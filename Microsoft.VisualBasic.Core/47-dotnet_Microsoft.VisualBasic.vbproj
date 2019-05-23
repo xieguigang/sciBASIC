@@ -1158,6 +1158,8 @@
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
     <Compile Include="Scripting\Runtime\CType\Narrowing.vb" />
+    <Compile Include="Scripting\VisualBasic\Extensions.vb" />
+    <Compile Include="Scripting\VisualBasic\KeywordProcessor.vb" />
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Serialization\JSON\AnonymousJSON.vb" />
     <Compile Include="Text\Parser\CharEnumerator.vb" />
@@ -1189,7 +1191,7 @@
     <Compile Include="Scripting\Runtime\Extensions.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\OperatorExpression.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
-    <Compile Include="Scripting\VBLanguage.vb" />
+    <Compile Include="Scripting\VisualBasic\VBLanguage.vb" />
     <Compile Include="Text\GreekAlphabets.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
     <Compile Include="Text\Xml\Linq\DeserializeHandler.vb" />

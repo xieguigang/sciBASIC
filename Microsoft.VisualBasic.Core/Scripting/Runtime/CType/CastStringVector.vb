@@ -60,6 +60,17 @@ Namespace Scripting.Runtime
             Return values.ToDictionary(Function(x) x.Key, Function(x) CStr(x.Value))
         End Function
 
+        ''' <summary>
+        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString(Object, String)"/>.
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsCharacter(values As Dictionary(Of String, Object), Optional null$ = Nothing) As Dictionary(Of String, String)
+            Return values.ToDictionary(Function(x) x.Key, Function(x) Scripting.ToString(x, null))
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsCharacter(values As IEnumerable(Of Double), Optional negPrefix As Boolean = False, Optional format$ = "G4") As IEnumerable(Of String)
