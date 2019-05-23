@@ -4,14 +4,14 @@ Namespace HDF5.type
 
     Public Class FixedPoint : Inherits DataType
 
-        Public Property order As ByteOrder
+        Public Property byteOrder As ByteOrder
         Public Property lowPadding As Boolean
         Public Property highPadding As Boolean
         Public Property signed As Boolean
         Public Property bitOffset As Short
         Public Property bitPrecision As Short
 
-        Public ReadOnly Property typeInfo As System.Type
+        Public Overrides ReadOnly Property typeInfo As System.Type
             Get
                 If signed Then
                     Select Case bitPrecision

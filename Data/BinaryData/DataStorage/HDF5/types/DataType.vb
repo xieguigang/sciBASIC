@@ -8,5 +8,7 @@ Namespace HDF5.type
         Public Property [class] As DataTypes
         Public Property size As Integer
 
+        Public MustOverride ReadOnly Property TypeInfo As System.Type
+
     End Class
 End Namespace

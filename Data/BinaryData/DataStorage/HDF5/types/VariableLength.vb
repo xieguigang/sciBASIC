@@ -8,5 +8,11 @@ Namespace HDF5.type
         Public Property paddingType As Integer
         Public Property encoding As Encoding
 
+        Public Overrides ReadOnly Property TypeInfo As System.Type
+            Get
+                Return GetType(String)
+            End Get
+        End Property
+
     End Class
 End Namespace
