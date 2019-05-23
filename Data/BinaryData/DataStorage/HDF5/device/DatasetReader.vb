@@ -75,10 +75,19 @@ Namespace HDF5.device
 
         <Extension>
         Public Function readDataset(type As DataType, address&, space As DataspaceMessage, sb As Superblock, dimensions As Integer()) As Object
+            Dim buffer As Byte()
+
+            sb.file.reader.offset = address
+            buffer = sb.file.reader.readBytes(space.totalLength * type.size)
+
+            Return type.ParseDataChunk(buffer, dimensions)
+        End Function
+
+        <Extension>
+        Public Function ParseDataChunk(type As DataType, buffer As Byte(), dimensions As Integer()) As Object
             ' If the data is scalar make a fake one element array then remove it at the end
             Dim data As Array
             Dim isScalar As Boolean
-            Dim buffer As Byte()
 
             If dimensions.Length = 0 Then
                 ' Scalar dataset
@@ -90,9 +99,6 @@ Namespace HDF5.device
                 data = Array.CreateInstance(type.TypeInfo, dimensions)
                 isScalar = False
             End If
-
-            sb.file.reader.offset = address
-            buffer = sb.file.reader.readBytes(space.totalLength * type.size)
 
             If TypeOf type Is FixedPoint Then
                 Dim fixedPoint As FixedPoint = DirectCast(type, FixedPoint)
@@ -124,11 +130,9 @@ Namespace HDF5.device
 
                 Select Case floatingPoint.size
                     Case 4
-                        fillData(data, dimensions, buffer.asFloatBuffer(byteOrder))
-                        Exit Select
+                        Call fillData(data, dimensions, buffer.asFloatBuffer(byteOrder))
                     Case 8
-                        fillData(data, dimensions, buffer.asDoubleBuffer(byteOrder))
-                        Exit Select
+                        Call fillData(data, dimensions, buffer.asDoubleBuffer(byteOrder))
                     Case Else
                         Throw New NotSupportedException("Unsupported floating point type size " & floatingPoint.size & " bytes")
                 End Select
