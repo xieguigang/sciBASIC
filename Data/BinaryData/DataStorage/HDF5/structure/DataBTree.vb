@@ -48,6 +48,9 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.IO.HDF5.device
+
 Namespace HDF5.struct
 
     Public Class DataBTree
@@ -58,8 +61,18 @@ Namespace HDF5.struct
             Me.layout = layout
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function getChunkIterator(sb As Superblock) As DataChunkIterator
             Return New DataChunkIterator(sb, Me.layout)
+        End Function
+
+        Public Iterator Function EnumerateChunks(sb As Superblock) As IEnumerable(Of DataChunk)
+            Dim reader As DataChunkIterator = getChunkIterator(sb)
+            Dim file As BinaryReader = sb.FileReader(-1)
+
+            Do While reader.hasNext()
+                Yield reader.next(file, sb)
+            Loop
         End Function
 
         Public Overrides Function ToString() As String

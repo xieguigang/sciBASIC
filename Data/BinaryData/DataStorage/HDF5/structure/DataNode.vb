@@ -174,17 +174,15 @@ Namespace HDF5.struct
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="[in]"></param>
-        ''' <param name="sb"></param>
         ''' <returns></returns>
         ''' <remarks>
         ''' LOOK - wouldnt be a bad idea to terminate if possible instead of running through all subsequent entries
         ''' </remarks>
-        Public Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
+        Public Function hasNext() As Boolean
             If Me.level = 0 Then
                 Return (Me.currentEntry < Me.numberOfEntries)
             Else
-                If Me.currentNode.hasNext([in], sb) Then
+                If Me.currentNode.hasNext() Then
                     Return True
                 End If
 
@@ -196,7 +194,7 @@ Namespace HDF5.struct
             If Me.level = 0 Then
                 Return Me.entries(++Me.currentEntry)
             Else
-                If Me.currentNode.hasNext([in], sb) Then
+                If Me.currentNode.hasNext() Then
                     Return Me.currentNode.[next]([in], sb)
                 End If
 

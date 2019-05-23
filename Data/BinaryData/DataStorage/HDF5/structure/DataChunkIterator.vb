@@ -72,8 +72,8 @@ Namespace HDF5.struct
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public  Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
-            Return Me.root.hasNext([in], sb)
+        Public Function hasNext() As Boolean
+            Return Me.root.hasNext()
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

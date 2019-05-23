@@ -65,7 +65,7 @@ Namespace HDF5.struct
 
         Public ReadOnly Property size As Integer
         Public ReadOnly Property filterMask As Integer
-        Public ReadOnly Property offsets As Integer()
+        Public ReadOnly Property offsets As Long()
         Public ReadOnly Property filePosition As Long
 
         Friend Sub New(sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
@@ -75,10 +75,10 @@ Namespace HDF5.struct
 
             Me.size = [in].readInt()
             Me.filterMask = [in].readInt()
-            Me.offsets = New Integer(numberOfDimensions - 1) {}
+            Me.offsets = New Long(numberOfDimensions - 1) {}
 
             For i As Integer = 0 To numberOfDimensions - 1
-                Me.offsets(i) = CInt([in].readLong())
+                Me.offsets(i) = [in].readLong()
             Next
 
             Me.filePosition = If(last, -1, ReadHelper.readO([in], sb))

@@ -19,6 +19,9 @@ Namespace HDF5.dataset
 
         Public Property dataType As DataType
         Public Property dataSpace As DataspaceMessage
+        Public Property dataLayout As Layout
+        Public Property layout As LayoutMessage
+        Public Property pipeline As FilterPipelineMessage
 
         Public Overridable ReadOnly Property scalar() As Boolean
             Get

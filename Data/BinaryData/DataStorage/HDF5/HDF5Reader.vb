@@ -202,9 +202,11 @@ Namespace HDF5
                 If Not container.dataset Is Nothing Then
                     container.dataset.dataSpace = container.dataSpace
                     container.dataset.dataType = container.dataType.reader
+                    container.dataset.dataLayout = layout
+                    container.dataset.layout = dobj.layoutMessage
                 End If
 
-                While iter.hasNext(reader, sb)
+                While iter.hasNext()
                     chunk = iter.[next](reader, sb)
                     ' read/add a new data chunk block
                     container.chunks.Add(chunk)

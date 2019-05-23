@@ -81,6 +81,12 @@ Namespace HDF5.struct
             End Get
         End Property
 
+        Public ReadOnly Property layoutMessage As LayoutMessage
+            Get
+                Return Me.dataObject.messages.OfType(Of LayoutMessage).FirstOrDefault
+            End Get
+        End Property
+
         Public Sub New(sb As Superblock, symbolName As String, address As Long)
             Call MyBase.New(address)
 

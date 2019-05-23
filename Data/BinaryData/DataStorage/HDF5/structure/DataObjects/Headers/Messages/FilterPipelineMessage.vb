@@ -106,6 +106,10 @@ Namespace HDF5.struct
         Protected Friend Overrides Sub printValues(console As TextWriter)
             Throw New NotImplementedException()
         End Sub
+
+        Friend Function decode(encodedBytes() As Byte) As Byte()
+            Throw New NotImplementedException()
+        End Function
     End Class
 
     ''' <summary>
