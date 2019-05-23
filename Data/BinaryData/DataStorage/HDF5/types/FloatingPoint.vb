@@ -29,5 +29,8 @@
             End Get
         End Property
 
+        Public Overrides Function ToString() As String
+            Return $"({byteOrder.ToString} {Me.GetType.Name}) {TypeInfo.FullName}"
+        End Function
     End Class
 End Namespace

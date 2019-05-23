@@ -111,6 +111,50 @@ Namespace HDF5.[Structure]
             Return dobj
         End Function
 
+        ''' <summary>
+        ''' 如果存在重复的话，这个函数只会读取第一条
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Function GetMessage(type As ObjectHeaderMessages) As Message
+            Dim objMsg = dataObject.messages.FirstOrDefault(Function(msg) msg.headerMessageTypeNumber = type)
+
+            If objMsg Is Nothing Then
+                Return Nothing
+            End If
+
+            Select Case type
+                Case ObjectHeaderMessages.Attribute : Return objMsg.attributeMessage
+                Case ObjectHeaderMessages.AttributeInfo : Return Nothing
+                Case ObjectHeaderMessages.Bogus : Return Nothing
+                Case ObjectHeaderMessages.BtreeKValues : Return Nothing
+                Case ObjectHeaderMessages.DataLayout : Return objMsg.layoutMessage
+                Case ObjectHeaderMessages.Dataspace : Return objMsg.dataspaceMessage
+                Case ObjectHeaderMessages.DataStorageFilterPipeline : Return objMsg.filterPipelineMessage
+                Case ObjectHeaderMessages.Datatype : Return objMsg.dataTypeMessage
+                Case ObjectHeaderMessages.DriverInfo : Return Nothing
+                Case ObjectHeaderMessages.ExternalDataFiles : Return Nothing
+                Case ObjectHeaderMessages.FillValue : Return objMsg.fillValueMessage
+                Case ObjectHeaderMessages.FillValueOld : Return objMsg.fillValueOldMessage
+                Case ObjectHeaderMessages.GroupInfo : Return Nothing
+                Case ObjectHeaderMessages.Link : Return objMsg.linkMessage
+                Case ObjectHeaderMessages.LinkInfo : Return Nothing
+                Case ObjectHeaderMessages.NIL : Return Nothing
+                Case ObjectHeaderMessages.ObjectComment : Return Nothing
+                Case ObjectHeaderMessages.ObjectHeaderContinuation : Return Nothing
+                Case ObjectHeaderMessages.ObjectModificationTime : Return objMsg.lastModifiedMessage
+                Case ObjectHeaderMessages.ObjectModificationTimeOld : Return Nothing
+                Case ObjectHeaderMessages.ObjectReferenceCount : Return Nothing
+                Case ObjectHeaderMessages.SharedMessageTable : Return Nothing
+                Case ObjectHeaderMessages.SymbolTableMessage : Return objMsg.groupMessage
+
+                Case Else
+                    Return Nothing
+            End Select
+
+            Return Nothing
+        End Function
+
         '
         '        public Hashtable<String, String> getAttributes(BinaryReader in, Superblock sb) throws IOException {
         '        	Hashtable<String, String> ht = new Hashtable<String, String>();

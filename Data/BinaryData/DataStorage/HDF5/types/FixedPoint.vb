@@ -79,5 +79,9 @@ Namespace HDF5.type
                 End If
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"({byteOrder.ToString} {Me.GetType.Name}) {typeInfo.FullName}"
+        End Function
     End Class
 End Namespace

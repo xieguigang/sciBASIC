@@ -106,7 +106,7 @@ Namespace HDF5.[Structure]
 
         Const MAX_MESSAGE As Integer = 23
 
-        Shared ReadOnly hash As IDictionary(Of String, ObjectHeaderMessageType) = New Dictionary(Of String, ObjectHeaderMessageType)(10)
+        Shared ReadOnly hash As New Dictionary(Of String, ObjectHeaderMessageType)(10)
         Shared ReadOnly mess As ObjectHeaderMessageType() = New ObjectHeaderMessageType(MAX_MESSAGE - 1) {}
 
         ''' <summary>
@@ -182,7 +182,13 @@ Namespace HDF5.[Structure]
         ''' Message number.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property num() As Integer
+        Public ReadOnly Property num As Integer
+
+        Public ReadOnly Property type As ObjectHeaderMessages
+            Get
+                Return CType(num, ObjectHeaderMessages)
+            End Get
+        End Property
 
         Private Sub New(name As String, num As Integer)
             Me.name = name

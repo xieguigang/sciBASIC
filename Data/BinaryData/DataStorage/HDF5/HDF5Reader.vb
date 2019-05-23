@@ -79,6 +79,8 @@ Namespace HDF5
         Public ReadOnly Property layout As Layout
         Public ReadOnly Property dataBTree As DataBTree
         Public ReadOnly Property chunks As List(Of DataChunk)
+        Public ReadOnly Property dataType As DataTypeMessage
+        Public ReadOnly Property dataSpace As DataspaceMessage
 
         Dim file As HDF5File
 
@@ -174,6 +176,8 @@ Namespace HDF5
                 Dim chunk As DataChunk
 
                 container._dataBTree = dataTree
+                container._dataType = dobj.GetMessage(ObjectHeaderMessages.Datatype)
+                container._dataSpace = dobj.GetMessage(ObjectHeaderMessages.Dataspace)
 
                 While iter.hasNext(reader, sb)
                     chunk = iter.[next](reader, sb)

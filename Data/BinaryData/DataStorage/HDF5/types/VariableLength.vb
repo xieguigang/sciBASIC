@@ -56,5 +56,8 @@ Namespace HDF5.type
             End Get
         End Property
 
+        Public Overrides Function ToString() As String
+            Return $"({encoding.ToString} {Me.GetType.Name}) {TypeInfo.FullName}"
+        End Function
     End Class
 End Namespace

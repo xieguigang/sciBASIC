@@ -64,17 +64,17 @@ Namespace HDF5.[Structure]
 
     Public Class ObjectHeaderMessage : Inherits HDF5Ptr
 
-        Public ReadOnly Property headerMessageTypeNo() As Integer
+        Public ReadOnly Property headerMessageType As ObjectHeaderMessageType
+        Public ReadOnly Property sizeOfHeaderMessageData As Integer
+        Public ReadOnly Property headerMessageFlags As Byte
+        Public ReadOnly Property headerLength As Integer
+        Public ReadOnly Property headerMessageData As Byte()
+
+        Public ReadOnly Property headerMessageTypeNumber As ObjectHeaderMessages
             Get
-                Return headerMessageType.num
+                Return headerMessageType.type
             End Get
         End Property
-
-        Public ReadOnly Property headerMessageType() As ObjectHeaderMessageType
-        Public ReadOnly Property sizeOfHeaderMessageData() As Integer
-        Public ReadOnly Property headerMessageFlags() As Byte
-        Public ReadOnly Property headerLength() As Integer
-        Public ReadOnly Property headerMessageData() As Byte()
 
 #Region "message data"
 
