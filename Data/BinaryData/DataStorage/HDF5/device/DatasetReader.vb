@@ -76,9 +76,9 @@ Namespace HDF5.device
         <Extension>
         Public Function readDataset(type As DataType, address&, space As DataspaceMessage, sb As Superblock, dimensions As Integer()) As Object
             Dim buffer As Byte()
+            Dim reader As BinaryReader = sb.FileReader(address)
 
-            sb.file.reader.offset = address
-            buffer = sb.file.reader.readBytes(space.totalLength * type.size)
+            buffer = reader.readBytes(space.totalLength * type.size)
 
             Return type.ParseDataChunk(buffer, dimensions)
         End Function

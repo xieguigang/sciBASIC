@@ -156,7 +156,7 @@ Namespace HDF5.struct
             Dim dims = msg.dataSpace.dimensionLength
             Dim dataType As DataTypes = type.type
 
-            sb.file.reader.offset = msg.dataPos
+            Call sb.FileReader(msg.dataPos)
 
             Select Case dataType
                 Case DataTypes.DATATYPE_VARIABLE_LENGTH

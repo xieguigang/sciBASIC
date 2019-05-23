@@ -54,6 +54,7 @@
 ' 
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Language
@@ -141,7 +142,22 @@ Namespace HDF5.struct
             End If
         End Sub
 
-        Public Function GetReader(address As Long) As BinaryReader
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetCacheObject(address As Long) As DataObject
+            Return file.GetCacheObject(address:=address)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub AddCacheObject(obj As DataObject)
+            Call file.addCache(obj)
+        End Sub
+
+        ''' <summary>
+        ''' 可以通过这个函数来设置文件读取对象的当前读取位置
+        ''' </summary>
+        ''' <param name="address">小于零的数表示不进行位移</param>
+        ''' <returns></returns>
+        Public Function FileReader(address As Long) As BinaryReader
             If address >= 0 Then
                 file.reader.offset = address
             End If

@@ -74,9 +74,7 @@ Namespace HDF5.struct
         Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            Dim [in] As BinaryReader = sb.file.reader
-
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.symbolTableEntries = New List(Of SymbolTableEntry)()
 
@@ -92,9 +90,8 @@ Namespace HDF5.struct
         End Sub
 
         Private Sub readAllEntries(sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
-            Dim [in] As BinaryReader = sb.file.reader
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
-            [in].offset = address
             _magic = Encoding.ASCII.GetString([in].readBytes(4))
 
             If Not Me.VerifyMagicSignature(signature) Then

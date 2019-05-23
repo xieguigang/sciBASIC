@@ -88,9 +88,7 @@ Namespace HDF5.struct
         Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            Dim [in] As BinaryReader = sb.file.reader
-
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             ' signature
             Me.magic = Encoding.ASCII.GetString([in].readBytes(4))

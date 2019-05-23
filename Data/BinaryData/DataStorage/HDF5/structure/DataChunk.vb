@@ -71,9 +71,7 @@ Namespace HDF5.struct
         Friend Sub New(sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
             Call MyBase.New(address)
 
-            Dim [in] As BinaryReader = sb.file.reader
-
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.size = [in].readInt()
             Me.filterMask = [in].readInt()

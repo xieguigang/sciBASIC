@@ -82,9 +82,7 @@ Namespace HDF5.struct
         Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            Dim [in] As BinaryReader = sb.file.reader
-
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.objectHeader = New ObjectHeader(sb, address)
 

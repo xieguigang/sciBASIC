@@ -84,7 +84,7 @@ Namespace HDF5.struct
         Public Sub New(sb As Superblock, symbolName As String, address As Long)
             Call MyBase.New(address)
 
-            Dim [in] As BinaryReader = sb.file.reader
+            Dim [in] As BinaryReader = sb.FileReader(-1)
             Dim dobj As DataObject = readDataObject([in], sb, address)
 
             Me.dataObject = dobj
@@ -102,11 +102,11 @@ Namespace HDF5.struct
         End Sub
 
         Private Function readDataObject([in] As BinaryReader, sb As Superblock, address As Long) As DataObject
-            Dim dobj As DataObject = sb.file.GetCacheObject(address)
+            Dim dobj As DataObject = sb.GetCacheObject(address)
 
             If dobj Is Nothing Then
                 dobj = New DataObject(sb, address)
-                sb.file.addCache(dobj)
+                sb.AddCacheObject(dobj)
             End If
 
             Return dobj
