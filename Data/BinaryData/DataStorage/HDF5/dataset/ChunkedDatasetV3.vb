@@ -31,7 +31,7 @@ Namespace HDF5.dataset
         ''' fields later in the message.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property dimensionality As Integer
+        Public Property dimensionality As Integer
         ''' <summary>
         ''' This is the address of the v1 B-tree that is used to look up the addresses of the chunks 
         ''' that actually store portions of the array data. The address may have the 
@@ -39,7 +39,7 @@ Namespace HDF5.dataset
         ''' array.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property BtreeAddress As Long
+        Public Property BtreeAddress As Long
 
         ''' <summary>
         ''' These values define the dimension size of a single chunk, in units of array elements 
@@ -47,7 +47,7 @@ Namespace HDF5.dataset
         ''' dimension and the last dimension stored is the fastest changing dimension.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property dimensionSize As Integer()
+        Public Property dimensionSize As Integer()
 
         ''' <summary>
         ''' ###### Dataset Element Size
@@ -55,9 +55,7 @@ Namespace HDF5.dataset
         ''' The size of a dataset element, in bytes.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property byteSize As Integer
-
-
+        Public Property byteSize As Integer
 
     End Class
 

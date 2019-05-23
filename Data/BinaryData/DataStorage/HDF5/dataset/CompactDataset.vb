@@ -19,13 +19,12 @@ Namespace HDF5.dataset
         ''' (2 bytes) This field contains the size of the raw data for the dataset array, in bytes.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property size As Integer
+        Public Property size As Integer
         ''' <summary>
         ''' This field contains the raw data for the dataset array.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property rawData As Byte()
-
+        Public Property rawData As Byte()
 
     End Class
 End Namespace

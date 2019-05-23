@@ -25,12 +25,12 @@ Namespace HDF5.dataset
         ''' for this array.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property dataAddress As Long
+        Public Property dataAddress As Long
         ''' <summary>
         ''' This field contains the size allocated to store the raw data, in bytes.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property size As Long
+        Public Property size As Long
 
 
     End Class

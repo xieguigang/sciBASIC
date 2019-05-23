@@ -16,8 +16,8 @@ Namespace HDF5.dataset
 
     Public MustInherit Class Hdf5Dataset
 
-        Public ReadOnly Property dataType As DataType
-        Public ReadOnly Property dataSpace As DataspaceMessage
+        Public Property dataType As DataType
+        Public Property dataSpace As DataspaceMessage
 
         Public Overridable ReadOnly Property data() As Object
             Get

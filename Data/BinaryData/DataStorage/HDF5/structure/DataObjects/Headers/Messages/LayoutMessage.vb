@@ -121,8 +121,22 @@ Namespace HDF5.struct
 
             Select Case type
                 Case LayoutClass.ChunkedStorage
+                    dataset = New ChunkedDatasetV3 With {
+                        .BtreeAddress = dataAddress,
+                        .byteSize = dataSize,
+                        .dimensionality = dimensionality,
+                        .dimensionSize = chunkSize
+                    }
                 Case LayoutClass.CompactStorage
+                    dataset = New CompactDataset With {
+                        .size = dataSize,
+                        .rawData = [in].readBytes(dataSize)
+                    }
                 Case LayoutClass.ContiguousStorage
+                    dataset = New ContiguousDataset With {
+                        .dataAddress = dataAddress,
+                        .size = continuousSize
+                    }
                 Case Else
                     Throw New NotImplementedException
             End Select
