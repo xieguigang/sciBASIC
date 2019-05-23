@@ -122,6 +122,7 @@
     <Compile Include="HDF5\FileDump.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\LayoutClass.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\BogusMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb" />
     <Compile Include="HDF5\structure\Infrastructure\BTree\BLinkTreeNode.vb" />
     <Compile Include="HDF5\structure\Infrastructure\BTree\BTreeEntry.vb" />

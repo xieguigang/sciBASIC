@@ -64,10 +64,10 @@ Namespace HDF5.struct
         Public ReadOnly Property length As Long
         Public ReadOnly Property totalObjectHeaderMessageContinueSize As Integer
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.offset = ReadHelper.readO([in], sb)
             Me.length = ReadHelper.readL([in], sb)
