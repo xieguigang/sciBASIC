@@ -9,6 +9,7 @@
 ' MIT License see 'LICENSE' file
 ' *****************************************************************************
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 
@@ -26,6 +27,9 @@ Namespace HDF5.dataset
         End Property
 
         Public MustOverride Function data(sb As Superblock) As Object
+
+        Protected MustOverride Function getBuffer(sb As Superblock) As MemoryStream
+
 
         'Dim type As DataType = dataType
         'Dim bb As ByteBuffer = dataBuffer

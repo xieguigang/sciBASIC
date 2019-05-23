@@ -9,6 +9,7 @@
 ' MIT License see 'LICENSE' file
 ' *****************************************************************************
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 
 Namespace HDF5.dataset
@@ -59,10 +60,41 @@ Namespace HDF5.dataset
         ''' <returns></returns>
         Public Property byteSize As Integer
 
+        Public Overridable ReadOnly Property size() As Long
+            Get
+                Return dataSpace.totalLength
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property diskSize() As Long
+            Get
+                Return size * dataType.size
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property dimensions() As Integer()
+            Get
+                Return dataSpace.dimensionLength
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property maxSize() As Integer()
+            Get
+                If Not dataSpace.maxDimensionLength.IsNullOrEmpty Then
+                    Return dataSpace.maxDimensionLength
+                Else
+                    Return dimensions
+                End If
+            End Get
+        End Property
+
         Public Overrides Function data(sb As Superblock) As Object
             Throw New NotImplementedException()
         End Function
 
+        Protected Overrides Function getBuffer(sb As Superblock) As MemoryStream
+            Throw New NotImplementedException()
+        End Function
     End Class
 
 End Namespace

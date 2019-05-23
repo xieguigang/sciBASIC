@@ -8,6 +8,7 @@
 ' MIT License see 'LICENSE' file
 ' *****************************************************************************
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 
 Namespace HDF5.dataset
@@ -30,6 +31,10 @@ Namespace HDF5.dataset
 
         Public Overrides Function data(sb As Superblock) As Object
             Throw New NotImplementedException()
+        End Function
+
+        Protected Overrides Function getBuffer(sb As Superblock) As MemoryStream
+            Return New MemoryStream(rawData)
         End Function
     End Class
 End Namespace
