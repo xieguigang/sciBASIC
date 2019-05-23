@@ -87,6 +87,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -130,6 +131,7 @@
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Message.vb" />
     <Compile Include="HDF5\structure\Infrastructure\GlobalHeap.vb" />
+    <Compile Include="HDF5\types\FixedPoint.vb" />
     <Compile Include="HDF5\types\VariableLength.vb" />
     <Compile Include="HDF5\types\DataType.vb" />
     <Compile Include="HDF5\types\DataTypes.vb" />

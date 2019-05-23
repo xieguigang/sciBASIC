@@ -159,7 +159,8 @@ Namespace HDF5.[Structure]
 
             If dataType = DataTypes.DATATYPE_VARIABLE_LENGTH Then
                 Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb)
-            Else
+            ElseIf dataType = DataTypes.DATATYPE_FIXED_POINT Then
+
                 Throw New NotImplementedException
             End If
         End Function

@@ -84,6 +84,7 @@ Namespace HDF5.[Structure]
         Dim m_referenceType As Integer
         Dim m_isOK As Boolean
         Dim m_base As DataTypeMessage
+        Dim m_classBits As BitSet
 
         Dim encoding As Encoding
 
@@ -107,6 +108,7 @@ Namespace HDF5.[Structure]
             Me.version = ((tandv And &HF0) >> 4)
 
             Me.m_flags = [in].readBytes(3)
+            Me.m_classBits = BitSet.ValueOf(m_flags.Take(2).ToArray)
             Me.byteSize = [in].readInt()
             Me.byteOrder = If((Me.m_flags(0) And &H1) = 0, ByteOrder.LittleEndian, ByteOrder.BigEndian)
             Me.m_timeTypeByteSize = 4
@@ -119,6 +121,17 @@ Namespace HDF5.[Structure]
                 Dim bitPrecision As Short = [in].readShort()
 
                 Me.m_isOK = (bitOffset = 0) AndAlso (bitPrecision Mod 8 = 0)
+                Me.reader = New FixedPoint With {
+                    .bitOffset = bitOffset,
+                    .bitPrecision = bitPrecision,
+                    .[class] = DataTypes.DATATYPE_FIXED_POINT,
+                    .order = byteOrder,
+                    .signed = Not m_unsigned,
+                    .size = byteSize,
+                    .version = version,
+                    .lowPadding = m_classBits.Get(1),
+                    .highPadding = m_classBits.Get(2)
+                }
             ElseIf Me.type = DataTypes.DATATYPE_FLOATING_POINT Then
                 Dim bitOffset As Short = [in].readShort()
                 Dim bitPrecision As Short = [in].readShort()
