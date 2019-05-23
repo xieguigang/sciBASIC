@@ -68,7 +68,7 @@ Namespace Scripting.Runtime
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsCharacter(values As Dictionary(Of String, Object), Optional null$ = Nothing) As Dictionary(Of String, String)
-            Return values.ToDictionary(Function(x) x.Key, Function(x) Scripting.ToString(x, null))
+            Return values.ToDictionary(Function(x) x.Key, Function(x) Scripting.ToString(x.Value, null))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
