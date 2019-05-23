@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26088a1790c1c16bc0b61d7ae3ae09e1, Data\BinaryData\DataStorage\HDF5\structure\Superblock.vb"
+﻿#Region "Microsoft.VisualBasic::1544f941e2ecda712a82bd04185d09c9, Data\BinaryData\DataStorage\HDF5\structure\Superblock.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,9 @@
     '     Class Superblock
     ' 
     '         Properties: addressOfFileFreeSpaceInfo, baseAddress, driverInformationBlockAddress, endOfFileAddress, fileConsistencyFlags
-    '                     formatSignature, groupInternalNodeK, groupLeafNodeK, indexedStorageInterNodeK, rootGroupSymbolTableEntry
-    '                     sizeOfLengths, sizeOfOffsets, totalSuperBlockSize, validFormatSignature, versionOfFileFreeSpaceStorage
-    '                     versionOfRootGroupSymbolTableEntry, versionOfShardedHeaderMessageFormat, versionOfSuperblock
+    '                     formatSignature, globalHeaps, groupInternalNodeK, groupLeafNodeK, indexedStorageInterNodeK
+    '                     rootGroupSymbolTableEntry, sizeOfLengths, sizeOfOffsets, totalSuperBlockSize, validFormatSignature
+    '                     versionOfFileFreeSpaceStorage, versionOfRootGroupSymbolTableEntry, versionOfShardedHeaderMessageFormat, versionOfSuperblock
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues, readVersion1, readVersion2

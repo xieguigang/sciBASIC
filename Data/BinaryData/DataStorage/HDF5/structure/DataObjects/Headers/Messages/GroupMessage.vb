@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eab02e805b432435bf313ec4c4fdd376, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
+﻿#Region "Microsoft.VisualBasic::f159caefa3cdcd3afb23a512c4fc914c, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
 
     ' Author:
     ' 

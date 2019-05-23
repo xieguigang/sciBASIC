@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3babfe0debb1d5c46ba70676d18e1eec, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::277fdb4847a9c08e3e94183064e526af, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module CastStringVector
     ' 
-    '         Function: AsBoolean, (+3 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
+    '         Function: AsBoolean, (+4 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
     '                   AsInteger, AsNumeric, AsSingle, AsType
     ' 
     ' 

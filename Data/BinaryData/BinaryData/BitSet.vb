@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::148edf35859905a572d765647615a70c, Data\BinaryData\BinaryData\BitSet.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class BitSet
+    ' 
+    '     Properties: Count, IsSynchronized, SyncRoot
+    ' 
+    '     Constructor: (+13 Overloads) Sub New
+    ' 
+    '     Function: [And], [Get], [Not], [Or], [Set]
+    '               [Xor], (+2 Overloads) Append, BinaryBitwiseOp, Clone, Concatenate
+    '               Duplicate, Equals, FromBinaryString, FromHexString, GetBits
+    '               GetEnumerator, GetHashCode, Repeat, RequiredSize, Reverse
+    '               SetAll, SetBits, SplitEvery, ToArray, ToBinaryString
+    '               ToBytes, ToHexString, ToInteger, ToString, ValueOf
+    ' 
+    '     Sub: CopyTo, Extend, (+2 Overloads) InitializeFrom
+    ' 
+    '     Operators: +, <<, <>, =, >>
+    '                (+2 Overloads) And, (+2 Overloads) Not, (+2 Overloads) Or, (+2 Overloads) Xor
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Globalization
 Imports System.Numerics
 Imports System.Runtime.CompilerServices
@@ -606,3 +661,4 @@ Public Class BitSet
 
 #End Region
 End Class
+

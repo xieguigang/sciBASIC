@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76cbb1d4416b95af7a07f5f972d340d8, Data\BinaryData\DataStorage\HDF5\structure\Group.vb"
+﻿#Region "Microsoft.VisualBasic::bbda9ca61dec60006e87d45a3848fb4e, Data\BinaryData\DataStorage\HDF5\structure\Group.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Group
     ' 
-    '         Properties: objects
+    '         Properties: attributes, objects
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

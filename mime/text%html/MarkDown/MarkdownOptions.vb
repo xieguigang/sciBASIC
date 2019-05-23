@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35f9f796ac48e84d6fa06a11c3d28b62, mime\text%html\MarkDown\MarkdownOptions.vb"
+﻿#Region "Microsoft.VisualBasic::85ef0d4441bb38829f676c101e0e1c0d, mime\text%html\MarkDown\MarkdownOptions.vb"
 
     ' Author:
     ' 

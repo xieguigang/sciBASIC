@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::794eda8a3cf935e1eecee42b0dfff63d, Microsoft.VisualBasic.Core\Scripting\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::5be772c3e5df01d25aea9957012aad2c, Microsoft.VisualBasic.Core\Scripting\VisualBasic\VBLanguage.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: TypeCharName
-    ' 
-    '     Class KeywordProcessor
-    ' 
-    '         Properties: Words
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: AutoEscapeVBKeyword
     ' 
     ' 
     ' /********************************************************************************/

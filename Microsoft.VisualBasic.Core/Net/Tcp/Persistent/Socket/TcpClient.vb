@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ade6d7a7350fe60daabfb2490b524242, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::7e5d8a1530ecea1df65397b064587ec4, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\TcpClient.vb"
 
     ' Author:
     ' 

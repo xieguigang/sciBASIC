@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c4037dc8f33ba759713e63fddc0e238, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::62654a088843804f9eb38fd9f0772359, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 

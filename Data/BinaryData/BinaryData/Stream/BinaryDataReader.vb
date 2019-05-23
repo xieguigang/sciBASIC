@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5393f5cf24957a44e561e8abd7ed2e6b, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::ff8fe2353d308610e86d4dea4b767102, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
     '               ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
     '               ToString
     ' 
-    '     Sub: Align, TemporarySeek
+    '     Sub: Align, Mark, Reset, TemporarySeek
     ' 
     ' /********************************************************************************/
 
@@ -136,7 +136,7 @@ Public Class BinaryDataReader
         End Get
         Set
             _byteOrder = Value
-            _needsReversion = _byteOrder <> ByteOrderHelper.SystemByteOrder
+            _needsReversion = ByteOrderHelper.NeedsReversion(Value)
         End Set
     End Property
 

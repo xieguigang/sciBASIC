@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab38822761a63190a02e2da26af80d1e, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::fa33410acc96b1edfc3ab8c7b8236a22, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '     Delegate Function
     ' 
     ' 
-    '     Interface IDefaultValue
+    '     Interface IDefault
     ' 
     '         Properties: DefaultValue
     ' 
@@ -45,7 +45,7 @@
     ' 
     '         Properties: IsEmpty
     ' 
-    '     Structure DefaultValue
+    '     Structure [Default]
     ' 
     '         Properties: DefaultValue, IsEmpty
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4212d67a9f27863dbe7c9188e8f1419c, Data\BinaryData\DataStorage\HDF5\HDF5Reader.vb"
+﻿#Region "Microsoft.VisualBasic::729d6fc47ecefa701da0e82c1faf409d, Data\BinaryData\DataStorage\HDF5\HDF5Reader.vb"
 
     ' Author:
     ' 
@@ -31,33 +31,16 @@
 
     ' Summaries:
 
-    '     Class HDF5File
-    ' 
-    '         Properties: rootObjects, Superblock
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose, parseHeader
-    ' 
-    '     Class HDF5GroupReader
-    ' 
-    '         Properties: folder
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: (+2 Overloads) Dispose, printValues
-    ' 
     '     Class HDF5Reader
     ' 
-    '         Properties: chunks, dataBTree, dataGroups, datasetName, fileName
-    '                     headerSize, layout, reader, Superblock
+    '         Properties: chunks, dataBTree, dataGroups, datasetName, headerSize
+    '                     layout, reader, Superblock
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: ParseDataObject, parserObject, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, parseHeader, printValues
+    '         Sub: parseHeader, printValues
     ' 
     ' 
     ' /********************************************************************************/
