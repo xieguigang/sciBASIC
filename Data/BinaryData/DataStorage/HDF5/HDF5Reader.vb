@@ -140,7 +140,7 @@ Namespace HDF5
             Dim sb As Superblock = Me.Superblock
             Dim rootSymbolTableEntry As SymbolTableEntry = sb.rootGroupSymbolTableEntry
             Dim objectFacade As New DataObjectFacade(Me.reader, sb, "root", rootSymbolTableEntry.objectHeaderAddress)
-            Dim rootGroup As New Group(Me.reader, sb, objectFacade)
+            Dim rootGroup As New Group(sb, objectFacade)
             Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 
             For Each dobj As DataObjectFacade In objects
@@ -168,11 +168,11 @@ Namespace HDF5
             container._layout = layout
 
             If layout.IsEmpty Then
-                Return New Group(reader, sb, dobj)
+                Return New Group(sb, dobj)
             Else
                 ' parse btree index of the data
                 Dim dataTree As New DataBTree(layout)
-                Dim iter As DataChunkIterator = dataTree.getChunkIterator(reader, sb)
+                Dim iter As DataChunkIterator = dataTree.getChunkIterator(sb)
                 Dim chunk As DataChunk
 
                 container._dataBTree = dataTree

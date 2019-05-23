@@ -79,8 +79,10 @@ Namespace HDF5.[Structure]
         Dim currentEntry As VBInteger
         ' track iteration; LOOK this seems fishy - why not an iterator ??
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, layout As Layout, address As Long)
+        Public Sub New(sb As Superblock, layout As Layout, address As Long)
             Call MyBase.New(address)
+
+            Dim [in] As BinaryReader = sb.file.reader
 
             [in].offset = address
 
@@ -111,7 +113,7 @@ Namespace HDF5.[Structure]
 
                 For i As Integer = 0 To Me.numberOfEntries
                     isLast = (i = Me.numberOfEntries)
-                    dc = New DataChunk([in], sb, [in].offset, layout.numberOfDimensions, isLast)
+                    dc = New DataChunk(sb, [in].offset, layout.numberOfDimensions, isLast)
                     entries.Add(dc)
                 Next
             Else
@@ -156,7 +158,7 @@ Namespace HDF5.[Structure]
                 Me.currentNode = Nothing
                 Me.currentEntry = 0
                 While Me.currentEntry < Me.numberOfEntries
-                    Me.currentNode = New DataNode([in], sb, Me.layout, Me.childPointer(Me.currentEntry))
+                    Me.currentNode = New DataNode(sb, Me.layout, Me.childPointer(Me.currentEntry))
                     Me.currentNode.first([in], sb)
                     Exit While
                     Me.currentEntry += 1
@@ -165,7 +167,7 @@ Namespace HDF5.[Structure]
                 ' heres the case where its the last entry we want; the tiling.compare() above may fail
                 If Me.currentNode Is Nothing Then
                     Me.currentEntry = Me.numberOfEntries - 1
-                    Me.currentNode = New DataNode([in], sb, Me.layout, Me.childPointer(Me.currentEntry))
+                    Me.currentNode = New DataNode(sb, Me.layout, Me.childPointer(Me.currentEntry))
                     Me.currentNode.first([in], sb)
                 End If
             End If
@@ -201,7 +203,7 @@ Namespace HDF5.[Structure]
                 End If
 
                 Me.currentEntry += 1
-                Me.currentNode = New DataNode([in], sb, Me.layout, Me.childPointer(Me.currentEntry))
+                Me.currentNode = New DataNode(sb, Me.layout, Me.childPointer(Me.currentEntry))
                 Me.currentNode.first([in], sb)
 
                 Return Me.currentNode.[next]([in], sb)

@@ -81,9 +81,10 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, symbolName As String, address As Long)
+        Public Sub New(sb As Superblock, symbolName As String, address As Long)
             Call MyBase.New(address)
 
+            Dim [in] As BinaryReader = sb.file.reader
             Dim dobj As DataObject = readDataObject([in], sb, address)
 
             Me.dataObject = dobj

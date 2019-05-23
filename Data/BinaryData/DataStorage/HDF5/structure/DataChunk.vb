@@ -68,8 +68,10 @@ Namespace HDF5.[Structure]
         Public ReadOnly Property offsets As Integer()
         Public ReadOnly Property filePosition As Long
 
-        Friend Sub New([in] As BinaryReader, sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
+        Friend Sub New(sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
             Call MyBase.New(address)
+
+            Dim [in] As BinaryReader = sb.file.reader
 
             [in].offset = address
 

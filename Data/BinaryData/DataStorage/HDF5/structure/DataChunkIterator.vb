@@ -62,12 +62,14 @@ Namespace HDF5.[Structure]
 
         Dim root As DataNode
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, layout As Layout)
+        Public Sub New(sb As Superblock, layout As Layout)
             Call MyBase.New(layout.dataAddress)
+
+            Dim [in] As BinaryReader = sb.file.reader
 
             [in].offset = Me.m_address
 
-            Me.root = New DataNode([in], sb, layout, Me.m_address)
+            Me.root = New DataNode(sb, layout, Me.m_address)
             Me.root.first([in], sb)
         End Sub
 
