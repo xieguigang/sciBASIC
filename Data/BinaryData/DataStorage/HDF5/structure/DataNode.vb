@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::cfc89ff2924ceb848d7e8e64649a1d00, Data\BinaryData\DataStorage\HDF5\structure\DataNode.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataNode
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: [next], hasNext
-    ' 
-    '         Sub: first, printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataNode
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: [next], hasNext
+' 
+'         Sub: first, printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -142,7 +142,7 @@ Namespace HDF5.[Structure]
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <param name="sb"></param>
-        Public  Sub first([in] As BinaryReader, sb As Superblock)
+        Public Sub first([in] As BinaryReader, sb As Superblock)
             If Me.level = 0 Then
 
                 ' note nentries-1 - assume dont skip the last one
@@ -182,7 +182,7 @@ Namespace HDF5.[Structure]
         ''' <remarks>
         ''' LOOK - wouldnt be a bad idea to terminate if possible instead of running through all subsequent entries
         ''' </remarks>
-        Public  Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
+        Public Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
             If Me.level = 0 Then
                 Return (Me.currentEntry < Me.numberOfEntries)
             Else
@@ -194,7 +194,7 @@ Namespace HDF5.[Structure]
             End If
         End Function
 
-        Public  Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
+        Public Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
             If Me.level = 0 Then
                 Return Me.entries(++Me.currentEntry)
             Else
