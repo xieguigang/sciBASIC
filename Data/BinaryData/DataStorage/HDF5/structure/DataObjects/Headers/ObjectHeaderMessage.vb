@@ -116,7 +116,7 @@ Namespace HDF5.struct
             If Me.headerMessageType Is ObjectHeaderMessageType.ObjectHeaderContinuation Then
                 Me.continueMessage = New ContinueMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Group Then
-                Me.groupMessage = New GroupMessage([in], sb, [in].offset)
+                Me.groupMessage = New GroupMessage(sb, [in].offset)
                 ' do nothing
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.NIL Then
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
@@ -124,7 +124,7 @@ Namespace HDF5.struct
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupNew Then
                 Throw New IOException("Group New not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Datatype Then
-                Me.dataTypeMessage = New DataTypeMessage([in], sb, [in].offset)
+                Me.dataTypeMessage = New DataTypeMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValueOld Then
                 Me.fillValueOldMessage = New FillValueOldMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValue Then
@@ -132,7 +132,7 @@ Namespace HDF5.struct
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Link Then
                 Me.linkMessage = New LinkMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Layout Then
-                Me.layoutMessage = New LayoutMessage([in], sb, [in].offset)
+                Me.layoutMessage = New LayoutMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
                 Throw New IOException("Group Info not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FilterPipeline Then

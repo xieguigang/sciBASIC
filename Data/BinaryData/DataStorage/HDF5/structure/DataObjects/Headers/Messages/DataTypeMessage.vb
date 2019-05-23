@@ -97,10 +97,10 @@ Namespace HDF5.struct
 
         Public ReadOnly Property reader As DataType
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             ' common base constructor
             Dim tandv As Byte = [in].readByte()
@@ -178,12 +178,13 @@ Namespace HDF5.struct
             ElseIf Me.type = DataTypes.DATATYPE_ENUMS Then
                 ' throw new IOException( "data type enums is not implemented" );
 
-                Dim nmembers As Integer = ReadHelper.bytesToUnsignedInt(Me.m_flags(1), Me.m_flags(0))
-                Me.m_base = New DataTypeMessage([in], sb, [in].offset)
+                Dim nMembers As Integer = ReadHelper.bytesToUnsignedInt(Me.m_flags(1), Me.m_flags(0))
+                Me.m_base = New DataTypeMessage(sb, [in].offset)
                 ' base type
                 ' read the enums
-                Dim enumName As [String]() = New [String](nmembers - 1) {}
-                For i As Integer = 0 To nmembers - 1
+                Dim enumName As String() = New String(nMembers - 1) {}
+
+                For i As Integer = 0 To nMembers - 1
                     If Me.version < 3 Then
                         enumName(i) = ReadHelper.readString8([in])
                     Else
@@ -198,8 +199,8 @@ Namespace HDF5.struct
                     [in].SetByteOrder(ByteOrder.BigEndian)
                 End If
 
-                Dim enumValue As Integer() = New Integer(nmembers - 1) {}
-                For i As Integer = 0 To nmembers - 1
+                Dim enumValue As Integer() = New Integer(nMembers - 1) {}
+                For i As Integer = 0 To nMembers - 1
                     enumValue(i) = CInt(ReadHelper.readVariableSizeUnsigned([in], Me.m_base.byteSize))
                 Next
                 ' assume size is 1, 2, or 4

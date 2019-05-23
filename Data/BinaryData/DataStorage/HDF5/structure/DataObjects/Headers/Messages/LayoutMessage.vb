@@ -106,57 +106,73 @@ Namespace HDF5.struct
 
         Public ReadOnly Property dataset As Hdf5Dataset
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.version = [in].readByte()
 
             If Me.version < 3 Then
-                Me.dimensionality = [in].readByte()
-                Me.type = [in].readByte()
+                Call parseVersion1Or2([in], sb)
+            Else
+                Call parseVersion3([in], sb)
+            End If
 
-                ' Reserved (zero) 1 + 4 = 5 bytes
-                [in].skipBytes(5)
+            Select Case type
+                Case LayoutClass.ChunkedStorage
+                Case LayoutClass.CompactStorage
+                Case LayoutClass.ContiguousStorage
+                Case Else
+                    Throw New NotImplementedException
+            End Select
+        End Sub
 
-                Dim isCompact As Boolean = (Me.type = LayoutClass.CompactStorage)
+        Private Sub parseVersion3([in] As BinaryReader, sb As Superblock)
+            Me._type = CType(CInt([in].readByte), LayoutClass)
 
-                If Not isCompact Then
-                    ' Data AddressO (optional)
-                    Me.dataAddress = ReadHelper.readO([in], sb)
-                End If
-
-                Me.chunkSize = New Integer(Me.dimensionality - 1) {}
+            If Me.type = LayoutClass.CompactStorage Then
+                Me._dataSize = [in].readShort()
+                Me._dataAddress = [in].offset
+            ElseIf Me.type = LayoutClass.ContiguousStorage Then
+                Me._dataAddress = ReadHelper.readO([in], sb)
+                Me._continuousSize = ReadHelper.readL([in], sb)
+            ElseIf Me.type = LayoutClass.ChunkedStorage Then
+                Me._dimensionality = [in].readByte()
+                Me._dataAddress = ReadHelper.readO([in], sb)
+                Me._chunkSize = New Integer(Me.dimensionality - 1) {}
 
                 For i As Integer = 0 To Me.dimensionality - 1
-                    ' Dimension n Size
                     Me.chunkSize(i) = [in].readInt()
                 Next
+            End If
+        End Sub
 
-                If isCompact Then
-                    ' Dataset Element Size (optional)
-                    Me.dataSize = [in].readInt()
-                    Me.dataAddress = [in].offset
-                End If
-            Else
-                Me.type = CType(CInt([in].readByte), LayoutClass)
+        Private Sub parseVersion1Or2([in] As BinaryReader, sb As Superblock)
+            Me._dimensionality = [in].readByte()
+            Me._type = CInt([in].readByte)
 
-                If Me.type = LayoutClass.CompactStorage Then
-                    Me.dataSize = [in].readShort()
-                    Me.dataAddress = [in].offset
-                ElseIf Me.type = LayoutClass.ContiguousStorage Then
-                    Me.dataAddress = ReadHelper.readO([in], sb)
-                    Me.continuousSize = ReadHelper.readL([in], sb)
-                ElseIf Me.type = LayoutClass.ChunkedStorage Then
-                    Me.dimensionality = [in].readByte()
-                    Me.dataAddress = ReadHelper.readO([in], sb)
-                    Me.chunkSize = New Integer(Me.dimensionality - 1) {}
+            ' Reserved (zero) 1 + 4 = 5 bytes
+            [in].skipBytes(5)
 
-                    For i As Integer = 0 To Me.dimensionality - 1
-                        Me.chunkSize(i) = [in].readInt()
-                    Next
-                End If
+            Dim isCompact As Boolean = (Me.type = LayoutClass.CompactStorage)
+
+            If Not isCompact Then
+                ' Data AddressO (optional)
+                Me._dataAddress = ReadHelper.readO([in], sb)
+            End If
+
+            Me._chunkSize = New Integer(Me.dimensionality - 1) {}
+
+            For i As Integer = 0 To Me.dimensionality - 1
+                ' Dimension n Size
+                Me.chunkSize(i) = [in].readInt()
+            Next
+
+            If isCompact Then
+                ' Dataset Element Size (optional)
+                Me._dataSize = [in].readInt()
+                Me._dataAddress = [in].offset
             End If
         End Sub
 

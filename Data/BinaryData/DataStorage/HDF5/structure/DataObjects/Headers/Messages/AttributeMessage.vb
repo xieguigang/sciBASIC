@@ -127,7 +127,7 @@ Namespace HDF5.struct
                 'mdt = getSharedDataObject(MessageType.Datatype).mdt;
                 Throw New IOException("shared data object is not implemented")
             Else
-                Me.dataType = New DataTypeMessage([in], sb, [in].offset)
+                Me.dataType = New DataTypeMessage(sb, [in].offset)
 
                 If Me.version = 1 Then
                     typeSize += CShort(ReadHelper.padding(typeSize, 8))

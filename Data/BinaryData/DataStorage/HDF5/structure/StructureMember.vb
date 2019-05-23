@@ -89,7 +89,7 @@ Namespace HDF5.struct
                 [in].skipBytes(24)
             End If
 
-            Me.message = New DataTypeMessage([in], sb, [in].offset)
+            Me.message = New DataTypeMessage(sb, [in].offset)
         End Sub
 
         Public Overrides Function ToString() As String

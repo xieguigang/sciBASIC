@@ -79,10 +79,10 @@ Namespace HDF5.struct
         ''' <returns></returns>
         Public  ReadOnly Property nameHeapAddress() As Long
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.bTreeAddress = ReadHelper.readO([in], sb)
             Me.nameHeapAddress = ReadHelper.readO([in], sb)
