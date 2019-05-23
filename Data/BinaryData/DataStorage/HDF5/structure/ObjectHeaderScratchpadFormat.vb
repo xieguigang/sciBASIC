@@ -69,9 +69,7 @@ Namespace HDF5.struct
         Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            Dim [in] As BinaryReader = sb.file.reader
-
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.GetReader(address)
 
             Me.addressOfBTree = ReadHelper.readO([in], sb)
             Me.addressOfNameHeap = ReadHelper.readO([in], sb)

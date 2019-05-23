@@ -124,7 +124,7 @@ Namespace HDF5.struct
         Public Sub New(sb As Superblock, address As Long)
             MyBase.New(address)
 
-            Dim reader As BinaryReader = sb.file.reader
+            Dim reader As BinaryReader = sb.GetReader(-1)
             Dim headerSize As Integer = 4 + 1 + 3 + sb.sizeOfLengths
 
             reader.offset = address

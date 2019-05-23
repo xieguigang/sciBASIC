@@ -89,7 +89,7 @@ Namespace HDF5.struct
         Dim reserved1 As Integer
         Dim reserved2 As Integer
 
-        Friend ReadOnly file As HDF5File
+        ReadOnly file As HDF5File
 
         Public ReadOnly Property versionOfSuperblock() As Integer
         Public ReadOnly Property versionOfFileFreeSpaceStorage() As Integer
@@ -140,6 +140,14 @@ Namespace HDF5.struct
                 Throw New IOException("Unknown superblock version " & Me.versionOfSuperblock)
             End If
         End Sub
+
+        Public Function GetReader(address As Long) As BinaryReader
+            If address >= 0 Then
+                file.reader.offset = address
+            End If
+
+            Return file.reader
+        End Function
 
         Private Sub readVersion1([in] As BinaryReader)
             _versionOfFileFreeSpaceStorage = [in].readByte()
