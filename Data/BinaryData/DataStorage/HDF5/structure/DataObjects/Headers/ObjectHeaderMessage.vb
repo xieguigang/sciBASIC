@@ -114,11 +114,13 @@ Namespace HDF5.struct
             End If
 
             If Me.headerMessageType Is ObjectHeaderMessageType.ObjectHeaderContinuation Then
-                Me.continueMessage = New ContinueMessage([in], sb, [in].offset)
+                Me.continueMessage = New ContinueMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Group Then
                 Me.groupMessage = New GroupMessage(sb, [in].offset)
                 ' do nothing
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.NIL Then
+            ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Bogus Then
+                Throw New InvalidDataException("Invalid HDF5 file!")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
                 Me.dataspaceMessage = New DataspaceMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupNew Then

@@ -127,6 +127,7 @@ Namespace HDF5.struct
         ''' </summary>
         Public Shared ReadOnly GroupNew As New ObjectHeaderMessageType("GroupNew", 2)
         Public Shared ReadOnly Datatype As New ObjectHeaderMessageType("Datatype", 3)
+
         ''' <summary>
         ''' The fill value message stores a single data value which is returned to the application 
         ''' when an uninitialized data element is read from a dataset. The fill value is interpreted 
@@ -166,7 +167,7 @@ Namespace HDF5.struct
         ''' become too large or are likely to change over time.
         ''' </summary>
         Public Shared ReadOnly ObjectHeaderContinuation As New ObjectHeaderMessageType("ObjectHeaderContinuation", 16)
-
+        Public Shared ReadOnly Bogus As New ObjectHeaderMessageType("Bogus", ObjectHeaderMessages.Bogus)
         ''' <summary>
         ''' Each "old style" group has a v1 B-tree and a local heap for storing symbol table entries, 
         ''' which are located with this message.
