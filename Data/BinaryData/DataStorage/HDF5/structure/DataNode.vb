@@ -53,6 +53,7 @@
 
 
 Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
@@ -60,8 +61,9 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 Namespace HDF5.struct
 
     Public Class DataNode : Inherits HDF5Ptr
+        Implements IMagicBlock
 
-        Public Shared ReadOnly SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
+        Public Const signature$ = "TREE"
 
         Dim layout As Layout
         Dim level As Integer
@@ -79,20 +81,19 @@ Namespace HDF5.struct
         Dim currentEntry As VBInteger
         ' track iteration; LOOK this seems fishy - why not an iterator ??
 
+        Public ReadOnly Property magic As String Implements IMagicBlock.magic
+
         Public Sub New(sb As Superblock, layout As Layout, address As Long)
             Call MyBase.New(address)
 
             Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.layout = layout
+            Me.magic = Encoding.ASCII.GetString([in].readBytes(4))
 
-            Dim signature As Byte() = [in].readBytes(4)
-
-            For i As Integer = 0 To 3
-                If signature(i) <> DataNode.SIGNATURE(i) Then
-                    Throw New IOException("signature is not valid")
-                End If
-            Next
+            If Not Me.VerifyMagicSignature(signature) Then
+                Throw New IOException("signature is not valid")
+            End If
 
             Dim type As Integer = [in].readByte()
 
