@@ -108,7 +108,7 @@ Namespace HDF5.struct
             Throw New NotImplementedException()
         End Sub
 
-        Friend Function decode(encodedBytes() As Byte) As Byte()
+        Public Function decode(encodedBytes() As Byte) As Byte()
             For Each filter In description
                 encodedBytes = filter.filter.decode(encodedBytes, filter.clientData)
             Next
