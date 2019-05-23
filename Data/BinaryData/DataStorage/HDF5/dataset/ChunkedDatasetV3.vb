@@ -9,6 +9,8 @@
 ' MIT License see 'LICENSE' file
 ' *****************************************************************************
 
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
+
 Namespace HDF5.dataset
 
     ''' <summary>
@@ -56,6 +58,10 @@ Namespace HDF5.dataset
         ''' </summary>
         ''' <returns></returns>
         Public Property byteSize As Integer
+
+        Public Overrides Function data(sb As Superblock) As Object
+            Throw New NotImplementedException()
+        End Function
 
     End Class
 

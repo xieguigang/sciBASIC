@@ -199,6 +199,11 @@ Namespace HDF5
                 container._dataType = dobj.GetMessage(ObjectHeaderMessages.Datatype)
                 container._dataSpace = dobj.GetMessage(ObjectHeaderMessages.Dataspace)
 
+                If Not container.dataset Is Nothing Then
+                    container.dataset.dataSpace = container.dataSpace
+                    container.dataset.dataType = container.dataType.reader
+                End If
+
                 While iter.hasNext(reader, sb)
                     chunk = iter.[next](reader, sb)
                     ' read/add a new data chunk block

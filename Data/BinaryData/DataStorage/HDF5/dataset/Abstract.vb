@@ -19,24 +19,26 @@ Namespace HDF5.dataset
         Public Property dataType As DataType
         Public Property dataSpace As DataspaceMessage
 
-        Public Overridable ReadOnly Property data() As Object
-            Get
-                'Dim type As DataType = dataType
-                'Dim bb As ByteBuffer = dataBuffer
-
-                'If TypeOf type Is VariableLength Then
-                '    Return VariableLengthDatasetReader.readDataset(DirectCast(type, VariableLength), bb, dimensions, hdfFc)
-                'Else
-                '    Return DatasetReader.readDataset(type, bb, dimensions)
-                'End If
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property scalar() As Boolean
             Get
                 Return dataSpace.dimensionLength.Length = 0
             End Get
         End Property
+
+        Public MustOverride Function data(sb As Superblock) As Object
+
+        'Dim type As DataType = dataType
+        'Dim bb As ByteBuffer = dataBuffer
+
+        'If TypeOf type Is VariableLength Then
+        '    Return VariableLengthDatasetReader.readDataset(DirectCast(type, VariableLength), bb, dimensions, hdfFc)
+        'Else
+        '    Return DatasetReader.readDataset(type, bb, dimensions)
+        'End If
+
+        Public Overrides Function ToString() As String
+            Return $"{Me.GetType.Name} {Scripting.ToString(dataSpace)} {Scripting.ToString(dataType)}"
+        End Function
     End Class
 
 End Namespace
