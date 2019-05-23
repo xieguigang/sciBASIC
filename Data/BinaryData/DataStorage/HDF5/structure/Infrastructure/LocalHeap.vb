@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::1bb76de8b4b49d96b6a7e993233e0f0a, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\LocalHeap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LocalHeap
-    ' 
-    '         Properties: addressOfDataSegment, data, dataSegmentSize, offsetToHeadOfFreeList, signature
-    '                     totalLocalHeapSize, validSignature, version
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: getString, ToString
-    ' 
-    '         Sub: printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LocalHeap
+' 
+'         Properties: addressOfDataSegment, data, dataSegmentSize, offsetToHeadOfFreeList, signature
+'                     totalLocalHeapSize, validSignature, version
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: getString, ToString
+' 
+'         Sub: printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,7 @@
 
 
 Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
@@ -70,28 +71,17 @@ Namespace HDF5.[Structure]
     ''' local heap.
     ''' </summary>
     Public Class LocalHeap : Inherits HDF5Ptr
+        Implements IMagicBlock
 
-        Shared ReadOnly LOCALHEAP_SIGNATURE As Byte() = New CharStream() From {"H"c, "E"c, "A"c, "P"c}
+        Public Const signature$ = "HEAP"
 
-        Public  ReadOnly Property signature() As Byte()
-
-        Public  ReadOnly Property validSignature() As Boolean
-            Get
-                For i As Integer = 0 To 3
-                    If Me.signature(i) <> LOCALHEAP_SIGNATURE(i) Then
-                        Return False
-                    End If
-                Next
-                Return True
-            End Get
-        End Property
-
-        Public  ReadOnly Property version() As Integer
-        Public  ReadOnly Property dataSegmentSize() As Long
-        Public  ReadOnly Property offsetToHeadOfFreeList() As Long
-        Public  ReadOnly Property addressOfDataSegment() As Long
-        Public  ReadOnly Property totalLocalHeapSize() As Integer
-        Public  ReadOnly Property data() As Byte()
+        Public ReadOnly Property version() As Integer
+        Public ReadOnly Property dataSegmentSize() As Long
+        Public ReadOnly Property offsetToHeadOfFreeList() As Long
+        Public ReadOnly Property addressOfDataSegment() As Long
+        Public ReadOnly Property totalLocalHeapSize() As Integer
+        Public ReadOnly Property data() As Byte()
+        Public ReadOnly Property magic As String Implements IMagicBlock.magic
 
         Dim reserved0 As Byte()
 
@@ -103,9 +93,9 @@ Namespace HDF5.[Structure]
             [in].offset = address
 
             ' signature
-            Me.signature = [in].readBytes(4)
+            Me.magic = Encoding.ASCII.GetString([in].readBytes(4))
 
-            If Not Me.validSignature Then
+            If Not Me.VerifyMagicSignature(signature) Then
                 Throw New IOException("signature is not valid")
             End If
 
@@ -130,13 +120,15 @@ Namespace HDF5.[Structure]
         End Sub
 
         Protected Friend Overrides Sub printValues(console As TextWriter)
+            Dim signature = Encoding.ASCII.GetBytes(magic)
+
             console.WriteLine("LocalHeap >>>")
             console.WriteLine("address : " & Me.m_address)
             console.WriteLine("signature : " &
-                              (Me.signature(0) And &HFF).ToString("x") &
-                              (Me.signature(1) And &HFF).ToString("x") &
-                              (Me.signature(2) And &HFF).ToString("x") &
-                              (Me.signature(3) And &HFF).ToString("x")
+                              (signature(0) And &HFF).ToString("x") &
+                              (signature(1) And &HFF).ToString("x") &
+                              (signature(2) And &HFF).ToString("x") &
+                              (signature(3) And &HFF).ToString("x")
                              )
 
             console.WriteLine("version : " & Me.version)
@@ -155,7 +147,7 @@ Namespace HDF5.[Structure]
             console.WriteLine("LocalHeap <<<")
         End Sub
 
-        Public  Function getString(offset As Integer) As String
+        Public Function getString(offset As Integer) As String
             Dim count As Integer = 0
 
             While Me.data(offset + count) <> 0

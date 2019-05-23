@@ -11,32 +11,27 @@
 
 Namespace HDF5.dataset
 
-    Public Class ContiguousDataset
-        Inherits DatasetBase
+    ''' <summary>
+    ''' The array is stored in one contiguous area of the file. This layout requires that the size 
+    ''' of the array be constant: data manipulations such as chunking, compression, checksums, or 
+    ''' encryption are not permitted. The message stores the total storage size of the array. 
+    ''' The offset of an element from the beginning of the storage area is computed as in a C array.
+    ''' </summary>
+    Public Class ContiguousDataset : Inherits Hdf5Dataset
 
-        Public Sub New(hdfFc As HdfFileChannel, address As Long, name As String, parent As Group, oh As ObjectHeader)
-            MyBase.New(hdfFc, address, name, parent, oh)
-        End Sub
+        ''' <summary>
+        ''' This is the address of the raw data in the file. The address may have the 
+        ''' ¡°undefined address¡± value, to indicate that storage has not yet been allocated 
+        ''' for this array.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property dataAddress As Long
+        ''' <summary>
+        ''' This field contains the size allocated to store the raw data, in bytes.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Long
 
-        Public Overrides ReadOnly Property dataBuffer() As ByteBuffer
-            Get
-                Dim contiguousDataLayoutMessage As ContiguousDataLayoutMessage = getHeaderMessage(GetType(ContiguousDataLayoutMessage))
-
-                ' Check for empty dataset
-                If contiguousDataLayoutMessage.address = UNDEFINED_ADDRESS Then
-                    Return Nothing
-                End If
-
-                Try
-                    Dim data As ByteBuffer = hdfFc.map(contiguousDataLayoutMessage.address, contiguousDataLayoutMessage.size)
-                    convertToCorrectEndiness(data)
-                    Return data
-                Catch e As Exception
-                    Throw New HdfException("Failed to map data buffer for dataset '" & path & "'", e)
-                End Try
-            End Get
-        End Property
 
     End Class
-
 End Namespace

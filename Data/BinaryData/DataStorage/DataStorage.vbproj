@@ -109,8 +109,7 @@
     <Compile Include="HDF5\dataset\ChunkedDatasetV3.vb" />
     <Compile Include="HDF5\dataset\CompactDataset.vb" />
     <Compile Include="HDF5\dataset\ContiguousDataset.vb" />
-    <Compile Include="HDF5\dataset\DatasetBase.vb" />
-    <Compile Include="HDF5\dataset\DatasetLoader.vb" />
+    <Compile Include="HDF5\dataset\Abstract.vb" />
     <Compile Include="HDF5\device\GlobalHeapId.vb" />
     <Compile Include="HDF5\device\DatasetReader.vb" />
     <Compile Include="HDF5\device\VariableLengthDatasetReader.vb" />

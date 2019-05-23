@@ -52,6 +52,7 @@
 ' 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.dataset
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
@@ -59,7 +60,7 @@ Namespace HDF5.[Structure]
 
     ''' <summary>
     ''' The Data Layout message describes how the elements of a multi-dimensional array 
-    ''' are stored in the HDF5 file.
+    ''' are stored in the HDF5 file. Required for datasets; may not be repeated.
     ''' </summary>
     Public Class LayoutMessage : Inherits Message
 
@@ -102,6 +103,8 @@ Namespace HDF5.[Structure]
         Public ReadOnly Property continuousSize As Long
         Public ReadOnly Property chunkSize As Integer()
         Public ReadOnly Property dataSize As Integer
+
+        Public ReadOnly Property dataset As Hdf5Dataset
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
