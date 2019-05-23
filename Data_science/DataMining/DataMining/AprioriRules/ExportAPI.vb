@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0615d150749ee89349389bbf8170c2ee, Data_science\DataMining\DataMining\AprioriRules\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::537e2ceb6350f84164a1fafc67df66bf, Data_science\DataMining\DataMining\AprioriRules\ExportAPI.vb"
 
     ' Author:
     ' 

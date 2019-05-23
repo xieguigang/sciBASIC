@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b824ef51ccc07a3840d5ea58a1c5a75, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::dd473e1b59ccdacc37c8e01d963931c3, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -279,6 +279,8 @@ Namespace Scripting
         ''' <param name="name">Case insensitive.(类型的名称简写)</param>
         ''' <param name="ObjectGeneric">是否出错的时候返回<see cref="Object"/>类型，默认返回Nothing</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [GetType](name As Value(Of String), Optional objectGeneric As Boolean = False) As Type
             Return Scripting.GetType(name.Value, objectGeneric)
         End Function
@@ -301,6 +303,7 @@ Namespace Scripting
         ''' <returns></returns>
         Public ReadOnly Property [String] As Type = GetType(String)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToString(Of T)() As [Default](Of IToString(Of T))
             Return New IToString(Of T)(AddressOf ToString)
         End Function
@@ -319,7 +322,12 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' <seealso cref="CStrSafe"/>, 出现错误的时候总是会返回空字符串的
+        ''' <seealso cref="CStrSafe"/>, 出现错误的时候总是会返回空字符串的，
+        ''' 
+        ''' 注意：
+        ''' 
+        ''' 1. 对于一些基础的数据类型例如<see cref="Integer"/>,<see cref="Long"/>等则是以json序列化来构建字符串值，
+        ''' 2. 对于<see cref="Byte"/>数组则是被编码为base64字符串
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>

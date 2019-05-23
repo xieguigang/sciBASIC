@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59ab5a81c5878669f31f132e0691a1ea, Data\BinaryData\DataStorage\HDF5\structure\SymbolicLinkScratchpadFormat.vb"
+﻿#Region "Microsoft.VisualBasic::d8e78648f69d02c91b9c2fe1bc93bce2, Data\BinaryData\DataStorage\HDF5\structure\SymbolicLinkScratchpadFormat.vb"
 
     ' Author:
     ' 
@@ -54,18 +54,18 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
 
     Public Class SymbolicLinkScratchpadFormat : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property offsetToLinkValue As Integer
-        Public Overridable ReadOnly Property totalSymbolicLinkScratchpadFormatSize As Integer
+        Public  ReadOnly Property offsetToLinkValue As Integer
+        Public  ReadOnly Property totalSymbolicLinkScratchpadFormatSize As Integer
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.offsetToLinkValue = [in].readInt()
             Me.totalSymbolicLinkScratchpadFormatSize = 4

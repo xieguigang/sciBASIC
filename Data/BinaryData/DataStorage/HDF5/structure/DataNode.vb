@@ -1,46 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::2df57868a2d773c2bbce74b6010fb741, Data\BinaryData\DataStorage\HDF5\structure\DataNode.vb"
+﻿#Region "Microsoft.VisualBasic::cfc89ff2924ceb848d7e8e64649a1d00, Data\BinaryData\DataStorage\HDF5\structure\DataNode.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataNode
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: [next], hasNext
-    ' 
-    '         Sub: first, printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataNode
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: [next], hasNext
+' 
+'         Sub: first, printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     Public Class DataNode : Inherits HDF5Ptr
 
@@ -79,10 +79,10 @@ Namespace HDF5.[Structure]
         Dim currentEntry As VBInteger
         ' track iteration; LOOK this seems fishy - why not an iterator ??
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, layout As Layout, address As Long)
+        Public Sub New(sb As Superblock, layout As Layout, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.layout = layout
 
@@ -95,6 +95,7 @@ Namespace HDF5.[Structure]
             Next
 
             Dim type As Integer = [in].readByte()
+
             Me.level = [in].readByte()
             Me.numberOfEntries = [in].readShort()
 
@@ -110,7 +111,7 @@ Namespace HDF5.[Structure]
 
                 For i As Integer = 0 To Me.numberOfEntries
                     isLast = (i = Me.numberOfEntries)
-                    dc = New DataChunk([in], sb, [in].offset, layout.numberOfDimensions, isLast)
+                    dc = New DataChunk(sb, [in].offset, layout.numberOfDimensions, isLast)
                     entries.Add(dc)
                 Next
             Else
@@ -139,7 +140,7 @@ Namespace HDF5.[Structure]
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <param name="sb"></param>
-        Public Overridable Sub first([in] As BinaryReader, sb As Superblock)
+        Public Sub first([in] As BinaryReader, sb As Superblock)
             If Me.level = 0 Then
 
                 ' note nentries-1 - assume dont skip the last one
@@ -155,7 +156,7 @@ Namespace HDF5.[Structure]
                 Me.currentNode = Nothing
                 Me.currentEntry = 0
                 While Me.currentEntry < Me.numberOfEntries
-                    Me.currentNode = New DataNode([in], sb, Me.layout, Me.childPointer(Me.currentEntry))
+                    Me.currentNode = New DataNode(sb, Me.layout, Me.childPointer(Me.currentEntry))
                     Me.currentNode.first([in], sb)
                     Exit While
                     Me.currentEntry += 1
@@ -164,7 +165,7 @@ Namespace HDF5.[Structure]
                 ' heres the case where its the last entry we want; the tiling.compare() above may fail
                 If Me.currentNode Is Nothing Then
                     Me.currentEntry = Me.numberOfEntries - 1
-                    Me.currentNode = New DataNode([in], sb, Me.layout, Me.childPointer(Me.currentEntry))
+                    Me.currentNode = New DataNode(sb, Me.layout, Me.childPointer(Me.currentEntry))
                     Me.currentNode.first([in], sb)
                 End If
             End If
@@ -179,7 +180,7 @@ Namespace HDF5.[Structure]
         ''' <remarks>
         ''' LOOK - wouldnt be a bad idea to terminate if possible instead of running through all subsequent entries
         ''' </remarks>
-        Public Overridable Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
+        Public Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
             If Me.level = 0 Then
                 Return (Me.currentEntry < Me.numberOfEntries)
             Else
@@ -191,7 +192,7 @@ Namespace HDF5.[Structure]
             End If
         End Function
 
-        Public Overridable Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
+        Public Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
             If Me.level = 0 Then
                 Return Me.entries(++Me.currentEntry)
             Else
@@ -200,7 +201,7 @@ Namespace HDF5.[Structure]
                 End If
 
                 Me.currentEntry += 1
-                Me.currentNode = New DataNode([in], sb, Me.layout, Me.childPointer(Me.currentEntry))
+                Me.currentNode = New DataNode(sb, Me.layout, Me.childPointer(Me.currentEntry))
                 Me.currentNode.first([in], sb)
 
                 Return Me.currentNode.[next]([in], sb)

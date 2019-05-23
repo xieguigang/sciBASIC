@@ -87,6 +87,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,7 +106,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HDF5\dataset\ChunkedDatasetV3.vb" />
+    <Compile Include="HDF5\dataset\CompactDataset.vb" />
+    <Compile Include="HDF5\dataset\ContiguousDataset.vb" />
+    <Compile Include="HDF5\dataset\Abstract.vb" />
     <Compile Include="HDF5\device\GlobalHeapId.vb" />
+    <Compile Include="HDF5\device\DatasetReader.vb" />
     <Compile Include="HDF5\device\VariableLengthDatasetReader.vb" />
     <Compile Include="HDF5\HDF5File.vb" />
     <Compile Include="HDF5\HDF5Ptr.vb" />
@@ -116,6 +122,7 @@
     <Compile Include="HDF5\FileDump.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\LayoutClass.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\BogusMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb" />
     <Compile Include="HDF5\structure\Infrastructure\BTree\BLinkTreeNode.vb" />
     <Compile Include="HDF5\structure\Infrastructure\BTree\BTreeEntry.vb" />
@@ -130,6 +137,9 @@
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Message.vb" />
     <Compile Include="HDF5\structure\Infrastructure\GlobalHeap.vb" />
+    <Compile Include="HDF5\types\StringData.vb" />
+    <Compile Include="HDF5\types\FloatingPoint.vb" />
+    <Compile Include="HDF5\types\FixedPoint.vb" />
     <Compile Include="HDF5\types\VariableLength.vb" />
     <Compile Include="HDF5\types\DataType.vb" />
     <Compile Include="HDF5\types\DataTypes.vb" />

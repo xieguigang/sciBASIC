@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af736bc41848536c889b92c6d697fd06, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
+﻿#Region "Microsoft.VisualBasic::e005a08a803bc69c9436b196538f0961, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
 
     ' Author:
     ' 

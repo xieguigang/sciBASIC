@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::873613120db211d7fe05e9af36dfb990, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
+﻿#Region "Microsoft.VisualBasic::f81645152251e8348030c93df583ae1f, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
 
     ' Author:
     ' 
@@ -56,13 +56,13 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure].BTree
+Namespace HDF5.struct.BTree
 
 
     Public Class BTreeEntry : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property targetAddress() As Long
-        Public Overridable ReadOnly Property key() As Long
+        Public  ReadOnly Property targetAddress() As Long
+        Public  ReadOnly Property key() As Long
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

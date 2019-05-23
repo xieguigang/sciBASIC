@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7719691df9190b6fe76aa6dcc74d8929, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::e972515e0546576ec9cabfa059af1f29, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
     ' Module KeyValuePairExtensions
     ' 
     '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
-    '               AsNamedVector, AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples
-    '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey
-    '               HaveData, IGrouping, IterateNameCollections, IterateNameValues, IteratesAll
-    '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection
-    '               ParserDictionary, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
-    '               (+2 Overloads) Subset, tableInternal, Takes, (+3 Overloads) ToDictionary, Tsv
-    '               Tuple, (+2 Overloads) Values, XMLModel
+    '               AsNamedVector, AsTable, ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData
+    '               (+2 Overloads) EnumerateTuples, EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault
+    '               GroupByKey, HaveData, IGrouping, IterateNameCollections, IterateNameValues
+    '               IteratesAll, Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues
+    '               (+3 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects
+    '               SetOfKeyValuePairs, (+2 Overloads) Subset, tableInternal, Takes, (+3 Overloads) ToDictionary
+    '               Tsv, Tuple, (+2 Overloads) Values, XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 

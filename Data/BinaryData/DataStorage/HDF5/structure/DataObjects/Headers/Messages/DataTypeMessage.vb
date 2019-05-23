@@ -1,48 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::e02be0d092ef3bf652a70ab87ad63fed, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::177b42cd0d815e63c0ce67350a811ddc, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class DataTypeMessage
-' 
-'         Properties: byteSize, isBigEndian, isLittleEndian, structureMembers, type
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: ToString
-' 
-'         Sub: printValues
-' 
-' 
-' /********************************************************************************/
+    '     Class DataTypeMessage
+    ' 
+    '         Properties: byteOrder, byteSize, reader, structureMembers, type
+    '                     version
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: printValues
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -60,7 +61,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports Microsoft.VisualBasic.Linq
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' The datatype message defines the datatype for each element of a dataset or 
@@ -84,6 +85,7 @@ Namespace HDF5.[Structure]
         Dim m_referenceType As Integer
         Dim m_isOK As Boolean
         Dim m_base As DataTypeMessage
+        Dim m_classBits As BitSet
 
         Dim encoding As Encoding
 
@@ -93,10 +95,12 @@ Namespace HDF5.[Structure]
         Public ReadOnly Property byteSize As Integer
         Public ReadOnly Property structureMembers As List(Of StructureMember)
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public ReadOnly Property reader As DataType
+
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             ' common base constructor
             Dim tandv As Byte = [in].readByte()
@@ -105,6 +109,7 @@ Namespace HDF5.[Structure]
             Me.version = ((tandv And &HF0) >> 4)
 
             Me.m_flags = [in].readBytes(3)
+            Me.m_classBits = BitSet.ValueOf(m_flags.Take(2).ToArray)
             Me.byteSize = [in].readInt()
             Me.byteOrder = If((Me.m_flags(0) And &H1) = 0, ByteOrder.LittleEndian, ByteOrder.BigEndian)
             Me.m_timeTypeByteSize = 4
@@ -117,6 +122,17 @@ Namespace HDF5.[Structure]
                 Dim bitPrecision As Short = [in].readShort()
 
                 Me.m_isOK = (bitOffset = 0) AndAlso (bitPrecision Mod 8 = 0)
+                Me.reader = New FixedPoint With {
+                    .bitOffset = bitOffset,
+                    .bitPrecision = bitPrecision,
+                    .[class] = DataTypes.DATATYPE_FIXED_POINT,
+                    .byteOrder = byteOrder,
+                    .signed = Not m_unsigned,
+                    .size = byteSize,
+                    .version = version,
+                    .lowPadding = m_classBits.Get(1),
+                    .highPadding = m_classBits.Get(2)
+                }
             ElseIf Me.type = DataTypes.DATATYPE_FLOATING_POINT Then
                 Dim bitOffset As Short = [in].readShort()
                 Dim bitPrecision As Short = [in].readShort()
@@ -125,6 +141,20 @@ Namespace HDF5.[Structure]
                 Dim manLocation As Byte = [in].readByte()
                 Dim manSize As Byte = [in].readByte()
                 Dim expBias As Integer = [in].readInt()
+
+                Me.reader = New FloatingPoint With {
+                    .version = version,
+                    .bitOffset = bitOffset,
+                    .bitPrecision = bitPrecision,
+                    .byteOrder = byteOrder,
+                    .[class] = DataTypes.DATATYPE_FLOATING_POINT,
+                    .exponentBias = expBias,
+                    .exponentLocation = expLocation,
+                    .exponentSize = expSize,
+                    .mantissaLocation = manLocation,
+                    .mantissaSize = manSize,
+                    .size = byteSize
+                }
             ElseIf Me.type = DataTypes.DATATYPE_TIME Then
                 Dim bitPrecision As Short = [in].readShort()
                 Me.m_timeTypeByteSize = bitPrecision \ 8
@@ -148,12 +178,13 @@ Namespace HDF5.[Structure]
             ElseIf Me.type = DataTypes.DATATYPE_ENUMS Then
                 ' throw new IOException( "data type enums is not implemented" );
 
-                Dim nmembers As Integer = ReadHelper.bytesToUnsignedInt(Me.m_flags(1), Me.m_flags(0))
-                Me.m_base = New DataTypeMessage([in], sb, [in].offset)
+                Dim nMembers As Integer = ReadHelper.bytesToUnsignedInt(Me.m_flags(1), Me.m_flags(0))
+                Me.m_base = New DataTypeMessage(sb, [in].offset)
                 ' base type
                 ' read the enums
-                Dim enumName As [String]() = New [String](nmembers - 1) {}
-                For i As Integer = 0 To nmembers - 1
+                Dim enumName As String() = New String(nMembers - 1) {}
+
+                For i As Integer = 0 To nMembers - 1
                     If Me.version < 3 Then
                         enumName(i) = ReadHelper.readString8([in])
                     Else
@@ -168,8 +199,8 @@ Namespace HDF5.[Structure]
                     [in].SetByteOrder(ByteOrder.BigEndian)
                 End If
 
-                Dim enumValue As Integer() = New Integer(nmembers - 1) {}
-                For i As Integer = 0 To nmembers - 1
+                Dim enumValue As Integer() = New Integer(nMembers - 1) {}
+                For i As Integer = 0 To nMembers - 1
                     enumValue(i) = CInt(ReadHelper.readVariableSizeUnsigned([in], Me.m_base.byteSize))
                 Next
                 ' assume size is 1, 2, or 4
@@ -191,6 +222,14 @@ Namespace HDF5.[Structure]
                 Else
                     Throw New NotImplementedException
                 End If
+
+                Me.reader = New VariableLength With {
+                    .[class] = Me.type,
+                    .encoding = encoding,
+                    .version = version,
+                    .paddingType = paddingType,
+                    .size = byteSize
+                }
 
             ElseIf Me.type = DataTypes.DATATYPE_ARRAY Then
                 Throw New Exception("data type array is not implemented")

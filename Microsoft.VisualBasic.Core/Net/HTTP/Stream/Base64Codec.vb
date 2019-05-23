@@ -112,6 +112,18 @@ Namespace Net.Http
         End Function
 
         ''' <summary>
+        ''' 将base64编码的字符串还原为原始的数据流
+        ''' </summary>
+        ''' <param name="base64"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Base64RawBytes(base64 As String) As Byte()
+            Return Convert.FromBase64String(base64)
+        End Function
+
+        ''' <summary>
         ''' Function to Get Image from Base64 Encoded String
         ''' </summary>
         ''' <param name="base64String"></param>

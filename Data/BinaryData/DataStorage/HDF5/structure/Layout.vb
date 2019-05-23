@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f84f84516a50ece2254a62fc065fd0b, Data\BinaryData\DataStorage\HDF5\structure\Layout.vb"
+﻿#Region "Microsoft.VisualBasic::bc8e3659a5f9bf77f5e944c6ddcefb03, Data\BinaryData\DataStorage\HDF5\structure\Layout.vb"
 
 ' Author:
 ' 
@@ -33,8 +33,8 @@
 
 '     Class Layout
 ' 
-'         Properties: chunkSize, dataAddress, dimensionLength, fields, IsEmpty
-'                     maxDimensionLength, numberOfDimensions
+'         Properties: chunkSize, dataAddress, dimensionLength, fields, isCompoundStruct
+'                     isEmpty, maxDimensionLength, numberOfDimensions
 ' 
 '         Function: ToString
 ' 
@@ -54,10 +54,11 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Data.IO.HDF5.dataset
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports Microsoft.VisualBasic.Language
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' 
@@ -74,6 +75,7 @@ Namespace HDF5.[Structure]
         Public Property numberOfDimensions As Integer
         Public Property dimensionLength As Integer()
         Public Property maxDimensionLength As Integer()
+        Public Property dataset As Hdf5Dataset
 
         ''' <summary>
         ''' 如果这个列表不是空的，则说明目标对象是<see cref="DataTypes.DATATYPE_COMPOUND"/>类型的结构体

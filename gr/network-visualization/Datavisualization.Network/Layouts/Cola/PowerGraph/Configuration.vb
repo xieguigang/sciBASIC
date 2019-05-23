@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d57a7fff49161a410c4b457bf429fef, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Configuration.vb"
+﻿#Region "Microsoft.VisualBasic::67b593d8bf21e48c1149bb49c4c39b3e, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Configuration.vb"
 
     ' Author:
     ' 

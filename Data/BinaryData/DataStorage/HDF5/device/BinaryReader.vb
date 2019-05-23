@@ -1,50 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::a64d536beddb85008499d1428c4cee65, Data\BinaryData\DataStorage\HDF5\io\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::b3df638a362384f612f0bd9381cd5ea8, Data\BinaryData\DataStorage\HDF5\device\BinaryReader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class BinaryReader
-    ' 
-    '         Properties: ByteOrder, maxOffset, offset, size
-    ' 
-    '         Function: (+2 Overloads) readASCIIString, readBytes, readInt, readLong, readShort
-    '                   ToString
-    ' 
-    '         Sub: clearMaxOffset, (+2 Overloads) Dispose, SetByteOrder, skipBytes
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class BinaryReader
+' 
+'         Properties: ByteOrder, deltaSize, maxOffset, offset, size
+' 
+'         Function: (+2 Overloads) readASCIIString, readBytes, readInt, readLong, readShort
+'                   ToString
+' 
+'         Sub: clearMaxOffset, (+2 Overloads) Dispose, Mark, Reset, SetByteOrder
+'              skipBytes
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 
 Namespace HDF5.device
@@ -57,7 +59,7 @@ Namespace HDF5.device
 
         Dim markedPos As Long
 
-        Public Overridable ReadOnly Property maxOffset As Long
+        Public  ReadOnly Property maxOffset As Long
             Get
                 Return Me.m_maxOffset
             End Get
@@ -69,7 +71,7 @@ Namespace HDF5.device
         ''' The file size in bytes
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property size As Long
+        Public  ReadOnly Property size As Long
             Get
                 Return filesize
             End Get
@@ -95,7 +97,7 @@ Namespace HDF5.device
             End Get
         End Property
 
-        Public Overridable Sub clearMaxOffset()
+        Public  Sub clearMaxOffset()
             Me.m_maxOffset = 0
         End Sub
 
@@ -123,7 +125,7 @@ Namespace HDF5.device
             Return $"[{offset}/{filesize}] {ByteOrder.ToString}"
         End Function
 
-        Public Overridable Function readBytes(n As Integer) As Byte()
+        Public  Function readBytes(n As Integer) As Byte()
             If n < 0 Then
                 Throw New ArgumentException("n should be greater than 0")
             End If
@@ -135,7 +137,7 @@ Namespace HDF5.device
             Return buf
         End Function
 
-        Public Overridable Sub skipBytes(n As Integer)
+        Public  Sub skipBytes(n As Integer)
             If n < 0 Then
                 Throw New ArgumentException("n should be greater than 0")
             End If
@@ -149,11 +151,16 @@ Namespace HDF5.device
         ''' Read 4 bytes 32 bit integer
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Function readInt() As Integer
-            Dim data As Byte() = readBytes(4)
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public  Function readInt() As Integer
+            Return ToInteger(readBytes(4), m_littleEndian)
+        End Function
+
+        Public Shared Function ToInteger(data As Byte(), littleEndian As Boolean) As Integer
             Dim temp As Integer = 0
 
-            If Me.m_littleEndian Then
+            If littleEndian Then
                 temp = (data(0) And &HFF)
                 temp = temp Or (data(1) And &HFF) << 8
                 temp = temp Or (data(2) And &HFF) << 16
@@ -164,14 +171,19 @@ Namespace HDF5.device
                 temp = temp Or (data(2) And &HFF) << 8
                 temp = temp Or (data(3) And &HFF)
             End If
+
             Return temp
         End Function
 
-        Public Overridable Function readLong() As Long
-            Dim data As Byte() = readBytes(8)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public  Function readLong() As Long
+            Return ToLong(readBytes(8), m_littleEndian)
+        End Function
+
+        Public Shared Function ToLong(data As Byte(), littleEndian As Boolean) As Long
             Dim temp As Long = 0
 
-            If Me.m_littleEndian Then
+            If littleEndian Then
                 temp = (data(0) And &HFF)
                 temp = temp Or (data(1) And &HFF) << 8
                 temp = temp Or (data(2) And &HFF) << 16
@@ -190,6 +202,7 @@ Namespace HDF5.device
                 temp = temp Or (data(6) And &HFF) << 8
                 temp = temp Or (data(7) And &HFF)
             End If
+
             Return temp
         End Function
 
@@ -197,21 +210,27 @@ Namespace HDF5.device
         ''' read 2 byte integer
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Function readShort() As Short
-            Dim data As Byte() = readBytes(2)
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public  Function readShort() As Short
+            Return ToShort(readBytes(2), m_littleEndian)
+        End Function
+
+        Public Shared Function ToShort(data As Byte(), littleEndian As Boolean) As Short
             Dim temp As Short = 0
 
-            If Me.m_littleEndian Then
+            If littleEndian Then
                 temp = CShort(data(0) And &HFF)
                 temp = temp Or CShort((data(1) And &HFF) << 8)
             Else
                 temp = CShort((data(0) And &HFF) << 8)
                 temp = temp Or CShort(data(1) And &HFF)
             End If
+
             Return temp
         End Function
 
-        Public Overridable Function readASCIIString() As String
+        Public  Function readASCIIString() As String
             Dim sb As New StringBuilder()
 
             For i As Long = Me.offset To Me.size - 1
@@ -227,7 +246,7 @@ Namespace HDF5.device
             Return sb.ToString()
         End Function
 
-        Public Overridable Function readASCIIString(length As Integer) As String
+        Public  Function readASCIIString(length As Integer) As String
             Dim sb As New StringBuilder()
             Dim nCount As Integer = 0
 
@@ -252,7 +271,7 @@ Namespace HDF5.device
         Private disposedValue As Boolean ' 要检测冗余调用
 
         ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
+        Protected  Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)。

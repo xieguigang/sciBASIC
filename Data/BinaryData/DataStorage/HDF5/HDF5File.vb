@@ -1,6 +1,54 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::30edf807b69571f01a2a5c2d2b676379, Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class HDF5File
+    ' 
+    '         Properties: attributes, fileName, superblock
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: attributeTable, GetCacheObject, ToString
+    ' 
+    '         Sub: addCache, (+2 Overloads) Dispose, parseHeader
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
-Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5
@@ -15,12 +63,21 @@ Namespace HDF5
         ''' <returns></returns>
         Public ReadOnly Property fileName As String
 
+        ''' <summary>
+        ''' The superblock may begin at certain predefined offsets within the HDF5 file, allowing a 
+        ''' block of unspecified content for users to place additional information at the beginning 
+        ''' (and end) of the HDF5 file without limiting the HDF5 Library's ability to manage the 
+        ''' objects within the file itself. This feature was designed to accommodate wrapping an 
+        ''' HDF5 file in another file format or adding descriptive information to an HDF5 file without 
+        ''' requiring the modification of the actual file's information. The superblock is located 
+        ''' by searching for the HDF5 format signature at byte offset 0, byte offset 512, and at 
+        ''' successive locations in the file, each a multiple of two of the previous location; 
+        ''' in other words, at these byte offsets: 0, 512, 1024, 2048, and so on.
+        '''
+        ''' The superblock Is composed Of the format signature, followed by a superblock version number 
+        ''' And information that Is specific To Each version Of the superblock.
+        ''' </summary>
         Public ReadOnly Property superblock As Superblock
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New Superblock(Me, Scan0)
-            End Get
-        End Property
 
         ''' <summary>
         ''' 最顶端的数据对象，可能是一个数据块也可能是一个文件夹
@@ -36,7 +93,10 @@ Namespace HDF5
         ''' <summary>
         ''' 根节点名称或者全路径来获取一个数据集对象
         ''' </summary>
-        ''' <param name="symbolName"></param>
+        ''' <param name="symbolName">
+        ''' + 如果只提供一个名称的话，则只会在根节点下面进行查找
+        ''' + 如果提供的是一个全路径的话，则会依据这个路径依次进行查找操作
+        ''' </param>
         ''' <returns></returns>
         Default Public ReadOnly Property GetObject(symbolName As String) As HDF5Reader
             Get
@@ -65,6 +125,7 @@ Namespace HDF5
         Sub New(fileName As String)
             Me.reader = New BinaryFileReader(fileName)
             Me.fileName = fileName.GetFullPath
+            Me.superblock = New Superblock(Me, address:=Scan0)
 
             Call parseHeader()
         End Sub
@@ -90,8 +151,8 @@ Namespace HDF5
         Private Sub parseHeader()
             Dim sb As Superblock = Me.superblock
             Dim rootSymbolTableEntry As SymbolTableEntry = sb.rootGroupSymbolTableEntry
-            Dim objectFacade As New DataObjectFacade(Me.reader, sb, "root", rootSymbolTableEntry.objectHeaderAddress)
-            Dim rootGroup As New Group(Me.reader, sb, objectFacade)
+            Dim objectFacade As New DataObjectFacade(sb, "root", rootSymbolTableEntry.objectHeaderAddress)
+            Dim rootGroup As New Group(sb, objectFacade)
             Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 
             _attributes = attributeTable(rootGroup.attributes, Me)
@@ -118,7 +179,7 @@ Namespace HDF5
         Private disposedValue As Boolean ' 要检测冗余调用
 
         ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
+        Protected  Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)。

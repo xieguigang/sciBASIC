@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f430dc8e3e33bd60043afa933912e9f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\WeightedChar.vb"
+﻿#Region "Microsoft.VisualBasic::f0b3709a47a69b50c0b2581b3f1df83d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\WeightedChar.vb"
 
     ' Author:
     ' 

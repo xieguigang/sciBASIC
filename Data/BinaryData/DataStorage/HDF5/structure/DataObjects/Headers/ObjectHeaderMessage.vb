@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a07f1e9bb00a810e6aad55eeecbb93d3, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
+﻿#Region "Microsoft.VisualBasic::7536bc1c81db25b3a63c96b8504a2ba6, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
 
     ' Author:
     ' 
@@ -59,22 +59,22 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
 
     Public Class ObjectHeaderMessage : Inherits HDF5Ptr
 
-        Public ReadOnly Property headerMessageTypeNo() As Integer
+        Public ReadOnly Property headerMessageType As ObjectHeaderMessageType
+        Public ReadOnly Property sizeOfHeaderMessageData As Integer
+        Public ReadOnly Property headerMessageFlags As Byte
+        Public ReadOnly Property headerLength As Integer
+        Public ReadOnly Property headerMessageData As Byte()
+
+        Public ReadOnly Property headerMessageTypeNumber As ObjectHeaderMessages
             Get
-                Return headerMessageType.num
+                Return headerMessageType.type
             End Get
         End Property
-
-        Public ReadOnly Property headerMessageType() As ObjectHeaderMessageType
-        Public ReadOnly Property sizeOfHeaderMessageData() As Integer
-        Public ReadOnly Property headerMessageFlags() As Byte
-        Public ReadOnly Property headerLength() As Integer
-        Public ReadOnly Property headerMessageData() As Byte()
 
 #Region "message data"
 
@@ -114,17 +114,19 @@ Namespace HDF5.[Structure]
             End If
 
             If Me.headerMessageType Is ObjectHeaderMessageType.ObjectHeaderContinuation Then
-                Me.continueMessage = New ContinueMessage([in], sb, [in].offset)
+                Me.continueMessage = New ContinueMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Group Then
-                Me.groupMessage = New GroupMessage([in], sb, [in].offset)
+                Me.groupMessage = New GroupMessage(sb, [in].offset)
                 ' do nothing
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.NIL Then
+            ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Bogus Then
+                Throw New InvalidDataException("Invalid HDF5 file!")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
                 Me.dataspaceMessage = New DataspaceMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupNew Then
                 Throw New IOException("Group New not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Datatype Then
-                Me.dataTypeMessage = New DataTypeMessage([in], sb, [in].offset)
+                Me.dataTypeMessage = New DataTypeMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValueOld Then
                 Me.fillValueOldMessage = New FillValueOldMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValue Then
@@ -132,7 +134,7 @@ Namespace HDF5.[Structure]
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Link Then
                 Me.linkMessage = New LinkMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Layout Then
-                Me.layoutMessage = New LayoutMessage([in], sb, [in].offset)
+                Me.layoutMessage = New LayoutMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
                 Throw New IOException("Group Info not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FilterPipeline Then

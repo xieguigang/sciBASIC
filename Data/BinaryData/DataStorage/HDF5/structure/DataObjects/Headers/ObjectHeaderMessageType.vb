@@ -57,7 +57,7 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     Public Enum ObjectHeaderMessages As Integer
         NIL = &H0
@@ -106,7 +106,7 @@ Namespace HDF5.[Structure]
 
         Const MAX_MESSAGE As Integer = 23
 
-        Shared ReadOnly hash As IDictionary(Of String, ObjectHeaderMessageType) = New Dictionary(Of String, ObjectHeaderMessageType)(10)
+        Shared ReadOnly hash As New Dictionary(Of String, ObjectHeaderMessageType)(10)
         Shared ReadOnly mess As ObjectHeaderMessageType() = New ObjectHeaderMessageType(MAX_MESSAGE - 1) {}
 
         ''' <summary>
@@ -127,6 +127,7 @@ Namespace HDF5.[Structure]
         ''' </summary>
         Public Shared ReadOnly GroupNew As New ObjectHeaderMessageType("GroupNew", 2)
         Public Shared ReadOnly Datatype As New ObjectHeaderMessageType("Datatype", 3)
+
         ''' <summary>
         ''' The fill value message stores a single data value which is returned to the application 
         ''' when an uninitialized data element is read from a dataset. The fill value is interpreted 
@@ -166,7 +167,7 @@ Namespace HDF5.[Structure]
         ''' become too large or are likely to change over time.
         ''' </summary>
         Public Shared ReadOnly ObjectHeaderContinuation As New ObjectHeaderMessageType("ObjectHeaderContinuation", 16)
-
+        Public Shared ReadOnly Bogus As New ObjectHeaderMessageType("Bogus", ObjectHeaderMessages.Bogus)
         ''' <summary>
         ''' Each "old style" group has a v1 B-tree and a local heap for storing symbol table entries, 
         ''' which are located with this message.
@@ -182,7 +183,13 @@ Namespace HDF5.[Structure]
         ''' Message number.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property num() As Integer
+        Public ReadOnly Property num As Integer
+
+        Public ReadOnly Property type As ObjectHeaderMessages
+            Get
+                Return CType(num, ObjectHeaderMessages)
+            End Get
+        End Property
 
         Private Sub New(name As String, num As Integer)
             Me.name = name

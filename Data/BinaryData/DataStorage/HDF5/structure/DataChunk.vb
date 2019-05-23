@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e52e8e11ed01a3351b74e47c641c3365, Data\BinaryData\DataStorage\HDF5\structure\DataChunk.vb"
+﻿#Region "Microsoft.VisualBasic::b737a9c2848031c658f1c765272c5be9, Data\BinaryData\DataStorage\HDF5\structure\DataChunk.vb"
 
     ' Author:
     ' 
@@ -56,22 +56,22 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' 所存储的数据块
     ''' </summary>
     Public Class DataChunk : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property size() As Integer
-        Public Overridable ReadOnly Property filterMask() As Integer
-        Public Overridable ReadOnly Property offsets() As Integer()
-        Public Overridable ReadOnly Property filePosition() As Long
+        Public ReadOnly Property size As Integer
+        Public ReadOnly Property filterMask As Integer
+        Public ReadOnly Property offsets As Integer()
+        Public ReadOnly Property filePosition As Long
 
-        Friend Sub New([in] As BinaryReader, sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
+        Friend Sub New(sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.size = [in].readInt()
             Me.filterMask = [in].readInt()

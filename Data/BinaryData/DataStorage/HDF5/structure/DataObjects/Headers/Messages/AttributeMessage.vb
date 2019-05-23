@@ -1,48 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::a154d42085552aad0a2017a146b6e7fe, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::5ad6433bd708ca8af10af25c619d8520, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class AttributeMessage
-' 
-'         Properties: dataPos, dataSpace, dataType, name, version
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: ToString
-' 
-'         Sub: printValues
-' 
-' 
-' /********************************************************************************/
+    '     Class AttributeMessage
+    ' 
+    '         Properties: dataPos, dataSpace, dataType, name, reader
+    '                     version
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ReadAttrValue, ToString
+    ' 
+    '         Sub: printValues
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -59,21 +60,21 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     Public Class AttributeMessage : Inherits Message
 
-        Public Overridable ReadOnly Property version As Integer
-        Public Overridable ReadOnly Property name As String
-        Public Overridable ReadOnly Property dataPos As Long
-        Public Overridable ReadOnly Property dataType As DataTypeMessage
-        Public Overridable ReadOnly Property dataSpace As DataspaceMessage
+        Public  ReadOnly Property version As Integer
+        Public  ReadOnly Property name As String
+        Public  ReadOnly Property dataPos As Long
+        Public  ReadOnly Property dataType As DataTypeMessage
+        Public  ReadOnly Property dataSpace As DataspaceMessage
 
-        ''' <summary>
-        ''' A helper class for read attribute data.
-        ''' </summary>
-        ''' <returns></returns>
         Public ReadOnly Property reader As DataType
+            Get
+                Return dataType.reader
+            End Get
+        End Property
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
@@ -126,15 +127,7 @@ Namespace HDF5.[Structure]
                 'mdt = getSharedDataObject(MessageType.Datatype).mdt;
                 Throw New IOException("shared data object is not implemented")
             Else
-                Call [in].Mark()
-
-                Me.dataType = New DataTypeMessage([in], sb, [in].offset)
-
-                Call [in].Reset()
-
-                If Me.dataType.type = DataTypes.DATATYPE_VARIABLE_LENGTH Then
-                    Me.reader = New VariableLength([in])
-                End If
+                Me.dataType = New DataTypeMessage(sb, [in].offset)
 
                 If Me.version = 1 Then
                     typeSize += CShort(ReadHelper.padding(typeSize, 8))
@@ -163,13 +156,16 @@ Namespace HDF5.[Structure]
             Dim dims = msg.dataSpace.dimensionLength
             Dim dataType As DataTypes = type.type
 
-            sb.file.reader.offset = msg.dataPos
+            Call sb.FileReader(msg.dataPos)
 
-            If dataType = DataTypes.DATATYPE_VARIABLE_LENGTH Then
-                Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb)
-            Else
-                Throw New NotImplementedException
-            End If
+            Select Case dataType
+                Case DataTypes.DATATYPE_VARIABLE_LENGTH
+                    Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb)
+                Case DataTypes.DATATYPE_FIXED_POINT, DataTypes.DATATYPE_FLOATING_POINT
+                    Return DatasetReader.readDataset(msg.reader, msg.dataPos, msg.dataSpace, sb, dims)
+                Case Else
+                    Throw New NotImplementedException(dataType.ToString)
+            End Select
         End Function
 
         Public Overrides Function ToString() As String

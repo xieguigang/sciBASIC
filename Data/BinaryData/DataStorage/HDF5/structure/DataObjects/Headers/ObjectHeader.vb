@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d157fe8a229c2cb5db362c8a3764a29, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeader.vb"
+﻿#Region "Microsoft.VisualBasic::a6b4e51d81687947ed38a6757bc04fe9, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeader.vb"
 
     ' Author:
     ' 
@@ -57,20 +57,20 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     Public Class ObjectHeader : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property version As Integer
-        Public Overridable ReadOnly Property totalNumberOfHeaderMessages As Integer
-        Public Overridable ReadOnly Property objectReferenceCount As Integer
-        Public Overridable ReadOnly Property objectHeaderSize As Integer
-        Public Overridable ReadOnly Property headerMessages As New List(Of ObjectHeaderMessage)
+        Public  ReadOnly Property version As Integer
+        Public  ReadOnly Property totalNumberOfHeaderMessages As Integer
+        Public  ReadOnly Property objectReferenceCount As Integer
+        Public  ReadOnly Property objectHeaderSize As Integer
+        Public  ReadOnly Property headerMessages As New List(Of ObjectHeaderMessage)
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.version = [in].readByte()
 
@@ -87,8 +87,8 @@ Namespace HDF5.[Structure]
                 readVersion1([in], sb, [in].offset, Me.totalNumberOfHeaderMessages, Long.MaxValue)
             Else
                 readVersion2([in], sb, [in].offset)
-			End If
-		End Sub
+            End If
+        End Sub
 
         Private Function readVersion1([in] As BinaryReader, sb As Superblock, address As Long, readMessages As Integer, maxBytes As Long) As Integer
             Dim count As Integer = 0

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43fe1c486a8114753c830cac45819663, Data\BinaryData\DataStorage\HDF5\structure\ObjectHeaderScratchpadFormat.vb"
+﻿#Region "Microsoft.VisualBasic::9e0329cb0c0287a87da13c252da22f74, Data\BinaryData\DataStorage\HDF5\structure\ObjectHeaderScratchpadFormat.vb"
 
     ' Author:
     ' 
@@ -58,18 +58,18 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     Public Class ObjectHeaderScratchpadFormat : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property addressOfBTree As Long
-        Public Overridable ReadOnly Property addressOfNameHeap As Long
-        Public Overridable ReadOnly Property totalObjectHeaderScratchpadFormatSize As Integer
+        Public  ReadOnly Property addressOfBTree As Long
+        Public  ReadOnly Property addressOfNameHeap As Long
+        Public  ReadOnly Property totalObjectHeaderScratchpadFormatSize As Integer
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.addressOfBTree = ReadHelper.readO([in], sb)
             Me.addressOfNameHeap = ReadHelper.readO([in], sb)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c40b7bd6128b60bcb2b20b11972fbcac, Data\BinaryData\DataStorage\HDF5\structure\StructureMember.vb"
+﻿#Region "Microsoft.VisualBasic::97077655913d2bbdec8013bf9b8916f9, Data\BinaryData\DataStorage\HDF5\structure\StructureMember.vb"
 
     ' Author:
     ' 
@@ -58,14 +58,14 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     Public Class StructureMember : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property name As String
-        Public Overridable ReadOnly Property offset As Integer
-        Public Overridable ReadOnly Property dims As Integer
-        Public Overridable ReadOnly Property message As DataTypeMessage
+        Public  ReadOnly Property name As String
+        Public  ReadOnly Property offset As Integer
+        Public  ReadOnly Property dims As Integer
+        Public  ReadOnly Property message As DataTypeMessage
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long, version As Integer, byteSize As Integer)
             Call MyBase.New(address)
@@ -89,7 +89,7 @@ Namespace HDF5.[Structure]
                 [in].skipBytes(24)
             End If
 
-            Me.message = New DataTypeMessage([in], sb, [in].offset)
+            Me.message = New DataTypeMessage(sb, [in].offset)
         End Sub
 
         Public Overrides Function ToString() As String

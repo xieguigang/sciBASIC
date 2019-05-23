@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41a3160443828869370ccb99bbff1b09, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
+﻿#Region "Microsoft.VisualBasic::c3e219b5478f49caa7eec7e031c5ebc6, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
 
     ' Author:
     ' 
@@ -37,22 +37,6 @@
     '                 Targets, ToolsVersion
     ' 
     '     Function: GetProfile, (+2 Overloads) Save, ToString
-    ' 
-    ' Class Target
-    ' 
-    '     Properties: Name
-    ' 
-    ' Class Import
-    ' 
-    '     Properties: Condition, Label, Project
-    ' 
-    '     Function: ToString
-    ' 
-    ' Class ConditionValue
-    ' 
-    '     Properties: Condition, value
-    ' 
-    '     Function: ToString
     ' 
     ' /********************************************************************************/
 

@@ -1,7 +1,59 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::c43f46d835a7cc837fdd1ff3b812a054, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\GlobalHeap.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class GlobalHeap
+    ' 
+    '         Properties: collectionSize, objects, signature, version
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: printValues
+    ' 
+    '     Class GlobalHeapObject
+    ' 
+    '         Properties: data, index, objectSize, references
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' Each HDF5 file has a global heap which stores various types of information 
@@ -72,9 +124,10 @@ Namespace HDF5.[Structure]
         Public Sub New(sb As Superblock, address As Long)
             MyBase.New(address)
 
-            Dim reader As BinaryReader = sb.file.reader
+            Dim reader As BinaryReader = sb.FileReader(-1)
             Dim headerSize As Integer = 4 + 1 + 3 + sb.sizeOfLengths
 
+            reader.offset = address
             reader.Mark()
 
             signature = reader.readBytes(4)
@@ -134,7 +187,7 @@ Namespace HDF5.[Structure]
         Public ReadOnly Property data As Byte()
 
         Sub New(gh As GlobalHeap, sb As Superblock)
-            Dim reader = sb.file.reader
+            Dim reader As BinaryReader = sb.FileReader(-1)
 
             Call reader.Mark()
 
@@ -148,5 +201,9 @@ Namespace HDF5.[Structure]
             data = reader.readBytes(objectSize)
             device.seekBufferToNextMultipleOfEight(reader)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"#{index} > ({objectSize} bytes) {data.Select(Function(x) x.ToString("X2")).JoinBy("")}"
+        End Function
     End Class
 End Namespace

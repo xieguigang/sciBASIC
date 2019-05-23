@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5339d805de5b6c894834cd6d8d99b07b, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::196f606a0eab968477bea059d0ec3ace, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 

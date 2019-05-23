@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3adcf3e044f4b2dd70d64b802c36192d, Data\BinaryData\DataStorage\HDF5\io\ReadHelper.vb"
+﻿#Region "Microsoft.VisualBasic::166949772ff11f45b8f6a8f5afb285aa, Data\BinaryData\DataStorage\HDF5\device\ReadHelper.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,8 @@
     '                   readString8, readVariableSizeFactor, readVariableSizeMax, readVariableSizeN, readVariableSizeUnsigned
     '                   unsignedByteToShort, unsignedIntToLong, unsignedShortToInt
     ' 
+    '         Sub: seekBufferToNextMultipleOfEight
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -52,7 +54,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 
 Namespace HDF5.device
 

@@ -1,28 +1,63 @@
-﻿Imports System.Text
-Imports Microsoft.VisualBasic.Data.IO.HDF5.device
+﻿#Region "Microsoft.VisualBasic::5701861673dcf520ac3db7fe80632de0, Data\BinaryData\DataStorage\HDF5\types\VariableLength.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class VariableLength
+    ' 
+    '         Properties: encoding, paddingType, type, TypeInfo
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 
 Namespace HDF5.type
 
     Public Class VariableLength : Inherits DataType
 
-        Public ReadOnly Property type As Integer
-        Public ReadOnly Property paddingType As Integer
-        Public ReadOnly Property encoding As Encoding
+        Public Property type As Integer
+        Public Property paddingType As Integer
+        Public Property encoding As Encoding
 
-        Sub New([in] As BinaryReader)
-            Call MyBase.New([in])
+        Public Overrides ReadOnly Property TypeInfo As System.Type
+            Get
+                Return GetType(String)
+            End Get
+        End Property
 
-            type = classBits.ToInteger(0, 4)
-            paddingType = classBits.ToInteger(4, 4)
-
-            Select Case classBits.ToInteger(8, 4)
-                Case 0
-                    encoding = Encoding.ASCII
-                Case 1
-                    encoding = Encoding.UTF8
-                Case Else
-                    Throw New InvalidProgramException
-            End Select
-        End Sub
+        Public Overrides Function ToString() As String
+            Return $"({encoding.ToString} {Me.GetType.Name}) {TypeInfo.FullName}"
+        End Function
     End Class
 End Namespace

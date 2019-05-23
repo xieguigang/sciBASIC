@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed9d5eb1f4dff50907e0ae942af74f95, Data\BinaryData\DataStorage\HDF5\structure\DataChunkIterator.vb"
+﻿#Region "Microsoft.VisualBasic::4ff0825560eac68bff9a138cf0b7fca5, Data\BinaryData\DataStorage\HDF5\structure\DataChunkIterator.vb"
 
     ' Author:
     ' 
@@ -56,28 +56,28 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     Public Class DataChunkIterator : Inherits HDF5Ptr
 
         Dim root As DataNode
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, layout As Layout)
+        Public Sub New(sb As Superblock, layout As Layout)
             Call MyBase.New(layout.dataAddress)
 
-            [in].offset = Me.m_address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
-            Me.root = New DataNode([in], sb, layout, Me.m_address)
+            Me.root = New DataNode(sb, layout, Me.m_address)
             Me.root.first([in], sb)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
+        Public  Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
             Return Me.root.hasNext([in], sb)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
+        Public  Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
             Return Me.root.[next]([in], sb)
         End Function
 

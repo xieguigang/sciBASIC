@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::794eda8a3cf935e1eecee42b0dfff63d, Microsoft.VisualBasic.Core\Scripting\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::04b70b48eab1dafca8861e45bd5803df, Microsoft.VisualBasic.Core\Scripting\VisualBasic\KeywordProcessor.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,6 @@
 
     ' Summaries:
 
-    '     Class Patterns
-    ' 
-    '         Properties: TypeChar
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: TypeCharName
-    ' 
     '     Class KeywordProcessor
     ' 
     '         Properties: Words
@@ -51,58 +44,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Scripting.SymbolBuilder.VBLanguage
-
-    Public NotInheritable Class Patterns
-
-        Private Sub New()
-        End Sub
-
-        ''' <summary>
-        ''' 匹配一个合法的标识符，在正则匹配的时候应该不区分大小写
-        ''' </summary>
-        Public Const Identifer$ = "\[?[_a-z][_a-z0-9]*\]?"
-
-        Public Const Access$ = "((Partial )|(Public )|(Private )|(Friend )|(Protected )|(Shadows )|(Shared )|(Overrides )|(Overloads )|(Overridable )|(MustOverrides )|(NotInheritable )|(MustInherit ))*"
-        Public Const Type$ = "^\s*" & Access & "((Class)|(Module)|(Structure)|(Enum)|(Delegate)|(Interface))\s+" & VBLanguage.Patterns.Identifer
-        Public Const Property$ = "^\s+" & Access & "\s*((ReadOnly )|(WriteOnly )|(Default ))*\s*Property\s+" & VBLanguage.Patterns.Identifer
-        Public Const Method$ = "^\s+" & Access & "\s*((Sub )|(Function )|(Iterator )|(Operator ))+\s*" & VBLanguage.Patterns.Identifer
-        Public Const Operator$ = "^\s+" & Access & "\s*Operator\s+(([<]|[>]|\=|\+|\-|\*|/|\^|\\)+|(" & VBLanguage.Patterns.Identifer & "))"
-        Public Const Close$ = "^\s+End\s((Sub)|(Function)|(Class)|(Structure)|(Enum)|(Interface)|(Operator)|(Module))"
-        Public Const CloseType$ = "^\s*End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
-        Public Const Indents$ = "^\s+"
-        Public Const Attribute$ = "<.+?>\s*"
-
-        ''' <summary>
-        ''' The VB.NET type char index
-        ''' </summary>
-        ''' <returns></returns>
-        Public Shared ReadOnly Property TypeChar As Index(Of Char) = {"!"c, "@"c, "#"c, "$"c, "%"c, "&"c, "?"c}
-
-        Public Shared Function TypeCharName(c As Char) As String
-            Select Case c
-                Case "!"c
-                    Return "Single"
-                Case "@"c
-                    Return "Decimal"
-                Case "#"c
-                    Return "Double"
-                Case "$"c
-                    Return "String"
-                Case "%"c
-                    Return "Integer"
-                Case "&"c
-                    Return "Long"
-                Case "?"c
-                    Return "Boolean"
-                Case Else
-                    Throw New InvalidExpressionException($"Character '{c}' is not a valid VB type char!")
-            End Select
-        End Function
-
-    End Class
 
     ''' <summary>
     ''' Keyword processor of the VB.NET language

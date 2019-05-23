@@ -1,45 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::901d4e5ca79d70e99203777934db8dc1, Data\BinaryData\DataStorage\HDF5\structure\GroupBTree.vb"
+﻿#Region "Microsoft.VisualBasic::b08bcbf85ea0f7977874113d9c6cb886, Data\BinaryData\DataStorage\HDF5\structure\GroupBTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GroupBTree
-    ' 
-    '         Properties: symbolTableEntries
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues, readAllEntries
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GroupBTree
+' 
+'         Properties: symbolTableEntries
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: printValues, readAllEntries
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,47 +52,51 @@
 
 
 Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
-Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure.BTree
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.BTree
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Public Class GroupBTree : Inherits HDF5Ptr
+        Implements IMagicBlock
 
-        Public Shared ReadOnly SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
+        Public Const signature$ = "TREE"
 
-        Public Overridable ReadOnly Property symbolTableEntries() As List(Of SymbolTableEntry)
+        Public ReadOnly Property symbolTableEntries As List(Of SymbolTableEntry)
+        Public ReadOnly Property magic As String Implements IMagicBlock.magic
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.symbolTableEntries = New List(Of SymbolTableEntry)()
 
             Dim entryList As New List(Of BTreeEntry)()
             Dim node As GroupNode
 
-            readAllEntries([in], sb, address, entryList)
+            Call readAllEntries(sb, address, entryList)
 
             For Each e As BTreeEntry In entryList
-                node = New GroupNode([in], sb, e.targetAddress)
+                node = New GroupNode(sb, e.targetAddress)
                 symbolTableEntries.AddRange(node.symbols)
             Next
         End Sub
 
-        Private Sub readAllEntries([in] As BinaryReader, sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
-            [in].offset = address
+        Private Sub readAllEntries(sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
-            Dim signature As Byte() = [in].readBytes(4)
+            _magic = Encoding.ASCII.GetString([in].readBytes(4))
 
-            For i As Integer = 0 To 3
-                If signature(i) <> GroupBTree.SIGNATURE(i) Then
-                    Throw New IOException("signature is not valid")
-                End If
-            Next
+            If Not Me.VerifyMagicSignature(signature) Then
+                Throw New IOException("signature is not valid")
+            End If
 
             Dim type As Integer = [in].readByte()
             Dim level As Integer = [in].readByte()
@@ -110,7 +114,7 @@ Namespace HDF5.[Structure]
                 entryList.AddRange(myEntries)
             Else
                 For Each entry As BTreeEntry In myEntries
-                    readAllEntries([in], sb, entry.targetAddress, entryList)
+                    readAllEntries(sb, entry.targetAddress, entryList)
                 Next
             End If
         End Sub

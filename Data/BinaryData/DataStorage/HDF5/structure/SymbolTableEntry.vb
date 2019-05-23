@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b1be98f016e69bc81cf49e2686ad08d, Data\BinaryData\DataStorage\HDF5\structure\SymbolTableEntry.vb"
+﻿#Region "Microsoft.VisualBasic::b10bf086d13f8846c594fa0c0e077ea4, Data\BinaryData\DataStorage\HDF5\structure\SymbolTableEntry.vb"
 
     ' Author:
     ' 
@@ -56,37 +56,37 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
 
     Public Class SymbolTableEntry : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property linkNameOffset() As Long
-        Public Overridable ReadOnly Property objectHeaderAddress() As Long
-        Public Overridable ReadOnly Property cacheType() As Integer
-        Public Overridable ReadOnly Property scratchpadSpace() As Byte()
+        Public ReadOnly Property linkNameOffset() As Long
+        Public ReadOnly Property objectHeaderAddress() As Long
+        Public ReadOnly Property cacheType() As Integer
+        Public ReadOnly Property scratchpadSpace() As Byte()
 
         ''' <summary>
         ''' only work for cache type = 1
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property objectHeaderScratchpadFormat() As ObjectHeaderScratchpadFormat
+        Public ReadOnly Property objectHeaderScratchpadFormat() As ObjectHeaderScratchpadFormat
 
         ''' <summary>
         ''' only work for cache type = 2
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property symbolicLinkScratchpadFormat() As SymbolicLinkScratchpadFormat
+        Public ReadOnly Property symbolicLinkScratchpadFormat() As SymbolicLinkScratchpadFormat
 
-        Public Overridable ReadOnly Property totalSymbolTableEntrySize() As Integer
-        Public Overridable ReadOnly Property size() As Long
+        Public ReadOnly Property totalSymbolTableEntrySize() As Integer
+        Public ReadOnly Property size() As Long
 
         Dim reserved As Integer
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.linkNameOffset = ReadHelper.readO([in], sb)
             Me.objectHeaderAddress = ReadHelper.readO([in], sb)
@@ -98,19 +98,21 @@ Namespace HDF5.[Structure]
             If Me.cacheType = 0 Then
                 Me.scratchpadSpace = [in].readBytes(16)
             ElseIf Me.cacheType = 1 Then
-                Me.objectHeaderScratchpadFormat = New ObjectHeaderScratchpadFormat([in], sb, [in].offset)
+                Me.objectHeaderScratchpadFormat = New ObjectHeaderScratchpadFormat(sb, [in].offset)
 
                 ' skip 
                 Dim size As Integer = Me.objectHeaderScratchpadFormat.totalObjectHeaderScratchpadFormatSize
                 Dim remained As Integer = 16 - size
-                [in].skipBytes(remained)
+
+                Call [in].skipBytes(remained)
             ElseIf Me.cacheType = 2 Then
-                Me.symbolicLinkScratchpadFormat = New SymbolicLinkScratchpadFormat([in], sb, [in].offset)
+                Me.symbolicLinkScratchpadFormat = New SymbolicLinkScratchpadFormat(sb, [in].offset)
 
                 ' skip
                 Dim size As Integer = Me.symbolicLinkScratchpadFormat.totalSymbolicLinkScratchpadFormatSize
                 Dim remained As Integer = 16 - size
-                [in].skipBytes(remained)
+
+                Call [in].skipBytes(remained)
             End If
 
             Me.totalSymbolTableEntrySize += 16

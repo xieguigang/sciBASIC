@@ -1,48 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::26088a1790c1c16bc0b61d7ae3ae09e1, Data\BinaryData\DataStorage\HDF5\structure\Superblock.vb"
+﻿#Region "Microsoft.VisualBasic::1544f941e2ecda712a82bd04185d09c9, Data\BinaryData\DataStorage\HDF5\structure\Superblock.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Superblock
-    ' 
-    '         Properties: addressOfFileFreeSpaceInfo, baseAddress, driverInformationBlockAddress, endOfFileAddress, fileConsistencyFlags
-    '                     formatSignature, groupInternalNodeK, groupLeafNodeK, indexedStorageInterNodeK, rootGroupSymbolTableEntry
-    '                     sizeOfLengths, sizeOfOffsets, totalSuperBlockSize, validFormatSignature, versionOfFileFreeSpaceStorage
-    '                     versionOfRootGroupSymbolTableEntry, versionOfShardedHeaderMessageFormat, versionOfSuperblock
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues, readVersion1, readVersion2
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Superblock
+' 
+'         Properties: addressOfFileFreeSpaceInfo, baseAddress, driverInformationBlockAddress, endOfFileAddress, fileConsistencyFlags
+'                     formatSignature, globalHeaps, groupInternalNodeK, groupLeafNodeK, indexedStorageInterNodeK
+'                     rootGroupSymbolTableEntry, sizeOfLengths, sizeOfOffsets, totalSuperBlockSize, validFormatSignature
+'                     versionOfFileFreeSpaceStorage, versionOfRootGroupSymbolTableEntry, versionOfShardedHeaderMessageFormat, versionOfSuperblock
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: printValues, readVersion1, readVersion2
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,10 +54,14 @@
 ' 
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Http
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' The superblock may begin at certain predefined offsets within the HDF5 file, allowing a 
@@ -74,47 +78,37 @@ Namespace HDF5.[Structure]
     ''' And information that Is specific To Each version Of the superblock.
     ''' </summary>
     Public Class Superblock : Inherits HDF5Ptr
+        Implements IMagicBlock
 
         Shared ReadOnly SUPERBLOCK_SIGNATURE As Byte() = {&H89, &H48, &H44, &H46, &HD, &HA, &H1A, &HA} _
             .Select(Function(i) CByte(i)) _
             .ToArray
 
-        Public Overridable ReadOnly Property formatSignature As Byte()
-
-        Public Overridable ReadOnly Property validFormatSignature() As Boolean
-            Get
-                For i As Integer = 0 To 7
-                    If Me.formatSignature(i) <> SUPERBLOCK_SIGNATURE(i) Then
-                        Return False
-                    End If
-                Next
-                Return True
-            End Get
-        End Property
+        Public ReadOnly Property magic As String Implements IMagicBlock.magic
 
         Dim reserved0 As Integer
         Dim reserved1 As Integer
         Dim reserved2 As Integer
 
-        Friend ReadOnly file As HDF5File
+        ReadOnly file As HDF5File
 
-        Public Overridable ReadOnly Property versionOfSuperblock() As Integer
-        Public Overridable ReadOnly Property versionOfFileFreeSpaceStorage() As Integer
-        Public Overridable ReadOnly Property versionOfRootGroupSymbolTableEntry() As Integer
-        Public Overridable ReadOnly Property versionOfShardedHeaderMessageFormat() As Integer
-        Public Overridable ReadOnly Property sizeOfOffsets() As Integer
-        Public Overridable ReadOnly Property sizeOfLengths() As Integer
-        Public Overridable ReadOnly Property groupLeafNodeK() As Integer
-        Public Overridable ReadOnly Property groupInternalNodeK() As Integer
-        Public Overridable ReadOnly Property fileConsistencyFlags() As Integer
+        Public ReadOnly Property versionOfSuperblock() As Integer
+        Public ReadOnly Property versionOfFileFreeSpaceStorage() As Integer
+        Public ReadOnly Property versionOfRootGroupSymbolTableEntry() As Integer
+        Public ReadOnly Property versionOfShardedHeaderMessageFormat() As Integer
+        Public ReadOnly Property sizeOfOffsets() As Integer
+        Public ReadOnly Property sizeOfLengths() As Integer
+        Public ReadOnly Property groupLeafNodeK() As Integer
+        Public ReadOnly Property groupInternalNodeK() As Integer
+        Public ReadOnly Property fileConsistencyFlags() As Integer
         ' for ver1
-        Public Overridable ReadOnly Property indexedStorageInterNodeK() As Integer
-        Public Overridable ReadOnly Property baseAddress() As Long
-        Public Overridable ReadOnly Property addressOfFileFreeSpaceInfo() As Long
-        Public Overridable ReadOnly Property endOfFileAddress() As Long
-        Public Overridable ReadOnly Property driverInformationBlockAddress() As Long
-        Public Overridable ReadOnly Property rootGroupSymbolTableEntry() As SymbolTableEntry
-        Public Overridable ReadOnly Property totalSuperBlockSize() As Integer
+        Public ReadOnly Property indexedStorageInterNodeK() As Integer
+        Public ReadOnly Property baseAddress() As Long
+        Public ReadOnly Property addressOfFileFreeSpaceInfo() As Long
+        Public ReadOnly Property endOfFileAddress() As Long
+        Public ReadOnly Property driverInformationBlockAddress() As Long
+        Public ReadOnly Property rootGroupSymbolTableEntry() As SymbolTableEntry
+        Public ReadOnly Property totalSuperBlockSize() As Integer
 
         Public ReadOnly Property globalHeaps As Dictionary(Of Long, GlobalHeap)
             Get
@@ -130,10 +124,10 @@ Namespace HDF5.[Structure]
             [in].offset = address
 
             ' signature
-            Me.formatSignature = [in].readBytes(8)
+            Me.magic = [in].readBytes(8).ToBase64String
             Me.file = file
 
-            If Not Me.validFormatSignature Then
+            If Not Me.VerifyMagicSignature(SUPERBLOCK_SIGNATURE) Then
                 Throw New IOException("signature is not valid")
             End If
 
@@ -147,6 +141,29 @@ Namespace HDF5.[Structure]
                 Throw New IOException("Unknown superblock version " & Me.versionOfSuperblock)
             End If
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetCacheObject(address As Long) As DataObject
+            Return file.GetCacheObject(address:=address)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub AddCacheObject(obj As DataObject)
+            Call file.addCache(obj)
+        End Sub
+
+        ''' <summary>
+        ''' 可以通过这个函数来设置文件读取对象的当前读取位置
+        ''' </summary>
+        ''' <param name="address">小于零的数表示不进行位移</param>
+        ''' <returns></returns>
+        Public Function FileReader(address As Long) As BinaryReader
+            If address >= 0 Then
+                file.reader.offset = address
+            End If
+
+            Return file.reader
+        End Function
 
         Private Sub readVersion1([in] As BinaryReader)
             _versionOfFileFreeSpaceStorage = [in].readByte()
@@ -177,7 +194,7 @@ Namespace HDF5.[Structure]
             _endOfFileAddress = ReadHelper.readO([in], Me)
             _driverInformationBlockAddress = ReadHelper.readO([in], Me)
             _totalSuperBlockSize += _sizeOfOffsets * 4
-            _rootGroupSymbolTableEntry = New SymbolTableEntry([in], Me, [in].offset)
+            _rootGroupSymbolTableEntry = New SymbolTableEntry(Me, [in].offset)
             _totalSuperBlockSize += _rootGroupSymbolTableEntry.totalSymbolTableEntrySize
         End Sub
 
@@ -185,7 +202,16 @@ Namespace HDF5.[Structure]
             Throw New IOException("version 2 is not implemented")
         End Sub
 
+        Public Overrides Function ToString() As String
+            With New StringBuilder
+                Call printValues(New System.IO.StringWriter(.ByRef))
+                Return .ToString
+            End With
+        End Function
+
         Protected Friend Overrides Sub printValues(console As TextWriter)
+            Dim formatSignature = Encoding.ASCII.GetBytes(magic)
+
             console.WriteLine("Superblock >>>")
             console.WriteLine("address : " & Me.m_address)
             console.WriteLine("signature : " &

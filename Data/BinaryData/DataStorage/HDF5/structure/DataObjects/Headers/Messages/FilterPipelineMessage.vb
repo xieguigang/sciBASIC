@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71410fab96224d440b2cbcd3bef30599, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb"
+﻿#Region "Microsoft.VisualBasic::bb45292c2eaf4318585e4276d195d974, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' This message describes the filter pipeline which should be applied to 

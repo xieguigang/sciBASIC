@@ -453,7 +453,7 @@ Namespace netCDF
         Private disposedValue As Boolean ' To detect redundant calls
 
         ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
+        Protected  Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
