@@ -71,7 +71,7 @@ Namespace HDF5.[Structure]
         Dim m_facade As DataObjectFacade
         Dim NESTED_OBJECTS As New List(Of DataObjectFacade)
 
-        Public Overridable ReadOnly Property objects() As List(Of DataObjectFacade)
+        Public  ReadOnly Property objects() As List(Of DataObjectFacade)
             Get
                 Return NESTED_OBJECTS
             End Get

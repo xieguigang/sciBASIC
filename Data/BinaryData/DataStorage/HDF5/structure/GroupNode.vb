@@ -72,10 +72,10 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property signature() As Byte()
-        Public Overridable ReadOnly Property version() As Integer
-        Public Overridable ReadOnly Property entryNumber() As Integer
-        Public Overridable ReadOnly Property symbols() As List(Of SymbolTableEntry)
+        Public  ReadOnly Property signature() As Byte()
+        Public  ReadOnly Property version() As Integer
+        Public  ReadOnly Property entryNumber() As Integer
+        Public  ReadOnly Property symbols() As List(Of SymbolTableEntry)
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

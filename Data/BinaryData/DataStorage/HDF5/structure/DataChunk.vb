@@ -63,10 +63,10 @@ Namespace HDF5.[Structure]
     ''' </summary>
     Public Class DataChunk : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property size() As Integer
-        Public Overridable ReadOnly Property filterMask() As Integer
-        Public Overridable ReadOnly Property offsets() As Integer()
-        Public Overridable ReadOnly Property filePosition() As Long
+        Public ReadOnly Property size As Integer
+        Public ReadOnly Property filterMask As Integer
+        Public ReadOnly Property offsets As Integer()
+        Public ReadOnly Property filePosition As Long
 
         Friend Sub New([in] As BinaryReader, sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
             Call MyBase.New(address)

@@ -72,12 +72,12 @@ Namespace HDF5.[Structure]
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
+        Public  Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
             Return Me.root.hasNext([in], sb)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
+        Public  Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
             Return Me.root.[next]([in], sb)
         End Function
 

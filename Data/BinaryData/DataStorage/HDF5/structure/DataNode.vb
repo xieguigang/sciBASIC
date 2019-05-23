@@ -140,7 +140,7 @@ Namespace HDF5.[Structure]
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <param name="sb"></param>
-        Public Overridable Sub first([in] As BinaryReader, sb As Superblock)
+        Public  Sub first([in] As BinaryReader, sb As Superblock)
             If Me.level = 0 Then
 
                 ' note nentries-1 - assume dont skip the last one
@@ -180,7 +180,7 @@ Namespace HDF5.[Structure]
         ''' <remarks>
         ''' LOOK - wouldnt be a bad idea to terminate if possible instead of running through all subsequent entries
         ''' </remarks>
-        Public Overridable Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
+        Public  Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
             If Me.level = 0 Then
                 Return (Me.currentEntry < Me.numberOfEntries)
             Else
@@ -192,7 +192,7 @@ Namespace HDF5.[Structure]
             End If
         End Function
 
-        Public Overridable Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
+        Public  Function [next]([in] As BinaryReader, sb As Superblock) As DataChunk
             If Me.level = 0 Then
                 Return Me.entries(++Me.currentEntry)
             Else

@@ -79,9 +79,9 @@ Namespace HDF5.[Structure]
             .Select(Function(i) CByte(i)) _
             .ToArray
 
-        Public Overridable ReadOnly Property formatSignature As Byte()
+        Public  ReadOnly Property formatSignature As Byte()
 
-        Public Overridable ReadOnly Property validFormatSignature() As Boolean
+        Public  ReadOnly Property validFormatSignature() As Boolean
             Get
                 For i As Integer = 0 To 7
                     If Me.formatSignature(i) <> SUPERBLOCK_SIGNATURE(i) Then
@@ -98,23 +98,23 @@ Namespace HDF5.[Structure]
 
         Friend ReadOnly file As HDF5File
 
-        Public Overridable ReadOnly Property versionOfSuperblock() As Integer
-        Public Overridable ReadOnly Property versionOfFileFreeSpaceStorage() As Integer
-        Public Overridable ReadOnly Property versionOfRootGroupSymbolTableEntry() As Integer
-        Public Overridable ReadOnly Property versionOfShardedHeaderMessageFormat() As Integer
-        Public Overridable ReadOnly Property sizeOfOffsets() As Integer
-        Public Overridable ReadOnly Property sizeOfLengths() As Integer
-        Public Overridable ReadOnly Property groupLeafNodeK() As Integer
-        Public Overridable ReadOnly Property groupInternalNodeK() As Integer
-        Public Overridable ReadOnly Property fileConsistencyFlags() As Integer
+        Public  ReadOnly Property versionOfSuperblock() As Integer
+        Public  ReadOnly Property versionOfFileFreeSpaceStorage() As Integer
+        Public  ReadOnly Property versionOfRootGroupSymbolTableEntry() As Integer
+        Public  ReadOnly Property versionOfShardedHeaderMessageFormat() As Integer
+        Public  ReadOnly Property sizeOfOffsets() As Integer
+        Public  ReadOnly Property sizeOfLengths() As Integer
+        Public  ReadOnly Property groupLeafNodeK() As Integer
+        Public  ReadOnly Property groupInternalNodeK() As Integer
+        Public  ReadOnly Property fileConsistencyFlags() As Integer
         ' for ver1
-        Public Overridable ReadOnly Property indexedStorageInterNodeK() As Integer
-        Public Overridable ReadOnly Property baseAddress() As Long
-        Public Overridable ReadOnly Property addressOfFileFreeSpaceInfo() As Long
-        Public Overridable ReadOnly Property endOfFileAddress() As Long
-        Public Overridable ReadOnly Property driverInformationBlockAddress() As Long
-        Public Overridable ReadOnly Property rootGroupSymbolTableEntry() As SymbolTableEntry
-        Public Overridable ReadOnly Property totalSuperBlockSize() As Integer
+        Public  ReadOnly Property indexedStorageInterNodeK() As Integer
+        Public  ReadOnly Property baseAddress() As Long
+        Public  ReadOnly Property addressOfFileFreeSpaceInfo() As Long
+        Public  ReadOnly Property endOfFileAddress() As Long
+        Public  ReadOnly Property driverInformationBlockAddress() As Long
+        Public  ReadOnly Property rootGroupSymbolTableEntry() As SymbolTableEntry
+        Public  ReadOnly Property totalSuperBlockSize() As Integer
 
         Public ReadOnly Property globalHeaps As Dictionary(Of Long, GlobalHeap)
             Get

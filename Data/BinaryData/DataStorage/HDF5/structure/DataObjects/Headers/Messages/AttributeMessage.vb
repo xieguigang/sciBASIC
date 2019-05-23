@@ -64,11 +64,11 @@ Namespace HDF5.[Structure]
 
     Public Class AttributeMessage : Inherits Message
 
-        Public Overridable ReadOnly Property version As Integer
-        Public Overridable ReadOnly Property name As String
-        Public Overridable ReadOnly Property dataPos As Long
-        Public Overridable ReadOnly Property dataType As DataTypeMessage
-        Public Overridable ReadOnly Property dataSpace As DataspaceMessage
+        Public  ReadOnly Property version As Integer
+        Public  ReadOnly Property name As String
+        Public  ReadOnly Property dataPos As Long
+        Public  ReadOnly Property dataType As DataTypeMessage
+        Public  ReadOnly Property dataSpace As DataspaceMessage
 
         Public ReadOnly Property reader As DataType
             Get

@@ -166,7 +166,7 @@ Namespace HDF5
         Private disposedValue As Boolean ' 要检测冗余调用
 
         ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
+        Protected  Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)。

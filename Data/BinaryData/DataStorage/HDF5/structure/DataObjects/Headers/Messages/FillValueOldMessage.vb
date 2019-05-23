@@ -72,8 +72,8 @@ Namespace HDF5.[Structure]
     ''' </summary>
     Public Class FillValueOldMessage : Inherits Message
 
-        Public Overridable ReadOnly Property size As Integer
-        Public Overridable ReadOnly Property value As Byte()
+        Public  ReadOnly Property size As Integer
+        Public  ReadOnly Property value As Byte()
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

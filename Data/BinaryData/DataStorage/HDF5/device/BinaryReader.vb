@@ -59,7 +59,7 @@ Namespace HDF5.device
 
         Dim markedPos As Long
 
-        Public Overridable ReadOnly Property maxOffset As Long
+        Public  ReadOnly Property maxOffset As Long
             Get
                 Return Me.m_maxOffset
             End Get
@@ -71,7 +71,7 @@ Namespace HDF5.device
         ''' The file size in bytes
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property size As Long
+        Public  ReadOnly Property size As Long
             Get
                 Return filesize
             End Get
@@ -97,7 +97,7 @@ Namespace HDF5.device
             End Get
         End Property
 
-        Public Overridable Sub clearMaxOffset()
+        Public  Sub clearMaxOffset()
             Me.m_maxOffset = 0
         End Sub
 
@@ -125,7 +125,7 @@ Namespace HDF5.device
             Return $"[{offset}/{filesize}] {ByteOrder.ToString}"
         End Function
 
-        Public Overridable Function readBytes(n As Integer) As Byte()
+        Public  Function readBytes(n As Integer) As Byte()
             If n < 0 Then
                 Throw New ArgumentException("n should be greater than 0")
             End If
@@ -137,7 +137,7 @@ Namespace HDF5.device
             Return buf
         End Function
 
-        Public Overridable Sub skipBytes(n As Integer)
+        Public  Sub skipBytes(n As Integer)
             If n < 0 Then
                 Throw New ArgumentException("n should be greater than 0")
             End If
@@ -153,7 +153,7 @@ Namespace HDF5.device
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function readInt() As Integer
+        Public  Function readInt() As Integer
             Return ToInteger(readBytes(4), m_littleEndian)
         End Function
 
@@ -176,7 +176,7 @@ Namespace HDF5.device
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function readLong() As Long
+        Public  Function readLong() As Long
             Return ToLong(readBytes(8), m_littleEndian)
         End Function
 
@@ -212,7 +212,7 @@ Namespace HDF5.device
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function readShort() As Short
+        Public  Function readShort() As Short
             Return ToShort(readBytes(2), m_littleEndian)
         End Function
 
@@ -230,7 +230,7 @@ Namespace HDF5.device
             Return temp
         End Function
 
-        Public Overridable Function readASCIIString() As String
+        Public  Function readASCIIString() As String
             Dim sb As New StringBuilder()
 
             For i As Long = Me.offset To Me.size - 1
@@ -246,7 +246,7 @@ Namespace HDF5.device
             Return sb.ToString()
         End Function
 
-        Public Overridable Function readASCIIString(length As Integer) As String
+        Public  Function readASCIIString(length As Integer) As String
             Dim sb As New StringBuilder()
             Dim nCount As Integer = 0
 
@@ -271,7 +271,7 @@ Namespace HDF5.device
         Private disposedValue As Boolean ' 要检测冗余调用
 
         ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
+        Protected  Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)。

@@ -70,14 +70,14 @@ Namespace HDF5.[Structure]
         ''' entries for the group.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property bTreeAddress() As Long
+        Public  ReadOnly Property bTreeAddress() As Long
 
         ''' <summary>
         ''' This value is the address of the local heap containing the link names 
         ''' for the symbol table entries for the group.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property nameHeapAddress() As Long
+        Public  ReadOnly Property nameHeapAddress() As Long
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

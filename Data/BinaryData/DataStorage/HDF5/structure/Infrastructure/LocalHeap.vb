@@ -73,9 +73,9 @@ Namespace HDF5.[Structure]
 
         Shared ReadOnly LOCALHEAP_SIGNATURE As Byte() = New CharStream() From {"H"c, "E"c, "A"c, "P"c}
 
-        Public Overridable ReadOnly Property signature() As Byte()
+        Public  ReadOnly Property signature() As Byte()
 
-        Public Overridable ReadOnly Property validSignature() As Boolean
+        Public  ReadOnly Property validSignature() As Boolean
             Get
                 For i As Integer = 0 To 3
                     If Me.signature(i) <> LOCALHEAP_SIGNATURE(i) Then
@@ -86,12 +86,12 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property version() As Integer
-        Public Overridable ReadOnly Property dataSegmentSize() As Long
-        Public Overridable ReadOnly Property offsetToHeadOfFreeList() As Long
-        Public Overridable ReadOnly Property addressOfDataSegment() As Long
-        Public Overridable ReadOnly Property totalLocalHeapSize() As Integer
-        Public Overridable ReadOnly Property data() As Byte()
+        Public  ReadOnly Property version() As Integer
+        Public  ReadOnly Property dataSegmentSize() As Long
+        Public  ReadOnly Property offsetToHeadOfFreeList() As Long
+        Public  ReadOnly Property addressOfDataSegment() As Long
+        Public  ReadOnly Property totalLocalHeapSize() As Integer
+        Public  ReadOnly Property data() As Byte()
 
         Dim reserved0 As Byte()
 
@@ -153,7 +153,7 @@ Namespace HDF5.[Structure]
             console.WriteLine("LocalHeap <<<")
         End Sub
 
-        Public Overridable Function getString(offset As Integer) As String
+        Public  Function getString(offset As Integer) As String
             Dim count As Integer = 0
 
             While Me.data(offset + count) <> 0

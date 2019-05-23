@@ -60,7 +60,7 @@ Namespace HDF5.[Structure]
             Me.layout = layout
         End Sub
 
-        Public Overridable Function getChunkIterator([in] As BinaryReader, sb As Superblock) As DataChunkIterator
+        Public  Function getChunkIterator([in] As BinaryReader, sb As Superblock) As DataChunkIterator
             Return New DataChunkIterator([in], sb, Me.layout)
         End Function
 

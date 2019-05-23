@@ -63,7 +63,7 @@ Namespace HDF5.[Structure]
 
         Public Shared ReadOnly SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
-        Public Overridable ReadOnly Property symbolTableEntries() As List(Of SymbolTableEntry)
+        Public  ReadOnly Property symbolTableEntries() As List(Of SymbolTableEntry)
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

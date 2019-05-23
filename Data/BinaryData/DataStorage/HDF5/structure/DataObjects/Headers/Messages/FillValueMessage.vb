@@ -60,13 +60,13 @@ Namespace HDF5.[Structure]
 
     Public Class FillValueMessage : Inherits Message
 
-        Public Overridable ReadOnly Property version() As Integer
-        Public Overridable ReadOnly Property spaceAllocateTime() As Integer
-        Public Overridable ReadOnly Property flags() As Integer
-        Public Overridable ReadOnly Property fillWriteTime() As Integer
-        Public Overridable ReadOnly Property hasFillValue() As Boolean
-        Public Overridable ReadOnly Property size() As Integer
-        Public Overridable ReadOnly Property value() As Byte()
+        Public  ReadOnly Property version() As Integer
+        Public  ReadOnly Property spaceAllocateTime() As Integer
+        Public  ReadOnly Property flags() As Integer
+        Public  ReadOnly Property fillWriteTime() As Integer
+        Public  ReadOnly Property hasFillValue() As Boolean
+        Public  ReadOnly Property size() As Integer
+        Public  ReadOnly Property value() As Byte()
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

@@ -62,10 +62,10 @@ Namespace HDF5.[Structure]
 
     Public Class StructureMember : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property name As String
-        Public Overridable ReadOnly Property offset As Integer
-        Public Overridable ReadOnly Property dims As Integer
-        Public Overridable ReadOnly Property message As DataTypeMessage
+        Public  ReadOnly Property name As String
+        Public  ReadOnly Property offset As Integer
+        Public  ReadOnly Property dims As Integer
+        Public  ReadOnly Property message As DataTypeMessage
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long, version As Integer, byteSize As Integer)
             Call MyBase.New(address)

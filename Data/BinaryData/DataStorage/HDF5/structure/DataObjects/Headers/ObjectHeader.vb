@@ -61,11 +61,11 @@ Namespace HDF5.[Structure]
 
     Public Class ObjectHeader : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property version As Integer
-        Public Overridable ReadOnly Property totalNumberOfHeaderMessages As Integer
-        Public Overridable ReadOnly Property objectReferenceCount As Integer
-        Public Overridable ReadOnly Property objectHeaderSize As Integer
-        Public Overridable ReadOnly Property headerMessages As New List(Of ObjectHeaderMessage)
+        Public  ReadOnly Property version As Integer
+        Public  ReadOnly Property totalNumberOfHeaderMessages As Integer
+        Public  ReadOnly Property objectReferenceCount As Integer
+        Public  ReadOnly Property objectHeaderSize As Integer
+        Public  ReadOnly Property headerMessages As New List(Of ObjectHeaderMessage)
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

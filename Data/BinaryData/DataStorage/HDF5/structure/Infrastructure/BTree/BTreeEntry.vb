@@ -61,8 +61,8 @@ Namespace HDF5.[Structure].BTree
 
     Public Class BTreeEntry : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property targetAddress() As Long
-        Public Overridable ReadOnly Property key() As Long
+        Public  ReadOnly Property targetAddress() As Long
+        Public  ReadOnly Property key() As Long
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

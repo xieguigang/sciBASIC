@@ -62,9 +62,9 @@ Namespace HDF5.[Structure]
 
     Public Class ObjectHeaderScratchpadFormat : Inherits HDF5Ptr
 
-        Public Overridable ReadOnly Property addressOfBTree As Long
-        Public Overridable ReadOnly Property addressOfNameHeap As Long
-        Public Overridable ReadOnly Property totalObjectHeaderScratchpadFormatSize As Integer
+        Public  ReadOnly Property addressOfBTree As Long
+        Public  ReadOnly Property addressOfNameHeap As Long
+        Public  ReadOnly Property totalObjectHeaderScratchpadFormatSize As Integer
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

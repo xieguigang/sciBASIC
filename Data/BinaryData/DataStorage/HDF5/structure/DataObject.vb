@@ -68,9 +68,9 @@ Namespace HDF5.[Structure]
         ''' local heap and to a B-tree which points to symbol nodes.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property groupMessage As GroupMessage
+        Public  ReadOnly Property groupMessage As GroupMessage
 
-        Public Overridable ReadOnly Property messages As List(Of ObjectHeaderMessage)
+        Public  ReadOnly Property messages As List(Of ObjectHeaderMessage)
             Get
                 If Me.objectHeader IsNot Nothing Then
                     Return Me.objectHeader.headerMessages

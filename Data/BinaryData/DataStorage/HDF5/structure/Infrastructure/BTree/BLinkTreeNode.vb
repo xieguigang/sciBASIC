@@ -119,13 +119,13 @@ Namespace HDF5.[Structure].BTree
             Next
         End Sub
 
-        Public Overridable ReadOnly Property signature() As Byte()
+        Public  ReadOnly Property signature() As Byte()
             Get
                 Return Me.m_signature
             End Get
         End Property
 
-        Public Overridable ReadOnly Property validSignature() As Boolean
+        Public  ReadOnly Property validSignature() As Boolean
             Get
                 For i As Integer = 0 To 3
                     If Me.m_signature(i) <> BLINKTREENODE_SIGNATURE(i) Then
@@ -136,13 +136,13 @@ Namespace HDF5.[Structure].BTree
             End Get
         End Property
 
-        Public Overridable ReadOnly Property totalBLinkTreeNodeSize() As Integer
+        Public  ReadOnly Property totalBLinkTreeNodeSize() As Integer
             Get
                 Return Me.m_totalBLinkTreeNodeSize
             End Get
         End Property
 
-        Public Overridable Sub printValues()
+        Public  Sub printValues()
             Console.WriteLine("BLinkTreeNode >>>")
             Console.WriteLine("signature : " & (Me.m_signature(0) And &HFF).ToString("x") & (Me.m_signature(1) And &HFF).ToString("x") & (Me.m_signature(2) And &HFF).ToString("x") & (Me.m_signature(3) And &HFF).ToString("x"))
             '
