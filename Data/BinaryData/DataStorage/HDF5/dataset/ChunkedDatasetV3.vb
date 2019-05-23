@@ -118,7 +118,7 @@ Namespace HDF5.dataset
         Private Function getChunkOffset(dimensionedIndex As Integer()) As Long()
             Dim chunkOffset As Long() = New Long(dimensionedIndex.Length - 1) {}
             For i As Integer = 0 To chunkOffset.Length - 1
-                Dim temp As Long = layout.chunkSize(i)
+                Dim temp As Long = dataLayout.chunkSize(i)
                 chunkOffset(i) = (dimensionedIndex(i) \ temp) * temp
             Next
             Return chunkOffset
@@ -144,7 +144,7 @@ Namespace HDF5.dataset
                     insideChunk(j) = CInt(dimensionedIndex(j) - chunkOffset(j))
                 Next
 
-                Dim insideChunkLinearOffset As Integer = dimensionIndexToLinearIndex(insideChunk, layout.chunkSize)
+                Dim insideChunkLinearOffset As Integer = dimensionIndexToLinearIndex(insideChunk, dataLayout.chunkSize)
                 Dim chunkData As Byte() = getDecodedChunk(chunkLookup, New ChunkOffsetKey(chunkOffset))
 
                 ' Copy that data into the overall buffer

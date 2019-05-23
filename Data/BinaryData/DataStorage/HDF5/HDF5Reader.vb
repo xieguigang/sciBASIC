@@ -203,7 +203,6 @@ Namespace HDF5
                     container.dataset.dataSpace = container.dataSpace
                     container.dataset.dataType = container.dataType.reader
                     container.dataset.dataLayout = layout
-                    container.dataset.layout = dobj.layoutMessage
                 End If
 
                 While iter.hasNext()
