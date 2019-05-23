@@ -58,6 +58,9 @@ Namespace edu.arizona.cs.hdf5.test
     Public Class ParseTest
 
         Private Shared Sub dumpData(reader As HDF5Reader, showHeader As Boolean, showData As Boolean, dumpFile$)
+
+            Dim result = reader.dataset.data(reader.superblock)
+
             If showHeader Then
                 Dim headerSize As Long = reader.headerSize
                 Console.WriteLine("header size : " & headerSize)
