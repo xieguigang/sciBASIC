@@ -9,7 +9,7 @@
 ' MIT License see 'LICENSE' file
 ' *****************************************************************************
 
-Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 
 Namespace HDF5.dataset
