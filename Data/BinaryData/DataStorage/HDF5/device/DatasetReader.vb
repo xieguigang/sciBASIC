@@ -71,7 +71,7 @@ Namespace HDF5.device
     ''' <remarks>
     ''' https://github.com/jamesmudd/jhdf/blob/master/jhdf/src/main/java/io/jhdf/dataset/DatasetReader.java
     ''' </remarks>
-    Module DatasetReader
+    Public Module DatasetReader
 
         <Extension>
         Public Function readDataset(type As DataType, address&, space As DataspaceMessage, sb As Superblock, dimensions As Integer()) As Object
