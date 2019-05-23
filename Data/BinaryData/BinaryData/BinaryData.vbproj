@@ -312,6 +312,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByteBuffer.vb" />
     <Compile Include="Extensions\FixLengthString.vb" />
     <Compile Include="Extensions\MSWindows.vb" />
     <Compile Include="BitSet.vb" />

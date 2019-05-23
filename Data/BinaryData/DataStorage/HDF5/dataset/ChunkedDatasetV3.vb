@@ -91,10 +91,6 @@ Namespace HDF5.dataset
             End Get
         End Property
 
-        Public Overrides Function data(sb As Superblock) As Object
-            Throw New NotImplementedException()
-        End Function
-
         Private Function linearIndexToDimensionIndex(index As Integer, dimensions As Integer()) As Integer()
             Dim dimIndex As Integer() = New Integer(dimensions.Length - 1) {}
 
@@ -107,6 +103,7 @@ Namespace HDF5.dataset
 
         Private Function dimensionIndexToLinearIndex(index As Integer(), dimensions As Integer()) As Integer
             Dim linear As Integer = 0
+
             For i As Integer = 0 To dimensions.Length - 1
                 Dim temp As Integer = index(i)
                 For j As Integer = i + 1 To dimensions.Length - 1
@@ -114,6 +111,7 @@ Namespace HDF5.dataset
                 Next
                 linear += temp
             Next
+
             Return linear
         End Function
 

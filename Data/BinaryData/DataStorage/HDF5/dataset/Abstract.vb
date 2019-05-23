@@ -29,7 +29,14 @@ Namespace HDF5.dataset
             End Get
         End Property
 
-        Public MustOverride Function data(sb As Superblock) As Object
+        Public Function data(sb As Superblock) As Object
+            Dim buffer = getBuffer(sb)
+
+        End Function
+
+        Protected Function readDataSet() As Object
+
+        End Function
 
         Protected MustOverride Function getBuffer(sb As Superblock) As MemoryStream
 
