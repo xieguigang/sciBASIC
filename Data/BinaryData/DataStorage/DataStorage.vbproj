@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HDF5\device\GlobalHeapId.vb" />
+    <Compile Include="HDF5\device\DatasetReader.vb" />
     <Compile Include="HDF5\device\VariableLengthDatasetReader.vb" />
     <Compile Include="HDF5\HDF5File.vb" />
     <Compile Include="HDF5\HDF5Ptr.vb" />
