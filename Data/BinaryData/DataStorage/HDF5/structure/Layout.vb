@@ -57,7 +57,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports Microsoft.VisualBasic.Language
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' 

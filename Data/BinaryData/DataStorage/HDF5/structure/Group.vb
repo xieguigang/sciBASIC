@@ -58,7 +58,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' A group of <see cref="DataObjectFacade"/>. a group is an object header that contains a message 

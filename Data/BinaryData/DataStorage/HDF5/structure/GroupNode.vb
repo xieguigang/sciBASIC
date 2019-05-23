@@ -56,7 +56,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' A group is an object internal to the file that allows arbitrary nesting of objects within the 

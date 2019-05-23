@@ -56,30 +56,30 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
 
     Public Class SymbolTableEntry : Inherits HDF5Ptr
 
-        Public  ReadOnly Property linkNameOffset() As Long
-        Public  ReadOnly Property objectHeaderAddress() As Long
-        Public  ReadOnly Property cacheType() As Integer
-        Public  ReadOnly Property scratchpadSpace() As Byte()
+        Public ReadOnly Property linkNameOffset() As Long
+        Public ReadOnly Property objectHeaderAddress() As Long
+        Public ReadOnly Property cacheType() As Integer
+        Public ReadOnly Property scratchpadSpace() As Byte()
 
         ''' <summary>
         ''' only work for cache type = 1
         ''' </summary>
         ''' <returns></returns>
-        Public  ReadOnly Property objectHeaderScratchpadFormat() As ObjectHeaderScratchpadFormat
+        Public ReadOnly Property objectHeaderScratchpadFormat() As ObjectHeaderScratchpadFormat
 
         ''' <summary>
         ''' only work for cache type = 2
         ''' </summary>
         ''' <returns></returns>
-        Public  ReadOnly Property symbolicLinkScratchpadFormat() As SymbolicLinkScratchpadFormat
+        Public ReadOnly Property symbolicLinkScratchpadFormat() As SymbolicLinkScratchpadFormat
 
-        Public  ReadOnly Property totalSymbolTableEntrySize() As Integer
-        Public  ReadOnly Property size() As Long
+        Public ReadOnly Property totalSymbolTableEntrySize() As Integer
+        Public ReadOnly Property size() As Long
 
         Dim reserved As Integer
 

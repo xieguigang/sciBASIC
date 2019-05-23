@@ -59,7 +59,7 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
 
     Public Class ObjectHeaderMessage : Inherits HDF5Ptr

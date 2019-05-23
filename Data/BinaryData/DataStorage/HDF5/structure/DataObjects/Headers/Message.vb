@@ -40,7 +40,7 @@
 
 #End Region
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' Data object header messages are small pieces of metadata that are stored in the 

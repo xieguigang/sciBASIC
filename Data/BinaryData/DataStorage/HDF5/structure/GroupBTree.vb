@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure.BTree
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.struct
 
     ''' <summary>
     ''' 
