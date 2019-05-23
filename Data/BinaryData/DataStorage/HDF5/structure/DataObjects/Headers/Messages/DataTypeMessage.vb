@@ -93,6 +93,8 @@ Namespace HDF5.[Structure]
         Public ReadOnly Property byteSize As Integer
         Public ReadOnly Property structureMembers As List(Of StructureMember)
 
+        Public ReadOnly Property reader As DataType
+
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
 
@@ -191,6 +193,14 @@ Namespace HDF5.[Structure]
                 Else
                     Throw New NotImplementedException
                 End If
+
+                Me.reader = New VariableLength With {
+                    .[class] = Me.type,
+                    .encoding = encoding,
+                    .version = version,
+                    .paddingType = paddingType,
+                    .size = byteSize
+                }
 
             ElseIf Me.type = DataTypes.DATATYPE_ARRAY Then
                 Throw New Exception("data type array is not implemented")

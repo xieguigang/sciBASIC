@@ -69,11 +69,11 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property dataType As DataTypeMessage
         Public Overridable ReadOnly Property dataSpace As DataspaceMessage
 
-        ''' <summary>
-        ''' A helper class for read attribute data.
-        ''' </summary>
-        ''' <returns></returns>
         Public ReadOnly Property reader As DataType
+            Get
+                Return dataType.reader
+            End Get
+        End Property
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
@@ -126,15 +126,7 @@ Namespace HDF5.[Structure]
                 'mdt = getSharedDataObject(MessageType.Datatype).mdt;
                 Throw New IOException("shared data object is not implemented")
             Else
-                Call [in].Mark()
-
                 Me.dataType = New DataTypeMessage([in], sb, [in].offset)
-
-                Call [in].Reset()
-
-                If Me.dataType.type = DataTypes.DATATYPE_VARIABLE_LENGTH Then
-                    Me.reader = New VariableLength([in])
-                End If
 
                 If Me.version = 1 Then
                     typeSize += CShort(ReadHelper.padding(typeSize, 8))

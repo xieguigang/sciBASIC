@@ -75,6 +75,7 @@ Namespace HDF5.[Structure]
             Dim reader As BinaryReader = sb.file.reader
             Dim headerSize As Integer = 4 + 1 + 3 + sb.sizeOfLengths
 
+            reader.offset = address
             reader.Mark()
 
             signature = reader.readBytes(4)
@@ -148,5 +149,9 @@ Namespace HDF5.[Structure]
             data = reader.readBytes(objectSize)
             device.seekBufferToNextMultipleOfEight(reader)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"#{index} > ({objectSize} bytes) {data.Select(Function(x) x.ToString("X2")).JoinBy("-")}"
+        End Function
     End Class
 End Namespace

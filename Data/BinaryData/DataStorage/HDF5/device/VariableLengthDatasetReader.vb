@@ -22,20 +22,24 @@ Namespace HDF5.device
         ''' <returns></returns>
         <Extension>
         Public Function readDataSet(type As VariableLength, dimensions%(), sb As Superblock) As Object
-            Dim data As String() = New String() {}
+            Dim data As Array
             Dim isScalar As Boolean
 
             If dimensions.Length = 0 Then
                 isScalar = True
                 dimensions = {1}
+                data = {""}
             Else
                 isScalar = False
+                data = Array.CreateInstance(GetType(String), dimensions)
             End If
 
             Dim charset As Encoding = type.encoding
             Dim objects As New List(Of String)
 
-            For Each globalHeapId As GlobalHeapId In getGlobalHeapIds(sb, type.size, dimensions.totalPoints)
+            ' 在这里不能够使用linq方法，必须立即读取完，因为reader是公用的
+            ' 否则会产生读取bug
+            For Each globalHeapId As GlobalHeapId In getGlobalHeapIds(sb, type.size, dimensions.totalPoints).ToArray
                 Dim heap As GlobalHeap = sb.globalHeaps.ComputeIfAbsent(globalHeapId.heapAddress, Function(address) New GlobalHeap(sb, address))
                 Dim cache = heap.objects(globalHeapId.index)
                 Dim element As String = charset.GetString(cache.data)
@@ -43,8 +47,11 @@ Namespace HDF5.device
                 objects.Add(element)
             Next
 
+            Dim objEnumerates = objects.GetEnumerator
+
+            Call objEnumerates.MoveNext()
             ' Make the output array
-            fillData(data, dimensions, objects.GetEnumerator())
+            Call fillData(data, dimensions, objEnumerates)
 
             If isScalar Then
                 Return data.GetValue(Scan0)
@@ -53,6 +60,13 @@ Namespace HDF5.device
             End If
         End Function
 
+        ''' <summary>
+        ''' 因为reader是共享的，所以在这里因为使用的是迭代器，所以在外层需要使用ToArray立即读取完，否则会因为读取其他数据而导致下一个<see cref="GlobalHeapId"/>出问题
+        ''' </summary>
+        ''' <param name="sb"></param>
+        ''' <param name="length">数据块的总大小</param>
+        ''' <param name="datasetTotalSize%"></param>
+        ''' <returns></returns>
         Private Iterator Function getGlobalHeapIds(sb As Superblock, length%, datasetTotalSize%) As IEnumerable(Of GlobalHeapId)
             ' For variable length datasets the actual data is in the global heap so need to
             ' resolve that then build the buffer.
@@ -60,13 +74,13 @@ Namespace HDF5.device
             ' final int skipBytes = length - hdfFc.getSizeOfOffsets() - 4;
             Dim skipBytes As Integer = length - sb.sizeOfOffsets - 4
             Dim buffer = sb.file.reader
-            Dim size As Integer = 0
+
+            Call buffer.Mark()
 
             ' id=4
-            While size <= length
+            While buffer.deltaSize < length
                 ' Move past the skipped bytes. TODO figure out what this is for
                 buffer.offset += skipBytes
-                size += skipBytes
 
                 Dim heapAddress As Long = device.readO(buffer, sb)
                 Dim index As Integer = buffer.readInt
