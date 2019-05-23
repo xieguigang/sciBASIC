@@ -75,6 +75,12 @@ Namespace HDF5.device
             End Get
         End Property
 
+        Public ReadOnly Property deltaSize As Integer
+            Get
+                Return offset - markedPos
+            End Get
+        End Property
+
         ''' <summary>
         ''' Represents the possible endianness of binary data.
         ''' </summary>

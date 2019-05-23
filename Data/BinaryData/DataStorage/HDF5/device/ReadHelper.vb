@@ -59,7 +59,7 @@ Namespace HDF5.device
     <HideModuleName> Public Module ReadHelper
 
         ''' <summary>
-        ''' 这个函数读取的都是整形数
+        ''' <see cref="Superblock.sizeOfOffsets"/>
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <param name="sb"></param>
@@ -88,6 +88,12 @@ Namespace HDF5.device
             Throw New IOException("size of offsets is not specified")
         End Function
 
+        ''' <summary>
+        ''' <see cref="Superblock.sizeOfLengths"/>
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <param name="sb"></param>
+        ''' <returns></returns>
         Public Function readL([in] As BinaryReader, sb As Superblock) As Long
             If [in] Is Nothing Then
                 Throw New ArgumentException("in is null")
@@ -224,6 +230,25 @@ Namespace HDF5.device
             Dim size As Integer = CInt(Math.Truncate(Math.Pow(2, sizeFactor)))
             Return readVariableSizeUnsigned([in], size)
         End Function
+
+        ''' <summary>
+        ''' Moves the position of the <seealso cref="BinaryReader"/> to the next position aligned on
+        ''' 8 bytes. If the buffer position is already a multiple of 8 the position will
+        ''' not be changed.
+        ''' </summary>
+        ''' <param name="reader"> the buffer to be aligned </param>
+        ''' 
+        <Extension>
+        Public Sub seekBufferToNextMultipleOfEight(reader As BinaryReader)
+            Dim pos As Integer = reader.offset
+
+            If pos Mod 8 = 0 Then
+                ' Already on a 8 byte multiple
+                Return
+            Else
+                reader.offset += (8 - (pos Mod 8))
+            End If
+        End Sub
     End Module
 
 End Namespace

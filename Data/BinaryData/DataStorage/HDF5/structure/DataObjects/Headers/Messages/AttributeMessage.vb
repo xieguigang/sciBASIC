@@ -69,6 +69,12 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property dataType As DataTypeMessage
         Public Overridable ReadOnly Property dataSpace As DataspaceMessage
 
+        ''' <summary>
+        ''' A helper class for read attribute data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property reader As DataType
+
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
 
@@ -120,7 +126,15 @@ Namespace HDF5.[Structure]
                 'mdt = getSharedDataObject(MessageType.Datatype).mdt;
                 Throw New IOException("shared data object is not implemented")
             Else
+                Call [in].Mark()
+
                 Me.dataType = New DataTypeMessage([in], sb, [in].offset)
+
+                Call [in].Reset()
+
+                If Me.dataType.type = DataTypes.DATATYPE_VARIABLE_LENGTH Then
+                    Me.reader = New VariableLength([in])
+                End If
 
                 If Me.version = 1 Then
                     typeSize += CShort(ReadHelper.padding(typeSize, 8))
@@ -144,15 +158,15 @@ Namespace HDF5.[Structure]
             Me.dataPos = [in].offset
         End Sub
 
-        Public Shared Function ReadAttrValue([in] As BinaryReader, msg As AttributeMessage, sb As Superblock) As Object
+        Public Shared Function ReadAttrValue(msg As AttributeMessage, sb As Superblock) As Object
             Dim type As DataTypeMessage = msg.dataType
-            Dim len = msg.dataSpace
+            Dim dims = msg.dataSpace.dimensionLength
             Dim dataType As DataTypes = type.type
 
-            [in].offset = msg.dataPos
+            sb.file.reader.offset = msg.dataPos
 
             If dataType = DataTypes.DATATYPE_VARIABLE_LENGTH Then
-
+                Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb)
             Else
                 Throw New NotImplementedException
             End If

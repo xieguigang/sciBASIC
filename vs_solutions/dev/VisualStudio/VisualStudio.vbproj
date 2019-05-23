@@ -146,6 +146,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="vbproj\Mics.vb" />
     <Compile Include="vbproj\ItemGroup.vb" />
     <Compile Include="vbproj\Project.vb" />
     <Compile Include="vbproj\PropertyGroup.vb" />

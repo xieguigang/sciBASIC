@@ -116,6 +116,12 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property rootGroupSymbolTableEntry() As SymbolTableEntry
         Public Overridable ReadOnly Property totalSuperBlockSize() As Integer
 
+        Public ReadOnly Property globalHeaps As Dictionary(Of Long, GlobalHeap)
+            Get
+                Return file.globalHeaps
+            End Get
+        End Property
+
         Public Sub New(file As HDF5File, address As Long)
             Call MyBase.New(address)
 
