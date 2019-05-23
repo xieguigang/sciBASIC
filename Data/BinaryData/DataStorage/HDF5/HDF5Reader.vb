@@ -53,6 +53,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.IO.HDF5.dataset
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
@@ -84,6 +85,7 @@ Namespace HDF5
         Public ReadOnly Property chunks As List(Of DataChunk)
         Public ReadOnly Property dataType As DataTypeMessage
         Public ReadOnly Property dataSpace As DataspaceMessage
+        Public ReadOnly Property dataset As Hdf5Dataset
 
         Dim file As HDF5File
 
@@ -192,6 +194,7 @@ Namespace HDF5
                 Dim iter As DataChunkIterator = dataTree.getChunkIterator(sb)
                 Dim chunk As DataChunk
 
+                container._dataset = dobj.layout.dataset
                 container._dataBTree = dataTree
                 container._dataType = dobj.GetMessage(ObjectHeaderMessages.Datatype)
                 container._dataSpace = dobj.GetMessage(ObjectHeaderMessages.Dataspace)
