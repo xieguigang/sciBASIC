@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::729d6fc47ecefa701da0e82c1faf409d, Data\BinaryData\DataStorage\HDF5\HDF5Reader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HDF5Reader
-    ' 
-    '         Properties: chunks, dataBTree, dataGroups, datasetName, headerSize
-    '                     layout, reader, Superblock
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: ParseDataObject, parserObject, ToString
-    ' 
-    '         Sub: parseHeader, printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HDF5Reader
+' 
+'         Properties: chunks, dataBTree, dataGroups, datasetName, headerSize
+'                     layout, reader, Superblock
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: ParseDataObject, parserObject, ToString
+' 
+'         Sub: parseHeader, printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,7 +60,10 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 Namespace HDF5
 
     ''' <summary>
-    ''' 这个reader只会读取一个<see cref="datasetName"/>的数据，如果需要读取其他的dataset的话，则会需要创建多个<see cref="HDF5Reader"/>对象来进行数据的读取操作
+    ''' 这个reader只会读取一个<see cref="datasetName"/>的数据，如果需要读取其他的dataset的话，
+    ''' 则会需要创建多个<see cref="HDF5Reader"/>对象来进行数据的读取操作
+    ''' 
+    ''' 这个对象相当于文件系统之中的一个文件或者文件夹
     ''' </summary>
     ''' <remarks>
     ''' A VB.NET continues work of this java project: https://github.com/iychoi/HDF5HadoopReader
@@ -68,7 +71,7 @@ Namespace HDF5
     Public Class HDF5Reader : Implements IFileDump
 
         Public ReadOnly Property reader As BinaryReader
-        Public ReadOnly Property dataGroups As Group
+        Public ReadOnly Property dataGroup As Group
 
         ''' <summary>
         ''' header length
@@ -84,10 +87,20 @@ Namespace HDF5
 
         Dim file As HDF5File
 
-        Public ReadOnly Property Superblock As Superblock
+        Public ReadOnly Property superblock As Superblock
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Superblock(file, Scan0)
+                Return file.superblock
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 当前的这个对象是一个不进行数据存储的文件夹还是存储具体的数据的文件对象？
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property isDataSet As Boolean
+            Get
+                Return dataGroup Is Nothing
             End Get
         End Property
 
@@ -122,22 +135,26 @@ Namespace HDF5
             Me.chunks = New List(Of DataChunk)()
             Me.headerSize = 0
 
-            _dataGroups = parserObject(dataset, sb:=Superblock, container:=Me)
+            _dataGroup = parserObject(dataset, sb:=superblock, container:=Me)
             _headerSize = reader.maxOffset
         End Sub
 
         Public Function ParseDataObject(dataSetName As String) As HDF5Reader
             Dim reader As New HDF5Reader(Me.file, dataSetName)
-            Dim dobj As DataObjectFacade = dataGroups.objects.FirstOrDefault(Function(d) d.symbolName.TextEquals(dataSetName))
+            Dim dobj As DataObjectFacade = dataGroup _
+                .objects _
+                .FirstOrDefault(Function(d)
+                                    Return d.symbolName.TextEquals(dataSetName)
+                                End Function)
 
-            reader._dataGroups = parserObject(dobj, sb:=Superblock, container:=reader)
+            reader._dataGroup = parserObject(dobj, sb:=superblock, container:=reader)
             _headerSize = Me.reader.maxOffset
 
             Return reader
         End Function
 
         Private Sub parseHeader()
-            Dim sb As Superblock = Me.Superblock
+            Dim sb As Superblock = Me.superblock
             Dim rootSymbolTableEntry As SymbolTableEntry = sb.rootGroupSymbolTableEntry
             Dim objectFacade As New DataObjectFacade(sb, "root", rootSymbolTableEntry.objectHeaderAddress)
             Dim rootGroup As New Group(sb, objectFacade)
@@ -146,7 +163,7 @@ Namespace HDF5
             For Each dobj As DataObjectFacade In objects
                 ' compare dataset name
                 If dobj.symbolName.TextEquals(Me.datasetName) Then
-                    _dataGroups = parserObject(dobj, sb, Me)
+                    _dataGroup = parserObject(dobj, sb, Me)
                     Exit For
                 End If
             Next
@@ -163,11 +180,11 @@ Namespace HDF5
         Private Shared Function parserObject(dobj As DataObjectFacade, sb As Superblock, container As HDF5Reader) As Group
             ' parse or get layout
             Dim layout As Layout = dobj.layout
-            Dim reader = container.reader
+            Dim reader As BinaryReader = container.reader
 
             container._layout = layout
 
-            If layout.IsEmpty Then
+            If layout.isEmpty Then
                 Return New Group(sb, dobj)
             Else
                 ' parse btree index of the data
@@ -190,10 +207,10 @@ Namespace HDF5
         End Function
 
         Public Overrides Function ToString() As String
-            If Not layout Is Nothing AndAlso Not layout.IsEmpty Then
-                Return $"{reader} => {layout}"
+            If Not layout Is Nothing AndAlso Not layout.isEmpty Then
+                Return $"Dim {datasetName} As {dataType.reader} = &{layout.dataAddress}"
             Else
-                Return $"{reader} => {dataGroups}"
+                Return dataGroup.ToString
             End If
         End Function
 

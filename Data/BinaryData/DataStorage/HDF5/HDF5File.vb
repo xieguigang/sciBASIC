@@ -63,12 +63,21 @@ Namespace HDF5
         ''' <returns></returns>
         Public ReadOnly Property fileName As String
 
+        ''' <summary>
+        ''' The superblock may begin at certain predefined offsets within the HDF5 file, allowing a 
+        ''' block of unspecified content for users to place additional information at the beginning 
+        ''' (and end) of the HDF5 file without limiting the HDF5 Library's ability to manage the 
+        ''' objects within the file itself. This feature was designed to accommodate wrapping an 
+        ''' HDF5 file in another file format or adding descriptive information to an HDF5 file without 
+        ''' requiring the modification of the actual file's information. The superblock is located 
+        ''' by searching for the HDF5 format signature at byte offset 0, byte offset 512, and at 
+        ''' successive locations in the file, each a multiple of two of the previous location; 
+        ''' in other words, at these byte offsets: 0, 512, 1024, 2048, and so on.
+        '''
+        ''' The superblock Is composed Of the format signature, followed by a superblock version number 
+        ''' And information that Is specific To Each version Of the superblock.
+        ''' </summary>
         Public ReadOnly Property superblock As Superblock
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New Superblock(Me, Scan0)
-            End Get
-        End Property
 
         ''' <summary>
         ''' 最顶端的数据对象，可能是一个数据块也可能是一个文件夹
@@ -84,7 +93,10 @@ Namespace HDF5
         ''' <summary>
         ''' 根节点名称或者全路径来获取一个数据集对象
         ''' </summary>
-        ''' <param name="symbolName"></param>
+        ''' <param name="symbolName">
+        ''' + 如果只提供一个名称的话，则只会在根节点下面进行查找
+        ''' + 如果提供的是一个全路径的话，则会依据这个路径依次进行查找操作
+        ''' </param>
         ''' <returns></returns>
         Default Public ReadOnly Property GetObject(symbolName As String) As HDF5Reader
             Get
@@ -113,6 +125,7 @@ Namespace HDF5
         Sub New(fileName As String)
             Me.reader = New BinaryFileReader(fileName)
             Me.fileName = fileName.GetFullPath
+            Me.superblock = New Superblock(Me, address:=Scan0)
 
             Call parseHeader()
         End Sub

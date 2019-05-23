@@ -53,8 +53,8 @@ Namespace HDF5
     <HideModuleName> Public Module FileDump
 
         <Extension>
-        Public Sub CreateFileDump(reader As HDF5Reader, out As System.IO.StringWriter)
-            Call DirectCast(reader, IFileDump).printValues(out)
+        Public Sub CreateFileDump(obj As IFileDump, out As TextWriter)
+            Call obj.printValues(out)
         End Sub
     End Module
 

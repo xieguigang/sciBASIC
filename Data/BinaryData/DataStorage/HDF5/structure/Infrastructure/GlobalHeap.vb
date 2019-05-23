@@ -203,7 +203,7 @@ Namespace HDF5.[Structure]
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"#{index} > ({objectSize} bytes) {data.Select(Function(x) x.ToString("X2")).JoinBy("-")}"
+            Return $"#{index} > ({objectSize} bytes) {data.Select(Function(x) x.ToString("X2")).JoinBy("")}"
         End Function
     End Class
 End Namespace
