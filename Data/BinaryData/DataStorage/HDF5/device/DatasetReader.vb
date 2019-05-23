@@ -73,7 +73,7 @@ Namespace HDF5.device
     Module DatasetReader
 
         <Extension>
-        Public Function readDataset(type As DataType, address&, sb As Superblock, dimensions As Integer()) As Object
+        Public Function readDataset(type As DataType, address&, space As DataspaceMessage, sb As Superblock, dimensions As Integer()) As Object
             ' If the data is scalar make a fake one element array then remove it at the end
             Dim data As Array
             Dim isScalar As Boolean
@@ -91,7 +91,7 @@ Namespace HDF5.device
             End If
 
             sb.file.reader.offset = address
-            buffer = sb.file.reader.readBytes(type.size)
+            buffer = sb.file.reader.readBytes(space.totalLength * type.size)
 
             If TypeOf type Is FixedPoint Then
                 Dim fixedPoint As FixedPoint = DirectCast(type, FixedPoint)

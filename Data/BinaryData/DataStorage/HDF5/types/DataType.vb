@@ -48,6 +48,11 @@ Namespace HDF5.type
 
         Public Property version As Integer
         Public Property [class] As DataTypes
+
+        ''' <summary>
+        ''' 数据元素<see cref="DataTypes"/>的单位大小
+        ''' </summary>
+        ''' <returns></returns>
         Public Property size As Integer
 
         Public MustOverride ReadOnly Property TypeInfo As System.Type

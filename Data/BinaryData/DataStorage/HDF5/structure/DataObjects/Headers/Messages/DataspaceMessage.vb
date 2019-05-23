@@ -91,7 +91,7 @@ Namespace HDF5.[Structure]
         Public ReadOnly Property dimensionLength As Integer()
         Public ReadOnly Property maxDimensionLength As Integer()
         ''' <summary>
-        ''' 数据块总长度
+        ''' 数据块单位元素的总数量，这个还需要乘以每一个数据块的大小才能够得到总大小值
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property totalLength As Long
