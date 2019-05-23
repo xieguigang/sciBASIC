@@ -1,18 +1,13 @@
 
-''' <summary>
-'''*****************************************************************************
-''' This file is part of jHDF. A pure Java library for accessing HDF5 files.
-''' 
-''' http://jhdf.io
-''' 
-''' Copyright 2019 James Mudd
-''' 
-''' MIT License see 'LICENSE' file
-''' *****************************************************************************
-''' </summary>
-'JAVA TO C# CONVERTER CRACKED BY X-CRACKER TODO TASK: This Java 'import static' statement cannot be converted to C#:
-'    import static io.jhdf.Constants.UNDEFINED_ADDRESS;
-
+'*****************************************************************************
+' This file is part of jHDF. A pure Java library for accessing HDF5 files.
+' 
+' http://jhdf.io
+' 
+' Copyright 2019 James Mudd
+' 
+' MIT License see 'LICENSE' file
+' *****************************************************************************
 
 Namespace HDF5.dataset
 

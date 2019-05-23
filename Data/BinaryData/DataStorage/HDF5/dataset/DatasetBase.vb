@@ -1,28 +1,23 @@
 
-''' <summary>
-'''*****************************************************************************
-''' This file is part of jHDF. A pure Java library for accessing HDF5 files.
-''' 
-''' http://jhdf.io
-''' 
-''' Copyright 2019 James Mudd
-''' 
-''' MIT License see 'LICENSE' file
-''' *****************************************************************************
-''' </summary>
-'JAVA TO C# CONVERTER CRACKED BY X-CRACKER TODO TASK: This Java 'import static' statement cannot be converted to C#:
-'    import static org.apache.commons.lang3.ClassUtils.primitiveToWrapper;
+'*****************************************************************************
+' This file is part of jHDF. A pure Java library for accessing HDF5 files.
+' 
+' http://jhdf.io
+' 
+' Copyright 2019 James Mudd
+' 
+' MIT License see 'LICENSE' file
+' *****************************************************************************
+
 Namespace HDF5.dataset
 
     Public MustInherit Class DatasetBase
         Inherits AbstractNode
         Inherits dataset
-        Private Shared ReadOnly logger As Logger = LoggerFactory.getLogger(GetType(DatasetBase))
 
         Protected Friend ReadOnly hdfFc As HdfFileChannel
         Protected Friend ReadOnly oh As ObjectHeader
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private ReadOnly dataType_Renamed As DataType
         Private ReadOnly dataSpace As DataSpace
 
@@ -43,8 +38,6 @@ Namespace HDF5.dataset
 
         Protected Friend Overridable Sub convertToCorrectEndiness(bb As ByteBuffer)
             If TypeOf dataType_Renamed Is OrderedDataType Then
-                'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-                'ORIGINAL LINE: final java.nio.ByteOrder order = (((io.jhdf.object.datatype.OrderedDataType) dataType).getByteOrder());
                 Dim order As ByteOrder = (DirectCast(dataType_Renamed, OrderedDataType).byteOrder)
                 bb.order(order)
                 logger.debug("Set buffer oder of '{}' to {}", path, order)
@@ -89,8 +82,6 @@ Namespace HDF5.dataset
 
         Public Overridable ReadOnly Property javaType() As type Implements dataset.javaType
             Get
-                'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-                'ORIGINAL LINE: final Class type = dataType.getJavaType();
                 Dim type As type = dataType_Renamed.javaType
                 ' For scalar datasets the returned type will be the wrapper class because
                 ' getData returns Object

@@ -1,18 +1,13 @@
 
-''' <summary>
-'''*****************************************************************************
-''' This file is part of jHDF. A pure Java library for accessing HDF5 files.
-''' 
-''' http://jhdf.io
-''' 
-''' Copyright 2019 James Mudd
-''' 
-''' MIT License see 'LICENSE' file
-''' *****************************************************************************
-''' </summary>
-'JAVA TO C# CONVERTER CRACKED BY X-CRACKER TODO TASK: This Java 'import static' statement cannot be converted to C#:
-'    import static Math.toIntExact;
-
+'*****************************************************************************
+' This file is part of jHDF. A pure Java library for accessing HDF5 files.
+' 
+' http://jhdf.io
+' 
+' Copyright 2019 James Mudd
+' 
+' MIT License see 'LICENSE' file
+' *****************************************************************************
 
 Namespace HDF5.dataset
 
@@ -25,7 +20,7 @@ Namespace HDF5.dataset
     ''' </summary>
     Public Class ChunkedDatasetV3
         Inherits DatasetBase
-        Private Shared ReadOnly logger As Logger = LoggerFactory.getLogger(GetType(ChunkedDatasetV3))
+
 
         Private ReadOnly chunkLookup As LazyInitializer(Of IDictionary(Of ChunkOffsetKey, BTreeV1Data.Chunk))
         Private ReadOnly decodedChunkLookup As ConcurrentMap(Of ChunkOffsetKey, SByte()) = New ConcurrentDictionary(Of ChunkOffsetKey, SByte())()
@@ -68,9 +63,6 @@ Namespace HDF5.dataset
                         insideChunk(j) = CInt(dimensionedIndex(j) - chunkOffset(j))
                     Next
                     Dim insideChunkLinearOffset As Integer = dimensionIndexToLinearIndex(insideChunk, layoutMessage.chunkDimensions)
-
-                    'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-                    'ORIGINAL LINE: final byte[] chunkData = getDecodedChunk(new ChunkOffsetKey(chunkOffset));
                     Dim chunkData As SByte() = getDecodedChunk(New ChunkOffsetKey(Me, chunkOffset))
 
                     ' Copy that data into the overall buffer
@@ -86,32 +78,20 @@ Namespace HDF5.dataset
         End Function
 
         Private Function decodeChunk(key As ChunkOffsetKey) As SByte()
-            logger.debug("Decoding chunk '{}'", key)
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-            'ORIGINAL LINE: final io.jhdf.btree.BTreeV1Data.Chunk chunk = getChunk(key);
             Dim chunk As BTreeV1Data.Chunk = getChunk(key)
             ' Get the encoded (i.e. compressed buffer)
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-            'ORIGINAL LINE: final ByteBuffer encodedBuffer = getDataBuffer(chunk);
             Dim encodedBuffer As ByteBuffer = getDataBuffer(chunk)
-
             ' Get the encoded data from buffer
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-            'ORIGINAL LINE: final byte[] encodedBytes = new byte[encodedBuffer.remaining()];
             Dim encodedBytes As SByte() = New SByte(encodedBuffer.remaining() - 1) {}
+
             encodedBuffer.[get](encodedBytes)
 
             If pipeline Is Nothing Then
-                ' No filters
-                logger.debug("No filters returning decoded chunk '{}'", chunk)
                 Return encodedBytes
             End If
 
             ' Decode using the pipeline applying the filters
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-            'ORIGINAL LINE: final byte[] decodedBytes = pipeline.decode(encodedBytes);
             Dim decodedBytes As SByte() = pipeline.decode(encodedBytes)
-            logger.debug("Decoded {}", chunk)
 
             Return decodedBytes
         End Function
@@ -172,15 +152,14 @@ Namespace HDF5.dataset
             End Sub
 
             Protected Friend Overrides Function initialize() As IDictionary(Of ChunkOffsetKey, BTreeV1Data.Chunk)
-                logger.debug("Lazy initializing chunk lookup for '{}'", outerInstance.path)
                 Dim bTree As BTreeV1Data = BTreeV1.createDataBTree(outerInstance.hdfFc, outerInstance.layoutMessage.bTreeAddress, outerInstance.dimensions.Length)
-
                 Dim chunks As IList(Of BTreeV1Data.Chunk) = bTree.chunks
                 Dim chunkLookupMap As IDictionary(Of ChunkOffsetKey, BTreeV1Data.Chunk) = New Dictionary(Of ChunkOffsetKey, BTreeV1Data.Chunk)(chunks.Count)
+
                 For Each chunk As BTreeV1Data.Chunk In chunks
                     chunkLookupMap(New ChunkOffsetKey(outerInstance, chunk.chunkOffset)) = chunk
                 Next
-                logger.debug("Created chunk lookup for '{}'", outerInstance.path)
+
                 Return chunkLookupMap
             End Function
         End Class
