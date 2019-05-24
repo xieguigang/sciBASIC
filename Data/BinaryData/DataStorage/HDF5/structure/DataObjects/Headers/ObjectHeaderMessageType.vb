@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7f5f8ab5970474bded86a52ea97be3a, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeaderMessageType.vb"
+﻿#Region "Microsoft.VisualBasic::f6fd27f240ff57c16f12d1b1095913e9, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeaderMessageType.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Class ObjectHeaderMessageType
     ' 
-    '         Properties: num
+    '         Properties: num, type
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) [getType], ToString

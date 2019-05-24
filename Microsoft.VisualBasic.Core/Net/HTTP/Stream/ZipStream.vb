@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91762bbb449e95456d3322a02d642d4e, Microsoft.VisualBasic.Core\Net\HTTP\Stream\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::2bc81f82cf1a26d06e4d18edad34ebe8, Microsoft.VisualBasic.Core\Net\HTTP\Stream\ZipStream.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ZipStreamExtensions
     ' 
-    '         Function: UnZipStream
+    '         Function: Deflate, UnZipStream
     ' 
     ' 
     ' /********************************************************************************/

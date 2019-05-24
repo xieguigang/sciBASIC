@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::574d914fcf5beb5d8af9d528ecab4881, vs_solutions\dev\VisualStudio\vbproj\Mics.vb"
+﻿#Region "Microsoft.VisualBasic::35a1a8b4dbee8ef34f3e55c16a20c1b8, vs_solutions\dev\VisualStudio\vbproj\Mics.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,6 @@
 
 #End Region
 
-
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -82,4 +81,3 @@ Public Class ConditionValue
         Return Me.GetJson
     End Function
 End Class
-

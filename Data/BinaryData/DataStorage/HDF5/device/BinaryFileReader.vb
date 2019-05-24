@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a887c8532164a2b025e83503bc505643, Data\BinaryData\DataStorage\HDF5\device\BinaryFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::e34d910a455d60469b242e8ed27e6a66, Data\BinaryData\DataStorage\HDF5\device\BinaryFileReader.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: readByte, ToString
     ' 
-    '         Sub: _BinaryFileReader, close
+    '         Sub: _BinaryFileReader, close, setPosition
     ' 
     ' 
     ' /********************************************************************************/

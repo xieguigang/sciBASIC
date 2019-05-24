@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ff0825560eac68bff9a138cf0b7fca5, Data\BinaryData\DataStorage\HDF5\structure\DataChunkIterator.vb"
+﻿#Region "Microsoft.VisualBasic::e1ab0930d8d88c012834fddf300b486c, Data\BinaryData\DataStorage\HDF5\structure\DataChunkIterator.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Class DataChunkIterator
+    ' 
+    '         Properties: root
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
