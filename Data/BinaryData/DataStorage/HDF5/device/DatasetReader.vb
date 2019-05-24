@@ -45,6 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 
 Namespace HDF5.device

@@ -171,7 +171,7 @@ Namespace HDF5.struct.messages
                 Me.structureMembers = New List(Of StructureMember)()
 
                 For i As Integer = 0 To nmembers - 1
-                    Me.structureMembers.Add(New StructureMember([in], sb, [in].offset, Me.version, Me.byteSize))
+                    Me.structureMembers.Add(New StructureMember(sb, [in].offset, Me.version, Me.byteSize))
                 Next
             ElseIf Me.type = DataTypes.DATATYPE_REFERENCE Then
                 Me.m_referenceType = Me.m_flags(0) And &HF

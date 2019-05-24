@@ -55,8 +55,8 @@
 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5.struct
 

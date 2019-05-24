@@ -11,6 +11,7 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 
 Namespace HDF5.dataset
@@ -22,7 +23,7 @@ Namespace HDF5.dataset
         Public Property dataLayout As Layout
         Public Property pipeline As FilterPipelineMessage
 
-        Public Overridable ReadOnly Property scalar() As Boolean
+        Public Overridable ReadOnly Property scalar As Boolean
             Get
                 Return dataSpace.dimensionLength.Length = 0
             End Get
