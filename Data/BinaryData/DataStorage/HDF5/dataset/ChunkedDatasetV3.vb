@@ -63,25 +63,25 @@ Namespace HDF5.dataset
 
         ReadOnly decodedChunkLookup As New Dictionary(Of ChunkOffsetKey, Byte())()
 
-        Public Overridable ReadOnly Property size() As Long
+        Public Overridable ReadOnly Property size As Long
             Get
                 Return dataSpace.totalLength
             End Get
         End Property
 
-        Public Overridable ReadOnly Property diskSize() As Long
+        Public Overridable ReadOnly Property diskSize As Long
             Get
                 Return size * dataType.size
             End Get
         End Property
 
-        Public Overridable ReadOnly Property dimensions() As Integer()
+        Public Overrides ReadOnly Property dimensions As Integer()
             Get
                 Return dataSpace.dimensionLength
             End Get
         End Property
 
-        Public Overridable ReadOnly Property maxSize() As Integer()
+        Public Overridable ReadOnly Property maxSize As Integer()
             Get
                 If Not dataSpace.maxDimensionLength.IsNullOrEmpty Then
                     Return dataSpace.maxDimensionLength

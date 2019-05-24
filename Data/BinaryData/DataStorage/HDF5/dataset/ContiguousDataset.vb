@@ -35,6 +35,12 @@ Namespace HDF5.dataset
         ''' <returns></returns>
         Public Property size As Long
 
+        Public Overrides ReadOnly Property dimensions As Integer()
+            Get
+                Return dataSpace.dimensionLength
+            End Get
+        End Property
+
         Protected Overrides Function getBuffer(sb As Superblock) As MemoryStream
             Return New MemoryStream(sb.FileReader(dataAddress).readBytes(size))
         End Function
