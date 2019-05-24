@@ -160,7 +160,7 @@ Namespace HDF5.struct.messages
         Public ReadOnly Property name As String Implements Filter.name
 
         Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements Filter.decode
-            Return ZipStreamExtensions.UnZipStream(encodedData).ToArray
+            Return GZipStream.Deflate(New MemoryStream(encodedData)).ToArray
         End Function
     End Class
 
@@ -203,7 +203,7 @@ Namespace HDF5.struct.messages
         ''' with identifiers from this range.
         ''' </summary>
         ''' <returns></returns>
-        Public Property uid As Short
+        Public Property id As Short
         ''' <summary>
         ''' Each filter has an optional null-terminated ASCII name and this field holds 
         ''' the length of the name including the null termination padded with nulls to 
@@ -230,7 +230,7 @@ Namespace HDF5.struct.messages
             Call MyBase.New(address)
 
             If version = 1 Then
-                uid = [in].readShort
+                id = [in].readShort
                 nameLength = [in].readShort
                 flags = [in].readShort
                 numberOfClientDataValues = [in].readShort
@@ -244,7 +244,7 @@ Namespace HDF5.struct.messages
                 Throw New NotImplementedException
             End If
 
-            If uid = ReservedFilters.deflate Then
+            If id = ReservedFilters.deflate Then
                 filter = New DeflatePipelineFilter
             End If
         End Sub

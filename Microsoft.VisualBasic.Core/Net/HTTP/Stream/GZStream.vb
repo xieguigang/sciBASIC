@@ -43,6 +43,7 @@
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Net.Http
 
@@ -50,7 +51,26 @@ Namespace Net.Http
     ''' 请注意，这个模块是处理http请求或者响应之中的gzip压缩的数据，
     ''' 对于zip压缩的数据需要使用<see cref="ZipStreamExtensions"/>模块之中的帮助函数来完成
     ''' </summary>
-    Public Module GZStream
+    Public Module GZipStream
+
+        Public Function Deflate(stream As Stream) As MemoryStream
+            Using decompressionStream As New DeflateStream(stream, CompressionMode.Decompress)
+                Dim decompressedFileStream As New MemoryStream
+                ' 执行deflate然后返回填充的结果
+                Call decompressionStream.CopyTo(decompressedFileStream)
+                Return decompressedFileStream
+            End Using
+        End Function
+
+        ''' <summary>
+        ''' 如果得到的一个gzip压缩的数据块头部没有magic number的话，则使用这个方法手动的添加标记后再做解压缩
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function AddGzipMagic(data As IEnumerable(Of Byte)) As IEnumerable(Of Byte)
+            Return New Byte() {&H1F, &H8B}.JoinIterates(data)
+        End Function
 
         ''' <summary>
         ''' Unzip the stream data in the <paramref name="base64"/> string.
@@ -74,7 +94,7 @@ Namespace Net.Http
         ''' <returns></returns>
         <Extension>
         Public Function UnGzipStream(stream As IEnumerable(Of Byte)) As MemoryStream
-            Using gz As New GZipStream(New MemoryStream(stream.ToArray), CompressionMode.Decompress)
+            Using gz As New Compression.GZipStream(New MemoryStream(stream.ToArray), CompressionMode.Decompress)
                 Dim ms As New MemoryStream
                 Call gz.CopyTo(ms)
                 Return ms
@@ -90,7 +110,7 @@ Namespace Net.Http
         Public Function GZipStream(stream As Stream) As MemoryStream
             Dim ms As New MemoryStream
 
-            Using gz As New GZipStream(ms, CompressionMode.Compress)
+            Using gz As New Compression.GZipStream(ms, CompressionMode.Compress)
                 Call stream.CopyTo(gz)
                 Return ms
             End Using
