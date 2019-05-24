@@ -208,7 +208,7 @@ Namespace HDF5.dataset
         End Function
 
         Private Function getDataBuffer(sb As Superblock, chunk As DataChunk) As Byte()
-            Return sb.FileReader(chunk.filePosition).readBytes(chunk.size)
+            Return sb.FileReader(chunk.filePosition).readBytes(chunk.sizeOfChunk)
         End Function
     End Class
 

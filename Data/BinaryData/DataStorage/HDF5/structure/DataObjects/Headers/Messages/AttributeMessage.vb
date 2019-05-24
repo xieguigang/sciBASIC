@@ -138,7 +138,7 @@ Namespace HDF5.struct.messages
             ' make it more robust for errors
             ' read the dataspace
             filePos = [in].offset
-            dataSpace = New DataspaceMessage([in], sb, [in].offset)
+            dataSpace = New DataspaceMessage(sb, [in].offset)
 
             If Me.version = 1 Then
                 spaceSize += CShort(ReadHelper.padding(spaceSize, 8))

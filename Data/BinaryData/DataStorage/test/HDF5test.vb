@@ -101,7 +101,7 @@ Namespace edu.arizona.cs.hdf5.test
                         '  Dim dataValue = reader.dataType.reader.readDataset(filepos, reader.dataSpace, reader.superblock, reader.dataSpace.dimensionLength)
 
 
-                        Dim dataCountPerChunk As Integer = chunk.size \ chunkSize(0)
+                        Dim dataCountPerChunk As Integer = chunk.sizeOfChunk \ chunkSize(0)
                         For i As Integer = 0 To dataCountPerChunk - 1
                             Dim bytes As Byte() = chunkReader.readBytes(chunkSize(0))
 

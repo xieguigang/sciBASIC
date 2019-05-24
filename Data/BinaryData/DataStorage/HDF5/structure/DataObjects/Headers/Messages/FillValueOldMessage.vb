@@ -75,10 +75,10 @@ Namespace HDF5.struct.messages
         Public ReadOnly Property size As Integer
         Public ReadOnly Property value As Byte()
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.size = [in].readInt()
             Me.value = [in].readBytes(Me.size)

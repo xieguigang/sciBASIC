@@ -63,18 +63,51 @@ Namespace HDF5.struct
     ''' </summary>
     Public Class DataChunk : Inherits HDF5Ptr
 
-        Public ReadOnly Property size As Integer
-        Public ReadOnly Property filterMask As Integer
+        ''' <summary>
+        ''' Size of chunk in bytes.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property sizeOfChunk As Integer
+        ''' <summary>
+        ''' Filter mask, a 32-bit bit field indicating which filters have been skipped For 
+        ''' this chunk. Each filter has an index number In the pipeline (starting at 0, 
+        ''' With the first filter To apply) And If that filter Is skipped, the bit corresponding 
+        ''' To its index Is Set.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property filterMask As BitSet
         Public ReadOnly Property offsets As Long()
         Public ReadOnly Property filePosition As Long
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sb"></param>
+        ''' <param name="address"></param>
+        ''' <param name="numberOfDimensions"></param>
+        ''' <param name="last"></param>
+        ''' <remarks>
+        ''' For nodes of node type 1 (chunked raw data nodes), the key is formatted as follows:
+        ''' 
+        ''' Bytes 1-4	Size of chunk in bytes.
+        ''' Bytes 4-8:	Filter mask, a 32-bit bit field indicating which filters have been skipped For 
+        '''             this chunk. Each filter has an index number In the pipeline (starting at 0, 
+        '''             With the first filter To apply) And If that filter Is skipped, the bit 
+        '''             corresponding To its index Is Set.
+        '''             
+        ''' (D + 1) 64-bit fields:	The offset Of the chunk within the dataset where D Is the number 
+        ''' Of dimensions Of the dataset, And the last value Is the offset within the dataset's 
+        ''' datatype and should always be zero. For example, if a chunk in a 3-dimensional dataset 
+        ''' begins at the position [5,5,5], there will be three such 64-bit values, each with the 
+        ''' value of 5, followed by a 0 value.
+        ''' </remarks>
         Friend Sub New(sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
             Call MyBase.New(address)
 
             Dim [in] As BinaryReader = sb.FileReader(address)
 
-            Me.size = [in].readInt()
-            Me.filterMask = [in].readInt()
+            Me.sizeOfChunk = [in].readInt()
+            Me.filterMask = New BitSet([in].readInt)
             Me.offsets = New Long(numberOfDimensions - 1) {}
 
             For i As Integer = 0 To numberOfDimensions - 1
@@ -87,8 +120,8 @@ Namespace HDF5.struct
         Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("DataChunk >>>")
             console.WriteLine("address : " & Me.m_address)
-            console.WriteLine("size : " & Me.size)
-            console.WriteLine("filter mask : " & Me.filterMask)
+            console.WriteLine("size : " & Me.sizeOfChunk)
+            console.WriteLine("filter mask : " & Me.filterMask.ToString)
 
             If Me.offsets IsNot Nothing Then
                 For i As Integer = 0 To Me.offsets.Length - 1

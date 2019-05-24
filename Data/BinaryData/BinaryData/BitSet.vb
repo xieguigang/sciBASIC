@@ -304,6 +304,10 @@ Public Class BitSet
 
 #Region "String Conversions"
 
+    ''' <summary>
+    ''' <see cref="ToBinaryString"/>
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return ToBinaryString()

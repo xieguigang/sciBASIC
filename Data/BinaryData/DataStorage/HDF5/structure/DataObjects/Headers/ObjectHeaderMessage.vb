@@ -123,17 +123,17 @@ Namespace HDF5.struct
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Bogus Then
                 Throw New InvalidDataException("Invalid HDF5 file!")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
-                Me.dataspaceMessage = New DataspaceMessage([in], sb, [in].offset)
+                Me.dataspaceMessage = New DataspaceMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupNew Then
                 Throw New IOException("Group New not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Datatype Then
                 Me.dataTypeMessage = New DataTypeMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValueOld Then
-                Me.fillValueOldMessage = New FillValueOldMessage([in], sb, [in].offset)
+                Me.fillValueOldMessage = New FillValueOldMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValue Then
-                Me.fillValueMessage = New FillValueMessage([in], sb, [in].offset)
+                Me.fillValueMessage = New FillValueMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Link Then
-                Me.linkMessage = New LinkMessage([in], sb, [in].offset)
+                Me.linkMessage = New LinkMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Layout Then
                 Me.layoutMessage = New DataLayoutMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
