@@ -160,12 +160,17 @@ Namespace HDF5.struct.messages
                 Me._continuousSize = ReadHelper.readL([in], sb)
             ElseIf Me.type = LayoutClass.ChunkedStorage Then
                 Me._dimensionality = [in].readByte()
-                Me._dataAddress = ReadHelper.readO([in], sb)
-                Me._chunkSize = New Integer(Me.dimensionality - 1) {}
 
-                For i As Integer = 0 To Me.dimensionality - 1
+                ' Call [in].skipBytes(3)
+
+                Me._dataAddress = ReadHelper.readO([in], sb)
+                Me._chunkSize = New Integer(Me.dimensionality - 2) {}
+
+                For i As Integer = 0 To Me.dimensionality - 2
                     Me.chunkSize(i) = [in].readInt()
                 Next
+
+                Me._dataElementSize = [in].readInt
             End If
         End Sub
 
@@ -183,9 +188,9 @@ Namespace HDF5.struct.messages
                 Me._dataAddress = ReadHelper.readO([in], sb)
             End If
 
-            Me._chunkSize = New Integer(Me.dimensionality - 1) {}
+            Me._chunkSize = New Integer(Me.dimensionality - 2) {}
 
-            For i As Integer = 0 To Me.dimensionality - 1
+            For i As Integer = 0 To Me.dimensionality - 2
                 ' Dimension #n Size
                 Me.chunkSize(i) = [in].readInt()
             Next

@@ -154,7 +154,10 @@ Namespace HDF5.dataset
             Dim dataArray As Byte() = New Byte(diskSize - 1) {}
             Dim elementSize As Integer = dataType.size
 
+            ' size 是元素的总数量，在这个循环之中，分别计算坐标，将每一个元素的数据字节从对应的chunk之中复制到dataArray之中
             For i As Integer = 0 To size - 1
+
+                ' 在这里首先根据元素的字节占用数量计算元素所处的chunk的编号
                 Dim dimensionedIndex As Integer() = linearIndexToDimensionIndex(i, dimensions)
                 Dim chunkOffset As Long() = getChunkOffset(dimensionedIndex)
 
@@ -165,12 +168,17 @@ Namespace HDF5.dataset
                     insideChunk(j) = CInt(dimensionedIndex(j) - chunkOffset(j))
                 Next
 
+                ' 然后下面的代码根据所计算出来的chunk编号查找出对应的chunk
                 Dim insideChunkLinearOffset As Integer = dimensionIndexToLinearIndex(insideChunk, dataLayout.chunkSize)
                 Dim key As New ChunkOffsetKey(chunkOffset)
                 Dim chunkData As Byte() = getDecodedChunk(chunkLookup, key)
 
                 ' Copy that data into the overall buffer
-                Array.Copy(chunkData, insideChunkLinearOffset * elementSize, dataArray, i * elementSize, elementSize)
+                ' 然后从所查找出来的chunk之中复制对应的元素到dataarray之中
+                Dim sourcePos = insideChunkLinearOffset * elementSize
+                Dim dataOffset = i * elementSize
+
+                Array.Copy(chunkData, sourcePos, dataArray, dataOffset, elementSize)
             Next
 
             Return New MemoryStream(dataArray)
@@ -206,25 +214,32 @@ Namespace HDF5.dataset
 
     Public Class ChunkLookup
 
-        ReadOnly lookup As Dictionary(Of ChunkOffsetKey, DataChunk)
+        ReadOnly lookup As Dictionary(Of String, DataChunk)
 
         Public ReadOnly Property sb As Superblock
 
-        Default Public ReadOnly Property GetChunk(key As ChunkOffsetKey) As DataChunk
+        Public ReadOnly Property chunkValues As DataChunk()
             Get
-                Return lookup(key)
+                Return lookup.Values.ToArray
+            End Get
+        End Property
+
+        Default Public ReadOnly Property GetChunk(offsetKey As ChunkOffsetKey) As DataChunk
+            Get
+                Return lookup(offsetKey.key)
             End Get
         End Property
 
         Sub New(sb As Superblock, dataset As ChunkedDatasetV3)
             Dim bTree As New DataBTree(dataset.dataLayout)
-            Dim chunkLookupMap As New Dictionary(Of ChunkOffsetKey, DataChunk)()
+            Dim chunkLookupMap As New Dictionary(Of String, DataChunk)()
 
             For Each chunk As DataChunk In bTree.EnumerateChunks(sb)
-                chunkLookupMap(New ChunkOffsetKey(chunk.offsets)) = chunk
+                chunkLookupMap(New ChunkOffsetKey(chunk.offsets).key) = chunk
             Next
 
-            lookup = chunkLookupMap
+            Me.lookup = chunkLookupMap
+            Me.sb = sb
         End Sub
 
     End Class
@@ -237,6 +252,19 @@ Namespace HDF5.dataset
 
         Friend ReadOnly hashcode As Integer
         Friend ReadOnly chunkOffset As Long()
+
+        ''' <summary>
+        ''' 字典查找的主键名
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 因为在java之中和在VB.NET之中的字典查找的原理不一样，所以在这里使用这个字符串作为主键进行查找
+        ''' </remarks>
+        Public ReadOnly Property key As String
+            Get
+                Return chunkOffset.GetJson
+            End Get
+        End Property
 
         Friend Sub New(chunkOffset As Long())
             Me.chunkOffset = chunkOffset

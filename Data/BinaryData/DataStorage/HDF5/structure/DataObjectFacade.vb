@@ -207,7 +207,7 @@ Namespace HDF5.struct
                 If msg.headerMessageType Is ObjectHeaderMessageType.Layout Then
                     Dim lm As DataLayoutMessage = msg.layoutMessage
 
-                    Dim numberOfDimensions As Integer = lm.dimensionality
+                    Dim numberOfDimensions As Integer = lm.dimensionality - 1
                     Dim chunkSize As Integer() = lm.chunkSize
                     Dim dataAddress As Long = lm.dataAddress
 
