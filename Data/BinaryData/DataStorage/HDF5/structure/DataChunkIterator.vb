@@ -60,14 +60,14 @@ Namespace HDF5.struct
 
     Public Class DataChunkIterator : Inherits HDF5Ptr
 
-        Dim root As DataNode
+        Dim root As BTreeNode
 
         Public Sub New(sb As Superblock, layout As Layout)
             Call MyBase.New(layout.dataAddress)
 
             Dim [in] As BinaryReader = sb.FileReader(address)
 
-            Me.root = New DataNode(sb, layout, Me.m_address)
+            Me.root = New BTreeNode(sb, layout, Me.m_address)
             Me.root.first([in], sb)
         End Sub
 

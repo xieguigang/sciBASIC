@@ -140,7 +140,7 @@ Namespace edu.arizona.cs.hdf5.test
 
         Public Shared Sub Main(args As String())
             Dim [option] As String = "hd"
-            Dim filename As String = "E:\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\data\EP388069_K40_BS1D.otu_table.biom"
+            Dim filename As String = "D:\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\data\EP388069_K40_BS1D.otu_table.biom"
 
             If args.Length = 2 Then
                 [option] = args(0)
