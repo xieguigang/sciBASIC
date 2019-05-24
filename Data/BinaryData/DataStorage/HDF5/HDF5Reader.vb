@@ -107,6 +107,20 @@ Namespace HDF5
             End Get
         End Property
 
+        ''' <summary>
+        ''' 非数据集的时候总是返回空值
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property data As Object
+            Get
+                If Not isDataSet Then
+                    Return Nothing
+                Else
+                    Return dataset.data(file.superblock)
+                End If
+            End Get
+        End Property
+
         Public Sub New(filename As String, datasetName As String)
             Me.file = New HDF5File(filename)
             Me.reader = New BinaryFileReader(filename)
