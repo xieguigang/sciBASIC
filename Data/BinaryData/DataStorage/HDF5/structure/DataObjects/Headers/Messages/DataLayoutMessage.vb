@@ -76,11 +76,7 @@ Namespace HDF5.struct.messages
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property version As Integer
-        ''' <summary>
-        ''' Layout Class
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property type As LayoutClass
+
         ''' <summary>
         ''' number of Dimensions
         ''' 
@@ -91,6 +87,13 @@ Namespace HDF5.struct.messages
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property dimensionality As Integer
+
+        ''' <summary>
+        ''' Layout Class
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property type As LayoutClass
+
         ''' <summary>
         ''' For contiguous storage, this is the address of the raw data in the file. For chunked 
         ''' storage this is the address of the v1 B-tree that is used to look up the addresses 
@@ -102,7 +105,11 @@ Namespace HDF5.struct.messages
         Public ReadOnly Property dataAddress As Long
         Public ReadOnly Property continuousSize As Long
         Public ReadOnly Property chunkSize As Integer()
-        Public ReadOnly Property dataSize As Integer
+        ''' <summary>
+        ''' Dataset element size/Compact Data Size(Compact Data/chunked data)
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property dataElementSize As Integer
 
         Public ReadOnly Property dataset As Hdf5Dataset
 
@@ -123,14 +130,14 @@ Namespace HDF5.struct.messages
                 Case LayoutClass.ChunkedStorage
                     dataset = New ChunkedDatasetV3 With {
                         .BtreeAddress = dataAddress,
-                        .byteSize = dataSize,
+                        .byteSize = dataElementSize,
                         .dimensionality = dimensionality,
                         .dimensionSize = chunkSize
                     }
                 Case LayoutClass.CompactStorage
                     dataset = New CompactDataset With {
-                        .size = dataSize,
-                        .rawData = [in].readBytes(dataSize)
+                        .size = dataElementSize,
+                        .rawData = [in].readBytes(dataElementSize)
                     }
                 Case LayoutClass.ContiguousStorage
                     dataset = New ContiguousDataset With {
@@ -146,7 +153,7 @@ Namespace HDF5.struct.messages
             Me._type = CType(CInt([in].readByte), LayoutClass)
 
             If Me.type = LayoutClass.CompactStorage Then
-                Me._dataSize = [in].readShort()
+                Me._dataElementSize = [in].readShort()
                 Me._dataAddress = [in].offset
             ElseIf Me.type = LayoutClass.ContiguousStorage Then
                 Me._dataAddress = ReadHelper.readO([in], sb)
@@ -179,14 +186,16 @@ Namespace HDF5.struct.messages
             Me._chunkSize = New Integer(Me.dimensionality - 1) {}
 
             For i As Integer = 0 To Me.dimensionality - 1
-                ' Dimension n Size
+                ' Dimension #n Size
                 Me.chunkSize(i) = [in].readInt()
             Next
 
             If isCompact Then
                 ' Dataset Element Size (optional)
-                Me._dataSize = [in].readInt()
+                Me._dataElementSize = [in].readInt()
                 Me._dataAddress = [in].offset
+            ElseIf type = LayoutClass.ChunkedStorage Then
+                Me._dataElementSize = [in].readInt
             End If
         End Sub
 
@@ -199,7 +208,7 @@ Namespace HDF5.struct.messages
             console.WriteLine("type : " & Me.type)
             console.WriteLine("data address : " & Me.dataAddress)
             console.WriteLine("continuous size : " & Me.continuousSize)
-            console.WriteLine("data size : " & Me.dataSize)
+            console.WriteLine("data size : " & Me.dataElementSize)
 
             For i As Integer = 0 To Me.chunkSize.Length - 1
                 console.WriteLine("chunk size [" & i & "] : " & Me.chunkSize(i))

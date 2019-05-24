@@ -91,6 +91,12 @@ Namespace HDF5.dataset
             End Get
         End Property
 
+        ''' <summary>
+        ''' 将一个线型的数组下标转换为多维矩阵数组的坐标信息
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="dimensions"></param>
+        ''' <returns></returns>
         Private Function linearIndexToDimensionIndex(index As Integer, dimensions As Integer()) As Integer()
             Dim dimIndex As Integer() = New Integer(dimensions.Length - 1) {}
 
@@ -101,14 +107,27 @@ Namespace HDF5.dataset
             Return dimIndex
         End Function
 
+        ''' <summary>
+        ''' 将一个多维矩阵数组的坐标信息转换为一个一维线性区域的数组下标
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="dimensions"></param>
+        ''' <returns></returns>
         Private Function dimensionIndexToLinearIndex(index As Integer(), dimensions As Integer()) As Integer
             Dim linear As Integer = 0
 
+            If index.All(Function(i) i = 0) Then
+                ' 所有的元素都是零，则其肯定是线性数组之中的第一个元素
+                Return 0
+            End If
+
             For i As Integer = 0 To dimensions.Length - 1
                 Dim temp As Integer = index(i)
+
                 For j As Integer = i + 1 To dimensions.Length - 1
                     temp *= dimensions(j)
                 Next
+
                 linear += temp
             Next
 
@@ -117,10 +136,12 @@ Namespace HDF5.dataset
 
         Private Function getChunkOffset(dimensionedIndex As Integer()) As Long()
             Dim chunkOffset As Long() = New Long(dimensionedIndex.Length - 1) {}
+
             For i As Integer = 0 To chunkOffset.Length - 1
                 Dim temp As Long = dataLayout.chunkSize(i)
                 chunkOffset(i) = (dimensionedIndex(i) \ temp) * temp
             Next
+
             Return chunkOffset
         End Function
 
@@ -145,7 +166,8 @@ Namespace HDF5.dataset
                 Next
 
                 Dim insideChunkLinearOffset As Integer = dimensionIndexToLinearIndex(insideChunk, dataLayout.chunkSize)
-                Dim chunkData As Byte() = getDecodedChunk(chunkLookup, New ChunkOffsetKey(chunkOffset))
+                Dim key As New ChunkOffsetKey(chunkOffset)
+                Dim chunkData As Byte() = getDecodedChunk(chunkLookup, key)
 
                 ' Copy that data into the overall buffer
                 Array.Copy(chunkData, insideChunkLinearOffset * elementSize, dataArray, i * elementSize, elementSize)
@@ -155,7 +177,11 @@ Namespace HDF5.dataset
         End Function
 
         Private Function getDecodedChunk(chunkLookup As ChunkLookup, chunkKey As ChunkOffsetKey) As Byte()
-            Return decodedChunkLookup.ComputeIfAbsent(chunkKey, Function(key) decodeChunk(chunkLookup(chunkKey), chunkLookup.sb))
+            Return decodedChunkLookup.ComputeIfAbsent(
+                chunkKey, Function(key)
+                              Dim entry = chunkLookup(chunkKey)
+                              Return decodeChunk(entry, chunkLookup.sb)
+                          End Function)
         End Function
 
         Private Function decodeChunk(chunk As DataChunk, sb As Superblock) As Byte()
@@ -183,6 +209,7 @@ Namespace HDF5.dataset
         ReadOnly lookup As Dictionary(Of ChunkOffsetKey, DataChunk)
 
         Public ReadOnly Property sb As Superblock
+
         Default Public ReadOnly Property GetChunk(key As ChunkOffsetKey) As DataChunk
             Get
                 Return lookup(key)
@@ -201,6 +228,7 @@ Namespace HDF5.dataset
         End Sub
 
     End Class
+
     ''' <summary>
     ''' Custom key object for indexing chunks. It is optimised for fast hashcode and
     ''' equals when looking up chunks.

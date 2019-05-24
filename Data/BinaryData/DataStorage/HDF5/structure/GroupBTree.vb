@@ -104,10 +104,10 @@ Namespace HDF5.struct
 
             Dim leftAddress As Long = ReadHelper.readO([in], sb)
             Dim rightAddress As Long = ReadHelper.readO([in], sb)
-
             Dim myEntries As New List(Of BTreeEntry)()
+
             For i As Integer = 0 To entryNum - 1
-                myEntries.Add(New BTreeEntry([in], sb, [in].offset))
+                myEntries.Add(New BTreeEntry(sb, [in].offset))
             Next
 
             If level = 0 Then

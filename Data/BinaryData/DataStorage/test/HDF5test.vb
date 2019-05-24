@@ -170,14 +170,14 @@ Namespace edu.arizona.cs.hdf5.test
             Dim reader As HDF5Reader = file!sample
             ' reader.parseHeader()
 
-            Dim ids = reader.ParseDataObject("matrix")
+            ' Dim ids = reader.ParseDataObject("matrix")
 
-            Dim data = ids.ParseDataObject("data")
+            '  Dim data = ids.ParseDataObject("data")
 
-            Call dumpData(data, True, True, "./test.dump")
+            '  Call dumpData(data, True, True, "./test.dump")
 
-            data = Nothing
-            data = file("/sample/matrix/data")
+            ' Data = Nothing
+            Dim Data = file("/sample/matrix/data")
 
             Call dumpData(data, True, True, "./test2.dump")
         End Sub

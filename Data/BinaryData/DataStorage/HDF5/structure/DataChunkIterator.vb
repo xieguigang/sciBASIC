@@ -60,7 +60,7 @@ Namespace HDF5.struct
 
     Public Class DataChunkIterator : Inherits HDF5Ptr
 
-        Dim root As BTreeNode
+        Public ReadOnly Property root As BTreeNode
 
         Public Sub New(sb As Superblock, layout As Layout)
             Call MyBase.New(layout.dataAddress)
