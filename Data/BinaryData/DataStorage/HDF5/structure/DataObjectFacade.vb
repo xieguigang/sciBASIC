@@ -81,9 +81,9 @@ Namespace HDF5.struct
             End Get
         End Property
 
-        Public ReadOnly Property layoutMessage As LayoutMessage
+        Public ReadOnly Property layoutMessage As DataLayoutMessage
             Get
-                Return Me.dataObject.messages.OfType(Of LayoutMessage).FirstOrDefault
+                Return Me.dataObject.messages.OfType(Of DataLayoutMessage).FirstOrDefault
             End Get
         End Property
 
@@ -204,7 +204,7 @@ Namespace HDF5.struct
 
             For Each msg As ObjectHeaderMessage In msgs
                 If msg.headerMessageType Is ObjectHeaderMessageType.Layout Then
-                    Dim lm As LayoutMessage = msg.layoutMessage
+                    Dim lm As DataLayoutMessage = msg.layoutMessage
 
                     Dim numberOfDimensions As Integer = lm.dimensionality
                     Dim chunkSize As Integer() = lm.chunkSize

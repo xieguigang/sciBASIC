@@ -62,7 +62,7 @@ Namespace HDF5.struct
     ''' The Data Layout message describes how the elements of a multi-dimensional array 
     ''' are stored in the HDF5 file. Required for datasets; may not be repeated.
     ''' </summary>
-    Public Class LayoutMessage : Inherits Message
+    Public Class DataLayoutMessage : Inherits Message
 
         ''' <summary>
         ''' The version number information is used for changes in the format of the 

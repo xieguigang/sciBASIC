@@ -85,7 +85,7 @@ Namespace HDF5.struct
         Public ReadOnly Property dataTypeMessage() As DataTypeMessage
         Public ReadOnly Property attributeMessage() As AttributeMessage
         Public ReadOnly Property linkMessage() As LinkMessage
-        Public ReadOnly Property layoutMessage() As LayoutMessage
+        Public ReadOnly Property layoutMessage() As DataLayoutMessage
         Public ReadOnly Property lastModifiedMessage() As LastModifiedMessage
         Public ReadOnly Property dataspaceMessage() As DataspaceMessage
         Public ReadOnly Property filterPipelineMessage As FilterPipelineMessage
@@ -134,7 +134,7 @@ Namespace HDF5.struct
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Link Then
                 Me.linkMessage = New LinkMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Layout Then
-                Me.layoutMessage = New LayoutMessage(sb, [in].offset)
+                Me.layoutMessage = New DataLayoutMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
                 Throw New IOException("Group Info not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FilterPipeline Then
