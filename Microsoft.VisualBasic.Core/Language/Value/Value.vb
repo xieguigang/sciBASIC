@@ -89,10 +89,18 @@ Namespace Language
             End Get
         End Property
 
-        Default Public ReadOnly Property Index(key As Object) As Object
+        ''' <summary>
+        ''' Get data from <see cref="Value"/> through its index method
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Default Public Overridable Property Index(key As Object) As Object
             Get
                 Return CObj(Value)(key)
             End Get
+            Set(value As Object)
+                CObj(Me.Value)(key) = value
+            End Set
         End Property
 
         ''' <summary>
