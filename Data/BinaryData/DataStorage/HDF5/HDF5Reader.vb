@@ -204,6 +204,7 @@ Namespace HDF5
                     container.dataset.dataSpace = container.dataSpace
                     container.dataset.dataType = container.dataType.reader
                     container.dataset.dataLayout = layout
+                    container.dataset.pipeline = dobj.filterMessage
                 End If
 
                 While iter.hasNext()
