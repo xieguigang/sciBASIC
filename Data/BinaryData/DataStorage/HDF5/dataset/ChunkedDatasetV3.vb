@@ -39,7 +39,7 @@ Namespace HDF5.dataset
         ''' <summary>
         ''' This is the address of the v1 B-tree that is used to look up the addresses of the chunks 
         ''' that actually store portions of the array data. The address may have the 
-        ''' ¡°undefined address¡± value, to indicate that storage has not yet been allocated for this 
+        ''' â€œundefined addressâ€ value, to indicate that storage has not yet been allocated for this 
         ''' array.
         ''' </summary>
         ''' <returns></returns>
@@ -92,7 +92,7 @@ Namespace HDF5.dataset
         End Property
 
         ''' <summary>
-        ''' ½«Ò»¸öÏßĞÍµÄÊı×éÏÂ±ê×ª»»Îª¶àÎ¬¾ØÕóÊı×éµÄ×ø±êĞÅÏ¢
+        ''' å°†ä¸€ä¸ªçº¿å‹çš„æ•°ç»„ä¸‹æ ‡è½¬æ¢ä¸ºå¤šç»´çŸ©é˜µæ•°ç»„çš„åæ ‡ä¿¡æ¯
         ''' </summary>
         ''' <param name="index"></param>
         ''' <param name="dimensions"></param>
@@ -108,7 +108,7 @@ Namespace HDF5.dataset
         End Function
 
         ''' <summary>
-        ''' ½«Ò»¸ö¶àÎ¬¾ØÕóÊı×éµÄ×ø±êĞÅÏ¢×ª»»ÎªÒ»¸öÒ»Î¬ÏßĞÔÇøÓòµÄÊı×éÏÂ±ê
+        ''' å°†ä¸€ä¸ªå¤šç»´çŸ©é˜µæ•°ç»„çš„åæ ‡ä¿¡æ¯è½¬æ¢ä¸ºä¸€ä¸ªä¸€ç»´çº¿æ€§åŒºåŸŸçš„æ•°ç»„ä¸‹æ ‡
         ''' </summary>
         ''' <param name="index"></param>
         ''' <param name="dimensions"></param>
@@ -117,7 +117,7 @@ Namespace HDF5.dataset
             Dim linear As Integer = 0
 
             If index.All(Function(i) i = 0) Then
-                ' ËùÓĞµÄÔªËØ¶¼ÊÇÁã£¬ÔòÆä¿Ï¶¨ÊÇÏßĞÔÊı×éÖ®ÖĞµÄµÚÒ»¸öÔªËØ
+                ' æ‰€æœ‰çš„å…ƒç´ éƒ½æ˜¯é›¶ï¼Œåˆ™å…¶è‚¯å®šæ˜¯çº¿æ€§æ•°ç»„ä¹‹ä¸­çš„ç¬¬ä¸€ä¸ªå…ƒç´ 
                 Return 0
             End If
 
@@ -154,10 +154,10 @@ Namespace HDF5.dataset
             Dim dataArray As Byte() = New Byte(diskSize - 1) {}
             Dim elementSize As Integer = dataType.size
 
-            ' size ÊÇÔªËØµÄ×ÜÊıÁ¿£¬ÔÚÕâ¸öÑ­»·Ö®ÖĞ£¬·Ö±ğ¼ÆËã×ø±ê£¬½«Ã¿Ò»¸öÔªËØµÄÊı¾İ×Ö½Ú´Ó¶ÔÓ¦µÄchunkÖ®ÖĞ¸´ÖÆµ½dataArrayÖ®ÖĞ
+            ' size æ˜¯å…ƒç´ çš„æ€»æ•°é‡ï¼Œåœ¨è¿™ä¸ªå¾ªç¯ä¹‹ä¸­ï¼Œåˆ†åˆ«è®¡ç®—åæ ‡ï¼Œå°†æ¯ä¸€ä¸ªå…ƒç´ çš„æ•°æ®å­—èŠ‚ä»å¯¹åº”çš„chunkä¹‹ä¸­å¤åˆ¶åˆ°dataArrayä¹‹ä¸­
             For i As Integer = 0 To size - 1
 
-                ' ÔÚÕâÀïÊ×ÏÈ¸ù¾İÔªËØµÄ×Ö½ÚÕ¼ÓÃÊıÁ¿¼ÆËãÔªËØËù´¦µÄchunkµÄ±àºÅ
+                ' åœ¨è¿™é‡Œé¦–å…ˆæ ¹æ®å…ƒç´ çš„å­—èŠ‚å ç”¨æ•°é‡è®¡ç®—å…ƒç´ æ‰€å¤„çš„chunkçš„ç¼–å·
                 Dim dimensionedIndex As Integer() = linearIndexToDimensionIndex(i, dimensions)
                 Dim chunkOffset As Long() = getChunkOffset(dimensionedIndex)
 
@@ -168,13 +168,13 @@ Namespace HDF5.dataset
                     insideChunk(j) = CInt(dimensionedIndex(j) - chunkOffset(j))
                 Next
 
-                ' È»ºóÏÂÃæµÄ´úÂë¸ù¾İËù¼ÆËã³öÀ´µÄchunk±àºÅ²éÕÒ³ö¶ÔÓ¦µÄchunk
+                ' ç„¶åä¸‹é¢çš„ä»£ç æ ¹æ®æ‰€è®¡ç®—å‡ºæ¥çš„chunkç¼–å·æŸ¥æ‰¾å‡ºå¯¹åº”çš„chunk
                 Dim insideChunkLinearOffset As Integer = dimensionIndexToLinearIndex(insideChunk, dataLayout.chunkSize)
                 Dim key As New ChunkOffsetKey(chunkOffset)
                 Dim chunkData As Byte() = getDecodedChunk(chunkLookup, key)
 
                 ' Copy that data into the overall buffer
-                ' È»ºó´ÓËù²éÕÒ³öÀ´µÄchunkÖ®ÖĞ¸´ÖÆ¶ÔÓ¦µÄÔªËØµ½dataarrayÖ®ÖĞ
+                ' ç„¶åä»æ‰€æŸ¥æ‰¾å‡ºæ¥çš„chunkä¹‹ä¸­å¤åˆ¶å¯¹åº”çš„å…ƒç´ åˆ°dataarrayä¹‹ä¸­
                 Dim sourcePos = insideChunkLinearOffset * elementSize
                 Dim dataOffset = i * elementSize
 
@@ -254,11 +254,11 @@ Namespace HDF5.dataset
         Friend ReadOnly chunkOffset As Long()
 
         ''' <summary>
-        ''' ×Öµä²éÕÒµÄÖ÷¼üÃû
+        ''' å­—å…¸æŸ¥æ‰¾çš„ä¸»é”®å
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
-        ''' ÒòÎªÔÚjavaÖ®ÖĞºÍÔÚVB.NETÖ®ÖĞµÄ×Öµä²éÕÒµÄÔ­Àí²»Ò»Ñù£¬ËùÒÔÔÚÕâÀïÊ¹ÓÃÕâ¸ö×Ö·û´®×÷ÎªÖ÷¼ü½øĞĞ²éÕÒ
+        ''' å› ä¸ºåœ¨javaä¹‹ä¸­å’Œåœ¨VB.NETä¹‹ä¸­çš„å­—å…¸æŸ¥æ‰¾çš„åŸç†ä¸ä¸€æ ·ï¼Œæ‰€ä»¥åœ¨è¿™é‡Œä½¿ç”¨è¿™ä¸ªå­—ç¬¦ä¸²ä½œä¸ºä¸»é”®è¿›è¡ŒæŸ¥æ‰¾
         ''' </remarks>
         Public ReadOnly Property key As String
             Get
