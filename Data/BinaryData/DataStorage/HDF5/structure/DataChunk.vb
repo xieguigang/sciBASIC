@@ -114,7 +114,12 @@ Namespace HDF5.struct
                 Me.offsets(i) = [in].readLong()
             Next
 
-            [in].readLong()
+            ' 2019-05-24
+            '
+            ' 这个64bit数据总是零来的
+            ' 需要读取这个字节之后，数据块的文件位置才能够被正确的读取出来
+            ' 否则直接读取的话，得到的filePosition的值都是零
+            Call [in].skipBytes(8)
 
             Me.filePosition = If(last, -1, ReadHelper.readO([in], sb))
         End Sub
