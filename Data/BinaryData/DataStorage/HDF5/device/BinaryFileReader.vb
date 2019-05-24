@@ -50,35 +50,9 @@ Imports System.IO
 
 Namespace HDF5.device
 
-    Public Class BinaryFileReader
-        Inherits BinaryReader
+    Public Class BinaryFileReader : Inherits BinaryReader
 
-        Protected Friend randomaccessfile As FileStream
-
-        Public Sub New(filepath As String)
-            If filepath.StringEmpty Then
-                Throw New ArgumentException("filepath must not be null or empty!")
-            End If
-
-            _BinaryFileReader(New FileInfo(filepath))
-        End Sub
-
-        Public Sub New(file As FileInfo)
-            _BinaryFileReader(file)
-        End Sub
-
-        Private Sub _BinaryFileReader(file As FileInfo)
-            If file Is Nothing Then
-                Throw New ArgumentException("file must not be null")
-            End If
-
-            Me.offset = 0
-            Me.filesize = file.Length
-            Me.m_littleEndian = True
-            Me.m_maxOffset = 0
-
-            Me.randomaccessfile = New FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)
-        End Sub
+        Dim randomaccessfile As FileStream
 
         Public Overrides Property offset() As Long
             Get
@@ -92,20 +66,48 @@ Namespace HDF5.device
                     Throw New ArgumentException("offset must be positive and smaller than filesize")
                 End If
 
-                If MyBase.offset = Value Then
-                    Return
-                End If
-
-                MyBase.offset = Value
-
-                If Me.m_maxOffset < Value Then
-                    Me.m_maxOffset = Value
-                End If
-
-                ' change underlying file value
-                Me.randomaccessfile.Seek(Value, SeekOrigin.Begin)
+                Call setPosition(Value)
             End Set
         End Property
+
+        Public Sub New(filepath As String)
+            If filepath.StringEmpty Then
+                Throw New ArgumentException("filepath must not be null or empty!")
+            End If
+
+            _BinaryFileReader(New FileInfo(filepath))
+        End Sub
+
+        Public Sub New(file As FileInfo)
+            _BinaryFileReader(file)
+        End Sub
+
+        Private Sub setPosition(value As Long)
+            If MyBase.offset = value Then
+                Return
+            End If
+
+            MyBase.offset = value
+
+            If Me.m_maxOffset < value Then
+                Me.m_maxOffset = value
+            End If
+
+            ' change underlying file value
+            Me.randomaccessfile.Seek(value, SeekOrigin.Begin)
+        End Sub
+
+        Private Sub _BinaryFileReader(file As FileInfo)
+            If file Is Nothing Then
+                Throw New ArgumentException("file must not be null")
+            End If
+
+            Me.offset = 0
+            Me.filesize = file.Length
+            Me.m_littleEndian = True
+            Me.m_maxOffset = 0
+            Me.randomaccessfile = New FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)
+        End Sub
 
         Public Overrides Function readByte() As Byte
             If Me.offset >= Me.filesize Then

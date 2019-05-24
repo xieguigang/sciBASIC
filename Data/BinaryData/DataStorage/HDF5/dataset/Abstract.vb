@@ -42,7 +42,7 @@ Namespace HDF5.dataset
             Dim type As DataType = dataType
 
             If TypeOf type Is VariableLength Then
-                Return VariableLengthDatasetReader.readDataSet(DirectCast(type, VariableLength), dimensions, sb)
+                Return VariableLengthDatasetReader.readDataSet(type, dimensions, sb, New MemoryReader(dataBuffer))
             Else
                 Return DatasetReader.ParseDataChunk(type, dataBuffer.ToArray, dimensions)
             End If

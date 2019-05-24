@@ -156,11 +156,12 @@ Namespace HDF5.struct.messages
             Dim dims = msg.dataSpace.dimensionLength
             Dim dataType As DataTypes = type.type
 
+            ' 需要在这里移动文件的读取指针到dataPosition才能够正确的读取globalheap数据
             Call sb.FileReader(msg.dataPos)
 
             Select Case dataType
                 Case DataTypes.DATATYPE_VARIABLE_LENGTH
-                    Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb)
+                    Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb, msg.dataPos)
                 Case DataTypes.DATATYPE_FIXED_POINT, DataTypes.DATATYPE_FLOATING_POINT
                     Return DatasetReader.readDataset(msg.reader, msg.dataPos, msg.dataSpace, sb, dims)
                 Case Else

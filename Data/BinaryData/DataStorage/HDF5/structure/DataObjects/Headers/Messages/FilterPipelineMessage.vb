@@ -105,6 +105,10 @@ Namespace HDF5.struct.messages
             Next
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return description.Select(Function(filter) filter.name).JoinBy(" -> ")
+        End Function
+
         Protected Friend Overrides Sub printValues(console As TextWriter)
             Throw New NotImplementedException()
         End Sub
