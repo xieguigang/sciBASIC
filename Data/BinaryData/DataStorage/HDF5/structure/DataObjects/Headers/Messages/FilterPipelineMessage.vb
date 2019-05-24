@@ -62,6 +62,8 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.IO.HDF5.dataset.filters
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
@@ -109,83 +111,13 @@ Namespace HDF5.struct.messages
         End Sub
 
         Public Function decode(encodedBytes() As Byte) As Byte()
-            For Each filter In description
-                encodedBytes = filter.filter.decode(encodedBytes, filter.clientData)
+            For Each filter As FilterDescription In description
+                encodedBytes = filter.doDecode(encodedBytes)
             Next
 
             Return encodedBytes
         End Function
     End Class
-
-    ''' <summary>
-    ''' The filters currently in library version 1.8.0 are listed below:
-    ''' </summary>
-    Public Enum ReservedFilters As Short
-        ''' <summary>
-        ''' Reserved
-        ''' </summary>
-        NA = 0
-        ''' <summary>
-        ''' GZIP deflate compression
-        ''' </summary>
-        deflate = 1
-        ''' <summary>
-        ''' Data element shuffling
-        ''' </summary>
-        shuffle = 2
-        ''' <summary>
-        ''' Fletcher32 checksum
-        ''' </summary>
-        fletcher32 = 3
-        ''' <summary>
-        ''' SZIP compression
-        ''' </summary>
-        szip = 4
-        ''' <summary>
-        ''' N-bit packing
-        ''' </summary>
-        nbit = 5
-        ''' <summary>
-        ''' Scale and offset encoded values
-        ''' </summary>
-        scaleoffset = 6
-    End Enum
-
-    ''' <summary>
-    ''' GZip
-    ''' </summary>
-    Public Class DeflatePipelineFilter : Implements Filter
-
-        Public ReadOnly Property id As Integer Implements Filter.id
-        Public ReadOnly Property name As String Implements Filter.name
-
-        Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements Filter.decode
-            Return GZipStream.Deflate(New MemoryStream(encodedData)).ToArray
-        End Function
-    End Class
-
-    ''' <summary>
-    ''' Interface to be implemented to be a HDF5 filter.
-    ''' 
-    ''' @author James Mudd
-    ''' </summary>
-    Public Interface Filter
-
-        ''' <summary>
-        ''' Gets the ID of this filter, this must match the ID in the dataset header.
-        ''' </summary>
-        ''' <returns> the ID of this filter </returns>
-        ReadOnly Property id As Integer
-
-        ''' <summary>
-        ''' Gets the name of this filter e.g. 'deflate', 'shuffle'
-        ''' </summary>
-        ''' <returns> the name of this filter </returns>
-        ReadOnly Property name As String
-
-        Function decode(encodedData As Byte(), filterData As Integer()) As Byte()
-
-    End Interface
 
     Public Class FilterDescription : Inherits HDF5Ptr
 
@@ -224,7 +156,7 @@ Namespace HDF5.struct.messages
         ''' <returns></returns>
         Public ReadOnly Property clientData As Integer()
 
-        Public ReadOnly Property filter As Filter
+        Public ReadOnly Property filter As IFilter
 
         Sub New([in] As BinaryReader, version%, address&)
             Call MyBase.New(address)
@@ -248,6 +180,11 @@ Namespace HDF5.struct.messages
                 filter = New DeflatePipelineFilter
             End If
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function doDecode(encodedBytes As IEnumerable(Of Byte)) As Byte()
+            Return filter.decode(encodedBytes, clientData)
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"Call {name}({clientData.Select(Function(i) CStr(i)).JoinBy(", ")})"

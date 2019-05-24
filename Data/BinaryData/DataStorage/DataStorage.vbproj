@@ -110,6 +110,9 @@
     <Compile Include="HDF5\dataset\CompactDataset.vb" />
     <Compile Include="HDF5\dataset\ContiguousDataset.vb" />
     <Compile Include="HDF5\dataset\Abstract.vb" />
+    <Compile Include="HDF5\dataset\filters\IFilter.vb" />
+    <Compile Include="HDF5\dataset\filters\filters.vb" />
+    <Compile Include="HDF5\dataset\filters\ReservedFilters.vb" />
     <Compile Include="HDF5\device\GlobalHeapId.vb" />
     <Compile Include="HDF5\device\DatasetReader.vb" />
     <Compile Include="HDF5\device\VariableLengthDatasetReader.vb" />
