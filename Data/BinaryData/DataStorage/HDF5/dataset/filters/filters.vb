@@ -12,7 +12,7 @@ Namespace HDF5.dataset.filters
         Public ReadOnly Property name As String Implements IFilter.name
 
         Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements IFilter.decode
-            Return GZipStream.Deflate(New MemoryStream(encodedData)).ToArray
+            Return encodedData.UnZipStream(noMagic:=True).ToArray
         End Function
     End Class
 End Namespace

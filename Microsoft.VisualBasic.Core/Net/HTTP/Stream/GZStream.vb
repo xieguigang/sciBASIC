@@ -53,15 +53,6 @@ Namespace Net.Http
     ''' </summary>
     Public Module GZipStream
 
-        Public Function Deflate(stream As Stream) As MemoryStream
-            Using decompressionStream As New DeflateStream(stream, CompressionMode.Decompress)
-                Dim decompressedFileStream As New MemoryStream
-                ' 执行deflate然后返回填充的结果
-                Call decompressionStream.CopyTo(decompressedFileStream)
-                Return decompressedFileStream
-            End Using
-        End Function
-
         ''' <summary>
         ''' 如果得到的一个gzip压缩的数据块头部没有magic number的话，则使用这个方法手动的添加标记后再做解压缩
         ''' </summary>

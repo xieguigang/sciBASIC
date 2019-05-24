@@ -30,7 +30,7 @@ Namespace HDF5.dataset
         End Property
 
         Public Function data(sb As Superblock) As Object
-            Dim buffer = getBuffer(sb)
+            Dim buffer As MemoryStream = getBuffer(sb)
 
         End Function
 

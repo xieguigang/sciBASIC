@@ -114,6 +114,8 @@ Namespace HDF5.struct
                 Me.offsets(i) = [in].readLong()
             Next
 
+            [in].readLong()
+
             Me.filePosition = If(last, -1, ReadHelper.readO([in], sb))
         End Sub
 

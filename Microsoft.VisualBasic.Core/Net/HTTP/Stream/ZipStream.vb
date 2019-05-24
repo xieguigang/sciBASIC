@@ -98,7 +98,7 @@ Namespace Net.Http
         Public Function Deflate(compress As Stream) As MemoryStream
             Dim deflatMs As New MemoryStream()
 
-            Using deflatestream As New DeflateStream(compress, CompressionMode.Decompress, False)
+            Using deflatestream As New DeflateStream(compress, CompressionMode.Decompress)
                 deflatestream.CopyTo(deflatMs, 8192)
             End Using
 
