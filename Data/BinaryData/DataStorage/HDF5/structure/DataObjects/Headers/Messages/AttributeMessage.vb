@@ -60,15 +60,15 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     Public Class AttributeMessage : Inherits Message
 
-        Public  ReadOnly Property version As Integer
-        Public  ReadOnly Property name As String
-        Public  ReadOnly Property dataPos As Long
-        Public  ReadOnly Property dataType As DataTypeMessage
-        Public  ReadOnly Property dataSpace As DataspaceMessage
+        Public ReadOnly Property version As Integer
+        Public ReadOnly Property name As String
+        Public ReadOnly Property dataPos As Long
+        Public ReadOnly Property dataType As DataTypeMessage
+        Public ReadOnly Property dataSpace As DataspaceMessage
 
         Public ReadOnly Property reader As DataType
             Get

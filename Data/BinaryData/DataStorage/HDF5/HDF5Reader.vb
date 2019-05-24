@@ -56,6 +56,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.dataset
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5
