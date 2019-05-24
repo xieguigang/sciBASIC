@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c43f46d835a7cc837fdd1ff3b812a054, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\GlobalHeap.vb"
+﻿#Region "Microsoft.VisualBasic::6de85e0343538c096eca9d4509ff2aaa, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\GlobalHeap.vb"
 
     ' Author:
     ' 
@@ -197,9 +197,16 @@ Namespace HDF5.struct
             ' Skip 4 reserved bytes
             reader.skipBytes(4)
 
-            objectSize = device.readO(reader, sb)
-            data = reader.readBytes(objectSize)
-            device.seekBufferToNextMultipleOfEight(reader)
+            ' index 等于零的时候是读取操作结束的标志，在这里就不读取后面的数据了，如果index等于零的时候
+            If index > 0 Then
+                objectSize = device.readO(reader, sb)
+                data = reader.readBytes(objectSize)
+                device.seekBufferToNextMultipleOfEight(reader)
+            Else
+#If DEBUG Then
+                Call "index = ZERO!".Warning
+#End If
+            End If
         End Sub
 
         Public Overrides Function ToString() As String

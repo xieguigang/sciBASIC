@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97077655913d2bbdec8013bf9b8916f9, Data\BinaryData\DataStorage\HDF5\structure\StructureMember.vb"
+﻿#Region "Microsoft.VisualBasic::6552772fd7830640a4447926f07f1562, Data\BinaryData\DataStorage\HDF5\structure\StructureMember.vb"
 
     ' Author:
     ' 
@@ -56,21 +56,22 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5.struct
 
     Public Class StructureMember : Inherits HDF5Ptr
 
-        Public  ReadOnly Property name As String
-        Public  ReadOnly Property offset As Integer
-        Public  ReadOnly Property dims As Integer
-        Public  ReadOnly Property message As DataTypeMessage
+        Public ReadOnly Property name As String
+        Public ReadOnly Property offset As Integer
+        Public ReadOnly Property dims As Integer
+        Public ReadOnly Property message As DataTypeMessage
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long, version As Integer, byteSize As Integer)
+        Public Sub New(sb As Superblock, address As Long, version As Integer, byteSize As Integer)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.name = [in].readASCIIString()
 

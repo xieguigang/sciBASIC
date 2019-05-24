@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f2234f036b21c6eae945a39fc202f14, Data\BinaryData\DataStorage\HDF5\device\VariableLengthDatasetReader.vb"
+﻿#Region "Microsoft.VisualBasic::9a5e3c004f8c6cd2576d176f93f1ac30, Data\BinaryData\DataStorage\HDF5\device\VariableLengthDatasetReader.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 
 Namespace HDF5.device
@@ -65,7 +66,7 @@ Namespace HDF5.device
         ''' <param name="dimensions%"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function readDataSet(type As VariableLength, dimensions%(), sb As Superblock) As Object
+        Public Function readDataSet(type As VariableLength, dimensions%(), sb As Superblock, source As [Variant](Of Long, MemoryReader)) As Object
             Dim data As Array
             Dim isScalar As Boolean
 
@@ -83,7 +84,7 @@ Namespace HDF5.device
 
             ' 在这里不能够使用linq方法，必须立即读取完，因为reader是公用的
             ' 否则会产生读取bug
-            For Each globalHeapId As GlobalHeapId In getGlobalHeapIds(sb, type.size, dimensions.totalPoints).ToArray
+            For Each globalHeapId As GlobalHeapId In getGlobalHeapIds(sb, type.size, dimensions.totalPoints, source).ToArray
                 Dim heap As GlobalHeap = sb.globalHeaps.ComputeIfAbsent(globalHeapId.heapAddress, Function(address) New GlobalHeap(sb, address))
                 Dim cache = heap.objects(globalHeapId.index)
                 Dim element As String = charset.GetString(cache.data)
@@ -111,13 +112,19 @@ Namespace HDF5.device
         ''' <param name="length">数据块的总大小</param>
         ''' <param name="datasetTotalSize%"></param>
         ''' <returns></returns>
-        Private Iterator Function getGlobalHeapIds(sb As Superblock, length%, datasetTotalSize%) As IEnumerable(Of GlobalHeapId)
+        Private Iterator Function getGlobalHeapIds(sb As Superblock, length%, datasetTotalSize%, source As [Variant](Of Long, MemoryReader)) As IEnumerable(Of GlobalHeapId)
             ' For variable length datasets the actual data is in the global heap so need to
             ' resolve that then build the buffer.
 
             ' final int skipBytes = length - hdfFc.getSizeOfOffsets() - 4;
             Dim skipBytes As Integer = length - sb.sizeOfOffsets - 4
-            Dim buffer = sb.FileReader(-1)
+            Dim buffer As BinaryReader
+
+            If source Like GetType(Long) Then
+                buffer = sb.FileReader(source.TryCast(Of Long))
+            Else
+                buffer = source.TryCast(Of MemoryReader)
+            End If
 
             Call buffer.Mark()
 

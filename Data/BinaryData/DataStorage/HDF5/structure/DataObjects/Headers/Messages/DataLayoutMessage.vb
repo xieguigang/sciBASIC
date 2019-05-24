@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4a239a1462715b25b3e6b8527653b58, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LayoutMessage.vb"
+﻿#Region "Microsoft.VisualBasic::44e9f1b7281604d406c9122cf843822c, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataLayoutMessage.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,13 @@
 
     ' Summaries:
 
-    '     Class LayoutMessage
+    '     Class DataLayoutMessage
     ' 
-    '         Properties: chunkSize, continuousSize, dataAddress, dataSize, dimensionality
-    '                     type, version
+    '         Properties: chunkSize, continuousSize, dataAddress, dataElementSize, dataset
+    '                     dimensionality, type, version
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues
+    '         Sub: parseVersion1Or2, parseVersion3, printValues
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,13 +56,13 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.dataset
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     ''' <summary>
     ''' The Data Layout message describes how the elements of a multi-dimensional array 
     ''' are stored in the HDF5 file. Required for datasets; may not be repeated.
     ''' </summary>
-    Public Class LayoutMessage : Inherits Message
+    Public Class DataLayoutMessage : Inherits Message
 
         ''' <summary>
         ''' The version number information is used for changes in the format of the 
@@ -76,11 +76,7 @@ Namespace HDF5.struct
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property version As Integer
-        ''' <summary>
-        ''' Layout Class
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property type As LayoutClass
+
         ''' <summary>
         ''' number of Dimensions
         ''' 
@@ -91,6 +87,13 @@ Namespace HDF5.struct
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property dimensionality As Integer
+
+        ''' <summary>
+        ''' Layout Class
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property type As LayoutClass
+
         ''' <summary>
         ''' For contiguous storage, this is the address of the raw data in the file. For chunked 
         ''' storage this is the address of the v1 B-tree that is used to look up the addresses 
@@ -102,7 +105,11 @@ Namespace HDF5.struct
         Public ReadOnly Property dataAddress As Long
         Public ReadOnly Property continuousSize As Long
         Public ReadOnly Property chunkSize As Integer()
-        Public ReadOnly Property dataSize As Integer
+        ''' <summary>
+        ''' Dataset element size/Compact Data Size(Compact Data/chunked data)
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property dataElementSize As Integer
 
         Public ReadOnly Property dataset As Hdf5Dataset
 
@@ -123,14 +130,14 @@ Namespace HDF5.struct
                 Case LayoutClass.ChunkedStorage
                     dataset = New ChunkedDatasetV3 With {
                         .BtreeAddress = dataAddress,
-                        .byteSize = dataSize,
+                        .byteSize = dataElementSize,
                         .dimensionality = dimensionality,
                         .dimensionSize = chunkSize
                     }
                 Case LayoutClass.CompactStorage
                     dataset = New CompactDataset With {
-                        .size = dataSize,
-                        .rawData = [in].readBytes(dataSize)
+                        .size = dataElementSize,
+                        .rawData = [in].readBytes(dataElementSize)
                     }
                 Case LayoutClass.ContiguousStorage
                     dataset = New ContiguousDataset With {
@@ -146,19 +153,24 @@ Namespace HDF5.struct
             Me._type = CType(CInt([in].readByte), LayoutClass)
 
             If Me.type = LayoutClass.CompactStorage Then
-                Me._dataSize = [in].readShort()
+                Me._dataElementSize = [in].readShort()
                 Me._dataAddress = [in].offset
             ElseIf Me.type = LayoutClass.ContiguousStorage Then
                 Me._dataAddress = ReadHelper.readO([in], sb)
                 Me._continuousSize = ReadHelper.readL([in], sb)
             ElseIf Me.type = LayoutClass.ChunkedStorage Then
                 Me._dimensionality = [in].readByte()
-                Me._dataAddress = ReadHelper.readO([in], sb)
-                Me._chunkSize = New Integer(Me.dimensionality - 1) {}
 
-                For i As Integer = 0 To Me.dimensionality - 1
+                ' Call [in].skipBytes(3)
+
+                Me._dataAddress = ReadHelper.readO([in], sb)
+                Me._chunkSize = New Integer(Me.dimensionality - 2) {}
+
+                For i As Integer = 0 To Me.dimensionality - 2
                     Me.chunkSize(i) = [in].readInt()
                 Next
+
+                Me._dataElementSize = [in].readInt
             End If
         End Sub
 
@@ -176,17 +188,19 @@ Namespace HDF5.struct
                 Me._dataAddress = ReadHelper.readO([in], sb)
             End If
 
-            Me._chunkSize = New Integer(Me.dimensionality - 1) {}
+            Me._chunkSize = New Integer(Me.dimensionality - 2) {}
 
-            For i As Integer = 0 To Me.dimensionality - 1
-                ' Dimension n Size
+            For i As Integer = 0 To Me.dimensionality - 2
+                ' Dimension #n Size
                 Me.chunkSize(i) = [in].readInt()
             Next
 
             If isCompact Then
                 ' Dataset Element Size (optional)
-                Me._dataSize = [in].readInt()
+                Me._dataElementSize = [in].readInt()
                 Me._dataAddress = [in].offset
+            ElseIf type = LayoutClass.ChunkedStorage Then
+                Me._dataElementSize = [in].readInt
             End If
         End Sub
 
@@ -199,7 +213,7 @@ Namespace HDF5.struct
             console.WriteLine("type : " & Me.type)
             console.WriteLine("data address : " & Me.dataAddress)
             console.WriteLine("continuous size : " & Me.continuousSize)
-            console.WriteLine("data size : " & Me.dataSize)
+            console.WriteLine("data size : " & Me.dataElementSize)
 
             For i As Integer = 0 To Me.chunkSize.Length - 1
                 console.WriteLine("chunk size [" & i & "] : " & Me.chunkSize(i))

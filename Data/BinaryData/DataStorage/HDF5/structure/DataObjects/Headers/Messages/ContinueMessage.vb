@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61d73dfe9cf18f2ed2d8dc064c63ec70, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\ContinueMessage.vb"
+﻿#Region "Microsoft.VisualBasic::58c68a222e9473324c6c128238b698fd, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\ContinueMessage.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
 
     Public Class ContinueMessage : Inherits Message

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1b87093e3dae4b826410dffe724fc66, Data\BinaryData\DataStorage\HDF5\FileDump.vb"
+﻿#Region "Microsoft.VisualBasic::d7c99e5b968ed7d376f2595fd713a959, Data\BinaryData\DataStorage\HDF5\dataset\filters\filters.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,11 @@
 
     ' Summaries:
 
-    '     Module FileDump
+    '     Class DeflatePipelineFilter
     ' 
-    '         Sub: CreateFileDump
+    '         Properties: id, name
     ' 
-    '     Interface IFileDump
-    ' 
-    '         Sub: printValues
+    '         Function: decode
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,28 +43,20 @@
 #End Region
 
 Imports System.IO
-Imports System.Runtime.CompilerServices
-Imports System.Text
+Imports Microsoft.VisualBasic.Net.Http
 
-Namespace HDF5
+Namespace HDF5.dataset.filters
 
-    <HideModuleName> Public Module FileDump
+    ''' <summary>
+    ''' GZip
+    ''' </summary>
+    Public Class DeflatePipelineFilter : Implements IFilter
 
-        <Extension>
-        Public Sub CreateFileDump(obj As IFileDump, out As TextWriter)
-            Call obj.printValues(out)
-        End Sub
-    End Module
+        Public ReadOnly Property id As Integer Implements IFilter.id
+        Public ReadOnly Property name As String Implements IFilter.name
 
-    Public Interface IFileDump
-
-        ''' <summary>
-        ''' 可以通过下面的两种方法构建出所需要的<paramref name="console"/>参数
-        ''' 
-        ''' + <see cref="StringBuilder"/> => new <see cref="TextWriter"/>
-        ''' + <see cref="StreamWriter"/>
-        ''' </summary>
-        ''' <param name="console"></param>
-        Sub printValues(console As TextWriter)
-    End Interface
+        Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements IFilter.decode
+            Return encodedData.UnZipStream(noMagic:=True).ToArray
+        End Function
+    End Class
 End Namespace

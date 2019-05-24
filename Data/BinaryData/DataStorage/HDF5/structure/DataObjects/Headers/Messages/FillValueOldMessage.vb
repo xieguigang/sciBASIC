@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acce3629429ee02077f2ca899c17e5f3, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FillValueOldMessage.vb"
+﻿#Region "Microsoft.VisualBasic::5992128cbc347f5cc74eb26c00f6794f, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FillValueOldMessage.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,7 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     ''' <summary>
     ''' The Data Storage - Fill Value (Old) Message
@@ -72,13 +72,13 @@ Namespace HDF5.struct
     ''' </summary>
     Public Class FillValueOldMessage : Inherits Message
 
-        Public  ReadOnly Property size As Integer
-        Public  ReadOnly Property value As Byte()
+        Public ReadOnly Property size As Integer
+        Public ReadOnly Property value As Byte()
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.size = [in].readInt()
             Me.value = [in].readBytes(Me.size)

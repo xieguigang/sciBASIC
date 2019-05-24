@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd485fec11c6c7840e6d1c508771a1e6, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb"
+﻿#Region "Microsoft.VisualBasic::f15b54b7883f6f7c37e9a751acf501ac, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Math
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     ''' <summary>
     ''' The dataspace message describes the number of dimensions (in other words, “rank”) and size of 
@@ -96,10 +96,10 @@ Namespace HDF5.struct
         ''' <returns></returns>
         Public ReadOnly Property totalLength As Long
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.version = [in].readByte()
 

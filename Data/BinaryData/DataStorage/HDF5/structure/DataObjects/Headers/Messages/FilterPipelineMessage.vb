@@ -1,72 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::bb45292c2eaf4318585e4276d195d974, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb"
+﻿#Region "Microsoft.VisualBasic::5b0d77df2da430688cc7d48ed14c406f, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class FilterPipelineMessage
-' 
-'         Properties: description, numberOfFilters, version
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: printValues
-' 
-'     Enum ReservedFilters
-' 
-' 
-'  
-' 
-' 
-' 
-'     Class FilterDescription
-' 
-'         Properties: clientData, flags, name, nameLength, numberOfClientDataValues
-'                     uid
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: ToString
-' 
-'         Sub: printValues
-' 
-' 
-' /********************************************************************************/
+    '     Class FilterPipelineMessage
+    ' 
+    '         Properties: description, numberOfFilters, version
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: decode, ToString
+    ' 
+    '         Sub: printValues
+    ' 
+    '     Class FilterDescription
+    ' 
+    '         Properties: clientData, filter, flags, id, name
+    '                     nameLength, numberOfClientDataValues
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: doDecode, ToString
+    ' 
+    '         Sub: printValues
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.IO.HDF5.dataset.filters
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Net.Http
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     ''' <summary>
     ''' This message describes the filter pipeline which should be applied to 
@@ -104,88 +101,22 @@ Namespace HDF5.struct
             Next
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return description.Select(Function(filter) filter.name).JoinBy(" -> ")
+        End Function
+
         Protected Friend Overrides Sub printValues(console As TextWriter)
             Throw New NotImplementedException()
         End Sub
 
         Public Function decode(encodedBytes() As Byte) As Byte()
-            For Each filter In description
-                encodedBytes = filter.filter.decode(encodedBytes, filter.clientData)
+            For Each filter As FilterDescription In description
+                encodedBytes = filter.doDecode(encodedBytes)
             Next
 
             Return encodedBytes
         End Function
     End Class
-
-    ''' <summary>
-    ''' The filters currently in library version 1.8.0 are listed below:
-    ''' </summary>
-    Public Enum ReservedFilters As Short
-        ''' <summary>
-        ''' Reserved
-        ''' </summary>
-        NA = 0
-        ''' <summary>
-        ''' GZIP deflate compression
-        ''' </summary>
-        deflate = 1
-        ''' <summary>
-        ''' Data element shuffling
-        ''' </summary>
-        shuffle = 2
-        ''' <summary>
-        ''' Fletcher32 checksum
-        ''' </summary>
-        fletcher32 = 3
-        ''' <summary>
-        ''' SZIP compression
-        ''' </summary>
-        szip = 4
-        ''' <summary>
-        ''' N-bit packing
-        ''' </summary>
-        nbit = 5
-        ''' <summary>
-        ''' Scale and offset encoded values
-        ''' </summary>
-        scaleoffset = 6
-    End Enum
-
-    ''' <summary>
-    ''' GZip
-    ''' </summary>
-    Public Class DeflatePipelineFilter : Implements Filter
-
-        Public ReadOnly Property id As Integer Implements Filter.id
-        Public ReadOnly Property name As String Implements Filter.name
-
-        Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements Filter.decode
-            Return GZStream.UnGzipStream(encodedData).ToArray
-        End Function
-    End Class
-
-    ''' <summary>
-    ''' Interface to be implemented to be a HDF5 filter.
-    ''' 
-    ''' @author James Mudd
-    ''' </summary>
-    Public Interface Filter
-
-        ''' <summary>
-        ''' Gets the ID of this filter, this must match the ID in the dataset header.
-        ''' </summary>
-        ''' <returns> the ID of this filter </returns>
-        ReadOnly Property id As Integer
-
-        ''' <summary>
-        ''' Gets the name of this filter e.g. 'deflate', 'shuffle'
-        ''' </summary>
-        ''' <returns> the name of this filter </returns>
-        ReadOnly Property name As String
-
-        Function decode(encodedData As Byte(), filterData As Integer()) As Byte()
-
-    End Interface
 
     Public Class FilterDescription : Inherits HDF5Ptr
 
@@ -203,7 +134,7 @@ Namespace HDF5.struct
         ''' with identifiers from this range.
         ''' </summary>
         ''' <returns></returns>
-        Public Property uid As Short
+        Public Property id As Short
         ''' <summary>
         ''' Each filter has an optional null-terminated ASCII name and this field holds 
         ''' the length of the name including the null termination padded with nulls to 
@@ -224,13 +155,13 @@ Namespace HDF5.struct
         ''' <returns></returns>
         Public ReadOnly Property clientData As Integer()
 
-        Public ReadOnly Property filter As Filter
+        Public ReadOnly Property filter As IFilter
 
         Sub New([in] As BinaryReader, version%, address&)
             Call MyBase.New(address)
 
             If version = 1 Then
-                uid = [in].readShort
+                id = [in].readShort
                 nameLength = [in].readShort
                 flags = [in].readShort
                 numberOfClientDataValues = [in].readShort
@@ -244,10 +175,15 @@ Namespace HDF5.struct
                 Throw New NotImplementedException
             End If
 
-            If uid = ReservedFilters.deflate Then
+            If id = ReservedFilters.deflate Then
                 filter = New DeflatePipelineFilter
             End If
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function doDecode(encodedBytes As IEnumerable(Of Byte)) As Byte()
+            Return filter.decode(encodedBytes, clientData)
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"Call {name}({clientData.Select(Function(i) CStr(i)).JoinBy(", ")})"

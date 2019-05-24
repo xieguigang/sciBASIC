@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::148edf35859905a572d765647615a70c, Data\BinaryData\BinaryData\BitSet.vb"
+﻿#Region "Microsoft.VisualBasic::f2254adf665c6b2fb6e8828c0f0d87d7, Data\BinaryData\BinaryData\BitSet.vb"
 
     ' Author:
     ' 
@@ -304,6 +304,10 @@ Public Class BitSet
 
 #Region "String Conversions"
 
+    ''' <summary>
+    ''' <see cref="ToBinaryString"/>
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return ToBinaryString()
@@ -661,4 +665,3 @@ Public Class BitSet
 
 #End Region
 End Class
-

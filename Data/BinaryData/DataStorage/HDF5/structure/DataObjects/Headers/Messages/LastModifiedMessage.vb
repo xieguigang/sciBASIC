@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7383749e62b3c92b37cca3185f2983f, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LastModifiedMessage.vb"
+﻿#Region "Microsoft.VisualBasic::491329b2caa9c810f6a9e06be6836d21, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LastModifiedMessage.vb"
 
     ' Author:
     ' 
@@ -56,12 +56,12 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     Public Class LastModifiedMessage : Inherits Message
 
-        Public  ReadOnly Property version() As Integer
-        Public  ReadOnly Property seconds() As Integer
+        Public ReadOnly Property version() As Integer
+        Public ReadOnly Property seconds() As Integer
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)

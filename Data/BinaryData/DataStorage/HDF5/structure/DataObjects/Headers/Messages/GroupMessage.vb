@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f159caefa3cdcd3afb23a512c4fc914c, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
+﻿#Region "Microsoft.VisualBasic::678f2462a3b99381db3a84b181b6680f, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     ''' <summary>
     ''' The Symbol Table Message
@@ -70,14 +70,14 @@ Namespace HDF5.struct
         ''' entries for the group.
         ''' </summary>
         ''' <returns></returns>
-        Public  ReadOnly Property bTreeAddress() As Long
+        Public ReadOnly Property bTreeAddress() As Long
 
         ''' <summary>
         ''' This value is the address of the local heap containing the link names 
         ''' for the symbol table entries for the group.
         ''' </summary>
         ''' <returns></returns>
-        Public  ReadOnly Property nameHeapAddress() As Long
+        Public ReadOnly Property nameHeapAddress() As Long
 
         Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)

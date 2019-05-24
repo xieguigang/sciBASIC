@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e34d910a455d60469b242e8ed27e6a66, Data\BinaryData\DataStorage\HDF5\device\BinaryFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::3a377c5d95e27db1829ec07f5418041d, Data\BinaryData\DataStorage\HDF5\device\MemoryReader.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,15 @@
 
     ' Summaries:
 
-    '     Class BinaryFileReader
+    '     Class MemoryReader
     ' 
     '         Properties: offset
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: readByte, ToString
+    '         Function: readByte
     ' 
-    '         Sub: _BinaryFileReader, close, setPosition
+    '         Sub: close, setPosition
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,36 +50,33 @@ Imports System.IO
 
 Namespace HDF5.device
 
-    Public Class BinaryFileReader : Inherits BinaryReader
+    Public Class MemoryReader : Inherits BinaryReader
 
-        Dim randomaccessfile As FileStream
+        Dim memory As MemoryStream
 
         Public Overrides Property offset() As Long
             Get
                 Return MyBase.offset
             End Get
-            Set
-                If Value < 0 Then
+            Set(value As Long)
+                If value < 0 Then
                     Throw New ArgumentException("offset must be positive and bigger than 0")
                 End If
-                If Value > Me.filesize Then
+                If value > Me.filesize Then
                     Throw New ArgumentException("offset must be positive and smaller than filesize")
                 End If
 
-                Call setPosition(Value)
+                Call setPosition(value)
             End Set
         End Property
 
-        Public Sub New(filepath As String)
-            If filepath.StringEmpty Then
-                Throw New ArgumentException("filepath must not be null or empty!")
-            End If
+        Sub New(memory As MemoryStream)
+            Me.memory = memory
 
-            _BinaryFileReader(New FileInfo(filepath))
-        End Sub
-
-        Public Sub New(file As FileInfo)
-            _BinaryFileReader(file)
+            Me.offset = 0
+            Me.filesize = memory.Length
+            Me.m_littleEndian = True
+            Me.m_maxOffset = 0
         End Sub
 
         Private Sub setPosition(value As Long)
@@ -94,26 +91,19 @@ Namespace HDF5.device
             End If
 
             ' change underlying file value
-            Me.randomaccessfile.Seek(value, SeekOrigin.Begin)
+            Call memory.Seek(value, SeekOrigin.Begin)
         End Sub
 
-        Private Sub _BinaryFileReader(file As FileInfo)
-            If file Is Nothing Then
-                Throw New ArgumentException("file must not be null")
-            End If
-
-            Me.offset = 0
-            Me.filesize = file.Length
-            Me.m_littleEndian = True
-            Me.m_maxOffset = 0
-            Me.randomaccessfile = New FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)
+        Public Overrides Sub close()
+            ' do nothing
         End Sub
 
         Public Overrides Function readByte() As Byte
             If Me.offset >= Me.filesize Then
                 Throw New IOException("file offset reached to end of file")
             End If
-            Dim b As Byte = CByte(Me.randomaccessfile.ReadByte())
+
+            Dim b As Byte = CByte(memory.ReadByte())
 
             MyBase.offset += 1
 
@@ -123,20 +113,5 @@ Namespace HDF5.device
 
             Return b
         End Function
-
-        Public Overrides Function ToString() As String
-            Return $"{MyBase.ToString()}  #{randomaccessfile.Name.FileName}"
-        End Function
-
-        Public Overrides Sub close()
-            Try
-                Me.randomaccessfile.Close()
-            Catch ex As IOException
-                Call App.LogException(ex)
-            Finally
-                MyBase.offset = 0
-            End Try
-        End Sub
     End Class
-
 End Namespace

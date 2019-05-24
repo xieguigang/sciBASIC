@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1b87093e3dae4b826410dffe724fc66, Data\BinaryData\DataStorage\HDF5\FileDump.vb"
+﻿#Region "Microsoft.VisualBasic::2713d81c7a1bd6735daa510054d42127, Data\BinaryData\DataStorage\HDF5\dataset\filters\ReservedFilters.vb"
 
     ' Author:
     ' 
@@ -31,42 +31,51 @@
 
     ' Summaries:
 
-    '     Module FileDump
+    '     Enum ReservedFilters
     ' 
-    '         Sub: CreateFileDump
     ' 
-    '     Interface IFileDump
+    '  
     ' 
-    '         Sub: printValues
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.IO
-Imports System.Runtime.CompilerServices
-Imports System.Text
+Namespace HDF5.dataset.filters
 
-Namespace HDF5
-
-    <HideModuleName> Public Module FileDump
-
-        <Extension>
-        Public Sub CreateFileDump(obj As IFileDump, out As TextWriter)
-            Call obj.printValues(out)
-        End Sub
-    End Module
-
-    Public Interface IFileDump
-
+    ''' <summary>
+    ''' The filters currently in library version 1.8.0 are listed below:
+    ''' </summary>
+    Public Enum ReservedFilters As Short
         ''' <summary>
-        ''' 可以通过下面的两种方法构建出所需要的<paramref name="console"/>参数
-        ''' 
-        ''' + <see cref="StringBuilder"/> => new <see cref="TextWriter"/>
-        ''' + <see cref="StreamWriter"/>
+        ''' Reserved
         ''' </summary>
-        ''' <param name="console"></param>
-        Sub printValues(console As TextWriter)
-    End Interface
+        NA = 0
+        ''' <summary>
+        ''' GZIP deflate compression
+        ''' </summary>
+        deflate = 1
+        ''' <summary>
+        ''' Data element shuffling
+        ''' </summary>
+        shuffle = 2
+        ''' <summary>
+        ''' Fletcher32 checksum
+        ''' </summary>
+        fletcher32 = 3
+        ''' <summary>
+        ''' SZIP compression
+        ''' </summary>
+        szip = 4
+        ''' <summary>
+        ''' N-bit packing
+        ''' </summary>
+        nbit = 5
+        ''' <summary>
+        ''' Scale and offset encoded values
+        ''' </summary>
+        scaleoffset = 6
+    End Enum
 End Namespace

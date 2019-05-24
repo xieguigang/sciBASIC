@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::177b42cd0d815e63c0ce67350a811ddc, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::0308c1c611f8e0517355aa721abddbd3, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports Microsoft.VisualBasic.Linq
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     ''' <summary>
     ''' The datatype message defines the datatype for each element of a dataset or 
@@ -171,7 +171,7 @@ Namespace HDF5.struct
                 Me.structureMembers = New List(Of StructureMember)()
 
                 For i As Integer = 0 To nmembers - 1
-                    Me.structureMembers.Add(New StructureMember([in], sb, [in].offset, Me.version, Me.byteSize))
+                    Me.structureMembers.Add(New StructureMember(sb, [in].offset, Me.version, Me.byteSize))
                 Next
             ElseIf Me.type = DataTypes.DATATYPE_REFERENCE Then
                 Me.m_referenceType = Me.m_flags(0) And &HF

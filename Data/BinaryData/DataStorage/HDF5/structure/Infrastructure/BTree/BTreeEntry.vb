@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f81645152251e8348030c93df583ae1f, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
+﻿#Region "Microsoft.VisualBasic::2ebf7d123acdf441271395677ac33018, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,9 @@
     '         Properties: key, targetAddress
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
     '         Sub: printValues
     ' 
     ' 
@@ -61,17 +64,21 @@ Namespace HDF5.struct.BTree
 
     Public Class BTreeEntry : Inherits HDF5Ptr
 
-        Public  ReadOnly Property targetAddress() As Long
-        Public  ReadOnly Property key() As Long
+        Public ReadOnly Property targetAddress As Long
+        Public ReadOnly Property key As Long
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.key = ReadHelper.readL([in], sb)
             Me.targetAddress = ReadHelper.readO([in], sb)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{MyBase.ToString} [{key} => &{targetAddress}]"
+        End Function
 
         Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("BTreeEntry >>>")

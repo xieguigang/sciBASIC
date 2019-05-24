@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ad6433bd708ca8af10af25c619d8520, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::d5355051d09071bbe58b5a49dbcd31f9, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb"
 
     ' Author:
     ' 
@@ -60,15 +60,15 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
     Public Class AttributeMessage : Inherits Message
 
-        Public  ReadOnly Property version As Integer
-        Public  ReadOnly Property name As String
-        Public  ReadOnly Property dataPos As Long
-        Public  ReadOnly Property dataType As DataTypeMessage
-        Public  ReadOnly Property dataSpace As DataspaceMessage
+        Public ReadOnly Property version As Integer
+        Public ReadOnly Property name As String
+        Public ReadOnly Property dataPos As Long
+        Public ReadOnly Property dataType As DataTypeMessage
+        Public ReadOnly Property dataSpace As DataspaceMessage
 
         Public ReadOnly Property reader As DataType
             Get
@@ -138,7 +138,7 @@ Namespace HDF5.struct
             ' make it more robust for errors
             ' read the dataspace
             filePos = [in].offset
-            dataSpace = New DataspaceMessage([in], sb, [in].offset)
+            dataSpace = New DataspaceMessage(sb, [in].offset)
 
             If Me.version = 1 Then
                 spaceSize += CShort(ReadHelper.padding(spaceSize, 8))
@@ -156,11 +156,12 @@ Namespace HDF5.struct
             Dim dims = msg.dataSpace.dimensionLength
             Dim dataType As DataTypes = type.type
 
+            ' 需要在这里移动文件的读取指针到dataPosition才能够正确的读取globalheap数据
             Call sb.FileReader(msg.dataPos)
 
             Select Case dataType
                 Case DataTypes.DATATYPE_VARIABLE_LENGTH
-                    Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb)
+                    Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb, msg.dataPos)
                 Case DataTypes.DATATYPE_FIXED_POINT, DataTypes.DATATYPE_FLOATING_POINT
                     Return DatasetReader.readDataset(msg.reader, msg.dataPos, msg.dataSpace, sb, dims)
                 Case Else

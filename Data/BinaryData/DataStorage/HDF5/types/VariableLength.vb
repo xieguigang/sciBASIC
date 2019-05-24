@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5701861673dcf520ac3db7fe80632de0, Data\BinaryData\DataStorage\HDF5\types\VariableLength.vb"
+﻿#Region "Microsoft.VisualBasic::297f07398aed7beecc02ecb496b999b0, Data\BinaryData\DataStorage\HDF5\types\VariableLength.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Class VariableLength
     ' 
     '         Properties: encoding, paddingType, type, TypeInfo
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1b87093e3dae4b826410dffe724fc66, Data\BinaryData\DataStorage\HDF5\FileDump.vb"
+﻿#Region "Microsoft.VisualBasic::748bc18ab0b51bfcce4e4c18269f2364, Data\BinaryData\DataStorage\HDF5\dataset\filters\IFilter.vb"
 
     ' Author:
     ' 
@@ -31,42 +31,39 @@
 
     ' Summaries:
 
-    '     Module FileDump
+    '     Interface IFilter
     ' 
-    '         Sub: CreateFileDump
+    '         Properties: id, name
     ' 
-    '     Interface IFileDump
-    ' 
-    '         Sub: printValues
+    '         Function: decode
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.IO
-Imports System.Runtime.CompilerServices
-Imports System.Text
+Namespace HDF5.dataset.filters
 
-Namespace HDF5
-
-    <HideModuleName> Public Module FileDump
-
-        <Extension>
-        Public Sub CreateFileDump(obj As IFileDump, out As TextWriter)
-            Call obj.printValues(out)
-        End Sub
-    End Module
-
-    Public Interface IFileDump
+    ''' <summary>
+    ''' Interface to be implemented to be a HDF5 filter.
+    ''' 
+    ''' @author James Mudd
+    ''' </summary>
+    Public Interface IFilter
 
         ''' <summary>
-        ''' 可以通过下面的两种方法构建出所需要的<paramref name="console"/>参数
-        ''' 
-        ''' + <see cref="StringBuilder"/> => new <see cref="TextWriter"/>
-        ''' + <see cref="StreamWriter"/>
+        ''' Gets the ID of this filter, this must match the ID in the dataset header.
         ''' </summary>
-        ''' <param name="console"></param>
-        Sub printValues(console As TextWriter)
+        ''' <returns> the ID of this filter </returns>
+        ReadOnly Property id As Integer
+
+        ''' <summary>
+        ''' Gets the name of this filter e.g. 'deflate', 'shuffle'
+        ''' </summary>
+        ''' <returns> the name of this filter </returns>
+        ReadOnly Property name As String
+
+        Function decode(encodedData As Byte(), filterData As Integer()) As Byte()
+
     End Interface
 End Namespace

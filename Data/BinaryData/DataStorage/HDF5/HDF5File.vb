@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30edf807b69571f01a2a5c2d2b676379, Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
+﻿#Region "Microsoft.VisualBasic::3fdcf70667e36b9179926656949662b3, Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5
@@ -179,7 +180,7 @@ Namespace HDF5
         Private disposedValue As Boolean ' 要检测冗余调用
 
         ' IDisposable
-        Protected  Sub Dispose(disposing As Boolean)
+        Protected Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)。

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e138258b67c21f3d5ea2b70f8ce0737a, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FillValueMessage.vb"
+﻿#Region "Microsoft.VisualBasic::a249cbfd088eee29283c6b83305092e5, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FillValueMessage.vb"
 
     ' Author:
     ' 
@@ -56,22 +56,27 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace HDF5.struct.messages
 
+    ''' <summary>
+    ''' The fill value message stores a single data value which is returned to the application when 
+    ''' an uninitialized data element is read from a dataset. The fill value is interpreted with the 
+    ''' same datatype as the dataset.
+    ''' </summary>
     Public Class FillValueMessage : Inherits Message
 
-        Public  ReadOnly Property version() As Integer
-        Public  ReadOnly Property spaceAllocateTime() As Integer
-        Public  ReadOnly Property flags() As Integer
-        Public  ReadOnly Property fillWriteTime() As Integer
-        Public  ReadOnly Property hasFillValue() As Boolean
-        Public  ReadOnly Property size() As Integer
-        Public  ReadOnly Property value() As Byte()
+        Public ReadOnly Property version() As Integer
+        Public ReadOnly Property spaceAllocateTime() As Integer
+        Public ReadOnly Property flags() As Integer
+        Public ReadOnly Property fillWriteTime() As Integer
+        Public ReadOnly Property hasFillValue() As Boolean
+        Public ReadOnly Property size() As Integer
+        Public ReadOnly Property value As Byte()
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            [in].offset = address
+            Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.version = [in].readByte()
 

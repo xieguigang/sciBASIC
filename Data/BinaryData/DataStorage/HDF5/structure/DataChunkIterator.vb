@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ff0825560eac68bff9a138cf0b7fca5, Data\BinaryData\DataStorage\HDF5\structure\DataChunkIterator.vb"
+﻿#Region "Microsoft.VisualBasic::e1ab0930d8d88c012834fddf300b486c, Data\BinaryData\DataStorage\HDF5\structure\DataChunkIterator.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     '     Class DataChunkIterator
     ' 
+    '         Properties: root
+    ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: [next], hasNext
@@ -60,14 +62,14 @@ Namespace HDF5.struct
 
     Public Class DataChunkIterator : Inherits HDF5Ptr
 
-        Dim root As DataNode
+        Public ReadOnly Property root As BTreeNode
 
         Public Sub New(sb As Superblock, layout As Layout)
             Call MyBase.New(layout.dataAddress)
 
             Dim [in] As BinaryReader = sb.FileReader(address)
 
-            Me.root = New DataNode(sb, layout, Me.m_address)
+            Me.root = New BTreeNode(sb, layout, Me.m_address)
             Me.root.first([in], sb)
         End Sub
 

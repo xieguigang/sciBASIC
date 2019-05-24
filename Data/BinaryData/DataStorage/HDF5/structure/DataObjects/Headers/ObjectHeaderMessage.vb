@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7536bc1c81db25b3a63c96b8504a2ba6, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
+﻿#Region "Microsoft.VisualBasic::9504dfba383155c90c42e63e35e8b11b, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: attributeMessage, continueMessage, dataspaceMessage, dataTypeMessage, fillValueMessage
     '                     fillValueOldMessage, filterPipelineMessage, groupMessage, headerLength, headerMessageData
-    '                     headerMessageFlags, headerMessageType, headerMessageTypeNo, lastModifiedMessage, layoutMessage
+    '                     headerMessageFlags, headerMessageType, headerMessageTypeNumber, lastModifiedMessage, layoutMessage
     '                     linkMessage, sizeOfHeaderMessageData
     ' 
     '         Constructor: (+1 Overloads) Sub New
@@ -57,6 +57,7 @@
 ' 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5.struct
@@ -78,16 +79,16 @@ Namespace HDF5.struct
 
 #Region "message data"
 
-        Public ReadOnly Property groupMessage() As GroupMessage
-        Public ReadOnly Property continueMessage() As ContinueMessage
-        Public ReadOnly Property fillValueMessage() As FillValueMessage
-        Public ReadOnly Property fillValueOldMessage() As FillValueOldMessage
-        Public ReadOnly Property dataTypeMessage() As DataTypeMessage
-        Public ReadOnly Property attributeMessage() As AttributeMessage
-        Public ReadOnly Property linkMessage() As LinkMessage
-        Public ReadOnly Property layoutMessage() As LayoutMessage
-        Public ReadOnly Property lastModifiedMessage() As LastModifiedMessage
-        Public ReadOnly Property dataspaceMessage() As DataspaceMessage
+        Public ReadOnly Property groupMessage As GroupMessage
+        Public ReadOnly Property continueMessage As ContinueMessage
+        Public ReadOnly Property fillValueMessage As FillValueMessage
+        Public ReadOnly Property fillValueOldMessage As FillValueOldMessage
+        Public ReadOnly Property dataTypeMessage As DataTypeMessage
+        Public ReadOnly Property attributeMessage As AttributeMessage
+        Public ReadOnly Property linkMessage As LinkMessage
+        Public ReadOnly Property layoutMessage As DataLayoutMessage
+        Public ReadOnly Property lastModifiedMessage As LastModifiedMessage
+        Public ReadOnly Property dataspaceMessage As DataspaceMessage
         Public ReadOnly Property filterPipelineMessage As FilterPipelineMessage
 #End Region
 
@@ -122,19 +123,19 @@ Namespace HDF5.struct
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Bogus Then
                 Throw New InvalidDataException("Invalid HDF5 file!")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
-                Me.dataspaceMessage = New DataspaceMessage([in], sb, [in].offset)
+                Me.dataspaceMessage = New DataspaceMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupNew Then
                 Throw New IOException("Group New not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Datatype Then
                 Me.dataTypeMessage = New DataTypeMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValueOld Then
-                Me.fillValueOldMessage = New FillValueOldMessage([in], sb, [in].offset)
+                Me.fillValueOldMessage = New FillValueOldMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValue Then
-                Me.fillValueMessage = New FillValueMessage([in], sb, [in].offset)
+                Me.fillValueMessage = New FillValueMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Link Then
-                Me.linkMessage = New LinkMessage([in], sb, [in].offset)
+                Me.linkMessage = New LinkMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Layout Then
-                Me.layoutMessage = New LayoutMessage(sb, [in].offset)
+                Me.layoutMessage = New DataLayoutMessage(sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
                 Throw New IOException("Group Info not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FilterPipeline Then

@@ -64,7 +64,7 @@ Public Class var : Inherits VBDouble
     Implements ICloneable
     Implements IAddress(Of Integer)
 
-    Public Property Index As Integer Implements IAddress(Of Integer).Address
+    Public Overloads Property Index As Integer Implements IAddress(Of Integer).Address
     Public Property Name As String Implements INamedValue.Key
     Public Overrides Property value As Double Implements Ivar.value
 
