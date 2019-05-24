@@ -160,7 +160,7 @@ Namespace HDF5.struct.messages
         Public ReadOnly Property name As String Implements Filter.name
 
         Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements Filter.decode
-            Return GZStream.UnGzipStream(encodedData).ToArray
+            Return ZipStreamExtensions.UnZipStream(encodedData).ToArray
         End Function
     End Class
 
