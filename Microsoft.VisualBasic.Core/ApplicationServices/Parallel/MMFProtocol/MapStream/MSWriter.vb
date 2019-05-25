@@ -59,12 +59,12 @@ Namespace Parallel.MMFProtocol.MapStream
 #Region "Nested Type Definitions"
 
     ''' <summary>
-    ''' 
+    ''' Memory stream writer
     ''' </summary>
     ''' <remarks>
     ''' mmfServer的主要功能是创建并维护一个内存映射文件
     ''' </remarks>
-    Public Class MSWriter : Inherits IMapBase
+    Public Class MSWriter : Inherits MapStream
 
         ''' <summary>
         ''' 
@@ -75,20 +75,16 @@ Namespace Parallel.MMFProtocol.MapStream
             Call MyBase.New(uri, chunkSize)
 
             Try
-                _mmfileStream =
-                    MemoryMappedFiles.MemoryMappedFile.CreateNew(
-                    uri, chunkSize)
+                file = MemoryMappedFiles.MemoryMappedFile.CreateNew(uri, chunkSize)
             Catch ex As Exception
-                _mmfileStream =
-                    MemoryMappedFiles.MemoryMappedFile.CreateOrOpen(
-                    uri, chunkSize)
+                file = MemoryMappedFiles.MemoryMappedFile.CreateOrOpen(uri, chunkSize)
             Finally
             End Try
         End Sub
 
         Public Sub WriteStream(byteData As Byte())
             If Not byteData.IsNullOrEmpty Then
-                Call _mmfileStream.CreateViewStream.Write(
+                Call file.CreateViewStream.Write(
                     byteData, Scan0, byteData.Length)
             End If
         End Sub
