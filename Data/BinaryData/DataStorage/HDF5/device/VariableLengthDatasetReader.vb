@@ -76,7 +76,12 @@ Namespace HDF5.device
                 data = {""}
             Else
                 isScalar = False
-                data = Array.CreateInstance(GetType(String), dimensions)
+
+                If dimensions.Length = 1 Then
+                    data = Array.CreateInstance(GetType(String), dimensions)
+                Else
+                    data = MAT(Of String)(dimensions(Scan0), dimensions(1))
+                End If
             End If
 
             Dim charset As Encoding = type.encoding
@@ -129,7 +134,7 @@ Namespace HDF5.device
             Call buffer.Mark()
 
             ' id=4
-            While buffer.deltaSize < length
+            While buffer.deltaSize < length * datasetTotalSize
                 ' Move past the skipped bytes. TODO figure out what this is for
                 buffer.offset += skipBytes
 

@@ -103,7 +103,7 @@ Namespace Mailto
 
         Public Shared ReadOnly Property qiye163(account$, password$, Optional SSL As Boolean = True) As MailConfigure
             Get
-                Dim smtpSSLPort994 As DefaultValue(Of Integer) = 994
+                Dim smtpSSLPort994 As [Default](Of Integer) = 994
 
                 Return New MailConfigure With {
                     .Account = account,

@@ -98,7 +98,12 @@ Namespace HDF5.device
                 ' Fake the dimensions
                 dimensions = New Integer() {1}
             Else
-                data = Array.CreateInstance(type.TypeInfo, dimensions)
+                If dimensions.Length = 1 Then
+                    data = Array.CreateInstance(type.TypeInfo, dimensions)
+                Else
+                    data = type.TypeInfo.Rectangle(dimensions(Scan0), dimensions(1))
+                End If
+
                 isScalar = False
             End If
 
