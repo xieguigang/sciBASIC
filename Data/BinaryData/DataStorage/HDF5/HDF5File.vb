@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::3fdcf70667e36b9179926656949662b3, Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HDF5File
-    ' 
-    '         Properties: attributes, fileName, superblock
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: attributeTable, GetCacheObject, ToString
-    ' 
-    '         Sub: addCache, (+2 Overloads) Dispose, parseHeader
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HDF5File
+' 
+'         Properties: attributes, fileName, superblock
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: attributeTable, GetCacheObject, ToString
+' 
+'         Sub: addCache, (+2 Overloads) Dispose, parseHeader
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -115,6 +115,11 @@ Namespace HDF5
 
                 For Each token As String In path.Skip(1)
                     reader = reader.ParseDataObject(dataSetName:=token)
+
+                    If reader Is Nothing Then
+                        ' 数据集或者文件夹对象不存在
+                        Exit For
+                    End If
                 Next
 
                 Return reader
@@ -156,14 +161,13 @@ Namespace HDF5
             Dim rootGroup As New Group(sb, objectFacade)
             Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 
-            _attributes = attributeTable(rootGroup.attributes, Me)
+            _attributes = attributeTable(rootGroup.attributes, Me.superblock)
             rootObjects = objects.ToDictionary(Function(o) o.symbolName)
         End Sub
 
-        Public Shared Function attributeTable(attrs As AttributeMessage(), file As HDF5File) As Dictionary(Of String, Object)
+        Public Shared Function attributeTable(attrs As AttributeMessage(), sb As Superblock) As Dictionary(Of String, Object)
             Dim table As New Dictionary(Of String, Object)
-            Dim reader = file.reader
-            Dim sb As Superblock = file.superblock
+            Dim reader As BinaryReader = sb.FileReader(-1)
 
             For Each a As AttributeMessage In attrs
                 table(a.name) = AttributeMessage.ReadAttrValue(a, sb)

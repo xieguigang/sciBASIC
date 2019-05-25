@@ -88,6 +88,7 @@ Namespace HDF5
         Public ReadOnly Property dataType As DataTypeMessage
         Public ReadOnly Property dataSpace As DataspaceMessage
         Public ReadOnly Property dataset As Hdf5Dataset
+        Public ReadOnly Property attributes As Dictionary(Of String, Object)
 
         Dim file As HDF5File
 
@@ -153,10 +154,15 @@ Namespace HDF5
             Me.chunks = New List(Of DataChunk)()
             Me.headerSize = 0
 
-            _dataGroup = parserObject(dataset, sb:=superblock, container:=Me)
+            _dataGroup = parserObject(dataset, container:=Me)
             _headerSize = reader.maxOffset
         End Sub
 
+        ''' <summary>
+        ''' 如果目标数据集不存在的话，这个函数会返回空值
+        ''' </summary>
+        ''' <param name="dataSetName"></param>
+        ''' <returns></returns>
         Public Function ParseDataObject(dataSetName As String) As HDF5Reader
             Dim reader As New HDF5Reader(Me.file, dataSetName)
             Dim dobj As DataObjectFacade = dataGroup _
@@ -165,7 +171,11 @@ Namespace HDF5
                                     Return d.symbolName.TextEquals(dataSetName)
                                 End Function)
 
-            reader._dataGroup = parserObject(dobj, sb:=superblock, container:=reader)
+            If dobj Is Nothing Then
+                Return Nothing
+            End If
+
+            reader._dataGroup = parserObject(dobj, container:=reader)
             _headerSize = Me.reader.maxOffset
 
             Return reader
@@ -181,7 +191,7 @@ Namespace HDF5
             For Each dobj As DataObjectFacade In objects
                 ' compare dataset name
                 If dobj.symbolName.TextEquals(Me.datasetName) Then
-                    _dataGroup = parserObject(dobj, sb, Me)
+                    _dataGroup = parserObject(dobj, Me)
                     Exit For
                 End If
             Next
@@ -193,14 +203,15 @@ Namespace HDF5
         ''' 如果是dataset，则直接返回空值，反之返回<see cref="Group"/>对象
         ''' </summary>
         ''' <param name="dobj"></param>
-        ''' <param name="sb"></param>
         ''' <returns></returns>
-        Private Shared Function parserObject(dobj As DataObjectFacade, sb As Superblock, container As HDF5Reader) As Group
+        Private Shared Function parserObject(dobj As DataObjectFacade, container As HDF5Reader) As Group
             ' parse or get layout
             Dim layout As Layout = dobj.layout
             Dim reader As BinaryReader = container.reader
+            Dim sb As Superblock = container.superblock
 
             container._layout = layout
+            container._attributes = HDF5File.attributeTable(dobj.attributes, sb)
 
             If layout.isEmpty Then
                 Return New Group(sb, dobj)

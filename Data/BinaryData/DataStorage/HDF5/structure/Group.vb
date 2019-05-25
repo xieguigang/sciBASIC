@@ -82,11 +82,7 @@ Namespace HDF5.struct
 
         Public ReadOnly Property attributes As AttributeMessage()
             Get
-                Return m_facade.dataObject _
-                    .messages _
-                    .Where(Function(msg) Not msg.attributeMessage Is Nothing) _
-                    .Select(Function(a) a.attributeMessage) _
-                    .ToArray
+                Return m_facade.attributes
             End Get
         End Property
 
