@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::eac9b0111e5f0e24e76b7e0247c18567, mime\application%json\Parser\JsonParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class JsonParser
-    ' 
-    '         Properties: JSONvalue
-    ' 
-    '         Function: GetParserErrors, Open, OpenJSON, parse, parseArray
-    '                   parseBoolean, parseKey, parseNull, parseNumber, parseObject
-    '                   parseString, parseValue, StripString
-    ' 
-    '         Sub: ClearParserError, skipChar
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class JsonParser
+' 
+'         Properties: JSONvalue
+' 
+'         Function: GetParserErrors, Open, OpenJSON, parse, parseArray
+'                   parseBoolean, parseKey, parseNull, parseNumber, parseObject
+'                   parseString, parseValue, StripString
+' 
+'         Sub: ClearParserError, skipChar
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,9 +55,9 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Language
 
 Namespace Parser
 
@@ -75,13 +75,12 @@ Namespace Parser
         'Const INVALID_RPC_CALL As Integer = 7
 
         Dim psErrors As String
-        Dim root As New Value(Of JsonElement)
 
-        Public ReadOnly Property JSONvalue() As JsonElement
-            Get
-                Return root
-            End Get
-        End Property
+        ''' <summary>
+        ''' The root node in json file
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property JSONvalue As JsonElement
 
         Public Function GetParserErrors() As String
             Return psErrors
@@ -92,14 +91,15 @@ Namespace Parser
         End Sub
 
         Public Function Open(file As String) As JsonElement
-            Using sr As New IO.StreamReader(file)
+            Using sr As New StreamReader(file)
                 Return OpenJSON(sr.ReadToEnd)
             End Using
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OpenJSON(jsonStr As String) As JsonElement
-            Return root = parse(jsonStr)
+            _JSONvalue = parse(jsonStr)
+            Return JSONvalue
         End Function
 
         ''' <summary>
