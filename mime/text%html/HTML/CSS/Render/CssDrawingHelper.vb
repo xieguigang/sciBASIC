@@ -51,6 +51,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports rect = System.Drawing.Rectangle
 
 Namespace HTML.CSS.Render
 
@@ -75,7 +76,7 @@ Namespace HTML.CSS.Render
         ''' Rounds the specified point
         ''' </summary>
         ''' <param name="p"></param>
-        ''' <param name="b"></param>
+        ''' <param name="b"></param>Module
         ''' <returns></returns>
         Private Shared Function RoundP(p As PointF, b As CssBox) As PointF
             'HACK: Don't round if in printing mode
@@ -90,7 +91,7 @@ Namespace HTML.CSS.Render
         ''' <returns></returns>
         Private Shared Function RoundR(r As RectangleF, b As CssBox) As RectangleF
             'HACK: Don't round if in printing mode
-            Return Rectangle.Round(r)
+            Return rect.Round(r)
         End Function
 
         ''' <summary>

@@ -88,6 +88,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 Imports sys = System.Math
 Imports HTMLParser = Microsoft.VisualBasic.MIME.Markup.HTML.Render.Parser
+Imports rect = System.Drawing.Rectangle
 
 Namespace HTML.CSS.Render
 
@@ -2979,7 +2980,7 @@ Namespace HTML.CSS.Render
                 r.Height -= ActualBorderTopWidth + ActualBorderBottomWidth + ActualPaddingTop + ActualPaddingBottom
                 r.Y += ActualBorderTopWidth + ActualPaddingTop
                 'HACK: round rectangle only when necessary
-                g.DrawImage(Words(0).Image, Rectangle.Round(r))
+                g.DrawImage(Words(0).Image, rect.Round(r))
             Else
                 Dim f As Font = ActualFont
                 Using b As New SolidBrush(CssValue.GetActualColor(Color))
