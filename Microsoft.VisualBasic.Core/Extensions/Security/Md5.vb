@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::0983848ac76a8b9942aa4f7e68fe5555, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module MD5Hash
-    ' 
-    '         Function: GetFileMd5, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2, NewUid
-    '                   SaltValue, Sha256ByteString, StringToByteArray, (+2 Overloads) ToLong, VerifyFile
-    '                   VerifyMd5Hash
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module MD5Hash
+' 
+'         Function: GetFileMd5, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2, NewUid
+'                   SaltValue, Sha256ByteString, StringToByteArray, (+2 Overloads) ToLong, VerifyFile
+'                   VerifyMd5Hash
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Security.Cryptography
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -293,6 +294,51 @@ Namespace SecurityString
             Next
 
             Return sb.ToString.Trim(delimiter)
+        End Function
+
+        ''' <summary>
+        ''' Calculate the Fletcher32 checksum.
+        ''' </summary>
+        ''' <param name="bytes">the bytes data for verify</param>
+        ''' <param name="offset">initial offset</param>
+        ''' <param name="length">the message length (if odd, 0 is appended)</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' https://github.com/AKafakA/CSE5234_Group1/blob/ae055d2bb45be9ccf30bbf2bf9dfac4e6e982b1c/h2/src/main/org/h2/mvstore/DataUtils.java#L798
+        ''' </remarks>
+        <Extension>
+        Public Function Fletcher32(bytes As Byte(), offset%, length%) As Integer
+            Dim s1 As Integer = &HFFFF
+            Dim s2 As Integer = &HFFFF
+            Dim i As VBInteger = offset
+            Dim len As Integer = offset + (length And (Not 1))
+
+            Do While i < len
+                ' reduce after 360 words (each word is two bytes)
+                Dim [end] As Integer = System.Math.Min(CInt(i) + 720, len)
+
+                Do While i < [end]
+                    'ORIGINAL LINE: int x = ((bytes[i++] & &Hff) << 8) | (bytes[i++] & &Hff);
+                    Dim x As Integer = ((bytes(++i) And &HFF) << 8) Or (bytes(++i) And &HFF)
+                    s1 += x
+                    s2 += s1
+                Loop
+
+                s1 = (s1 And &HFFFF) + (CInt(CUInt(s1) >> 16))
+                s2 = (s2 And &HFFFF) + (CInt(CUInt(s2) >> 16))
+            Loop
+
+            If (length And 1) <> 0 Then
+                ' odd length: append 0
+                Dim x As Integer = (bytes(i) And &HFF) << 8
+                s1 += x
+                s2 += s1
+            End If
+
+            s1 = (s1 And &HFFFF) + (CInt(CUInt(s1) >> 16))
+            s2 = (s2 And &HFFFF) + (CInt(CUInt(s2) >> 16))
+
+            Return (s2 << 16) Or s1
         End Function
     End Module
 End Namespace

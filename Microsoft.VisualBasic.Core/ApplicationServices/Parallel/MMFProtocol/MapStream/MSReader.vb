@@ -58,21 +58,21 @@ Imports System.IO.MemoryMappedFiles
 
 Namespace Parallel.MMFProtocol.MapStream
 
-    Public MustInherit Class IMapBase : Implements IDisposable
+    Public MustInherit Class MapStream : Implements IDisposable
 
         Public ReadOnly Property URI As String
 
-        Protected _chunkBuffer As Byte()
-        Protected _mmfileStream As MemoryMappedFile
+        Protected buffer As Byte()
+        Protected file As MemoryMappedFile
 
-        Sub New(uri As String, ChunkSize As Long)
+        Sub New(uri As String, chunkSize As Integer)
             Me._URI = uri
-            Me._chunkBuffer = New Byte(ChunkSize - 1) {}
+            Me.buffer = New Byte(chunkSize - 1) {}
         End Sub
 
         Public Function Read() As MMFStream
-            Call _mmfileStream.CreateViewStream.Read(_chunkBuffer, Scan0, _chunkBuffer.Length)
-            Return New MMFStream(_chunkBuffer)
+            Call file.CreateViewStream.Read(buffer, Scan0, buffer.Length)
+            Return New MMFStream(buffer)
         End Function
 
         Public Overrides Function ToString() As String
@@ -112,7 +112,7 @@ Namespace Parallel.MMFProtocol.MapStream
 #End Region
     End Class
 
-    Public Class MSIOReader : Inherits IMapBase
+    Public Class MSIOReader : Inherits MapStream
         Implements IDisposable
 
         ''' <summary>
@@ -132,7 +132,7 @@ Namespace Parallel.MMFProtocol.MapStream
         ''' <param name="ChunkSize">内存映射文件的数据块的预分配大小</param>
         Sub New(uri As String, callback As DataArrival, ChunkSize As Long)
             Call MyBase.New(uri, ChunkSize)
-            _mmfileStream = MemoryMappedFile.OpenExisting(uri)
+            file = MemoryMappedFile.OpenExisting(uri)
             _dataArrivals = callback
 
             Call Parallel.RunTask(AddressOf __threadElapsed)
@@ -152,7 +152,7 @@ Namespace Parallel.MMFProtocol.MapStream
         ''' <returns></returns>
         Public Function ReadBadge() As Long
             Dim buf As Byte() = New Byte(MMFStream.INT64 - 1) {}
-            Call _mmfileStream.CreateViewStream.Read(buf, Scan0, buf.Length)
+            Call file.CreateViewStream.Read(buf, Scan0, buf.Length)
             Dim n As Long = BitConverter.ToInt64(buf, Scan0)
             Return n
         End Function
