@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::2a857cba3f0f5cfc7788ddcc1883d444, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: Association, cbind, FillZero, rbind, rbindGroup
-    '               Subtract, Union, Unique
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: Association, cbind, FillZero, rbind, rbindGroup
+'               Subtract, Union, Unique
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.IO
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -51,6 +52,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Office.Excel
 Imports Microsoft.VisualBasic.Scripting
@@ -71,7 +73,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     Public Function Unique(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ID_unique.csv"
-        Dim file As csv = csv.Load(Path:=[in])
+        Dim file As csv = csv.Load(path:=[in])
         Dim idIndex As New Dictionary(Of String, String)
 
         For Each row As RowObject In file
@@ -309,5 +311,60 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
             .Where(Function(r) Not r.ID Like indexB) _
             .SaveTo(out) _
             .CLICode
+    End Function
+
+    <ExportAPI("/removes")>
+    <Usage("/removes /in <dataset.csv> /pattern <regexp_pattern> [/by_row /out <out.csv>]")>
+    <Description("Removes row or column data by given regular expression pattern.")>
+    <Argument("/by_row", True, CLITypes.Boolean, AcceptTypes:={GetType(Boolean)},
+              Description:="This argument specific that removes data by row or by column, by default is by column.")>
+    Public Function Removes(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim pattern$ = args <= "/pattern"
+        Dim by_row As Boolean = args("/by_row")
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.removes[{pattern.NormalizePathString(False)}].csv"
+        Dim removedOut = out.TrimSuffix & "_removedParts.csv"
+        Dim data = EntityObject.LoadDataSet([in])
+        Dim regexp As New Regex(pattern, RegexICSng)
+        Dim result As New List(Of EntityObject)
+        Dim removedParts As New List(Of EntityObject)
+
+        If by_row Then
+            For Each row As EntityObject In data
+                If regexp.Match(row.ID).Success Then
+                    removedParts += row
+                Else
+                    result += row
+                End If
+            Next
+        Else
+            Dim columnNames As StringVector = data(Scan0).Properties.Keys.ToArray
+            Dim deletes As Index(Of String) = columnNames _
+                .Where(Function(name) regexp.Match(name).Success) _
+                .Indexing
+            Dim subsetKeys As String() = columnNames(Not columnNames Like deletes)
+
+            result = data _
+                .Select(Function(row)
+                            Return New EntityObject With {
+                                .ID = row.ID,
+                                .Properties = row.Properties.Subset(subsetKeys)
+                            }
+                        End Function) _
+                .AsList
+            subsetKeys = deletes.Objects
+            removedParts = data _
+                .Select(Function(row)
+                            Return New EntityObject With {
+                                .ID = row.ID,
+                                .Properties = row.Properties.Subset(subsetKeys)
+                            }
+                        End Function) _
+                .AsList
+        End If
+
+        Call removedParts.SaveTo(removedOut)
+
+        Return result.SaveTo(out).CLICode
     End Function
 End Module
