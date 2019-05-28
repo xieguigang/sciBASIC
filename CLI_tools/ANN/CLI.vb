@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::ba4905f2f8bc0929b3279a0a16de7eab, CLI_tools\ANN\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, MinErrorSnapshot
-    '               ROCData, runTrainingCommon, Train
-    ' 
-    '     Sub: SummaryDebuggerDump
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, MinErrorSnapshot
+'               ROCData, runTrainingCommon, Train
+' 
+'     Sub: SummaryDebuggerDump
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -54,7 +55,6 @@ Imports Microsoft.VisualBasic.MachineLearning.Debugger
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
-Imports Microsoft.VisualBasic.MIME.application.netCDF
 Imports DataFrame = Microsoft.VisualBasic.Data.csv.IO.DataFrame
 Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
@@ -78,7 +78,7 @@ Module CLI
                     End Function) _
             .ToArray
 
-        Return ROCMatrix.SaveTo(Out).CLICode
+        Return ROCMatrix.SaveTo(out).CLICode
     End Function
 
     <ExportAPI("/Summary.Debugger.Dump")>
@@ -177,7 +177,7 @@ Module CLI
                 .ToArray
         End If
 
-        Dim defaultActive As DefaultValue(Of String) = config.default_active Or ActiveFunction.Sigmoid
+        Dim defaultActive As [Default](Of String) = config.default_active Or ActiveFunction.Sigmoid
         Dim actives As New Activations.LayerActives With {
             .hiddens = ActiveFunction.Parse(config.hiddens_active Or defaultActive),
             .input = ActiveFunction.Parse(config.input_active Or defaultActive),
