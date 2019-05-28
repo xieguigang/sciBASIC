@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::ed953e46b04d847b02ce2f7e8da6985f, Microsoft.VisualBasic.Core\Text\ASCII.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ASCII
-    ' 
-    '         Properties: AlphaNumericTable, Nonprintings, Symbols
-    ' 
-    '         Function: IsASCIIString, ReplaceQuot, TrimNonPrintings
-    '         Class [Byte]
-    ' 
-    '             Function: GetASCIISymbols
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ASCII
+' 
+'         Properties: AlphaNumericTable, Nonprintings, Symbols
+' 
+'         Function: IsASCIIString, ReplaceQuot, TrimNonPrintings
+'         Class [Byte]
+' 
+'             Function: GetASCIISymbols
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,6 +51,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Text
 
@@ -283,12 +284,21 @@ Namespace Text
         ''' </summary>
         Public Const Mark As Char = "'"c
 
+        Shared ReadOnly nonPrintingBytes As Index(Of Byte) = Nonprintings _
+            .Select(Function(c) CByte(Asc(c))) _
+            .ToArray
+
         Public Shared Function TrimNonPrintings(s$) As String
             For Each c As Char In Nonprintings
                 Call s.Trim(c, "")
             Next
 
             Return s
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsNonPrinting(b As Byte) As Boolean
+            Return b Like nonPrintingBytes
         End Function
 
         ''' <summary>

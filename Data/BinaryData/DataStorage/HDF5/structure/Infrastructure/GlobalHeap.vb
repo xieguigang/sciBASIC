@@ -1,56 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::6de85e0343538c096eca9d4509ff2aaa, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\GlobalHeap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GlobalHeap
-    ' 
-    '         Properties: collectionSize, objects, signature, version
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues
-    ' 
-    '     Class GlobalHeapObject
-    ' 
-    '         Properties: data, index, objectSize, references
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GlobalHeap
+' 
+'         Properties: collectionSize, objects, signature, version
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: printValues
+' 
+'     Class GlobalHeapObject
+' 
+'         Properties: data, index, objectSize, references
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.Text
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5.struct
@@ -195,13 +197,19 @@ Namespace HDF5.struct
             references = reader.readShort
 
             ' Skip 4 reserved bytes
-            reader.skipBytes(4)
+            Call reader.skipBytes(4)
 
             ' index 等于零的时候是读取操作结束的标志，在这里就不读取后面的数据了，如果index等于零的时候
             If index > 0 Then
                 objectSize = device.readO(reader, sb)
-                data = reader.readBytes(objectSize)
-                device.seekBufferToNextMultipleOfEight(reader)
+
+                If objectSize = -1 Then
+                    data = {}
+                Else
+                    data = reader.readBytes(objectSize)
+                End If
+
+                Call device.seekBufferToNextMultipleOfEight(reader)
             Else
 #If DEBUG Then
                 Call "index = ZERO!".Warning
@@ -210,7 +218,17 @@ Namespace HDF5.struct
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"#{index} > ({objectSize} bytes) {data.Select(Function(x) x.ToString("X2")).JoinBy("")}"
+            Dim debugView$
+
+            If data.All(Function(b) Not ASCII.IsNonPrinting(b)) Then
+                debugView = Encoding.ASCII.GetString(data)
+            Else
+                debugView = data _
+                    .Select(Function(b) b.ToString("X2")) _
+                    .JoinBy("-")
+            End If
+
+            Return $"#{index} > ({objectSize} bytes) {debugView}"
         End Function
     End Class
 End Namespace
