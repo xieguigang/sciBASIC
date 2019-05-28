@@ -91,6 +91,14 @@ Namespace IO
             Me.Properties = New Dictionary(Of String, Double)
         End Sub
 
+        Public Function Append(data As [Property](Of Double)) As DataSet
+            For Each item In data.Properties
+                Me(item.Key) = item.Value
+            Next
+
+            Return Me
+        End Function
+
         ''' <summary>
         ''' Copy prop[erty value
         ''' </summary>

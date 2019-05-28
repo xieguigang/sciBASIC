@@ -542,12 +542,15 @@ Public Module Extensions
 
         Dim objSeq = source.Select(Function(o) DirectCast(o, Object))
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
-            objSeq,
-            GetType(T),
-            strict,
-            maps,
-            Not nonParallel,
-            metaBlank, reorderKeys, layout)
+            source:=objSeq,
+            type:=GetType(T),
+            Explicit:=strict,
+            maps:=maps,
+            parallel:=Not nonParallel,
+            metaBlank:=metaBlank,
+            reorderKeys:=reorderKeys,
+            layout:=layout
+        )
 
         If transpose Then
             csv = csv _
@@ -560,7 +563,8 @@ Public Module Extensions
         Dim success = csv.SaveDataFrame(
             path:=path,
             encoding:=encoding,
-            tsv:=tsv)
+            tsv:=tsv
+        )
 
         If success Then
             Call "CSV saved!".EchoLine
