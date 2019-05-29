@@ -209,14 +209,17 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="path">Csv file path</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetLocusMapName(path As String) As String
-        Dim first As String = path.ReadFirstLine
-        Dim tokens = IO.CharsParser(first)
-        Return tokens.FirstOrDefault
+        Return File.ReadHeaderRow(path).FirstOrDefault
     End Function
 
     <Extension>
-    Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo As String, Optional noTitle As Boolean = False, Optional encoding As Encodings = Encodings.UTF8) As Boolean
+    Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo$,
+                                             Optional noTitle As Boolean = False,
+                                             Optional encoding As Encodings = Encodings.UTF8) As Boolean
+
         Dim doc As File = Reflector.Save(source, False)
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
         Dim slines As String() = lines.Select(Function(x) x.AsLine(vbTab)).ToArray
@@ -224,7 +227,9 @@ Public Module Extensions
         Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
 
-    <Extension> Public Sub ForEach(Of T As Class)(path As String, invoke As Action(Of T))
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub ForEach(Of T As Class)(path As String, invoke As Action(Of T))
         Call DataStream.OpenHandle(path).ForEach(Of T)(invoke)
     End Sub
 
@@ -234,7 +239,10 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function AsLinq(Of T As Class)(path$, Optional parallel As Boolean = False) As IEnumerable(Of T)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsLinq(Of T As Class)(path$, Optional parallel As Boolean = False) As IEnumerable(Of T)
         Return DataLinqStream.OpenHandle(path).AsLinq(Of T)(parallel)
     End Function
 
@@ -270,6 +278,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="source"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DataFrame(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))) As EntityObject()
         Return source _
@@ -375,10 +385,11 @@ Public Module Extensions
     ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
-                                                            Optional strict As Boolean = False,
-                                                            Optional skipEmpty As Boolean = True,
-                                                            Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+    <Extension>
+    Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
+                                                Optional strict As Boolean = False,
+                                                Optional skipEmpty As Boolean = True,
+                                                Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
         Dim sheet As File_csv
 
         If skipEmpty Then
