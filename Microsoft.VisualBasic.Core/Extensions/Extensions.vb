@@ -1908,7 +1908,7 @@ Public Module Extensions
     End Function
 
     <Extension>
-    Public Function IsNullorEmpty(Of T)(vector As Vector(Of T)) As Boolean
+    Public Function IsNullOrEmpty(Of T)(vector As Vector(Of T)) As Boolean
         If vector Is Nothing Then
             Return True
         End If
@@ -1997,6 +1997,23 @@ Public Module Extensions
             Return 0
         Else
             Return collect.Count
+        End If
+    End Function
+
+    ''' <summary>
+    ''' [height, width] or [rows, columns]
+    ''' </summary>
+    ''' <param name="size"></param>
+    ''' <param name="reverse">
+    ''' [width, height] or [columns, rows]
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ToArray(size As Size, Optional reverse As Boolean = False) As Integer()
+        If reverse Then
+            Return {size.Width, size.Height}
+        Else
+            Return {size.Height, size.Width}
         End If
     End Function
 

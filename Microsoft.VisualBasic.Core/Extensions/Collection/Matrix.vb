@@ -158,6 +158,15 @@ Public Module MatrixExtensions
         Return newMatrix
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SizeOf(Of T)(rect As T()()) As Size
+        Return New Size With {
+            .Width = rect(Scan0).Length,
+            .Height = rect.Length
+        }
+    End Function
+
     ''' <summary>
     ''' Convert the data collection into a matrix value.
     ''' </summary>
