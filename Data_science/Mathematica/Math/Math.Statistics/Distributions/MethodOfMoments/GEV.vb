@@ -114,11 +114,9 @@ Namespace Distributions.MethodOfMoments
                 Return _Mu - _Sigma * Math.Log(Math.Log(1 / probability))
             End If
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Xi <= 0 Then errors.Add(New Distributions.ContinuousDistributionError("Xi must be greater than 0"))
-            If _Sigma <= 0 Then errors.Add(New Distributions.ContinuousDistributionError("Sigma must be greater than 0"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Xi <= 0 Then Yield New Exception("Xi must be greater than 0")
+            If _Sigma <= 0 Then Yield New Exception("Sigma must be greater than 0")
         End Function
     End Class
 

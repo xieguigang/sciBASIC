@@ -222,10 +222,8 @@ Namespace Distributions.MethodOfMoments
             Return (1 / Math.Sqrt(2 * Math.PI) * Math.Pow(_StDev, 2.0)) * Math.Exp((-(Math.Pow(value - _Mean, 2) / (2 * Math.Pow(_StDev, 2)))))
         End Function
 
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _StDev <= 0 Then errors.Add(New Distributions.ContinuousDistributionError("Standard of Deviation must be greater than 0"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _StDev <= 0 Then Yield New Exception("Standard of Deviation must be greater than 0")
         End Function
     End Class
 

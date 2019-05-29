@@ -85,10 +85,8 @@ Namespace Distributions.LinearMoments
         Public Overrides Function GetPDF(value As Double) As Double
             Return (1 / _Alpha) * Math.Exp(-(value - _Xi) / _Alpha) * Math.Exp(-Math.Exp(-(value - _Xi) / _Alpha))
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Alpha = 0 Then errors.Add(New Distributions.ContinuousDistributionError("Alpha cannot be zero"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Alpha = 0 Then Yield New Exception("Alpha cannot be zero")
         End Function
     End Class
 

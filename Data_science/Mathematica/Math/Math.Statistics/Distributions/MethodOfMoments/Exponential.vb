@@ -85,10 +85,8 @@ Namespace Distributions.MethodOfMoments
                 Return _Lambda * Math.Exp(-_Lambda * value)
             End If
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Lambda <= 0 Then errors.Add(New Distributions.ContinuousDistributionError("Lambda must be greater than 0"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Lambda <= 0 Then Yield New Exception("Lambda must be greater than 0")
         End Function
 
     End Class

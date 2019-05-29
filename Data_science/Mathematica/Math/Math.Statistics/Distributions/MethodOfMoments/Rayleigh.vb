@@ -56,8 +56,7 @@ Namespace Distributions.MethodOfMoments
     ''' <summary>
     ''' @author Will_and_Sara
     ''' </summary>
-    Public Class Rayleigh
-        Inherits Distributions.ContinuousDistribution
+    Public Class Rayleigh : Inherits Distributions.ContinuousDistribution
 
         Public ReadOnly Property Sigma As Double
 
@@ -82,10 +81,8 @@ Namespace Distributions.MethodOfMoments
         Public Overrides Function GetPDF(value As Double) As Double
             Return (value / (Math.Pow(_Sigma, 2))) * Math.Exp(-(Math.Pow(value, 2)) / (2 * (Math.Pow(_Sigma, 2))))
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errs As New List(Of Distributions.ContinuousDistributionError)
-            If _Sigma <= 0 Then errs.Add(New Distributions.ContinuousDistributionError("Sigma cannot be less than or equal to zero in the Rayleigh distribuiton."))
-            Return errs
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Sigma <= 0 Then Yield New Exception("Sigma cannot be less than or equal to zero in the Rayleigh distribuiton.")
         End Function
     End Class
 

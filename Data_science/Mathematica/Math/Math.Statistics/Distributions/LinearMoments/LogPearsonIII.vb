@@ -112,10 +112,8 @@ Namespace Distributions.LinearMoments
         Public Overrides Function GetPDF(value As Double) As Double
             Throw New System.NotSupportedException("Not supported yet.") 'To change body of generated methods, choose Tools | Templates.
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Beta = 0 Then errors.Add(New Distributions.ContinuousDistributionError("Beta cannot be zero"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Beta = 0 Then Yield New Exception("Beta cannot be zero")
         End Function
     End Class
 

@@ -85,10 +85,8 @@ Namespace Distributions.MethodOfMoments
             Dim z As Double = (value - _Mu) / _Beta
             Return (1 / _Beta) * Math.Exp(-(z + Math.Exp(-z)))
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Beta <= 0 Then errors.Add(New Distributions.ContinuousDistributionError("Beta must be greater than 0"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Beta <= 0 Then Yield New Exception("Beta must be greater than 0")
         End Function
     End Class
 

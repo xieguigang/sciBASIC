@@ -74,10 +74,10 @@ Namespace Distributions.MethodOfMoments
         Public Overrides Function GetPDF(value As Double) As Double
             Throw New System.NotSupportedException("Not supported yet.") 'To change body of generated methods, choose Tools | Templates.
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _CumulativeProbabilities.Length <> _ExceedanceValues.Length Then errors.Add(New Distributions.ContinuousDistributionError("Cumulative Probability values and Emperical Exceedance values are different lengths."))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _CumulativeProbabilities.Length <> _ExceedanceValues.Length Then
+                Yield New Exception("Cumulative Probability values and Emperical Exceedance values are different lengths.")
+            End If
         End Function
 
     End Class

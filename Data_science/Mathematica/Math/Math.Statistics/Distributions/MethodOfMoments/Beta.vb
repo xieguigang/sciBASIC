@@ -109,12 +109,10 @@ Namespace Distributions.MethodOfMoments
         Public Overrides Function GetPDF(value As Double) As Double
             Return (Math.Pow(value, (_Alpha - 1)) * (Math.Pow((1 - value), (_Beta - 1)))) / SpecialFunctions.BetaFunction(_Alpha, _Beta)
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Alpha <= 0 Then errors.Add(New Distributions.ContinuousDistributionError("Alpha must be greater than 0"))
-            If _Beta <= 0 Then errors.Add(New Distributions.ContinuousDistributionError("Beta must be greater than 0"))
-            If _Alpha <= _Beta Then errors.Add(New Distributions.ContinuousDistributionError("Alpha must be greater than Beta"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Alpha <= 0 Then Yield New Exception("Alpha must be greater than 0")
+            If _Beta <= 0 Then Yield New Exception("Beta must be greater than 0")
+            If _Alpha <= _Beta Then Yield New Exception("Alpha must be greater than Beta")
         End Function
     End Class
 

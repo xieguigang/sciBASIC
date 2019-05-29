@@ -101,10 +101,10 @@ Namespace Distributions.MethodOfMoments
                 Return 0
             End If
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errs As New List(Of Distributions.ContinuousDistributionError)
-            If _Min > _Max Then errs.Add(New Distributions.ContinuousDistributionError("The min cannot be greater than the max in the uniform distribuiton."))
-            Return errs
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Min > _Max Then
+                Yield New Exception("The min cannot be greater than the max in the uniform distribuiton.")
+            End If
         End Function
     End Class
 

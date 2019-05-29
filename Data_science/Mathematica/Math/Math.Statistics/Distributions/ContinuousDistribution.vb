@@ -120,7 +120,7 @@ Namespace Distributions
             Return New Vector(v)
         End Function
 
-        Public MustOverride Function Validate() As List(Of ContinuousDistributionError)
+        Public MustOverride Function Validate() As IEnumerable(Of Exception)
 
         ' <editor-fold defaultstate="collapsed" desc="Goodness of fit tests">
         Public Overridable Function Kolmogorov_SmirnovTest() As Double

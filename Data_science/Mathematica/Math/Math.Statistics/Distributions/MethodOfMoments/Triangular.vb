@@ -138,12 +138,11 @@ Namespace Distributions.MethodOfMoments
             If value <= _Max Then Return (2 * (_Max - value) / (_Max - _Min) * (_Max - _MostLikely))
             Return 0
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Min > _Max Then errors.Add(New Distributions.ContinuousDistributionError("Min cannot be greater than Max"))
-            If _Min > _MostLikely Then errors.Add(New Distributions.ContinuousDistributionError("Min cannot be greater than MostLikely"))
-            If _MostLikely > _Max Then errors.Add(New Distributions.ContinuousDistributionError("MostLikely cannot be greater than Max"))
-            Return errors
+
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Min > _Max Then Yield New Exception("Min cannot be greater than Max")
+            If _Min > _MostLikely Then Yield New Exception("Min cannot be greater than MostLikely")
+            If _MostLikely > _Max Then Yield New Exception("MostLikely cannot be greater than Max")
         End Function
     End Class
 
