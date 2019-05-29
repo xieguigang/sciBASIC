@@ -91,9 +91,17 @@ Namespace IO
             Me.Properties = New Dictionary(Of String, Double)
         End Sub
 
-        Public Function Append(data As [Property](Of Double)) As DataSet
+        Shared ReadOnly replace As New [Default](Of Func(Of Double, Double, Double))(Function(previous, now) now)
+
+        Public Function Append(data As [Property](Of Double), Optional duplicated As Func(Of Double, Double, Double) = Nothing) As DataSet
+            duplicated = duplicated Or DataSet.replace
+
             For Each item In data.Properties
-                Me(item.Key) = item.Value
+                If Me.HasProperty(item.Key) Then
+                    Me(item.Key) = duplicated(Me(item.Key), item.Value)
+                Else
+                    Me.Properties.Add(item.Key, item.Value)
+                End If
             Next
 
             Return Me
