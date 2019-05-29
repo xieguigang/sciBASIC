@@ -1,97 +1,94 @@
 ﻿#Region "Microsoft.VisualBasic::ce2ae85a37031d68ac38ccf6dab0b9d3, Microsoft.VisualBasic.Core\ApplicationServices\Tools\OSVersionInfo.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module OSVersionInfo
-    ' 
-    ' 
-    '         Enum SoftwareArchitecture
-    ' 
-    ' 
-    ' 
-    ' 
-    '         Enum ProcessorArchitecture
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '         Delegate Function
-    ' 
-    '             Properties: Edition, OSBits, ProcessorBits, ProgramBits
-    '         Enum WindowsNameList
-    ' 
-    '             null, Windows2000, Windows3_1, Windows7, Windows8
-    '             Windows95, Windows95OSR2, Windows98, Windows98SecondEdition, WindowsCE
-    '             WindowsMe, WindowsNT3_51, WindowsNT4_0, WindowsNT4_0Server, WindowsServer2003
-    '             WindowsServer2008, WindowsServer2008R2, WindowsServer2012, WindowsVista, WindowsXP
-    ' 
-    ' 
-    ' 
-    '         Structure OSVERSIONINFOEX
-    ' 
-    '             Properties: WindowsName
-    ' 
-    '             Function: GetProductInfo, GetSystemMetrics, GetVersion, GetVersionEx
-    ' 
-    '             Sub: GetNativeSystemInfo, GetSystemInfo
-    ' 
-    '         Structure SYSTEM_INFO
-    ' 
-    ' 
-    ' 
-    '         Structure _PROCESSOR_INFO_UNION
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: BuildVersion, MajorVersion, MinorVersion, RevisionVersion, ServicePack
-    '                 Version, VersionString
-    ' 
-    '     Function: GetIsWow64ProcessDelegate, GetProcAddress, Is32BitProcessOn64BitProcessor, LoadLibrary
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module OSVersionInfo
+' 
+' 
+'         Enum SoftwareArchitecture
+' 
+' 
+' 
+' 
+'         Enum ProcessorArchitecture
+' 
+' 
+'  
+' 
+' 
+' 
+'         Delegate Function
+' 
+'             Properties: Edition, OSBits, ProcessorBits, ProgramBits
+'         Enum WindowsNameList
+' 
+'             null, Windows2000, Windows3_1, Windows7, Windows8
+'             Windows95, Windows95OSR2, Windows98, Windows98SecondEdition, WindowsCE
+'             WindowsMe, WindowsNT3_51, WindowsNT4_0, WindowsNT4_0Server, WindowsServer2003
+'             WindowsServer2008, WindowsServer2008R2, WindowsServer2012, WindowsVista, WindowsXP
+' 
+' 
+' 
+'         Structure OSVERSIONINFOEX
+' 
+'             Properties: WindowsName
+' 
+'             Function: GetProductInfo, GetSystemMetrics, GetVersion, GetVersionEx
+' 
+'             Sub: GetNativeSystemInfo, GetSystemInfo
+' 
+'         Structure SYSTEM_INFO
+' 
+' 
+' 
+'         Structure _PROCESSOR_INFO_UNION
+' 
+' 
+' 
+'  
+' 
+'     Properties: BuildVersion, MajorVersion, MinorVersion, RevisionVersion, ServicePack
+'                 Version, VersionString
+' 
+'     Function: GetIsWow64ProcessDelegate, GetProcAddress, Is32BitProcessOn64BitProcessor, LoadLibrary
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 #Region "USINGS"
-Imports System.Collections.Generic
-Imports System.Diagnostics
 Imports System.Runtime.InteropServices
 Imports System.Runtime.InteropServices.Marshal
-Imports System.Text
 #End Region
 
 Namespace ApplicationServices
@@ -264,7 +261,7 @@ Namespace ApplicationServices
 
                 Dim osVersion As OperatingSystem = Environment.OSVersion
                 Dim osVersionInfo As New OSVERSIONINFOEX()
-                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersion(osVersionInfo) Then
                     Dim majorVersion As Integer = osVersion.Version.Major
@@ -658,7 +655,7 @@ Namespace ApplicationServices
 
                 Dim osVersion As OperatingSystem = Environment.OSVersion
                 Dim osVersionInfo As New OSVERSIONINFOEX()
-                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersion(osVersionInfo) Then
                     Dim majorVersion As Integer = osVersion.Version.Major
@@ -1074,7 +1071,7 @@ Namespace ApplicationServices
                 Dim servicePack__1 As String = String.Empty
                 Dim osVersionInfo As New OSVERSIONINFOEX()
 
-                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersion(osVersionInfo) Then
                     servicePack__1 = osVersionInfo.szCSDVersion
