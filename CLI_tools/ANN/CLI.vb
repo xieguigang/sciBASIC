@@ -235,9 +235,12 @@ Module CLI
                                 End If
 
                                 If err < minError Then
+                                    ' 因为这个只是保存一个临时文件,可能在测试的时候会因为占用
+                                    ' 这个临时文件而导致保存失败
+                                    ' 所以在这里忽略掉这个错误就好了
                                     Call trainer.TakeSnapshot _
                                         .GetXml _
-                                        .SaveTo(snapshotFile)
+                                        .SaveTo(snapshotFile, throwEx:=False)
                                 End If
                             End Sub) _
             .Train(parallel)
