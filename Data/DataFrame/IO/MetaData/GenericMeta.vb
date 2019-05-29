@@ -73,12 +73,16 @@ Namespace IO
             Dim pl% = prefix.Length
             Dim tagsData As NamedValue(Of String)() = rows _
                 .Select(Function(s) Mid(s, pl + 1)) _
-                .Select(Function(s) s.GetTagValue(delimiter, trim:=True)) _
+                .Select(Function(s)
+                            Return s.GetTagValue(delimiter, trim:=True)
+                        End Function) _
                 .ToArray
 
             Return tagsData.GroupBy(Function(o) o.Name) _
                 .ToDictionary(Function(k) k.Key,
-                              Function(s) s.Select(Function(v) v.Value).ToArray)
+                              Function(s)
+                                  Return s.Select(Function(v) v.Value).ToArray
+                              End Function)
         End Function
     End Module
 End Namespace

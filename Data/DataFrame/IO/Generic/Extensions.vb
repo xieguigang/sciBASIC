@@ -176,6 +176,12 @@ Namespace IO
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' Column value projection
+        ''' </summary>
+        ''' <param name="datasets"></param>
+        ''' <param name="property$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of EntityObject), property$) As String()
@@ -219,6 +225,11 @@ Namespace IO
             Return source.Select(AddressOf asCharacter)
         End Function
 
+        ''' <summary>
+        ''' Convert a numeric dataset object as character dataset
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function asCharacter(data As DataSet) As EntityObject
             Return New EntityObject With {

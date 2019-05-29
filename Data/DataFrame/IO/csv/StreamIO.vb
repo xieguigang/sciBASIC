@@ -62,7 +62,7 @@ Namespace IO
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function [GetType](csv As File, ParamArray types As Type()) As Type
+        Public Function [TypeOf](csv As File, ParamArray types As Type()) As Type
             Dim headers As Index(Of String) = csv.First.ToArray
             Dim scores As New List(Of (Type, Integer))
 

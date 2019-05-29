@@ -21,7 +21,7 @@ Namespace DATA
         Private Function processValue(map As KeyValuePair(Of String, Double), replaceAs$) As String
             Dim s As String = map.Value.ToString
 
-            If NaN.IndexOf(s) > -1 Then
+            If s Like NaN Then
                 Return replaceAs
             Else
                 Return s

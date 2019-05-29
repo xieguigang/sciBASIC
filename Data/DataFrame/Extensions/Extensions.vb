@@ -351,7 +351,8 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Create a dynamics data frame object from a csv document object.(从Csv文件之中创建一个数据框容器)
+    ''' Create a dynamics data frame object from a csv document object.
+    ''' (从Csv文件之中创建一个数据框容器)
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
@@ -656,8 +657,8 @@ Public Module Extensions
     <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim row As IEnumerable(Of String) = From n As Double
                                             In data
-                                            Select s =
-                                                n.ToString
+                                            Select s = n.ToString
+
         Dim buf As New IO.File({New RowObject(row)})
         Return buf.Save(path, encoding.CodePage)
     End Function
