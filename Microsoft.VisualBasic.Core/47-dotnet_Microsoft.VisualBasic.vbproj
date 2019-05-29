@@ -955,9 +955,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
-    <Compile Include="CommandLine\CLI\Stream\Extensions.vb" />
-    <Compile Include="CommandLine\CLI\Stream\StreamReader.vb" />
-    <Compile Include="CommandLine\CLI\Stream\StreamWriter.vb" />
+    <Compile Include="CommandLine\Stream.vb" />
     <Compile Include="CommandLine\InteropService\InCompatible.vb" />
     <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
