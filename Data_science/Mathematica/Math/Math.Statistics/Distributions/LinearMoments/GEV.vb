@@ -70,15 +70,15 @@ Namespace Distributions.LinearMoments
         End Sub
         Public Sub New(data As Double())
             Dim LM As New MomentFunctions.LinearMoments(data)
-            PeriodOfRecord = (LM.GetSampleSize())
+            PeriodOfRecord = (LM.SampleSize())
             'different formulae finding _k for positive and negative t3 - for very low t3 _k is refined through newton-raphson iteration
-            If LM.GetT3() <= 0 Then 'following works for -0.8 to 0
-                _K = (0.2837753 + LM.GetT3() * (-1.21096399 + LM.GetT3() * (-2.50728214 + LM.GetT3() * (-1.13455566 + LM.GetT3() * -0.07138022)))) / (1 + LM.GetT3() * (2.06189696 + LM.GetT3() * (1.31912239 + LM.GetT3() * 0.25077104)))
-                If LM.GetT3() < -0.8 Then 'use above _k as starting point for newton-raphson iteration to converge to answer
-                    If LM.GetT3() <= -0.97 Then
-                        _K = 1 - Math.Log(1 + LM.GetT3()) / Math.Log(2) '...unless t3 is below -0.97 in which case start from this formula
+            If LM.T3() <= 0 Then 'following works for -0.8 to 0
+                _K = (0.2837753 + LM.T3() * (-1.21096399 + LM.T3() * (-2.50728214 + LM.T3() * (-1.13455566 + LM.T3() * -0.07138022)))) / (1 + LM.T3() * (2.06189696 + LM.T3() * (1.31912239 + LM.T3() * 0.25077104)))
+                If LM.T3() < -0.8 Then 'use above _k as starting point for newton-raphson iteration to converge to answer
+                    If LM.T3() <= -0.97 Then
+                        _K = 1 - Math.Log(1 + LM.T3()) / Math.Log(2) '...unless t3 is below -0.97 in which case start from this formula
                     Else
-                        Dim t0 As Double = (LM.GetT3() + 3) / 2
+                        Dim t0 As Double = (LM.T3() + 3) / 2
                         For i As Integer = 1 To 19
                             Dim x2 As Double = Math.Pow(2, -_K)
                             Dim x3 As Double = Math.Pow(3, -_K)
@@ -94,18 +94,18 @@ Namespace Distributions.LinearMoments
                     'use the above k, without any newton-raphson
                 End If 'positive t3 always uses the below k
             Else
-                Dim z As Double = 1 - LM.GetT3()
+                Dim z As Double = 1 - LM.T3()
                 _K = (-1 + z * (1.59921491 + z * (-0.48832213 + z * 0.01573152))) / (1 + z * (-0.64363929 + z * 0.08985247))
             End If
             'calculate alpha and xi from k, or if k = 0 calculate them in a different way
             If Math.Abs(_K) < 0.000001 Then
                 _K = 0
-                _Alpha = LM.GetL2() / Math.Log(2)
-                _Xi = LM.GetL1() - _Alpha * 0.57721566 'euler's constant
+                _Alpha = LM.L2() / Math.Log(2)
+                _Xi = LM.L1() - _Alpha * 0.57721566 'euler's constant
             Else
                 Dim gam As Double = Math.Exp(SpecialFunctions.gammaln(1 + _K))
-                _Alpha = LM.GetL2() * _K / (gam * (1 - Math.Pow(2, -_K)))
-                _Xi = LM.GetL1() - _Alpha * (1 - gam) / _K
+                _Alpha = LM.L2() * _K / (gam * (1 - Math.Pow(2, -_K)))
+                _Xi = LM.L1() - _Alpha * (1 - gam) / _K
             End If
         End Sub
         Public Sub New(K As Double, Alpha As Double, Xi As Double)

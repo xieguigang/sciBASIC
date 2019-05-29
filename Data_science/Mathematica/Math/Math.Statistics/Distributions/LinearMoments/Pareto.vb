@@ -70,11 +70,11 @@ Namespace Distributions.LinearMoments
         End Sub
         Public Sub New(data As Double())
             Dim LM As New MomentFunctions.LinearMoments(data)
-            If LM.GetL2() = 0 Then
-                _K = (1 - 3 * LM.GetT3()) / (1 + LM.GetT3())
-                _Alpha = (1 + _K) * (2 + _K) * LM.GetL2()
-                _Xi = LM.GetL1() - (2 + _K) * LM.GetL2()
-                PeriodOfRecord = (LM.GetSampleSize())
+            If LM.L2() = 0 Then
+                _K = (1 - 3 * LM.T3()) / (1 + LM.T3())
+                _Alpha = (1 + _K) * (2 + _K) * LM.L2()
+                _Xi = LM.L1() - (2 + _K) * LM.L2()
+                PeriodOfRecord = (LM.SampleSize())
             Else
                 'coefficient of variation cannot be zero.
             End If

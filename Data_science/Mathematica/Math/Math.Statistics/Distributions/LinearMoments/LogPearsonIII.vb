@@ -70,24 +70,24 @@ Namespace Distributions.LinearMoments
         End Sub
         Public Sub New(data As Double())
             Dim LM As New MomentFunctions.LinearMoments(data)
-            PeriodOfRecord = (LM.GetSampleSize())
+            PeriodOfRecord = (LM.SampleSize())
             Dim z As Double = 0
             Dim a As Double = 0
-            Dim abst3 As Double = Math.Abs(LM.GetT3())
+            Dim abst3 As Double = Math.Abs(LM.T3())
             If abst3 > 0 AndAlso abst3 < (1 \ 3) Then
-                z = 3 * Math.PI * (LM.GetT3() * LM.GetT3())
+                z = 3 * Math.PI * (LM.T3() * LM.T3())
                 a = ((1 + (0.2906 * z)) / (z + (0.1882 * (z * z)) + (0.0442 * (z * z * z))))
             ElseIf abst3 < 1 Then
-                z = 1 - Math.Abs(LM.GetT3())
+                z = 1 - Math.Abs(LM.T3())
                 a = ((0.36067 * z - (0.59567 * (z * z)) + (0.25361 * (z * z * z))) / (1 - 2.78861 * z + (2.56096 * (z * z)) - (0.77045 * (z * z * z))))
             Else
                 'no solution because t3 is greater than or equal to 1.
             End If
-            Dim gamma As Double = (2 / Math.Sqrt(a)) * Math.Sign(LM.GetT3())
+            Dim gamma As Double = (2 / Math.Sqrt(a)) * Math.Sign(LM.T3())
             Dim sigma As Double = (12 * Math.Sqrt(Math.PI) * Math.Sqrt(a) * Math.Exp(SpecialFunctions.gammaln(a))) / Math.Exp(SpecialFunctions.gammaln(a + 0.5)) 'need gammaln
             If gamma <> 0 Then
                 _Alpha = 4 / (gamma * gamma)
-                _Xi = LM.GetL1() - ((2 * sigma) / gamma)
+                _Xi = LM.L1() - ((2 * sigma) / gamma)
                 _Beta = 0.5 * sigma * Math.Abs(gamma)
             Else
                 'normal distribution fits better.

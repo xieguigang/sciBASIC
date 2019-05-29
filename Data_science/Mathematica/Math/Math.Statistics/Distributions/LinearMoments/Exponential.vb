@@ -68,9 +68,9 @@ Namespace Distributions.LinearMoments
         End Sub
         Public Sub New(data As Double())
             Dim LM As New MomentFunctions.LinearMoments(data)
-            _Alpha = 2 * LM.GetL2()
-            _Xi = LM.GetL1() - _Alpha
-            PeriodOfRecord = (LM.GetSampleSize())
+            _Alpha = 2 * LM.L2()
+            _Xi = LM.L1() - _Alpha
+            PeriodOfRecord = (LM.SampleSize())
         End Sub
         Public Sub New(Alpha As Double, Xi As Double)
             _Alpha = Alpha

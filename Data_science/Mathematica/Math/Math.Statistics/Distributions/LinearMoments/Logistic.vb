@@ -70,10 +70,10 @@ Namespace Distributions.LinearMoments
         End Sub
         Public Sub New(data As Double())
             Dim LM As New MomentFunctions.LinearMoments(data)
-            _K = -LM.GetT3()
-            _Alpha = LM.GetL2() * Math.Sin(_K * Math.PI) / (_K * Math.PI)
-            _Xi = LM.GetL1() - _Alpha * ((1 / _K) - (Math.PI / Math.Sin(_K * Math.PI)))
-            PeriodOfRecord = (LM.GetSampleSize())
+            _K = -LM.T3()
+            _Alpha = LM.L2() * Math.Sin(_K * Math.PI) / (_K * Math.PI)
+            _Xi = LM.L1() - _Alpha * ((1 / _K) - (Math.PI / Math.Sin(_K * Math.PI)))
+            PeriodOfRecord = (LM.SampleSize())
         End Sub
         Public Sub New(K As Double, Alpha As Double, Xi As Double)
             _K = K
