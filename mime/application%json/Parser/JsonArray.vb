@@ -52,6 +52,12 @@ Namespace Parser
 
         Dim list As New List(Of JsonElement)
 
+        Public ReadOnly Property Length As Integer
+            Get
+                Return list.Count
+            End Get
+        End Property
+
         Public Sub Add(element As JsonElement)
             Call list.Add(element)
         End Sub

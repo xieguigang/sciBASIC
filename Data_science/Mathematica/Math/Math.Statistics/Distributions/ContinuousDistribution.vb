@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::81d4230d834f1178c8b13a42ee387d56, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ContinuousDistribution
-    ' 
-    '         Properties: PeriodOfRecord
-    ' 
-    '         Function: AndersonDarlingTest, (+2 Overloads) BootStrap, Clone, Equals, GetCDF
-    '                   GetHashCode, GetInvCDF, GetParamNames, GetParamValues, GetPDF
-    '                   Kolmogorov_SmirnovTest
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ContinuousDistribution
+' 
+'         Properties: PeriodOfRecord
+' 
+'         Function: AndersonDarlingTest, (+2 Overloads) BootStrap, Clone, Equals, GetCDF
+'                   GetHashCode, GetInvCDF, GetParamNames, GetParamValues, GetPDF
+'                   Kolmogorov_SmirnovTest
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -77,7 +77,6 @@ Namespace Distributions
         ''' <param name="value"> the value that a likelihood will be returned for. </param>
         ''' <returns> the likelihood (defined by the concrete distribution) the specified value will occur in any given sample dataset (assuming the value is from the underlying distribution). </returns>
         Public MustOverride Function GetPDF(value As Double) As Double
-
 
         ''' <summary>
         ''' This function produces a value for a given probability, this value will represent the Non-Exceedance value for that probability. </summary>
@@ -121,13 +120,14 @@ Namespace Distributions
             Return New Vector(v)
         End Function
 
-        Public MustOverride Function Validate() As List(Of ContinuousDistributionError)
+        Public MustOverride Function Validate() As IEnumerable(Of Exception)
 
         ' <editor-fold defaultstate="collapsed" desc="Goodness of fit tests">
         Public Overridable Function Kolmogorov_SmirnovTest() As Double
             ' need to create a good empirical distribution.
             Return 0
         End Function
+
         Public Overridable Function AndersonDarlingTest() As Double
             'still need a good emperical distribution.
             Return 0
@@ -146,6 +146,7 @@ Namespace Distributions
             Next
             Return ParamNames
         End Function
+
         ''' <summary>
         ''' This function determines the current values for each parameter in this concrete implementation of the ContinuousDistribution </summary>
         ''' <returns> an array of object for each parameter in this class. </returns>
@@ -197,6 +198,7 @@ Namespace Distributions
 
             Return Dist
         End Function
+
         Public Overrides Function Equals(dist As Object) As Boolean
             If dist.GetType().Name.Equals(Me.GetType().Name) Then
                 Dim thisParamValues As Object() = Me.GetParamValues()
@@ -214,6 +216,7 @@ Namespace Distributions
             End If
             Return True
         End Function
+
         Public Overrides Function GetHashCode() As Integer
             Dim hash As Integer = Me.GetType().Name.GetHashCode()
             Dim vals As Object() = Me.GetParamValues()
@@ -222,6 +225,7 @@ Namespace Distributions
             Next val
             Return hash
         End Function
+
         'Public Shared Function ReadFromXML( ele As Element) As ContinuousDistribution
         '		Dim Dist As ContinuousDistribution = Nothing
         '		Dim c As Type
@@ -295,6 +299,7 @@ Namespace Distributions
             Next
             Return result
         End Function
+
         Public Overridable Function BootStrap(seed As Long) As Double()
             Dim result As Double() = New Double(_PeriodOfRecord - 1) {}
             Dim Random As New Random(seed)

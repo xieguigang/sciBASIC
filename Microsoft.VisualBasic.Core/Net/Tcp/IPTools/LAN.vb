@@ -151,11 +151,11 @@ Namespace Net
                 End If
                 ' Get the rows count
                 Dim rowsCount As Integer = ReadInt32(rawTable)
-                Dim currentBuffer As New IntPtr(rawTable.ToInt64() + SizeOf(GetType(Int32)))
+                Dim currentBuffer As New IntPtr(rawTable.ToInt64() + Marshal.SizeOf(GetType(Int32)))
                 ' Convert the raw table to individual entries
                 Dim rows As MIB_IPNETROW() = New MIB_IPNETROW(rowsCount - 1) {}
                 For index As Integer = 0 To rowsCount - 1
-                    rows(index) = CType(PtrToStructure(New IntPtr(currentBuffer.ToInt64() + (index * SizeOf(GetType(MIB_IPNETROW)))), GetType(MIB_IPNETROW)), MIB_IPNETROW)
+                    rows(index) = CType(PtrToStructure(New IntPtr(currentBuffer.ToInt64() + (index * Marshal.SizeOf(GetType(MIB_IPNETROW)))), GetType(MIB_IPNETROW)), MIB_IPNETROW)
                 Next
                 ' Define the dummy entries list (we can discard these)
                 Dim virtualMAC As New PhysicalAddress(New Byte() {0, 0, 0, 0, 0, 0})

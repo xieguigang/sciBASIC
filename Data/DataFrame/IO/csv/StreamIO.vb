@@ -60,11 +60,23 @@ Namespace IO
         ''' <param name="csv"></param>
         ''' <param name="types"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [TypeOf](csv As File, ParamArray types As Type()) As Type
+            Return csv.Headers.TypeOf(types)
+        End Function
+
+        ''' <summary>
+        ''' 根据文件的头部的定义，从<paramref name="types"/>之中选取得到最合适的类型的定义
+        ''' </summary>
+        ''' <param name="header"></param>
+        ''' <param name="types">A candidate type list</param>
+        ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function [GetType](csv As File, ParamArray types As Type()) As Type
-            Dim headers As Index(Of String) = csv.First.ToArray
+        Public Function [TypeOf](header As RowObject, ParamArray types As Type()) As Type
             Dim scores As New List(Of (Type, Integer))
+            Dim headers As New Index(Of String)(header)
 
             For Each schema In types.Select(AddressOf SchemaProvider.CreateObjectInternal)
                 Dim allNames$() = schema.Properties _
@@ -83,6 +95,7 @@ Namespace IO
                        Select type = score.Item1, Value = score.Item2
                        Order By Value Descending
             Dim target As Type = desc.FirstOrDefault?.type
+
             Return target
         End Function
 
@@ -96,7 +109,11 @@ Namespace IO
         ''' </param>
         ''' <remarks>当目标保存路径不存在的时候，会自动创建文件夹</remarks>
         <Extension>
-        Public Function SaveDataFrame(csv As IEnumerable(Of RowObject), Optional path$ = "", Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False) As Boolean
+        Public Function SaveDataFrame(csv As IEnumerable(Of RowObject),
+                                      Optional path$ = "",
+                                      Optional encoding As Encoding = Nothing,
+                                      Optional tsv As Boolean = False) As Boolean
+
             Dim stopwatch As Stopwatch = Stopwatch.StartNew
             Dim del$ = ","c Or ASCII.TAB.AsDefault(Function() tsv)
 

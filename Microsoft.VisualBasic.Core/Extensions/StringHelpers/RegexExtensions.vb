@@ -55,6 +55,24 @@ Imports Microsoft.VisualBasic.Language
 Public Module RegexExtensions
 
     ''' <summary>
+    ''' Determines whether the end of this string instance matches the specified string pattern.
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function EndsWith(str$, pattern$, opt As RegexOptions) As Boolean
+        Dim match$ = str.Match(pattern, opt)
+
+        If match.StringEmpty Then
+            Return False
+        Else
+            Return str.EndsWith(match)
+        End If
+    End Function
+
+    ''' <summary>
     ''' 模拟python的raw字符串的正则表达式，多行的
     ''' </summary>
     Public Const RegexPythonRawString As RegexOptions =

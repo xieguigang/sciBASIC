@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::2ced8fc75b6506d8d2db3bd4a2807e1e, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Pareto.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Pareto
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetCDF, GetInvCDF, GetPDF, Validate, Y
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Pareto
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetCDF, GetInvCDF, GetPDF, Validate, Y
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,11 +70,11 @@ Namespace Distributions.LinearMoments
         End Sub
         Public Sub New(data As Double())
             Dim LM As New MomentFunctions.LinearMoments(data)
-            If LM.GetL2() = 0 Then
-                _K = (1 - 3 * LM.GetT3()) / (1 + LM.GetT3())
-                _Alpha = (1 + _K) * (2 + _K) * LM.GetL2()
-                _Xi = LM.GetL1() - (2 + _K) * LM.GetL2()
-                PeriodOfRecord = (LM.GetSampleSize())
+            If LM.L2() = 0 Then
+                _K = (1 - 3 * LM.T3()) / (1 + LM.T3())
+                _Alpha = (1 + _K) * (2 + _K) * LM.L2()
+                _Xi = LM.L1() - (2 + _K) * LM.L2()
+                PeriodOfRecord = (LM.SampleSize())
             Else
                 'coefficient of variation cannot be zero.
             End If
@@ -104,10 +104,8 @@ Namespace Distributions.LinearMoments
                 Return (value - _Xi) / _Alpha
             End If
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Alpha = 0 Then errors.Add(New Distributions.ContinuousDistributionError("Alpha cannot be zero"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Alpha = 0 Then Yield New Exception("Alpha cannot be zero")
         End Function
     End Class
 

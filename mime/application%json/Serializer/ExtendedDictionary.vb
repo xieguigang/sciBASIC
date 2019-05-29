@@ -48,10 +48,11 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Module ExtendedDictionary
 
     Public Function LoadExtendedJson(Of V, T As Dictionary(Of String, V))(json$) As T
-        Dim model As JsonObject = DirectCast(ParseJson(json$), JsonObject) ' 因为所需要反序列化的对象是一个字典的继承对象，所以这里得到的一定是字典对象
+        ' 因为所需要反序列化的对象是一个字典的继承对象，所以这里得到的一定是字典对象
+        Dim model As JsonObject = DirectCast(ParseJson(json$), JsonObject)
         Dim type As Type = GetType(T)
         Dim obj As Object = Activator.CreateInstance(type)
-        Dim defines = type.__getSpecificProperties(PropertyAccess.Writeable)
+        Dim defines = type.getSpecificProperties(PropertyAccess.Writeable)
 
         For Each key$ In defines.Keys
             If model.ContainsKey(key$) Then
@@ -67,10 +68,13 @@ Public Module ExtendedDictionary
 
         ' 剩下的元素都是字典的
         Dim out As T = DirectCast(obj, T)
+
         type = GetType(V)
+
         For Each key In model
             Dim j As String = key.Value.BuildJsonString
             Dim value As V = DirectCast(LoadObject(j$, type,), V)
+
             Call out.Add(key.Name, value)
         Next
 
@@ -83,12 +87,15 @@ Public Module ExtendedDictionary
     ''' <param name="type"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function __getSpecificProperties(type As Type, acc As PropertyAccess) As Dictionary(Of String, PropertyInfo)
+    Private Function getSpecificProperties(type As Type, acc As PropertyAccess) As Dictionary(Of String, PropertyInfo)
         Dim defines = DataFramework.Schema(type, acc,, True)
-        Call defines.Remove("Keys")   ' 忽略掉系统字典对象的自有属性
+
+        ' 忽略掉系统字典对象的自有属性
+        Call defines.Remove("Keys")
         Call defines.Remove("Values")
         Call defines.Remove("Comparer")
         Call defines.Remove("Count")
+
         Return defines
     End Function
 
@@ -110,22 +117,27 @@ Public Module ExtendedDictionary
             Call br.Add(key, obj(key$).GetJson)
         Next
 
+        Dim o As Object
+        Dim valueJSON As String
         Dim defines As Dictionary(Of String, PropertyInfo) =
             obj _
             .GetType _
-            .__getSpecificProperties(PropertyAccess.Readable)
+            .getSpecificProperties(PropertyAccess.Readable)
 
-        For Each key$ In defines.Keys
-            Dim o = defines(key$).GetValue(obj)
-            Dim value$ = If(
-                o Is Nothing,
-                "null",
-                JsonContract.GetObjectJson(o, o.GetType, False))
+        For Each key As String In defines.Keys
+            o = defines(key$).GetValue(obj)
 
-            Call br.Add(key, value)
+            If o Is Nothing Then
+                valueJSON = "null"
+            Else
+                valueJSON = JsonContract.GetObjectJson(o, o.GetType, False)
+            End If
+
+            Call br.Add(key, valueJSON)
         Next
 
         Dim json$ = br.BuildJsonString
+
         If indent Then
             json = Formatter.Format(json:=json$)
         End If

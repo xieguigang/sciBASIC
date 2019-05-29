@@ -81,8 +81,8 @@ Namespace MomentFunctions
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Min() As Double
-        Public Overrides ReadOnly Property Max() As Double
+        Public Overrides ReadOnly Property Min As Double
+        Public Overrides ReadOnly Property Max As Double
 
         ''' <summary>
         ''' This function can be used to determine if enough samples have been added to determine convergence 

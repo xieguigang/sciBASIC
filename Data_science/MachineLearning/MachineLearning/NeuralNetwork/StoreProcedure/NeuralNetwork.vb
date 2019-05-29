@@ -70,6 +70,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 输入一个样本信息然后输出分类结果预测
         ''' 
         ''' 这个函数假设目标样本输入是在当前的这个<paramref name="normalize"/>矩阵的范围之中的
+        ''' 目标输入的样本会在这个函数返回的预测函数之中自动归一化
         ''' </summary>
         ''' <param name="normalize">进行所输入的样本数据的归一化的矩阵</param>
         ''' <returns></returns>

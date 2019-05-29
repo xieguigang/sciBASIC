@@ -721,6 +721,16 @@ B21,B22,B23,...
             Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
+        Public Shared Function ReadHeaderRow(path$, Optional encoding As Encodings = Encodings.UTF8, Optional tsv As Boolean = False) As RowObject
+            Dim firstLine$ = path.ReadFirstLine(encoding.CodePage)
+
+            If tsv Then
+                Return New RowObject(firstLine.Split(ASCII.TAB))
+            Else
+                Return New RowObject(IO.CharsParser(firstLine))
+            End If
+        End Function
+
         ''' <summary>
         ''' 同时兼容本地文件和网络文件的
         ''' </summary>

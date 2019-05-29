@@ -85,5 +85,13 @@ Namespace ComponentModel.DataSourceModel
         Public Overloads Shared Narrowing Operator CType(properties As [Property](Of T)) As Dictionary(Of String, T)
             Return properties.Properties
         End Operator
+
+        Public Shared Operator +(base As [Property](Of T), append As [Property](Of T)) As [Property](Of T)
+            For Each item As NamedValue(Of T) In append.src
+                base(item.Name) = item.Value
+            Next
+
+            Return base
+        End Operator
     End Class
 End Namespace
