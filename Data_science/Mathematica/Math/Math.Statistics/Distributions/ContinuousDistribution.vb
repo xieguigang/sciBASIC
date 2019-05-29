@@ -78,7 +78,6 @@ Namespace Distributions
         ''' <returns> the likelihood (defined by the concrete distribution) the specified value will occur in any given sample dataset (assuming the value is from the underlying distribution). </returns>
         Public MustOverride Function GetPDF(value As Double) As Double
 
-
         ''' <summary>
         ''' This function produces a value for a given probability, this value will represent the Non-Exceedance value for that probability. </summary>
         ''' <param name="probability"> a number between 0 and 1. </param>
@@ -128,6 +127,7 @@ Namespace Distributions
             ' need to create a good empirical distribution.
             Return 0
         End Function
+
         Public Overridable Function AndersonDarlingTest() As Double
             'still need a good emperical distribution.
             Return 0
@@ -146,6 +146,7 @@ Namespace Distributions
             Next
             Return ParamNames
         End Function
+
         ''' <summary>
         ''' This function determines the current values for each parameter in this concrete implementation of the ContinuousDistribution </summary>
         ''' <returns> an array of object for each parameter in this class. </returns>
@@ -197,6 +198,7 @@ Namespace Distributions
 
             Return Dist
         End Function
+
         Public Overrides Function Equals(dist As Object) As Boolean
             If dist.GetType().Name.Equals(Me.GetType().Name) Then
                 Dim thisParamValues As Object() = Me.GetParamValues()
@@ -214,6 +216,7 @@ Namespace Distributions
             End If
             Return True
         End Function
+
         Public Overrides Function GetHashCode() As Integer
             Dim hash As Integer = Me.GetType().Name.GetHashCode()
             Dim vals As Object() = Me.GetParamValues()
@@ -222,6 +225,7 @@ Namespace Distributions
             Next val
             Return hash
         End Function
+
         'Public Shared Function ReadFromXML( ele As Element) As ContinuousDistribution
         '		Dim Dist As ContinuousDistribution = Nothing
         '		Dim c As Type
@@ -295,6 +299,7 @@ Namespace Distributions
             Next
             Return result
         End Function
+
         Public Overridable Function BootStrap(seed As Long) As Double()
             Dim result As Double() = New Double(_PeriodOfRecord - 1) {}
             Dim Random As New Random(seed)
