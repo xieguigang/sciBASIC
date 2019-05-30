@@ -102,12 +102,19 @@ Namespace Language.Vectorization
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function InStr(string1 As StringVector, string2$, Optional method As CompareMethod = CompareMethod.Binary) As Vector(Of Integer)
-            Return string1.Select(Function(str) base.InStr(str, string2, method)).AsVector
+            Return string1.Select(Function(str) base.InStr(str, string2, method)).ToVector
         End Function
 
+        ''' <summary>
+        ''' 批量执行判断目标字符串集合中的每一个字符串元素都是符合目标匹配模式的
+        ''' </summary>
+        ''' <param name="strings"></param>
+        ''' <param name="pattern$"></param>
+        ''' <param name="opt"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsPattern(strings As StringVector, pattern$, Optional opt As RegexOptions = RegexICSng) As BooleanVector
-            Return strings.Select(Function(s) s.IsPattern(pattern, opt)).AsVector
+            Return strings.Select(Function(s) s.IsPattern(pattern, opt)).ToVector
         End Function
 
         ''' <summary>
