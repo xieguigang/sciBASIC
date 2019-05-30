@@ -133,6 +133,15 @@ Namespace LinearAlgebra
             End Set
         End Property
 
+        Default Public Overloads Property Item(slice As SliceRange) As Vector
+            Get
+                Return MyBase.Item(slice.Index(Length)).AsVector
+            End Get
+            Set(value As Vector)
+                MyBase.Item(slice.Index(Length)) = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' ``norm2()``
         ''' 

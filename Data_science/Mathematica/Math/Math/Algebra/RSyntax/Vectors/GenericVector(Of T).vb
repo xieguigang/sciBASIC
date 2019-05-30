@@ -121,9 +121,9 @@ Namespace SyntaxAPI.Vectors
         Public Overloads Property [GET](a As Vector, b As Vector) As T()
             Get
                 Dim x As Integer = a(0), y As Integer = b(0)
-                Dim ChunkBuffer As T() = New T(y - x - 1) {}
-                Call System.Array.ConstrainedCopy(Me.ToArray, x, ChunkBuffer, 0, ChunkBuffer.Length)
-                Return ChunkBuffer
+                Dim buffer As T() = New T(y - x - 1) {}
+                Call System.Array.ConstrainedCopy(Me.ToArray, x, buffer, 0, buffer.Length)
+                Return buffer
             End Get
             Set(value As T())
                 Dim x As Integer = a(0), y As Integer = b(0)

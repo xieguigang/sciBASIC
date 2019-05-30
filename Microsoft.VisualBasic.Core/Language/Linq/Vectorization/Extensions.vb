@@ -44,17 +44,22 @@ Imports System.Runtime.CompilerServices
 
 Namespace Language.Vectorization
 
+    <HideModuleName>
     Public Module Extensions
+
+        ' 2019-05-30 因为在这里的向量对象创建函数的名称
+        ' 原来是AsVector，会和math模块中的AsVector产生冲突
+        ' 所以这里都修改为ToVector
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function AsVector(booleans As IEnumerable(Of Boolean)) As BooleanVector
+        Public Function ToVector(booleans As IEnumerable(Of Boolean)) As BooleanVector
             Return New BooleanVector(booleans)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function AsVector(Of T)(list As IEnumerable(Of T)) As Vector(Of T)
+        Public Function ToVector(Of T)(list As IEnumerable(Of T)) As Vector(Of T)
             Return New Vector(Of T)(list)
         End Function
 
