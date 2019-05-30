@@ -478,15 +478,21 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function OpenStreamInput(param As String, Optional ByRef s As String = Nothing) As StreamReader
             Dim path As String = Me(param)
+            Dim type As FileTypes = StreamExtensions.FileType(path)
 
-            If path.FileExists Then
-                Return New StreamReader(New FileStream(path, FileMode.Open, access:=FileAccess.Read))
-            ElseIf Not String.IsNullOrEmpty(path) Then
-                s = path
-                Return Nothing
-            Else
-                Return New StreamReader(Console.OpenStandardInput)
-            End If
+            Select Case type
+                Case FileTypes.MemoryFile, FileTypes.PipelineFile
+                    Return New StreamReader(StreamExtensions.OpenForRead(path))
+                Case Else
+                    If path.FileExists Then
+                        Return New StreamReader(New FileStream(path, FileMode.Open, access:=FileAccess.Read))
+                    ElseIf Not String.IsNullOrEmpty(path) Then
+                        s = path
+                        Return Nothing
+                    Else
+                        Return New StreamReader(Console.OpenStandardInput)
+                    End If
+            End Select
         End Function
 
         ''' <summary>
@@ -497,12 +503,18 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
             Dim path$ = Me(param)
+            Dim type As FileTypes = StreamExtensions.FileType(path)
 
-            If path.StringEmpty Then
-                Return New StreamWriter(Console.OpenStandardOutput, encoding.CodePage)
-            Else
-                Return path.OpenWriter(encoding)
-            End If
+            Select Case type
+                Case FileTypes.MemoryFile, FileTypes.PipelineFile
+                    Return New StreamWriter(StreamExtensions.OpenForWrite(path))
+                Case Else
+                    If path.StringEmpty Then
+                        Return New StreamWriter(Console.OpenStandardOutput, encoding.CodePage)
+                    Else
+                        Return path.OpenWriter(encoding)
+                    End If
+            End Select
         End Function
 
         ''' <summary>

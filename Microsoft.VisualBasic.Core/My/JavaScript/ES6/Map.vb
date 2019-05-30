@@ -49,7 +49,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports System.Text.RegularExpressions
-
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace My.JavaScript.ES6
 
@@ -69,8 +69,26 @@ Namespace My.JavaScript.ES6
             Return match(text, r)
         End Function
 
+        ''' <summary>
+        ''' Parse regexp attribute flags string
+        ''' </summary>
+        ''' <param name="flags"></param>
+        ''' <returns></returns>
         Public Shared Function ParseOptions(flags As String) As RegexOptions
+            Dim opts As Index(Of Char) = flags
+            Dim int As RegexOptions
 
+            If "g"c Like opts Then
+                ' no global
+            End If
+            If "i"c Like opts Then
+                int = int Or RegexOptions.IgnoreCase
+            End If
+            If "m"c Like opts Then
+                int = int Or RegexOptions.Multiline
+            End If
+
+            Return int
         End Function
     End Class
 
