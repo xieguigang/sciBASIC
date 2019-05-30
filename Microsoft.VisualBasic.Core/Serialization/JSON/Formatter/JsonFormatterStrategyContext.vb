@@ -55,7 +55,7 @@ Namespace Serialization.JSON.Formatter.Internals
     Friend NotInheritable Class JsonFormatterStrategyContext
 
         Const Space As String = " "
-        Const SpacesPerIndent As Integer = 4
+        Const SpacesPerIndent As Integer = 2
 
         Dim m_indent As String = String.Empty
         Dim currentCharacter As Char
@@ -69,18 +69,12 @@ Namespace Serialization.JSON.Formatter.Internals
         Public ReadOnly Property Indent() As String
             Get
                 If Me.m_indent = String.Empty Then
-                    Me.InitializeIndent()
+                    Me.m_indent = New String(Space, SpacesPerIndent)
                 End If
 
                 Return Me.m_indent
             End Get
         End Property
-
-        Private Sub InitializeIndent()
-            For i As Integer = 0 To SpacesPerIndent - 1
-                Me.m_indent += Space
-            Next
-        End Sub
 
         Public ReadOnly Property IsInArrayScope() As Boolean
             Get
