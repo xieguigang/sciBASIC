@@ -82,9 +82,9 @@ Module VectorTest
 
         Console.WriteLine("sort")
 
-        Console.WriteLine(numpy.Sort(a).ToMatrix.ToVectorList.GetJson)
+        Console.WriteLine(numpy.Sort(a).ToMatrix.ToVectorList.GetJson(indent:=True))
         Console.WriteLine(numpy.Sort(a, axis:=Nothing).ToMatrix.ToVectorList.GetJson)
-        Console.WriteLine(numpy.Sort(a, axis:=0).ToMatrix.ToVectorList.GetJson)
+        Console.WriteLine(numpy.Sort(a, axis:=0).ToMatrix.ToVectorList.GetJson(indent:=True))
 
         Pause()
     End Sub

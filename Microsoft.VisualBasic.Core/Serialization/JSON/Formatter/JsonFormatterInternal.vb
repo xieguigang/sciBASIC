@@ -80,15 +80,14 @@ Namespace Serialization.JSON.Formatter.Internals
                 Return String.Empty
             End If
 
-            Dim input As New StringBuilder(json)
             Dim output As New StringBuilder()
 
-            Me.PrettyPrintCharacter(input, output)
+            Me.PrettyPrintCharacter(json.ToArray, output)
 
             Return output.ToString()
         End Function
 
-        Private Sub PrettyPrintCharacter(input As StringBuilder, output As StringBuilder)
+        Private Sub PrettyPrintCharacter(input As Char(), output As StringBuilder)
             For i As Integer = 0 To input.Length - 1
                 Me.context.PrettyPrintCharacter(input(i), output)
             Next

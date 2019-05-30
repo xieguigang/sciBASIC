@@ -174,6 +174,15 @@ Namespace Language.Default
             Me.assert = assert Or defaultAssert
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="populator"></param>
+        ''' <param name="assert"></param>
+        ''' <param name="isLazy">
+        ''' + 如果这个参数为true，则表示表达式为lazy加载，只会执行一次
+        ''' + 反之当这个参数为false的时候，则表达式会不断的产生新的值
+        ''' </param>
         Sub New(populator As Func(Of T), Optional assert As Assert(Of Object) = Nothing, Optional isLazy As Boolean = True)
             If isLazy Then
                 Me.lazy = populator.AsLazy
