@@ -153,12 +153,6 @@ Namespace Language.Vectorization
             End Set
         End Property
 
-        Default Overloads ReadOnly Property Item(slice As SliceRange) As List(Of T)
-            Get
-                Return Me(slice.Index(Me.Length))
-            End Get
-        End Property
-
         ''' <summary>
         ''' This indexer property is using for the ODEs-system computing.
         ''' (这个是为了ODEs计算模块所准备的一个数据接口)
