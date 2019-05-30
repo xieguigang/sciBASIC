@@ -74,7 +74,53 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Sort(matrix As IEnumerable(Of Vector), Optional axis% = -1) As IEnumerable(Of Vector)
-        Return matrix.Apply(Function(x) x.Sort, axis:=axis, aggregate:=Function(collect) collect.Select(AddressOf AsVector))
+    Public Function Sort(matrix As IEnumerable(Of Vector), Optional axis%? = -1) As IEnumerable(Of Vector)
+        ' >>> a = np.array([[1,4],[3,1]])
+        ' >>> np.sort(a)                # sort along the last axis
+        ' Array([[1, 4],
+        '        [1, 3]])
+        ' >>> np.sort(a, axis=None)     # sort the flattened array
+        ' Array([1, 1, 3, 4])
+        ' >>> np.sort(a, axis=0)        # sort along the first axis
+        ' Array([[1, 1],
+        '        [3, 4]])
+
+        If axis < 0 Then
+            Return matrix _
+                .Select(Function(r)
+                            Return r _
+                                .OrderBy(Function(x) x) _
+                                .AsVector
+                        End Function)
+        ElseIf axis = 0 Then
+            Dim reorderMatrix = Iterator Function() As IEnumerable(Of Double())
+                                    Dim data As Vector() = matrix.ToArray
+                                    Dim columns As Integer = data(Scan0).Length
+#Disable Warning
+                                    For i As Integer = 0 To columns - 1
+                                        Yield data _
+                                           .Select(Function(row) row(i)) _
+                                           .OrderBy(Function(x) x) _
+                                           .ToArray
+                                    Next
+#Enable Warning
+                                End Function()
+
+            Return Iterator Function() As IEnumerable(Of Vector)
+                       Dim columns As Integer = reorderMatrix(Scan0).Length
+#Disable Warning
+                       For i As Integer = 0 To columns - 1
+                           Yield reorderMatrix _
+                               .Select(Function(row) row(i)) _
+                               .OrderBy(Function(x) x) _
+                               .AsVector
+                       Next
+#Enable Warning
+                   End Function()
+        ElseIf axis Is Nothing Then
+            Return {matrix.IteratesALL.OrderBy(Function(x) x).AsVector}
+        Else
+            Throw New NotImplementedException
+        End If
     End Function
 End Module
