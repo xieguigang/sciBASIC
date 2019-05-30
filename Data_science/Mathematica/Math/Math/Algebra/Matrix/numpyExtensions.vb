@@ -68,6 +68,12 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
+    Public Function Sum(matrix As IEnumerable(Of Vector), Optional axis% = -1) As Vector
+        Return matrix.Apply(Function(x) x.Sum, axis:=axis, aggregate:=AddressOf AsVector)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function Sort(matrix As IEnumerable(Of Vector), Optional axis% = -1) As IEnumerable(Of Vector)
         Return matrix.Apply(Function(x) x.Sort, axis:=axis, aggregate:=Function(collect) collect.Select(AddressOf AsVector))
     End Function
