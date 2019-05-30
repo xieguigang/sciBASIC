@@ -986,7 +986,6 @@
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
-    <Compile Include="Extensions\Collection\Linq\Slice.vb" />
     <Compile Include="Extensions\Collection\Linq\Enumeration.vb" />
     <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
