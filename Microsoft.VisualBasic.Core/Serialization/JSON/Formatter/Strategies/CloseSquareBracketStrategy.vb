@@ -47,6 +47,13 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
     Friend NotInheritable Class CloseSquareBracketStrategy
         Implements ICharacterStrategy
 
+        ''' <summary>
+        ''' ]
+        ''' </summary>
+        Sub New()
+
+        End Sub
+
         Public Sub Execute(context As JsonFormatterStrategyContext) Implements ICharacterStrategy.Execute
             If context.IsProcessingString Then
                 context.AppendCurrentChar()
@@ -54,7 +61,7 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
             End If
 
             context.CloseCurrentScope()
-            context.BuildContextIndents()
+            ' context.BuildContextIndents()
             context.AppendCurrentChar()
         End Sub
 

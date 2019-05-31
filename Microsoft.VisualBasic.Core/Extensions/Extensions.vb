@@ -131,6 +131,12 @@ Public Module Extensions
         Return New DoubleRange(data) * scale
     End Function
 
+    ''' <summary>
+    ''' 将目标值域切割为等长递增的<paramref name="n"/>个值域
+    ''' </summary>
+    ''' <param name="range"></param>
+    ''' <param name="n%"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Slice(range As DoubleRange, n%) As IEnumerable(Of DoubleRange)
         Dim l = range.Length

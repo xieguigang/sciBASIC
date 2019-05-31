@@ -81,6 +81,7 @@ Public Class Config
     <DataFrameColumn> Public Property hidden_size As String = "100,100,100"
 
     <DataFrameColumn> Public Property selective As String = "no"
+    <DataFrameColumn> Public Property scattered As String = "no"
 
     Public Shared ReadOnly Property [Default] As [Default](Of Config) = New Config
 

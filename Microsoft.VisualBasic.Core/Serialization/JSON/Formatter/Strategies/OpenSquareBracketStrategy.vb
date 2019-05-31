@@ -45,6 +45,14 @@
 Namespace Serialization.JSON.Formatter.Internals.Strategies
     Friend NotInheritable Class OpenSquareBracketStrategy
         Implements ICharacterStrategy
+
+        ''' <summary>
+        ''' [
+        ''' </summary>
+        Sub New()
+
+        End Sub
+
         Public Sub Execute(context As JsonFormatterStrategyContext) Implements ICharacterStrategy.Execute
             context.AppendCurrentChar()
 
@@ -53,7 +61,7 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
             End If
 
             context.EnterArrayScope()
-            context.BuildContextIndents()
+            ' context.BuildContextIndents()
         End Sub
 
         Public ReadOnly Property ForWhichCharacter() As Char Implements ICharacterStrategy.ForWhichCharacter

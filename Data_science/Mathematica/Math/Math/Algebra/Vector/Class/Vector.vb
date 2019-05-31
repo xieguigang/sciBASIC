@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
+Imports numpy = Microsoft.VisualBasic.Language.Python
 
 Namespace LinearAlgebra
 
@@ -746,6 +747,18 @@ Namespace LinearAlgebra
         End Operator
 #End Region
 #End Region
+
+        ''' <summary>
+        ''' 进行序列切片操作
+        ''' </summary>
+        ''' <param name="start%"></param>
+        ''' <param name="stop%"></param>
+        ''' <param name="steps%"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function slice(Optional start% = 0, Optional stop% = -1, Optional steps% = 1) As Vector
+            Return numpy.slice(buffer, start, [stop], steps).AsVector
+        End Function
 
         ''' <summary>
         ''' + http://mathworld.wolfram.com/DotProduct.html

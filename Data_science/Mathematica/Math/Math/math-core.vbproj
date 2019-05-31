@@ -431,8 +431,10 @@
     <Compile Include="Algebra\LP\Extensions.vb" />
     <Compile Include="Algebra\LP\LPP.vb" />
     <Compile Include="Algebra\LP\LPPSolution.vb" />
+    <Compile Include="Algebra\Matrix\NumpyExtensions.vb" />
     <Compile Include="Algebra\PCA.vb" />
     <Compile Include="Algebra\SVD.vb" />
+    <Compile Include="Algebra\Vector\Class\Linq.vb" />
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Crc32.vb" />

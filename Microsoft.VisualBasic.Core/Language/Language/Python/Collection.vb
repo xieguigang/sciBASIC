@@ -58,8 +58,30 @@ Namespace Language.Python
         ''' <param name="[step]"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function slice(Of T)([set] As IEnumerable(Of T), start%, Optional stop% = -1, Optional step% = 1) As IEnumerable(Of T)
-            Dim array As T() = [set].Skip(start).ToArray
+        Public Iterator Function slice(Of T)([set] As IEnumerable(Of T),
+                                             Optional start% = 0,
+                                             Optional stop% = -1,
+                                             Optional step% = 1) As IEnumerable(Of T)
+            Dim array As T()
+
+            If start = 0 AndAlso [stop] = -1 Then
+                ' [:] 所有的参数都被忽略掉了，返回序列的拷贝
+                For Each x In [set]
+                    Yield x
+                Next
+
+                Return
+            ElseIf start = 0 Then
+                array = [set].ToArray
+            Else
+                If start < 0 Then
+                    array = [set].ToArray
+                    start = array.Length + start
+                    array = array.Skip(start).ToArray
+                Else
+                    array = [set].Skip(start).ToArray
+                End If
+            End If
 
             If [stop] < 0 Then
                 [stop] = array.Length + [stop]

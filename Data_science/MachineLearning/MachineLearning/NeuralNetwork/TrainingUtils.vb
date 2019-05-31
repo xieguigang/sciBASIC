@@ -91,6 +91,11 @@ Namespace NeuralNetwork
         ReadOnly network As Network
 
         ''' <summary>
+        ''' 模型当前的训练误差
+        ''' </summary>
+        Dim errors#
+
+        ''' <summary>
         ''' 训练所使用到的经验数量,即数据集的大小s
         ''' </summary>
         ''' <returns></returns>
@@ -100,15 +105,6 @@ Namespace NeuralNetwork
                 Return _dataSets.Count
             End Get
         End Property
-
-        ''' <summary>
-        ''' 将训练的成果状态进行快照,转换为可以保存的XML文件对象
-        ''' </summary>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function TakeSnapshot() As StoreProcedure.NeuralNetwork
-            Return StoreProcedure.NeuralNetwork.Snapshot(network)
-        End Function
 
         Sub New(net As Network)
             network = net
@@ -121,6 +117,15 @@ Namespace NeuralNetwork
                        Optional active As LayerActives = Nothing)
             Call Me.New(New Network(inputSize, hiddenSize, outputSize, learnRate, momentum, active))
         End Sub
+
+        ''' <summary>
+        ''' 将训练的成果状态进行快照,转换为可以保存的XML文件对象
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function TakeSnapshot() As StoreProcedure.NeuralNetwork
+            Return StoreProcedure.NeuralNetwork.Snapshot(network, errors)
+        End Function
 
         Public Sub RemoveLast()
             If Not _dataSets.Count = 0 Then
@@ -164,7 +169,6 @@ Namespace NeuralNetwork
             Using progress As New ProgressBar("Training ANN...")
                 Dim tick As New ProgressProvider(numEpochs)
                 Dim msg$
-                Dim errors#
                 Dim ETA$
 
                 For i As Integer = 0 To numEpochs - 1
@@ -191,6 +195,9 @@ Namespace NeuralNetwork
 
             For Each dataSet As Sample In dataSets
                 If selective Then
+                    ' 如果是只针对误差较大的训练样本进行训练的话,则在这里会首先计算
+                    ' 当前的训练样本的误差,如果当前的训练样本误差比较小的话,就
+                    ' 不再进行当前的样本的训练了
                     ' sum
                     err = CalculateError(network, dataSet.target)
                     ' means
@@ -201,6 +208,9 @@ Namespace NeuralNetwork
                     End If
                 End If
 
+                ' 下面的两步代码调用完成一个样本的训练操作:
+                ' 首先根据当前样本进行计算
+                ' 然后根据误差调整响应节点的权重
                 Call network.ForwardPropagate(dataSet.status, parallel)
                 Call network.BackPropagate(dataSet.target, Truncate, parallel)
                 Call errors.Add(CalculateError(network, dataSet.target))

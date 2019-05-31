@@ -75,7 +75,9 @@ Namespace ComponentModel
         ''' ReadOnly, Data model type tracking use Xml Comment.
         ''' </summary>
         ''' <returns></returns>
-        '''
+        ''' <remarks>
+        ''' JSON存储的时候,这个属性会被自动忽略掉
+        ''' </remarks>
         <DataMember>
         <IgnoreDataMember>
         <ScriptIgnore>
@@ -88,7 +90,8 @@ Namespace ComponentModel
             End Get
             Set(value As XmlComment)
                 ' Do Nothing
-                ' 2018-6-5 this xml comment node cause bug when using xml deserialization
+                ' 2018-6-5 this xml comment node cause bug 
+                ' when using xml deserialization
             End Set
         End Property
 

@@ -48,6 +48,18 @@ Namespace Linq
 
     Public Module IteratorExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Tuples(Of T)(seq As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of (i%, val As T))
+            Return seq.Select(Function(i) (i.i, i.value))
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="offset%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function SeqIterator(source As IEnumerable, Optional offset% = 0) As IEnumerable(Of SeqValue(Of Object))
             Dim i As Integer = offset
@@ -60,11 +72,16 @@ Namespace Linq
 
         ''' <summary>
         ''' Iterates all of the objects in the source sequence with collection index position.
+        ''' (``enumerate()`` 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，
+        ''' 同时列出数据和数据下标，一般用在 Linq表达式 循环当中。
+        ''' 这个拓展函数类似于python之中的 ``enumerate()`` 函数)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source">the source sequence</param>
-        ''' <param name="offset"></param>
-        ''' <returns></returns>
+        ''' <param name="offset">``[start=0]``下标的起始位置</param>
+        ''' <returns>
+        ''' ``[index, item_value]``
+        ''' </returns>
         <Extension>
         Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of SeqValue(Of T))
             If Not source Is Nothing Then

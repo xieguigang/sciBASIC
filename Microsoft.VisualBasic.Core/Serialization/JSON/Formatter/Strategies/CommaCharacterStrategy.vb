@@ -45,6 +45,14 @@
 Namespace Serialization.JSON.Formatter.Internals.Strategies
     Friend NotInheritable Class CommaStrategy
         Implements ICharacterStrategy
+
+        ''' <summary>
+        ''' ,
+        ''' </summary>
+        Sub New()
+
+        End Sub
+
         Public Sub Execute(context As JsonFormatterStrategyContext) Implements ICharacterStrategy.Execute
             context.AppendCurrentChar()
 
@@ -52,7 +60,10 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
                 Return
             End If
 
-            context.BuildContextIndents()
+            If Not context.IsInArrayScope Then
+                context.BuildContextIndents()
+            End If
+
             context.IsProcessingVariableAssignment = False
         End Sub
 
