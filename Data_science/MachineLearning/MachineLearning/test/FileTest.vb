@@ -40,6 +40,8 @@ Module FileTest
 
         Dim trainer As New TrainingUtils(5, {10, 100, 30, 50}, 4)
 
+        Helpers.MaxEpochs = 1000
+
         Call samples.DoEach(Sub(dset) trainer.Add(dset))
         Call trainer.Train()
 
@@ -53,6 +55,9 @@ Module FileTest
 
         Dim predict1 = model1.Compute(1, 1, 1, 1, 0)
         Dim predict2 = model2.Compute(1, 1, 1, 1, 0)
+
+        Call StoreProcedure.NeuralNetwork.Snapshot(model1).GetXml.SaveTo("./scatterLoaded.Xml")
+        Call StoreProcedure.NeuralNetwork.Snapshot(model2).GetXml.SaveTo("./interalLoaded.Xml")
 
         Pause()
     End Sub

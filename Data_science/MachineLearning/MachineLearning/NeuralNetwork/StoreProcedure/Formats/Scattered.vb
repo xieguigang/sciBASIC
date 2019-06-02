@@ -59,6 +59,8 @@ Namespace NeuralNetwork.StoreProcedure
                         .w = Val(tokens(2)),
                         .delta = Val(tokens(3))
                     }
+
+                    Yield edge
                 Next
             End Using
         End Function
@@ -98,7 +100,7 @@ Namespace NeuralNetwork.StoreProcedure
                     Call .writeCsv(NameOf(NeuronNode.id), NameOf(NeuronNode.bias), NameOf(NeuronNode.delta), NameOf(NeuronNode.gradient))
 
                     For Each node As NeuronNode In snapshot.neurons
-                        Call .writeCsv(node.id, node.bias, node.delta, node.gradient)
+                        Call .writeCsv(node.id, node.bias.ToString("G17"), node.delta.ToString("G17"), node.gradient.ToString("G17"))
                     Next
 
                     Call .Flush()
@@ -110,7 +112,7 @@ Namespace NeuralNetwork.StoreProcedure
                     Call .writeCsv(NameOf(Synapse.in), NameOf(Synapse.out), NameOf(Synapse.w), NameOf(Synapse.delta))
 
                     For Each synapse As Synapse In snapshot.connections
-                        Call .writeCsv(synapse.in, synapse.out, synapse.w, synapse.delta)
+                        Call .writeCsv(synapse.in, synapse.out, synapse.w.ToString("G17"), synapse.delta.ToString("G17"))
                     Next
 
                     Call .Flush()
