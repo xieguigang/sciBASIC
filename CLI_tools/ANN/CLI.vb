@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Debugger
@@ -244,6 +245,7 @@ Module CLI
         Dim debugger As New ANNDebugger(trainer.NeuronNetwork)
         Dim minError# = 999999
         Dim snapshotFile$ = inFile.TrimSuffix & ".minerr.Xml"
+        Dim circle As VBInteger = 666
 
         Call Console.WriteLine(trainer.NeuronNetwork.ToString)
         Call trainer _
@@ -257,11 +259,15 @@ Module CLI
                                     ' 这个临时文件而导致保存失败
                                     ' 所以在这里忽略掉这个错误就好了
                                     With trainer.TakeSnapshot
+                                        Call $"  [{circle.Hex}] start write snapshot....".__DEBUG_ECHO
+
                                         If multipleParts Then
                                             Call .ScatteredStore(snapshotFile.TrimSuffix)
                                         Else
                                             Call .GetXml.SaveTo(snapshotFile, throwEx:=False)
                                         End If
+
+                                        Call $"  [{(++circle).ToHexString}] done!".__INFO_ECHO
                                     End With
                                 End If
                             End Sub) _
