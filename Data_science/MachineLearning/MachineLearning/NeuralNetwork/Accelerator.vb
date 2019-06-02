@@ -64,6 +64,9 @@ Imports Microsoft.VisualBasic.SecurityString
 
 Namespace NeuralNetwork.Accelerator
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Public Module GAExtensions
 
         <Extension>
