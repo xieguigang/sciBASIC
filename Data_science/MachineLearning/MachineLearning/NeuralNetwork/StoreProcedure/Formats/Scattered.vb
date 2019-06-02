@@ -17,6 +17,20 @@ Namespace NeuralNetwork.StoreProcedure
         Const edges$ = "network/edges.csv"
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="store">
+        ''' 模型文件所存储的文件夹的路径
+        ''' </param>
+        ''' <returns>
+        ''' 返回来的完整的结果可以通过<see cref="IntegralLoader.LoadModel(NeuralNetwork)"/>
+        ''' 函数将数据模型来加载为计算模型
+        ''' </returns>
+        Public Function ScatteredLoader(store As String) As StoreProcedure.NeuralNetwork
+
+        End Function
+
+        ''' <summary>
         ''' 将一个超大的网络快照以分散文件的形式保存在一个给定的文件夹之中
         ''' </summary>
         ''' <param name="snapshot"></param>
