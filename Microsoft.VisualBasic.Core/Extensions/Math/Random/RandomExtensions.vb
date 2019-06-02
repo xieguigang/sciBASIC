@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::f3e9e6a60058e7789c46a6c06f1647f2, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module RandomExtensions
-    ' 
-    '         Properties: Seeds
-    ' 
-    '         Function: GetNextBetween, (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian
-    '                   NextTriangular, Permutation, randf, RandomSingle, Seed
-    ' 
-    '         Sub: (+3 Overloads) Shuffle
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+' 
+'     Module RandomExtensions
+' 
+'         Properties: Seeds
+' 
+'         Function: GetNextBetween, (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian
+'                   NextTriangular, Permutation, randf, RandomSingle, Seed
+' 
+'         Sub: (+3 Overloads) Shuffle
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -123,7 +123,24 @@ Namespace Math
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RandomSingle() As Single
-            Return seeds.NextDouble()
+            Return Seeds.NextDouble()
+        End Function
+
+        ''' <summary>
+        ''' Returns a non-negative random integer that is less than the specified maximum.
+        ''' </summary>
+        ''' <param name="upper">
+        ''' The exclusive upper bound of the random number to be generated. maxValue must
+        ''' be greater than or equal to 0.</param>
+        ''' <returns>
+        ''' A 32-bit signed integer that is greater than or equal to 0, and less than maxValue;
+        ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
+        ''' if maxValue equals 0, maxValue is returned.
+        ''' </returns>
+        Public Function NextInteger(upper As Integer) As Integer
+            SyncLock Seeds
+                Return Seeds.Next(upper)
+            End SyncLock
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -134,8 +151,8 @@ Namespace Math
 
         <Extension>
         Public Function GetRandomValue(rng As DoubleRange) As Double
-            SyncLock seeds
-                Return seeds.NextDouble(range:=rng)
+            SyncLock Seeds
+                Return Seeds.NextDouble(range:=rng)
             End SyncLock
         End Function
 
@@ -158,7 +175,7 @@ Namespace Math
 
         <Extension>
         Public Function GetRandomValue(rng As IntRange) As Integer
-            Return rng.Length * seeds.NextDouble + rng.Min
+            Return rng.Length * Seeds.NextDouble + rng.Min
         End Function
 
         ''' <summary>
@@ -183,7 +200,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("NextGaussian")>
         Public Function NextGaussian(Optional mu As Double = 0, Optional sigma As Double = 1) As Double
-            Return seeds.NextGaussian(mu, sigma)
+            Return Seeds.NextGaussian(mu, sigma)
         End Function
 
         ''' <summary>
@@ -239,7 +256,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub Shuffle(Of T)(ByRef list As List(Of T))
-            Call seeds.Shuffle(list)
+            Call Seeds.Shuffle(list)
         End Sub
 
         ''' <summary>

@@ -204,7 +204,13 @@ Module CLI
         ' Call Console.WriteLine(trainingHelper.NeuronNetwork.ToString)
 
         If Not args("/GA.optimize").IsTrue Then
-            Call trainingHelper.runTrainingCommon(out.TrimSuffix & ".debugger.CDF", [in], parallel, args("/debug"))
+            Call trainingHelper.runTrainingCommon(
+                out.TrimSuffix & ".debugger.CDF",
+                [in],
+                parallel,
+                args("/debug"),
+                config.scattered.ParseBoolean
+            )
         Else
             Call trainingHelper _
                 .NeuronNetwork _
@@ -214,15 +220,27 @@ Module CLI
                  )
         End If
 
-        Return trainingHelper _
-            .TakeSnapshot _
-            .GetXml _
-            .SaveTo(out) _
-            .CLICode
+
+        With trainingHelper.TakeSnapshot
+            If config.scattered.ParseBoolean Then
+                Return .ScatteredStore(out.TrimSuffix) _
+                    .CLICode
+            Else
+                Return .GetXml _
+                    .SaveTo(out) _
+                    .CLICode
+            End If
+        End With
     End Function
 
     <Extension>
-    Private Function runTrainingCommon(trainer As TrainingUtils, debugCDF$, inFile$, parallel As Boolean, debug As Boolean) As TrainingUtils
+    Private Function runTrainingCommon(trainer As TrainingUtils,
+                                       debugCDF$,
+                                       inFile$,
+                                       parallel As Boolean,
+                                       debug As Boolean,
+                                       multipleParts As Boolean) As TrainingUtils
+
         Dim debugger As New ANNDebugger(trainer.NeuronNetwork)
         Dim minError# = 999999
         Dim snapshotFile$ = inFile.TrimSuffix & ".minerr.Xml"
@@ -238,9 +256,13 @@ Module CLI
                                     ' 因为这个只是保存一个临时文件,可能在测试的时候会因为占用
                                     ' 这个临时文件而导致保存失败
                                     ' 所以在这里忽略掉这个错误就好了
-                                    Call trainer.TakeSnapshot _
-                                        .GetXml _
-                                        .SaveTo(snapshotFile, throwEx:=False)
+                                    With trainer.TakeSnapshot
+                                        If multipleParts Then
+                                            Call .ScatteredStore(snapshotFile.TrimSuffix)
+                                        Else
+                                            Call .GetXml.SaveTo(snapshotFile, throwEx:=False)
+                                        End If
+                                    End With
                                 End If
                             End Sub) _
             .Train(parallel)
@@ -276,7 +298,7 @@ Module CLI
         Next
 
         Return training _
-            .runTrainingCommon(out.TrimSuffix & ".debugger.CDF", [in], parallel, args("/debug")) _
+            .runTrainingCommon(out.TrimSuffix & ".debugger.CDF", [in], parallel, args("/debug"), False) _
             .TakeSnapshot _
             .GetXml _
             .SaveTo(out) _

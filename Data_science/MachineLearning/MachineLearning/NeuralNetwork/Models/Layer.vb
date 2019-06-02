@@ -101,7 +101,7 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
-        ''' 将外界的测试数据赋值到每一个神经元的<see cref="Neuron.Value"/>之上
+        ''' 将外界的测试数据赋值到每一个神经元的<see cref="Neuron.Value"/>之上,在这里只是进行简单的属性赋值操作
         ''' </summary>
         ''' <param name="data"></param>
         ''' <remarks>
@@ -160,7 +160,7 @@ Namespace NeuralNetwork
 
         Public Sub CalculateGradient(targets As Double(), truncate As Double)
             For i As Integer = 0 To targets.Length - 1
-                Neurons(i).CalculateGradient(targets(i), truncate)
+                _Neurons(i).CalculateGradient(targets(i), truncate)
             Next
         End Sub
 
@@ -256,7 +256,7 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' 前向传播
         ''' </summary>
         ''' <remarks>
         ''' 因为隐藏层的层数也不是很多,所以在这个函数也不需要并行?

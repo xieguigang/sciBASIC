@@ -326,16 +326,20 @@
     <Compile Include="NeuralNetwork\Accelerator.vb" />
     <Compile Include="NeuralNetwork\Models\Layer.vb" />
     <Compile Include="NeuralNetwork\Importance.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\ActiveFunction.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\NormalizeMatrix.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\Neuron.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\NeuralNetwork.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\DataSet.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Formats\Scattered.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\NamespaceDoc.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Snapshot.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Models\Sample.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Models\NormalizeMatrix.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Models\Neuron.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Models\DataSet.vb" />
     <Compile Include="NeuralNetwork\Helpers.vb" />
     <Compile Include="NeuralNetwork\Models\Network.vb" />
     <Compile Include="NeuralNetwork\Models\Neuron.vb" />
     <Compile Include="NeuralNetwork\Models\Synapse.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="QLearning\Action.vb" />
     <Compile Include="QLearning\Model.vb" />
@@ -367,13 +371,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DataMining\DataMining\Microsoft.VisualBasic.DataMining.Framework.vbproj">
-      <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
-      <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\Math\Math-core.vbproj">
+    <ProjectReference Include="..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>Math-core</Name>
+      <Name>math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

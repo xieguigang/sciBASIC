@@ -87,36 +87,41 @@ Namespace NeuralNetwork.StoreProcedure
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property [Function]() As IActivationFunction
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                With Me
-                    Select Case name
-                        Case NameOf(Activations.BipolarSigmoid)
-                            If HasKey("alpha") Then
-                                Return New BipolarSigmoid(!alpha)
-                            Else
-                                Return New BipolarSigmoid
-                            End If
-                        Case NameOf(Activations.SigmoidFunction)
-                            Return New SigmoidFunction
-                        Case NameOf(Activations.Sigmoid)
-                            If HasKey("alpha") Then
-                                Return New Sigmoid(!alpha)
-                            Else
-                                Return New Sigmoid
-                            End If
-                        Case NameOf(Activations.Threshold)
-                            Return New Threshold
-                        Case NameOf(Activations.ReLU)
-                            Return New ReLU
-                        Case Else
-#If DEBUG Then
-                            Call $"Missing model: {name}".Warning
-#End If
-                            Return New Activations.Sigmoid
-                    End Select
-                End With
+                Return CreateFunction()
             End Get
         End Property
+
+        Public Function CreateFunction() As IActivationFunction
+            With Me
+                Select Case name
+                    Case NameOf(Activations.BipolarSigmoid)
+                        If HasKey("alpha") Then
+                            Return New BipolarSigmoid(!alpha)
+                        Else
+                            Return New BipolarSigmoid
+                        End If
+                    Case NameOf(Activations.SigmoidFunction)
+                        Return New SigmoidFunction
+                    Case NameOf(Activations.Sigmoid)
+                        If HasKey("alpha") Then
+                            Return New Sigmoid(!alpha)
+                        Else
+                            Return New Sigmoid
+                        End If
+                    Case NameOf(Activations.Threshold)
+                        Return New Threshold
+                    Case NameOf(Activations.ReLU)
+                        Return New ReLU
+                    Case Else
+#If DEBUG Then
+                        Call $"Missing model: {name}".Warning
+#End If
+                        Return New Activations.Sigmoid
+                End Select
+            End With
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function HasKey(name As String) As Boolean
