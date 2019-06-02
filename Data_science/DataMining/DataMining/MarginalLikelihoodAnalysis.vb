@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::805cb8aa9248763533a8cfc96cf0ca3a, Data_science\DataMining\DataMining\MarginalLikelihoodAnalysis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MarginalLikelihoodAnalysis
-    ' 
-    '     Properties: BootstrappedSE, Burnin, LogMarginalLikelihood
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: calculateLogMarginalLikelihood, logMarginalLikelihoodAICM, logMarginalLikelihoodArithmetic, logMarginalLikelihoodHarmonic, (+2 Overloads) logMarginalLikelihoodSmoothed
-    ' 
-    '     Sub: calculate
-    ' 
-    ' /********************************************************************************/
+' Class MarginalLikelihoodAnalysis
+' 
+'     Properties: BootstrappedSE, Burnin, LogMarginalLikelihood
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: calculateLogMarginalLikelihood, logMarginalLikelihoodAICM, logMarginalLikelihoodArithmetic, logMarginalLikelihoodHarmonic, (+2 Overloads) logMarginalLikelihoodSmoothed
+' 
+'     Sub: calculate
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,13 +80,20 @@ Imports Microsoft.VisualBasic.Language.Java
 ''' </summary>
 Public Class MarginalLikelihoodAnalysis
 
-    Private ReadOnly sample As IList(Of Double)
-    Private ReadOnly analysisType As String ' "harmonic" for harmonic mean, "smoothed" for smoothed harmonic mean, "aicm" for AICM, "arithmetic" for arithmetic mean
-    Private ReadOnly bootstrapLength As Integer
+    ReadOnly sample As IList(Of Double)
 
-    Private marginalLikelihoodCalculated As Boolean = False
-    Private _logMarginalLikelihood As Double
-    Private _bootstrappedSE As Double
+    ''' <summary>
+    ''' "harmonic" for harmonic mean, 
+    ''' "smoothed" for smoothed harmonic mean, 
+    ''' "aicm" for AICM, 
+    ''' "arithmetic" for arithmetic mean
+    ''' </summary>
+    ReadOnly analysisType As String
+    ReadOnly bootstrapLength As Integer
+
+    Dim marginalLikelihoodCalculated As Boolean = False
+    Dim _logMarginalLikelihood As Double
+    Dim _bootstrappedSE As Double
 
     Public Overridable Property Burnin As Integer
 
@@ -97,14 +104,14 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="burnin">          used for 'toString' display purposes only </param>
     ''' <param name="analysisType"> </param>
     ''' <param name="bootstrapLength"> a value of zero will turn off bootstrapping </param>
-    Public Sub New( sample As IList(Of Double),  burnin As Integer,  analysisType As String,  bootstrapLength As Integer)
+    Public Sub New(sample As IList(Of Double), burnin As Integer, analysisType As String, bootstrapLength As Integer)
         Me.sample = sample
         Me.Burnin = burnin
         Me.analysisType = analysisType
         Me.bootstrapLength = bootstrapLength
     End Sub
 
-    Public Overridable Function calculateLogMarginalLikelihood( sample As IList(Of Double)) As Double
+    Public Overridable Function calculateLogMarginalLikelihood(sample As IList(Of Double)) As Double
         If analysisType.Equals("aicm") Then
             Return logMarginalLikelihoodAICM(sample)
         ElseIf analysisType.Equals("smoothed") Then
@@ -121,7 +128,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' </summary>
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodArithmetic( v As IList(Of Double?)) As Double
+    Public Overridable Function logMarginalLikelihoodArithmetic(v As IList(Of Double?)) As Double
         Dim size As Integer = v.Count
         Dim sum As Double = LogTricks.logZero
 
@@ -137,9 +144,10 @@ Public Class MarginalLikelihoodAnalysis
     ''' </summary>
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodHarmonic( v As IList(Of Double)) As Double
+    Public Overridable Function logMarginalLikelihoodHarmonic(v As IList(Of Double)) As Double
         Dim sum As Double = 0
         Dim size As Integer = v.Count
+
         For i As Integer = 0 To size - 1
             sum += v(i)
         Next i
@@ -159,7 +167,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the AICM (lower values are better) </returns>
 
-    Public Overridable Function logMarginalLikelihoodAICM( v As IList(Of Double)) As Double
+    Public Overridable Function logMarginalLikelihoodAICM(v As IList(Of Double)) As Double
 
         Dim sum As Double = 0
         Dim size As Integer = v.Count
@@ -217,7 +225,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="delta"> proportion of pseudo-samples from the prior </param>
     ''' <param name="Pdata"> current estimate of the log marginal likelihood </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodSmoothed( v As IList(Of Double),  delta As Double,  Pdata As Double) As Double
+    Public Overridable Function logMarginalLikelihoodSmoothed(v As IList(Of Double), delta As Double, Pdata As Double) As Double
 
         Dim logDelta As Double = Math.Log(delta)
         Dim logInvDelta As Double = Math.Log(1.0 - delta)
@@ -252,7 +260,7 @@ Public Class MarginalLikelihoodAnalysis
         End Get
     End Property
 
-    Public Overridable Function logMarginalLikelihoodSmoothed( v As IList(Of Double?)) As Double
+    Public Overridable Function logMarginalLikelihoodSmoothed(v As IList(Of Double?)) As Double
 
         Const delta As Double = 0.01 ' todo make class adjustable by accessor/setter
 
