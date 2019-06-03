@@ -50,10 +50,10 @@ Namespace QLearning
     ''' <typeparam name="T">Status object</typeparam>
     Public MustInherit Class QState(Of T As ICloneable)
 
-        Protected __state As T
+        Protected stateValue As T
 
         Public Sub SetState(x As T)
-            __state = x
+            stateValue = x
         End Sub
 
         ''' <summary>
@@ -63,7 +63,7 @@ Namespace QLearning
         ''' <returns></returns>
         Public ReadOnly Property State As T
             Get
-                Return __state
+                Return stateValue
             End Get
         End Property
 
@@ -73,7 +73,7 @@ Namespace QLearning
         ''' <returns></returns>
         Public ReadOnly Property Current As T
             Get
-                Return DirectCast(__state.Clone, T)
+                Return DirectCast(stateValue.Clone, T)
             End Get
         End Property
 

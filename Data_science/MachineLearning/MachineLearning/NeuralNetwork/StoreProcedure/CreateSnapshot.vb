@@ -7,7 +7,7 @@ Namespace NeuralNetwork.StoreProcedure
     ''' <summary>
     ''' 
     ''' </summary>
-    Module Snapshot
+    Module CreateSnapshot
 
         Private Iterator Function GetLayerNodes(layer As Layer) As IEnumerable(Of NeuronNode)
             For Each neuron As Neuron In layer.Neurons
