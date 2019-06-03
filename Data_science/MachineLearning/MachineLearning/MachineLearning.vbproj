@@ -326,7 +326,7 @@
     <Compile Include="NeuralNetwork\Accelerator.vb" />
     <Compile Include="NeuralNetwork\Models\Layer.vb" />
     <Compile Include="NeuralNetwork\Importance.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\Class1.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Snapshot.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Formats\Scattered.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\NamespaceDoc.vb" />
