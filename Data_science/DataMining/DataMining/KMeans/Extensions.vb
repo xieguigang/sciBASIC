@@ -94,7 +94,7 @@ Namespace KMeans
 
             For Each cluster As SeqValue(Of KMeansCluster(Of Entity)) In clusters.SeqIterator(offset:=1)
                 Dim values As EntityClusterModel() = (+cluster) _
-                    .Select(Function(x) x.ToLDM(maps)) _
+                    .Select(Function(x) x.ToDataModel(maps)) _
                     .ToArray
 
                 For Each x As EntityClusterModel In values

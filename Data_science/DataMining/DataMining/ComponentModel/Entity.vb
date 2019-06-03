@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Language
 Namespace ComponentModel
 
     ''' <summary>
-    '''
+    ''' An abstract property vector 
     ''' </summary>
     ''' <typeparam name="T">只允许数值类型</typeparam>
     Public MustInherit Class EntityBase(Of T) : Inherits BaseClass
@@ -80,7 +80,7 @@ Namespace ComponentModel
     ''' {Properties} -> Class
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Entity : Inherits EntityBase(Of Integer)
+    Public Class IntegerEntity : Inherits EntityBase(Of Integer)
 
         <XmlAttribute> Public Property [Class] As Integer
 
@@ -94,14 +94,14 @@ Namespace ComponentModel
             End Get
         End Property
 
-        Public Shared Widening Operator CType(properties As Double()) As Entity
-            Return New Entity With {
+        Public Shared Widening Operator CType(properties As Double()) As IntegerEntity
+            Return New IntegerEntity With {
                 .Properties = (From x In properties Select CType(x, Integer)).ToArray
             }
         End Operator
 
-        Public Shared Widening Operator CType(properties As Integer()) As Entity
-            Return New Entity With {
+        Public Shared Widening Operator CType(properties As Integer()) As IntegerEntity
+            Return New IntegerEntity With {
                 .Properties = properties
             }
         End Operator

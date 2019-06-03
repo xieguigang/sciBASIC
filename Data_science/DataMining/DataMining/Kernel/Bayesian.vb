@@ -56,12 +56,12 @@ Namespace Kernel.Classifier
         ''' 原始的数据集合
         ''' </summary>
         ''' <remarks></remarks>
-        Dim Entities As List(Of ComponentModel.Entity)
+        Dim Entities As List(Of IntegerEntity)
         Dim AllClass As Integer()
         Dim Width As Integer
 
-        Public Shared Function Load(Data As Generic.IEnumerable(Of ComponentModel.Entity)) As Bayesian
-            Dim Entities As List(Of ComponentModel.Entity) = Data.AsList
+        Public Shared Function Load(Data As IEnumerable(Of IntegerEntity)) As Bayesian
+            Dim Entities As List(Of IntegerEntity) = Data.AsList
             Return New Bayesian With {
                 .Entities = Entities,
                 .AllClass = GetAllClass(Entities),
@@ -81,13 +81,13 @@ Namespace Kernel.Classifier
         End Function
 
         Private Function P(Y As Integer) As Double
-            Dim LQuery = From Entity As Entity In Entities Where Entity.Class = Y Select 1 '
+            Dim LQuery = From Entity As IntegerEntity In Entities Where Entity.Class = Y Select 1 '
             Return LQuery.Count / Entities.Count
         End Function
 
-        Private Shared Function GetAllClass(Entities As List(Of ComponentModel.Entity)) As Integer()
+        Private Shared Function GetAllClass(Entities As List(Of IntegerEntity)) As Integer()
             If Entities Is Nothing OrElse Entities.Count = 0 Then Return New Integer() {}
-            Dim LQuery = From Entity As Entity In Entities.AsParallel Select Entity.Class Distinct '
+            Dim LQuery = From Entity As IntegerEntity In Entities.AsParallel Select Entity.Class Distinct '
             Return LQuery.ToArray
         End Function
 
@@ -98,9 +98,9 @@ Namespace Kernel.Classifier
         ''' <param name="Y"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function P(X As ComponentModel.Entity, Y As Integer) As Double
+        Public Function P(X As IntegerEntity, Y As Integer) As Double
             Dim LQuery = From Handle As Integer In Width.Sequence
-                         Select (From Entity As Entity
+                         Select (From Entity As IntegerEntity
                                  In Entities
                                  Where Entity(Handle) = X(Handle) AndAlso Entity.Class = Y
                                  Select 1).Count / Entities.Count '
@@ -116,7 +116,7 @@ Namespace Kernel.Classifier
         ''' <remarks></remarks>
         Public Function P(X As Integer(), Y As Integer) As Double
             Dim LQuery = From Handle As Integer In Width.Sequence
-                         Select (From Entity As Entity
+                         Select (From Entity As IntegerEntity
                                  In Entities
                                  Where Entity(Handle) = X(Handle) AndAlso Entity.Class = Y
                                  Select 1).Count / Entities.Count '

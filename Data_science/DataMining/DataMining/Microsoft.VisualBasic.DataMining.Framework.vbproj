@@ -404,6 +404,7 @@
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
     <Compile Include="Kernel\Neuron\NeuronEntity.vb" />
+    <Compile Include="KMeans\Kmedoids.vb" />
     <Compile Include="KMeans\EntityModels\csv.vb" />
     <Compile Include="KMeans\Extensions.vb" />
     <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
