@@ -111,7 +111,7 @@ Namespace Distributions
             Dim size% = v.Length / k
 
             Return v _
-                .Split(size, echo:=False) _
+                .SplitIterator(size) _
                 .Select(Function(block)
                             Return New DataBinBox(Of T)(block, eval)
                         End Function)
