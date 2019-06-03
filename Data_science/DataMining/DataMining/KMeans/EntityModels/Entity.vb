@@ -53,6 +53,12 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace KMeans
 
+    Public Class ClusterEntity : Inherits EntityBase(Of Double)
+
+        Public Property cluster As Integer
+
+    End Class
+
     ''' <summary>
     ''' 计算所使用的对象实例实体模型
     ''' </summary>

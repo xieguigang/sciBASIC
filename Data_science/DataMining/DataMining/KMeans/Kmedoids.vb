@@ -1,23 +1,22 @@
 Imports System.Runtime.CompilerServices
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports Entity = Microsoft.VisualBasic.DataMining.ComponentModel.IntegerEntity
 
 Namespace KMeans
 
     Public Module Kmedoids
 
         <Extension>
-        Public Function DoKMedoids(source As IEnumerable(Of Entity), k As Integer, maxSteps As Integer) As Entity()
+        Public Function DoKMedoids(source As IEnumerable(Of ClusterEntity), k As Integer, maxSteps As Integer) As ClusterEntity()
             Dim points = source.ToArray
 
             If k > points.Length OrElse k < 1 Then
                 Throw New Exception("K must be between 0 and set size")
             End If
 
-            Dim medoids As Entity() = New Entity(k - 1) {}
+            Dim medoids As ClusterEntity() = New ClusterEntity(k - 1) {}
             Dim resultClusterPoints As String() = New String(k - 1) {}
-            Dim resultPoints As Entity() = New Entity(points.Length - 1) {}
-            Dim stepmedoids As Entity() = New Entity(k - 1) {}
+            Dim resultPoints As ClusterEntity() = New ClusterEntity(points.Length - 1) {}
+            Dim stepmedoids As ClusterEntity() = New ClusterEntity(k - 1) {}
             Dim medoidsIndexes As New List(Of Integer)()
             Dim randIndex As Integer = 0
 
@@ -51,20 +50,20 @@ Namespace KMeans
                         dist = points(i).Properties.EuclideanDistance(stepmedoids(c).Properties)
 
                         If dist < minDist Then
-                            points(i).Class = c
+                            points(i).cluster = c
                             minDist = dist
                         End If
                     Next
 
                     ' getting sumFunc result for all clusters
-                    clusterSumFunc(points(i).Cluster) += minDist
+                    clusterSumFunc(points(i).cluster) += minDist
                     stepSumFunc += minDist
 
-                    If clusterPoints(points(i).Cluster) Is Nothing Then
-                        clusterPoints(points(i).Cluster) = ""
+                    If clusterPoints(points(i).cluster) Is Nothing Then
+                        clusterPoints(points(i).cluster) = ""
                     End If
 
-                    clusterPoints(points(i).Cluster) += " " & points(i).ToString()
+                    clusterPoints(points(i).cluster) += " " & points(i).ToString()
                 Next
 
                 ' if result of sumFinc is better than previous, save the configuration
@@ -76,7 +75,7 @@ Namespace KMeans
                         resultClusterPoints(i) = clusterPoints(i)
                     Next
 
-                    points.CopyTo(resultPoints)
+                    Call Array.ConstrainedCopy(points, Scan0, resultPoints, Scan0, points.Length)
                 End If
 
                 stepSumFunc = 0
@@ -91,9 +90,9 @@ Namespace KMeans
                 For i As Integer = 0 To points.Length - 1
                     randomValue = randf.NextInteger(Integer.MaxValue)
 
-                    If clusterSwapRandomCost(points(i).Cluster) < randomValue AndAlso stepmedoids(points(i).Cluster) IsNot points(i) Then
-                        indexOfSwapCandidate(points(i).Cluster) = i
-                        clusterSwapRandomCost(points(i).Cluster) = randomValue
+                    If clusterSwapRandomCost(points(i).cluster) < randomValue AndAlso stepmedoids(points(i).cluster) IsNot points(i) Then
+                        indexOfSwapCandidate(points(i).cluster) = i
+                        clusterSwapRandomCost(points(i).cluster) = randomValue
                     End If
                 Next
 
