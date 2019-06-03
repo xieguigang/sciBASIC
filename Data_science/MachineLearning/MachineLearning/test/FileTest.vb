@@ -33,19 +33,39 @@ Module FileTest
         samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 0, 1, 1}}, .target = {0, 0, 0, 0}}
         samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 1}}, .target = {1, 1, 1, 1}}
         samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 1}}, .target = {1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 1}}, .target = {1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 1}}, .target = {1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 1}}, .target = {1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 1}}, .target = {1, 1, 1, 1}}
+        samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 0}}, .target = {0, 0, 0, 1}}
+        samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 0}}, .target = {0, 0, 0, 1}}
+        samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 0}}, .target = {0, 0, 0, 1}}
+        samples += New Sample With {.ID = ++id, .status = New NumericVector With {.vector = {1, 1, 1, 1, 0}}, .target = {0, 0, 0, 1}}
 
         Dim trainer As New TrainingUtils(5, {10, 100, 30, 50}, 4)
 
+        Helpers.MaxEpochs = 1000
+
+        Dim snapshot As New Snapshot(trainer.NeuronNetwork)
+
+        Call snapshot.UpdateSnapshot(1000).WriteIntegralXML("./test_before.XML")
+
         Call samples.DoEach(Sub(dset) trainer.Add(dset))
         Call trainer.Train()
+
+        Call snapshot.UpdateSnapshot(trainer.MinError).WriteIntegralXML("./test_after.XML")
+
 
         Call trainer.TakeSnapshot.GetXml.SaveTo("./format1.Xml")
         Call trainer.TakeSnapshot.GetJson.SaveTo("./format2.json")
 
         Call trainer.TakeSnapshot.ScatteredStore("./scatters/")
+
+        Dim model1 = Scattered.ScatteredLoader("./scatters/").LoadModel
+        Dim model2 = "./format1.Xml".LoadXml(Of StoreProcedure.NeuralNetwork).LoadModel
+
+        Dim predict1 = model1.Compute(1, 1, 1, 1, 0)
+        Dim predict2 = model2.Compute(1, 1, 1, 1, 0)
+
+        Call StoreProcedure.NeuralNetwork.Snapshot(model1).GetXml.SaveTo("./scatterLoaded.Xml")
+        Call StoreProcedure.NeuralNetwork.Snapshot(model2).GetXml.SaveTo("./interalLoaded.Xml")
+
+        Pause()
     End Sub
 End Module

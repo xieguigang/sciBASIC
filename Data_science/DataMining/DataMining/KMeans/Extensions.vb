@@ -87,14 +87,14 @@ Namespace KMeans
                 .ToArray
             Dim clusters As ClusterCollection(Of Entity) =
                 ClusterDataSet(clusterCount:=expected,
-                               Source:=source.Select(Function(x) x.ToModel).ToArray,
+                               source:=source.Select(Function(x) x.ToModel).ToArray,
                                debug:=debug,
                                parallel:=parallel)
             Dim result As New List(Of EntityClusterModel)
 
             For Each cluster As SeqValue(Of KMeansCluster(Of Entity)) In clusters.SeqIterator(offset:=1)
                 Dim values As EntityClusterModel() = (+cluster) _
-                    .Select(Function(x) x.ToLDM(maps)) _
+                    .Select(Function(x) x.ToDataModel(maps)) _
                     .ToArray
 
                 For Each x As EntityClusterModel In values

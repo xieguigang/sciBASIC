@@ -61,7 +61,6 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace NeuralNetwork.StoreProcedure
@@ -82,7 +81,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"|{[in]} => {out}| = {w}"
         End Function
     End Class
 
@@ -100,8 +99,15 @@ Namespace NeuralNetwork.StoreProcedure
         <XmlAttribute> Public Property delta As Double
         <XmlAttribute> Public Property gradient As Double
 
+        Public Overrides Function ToString() As String
+            Return id
+        End Function
+
     End Class
 
+    ''' <summary>
+    ''' Layer对象之中只放置神经元节点的引用唯一编号
+    ''' </summary>
     <XmlType("layer")> Public Class NeuronLayer : Inherits ListOf(Of String)
         Implements INamedValue
 

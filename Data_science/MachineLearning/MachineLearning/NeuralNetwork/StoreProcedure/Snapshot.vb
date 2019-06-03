@@ -1,106 +1,154 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports Connector = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Synapse
 
 Namespace NeuralNetwork.StoreProcedure
 
     ''' <summary>
-    ''' 
+    ''' 对于大型的神经网络而言，反复的构建XML数据模型将会额外的消耗掉大量的时间，导致训练的时间过长
+    ''' 在这里通过这个持久性的快照对象来减少这种反复创建XML数据快照的问题
     ''' </summary>
-    Module Snapshot
+    Public Class Snapshot
 
-        Private Iterator Function GetLayerNodes(layer As Layer) As IEnumerable(Of NeuronNode)
-            For Each neuron As Neuron In layer.Neurons
-                Yield New NeuronNode With {
-                    .bias = neuron.Bias,
-                    .delta = neuron.BiasDelta,
-                    .gradient = neuron.Gradient,
-                    .id = neuron.Guid
+        ReadOnly snapshot As NeuralNetwork
+        ReadOnly source As Network
+
+        ''' <summary>
+        ''' 节点的数量较少
+        ''' </summary>
+        ReadOnly neuronLinks As Map(Of Neuron, NeuronNode)()
+        ''' <summary>
+        ''' 因为链接的数量非常多，可能会超过了一个数组的元素数量上限，
+        ''' 所以在这里使用多个分组来避免这个问题
+        ''' </summary>
+        ReadOnly synapseLinks As Map(Of Connector, Synapse)()()
+
+        Sub New(model As Network)
+            source = model
+            snapshot = CreateSnapshot.TakeSnapshot(model, 0)
+            neuronLinks = createNeuronUpdateMaps(source, snapshot).ToArray
+            synapseLinks = createSynapseUpdateMaps(source, snapshot).ToArray
+        End Sub
+
+        Private Shared Iterator Function createNeuronUpdateMaps(source As Network, snapshot As NeuralNetwork) As IEnumerable(Of Map(Of Neuron, NeuronNode))
+            Dim neuronTable = snapshot.neurons.ToDictionary(Function(n) n.id)
+
+            For Each node As Neuron In source.InputLayer
+                Yield New Map(Of Neuron, NeuronNode) With {
+                    .Key = node,
+                    .Maps = neuronTable(node.Guid)
+                }
+            Next
+
+            For Each layer In source.HiddenLayer
+                For Each node As Neuron In layer
+                    Yield New Map(Of Neuron, NeuronNode) With {
+                        .Key = node,
+                        .Maps = neuronTable(node.Guid)
+                    }
+                Next
+            Next
+
+            For Each node As Neuron In source.OutputLayer
+                Yield New Map(Of Neuron, NeuronNode) With {
+                    .Key = node,
+                    .Maps = neuronTable(node.Guid)
                 }
             Next
         End Function
 
-        Private Iterator Function GetNodeConnections(layer As Layer) As IEnumerable(Of Synapse)
-            For Each neuron As Neuron In layer.Neurons
-                For Each edge In neuron.PopulateAllSynapses
-                    Yield New Synapse With {
-                        .[in] = edge.InputNeuron.Guid,
-                        .out = edge.OutputNeuron.Guid,
-                        .w = edge.Weight,
-                        .delta = edge.WeightDelta
-                    }
+        Private Shared Iterator Function createSynapseUpdateMaps(model As Network, snapshot As NeuralNetwork) As IEnumerable(Of Map(Of Connector, Synapse)())
+            Dim linkTable As BucketDictionary(Of String, Synapse) = snapshot _
+                .connections _
+                .CreateBuckets(Function(s) $"{s.in}|{s.out}")
+            Dim populateConnector = Iterator Function(node As Neuron) As IEnumerable(Of Map(Of Connector, Synapse))
+                                        If Not node.InputSynapses Is Nothing Then
+                                            For Each link In node.InputSynapses
+                                                Yield New Map(Of Connector, Synapse) With {
+                                                    .Key = link,
+                                                    .Maps = linkTable($"{link.InputNeuron.Guid}|{link.OutputNeuron.Guid}")
+                                                }
+                                            Next
+                                        End If
+                                    End Function
+
+            Yield model.InputLayer _
+                .Select(populateConnector) _
+                .IteratesALL _
+                .ToArray
+
+            For Each layer As Layer In model.HiddenLayer
+                For Each block In layer _
+                    .Select(populateConnector) _
+                    .IteratesALL _
+                    .SplitIterator(100000)
+
+                    Yield block
                 Next
             Next
-        End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function GetGuids(layer As Layer) As String()
-            Return layer.Neurons _
-                .Select(Function(node) node.Guid) _
+            Yield model.OutputLayer _
+                .Select(populateConnector) _
+                .IteratesALL _
                 .ToArray
         End Function
 
         ''' <summary>
-        ''' Dump the given Neuron <see cref="Network"/> as xml model data
+        ''' 
         ''' </summary>
-        ''' <param name="instance"></param>
+        ''' <param name="error">
+        ''' The calculation errors of current snapshot.
+        ''' </param>
         ''' <returns></returns>
-        Public Function TakeSnapshot(instance As Network, errors#) As NeuralNetwork
-            Dim nodes As New List(Of NeuronNode)
-            Dim hiddenlayers As New List(Of NeuronLayer)
-            Dim inputlayer As String()
-            Dim outputlayer As String()
-            Dim connections As New List(Of Synapse)
+        Public Function UpdateSnapshot([error] As Double) As Snapshot
+            Dim toNode As NeuronNode
+            Dim fromNode As Neuron
 
-            ' nodes
-            nodes += GetLayerNodes(instance.InputLayer)
-            inputlayer = GetGuids(instance.InputLayer)
+            snapshot.errors = [error]
+            snapshot.learnRate = source.LearnRate
+            snapshot.momentum = source.Momentum
 
-            For Each layer As SeqValue(Of Layer) In instance.HiddenLayer.SeqIterator
-                nodes += GetLayerNodes(layer)
-                hiddenlayers += New NeuronLayer With {
-                    .id = layer.i + 1,
-                    .neurons = GetGuids(layer)
-                }
+            ' update node and links in current neuron network
+            For Each node In neuronLinks
+                toNode = node.Maps
+                fromNode = node.Key
+
+                toNode.bias = fromNode.Bias
+                toNode.delta = fromNode.BiasDelta
+                toNode.gradient = fromNode.Gradient
+                toNode.id = fromNode.Guid
             Next
 
-            nodes += GetLayerNodes(instance.OutputLayer)
-            outputlayer = GetGuids(instance.OutputLayer)
+            Dim toLink As Synapse
+            Dim fromLink As Connector
 
-            ' edges
-            connections += GetNodeConnections(instance.InputLayer)
+            For Each layer In synapseLinks
+                For Each connection In layer
+                    toLink = connection.Maps
+                    fromLink = connection.Key
 
-            For Each layer As Layer In instance.HiddenLayer
-                connections += GetNodeConnections(layer)
+                    toLink.delta = fromLink.WeightDelta
+                    toLink.w = fromLink.Weight
+                Next
             Next
 
-            connections += GetNodeConnections(instance.OutputLayer)
-            connections = connections _
-                .GroupBy(Function(n) $"{n.in} = {n.out}") _
-                .Select(Function(g) g.First) _
-                .AsList
-
-            Return New NeuralNetwork With {
-                .learnRate = instance.LearnRate,
-                .momentum = instance.Momentum,
-                .errors = errors,
-                .neurons = nodes,
-                .hiddenlayers = New HiddenLayer With {
-                    .activation = instance.Activations!hiddens,
-                    .layers = hiddenlayers
-                },
-                .inputlayer = New NeuronLayer With {
-                    .id = "input",
-                    .neurons = inputlayer,
-                    .activation = instance.Activations!input
-                },
-                .outputlayer = New NeuronLayer With {
-                    .id = "output",
-                    .neurons = outputlayer,
-                    .activation = instance.Activations!output
-                },
-                .connections = connections
-            }
+            Return Me
         End Function
-    End Module
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function WriteIntegralXML(path As String) As Boolean
+            Return snapshot.GetXml.SaveTo(path, throwEx:=False)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function WriteScatteredParts(directory As String) As Boolean
+            Return snapshot.ScatteredStore(store:=directory)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return source.ToString
+        End Function
+    End Class
 End Namespace

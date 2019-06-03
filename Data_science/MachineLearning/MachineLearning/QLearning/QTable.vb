@@ -65,7 +65,7 @@ Namespace QLearning
         ''' <summary>
         ''' for creating random numbers
         ''' </summary>
-        Protected ReadOnly __randomGenerator As Random
+        Protected ReadOnly randomGenerator As Random
 
         ''' <summary>
         ''' the table variable stores the Q-table, where the state is saved
@@ -144,7 +144,7 @@ Namespace QLearning
         End Sub
 
         Private Sub New()
-            __randomGenerator = New Random()
+            randomGenerator = New Random()
         End Sub
 
         ''' <summary>
@@ -158,10 +158,10 @@ Namespace QLearning
         Public Overridable Function NextAction(map As T) As Integer
             _prevState = CType(map.Clone(), T)
 
-            If __randomGenerator.NextDouble() < ExplorationChance Then
+            If randomGenerator.NextDouble() < ExplorationChance Then
                 _prevAction = __explore()
             Else
-                _prevAction = __getBestAction(map)
+                _prevAction = getBestAction(map)
             End If
             Return _prevAction
         End Function
@@ -177,8 +177,8 @@ Namespace QLearning
         ''' </summary>
         ''' <param name="map"> current map (state) </param>
         ''' <returns> the action with the highest Q value </returns>
-        Private Function __getBestAction(map As T) As Integer
-            Dim rewards() As Single = Me.__getActionsQValues(map)
+        Private Function getBestAction(map As T) As Integer
+            Dim rewards() As Single = Me.getActionsQValues(map)
             Dim maxRewards As Single = Single.NegativeInfinity
             Dim indexMaxRewards As Integer = 0
 
@@ -204,7 +204,7 @@ Namespace QLearning
         ''' <returns> index of action to take </returns>
         ''' <remarks>在这里得到可能的下一步的动作的在动作列表里面编号值， Index</remarks>
         Protected Function __explore() As Integer
-            Return (New Random(Me.__randomGenerator.Next(ActionRange + 100 * _prevAction))).Next(ActionRange)
+            Return (New Random(Me.randomGenerator.Next(ActionRange + 100 * _prevAction))).Next(ActionRange)
         End Function
 
         ''' <summary>
@@ -219,8 +219,8 @@ Namespace QLearning
         ''' <param name="map"> current map state (for finding the best action of the
         ''' current map state) </param>
         Public Overridable Sub UpdateQvalue(reward As Integer, map As T)
-            Dim preVal() As Single = Me.__getActionsQValues(Me._prevState)
-            preVal(Me._prevAction) += Me.LearningRate * (reward + Me.GammaValue * Me.__getActionsQValues(map)(Me.__getBestAction(map)) - preVal(Me._prevAction))
+            Dim preVal() As Single = Me.getActionsQValues(Me._prevState)
+            preVal(Me._prevAction) += Me.LearningRate * (reward + Me.GammaValue * Me.getActionsQValues(map)(Me.getBestAction(map)) - preVal(Me._prevAction))
         End Sub
 
         ''' <summary>
@@ -239,19 +239,27 @@ Namespace QLearning
         ''' </summary>
         ''' <param name="map"> current map (state) </param>
         ''' <returns> an array of Q values for all the actions available at any state </returns>
-        Private Function __getActionsQValues(map As T) As Single()
+        Private Function getActionsQValues(map As T) As Single()
             Dim actions() As Single = GetValues(map)
-            If actions Is Nothing Then ' 还不存在这个动作，则添加新的动作
+
+            If actions Is Nothing Then
+                ' 还不存在这个动作，则添加新的动作
                 Dim initialActions(ActionRange - 1) As Single
+
                 For i As Integer = 0 To ActionRange - 1
                     initialActions(i) = 0.0F
                 Next i
-                _Table += New Action With {  ' If the current environment state is not in the program's memory, then store it, this is the so called learn
+
+                ' If the current environment state is not in the program's memory, 
+                ' then store it, this is the so called learning
+                _Table += New Action With {
                     .EnvirState = __getMapString(map),
                     .Qvalues = initialActions
                 }
+
                 Return initialActions
             End If
+
             Return actions
         End Function
 
@@ -262,9 +270,11 @@ Namespace QLearning
         ''' <returns> the Q-values stored of the Qtable entry of the map state, otherwise null if it is not found </returns>
         Public Overridable Function GetValues(map As T) As Single()
             Dim mapKey As String = __getMapString(map)
+
             If Table.ContainsKey(mapKey) Then
                 Return Table(mapKey).Qvalues
             End If
+
             Return Nothing
         End Function
     End Class

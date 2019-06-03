@@ -99,6 +99,11 @@ Public Module LargeTextFile
         End Using
     End Function
 
+    ''' <summary>
+    ''' Populate all lines of the text data from current stream reader object
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function IteratesStream(s As StreamReader) As IEnumerable(Of String)
         Do While Not s.EndOfStream

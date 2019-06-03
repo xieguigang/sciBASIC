@@ -56,6 +56,8 @@ Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Namespace NeuralNetwork
 
     ''' <summary>
+    ''' 人工神经网络计算用的对象模型
+    ''' 
     ''' https://github.com/trentsartain/Neural-Network
     ''' </summary>
     Public Class Network : Inherits Model
@@ -63,8 +65,21 @@ Namespace NeuralNetwork
 #Region "-- Properties --"
         Public Property LearnRate As Double
         Public Property Momentum As Double
+
+        ''' <summary>
+        ''' 通过这个属性可以枚举出所有的输入层的神经元节点
+        ''' </summary>
+        ''' <returns></returns>
         Public Property InputLayer As Layer
+        ''' <summary>
+        ''' 通过这个属性可以枚举出所有的隐藏层，然后对每一层隐藏层可以枚举出该隐藏层之中的所有的神经元节点
+        ''' </summary>
+        ''' <returns></returns>
         Public Property HiddenLayer As HiddenLayers
+        ''' <summary>
+        ''' 通过这个属性可以枚举出所有的输出层的神经元节点
+        ''' </summary>
+        ''' <returns></returns>
         Public Property OutputLayer As Layer
 
         ''' <summary>

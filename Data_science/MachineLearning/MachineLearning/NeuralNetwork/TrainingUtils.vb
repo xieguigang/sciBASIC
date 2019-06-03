@@ -68,6 +68,11 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <returns></returns>
         Public Property Truncate As Double = -1
+        ''' <summary>
+        ''' 是否对训练样本数据集进行选择性的训练，假若目标样本在当前所训练的模型上面
+        ''' 所计算得到的预测结果和其真实结果的误差足够小的话，目标样本将不会再进行训练
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Selective As Boolean = True
 
         ''' <summary>
@@ -110,6 +115,15 @@ Namespace NeuralNetwork
             network = net
         End Sub
 
+        ''' <summary>
+        ''' 以指定的网络规模参数进行人工神经网络模型的构建
+        ''' </summary>
+        ''' <param name="inputSize"></param>
+        ''' <param name="hiddenSize"></param>
+        ''' <param name="outputSize"></param>
+        ''' <param name="learnRate"></param>
+        ''' <param name="momentum"></param>
+        ''' <param name="active"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(inputSize As Integer, hiddenSize As Integer(), outputSize As Integer,
                        Optional learnRate As Double = 0.1,

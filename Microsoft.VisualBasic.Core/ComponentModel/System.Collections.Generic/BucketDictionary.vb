@@ -61,23 +61,13 @@ Namespace ComponentModel.Collection
     ''' <typeparam name="V"></typeparam>
     Public Class BucketDictionary(Of K, V) : Implements IReadOnlyDictionary(Of K, V)
 
-        Friend ReadOnly __buckets As New List(Of Dictionary(Of K, V))
+        Friend ReadOnly buckets As New List(Of Dictionary(Of K, V))
+        Friend minBucket As Dictionary(Of K, V)
+
         ''' <summary>
         ''' 每一个字典之中的最大的元素数目
         ''' </summary>
         ReadOnly bucketSize As Integer
-
-        Sub New(bucketSize As Integer)
-            Me.bucketSize = bucketSize
-        End Sub
-
-        Sub New()
-            Call Me.New(Short.MaxValue * 10)
-        End Sub
-
-        Sub New(buckets As IEnumerable(Of Dictionary(Of K, V)))
-            __buckets = buckets.AsList
-        End Sub
 
         ''' <summary>
         ''' 获取这个超大的字典集合之中的对象的数量总数
@@ -86,7 +76,7 @@ Namespace ComponentModel.Collection
         Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of KeyValuePair(Of K, V)).Count
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __buckets.Sum(Function(x) x.Count)
+                Return buckets.Sum(Function(x) x.Count)
             End Get
         End Property
 
@@ -97,7 +87,7 @@ Namespace ComponentModel.Collection
         ''' <returns></returns>
         Default Public Property Item(key As K) As V Implements IReadOnlyDictionary(Of K, V).Item
             Get
-                For Each hash In __buckets
+                For Each hash In buckets
                     If hash.ContainsKey(key) Then
                         Return hash(key)
                     End If
@@ -106,27 +96,22 @@ Namespace ComponentModel.Collection
                 Return Nothing
             End Get
             Set(value As V)
-                If __buckets.Count = 0 Then
-                    Call __buckets.Add(New Dictionary(Of K, V) From {{key, value}})
+                If buckets.Count = 0 Then
+                    buckets.Add(New Dictionary(Of K, V) From {{key, value}})
+                    minBucket = buckets(Scan0)
                 Else
-                    For Each hash In __buckets
+                    For Each hash In buckets
                         If hash.ContainsKey(key) Then
                             hash(key) = value
                             Return
                         End If
                     Next
 
-                    Dim min = LinqAPI.DefaultFirst(Of Dictionary(Of K, V)) _
- _
-                        () <= From x As Dictionary(Of K, V)
-                              In __buckets
-                              Select x
-                              Order By x.Count Ascending
+                    minBucket(key) = value
 
-                    min(key) = value
-
-                    If min.Count >= bucketSize Then
-                        Call __buckets.Add(New Dictionary(Of K, V))
+                    If minBucket.Count >= bucketSize Then
+                        buckets.Add(New Dictionary(Of K, V))
+                        minBucket = buckets.Last
                     End If
                 End If
             End Set
@@ -135,23 +120,38 @@ Namespace ComponentModel.Collection
         Public ReadOnly Property Keys As IEnumerable(Of K) Implements IReadOnlyDictionary(Of K, V).Keys
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __buckets.Select(Function(x) x.Keys).IteratesALL
+                Return buckets.Select(Function(x) x.Keys).IteratesALL
             End Get
         End Property
 
         Public ReadOnly Property Values As IEnumerable(Of V) Implements IReadOnlyDictionary(Of K, V).Values
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __buckets.Select(Function(x) x.Values).IteratesALL
+                Return buckets.Select(Function(x) x.Values).IteratesALL
             End Get
         End Property
 
+        Sub New(bucketSize As Integer)
+            Me.bucketSize = bucketSize
+        End Sub
+
+        Sub New()
+            Call Me.New(Short.MaxValue * 10)
+        End Sub
+
+        Sub New(buckets As IEnumerable(Of Dictionary(Of K, V)))
+            Me.buckets = buckets.AsList
+            Me.minBucket = Me.buckets _
+                .OrderBy(Function(table) table.Count) _
+                .FirstOrDefault
+        End Sub
+
         Public Overrides Function ToString() As String
-            Return $"Tuple of [{GetType(K).Name}, {GetType(V).Name}] with {__buckets.Count} buckets."
+            Return $"Tuple of [{GetType(K).Name}, {GetType(V).Name}] with {buckets.Count} buckets."
         End Function
 
         Public Function ContainsKey(key As K) As Boolean Implements IReadOnlyDictionary(Of K, V).ContainsKey
-            For Each hash In __buckets
+            For Each hash In buckets
                 If hash.ContainsKey(key) Then
                     Return True
                 End If
@@ -161,7 +161,7 @@ Namespace ComponentModel.Collection
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of K, V)) Implements IEnumerable(Of KeyValuePair(Of K, V)).GetEnumerator
-            For Each hash In __buckets
+            For Each hash In buckets
                 For Each x In hash
                     Yield x
                 Next
@@ -169,7 +169,7 @@ Namespace ComponentModel.Collection
         End Function
 
         Public Function TryGetValue(key As K, ByRef value As V) As Boolean Implements IReadOnlyDictionary(Of K, V).TryGetValue
-            For Each hash In __buckets
+            For Each hash In buckets
                 If hash.ContainsKey(key) Then
                     value = hash(key)
                     Return True
@@ -186,8 +186,18 @@ Namespace ComponentModel.Collection
 
     Public Module BucketDictionaryExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function CreateBuckets(Of T, K, V)(source As IEnumerable(Of T), getKey As Func(Of T, K), getValue As Func(Of T, V), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
+        Public Function CreateBuckets(Of T, K)(source As IEnumerable(Of T), getKey As Func(Of T, K), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, T)
+            Return source.CreateBuckets(getKey, Function(o) o, size:=size)
+        End Function
+
+        <Extension>
+        Public Function CreateBuckets(Of T, K, V)(source As IEnumerable(Of T),
+                                                  getKey As Func(Of T, K),
+                                                  getValue As Func(Of T, V),
+                                                  Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
+
             Dim table As New BucketDictionary(Of K, V)(size)
             Dim bucket As New Dictionary(Of K, V)
 
@@ -198,12 +208,12 @@ Namespace ComponentModel.Collection
                 Call bucket.Add(key, value)
 
                 If bucket.Count >= size Then
-                    table.__buckets.Add(bucket)
+                    table.buckets.Add(bucket)
                     bucket = New Dictionary(Of K, V)
                 End If
             Next
 
-            table.__buckets.Add(bucket)
+            Call table.buckets.Add(bucket)
 
             Return table
         End Function

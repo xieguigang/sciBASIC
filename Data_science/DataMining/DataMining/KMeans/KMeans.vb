@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Linq
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace KMeans
 
@@ -165,13 +166,13 @@ Namespace KMeans
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
         ''' </param>
         <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(
-                                                 Source As IEnumerable(Of T),
+                                                 source As IEnumerable(Of T),
                                                  clusterCount%,
                                            Optional debug As Boolean = False,
                                            Optional stop% = -1,
                                            Optional parallel As Boolean = True) As ClusterCollection(Of T)
 
-            Dim data As T() = Source.ToArray
+            Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
             Dim fieldCount As Integer = data(Scan0).Length
@@ -269,11 +270,9 @@ Namespace KMeans
 
         <Extension>
         Private Function CrossOver(Of T As EntityBase(Of Double))(stableClusters As ClusterCollection(Of T)) As ClusterCollection(Of T)
-            Dim random As New Random
-
             For null As Integer = 1 To 3
-                Dim i% = random.NextInteger(stableClusters.NumOfCluster)
-                Dim j% = random.NextInteger(stableClusters.NumOfCluster)
+                Dim i% = randf.NextInteger(stableClusters.NumOfCluster)
+                Dim j% = randf.NextInteger(stableClusters.NumOfCluster)
 
                 If i < 0 OrElse j < 0 Then
                     Continue For
@@ -284,8 +283,8 @@ Namespace KMeans
                     Dim y = stableClusters._innerList(j)
 
                     For r As Integer = 0 To 3
-                        i = random.NextInteger(x.NumOfEntity)
-                        j = random.NextInteger(y.NumOfEntity)
+                        i = randf.NextInteger(x.NumOfEntity)
+                        j = randf.NextInteger(y.NumOfEntity)
 
                         If i < 0 OrElse j < 0 Then
                             Continue For
@@ -349,7 +348,7 @@ Namespace KMeans
             Else
                 '((20+30)/2), ((170+160)/2), ((80+120)/2)
                 For Each x As T In data
-                    Call newClusters(clusters.__minIndex(x)).Add(x)
+                    Call newClusters(clusters.minIndex(x)).Add(x)
                 Next
             End If
 
@@ -363,7 +362,7 @@ Namespace KMeans
         End Function
 
         <Extension>
-        Private Function __minIndex(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), dataPoint As T) As Integer
+        Private Function minIndex(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), dataPoint As T) As Integer
             Dim position As Integer = 0
             Dim clusterMean As Double()
             Dim firstClusterDistance As Double = 0.0

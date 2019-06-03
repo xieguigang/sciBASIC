@@ -50,26 +50,23 @@ Imports ANN = Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Namespace NeuralNetwork.StoreProcedure
 
     ''' <summary>
-    ''' 与<see cref="Snapshot"/>之中的快照生成函数执行相反的操作,从模型数据文件之中创建计算用的对象模型
+    ''' 与<see cref="CreateSnapshot"/>之中的快照生成函数执行相反的操作,从模型数据文件之中创建计算用的对象模型
     ''' </summary>
     <HideModuleName>
     Public Module IntegralLoader
 
-        ''' <summary>
-        ''' 将保存在Xml文件之中的已经训练好的模型加载为人工神经网络对象用来进行后续的分析操作
-        ''' </summary>
-        ''' <param name="model"></param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' 这个加载器函数主要是针对小文件使用的
-        ''' </remarks>
-        <Extension> Public Function LoadModel(model As StoreProcedure.NeuralNetwork) As Network
-            Dim activations As LayerActives = LayerActives.FromXmlModel(
-                functions:=New Dictionary(Of String, ActiveFunction) From {
-                    {"input", model.inputlayer.activation},
-                    {"output", model.outputlayer.activation},
-                    {"hiddens", model.hiddenlayers.activation}
-                })
+        Private Class neuronLoader
+
+            Public inputLayer As Dictionary(Of String, Neuron)
+            Public outputLayer As Dictionary(Of String, Neuron)
+            Public hiddenLayer As List(Of Dictionary(Of String, Neuron))
+
+            Public neuronBucket As BucketDictionary(Of String, Neuron)
+
+        End Class
+
+        <Extension>
+        Private Function createNeuronBuckets(model As StoreProcedure.NeuralNetwork, activations As LayerActives) As neuronLoader
             Dim neuronDataTable = model.neurons.ToDictionary(Function(n) n.id)
             Dim inputLayer As Dictionary(Of String, Neuron) = model.inputlayer _
                 .createNeurons(activations.input, neuronDataTable) _
@@ -92,7 +89,34 @@ Namespace NeuralNetwork.StoreProcedure
 
             ' 构建神经元之间的链接
             Dim neurons As New BucketDictionary(Of String, Neuron)(hiddenLayer + inputLayer + outputLayer)
+            Dim loader As New neuronLoader With {
+                .hiddenLayer = hiddenLayer,
+                .inputLayer = inputLayer,
+                .outputLayer = outputLayer,
+                .neuronBucket = neurons
+            }
+
+            Return loader
+        End Function
+
+        ''' <summary>
+        ''' 将保存在Xml文件之中的已经训练好的模型加载为人工神经网络对象用来进行后续的分析操作
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个加载器函数主要是针对小文件使用的
+        ''' </remarks>
+        <Extension> Public Function LoadModel(model As StoreProcedure.NeuralNetwork) As Network
+            Dim activations As LayerActives = LayerActives.FromXmlModel(
+                functions:=New Dictionary(Of String, ActiveFunction) From {
+                    {"input", model.inputlayer.activation},
+                    {"output", model.outputlayer.activation},
+                    {"hiddens", model.hiddenlayers.activation}
+                })
             Dim connectedLinks As New Index(Of String)
+            Dim loader = model.createNeuronBuckets(activations)
+            Dim neurons As BucketDictionary(Of String, Neuron) = loader.neuronBucket
 
             For Each edge As StoreProcedure.Synapse In model.connections
                 If connectedLinks.IndexOf($"{edge.in} = {edge.out}") = -1 Then
@@ -115,9 +139,9 @@ Namespace NeuralNetwork.StoreProcedure
             Return New Network(activations) With {
                 .LearnRate = model.learnRate,
                 .Momentum = model.momentum,
-                .InputLayer = New Layer(inputLayer.Values.ToArray),
-                .OutputLayer = New Layer(outputLayer.Values.ToArray),
-                .HiddenLayer = New HiddenLayers(hiddenLayer.Select(Function(c) New Layer(c.Values.ToArray)))
+                .InputLayer = New Layer(loader.inputLayer.Values.ToArray),
+                .OutputLayer = New Layer(loader.outputLayer.Values.ToArray),
+                .HiddenLayer = New HiddenLayers(loader.hiddenLayer.Select(Function(c) New Layer(c.Values.ToArray)))
             }
         End Function
 

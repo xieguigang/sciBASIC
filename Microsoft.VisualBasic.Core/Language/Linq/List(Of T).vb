@@ -563,6 +563,34 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' Elements count is greater than or equals to a specific number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator >=(list As List(Of T), count%) As Boolean
+            If list Is Nothing Then
+                Return 0 >= count
+            Else
+                Return list.Count >= count
+            End If
+        End Operator
+
+        ''' <summary>
+        ''' Elements count is less than or equals to a specific number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator <=(list As List(Of T), count%) As Boolean
+            If list Is Nothing Then
+                Return 0 <= count
+            Else
+                Return list.Count <= count
+            End If
+        End Operator
+
+        ''' <summary>
         ''' Assert that the element counts of this list object is equals to a specifc number?
         ''' </summary>
         ''' <param name="list"></param>

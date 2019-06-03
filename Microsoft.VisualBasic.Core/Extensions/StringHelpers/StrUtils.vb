@@ -191,7 +191,7 @@ Public Module StrUtils
         Return AscW(c)
     End Function
 
-    ReadOnly newRandom As New [Default](Of Random)(Math.Seeds)
+    ReadOnly newRandom As New [Default](Of Random)(Math.seeds)
 
     ''' <summary>
     ''' 32-126

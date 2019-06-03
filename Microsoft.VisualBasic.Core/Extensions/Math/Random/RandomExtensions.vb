@@ -119,11 +119,11 @@ Namespace Math
         ''' 不同的代码重复使用这个种子，这样子可以尽量的模拟出真正的随机行为
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Seeds As New Random()
+        Public ReadOnly Property seeds As New Random()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function RandomSingle() As Single
-            Return Seeds.NextDouble()
+        Public Function RandomSingle() As Double
+            Return seeds.NextDouble()
         End Function
 
         ''' <summary>
@@ -138,8 +138,8 @@ Namespace Math
         ''' if maxValue equals 0, maxValue is returned.
         ''' </returns>
         Public Function NextInteger(upper As Integer) As Integer
-            SyncLock Seeds
-                Return Seeds.Next(upper)
+            SyncLock seeds
+                Return seeds.Next(upper)
             End SyncLock
         End Function
 
@@ -151,8 +151,8 @@ Namespace Math
 
         <Extension>
         Public Function GetRandomValue(rng As DoubleRange) As Double
-            SyncLock Seeds
-                Return Seeds.NextDouble(range:=rng)
+            SyncLock seeds
+                Return seeds.NextDouble(range:=rng)
             End SyncLock
         End Function
 
@@ -175,7 +175,7 @@ Namespace Math
 
         <Extension>
         Public Function GetRandomValue(rng As IntRange) As Integer
-            Return rng.Length * Seeds.NextDouble + rng.Min
+            Return rng.Length * seeds.NextDouble + rng.Min
         End Function
 
         ''' <summary>
@@ -200,7 +200,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("NextGaussian")>
         Public Function NextGaussian(Optional mu As Double = 0, Optional sigma As Double = 1) As Double
-            Return Seeds.NextGaussian(mu, sigma)
+            Return seeds.NextGaussian(mu, sigma)
         End Function
 
         ''' <summary>
@@ -256,7 +256,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub Shuffle(Of T)(ByRef list As List(Of T))
-            Call Seeds.Shuffle(list)
+            Call seeds.Shuffle(list)
         End Sub
 
         ''' <summary>

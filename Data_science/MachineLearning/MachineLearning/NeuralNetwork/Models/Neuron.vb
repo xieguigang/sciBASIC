@@ -80,6 +80,10 @@ Namespace NeuralNetwork
         ''' </remarks>
         Public Property Value As Double
 
+        ''' <summary>
+        ''' 当前的这个神经元对象的唯一标识符
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Guid As String
 
         ''' <summary>
