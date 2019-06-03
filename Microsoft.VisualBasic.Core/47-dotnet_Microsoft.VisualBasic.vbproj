@@ -988,6 +988,7 @@
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Enumeration.vb" />
     <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
+    <Compile Include="Extensions\Collection\BucketExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
@@ -1092,7 +1093,6 @@
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Ranges\Relations.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\BucketIndexOf.vb" />
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />

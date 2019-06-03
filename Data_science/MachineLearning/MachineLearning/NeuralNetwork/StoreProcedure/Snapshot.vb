@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Connector = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Synapse
 
 Namespace NeuralNetwork.StoreProcedure
@@ -26,10 +28,71 @@ Namespace NeuralNetwork.StoreProcedure
         Sub New(model As Network)
             source = model
             snapshot = CreateSnapshot.TakeSnapshot(model, 0)
+            neuronLinks = createNeuronUpdateMaps(source, snapshot).ToArray
+            synapseLinks = createSynapseUpdateMaps(source, snapshot).ToArray
         End Sub
 
-        Private Shared Function createNeuronUpdateMaps(source As Network, snapshot As NeuralNetwork) As Map(Of Neuron, NeuronNode)()
+        Private Shared Iterator Function createNeuronUpdateMaps(source As Network, snapshot As NeuralNetwork) As IEnumerable(Of Map(Of Neuron, NeuronNode))
+            Dim neuronTable = snapshot.neurons.ToDictionary(Function(n) n.id)
 
+            For Each node As Neuron In source.InputLayer
+                Yield New Map(Of Neuron, NeuronNode) With {
+                    .Key = node,
+                    .Maps = neuronTable(node.Guid)
+                }
+            Next
+
+            For Each layer In source.HiddenLayer
+                For Each node As Neuron In layer
+                    Yield New Map(Of Neuron, NeuronNode) With {
+                        .Key = node,
+                        .Maps = neuronTable(node.Guid)
+                    }
+                Next
+            Next
+
+            For Each node As Neuron In source.OutputLayer
+                Yield New Map(Of Neuron, NeuronNode) With {
+                    .Key = node,
+                    .Maps = neuronTable(node.Guid)
+                }
+            Next
+        End Function
+
+        Private Shared Iterator Function createSynapseUpdateMaps(model As Network, snapshot As NeuralNetwork) As IEnumerable(Of Map(Of Connector, Synapse)())
+            Dim linkTable As BucketDictionary(Of String, Synapse) = snapshot _
+                .connections _
+                .CreateBuckets(Function(s) $"{s.in}|{s.out}")
+            Dim populateConnector = Iterator Function(node As Neuron) As IEnumerable(Of Map(Of Connector, Synapse))
+                                        If Not node.InputSynapses Is Nothing Then
+                                            For Each link In node.InputSynapses
+                                                Yield New Map(Of Connector, Synapse) With {
+                                                    .Key = link,
+                                                    .Maps = linkTable($"{link.InputNeuron.Guid}|{link.OutputNeuron.Guid}")
+                                                }
+                                            Next
+                                        End If
+                                    End Function
+
+            Yield model.InputLayer _
+                .Select(populateConnector) _
+                .IteratesALL _
+                .ToArray
+
+            For Each layer As Layer In model.HiddenLayer
+                For Each block In layer _
+                    .Select(populateConnector) _
+                    .IteratesALL _
+                    .SplitIterator(100000)
+
+                    Yield block
+                Next
+            Next
+
+            Yield model.OutputLayer _
+                .Select(populateConnector) _
+                .IteratesALL _
+                .ToArray
         End Function
 
         ''' <summary>

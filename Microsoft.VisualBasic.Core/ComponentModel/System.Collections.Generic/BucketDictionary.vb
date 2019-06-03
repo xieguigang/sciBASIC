@@ -186,8 +186,18 @@ Namespace ComponentModel.Collection
 
     Public Module BucketDictionaryExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function CreateBuckets(Of T, K, V)(source As IEnumerable(Of T), getKey As Func(Of T, K), getValue As Func(Of T, V), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
+        Public Function CreateBuckets(Of T, K)(source As IEnumerable(Of T), getKey As Func(Of T, K), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, T)
+            Return source.CreateBuckets(getKey, Function(o) o, size:=size)
+        End Function
+
+        <Extension>
+        Public Function CreateBuckets(Of T, K, V)(source As IEnumerable(Of T),
+                                                  getKey As Func(Of T, K),
+                                                  getValue As Func(Of T, V),
+                                                  Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
+
             Dim table As New BucketDictionary(Of K, V)(size)
             Dim bucket As New Dictionary(Of K, V)
 
@@ -203,7 +213,7 @@ Namespace ComponentModel.Collection
                 End If
             Next
 
-            table.buckets.Add(bucket)
+            Call table.buckets.Add(bucket)
 
             Return table
         End Function

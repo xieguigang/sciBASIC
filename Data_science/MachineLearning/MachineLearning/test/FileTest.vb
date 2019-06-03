@@ -42,8 +42,15 @@ Module FileTest
 
         Helpers.MaxEpochs = 1000
 
+        Dim snapshot As New Snapshot(trainer.NeuronNetwork)
+
+        Call snapshot.UpdateSnapshot(1000).WriteIntegralXML("./test_before.XML")
+
         Call samples.DoEach(Sub(dset) trainer.Add(dset))
         Call trainer.Train()
+
+        Call snapshot.UpdateSnapshot(trainer.MinError).WriteIntegralXML("./test_after.XML")
+
 
         Call trainer.TakeSnapshot.GetXml.SaveTo("./format1.Xml")
         Call trainer.TakeSnapshot.GetJson.SaveTo("./format2.json")
