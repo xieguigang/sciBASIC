@@ -68,9 +68,7 @@ Public Module Abundance
             In allTags
             Select mxVal = array _
                 .Where(Function(x) x.Samples.ContainsKey(tag)) _
-                .Select(Function(x) x.Samples(tag)).Max,
-                tag).ToDictionary(Function(x) x.tag,
-                                  Function(x) x.mxVal)
+                .Select(Function(x) x.Samples(tag)).Max, tag).ToDictionary(Function(x) x.tag, Function(x) x.mxVal)
         For Each x As T In array
             x.Samples = (From tag As String
                          In allTags

@@ -87,7 +87,7 @@ Namespace KMeans
                 .ToArray
             Dim clusters As ClusterCollection(Of Entity) =
                 ClusterDataSet(clusterCount:=expected,
-                               Source:=source.Select(Function(x) x.ToModel).ToArray,
+                               source:=source.Select(Function(x) x.ToModel).ToArray,
                                debug:=debug,
                                parallel:=parallel)
             Dim result As New List(Of EntityClusterModel)

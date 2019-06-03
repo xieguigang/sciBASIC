@@ -120,7 +120,7 @@ Namespace Clustering
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Clustering")>
-        Public Function Clustering(data As Generic.IEnumerable(Of Double), <Parameter("Distance")> d As Double) As SimpleCluster()
+        Public Function Clustering(data As IEnumerable(Of Double), <Parameter("Distance")> d As Double) As SimpleCluster()
             Dim Ordered = (From n In data Select n Order By n Ascending).ToArray '从小到大排序
             Dim an = data.Average
             If an - Ordered.First <= d AndAlso Ordered.Last - an <= d Then
@@ -207,16 +207,6 @@ Namespace Clustering
             Next
 
             Return data
-        End Function
-
-        <ExportAPI("Result.Print")>
-        Public Function PrintResult(data As Generic.IEnumerable(Of SimpleCluster)) As String()
-            Dim LQuery = (From i As Integer In data.Sequence Let item = data(i) Let str As String = item.ToString Select i, str).ToArray
-            Call Console.WriteLine("There are {0} clusters from the original data." & vbCrLf, data.Count)
-            For Each s In LQuery
-                Call Console.WriteLine("[{0}]  {1}", s.i, s.str)
-            Next
-            Return (From item In LQuery Select item.str).ToArray
         End Function
     End Module
 End Namespace

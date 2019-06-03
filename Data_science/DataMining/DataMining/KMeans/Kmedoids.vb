@@ -3,8 +3,18 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace KMeans
 
+    ''' <summary>
+    ''' Partitioning around medoids(PAM)
+    ''' </summary>
     Public Module Kmedoids
 
+        ''' <summary>
+        ''' Partitioning around medoids(PAM)
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="k"></param>
+        ''' <param name="maxSteps"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function DoKMedoids(source As IEnumerable(Of ClusterEntity), k As Integer, maxSteps As Integer) As ClusterEntity()
             Dim points = source.ToArray
