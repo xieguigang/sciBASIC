@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Connector = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Synapse
 
 Namespace NeuralNetwork.StoreProcedure
 
@@ -11,10 +13,24 @@ Namespace NeuralNetwork.StoreProcedure
         ReadOnly snapshot As NeuralNetwork
         ReadOnly source As Network
 
+        ''' <summary>
+        ''' 节点的数量较少
+        ''' </summary>
+        ReadOnly neuronLinks As Map(Of Neuron, NeuronNode)()
+        ''' <summary>
+        ''' 因为链接的数量非常多，可能会超过了一个数组的元素数量上限，
+        ''' 所以在这里使用多个分组来避免这个问题
+        ''' </summary>
+        ReadOnly synapseLinks As Map(Of Connector, Synapse)()()
+
         Sub New(model As Network)
             source = model
             snapshot = CreateSnapshot.TakeSnapshot(model, 0)
         End Sub
+
+        Private Shared Function createNeuronUpdateMaps(source As Network, snapshot As NeuralNetwork) As Map(Of Neuron, NeuronNode)()
+
+        End Function
 
         ''' <summary>
         ''' 
@@ -24,11 +40,36 @@ Namespace NeuralNetwork.StoreProcedure
         ''' </param>
         ''' <returns></returns>
         Public Function UpdateSnapshot([error] As Double) As Snapshot
+            Dim toNode As NeuronNode
+            Dim fromNode As Neuron
+
             snapshot.errors = [error]
             snapshot.learnRate = source.LearnRate
             snapshot.momentum = source.Momentum
 
+            ' update node and links in current neuron network
+            For Each node In neuronLinks
+                toNode = node.Maps
+                fromNode = node.Key
 
+                toNode.bias = fromNode.Bias
+                toNode.delta = fromNode.BiasDelta
+                toNode.gradient = fromNode.Gradient
+                toNode.id = fromNode.Guid
+            Next
+
+            Dim toLink As Synapse
+            Dim fromLink As Connector
+
+            For Each layer In synapseLinks
+                For Each connection In layer
+                    toLink = connection.Maps
+                    fromLink = connection.Key
+
+                    toLink.delta = fromLink.WeightDelta
+                    toLink.w = fromLink.Weight
+                Next
+            Next
 
             Return Me
         End Function
