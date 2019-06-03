@@ -16,8 +16,21 @@ Namespace NeuralNetwork.StoreProcedure
             snapshot = CreateSnapshot.TakeSnapshot(model, 0)
         End Sub
 
-        Public Function UpdateSnapshot() As Snapshot
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="error">
+        ''' The calculation errors of current snapshot.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function UpdateSnapshot([error] As Double) As Snapshot
+            snapshot.errors = [error]
+            snapshot.learnRate = source.LearnRate
+            snapshot.momentum = source.Momentum
 
+
+
+            Return Me
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
