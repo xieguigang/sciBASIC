@@ -45,17 +45,19 @@ Namespace KMeans
             Dim [step] As Integer = 0
             Dim resultSumFunc As Double = Double.MaxValue
             Dim stepSumFunc As Double = 0
+            Dim dist As Double = 0
+            Dim minDist As Double
+            Dim randomValue As Integer = 0
 
             While [step] < maxSteps
                 ' initial clustering to medoids
                 Dim clusterSumFunc As Double() = New Double(k - 1) {}
                 Dim clusterPoints As String() = New String(k - 1) {}
 
-                Dim dist As Double = 0
-
                 For i As Integer = 0 To points.Length - 1
-                    Dim minDist As Double = Double.MaxValue
+                    minDist = Double.MaxValue
                     dist = 0
+
                     For c As Integer = 0 To k - 1
                         dist = points(i).Properties.EuclideanDistance(stepmedoids(c).Properties)
 
@@ -73,7 +75,7 @@ Namespace KMeans
                         clusterPoints(points(i).cluster) = ""
                     End If
 
-                    clusterPoints(points(i).cluster) += " " & points(i).ToString()
+                    clusterPoints(points(i).cluster) &= " " & points(i).ToString()
                 Next
 
                 ' if result of sumFinc is better than previous, save the configuration
@@ -94,8 +96,6 @@ Namespace KMeans
                 ' random swapping medoids with nonmedoids
                 Dim clusterSwapRandomCost As Integer() = New Integer(k - 1) {}
                 Dim indexOfSwapCandidate As Integer() = New Integer(k - 1) {}
-
-                Dim randomValue As Integer = 0
 
                 For i As Integer = 0 To points.Length - 1
                     randomValue = randf.NextInteger(Integer.MaxValue)
