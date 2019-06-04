@@ -159,11 +159,11 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="path">Csv文件之中除了第一列是名称标识符，其他的都必须是该实体对象的属性</param>
     ''' <returns></returns>
-    Public Function Load(path As String, Optional map As String = "Name") As Entity()
+    Public Function Load(path As String, Optional map As String = "Name") As ClusterEntity()
         Dim data = DataSet.LoadDataSet(path, map).ToArray
-        Dim source As Entity() = data _
+        Dim source As ClusterEntity() = data _
                 .Select(Function(x)
-                            Return New Entity With {
+                            Return New ClusterEntity With {
                                 .uid = x.ID,
                                 .Properties = x.Properties.Values.ToArray
                             }
