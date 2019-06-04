@@ -81,6 +81,7 @@ Namespace KMeans
         Public Function ToDataModel() As EntityClusterModel
             Return New EntityClusterModel With {
                 .ID = uid,
+                .Cluster = cluster,
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) CStr(x.i),
@@ -97,6 +98,7 @@ Namespace KMeans
         Public Function ToDataModel(maps As String()) As EntityClusterModel
             Return New EntityClusterModel With {
                 .ID = uid,
+                .Cluster = cluster,
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) maps(x.i),
