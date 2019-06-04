@@ -137,6 +137,24 @@ Namespace Math.Correlations
         End Function
 
         ''' <summary>
+        ''' Jensen–Shannon divergence（J-S散度） is a method of measuring the similarity between two 
+        ''' probability distributions.
+        ''' It is based on the Kullback–Leibler divergence（K-L散度）, with some notable (and useful) 
+        ''' differences, including that it is symmetric and it is always a finite value.
+        ''' </summary>
+        ''' <param name="P"></param>
+        ''' <param name="Q"></param>
+        ''' <returns></returns>
+        Public Function JSD(P As Double(), Q As Double()) As Double
+            Dim M As Double() = (From i As Integer
+                                 In P.Sequence
+                                 Select 0.5 * (P(i) + Q(i))).ToArray
+            Dim divergence = 0.5 * KLD(P, M) + 0.5 * KLD(Q, M)
+
+            Return divergence
+        End Function
+
+        ''' <summary>
         ''' Kullback-Leibler divergence, <paramref name="x"/>和<paramref name="y"/>必须是等长的
         ''' </summary>
         ''' <param name="x"></param>
