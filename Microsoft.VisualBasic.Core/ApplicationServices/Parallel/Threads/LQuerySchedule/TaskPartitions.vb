@@ -78,7 +78,7 @@ Namespace Parallel.Linq
         ''' <param name="source"></param>
         ''' <param name="parTokens">每一个分区之中的元素数量</param>
         ''' <returns></returns>
-        ''' <remarks>对于数量较少的序列，可以使用<see cref="Extensions.SplitIterator(Of T)(IEnumerable(Of T), Integer, Boolean)"/>进行分区操作，
+        ''' <remarks>对于数量较少的序列，可以使用<see cref="SplitIterator(Of T)(IEnumerable(Of T), Integer, Boolean)"/>进行分区操作，
         ''' 该函数使用数组的<see cref="Array.ConstrainedCopy(Array, Integer, Array, Integer, Integer)"/>方法进行分区复制，效率较高
         ''' 
         ''' 由于本函数需要处理大量的数据，使用Array的方法会内存占用较厉害，所以在这里更改为List操作以降低内存的占用
