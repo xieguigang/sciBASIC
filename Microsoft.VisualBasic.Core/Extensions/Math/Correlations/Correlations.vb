@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fdd877e6b00aeec49cd663ea58c6c21, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::c6b8564840e3112672deca685eabbdc9, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '         Properties: PearsonDefault
     ' 
-    '         Function: __kldPart, (+2 Overloads) GetPearson, JaccardIndex, kendallTauBeta, KLD
-    '                   rankKendallTauBeta, SW
+    '         Function: (+2 Overloads) GetPearson, JaccardIndex, JSD, kendallTauBeta, KLD
+    '                   KLDi, rankKendallTauBeta, SW
     '         Structure Pearson
     ' 
     '             Properties: P
@@ -58,10 +58,6 @@
     ' 
     ' 
     ' 
-    ' 
-    '     Module Beta
-    ' 
-    '         Function: betacf, betai, erfcc, gammln
     ' 
     ' 
     ' 
@@ -137,26 +133,47 @@ Namespace Math.Correlations
         End Function
 
         ''' <summary>
-        ''' Kullback-Leibler divergence
+        ''' Jensen–Shannon divergence（J-S散度） is a method of measuring the similarity between two 
+        ''' probability distributions.
+        ''' It is based on the Kullback–Leibler divergence（K-L散度）, with some notable (and useful) 
+        ''' differences, including that it is symmetric and it is always a finite value.
+        ''' </summary>
+        ''' <param name="P"></param>
+        ''' <param name="Q"></param>
+        ''' <returns></returns>
+        Public Function JSD(P As Double(), Q As Double()) As Double
+            Dim M As Double() = (From i As Integer
+                                 In P.Sequence
+                                 Select 0.5 * (P(i) + Q(i))).ToArray
+            Dim divergence = 0.5 * KLD(P, M) + 0.5 * KLD(Q, M)
+
+            Return divergence
+        End Function
+
+        ''' <summary>
+        ''' Kullback-Leibler divergence, <paramref name="x"/>和<paramref name="y"/>必须是等长的
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
         <ExportAPI("KLD", Info:="Kullback-Leibler divergence")>
         Public Function KLD(x As Double(), y As Double()) As Double
-            Dim index As Integer() = x.Sequence
-            Dim a As Double = (From i As Integer In index Select __kldPart(x(i), y(i))).Sum
-            Dim b As Double = (From i As Integer In index Select __kldPart(y(i), x(i))).Sum
+            Dim index As Integer() = x.Sequence.ToArray
+            Dim a As Double = Aggregate i As Integer In index Into Sum(KLDi(x(i), y(i)))
+            Dim b As Double = Aggregate i As Integer In index Into Sum(KLDi(y(i), x(i)))
             Dim value As Double = (a + b) / 2
             Return value
         End Function
 
-        Private Function __kldPart(Xa#, Ya#) As Double
+        Private Function KLDi(Xa#, Ya#) As Double
             If Xa = 0R Then
+                ' 0 * n = 0
                 Return 0R
+            Else
+                ' KLD(P||Q) = Σ[P(i)*ln(P(i)/Q(i))]
+                Dim value As Double = Xa * sys.Log(Xa / Ya)
+                Return value
             End If
-            Dim value As Double = Xa * sys.Log(Xa / Ya)  ' 0 * n = 0
-            Return value
         End Function
 
 #Region "https://en.wikipedia.org/wiki/Kendall_tau_distance"
@@ -454,7 +471,7 @@ Namespace Math.Correlations
                that is, when the Spearman correlation coefficient is desired for the top X records 
                (whether by pre-change rank or post-change rank, or both), the user should use the 
                Pearson correlation coefficient formula given above.")>
-        Public Function Spearman#(X#(), Y#())
+        Public Function Spearman(X#(), Y#()) As Double
             If X.Length <> Y.Length Then
                 Call throwNotAgree(X, Y)
             ElseIf X.Length = 1 Then
@@ -570,132 +587,6 @@ Namespace Math.Correlations
             Next
 
             Return outMatrix
-        End Function
-    End Module
-
-    Public Module Beta
-
-        Const SWITCH As Integer = 3000, MAXIT As Integer = 1000
-        Const EPS As Double = 0.0000003, FPMIN As Double = 1.0E-30
-
-        Public Function betai(a As Double, b As Double, x As Double) As Double
-            Dim bt As Double
-
-            If x < 0.0 OrElse x > 1.0 Then
-                Throw New ArgumentException($"Bad x:={x} in routine betai")
-            End If
-            If x = 0.0 OrElse x = 1.0 Then
-                bt = 0.0
-            Else
-                bt = sys.Exp(gammln(a + b) - gammln(a) - gammln(b) + a * sys.Log(x) + b * sys.Log(1.0 - x))
-            End If
-            If x < (a + 1.0) / (a + b + 2.0) Then
-                Return bt * betacf(a, b, x) / a
-            Else
-                Return 1.0 - bt * betacf(b, a, 1.0 - x) / b
-            End If
-        End Function
-
-        Private Function gammln(xx As Double) As Double
-            Dim x As Double = xx, y As Double, tmp As Double, ser As Double
-            Dim j As Integer
-
-            y = x
-            tmp = x + 5.5
-            tmp -= (x + 0.5) * sys.Log(tmp)
-            ser = 1.00000000019001
-            For j = 0 To 5
-                y += 1 ' ++y
-                ser += cof(j) / y
-            Next
-
-            Return -tmp + sys.Log(2.506628274631 * ser / x)
-        End Function
-
-        ReadOnly cof As Double() = {
-            76.1800917294715,
-            -86.5053203294168,
-            24.0140982408309,
-            -1.23173957245015,
-            0.00120865097386618,
-            -0.000005395239384953
-        }
-
-        Private Function betacf(a As Double, b As Double, x As Double) As Double
-            Dim m As Integer, m2 As Integer
-            Dim aa As Double,
-            c As Double,
-            d As Double,
-            del As Double,
-            h As Double,
-            qab As Double,
-            qam As Double,
-            qap As Double
-
-            qab = a + b
-            qap = a + 1.0
-            qam = a - 1.0
-            c = 1.0
-            d = 1.0 - qab * x / qap
-            If sys.Abs(d) < FPMIN Then
-                d = FPMIN
-            End If
-            d = 1.0 / d
-            h = d
-
-            For m = 1 To MAXIT
-                m2 = 2 * m
-                aa = m * (b - m) * x / ((qam + m2) * (a + m2))
-                d = 1.0 + aa * d
-                If sys.Abs(d) < FPMIN Then
-                    d = FPMIN
-                End If
-                c = 1.0 + aa / c
-                If sys.Abs(c) < FPMIN Then
-                    c = FPMIN
-                End If
-                d = 1.0 / d
-                h *= d * c
-                aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
-                d = 1.0 + aa * d
-                If sys.Abs(d) < FPMIN Then
-                    d = FPMIN
-                End If
-                c = 1.0 + aa / c
-                If sys.Abs(c) < FPMIN Then
-                    c = FPMIN
-                End If
-                d = 1.0 / d
-                del = d * c
-                h *= del
-                If sys.Abs(del - 1.0) < EPS Then
-                    Exit For
-                End If
-            Next
-            If m > MAXIT Then
-                Dim msg As String =
-                $"a:={a} or b:={b} too big, or MAXIT too small in betacf"
-                Throw New ArgumentException(msg)
-            End If
-            Return h
-        End Function
-
-        Public Function erfcc(x As Double) As Double
-            Dim t As Double, z As Double, ans As Double
-
-            z = sys.Abs(x)
-            t = 1.0 / (1.0 + 0.5 * z)
-            ans = t * sys.Exp(-z * z - 1.26551223 +
-                           t * (1.00002368 +
-                           t * (0.37409196 +
-                           t * (0.09678418 +
-                           t * (-0.18628806 +
-                           t * (0.27886807 +
-                           t * (-1.13520398 +
-                           t * (1.48851587 +
-                           t * (-0.82215223 +
-                           t * 0.17087277)))))))))
-            Return If(x >= 0.0, ans, 2.0 - ans)
         End Function
     End Module
 End Namespace

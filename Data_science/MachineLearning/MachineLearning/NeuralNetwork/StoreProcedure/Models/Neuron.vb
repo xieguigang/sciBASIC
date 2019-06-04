@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a081c4e0a15e5c6094a356e0f9244ef, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::ed8d48b8c84ebd0c77f8a4aec0cbf1a0, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\Neuron.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,8 @@
     '     Class NeuronNode
     ' 
     '         Properties: bias, delta, gradient, id
+    ' 
+    '         Function: ToString
     ' 
     '     Class NeuronLayer
     ' 

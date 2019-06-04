@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dadf5569dfab679f89f92302c67b27f6, Data_science\DataMining\DataMining\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::1873fcb1b1eaa0f0e722336006c78d80, Data_science\DataMining\DataMining\KMeans\KMeans.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module KMeansAlgorithm
     ' 
-    '         Function: __minIndex, (+2 Overloads) ClusterDataSet, ClusterMean, CrossOver, EuclideanDistance
-    '                   ManhattanDistance, means
+    '         Function: (+2 Overloads) ClusterDataSet, ClusterMean, CrossOver, EuclideanDistance, ManhattanDistance
+    '                   means, minIndex
     ' 
     ' 
     ' /********************************************************************************/

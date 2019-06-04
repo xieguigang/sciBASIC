@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e005a08a803bc69c9436b196538f0961, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
+﻿#Region "Microsoft.VisualBasic::d705ec5e08ea0496e63c97586f6c6818, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: [Function], Arguments, BipolarSigmoid, name, ReLU
     '                     Sigmoid, Threshold
     ' 
-    '         Function: HasKey, Parse, ToString
+    '         Function: CreateFunction, HasKey, Parse, ToString
     ' 
     ' 
     ' /********************************************************************************/

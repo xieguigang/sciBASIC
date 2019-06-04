@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::222b4f3284f929f4ab54eb16611f7d68, Data\BinaryData\BinaryData\ByteBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::db11fec413c5d14f0dbc43e2bf06c906, Data\BinaryData\BinaryData\ByteBuffer.vb"
 
     ' Author:
     ' 
@@ -350,4 +350,3 @@ Public Class ByteBuffer
         Return Me
     End Function
 End Class
-

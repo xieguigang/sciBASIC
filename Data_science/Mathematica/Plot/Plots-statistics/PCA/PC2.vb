@@ -91,12 +91,12 @@ Namespace PCA
                 getlabel = Function(i) labels(i)
             End If
 
-            Dim pts As Entity() = Points(x, y) _
+            Dim pts As ClusterEntity() = Points(x, y) _
                 .SeqIterator _
                 .Select(Function(pt)
                             Dim point As PointF = pt.value
 
-                            Return New Entity With {
+                            Return New ClusterEntity With {
                                 .uid = getlabel(pt.i),
                                 .Properties = {
                                     point.X,
@@ -107,7 +107,7 @@ Namespace PCA
                 .ToArray
 
             ' 进行聚类获取得到分组
-            Dim kmeans As ClusterCollection(Of Entity) = pts.ClusterDataSet(sampleGroup)
+            Dim kmeans As ClusterCollection(Of ClusterEntity) = pts.ClusterDataSet(sampleGroup)
             ' 赋值颜色到分组上
             Dim colors() = Designer.GetColors(colorSchema)
             ' 点为黑色的，border则才是所上的颜色

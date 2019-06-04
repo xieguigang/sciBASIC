@@ -131,26 +131,26 @@ Namespace Heatmap
         <Extension>
         Public Function KmeansReorder(data As NamedValue(Of Dictionary(Of String, Double))(), Optional n% = 5) As NamedValue(Of Dictionary(Of String, Double))()
             Dim keys$() = data(Scan0%).Value.Keys.ToArray
-            Dim entityList As Entity() = LinqAPI.Exec(Of Entity) _
+            Dim entityList As ClusterEntity() = LinqAPI.Exec(Of ClusterEntity) _
  _
                 () <= From x As NamedValue(Of Dictionary(Of String, Double))
                       In data
-                      Select New Entity With {
+                      Select New ClusterEntity With {
                           .uid = x.Name,
                           .Properties = keys _
                               .Select(Function(k) x.Value(k)) _
                               .ToArray
                       }
 
-            Dim clusters As ClusterCollection(Of Entity)
+            Dim clusters As ClusterCollection(Of ClusterEntity)
 
             n = entityList.Length / n
 
             If n = 0 OrElse entityList.Length <= 2 Then
-                clusters = New ClusterCollection(Of Entity)
+                clusters = New ClusterCollection(Of ClusterEntity)
 
-                For Each x As Entity In entityList
-                    Dim c As New KMeansCluster(Of Entity)
+                For Each x As ClusterEntity In entityList
+                    Dim c As New KMeansCluster(Of ClusterEntity)
 
                     Call c.Add(x)
                     Call clusters.Add(c)
@@ -164,7 +164,7 @@ Namespace Heatmap
             ' 通过kmeans计算出keys的顺序
             Dim keysEntity = keys _
                 .Select(Function(k)
-                            Return New Entity With {
+                            Return New ClusterEntity With {
                                 .uid = k,
                                 .Properties = data _
                                     .Select(Function(x) x.Value(k)) _
@@ -182,7 +182,7 @@ Namespace Heatmap
             Next
 
             For Each cluster In clusters
-                For Each entity As Entity In cluster
+                For Each entity As ClusterEntity In cluster
                     out += New NamedValue(Of Dictionary(Of String, Double)) With {
                     .Name = entity.uid,
                     .Value = keysOrder _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdbb840b5402a78b356f6510f5a8811b, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::6e505faee304339630f6b3e462d36b90, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: Execute, PeformNonStringPrint
     ' 
     ' 

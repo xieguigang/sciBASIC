@@ -124,10 +124,11 @@ Namespace Interpolation
             data(2) = X.Last
 
             Dim tmp As New BezierCurve(
-                New PointF(0, data(0)),
-                New PointF(1, data(1)),
-                New PointF(2, data(2)),
-                iteration)
+                ctrl1:=New PointF(0, data(0)),
+                ctrl2:=New PointF(1, data(1)),
+                ctrl3:=New PointF(2, data(2)),
+                iteration:=iteration
+            )
 
             X = tmp.BezierPoints _
                 .Select(Function(p) CDbl(p.Y)) _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81d5920fe1a96dad575dfe3decb8fa7e, Data\BinaryData\DataStorage\HDF5\dataset\ContiguousDataset.vb"
+﻿#Region "Microsoft.VisualBasic::4a3274de9d3dd2c8f365d39d0abadc33, Data\BinaryData\DataStorage\HDF5\dataset\ContiguousDataset.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '*****************************************************************************
 ' This file is part of jHDF. A pure Java library for accessing HDF5 files.
@@ -90,4 +89,3 @@ Namespace HDF5.dataset
         End Function
     End Class
 End Namespace
-

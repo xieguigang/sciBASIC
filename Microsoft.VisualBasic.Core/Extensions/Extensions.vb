@@ -1,63 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::90da2731cbd9e11485b5b79565945580, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a6fb2d298d08cceb26ab0e800269e11a, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Extensions
-' 
-' 
-' Module Extensions
-' 
-'     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
-'               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
-'               DriverRun, ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime
-'               FuzzyMatching, GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, GetValueOrNull
-'               IndexOf, InsertOrUpdate, Invoke, InvokeSet, Is_NA_UHandle
-'               (+2 Overloads) IsNaNImaginary, IsNullorEmpty, (+14 Overloads) IsNullOrEmpty, (+4 Overloads) Join, (+2 Overloads) JoinBy
-'               Keys, KeysJson, Log2, (+2 Overloads) LongSeq, MatrixToUltraLargeVector
-'               MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue, NormalizeXMLString
-'               NotNull, (+2 Overloads) Offset, ParseDateTime, Range, Remove
-'               RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver, SaveAsTabularMapping
-'               Second, SelectFile, SeqRandom, (+2 Overloads) Sequence, (+2 Overloads) SetValue
-'               (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice, Split
-'               SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes
-'               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
-'               (+3 Overloads) TrimNull, (+3 Overloads) TryGetValue, Unlist, WriteAddress
-' 
-'     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
-'          SwapItem, SwapWith
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Module Extensions
+    ' 
+    ' 
+    ' Module Extensions
+    ' 
+    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
+    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
+    '               DriverRun, ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime
+    '               FuzzyMatching, GetHexInteger, (+2 Overloads) GetItem, GetValueOrNull, IndexOf
+    '               InsertOrUpdate, Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary
+    '               (+2 Overloads) JoinBy, Keys, KeysJson, Log2, (+2 Overloads) LongSeq
+    '               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
+    '               NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime, Range
+    '               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
+    '               SaveAsTabularMapping, Second, SelectFile, SeqRandom, (+2 Overloads) Sequence
+    '               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice
+    '               (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes, ToArray
+    '               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
+    '               (+3 Overloads) TrimNull, (+3 Overloads) TryGetValue, Unlist, WriteAddress
+    ' 
+    '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
+    '          SwapItem, SwapWith
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -1637,12 +1636,6 @@ Public Module Extensions
             array(i) = i
         Next
         Return array
-    End Function
-
-    <Extension> Public Function Takes(Of T)(source As T(), count As Integer) As T()
-        Dim bufs As T() = New T(count - 1) {}
-        Call Array.ConstrainedCopy(source, Scan0, bufs, Scan0, count)
-        Return bufs
     End Function
 
     ''' <summary>

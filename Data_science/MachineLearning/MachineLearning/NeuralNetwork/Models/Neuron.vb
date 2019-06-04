@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::258bf069621e1dad753b85efcc4f1788, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::b2431b85fc08d912e40771a9ae437d41, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
     ' Author:
     ' 

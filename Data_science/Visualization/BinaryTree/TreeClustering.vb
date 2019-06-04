@@ -66,13 +66,13 @@ Namespace KMeans
 
             Dim source As EntityClusterModel() = resultSet.ToArray
             Dim mapNames As String() = source(Scan0).Properties.Keys.ToArray   ' 得到所有属性的名称
-            Dim ds As Entity() = source.Select(
-                Function(x) New Entity With {
+            Dim ds As ClusterEntity() = source.Select(
+                Function(x) New ClusterEntity With {
                     .uid = x.ID,
                     .Properties = mapNames.Select(Function(s) x.Properties(s))
                 }).ToArray  ' 在这里生成计算模型
-            Dim tree As Entity() = TreeCluster(ds, parallel, [stop], parallelDepth)   ' 二叉树聚类操作
-            Dim saveResult As EntityClusterModel() = tree.Select(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
+            Dim tree As ClusterEntity() = TreeCluster(ds, parallel, [stop], parallelDepth)   ' 二叉树聚类操作
+            Dim saveResult As EntityClusterModel() = tree.Select(Function(x) x.ToDataModel(mapNames))   ' 重新生成回数据模型
 
             For Each name As String In source.Select(Function(x) x.ID)
                 For Each x As EntityClusterModel In saveResult
@@ -88,18 +88,18 @@ Namespace KMeans
         End Function
 
         ''' <summary>
-        ''' 二叉树聚类的路径会在<see cref="Entity.uid"/>上面出现
+        ''' 二叉树聚类的路径会在<see cref="ClusterEntity.uid"/>上面出现
         ''' </summary>
         ''' <param name="source">函数会在这里自动调用ToArray方法结束Linq查询</param>
         ''' <param name="parallel"></param>
         ''' <param name="stop">Max iteration number for the kmeans kernel</param>
         ''' <returns></returns>
         <ExportAPI("Cluster.Trees")>
-        <Extension> Public Function TreeCluster(source As IEnumerable(Of Entity),
+        <Extension> Public Function TreeCluster(source As IEnumerable(Of ClusterEntity),
                                             Optional parallel As Boolean = False,
                                             Optional [stop] As Integer = -1,
-                                            Optional parallelDepth% = 3) As Entity()
-            Return TreeCluster(Of Entity)(
+                                            Optional parallelDepth% = 3) As ClusterEntity()
+            Return TreeCluster(Of ClusterEntity)(
                 source.ToArray,
                 parallel,
                 [stop],
@@ -115,10 +115,10 @@ Namespace KMeans
         ''' <param name="[stop]"></param>
         ''' <param name="parallelDepth%">-1表示不会限制，但是0表示只会是第一层为并行计算模式</param>
         ''' <returns></returns>
-        Public Function TreeCluster(Of T As Entity)(source As IEnumerable(Of T),
+        Public Function TreeCluster(Of T As ClusterEntity)(source As IEnumerable(Of T),
                                                 Optional parallel As Boolean = False,
                                                 Optional [stop] As Integer = -1,
-                                                Optional parallelDepth% = 3) As Entity()
+                                                Optional parallelDepth% = 3) As ClusterEntity()
             If parallelDepth <= -1 Then
                 parallelDepth = Integer.MaxValue
             End If
@@ -146,17 +146,17 @@ Namespace KMeans
         ''' <param name="source"></param>
         ''' <param name="[stop]"></param>
         ''' <returns></returns>
-        Private Function __firstCluster(Of T As Entity)(source As IEnumerable(Of T), [stop] As Integer, kmeansStop As Integer, parallelDepth%) As Entity()
+        Private Function __firstCluster(Of T As ClusterEntity)(source As IEnumerable(Of T), [stop] As Integer, kmeansStop As Integer, parallelDepth%) As ClusterEntity()
             Dim result As KMeansCluster(Of T)() = source.ClusterDataSet(2, debug:=True, [stop]:=kmeansStop).ToArray
             ' 假设在刚开始不会出现为零的情况
-            Dim cluster1 As AsyncHandle(Of Entity()) =
-                New AsyncHandle(Of Entity())(Function() __rootCluster(result(0), "1", [stop], kmeansStop, parallelDepth)).Run    ' cluster1
-            Dim list As List(Of Entity) = New List(Of Entity) + __rootCluster(result(1), "2", [stop], kmeansStop, parallelDepth) ' cluster2
+            Dim cluster1 As AsyncHandle(Of ClusterEntity()) =
+                New AsyncHandle(Of ClusterEntity())(Function() __rootCluster(result(0), "1", [stop], kmeansStop, parallelDepth)).Run    ' cluster1
+            Dim list As List(Of ClusterEntity) = New List(Of ClusterEntity) + __rootCluster(result(1), "2", [stop], kmeansStop, parallelDepth) ' cluster2
             list += cluster1.GetValue
             Return list.ToArray
         End Function
 
-        Private Function __rootCluster(Of T As Entity)(cluster As KMeansCluster(Of T), id As String, [stop] As Integer, kmeansStop As Integer, parallelDepth%) As Entity()
+        Private Function __rootCluster(Of T As ClusterEntity)(cluster As KMeansCluster(Of T), id As String, [stop] As Integer, kmeansStop As Integer, parallelDepth%) As ClusterEntity()
             For Each x In cluster
                 x.uid &= ("." & id)
             Next
@@ -168,7 +168,7 @@ Namespace KMeans
             End If
         End Function
 
-        Private Function __treeCluster(Of T As Entity)(source As IEnumerable(Of T), depth As Integer, [stop] As Integer, kmeansStop As Integer, parallelDepth%) As Entity()
+        Private Function __treeCluster(Of T As ClusterEntity)(source As IEnumerable(Of T), depth As Integer, [stop] As Integer, kmeansStop As Integer, parallelDepth%) As ClusterEntity()
 
             If source.Count = 2 Then
 EXIT_:          Dim array As T() = source.ToArray
@@ -193,7 +193,7 @@ EXIT_:          Dim array As T() = source.ToArray
                 End If
             End If
 
-            Dim list As New List(Of Entity)
+            Dim list As New List(Of ClusterEntity)
             Dim result As KMeansCluster(Of T)() = source.ClusterDataSet(
                 2, ,
                 [stop]:=kmeansStop, ' 当递归的深度到达一定程度之后会自动使用非并行算法，以防止并行化的颗粒度过细，影响性能

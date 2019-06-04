@@ -987,6 +987,7 @@
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Enumeration.vb" />
+    <Compile Include="Extensions\Collection\Linq\Takes.vb" />
     <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
     <Compile Include="Extensions\Collection\BucketExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
@@ -1000,6 +1001,7 @@
     <Compile Include="Extensions\IO\Path\ProgramPathSearchTool.vb" />
     <Compile Include="Extensions\IO\Path\TemporaryEnvironment.vb" />
     <Compile Include="Extensions\IO\Path\Extensions.vb" />
+    <Compile Include="Extensions\Math\Correlations\Beta.vb" />
     <Compile Include="Extensions\Math\NumberEqualityComparer.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\Math\Information\UncheckHelpers.vb" />

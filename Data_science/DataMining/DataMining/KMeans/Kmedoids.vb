@@ -1,3 +1,45 @@
+﻿#Region "Microsoft.VisualBasic::95c1dbe249cce823cf7ff1ebdf4d9a0c, Data_science\DataMining\DataMining\KMeans\Kmedoids.vb"
+
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+' /********************************************************************************/
+
+' Summaries:
+
+'     Module Kmedoids
+' 
+'         Function: DoKMedoids
+' 
+' 
+' /********************************************************************************/
+
+#End Region
+
 Imports System.Runtime.CompilerServices
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -16,15 +58,19 @@ Namespace KMeans
         ''' <param name="maxSteps"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function DoKMedoids(source As IEnumerable(Of ClusterEntity), k As Integer, maxSteps As Integer) As ClusterEntity()
+        Public Function DoKMedoids(source As IEnumerable(Of ClusterEntity), k As Integer, Optional maxSteps% = 1000) As ClusterEntity()
             Dim points = source.ToArray
 
             If k > points.Length OrElse k < 1 Then
                 Throw New Exception("K must be between 0 and set size")
+            Else
+                Return doKMedoids(points, k, maxSteps)
             End If
+        End Function
 
+        Private Function doKMedoids(points As ClusterEntity(), k As Integer, Optional maxSteps% = 1000) As ClusterEntity()
             Dim medoids As ClusterEntity() = New ClusterEntity(k - 1) {}
-            Dim resultClusterPoints As String() = New String(k - 1) {}
+            ' Dim resultClusterPoints As String() = New String(k - 1) {}
             Dim resultPoints As ClusterEntity() = New ClusterEntity(points.Length - 1) {}
             Dim stepmedoids As ClusterEntity() = New ClusterEntity(k - 1) {}
             Dim medoidsIndexes As New List(Of Integer)()
@@ -42,17 +88,16 @@ Namespace KMeans
                 End If
             Next
 
-            Dim [step] As Integer = 0
             Dim resultSumFunc As Double = Double.MaxValue
             Dim stepSumFunc As Double = 0
             Dim dist As Double = 0
             Dim minDist As Double
             Dim randomValue As Integer = 0
 
-            While [step] < maxSteps
+            For [step] As Integer = 0 To maxSteps
                 ' initial clustering to medoids
                 Dim clusterSumFunc As Double() = New Double(k - 1) {}
-                Dim clusterPoints As String() = New String(k - 1) {}
+                ' Dim clusterPoints As String() = New String(k - 1) {}
 
                 For i As Integer = 0 To points.Length - 1
                     minDist = Double.MaxValue
@@ -71,11 +116,11 @@ Namespace KMeans
                     clusterSumFunc(points(i).cluster) += minDist
                     stepSumFunc += minDist
 
-                    If clusterPoints(points(i).cluster) Is Nothing Then
-                        clusterPoints(points(i).cluster) = ""
-                    End If
+                    'If clusterPoints(points(i).cluster) Is Nothing Then
+                    '    clusterPoints(points(i).cluster) = ""
+                    'End If
 
-                    clusterPoints(points(i).cluster) &= " " & points(i).ToString()
+                    'clusterPoints(points(i).cluster) &= " " & points(i).ToString()
                 Next
 
                 ' if result of sumFinc is better than previous, save the configuration
@@ -84,14 +129,13 @@ Namespace KMeans
 
                     For i As Integer = 0 To k - 1
                         medoids(i) = stepmedoids(i)
-                        resultClusterPoints(i) = clusterPoints(i)
+                        ' resultClusterPoints(i) = clusterPoints(i)
                     Next
 
                     Call Array.ConstrainedCopy(points, Scan0, resultPoints, Scan0, points.Length)
                 End If
 
                 stepSumFunc = 0
-                [step] += 1
 
                 ' random swapping medoids with nonmedoids
                 Dim clusterSwapRandomCost As Integer() = New Integer(k - 1) {}
@@ -109,7 +153,7 @@ Namespace KMeans
                 For i As Integer = 0 To k - 1
                     stepmedoids(i) = points(indexOfSwapCandidate(i))
                 Next
-            End While
+            Next
 
             Return resultPoints
         End Function

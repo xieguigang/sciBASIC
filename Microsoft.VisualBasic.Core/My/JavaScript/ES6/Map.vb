@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a05b3989db587a4921abf47b09e4722, Microsoft.VisualBasic.Core\My\JavaScript\ES6\Map.vb"
+﻿#Region "Microsoft.VisualBasic::d778ee5d576e999a44c42696c94281f5, Microsoft.VisualBasic.Core\My\JavaScript\ES6\Map.vb"
 
     ' Author:
     ' 

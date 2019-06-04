@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed1c499738ee3d0c8cfcd69dffc8fcac, Data_science\DataMining\DataMining\ComponentModel\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::cbf18179c9161012a2e35513db3c5a11, Data_science\DataMining\DataMining\ComponentModel\Entity.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Length, Properties
     ' 
-    '     Class Entity
+    '     Class IntegerEntity
     ' 
     '         Properties: [Class]
     ' 

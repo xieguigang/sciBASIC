@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96cc260c542afccef1f7b433f06bd72d, Data\BinaryData\DataStorage\HDF5\HDF5Reader.vb"
+﻿#Region "Microsoft.VisualBasic::83d0fe8c591a9d05bd083ddff685902b, Data\BinaryData\DataStorage\HDF5\HDF5Reader.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Class HDF5Reader
     ' 
-    '         Properties: chunks, data, dataBTree, dataGroup, dataset
-    '                     datasetName, dataSpace, dataType, headerSize, isDataSet
-    '                     layout, reader, superblock
+    '         Properties: attributes, chunks, data, dataBTree, dataGroup
+    '                     dataset, datasetName, dataSpace, dataType, headerSize
+    '                     isDataSet, layout, reader, superblock
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 

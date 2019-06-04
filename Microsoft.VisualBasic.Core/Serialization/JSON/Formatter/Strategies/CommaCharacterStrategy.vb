@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91955d8af7d7a78153ae52ffcd39cc65, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::0b971f95937a975d61ec82a40a5de12a, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: Execute
     ' 
     ' 

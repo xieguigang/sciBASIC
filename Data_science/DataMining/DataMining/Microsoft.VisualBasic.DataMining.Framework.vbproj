@@ -411,6 +411,7 @@
     <Compile Include="KMeans\CompleteLinkage\Clustering.vb" />
     <Compile Include="KMeans\CompleteLinkage\Point.vb" />
     <Compile Include="KMeans\Models\ClusterCollection.vb" />
+    <Compile Include="KMeans\Evaluation.vb" />
     <Compile Include="KMeans\Parallel\Folks.vb" />
     <Compile Include="KMeans\Parallel\StreamAPI.vb" />
     <Compile Include="KMeans\EntityModels\Entity.vb" />

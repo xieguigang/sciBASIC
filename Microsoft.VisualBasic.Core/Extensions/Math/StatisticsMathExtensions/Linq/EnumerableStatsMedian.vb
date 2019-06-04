@@ -1,70 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::4a053d23447c2c628bf650c45c6e5119, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module EnumerableStatsMedian
-    ' 
-    '         Function: (+20 Overloads) Median
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module EnumerableStatsMedian
+' 
+'         Function: (+20 Overloads) Median
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Namespace Math.Statistics.Linq
 
+    ''' <summary>
+    ''' 中位数计算拓展
+    ''' </summary>
     Public Module EnumerableStatsMedian
-        '
-        ' Summary:
-        '     Computes the Median of a sequence of nullable System.Decimal values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of nullable System.Decimal values to calculate the Median of.
-        '
-        ' Returns:
-        '     The Median of the sequence of values, or null if the source sequence is
-        '     empty or contains only values that are null.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.OverflowException:
-        '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+
+        ''' <summary>
+        ''' Computes the Median of a sequence of nullable System.Decimal values.
+        ''' </summary>
+        ''' <param name="source">A sequence of nullable System.Decimal values to calculate the Median of.</param>
+        ''' <returns>The Median of the sequence of values, or null if the source sequence is
+        ''' empty or contains only values that are null.</returns>
         <Extension>
         Public Function Median(source As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
@@ -75,26 +65,14 @@ Namespace Math.Statistics.Linq
 
             Return Nothing
         End Function
-        '
-        ' Summary:
-        '     Computes the Median of a sequence of System.Decimal values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of System.Decimal values to calculate the Median of.
-        '
-        ' Returns:
-        '     The Median of the sequence of values.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.InvalidOperationException:
-        '     source contains no elements.
-        '
-        '   System.OverflowException:
-        '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+
+        ''' <summary>
+        ''' Computes the Median of a sequence of System.Decimal values.
+        ''' </summary>
+        ''' <param name="source">A sequence of System.Decimal values to calculate the Median of.</param>
+        ''' <returns>
+        ''' The Median of the sequence of values.
+        ''' </returns>
         <Extension>
         Public Function Median(source As IEnumerable(Of Decimal)) As Decimal
             Dim sortedList = From number In source Order By number Select number

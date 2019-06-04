@@ -1,9 +1,57 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::6fd99f3fcbf5f1863328a042270ef49e, Data_science\Mathematica\Math\Math\Algebra\Matrix\NumpyExtensions.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module NumpyExtensions
+    ' 
+    '     Function: Apply, doCall, Mean, Sort, Std
+    '               Sum
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 <HideModuleName> Public Module NumpyExtensions
+
+    Public Enum ApplyOnAxis As Integer
+        Any = -1
+        Column = 0
+        Row = 1
+    End Enum
 
     ''' <summary>
     ''' Returns the average of the array elements. The average is taken over the 
@@ -20,6 +68,20 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
         Return matrix.Apply(Function(x) x.Average, axis:=axis, aggregate:=AddressOf AsVector)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="Tout"></typeparam>
+    ''' <param name="matrix"></param>
+    ''' <param name="math"></param>
+    ''' <param name="axis">
+    ''' + 0 表示按列进行计算
+    ''' + 1 表示按行进行计算
+    ''' + 小于零则负数则表示所有元素作为一个向量来计算
+    ''' </param>
+    ''' <param name="aggregate"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Apply(Of T, Tout)(matrix As IEnumerable(Of Vector),
                                       math As Func(Of IEnumerable(Of Double), T),
@@ -124,3 +186,4 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
         End If
     End Function
 End Module
+

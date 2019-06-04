@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e28bd4de63f763a8df5c94606a903d68, mime\application%json\Serializer\ExtendedDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::f6a0a30eeaf8d5d78faa573656fbf437, mime\application%json\Serializer\ExtendedDictionary.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module ExtendedDictionary
     ' 
-    '     Function: __getSpecificProperties, GetExtendedJson, LoadExtendedJson
+    '     Function: GetExtendedJson, getSpecificProperties, LoadExtendedJson
     ' 
     ' /********************************************************************************/
 

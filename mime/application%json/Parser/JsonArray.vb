@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f935706143b3885509ed84ec00d9c61, mime\application%json\Parser\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::6b9c567440de81f6bea54dddfb57d878, mime\application%json\Parser\JsonArray.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Class JsonArray
+    ' 
+    '         Properties: Length
     ' 
     '         Function: BuildJsonString, ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 

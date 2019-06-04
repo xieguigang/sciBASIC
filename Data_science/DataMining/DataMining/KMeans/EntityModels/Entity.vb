@@ -1,45 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::ecaebdc046433067d6995949a1717047, Data_science\DataMining\DataMining\KMeans\EntityModels\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::480dded4ce5b30945c837bf8fa4567e3, Data_science\DataMining\DataMining\KMeans\EntityModels\Entity.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Entity
-' 
-'         Properties: uid
-' 
-'         Function: (+2 Overloads) ToLDM, ToString
-'         Operators: <>, =
-' 
-' 
-' /********************************************************************************/
+    '     Class ClusterEntity
+    ' 
+    '         Properties: cluster
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class Entity
+    ' 
+    '         Properties: uid
+    ' 
+    '         Function: (+2 Overloads) ToDataModel, ToString
+    '         Operators: <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -53,27 +59,17 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace KMeans
 
-    Public Class ClusterEntity : Inherits EntityBase(Of Double)
-
-        Public Property cluster As Integer
-
-        Public Overrides Function ToString() As String
-            Return $"[{Properties.JoinBy(", ")}]"
-        End Function
-
-    End Class
-
     ''' <summary>
     ''' 计算所使用的对象实例实体模型
     ''' </summary>
-    Public Class Entity : Inherits EntityBase(Of Double)
+    Public Class ClusterEntity : Inherits EntityBase(Of Double)
         Implements INamedValue
 
-        <XmlAttribute>
-        Public Property uid As String Implements INamedValue.Key
+        <XmlAttribute> Public Property uid As String Implements INamedValue.Key
+        <XmlAttribute> Public Property cluster As Integer
 
         Public Overrides Function ToString() As String
-            Return $"{uid}  ({Length} Properties)"
+            Return $"[{Properties.JoinBy(", ")}]"
         End Function
 
         ''' <summary>
@@ -85,6 +81,7 @@ Namespace KMeans
         Public Function ToDataModel() As EntityClusterModel
             Return New EntityClusterModel With {
                 .ID = uid,
+                .Cluster = cluster,
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) CStr(x.i),
@@ -101,6 +98,7 @@ Namespace KMeans
         Public Function ToDataModel(maps As String()) As EntityClusterModel
             Return New EntityClusterModel With {
                 .ID = uid,
+                .Cluster = cluster,
                 .Properties = Properties _
                     .SeqIterator _
                     .ToDictionary(Function(x) maps(x.i),
@@ -116,12 +114,12 @@ Namespace KMeans
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator =(a As Entity, b As Entity) As Boolean
+        Public Shared Operator =(a As ClusterEntity, b As ClusterEntity) As Boolean
             Return a.uid.TextEquals(b.uid) AndAlso VectorEqualityComparer.VectorEqualsToAnother(a.Properties, b.Properties)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator <>(a As Entity, b As Entity) As Boolean
+        Public Shared Operator <>(a As ClusterEntity, b As ClusterEntity) As Boolean
             Return Not a = b
         End Operator
     End Class
