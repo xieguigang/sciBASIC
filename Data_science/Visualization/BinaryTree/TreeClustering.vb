@@ -72,7 +72,7 @@ Namespace KMeans
                     .Properties = mapNames.Select(Function(s) x.Properties(s))
                 }).ToArray  ' 在这里生成计算模型
             Dim tree As Entity() = TreeCluster(ds, parallel, [stop], parallelDepth)   ' 二叉树聚类操作
-            Dim saveResult As EntityClusterModel() = tree.Select(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
+            Dim saveResult As EntityClusterModel() = tree.Select(Function(x) x.ToDataModel(mapNames))   ' 重新生成回数据模型
 
             For Each name As String In source.Select(Function(x) x.ID)
                 For Each x As EntityClusterModel In saveResult
