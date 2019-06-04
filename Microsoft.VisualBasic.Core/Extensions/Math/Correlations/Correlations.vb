@@ -137,7 +137,7 @@ Namespace Math.Correlations
         End Function
 
         ''' <summary>
-        ''' Kullback-Leibler divergence
+        ''' Kullback-Leibler divergence, <paramref name="x"/>和<paramref name="y"/>必须是等长的
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
@@ -145,18 +145,21 @@ Namespace Math.Correlations
         <ExportAPI("KLD", Info:="Kullback-Leibler divergence")>
         Public Function KLD(x As Double(), y As Double()) As Double
             Dim index As Integer() = x.Sequence
-            Dim a As Double = (From i As Integer In index Select __kldPart(x(i), y(i))).Sum
-            Dim b As Double = (From i As Integer In index Select __kldPart(y(i), x(i))).Sum
+            Dim a As Double = Aggregate i As Integer In index Into Sum(KLDi(x(i), y(i)))
+            Dim b As Double = Aggregate i As Integer In index Into Sum(KLDi(y(i), x(i)))
             Dim value As Double = (a + b) / 2
             Return value
         End Function
 
-        Private Function __kldPart(Xa#, Ya#) As Double
+        Private Function KLDi(Xa#, Ya#) As Double
             If Xa = 0R Then
+                ' 0 * n = 0
                 Return 0R
+            Else
+                ' KLD(P||Q) = Σ[P(i)*ln(P(i)/Q(i))]
+                Dim value As Double = Xa * sys.Log(Xa / Ya)
+                Return value
             End If
-            Dim value As Double = Xa * sys.Log(Xa / Ya)  ' 0 * n = 0
-            Return value
         End Function
 
 #Region "https://en.wikipedia.org/wiki/Kendall_tau_distance"
