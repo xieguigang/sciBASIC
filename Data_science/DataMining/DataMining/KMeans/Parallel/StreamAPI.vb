@@ -52,16 +52,16 @@ Namespace KMeans.Parallel
     Public Module StreamAPI
 
         <Extension>
-        Public Function GetRaw(source As IEnumerable(Of Entity)) As Byte()
+        Public Function GetRaw(source As IEnumerable(Of ClusterEntity)) As Byte()
             Return BufferAPI.CreateBuffer(source, AddressOf GetRaw)
         End Function
 
         <Extension>
-        Public Iterator Function GetObjects(raw As Byte()) As IEnumerable(Of Entity)
+        Public Iterator Function GetObjects(raw As Byte()) As IEnumerable(Of ClusterEntity)
             Yield BufferAPI.GetBuffer(raw, AddressOf GetObject)
         End Function
 
-        <Extension> Public Function GetRaw(x As Entity) As Byte()
+        <Extension> Public Function GetRaw(x As ClusterEntity) As Byte()
             Dim name As Byte() = Encoding.Unicode.GetBytes(x.uid)
             Dim buffer As Byte() =
                 New Byte(name.Length + RawStream.INT32 + (x.Properties.Length * RawStream.DblFloat) - 1) {}
@@ -78,7 +78,7 @@ Namespace KMeans.Parallel
             Return buffer
         End Function
 
-        <Extension> Public Function GetObject(buffer As Byte()) As Entity
+        <Extension> Public Function GetObject(buffer As Byte()) As ClusterEntity
             Dim nameLen As Byte() = New Byte(RawStream.INT32 - 1) {}
             Dim p As VBInteger = 0
             Call Array.ConstrainedCopy(buffer, p + nameLen.Length, nameLen, Scan0, nameLen.Length)
@@ -90,7 +90,7 @@ Namespace KMeans.Parallel
                 buffer.Skip(nameLen.Length + name.Length).Split(RawStream.DblFloat) _
                       .Select(Function(buf) BitConverter.ToDouble(buf, Scan0)).ToArray
 
-            Return New Entity With {
+            Return New ClusterEntity With {
                 .Properties = props,
                 .uid = Encoding.Unicode.GetString(name)
             }

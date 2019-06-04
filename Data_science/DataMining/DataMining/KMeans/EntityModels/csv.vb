@@ -78,8 +78,8 @@ Namespace KMeans
             Return ID
         End Function
 
-        Public Function ToModel() As Entity
-            Return New Entity With {
+        Public Function ToModel() As ClusterEntity
+            Return New ClusterEntity With {
                 .uid = ID,
                 .Properties = Properties.Values.ToArray
             }
