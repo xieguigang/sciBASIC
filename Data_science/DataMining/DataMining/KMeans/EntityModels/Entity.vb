@@ -57,6 +57,10 @@ Namespace KMeans
 
         Public Property cluster As Integer
 
+        Public Overrides Function ToString() As String
+            Return $"[{Properties.JoinBy(", ")}]"
+        End Function
+
     End Class
 
     ''' <summary>
