@@ -59,27 +59,17 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace KMeans
 
-    Public Class ClusterEntity : Inherits EntityBase(Of Double)
-
-        Public Property cluster As Integer
-
-        Public Overrides Function ToString() As String
-            Return $"[{Properties.JoinBy(", ")}]"
-        End Function
-
-    End Class
-
     ''' <summary>
     ''' 计算所使用的对象实例实体模型
     ''' </summary>
-    Public Class Entity : Inherits EntityBase(Of Double)
+    Public Class ClusterEntity : Inherits EntityBase(Of Double)
         Implements INamedValue
 
-        <XmlAttribute>
-        Public Property uid As String Implements INamedValue.Key
+        <XmlAttribute> Public Property uid As String Implements INamedValue.Key
+        <XmlAttribute> Public Property cluster As Integer
 
         Public Overrides Function ToString() As String
-            Return $"{uid}  ({Length} Properties)"
+            Return $"[{Properties.JoinBy(", ")}]"
         End Function
 
         ''' <summary>
@@ -122,12 +112,12 @@ Namespace KMeans
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator =(a As Entity, b As Entity) As Boolean
+        Public Shared Operator =(a As ClusterEntity, b As ClusterEntity) As Boolean
             Return a.uid.TextEquals(b.uid) AndAlso VectorEqualityComparer.VectorEqualsToAnother(a.Properties, b.Properties)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator <>(a As Entity, b As Entity) As Boolean
+        Public Shared Operator <>(a As ClusterEntity, b As ClusterEntity) As Boolean
             Return Not a = b
         End Operator
     End Class

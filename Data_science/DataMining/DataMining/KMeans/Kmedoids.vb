@@ -58,7 +58,7 @@ Namespace KMeans
         ''' <param name="maxSteps"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function DoKMedoids(source As IEnumerable(Of ClusterEntity), k As Integer, maxSteps As Integer) As ClusterEntity()
+        Public Function DoKMedoids(source As IEnumerable(Of ClusterEntity), k As Integer, Optional maxSteps% = 1000) As ClusterEntity()
             Dim points = source.ToArray
 
             If k > points.Length OrElse k < 1 Then
