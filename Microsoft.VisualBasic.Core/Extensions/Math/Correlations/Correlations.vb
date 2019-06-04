@@ -158,7 +158,7 @@ Namespace Math.Correlations
         ''' <returns></returns>
         <ExportAPI("KLD", Info:="Kullback-Leibler divergence")>
         Public Function KLD(x As Double(), y As Double()) As Double
-            Dim index As Integer() = x.Sequence
+            Dim index As Integer() = x.Sequence.ToArray
             Dim a As Double = Aggregate i As Integer In index Into Sum(KLDi(x(i), y(i)))
             Dim b As Double = Aggregate i As Integer In index Into Sum(KLDi(y(i), x(i)))
             Dim value As Double = (a + b) / 2
