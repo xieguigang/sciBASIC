@@ -45,6 +45,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Interpolation
 
+    <HideModuleName>
     Public Module Extensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
