@@ -47,6 +47,12 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 <HideModuleName> Public Module NumpyExtensions
 
+    Public Enum ApplyOnAxis As Integer
+        Any = -1
+        Column = 0
+        Row = 1
+    End Enum
+
     ''' <summary>
     ''' Returns the average of the array elements. The average is taken over the 
     ''' flattened array by default, otherwise over the specified axis. float64 
@@ -62,6 +68,20 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
         Return matrix.Apply(Function(x) x.Average, axis:=axis, aggregate:=AddressOf AsVector)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="Tout"></typeparam>
+    ''' <param name="matrix"></param>
+    ''' <param name="math"></param>
+    ''' <param name="axis">
+    ''' + 0 表示按列进行计算
+    ''' + 1 表示按行进行计算
+    ''' + 小于零则负数则表示所有元素作为一个向量来计算
+    ''' </param>
+    ''' <param name="aggregate"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Apply(Of T, Tout)(matrix As IEnumerable(Of Vector),
                                       math As Func(Of IEnumerable(Of Double), T),

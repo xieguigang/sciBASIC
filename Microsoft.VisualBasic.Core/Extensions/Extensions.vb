@@ -1638,12 +1638,6 @@ Public Module Extensions
         Return array
     End Function
 
-    <Extension> Public Function Takes(Of T)(source As T(), count As Integer) As T()
-        Dim bufs As T() = New T(count - 1) {}
-        Call Array.ConstrainedCopy(source, Scan0, bufs, Scan0, count)
-        Return bufs
-    End Function
-
     ''' <summary>
     ''' 将目标键值对对象的集合转换为一个字典对象
     ''' </summary>
