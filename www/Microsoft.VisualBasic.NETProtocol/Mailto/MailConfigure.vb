@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a24a3e94d7dddc80abb113fe1cdcddab, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailConfigure.vb"
+﻿#Region "Microsoft.VisualBasic::5bbe3ee72174feaee1338edff3ac068d, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailConfigure.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8968b401be4499653b2162fdbfa5ae0c, Data_science\DataMining\DataMining\Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::09871f196f3f8c533a462292b18388b1, Data_science\DataMining\DataMining\Clustering.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Module Clustering
     ' 
-    '         Function: Clustering, InternalMergeJ, PrintResult
+    '         Function: Clustering, InternalMergeJ
     ' 
     ' 
     ' /********************************************************************************/

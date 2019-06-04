@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85535aa28678e76ae6415cfda4084efb, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::44bec93731efa49cd5c9e88b17824d27, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     ' Module MatrixExtensions
     ' 
     '     Function: DATA, GetCol, GetRow, GetSize, MAT
-    '               (+2 Overloads) Matrix, RowIterator, SetCol, SetRow, ToFloatMatrix
-    '               ToMatrix, ToVectorList
+    '               (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol, SetRow
+    '               SizeOf, ToFloatMatrix, ToMatrix, ToVectorList
     ' 
     ' /********************************************************************************/
 

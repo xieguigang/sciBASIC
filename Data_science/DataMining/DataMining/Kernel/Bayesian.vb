@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::058e9b5706dfa0c0fe490039daa7c4b9, Data_science\DataMining\DataMining\Kernel\Bayesian.vb"
+﻿#Region "Microsoft.VisualBasic::f36db390f8164faa1b2505d767abdebb, Data_science\DataMining\DataMining\Kernel\Bayesian.vb"
 
     ' Author:
     ' 

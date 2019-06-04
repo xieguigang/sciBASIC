@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d0bbee649a0179f277a14d18229540f, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::4e4c5a212a854b8b9d5ee6d75ecb401a, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\DataSet.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,6 @@
 
     ' Summaries:
 
-    '     Class Sample
-    ' 
-    '         Properties: ID, status, target
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    ' 
     '     Class DataSet
     ' 
     '         Properties: DataSamples, NormalizeMatrix, OutputSize, Size

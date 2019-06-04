@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60930fc257c38248b1106cc78c4e93f9, Data\DataFrame\IO\csv\StreamIO.vb"
+﻿#Region "Microsoft.VisualBasic::a8c811978f9fe448d038f7545a375510, Data\DataFrame\IO\csv\StreamIO.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module StreamIO
     ' 
-    '         Function: [GetType], SaveDataFrame
+    '         Function: (+2 Overloads) [TypeOf], SaveDataFrame
     ' 
     ' 
     ' /********************************************************************************/

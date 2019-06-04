@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::273b95a09a62d3075a0867b38a17a6e8, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::caae9ed0bce84a2a283d34c9e4367048, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module IteratorExtensions
     ' 
     '         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+2 Overloads) SeqIterator
-    '                   (+2 Overloads) SeqTuple, ValueArray
+    '                   (+2 Overloads) SeqTuple, Tuples, ValueArray
     ' 
     ' 
     ' /********************************************************************************/

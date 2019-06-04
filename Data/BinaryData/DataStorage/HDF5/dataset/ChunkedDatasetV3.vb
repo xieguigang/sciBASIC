@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb3790073ec6099a968fff22d930b821, Data\BinaryData\DataStorage\HDF5\dataset\ChunkedDatasetV3.vb"
+﻿#Region "Microsoft.VisualBasic::1d06f4a4a355b0cdf4d6e6d66b1d922e, Data\BinaryData\DataStorage\HDF5\dataset\ChunkedDatasetV3.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '*****************************************************************************
 ' This file is part of jHDF. A pure Java library for accessing HDF5 files.
@@ -354,4 +353,3 @@ Namespace HDF5.dataset
 
     End Class
 End Namespace
-

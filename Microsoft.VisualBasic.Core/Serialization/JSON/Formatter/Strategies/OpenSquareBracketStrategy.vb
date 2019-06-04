@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ae8384346206efd7a4d07b4958c8487, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::957d2d7580674b7f43a4e520abcac7b0, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: Execute
     ' 
     ' 

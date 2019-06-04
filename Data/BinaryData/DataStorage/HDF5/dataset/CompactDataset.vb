@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b1c37076c66b287aa23f004840070a9, Data\BinaryData\DataStorage\HDF5\dataset\CompactDataset.vb"
+﻿#Region "Microsoft.VisualBasic::b760b1a419b57420278cc2710f6bb3db, Data\BinaryData\DataStorage\HDF5\dataset\CompactDataset.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Namespace HDF5.dataset
         End Function
     End Class
 End Namespace
-

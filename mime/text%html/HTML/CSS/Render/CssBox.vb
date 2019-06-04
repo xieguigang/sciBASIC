@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::004bf7da1a5420a4a1c7c2537b516cbd, mime\text%html\HTML\CSS\Render\CssBox.vb"
+﻿#Region "Microsoft.VisualBasic::c92c5683bf17f5506964bab89b0207d7, mime\text%html\HTML\CSS\Render\CssBox.vb"
 
     ' Author:
     ' 

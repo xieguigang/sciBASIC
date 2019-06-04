@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68b048fd5e6efadf7dd7cf304d168f50, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::3833795011a6ed46058df56330aca07e, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Module BucketDictionaryExtensions
     ' 
-    '         Function: (+2 Overloads) CreateBuckets
+    '         Function: (+3 Overloads) CreateBuckets
     ' 
     ' 
     ' /********************************************************************************/

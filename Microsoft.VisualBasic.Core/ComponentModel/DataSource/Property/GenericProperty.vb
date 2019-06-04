@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2beb412f7215bef11210b26e353551c1, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\GenericProperty.vb"
+﻿#Region "Microsoft.VisualBasic::acba7167e1e900039f16d90d328b2d31, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\GenericProperty.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Class [Property]
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Operators: +
     ' 
     ' 
     ' /********************************************************************************/

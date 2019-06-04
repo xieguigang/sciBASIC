@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e70dc54a73559d24c23f9886b1aa2877, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\NeuralNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::e1a21e91c831e933734811859ac6a315, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Class NeuralNetwork
     ' 
-    '         Properties: connections, hiddenlayers, inputlayer, learnRate, momentum
-    '                     neurons, outputlayer
+    '         Properties: connections, errors, hiddenlayers, inputlayer, learnRate
+    '                     momentum, neurons, outputlayer
     ' 
-    '         Function: GetGuids, GetLayerNodes, GetNodeConnections, GetPredictLambda, Snapshot
+    '         Function: GetPredictLambda, Snapshot
     ' 
     ' 
     ' /********************************************************************************/

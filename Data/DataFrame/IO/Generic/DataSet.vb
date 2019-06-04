@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7127de87ebd06bb47307e7a0479de6b, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::6d29ffebf2a078c945291ccbebc82bf8, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: ID, MyHashCode, Vector
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: __getID, Copy, (+2 Overloads) LoadDataSet, SubSet, ToString
+    '         Function: __getID, Append, Copy, (+2 Overloads) LoadDataSet, SubSet
+    '                   ToString
     ' 
     ' 
     ' /********************************************************************************/
