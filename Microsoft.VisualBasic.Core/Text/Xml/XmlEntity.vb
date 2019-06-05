@@ -142,7 +142,9 @@ Namespace Text.Xml
                 {"""", "&quot;"},
                 {"'", "&apos;"},
                 {"<", "&lt;"},
-                {">", "&gt;"}
+                {">", "&gt;"},
+                {"×", "&times;"},
+                {"÷", "&divide;"}
             }
             entities = escapes.Values.ToArray
         End Sub

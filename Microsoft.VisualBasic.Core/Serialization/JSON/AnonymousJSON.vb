@@ -116,5 +116,18 @@ Namespace Serialization.JSON
                 Return .GetJson
             End With
         End Function
+
+        ''' <summary>
+        ''' Returns all of the keys in a dictionary in json format
+        ''' </summary>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="d"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function KeysJson(Of V)(d As Dictionary(Of String, V)) As String
+            Return d.Keys.ToArray.GetJson
+        End Function
     End Module
 End Namespace
