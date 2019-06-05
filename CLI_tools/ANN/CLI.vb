@@ -269,6 +269,8 @@ Module CLI
 
                                         Call $"  [{(++circle).ToHexString}] done!".__INFO_ECHO
                                     End With
+
+                                    minError = err
                                 End If
                             End Sub) _
             .Train(parallel)
