@@ -260,6 +260,7 @@ Module CLI
                                     ' 所以在这里忽略掉这个错误就好了
                                     With trainer.TakeSnapshot
                                         Call $"  [{circle.Hex}] start write snapshot....".__DEBUG_ECHO
+                                        Call $"  Current min_error={err}".__INFO_ECHO
 
                                         If multipleParts Then
                                             Call .ScatteredStore(snapshotFile.TrimSuffix)
@@ -269,6 +270,8 @@ Module CLI
 
                                         Call $"  [{(++circle).ToHexString}] done!".__INFO_ECHO
                                     End With
+
+                                    minError = err
                                 End If
                             End Sub) _
             .Train(parallel)
