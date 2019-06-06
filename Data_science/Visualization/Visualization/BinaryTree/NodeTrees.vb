@@ -135,7 +135,7 @@ Namespace KMeans
 
             Dim q# = childsDistribute _
                 .Values _
-                .QuantileThreshold(quantile:=min)
+                .Threshold(quantile:=min)
 
             For Each child As EntityNode In tree.ChildNodes
                 For Each part As Partition In child.__cutTrees(childsDistribute, min:=CInt(q))

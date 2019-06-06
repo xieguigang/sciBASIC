@@ -699,7 +699,7 @@ Public Module Extensions
     ''' <param name="collection"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function DataCounts(Of T)(collection As IEnumerable(Of T)) As Integer
+    <Extension> Public Function TryCount(Of T)(collection As IEnumerable(Of T)) As Integer
         If collection Is Nothing Then
             Return 0
         ElseIf TypeOf collection Is T() Then

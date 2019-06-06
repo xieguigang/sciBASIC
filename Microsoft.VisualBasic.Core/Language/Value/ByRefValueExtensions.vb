@@ -51,5 +51,11 @@ Namespace Language.Values
         <Extension> Public Function Split(s As ByRefString, ParamArray delimiter As Char()) As String()
             Return s.Value.Split(delimiter)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToLower(str As ByRefString) As String
+            Return Strings.LCase(str.Value)
+        End Function
     End Module
 End Namespace
