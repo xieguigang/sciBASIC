@@ -150,17 +150,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' ``Math.Log(x, newBase:=2)``
-    ''' </summary>
-    ''' <param name="x#"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Log2(x#) As Double
-        Return sys.Log(x, newBase:=2)
-    End Function
-
-    ''' <summary>
     ''' 将16进制的数字转换为10进制数
     ''' </summary>
     ''' <param name="hex$"></param>
@@ -173,41 +162,6 @@ Public Module Extensions
     Public Function GetHexInteger(hex$) As Integer
         Dim num% = Integer.Parse(hex, NumberStyles.HexNumber)
         Return num
-    End Function
-
-    ''' <summary>
-    ''' Save as a tsv file, with data format like: 
-    ''' 
-    ''' ```
-    ''' <see cref="NamedValue(Of String).Name"/>\t<see cref="NamedValue(Of String).Value"/>\t<see cref="NamedValue(Of String).Description"/>
-    ''' ```
-    ''' </summary>
-    ''' <param name="source"></param>
-    ''' <param name="path$"></param>
-    ''' <param name="encoding"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)),
-                                         path$,
-                                         Optional saveDescrib As Boolean = False,
-                                         Optional saveHeaders$() = Nothing,
-                                         Optional encoding As Encodings = Encodings.ASCII) As Boolean
-        Dim content = source _
-            .Select(Function(row)
-                        With row
-                            If saveDescrib Then
-                                Return $"{ .Name}{ASCII.TAB}{ .Value}{ASCII.TAB}{ .Description}"
-                            Else
-                                Return $"{ .Name}{ASCII.TAB}{ .Value}"
-                            End If
-                        End With
-                    End Function)
-
-        If saveHeaders.IsNullOrEmpty Then
-            Return content.SaveTo(path, encoding.CodePage)
-        Else
-            Return {saveHeaders.JoinBy(ASCII.TAB)}.JoinIterates(content).SaveTo(path, encoding.CodePage)
-        End If
     End Function
 
     ''' <summary>
@@ -228,19 +182,6 @@ Public Module Extensions
     Public Function Average(data As IEnumerable(Of TimeSpan)) As TimeSpan
         Dim avg# = data.Select(Function(x) x.TotalMilliseconds).Average
         Return TimeSpan.FromMilliseconds(avg)
-    End Function
-
-    ''' <summary>
-    ''' Returns all of the keys in a dictionary in json format
-    ''' </summary>
-    ''' <typeparam name="V"></typeparam>
-    ''' <param name="d"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function KeysJson(Of V)(d As Dictionary(Of String, V)) As String
-        Return d.Keys.ToArray.GetJson
     End Function
 
     ''' <summary>
@@ -631,25 +572,6 @@ Public Module Extensions
         End If
 
         Return table
-    End Function
-
-    ''' <summary>
-    ''' 对Xml文件之中的特殊字符进行转义处理
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function NormalizeXMLString(str As String) As String
-        Dim sBuilder As StringBuilder = New StringBuilder(str)
-
-        Call sBuilder.Replace("&", "&amp;")
-        Call sBuilder.Replace("""", "&quot;")
-        Call sBuilder.Replace("×", "&times;")
-        Call sBuilder.Replace("÷", "&divide;")
-        Call sBuilder.Replace("<", "&lt;")
-        Call sBuilder.Replace(">", "&gt;")
-
-        Return sBuilder.ToString
     End Function
 
     ''' <summary>
