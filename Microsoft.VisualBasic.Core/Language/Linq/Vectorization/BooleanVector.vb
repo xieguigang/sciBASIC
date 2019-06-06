@@ -88,6 +88,10 @@ Namespace Language.Vectorization
             MyBase.New(b)
         End Sub
 
+        Public Function Sum() As Integer
+            Return BooleanVector.Sum(Me)
+        End Function
+
         Public Overrides Function ToString() As String
             Dim countTrue% = Linq.Which.IsTrue(buffer).Count
             Dim countFalse% = Linq.Which.IsTrue(Not Me).Count
