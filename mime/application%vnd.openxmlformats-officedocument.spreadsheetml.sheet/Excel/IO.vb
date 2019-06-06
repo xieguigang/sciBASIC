@@ -87,9 +87,9 @@ Public Module IO
     ''' <returns></returns>
     Public Function CreateReader(xlsx As String) As File
         Dim ROOT$ = App.GetAppSysTempFile(
-            ext:="_" & RandomASCIIString(6, skipSymbols:=True),
+            ext:=RandomASCIIString(6, skipSymbols:=True),
             sessionID:=App.PID,
-            prefix:="excel_xlsx"
+            prefix:="excel_xlsx_"
         )
 
         Call UnZipHandler(xlsx, ROOT)
