@@ -49,6 +49,12 @@ Namespace Language.Default
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        Public Function ToLower(str As [Default](Of String)) As String
+            Return Strings.LCase(str.value)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
         Public Function Split(str As DefaultString, deli$, Optional ignoreCase As Boolean = False) As String()
             Return Splitter.Split(str.DefaultValue, deli, True, compare:=StringHelpers.IgnoreCase(flag:=ignoreCase))
         End Function

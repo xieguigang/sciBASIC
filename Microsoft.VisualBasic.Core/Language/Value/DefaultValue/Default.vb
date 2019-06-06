@@ -93,7 +93,8 @@ Namespace Language.Default
     ''' The default value
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure [Default](Of T) : Implements IDefault(Of T)
+    Public Structure [Default](Of T)
+        Implements IDefault(Of T)
         Implements IsEmpty
 
         Public ReadOnly Property DefaultValue As T Implements IDefault(Of T).DefaultValue
