@@ -1,24 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\Math\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\Mathematica\Math\Math\math-core.vbproj", "{E3367B88-5D0C-495A-8273-331656D4B5AA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{502430AD-9C24-4969-B189-D44BF3E1C196}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{502430AD-9C24-4969-B189-D44BF3E1C196}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots", "Plots\Plots.vbproj", "{17F8E821-0A01-4975-9CAA-AC95251226D5}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "..\..\..\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.Imaging", "..\..\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj", "{85E71B4B-9276-4EC8-AADC-C849205F1EA8}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\..\..\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MIME-htmls", "..\..\mime\text%html\MIME-htmls.vbproj", "{2DD4BE80-DDC3-4767-94A7-10F1C3395716}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ODEsSolver", "..\Math\ODE\ODEsSolver.vbproj", "{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ODEsSolver", "..\Mathematica\Math\ODE\ODEsSolver.vbproj", "{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}
 	EndProjectSection
@@ -35,35 +35,35 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Plots.Statistics", "Plots-S
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "hierarchical-clustering", "..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj", "{6CA54AF6-CADC-457E-94B9-384F2990F07E}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "hierarchical-clustering", "..\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj", "{6CA54AF6-CADC-457E-94B9-384F2990F07E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math.Statistics", "..\Math\Math.Statistics\Math.Statistics.vbproj", "{3E195DF1-9FEB-44D5-904B-15626BBE74D7}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math.Statistics", "..\Mathematica\Math\Math.Statistics\Math.Statistics.vbproj", "{3E195DF1-9FEB-44D5-904B-15626BBE74D7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphTheory", "..\..\Graph\GraphTheory.vbproj", "{203BC68F-A0CD-443A-AB62-4AF4110F752F}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphTheory", "..\Graph\GraphTheory.vbproj", "{203BC68F-A0CD-443A-AB62-4AF4110F752F}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataFittings", "..\Math\DataFittings\DataFittings.vbproj", "{FC125B0D-1942-496F-B502-9C0EB80E35B6}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataFittings", "..\Mathematica\Math\DataFittings\DataFittings.vbproj", "{FC125B0D-1942-496F-B502-9C0EB80E35B6}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "charting", "Chart\charting.vbproj", "{B2BFEB36-32E0-495B-9839-F18218494CB2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{8410CCEB-3BAE-4204-B681-A54C1CA69267}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Network.GraphTheory", "..\..\..\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Network.GraphTheory", "..\..\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics", "..\..\..\gr\physics\physics.vbproj", "{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics", "..\..\gr\physics\physics.vbproj", "{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataVisualization", "..\..\Visualization\DataVisualization.vbproj", "{3A114030-D9FD-4913-8E85-A78C032E9000}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataVisualization", "Visualization\DataVisualization.vbproj", "{3A114030-D9FD-4913-8E85-A78C032E9000}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework", "..\..\DataMining\DataMining\Microsoft.VisualBasic.DataMining.Framework.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataMining", "..\DataMining\DataMining\DataMining.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\..\MachineLearning\MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\MachineLearning\MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
