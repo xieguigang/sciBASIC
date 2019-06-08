@@ -52,10 +52,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Collection
 
-    Public Class CapacityQueue(Of T) : Inherits Language.BaseClass
+    Public Class CapacityQueue(Of T)
         Implements IEnumerable(Of T)
 
-        ReadOnly _queue As Queue(Of T)
+        ReadOnly queue As Queue(Of T)
 
         Public ReadOnly Property Capacity As Integer
 
@@ -65,25 +65,25 @@ Namespace ComponentModel.Collection
         ''' <param name="capacity">The initial number of elements that the System.Collections.Generic.Queue`1 can
         ''' contain.</param>
         Sub New(capacity As Integer)
-            _queue = New Queue(Of T)(capacity)
+            queue = New Queue(Of T)(capacity)
         End Sub
 
         Public Function Enqueue(x As T) As T
             Dim o As T
 
-            Call _queue.Enqueue(x)
+            Call queue.Enqueue(x)
 
-            If _queue.Count = Capacity - 1 Then
-                o = _queue.Dequeue()
+            If queue.Count = Capacity - 1 Then
+                o = queue.Dequeue()
             Else
-                o = _queue.Peek
+                o = queue.Peek
             End If
 
             Return o
         End Function
 
         Public Sub Clear()
-            Call _queue.Clear()
+            Call queue.Clear()
         End Sub
 
         Public Overrides Function ToString() As String
@@ -96,7 +96,7 @@ Namespace ComponentModel.Collection
         End Operator
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In _queue
+            For Each x As T In queue
                 Yield x
             Next
         End Function

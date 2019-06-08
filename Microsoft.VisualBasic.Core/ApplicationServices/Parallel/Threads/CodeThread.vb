@@ -45,37 +45,36 @@
 #End Region
 
 Imports System.Threading
-Imports Microsoft.VisualBasic.Language
 
 Namespace Parallel.Threads
 
-    Public MustInherit Class CodeThread : Inherits BaseClass
+    Public MustInherit Class CodeThread
 
-        Protected ReadOnly __thread As Thread
+        Protected ReadOnly thread As Thread
 
         Sub New()
-            __thread = New Thread(AddressOf __run)
+            thread = New Thread(AddressOf __run)
         End Sub
 
         Protected MustOverride Sub __run()
 
         Public Shared Function GetThread(x As CodeThread) As Thread
-            Return x.__thread
+            Return x.thread
         End Function
 
         Public Shared Sub Run(x As CodeThread)
-            Call x.__thread.Start()
+            Call x.thread.Start()
         End Sub
 
         Public Shared Sub Pause(x As CodeThread)
 #Disable Warning
-            Call x.__thread.Suspend()
+            Call x.thread.Suspend()
 #Enable Warning
         End Sub
 
         Public Shared Sub [Resume](x As CodeThread)
 #Disable Warning
-            Call x.__thread.Resume()
+            Call x.thread.Resume()
 #Enable Warning
         End Sub
     End Class

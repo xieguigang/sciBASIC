@@ -1417,7 +1417,6 @@
     <Compile Include="Language\NamespaceDoc.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\ls.vb" />
     <Compile Include="Language\Language\UnixBash\FileSystem\File.vb" />
-    <Compile Include="Language\BaseClass.vb" />
     <Compile Include="Language\Value\Numeric\Numeric.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\Text\Grep.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\WorkFlow.vb" />

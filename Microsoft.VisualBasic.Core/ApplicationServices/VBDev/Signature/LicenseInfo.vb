@@ -83,7 +83,7 @@ Namespace ApplicationServices.Development
 
 #End Region
 
-    Public Class LicenseInfo : Inherits BaseClass
+    Public Class LicenseInfo
 
         Public Property Authors As NamedValue()
         Public Property Title As String

@@ -82,7 +82,7 @@ Namespace ComponentModel.DataSourceModel
         ''' The instance object for this extension property
         ''' </summary>
         ''' <returns></returns>
-        Public Property obj As IClassObject
+        Public Property obj As DynamicPropertyBase(Of T)
 
         ''' <summary>
         ''' Custom property value.(value generated based on the extension property host <see cref="obj"/>)
@@ -107,7 +107,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function SetValue(value As T) As IClassObject
+        Public Function SetValue(value As T) As DynamicPropertyBase(Of T)
             Call __set(value)
             Return obj
         End Function
@@ -129,51 +129,49 @@ Namespace ComponentModel.DataSourceModel
             Return value.GetJson
         End Function
 
-        Public Shared Function GetValue(Of Cls As IClassObject)(x As Cls, name As String) As PropertyValue(Of T)
-            Dim value As Object = x.Extension.DynamicHashTable(name)
+        Public Shared Function GetValue(Of Cls As DynamicPropertyBase(Of T))(x As Cls, name As String) As PropertyValue(Of T)
+            Dim value As Object = x(name)
             Dim pv As PropertyValue(Of T) = DirectCast(value, PropertyValue(Of T))
             Return pv
         End Function
 
-        Public Shared Sub SetValue(Of Cls As IClassObject)(x As Cls, name As String, value As T)
-            Dim pvo As Object = x.Extension.DynamicHashTable(name)
+        Public Shared Sub SetValue(Of Cls As DynamicPropertyBase(Of T))(x As Cls, name As String, value As T)
+            Dim pvo As Object = x(name)
             Dim pv As PropertyValue(Of T) = DirectCast(pvo, PropertyValue(Of T))
             pv.value = value
         End Sub
 
         ''' <summary>
-        ''' Creates a new extension property for the target <see cref="BaseClass"/>
+        ''' Creates a new extension property for the target <see cref="DynamicPropertyBase(Of T)"/>
         ''' </summary>
         ''' <typeparam name="Cls"></typeparam>
         ''' <param name="x"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Shared Function [New](Of Cls As IClassObject)(x As Cls, name As String) As PropertyValue(Of T)
+        Public Shared Function [New](Of Cls As DynamicPropertyBase(Of T))(x As Cls, name As String) As PropertyValue(Of T)
             Dim value As New PropertyValue(Of T)()
-            x.Extension.DynamicHashTable(name) = value
+            x(name) = value
             value.obj = x
             Return value
         End Function
 
         ''' <summary>
-        ''' Gets the tag property value from the <see cref="BaseClass"/>.(读取<see cref="BaseClass"/>对象之中的一个拓展属性)
+        ''' Gets the tag property value from the <see cref="DynamicPropertyBase(Of T)"/>.
+        ''' (读取<see cref="DynamicPropertyBase(Of T)"/>对象之中的一个拓展属性)
         ''' </summary>
         ''' <typeparam name="Cls"></typeparam>
         ''' <param name="x"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Shared Function Read(Of Cls As IClassObject)(x As Cls, name As String) As PropertyValue(Of T)
-            If x.Extension Is Nothing Then
-                x.Extension = New ExtendedProps
-            End If
-            Dim prop As Object = x.Extension.DynamicHashTable(name)
+        Public Shared Function Read(Of Cls As DynamicPropertyBase(Of T))(x As Cls, name As String) As PropertyValue(Of T)
+            Dim prop As Object = x(name)
             If prop Is Nothing Then
                 prop = PropertyValue(Of T).[New](Of Cls)(x, name)
             End If
             Return DirectCast(prop, PropertyValue(Of T))
         End Function
 
-        Public Shared Function Read(Of Cls As IClassObject)(x As Cls, pm As MethodBase) As PropertyValue(Of T)
+        Public Shared Function Read(Of Cls As DynamicPropertyBase(Of T))(x As Cls, pm As MethodBase) As PropertyValue(Of T)
             Return Read(Of Cls)(x, pm.Name)
         End Function
     End Class

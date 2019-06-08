@@ -920,7 +920,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function __getTEMP(prefix As String) As String
+    Public Function GetNextUniqueName(prefix As String) As String
         Static tmp As [Default](Of String) = NameOf(tmp)
         Return $"{prefix Or tmp}{App.tempCode}"
     End Function
@@ -932,7 +932,7 @@ Public Module App
     Public ReadOnly Property NextTempName As String
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return __getTEMP(Nothing)
+            Return GetNextUniqueName(Nothing)
         End Get
     End Property
 
@@ -1278,7 +1278,7 @@ Public Module App
     '''
     <ExportAPI("GetTempFile.AppSys")>
     Public Function GetAppSysTempFile(Optional ext$ = ".tmp", Optional sessionID$ = "", Optional prefix$ = Nothing) As String
-        Dim tmp As String = App.SysTemp & "/" & __getTEMP(prefix) & ext
+        Dim tmp As String = App.SysTemp & "/" & GetNextUniqueName(prefix) & ext
         tmp = GenerateTemp(tmp, sessionID)
         Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(tmp))
         tmp = FileIO.FileSystem.GetFileInfo(tmp).FullName.Replace("\", "/")

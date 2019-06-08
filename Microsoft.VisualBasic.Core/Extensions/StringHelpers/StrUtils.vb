@@ -196,7 +196,8 @@ Public Module StrUtils
     ''' <summary>
     ''' 32-126
     ''' </summary>
-    ''' <param name="len%"></param>
+    ''' <param name="len"></param>
+    ''' <param name="seed">默认是使用<see cref="Math.seeds"/>来作为随机种子的</param>
     ''' <returns></returns>
     Public Function RandomASCIIString(len%, Optional skipSymbols As Boolean = False, Optional seed As Random = Nothing) As String
         With seed Or newRandom
