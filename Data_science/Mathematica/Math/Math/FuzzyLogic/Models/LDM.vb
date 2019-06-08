@@ -79,7 +79,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Logical.FuzzyLogic.Models
 
-    Public Class Value : Inherits BaseClass
+    Public Class Value
         Implements INamedValue
 
         <XmlAttribute> Public Property Identifier As String Implements INamedValue.Key
@@ -96,7 +96,7 @@ Namespace Logical.FuzzyLogic.Models
         End Sub
     End Class
 
-    Public Class Term : Inherits BaseClass
+    Public Class Term
         Implements INamedValue
 
         <XmlAttribute> Public Property Identifier As String Implements INamedValue.Key
@@ -112,7 +112,7 @@ Namespace Logical.FuzzyLogic.Models
 
     End Class
 
-    Public Class Fuzzify : Inherits BaseClass
+    Public Class Fuzzify
         Implements INamedValue
 
         <XmlAttribute> Public Property Identifier As String Implements INamedValue.Key
@@ -144,7 +144,7 @@ Namespace Logical.FuzzyLogic.Models
 
     End Class
 
-    Public Class Rule : Inherits BaseClass
+    Public Class Rule
         Implements INamedValue
 
         <XmlAttribute> Public Property Identifier As String Implements INamedValue.Key
@@ -160,7 +160,7 @@ Namespace Logical.FuzzyLogic.Models
         End Sub
     End Class
 
-    Public Class RuleBlock : Inherits BaseClass
+    Public Class RuleBlock
 
         <XmlAttribute> Public Property [AND] As String
         <XmlAttribute> Public Property [OR] As String

@@ -55,7 +55,7 @@ Namespace ComponentModel
     ''' An abstract property vector 
     ''' </summary>
     ''' <typeparam name="T">只允许数值类型</typeparam>
-    Public MustInherit Class EntityBase(Of T) : Inherits BaseClass
+    Public MustInherit Class EntityBase(Of T)
 
         <XmlAttribute("T")>
         Public Overridable Property Properties As T()

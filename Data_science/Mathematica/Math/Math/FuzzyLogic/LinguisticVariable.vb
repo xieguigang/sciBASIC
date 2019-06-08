@@ -73,7 +73,7 @@ Namespace Logical.FuzzyLogic
     ''' <summary>
     ''' Represents a linguistic variable.
     ''' </summary>
-    Public Class LinguisticVariable : Inherits BaseClass
+    Public Class LinguisticVariable
         Implements INamedValue
 
 #Region "Constructors"

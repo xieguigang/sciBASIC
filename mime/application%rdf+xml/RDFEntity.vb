@@ -115,7 +115,7 @@ End Class
 ''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended by adding XmlAttribute elements. 
 ''' Please consider changing XmlText member of the base class to string array.
 ''' </remarks>
-Public MustInherit Class EntityProperty : Inherits BaseClass
+Public MustInherit Class EntityProperty
 
     ''' <summary>
     ''' rdf:datatype

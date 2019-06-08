@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' The schema project json file.
 ''' </summary>
-Public Class Schema : Inherits BaseClass
+Public Class Schema
 
     ''' <summary>
     ''' 默认的主文件的名称

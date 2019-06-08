@@ -99,7 +99,7 @@ Namespace Graph
     ''' <summary>
     ''' The network graph object model, corresponding network csv table data model is <see cref="FileStream.NetworkTables"/> 
     ''' </summary>
-    Public Class NetworkGraph : Inherits BaseClass
+    Public Class NetworkGraph
         Implements IGraph
         Implements ICloneable
 
