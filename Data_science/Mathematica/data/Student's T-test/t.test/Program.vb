@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dd8dac7b7cb030539c90db8de50d07e, Data_science\Mathematica\data\Student's T-test\t.test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::084a692645b48012140cb46e4ef3c53f, Data_science\Mathematica\data\Student's T-test\t.test\Program.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module Program
 
     Sub Main()
-        Dim a#() = {175, 168, 168, 190, 156, 181, 182, 175, 174, 179}
+        Dim a#() = {115, 108, 108, 119, 105, 101, 120, 115, 104, 100.9}
         Dim b#() = {185, 169, 173, 173, 188, 186, 175, 174, 179, 180}
 
         With t.Test(a, b)
@@ -60,11 +60,11 @@ Module Program
             Call .GetJson(True).__DEBUG_ECHO
         End With
 
-        a = {1846523.253, 6840877.665, 2806323.704}
+        a = {6846523.253, 6840877.665, 5806323.704}
         b = {3056565.388, 1831431.105, 2933659.497}
 
-        Call t.Test(a, b).GetJson.__DEBUG_ECHO
-        Call t.Test(a, b, varEqual:=False).GetJson.__DEBUG_ECHO
+        Call t.Test(a, b).GetJson(indent:=True).__DEBUG_ECHO
+        Call t.Test(a, b, varEqual:=False).GetJson(indent:=True).__DEBUG_ECHO
 
 
         Pause()

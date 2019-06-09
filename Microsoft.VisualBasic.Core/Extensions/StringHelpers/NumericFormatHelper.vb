@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1df4e3735eeeb7d27c92829b1bbef491, Microsoft.VisualBasic.Core\Extensions\StringHelpers\NumericFormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a359fde6d498a5fec0ea6c460f1721da, Microsoft.VisualBasic.Core\Extensions\StringHelpers\NumericFormatHelper.vb"
 
     ' Author:
     ' 
@@ -153,10 +153,15 @@ Public Module NumericFormatHelper
         Return reverse.ToString("x4")
     End Function
 
+    ''' <summary>
+    ''' 转换为16进制
+    ''' </summary>
+    ''' <param name="this"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ToHexString(this As Integer) As String
-        Dim value As UInteger = CUInt(this)
-        Return ToHexString(value)
+        Return ToHexString(CUInt(this))
     End Function
 
     <Extension>

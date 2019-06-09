@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f884fbccdd130b9b44aef39692318ebd, Microsoft.VisualBasic.Core\Language\Value\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::ef16285bcf1dd1e43c4720a98796fe49, Microsoft.VisualBasic.Core\Language\Value\Pointer.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace Language
 
     ''' <summary>
@@ -54,21 +56,25 @@ Namespace Language
         ''' <summary>
         ''' Current read position
         ''' </summary>
-        Protected __index As Integer
-        ReadOnly __step As Integer
+        Protected index As Integer
+        ''' <summary>
+        ''' 指针移动的步进值
+        ''' </summary>
+        Protected ReadOnly [step] As Integer
 
         ''' <summary>
-        ''' Construct a pointer class and then assign a initial <see cref="Int32"/> value.(构造一个指针对象，并且赋值其初始值)
+        ''' Construct a pointer class and then assign a initial <see cref="Int32"/> value.
+        ''' (构造一个指针对象，并且赋值其初始值)
         ''' </summary>
         ''' <param name="n">The initial value.</param>
         Sub New(n As Integer)
-            __index = n
-            __step = 1
+            index = n
+            [step] = 1
         End Sub
 
         Public Sub New(n As Integer, [step] As Integer)
-            __index = n
-            __step = [step]
+            index = n
+            Me.step = [step]
         End Sub
 
         ''' <summary>
@@ -79,48 +85,49 @@ Namespace Language
         End Sub
 
         Public Overrides Function ToString() As String
-            Return __index
+            Return index
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(n As Integer) As Pointer
             Return New Pointer(n)
         End Operator
 
         Public Shared Narrowing Operator CType(n As Pointer) As Integer
-            Return n.__index
+            Return n.index
         End Operator
 
         Public Overloads Shared Operator +(n As Pointer, x As Integer) As Pointer
-            n.__index += x
+            n.index += x
             Return n
         End Operator
 
         Public Overloads Shared Operator +(x As Integer, n As Pointer) As Pointer
-            n.__index += x
+            n.index += x
             Return n
         End Operator
 
         Public Overloads Shared Operator +(x As Pointer, n As Pointer) As Pointer
-            Return New Pointer(n.__index + x.__index)
+            Return New Pointer(n.index + x.index)
         End Operator
 
         ''' <summary>
-        ''' ``<see cref="__index"/> &lt; <paramref name="n"/>``
+        ''' ``<see cref="index"/> &lt; <paramref name="n"/>``
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="n"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator <(x As Pointer, n As Integer) As Boolean
-            Return x.__index < n
+            Return x.index < n
         End Operator
 
         Public Overloads Shared Operator >(x As Pointer, n As Integer) As Boolean
-            Return x.__index > n
+            Return x.index > n
         End Operator
 
         Public Shared Operator -(x As Pointer, n As Integer) As Integer
-            Dim p As Integer = x.__index
-            x.__index -= n
+            Dim p As Integer = x.index
+            x.index -= n
             Return p
         End Operator
 
@@ -131,8 +138,8 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <returns></returns>
         Public Shared Operator <<(x As Pointer, n As Integer) As Integer
-            Dim value As Integer = x.__index
-            x.__index += n
+            Dim value As Integer = x.index
+            x.index += n
             Return value
         End Operator
 
@@ -142,8 +149,8 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator +(x As Pointer) As Integer
-            Dim p As Integer = x.__index
-            x.__index += x.__step
+            Dim p As Integer = x.index
+            x.index += x.step
             Return p
         End Operator
 
@@ -153,8 +160,8 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator -(x As Pointer) As Integer
-            Dim p As Integer = x.__index
-            x.__index -= x.__step
+            Dim p As Integer = x.index
+            x.index -= x.step
             Return p
         End Operator
 
@@ -165,7 +172,7 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <returns></returns>
         Public Shared Operator <=(x As Pointer, n As Integer) As Boolean
-            Return x.__index <= n
+            Return x.index <= n
         End Operator
 
         ''' <summary>
@@ -175,7 +182,7 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <returns></returns>
         Public Shared Operator >=(x As Pointer, n As Integer) As Boolean
-            Return x.__index >= n
+            Return x.index >= n
         End Operator
     End Class
 End Namespace

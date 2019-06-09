@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::451a2205c4f8963de8185e32eaf6b0f3, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\Table.vb"
+﻿#Region "Microsoft.VisualBasic::3b8d61b2e49b24f41dbcb2d1e65263b8, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\Table.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TableParser
     ' 
-    '         Function: GetColumnsHTML, GetRowsHTML, GetTablesHTML
+    '         Function: GetColumnsHTML, GetRowsHTML, GetTablesHTML, ParseHtmlMeta
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,10 +41,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports r = System.Text.RegularExpressions.Regex
 
-Namespace Text.HtmlParser
+Namespace Text.Parser.HtmlParser
 
     ''' <summary>
     ''' The string parser for the table html text block
@@ -60,12 +61,15 @@ Namespace Text.HtmlParser
         <Extension>
         Public Function GetTablesHTML(html As String, Optional greedy As Boolean = False) As String()
             Dim regxp As String = If(greedy, "<table.+</table>", "<table.+?</table>")
-            Dim tbls As String() = Regex.Matches(html, regxp, RegexICSng).ToArray
+            Dim tbls As String() = r.Matches(html, regxp, RegexICSng).ToArray
             Return tbls
         End Function
 
+        Const RowPatterns$ = "<tr.+?</tr>"
+        Const ColumnPatterns$ = "(<td.+?</td>)|(<th.+?</th>)"
+
         ''' <summary>
-        ''' Parsing the html text betweens the tag &lt;tr>&lt;/tr> by using regex expression.
+        ''' Parsing the html text betweens the tag ``&lt;tr>&lt;/tr>`` by using regex expression.
         ''' </summary>
         ''' <param name="table"></param>
         ''' <returns></returns>
@@ -74,27 +78,45 @@ Namespace Text.HtmlParser
         Public Function GetRowsHTML(table As String) As String()
             If table Is Nothing Then
                 Return {}
+            Else
+                Dim rows As String() = r.Matches(table, RowPatterns, RegexICSng).ToArray
+                Return rows
             End If
-            Dim rows As String() = Regex.Matches(
-                table,
-                "<tr.+?</tr>",
-                RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
-            Return rows
         End Function
 
         ''' <summary>
-        ''' The td tag is trimmed in this function.(请注意，在本函数之中，&lt;td>标签是被去除掉了的)
+        ''' The td tag is trimmed in this function.(请注意，在本函数之中，``&lt;td>``标签是被去除掉了的)
         ''' </summary>
         ''' <param name="row"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
         Public Function GetColumnsHTML(row As String) As String()
-            Dim cols As String() = Regex.Matches(row, "(<td.+?</td>)|(<th.+?</th>)", RegexICSng).ToArray
+            Dim cols As String() = r.Matches(row, ColumnPatterns, RegexICSng).ToArray
             cols = cols _
                 .Select(Function(s) s.GetValue) _
                 .ToArray
             Return cols
+        End Function
+
+        Const metaPattern$ = "<meta .+?/>"
+
+        <Extension>
+        Public Function ParseHtmlMeta(html As String) As Dictionary(Of String, String)
+            Dim list = html.Matches(metaPattern, RegexICSng).ToArray
+            Dim attrs As NamedValue(Of String)() = list _
+                .Select(Function(meta) meta.TagAttributes) _
+                .Select(Function(meta)
+                            Dim name = meta.FirstOrDefault(Function(a) a.Name.TextEquals("name"))
+                            Dim content = meta.FirstOrDefault(Function(a) a.Name.TextEquals("content"))
+
+                            Return New NamedValue(Of String)(name, content)
+                        End Function) _
+                .Where(Function(meta) Not meta.Name.StringEmpty) _
+                .ToArray
+            Dim table = attrs.ToDictionary(Function(a) a.Name, Function(a) a.Value)
+
+            Return table
         End Function
     End Module
 End Namespace

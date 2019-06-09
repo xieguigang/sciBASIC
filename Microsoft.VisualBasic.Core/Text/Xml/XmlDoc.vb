@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a41eeb6f6cf5cdf8dec880c75b34bc1f, Microsoft.VisualBasic.Core\Text\Xml\XmlDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4ae207281fa3fb4e0208111d9c26bab6, Microsoft.VisualBasic.Core\Text\Xml\XmlDoc.vb"
 
     ' Author:
     ' 
@@ -146,11 +146,11 @@ Namespace Text.Xml
         ''' <param name="Path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Public Function SaveTo(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Function SaveTo(Path$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Return Me.ToString.SaveTo(Path, encoding)
         End Function
 
-        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+        Public Function Save(Path$, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return SaveTo(Path, encoding.CodePage)
         End Function
     End Class

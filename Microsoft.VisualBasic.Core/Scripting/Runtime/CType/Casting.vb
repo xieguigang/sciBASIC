@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35b47356b7aad6fe4639597e137b7e05, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::af24e82510b8a39d20f747cdfe82dcc2, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
     '                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
     '                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
-    '                   ScriptValue, SizeParser
+    '                   ScriptValue, SizeParser, TryParse
     ' 
     ' 
     ' /********************************************************************************/
@@ -61,9 +61,27 @@ Imports Microsoft.VisualBasic.ValueTypes
 Namespace Scripting.Runtime
 
     ''' <summary>
-    ''' Methods for convert the <see cref="System.String"/> to some .NET data types.
+    ''' Methods for convert the <see cref="String"/> to some .NET data types.
     ''' </summary>
     Public Module Casting
+
+        ''' <summary>
+        ''' Try parse of the enum value.
+        ''' </summary>
+        ''' <typeparam name="T">This generic type should be an <see cref="System.Enum"/> type!</typeparam>
+        ''' <param name="expression"></param>
+        ''' <param name="[default]"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function TryParse(Of T As Structure)(expression As Match, Optional [default] As T = Nothing) As T
+            Dim result As T = Nothing
+
+            If [Enum].TryParse(Of T)(expression.Value, result) Then
+                Return result
+            Else
+                Return [default]
+            End If
+        End Function
 
         ''' <summary>
         ''' <see cref="Size"/> object to string expression
@@ -213,13 +231,11 @@ Namespace Scripting.Runtime
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="list">在这里使用向量而非使用通用接口是因为和单个元素的As转换有冲突</param>
         ''' <returns></returns>
-        <Extension> Public Function [As](Of T, TOut)(list As IEnumerable(Of T)) As TOut()
+        <Extension> Public Function [As](Of T, TOut)(list As IEnumerable(Of T)) As IEnumerable(Of TOut)
             If list Is Nothing Then
                 Return {}
             Else
-                Return list _
-                    .Select(Function(x) CType(CObj(x), TOut)) _
-                    .ToArray
+                Return list.Select(Function(x) CType(CObj(x), TOut))
             End If
         End Function
 
@@ -366,7 +382,7 @@ Namespace Scripting.Runtime
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastGDIPlusDeviceHandle(path As String) As Graphics2D
-            Return GDIPlusDeviceHandleFromImageFile(path)
+            Return CanvasCreateFromImageFile(path)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

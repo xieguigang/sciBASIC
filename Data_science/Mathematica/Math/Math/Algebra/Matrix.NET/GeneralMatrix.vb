@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::dd8affb7f2982f5d963bba805f29400d, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::cad251eff14623994a47b9612c31c4ca, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GeneralMatrix
-    ' 
-    '         Properties: ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension
-    '                     RowPackedCopy
-    ' 
-    '         Constructor: (+6 Overloads) Sub New
-    ' 
-    '         Function: Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals, ArrayMultiply
-    '                   ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol, Clone
-    '                   Condition, Copy, Create, Determinant, Eigen
-    '                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+2 Overloads) Multiply
-    '                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
-    '                   QRD, Rank, RowVectors, Solve, SolveTranspose
-    '                   Subtract, SubtractEquals, SVD, ToString, Trace
-    '                   Transpose
-    ' 
-    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
-    ' 
-    '         Operators: (+2 Overloads) -, *, +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GeneralMatrix
+' 
+'         Properties: ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension
+'                     RowPackedCopy
+' 
+'         Constructor: (+6 Overloads) Sub New
+' 
+'         Function: Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals, ArrayMultiply
+'                   ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol, Clone
+'                   Condition, Copy, Create, Determinant, Eigen
+'                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+3 Overloads) Multiply
+'                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
+'                   QRD, Rank, RowVectors, Solve, SolveTranspose
+'                   (+2 Overloads) Subtract, SubtractEquals, SVD, ToString, Trace
+'                   Transpose
+' 
+'         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
+' 
+'         Operators: (+3 Overloads) -, (+3 Overloads) *, +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Matrix
@@ -719,16 +720,36 @@ Namespace Matrix
         ''' </param>
         ''' <returns>     A - B
         ''' </returns>
-
         Public Overridable Function Subtract(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
+            Call CheckMatrixDimensions(B)
+
             Dim X As New GeneralMatrix(m, n)
             Dim C As Double()() = X.Array
+
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
                     C(i)(j) = buffer(i)(j) - B.buffer(i)(j)
                 Next
             Next
+
+            Return X
+        End Function
+
+        ''' <summary>C = A - B</summary>
+        ''' <param name="B">   another matrix
+        ''' </param>
+        ''' <returns>     A - B
+        ''' </returns>
+        Public Overridable Function Subtract(B As Double) As GeneralMatrix
+            Dim X As New GeneralMatrix(m, n)
+            Dim C As Double()() = X.Array
+
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    C(i)(j) = buffer(i)(j) - B
+                Next
+            Next
+
             Return X
         End Function
 
@@ -867,6 +888,21 @@ Namespace Matrix
             Return X
         End Function
 
+        ''' <summary>Multiply a matrix by a scalar, C = s*A</summary>
+        ''' <returns>     s*A
+        ''' </returns>
+
+        Public Overridable Function Multiply(v As Vector) As GeneralMatrix
+            Dim X As New GeneralMatrix(m, n)
+            Dim C As Double()() = X.Array
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    C(i)(j) = v(i) * buffer(i)(j)
+                Next
+            Next
+            Return X
+        End Function
+
         ''' <summary>Multiply a matrix by a scalar in place, A = s*A</summary>
         ''' <param name="s">   scalar
         ''' </param>
@@ -936,6 +972,10 @@ Namespace Matrix
             Return m1.Subtract(m2)
         End Operator
 
+        Public Shared Operator -(m1 As GeneralMatrix, x As Double) As GeneralMatrix
+            Return m1.Subtract(x)
+        End Operator
+
         ''' <summary>
         ''' Multiplication of matrices
         ''' </summary>
@@ -946,6 +986,28 @@ Namespace Matrix
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(m1 As GeneralMatrix, m2 As GeneralMatrix) As GeneralMatrix
             Return m1.Multiply(m2)
+        End Operator
+
+        ''' <summary>
+        ''' Multiplication of matrices
+        ''' </summary>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator *(x As Double, m2 As GeneralMatrix) As GeneralMatrix
+            Return m2.Multiply(x)
+        End Operator
+
+        ''' <summary>
+        ''' Multiplication of matrices
+        ''' </summary>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator *(v As Vector, m2 As GeneralMatrix) As GeneralMatrix
+            Return m2.Multiply(v)
         End Operator
 
 #End Region

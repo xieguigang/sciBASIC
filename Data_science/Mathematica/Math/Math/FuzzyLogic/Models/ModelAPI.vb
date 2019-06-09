@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0814fd6f2a5f33a58bddd8f9429ba9d, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::39895d29fd09a958b135ec3c2e0d5745, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\ModelAPI.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Defuzzify, Fuzzify, Input, Output, Rules
     ' 
-    '         Function: FromXml, Load, Save
+    '         Function: FromXml, Load, (+2 Overloads) Save
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,10 +45,11 @@
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Text
 
 Namespace Logical.FuzzyLogic.Models
 
-    Public Class FuzzyModel : Inherits ITextFile
+    Public Class FuzzyModel : Implements ISaveHandle
 
         <XmlElement> Public Property Input As Value()
         Public Property Output As Value
@@ -56,8 +57,8 @@ Namespace Logical.FuzzyLogic.Models
         Public Property Defuzzify As Defuzzify
         Public Property Rules As RuleBlock
 
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return Me.GetXml.SaveTo(getPath(FilePath), Encoding)
+        Public Function Save(FilePath As String, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Return Me.GetXml.SaveTo(FilePath, Encoding)
         End Function
 
         ''' <summary>
@@ -96,6 +97,10 @@ Namespace Logical.FuzzyLogic.Models
 
         Public Shared Function FromXml(path As String) As FuzzyEngine
             Return path.LoadXml(Of FuzzyModel).Load
+        End Function
+
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3bd638d5ef52fdbf8d01311adc14f29, mime\text%html\HTML\CSS\Render\CssBox.vb"
+﻿#Region "Microsoft.VisualBasic::c92c5683bf17f5506964bab89b0207d7, mime\text%html\HTML\CSS\Render\CssBox.vb"
 
     ' Author:
     ' 
@@ -88,6 +88,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 Imports sys = System.Math
 Imports HTMLParser = Microsoft.VisualBasic.MIME.Markup.HTML.Render.Parser
+Imports rect = System.Drawing.Rectangle
 
 Namespace HTML.CSS.Render
 
@@ -2979,7 +2980,7 @@ Namespace HTML.CSS.Render
                 r.Height -= ActualBorderTopWidth + ActualBorderBottomWidth + ActualPaddingTop + ActualPaddingBottom
                 r.Y += ActualBorderTopWidth + ActualPaddingTop
                 'HACK: round rectangle only when necessary
-                g.DrawImage(Words(0).Image, Rectangle.Round(r))
+                g.DrawImage(Words(0).Image, rect.Round(r))
             Else
                 Dim f As Font = ActualFont
                 Using b As New SolidBrush(CssValue.GetActualColor(Color))
@@ -3023,7 +3024,7 @@ Namespace HTML.CSS.Render
             If Not (String.IsNullOrEmpty(BorderTopStyle) OrElse BorderTopStyle = CssConstants.None) Then
                 Using b As New SolidBrush(ActualBorderTopColor)
                     If BorderTopStyle = CssConstants.Inset Then
-                        b.Color = CssDrawingHelper.Darken(ActualBorderTopColor)
+                        b.Color = ActualBorderTopColor.Darken
                     End If
                     g.FillPath(b, CssDrawingHelper.GetBorderPath(CssDrawingHelper.Border.Top, Me, rectangle, isFirst, isLast))
                 End Using
@@ -3035,7 +3036,7 @@ Namespace HTML.CSS.Render
                 If Not (String.IsNullOrEmpty(BorderRightStyle) OrElse BorderRightStyle = CssConstants.None) Then
                     Using b As New SolidBrush(ActualBorderRightColor)
                         If BorderRightStyle = CssConstants.Outset Then
-                            b.Color = CssDrawingHelper.Darken(ActualBorderRightColor)
+                            b.Color = ActualBorderRightColor.Darken
                         End If
                         g.FillPath(b, CssDrawingHelper.GetBorderPath(CssDrawingHelper.Border.Right, Me, rectangle, isFirst, isLast))
                     End Using
@@ -3046,7 +3047,7 @@ Namespace HTML.CSS.Render
             If Not (String.IsNullOrEmpty(BorderBottomStyle) OrElse BorderBottomStyle = CssConstants.None) Then
                 Using b As New SolidBrush(ActualBorderBottomColor)
                     If BorderBottomStyle = CssConstants.Outset Then
-                        b.Color = CssDrawingHelper.Darken(ActualBorderBottomColor)
+                        b.Color = ActualBorderBottomColor.Darken
                     End If
                     g.FillPath(b, CssDrawingHelper.GetBorderPath(CssDrawingHelper.Border.Bottom, Me, rectangle, isFirst, isLast))
                 End Using
@@ -3057,7 +3058,7 @@ Namespace HTML.CSS.Render
                 If Not (String.IsNullOrEmpty(BorderLeftStyle) OrElse BorderLeftStyle = CssConstants.None) Then
                     Using b As New SolidBrush(ActualBorderLeftColor)
                         If BorderLeftStyle = CssConstants.Inset Then
-                            b.Color = CssDrawingHelper.Darken(ActualBorderLeftColor)
+                            b.Color = ActualBorderLeftColor.Darken
                         End If
                         g.FillPath(b, CssDrawingHelper.GetBorderPath(CssDrawingHelper.Border.Left, Me, rectangle, isFirst, isLast))
                     End Using

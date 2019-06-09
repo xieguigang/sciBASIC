@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cd3df138de15ae01780bace3f68965f, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::aa04d1dc805165e98f902dd149eca325, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,8 @@
     '               FullName, GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint
     '               GetDouble, GetFullName, GetInt, (+2 Overloads) GetReadWriteProperties, GetTypeElement
     '               GetTypesHelper, (+2 Overloads) GetValue, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
-    '               IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite, Source
-    '               Usage
+    '               IsNonParametric, IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite
+    '               Source, Usage
     ' 
     '     Sub: RunApp
     ' 
@@ -73,6 +73,25 @@ Public Module EmitReflection
     <Extension>
     Public Function ResourcesSatellite(assembly As Assembly) As ResourcesSatellite
         Return New ResourcesSatellite(assembly)
+    End Function
+
+    ''' <summary>
+    ''' 这个方法的调用是否是不需要任何参数的？
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <param name="optionalAsNone"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsNonParametric(method As MethodInfo, Optional optionalAsNone As Boolean = False) As Boolean
+        Dim params = method.GetParameters
+
+        If params.IsNullOrEmpty Then
+            Return True
+        ElseIf optionalAsNone Then
+            Return Not params.Any(Function(p) Not p.IsOptional)
+        End If
+
+        Return False
     End Function
 
     ''' <summary>
@@ -404,17 +423,21 @@ NULL:       If Not strict Then
         Dim baseType As Type = a.BaseType
 
         If Not strict Then
-            ' 在这里返回结果的话，depth为-1
 
+            ' 在这里返回结果的话，depth为-1
             If a Is base Then
                 Return True
             End If
 
             If a.IsGenericType AndAlso base.IsGenericType Then
+                Dim genericOfa As Type = a.GetGenericTypeDefinition
+                Dim typesOfa = a.GenericTypeArguments
+                Dim typesOfb = base.GenericTypeArguments
+
                 ' 2017-3-12
                 ' GetType(Dictionary(Of String, Double)).IsInheritsFrom(GetType(Dictionary(Of ,)))
 
-                If a.GetGenericTypeDefinition.Equals(base) Then
+                If typesOfb.Length = 0 AndAlso genericOfa.IsInheritsFrom(base, strict, depth) Then
                     Return True
                 End If
             End If

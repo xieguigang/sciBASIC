@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c67ca751d3ef372f3ee25e05c5f9ba0a, Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::d9eb7f3e9c445dcf4d61cee06ac718a4, Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class MappingsHelper
     ' 
-    '     Function: CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames
+    '     Function: CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames, TagFieldName
     ' 
     ' /********************************************************************************/
 
@@ -59,7 +59,7 @@ Public Class MappingsHelper
     ''' </param>
     ''' <returns>这个函数返回空值表名没有这个属性</returns>
     Public Shared Function ColumnName(schema As Type, propertyName$) As String
-        Dim schemaTable As SchemaProvider = SchemaProvider.CreateObject(schema)
+        Dim schemaTable As SchemaProvider = SchemaProvider.CreateObjectInternal(schema)
 
         For Each field As Field In schemaTable
             If field.BindProperty.Name = propertyName Then
@@ -76,7 +76,7 @@ Public Class MappingsHelper
     ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
     Public Shared Function PropertyNames(Of T)() As Dictionary(Of String, String)
-        Dim schemaTable = SchemaProvider.CreateObject(GetType(T))
+        Dim schemaTable = SchemaProvider.CreateObjectInternal(GetType(T))
         Dim table = schemaTable _
             .ToDictionary(Function(prop)
                               Return prop.BindProperty.Name
@@ -113,5 +113,15 @@ Public Class MappingsHelper
             {NameOf(NamedValue(Of Object).Value), value},
             {NameOf(NamedValue(Of Object).Description), description}
         }
+    End Function
+
+    Public Shared Iterator Function TagFieldName(data As IEnumerable(Of EntityObject), tagName As String, fieldName$) As IEnumerable(Of EntityObject)
+        For Each obj As EntityObject In data
+            Dim val = obj.Properties(fieldName)
+            obj.Properties.Remove(fieldName)
+            obj($"{tagName}.{fieldName}") = val
+
+            Yield obj
+        Next
     End Function
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed9a194d8b1d9f3b218a5301062a798e, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::2ffe6881ea86a4bcf64f0d7d7f8e9ec9, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
 
     ' Author:
     ' 
@@ -95,7 +95,7 @@ Namespace ComponentModel.DataSourceModel
                 If primitive Then
                     Return .Keys _
                         .Where(Function(k)
-                                   Return .ByRef(k).PropertyType.IsPrimitive
+                                   Return IsPrimitive(.ByRef(k).PropertyType)
                                End Function) _
                         .ToDictionary(Function(key) key,
                                       Function(key) .ByRef(key))
@@ -146,7 +146,7 @@ Namespace ComponentModel.DataSourceModel
             Return props.ToDictionary(Function(x) x.Name)
         End Function
 
-        ReadOnly alwaysTrue As DefaultValue(Of Assert(Of Object)) = New Assert(Of Object)(Function() True)
+        ReadOnly alwaysTrue As [Default](Of Assert(Of Object)) = New Assert(Of Object)(Function() True)
 
         ''' <summary>
         ''' 将对象之中的所有属性值都取出来以字符串的形式生成一个字典对象
@@ -168,7 +168,7 @@ Namespace ComponentModel.DataSourceModel
 
             If primitiveType Then
                 For Each key As String In schema.Keys.ToArray
-                    If Not schema(key).PropertyType.IsPrimitive Then
+                    If Not IsPrimitive(schema(key).PropertyType) Then
                         Call schema.Remove(key)
                     End If
                 Next

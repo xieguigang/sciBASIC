@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5419d3f4252bbbeed3dd101c5d483a3, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::95552df1c5fc0cd7ce6976ccffb455d6, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 
@@ -152,7 +152,8 @@ Namespace CommandLine.Reflection.EntryPoints
         End Function
 
         ''' <summary>
-        ''' 
+        ''' + 如果目标方法是一个Function函数,则退出代码为目标函数返回值
+        ''' + 如果目标方法是一个无返回的Sub,则退出代码永远都是零
         ''' </summary>
         ''' <param name="parameters">数组的长度必须与目标函数的参数的数目一致，否则短于目标函数的参数的数目的数组会使用Nothing来填充缺少的部分，而多于目标函数的参数会被截断</param>
         ''' <returns></returns>

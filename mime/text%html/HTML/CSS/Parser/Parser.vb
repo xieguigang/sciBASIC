@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::195e2cc836e9eecfcaeb0ed5e41c6bd3, mime\text%html\HTML\CSS\Parser\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::0e3a1455120a175a404ad84bc1c456ea, mime\text%html\HTML\CSS\Parser\Parser.vb"
 
     ' Author:
     ' 
@@ -160,8 +160,13 @@ Namespace HTML.CSS.Parser
             Return b
         End Function
 
+        ''' <summary>
+        ''' 将CSS字符串解析为键值对集合
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
         <Extension>
-        Private Iterator Function GetProperty(input As String) As IEnumerable(Of (key$, value$))
+        Public Iterator Function GetProperty(input As String) As IEnumerable(Of (key$, value$))
             Dim s As String() = r.Split(input, "[;]")
 
             For Each b As String In s

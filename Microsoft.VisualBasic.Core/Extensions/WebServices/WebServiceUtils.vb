@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6aaf1d9179ff4914bcc54dd8f938d6d9, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::4d5d5bef8e9a9b6e863af14d8d486dff, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -95,7 +95,7 @@ Public Module WebServiceUtils
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function isURL(url As String) As Boolean
-        Return url.InStrAny(Protocols) > -1
+        Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(Protocols) = 1
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -214,8 +214,8 @@ Public Module WebServiceUtils
         Return GenerateDictionary(tokens, transLower)
     End Function
 
-    ReadOnly urlEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
-    Friend ReadOnly noEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(Function(s) s)
+    ReadOnly urlEscaping As [Default](Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
+    Friend ReadOnly noEscaping As [Default](Of Func(Of String, String)) = New Func(Of String, String)(Function(s) s)
 
     ''' <summary>
     ''' 生成URL请求的参数
@@ -269,17 +269,32 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="encoding"></param>
+    ''' <param name="jswhitespace">
+    ''' 空格符号默认被转义为``+``, 如果这个参数为真的话,则空格会被转义为``%20``
+    ''' </param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' A extension method wrapper for <see cref="HttpUtility.UrlEncode"/>
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("URL.Encode")>
     <Extension>
-    Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing) As String
+    Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing, Optional jswhitespace As Boolean = False) As String
+        Dim component As String
+
         If encoding IsNot Nothing Then
-            Return HttpUtility.UrlEncode(s, encoding)
+            component = HttpUtility.UrlEncode(s, encoding)
         Else
-            Return HttpUtility.UrlEncode(s)
+            component = HttpUtility.UrlEncode(s)
         End If
+
+        If jswhitespace Then
+            ' 20190517 因为+号被转义为%2b,所以在这里可以直接替换
+            ' 由空格转义而得到的+符号为%20
+            component = component.Replace("+", "%20")
+        End If
+
+        Return component
     End Function
 
     <ExportAPI("URL.Encode")>
@@ -352,7 +367,7 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <returns></returns>
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As String
+    <Extension> Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = Nothing) As String
         Dim strData As String = ""
         Dim strValue As New List(Of String)
         Dim reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
@@ -410,7 +425,7 @@ Public Module WebServiceUtils
     <ExportAPI("GET.Raw", Info:="GET http request")>
     <Extension> Public Function GetRequestRaw(url As String,
                                               Optional https As Boolean = False,
-                                              Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As Stream
+                                              Optional userAgent As String = Nothing) As Stream
         Dim request As HttpWebRequest
         If https Then
             request = WebRequest.CreateDefault(New Uri(url))
@@ -421,7 +436,7 @@ Public Module WebServiceUtils
         request.Method = "GET"
         request.KeepAlive = False
         request.ServicePoint.Expect100Continue = False
-        request.UserAgent = userAgent
+        request.UserAgent = userAgent Or DefaultUA
 
         Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
         Dim s As Stream = response.GetResponseStream()
@@ -461,7 +476,7 @@ Public Module WebServiceUtils
                                      Optional proxy$ = Nothing,
                                      Optional contentEncoding As Encodings = Encodings.UTF8) As String
 
-        Static emptyBody As New DefaultValue(Of NameValueCollection) With {
+        Static emptyBody As New [Default](Of NameValueCollection) With {
             .Value = New NameValueCollection,
             .assert = Function(c)
                           Return c Is Nothing OrElse DirectCast(c, NameValueCollection).Count = 0
@@ -624,7 +639,11 @@ Public Module WebServiceUtils
         }
     End Function
 
-    Public Property DefaultUA As String = UserAgent.GoogleChrome
+    ''' <summary>
+    ''' 设置默认的http请求的user-agent，默认为Google Chrome的UA字符串
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property DefaultUA As [Default](Of String) = UserAgent.GoogleChrome
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
@@ -639,7 +658,7 @@ Public Module WebServiceUtils
                                              <Parameter("Path.Save", "The saved location of the downloaded file data.")>
                                              save$,
                                              Optional proxy$ = Nothing,
-                                             Optional ua$ = UserAgent.FireFox,
+                                             Optional ua$ = Nothing,
                                              Optional retry% = 0,
                                              Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
                                              Optional refer$ = Nothing,
@@ -668,9 +687,9 @@ RE0:
                     AddHandler browser.DownloadProgressChanged, progressHandle
                 End If
 
-                Call browser.Headers.Add(UserAgent.UAheader, ua)
-                Call save.ParentPath.MkDIR
+                Call browser.Headers.Add(UserAgent.UAheader, ua Or DefaultUA)
                 Call $"{strUrl} --> {save}".__DEBUG_ECHO
+                Call save.ParentPath.MkDIR
                 Call browser.DownloadFile(strUrl, save)
             End Using
 

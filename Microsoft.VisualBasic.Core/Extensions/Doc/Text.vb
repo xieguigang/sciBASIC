@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16c09e6ed8764347ede7cc93905e0cc5, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::400f086acc384a348306716fc505f3ed, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -67,10 +67,11 @@ Public Module TextDoc
     ''' <param name="ThrowEx"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function LoadTextDoc(Of T As ITextFile)(file$,
-                                                   Optional encoding As Encoding = Nothing,
-                                                   Optional parser As Func(Of String, Encoding, T) = Nothing,
-                                                   Optional ThrowEx As Boolean = True) As T
+    Public Function LoadTextDoc(Of T As IFileReference)(file$,
+                   Optional encoding As Encoding = Nothing,
+                   Optional parser As Func(Of String, Encoding, T) = Nothing,
+                   Optional ThrowEx As Boolean = True) As T
+
         If parser Is Nothing Then
             parser = AddressOf LoadXml
         End If
@@ -222,11 +223,31 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 自动进行判断解决所读取的数据源，当<paramref name="handle"/>为文件路径的时候，会读取文件内容，反之则会直接返回<paramref name="handle"/>的内容
+    ''' 自动进行判断解决所读取的数据源，当<paramref name="handle"/>为文件路径的时候，
+    ''' 会读取文件内容，反之则会直接返回<paramref name="handle"/>的内容
     ''' </summary>
-    ''' <param name="handle$">文本内容或者文件路径</param>
-    ''' <returns></returns>
+    ''' <param name="handle$">The text content or file path string.(文本内容或者文件路径)</param>
+    ''' <returns>Always returns a text content.</returns>
+    ''' <remarks>
+    ''' 不适用于大文本数据
+    ''' </remarks>
     <Extension> Public Function SolveStream(handle$, Optional encoding As Encodings = Encodings.UTF8) As String
+        If handle Is Nothing Then
+            Return ""
+        ElseIf handle.IndexOf(ASCII.CR) > -1 OrElse handle.IndexOf(ASCII.LF) > -1 Then
+            ' is text content, not path
+            Return handle
+        ElseIf ILLEGAL_PATH_CHARACTERS _
+            .Any(Function(i)
+                     ' handle可能是绝对路径，在windows之中，绝对路径会含有盘符
+                     ' 例如E:\，冒号会导致这里的判断出现BUG
+                     ' 所以需要添加一个额外的判断条件
+                     Return i <> ":"c AndAlso handle.IndexOf(i) > -1
+                 End Function) Then
+            ' is text content, not path
+            Return handle
+        End If
+
         If handle.FileExists(True) Then
             Return handle.ReadAllText(encoding.CodePage)
         Else

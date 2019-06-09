@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8d5d8d3a4cf91a967b29f2dfd178f6b, Data\DataFrame\test\MySQLImportsTest.vb"
+﻿#Region "Microsoft.VisualBasic::17ed0afe998827fe008da60b118e5705, Data\DataFrame\test\MySQLImportsTest.vb"
 
     ' Author:
     ' 

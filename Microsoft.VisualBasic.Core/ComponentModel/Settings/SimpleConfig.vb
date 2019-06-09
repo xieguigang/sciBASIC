@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d67c8859d3154538757ce075430790b, Microsoft.VisualBasic.Core\ComponentModel\Settings\SimpleConfig.vb"
+﻿#Region "Microsoft.VisualBasic::a33e499722e8f82ca55ee720a1cf47ca, Microsoft.VisualBasic.Core\ComponentModel\Settings\SimpleConfig.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Name, TypeInfo
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GenerateConfigurations, ToString, TryParse
+    '         Function: bindProperties, GenerateConfigurations, ToString, TryParse
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,6 +48,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports typeSchema = System.Reflection.TypeInfo
 
 Namespace ComponentModel.Settings
@@ -84,39 +85,25 @@ Namespace ComponentModel.Settings
         ''' <param name="canWrite">从文件之中读取数据的时候，需要设置为真</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function TryParse(Of T As Class,
-                                           TConfig As SimpleConfig)(
-                                           canRead As Boolean,
-                                           canWrite As Boolean) As BindProperty(Of TConfig)()
-
-            Dim type As typeSchema = GetType(T), configType As Type = GetType(TConfig)
+        Public Shared Iterator Function TryParse(Of T As Class, TConfig As SimpleConfig)(canRead As Boolean, canWrite As Boolean) As IEnumerable(Of BindProperty(Of TConfig))
+            Dim type As typeSchema = GetType(T)
+            Dim configType As Type = GetType(TConfig)
             Dim properties = type.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
-            Dim LQuery = LinqAPI.Exec(Of BindProperty(Of TConfig)) _
- _
-                () <= From [property] As PropertyInfo
-                      In properties
-                      Let attrs As Object() = [property].GetCustomAttributes(
-                          attributeType:=configType,
-                          inherit:=True)
-                      Let info As Type = [property].PropertyType
-                      Where Not attrs.IsNullOrEmpty AndAlso StringParsers.ContainsKey(info)
-                      Let attr = DirectCast(attrs.First, TConfig)
-                      Select New BindProperty(Of TConfig)(attr, [property])
+            Dim LQuery = bindProperties(Of TConfig)(properties, configType).ToArray
 
             If LQuery.IsNullOrEmpty Then
-                Return Nothing
+                Return
             End If
-
-            Dim Schema As New List(Of BindProperty(Of TConfig))
 
             For Each line As BindProperty(Of TConfig) In LQuery
                 Dim [property] As PropertyInfo = DirectCast(line.member, PropertyInfo)
 
-                If [property].CanRead AndAlso [property].CanWrite Then  '同时满足可读和可写的属性直接添加
+                If [property].CanRead AndAlso [property].CanWrite Then
+                    ' 同时满足可读和可写的属性直接添加
                     GoTo INSERT
                 End If
 
-                '从这里开始的属性都是只读属性或者只写属性
+                ' 从这里开始的属性都是只读属性或者只写属性
                 If canRead = True Then
                     If [property].CanRead = False Then
                         Continue For
@@ -129,41 +116,56 @@ Namespace ComponentModel.Settings
                 End If
 INSERT:
                 If String.IsNullOrEmpty(line.field._Name) Then
-                    line.field._Name =
-                        If(line.field._ToLower,
-                        line.Identity.ToLower,
-                        line.Identity)
+                    If line.field._ToLower Then
+                        line.field._Name = line.Identity.ToLower
+                    Else
+                        line.field._Name = line.Identity
+                    End If
                 End If
 
                 ' 这里为什么会出现重复的键名？？？
-                Schema += New BindProperty(Of TConfig)(line.field, [property])
+                Yield New BindProperty(Of TConfig)(line.field, [property])
             Next
-
-            Return Schema.ToArray
         End Function
+
+        Private Shared Function bindProperties(Of Tconfig As SimpleConfig)(properties As PropertyInfo(), configType As Type) As IEnumerable(Of BindProperty(Of Tconfig))
+            Return From [property] As PropertyInfo
+                   In properties
+                   Let attrs As Object() = [property].GetCustomAttributes(attributeType:=configType, inherit:=True)
+                   Let info As Type = [property].PropertyType
+                   Where Not attrs.IsNullOrEmpty AndAlso StringParsers.ContainsKey(info)
+                   Let attr = DirectCast(attrs.First, Tconfig)
+                   Select New BindProperty(Of Tconfig)(attr, [property])
+        End Function
+
+        Shared ReadOnly defaultFormat As New [Default](Of Func(Of String, String, String))(Function(name, value) $"{name}= {value}")
 
         ''' <summary>
         ''' 从类型实体生成配置文件数据
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="target"></param>
+        ''' <param name="formats">
+        ''' ``[name, value] => format_output``
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>类型实体之中的简单属性，只要具备可读属性即可被解析出来</remarks>
-        Public Shared Function GenerateConfigurations(Of T As Class)(target As T) As String()
+        Public Shared Iterator Function GenerateConfigurations(Of T As Class)(target As T, Optional formats As Func(Of String, String, String) = Nothing) As IEnumerable(Of String)
             Dim type As Type = GetType(T)
-            Dim Schema = TryParse(Of T, SimpleConfig)(canRead:=True, canWrite:=False)
-            Dim mlen As Integer = (From cfg As SimpleConfig In Schema.Select(Function(x) x.field) Select Len(cfg._Name)).Max
-            Dim bufs As New List(Of String)
+            Dim schema = TryParse(Of T, SimpleConfig)(canRead:=True, canWrite:=False).ToArray
+            Dim mlen As Integer = Aggregate cfg As SimpleConfig
+                                  In schema.Select(Function(x) x.field)
+                                  Let l = Len(cfg._Name)
+                                  Into Max(l)
+            Dim formatter = formats Or defaultFormat
 
-            For Each [property] As BindProperty(Of SimpleConfig) In Schema
+            For Each [property] As BindProperty(Of SimpleConfig) In schema
                 Dim blank As New String(" ", mlen - Len([property].field._Name) + 2)
-                Dim Name As String = [property].field._Name & blank
+                Dim name As String = [property].field._Name & blank
                 Dim value As String = Scripting.ToString([property].GetValue(target))
 
-                bufs += $"{Name}= {value}"
+                Yield formatter(name, value)
             Next
-
-            Return bufs.ToArray
         End Function
     End Class
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3da10841d6f9a62ea415710a98e602d, Microsoft.VisualBasic.Core\ApplicationServices\ServerModule.vb"
+﻿#Region "Microsoft.VisualBasic::2da983e326a439e3d78ee22104032cec, Microsoft.VisualBasic.Core\ApplicationServices\ServerModule.vb"
 
     ' Author:
     ' 
@@ -131,7 +131,7 @@ Namespace ApplicationServices
 
         Public ReadOnly Property Protocol As New Protocol(GetType(T))
         Public ReadOnly Property TcpRequest As TcpRequest
-        Public ReadOnly Property TextEncoding As DefaultValue(Of Encoding)
+        Public ReadOnly Property TextEncoding As [Default](Of Encoding)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(hostName$, remotePort%, Optional encoding As Encodings = Encodings.UTF8WithoutBOM)

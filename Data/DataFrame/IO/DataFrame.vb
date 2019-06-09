@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9da6f90560eecd28fcaba11cabd742ef, Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::efaa02e2d12dee7f5c0b73deddafe809, Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 
@@ -36,19 +36,20 @@
     '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
     '                     IsClosed, Item, RecordsAffected, SchemaOridinal
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: [Select], __createObject, __createSchemaOridinal, __createTableVector, __getColumnList
-    '                   __reviewColumnHeader, AddAttribute, CreateDataSource, CreateObject, csv
-    '                   EnumerateData, Generate, GetBoolean, GetByte, GetBytes
-    '                   GetChar, GetChars, GetData, GetDataTypeName, GetDateTime
-    '                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
-    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
-    '                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
-    '                   GetValues, IDataRecord_GetValue, IsDBNull, Load, Read
-    '                   ToString
+    '                   __reviewColumnHeader, AddAttribute, ColumnRows, CreateDataSource, CreateObject
+    '                   csv, EnumerateData, Generate, GetBoolean, GetByte
+    '                   GetBytes, GetChar, GetChars, GetData, GetDataTypeName
+    '                   GetDateTime, GetDecimal, GetDouble, GetEnumerator2, GetFieldType
+    '                   GetFloat, GetGuid, GetInt16, GetInt32, GetInt64
+    '                   GetName, GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString
+    '                   GetValue, GetValues, IDataRecord_GetValue, IsDBNull, Load
+    '                   LoadDataSet, Parse, Read, ToString
     ' 
-    '         Sub: ChangeMapping, Close, CopyFrom, Reset
+    '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
+    '              Reset
     ' 
     ' 
     ' /********************************************************************************/
@@ -63,6 +64,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 
@@ -80,17 +82,18 @@ Namespace IO
         Implements IEnumerable(Of DynamicObjectLoader)
 
         ''' <summary>
-        ''' <see cref="__currentLine"></see>在<see cref="_innerTable"></see>之中的位置
+        ''' <see cref="current"></see>在<see cref="_innerTable"></see>之中的位置
         ''' </summary>
         ''' <remarks></remarks>
-        Dim __current% = -1
-        Dim __currentLine As RowObject
+        Dim p% = -1
+        Dim current As RowObject
 
         ''' <summary>
         ''' Using the first line of the csv row as the column headers in this csv file.
         ''' </summary>
         ''' <remarks></remarks>
-        Protected __columnList As List(Of String)
+        Protected columnList As List(Of String)
+
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
 
         Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data!"
@@ -98,28 +101,32 @@ Namespace IO
         ''' <summary>
         ''' ``Csv.Field -> <see cref="PropertyInfo.Name"/>``
         ''' </summary>
-        ''' <param name="MappingData">``{oldFieldName, newFieldName}``</param>
+        ''' <param name="mapping">``{oldFieldName, newFieldName}``</param>
         ''' <remarks></remarks>
-        Public Sub ChangeMapping(MappingData As Dictionary(Of String, String))
-            For Each map As NamedValue(Of String) In MappingData.IterateNameValues
-                Dim p% = __columnList.IndexOf(map.Name)
+        Public Sub ChangeMapping(mapping As Dictionary(Of String, String))
+            Dim p As VBInteger = 0
+            Dim oridinal = SchemaOridinal
 
+            For Each map As NamedValue(Of String) In mapping.IterateNameValues
                 ' 由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
-                If Not p = -1 Then
-                    __columnList(p) = map.Value
+                If (p = columnList.IndexOf(map.Name)) = -1 Then
+                    Continue For
+                End If
+
+                columnList(p) = map.Value
+
+                If oridinal.ContainsKey(map.Value) AndAlso map.Name <> map.Value Then
+                    Dim msg = String.Format(FieldExists, map.Name, map.Value)
+                    Dim ex As New Exception(msg)
 
                     ' 2017-11-4 假设在原来的文件之中存在一个名字叫做ID的列
                     ' 但是在这里进行名称映射的变化的结果也是ID名字的话，
                     ' 则在这里会出现重复键名称的错误
-                    If SchemaOridinal.ContainsKey(map.Value) AndAlso map.Name <> map.Value Then
-                        Dim ex As New Exception(String.Format(FieldExists, map.Name, map.Value))
-                        ex = New Exception(Me.FilePath, ex)
-                        Throw ex
-                    End If
-
-                    _SchemaOridinal.Remove(map.Name)
-                    _SchemaOridinal.Add(map.Value, p)
+                    Throw ex
                 End If
+
+                Call oridinal.Remove(map.Name)
+                Call oridinal.Add(map.Value, p)
             Next
         End Sub
 
@@ -127,8 +134,8 @@ Namespace IO
             If SchemaOridinal.ContainsKey(Name) Then
                 Return SchemaOridinal(Name)
             Else
-                Dim p As Integer = __columnList.Count
-                Call __columnList.Add(Name)
+                Dim p As Integer = columnList.Count
+                Call columnList.Add(Name)
                 Call _SchemaOridinal.Add(Name, p)
                 Return p
             End If
@@ -145,7 +152,7 @@ Namespace IO
         ''' <param name="data"></param>
         ''' <returns></returns>
         Private Shared Function __createSchemaOridinal(data As DataFrame) As Dictionary(Of String, Integer)
-            Dim arrayCache$() = data.__columnList.ToArray
+            Dim arrayCache$() = data.columnList.ToArray
             Dim duplicates$() = arrayCache _
                 .GroupBy(Function(s) s) _
                 .Where(Function(g) g.Count > 1) _
@@ -212,7 +219,7 @@ Namespace IO
         ''' <returns></returns>
         Public ReadOnly Property HeadTitles As String()
             Get
-                Return __columnList.ToArray
+                Return columnList.ToArray
             End Get
         End Property
 
@@ -222,7 +229,7 @@ Namespace IO
         ''' <returns></returns>
         Public Overrides ReadOnly Property Headers As RowObject
             Get
-                Return New RowObject(__columnList)
+                Return New RowObject(columnList)
             End Get
         End Property
 
@@ -246,7 +253,7 @@ Namespace IO
 
         Public ReadOnly Property FieldCount As Integer Implements IDataRecord.FieldCount
             Get
-                Return __columnList.Count
+                Return columnList.Count
             End Get
         End Property
 
@@ -269,14 +276,60 @@ Namespace IO
         ''' </summary>
         ''' <returns></returns>
         Public Function csv() As File
-            Dim File As New File
-            File += New RowObject(__columnList)
-            File += DirectCast(_innerTable, IEnumerable(Of RowObject))
-            Return File
+            Dim file As New File
+            file += New RowObject(columnList)
+            file += DirectCast(_innerTable, IEnumerable(Of RowObject))
+            Return file
         End Function
 
         Protected Friend Sub New()
         End Sub
+
+        ''' <summary>
+        ''' Create a new dataframe with column value assigned
+        ''' </summary>
+        ''' <param name="columns">
+        ''' 只支持基础类型,不支持复杂类型,因为csv文件的单元格不适用于复杂数据类型的数据文本的存储
+        ''' </param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(ParamArray columns As ArgumentReference())
+            Call Initialize(ColumnRows(columns).AsList, Me)
+        End Sub
+
+        Private Shared Iterator Function ColumnRows(columns As ArgumentReference()) As IEnumerable(Of RowObject)
+            Dim collectionType As Type() = {GetType(Array), GetType(IEnumerable), GetType(IList)}
+            Dim matrix As Object()() = columns _
+                .Select(Function(c)
+                            Dim type As Type = c.ValueType
+
+                            If collectionType.Any(Function(base)
+                                                      Return type.IsInheritsFrom(base)
+                                                  End Function) Then
+                                ' 是一个值的集合
+                                Return DirectCast(c.Value, IEnumerable).ToVector
+                            Else
+                                ' 是一个单个的值,转换为值的集合
+                                Return New Object() {c.Value}
+                            End If
+                        End Function) _
+                .ToArray
+            Dim maxLen = Aggregate c In matrix Into Max(c.Length)
+            Dim row As IEnumerable(Of String)
+
+            ' yield title row
+            Yield New RowObject(columns.Select(Function(c) c.Name))
+
+            For i As Integer = 0 To maxLen - 1
+#Disable Warning
+                row = matrix _
+                    .Select(Function(v)
+                                Return v.ElementAtOrNull(i)
+                            End Function) _
+                    .Select(AddressOf Scripting.ToString)
+#Enable Warning
+                Yield New RowObject(row)
+            Next
+        End Function
 
         ''' <summary>
         ''' Try loading a excel csv data file as a dynamics data frame object.(尝试加载一个Csv文件为数据框对象，请注意，第一行必须要为标题行)
@@ -294,7 +347,17 @@ Namespace IO
                 file = File.Load(path, encoding)
             End If
 
-            Return CreateObject(File)
+            Return CreateObject(file)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadDataSet(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
+            Return DataSet.LoadDataSet(path, encoding:=encoding)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Function Parse(Of T As Class)(content As String) As IEnumerable(Of T)
+            Return File.Parse(content).AsDataSource(Of T)
         End Function
 
         Private Shared Function __getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
@@ -313,7 +376,8 @@ Namespace IO
         Const EmptyWarning$ = "[CSV::Reflector::Warnning] There are empty column header in your data!"
 
         ''' <summary>
-        ''' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，使用Trim函数之后，反而会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
+        ''' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，
+        ''' 使用Trim函数之后，反而会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
         ''' </summary>
         ''' <param name="strValue"></param>
         ''' <returns></returns>
@@ -334,7 +398,9 @@ Namespace IO
                 Call xConsole.WriteLine($"^y{String.Format(FailureWarning, strValue)}^!")
             End If
 
-            Return strValue '这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，使用Trim函数之后，反而会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
+            ' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，
+            ' 使用Trim函数之后，反而可能会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
+            Return strValue
         End Function
 
         Const FailureWarning As String =
@@ -346,35 +412,30 @@ Namespace IO
         ''' <param name="file"></param>
         ''' <returns></returns>
         Public Overloads Shared Function CreateObject(file As File) As DataFrame
-            Try
-                Return __createObject(file)
-            Catch ex As Exception
-                Call $"Error during read file from handle {file.FilePath.ToFileURL}".__DEBUG_ECHO
-                Call ex.PrintException
-                Throw
-            End Try
+            Return __createObject(file)
         End Function
 
-        Private Shared Function __createObject(file As File) As DataFrame
-            Dim df As New DataFrame With {
-                ._innerTable = file._innerTable.Skip(1).AsList,
-                .FilePath = file.FilePath
-            }
-            df.__columnList = __getColumnList(file._innerTable)
-            df._SchemaOridinal = __createSchemaOridinal(df)
+        Private Shared Sub Initialize(table As List(Of RowObject), dataframe As DataFrame)
+            dataframe._innerTable = table.Skip(1).AsList
+            dataframe.columnList = __getColumnList(table)
+            dataframe._SchemaOridinal = __createSchemaOridinal(dataframe)
+        End Sub
 
-            Return df
+        Private Shared Function __createObject(file As File) As DataFrame
+            Dim dataframe As New DataFrame
+            Call Initialize(file._innerTable, dataframe)
+            Return dataframe
         End Function
 
         Protected Friend Overrides Function __createTableVector() As RowObject()
-            Dim readBuffer As New List(Of RowObject)({CType(Me.__columnList, RowObject)})
+            Dim readBuffer As New List(Of RowObject)({CType(Me.columnList, RowObject)})
             Call readBuffer.AddRange(_innerTable)
             Return readBuffer.ToArray
         End Function
 
         Public Overrides Function Generate() As String
             Dim sb As New StringBuilder(1024)
-            Dim head As String = New RowObject(__columnList).AsLine
+            Dim head As String = New RowObject(columnList).AsLine
 
             Call sb.AppendLine(head)
 
@@ -392,7 +453,7 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function GetOrdinal(Column As String) As Integer Implements IDataRecord.GetOrdinal, ISchema.GetOrdinal
-            Return __columnList.IndexOf(Column)
+            Return columnList.IndexOf(Column)
         End Function
 
         ''' <summary>
@@ -405,17 +466,17 @@ Namespace IO
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinalSchema(columns As String()) As Integer()
-            Return columns.Select(Function(c) __columnList.IndexOf(c)).ToArray
+            Return columns.Select(Function(c) columnList.IndexOf(c)).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValue(ordinal As Integer) As String
 #If DEBUG Then
-            If ordinal > Me.__currentLine.Count - 1 Then
+            If ordinal > Me.current.Count - 1 Then
                 Return ""
             End If
 #End If
-            Return __currentLine.Column(ordinal)
+            Return current.Column(ordinal)
         End Function
 
         ''' <summary>
@@ -425,11 +486,11 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Function Read() As Boolean Implements IDataReader.Read, IDataReader.NextResult
-            If __current = _innerTable.Count - 1 Then
+            If p = _innerTable.Count - 1 Then
                 Return False
             Else
-                __current += 1
-                __currentLine = _innerTable(__current)
+                p += 1
+                current = _innerTable(p)
 
                 Return True
             End If
@@ -442,7 +503,7 @@ Namespace IO
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Reset()
-            __current = -1
+            p = -1
         End Sub
 
         ''' <summary>
@@ -452,13 +513,12 @@ Namespace IO
         ''' <remarks></remarks>
         Public Sub CopyFrom(source As File)
             _innerTable = source._innerTable.Skip(1).AsList
-            FilePath = source.FilePath
-            __columnList = source._innerTable.First.AsList
+            columnList = source._innerTable.First.AsList
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return FilePath.ToFileURL & "  // " & _innerTable(__current).ToString
+            Return _innerTable(p).ToString
         End Function
 
         Public Function [Select](columnList As String()) As DataFrame
@@ -471,19 +531,18 @@ Namespace IO
             Do While Me.Read
                 newTable += New RowObject(
                     pList.Select(
-                    Function(i) __currentLine.Column(i)))
+                    Function(i) current.Column(i)))
             Loop
 
             Return New DataFrame With {
-                .__columnList = columnList.AsList,
-                .FilePath = FilePath,
+                .columnList = columnList.AsList,
                 ._innerTable = newTable
             }
         End Function
 
         Public Iterator Function GetEnumerator2() As IEnumerator(Of DynamicObjectLoader) Implements IEnumerable(Of DynamicObjectLoader).GetEnumerator
             Dim schema As Dictionary(Of String, Integer) =
-                __columnList _
+                columnList _
                 .SeqIterator _
                 .ToDictionary(Function(x) x.value,
                               Function(x) x.i)
@@ -517,7 +576,7 @@ Namespace IO
         End Function
 
         Public Function GetName(i As Integer) As String Implements IDataRecord.GetName
-            Return __columnList(i)
+            Return columnList(i)
         End Function
 
         Public Function GetDataTypeName(i As Integer) As String Implements IDataRecord.GetDataTypeName
@@ -534,11 +593,11 @@ Namespace IO
 
         Public Function GetFieldType(i As Integer) As Type Implements IDataRecord.GetFieldType
             Dim typeName As String = GetDataTypeName(i)
-            Return Scripting.InputHandler.GetType(typeName, True)
+            Return InputHandler.GetType(typeName, True)
         End Function
 
         Private Function IDataRecord_GetValue(i As Integer) As Object Implements IDataRecord.GetValue
-            Return __currentLine.Column(i)
+            Return current.Column(i)
         End Function
 
         Public Function GetValues(values() As Object) As Integer Implements IDataRecord.GetValues
@@ -546,7 +605,7 @@ Namespace IO
                 Return 0
             Else
                 For i As Integer = 0 To values.Length - 1
-                    values(i) = __currentLine.Column(i)
+                    values(i) = current.Column(i)
                 Next
 
                 Return values.Length
@@ -554,12 +613,12 @@ Namespace IO
         End Function
 
         Public Function GetBoolean(i As Integer) As Boolean Implements IDataRecord.GetBoolean
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Boolean)(value)
         End Function
 
         Public Function GetByte(i As Integer) As Byte Implements IDataRecord.GetByte
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Byte)(value)
         End Function
 
@@ -568,7 +627,7 @@ Namespace IO
         End Function
 
         Public Function GetChar(i As Integer) As Char Implements IDataRecord.GetChar
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Char)(value)
         End Function
 
@@ -577,47 +636,47 @@ Namespace IO
         End Function
 
         Public Function GetGuid(i As Integer) As Guid Implements IDataRecord.GetGuid
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Guid)(value)
         End Function
 
         Public Function GetInt16(i As Integer) As Short Implements IDataRecord.GetInt16
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Short)(value)
         End Function
 
         Public Function GetInt32(i As Integer) As Integer Implements IDataRecord.GetInt32
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Integer)(value)
         End Function
 
         Public Function GetInt64(i As Integer) As Long Implements IDataRecord.GetInt64
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Long)(value)
         End Function
 
         Public Function GetFloat(i As Integer) As Single Implements IDataRecord.GetFloat
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Single)(value)
         End Function
 
         Public Function GetDouble(i As Integer) As Double Implements IDataRecord.GetDouble
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Double)(value)
         End Function
 
         Public Function GetString(i As Integer) As String Implements IDataRecord.GetString
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return value
         End Function
 
         Public Function GetDecimal(i As Integer) As Decimal Implements IDataRecord.GetDecimal
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Decimal)(value)
         End Function
 
         Public Function GetDateTime(i As Integer) As Date Implements IDataRecord.GetDateTime
-            Dim value As String = __currentLine.Column(i)
+            Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Date)(value)
         End Function
 
@@ -626,7 +685,39 @@ Namespace IO
         End Function
 
         Public Function IsDBNull(i As Integer) As Boolean Implements IDataRecord.IsDBNull
-            Return String.IsNullOrEmpty(__currentLine.Column(i))
+            Return String.IsNullOrEmpty(current.Column(i))
         End Function
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace

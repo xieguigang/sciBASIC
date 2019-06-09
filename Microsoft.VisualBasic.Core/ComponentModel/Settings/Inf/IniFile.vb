@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87a91b33dbed7d9ea08027e159a992f0, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IniFile.vb"
+﻿#Region "Microsoft.VisualBasic::136f0568fcde1a437db9944c1b3c978f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IniFile.vb"
 
     ' Author:
     ' 
@@ -33,87 +33,43 @@
 
     '     Class IniFile
     ' 
-    '         Properties: path
+    '         Properties: FileExists, path
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetPrivateProfileString, ReadValue, ToString, WritePrivateProfileString
+    '         Function: ReadValue, ToString
     ' 
-    '         Sub: WriteValue
+    '         Sub: (+2 Overloads) Dispose, Flush, WriteComment, WriteValue
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
-Imports System.Text
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
-Imports Microsoft.VisualBasic.Win32
 
 Namespace ComponentModel.Settings.Inf
 
     ''' <summary>
     ''' Ini file I/O handler
     ''' </summary>
-    Public Class IniFile
+    Public Class IniFile : Implements IDisposable
 
         Public ReadOnly Property path As String
 
-        ''' <summary>
-        ''' Write a string value into a specific section in a specifc ini profile.(在初始化文件指定小节内设置一个字串)
-        ''' </summary>
-        ''' <param name="section">
-        ''' <see cref="String"/>，要在其中写入新字串的小节名称。这个字串不区分大小写
-        ''' </param>
-        ''' <param name="key">
-        ''' <see cref="String"/>，要设置的项名或条目名。这个字串不区分大小写。
-        ''' 用<see cref="vbNullString"/>可删除这个小节的所有设置项
-        ''' </param>
-        ''' <param name="val">
-        ''' <see cref="String"/>，指定为这个项写入的字串值。用<see cref="vbNullString"/>表示删除这个项现有的字串
-        ''' </param>
-        ''' <param name="filePath">
-        ''' <see cref="String"/>，初始化文件的名字。如果没有指定完整路径名，则windows会在windows目录查找文件。
-        ''' 如果文件没有找到，则函数会创建它</param>
-        ''' <returns>Long，非零表示成功，零表示失败。会设置<see cref="GetLastErrorAPI.GetLastError()"/></returns>
-        <DllImport("kernel32")>
-        Public Shared Function WritePrivateProfileString(section As String,
-                                                         key As String,
-                                                         val As String,
-                                                         filePath As String) As Long
-        End Function
+        Public ReadOnly Property FileExists As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return path.FileLength > -1
+            End Get
+        End Property
 
         ''' <summary>
-        ''' 为初始化文件中指定的条目取得字串
+        ''' 为了避免频繁的读写文件，会使用这个数组来做缓存
         ''' </summary>
-        ''' <param name="section">
-        ''' String，欲在其中查找条目的小节名称。这个字串不区分大小写。如设为vbNullString，就在lpReturnedString
-        ''' 缓冲区内装载这个ini文件所有小节的列表。
-        ''' </param>
-        ''' <param name="key">
-        ''' String，欲获取的项名或条目名。这个字串不区分大小写。如设为vbNullString，就在lpReturnedString
-        ''' 缓冲区内装载指定小节所有项的列表
-        ''' </param>
-        ''' <param name="def">String，指定的条目没有找到时返回的默认值。可设为空（""）</param>
-        ''' <param name="retVal">String，指定一个字串缓冲区，长度至少为nSize</param>
-        ''' <param name="size">Long，指定装载到lpReturnedString缓冲区的最大字符数量</param>
-        ''' <param name="filePath">
-        ''' String，初始化文件的名字。如没有指定一个完整路径名，windows就在Windows目录中查找文件
-        ''' </param>
-        ''' <returns>
-        ''' Long，复制到lpReturnedString缓冲区的字节数量，其中不包括那些NULL中止字符。如lpReturnedString
-        ''' 缓冲区不够大，不能容下全部信息，就返回nSize-1（若lpApplicationName或lpKeyName为NULL，则返回nSize-2）
-        ''' </returns>
-        <DllImport("kernel32")>
-        Public Shared Function GetPrivateProfileString(section As String,
-                                                       key As String,
-                                                       def As String,
-                                                       retVal As StringBuilder,
-                                                       size As Integer,
-                                                       filePath As String) As Integer
-        End Function
+        Dim data As Dictionary(Of String, Section)
 
         ''' <summary>
         ''' Open a ini file handle.
@@ -121,6 +77,22 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="INIPath"></param>
         Public Sub New(INIPath As String)
             path = IO.Path.GetFullPath(PathMapper.GetMapPath(INIPath))
+            data = INIProfile _
+                .PopulateSections(path) _
+                .ToDictionary(Function(s)
+                                  Return s.Name
+                              End Function)
+        End Sub
+
+        ''' <summary>
+        ''' 将缓存数据写入文件之中
+        ''' </summary>
+        Public Sub Flush()
+            Using write As StreamWriter = path.OpenWriter
+                For Each section As Section In data.Values
+                    Call write.WriteLine(section.CreateDocFragment)
+                Next
+            End Using
         End Sub
 
         Public Overrides Function ToString() As String
@@ -128,14 +100,84 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub WriteValue(Section As String, Key As String, Value As String)
-            Call WritePrivateProfileString(Section, Key, Value, Me.path)
+        Public Sub WriteValue(section$, key$, value$, Optional comments$ = Nothing)
+            If Not data.ContainsKey(section) Then
+                data(section) = New Section With {
+                    .Name = section,
+                    .Items = {}
+                }
+            End If
+
+            data(section).SetValue(key, value, comments)
         End Sub
 
-        Public Function ReadValue(Section As String, Key As String) As String
-            Dim temp As New StringBuilder(255)
-            Dim i As Integer = GetPrivateProfileString(Section, Key, "", temp, 255, Me.path)
-            Return temp.ToString()
+        ''' <summary>
+        ''' 在给定的section,key上面写入注释
+        ''' </summary>
+        ''' <param name="section"></param>
+        ''' <param name="key">如果这个键名称不存在的话，则是将注释写入到目标<paramref name="section"/>之中的</param>
+        ''' <param name="comment">不需要添加注释符号,函数会自动添加</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub WriteComment(section$, comment$, Optional key$ = Nothing)
+            ' section和key都不存在的话，则找不到写入注释的位置
+            If Not data.ContainsKey(section) Then
+                Return
+            Else
+                If key.StringEmpty Then
+                    ' 当key是空字符串，则将comment写在section之中
+                    data(section).Comment = comment
+                    Return
+                Else
+                    If Not data(section).Have(key) Then
+                        Return
+                    End If
+                End If
+            End If
+
+            data(section).SetComments(key, comment)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ReadValue(section$, key$) As String
+            If data.ContainsKey(section) Then
+                Return data(section).GetValue(key)
+            Else
+                Return Nothing
+            End If
         End Function
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                    Call Flush()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace

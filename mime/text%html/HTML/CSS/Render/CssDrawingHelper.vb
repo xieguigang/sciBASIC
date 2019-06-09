@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d97a1204b93a8ed4b73f6625c0bcd114, mime\text%html\HTML\CSS\Render\CssDrawingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::ba4472f569bddb7009a61217e40cca27, mime\text%html\HTML\CSS\Render\CssDrawingHelper.vb"
 
     ' Author:
     ' 
@@ -42,8 +42,7 @@
     ' 
     '  
     ' 
-    '     Function: CreateCorner, Darken, GetBorderPath, GetRoundRect, RoundP
-    '               RoundR
+    '     Function: CreateCorner, GetBorderPath, GetRoundRect, RoundP, RoundR
     ' 
     ' 
     ' /********************************************************************************/
@@ -52,6 +51,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports rect = System.Drawing.Rectangle
 
 Namespace HTML.CSS.Render
 
@@ -76,7 +76,7 @@ Namespace HTML.CSS.Render
         ''' Rounds the specified point
         ''' </summary>
         ''' <param name="p"></param>
-        ''' <param name="b"></param>
+        ''' <param name="b"></param>Module
         ''' <returns></returns>
         Private Shared Function RoundP(p As PointF, b As CssBox) As PointF
             'HACK: Don't round if in printing mode
@@ -91,7 +91,7 @@ Namespace HTML.CSS.Render
         ''' <returns></returns>
         Private Shared Function RoundR(r As RectangleF, b As CssBox) As RectangleF
             'HACK: Don't round if in printing mode
-            Return Rectangle.Round(r)
+            Return rect.Round(r)
         End Function
 
         ''' <summary>
@@ -330,15 +330,6 @@ Namespace HTML.CSS.Render
             path.CloseFigure()
 
             Return path
-        End Function
-
-        ''' <summary>
-        ''' Makes the specified color darker
-        ''' </summary>
-        ''' <param name="c"></param>
-        ''' <returns></returns>
-        Public Shared Function Darken(c As Color) As Color
-            Return Color.FromArgb(c.R \ 2, c.G \ 2, c.B \ 2)
         End Function
     End Class
 End Namespace

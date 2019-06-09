@@ -346,7 +346,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Distributions\ContinuousDistribution.vb" />
-    <Compile Include="Distributions\ContinuousDistributionError.vb" />
     <Compile Include="Distributions\LinearMoments\Exponential.vb" />
     <Compile Include="Distributions\LinearMoments\GEV.vb" />
     <Compile Include="Distributions\LinearMoments\Gumbel.vb" />

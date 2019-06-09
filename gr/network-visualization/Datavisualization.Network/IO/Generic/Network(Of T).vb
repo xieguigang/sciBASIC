@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::433bdffc86f1fd6a2597c5414d637b49, gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::c539ccfe8489b68984fee2a071dc53aa, gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Network
     ' 
-    '         Properties: Edges, Nodes
+    '         Properties: Edges, IsEmpty, Nodes
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -83,6 +83,7 @@ Namespace FileStream.Generic
                 End If
             End Set
         End Property
+
         Public Property Edges As T_Edge() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Value
             Get
                 If __edges Is Nothing Then
@@ -97,6 +98,16 @@ Namespace FileStream.Generic
                     __edges = value.AsList
                 End If
             End Set
+        End Property
+
+        ''' <summary>
+        ''' 判断这个网络模型之中是否是没有任何数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return __nodes.IsNullOrEmpty AndAlso __edges.IsNullOrEmpty
+            End Get
         End Property
 
         Sub New()
@@ -150,7 +161,7 @@ Namespace FileStream.Generic
         ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overrides Function Save(Optional outDIR$ = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Overrides Function Save(outDIR$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             With outDIR Or App.CurrentDirectory.AsDefault
                 Call Nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding)
                 Call Edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding)

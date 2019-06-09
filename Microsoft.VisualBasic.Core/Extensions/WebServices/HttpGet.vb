@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebff84e767340583f68aa576db37f8ad, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::994b1956aa075a24286a1fac61a9418f, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,8 @@
     ' 
     '     Properties: HttpRequestTimeOut
     ' 
-    '     Function: [GET], __get, __httpRequest, Get_PageContent, LogException
+    '     Function: [GET], BuildWebRequest, Get_PageContent, httpRequest, LogException
+    '               urlGet
     ' 
     ' /********************************************************************************/
 
@@ -47,9 +48,9 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
 ''' Tools for http get
@@ -69,13 +70,12 @@ Public Module HttpGet
     <Extension> Public Function [GET](url As String,
                                       <Parameter("Request.TimeOut")>
                                       Optional retry As UInt16 = 0,
-                                      <Parameter("FileSystem.Works?", "Is this a local html document on your filesystem?")>
-                                      Optional isFileUrl As Boolean = False,
                                       Optional headers As Dictionary(Of String, String) = Nothing,
                                       Optional proxy As String = Nothing,
                                       Optional doNotRetry404 As Boolean = True,
-                                      Optional UA$ = UserAgent.GoogleChrome,
-                                      Optional refer$ = Nothing) As String
+                                      Optional UA$ = Nothing,
+                                      Optional refer$ = Nothing,
+                                      Optional ByRef is404 As Boolean = False) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -87,15 +87,21 @@ Public Module HttpGet
     '''
     <Extension> Public Function Get_PageContent(url As String, Optional RequestTimeOut As UInteger = 20, Optional FileSystemUrl As Boolean = False) As String
 #End If
-        ' Call $"Request data from: {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
+        Dim isFileUrl As String = (InStr(url, "http://", CompareMethod.Text) <> 1) AndAlso (InStr(url, "https://", CompareMethod.Text) <> 1)
+
         Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
 
-        If FileIO.FileSystem.FileExists(url) Then
+        ' do status indicator reset
+        is404 = False
+
+        ' 类似于php之中的file_get_contents函数,可以读取本地文件内容
+        If File.Exists(url) Then
             Call "[Job DONE!]".__DEBUG_ECHO
-            Return FileIO.FileSystem.ReadAllText(url)
+            Return url.ReadAllText
         Else
             If isFileUrl Then
-                Call $"URL {url.ToFileURL} can not solved on your filesystem!".Warning
+                Call $"URL {url.ToFileURL} can not be solved on your filesystem!".Warning
+                is404 = True
                 Return ""
             End If
         End If
@@ -108,11 +114,11 @@ Public Module HttpGet
             headers(NameOf(refer)) = refer
         End If
 
-        Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)
+        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404)
     End Function
 
     <Extension>
-    Private Function __httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$) As String
+    Private Function httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$, ByRef is404 As Boolean) As String
         Dim retryTime As Integer = 0
 
         If String.IsNullOrEmpty(proxy) Then
@@ -120,8 +126,9 @@ Public Module HttpGet
         End If
 
         Try
-RETRY:      Return __get(url, headers, proxy, UA)
+RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet()
         Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso DoNotRetry404
+            is404 = True
             Return LogException(url, New Exception(url, ex))
 
         Catch ex As Exception When retryTime < retries
@@ -139,12 +146,16 @@ RETRY:      Return __get(url, headers, proxy, UA)
         End Try
     End Function
 
-    Private Function LogException(url As String, ex As Exception) As String
-        Dim exMessage As String = String.Format("Unable to get the http request!" & vbCrLf &
-                                                "  Url:=[{0}]" & vbCrLf &
-                                                "  EXCEPTION ===>" & vbCrLf & ex.ToString, url)
-        Call App.LogException(exMessage, NameOf([GET]) & "::HTTP_REQUEST_EXCEPTION")
-        Return ""
+    Private Function LogException(url$, ex As Exception) As String
+        Dim exMsg As String = {
+            "Unable to get the http request!",
+           $"  Url:=[{url}]",
+            "  EXCEPTION ===>",
+            "",
+            ex.ToString
+        }.JoinBy(ASCII.LF)
+
+        Return App.LogException(exMsg, NameOf([GET]) & "::HTTP_REQUEST_EXCEPTION")
     End Function
 
     Const doctorcomError$ = "Please login your Campus Broadband Network Client at first!"
@@ -155,12 +166,11 @@ RETRY:      Return __get(url, headers, proxy, UA)
     ''' <returns></returns>
     Public Property HttpRequestTimeOut As Double
 
-    Private Function __get(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
-        Dim timer As Stopwatch = Stopwatch.StartNew
+    Public Function BuildWebRequest(url$, headers As Dictionary(Of String, String), proxy$, UA$) As HttpWebRequest
         Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
 
         webRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
-        webRequest.UserAgent = If(UA = UserAgent.GoogleChrome, DefaultUA, UA)
+        webRequest.UserAgent = UA Or DefaultUA
 
         If HttpRequestTimeOut > 0 Then
             webRequest.Timeout = 1000 * HttpRequestTimeOut
@@ -175,7 +185,19 @@ RETRY:      Return __get(url, headers, proxy, UA)
             Call webRequest.SetProxy(proxy)
         End If
 
-        Using respStream As Stream = webRequest.GetResponse.GetResponseStream,
+        Return webRequest
+    End Function
+
+    ''' <summary>
+    ''' Perform a web url query request
+    ''' </summary>
+    ''' <param name="webrequest"></param>
+    ''' <returns></returns>
+    <Extension> Private Function urlGet(webrequest As HttpWebRequest) As String
+        Dim timer As Stopwatch = Stopwatch.StartNew
+        Dim url As String = webrequest.RequestUri.ToString
+
+        Using respStream As Stream = webrequest.GetResponse.GetResponseStream,
             reader As New StreamReader(respStream)
 
             Dim htmlBuilder As New StringBuilder
@@ -192,9 +214,17 @@ RETRY:      Return __get(url, headers, proxy, UA)
             If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
                 Call doctorcomError.PrintException
                 Return ""
+            Else
+                Dim time$ = ValueTypes.ReadableElapsedTime(timer.ElapsedMilliseconds)
+                Dim debug$ = $"[{url}] {title} - {Len(html)} chars in {time}"
+
+                If timer.ElapsedMilliseconds > 1000 Then
+                    Call debug.Warning
+                Else
+                    Call debug.__INFO_ECHO
+                End If
             End If
 
-            Call $"[{title}  {url}] --> sizeOf:={Len(html)} chars; response_time:={timer.ElapsedMilliseconds} ms.".__DEBUG_ECHO
 #If DEBUG Then
             Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
 #End If

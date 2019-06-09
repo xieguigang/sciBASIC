@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86ce0bed2e5f669ade25de3b830e00cb, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::6d29ffebf2a078c945291ccbebc82bf8, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,11 @@
 
     '     Class DataSet
     ' 
-    '         Properties: ID, MyHashCode
+    '         Properties: ID, MyHashCode, Vector
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: __getID, Copy, (+2 Overloads) LoadDataSet, SubSet, ToString
+    '         Function: __getID, Append, Copy, (+2 Overloads) LoadDataSet, SubSet
+    '                   ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +48,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language.Default
 
 Namespace IO
@@ -67,6 +69,21 @@ Namespace IO
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 在进行序列化为csv表格文件的时候，这个属性将会被忽略掉
+        ''' </remarks>
+        <Ignored>
+        Public ReadOnly Property Vector As Double()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me.propertyTable.Values.ToArray
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
@@ -74,6 +91,22 @@ Namespace IO
             Me.ID = id
             Me.Properties = New Dictionary(Of String, Double)
         End Sub
+
+        Shared ReadOnly replace As New [Default](Of Func(Of Double, Double, Double))(Function(previous, now) now)
+
+        Public Function Append(data As [Property](Of Double), Optional duplicated As Func(Of Double, Double, Double) = Nothing) As DataSet
+            duplicated = duplicated Or DataSet.replace
+
+            For Each item In data.Properties
+                If Me.HasProperty(item.Key) Then
+                    Me(item.Key) = duplicated(Me(item.Key), item.Value)
+                Else
+                    Me.Properties.Add(item.Key, item.Value)
+                End If
+            Next
+
+            Return Me
+        End Function
 
         ''' <summary>
         ''' Copy prop[erty value
@@ -117,22 +150,25 @@ Namespace IO
         ''' <param name="uidMap">
         ''' 默认是使用csv文件的第一行第一个单元格中的内容作为标识符，但是有时候可能标识符不是在第一列的，则这个时候就需要对这个参数进行赋值了
         ''' </param>
+        ''' <param name="fieldNameMaps">
+        ''' [name_in_file => name_after_load]
+        ''' </param>
         ''' <returns></returns>
-        ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadDataSet(path$,
                                            Optional uidMap$ = Nothing,
+                                           Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                            Optional tsv As Boolean = False,
                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
-            Return EntityObject.LoadDataSet(path, uidMap, tsv, encoding).AsDataSet
+            Return EntityObject.LoadDataSet(path, uidMap, fieldNameMaps, tsv, encoding).AsDataSet
         End Function
 
         Public Shared Function LoadDataSet(Of T As DataSet)(path$,
                                                             Optional uidMap$ = Nothing,
                                                             Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
 
-            Dim mapFrom$ = uidMap Or New DefaultValue(Of String) With {
-                .LazyValue = New Func(Of String)(Function() __getID(path)).AsLazy
+            Dim mapFrom$ = uidMap Or New [Default](Of  String) With {
+                .lazy = New Func(Of String)(Function() __getID(path)).AsLazy
             }
             Return path.LoadCsv(Of T)(
                 explicit:=False,

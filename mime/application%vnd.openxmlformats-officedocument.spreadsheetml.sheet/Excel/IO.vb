@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f42ac14f0a01f236e945e0d8e2fb1c9, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
+﻿#Region "Microsoft.VisualBasic::f1c447b92273cdcfc99382317c1c8c09, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
 
     ' Author:
     ' 
@@ -55,11 +55,44 @@ Public Module IO
     '  +------- <docProps>
     '  +------- <xl>
     '  +------- [Content_Types].xml
+    Private Sub UnZipHandler(xlsx$, ROOT$)
+        Dim success As Boolean = False
+        Dim exception As Exception = Nothing
 
-    Public Function CreateReader(xlsx$) As File
-        Dim ROOT$ = App.GetAppSysTempFile("-" & RandomASCIIString(6, skipSymbols:=True), App.PID)
+        ' 20190606 会随机性的出现本地文件头已损坏的错误？？
+        For i As Integer = 1 To 3
+            success = False
 
-        Call GZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+            Try
+                ZipLib.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+                success = True
+            Catch ex As Exception
+                exception = ex
+            End Try
+
+            If success Then
+                Exit For
+            End If
+        Next
+
+        If Not success Then
+            Throw exception
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 解压缩Excel文件然后读取其中的XML数据以构成DataFrame表格 
+    ''' </summary>
+    ''' <param name="xlsx"></param>
+    ''' <returns></returns>
+    Public Function CreateReader(xlsx As String) As File
+        Dim ROOT$ = App.GetAppSysTempFile(
+            ext:=RandomASCIIString(6, skipSymbols:=True),
+            sessionID:=App.PID,
+            prefix:="excel_xlsx_"
+        )
+
+        Call UnZipHandler(xlsx, ROOT)
 
         Dim contentType As ContentTypes = (ROOT & "/[Content_Types].xml").LoadXml(Of ContentTypes)
         Dim rels As New _rels(ROOT)
@@ -110,7 +143,7 @@ Public Module IO
         End If
 
         ' 重新进行zip打包
-        Call GZip.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+        Call ZipLib.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
 
         Return True
     End Function

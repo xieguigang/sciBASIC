@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd6aedcd31ecc1c6e54f642a387e4f3c, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::412e2f4922e8587262ef11472581035a, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Class NumericVector
     ' 
-    '         Properties: Length, Vector
+    '         Properties: Length, name, vector
     ' 
-    '         Function: ToString
+    '         Function: SequenceEqual, ToString
     ' 
     '     Class TermsVector
     ' 
@@ -57,9 +57,10 @@ Namespace Text.Xml.Models
     ''' <summary>
     ''' A <see cref="Double"/> type numeric sequence container
     ''' </summary>
-    Public Class NumericVector
+    <XmlType("numerics")> Public Class NumericVector
 
-        <XmlAttribute> Public Property Vector As Double()
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property vector As Double()
 
         ''' <summary>
         ''' Get/Set Element ``Xi``
@@ -69,10 +70,10 @@ Namespace Text.Xml.Models
         Default Public Property Xi(i As Integer) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Vector(i)
+                Return vector(i)
             End Get
             Set(value As Double)
-                Vector(i) = value
+                vector(i) = value
             End Set
         End Property
 
@@ -83,12 +84,31 @@ Namespace Text.Xml.Models
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return CInt(Vector?.Length)
+                Return CInt(vector?.Length)
             End Get
         End Property
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            If name.StringEmpty Then
+                Return vector.GetJson
+            Else
+                Return $"Dim {name} As Vector = {vector.GetJson}"
+            End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(v As Double()) As NumericVector
+            Return New NumericVector With {.name = "NULL", .vector = v}
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(v As NumericVector) As Double()
+            Return v.vector
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function SequenceEqual(input() As Double) As Boolean
+            Return vector.SequenceEqual(input)
         End Function
     End Class
 

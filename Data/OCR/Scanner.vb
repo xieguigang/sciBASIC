@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9610f7cdd2218c55a49e098a87a11d4, Data\OCR\Scanner.vb"
+﻿#Region "Microsoft.VisualBasic::94b68f8b651b888d9780643f225c0af3, Data\OCR\Scanner.vb"
 
     ' Author:
     ' 
@@ -120,7 +120,7 @@ Public Module Scanner
     <Extension>
     Public Function DrawRegion(pixels As Vector, size As Size) As Image
         Using g = size.CreateGDIDevice
-            Dim i As int = 0
+            Dim i As VBInteger = 0
 
             For y As Integer = 0 To size.Height - 1
                 For x As Integer = 0 To size.Width - 1

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1539f4d8a854daa344ffd4d4aeacea1c, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8a6f2f7b2f712da8128b0fb08d5847db, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
@@ -161,6 +162,12 @@ Namespace IO
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 取出某一个给定的属性的所有值。取出来的数据元素之间的顺序是和<paramref name="datasets"/>之中的元素的顺序是一致的。
+        ''' </summary>
+        ''' <param name="datasets"></param>
+        ''' <param name="property">字典的键名称</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
@@ -169,6 +176,12 @@ Namespace IO
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' Column value projection
+        ''' </summary>
+        ''' <param name="datasets"></param>
+        ''' <param name="property$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of EntityObject), property$) As String()
@@ -212,6 +225,11 @@ Namespace IO
             Return source.Select(AddressOf asCharacter)
         End Function
 
+        ''' <summary>
+        ''' Convert a numeric dataset object as character dataset
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function asCharacter(data As DataSet) As EntityObject
             Return New EntityObject With {
@@ -254,15 +272,26 @@ Namespace IO
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 将字符串数据集转换为数值类型的数据集
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="blank">如果目标属性的值是空字符串的话，将该属性值设置为这个参数值默认的值</param>
+        ''' <param name="ignores">在转换的时候需要忽略掉的属性值</param>
+        ''' <returns></returns>
         <Extension>
-        Public Function AsDataSet(data As IEnumerable(Of EntityObject), Optional blank# = 0) As IEnumerable(Of DataSet)
-            Dim array = data.ToArray
+        Public Function AsDataSet(data As IEnumerable(Of EntityObject),
+                                  Optional ignores As Index(Of String) = Nothing,
+                                  Optional blank# = 0) As IEnumerable(Of DataSet)
+
+            Dim array As EntityObject() = data.ToArray
             Dim allKeys = array _
                 .Select(Function(x) x.Properties.Keys) _
                 .IteratesALL _
                 .Distinct _
+                .Where(Function(key) Not key Like ignores) _
                 .ToArray
-            Dim ToDouble = Function(obj As EntityObject, key$)
+            Dim toDouble = Function(obj As EntityObject, key$)
                                Return If(obj.Properties.ContainsKey(key), Val(obj(key)), blank)
                            End Function
 
@@ -272,7 +301,9 @@ Namespace IO
                                 .ID = obj.ID,
                                 .Properties = allKeys _
                                     .ToDictionary(Function(x) x,
-                                                  Function(x) ToDouble(obj, key:=x))
+                                                  Function(x)
+                                                      Return toDouble(obj, key:=x)
+                                                  End Function)
                             }
                         End Function)
         End Function

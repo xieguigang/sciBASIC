@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3cb5a415d3e159e69aa6e16086182fc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::07ca25440642878214108776f37d8e82, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
 
     ' Author:
     ' 
@@ -149,7 +149,7 @@ Namespace Drawing2D.Colors
             Dim percentage# = value.ParseDouble
 
             Return colors _
-                .Select(Function(c) c.Dark(percentage)) _
+                .Select(Function(c) c.Darken(percentage)) _
                 .ToArray
         End Function
 

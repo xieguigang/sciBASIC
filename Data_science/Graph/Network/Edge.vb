@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ab05a8a36fb18582054ed2a48e60ca2, Data_science\Graph\Network\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::0e75b50ef76a74078bdbac498b6cccc1, Data_science\Graph\Network\Edge.vb"
 
     ' Author:
     ' 

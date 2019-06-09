@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8530dc7ff77133b44a7f2173d943148d, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEs.vb"
+﻿#Region "Microsoft.VisualBasic::bb880065bf730a2e2e05c27f423535c3, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEs.vb"
 
     ' Author:
     ' 
@@ -268,10 +268,10 @@ Public MustInherit Class ODEs
 
             fields = type _
                 .DeclaredFields _
-                .Where(Function(f) (Not f.FieldType.Equals(GetType(var))) AndAlso f.FieldType.Equals(GetType(float)))
+                .Where(Function(f) (Not f.FieldType.Equals(GetType(var))) AndAlso f.FieldType.Equals(GetType(VBDouble)))
 
             For Each v As FieldInfo In fields
-                Call out.Add(v.Name, DirectCast(v.GetValue(Me), float).Value)
+                Call out.Add(v.Name, DirectCast(v.GetValue(Me), VBDouble).Value)
             Next
 
             Return out

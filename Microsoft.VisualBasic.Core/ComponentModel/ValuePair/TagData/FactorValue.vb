@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fce8a9ea7c599c8100764ec6c4800e82, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\FactorValue.vb"
+﻿#Region "Microsoft.VisualBasic::e5f6f962adb352ccd0e7877755b9c8e5, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\FactorValue.vb"
 
     ' Author:
     ' 
@@ -33,30 +33,37 @@
 
     '     Class FactorValue
     ' 
-    '         Properties: Factor, Value
+    '         Properties: factor, Value
     ' 
     '     Class FactorString
     ' 
-    '         Properties: Factor, text
+    '         Properties: factor, text
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace ComponentModel.TagData
 
     Public Class FactorValue(Of T As {Structure, IComparable(Of T)}, V)
 
-        Public Property Factor As T
+        Public Property factor As T
         Public Property Value As V
 
     End Class
 
     Public Class FactorString(Of T As {Structure, IComparable(Of T)})
 
-        Public Property Factor As T
+        Public Property factor As T
         Public Property text As String
 
+        Public Overrides Function ToString() As String
+            Return $"Dim {text} As {GetType(T).FullName} = {factor.GetJson}"
+        End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d050a3a11779bfc4ee56b3e6646ca52f, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6dd6ac2cd5d1a5908727ee36fa137537, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
 ' Author:
 ' 
@@ -155,6 +155,26 @@ Namespace Imaging
             Next
 
             Return path
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Opacity(fill As Color, val#) As Color
+            Return Color.FromArgb(val * 255, baseColor:=fill)
+        End Function
+
+        <Extension>
+        Public Function Opacity(fill As Brush, val#) As Brush
+            If TypeOf fill Is SolidBrush Then
+                Dim color As Color = DirectCast(fill, SolidBrush).Color
+
+                color = color.Opacity(val)
+                fill = New SolidBrush(color)
+
+                Return fill
+            Else
+                Return fill
+            End If
         End Function
 
         ''' <summary>
@@ -342,6 +362,12 @@ Namespace Imaging
             Return Image.FromStream(stream:=New MemoryStream(rawStream))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LoadImage(stream As Stream) As Image
+            Return Image.FromStream(stream)
+        End Function
+
         ''' <summary>
         ''' 将图片对象转换为原始的字节流
         ''' </summary>
@@ -433,7 +459,7 @@ Namespace Imaging
         ''' <returns></returns>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As Graphics2D
+        <Extension> Public Function CanvasCreateFromImageFile(path As String) As Graphics2D
             Dim image As Image = LoadImage(path)
             Dim g As Graphics = Graphics.FromImage(image)
 

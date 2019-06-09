@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::412844ab5bc9da6e838bce79a7b7a4f0, mime\application%json\Parser\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::f2a0e986a34ce8b4ea4e0053852445af, mime\application%json\Parser\JsonParser.vb"
 
     ' Author:
     ' 
@@ -55,8 +55,9 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
+Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Language
 
 Namespace Parser
 
@@ -74,13 +75,12 @@ Namespace Parser
         'Const INVALID_RPC_CALL As Integer = 7
 
         Dim psErrors As String
-        Dim root As New Value(Of JsonElement)
 
-        Public ReadOnly Property JSONvalue() As JsonElement
-            Get
-                Return root
-            End Get
-        End Property
+        ''' <summary>
+        ''' The root node in json file
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property JSONvalue As JsonElement
 
         Public Function GetParserErrors() As String
             Return psErrors
@@ -91,13 +91,15 @@ Namespace Parser
         End Sub
 
         Public Function Open(file As String) As JsonElement
-            Using sr As New IO.StreamReader(file)
+            Using sr As New StreamReader(file)
                 Return OpenJSON(sr.ReadToEnd)
             End Using
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OpenJSON(jsonStr As String) As JsonElement
-            Return root = parse(jsonStr)
+            _JSONvalue = parse(jsonStr)
+            Return JSONvalue
         End Function
 
         ''' <summary>
@@ -107,8 +109,10 @@ Namespace Parser
         ''' <returns></returns>
         Private Function parse(ByRef str As String) As JsonElement
             Dim index As Long = 1
+
             psErrors = "*"
             skipChar(str, index)
+
             Select Case Mid(str, index, 1)
                 Case "{"
                     Return parseObject(str, index)
@@ -237,8 +241,8 @@ eh:
             Dim chr$, code$
             Dim sb As New StringBuilder
 
-            While Index > 0 AndAlso Index <= Len(str)
-                Chr = Mid(str, Index, 1)
+            While index > 0 AndAlso index <= Len(str)
+                chr = Mid(str, index, 1)
                 Select Case chr
                     Case "\"
                         index += 1

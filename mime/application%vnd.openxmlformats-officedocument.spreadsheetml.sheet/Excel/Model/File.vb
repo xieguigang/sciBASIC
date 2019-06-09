@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f927ad35b856dacedf2abf97f5324f2, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::a3bbc84d3937439737310b3aa0054da3, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,6 @@
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.ApplicationServices.GZip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
@@ -74,7 +73,7 @@ Public Class File : Implements IFileReference
     Friend ReadOnly modify As New Index(Of String)
     Friend ROOT$
 
-    Dim _filePath As DefaultValue(Of String)
+    Dim _filePath As [Default](Of  String)
 
     Public Property FilePath As String Implements IFileReference.FilePath
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -227,7 +226,7 @@ Public Class File : Implements IFileReference
 
     Public Shared Function CreatePackage(tmp$, xlsx$, Optional throwEx As Boolean = True) As Boolean
         Try
-            Call GZip.DirectoryArchive(tmp, xlsx, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+            Call ZipLib.DirectoryArchive(tmp, xlsx, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
             Return True
         Catch ex As Exception
             Dim debug$ = New Dictionary(Of String, String) From {

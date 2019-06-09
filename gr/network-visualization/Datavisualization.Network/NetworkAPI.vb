@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e722aaf6f2941b3744766b4f269cb345, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::15ca561948589b43e030e54a06057fc7, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Module NetworkAPI
     ' 
     '     Function: EndPoints, FromCorrelations, GetConnections, GetNetworkNodes, GetNextConnects
-    '               GetNHetworkEdges, ReadnetWork, SaveNetwork, WriteNetwork
+    '               GetNHetworkEdges, ReadnetWork, SaveNetwork, Trim, WriteNetwork
     ' 
     ' /********************************************************************************/
 
@@ -46,7 +46,6 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -127,6 +126,16 @@ Public Module NetworkAPI
         Return LQuery
     End Function
 
+    <Extension>
+    Public Function Trim(network As FileStream.NetworkTables, Optional doNothing As Boolean = False) As FileStream.NetworkTables
+        If Not doNothing Then
+            Call network.RemoveSelfLoop()
+            Call network.RemoveDuplicated()
+        End If
+
+        Return network
+    End Function
+
     ''' <summary>
     ''' 变量的属性里面必须是包含有相关度的
     ''' </summary>
@@ -204,10 +213,9 @@ Public Module NetworkAPI
         }
 
         If trim Then
-            Call out.RemoveSelfLoop()
-            Call out.RemoveDuplicated()
+            Return out.Trim
+        Else
+            Return out
         End If
-
-        Return out
     End Function
 End Module

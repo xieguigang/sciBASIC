@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2c1a5e7615e711fe7f5e541b79a2539, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Styling.vb"
+﻿#Region "Microsoft.VisualBasic::e6ab36b6dbbcf1b78faa65c4baa813ee, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Styling.vb"
 
     ' Author:
     ' 

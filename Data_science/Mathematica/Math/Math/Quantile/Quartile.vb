@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47ff3905911fbb37bdfb186351e9618a, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
+﻿#Region "Microsoft.VisualBasic::680e837f277a99dab6b3b35d38c75cda, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,7 @@
 
     '     Module Quartile
     ' 
-    ' 
-    '         Enum Levels
-    ' 
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: Outlier, Quartile
+    '         Function: Outlier, Quartile
     ' 
     ' 
     ' /********************************************************************************/
@@ -59,12 +51,6 @@ Namespace Quantile
     ''' </summary>
     Public Module Quartile
 
-        Public Enum Levels
-            Q1 = 1
-            Q2 = 2
-            Q3 = 3
-        End Enum
-
         ''' <summary>
         ''' + 第一四分位数 (Q1)，又称“较小四分位数”，等于该样本中所有数值由小到大排列后第25%的数字。
         ''' + 第二四分位数 (Q2)，又称“中位数”，等于该样本中所有数值由小到大排列后第50%的数字。
@@ -76,9 +62,11 @@ Namespace Quantile
         ''' + <see cref="Boolean"/>.True  for n-1 method
         ''' + <see cref="Boolean"/>.False for n+1 method
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 理论上,正常值范围应该是Q1到Q3范围内的值
+        ''' </returns>
         <Extension>
-        Public Function Quartile(data As IEnumerable(Of Double), Optional altPosition As Boolean = False) As (Q1#, Q2#, Q3#, IQR#, range As DoubleRange)
+        Public Function Quartile(data As IEnumerable(Of Double), Optional altPosition As Boolean = False) As DataQuartile
             Dim vector = data.OrderBy(Function(x) x).ToArray
             Dim n = vector.Length
             Dim q As Vector
@@ -90,11 +78,11 @@ Namespace Quantile
             End If
 
             Dim q1 = vector(Math.Truncate(q(0)))
-            Dim q2 = vector(Math.Truncate(q(1)))
-            Dim q3 = vector(Math.Truncate(q(2)))
+            Dim q2 = vector.ElementAtOrDefault(Math.Truncate(q(1)), vector.Last)
+            Dim q3 = vector.ElementAtOrDefault(Math.Truncate(q(2)), vector.Last)
             Dim IQR = q3 - q1
 
-            Return (q1, q2, q3, IQR, New DoubleRange(vector))
+            Return New DataQuartile(q1, q2, q3, IQR, New DoubleRange(vector))
         End Function
 
         ''' <summary>
@@ -112,7 +100,7 @@ Namespace Quantile
         ''' <param name="quartile"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Outlier(data As Vector, quartile As (Q1#, Q2#, Q3#, IQR#, range As DoubleRange)) As (Normal As Double(), Outlier As Double())
+        Public Function Outlier(data As Vector, quartile As DataQuartile) As (normal As Double(), outlier As Double())
             With quartile
                 Dim lowerBound = .Q1 - 1.5 * .IQR
                 Dim upperBound = .Q3 + 1.5 * .IQR

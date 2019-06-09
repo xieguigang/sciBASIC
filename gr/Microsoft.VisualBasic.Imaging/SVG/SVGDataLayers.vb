@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d70e7be53b354c65d3207eaf822e842, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
+﻿#Region "Microsoft.VisualBasic::c8c6e35e3b109568f209df7d3f7bcc5a, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
 
     ' Author:
     ' 
@@ -74,7 +74,7 @@ Namespace SVG
         ''' <summary>
         ''' Generates the <see cref="CSSLayer"/> index order value.
         ''' </summary>
-        Friend zlayer As int = 0
+        Friend zlayer As VBInteger = 0
 
         Default Public ReadOnly Property GetLayer(zindex As Integer) As g
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -182,12 +182,12 @@ Namespace SVG
 #End Region
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function innerDefaultWidth() As DefaultValue(Of Integer)
+        Private Function innerDefaultWidth() As [Default](Of  Integer)
             Return Size.Width.AsDefault(Function(n) CType(n, Integer) = 0)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function innerDefaultHeight() As DefaultValue(Of Integer)
+        Private Function innerDefaultHeight() As [Default](Of  Integer)
             Return Size.Height.AsDefault(Function(n) CType(n, Integer) = 0)
         End Function
 

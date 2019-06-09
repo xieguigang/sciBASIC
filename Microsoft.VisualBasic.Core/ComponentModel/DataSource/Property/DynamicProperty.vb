@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c7b689e041bbd11e16644e14e0004a8, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::10639614f100433a4eb09a252f359a2b, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,9 @@
     ' 
     '         Properties: MyHashCode, Properties
     ' 
-    '         Function: EnumerateKeys, HasProperty, ToString
+    '         Function: EnumerateKeys, GetEnumerator, HasProperty, IEnumerable_GetEnumerator, ToString
+    ' 
+    '         Sub: Add
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,6 +58,7 @@ Namespace ComponentModel.DataSourceModel
     ''' <typeparam name="T"></typeparam>
     Public MustInherit Class DynamicPropertyBase(Of T)
         Implements IDynamicMeta(Of T)
+        Implements IEnumerable(Of NamedValue(Of T))
 
         ''' <summary>
         ''' The dynamics property object with specific type of value.
@@ -77,7 +80,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <summary>
         ''' 动态属性表
         ''' </summary>
-        Dim propertyTable As Dictionary(Of String, T)
+        Protected propertyTable As Dictionary(Of String, T)
 
         ''' <summary>
         ''' Gets/sets item value by using property name.
@@ -117,6 +120,20 @@ Namespace ComponentModel.DataSourceModel
                 Next
             End Set
         End Property
+
+        ''' <summary>
+        ''' Add a property into the property table
+        ''' </summary>
+        ''' <param name="propertyName$"></param>
+        ''' <param name="value"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Add(propertyName$, value As T)
+            If propertyTable Is Nothing Then
+                propertyTable = New Dictionary(Of String, T)
+            End If
+
+            Call propertyTable.Add(propertyName, value)
+        End Sub
 
         ''' <summary>
         ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified
@@ -178,5 +195,15 @@ Namespace ComponentModel.DataSourceModel
         Public Shared Narrowing Operator CType(dynamic As DynamicPropertyBase(Of T)) As Func(Of String, T)
             Return Function(pName$) dynamic(pName)
         End Operator
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of T)) Implements IEnumerable(Of NamedValue(Of T)).GetEnumerator
+            For Each [property] In propertyTable
+                Yield New NamedValue(Of T)([property].Key, [property].Value)
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 End Namespace

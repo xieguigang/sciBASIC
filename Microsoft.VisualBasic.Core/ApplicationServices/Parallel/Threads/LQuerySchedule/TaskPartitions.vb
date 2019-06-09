@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c77d1da748079d1ae782dc55a1cb89d5, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
+﻿#Region "Microsoft.VisualBasic::5ed2f94d21ee9f2ad9d8a58f970b68c8, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
 
     ' Author:
     ' 
@@ -78,7 +78,7 @@ Namespace Parallel.Linq
         ''' <param name="source"></param>
         ''' <param name="parTokens">每一个分区之中的元素数量</param>
         ''' <returns></returns>
-        ''' <remarks>对于数量较少的序列，可以使用<see cref="Extensions.SplitIterator(Of T)(IEnumerable(Of T), Integer, Boolean)"/>进行分区操作，
+        ''' <remarks>对于数量较少的序列，可以使用<see cref="SplitIterator(Of T)(IEnumerable(Of T), Integer, Boolean)"/>进行分区操作，
         ''' 该函数使用数组的<see cref="Array.ConstrainedCopy(Array, Integer, Array, Integer, Integer)"/>方法进行分区复制，效率较高
         ''' 
         ''' 由于本函数需要处理大量的数据，使用Array的方法会内存占用较厉害，所以在这里更改为List操作以降低内存的占用
@@ -87,26 +87,29 @@ Namespace Parallel.Linq
         Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens%, Optional echo As Boolean = True) As IEnumerable(Of T())
             Dim buf As New List(Of T)
             Dim n As Integer = 0
+            Dim count As Integer = 0
             Dim parts As Integer
 
             For Each x As T In source
                 If n = parTokens Then
                     Yield buf.ToArray
-                    buf.Clear()
+
+                    buf *= 0
                     n = 0
                     parts += 1
                 End If
 
                 buf.Add(x)
                 n += 1
+                count += 1
             Next
 
-            If buf.Count > 0 Then
+            If buf > 0 Then
                 Yield buf.ToArray
             End If
 
             If echo Then
-                Call $"Large data set data partitioning(partitions:={parts}) jobs done!".__DEBUG_ECHO
+                Call $"Large data_set(size:={count}) partitioning(partitions:={parts}) jobs done!".__DEBUG_ECHO
             End If
         End Function
 

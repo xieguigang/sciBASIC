@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::833e97f1043240f8d73e62ab2be08080, gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::b64257dc60d51537a40699dcda33a4a3, gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module Statistics
     ' 
-    '         Function: ComputeDegreeData, (+2 Overloads) ComputeNodeDegrees, GetDegrees, NodesGroupCount, Sum
+    '         Function: AnalysisDegrees, ComputeDegreeData, (+2 Overloads) ComputeNodeDegrees, GetDegrees, NodesGroupCount
+    '                   Sum
     ' 
     ' 
     ' /********************************************************************************/
@@ -86,6 +87,17 @@ Namespace Analysis
 
         ''' <summary>
         ''' 计算出每一个节点的``Degree``值，并且将结果写入节点的动态属性之中
+        ''' 这个函数之中包含有了节点的degree，并且还计算出了indegree和outdegree
+        ''' </summary>
+        ''' <param name="net"></param>
+        <Extension> Public Function AnalysisDegrees(net As NetGraph) As NetGraph
+            Call net.ComputeNodeDegrees
+            Return net
+        End Function
+
+        ''' <summary>
+        ''' 计算出每一个节点的``Degree``值，并且将结果写入节点的动态属性之中
+        ''' 这个函数之中包含有了节点的degree，并且还计算出了indegree和outdegree
         ''' </summary>
         ''' <param name="net"></param>
         <Extension> Public Function ComputeNodeDegrees(ByRef net As NetGraph) As Dictionary(Of String, Integer)
@@ -93,6 +105,8 @@ Namespace Analysis
             Dim d%
 
             With net.Edges.ComputeDegreeData
+                ' 通过节点之间的边链接关系计算出indegre和outdegree
+                ' 如果边连接是没有方向的，则这个计算结果无意义
                 For Each node As FileStream.Node In net.Nodes
                     'If Not degrees.ContainsKey(node.ID) Then
                     '    Dim ex As New Exception("nodes: " & net.Nodes.Keys.GetJson)
@@ -151,6 +165,11 @@ Namespace Analysis
             Return degreeValue
         End Function
 
+        ''' <summary>
+        ''' 这个函数计算网络的节点的degree，然后将degree数据写入节点的同时，通过字典返回给用户
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ComputeNodeDegrees(ByRef net As NetworkGraph) As Dictionary(Of String, Integer)
             Dim connectNodes = net _

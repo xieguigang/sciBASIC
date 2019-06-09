@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d686d36337a9031e2e78af7daadb163a, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::75fcb2ed92ecb1f1f378a569027e730a, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module GeometryMath
     ' 
-    '         Function: GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
+    '         Function: angleBetween2Lines, GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
     ' 
     '     Enum QuadrantRegions
     ' 
@@ -59,6 +59,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
 Namespace Imaging.Math2D
@@ -69,6 +71,18 @@ Namespace Imaging.Math2D
     ''' 与几何相关的辅助类
     ''' </summary>
     Public Module GeometryMath
+
+        Public Function angleBetween2Lines(line1 As Point2D(), line2 As Point2D()) As Double
+            Dim angle1 = Math.Atan2(line1(0).Y - line1(1).Y, line1(0).X - line1(1).X)
+            Dim angle2 = Math.Atan2(line2(0).Y - line2(1).Y, line2(0).X - line2(1).X)
+            Dim diff = angle1 - angle2
+
+            If diff > Math.PI OrElse diff < -Math.PI Then
+                diff = angle2 - angle1
+            End If
+
+            Return diff
+        End Function
 
         ''' <summary>
         ''' 判断线段与多边形的关系
@@ -317,25 +331,34 @@ Namespace Imaging.Math2D
         ''' <param name="p"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function QuadrantRegion(origin As PointF, p As PointF) As QuadrantRegions
+        Public Function QuadrantRegion(origin As PointF, p As PointF, Optional d! = 5) As QuadrantRegions
+            If Math.Abs(p.X - origin.X) <= d AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.Origin
+            End If
+
+            If Math.Abs(p.X - origin.X) <= d AndAlso p.Y < origin.Y Then
+                Return QuadrantRegions.YTop
+            End If
+            If Math.Abs(p.X - origin.X) <= d AndAlso p.Y > origin.Y Then
+                Return QuadrantRegions.YBottom
+            End If
+            If p.X > origin.X AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.XRight
+            End If
+            If p.X < origin.X AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.XLeft
+            End If
+
             If p.X > origin.X AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.RightTop
-            ElseIf p.X = origin.X AndAlso p.Y < origin.Y Then
-                Return QuadrantRegions.YTop
             ElseIf p.X < origin.X AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.LeftTop
-            ElseIf p.X < origin.X AndAlso p.Y = origin.Y Then
-                Return QuadrantRegions.XLeft
             ElseIf p.X < origin.X AndAlso p.Y > origin.Y Then
                 Return QuadrantRegions.LeftBottom
-            ElseIf p.X = origin.X AndAlso p.Y > origin.Y Then
-                Return QuadrantRegions.YBottom
             ElseIf p.X > origin.X AndAlso p.Y > origin.Y Then
                 Return QuadrantRegions.RightBottom
-            ElseIf p.X > origin.X AndAlso p.Y = origin.Y Then
-                Return QuadrantRegions.XRight
             Else
-                Return QuadrantRegions.Origin
+                Throw New EvaluateException({origin, p}.GetJson)
             End If
         End Function
     End Module

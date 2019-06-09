@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::723b2e75be07e7f61a2b912a0227cf55, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::031f5fcc0b550245c32403b96e41bd9e, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module VectorExtensions
     ' 
-    '     Function: (+2 Overloads) After, Append, Coalesce, Delete, Fill
+    '     Function: (+2 Overloads) After, Append, Coalesce, (+3 Overloads) Delete, (+2 Overloads) Fill
     '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
     '               Midv, RepeatCalls, Replicate, (+2 Overloads) Sort, Split
     '               VectorShadows
@@ -70,6 +70,13 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 ''' </summary>
 Public Module VectorExtensions
 
+    ''' <summary>
+    ''' 使用<paramref name="template"/>产生一个<paramref name="n"/>长度元素的目标序列
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="template"></param>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function Replicate(Of T)(template As T, n%) As IEnumerable(Of T)
         For i As Integer = 0 To n - 1
@@ -179,6 +186,14 @@ Public Module VectorExtensions
         Call Add(Of T)(array, value.ToArray)
     End Sub
 
+    ''' <summary>
+    ''' 在原来的数组末尾追加由<paramref name="count"/>个<paramref name="item"/>填充的新数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="item"></param>
+    ''' <param name="count%"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Fill(Of T)(vector As T(), item As T, count%) As T()
         If count <= 0 Then
@@ -198,6 +213,37 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
+    ''' 使用给定的数据序列<paramref name="data"/>填充<paramref name="vector"/>的指定位置开始的区域
+    ''' 填充的长度为<paramref name="data"/>的序列长度
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="data"></param>
+    ''' <param name="start%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Fill(Of T)(ByRef vector As T(),
+                               data As IEnumerable(Of T),
+                               start As VBInteger,
+                               Optional reverse As Boolean = False) As T()
+        If start < 0 Then
+            start = vector.Length + start.Value
+        End If
+
+        If reverse Then
+            For Each x As T In data.Reverse
+                vector(++start) = x
+            Next
+        Else
+            For Each x As T In data
+                vector(++start) = x
+            Next
+        End If
+
+        Return vector
+    End Function
+
+    ''' <summary>
     ''' Removes array element at index
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -212,6 +258,27 @@ Public Module VectorExtensions
         Call Array.ConstrainedCopy(vector, index + 1, newVector, index, newVector.Length - index)
 
         Return newVector
+    End Function
+
+    ''' <summary>
+    ''' 将指定下标的元素从原始的输入序列之中删除然后返回所得到的新序列
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector">原始序列不会被改变</param>
+    ''' <param name="index"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Delete(Of T)(vector As IEnumerable(Of T), index As IEnumerable(Of Integer)) As T()
+        Return vector.Takes(index.ToArray,, reversed:=True)
+    End Function
+
+    <Extension>
+    Public Function Delete(Of T)(list As System.Collections.Generic.List(Of T), index%) As T()
+        With New System.Collections.Generic.List(Of T)(list)
+            Call .RemoveAt(index)
+            Return .ToArray
+        End With
     End Function
 
     <Extension>
@@ -271,15 +338,20 @@ Public Module VectorExtensions
         Return out
     End Function
 
-    <Extension> Public Function GetRange(Of T)(vector As T(), index%, count%) As T()
-        Dim fill As T() = New T(count - 1) {}
+    ''' <summary>
+    ''' 从所给定的数组之中获取得到指定位置范围内的数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="index%"></param>
+    ''' <param name="count%"></param>
+    ''' <returns></returns>
+    <Extension> Public Iterator Function GetRange(Of T)(vector As T(), index%, count%) As IEnumerable(Of T)
         Dim ends% = index + count - 1
 
         For i As Integer = index To ends
-            fill(i - index) = vector(i)
+            Yield vector(i)
         Next
-
-        Return fill
     End Function
 
     ''' <summary>
@@ -349,7 +421,11 @@ Public Module VectorExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IndexOf(Of T)(array As T(), o As T) As Integer
-        Return System.Array.IndexOf(array, value:=o)
+        If array.IsNullOrEmpty Then
+            Return -1
+        Else
+            Return System.Array.IndexOf(array, value:=o)
+        End If
     End Function
 
     ''' <summary>

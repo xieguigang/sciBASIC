@@ -14,3 +14,5 @@ obj/
 *.ide
 *.ide-shm
 *.ide-wal
+*.sqlite
+*.sqlite-journal

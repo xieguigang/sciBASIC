@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e0d8b3134d48b469d8226b0ae8446a3, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::e620fb8eb27263060062a9f41fb09948, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports VB = Microsoft.VisualBasic.CommandLine.InteropService.SharedORM.VisualBasic
 
@@ -266,22 +267,25 @@ Namespace CommandLine
                 Return BashShell()
 
             ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
+                Dim namespace$ = CLI("/namespace") Or "CLI"
+                Dim vb$ = New VB(App:=Me, [namespace]:=[namespace]).GetSourceCode
+
                 If CLI.IsTrue("---echo") Then
-                    Console.WriteLine(New VB(App:=Me).GetSourceCode)
+                    Console.WriteLine(vb)
                     Return 0
                 Else
-                    Dim vb$ = App.HOME & "/" & Type.Assembly.CodeBase.BaseName & ".vb"
-                    Return New VB(App:=Me) _
-                        .GetSourceCode _
-                        .SaveTo(vb) _
+                    Dim sourcefile$ = $"{App.HOME}/{Type.Assembly.CodeBase.BaseName}.vb"
+                    Return vb _
+                        .SaveTo(sourcefile, Encodings.UTF8WithoutBOM.CodePage) _
                         .CLICode
                 End If
 
             Else
                 ' 命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
                 If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then
+                    App.InputFile = commandName
+
                     Try
-                        App.InputFile = commandName
                         Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
                     Catch ex As Exception
                         ex = New Exception("Execute file failure!", ex)

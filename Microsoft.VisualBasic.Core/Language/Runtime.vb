@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::592555dd2c6e5c688ee4eb66f89500f4, Microsoft.VisualBasic.Core\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::07b523fb539260b7cd01bff7c4c2311e, Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Class ArgumentReference
     ' 
-    '         Properties: Expression, Key
+    '         Properties: Expression, Key, ValueType
     ' 
-    '         Function: ToString
+    '         Function: [As], GetUnderlyingType, ToString
     '         Operators: <>, =
     ' 
     '     Class TypeSchema
@@ -57,22 +57,25 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Language
 
-    Public Class ArgumentReference : Implements INamedValue
-
-        Public name$, value
+    ''' <summary>
+    ''' ``[name => value]`` tuple
+    ''' </summary>
+    Public Class ArgumentReference : Inherits Value
+        Implements INamedValue
 
         Private Property Key As String Implements IKeyedEntity(Of String).Key
             Get
-                Return name
+                Return Name
             End Get
             Set(value As String)
-                name = value
+                Name = value
             End Set
         End Property
 
@@ -82,11 +85,12 @@ Namespace Language
             Get
                 Dim val$
 
-                Static [isNot] As New DefaultValue(Of Assert(Of String))(Function(var) False)
+                Static [isNot] As New [Default](Of Assert(Of String))(Function(var) False)
 
                 If value Is Nothing Then
                     val = null
                 ElseIf value.GetType Is GetType(String) Then
+                    ' string can be a variable name
                     If (isVar Or [isNot])(value) Then
                         val = value
                     Else
@@ -102,6 +106,26 @@ Namespace Language
             End Get
         End Property
 
+        Public ReadOnly Property ValueType As Type
+            Get
+                If value Is Nothing Then
+                    Return GetType(Void)
+                Else
+                    Return value.GetType
+                End If
+            End Get
+        End Property
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function GetUnderlyingType() As Type
+            Return ValueType
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function [As](Of T)() As NamedValue(Of T)
+            Return New NamedValue(Of T)(name, value)
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"Dim {name} As Object = {Scripting.ToString(value, "null")}"
         End Function
@@ -113,13 +137,23 @@ Namespace Language
         ''' <param name="value">argument value</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator =(var As ArgumentReference, value As Object) As ArgumentReference
-            var.value = value
+        Public Overloads Shared Operator =(var As ArgumentReference, value As Object) As ArgumentReference
+            var.Value = value
             Return var
         End Operator
 
-        Public Shared Operator <>(var As ArgumentReference, value As Object) As ArgumentReference
+        Public Overloads Shared Operator <>(var As ArgumentReference, value As Object) As ArgumentReference
             Throw New NotImplementedException
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
+            Return (arg.Name, arg.Value)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(name As String) As ArgumentReference
+            Return New ArgumentReference With {.Name = name}
         End Operator
     End Class
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61f30121e1d6a20ab25cb648c7810a6e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::aa706f76a1323507446c9ebb7e65de29, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,9 @@
     '                     MaterialPalette, Rainbow, TSF
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __constraint, __internalFills, Colors, CubicSpline, FromNames
-    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, IsColorNameList
+    '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
+    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, internalFills
+    '                   IsColorNameList, rangeConstraint, SplitColorList
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,12 +51,14 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Drawing2D.Colors
 
@@ -163,8 +166,43 @@ Namespace Drawing2D.Colors
 
         Public ReadOnly Property ConsoleColors As Color() = Enums(Of ConsoleColor) _
             .Select(Function(c) c.ToString) _
-            .Select(AddressOf TranslateColor) _
+            .Select(Function(exp As String)
+                        Return exp.FromConsoleColor
+                    End Function) _
             .ToArray
+
+        <Extension>
+        Private Function FromConsoleColor(exp As String) As Color
+            ' 2019-03-14 有些console的颜色是不存在的,所以解析会得到黑色
+            Dim color As Color = exp.TranslateColor(False)
+
+            If Not color.IsEmpty Then
+                Return color
+            Else
+                ' 使用相近的颜色进行替代
+                If InStr(exp, "Dark") > 0 Then
+                    exp = exp.Replace("Dark", "")
+                    color = exp.TranslateColor.Darken
+                ElseIf InStr(exp, "Light") > 0 Then
+                    exp = exp.Replace("Light", "")
+                    color = exp.TranslateColor.Lighten
+                Else
+                    Throw New NotImplementedException(exp)
+                End If
+
+                Return color
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 将<see cref="System.ConsoleColor"/>枚举值转换为gdi+颜色对象
+        ''' </summary>
+        ''' <param name="color"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ConsoleColor(color As ConsoleColor) As Color
+            Return color.ToString.FromConsoleColor
+        End Function
 
         ''' <summary>
         ''' 
@@ -217,7 +255,6 @@ Namespace Drawing2D.Colors
         ''' </remarks>
         Sub New()
             Try
-
                 Dim colors As Dictionary(Of String, String()) = My.Resources _
                     .designer_colors _
                     .GetString(Encodings.UTF8) _
@@ -232,11 +269,14 @@ Namespace Drawing2D.Colors
                 AvailableInterpolates = valids
 
                 Dim colorBrewerJSON$ = My.Resources.colorbrewer.GetString(Encodings.UTF8)
-                Dim ns = Regex.Matches(colorBrewerJSON, """\d+""") _
-                    .ToArray(Function(m) m.Trim(""""c))
+                Dim ns As String() = r _
+                    .Matches(colorBrewerJSON, """\d+""", RegexOptions.Singleline) _
+                    .ToArray(Function(m)
+                                 Return m.Trim(""""c)
+                             End Function)
                 Dim sb As New StringBuilder(colorBrewerJSON)
 
-                For Each n In ns.Distinct
+                For Each n As String In ns.Distinct
                     Call sb.Replace($"""{n}""", $"""c{n}""")
                 Next
 
@@ -284,10 +324,20 @@ Namespace Drawing2D.Colors
             "#988ED5", "#027093", "#73945A", "#8C564B", "#9467BD", "#D62829", "#2CA02C"
         }.AsColor()
 
+        Const rgbPattern$ = "rgb\(\d+\s*(,\s*\d+\s*)+\)"
+        Const rgbListPattern$ = rgbPattern & "(\s*,\s*" & rgbPattern & ")+"
+
         <Extension>
         Private Function IsColorNameList(exp$) As Boolean
+            ' 因为function和rgb表达式都存在括号
+            ' 所以在这里需要先判断是否为颜色表达式的列表
+            If exp.IsPattern(rgbListPattern, RegexICSng) Then
+                ' 颜色列表
+                Return True
+            End If
+
             If Not exp.IsPattern(DesignerExpression.FunctionPattern) AndAlso InStr(exp, ",") > 0 Then
-                If exp.IsPattern("rgb\(\d+\s*(,\s*\d+\s*)+\)") Then
+                If exp.IsPattern(rgbPattern) Then
                     ' 单个rgb表达式的情况，肯定不是颜色列表
                     Return False
                 Else
@@ -295,6 +345,30 @@ Namespace Drawing2D.Colors
                 End If
             Else
                 Return False
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 在这个函数里，需要保证颜色的顺序和表达式之中所输入的顺序一致
+        ''' </summary>
+        ''' <param name="expr"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个函数不支持rgb表达式与颜色名称，html颜色表达式混合
+        ''' </remarks>
+        <Extension>
+        Private Function SplitColorList(expr As String) As String()
+            If expr.IsPattern(rgbListPattern, RegexICSng) Then
+                ' 因为不支持混合，所以只能够出现rgb表达式列表
+                ' 在这里如果符合字符串模式的话，就直接使用正则
+                ' 进行列表元素的匹配操作了
+                Return expr _
+                    .Matches(rgbPattern, RegexICSng) _
+                    .ToArray
+            Else
+                ' 颜色名称和html颜色代码之间可以相互混合
+                ' 但是不允许出现rgb表达式
+                Return expr.StringSplit(",\s*")
             End If
         End Function
 
@@ -308,10 +382,9 @@ Namespace Drawing2D.Colors
         ''' <returns></returns>
         Public Function GetColors(exp$) As Color()
             If exp.IsColorNameList Then
-                ' 设计器的表达式解析器目前不兼容颜色列表的表达式
-                Return exp _
-                    .StringSplit(",\s*") _
-                    .Select(Function(c) c.TranslateColor) _
+                Return Designer _
+                    .SplitColorList(exp) _
+                    .Select(AddressOf TranslateColor) _
                     .ToArray
             Else
                 With New DesignerExpression(exp)
@@ -325,8 +398,7 @@ Namespace Drawing2D.Colors
                 Return New ColorMap(20, 255).ColorSequence(term)
             End If
 
-            Dim key As NamedValue(Of String) =
-                Drawing2D.Colors.ColorBrewer.ParseName(term)
+            Dim key As NamedValue(Of String) = Drawing2D.Colors.ColorBrewer.ParseName(term)
 
             If ColorBrewer.ContainsKey(key.Name) Then
                 Return ColorBrewer(key.Name).GetColors(key.Value)
@@ -399,20 +471,13 @@ Namespace Drawing2D.Colors
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function FromNames(colors$(), n%) As Color()
-            Return colors.Select(AddressOf ToColor).__internalFills(n)
+            Return colors.Select(AddressOf ToColor).internalFills(n)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Function __internalFills(colors As IEnumerable(Of Color), n As Integer) As Color()
-            Dim out As New List(Of Color)(colors)
-            Dim i As Integer = Scan0
-
-            Do While out.Count < n
-                out.Add(out(i))
-                i += 1
-            Loop
-
-            Return out.ToArray
+        Private Function internalFills(colors As IEnumerable(Of Color), n%) As Color()
+            Return New LoopArray(Of Color)(colors).Take(n).ToArray
         End Function
 
         ''' <summary>
@@ -421,8 +486,10 @@ Namespace Drawing2D.Colors
         ''' <param name="term$"></param>
         ''' <param name="n%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FromSchema(term$, n%) As Color()
-            Return GetColors(term).__internalFills(n)
+            Return GetColors(term).internalFills(n)
         End Function
 
         ''' <summary>
@@ -434,8 +501,8 @@ Namespace Drawing2D.Colors
         ''' more colors. There is also a function that converts between colors and a real valued vector.
         ''' </summary>
         ''' <param name="col">A list of colors (names or hex values) to interpolate</param>
-        ''' <param name="n%">Number of color levels. The setting n=64 is the orignal definition.</param>
-        ''' <param name="alpha%">
+        ''' <param name="n">Number of color levels. The setting n=64 is the orignal definition.</param>
+        ''' <param name="alpha">
         ''' The transparency of the color – 255 is opaque and 0 is transparent. This is useful for 
         ''' overlays of color and still being able to view the graphics that is covered.
         ''' </param>
@@ -452,7 +519,8 @@ Namespace Drawing2D.Colors
                     source:=previous,
                     target:=previous = c,
                     increment:=steps!,
-                    alpha:=alpha%)
+                    alpha:=alpha%
+                )
             Next
 
             Return out
@@ -480,9 +548,9 @@ Namespace Drawing2D.Colors
             Dim out As New List(Of Color)
 
             For f! = 0 To 1.0! Step delta!
-                Dim r% = __constraint(x.GetPoint(f))
-                Dim g% = __constraint(y.GetPoint(f))
-                Dim b% = __constraint(z.GetPoint(f))
+                Dim r% = rangeConstraint(x.GetPoint(f))
+                Dim g% = rangeConstraint(y.GetPoint(f))
+                Dim b% = rangeConstraint(z.GetPoint(f))
 
                 out += Color.FromArgb(alpha, r, g, b)
             Next
@@ -490,7 +558,12 @@ Namespace Drawing2D.Colors
             Return out
         End Function
 
-        Private Function __constraint(x!) As Integer
+        ''' <summary>
+        ''' Limit <see cref="CubicSpline"/> result in range [0, 255]
+        ''' </summary>
+        ''' <param name="x!"></param>
+        ''' <returns></returns>
+        Private Function rangeConstraint(x!) As Integer
             If x < 0! Then
                 x = 0!
             ElseIf x > 255.0! Then

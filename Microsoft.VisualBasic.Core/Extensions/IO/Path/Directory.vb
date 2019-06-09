@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd8e9fe7167d5ba0c8fb9128f807d2f8, Microsoft.VisualBasic.Core\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::63cbc4dd9aec4e57d75e98e7437fe50d, Microsoft.VisualBasic.Core\Extensions\IO\Path\Directory.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: CopyTo, Exists, GetFullPath, GetRelativePath, IsAbsolutePath
-    '                   ToString
+    '         Function: CopyTo, Exists, GetFullPath, GetRelativePath, GetSubDirectories
+    '                   IsAbsolutePath, ToString
     ' 
     '         Sub: CreateDirectory, Delete
     ' 
@@ -69,6 +69,11 @@ Namespace FileIO
         Sub New(DIR As String)
             Me.DIR = FileSystem.GetDirectoryInfo(DIR).FullName
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSubDirectories() As IEnumerable(Of String)
+            Return DIR.ListDirectory
+        End Function
 
         ''' <summary>
         ''' Gets the full path of the target file based on the path relative to this directory object.

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b04ca22b0716f9a72a99afbfc7c31b5e, mime\application%rdf+xml\RDFEntity.vb"
+﻿#Region "Microsoft.VisualBasic::d0f78fe737178e7eef81ecc96563b2b4, mime\application%rdf+xml\RDFEntity.vb"
 
     ' Author:
     ' 
@@ -115,7 +115,7 @@ End Class
 ''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended by adding XmlAttribute elements. 
 ''' Please consider changing XmlText member of the base class to string array.
 ''' </remarks>
-Public MustInherit Class EntityProperty : Inherits BaseClass
+Public MustInherit Class EntityProperty
 
     ''' <summary>
     ''' rdf:datatype

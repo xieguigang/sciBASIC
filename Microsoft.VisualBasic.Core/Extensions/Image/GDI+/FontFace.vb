@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8ba062b790f0f580a692e7741ce3888, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::196f606a0eab968477bea059d0ec3ace, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: InstalledFontFamilies
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetFontName
+    '         Function: GetFontName, IsInstalled, MeasureString
     ' 
     '     Module DefaultFontValues
     ' 
@@ -56,7 +56,8 @@
 
 Imports System.Drawing
 Imports System.Drawing.Text
-Imports DefaultFont = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Drawing.Font)
+Imports System.Runtime.CompilerServices
+Imports DefaultFont = Microsoft.VisualBasic.Language.Default.Default(Of System.Drawing.Font)
 
 Namespace Imaging
 
@@ -107,6 +108,16 @@ Namespace Imaging
         End Sub
 
         ''' <summary>
+        ''' 检查当前的操作系统之中是否安装有指定名称的字体
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsInstalled(name As String) As Boolean
+            Return fontFamilies.ContainsKey(name) OrElse fontFamilies.ContainsKey(LCase(name))
+        End Function
+
+        ''' <summary>
         ''' 由于字体名称的大小写敏感，所以假若是html css之类的渲染的话，由于可能会是小写的字体名称会导致无法
         ''' 正确的加载所需要的字体，所以可以使用这个函数来消除这种由于大小写敏感而带来的bug
         ''' </summary>
@@ -125,6 +136,13 @@ Namespace Imaging
                     Return [default]
                 End If
             End If
+        End Function
+
+        Public Shared Function MeasureString(text As String, font As Font) As SizeF
+            Static dummy_img As Image = New Bitmap(1, 1)
+            Static dummy_drawing As Graphics = Graphics.FromImage(dummy_img)
+
+            Return dummy_drawing.MeasureString(text, font)
         End Function
     End Class
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b877448a31bef0fb4123d1351d79169, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::130a10e1308e31262f8321f55b73347c, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEsOut.vb"
 
     ' Author:
     ' 
@@ -33,17 +33,17 @@
 
     ' Class ODEsOut
     ' 
-    '     Properties: dx, HaveNaN, params, x, y
-    '                 y0
+    '     Properties: dx, HaveNaN, params, Resolution, x
+    '                 y, y0
     ' 
-    '     Function: GetEnumerator, GetY0, IEnumerable_GetEnumerator, LoadFromDataFrame, ToString
-    ' 
-    '     Sub: Join
+    '     Function: GetEnumerator, GetY0, IEnumerable_GetEnumerator, Join, LoadFromDataFrame
+    '               ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -56,12 +56,33 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
 
     Public Property x As Double()
     Public Property y As Dictionary(Of NamedCollection(Of Double))
+
+    ''' <summary>
+    ''' 方程组的初始值，积分结果会受到初始值的极大的影响
+    ''' </summary>
+    ''' <returns></returns>
     Public Property y0 As Dictionary(Of String, Double)
     Public Property params As Dictionary(Of String, Double)
 
+    ''' <summary>
+    ''' 得到进行积分的步进值
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property dx As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return x(2) - x(1)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 获取得到积分计算的分辨率的数值
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Resolution As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return (x.Last - x.First) / dx
         End Get
     End Property
 
@@ -71,7 +92,9 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
     ''' <returns></returns>
     Public Function GetY0() As Dictionary(Of String, Double)
         Return y.ToDictionary(Function(x) x.Key,
-                              Function(x) x.Value.Value.First)
+                              Function(x)
+                                  Return x.Value(Scan0)
+                              End Function)
     End Function
 
     ''' <summary>
@@ -82,11 +105,7 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
         Get
             For Each val As NamedCollection(Of Double) In y.Values
                 For Each x As Double In val.Value
-                    If Double.IsNaN(x) OrElse
-                        Double.IsInfinity(x) OrElse
-                        Double.IsNegativeInfinity(x) OrElse
-                        Double.IsPositiveInfinity(x) Then
-
+                    If x.IsNaNImaginary Then
                         Return True
                     End If
                 Next
@@ -99,11 +118,20 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
     ''' <summary>
     ''' Merge <see cref="y0"/> into <see cref="params"/>
     ''' </summary>
-    Public Sub Join()
+    Public Function Join() As ODEsOut
+        Dim params As New Dictionary(Of String, Double)(Me.params)
+
         For Each v In y0
             Call params.Add(v.Key, v.Value)
         Next
-    End Sub
+
+        Return New ODEsOut With {
+            .params = params,
+            .x = x,
+            .y = y,
+            .y0 = y0
+        }
+    End Function
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
@@ -115,6 +143,8 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
     ''' <param name="csv$"></param>
     ''' <param name="noVars">ODEs Parameter value is not exists in the data file?</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function LoadFromDataFrame(csv$, Optional noVars As Boolean = False) As ODEsOut
         Return StreamExtension.LoadFromDataFrame(csv, noVars)
     End Function

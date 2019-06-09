@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4917fb0e089411880acc24cc5d2ed883, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ca016eecc9816504bde7a267d869738f, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,13 @@
     ' 
     '     Module RandomExtensions
     ' 
-    '         Function: (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, NextGaussian, NextTriangular
-    '                   Permutation, randf, RandomSingle, Seed
+    '         Properties: seeds
     ' 
-    '         Sub: (+2 Overloads) Shuffle
+    '         Function: GetNextBetween, (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian
+    '                   NextInteger, NextTriangular, Permutation, randf, RandomSingle
+    '                   Seed
+    ' 
+    '         Sub: (+3 Overloads) Shuffle
     ' 
     ' 
     ' 
@@ -87,12 +90,13 @@ Namespace Math
         ''' If a negative number is specified, the absolute value of the number is used.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Seed() As Integer
-            Dim seeds& = CLng(Integer.MaxValue) * 2
-            VisualBasic.Randomize()
-            seeds = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / seeds
-            Return CInt(seeds)
+            Return Math.Abs(CInt(Math.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
+
+        Const RandfMultiply# = 10000
 
         ''' <summary>
         ''' 返回<paramref name="min"/>到<paramref name="max"/>区间之内的一个和实数
@@ -101,25 +105,55 @@ Namespace Math
         ''' <param name="max"></param>
         ''' <returns></returns>
         Public Function randf(min As Double, max As Double) As Double
-            Dim minInteger& = CLng(sys.Truncate(min * 10000))
-            Dim maxInteger& = CLng(sys.Truncate(max * 10000))
+            Dim minInteger& = CLng(sys.Truncate(min * RandfMultiply))
+            Dim maxInteger& = CLng(sys.Truncate(max * RandfMultiply))
             Dim randInteger& = CLng(RandomNumbers.rand()) * CLng(RandomNumbers.rand())
             Dim diffInteger& = maxInteger - minInteger
             Dim resultInteger& = randInteger Mod diffInteger + minInteger
-            Return resultInteger / 10000.0
+
+            Return resultInteger / RandfMultiply
         End Function
 
-        ReadOnly __randomSeeds As New Random(Rnd() * 10000)
+        ''' <summary>
+        ''' 一般来说，在获取随机数的时候并不推荐重新构建一个新的随机数发生器
+        ''' 可以在全局范围内重复使用这个随机数发生器
+        ''' 不同的代码重复使用这个种子，这样子可以尽量的模拟出真正的随机行为
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property seeds As New Random()
 
-        Public Function RandomSingle() As Single
-            Dim result = __randomSeeds.NextDouble()
-            Return CSng(result)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function RandomSingle() As Double
+            Return seeds.NextDouble()
+        End Function
+
+        ''' <summary>
+        ''' Returns a non-negative random integer that is less than the specified maximum.
+        ''' </summary>
+        ''' <param name="upper">
+        ''' The exclusive upper bound of the random number to be generated. maxValue must
+        ''' be greater than or equal to 0.</param>
+        ''' <returns>
+        ''' A 32-bit signed integer that is greater than or equal to 0, and less than maxValue;
+        ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
+        ''' if maxValue equals 0, maxValue is returned.
+        ''' </returns>
+        Public Function NextInteger(upper As Integer) As Integer
+            SyncLock seeds
+                Return seeds.Next(upper)
+            End SyncLock
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetNextBetween(r As Random, min#, max#) As Double
+            Return (max - min) * r.NextDouble + min
         End Function
 
         <Extension>
         Public Function GetRandomValue(rng As DoubleRange) As Double
-            SyncLock __randomSeeds
-                Return __randomSeeds.NextDouble(range:=rng)
+            SyncLock seeds
+                Return seeds.NextDouble(range:=rng)
             End SyncLock
         End Function
 
@@ -142,7 +176,7 @@ Namespace Math
 
         <Extension>
         Public Function GetRandomValue(rng As IntRange) As Integer
-            Return rng.Length * __randomSeeds.NextDouble + rng.Min
+            Return rng.Length * seeds.NextDouble + rng.Min
         End Function
 
         ''' <summary>
@@ -164,11 +198,18 @@ Namespace Math
             Return rand_normal
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("NextGaussian")>
+        Public Function NextGaussian(Optional mu As Double = 0, Optional sigma As Double = 1) As Double
+            Return seeds.NextGaussian(mu, sigma)
+        End Function
+
         ''' <summary>
         ''' Generates values from a triangular distribution.
         ''' </summary>
         ''' <remarks>
-        ''' See http://en.wikipedia.org/wiki/Triangular_distribution for a description of the triangular probability distribution and the algorithm for generating one.
+        ''' See http://en.wikipedia.org/wiki/Triangular_distribution for a description of the triangular 
+        ''' probability distribution and the algorithm for generating one.
         ''' </remarks>
         ''' <param name="r"></param>
         ''' <param name = "a">Minimum</param>
@@ -202,12 +243,21 @@ Namespace Math
         ''' <param name="r"></param>
         ''' <param name = "list"></param>
         <Extension> Public Sub Shuffle(Of T)(r As Random, ByRef list As List(Of T))
+            Dim j As Integer
+            Dim temp As T
+
             For i As Integer = 0 To list.Count - 1
-                Dim j As Integer = r.[Next](0, i + 1)
-                Dim temp As T = list(j)
+                j = r.[Next](0, i + 1)
+                temp = list(j)
                 list(j) = list(i)
                 list(i) = temp
             Next
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Shuffle(Of T)(ByRef list As List(Of T))
+            Call seeds.Shuffle(list)
         End Sub
 
         ''' <summary>
@@ -218,9 +268,12 @@ Namespace Math
         ''' 
         <ExportAPI("Shuffle")>
         Public Sub Shuffle(r As Random, ByRef list As IList)
+            Dim j As Integer
+            Dim temp As Object
+
             For i As Integer = 0 To list.Count - 1
-                Dim j As Integer = r.[Next](0, i + 1)
-                Dim temp = list(j)
+                j = r.[Next](0, i + 1)
+                temp = list(j)
                 list(j) = list(i)
                 list(i) = temp
             Next

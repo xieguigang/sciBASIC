@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c73a7d5135f35a0d72477ae6565af3e6, Microsoft.VisualBasic.Core\Text\Xml\HtmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::afc89401c3f1693a70a33d4b86c123c0, Microsoft.VisualBasic.Core\Text\Xml\HtmlBuilder.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,14 @@
 
     '     Module HtmlBuilder
     ' 
-    '         Function: AppendLine, sprintf
+    '         Function: AppendLine, sprintf, WriteLine
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language.C
@@ -72,6 +73,17 @@ Namespace Text.Xml
             Else
                 Return sb.AppendLine(CLangStringFormatProvider.sprintf(html.ToString, args))
             End If
+        End Function
+
+        <Extension>
+        Public Function WriteLine(text As TextWriter, html As XElement, ParamArray args As Object()) As TextWriter
+            If args.IsNullOrEmpty Then
+                Call text.WriteLine(html.ToString)
+            Else
+                Call text.WriteLine(CLangStringFormatProvider.sprintf(html.ToString, args))
+            End If
+
+            Return text
         End Function
     End Module
 End Namespace

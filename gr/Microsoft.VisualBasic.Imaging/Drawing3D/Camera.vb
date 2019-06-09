@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6ad0f0d90e145f1757983f1a75976f9, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::279ade831195ffec4b0a2e0d898036ed, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Camera
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: Lighting, (+2 Overloads) Project, (+4 Overloads) Rotate, (+2 Overloads) RotateX, (+2 Overloads) RotateY
     '                   (+2 Overloads) RotateZ, ToString
@@ -83,6 +83,14 @@ Namespace Drawing3D
             Me.lightAngle = lightPosition.Normalize()
             Me.colorDifference = 0.2
             Me.lightColor = Color.FromArgb(255, 255, 255)
+        End Sub
+
+        Sub New(viewAngle As Point3D)
+            Call Me.New()
+
+            angleX = viewAngle.X
+            angleY = viewAngle.Y
+            angleZ = viewAngle.Z
         End Sub
 
 #Region "Rotation"

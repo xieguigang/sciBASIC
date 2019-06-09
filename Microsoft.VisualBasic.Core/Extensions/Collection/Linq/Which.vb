@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::603f2180efea2a3c5e5f1a0bad2cc3ff, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
+﻿#Region "Microsoft.VisualBasic::0f288f7675390d9881cf07e7a5bcab72, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: [True], GetMinIndex, Index, (+2 Overloads) IsFalse, (+2 Overloads) IsGreaterThan
-    '                   (+3 Overloads) IsTrue, Max, Min, Top
+    '                   (+3 Overloads) IsTrue, (+2 Overloads) Max, Min, Top
     ' 
     ' 
     ' /********************************************************************************/
@@ -110,6 +110,11 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Max(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
             Return x.MaxIndex
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Max(Of T, K As IComparable)(x As IEnumerable(Of T), compareProject As Func(Of T, K)) As Integer
+            Return x.Select(compareProject).MaxIndex
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::932e8ebac8df3d38796ed5947a1e458a, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::2321c4bfd9b582b8e1392039335ce8aa, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -277,6 +277,11 @@ Namespace Language.Vectorization
             End Set
         End Property
 
+        ''' <summary>
+        ''' 从当前的向量序列之中进行向量子集的截取
+        ''' </summary>
+        ''' <param name="booleans"></param>
+        ''' <returns></returns>
         Public Iterator Function Subset(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of T)
             For Each index In booleans.SeqIterator
                 If index.value = True Then

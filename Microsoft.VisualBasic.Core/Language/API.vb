@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71ee759ed63d841ed4e808bcd1d165c7, Microsoft.VisualBasic.Core\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::35147e4ef5eebdda84d0e0611a618835, Microsoft.VisualBasic.Core\Language\API.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module LanguageAPI
     ' 
-    '         Function: [ByRef], [Default], (+2 Overloads) [When], AsDefault, AsNumeric
-    '                   AsString, AsVector, DefaultValue, Empty, IsNothing
+    '         Function: (+2 Overloads) [As], [ByRef], (+2 Overloads) [Default], (+2 Overloads) [When], AsDefault
+    '                   AsNumeric, AsString, AsVector, Empty, IsNothing
     '                   Let, list, Self, TypeDef, TypeInfo
     ' 
     ' 
@@ -58,7 +58,7 @@ Namespace Language
         ''' <summary>
         ''' The default value assertor. If target object assert result is nothing or empty, then this function will returns True.
         ''' </summary>
-        Friend ReadOnly defaultAssert As New DefaultValue(Of Assert(Of Object)) With {
+        Friend ReadOnly defaultAssert As New [Default](Of Assert(Of Object)) With {
             .Value = AddressOf ExceptionHandle.Default,
             .assert = Function(assert)
                           Return assert Is Nothing
@@ -82,7 +82,7 @@ Namespace Language
         'End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Empty(Of T)() As DefaultValue(Of T())
+        Public Function Empty(Of T)() As [Default](Of T())
             Return {}
         End Function
 
@@ -106,8 +106,8 @@ Namespace Language
         ''' <param name="isNothing"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function [Default](Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
-            Return New DefaultValue(Of T) With {
+        Public Function [Default](Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As [Default](Of T)
+            Return New [Default](Of T) With {
                 .Value = x,
                 .assert = isNothing Or defaultAssert
             }
@@ -122,26 +122,33 @@ Namespace Language
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function AsDefault(Of T)(x As T, Optional [If] As Assert(Of Object) = Nothing) As DefaultValue(Of T)
+        Public Function AsDefault(Of T)(x As T, Optional [If] As Assert(Of Object) = Nothing) As [Default](Of T)
             Return [Default](x, [If])
         End Function
 
-        Public Function DefaultValue(Of T)(value As T) As DefaultValue(Of T)
-            Return New DefaultValue(Of T) With {
-                .Value = value,
+        Public Function [Default](Of  T)(value As T) As [Default](Of T)
+            Return New [Default](Of T) With {
+                .value = value,
                 .assert = defaultAssert
             }
         End Function
 
+        ''' <summary>
+        ''' Value Or Default When .... is true
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="[default]"></param>
+        ''' <param name="expression"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function [When](Of T)([default] As T, expression As Boolean) As DefaultValue(Of T)
+        Public Function [When](Of T)([default] As T, expression As Boolean) As [Default](Of T)
             Return [default].AsDefault().When(expression)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function [When](Of T)([default] As T, expression As Assert(Of T)) As DefaultValue(Of T)
+        Public Function [When](Of T)([default] As T, expression As Assert(Of T)) As [Default](Of T)
             Return [default].AsDefault().When(assert:=expression)
         End Function
 
@@ -223,6 +230,16 @@ Namespace Language
         <Extension>
         Public Function AsString(list As Dictionary(Of String, Object)) As Dictionary(Of String, String)
             Return list.ToDictionary(Function(t) t.Key, Function(t) Scripting.ToString(t.Value))
+        End Function
+
+        <Extension>
+        Public Function [As](Of A, B, T)(list As IEnumerable(Of [Variant](Of A, B))) As IEnumerable(Of T)
+            Return list.Select(Function(x) CType(x.Value, T))
+        End Function
+
+        <Extension>
+        Public Function [As](Of A, B, C, T)(list As IEnumerable(Of [Variant](Of A, B, C))) As IEnumerable(Of T)
+            Return list.Select(Function(x) CType(x.Value, T))
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5093c2f1ef9297f628fe118d2c049b1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::dc5eb9187be0c7f8eed6147a68f052ba, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: ASCIIImage, Convert2ASCII, DrawText
     ' 
-    '         Sub: WriteASCIIStream
+    '         Sub: WriteASCIIStream, writeInternal
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +47,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports sys = System.Math
 
@@ -59,10 +60,12 @@ Namespace Drawing2D.Text.ASCIIArt
     ''' </summary>
     Public Module HelperMethods
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ASCIIImage(text$, Optional font$ = CSSFont.Win7Normal, Optional characters As WeightedChar() = Nothing) As String
-            Dim image As Image = text.DrawText(Color.Black, Color.White, , CSSFont.TryParse(font).GDIObject)
-            Return image.Convert2ASCII
+            Return text _
+                .DrawText(Color.Black, Color.White, , CSSFont.TryParse(font).GDIObject) _
+                .Convert2ASCII(characters)
         End Function
 
         ''' <summary>
@@ -101,20 +104,21 @@ Namespace Drawing2D.Text.ASCIIArt
             Return Encoding.ASCII.GetString(out.ToArray)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub WriteASCIIStream(monoImage As Image, out As StreamWriter, Optional characters As WeightedChar() = Nothing)
+            Call monoImage.writeInternal(out, characters Or WeightedChar.getDefaultCharSet)
+        End Sub
 
-            If characters Is Nothing Then
-                characters = CharSet.GenerateFontWeights.ToArray
-            End If
-
-            Using BlackAndWhite As BitmapBuffer = BitmapBuffer.FromImage(monoImage)
+        <Extension>
+        Private Sub writeInternal(monoImage As Image, out As StreamWriter, characters As WeightedChar())
+            Using blackAndWhite As BitmapBuffer = BitmapBuffer.FromImage(monoImage)
                 For j As Integer = 0 To monoImage.Height - 1
                     Dim line As New List(Of String)() From {}
 
                     For i As Integer = 0 To monoImage.Width - 1
                         ' COLUMN
-                        Dim pixel As Color = BlackAndWhite.GetPixel(i, j)
+                        Dim pixel As Color = blackAndWhite.GetPixel(i, j)
                         Dim targetvalue As Double = (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
                         Dim closestchar As WeightedChar =
                             characters _
@@ -131,33 +135,46 @@ Namespace Drawing2D.Text.ASCIIArt
             End Using
         End Sub
 
-        <Extension> Public Function DrawText(text$, textColor As Color, backColor As Color, Optional WidthAndHeight As SizeF = Nothing, Optional font As Font = Nothing) As Image
-            Dim textSize As SizeF
+        ReadOnly defaultFont As [Default](Of  Font) = SystemFonts.DefaultFont
 
-            If font Is Nothing Then
-                font = SystemFonts.DefaultFont
-            End If
+        ''' <summary>
+        ''' 将字符转换为图像
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="textColor"></param>
+        ''' <param name="backColor"></param>
+        ''' <param name="WidthAndHeight"></param>
+        ''' <param name="fontStyle"></param>
+        ''' <returns></returns>
+        <Extension> Public Function DrawText(text$,
+                                             textColor As Color,
+                                             backColor As Color,
+                                             Optional WidthAndHeight As SizeF = Nothing,
+                                             Optional fontStyle As Font = Nothing) As Image
 
             ' Get char width for insertion point calculation purposes
-            Using dummy_img As Image = New Bitmap(1, 1), dummy_drawing As Graphics = Graphics.FromImage(dummy_img)
-                textSize = dummy_drawing.MeasureString(text, font)
-            End Using
+            Dim font As Font = fontStyle Or defaultFont
+            Dim textSize As SizeF = FontFace.MeasureString(text, font)
 
             If WidthAndHeight.IsEmpty Then
                 WidthAndHeight = textSize
             End If
 
             ' Create a new image of the right size
-            Dim img As New Bitmap(CInt(sys.Truncate(WidthAndHeight.Width)), CInt(sys.Truncate(WidthAndHeight.Height)))
+            Dim w% = CInt(sys.Truncate(WidthAndHeight.Width))
+            Dim h% = CInt(sys.Truncate(WidthAndHeight.Height))
+            Dim img As New Bitmap(w, h)
 
-            Using Drawing = Graphics.FromImage(img) ' Get a graphics object
+            ' Get a graphics object
+            Using drawing = Graphics.FromImage(img)
 
                 ' Create a brush for the text
-                Dim textBrush As Brush = New SolidBrush(textColor)
+                Dim textBrush As New SolidBrush(textColor)
+                Dim x = (WidthAndHeight.Width - textSize.Width) / 2
 
                 ' Paint the background
-                Call Drawing.Clear(backColor)
-                Call Drawing.DrawString(text, font, textBrush, (WidthAndHeight.Width - textSize.Width) / 2, 0)
+                Call drawing.Clear(backColor)
+                Call drawing.DrawString(text, font, textBrush, x, 0)
 
                 Return img
             End Using

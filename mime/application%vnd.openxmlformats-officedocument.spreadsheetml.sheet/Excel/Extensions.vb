@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89f4c4c81416ada93b39548097eb40dd, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5cffe058aef337925b0aaca8235e576f, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,9 @@
 
     ' Module Extensions
     ' 
-    '     Function: CreateNew, EnumerateTables, ReadTableAuto
+    '     Properties: Sheet1
+    ' 
+    '     Function: CreateNew, EnumerateTables, FirstSheet, ReadTableAuto
     ' 
     ' /********************************************************************************/
 
@@ -42,10 +44,21 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 Public Module Extensions
+
+    ''' <summary>
+    ''' ``Sheet1`` is the default sheet name in excel file.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Sheet1 As [Default](Of  String)
+        Get
+            Return NameOf(Sheet1)
+        End Get
+    End Property
 
     ''' <summary>
     ''' Create a new empty excel xlsx file.
@@ -101,5 +114,11 @@ Public Module Extensions
                 Throw New NotImplementedException
             End If
         End With
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function FirstSheet(xlsx As Xlsx) As csv
+        Return xlsx.GetTable(sheetName:=xlsx.SheetNames.FirstOrDefault)
     End Function
 End Module

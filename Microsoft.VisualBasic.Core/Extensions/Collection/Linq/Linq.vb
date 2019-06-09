@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3054ede40eca59d445bac49240cc5366, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::34a1cd09e754b1249abec3608421efde, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,14 @@
 
     '     Module Extensions
     ' 
-    '         Function: CopyVector, DATA, DefaultFirst, FirstOrDefault, IteratesALL
-    '                   (+2 Overloads) JoinIterates, MaxInd, Populate, (+2 Overloads) Read, RemoveLeft
-    '                   (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator, (+4 Overloads) Sequence
-    '                   (+4 Overloads) ToArray, ToVector, TryCatch
+    '         Function: DATA, Populate, SafeQuery, ToArray
+    '         Delegate Sub
+    ' 
+    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, IteratesALL
+    '                       (+2 Overloads) JoinIterates, LastOrDefault, MaxInd, (+2 Overloads) Read, RemoveLeft
+    '                       (+2 Overloads) Removes, Repeats, (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray
+    '                       ToVector, TryCatch
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,6 +62,14 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        ''' <summary>
+        ''' Parallel helper
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="parallel"></param>
+        ''' <param name="degreeOfParallelism%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Populate(Of T)(source As IEnumerable(Of T), parallel As Boolean, Optional degreeOfParallelism% = -1) As IEnumerable(Of T)
             If parallel Then
@@ -92,12 +104,46 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+        Public Function SafeQuery(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional trace$ = Nothing) As IEnumerable(Of T)
             If Not source Is Nothing Then
                 Return source
             Else
+#If DEBUG Then
+                Call $"Target source sequence is nothing...[{trace}]".Warning
+#End If
                 Return {}
             End If
+        End Function
+
+        Public Delegate Sub DoWith(Of T)(obj As T)
+
+        ''' <summary>
+        ''' <paramref name="doWith"/> each element in <paramref name="source"/> and then 
+        ''' returns the <paramref name="source"/> sequence after modify.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="doWith"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function [With](Of T As Class)(source As IEnumerable(Of T), doWith As DoWith(Of T)) As IEnumerable(Of T)
+            For Each x As T In source
+                Call doWith(x)
+                Yield x
+            Next
+        End Function
+
+        ''' <summary>
+        ''' <paramref name="doWith"/> target object <paramref name="x"/>, and then reutrns x
+        ''' </summary>
+        ''' <typeparam name="T">Only works for reference type</typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="doWith"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function [With](Of T As Class)(x As T, doWith As DoWith(Of T)) As T
+            Call doWith(x)
+            Return x
         End Function
 
         ''' <summary>
@@ -426,6 +472,17 @@ Namespace Linq
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function FirstOrDefault(Of TSource)(source As IEnumerable(Of TSource), [default] As TSource) As TSource
             Dim value As TSource = source.FirstOrDefault
+
+            If value Is Nothing Then
+                Return [default]
+            Else
+                Return value
+            End If
+        End Function
+
+        <Extension>
+        Public Function LastOrDefault(Of T)(source As IEnumerable(Of T), [default] As T) As T
+            Dim value As T = source.LastOrDefault
 
             If value Is Nothing Then
                 Return [default]

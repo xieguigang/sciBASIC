@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67a5413f92b51e02f167317bd56011e2, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::d947146bbc7d375f7b9bce335f5ade86, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -40,9 +40,9 @@
     '         Function: Add, GetEnumerator, IEnumerable_GetEnumerator, indexing, (+2 Overloads) Intersect
     '                   NotExists, ToString
     ' 
-    '         Sub: Clear
+    '         Sub: Clear, Delete
     ' 
-    '         Operators: +
+    '         Operators: +, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -145,7 +145,7 @@ Namespace ComponentModel.Collection
         ''' <param name="maps">如果是json加载，可能会出现空值的字典</param>
         ''' <param name="base%"></param>
         Sub New(maps As IDictionary(Of T, Integer), Optional base% = 0)
-            Static emptyIndex As DefaultValue(Of IDictionary(Of String, Integer)) =
+            Static emptyIndex As [Default](Of IDictionary(Of String, Integer)) =
                 New Dictionary(Of String, Integer)
 
             Me.base = base
@@ -181,6 +181,15 @@ Namespace ComponentModel.Collection
                 Return Me.index(index).value
             End Get
         End Property
+
+        Public Sub Delete(index As T)
+            Dim i = Me.IndexOf(index)
+
+            If i > -1 Then
+                Me.maps.Remove(index)
+                Me.index(i) = Nothing
+            End If
+        End Sub
 
         Public Iterator Function Intersect(collection As IEnumerable(Of T)) As IEnumerable(Of T)
             For Each x As T In collection
@@ -266,9 +275,36 @@ Namespace ComponentModel.Collection
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(list As List(Of T)) As Index(Of T)
+            Return New Index(Of T)(source:=list)
+        End Operator
+
+        ''' <summary>
+        ''' Add a new key to this index object.
+        ''' </summary>
+        ''' <param name="index">Element key index object.</param>
+        ''' <param name="element"></param>
+        ''' <returns></returns>
         Public Shared Operator +(index As Index(Of T), element As T) As Index(Of T)
             Call index.Add(element)
             Return index
+        End Operator
+
+        ''' <summary>
+        ''' <paramref name="item"/> is one of the element in <paramref name="indexr"/>
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <param name="indexr"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Like(item As T, indexr As Index(Of T)) As Boolean
+            If item Is Nothing OrElse indexr Is Nothing Then
+                Return False
+            Else
+                Return indexr(x:=item) > -1
+            End If
         End Operator
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator

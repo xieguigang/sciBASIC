@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c2fc1e575bec1c4ed4bc3018934d80, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::239e68d5c6a913fb96a4e7ca42c09bb4, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
 
     ' Author:
     ' 
@@ -213,7 +213,7 @@ Namespace SVG
                     Call gdiPath.VerticalTo(parameters(0), relative:=True)
 
                 Case "C"c
-                    Dim i As int = 0
+                    Dim i As VBInteger = 0
 
                     Call gdiPath.CurveTo(
                         parameters(++i),
@@ -224,7 +224,7 @@ Namespace SVG
                         parameters(++i)
                     )
                 Case "c"c
-                    Dim i As int = 0
+                    Dim i As VBInteger = 0
 
                     Call gdiPath.CurveTo(
                         parameters(++i),
@@ -248,7 +248,7 @@ Namespace SVG
                     Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4), relative:=True)
 
                 Case "A"c
-                    Dim i As int = 0
+                    Dim i As VBInteger = 0
 
                     Call gdiPath.EllipticalArc(
                         parameters(++i),
@@ -260,7 +260,7 @@ Namespace SVG
                         parameters(++i)
                     )
                 Case "a"c
-                    Dim i As int = 0
+                    Dim i As VBInteger = 0
 
                     Call gdiPath.EllipticalArc(
                         parameters(++i),

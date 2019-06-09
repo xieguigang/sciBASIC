@@ -8,13 +8,13 @@ Imports System.Runtime.InteropServices
 ' change them to the information which is associated with the assembly
 ' you compile.
 
-<assembly: AssemblyTitle("zfzxfdsf")>
-<assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("HierarchicalClustering and Visualization")>
+<Assembly: AssemblyDescription("HierarchicalClustering and Visualization")>
 <assembly: AssemblyConfiguration("")>
-<assembly: AssemblyCompany("")>
-<assembly: AssemblyProduct("zfzxfdsf")>
-<assembly: AssemblyCopyright("Copyright 2017")>
-<assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCompany("GPL3")>
+<Assembly: AssemblyProduct("sciBASIC.NET")>
+<Assembly: AssemblyCopyright("Copyright (c) xieguigang 2018")>
+<Assembly: AssemblyTrademark("sciBASIC.NET")>
 <assembly: AssemblyCulture("")>
 
 ' This sets the default COM visibility of types in the assembly to invisible.

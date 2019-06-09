@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e812c10793543e38580bab10cd1df1d, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::9599c84d706bc7b4030599d0e38f80c8, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -62,12 +62,12 @@ Namespace ComponentModel.Collection
 
         ReadOnly assert As Assert(Of Object)
 
-        Default Public Overloads Property Item(key As String) As DefaultValue(Of T)
+        Default Public Overloads Property Item(key As String) As [Default](Of T)
             Get
                 Dim value As T = If(ContainsKey(key), MyBase.Item(key), Nothing)
-                Return New DefaultValue(Of T)(value, assert)
+                Return New [Default](Of T)(value, assert)
             End Get
-            Set(value As DefaultValue(Of T))
+            Set(value As [Default](Of T))
                 MyBase.Item(key) = value.DefaultValue
             End Set
         End Property
@@ -98,14 +98,14 @@ Namespace ComponentModel.Collection
         End Property
 
         ''' <summary>
-        ''' 不存在的键名会返回Nothing
+        ''' 不存在的键名或者空值的键名都会返回``Nothing``
         ''' </summary>
         ''' <param name="key"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(key As String) As V
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                If ContainsKey(key) Then
+                If Not key Is Nothing AndAlso ContainsKey(key) Then
                     Return MyBase.Item(key)
                 Else
                     Return Nothing

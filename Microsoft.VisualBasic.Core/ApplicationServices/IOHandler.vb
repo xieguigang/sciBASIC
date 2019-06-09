@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1811564255de9ee59499da9b7739ed07, Microsoft.VisualBasic.Core\ApplicationServices\IOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::94e30bc7355c17ff77226a317b3876c1, Microsoft.VisualBasic.Core\ApplicationServices\IOHandler.vb"
 
     ' Author:
     ' 
@@ -36,16 +36,9 @@
     ' 
     '         Delegate Function
     ' 
+    '             Function: GetWrite, IsRegister, SaveJSON, SaveXml
     ' 
-    '         Delegate Function
-    ' 
-    '             Properties: DefaultHandle, DefaultLoadHandle, DefaultSaveDescription
-    ' 
-    '             Function: ReadJSON, SaveJSON, SaveXml
-    ' 
-    '             Sub: SetHandle
-    ' 
-    ' 
+    '             Sub: RegisterHandle
     ' 
     ' 
     ' 
@@ -53,8 +46,8 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ApplicationServices
@@ -62,36 +55,29 @@ Namespace ApplicationServices
     ''' <summary>
     ''' Collection IO extensions
     ''' </summary>
+    ''' <remarks>
+    ''' 在这个模块之中删除了read函数，因为read是取决于输入的文件的具体格式的，并不是取决于代码的
+    ''' 所以读取操作无意义
+    ''' 但是对于write而言，则是可以通过代码来控制具体的输出文件的
+    ''' </remarks>
     Public Module IOHandler
 
         Public Delegate Function ISave(obj As IEnumerable, path As String, encoding As Encoding) As Boolean
-        Public Delegate Function IRead(type As Type, path As String, encoding As Encoding) As IEnumerable
 
-        Public ReadOnly Property DefaultHandle As ISave = AddressOf SaveJSON
-        Public ReadOnly Property DefaultLoadHandle As IRead = AddressOf ReadJSON
+        ReadOnly saveWrite As New Dictionary(Of Type, ISave)
+        ReadOnly defaultWriter As New [Default](Of ISave)(AddressOf SaveJSON)
 
-        Public ReadOnly Property DefaultSaveDescription As String
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return DefaultHandle _
-                    .Method _
-                    .DeclaringType _
-                    .Module _
-                    .Assembly _
-                    .Location _
-                    .FileName & "!" & DefaultHandle.Method.FullName(False)
-            End Get
-        End Property
-
-        Public Sub SetHandle(handle As ISave)
-            _DefaultHandle = handle
-        End Sub
-
-        Public Function ReadJSON(type As Type, path As String, encoding As Encoding) As IEnumerable
-            Dim text As String = path.ReadAllText(encoding)
-            type = type.MakeArrayType
-            Return DirectCast(JsonContract.LoadObject(text, type), IEnumerable)
+        Public Function GetWrite(type As Type) As ISave
+            Return saveWrite.TryGetValue(type) Or defaultWriter
         End Function
+
+        Public Function IsRegister(type As Type) As Boolean
+            Return saveWrite.ContainsKey(type)
+        End Function
+
+        Public Sub RegisterHandle(handle As ISave, type As Type)
+            saveWrite(type) = handle
+        End Sub
 
         Public Function SaveJSON(obj As IEnumerable, path As String, encoding As Encoding) As Boolean
             Return GetObjectJson(obj, obj.GetType).SaveTo(path, encoding)

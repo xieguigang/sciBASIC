@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d0017ad00c3c95b60be9112a45a88d8, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8ba3175e197f6226ab472b4c6c497bba, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,10 @@
 
     ' Module XmlExtensions
     ' 
-    '     Function: CodePage, CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, GetXmlAttrValue
-    '               LoadFromXml, (+2 Overloads) LoadXml, SafeLoadXml, SaveAsXml, SetXmlEncoding
-    '               SetXmlStandalone
+    '     Properties: XmlParser
+    ' 
+    '     Function: CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, (+2 Overloads) LoadFromXml, (+2 Overloads) LoadXml
+    '               SafeLoadXml, SaveAsXml
     ' 
     '     Sub: WriteXML
     ' 
@@ -47,17 +48,22 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Text.RegularExpressions
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
 <Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 Public Module XmlExtensions
+
+    Public ReadOnly Property XmlParser As New [Default](Of IObjectBuilder)(AddressOf LoadFromXml)
 
     ''' <summary>
     ''' 这个函数主要是用作于Linq里面的Select语句拓展的，这个函数永远也不会报错，只会返回空值
@@ -101,6 +107,10 @@ Public Module XmlExtensions
             ' 由于在底层函数之中已经将错误给处理掉了，所以这里直接返回
             Return Nothing
         Else
+            If type.ImplementInterface(GetType(IFileReference)) Then
+                DirectCast(obj, IFileReference).FilePath = xmlFile
+            End If
+
             Return DirectCast(obj, T)
         End If
     End Function
@@ -142,7 +152,7 @@ Public Module XmlExtensions
             xmlDoc = preprocess(xmlDoc)
         End If
         If stripInvalidsCharacter Then
-            xmlDoc = xmlDoc.StripInvalidCharacters
+            xmlDoc = xmlDoc.StripInvalidUTF8Code
         End If
 
         Using stream As New StringReader(s:=xmlDoc)
@@ -227,18 +237,6 @@ Public Module XmlExtensions
         End Try
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CodePage(xmlEncoding As XmlEncodings) As Encoding
-        Select Case xmlEncoding
-            Case XmlEncodings.GB2312
-                Return Encodings.GB2312.CodePage
-            Case XmlEncodings.UTF8
-                Return UTF8WithoutBOM
-            Case Else
-                Return Encodings.UTF16.CodePage
-        End Select
-    End Function
-
     ''' <summary>
     ''' 写入的文本文件的编码格式和XML的编码格式应该是一致的
     ''' </summary>
@@ -288,39 +286,34 @@ Public Module XmlExtensions
         End Try
     End Function
 
-    <ExportAPI("Xml.GetAttribute")>
-    <Extension> Public Function GetXmlAttrValue(str As String, Name As String) As String
-        Dim m As Match = Regex.Match(str, Name & "=(("".+?"")|[^ ]*)")
-
-        If Not m.Success Then
-            Return ""
-        Else
-            str = m.Value.Replace(Name & "=", "")
-        End If
-
-        If str.First = """"c AndAlso str.Last = """"c Then
-            str = Mid(str, 2, Len(str) - 2)
-        End If
-
-        Return str
-    End Function
-
     ''' <summary>
     ''' Generate a specific type object from a xml document stream.(使用一个XML文本内容创建一个XML映射对象)
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
     ''' <param name="Xml">This parameter value is the document text of the xml file, not the file path of the xml file.(是Xml文件的文件内容而非文件路径)</param>
     ''' <param name="throwEx">Should this program throw the exception when the xml deserialization error happens?
     ''' if False then this function will returns a null value instead of throw exception.
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function LoadFromXml(Of T)(xml$, Optional throwEx As Boolean = True) As T
-        Using Stream As New StringReader(s:=xml)
+        Return LoadFromXml(xml, GetType(T), throwEx)
+    End Function
+
+    ''' <summary>
+    ''' Generate a specific type object from a xml document stream.(使用一个XML文本内容创建一个XML映射对象)
+    ''' </summary>
+    ''' <param name="Xml">This parameter value is the document text of the xml file, not the file path of the xml file.(是Xml文件的文件内容而非文件路径)</param>
+    ''' <param name="throwEx">Should this program throw the exception when the xml deserialization error happens?
+    ''' if False then this function will returns a null value instead of throw exception.
+    ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <Extension> Public Function LoadFromXml(xml$, schema As Type, Optional throwEx As Boolean = True) As Object
+        Using stream As New StringReader(s:=xml)
             Try
-                Dim type As Type = GetType(T)
-                Dim o As Object = New XmlSerializer(type).Deserialize(Stream)
-                Return DirectCast(o, T)
+                Return New XmlSerializer(schema).Deserialize(stream)
             Catch ex As Exception
                 Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
 
@@ -389,39 +382,5 @@ Public Module XmlExtensions
 
             Throw New Exception("Details at file dump: " & file, ex)
         End Try
-    End Function
-
-    <Extension>
-    Public Function SetXmlEncoding(xml As String, encoding As XmlEncodings) As String
-        Dim xmlEncoding As String = Text.Xml.XmlDeclaration.XmlEncodingString(encoding)
-        Dim head As String = Regex.Match(xml, XmlDoc.XmlDeclares, RegexICSng).Value
-        Dim enc As String = Regex.Match(head, "encoding=""\S+""", RegexICSng).Value
-
-        If String.IsNullOrEmpty(enc) Then
-            enc = head.Replace("?>", $" encoding=""{xmlEncoding}""?>")
-        Else
-            enc = head.Replace(enc, $"encoding=""{xmlEncoding}""")
-        End If
-
-        xml = xml.Replace(head, enc)
-
-        Return xml
-    End Function
-
-    <Extension>
-    Public Function SetXmlStandalone(xml As String, standalone As Boolean) As String
-        Dim opt As String = Text.Xml.XmlDeclaration.XmlStandaloneString(standalone)
-        Dim head As String = Regex.Match(xml, XmlDoc.XmlDeclares, RegexICSng).Value
-        Dim enc As String = Regex.Match(head, "standalone=""\S+""", RegexICSng).Value
-
-        If String.IsNullOrEmpty(enc) Then
-            enc = head.Replace("?>", $" standalone=""{opt}""?>")
-        Else
-            enc = head.Replace(enc, $"standalone=""{opt}""")
-        End If
-
-        xml = xml.Replace(head, enc)
-
-        Return xml
     End Function
 End Module

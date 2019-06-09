@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e19ef66cf06141306e8e31ae0cfc70de, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree.vb"
+﻿#Region "Microsoft.VisualBasic::81eec77cd0117693bed3fa2054025986, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,9 @@
 
     '     Class AVLTree
     ' 
-    '         Properties: root
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Add, Remove
+    '         Function: Add, Find, Remove
     ' 
     '         Sub: Add, appendLeft, appendRight, Remove, removeCurrent
     '              removeLeft, removeRight
@@ -59,25 +57,25 @@ Namespace ComponentModel.Algorithm.BinaryTree
     ''' <remarks>
     ''' http://www.cnblogs.com/huangxincheng/archive/2012/07/22/2603956.html
     ''' </remarks>
-    Public Class AVLTree(Of K, V)
-
-        ''' <summary>
-        ''' The root node of this binary tree
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property root As BinaryTree(Of K, V)
-
-        ReadOnly compares As Comparison(Of K)
-        ReadOnly views As Func(Of K, String)
+    Public Class AVLTree(Of K, V) : Inherits TreeBase(Of K, V)
 
         ''' <summary>
         ''' Create an instance of the AVL binary tree.
         ''' </summary>
-        ''' <param name="compares">Compare between two keys.</param>
+        ''' <param name="compares">
+        ''' Compare between two keys. This comparison function should returns: 
+        ''' 
+        ''' + 0, means two keys are equals.
+        ''' + 1, means a is greater than b.
+        ''' + -1, means a is smaller than b.
+        ''' </param>
         ''' <param name="views">Display the key as string</param>
         Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
-            Me.compares = compares
-            Me.views = views
+            MyBase.New(compares, views)
+        End Sub
+
+        Sub New(compares As IComparer(Of K), Optional views As Func(Of K, String) = Nothing)
+            MyBase.New(AddressOf compares.Compare, views)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -87,28 +85,30 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         Public Function Add(key As K, value As V, tree As BinaryTree(Of K, V), valueReplace As Boolean) As BinaryTree(Of K, V)
             If tree Is Nothing Then
+                ' 追加新的叶子节点
                 tree = New BinaryTree(Of K, V)(key, value, Nothing, views)
+                stack.Add(tree)
+            Else
+                Select Case compares(key, tree.Key)
+                    Case < 0 : Call appendLeft(tree, key, value, valueReplace)
+                    Case > 0 : Call appendRight(tree, key, value, valueReplace)
+                    Case = 0
+
+                        ' 将value追加到附加值中（也可对应重复元素）
+                        If valueReplace Then
+                            tree.Value = value
+                        End If
+
+                        ' 2018.3.6
+                        ' 如果是需要使用二叉树进行聚类操作，那么等于零的值可能都是同一个簇之中的
+                        ' 在这里将这个member添加进来
+                        Call DirectCast(tree!values, List(Of V)).Add(value)
+
+                    Case Else
+                        ' This will never happend!
+                        Throw New Exception("????")
+                End Select
             End If
-
-            Select Case compares(key, tree.Key)
-                Case < 0 : Call appendLeft(tree, key, value, valueReplace)
-                Case > 0 : Call appendRight(tree, key, value, valueReplace)
-                Case = 0
-
-                    ' 将value追加到附加值中（也可对应重复元素）
-                    If valueReplace Then
-                        tree.Value = value
-                    End If
-
-                    ' 2018.3.6
-                    ' 如果是需要使用二叉树进行聚类操作，那么等于零的值可能都是同一个簇之中的
-                    ' 在这里将这个member添加进来
-                    Call DirectCast(tree!values, List(Of V)).Add(value)
-
-                Case Else
-                    ' This will never happend!
-                    Throw New Exception("????")
-            End Select
 
             tree.PutHeight
 
@@ -138,6 +138,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
                 End If
             End If
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Find(term As K) As BinaryTree(Of K, V)
+            Return root.Find(key:=term, compares:=compares)
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Remove(key As K)

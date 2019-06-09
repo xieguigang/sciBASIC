@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6079529e8dc2410710467775fd0b758, gr\Landscape\3DBuilder\IO.vb"
+﻿#Region "Microsoft.VisualBasic::53d1160b086b4339aad80a5e8f03c1f0, gr\Landscape\3DBuilder\IO.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@ Namespace Vendor_3mf
         ''' <returns></returns>
         Public Function Open(zip$) As Project
             Dim tmp$ = App.GetAppSysTempFile("--" & zip.FileName, sessionID:=App.PID)
-            Call GZip.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
+            Call ZipLib.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
             Return Project.FromZipDirectory(tmp)
         End Function
 

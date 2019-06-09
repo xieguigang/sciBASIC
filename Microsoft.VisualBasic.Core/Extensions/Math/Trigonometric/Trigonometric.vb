@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54fe0fc3918c2d292daa3384d0b3894d, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
+﻿#Region "Microsoft.VisualBasic::9c312da426a7a5ef34abc056584b4c24, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Trigonometric
     ' 
-    '         Function: Angle, (+2 Overloads) Distance, GetAngle, GetAngleVector, MovePoint
+    '         Function: Angle, (+2 Overloads) Distance, (+2 Overloads) GetAngle, GetAngleVector, (+2 Overloads) MovePoint
     '                   NearestPoint, ToCartesianPoint, ToDegrees, ToRadians
     ' 
     ' 
@@ -43,10 +43,14 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 Imports sys = System.Math
 
 Namespace Math
 
+    ''' <summary>
+    ''' 三角函数拓展模块
+    ''' </summary>
     Public Module Trigonometric
 
         ''' <summary>
@@ -102,19 +106,44 @@ Namespace Math
             Return sys.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
 
+        ''' <summary>
+        ''' 计算两个点之间的线段的夹角
+        ''' </summary>
+        ''' <param name="p1"></param>
+        ''' <param name="p2"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAngle(p1 As Point, p2 As Point) As Double
-            Dim xDiff As Double = p2.X - p1.X
-            Dim yDiff As Double = p2.Y - p1.Y
+            Return GetAngle(p1.X, p1.Y, p2.X, p2.Y)
+        End Function
+
+        Public Function GetAngle(x1!, y1!, x2!, y2!) As Double
+            Dim xDiff As Double = x2 - x1
+            Dim yDiff As Double = y2 - y1
+
             Return 180 - (ToDegrees(sys.Atan2(yDiff, xDiff)) - 90)
         End Function
 
+        ''' <summary>
+        ''' 以当前的点为圆心，向<paramref name="angle"/>方向移动给定的距离
+        ''' </summary>
+        ''' <param name="distance#"></param>
+        ''' <param name="angle#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MovePoint(p As PointF, angle As Double, distance As Integer) As PointF
+            Return New PointF With {
+                .X = p.X + distance * Math.Sin(angle * Math.PI / 180),
+                .Y = p.Y + distance * Math.Cos(angle * Math.PI / 180)
+            }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MovePoint(p As Point, angle As Double, distance As Integer) As Point
-            p = New Point(p)
-            p.X += distance * sys.Sin(angle)
-            p.Y += distance * sys.Cos(angle)
-
-            Return p
+            Return p.PointF.MovePoint(angle, distance).ToPoint
         End Function
 
         ''' <summary>

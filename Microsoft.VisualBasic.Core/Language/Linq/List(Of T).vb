@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d40988cf8a83daadb7b668e0c41b6191, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::450b660eb44b1164bc931b037f515d36, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -37,8 +37,9 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
-    '         Operators: (+5 Overloads) -, *, ^, (+6 Overloads) +, (+2 Overloads) <
-    '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
+    '         Operators: (+5 Overloads) -, *, ^, (+8 Overloads) +, <
+    '                    <=, (+2 Overloads) <>, (+2 Overloads) =, >, >=
+    '                    >>
     ' 
     ' 
     ' /********************************************************************************/
@@ -159,6 +160,30 @@ Namespace Language
                     index = Count + index  ' -1 -> count -1
                 End If
                 MyBase.Item(index) = value
+            End Set
+        End Property
+
+        Default Public Overloads Property Item(index As Integer?) As T
+            Get
+                Return Item(index.Value)
+            End Get
+            Set(value As T)
+                Item(index.Value) = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Can accept negative number as the index value, negative value means ``<see cref="Count"/> - n``, 
+        ''' example as ``list(-1)``: means the last element in this list: ``list(list.Count -1)``
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Default Public Overloads Property Item(index As VBInteger) As T
+            Get
+                Return Item(index.Value)
+            End Get
+            Set(value As T)
+                Item(index.Value) = value
             End Set
         End Property
 
@@ -322,6 +347,21 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' Adds an object to the end of the <see cref="List(Of T)"/>.
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="x">
+        ''' The object to be added to the end of the <see cref="List(Of T)"/>. 
+        ''' The value can be null for reference types.
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(list As List(Of T), x As Value(Of T)) As List(Of T)
+            Return list + x.Value
+        End Operator
+
+        ''' <summary>
         ''' Adds an object to the begin of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
@@ -381,6 +421,11 @@ Namespace Language
             Return list
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(list As List(Of T), [iterator] As Func(Of IEnumerable(Of T))) As List(Of T)
+            Return list + iterator()
+        End Operator
+
         ''' <summary>
         ''' Append <paramref name="list2"/> to the end of <paramref name="list1"/>
         ''' </summary>
@@ -408,7 +453,9 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds the elements of the specified collection to the end of the <see cref="List(Of T)"/>.
+        ''' Adds the elements of the specified collection to the begining of the <paramref name="list"/> <see cref="List(Of T)"/>.
+        ''' (output = <paramref name="vals"/> contract <paramref name="list"/>)
+        ''' (这个操作符并不会修改所输入的两个原始序列的内容)
         ''' </summary>
         ''' <param name="vals"></param>
         ''' <param name="list"></param>
@@ -517,6 +564,34 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' Elements count is greater than or equals to a specific number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator >=(list As List(Of T), count%) As Boolean
+            If list Is Nothing Then
+                Return 0 >= count
+            Else
+                Return list.Count >= count
+            End If
+        End Operator
+
+        ''' <summary>
+        ''' Elements count is less than or equals to a specific number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator <=(list As List(Of T), count%) As Boolean
+            If list Is Nothing Then
+                Return 0 <= count
+            Else
+                Return list.Count <= count
+            End If
+        End Operator
+
+        ''' <summary>
         ''' Assert that the element counts of this list object is equals to a specifc number?
         ''' </summary>
         ''' <param name="list"></param>
@@ -544,17 +619,6 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Dump this collection data to the file system.
-        ''' </summary>
-        ''' <param name="source"></param>
-        ''' <param name="path"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator >(source As List(Of T), path As String) As Boolean
-            Return IOHandler.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
-        End Operator
-
-        ''' <summary>
         ''' <see cref="Count"/> of <paramref name="list"/> &gt; <paramref name="n"/>
         ''' </summary>
         ''' <param name="list"></param>
@@ -572,14 +636,14 @@ Namespace Language
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >>(source As List(Of T), path As Integer) As Boolean
-            Dim file As FileHandle = __getHandle(path)
+            Dim file As FileHandle = My.File.GetHandle(path)
             Return source > file.FileName
         End Operator
 
-        Public Shared Operator <(source As List(Of T), path As String) As Boolean
-            Throw New NotImplementedException
-        End Operator
-
+        ''' <summary>
+        ''' 反向的枚举出当前列表之中的所有元素
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function ReverseIterator() As IEnumerable(Of T)
             For i As Integer = Count - 1 To 0 Step -1
                 Yield MyBase.Item(i)
@@ -600,7 +664,7 @@ Namespace Language
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function [Default]() As DefaultValue(Of List(Of T))
+        Public Shared Function [Default]() As [Default](Of List(Of T))
             Return New List(Of T)
         End Function
 

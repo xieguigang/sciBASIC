@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab797db8f8d4be8697911e311fa88785, Microsoft.VisualBasic.Core\Serialization\JSON\JsonFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::18caaeaecae432ae59ba5c9891b0b90d, Microsoft.VisualBasic.Core\Serialization\JSON\JsonFormatter.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Serialization.JSON.Formatter.Internals
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Serialization.JSON.Formatter
 
@@ -57,14 +58,10 @@ Namespace Serialization.JSON.Formatter
         ''' <param name="json">A valid JSON string.</param>
         ''' <returns>A 'pretty printed' version of the specified JSON string.</returns>
         Public Function Format(json As String) As String
-            If json Is Nothing Then
-                Throw New ArgumentNullException("json should not be null.")
-            End If
-
             Dim context As New JsonFormatterStrategyContext()
             Dim formatter As New JsonFormatterInternal(context)
 
-            Return formatter.Format(json)
+            Return formatter.Format(json Or die("json should not be null."))
         End Function
 
         ''' <summary>
@@ -74,11 +71,7 @@ Namespace Serialization.JSON.Formatter
         ''' <param name="json">A valid JSON string.</param>
         ''' <returns>A 'minified' version of the specified JSON string.</returns>
         Public Function Minify(json As String) As String
-            If json Is Nothing Then
-                Throw New ArgumentNullException("json should not be null.")
-            End If
-
-            Return Regex.Replace(json, "(""(?:[^""\\]|\\.)*"")|\s+", "$1")
+            Return r.Replace(json Or die("json should not be null."), "(""(?:[^""\\]|\\.)*"")|\s+", "$1")
         End Function
     End Module
 End Namespace

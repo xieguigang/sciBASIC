@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27a6e726bdd07af572a40c4625b66bd9, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::caae9ed0bce84a2a283d34c9e4367048, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,7 @@
     '     Module IteratorExtensions
     ' 
     '         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+2 Overloads) SeqIterator
-    '                   (+2 Overloads) SeqTuple, ValueArray
-    ' 
-    '     Structure SeqValue
-    ' 
-    '         Properties: i, IsEmpty, value
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) CompareTo, ToString
-    ' 
-    '         Sub: Assign
-    ' 
-    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Mod
-    ' 
-    '     Interface IIterator
-    ' 
-    '         Function: GetEnumerator, IGetEnumerator
+    '                   (+2 Overloads) SeqTuple, Tuples, ValueArray
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,16 +42,24 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Linq
 
     Public Module IteratorExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Tuples(Of T)(seq As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of (i%, val As T))
+            Return seq.Select(Function(i) (i.i, i.value))
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="offset%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function SeqIterator(source As IEnumerable, Optional offset% = 0) As IEnumerable(Of SeqValue(Of Object))
             Dim i As Integer = offset
@@ -80,11 +72,16 @@ Namespace Linq
 
         ''' <summary>
         ''' Iterates all of the objects in the source sequence with collection index position.
+        ''' (``enumerate()`` 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，
+        ''' 同时列出数据和数据下标，一般用在 Linq表达式 循环当中。
+        ''' 这个拓展函数类似于python之中的 ``enumerate()`` 函数)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source">the source sequence</param>
-        ''' <param name="offset"></param>
-        ''' <returns></returns>
+        ''' <param name="offset">``[start=0]``下标的起始位置</param>
+        ''' <returns>
+        ''' ``[index, item_value]``
+        ''' </returns>
         <Extension>
         Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of SeqValue(Of T))
             If Not source Is Nothing Then
@@ -171,160 +168,4 @@ Namespace Linq
                 .Indices
         End Function
     End Module
-
-    ''' <summary>
-    ''' Value <typeparamref name="T"/> with sequence index <see cref="i"/>.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Structure SeqValue(Of T) : Implements IAddressOf
-        Implements IComparable(Of Integer)
-        Implements IComparable
-        Implements Value(Of T).IValueOf
-        Implements IsEmpty
-
-        ''' <summary>
-        ''' The position of this object value in the original sequence.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property i As Integer Implements IAddressOf.Address
-        ''' <summary>
-        ''' The Object data
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property value As T Implements Value(Of T).IValueOf.Value
-
-        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
-            Get
-                Return i = 0 AndAlso value Is Nothing
-            End Get
-        End Property
-
-        Sub New(i%, x As T)
-            Me.i = i
-            value = x
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function ToString() As String
-            Return Me.value.GetJson(False)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As T
-            Return x.value
-        End Operator
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As Integer
-            Return x.i
-        End Operator
-
-        Public Shared Operator +(list As System.Collections.Generic.List(Of T), x As SeqValue(Of T)) As System.Collections.Generic.List(Of T)
-            Call list.Add(x.value)
-            Return list
-        End Operator
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Mod(i As SeqValue(Of T), n%) As Integer
-            Return i.i Mod n
-        End Operator
-
-        Public Shared Operator <>(v As SeqValue(Of T), i%) As Boolean
-            Return v.i <> i
-        End Operator
-
-        Public Shared Operator =(v As SeqValue(Of T), i%) As Boolean
-            Return v.i = i
-        End Operator
-
-        ''' <summary>
-        ''' Get value from <see cref="value"/> property.
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' Syntax helper for the <see cref="Pointer(Of T)"/>:
-        ''' 
-        ''' ```vbnet
-        ''' Dim p As Pointer(Of T) = T()
-        ''' Dim x As T = ++p
-        ''' ```
-        ''' </remarks>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +(x As SeqValue(Of T)) As T
-            Return x.value
-        End Operator
-
-        ''' <summary>
-        ''' Get value from <see cref="value"/> property.
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' Syntax helper for the <see cref="Pointer(Of T)"/>:
-        ''' 
-        ''' ```vbnet
-        ''' Dim p As Pointer(Of T) = T()
-        ''' Dim x As T = --p
-        ''' ```
-        ''' </remarks>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator -(x As SeqValue(Of T)) As T
-            Return x.value
-        End Operator
-
-        ''' <summary>
-        ''' Compares the index value <see cref="i"/>.
-        ''' </summary>
-        ''' <param name="other"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CompareTo(other As Integer) As Integer Implements IComparable(Of Integer).CompareTo
-            Return i.CompareTo(other)
-        End Function
-
-        Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
-            If obj Is Nothing Then
-                Return 1
-            End If
-
-            If Not obj.GetType Is Me.GetType Then
-                Return 10
-            End If
-
-            Return i.CompareTo(DirectCast(obj, SeqValue(Of T)).i)
-        End Function
-
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            i = address
-        End Sub
-    End Structure
-
-    ''' <summary>
-    ''' Exposes the enumerator, which supports a simple iteration over a collection of
-    ''' a specified type.To browse the .NET Framework source code for this type, see
-    ''' the Reference Source.
-    ''' (使用这个的原因是系统自带的<see cref="IEnumerable(Of T)"/>在Xml序列化之中的支持不太好)
-    ''' </summary>
-    ''' <typeparam name="T">The type of objects to enumerate.This type parameter is covariant. That is, you
-    ''' can use either the type you specified or any type that is more derived. For more
-    ''' information about covariance and contravariance, see Covariance and Contravariance
-    ''' in Generics.</typeparam>
-    Public Interface IIterator(Of T)
-
-        ''' <summary>
-        ''' Returns an enumerator that iterates through the collection.
-        ''' </summary>
-        ''' <returns>An enumerator that can be used to iterate through the collection.</returns>
-        Function GetEnumerator() As IEnumerator(Of T)
-
-        ''' <summary>
-        ''' Returns an enumerator that iterates through a collection.
-        ''' </summary>
-        ''' <returns>An System.Collections.IEnumerator object that can be used to iterate through
-        ''' the collection.</returns>
-        Function IGetEnumerator() As IEnumerator
-    End Interface
 End Namespace

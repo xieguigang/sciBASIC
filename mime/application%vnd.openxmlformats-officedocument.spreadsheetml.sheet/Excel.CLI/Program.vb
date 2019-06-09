@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a1615fc8bf4d912be0d809c5cd62507, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c4dfe9987f7ba498fcb37a3994b3db9e, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\Program.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,9 @@
 #End Region
 
 Module Program
+
+    Public Const CsvTools$ = "Comma-Separated Values CLI Helpers"
+    Public Const XlsxTools$ = "Microsoft Xlsx File CLI Tools"
 
     Public Function Main() As Integer
         Return GetType(CLI).RunCLI(App.CommandLine)

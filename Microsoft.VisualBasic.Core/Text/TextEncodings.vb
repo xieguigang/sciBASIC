@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5059b152be1ca568fa19373babcb314, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::9609db91e7dcf90e1fe5a0b6e6717d36, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports defaultEncoding = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Text.Encoding)
+Imports defaultEncoding = Microsoft.VisualBasic.Language.Default.Default(Of System.Text.Encoding)
 
 Namespace Text
 

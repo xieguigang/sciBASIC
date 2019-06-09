@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54aff75e7c028f23015bc280393da197, Microsoft.VisualBasic.Core\ComponentModel\Settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::5da60dbd3e007a0efc48dec6e821a958, Microsoft.VisualBasic.Core\ComponentModel\Settings\Settings.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Namespace ComponentModel.Settings
         Public ReadOnly Property SettingsData As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return DirectCast(_SettingsData, T)
+                Return DirectCast(MyBase.profilesData, T)
             End Get
         End Property
 

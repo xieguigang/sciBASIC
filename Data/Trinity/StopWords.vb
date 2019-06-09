@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::439eb6ee3a88aaf48166d998883d1614, Data\Trinity\StopWords.vb"
+﻿#Region "Microsoft.VisualBasic::7f96faa8f74e0abfb47027acc5489e60, Data\Trinity\StopWords.vb"
 
     ' Author:
     ' 
@@ -417,7 +417,7 @@ Public Class StopWords : Implements IEnumerable(Of String)
     ''' Using list of stop words from https://www.ranks.nl/stopwords/ as default.
     ''' </summary>
     ''' <returns></returns>
-    Public Shared ReadOnly Property DefaultStopWords As New DefaultValue(Of StopWords)(New StopWords)
+    Public Shared ReadOnly Property DefaultStopWords As New [Default](Of  StopWords)(New StopWords)
 
     Default Public ReadOnly Property Item(index As Integer) As String Implements IReadOnlyList(Of String).Item
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -437,7 +437,7 @@ Public Class StopWords : Implements IEnumerable(Of String)
     ''' <returns></returns>
     Public Iterator Function Removes(tokens As IEnumerable(Of String)) As IEnumerable(Of String)
         For Each word As String In tokens.SafeQuery
-            If Not word.ToLower.IsOneOfA(stopwords) Then
+            If Not word.ToLower Like stopwords Then
                 Yield word
             End If
         Next

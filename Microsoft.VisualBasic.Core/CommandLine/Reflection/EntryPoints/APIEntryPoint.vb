@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47ba5af8f77b29a450220523e141ab3e, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::67c309bff08f4692ba4f8337e6c9cf8f, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -305,17 +305,26 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <remarks></remarks>
         Public Function InvokeCLI(parameters As Object(), target As Object, Optional [Throw] As Boolean = True) As Integer
             Dim rtvl As Object = Invoke(parameters, target, [Throw])
-            Dim Type As Type = rtvl.GetType
 
-            If Type = GetType(Integer) OrElse
-                Type = GetType(Long) OrElse
-                Type = GetType(Double) OrElse
-                Type = GetType(Short) Then
-
-                Return CType(rtvl, Integer)
+            If EntryPoint.ReturnType Is GetType(Void) Then
+                ' is a sub
+                ' always return zero
+                Return 0
+            ElseIf rtvl Is Nothing Then
+                ' function return value is nothing
+                Return -1
             Else
-                Dim value As Integer = If(rtvl Is Nothing, -1, 0)
-                Return value
+                Dim type As Type = rtvl.GetType
+
+                If type = GetType(Integer) OrElse
+                   type = GetType(Long) OrElse
+                   type = GetType(Double) OrElse
+                   type = GetType(Short) Then
+
+                    Return CType(rtvl, Integer)
+                Else
+                    Return 0
+                End If
             End If
         End Function
 #End Region

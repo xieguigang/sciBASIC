@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6a78be35a594cc97d3ec83d3596a076, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::c0c300c7751c675905ed4b93e9c9d6f8, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Structure DefaultString
     ' 
-    '         Properties: DefaultValue, IsEmpty
+    '         Properties: DefaultValue, IsEmpty, IsTrue
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: assertIsNothing, LoadJson, LoadXml, ToString
+    '         Function: assertIsNothing, LoadJson, LoadXml, ReadAllLines, ToString
     '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+8 Overloads) Or
     ' 
     ' 
@@ -53,14 +53,14 @@ Namespace Language.Default
     ''' <summary>
     ''' <see cref="CLI"/> optional value helper data model
     ''' </summary>
-    Public Structure DefaultString : Implements IDefaultValue(Of String)
+    Public Structure DefaultString : Implements IDefault(Of String)
         Implements IsEmpty
 
         ''' <summary>
         ''' The optional argument value that read from <see cref="CLI"/> 
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property DefaultValue As String Implements IDefaultValue(Of String).DefaultValue
+        Public ReadOnly Property DefaultValue As String Implements IDefault(Of String).DefaultValue
 
         ''' <summary>
         ''' <see cref="DefaultValue"/> is empty?
@@ -70,6 +70,13 @@ Namespace Language.Default
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return DefaultValue.StringEmpty
+            End Get
+        End Property
+
+        Public ReadOnly Property IsTrue As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return DefaultValue.ParseBoolean
             End Get
         End Property
 
@@ -96,6 +103,11 @@ Namespace Language.Default
             Else
                 Return DefaultValue.LoadJSON(Of T)
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ReadAllLines() As String()
+            Return DefaultValue.ReadAllLines
         End Function
 
         Public Overrides Function ToString() As String
@@ -186,7 +198,7 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Or(arg As DefaultString, [default] As DefaultValue(Of String)) As String
+        Public Shared Operator Or(arg As DefaultString, [default] As [Default](Of String)) As String
             Return arg.DefaultValue Or [default]
         End Operator
 

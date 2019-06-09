@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d94c79017f3e43915deae6ec8640342c, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::a3471837b8895154ee1106f6135a2fed, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 
@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Terminal.STDIO__
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine
 
@@ -173,7 +174,7 @@ Namespace CommandLine
                        Optional displayStdOut As Boolean = True,
                        Optional displayDebug As Boolean = False)
 
-            Dim program$ = exe.GetString(""""c)
+            Dim program$ = exe.Trim(ASCII.Quot, " "c)
             Dim pInfo As New ProcessStartInfo(program, args.TrimNewLine.Trim) With {
                 .UseShellExecute = False
             }
@@ -275,8 +276,9 @@ Namespace CommandLine
 
             If displaDebug Then
                 Dim Exe As String = FileIO.FileSystem.GetFileInfo(processInfo.StartInfo.FileName).FullName.Replace("\", "/")
-                Dim argvs As String = If(String.IsNullOrEmpty(processInfo.StartInfo.Arguments), "", " " & processInfo.StartInfo.Arguments)
-                Call Console.WriteLine("      ---> system(""file:''{0}""{1})", Exe, argvs)
+                Dim argvs As String = processInfo.StartInfo.Arguments
+
+                Call Console.WriteLine("# ""{0}"" {1}", Exe, argvs)
             End If
 
             Try
@@ -308,7 +310,9 @@ Namespace CommandLine
             End If
 
             If waitForExit Then
-                Return waitForExit
+                ' 请注意这个函数名称是和当前的这个函数参数是一样的
+                ' 会需要me来区别引用
+                Return Me.waitForExit
             Else
                 Call RunTask(AddressOf Me.waitForExit)
                 Return 0

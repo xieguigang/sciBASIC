@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2bb9b370296a36a4ee5cdb465f65dfa, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::e337b1549e44a8a4977b924788e36809, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
     '               ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
     '               ToString
     ' 
-    '     Sub: Align
+    '     Sub: Align, Mark, Reset, TemporarySeek
     ' 
     ' /********************************************************************************/
 
@@ -66,6 +66,7 @@ Public Class BinaryDataReader
 
     Dim _byteOrder As ByteOrder
     Dim _needsReversion As Boolean
+    Dim _markedPos As Long
 
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataReader"/> class based on the specified stream and
@@ -135,7 +136,7 @@ Public Class BinaryDataReader
         End Get
         Set
             _byteOrder = Value
-            _needsReversion = _byteOrder <> ByteOrderHelper.SystemByteOrder
+            _needsReversion = ByteOrderHelper.NeedsReversion(Value)
         End Set
     End Property
 
@@ -144,6 +145,7 @@ Public Class BinaryDataReader
     ''' way the underlying <see cref="BinaryReader"/> is instantiated, it can only be specified at creation time.
     ''' </summary>
     Public Property Encoding() As Encoding
+
     ''' <summary>
     ''' Gets the length in bytes of the stream in bytes. This is a shortcut to the base stream Length property.
     ''' </summary>
@@ -174,6 +176,20 @@ Public Class BinaryDataReader
             Return BaseStream.Position >= BaseStream.Length
         End Get
     End Property
+
+    ''' <summary>
+    ''' Mark current stream buffer position
+    ''' </summary>
+    Public Sub Mark()
+        _markedPos = Position
+    End Sub
+
+    ''' <summary>
+    ''' Move the buffer back to the position that marked by <see cref="Mark"/> method.
+    ''' </summary>
+    Public Sub Reset()
+        Position = _markedPos
+    End Sub
 
     ''' <summary>
     ''' Aligns the reader to the next given byte multiple.
@@ -556,6 +572,14 @@ Public Class BinaryDataReader
     Public Function TemporarySeek() As SeekTask
         Return TemporarySeek(0, SeekOrigin.Current)
     End Function
+
+    Public Sub TemporarySeek(offset As Integer, origin As SeekOrigin, action As Action)
+        Dim current As Long = Position
+
+        Call Seek(offset, origin)
+        Call action()
+        Call Seek(current, SeekOrigin.Begin)
+    End Sub
 
     ''' <summary>
     ''' Creates a <see cref="SeekTask"/> with the given parameters. As soon as the returned <see cref="SeekTask"/>

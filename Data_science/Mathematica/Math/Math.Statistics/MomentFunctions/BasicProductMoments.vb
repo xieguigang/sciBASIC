@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43b77fef9189b866249c2be84ac6dc8a, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMoments.vb"
+﻿#Region "Microsoft.VisualBasic::20bb872ad35df8e5c8832b5227b4a686, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMoments.vb"
 
     ' Author:
     ' 
@@ -53,12 +53,17 @@ Imports System.Runtime.CompilerServices
 ' 
 Namespace MomentFunctions
 
-    ''' 
     ''' <summary>
+    ''' 可以利用这个模块来进行一组数据的正态分布的参数的估计
+    ''' 
     ''' @author Will_and_Sara
     ''' </summary>
     Public Class BasicProductMoments : Inherits DataSample(Of Double)
 
+        ''' <summary>
+        ''' 样本的变异程度
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property SampleVariance As Double
 
         Dim _ZAlphaForConvergence As Double = 1.96039491692453
@@ -76,8 +81,8 @@ Namespace MomentFunctions
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Min() As Double
-        Public Overrides ReadOnly Property Max() As Double
+        Public Overrides ReadOnly Property Min As Double
+        Public Overrides ReadOnly Property Max As Double
 
         ''' <summary>
         ''' This function can be used to determine if enough samples have been added to determine convergence 

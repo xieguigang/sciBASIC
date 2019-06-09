@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d98097891d41c4aca973057a20980e05, Microsoft.VisualBasic.Core\Text\StringSimilarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::32953287387cab420d7a37cc9605becc, Microsoft.VisualBasic.Core\Text\StringSimilarity\Similarity.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,7 @@ Namespace Text.Similarity
 
     Public Module Evaluations
 
-        ReadOnly ignoreCase As New DefaultValue(Of IEquals)(AddressOf tokenEqualsIgnoreCase)
+        ReadOnly ignoreCase As New [Default](Of IEquals)(AddressOf tokenEqualsIgnoreCase)
 
         ''' <summary>
         ''' 两个字符串之间是通过单词的排布的相似度来比较相似度的

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b88d4e02beaef15dae0c6e195d18d8e, Microsoft.VisualBasic.Core\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::2047894333de18074bc2425ea5d699dc, Microsoft.VisualBasic.Core\My\Log4VB.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports System.ComponentModel.Composition
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.Terminal
@@ -51,7 +52,7 @@ Namespace My
     ''' <summary>
     ''' VB.NET <see cref="Console"/> log framework.
     ''' </summary>
-    Public Module Log4VB
+    Module Log4VB
 
         Friend ReadOnly logs As New List(Of LoggingDriver)
 
@@ -81,6 +82,10 @@ Namespace My
         Public Function Print(header$, msg$, msgColor As ConsoleColor, level As Integer) As Boolean
             My.InnerQueue.AddToQueue(
                 Sub()
+                    ' 2018-12-14
+                    ' 替换meta chars可能会导致windows下的路径显示出现bug
+                    ' msg = msg.ReplaceMetaChars
+
                     If ForceSTDError Then
                         Call Console.Error.WriteLine($"[{header}]{msg}")
                     Else
@@ -139,7 +144,7 @@ Namespace My
             End If
 
 #If DEBUG Then
-        Call Debug.WriteLine(msg)
+            Call Debug.WriteLine(msg)
 #End If
         End Sub
     End Module

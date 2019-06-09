@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7565c6f8741d91e4e09b9378f3e606dc, vs_solutions\dev\vs_PDB\Stream.vb"
+﻿#Region "Microsoft.VisualBasic::50d78f84fe9741478a1f09ce125898b1, vs_solutions\dev\vs_PDB\Stream.vb"
 
     ' Author:
     ' 

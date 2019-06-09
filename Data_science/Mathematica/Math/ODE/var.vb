@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::746bf2786cefa8f3c77ea99a0f7c09b5, Data_science\Mathematica\Math\ODE\var.vb"
+﻿#Region "Microsoft.VisualBasic::72317781d7c6c1d96a9d85334ed3a822, Data_science\Mathematica\Math\ODE\var.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
@@ -58,12 +59,12 @@ Imports Microsoft.VisualBasic.Language
 ''' <summary>
 ''' Y variable in the ODE
 ''' </summary>
-Public Class var : Inherits float
+Public Class var : Inherits VBDouble
     Implements Ivar
     Implements ICloneable
     Implements IAddress(Of Integer)
 
-    Public Property Index As Integer Implements IAddress(Of Integer).Address
+    Public Overloads Property Index As Integer Implements IAddress(Of Integer).Address
     Public Property Name As String Implements INamedValue.Key
     Public Overrides Property value As Double Implements Ivar.value
 
@@ -81,6 +82,7 @@ Public Class var : Inherits float
         End With
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(name As String)
         Me.Name = name
     End Sub
@@ -115,6 +117,7 @@ Public Class var : Inherits float
         Throw New NotImplementedException
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Shared Narrowing Operator CType(x As var) As Integer
         Return x.Index
     End Operator
@@ -123,11 +126,13 @@ Public Class var : Inherits float
         Throw New NotSupportedException
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return New var(Me)
     End Function
 
-    Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
         Index = address
     End Sub
 End Class

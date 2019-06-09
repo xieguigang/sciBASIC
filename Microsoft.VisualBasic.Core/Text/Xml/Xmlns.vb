@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adf7853a0f400413d214147ba630e932, Microsoft.VisualBasic.Core\Text\Xml\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::f102d5b8bfab1c9bab600e58f1abd72e, Microsoft.VisualBasic.Core\Text\Xml\Xmlns.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.Xml
 
@@ -112,16 +113,19 @@ Namespace Text.Xml
             Dim s As String
 
             [namespace] = New Dictionary(Of NamedValue(Of String))
-            s = Regex.Match(root, "xmlns="".+?""", RegexICSng).Value
+            s = r.Match(root, "xmlns="".+?""", RegexICSng).Value
             xmlns = s.GetStackValue("""", """")
 
-            Dim nsList As String() =
-                Regex.Matches(root, xmlnsRegex, RegexICSng) _
+            Dim nsList As String() = r _
+                .Matches(root, xmlnsRegex, RegexICSng) _
                 .ToArray(AddressOf Trim)
 
             For Each ns As String In nsList
-                [namespace] += ns.GetTagValue("=") _
-                    .FixValue(Function(x) x.GetStackValue("""", """"))
+                [namespace] += ns _
+                    .GetTagValue("=") _
+                    .FixValue(Function(x)
+                                  Return x.GetStackValue("""", """")
+                              End Function)
             Next
         End Sub
 

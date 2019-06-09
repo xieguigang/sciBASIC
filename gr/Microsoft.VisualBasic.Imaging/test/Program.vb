@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bb04a2d1baf7d3bcbd626149fc9eb67, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::13d83cca6936ac6a1f47c5b90369a792, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
 
     ' Author:
     ' 
@@ -72,11 +72,29 @@ Module Program
 
     Sub ASCIIArt_test()
 
+        Call "../1537192287563.jpg".LoadImage.GetBinaryBitmap().Convert2ASCII({"+"c, "-"c, "*"c, "."c}.GenerateFontWeights(New Font(FontFace.Consolas, 10))).SaveTo("../ascii.txt")
+
+        Pause()
+
         Dim logo = "sciBASIC#".ASCIIImage
 
         Call Console.WriteLine(logo)
 
-        Call logo.SaveTo("x:\sciBASIC.txt")
+        Call logo.SaveTo("D:\sciBASIC.txt")
+
+        Dim charset = "php.NETPHP".GenerateFontWeights
+        logo = "php.NET".ASCIIImage("font-style: strong; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
+
+        Call Console.WriteLine()
+        Call Console.WriteLine(logo)
+
+        Call Console.WriteLine()
+
+        charset = "bioCAD.cloud ".GenerateFontWeights
+        logo = "bioCAD.cloud".ASCIIImage("font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
+
+        Call Console.WriteLine()
+        Call Console.WriteLine(logo)
 
         Pause()
 

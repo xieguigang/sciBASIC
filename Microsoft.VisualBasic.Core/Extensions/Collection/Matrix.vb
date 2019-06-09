@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67050c28b38843b55d4dd1ab43343a35, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::44bec93731efa49cd5c9e88b17824d27, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,15 @@
 
     ' Module MatrixExtensions
     ' 
-    '     Function: DATA, MAT, (+2 Overloads) Matrix, RowIterator, ToFloatMatrix
-    '               ToMatrix, ToVectorList
+    '     Function: DATA, GetCol, GetRow, GetSize, MAT
+    '               (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol, SetRow
+    '               SizeOf, ToFloatMatrix, ToMatrix, ToVectorList
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -128,11 +130,12 @@ Public Module MatrixExtensions
     End Function
 
     ''' <summary>
-    ''' 生成一个有m行n列的矩阵，但是是使用数组来表示的
+    ''' Create an empty matrix with m row and n cols.
+    ''' (生成一个有m行n列的矩阵，但是是使用数组来表示的)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="m"></param>
-    ''' <param name="n"></param>
+    ''' <param name="m">m Rows</param>
+    ''' <param name="n">n Cols</param>
     ''' <returns></returns>
     Public Function MAT(Of T)(m%, n%) As T()()
         Dim newMAT As T()() = New T(m - 1)() {}
@@ -142,6 +145,26 @@ Public Module MatrixExtensions
         Next
 
         Return newMAT
+    End Function
+
+    <Extension>
+    Public Function Rectangle(type As Type, m%, n%) As Array
+        Dim newMatrix As Array = Array.CreateInstance(type.MakeArrayType, m)
+
+        For i As Integer = 0 To m - 1
+            Call newMatrix.SetValue(Array.CreateInstance(type, n), i)
+        Next
+
+        Return newMatrix
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SizeOf(Of T)(rect As T()()) As Size
+        Return New Size With {
+            .Width = rect(Scan0).Length,
+            .Height = rect.Length
+        }
     End Function
 
     ''' <summary>
@@ -181,6 +204,25 @@ Public Module MatrixExtensions
         Return MAT.RowIterator.AsList
     End Function
 
+#Region "Matrix Accessor Helper"
+
+    ''' <summary>
+    ''' Get matrix width and height values.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="m"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetSize(Of T)(m As T(,)) As Size
+        Dim w As Integer = m.GetLength(1)
+        Dim h As Integer = m.GetLength(0)
+
+        Return New Size With {
+            .Width = w,
+            .Height = h
+        }
+    End Function
+
     ''' <summary>
     ''' Iterates each row data in a matrix type array.
     ''' </summary>
@@ -189,18 +231,70 @@ Public Module MatrixExtensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function RowIterator(Of T)(MAT As T(,)) As IEnumerable(Of T())
-        Dim width As Integer = MAT.GetLength(1)
-        Dim height As Integer = MAT.GetLength(0)
-        Dim Temp As T()
+        Dim size As Size = MAT.GetSize
+        Dim temp As T()
 
-        For i As Integer = 0 To height - 1
-            Temp = New T(width - 1) {}
+        For i As Integer = 0 To size.Height - 1
+            temp = New T(size.Width - 1) {}
 
-            For j As Integer = 0 To width - 1
-                Temp(j) = MAT(i, j)
+            For j As Integer = 0 To size.Width - 1
+                temp(j) = MAT(i, j)
             Next
 
-            Yield Temp
+            Yield temp
         Next
     End Function
+
+    <Extension>
+    Public Iterator Function GetRow(Of T)(m As T(,), i%) As IEnumerable(Of T)
+        Dim size As Size = m.GetSize
+
+        For j As Integer = 0 To size.Width - 1
+            Yield m(i, j)
+        Next
+    End Function
+
+    <Extension>
+    Public Function SetRow(Of T)(m As T(,), i%, data As IEnumerable(Of T)) As T(,)
+        Dim size As Size = m.GetSize
+        Dim j% = Scan0
+
+        For Each x As T In data
+            m(i, j) = x
+            j += 1
+
+            If j = size.Width Then
+                Exit For
+            End If
+        Next
+
+        Return m
+    End Function
+
+    <Extension>
+    Public Iterator Function GetCol(Of T)(m As T(,), j%) As IEnumerable(Of T)
+        Dim size As Size = m.GetSize
+
+        For i As Integer = 0 To size.Height - 1
+            Yield m(i, j)
+        Next
+    End Function
+
+    <Extension>
+    Public Function SetCol(Of T)(m As T(,), j%, data As IEnumerable(Of T)) As T(,)
+        Dim size As Size = m.GetSize
+        Dim i% = Scan0
+
+        For Each x As T In data
+            m(i, j) = x
+            i += 1
+
+            If i = size.Height Then
+                Exit For
+            End If
+        Next
+
+        Return m
+    End Function
+#End Region
 End Module

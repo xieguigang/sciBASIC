@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c87e99eb9c2233a9d0509712fc34fbe5, gr\Microsoft.VisualBasic.Imaging\test\LabelingTest.vb"
+﻿#Region "Microsoft.VisualBasic::1c392ee9d9aa70e9ded8e9dadf71ec54, gr\Microsoft.VisualBasic.Imaging\test\LabelingTest.vb"
 
     ' Author:
     ' 

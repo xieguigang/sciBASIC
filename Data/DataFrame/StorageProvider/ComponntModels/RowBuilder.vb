@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab1665d270cd7f6e18a939e5703b35c8, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::8518579c1f15e168a087daea749ccd18, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
     ' Author:
     ' 
@@ -139,8 +139,7 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="schema"></param>
         Public Sub IndexOf(schema As ISchema)
-            Dim setValue = New SetValue(Of StorageProvider)() _
-                .GetSet(NameOf(StorageProvider.Ordinal))
+            Dim setValue = New SetValue(Of StorageProvider)().GetSet(NameOf(StorageProvider.Ordinal))
             Dim LQuery() = LinqAPI.Exec(Of StorageProvider) _
  _
                 () <= From field As StorageProvider
@@ -167,10 +166,13 @@ Namespace StorageProvider.ComponentModels
                                             Function(field) field.Value)
             End With
 
-            With IndexedFields.Select(Function(i) i.BindProperty.Name).Indexing
+            With IndexedFields _
+                .Select(Function(i) i.BindProperty.Name) _
+                .Indexing
+
                 _MissingFields = Columns _
                     .Where(Function(field)
-                               Return Not field.BindProperty.Name.IsOneOfA(.ByRef) AndAlso Not field.IsMetaField
+                               Return Not field.BindProperty.Name Like .ByRef AndAlso Not field.IsMetaField
                            End Function) _
                     .ToArray
             End With
@@ -216,9 +218,10 @@ Namespace StorageProvider.ComponentModels
                     Call meta.Add(x.name, x.value)
                 Next
 
-                Call SchemaProvider.MetaAttributes _
-                                   .BindProperty _
-                                   .SetValue(obj, meta, Nothing)
+                Call SchemaProvider _
+                    .MetaAttributes _
+                    .BindProperty _
+                    .SetValue(obj, meta, Nothing)
             End If
 
             Return obj

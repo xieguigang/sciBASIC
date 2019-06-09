@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f879425a7f24c0b6846d28c52709663b, Data_science\Mathematica\Math\Math\Spline\BezierExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::07ed0965f93612b2d8f7e15be97afdde, Data_science\Mathematica\Math\Math\Spline\BezierExtensions.vb"
 
     ' Author:
     ' 
@@ -124,10 +124,11 @@ Namespace Interpolation
             data(2) = X.Last
 
             Dim tmp As New BezierCurve(
-                New PointF(0, data(0)),
-                New PointF(1, data(1)),
-                New PointF(2, data(2)),
-                iteration)
+                ctrl1:=New PointF(0, data(0)),
+                ctrl2:=New PointF(1, data(1)),
+                ctrl3:=New PointF(2, data(2)),
+                iteration:=iteration
+            )
 
             X = tmp.BezierPoints _
                 .Select(Function(p) CDbl(p.Y)) _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::246adce5b79084346341df224737d798, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::a1619b7d906a1fd5023eb471a222d800, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,23 @@
     ' Module App
     ' 
     '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
-    '                 ExecutablePath, Github, HOME, Info, InputFile
-    '                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
-    '                 NanoTime, NextTempName, OutFile, PID, Platform
-    '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
-    '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
-    '                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
-    '                 Version
+    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
+    '                 ExceptionLogFile, ExecutablePath, Github, HOME, Info
+    '                 InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp
+    '                 LogErrDIR, NanoTime, NextTempName, OutFile, PID
+    '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
+    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunTimeDirectory
+    '                 StartTime, StartupDirectory, StdErr, StdOut, SysTemp
+    '                 UnixTimeStamp, UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __cli, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
-    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
-    '               ElapsedMilliseconds, Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
-    '               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
-    '               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
-    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TemporaryEnvironment
+    '     Function: __cli, __completeCLI, __getTEMP, __isMicrosoftPlatform, __listFiles
+    '               __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode, ElapsedMilliseconds
+    '               Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile
+    '               GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
+    '               SelfFolk, SelfFolks, Shell, tempCode, TemporaryEnvironment
     '               TraceBugs
     ' 
     '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
@@ -91,6 +91,7 @@ Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 
@@ -177,7 +178,7 @@ Public Module App
     ''' <see cref="Console.OpenStandardOutput()"/> as default text output device.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StdOut As DefaultValue(Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
+    Public ReadOnly Property StdOut As [Default](Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -600,6 +601,15 @@ Public Module App
     End Sub
 
     ''' <summary>
+    ''' This delegate function do nothing
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property DoNothing As Action =
+        Sub()
+            ' Do Nothing
+        End Sub
+
+    ''' <summary>
     ''' 假若有些时候函数的参数要求有一个输出流，但是并不想输出任何数据的话，则可以使用这个进行输出
     ''' </summary>
     ''' <returns></returns>
@@ -710,10 +720,21 @@ Public Module App
     End Function
 
     ''' <summary>
+    ''' Get current time <see cref="Date"/> in unix time stamp format.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property UnixTimeStamp As Long
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return DateTimeHelper.UnixTimeStamp(Now)
+        End Get
+    End Property
+
+    ''' <summary>
     ''' The time tag of the application started.(应用程序的启动的时间)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StartTime As Long = Now.ToBinary
+    Public ReadOnly Property StartTime As Long = UnixTimeStamp
 
     ''' <summary>
     ''' The distance of time that this application running from start and to current time.
@@ -723,7 +744,7 @@ Public Module App
     '''
     <ExportAPI("Elapsed.Milliseconds")>
     Public Function ElapsedMilliseconds() As Long
-        Dim nowLng As Long = Now.ToBinary
+        Dim nowLng As Long = App.UnixTimeStamp
         Dim d As Long = nowLng - StartTime
         Return d
     End Function
@@ -828,7 +849,7 @@ Public Module App
     '''
     <ExportAPI("TraceBugs")>
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
-        Dim entry$ = $"{Now.FormatTime("-")}_{App.__getTEMPhash}"
+        Dim entry$ = $"{Now.FormatTime("-")}_{App.tempCode}"
         Dim log$ = $"{App.LogErrDIR}/{entry}.log"
         Call App.LogException(ex, trace:=trace, fileName:=log)
         Return log
@@ -885,10 +906,10 @@ Public Module App
     ''' <summary>
     ''' Example: ``tmp2A10.tmp``
     ''' </summary>
-    Dim _tmpHash As New Uid(Not IsMicrosoftPlatform)
+    Dim _tmpHash As New Uid(10, Not IsMicrosoftPlatform)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function __getTEMPhash() As String
+    Private Function tempCode() As String
         SyncLock _tmpHash
             Return FormatZero(++_tmpHash, "00000")
         End SyncLock
@@ -899,8 +920,9 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function __getTEMP() As String
-        Return $"tmp{App.__getTEMPhash}"
+    Public Function GetNextUniqueName(prefix As String) As String
+        Static tmp As [Default](Of String) = NameOf(tmp)
+        Return $"{prefix Or tmp}{App.tempCode}"
     End Function
 
     ''' <summary>
@@ -910,7 +932,7 @@ Public Module App
     Public ReadOnly Property NextTempName As String
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return __getTEMP()
+            Return GetNextUniqueName(Nothing)
         End Get
     End Property
 
@@ -943,6 +965,7 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("Bugs.Formatter")>
+    <Extension>
     Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
         Dim logs = ex.ToString.LineTokens
         Dim stackTrace = logs _
@@ -993,13 +1016,15 @@ Public Module App
     ''' <summary>
     ''' This is the custom message of the exception, not extract from the function <see cref="Exception.ToString()"/>
     ''' </summary>
-    ''' <param name="exMsg">This is the custom message of the exception, not extract from the function <see cref="Exception.ToString()"/></param>
-    ''' <param name="Trace"></param>
+    ''' <param name="exMsg">
+    ''' This is the custom message of the exception, not extract from the function <see cref="Exception.ToString()"/>
+    ''' </param>
+    ''' <param name="trace"></param>
     ''' <returns></returns>
     <ExportAPI("Exception.Log")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function LogException(exMsg$, <CallerMemberName> Optional Trace$ = "") As Object
-        Return App.LogException(New Exception(exMsg), Trace)
+    Public Function LogException(exMsg$, <CallerMemberName> Optional trace$ = "") As Object
+        Return App.LogException(New Exception(exMsg), trace)
     End Function
 
     ''' <summary>
@@ -1240,20 +1265,20 @@ Public Module App
     '''
     <ExportAPI("GetTempFile")>
     Public Function GetTempFile() As String
-        Dim Temp As String = FileIO.FileSystem.GetTempFileName
-        Return GenerateTemp(Temp, "")
+        Dim temp As String = FileIO.FileSystem.GetTempFileName
+        Return GenerateTemp(temp, "")
     End Function
 
     ''' <summary>
     ''' Get temp file name in app system temp directory.
     ''' </summary>
     ''' <param name="ext"></param>
-    ''' <param name="sessionID"></param>
+    ''' <param name="sessionID">It is recommended that use <see cref="App.PID"/> for this parameter.</param>
     ''' <returns></returns>
     '''
     <ExportAPI("GetTempFile.AppSys")>
-    Public Function GetAppSysTempFile(Optional ext$ = ".tmp", Optional sessionID$ = "") As String
-        Dim tmp As String = App.SysTemp & "/" & __getTEMP() & ext  '  FileIO.FileSystem.GetTempFileName.Replace(".tmp", ext)
+    Public Function GetAppSysTempFile(Optional ext$ = ".tmp", Optional sessionID$ = "", Optional prefix$ = Nothing) As String
+        Dim tmp As String = App.SysTemp & "/" & GetNextUniqueName(prefix) & ext
         tmp = GenerateTemp(tmp, sessionID)
         Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(tmp))
         tmp = FileIO.FileSystem.GetFileInfo(tmp).FullName.Replace("\", "/")
@@ -1285,7 +1310,7 @@ Public Module App
     <ExportAPI("Shared.TempFile")>
     Public Function GetProductSharedTemp() As String
         'Dim Temp As String = FileIO.FileSystem.GetTempFileName
-        Dim Name As String = App.__getTEMPhash  'FileIO.FileSystem.GetFileInfo(Temp).Name
+        Dim Name As String = App.tempCode  'FileIO.FileSystem.GetFileInfo(Temp).Name
         'Name = Name.ToUpper.Replace("TMP", "")
         Dim Temp = $"{App.ProductSharedTemp}/{App.AssemblyName}-{Name}.tmp"
         Return Temp
@@ -1325,7 +1350,8 @@ Public Module App
     ''' <remarks><see cref="IORedirectFile"/>这个建议在进行外部调用的时候才使用</remarks>
     Public Function Shell(app$, CLI$,
                           Optional CLR As Boolean = False,
-                          Optional stdin$ = Nothing) As IIORedirectAbstract
+                          Optional stdin$ = Nothing,
+                          Optional ioRedirect As Boolean = False) As IIORedirectAbstract
 
         If Not IsMicrosoftPlatform Then
             If CLR Then
@@ -1340,7 +1366,8 @@ Public Module App
             End If
         Else
             If CLR Then
-                Return New IORedirect(app, CLI) ' 由于是重新调用自己，所以这个重定向是没有多大问题的
+                ' 由于是重新调用自己，所以这个重定向是没有多大问题的
+                Return New IORedirect(app, CLI, IOredirect:=ioRedirect)
             Else
                 Dim process As New IORedirectFile(app, CLI, stdin:=stdin)
                 Return process
@@ -1383,7 +1410,7 @@ Public Module App
                 Let task As Func(Of Integer) = AddressOf io.Run
                 Select task
 
-            Call BatchTask(Of Integer)(Tasks, parallel, TimeInterval:=200)
+            Call BatchTask(Of Integer)(Tasks, parallel, timeInterval:=200)
         End If
 
         Return sw.ElapsedMilliseconds

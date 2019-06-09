@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::215efdc3e82ba05bd99648622ffa9c0d, mime\text%html\HTML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::131d453cb117fb1b85edbcaf5b54cdb2, mime\text%html\HTML\Extensions.vb"
 
     ' Author:
     ' 
@@ -72,7 +72,7 @@ Namespace HTML
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Public Function StripHTMLSafely(source As String) As String
+        <Extension> Public Function StripHTMLSafely(source As String) As String
             Try
                 If source.StringEmpty Then
                     Return ""

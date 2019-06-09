@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ecd5fe99bd8434ff7019c8c69406aae, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::ff0ebaeaf4c489ac88a8afa9bebe5cea, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,14 @@
 
     '     Class BinaryTree
     ' 
-    '         Properties: Key, Left, QualifiedName, Right, Value
+    '         Properties: Key, Left, Members, QualifiedName, Right
+    '                     Value
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: ToString, viewQualifiedName
     ' 
-    '         Sub: SetValue
+    '         Sub: Copy, SetValue
     ' 
     ' 
     ' /********************************************************************************/
@@ -66,13 +67,27 @@ Namespace ComponentModel.Algorithm.BinaryTree
     ''' <typeparam name="V"></typeparam>
     Public Class BinaryTree(Of K, V) : Implements Value(Of V).IValueOf
 
+        Dim _key As K
+
         ''' <summary>
         ''' 键名是唯一的，赋值之后就不可以改变了
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Key As K
+        Public Property Key As K
+            Get
+                Return _key
+            End Get
+            Friend Set(value As K)
+                _key = value
+            End Set
+        End Property
+
+
         ''' <summary>
         ''' 与当前的这个键名相对应的键值可以根据需求发生改变，即可以被任意赋值
+        ''' 
+        ''' 如果是进行聚类操作的话，可以通过``!values`` as <see cref="List(Of V)"/>
+        ''' 来添加簇成员
         ''' </summary>
         ''' <returns></returns>
         Public Property Value As V Implements Value(Of V).IValueOf.Value
@@ -102,7 +117,17 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Get
         End Property
 
-        ReadOnly defaultView As New DefaultValue(Of Func(Of K, String))(Function(key) Scripting.ToString(key))
+        ''' <summary>
+        ''' Get cluster members
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Members As V()
+            Get
+                Return DirectCast(Me!values, IEnumerable(Of V)).ToArray
+            End Get
+        End Property
+
+        ReadOnly defaultView As New [Default](Of Func(Of K, String))(Function(key) Scripting.ToString(key))
 
         ''' <summary>
         ''' 
@@ -133,6 +158,13 @@ Namespace ComponentModel.Algorithm.BinaryTree
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetValue(key$, value As Object)
             additionals(key) = value
+        End Sub
+
+        Public Sub Copy(source As BinaryTree(Of K, V))
+            _Key = source.Key
+            _Value = source.Value
+            additionals.Clear()
+            additionals.AddRange(source.additionals)
         End Sub
 
         Private Shared Function viewQualifiedName(node As BinaryTree(Of K, V)) As String

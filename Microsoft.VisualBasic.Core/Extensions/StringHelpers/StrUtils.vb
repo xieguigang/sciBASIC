@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39241246e083081bf5a9473165f195f7, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::dea8bc0f296e9c41845e0fb0bc0c3b81, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -78,7 +78,6 @@
 '
 
 Imports System.Globalization
-Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -110,7 +109,10 @@ Public Module StrUtils
     ''' </summary>
     ''' <param name="s$">The string to search for a match.</param>
     ''' <param name="pattern$">The regular expression pattern to match.</param>
-    ''' <param name="opts">A bitwise combination of the enumeration values that provide options for matching.</param>
+    ''' <param name="opts">
+    ''' A bitwise combination of the enumeration values that provide options for matching.
+    ''' (如果这个参数的值是<see cref="RegexOptions.None"/>的话，则当前的这个函数不会使用正则进行查找)
+    ''' </param>
     ''' <returns>
     ''' A new string that is identical to the input string, except that the replacement
     ''' string takes the place of each matched string. If pattern is not matched in the
@@ -120,7 +122,15 @@ Public Module StrUtils
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Remove(s$, pattern$, Optional opts As RegexOptions = RegexICSng) As String
-        Return r.Replace(s, pattern, "", opts)
+        If opts = RegexOptions.None Then
+            If pattern.StringEmpty Then
+                Return s
+            Else
+                Return s.Replace(pattern, "")
+            End If
+        Else
+            Return r.Replace(s, pattern, "", opts)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -181,12 +191,13 @@ Public Module StrUtils
         Return AscW(c)
     End Function
 
-    ReadOnly newRandom As New DefaultValue(Of Random)(Function() New Random)
+    ReadOnly newRandom As New [Default](Of Random)(Math.seeds)
 
     ''' <summary>
     ''' 32-126
     ''' </summary>
-    ''' <param name="len%"></param>
+    ''' <param name="len"></param>
+    ''' <param name="seed">默认是使用<see cref="Math.seeds"/>来作为随机种子的</param>
     ''' <returns></returns>
     Public Function RandomASCIIString(len%, Optional skipSymbols As Boolean = False, Optional seed As Random = Nothing) As String
         With seed Or newRandom
@@ -627,13 +638,13 @@ Public Module StrUtils
     ''' <returns></returns>
     <Extension>
     Public Function UpperCaseFirstChar(name As String) As String
-        If name.Length >= 1 AndAlso Char.IsLower(name(0)) Then
+        If name?.Length > 0 AndAlso Char.IsLower(name(0)) Then
             Dim chars As Char() = name.ToCharArray()
             chars(0) = [Char].ToUpper(chars(0))
             Return New String(chars)
+        Else
+            Return name
         End If
-
-        Return name
     End Function
 
     ''' <summary>

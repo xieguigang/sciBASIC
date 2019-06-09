@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98ed7fe3287b7ccb6f74a13392fd70f2, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Poisson.vb"
+﻿#Region "Microsoft.VisualBasic::03dc76ea7fced29571717773050e5129, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Poisson.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -129,9 +130,10 @@ Namespace SyntaxAPI.MathExtension
             Throw New NotImplementedException
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("rnorm")>
         Public Function rnorm(x As Vector, m As Double, sd As Double) As Vector
-            Return New Vector(x.Select(Function(n) Bootstraping.ProbabilityDensity(n, m, sd)))
+            Return New Vector(x.Select(Function(n) Distributions.pnorm.ProbabilityDensity(n, m, sd)))
         End Function
 
         ''' <summary>
@@ -143,11 +145,13 @@ Namespace SyntaxAPI.MathExtension
         ''' <param name="m"></param>
         ''' <param name="sd"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function rnorm(n As Integer, m As Double, sd As Double) As Vector
-            Dim rand As New Random
-            Return New Vector(
-                n.Sequence.Select(
-                Function(x) rand.NextGaussian(m, sd)))  ' 不清楚在R之中是否是这样子来实现的
+            ' 不清楚在R之中是否是这样子来实现的
+            Return n.Sequence _
+                .Select(Function(x) RandomExtensions.NextGaussian(m, sd)) _
+                .AsVector
         End Function
     End Module
 End Namespace

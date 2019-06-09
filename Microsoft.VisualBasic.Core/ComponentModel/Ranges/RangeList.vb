@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddc15d1e44939a11e690d9b94b135da7, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeList.vb"
+﻿#Region "Microsoft.VisualBasic::db823fc685023f06205b5c43d4ba9f77, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeList.vb"
 
     ' Author:
     ' 
@@ -34,38 +34,70 @@
     '     Class RangeList
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: [Select], (+2 Overloads) SelectValue
+    ' 
+    '         Function: [Select], GetEnumerator, IEnumerable_GetEnumerator, (+2 Overloads) SelectValue
+    ' 
+    '         Sub: Add
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
 
-    Public Class RangeList(Of T As IComparable, V) : Inherits List(Of RangeTagValue(Of T, V))
+    Public Class RangeList(Of T As IComparable, V) : Implements IEnumerable(Of RangeTagValue(Of T, V))
 
-        Sub New()
-            MyBase.New(128)
+        Dim buffer As New List(Of RangeTagValue(Of T, V))
+
+        Public ReadOnly Iterator Property Values As IEnumerable(Of V)
+            Get
+                For Each x As RangeTagValue(Of T, V) In Me
+                    Yield x.Value
+                Next
+            End Get
+        End Property
+
+        Public ReadOnly Iterator Property Keys As IEnumerable(Of Range(Of T))
+            Get
+                For Each x As RangeTagValue(Of T, V) In Me
+                    Yield x
+                Next
+            End Get
+        End Property
+
+        Sub New(Optional capacity% = 128)
+            If capacity > 0 Then
+                buffer = New List(Of RangeTagValue(Of T, V))(capacity)
+            Else
+                ' do nothing, internal used only
+            End If
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Add(range As RangeTagValue(Of T, V))
+            Call buffer.Add(range)
         End Sub
 
         Public Function [Select](x As T) As RangeTagValue(Of T, V)
-            Dim LQuery As RangeTagValue(Of T, V) =
-                LinqAPI.DefaultFirst(Of RangeTagValue(Of T, V)) <=
-                From r As RangeTagValue(Of T, V)
-                In Me.AsQueryable
-                Where r.IsInside(x)
-                Select r
+            Dim LQuery = LinqAPI.DefaultFirst(Of RangeTagValue(Of T, V)) _
+ _
+                () <= From r As RangeTagValue(Of T, V)
+                      In Me.AsQueryable
+                      Where r.IsInside(x)
+                      Select r
 
             Return LQuery
         End Function
 
         Public Function SelectValue(x As T, Optional [throw] As Boolean = True, Optional ByRef success As Boolean = False) As V
             Dim n As RangeTagValue(Of T, V) = [Select](x)
+
             If n Is Nothing Then
                 If [throw] Then
                     Throw New DataException($"{x.GetJson} is not in any ranges!")
@@ -89,20 +121,21 @@ Namespace ComponentModel.Ranges
             End If
         End Function
 
-        Public ReadOnly Iterator Property Values As IEnumerable(Of V)
-            Get
-                For Each x As RangeTagValue(Of T, V) In Me
-                    Yield x.Value
-                Next
-            End Get
-        End Property
+        Public Iterator Function GetEnumerator() As IEnumerator(Of RangeTagValue(Of T, V)) Implements IEnumerable(Of RangeTagValue(Of T, V)).GetEnumerator
+            For Each x In buffer
+                Yield x
+            Next
+        End Function
 
-        Public ReadOnly Iterator Property Keys As IEnumerable(Of Range(Of T))
-            Get
-                For Each x As RangeTagValue(Of T, V) In Me
-                    Yield x
-                Next
-            End Get
-        End Property
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(buffer As RangeTagValue(Of T, V)()) As RangeList(Of T, V)
+            Return New RangeList(Of T, V)(-1) With {
+                .buffer = buffer.AsList
+            }
+        End Operator
     End Class
 End Namespace

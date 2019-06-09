@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1c8d244e449d84c3af14612251ff89d, Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::dcc9fea4d15817726fd0cce71653bd4b, Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -79,10 +79,6 @@ Public Module DataImports
     Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath$,
                               Optional delimiter$ = ",",
                               Optional encoding As Encoding = Nothing) As File
-        If encoding Is Nothing Then
-            encoding = Encoding.Default
-        End If
-
         Dim lines As String() = txtPath.ReadAllLines(encoding)
         Dim csv As New File(ImportsData(lines, delimiter), txtPath)
         Return csv
@@ -99,9 +95,10 @@ Public Module DataImports
     <Extension> Public Function [Imports](Of T As Class)(path$,
                                                          Optional delimiter$ = ",",
                                                          Optional encoding As Encoding = Nothing,
-                                                         Optional nameMaps As Dictionary(Of String, String) = Nothing) As T()
+                                                         Optional nameMaps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
 
         Dim source As IO.File = [Imports](path, delimiter, encoding)
+
         If source.RowNumbers = 0 Then
             Return New T() {}
         Else
@@ -124,10 +121,11 @@ Public Module DataImports
     ''' <param name="delimiter$"></param>
     ''' <param name="maps"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
-        Return ImportsData(text.LineTokens, delimiter) _
-            .AsDataSource(Of T)(maps:=maps)
+    Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+        Return ImportsData(text.LineTokens, delimiter).AsDataSource(Of T)(maps:=maps)
     End Function
 
     ''' <summary>
@@ -138,8 +136,10 @@ Public Module DataImports
     ''' <param name="delimiter$"></param>
     ''' <param name="maps"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ImportsData(Of T As Class)(text As IEnumerable(Of String), Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
+    Public Function ImportsData(Of T As Class)(text As IEnumerable(Of String), Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
         Return ImportsData(text, delimiter).AsDataSource(Of T)(maps:=maps)
     End Function
 
@@ -151,7 +151,7 @@ Public Module DataImports
     ''' <param name="maps"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As NameMapping = Nothing) As T()
+    Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As NameMapping = Nothing) As IEnumerable(Of T)
         Return ImportsData(lines, ASCII.TAB) _
             .AsDataSource(Of T)(maps:=maps)
     End Function
@@ -221,7 +221,7 @@ Public Module DataImports
     End Function
 
     ''' <summary>
-    ''' 从字符串集合之中推测可能的数据类型
+    ''' 从字符串集合之中推测可能的列数据的类型
     ''' </summary>
     ''' <param name="column"></param>
     ''' <returns></returns>

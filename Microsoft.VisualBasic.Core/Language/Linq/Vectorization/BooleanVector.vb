@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0df6611a225f55684a906c686989ea18, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::0743d2cffc813cbf5f50cfaf6e2c9841, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\BooleanVector.vb"
 
     ' Author:
     ' 
@@ -88,6 +88,10 @@ Namespace Language.Vectorization
             MyBase.New(b)
         End Sub
 
+        Public Function Sum() As Integer
+            Return BooleanVector.Sum(Me)
+        End Function
+
         Public Overrides Function ToString() As String
             Dim countTrue% = Linq.Which.IsTrue(buffer).Count
             Dim countFalse% = Linq.Which.IsTrue(Not Me).Count
@@ -95,8 +99,15 @@ Namespace Language.Vectorization
             Return $"ALL({Length}) = {countTrue} true + {countFalse} false"
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Sum(b As BooleanVector) As Integer
+            ' 因为 Aggregate 表达式中，当前的函数名和Linq拓展函数Sum冲突
+            ' 所以在这里就只能使用拓展函数链来进行累加
             Return b.Select(Function(x) If(x, 1, 0)).Sum
         End Function
 

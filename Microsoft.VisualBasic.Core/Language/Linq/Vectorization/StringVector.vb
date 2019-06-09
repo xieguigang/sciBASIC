@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63de4392770e77423d646f315a4dba4e, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\StringVector.vb"
+﻿#Region "Microsoft.VisualBasic::803acbf68a58f966e4f66334cbab4b62, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\StringVector.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: InStr, IsPattern, ToString
-    '         Operators: <>, =
+    '         Operators: <>, =, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,6 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports base = Microsoft.VisualBasic.Strings
@@ -101,12 +102,19 @@ Namespace Language.Vectorization
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function InStr(string1 As StringVector, string2$, Optional method As CompareMethod = CompareMethod.Binary) As Vector(Of Integer)
-            Return string1.Select(Function(str) base.InStr(str, string2, method)).AsVector
+            Return string1.Select(Function(str) base.InStr(str, string2, method)).ToVector
         End Function
 
+        ''' <summary>
+        ''' 批量执行判断目标字符串集合中的每一个字符串元素都是符合目标匹配模式的
+        ''' </summary>
+        ''' <param name="strings"></param>
+        ''' <param name="pattern$"></param>
+        ''' <param name="opt"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsPattern(strings As StringVector, pattern$, Optional opt As RegexOptions = RegexICSng) As BooleanVector
-            Return strings.Select(Function(s) s.IsPattern(pattern, opt)).AsVector
+            Return strings.Select(Function(s) s.IsPattern(pattern, opt)).ToVector
         End Function
 
         ''' <summary>
@@ -118,6 +126,10 @@ Namespace Language.Vectorization
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(expression As String) As StringVector
             Return New StringVector(base.Split(expression, ","))
+        End Operator
+
+        Public Shared Operator Like(strings As StringVector, pattern As Index(Of String)) As BooleanVector
+            Return New BooleanVector(strings.Select(Function(str) str Like pattern))
         End Operator
     End Class
 End Namespace

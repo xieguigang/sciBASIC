@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43ea2cc8cf549829ab47bff6fc389af0, Data\DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::ebfe6127ba2455c9f12d1bb442c6f4d8, Data\DataFrame\Linq\WriteStream.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: [Ctype], csvWriter, (+2 Overloads) Flush, ToArray, ToString
+    '         Function: [Ctype], (+2 Overloads) Flush, populateLine, ToArray, ToString
     '                   TryFlushObject
     ' 
     '         Sub: (+2 Overloads) Dispose, Flush
@@ -82,6 +82,7 @@ Namespace IO.Linq
         ''' Schema for creates row data from the inputs object.
         ''' </summary>
         ReadOnly rowWriter As RowWriter
+        ReadOnly isTsv As Boolean = False
 
         Public ReadOnly Property BaseStream As StreamWriter
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -89,82 +90,6 @@ Namespace IO.Linq
                 Return _fileIO
             End Get
         End Property
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <param name="explicit">Schema parsing of the object strictly?</param>
-        ''' <param name="metaKeys">预设的标题头部</param>
-        Sub New(path As String,
-                Optional explicit As Boolean = False,
-                Optional metaBlank$ = "",
-                Optional metaKeys$() = Nothing,
-                Optional maps As Dictionary(Of String, String) = Nothing,
-                Optional layout As Dictionary(Of String, Integer) = Nothing)
-
-            Call Me.New(csvWriter(path),
-                        explicit:=explicit,
-                        metaBlank:=metaBlank,
-                        metaKeys:=metaKeys,
-                        maps:=maps,
-                        layout:=layout
-                 )
-
-            handle = FileIO.FileSystem.GetFileInfo(path).FullName
-        End Sub
-
-        Sub New(write As StreamWriter,
-                Optional explicit As Boolean = False,
-                Optional metaBlank$ = "",
-                Optional metaKeys$() = Nothing,
-                Optional maps As Dictionary(Of String, String) = Nothing,
-                Optional layout As Dictionary(Of String, Integer) = Nothing)
-
-            Dim typeDef As Type = GetType(T)
-            Dim Schema As SchemaProvider =
-                SchemaProvider _
-                .CreateObject(typeDef, explicit) _
-                .CopyReadDataFromObject
-
-            _fileIO = write
-            rowWriter = New RowWriter(Schema, metaBlank, layout)
-            rowWriter.__cachedIndex = metaKeys
-
-            Dim title As RowObject = rowWriter.GetRowNames(maps)
-
-            If Not metaKeys.IsNullOrEmpty Then
-                title = New RowObject(title.Join(metaKeys))
-            End If
-
-            Call _fileIO.WriteLine(title.AsLine)
-        End Sub
-
-        Private Shared Function csvWriter(path As String) As StreamWriter
-            With path.ParentPath
-                If Not .DirectoryExists Then
-                    Call .MkDIR
-                End If
-
-                Call ClearFileBytes(path)
-            End With
-
-            Dim file As New FileStream(
-               path,
-               FileMode.OpenOrCreate,
-               FileAccess.ReadWrite,
-               share:=FileShare.Read
-            )
-
-            Return New StreamWriter(file) With {
-                .AutoFlush = True,
-                .NewLine = vbLf
-            }
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return handle.ToFileURL
-        End Function
 
         ''' <summary>
         ''' Has the meta field indexed?
@@ -177,12 +102,74 @@ Namespace IO.Linq
         End Property
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="explicit">Schema parsing of the object strictly?</param>
+        ''' <param name="metaKeys">预设的标题头部</param>
+        ''' <param name="tsv">
+        ''' Save the data frame in tsv format? By default is false means saved in csv format.
+        ''' </param>
+        Sub New(path As String,
+                Optional explicit As Boolean = False,
+                Optional metaBlank$ = "",
+                Optional metaKeys$() = Nothing,
+                Optional maps As Dictionary(Of String, String) = Nothing,
+                Optional layout As Dictionary(Of String, Integer) = Nothing,
+                Optional tsv As Boolean = False)
+
+            Call Me.New(path.OpenWriter,
+                        explicit:=explicit,
+                        metaBlank:=metaBlank,
+                        metaKeys:=metaKeys,
+                        maps:=maps,
+                        layout:=layout,
+                        tsv:=tsv
+                 )
+
+            handle = FileIO.FileSystem.GetFileInfo(path).FullName
+            isTsv = tsv
+        End Sub
+
+        Sub New(write As StreamWriter,
+                Optional explicit As Boolean = False,
+                Optional metaBlank$ = "",
+                Optional metaKeys$() = Nothing,
+                Optional maps As Dictionary(Of String, String) = Nothing,
+                Optional layout As Dictionary(Of String, Integer) = Nothing,
+                Optional tsv As Boolean = False)
+
+            Dim typeDef As Type = GetType(T)
+            Dim Schema As SchemaProvider =
+                SchemaProvider _
+                .CreateObjectInternal(typeDef, explicit) _
+                .CopyReadDataFromObject
+
+            _fileIO = write
+            rowWriter = New RowWriter(Schema, metaBlank, layout)
+            rowWriter.__cachedIndex = metaKeys
+            isTsv = tsv
+
+            Dim title As RowObject = rowWriter.GetRowNames(maps)
+
+            If Not metaKeys.IsNullOrEmpty Then
+                title = New RowObject(title.Join(metaKeys))
+            End If
+
+            Call _fileIO.WriteLine(populateLine(title))
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return handle.ToFileURL
+        End Function
+
+        ''' <summary>
         ''' Serialize the object data source into the csv document.
         ''' (将对象的数据源写入Csv文件之中）
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Public Function Flush(source As IEnumerable(Of T), Optional join As Boolean = True) As Boolean
+        Public Function Flush(source As IEnumerable(Of T)) As Boolean
             If source Is Nothing Then
                 ' 要不然会出现空行，会造成误解的，所以要在这里提前结束
                 Return True
@@ -193,15 +180,11 @@ Namespace IO.Linq
                 () <= From line As T
                       In source.AsParallel
                       Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行
-                      Let CreatedRow As RowObject = rowWriter.ToRow(line)
-                      Select CreatedRow.AsLine  ' 对象到数据的投影
+                      Let createdRow As RowObject = rowWriter.ToRow(line)
+                      Select populateLine(createdRow)  ' 对象到数据的投影
 
             If LQuery.Length = 0 Then
                 Return True
-            End If
-
-            If join Then
-                Call _fileIO.WriteLine(String.Join(_fileIO.NewLine, LQuery))
             Else
                 For Each line As String In LQuery
                     Call _fileIO.WriteLine(line)
@@ -211,11 +194,24 @@ Namespace IO.Linq
             Return True
         End Function
 
+        Private Function populateLine(row As RowObject) As String
+            If isTsv Then
+                Return row.TsvLine
+            Else
+                Return row.AsLine
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Write a object into the table file.
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function Flush(obj As T) As Boolean
             If obj Is Nothing Then
                 Return False
             Else
-                Call _fileIO.WriteLine(rowWriter.ToRow(obj).AsLine)
+                _fileIO.WriteLine(populateLine(rowWriter.ToRow(obj)))
             End If
 
             Return True
@@ -235,12 +231,12 @@ Namespace IO.Linq
         ''' 这个是配合<see cref="DataStream.ForEachBlock(Of T)(Action(Of T()), Integer)"/>方法使用的
         ''' </summary>
         ''' <typeparam name="Tsrc"></typeparam>
-        ''' <param name="_ctype"></param>
+        ''' <param name="[ctype]"></param>
         ''' <returns></returns>
-        Public Function ToArray(Of Tsrc)(_ctype As Func(Of Tsrc, T())) As Action(Of Tsrc)
+        Public Function ToArray(Of Tsrc)([ctype] As Func(Of Tsrc, IEnumerable(Of T))) As Action(Of Tsrc)
             Return AddressOf New __ctypeTransform(Of Tsrc) With {
                 .__IO = Me,
-                .__ctypeArray = _ctype
+                .__ctypeArray = [ctype]
             }.WriteArray
         End Function
 
@@ -259,11 +255,11 @@ Namespace IO.Linq
 
         Private Class __ctypeTransform(Of Tsrc)
             Public __IO As WriteStream(Of T)
-            Public __ctypeArray As Func(Of Tsrc, T())
+            Public __ctypeArray As Func(Of Tsrc, IEnumerable(Of T))
             Public __ctyper As Func(Of Tsrc, T)
 
             Public Sub WriteArray(source As Tsrc)
-                Dim array As T() = __ctypeArray(source)
+                Dim array As T() = __ctypeArray(source).ToArray
                 Call __IO.Flush(array)
             End Sub
 

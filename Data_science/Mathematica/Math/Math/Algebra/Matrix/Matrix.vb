@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88e9209ddff0ee0fc6a963a38720bca8, Data_science\Mathematica\Math\Math\Algebra\Matrix\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::94ee29d9a2c1a6a61dff464f2274ca9e, Data_science\Mathematica\Math\Math\Algebra\Matrix\Matrix.vb"
 
     ' Author:
     ' 
@@ -82,6 +82,9 @@ Namespace LinearAlgebra
         ''' [nrow, ncol] = [M, N]
         ''' </summary>
         Public M, N As Integer
+        ''' <summary>
+        ''' 矩阵数据本身
+        ''' </summary>
         Public X As Double(,)
 
         ''' <summary>
@@ -112,19 +115,19 @@ Namespace LinearAlgebra
 
         Public Property Row(index As Integer) As Vector
             Get
-
+                Return X.GetRow(index).AsVector
             End Get
             Set(value As Vector)
-
+                X.SetRow(index, value)
             End Set
         End Property
 
         Public Property Column(index As Integer) As Vector
             Get
-
+                Return X.GetCol(index).AsVector
             End Get
             Set(value As Vector)
-
+                X.SetCol(index, value)
             End Set
         End Property
 
@@ -156,6 +159,7 @@ Namespace LinearAlgebra
             X = data.ToMatrix
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(array As Double(,)) As Matrix
             Return New Matrix With {
                 .X = array,
@@ -187,6 +191,8 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Number() As Matrix
             Return New Matrix(0, 0)
         End Function
@@ -236,7 +242,8 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' 两个矩阵乘法算符重载，矩阵元素分别相乘，相当于MATLAB中的   .*，要求两个矩阵维数相同，矩阵类不进行个数判断
+        ''' 两个矩阵乘法算符重载，矩阵元素分别相乘，相当于MATLAB中的``.*``，
+        ''' 要求两个矩阵维数相同，矩阵类不进行个数判断
         ''' </summary>
         ''' <param name="a1"></param>
         ''' <param name="a2"></param>
@@ -258,7 +265,8 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' 两个矩阵除法算符重载，矩阵元素分别相除，相当于MATLAB中的   ./，要求两个矩阵维数相同，矩阵类不进行个数判断
+        ''' 两个矩阵除法算符重载，矩阵元素分别相除，相当于MATLAB中的``./``，
+        ''' 要求两个矩阵维数相同，矩阵类不进行个数判断
         ''' </summary>
         ''' <param name="a1"></param>
         ''' <param name="a2"></param>
@@ -270,6 +278,7 @@ Namespace LinearAlgebra
             n = a1.N
 
             Dim a3 As New Matrix(m, n)
+
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
                     a3.X(i, j) = a1.X(i, j) / a2.X(i, j)
@@ -298,7 +307,6 @@ Namespace LinearAlgebra
                     a2.X(i, j) = a1.X(i, j) + x
                 Next
             Next
-
 
             Return a2
         End Operator
@@ -459,9 +467,9 @@ Namespace LinearAlgebra
             q = a2.N
 
             If n <> p Then
-                Console.WriteLine("Inner matrix dimensions must agree！")
+                ' 如果矩阵维数不匹配给出告警信息
+                Call "Inner matrix dimensions must agree！".Warning
             End If
-            '如果矩阵维数不匹配给出告警信息
 
             '新矩阵，用于存放结果
             Dim a3 As New Matrix(m, q)
@@ -497,9 +505,9 @@ Namespace LinearAlgebra
             p = x.[Dim]
 
             If n <> p Then
-                Console.WriteLine("Inner matrix dimensions must agree！")
+                ' 如果矩阵维数不匹配，给出告警信息
+                Call "Inner matrix dimensions must agree！".Warning
             End If
-            '如果矩阵维数不匹配，给出告警信息
 
             Dim b As New Vector(m)
 
@@ -540,10 +548,13 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Transpose() As Matrix
             Return Matrix.Transpose(Me)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(MAT As Matrix) As Double(,)
             Return MAT.X
         End Operator

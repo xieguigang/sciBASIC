@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d341c2f68f5c0bf3f42c65a43fa7abcf, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Network.vb"
+﻿#Region "Microsoft.VisualBasic::01b1475f5ea7a133b9e989221fabf517, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Network.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Class NetworkTables
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: Links, Load
+    '         Function: IsEmptyTables, Links, Load, SearchNetworkTable
     ' 
     ' 
     ' /********************************************************************************/
@@ -83,15 +83,16 @@ Namespace FileStream
             Return count
         End Function
 
-        ''' <summary>
-        ''' Load network graph data from a saved network data direcotry.
-        ''' </summary>
-        ''' <param name="DIR"></param>
-        ''' <returns></returns>
-        Public Overloads Shared Function Load(DIR As String) As NetworkTables
-            Dim list As New List(Of String)(ls - l - r - "*.csv" <= DIR)
-            Dim edgeFile$ = $"{DIR}/network-edges.csv"
-            Dim nodeFile$ = $"{DIR}/nodes.csv"
+        Public Shared Function IsEmptyTables(directory As String) As Boolean
+            With SearchNetworkTable(directory)
+                Return .edges.IsEmptyTable AndAlso .nodes.IsEmptyTable
+            End With
+        End Function
+
+        Public Shared Function SearchNetworkTable(directory As String) As (edges$, nodes$)
+            Dim list As New List(Of String)(ls - l - r - "*.csv" <= directory)
+            Dim edgeFile$ = $"{directory}/network-edges.csv"
+            Dim nodeFile$ = $"{directory}/nodes.csv"
 
             If Not edgeFile.FileExists Then
                 For Each path$ In list
@@ -104,7 +105,7 @@ Namespace FileStream
                 If Not String.IsNullOrEmpty(edgeFile) Then
                     Call list.Remove(edgeFile)
                 Else
-                    Throw New MemberAccessException("Edge file not found in the directory: " & DIR)
+                    Throw New MemberAccessException("Edge file not found in the directory: " & directory)
                 End If
             End If
 
@@ -117,13 +118,24 @@ Namespace FileStream
                 Next
 
                 If String.IsNullOrEmpty(nodeFile) Then
-                    Throw New MemberAccessException("Node file not found in the directory: " & DIR)
+                    Throw New MemberAccessException("Node file not found in the directory: " & directory)
                 End If
             End If
 
+            Return (edgeFile, nodeFile)
+        End Function
+
+        ''' <summary>
+        ''' Load network graph data from a saved network data direcotry.
+        ''' </summary>
+        ''' <param name="DIR"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Function Load(DIR As String) As NetworkTables
+            Dim tables = SearchNetworkTable(directory:=DIR)
+
             Return New NetworkTables With {
-                .Edges = edgeFile.LoadCsv(Of NetworkEdge),
-                .Nodes = nodeFile.LoadCsv(Of Node)
+                .Edges = tables.edges.LoadCsv(Of NetworkEdge),
+                .Nodes = tables.nodes.LoadCsv(Of Node)
             }
         End Function
     End Class

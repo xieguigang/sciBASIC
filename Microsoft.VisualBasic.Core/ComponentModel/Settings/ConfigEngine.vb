@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81db02e80dda24713827f030a2997510, Microsoft.VisualBasic.Core\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::fb94b88579b5a80cf463c333ca85e8ea, Microsoft.VisualBasic.Core\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,10 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) [Set], __getDefaultPath, ExistsNode, GetName, GetSettings
-    '                   GetSettingsNode, Load, (+2 Overloads) Prints, Save, ToString
-    '                   View
+    '         Function: (+2 Overloads) [Set], ExistsNode, GetName, GetSettings, GetSettingsNode
+    '                   Load, (+2 Overloads) Prints, (+2 Overloads) Save, ToString, View
     ' 
-    '         Sub: Dispose
+    '         Sub: (+2 Overloads) Dispose
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,6 +54,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel.Settings
 
@@ -62,17 +62,17 @@ Namespace ComponentModel.Settings
     ''' 只包含有对数据映射目标对象的属性读写，并不包含有文件数据的读写操作
     ''' </summary>
     ''' 
-    Public Class ConfigEngine : Inherits ITextFile
+    Public Class ConfigEngine : Implements ISaveHandle, IFileReference
         Implements IDisposable
 
         ''' <summary>
         ''' 所映射的数据源
         ''' </summary>
-        Protected _SettingsData As IProfile
+        Protected profilesData As IProfile
         ''' <summary>
         ''' 键名都是小写的
         ''' </summary>
-        Protected ProfileItemCollection As IDictionary(Of String, BindMapping)
+        Protected profileItemCollection As IDictionary(Of String, BindMapping)
 
         ''' <summary>
         ''' List all of the available settings nodes in this profile data session.
@@ -84,28 +84,28 @@ Namespace ComponentModel.Settings
         Public ReadOnly Property AllItems As BindMapping()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return ProfileItemCollection _
+                Return profileItemCollection _
                     .Values _
                     .ToArray
             End Get
         End Property
 
-        Public Overrides Property FilePath As String
+        Public Property FilePath As String Implements IFileReference.FilePath
             Get
-                Return _SettingsData.FilePath
+                Return profilesData.FilePath
             End Get
             Set(value As String)
-                _SettingsData.FilePath = value
+                profilesData.FilePath = value
             End Set
         End Property
 
         Sub New(obj As IProfile)
-            _SettingsData = obj
-            ProfileItemCollection =
-                ConfigEngine.Load(Of IProfile)(
-                    obj.GetType,
-                    obj:=_SettingsData).ToDictionary(Function(x) x.Name,
-                                                     Function(x) x.Value)
+            profilesData = obj
+            profileItemCollection = ConfigEngine.Load(Of IProfile)(
+                obj.GetType,
+                obj:=profilesData
+            ).ToDictionary(Function(x) x.Name,
+                           Function(x) x.Value)
         End Sub
 
         Protected Sub New()
@@ -184,7 +184,7 @@ Namespace ComponentModel.Settings
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Node.Exists")>
         Public Overridable Function ExistsNode(Name As String) As Boolean
-            Return ProfileItemCollection.ContainsKey(Name.ToLower)
+            Return profileItemCollection.ContainsKey(Name.ToLower)
         End Function
 
         ''' <summary>
@@ -198,11 +198,12 @@ Namespace ComponentModel.Settings
         Public Overridable Function [Set](Name As String, Value As String) As Boolean
             Dim keyFind As String = Name.ToLower
 
-            If ProfileItemCollection.ContainsKey(keyFind) Then
-                Call ProfileItemCollection(keyFind).Set(Value)
+            If profileItemCollection.ContainsKey(keyFind) Then
+                Call profileItemCollection(keyFind).Set(Value)
             Else
                 Return False
             End If
+
             Return True
         End Function
 
@@ -215,8 +216,8 @@ Namespace ComponentModel.Settings
         Public Overridable Function GetSettings(Name As String) As String
             Dim keyFind As String = Name.ToLower
 
-            If ProfileItemCollection.ContainsKey(keyFind) Then
-                Dim item = ProfileItemCollection(keyFind)
+            If profileItemCollection.ContainsKey(keyFind) Then
+                Dim item = profileItemCollection(keyFind)
                 Dim result = item.Value
                 Return result
             Else
@@ -234,10 +235,9 @@ Namespace ComponentModel.Settings
         <ExportAPI("View")>
         Public Overridable Function View(Optional name As String = "") As String
             If String.IsNullOrEmpty(name) Then
-                Return Prints(Me.ProfileItemCollection.Values)
+                Return Prints(Me.profileItemCollection.Values)
             Else
-                Dim data = GetSettingsNode(name)
-                Return data.AsOutString
+                Return GetSettingsNode(name).AsOutString
             End If
         End Function
 
@@ -289,40 +289,57 @@ Namespace ComponentModel.Settings
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GetNode")>
         Public Function GetSettingsNode(Name As String) As BindMapping
-            Return ProfileItemCollection(Name.ToLower)
+            Return profileItemCollection(Name.ToLower)
         End Function
 
         Public Overrides Function ToString() As String
-            Return _SettingsData.FilePath
+            Return profilesData.FilePath
         End Function
 
         <ExportAPI("Save")>
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Dim Xml As String = _SettingsData.GetXml
-            Return Xml.SaveTo(getPath(FilePath), Encoding)
+        Public Function Save(FilePath$, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Dim Xml As String = profilesData.GetXml
+            Return Xml.SaveTo(FilePath Or Me.FilePath.When(FilePath.StringEmpty), Encoding)
         End Function
 
         Protected Friend Shared ReadOnly Property ProfileItemType As Type = GetType(ProfileItem)
         Protected Friend Shared ReadOnly Property ProfileItemNode As Type = GetType(ProfileNodeItem)
 
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
+        End Function
+
 #Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
         ' IDisposable
-        Protected Overrides Sub Dispose(disposing As Boolean)
-            If Not Me.disposedValue Then
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
                 If disposing Then
-                    ' TODO:  释放托管状态(托管对象)。
-                    Call _SettingsData.Save()
+                    ' TODO: dispose managed state (managed objects).
+                    Call profilesData.Save()
                 End If
 
-                ' TODO:  释放非托管资源(非托管对象)并重写下面的 Finalize()。
-                ' TODO:  将大型字段设置为 null。
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
             End If
-            Me.disposedValue = True
+            disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
-        Protected Overrides Function __getDefaultPath() As String
-            Return FilePath
-        End Function
     End Class
 End Namespace

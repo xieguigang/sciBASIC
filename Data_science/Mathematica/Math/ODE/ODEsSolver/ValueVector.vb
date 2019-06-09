@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffc18e4313b29faf04dba4057c29d4d0, Data_science\Mathematica\Math\ODE\ODEsSolver\ValueVector.vb"
+﻿#Region "Microsoft.VisualBasic::53ff3590ef80bd1b4b11178cea1981a2, Data_science\Mathematica\Math\ODE\ODEsSolver\ValueVector.vb"
 
     ' Author:
     ' 
@@ -46,18 +46,19 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class ValueVector : Inherits int
+Public Class ValueVector : Inherits VBInteger
 
     Public Property Y As Dictionary(Of NamedCollection(Of Double))
 
-    Default Public Overloads Property Value(name$) As Double
+    Default Public Overrides Property Index(name As Object) As Object
         Get
-            Return Y(name).Value(MyBase.Value)
+            Return Y(InputHandler.ToString(name)).Value(MyBase.Value)
         End Get
-        Set(value As Double)
-            Y(name$).Value(MyBase.Value) = value
+        Set(value As Object)
+            Y(InputHandler.ToString(name)).Value(MyBase.Value) = value
         End Set
     End Property
 

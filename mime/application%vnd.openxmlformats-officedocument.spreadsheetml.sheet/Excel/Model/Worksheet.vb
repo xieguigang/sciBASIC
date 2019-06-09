@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16673165ad02082daa03b818911967f7, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Worksheet.vb"
+﻿#Region "Microsoft.VisualBasic::36975a55f07fe9f8cc4665c5e280806b, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Worksheet.vb"
 
     ' Author:
     ' 
@@ -57,46 +57,46 @@ Namespace Model
 
         Public Property Row(i%) As RowObject
             Get
-
+                Throw New NotImplementedException
             End Get
             Set(value As RowObject)
-
+                Throw New NotImplementedException
             End Set
         End Property
 
         Public Property Column(i%) As String()
             Get
-
+                Throw New NotImplementedException
             End Get
             Set(value As String())
-
+                Throw New NotImplementedException
             End Set
         End Property
 
         Public Property Column(ID$) As String()
             Get
-
+                Throw New NotImplementedException
             End Get
             Set(value As String())
-
+                Throw New NotImplementedException
             End Set
         End Property
 
         Default Public Property Cell(point$) As String
             Get
-
+                Throw New NotImplementedException
             End Get
             Set(value As String)
-
+                Throw New NotImplementedException
             End Set
         End Property
 
         Default Public Property Cell(X%, Y%) As String
             Get
-
+                Throw New NotImplementedException
             End Get
             Set(value As String)
-
+                Throw New NotImplementedException
             End Set
         End Property
 

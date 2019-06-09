@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f579d67fade7b48a2b6c48e01267f4c, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
+﻿#Region "Microsoft.VisualBasic::a6ba67915b4876235a449e8a63a23bac, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,8 @@
     ' 
     '     Class MyVectorFitness
     ' 
+    '         Properties: Cacheable
+    ' 
     '         Function: Calculate
     ' 
     ' 
@@ -50,6 +52,7 @@
 
 #End Region
 
+Imports GAF_example
 Imports Microsoft.VisualBasic.Extensions
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
@@ -61,11 +64,13 @@ Public Class Demo
         Dim population As Population(Of MyVector) = New MyVector().InitialPopulation(5000)
         Dim fitness As Fitness(Of MyVector) = New MyVectorFitness()
         Dim ga As New GeneticAlgorithm(Of MyVector)(population, fitness)
-        '   Dim out As New List(Of outPrint)
+        Dim engine As New EnvironmentDriver(Of MyVector)(ga) With {
+            .Iterations = 10000,
+            .Threshold = 0.005
+        }
 
-        ga.AddDefaultListener '(Sub(x) Call out.Add(x))
-        ga.Evolve(5000)
-        '   out.SaveTo("./outPrint.csv")
+        Call engine.AttachReporter(Sub(i, e, g) EnvironmentDriver(Of MyVector).CreateReport(i, e, g).ToString.__DEBUG_ECHO)
+        Call engine.Train()
 
         Pause()
     End Sub
@@ -124,6 +129,12 @@ Public Class Demo
         Implements Fitness(Of MyVector)
 
         ReadOnly target As Integer() = {10, 20, 30, 40, 50}
+
+        Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of MyVector).Cacheable
+            Get
+                Return False
+            End Get
+        End Property
 
         Public Function Calculate(chromosome As MyVector) As Double Implements Fitness(Of MyVector).Calculate
             Return FitnessHelper.Calculate(chromosome.Vector, target)

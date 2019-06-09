@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a9ecf56b48ad5bf9dae82f49e60c67c, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRule.vb"
+﻿#Region "Microsoft.VisualBasic::e4be7af0c54441fc98d181208919afe9, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRule.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,7 @@ Namespace Logical.FuzzyLogic
     ''' <summary>
     ''' Represents a rule.
     ''' </summary>
-    Public Class FuzzyRule : Inherits BaseClass
+    Public Class FuzzyRule
 
 #Region "Private Properties"
 

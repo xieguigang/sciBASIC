@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a453720e24d8f77782b1ed1b2d46262, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::ca5c5151d1187ac4480f77c6a05613ea, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: r, x, y
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
@@ -66,6 +66,13 @@ Namespace d3js.Layout
         Public Property r As Double
 
         Sub New()
+        End Sub
+
+        Sub New(location As Point, r#)
+            Me.r = r
+
+            x = location.X
+            y = location.Y
         End Sub
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38debb6d764deb9a2c989eb6906b51c9, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\EventProc.vb"
+﻿#Region "Microsoft.VisualBasic::a55db275422fac8c7cd30fc5b1d99117, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\EventProc.vb"
 
     ' Author:
     ' 
@@ -74,7 +74,7 @@ Namespace Terminal.Utility
         Dim delta As Integer
         Dim tag As String
         Dim out As StreamWriter
-        Dim current As int = 0
+        Dim current As VBInteger = 0
 
         ''' <summary>
         ''' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b23642938a71b0f2b1eae3c2d623c899, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::7d7e8fe7e37bc25e396b1dc1792e0bd6, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Matrix.vb"
 
     ' Author:
     ' 
@@ -66,7 +66,7 @@ Namespace Drawing3D.Math3D
         End Structure
 
         Sub New(surface As IEnumerable(Of Surface))
-            Dim i As int = 0
+            Dim i As VBInteger = 0
             Dim x As New List(Of Double)
             Dim y As New List(Of Double)
             Dim z As New List(Of Double)

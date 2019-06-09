@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a89a70e7e27e2d5f59c685975e2909e6, mime\application%json\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a35d5949fb85f500ec92a190463a44f1, mime\application%json\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: AsString, AsStringVector, ParseJsonFile, ParseJsonStr
+    '     Function: AsString, AsStringVector, ParseJson, ParseJsonFile
     ' 
     ' /********************************************************************************/
 
@@ -45,15 +45,21 @@ Imports Microsoft.VisualBasic.MIME.application.json.Parser
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' Parse json string
+    ''' </summary>
+    ''' <param name="JsonStr"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ParseJsonStr(JsonStr As String) As JsonElement
-        Dim value As JsonElement = New JsonParser().OpenJSON(JsonStr)
-        Return value
+    Public Function ParseJson(JsonStr As String) As JsonElement
+        Return New JsonParser().OpenJSON(JsonStr)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ParseJsonFile(JsonFile As String) As JsonElement
-        Dim value As JsonElement = New JsonParser().Open(JsonFile)
-        Return value
+        Return New JsonParser().Open(JsonFile)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

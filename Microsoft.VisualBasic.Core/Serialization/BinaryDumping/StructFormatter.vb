@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bebb80e2ece0208f157f4ef527645194, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\StructFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::dfa3e3c9fa36967de91e3fe001e9693e, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\StructFormatter.vb"
 
     ' Author:
     ' 
@@ -57,17 +57,20 @@ Namespace Serialization.BinaryDumping
         ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Serialize(Of T)(obj As T, path As String) As Boolean
-            Dim buffer As Byte() = obj.GetSerializeBuffer
-            Return buffer.FlushStream(path)
+            Return obj.GetSerializeBuffer.FlushStream(path)
         End Function
 
         <Extension> Public Function GetSerializeBuffer(Of T)(obj As T) As Byte()
             Dim IFormatter As IFormatter = New BinaryFormatter()
-            Dim Stream As New IO.MemoryStream()
-            Call IFormatter.Serialize(Stream, obj)
-            Dim buffer As Byte() = Stream.ToArray
-            Return buffer
+
+            Using stream As New MemoryStream()
+                Call IFormatter.Serialize(stream, obj)
+                Dim buffer As Byte() = stream.ToArray
+                Return buffer
+            End Using
         End Function
 
         <Extension> Public Function DeSerialize(Of T)(bytes As Byte()) As T
@@ -84,12 +87,12 @@ Namespace Serialization.BinaryDumping
         ''' <returns></returns>
         ''' <remarks></remarks>
         <Extension> Public Function Load(Of T)(path As String) As T
-            If Not FileIO.FileSystem.FileExists(path) Then
+            If Not path.FileExists Then
                 Return Activator.CreateInstance(Of T)()
             End If
-            Using Stream As Stream = New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
+            Using stream As Stream = New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
                 Dim IFormatter As IFormatter = New BinaryFormatter()
-                Dim obj As T = DirectCast(IFormatter.Deserialize(Stream), T)
+                Dim obj As T = DirectCast(IFormatter.Deserialize(stream), T)
                 Return obj
             End Using
         End Function

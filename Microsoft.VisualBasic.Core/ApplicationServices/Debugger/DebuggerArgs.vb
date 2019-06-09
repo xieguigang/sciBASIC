@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f6db4a9425291d26e9edfa2742169b0, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::45d782ae175d587a152a19d88a206ff7, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
 
     ' Author:
     ' 
@@ -87,7 +87,7 @@ Namespace ApplicationServices.Debugging
             End If
 
             Try
-                If FileHandles.Wait(file:=logFile) Then
+                If My.File.Wait(file:=logFile) Then
                     Call FileIO.FileSystem.CreateDirectory(logFile.ParentPath)
                     Call FileIO.FileSystem.WriteAllText(logFile, log & vbCrLf, True)
                 End If
@@ -198,21 +198,21 @@ Namespace ApplicationServices.Debugging
             Dim config As Config = Config.Load
 
             If String.IsNullOrEmpty(opt) Then ' 默认的on参数
-                VBDebugger.__level = config.level
+                VBDebugger.m_level = config.level
             Else
                 Select Case opt.ToLower
                     Case "on"
-                        VBDebugger.__level = DebuggerLevels.On
+                        VBDebugger.m_level = DebuggerLevels.On
                     Case "off"
-                        VBDebugger.__level = DebuggerLevels.Off
+                        VBDebugger.m_level = DebuggerLevels.Off
                     Case "all"
-                        VBDebugger.__level = DebuggerLevels.All
+                        VBDebugger.m_level = DebuggerLevels.All
                     Case "warn", "warning"
-                        VBDebugger.__level = DebuggerLevels.Warning
+                        VBDebugger.m_level = DebuggerLevels.Warning
                     Case "err", "error"
-                        VBDebugger.__level = DebuggerLevels.Error
+                        VBDebugger.m_level = DebuggerLevels.Error
                     Case Else
-                        VBDebugger.__level = DebuggerLevels.On
+                        VBDebugger.m_level = DebuggerLevels.On
                         Call Console.WriteLine($"[INFO] The debugger argument value --echo:={opt} is invalid, using default settings.")
                 End Select
             End If

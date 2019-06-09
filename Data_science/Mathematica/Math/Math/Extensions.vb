@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2b8afdf3e06ecf2f580c5813c2aef89, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f6fdcc166a448bae2ef20d4351b9583f, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     ' Module Extensions
     ' 
-    '     Function: (+4 Overloads) AsVector, DoubleRange, FDR, FirstDecrease, FirstIncrease
-    '               IntRange, IsInside, Iterates, (+2 Overloads) Range, Reach
-    '               seq2, Sim, SSM, Tanimoto, X
-    '               Y
+    '     Function: [Shadows], AsSample, (+4 Overloads) AsVector, DoubleRange, FDR
+    '               FirstDecrease, FirstIncrease, FlipCoin, IntRange, IsInside
+    '               Iterates, (+2 Overloads) Range, Reach, seq2, Sim
+    '               SSM, Tanimoto, X, Y
     ' 
     ' /********************************************************************************/
 
@@ -49,13 +49,43 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports sys = System.Math
 
 ''' <summary>
 ''' 向量以及统计函数拓展
 ''' </summary>
 Public Module Extensions
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsSample(data As IEnumerable(Of Double)) As SampleDistribution
+        Return New SampleDistribution(data)
+    End Function
+
+    ''' <summary>
+    ''' Create the vector model from target .NET object collection.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function [Shadows](Of T)(source As IEnumerable(Of T)) As IVector(Of T)
+        Return New IVector(Of T)(source)
+    End Function
+
+    Public Function FlipCoin(Optional headsCutoff% = 50, Optional ntimes% = 100) As Double
+        Dim rand As Integer = randf(0, ntimes)
+
+        If rand >= headsCutoff Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 
     ''' <summary>
     ''' 计算两个离散信号之间的相似度
@@ -114,6 +144,15 @@ Public Module Extensions
     End Function
 
     ''' <summary>
+    ''' FDR错误控制法是Benjamini于1995年提出一种方法,通过控制FDR(False Discovery Rate)来决定P值的域值. 
+    ''' 假设你挑选了``R``个差异表达的基因，其中有``S``个是真正有差异表达的，另外有``V``个其实是没有差异表达的，是假阳性的。
+    ''' 实践中希望错误比例``Q＝V/R``平均而言不能超过某个预先设定的值（比如0.05），在统计学上，
+    ''' 这也就等价于控制FDR不能超过5％.
+    ''' 
+    ''' 对所有候选基因的p值进行从小到大排序，则若想控制fdr不能超过q，则只需找到最大的正整数i，使得 
+    ''' ``p(i)&lt;= (i*q)/m``.然后，挑选对应p(1),p(2),...,p(i)的基因做为差异表达基因，这样就能从统计学上
+    ''' 保证fdr不超过q。因此，FDR的计算公式如下
+    ''' 
     ''' ``FDR = length(pvalue)*pvalue/rank(pvalue)``
     ''' </summary>
     ''' <param name="pvalue"></param>
@@ -174,7 +213,7 @@ Public Module Extensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IsInside(vector As Vector, range As DoubleRange) As BooleanVector
-        Return vector.Select(Function(d) range.IsInside(d)).AsVector
+        Return vector.Select(Function(d) range.IsInside(d)).ToVector
     End Function
 
     ''' <summary>

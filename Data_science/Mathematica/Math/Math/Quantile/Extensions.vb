@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bddaef1607c5d729398e6b3c4accc6de, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::262e79fc65537e11f3d50c3154ac553a, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 
@@ -102,7 +102,7 @@ Namespace Quantile
         End Function
 
         ''' <summary>
-        ''' 
+        ''' <see cref="QuantileEstimationGK"/> for numeric vector.
         ''' </summary>
         ''' <param name="source"></param>
         ''' <param name="epsilon#"></param>
@@ -114,7 +114,7 @@ Namespace Quantile
                                    Optional compact_size% = 1000) As QuantileEstimationGK
             Dim estimator As New QuantileEstimationGK(epsilon, compact_size)
 
-            For Each x As Long In source
+            For Each x As Double In source
                 Call estimator.Insert(x)
             Next
 
@@ -122,20 +122,22 @@ Namespace Quantile
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Measure sample threshold data by a given quantile level.
         ''' </summary>
         ''' <param name="data"></param>
-        ''' <param name="quantile#">数量的百分比，值位于0-1之间</param>
-        ''' <param name="epsilon#"></param>
-        ''' <param name="compact_size%"></param>
+        ''' <param name="quantile">数量的百分比，值位于0-1之间</param>
+        ''' <param name="epsilon"></param>
+        ''' <param name="compact_size"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function QuantileThreshold(data As IEnumerable(Of Double),
-                                          quantile#,
-                                          Optional epsilon# = Extensions.epsilon,
-                                          Optional compact_size% = 1000) As Double
-            Dim q As QuantileEstimationGK = data.GKQuantile(epsilon, compact_size)
-            Return q.Query(quantile)
+        Public Function Threshold(data As IEnumerable(Of Double),
+                                  quantile#,
+                                  Optional epsilon# = Extensions.epsilon,
+                                  Optional compact_size% = 1000) As Double
+
+            Return data.GKQuantile(epsilon, compact_size).Query(quantile)
         End Function
 
         ''' <summary>

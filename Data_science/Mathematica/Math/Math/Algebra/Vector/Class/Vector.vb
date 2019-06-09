@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d9fa6e608c52ef0e80dfe4515ad3fc1, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::afbe7a5576ae77967dee4d2f2ee66435, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     '                     Range, SumMagnitude, Unit, Zero
     ' 
     '         Constructor: (+8 Overloads) Sub New
-    '         Function: DotProduct, Ones, Product, rand, SumMagnitudes
+    '         Function: Abs, CumSum, DotProduct, Ones, Order
+    '                   Product, rand, ScaleToRange, slice, SumMagnitudes
     '                   (+2 Overloads) ToString
     '         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
@@ -49,6 +50,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -58,6 +60,7 @@ Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
+Imports numpy = Microsoft.VisualBasic.Language.Python
 
 Namespace LinearAlgebra
 
@@ -747,6 +750,18 @@ Namespace LinearAlgebra
 #End Region
 
         ''' <summary>
+        ''' 进行序列切片操作
+        ''' </summary>
+        ''' <param name="start%"></param>
+        ''' <param name="stop%"></param>
+        ''' <param name="steps%"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function slice(Optional start% = 0, Optional stop% = -1, Optional steps% = 1) As Vector
+            Return numpy.slice(buffer, start, [stop], steps).AsVector
+        End Function
+
+        ''' <summary>
         ''' + http://mathworld.wolfram.com/DotProduct.html
         ''' + http://www.mathsisfun.com/algebra/vectors-dot-product.html
         ''' </summary>
@@ -771,6 +786,21 @@ Namespace LinearAlgebra
             Return Me.ProductALL
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CumSum() As Vector
+            Return Math.CumSum(Me)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Abs() As Vector
+            Return Abs(Me)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ScaleToRange(range As DoubleRange) As Vector
+            Return Me.RangeTransform(range)
+        End Function
+
         ''' <summary>
         ''' Display member's data as json array
         ''' </summary>
@@ -784,6 +814,27 @@ Namespace LinearAlgebra
             Return Me _
                 .Select(Function(x) x.ToString(format)) _
                 .ToArray
+        End Function
+
+        ''' <summary>
+        ''' ``order()``的返回值是对应``排名``的元素所在向量中的位置。
+        ''' 
+        ''' ```R
+        ''' x &lt;- c(97, 93, 85, 74, 32, 100, 99, 67);
+        ''' 
+        ''' sort(x)
+        ''' # [1] 32  67  74  85  93  97  99 100
+        ''' order(x)
+        ''' # [1] 5 8 4 3 2 1 7 6
+        ''' rank(x)
+        ''' # [1] 6 5 4 3 1 8 7 2
+        ''' ```
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Order() As Vector
+            Return Vector.Order(Me)
         End Function
 
         ''' <summary>

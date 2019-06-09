@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6357609b442f913b44617cb7db529728, www\Microsoft.VisualBasic.Webservices.Bing\Academic\ProfileResult.vb"
+﻿#Region "Microsoft.VisualBasic::ac2058ec365ec33c55d65d6f90cdc2c5, www\Microsoft.VisualBasic.Webservices.Bing\Academic\ProfileResult.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Academic
@@ -55,6 +55,8 @@ Namespace Academic
     ''' https://cn.bing.com/academic/profile?id=24ca0003c2b5935f1335003ca712b889&amp;encoded=0&amp;v=paper_preview&amp;mkt=zh-cn
     ''' </summary>
     Public Module ProfileResult
+
+        ReadOnly htmlLink As String = HtmlStrips.Regexp("a")
 
         <Extension>
         Private Function GetTarget(a As String) As Link

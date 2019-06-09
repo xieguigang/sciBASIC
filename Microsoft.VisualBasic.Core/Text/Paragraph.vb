@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::419efa23219b84576161d08b456aab68, Microsoft.VisualBasic.Core\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::d9963abdb1cd9050ffd80f3c10d220fc, Microsoft.VisualBasic.Core\Text\Paragraph.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Paragraph
     ' 
-    '         Function: SplitParagraph, Trim
+    '         Function: Chunks, SplitParagraph, Trim
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,6 +48,21 @@ Imports Microsoft.VisualBasic.Linq
 Namespace Text
 
     Public Module Paragraph
+
+        ''' <summary>
+        ''' 对于空文本，这个函数返回一个空集合
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="lineBreak%"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function Chunks(text$, lineBreak%) As IEnumerable(Of String)
+            If Not text.StringEmpty Then
+                For i As Integer = 1 To text.Length Step lineBreak
+                    Yield Mid(text, i, lineBreak)
+                Next
+            End If
+        End Function
 
         ''' <summary>
         ''' 

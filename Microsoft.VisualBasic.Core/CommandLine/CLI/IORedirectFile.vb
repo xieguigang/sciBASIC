@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::047864f664c5913e5c11d9c55477dcec, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::c2622e56797782ff7ecee40e1c895766, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -140,7 +140,8 @@ Namespace CommandLine
                 Optional environment As IEnumerable(Of ValueTuple) = Nothing,
                 Optional FolkNew As Boolean = False,
                 Optional stdRedirect$ = "",
-                Optional stdin$ = Nothing)
+                Optional stdin$ = Nothing,
+                Optional debug As Boolean = True)
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
@@ -175,7 +176,9 @@ Namespace CommandLine
                 shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin)
             End If
 
-            Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+            If debug Then
+                Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+            End If
         End Sub
 
         ''' <summary>
@@ -223,7 +226,7 @@ Namespace CommandLine
                 Wait:=True
             )
 #End If
-            Call path.Delete
+            Call path.DeleteFile
 
             Return exitCode
         End Function

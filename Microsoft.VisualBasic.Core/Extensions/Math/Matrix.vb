@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e82f2529ec9f0bcd074d4defebc0b2d, Microsoft.VisualBasic.Core\Extensions\Math\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::ed6b97fc29c5ecafbbde6e0d4dc667ac, Microsoft.VisualBasic.Core\Extensions\Math\Matrix.vb"
 
     ' Author:
     ' 

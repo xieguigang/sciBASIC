@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5585952eb0d95c19dfcb9e251476a7cf, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::92cc809a06a19401696bc6a2ef37f0cf, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
 
     ' Author:
     ' 
@@ -123,6 +123,7 @@ Public Module FisherTest
         Return px / py
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Private Function product(x As Dictionary(Of Integer, Integer)) As Double
         Return x.Select(Function(n) n.Key ^ n.Value).ProductALL

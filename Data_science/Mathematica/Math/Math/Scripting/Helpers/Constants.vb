@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9245676bb19af7ac35061e400c669711, Data_science\Mathematica\Math\Math\Scripting\Helpers\Constants.vb"
+﻿#Region "Microsoft.VisualBasic::8d126ac8294c049d81ebe07db567f2e3, Data_science\Mathematica\Math\Math\Scripting\Helpers\Constants.vb"
 
     ' Author:
     ' 
@@ -66,9 +66,9 @@ Namespace Scripting.Helpers
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function [GET](x As String, ByRef success As Boolean) As Double
-            If _objHash.ContainsKey(x) Then
+            If objTable.ContainsKey(x) Then
                 success = True
-                Return _objHash(x)
+                Return objTable(x)
             Else
                 success = False
                 Return -1
@@ -85,7 +85,7 @@ Namespace Scripting.Helpers
         ''' const [name] [value]
         ''' </remarks>
         Public Overloads Sub Add(Name As String, value As Double)
-            If _objHash.ContainsKey(Name) Then
+            If objTable.ContainsKey(Name) Then
                 Dim msg As String = $"Constant not set as the const ""{Name}"" is already set in this engine."
                 Throw New Exception(msg)
             Else

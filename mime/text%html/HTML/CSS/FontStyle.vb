@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::466d1e2e9b91db5c42e669f73973e330, mime\text%html\HTML\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::406df0058164c2b2d93481d00c11218a, mime\text%html\HTML\CSS\FontStyle.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                     style, weight
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) GetFontStyle, GetStyle, (+2 Overloads) ToString, TryParse
+    '         Function: (+2 Overloads) GetFontStyle, GetStyle, parseInner, (+2 Overloads) ToString, TryParse
     ' 
     ' 
     ' /********************************************************************************/
@@ -85,7 +85,9 @@ Namespace HTML.CSS
         Public Const Win7Large$ = "font-style: normal; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7VeryLarge$ = "font-style: normal; font-size: 36; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7VeryVeryLarge$ = "font-style: strong; font-size: 56; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7VeryVeryLargeNormal$ = "font-style: normal; font-size: 56; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7UltraLarge$ = "font-style: strong; font-size: 72; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7UltraLargeNormal$ = "font-style: normal; font-size: 72; font-family: " & FontFace.MicrosoftYaHei & ";"
 
         Public Const PlotTitle$ = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
         Public Const PlotSubTitle$ = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"
@@ -238,28 +240,56 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <param name="css"></param>
         ''' <param name="[default]">On failure return this default value</param>
+        ''' <param name="hasValue">
+        ''' 所输入到这个函数进行解析的<paramref name="css"/>样式字符串之中是否包含有字体的定义?
+        ''' </param>
         ''' <returns></returns>
-        Public Shared Function TryParse(css As String, Optional [default] As CSSFont = Nothing) As CSSFont
+        Public Shared Function TryParse(css$, Optional [default] As CSSFont = Nothing, Optional ByRef hasValue As Boolean = False) As CSSFont
+            hasValue = False
+
             Try
-                Dim tokens As String() = css.Split(";"c)
-                Dim styles As Dictionary(Of String, String) = tokens _
-                    .Where(Function(s) Not s.StringEmpty) _
-                    .Select(Function(s) s.GetTagValue(":", True)) _
-                    .ToDictionary(Function(x) x.Name.Trim.ToLower,
-                                  Function(x) x.Value)
-                Dim font As New CSSFont
-
-                If styles.ContainsKey("font-style") Then font.style = GetStyle(styles("font-style"))
-                If styles.ContainsKey("font-size") Then font.size = CSng(Val(styles("font-size"))) Else font.size = 12
-                If styles.ContainsKey("font-family") Then font.family = styles("font-family") Else font.family = FontFace.MicrosoftYaHei
-                If styles.ContainsKey("font-weight") Then font.weight = CSng(Val(styles("font-weight")))
-                If styles.ContainsKey("font-variant") Then font.variant = styles("font-variant")
-
-                Return font
+                Return parseInner(css, hasValue)
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return [default]
             End Try
+        End Function
+
+        Private Shared Function parseInner(css$, ByRef hasValue As Boolean) As CSSFont
+            Dim tokens As String() = css.Split(";"c)
+            Dim font As New CSSFont
+            Dim styles As Dictionary(Of String, String) = tokens _
+                .Where(Function(s) Not s.StringEmpty) _
+                .Select(Function(s) s.GetTagValue(":", True)) _
+                .ToDictionary(Function(x) x.Name.Trim.ToLower,
+                              Function(x) x.Value)
+
+            If styles.ContainsKey("font-style") Then
+                hasValue = True
+                font.style = GetStyle(styles("font-style"))
+            End If
+            If styles.ContainsKey("font-size") Then
+                hasValue = True
+                font.size = CSng(Val(styles("font-size")))
+            Else
+                font.size = 12
+            End If
+            If styles.ContainsKey("font-family") Then
+                hasValue = True
+                font.family = styles("font-family")
+            Else
+                font.family = FontFace.MicrosoftYaHei
+            End If
+            If styles.ContainsKey("font-weight") Then
+                hasValue = True
+                font.weight = CSng(Val(styles("font-weight")))
+            End If
+            If styles.ContainsKey("font-variant") Then
+                hasValue = True
+                font.variant = styles("font-variant")
+            End If
+
+            Return font
         End Function
 
         ''' <summary>
@@ -270,6 +300,10 @@ Namespace HTML.CSS
             Dim sb As New StringBuilder
 
             Call sb.Append($"font-style: {ToString(style)};")
+
+            If style = FontStyle.Bold Then
+                Call sb.Append("font-weight:bold;")
+            End If
 
             If size > 0 Then
                 sb.Append($"font-size: {size}px;")

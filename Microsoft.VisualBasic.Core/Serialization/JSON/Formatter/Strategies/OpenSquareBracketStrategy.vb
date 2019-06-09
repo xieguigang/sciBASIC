@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::294e2a71a49b975168d34ddd1340d4c8, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::957d2d7580674b7f43a4e520abcac7b0, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: Execute
     ' 
     ' 
@@ -45,6 +46,14 @@
 Namespace Serialization.JSON.Formatter.Internals.Strategies
     Friend NotInheritable Class OpenSquareBracketStrategy
         Implements ICharacterStrategy
+
+        ''' <summary>
+        ''' [
+        ''' </summary>
+        Sub New()
+
+        End Sub
+
         Public Sub Execute(context As JsonFormatterStrategyContext) Implements ICharacterStrategy.Execute
             context.AppendCurrentChar()
 
@@ -53,7 +62,7 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
             End If
 
             context.EnterArrayScope()
-            context.BuildContextIndents()
+            ' context.BuildContextIndents()
         End Sub
 
         Public ReadOnly Property ForWhichCharacter() As Char Implements ICharacterStrategy.ForWhichCharacter

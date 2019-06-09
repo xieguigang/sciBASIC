@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71cd4647368b5322e4237822c2ef12e7, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::31f6f271dc682f2d4497fac16d1ef8ce, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module PathExtensions
     ' 
-    '     Function: BaseName, ChangeSuffix, Delete, DIR, DirectoryExists
+    '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
     '               DirectoryName, EnumerateFiles, ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
     '               FileLength, FileMove, FileName, FileOpened, GetBaseName
     '               GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath, ListDirectory
@@ -48,13 +48,11 @@
 
 #End Region
 
-Imports System.Collections.ObjectModel
 Imports System.IO
 Imports System.Math
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.FileIO
@@ -99,10 +97,10 @@ Public Module PathExtensions
     ''' <summary>
     ''' Execute file delete
     ''' </summary>
-    ''' <param name="path$"></param>
+    ''' <param name="path">The file path or the directory path.</param>
     ''' <param name="throwEx"></param>
     ''' <returns></returns>
-    <Extension> Public Function Delete(path$, Optional throwEx As Boolean = False) As Boolean
+    <Extension> Public Function DeleteFile(path$, Optional throwEx As Boolean = False) As Boolean
         Try
             If path.FileExists Then
                 Call FileIO.FileSystem.DeleteFile(
@@ -205,7 +203,7 @@ Public Module PathExtensions
         End If
     End Function
 
-    ReadOnly allKinds As New DefaultValue(Of String())({"*.*"}, Function(o) TryCast(o, String()).IsNullOrEmpty)
+    ReadOnly allKinds As New [Default](Of String())({"*.*"}, Function(o) TryCast(o, String()).IsNullOrEmpty)
 
     ''' <summary>
     ''' 使用<see cref="FileIO.FileSystem.GetFiles"/>函数枚举
@@ -262,9 +260,20 @@ Public Module PathExtensions
         End If
     End Function
 
+    ''' <summary>
+    ''' Yield subfolders' FullName
+    ''' </summary>
+    ''' <param name="DIR">文件夹不存在，则返回空的列表</param>
+    ''' <param name="[option]"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ListDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
         Dim current As New DirectoryInfo(DIR)
+
+        If Not current.Exists Then
+            ' 文件夹不存在，则返回空的列表
+            Return
+        End If
 
         For Each folder In current.EnumerateDirectories
             Yield folder.FullName
@@ -283,13 +292,38 @@ Public Module PathExtensions
     ''' <param name="DIR$"></param>
     ''' <param name="keyword$"></param>
     ''' <param name="opt"></param>
+    ''' <param name="wildcard">The <paramref name="keyword"/> parameter value is a wildcard.</param>
     ''' <returns>当查找不到目标文件或者文件夹不存在的时候会返回空值</returns>
     <Extension>
-    Public Function TheFile(DIR$, keyword$, Optional opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As String
+    Public Function TheFile(DIR$, keyword$,
+                            Optional opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly,
+                            Optional wildcard As Boolean = True) As String
+
         If Not DIR.DirectoryExists Then
             Return Nothing
+        Else
+            Dim check As Func(Of String, Boolean) = Nothing
+
+            If Not wildcard Then
+                check = Function(path)
+                            Return path.FileName.TextEquals(keyword)
+                        End Function
+            End If
+
+            If opt = FileIO.SearchOption.SearchAllSubDirectories Then
+                If wildcard Then
+                    Return (ls - l - r - keyword <= DIR).FirstOrDefault
+                Else
+                    Return (ls - l - r <= DIR).FirstOrDefault(check)
+                End If
+            Else
+                If wildcard Then
+                    Return (ls - l - keyword <= DIR).FirstOrDefault
+                Else
+                    Return (ls - l <= DIR).FirstOrDefault(check)
+                End If
+            End If
         End If
-        Return FileIO.FileSystem.GetFiles(DIR, opt, keyword).FirstOrDefault
     End Function
 
     ''' <summary>
@@ -323,30 +357,30 @@ Public Module PathExtensions
     ''' 枚举所有非法的路径字符
     ''' </summary>
     ''' <remarks></remarks>
-    Public Const ILLEGAL_PATH_CHARACTERS_ENUMERATION As String = ":*?""<>|&"
-    Public Const ILLEGAL_FILENAME_CHARACTERS As String = "\/" & ILLEGAL_PATH_CHARACTERS_ENUMERATION
+    Public Const ILLEGAL_PATH_CHARACTERS As String = ":*?""<>|&"
+    Public Const ILLEGAL_FILENAME_CHARACTERS As String = "\/" & ILLEGAL_PATH_CHARACTERS
 
     ''' <summary>
-    ''' 将目标字符串之中的非法的字符替换为"_"符号以成为正确的文件名字符串。当参数<paramref name="OnlyASCII"/>为真的时候，意味着所有的非字母或者数字的字符都会被替换为下划线，默认为真
+    ''' 将目标字符串之中的非法的字符替换为"_"符号以成为正确的文件名字符串。当参数<paramref name="alphabetOnly"/>为真的时候，意味着所有的非字母或者数字的字符都会被替换为下划线，默认为真
     ''' </summary>
     ''' <param name="str"></param>
-    ''' <param name="OnlyASCII">当本参数为真的时候，仅26个字母，0-9数字和下划线_以及小数点可以被保留下来</param>
+    ''' <param name="alphabetOnly">当本参数为真的时候，仅26个字母，0-9数字和下划线_以及小数点可以被保留下来</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("NormalizePathString")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function NormalizePathString(str$, Optional OnlyASCII As Boolean = True) As String
-        Return NormalizePathString(str, "_", OnlyASCII)
+    <Extension> Public Function NormalizePathString(str$, Optional alphabetOnly As Boolean = True) As String
+        Return NormalizePathString(str, "_", alphabetOnly)
     End Function
 
     <ExportAPI("NormalizePathString")>
-    <Extension> Public Function NormalizePathString(str$, normAs As String, Optional onlyASCII As Boolean = True) As String
+    <Extension> Public Function NormalizePathString(str$, normAs As String, Optional alphabetOnly As Boolean = True) As String
         Dim sb As New StringBuilder(str)
         For Each ch As Char In ILLEGAL_FILENAME_CHARACTERS
             Call sb.Replace(ch, normAs)
         Next
 
-        If onlyASCII Then
+        If alphabetOnly Then
             For Each ch As Char In "()[]+-~!@#$%^&=;',"
                 Call sb.Replace(ch, normAs)
             Next
@@ -430,7 +464,7 @@ Public Module PathExtensions
         Dim fileName As String = tokens.Last
 
         ' 由于这里是判断文件是否合法，所以之判断文件名就行了，即token列表的最后一个元素
-        For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
+        For Each ch As Char In ILLEGAL_PATH_CHARACTERS
             If fileName.IndexOf(ch) > -1 Then
                 Return True
             End If
@@ -529,20 +563,26 @@ Public Module PathExtensions
             Return False
         End If
         If path.IndexOf(ASCII.CR) > -1 OrElse path.IndexOf(ASCII.LF) > -1 Then
-            Return False ' 包含有回车符或者换行符，则肯定不是文件路径了
-        End If
-
-        If Not String.IsNullOrEmpty(path) AndAlso
-            FileIO.FileSystem.FileExists(path) Then  ' 文件存在
-
-            If ZERO_Nonexists Then
-                Return FileSystem.FileLen(path) > 0
-            Else
-                Return True
-            End If
-        Else
+            ' 包含有回车符或者换行符，则肯定不是文件路径了
             Return False
         End If
+
+        If Not String.IsNullOrEmpty(path) Then
+            Try
+                ' 文件存在
+                If FileIO.FileSystem.FileExists(path) Then
+                    If ZERO_Nonexists Then
+                        Return FileSystem.FileLen(path) > 0
+                    Else
+                        Return True
+                    End If
+                End If
+            Catch ex As Exception
+                Return False
+            End Try
+        End If
+
+        Return False
     End Function
 
     ''' <summary>
@@ -1070,16 +1110,18 @@ Public Module PathExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' 这个函数为单纯的字符串解析函数，不依赖于文件系统的API
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.Name")>
     <Extension>
     Public Function FileName(path As String) As String
-        Try
-            Return FileIO.FileSystem.GetFileInfo(path).Name
-        Catch ex As Exception
-            Throw New InvalidOperationException(path, ex)
-        End Try
+        If path.StringEmpty Then
+            Return ""
+        Else
+            Return path.StringSplit("(\\|/)").Last
+        End If
     End Function
 
     ''' <summary>

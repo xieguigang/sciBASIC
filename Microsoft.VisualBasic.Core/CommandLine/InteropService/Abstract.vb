@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a413eb31d1afbe46ef62459ffef36b0, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::d7497de54115f6639b4080343f28b85c, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,14 @@
 
     '     Class InteropService
     ' 
-    '         Properties: Path
+    '         Properties: IORedirect, IsAvailable, Path
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetLastCLRException, GetLastError, RunDotNetApp, RunProgram, ToString
+    ' 
+    '     Interface AppDriver
+    ' 
+    '         Properties: App
     ' 
     '     Class CLIBuilder
     ' 
@@ -52,6 +56,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace CommandLine.InteropService
 
@@ -67,10 +72,28 @@ Namespace CommandLine.InteropService
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Path As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _executableAssembly
             End Get
         End Property
+
+        ''' <summary>
+        ''' 这个只读属性返回目标可执行文件是否有效
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsAvailable As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _executableAssembly.FileExists
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 默认是不做IO重定向的
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property IORedirect As Boolean = False
 
         Sub New()
         End Sub
@@ -151,6 +174,21 @@ Namespace CommandLine.InteropService
             End If
         End Function
     End Class
+
+    ''' <summary>
+    '''应用程序的执行驱动抽象接口, 这个抽象接口是为了兼容命令行应用和Docker环境下的命令行应用而设置的
+    ''' </summary>
+    Public Interface AppDriver
+
+        ''' <summary>
+        ''' 命令行命令或者可执行文件的路径
+        ''' </summary>
+        ''' <returns></returns>
+        Property App As String
+
+
+
+    End Interface
 
     Public MustInherit Class CLIBuilder
 

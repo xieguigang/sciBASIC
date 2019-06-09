@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14e6e7d6f16d2a7c7404557abfd5af5a, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::aa49e490c8c60fa3ba033227e6dda9df, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '     Properties: RegexpTimeout
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) EachValue, IsPattern, Locates, PythonRawRegexp, (+2 Overloads) ToArray
+    '     Function: (+2 Overloads) EachValue, EndsWith, IsPattern, Locates, PythonRawRegexp
+    '               (+2 Overloads) ToArray
     '     Structure [NameOf]
     ' 
     ' 
@@ -53,6 +54,24 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 
 Public Module RegexExtensions
+
+    ''' <summary>
+    ''' Determines whether the end of this string instance matches the specified string pattern.
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function EndsWith(str$, pattern$, opt As RegexOptions) As Boolean
+        Dim match$ = str.Match(pattern, opt)
+
+        If match.StringEmpty Then
+            Return False
+        Else
+            Return str.EndsWith(match)
+        End If
+    End Function
 
     ''' <summary>
     ''' 模拟python的raw字符串的正则表达式，多行的

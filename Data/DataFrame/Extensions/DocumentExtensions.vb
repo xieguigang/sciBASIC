@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20769120369c7c930a3941800e59f168, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6fecbd73a836b1a700b47ff91c4e9e99, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
     ' Module DocumentExtensions
     ' 
     '     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
-    '               InvalidsAsRLangNA, JoinColumns, LoadCsv, LoadData, LoadDictionary
+    '               GetLastRow, JoinColumns, LoadCsv, LoadData, LoadDictionary
     '               LoadMappings, LoadTable, (+2 Overloads) LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
-    '               SaveTsv, StripNaN, TsvLine
+    '               SaveTsv, TsvLine
     '     Class GenericTable
     ' 
-    '         Properties: Data
+    '         Properties: data
     ' 
     '         Function: ToString
     ' 
@@ -53,9 +53,9 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
@@ -66,66 +66,6 @@ Imports Microsoft.VisualBasic.Text
 ''' The csv document extensions API
 ''' </summary>
 Public Module DocumentExtensions
-
-    <Extension>
-    Public Iterator Function InvalidsAsRLangNA(source As IEnumerable(Of DataSet), Optional replaceAs$ = "NA") As IEnumerable(Of EntityObject)
-        Dim NaN As Index(Of String) = {
-            "正无穷大", "负无穷大", "非数字",
-            "Infinity", "-Infinity",
-            "NaN",
-            "∞", "-∞"
-        }
-
-        For Each data As DataSet In source
-            Dim values = data _
-                .Properties _
-                .ToDictionary(Function(map) map.Key,
-                              Function(map)
-                                  Dim s = map.Value.ToString
-
-                                  If NaN.IndexOf(s) > -1 Then
-                                      Return replaceAs
-                                  Else
-                                      Return s
-                                  End If
-                              End Function)
-
-            Yield New EntityObject With {
-                .ID = data.ID,
-                .Properties = values
-            }
-        Next
-    End Function
-
-    ''' <summary>
-    ''' 对于一些数学计算的数值结果，无穷大，无穷小或者非实数会被转换为中文，导致R程序无法识别
-    ''' 则需要使用这个函数来将这些数值替换为目标字符串<paramref name="replaceAs"/>
-    ''' </summary>
-    ''' <param name="path$"></param>
-    ''' <param name="replaceAs$">默认为R之中可以识别的``NA``常数值</param>
-    ''' <returns></returns>
-    Public Function StripNaN(path$, Optional replaceAs$ = "NA") As Boolean
-        Dim csv As IO.File = IO.File.Load(path)
-        Dim invalids As Index(Of String) = {"正无穷大", "负无穷大", "非数字"}.Indexing
-        Dim file As New List(Of RowObject)
-
-        ' 因为第一行一般都是标题行，所以在这里直接跳过了
-        For Each row In csv.Skip(1)
-            Dim buffer = row.ToArray
-
-            For i As Integer = 0 To buffer.Length - 1
-                If invalids.IndexOf(buffer(i)) > -1 Then
-                    buffer(i) = replaceAs
-                End If
-            Next
-
-            file += New RowObject(buffer)
-        Next
-
-        csv = csv.First + file
-
-        Return csv.Save(path, )
-    End Function
 
     ''' <summary>
     ''' 将列数据合并为一个csv文件对象
@@ -145,6 +85,13 @@ Public Module DocumentExtensions
         Return out
     End Function
 
+    ''' <summary>
+    ''' Apply a given value processing on each column of current row data.
+    ''' </summary>
+    ''' <param name="row"></param>
+    ''' <param name="action"></param>
+    ''' <param name="skip"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Apply(ByRef row As RowObject, action As Func(Of String, String), Optional skip As Integer = 0) As RowObject
         For i As Integer = skip To row.buffer.Count - 1
@@ -155,17 +102,22 @@ Public Module DocumentExtensions
     End Function
 
     Private Class GenericTable
-        Public Property Data As Dictionary(Of String, String)
+
+        Public Property data As Dictionary(Of String, String)
 
         Public Overrides Function ToString() As String
-            Return Data.GetJson
+            Return data.GetJson
         End Function
     End Class
 
     <Extension>
     Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, String)), path$) As Boolean
         Dim table As GenericTable() = d _
-            .Select(Function(x) New GenericTable With {.Data = x}) _
+            .Select(Function(x)
+                        Return New GenericTable With {
+                            .data = x
+                        }
+                    End Function) _
             .ToArray
         Return table.SaveTo(path)
     End Function
@@ -173,10 +125,10 @@ Public Module DocumentExtensions
     <Extension>
     Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, Double)), path$) As Boolean
         Return d _
-            .Select(
-            Function(x) x.ToDictionary(
-            Function(k) k.Key,
-            Function(v) v.Value.ToString)) _
+            .Select(Function(x)
+                        Return x.ToDictionary(Function(k) k.Key,
+                                              Function(v) v.Value.ToString)
+                    End Function) _
             .SaveAsDataFrame(path)
     End Function
 
@@ -203,7 +155,7 @@ Public Module DocumentExtensions
         Next
 
         If Not orderBy Is Nothing Then
-            data = data.OrderBy(Function(r) orderBy(r.Data)).AsList
+            data = data.OrderBy(Function(r) orderBy(r.data)).AsList
         End If
 
         Return data.SaveTo(EXPORT, encoding:=encoding.CodePage)
@@ -282,7 +234,7 @@ Public Module DocumentExtensions
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$,
                                            Optional encoding As Encodings = Encodings.Default,
-                                           Optional nameMaps As NameMapping = Nothing) As T()
+                                           Optional nameMaps As NameMapping = Nothing) As IEnumerable(Of T)
         Return [Imports](Of T)(path,
                                delimiter:=ASCII.TAB,
                                encoding:=encoding.CodePage,
@@ -300,11 +252,17 @@ Public Module DocumentExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function LoadTsv(Of T As Class)(path$, encoding As Encoding, Optional nameMaps As NameMapping = Nothing) As T()
-        Return [Imports](Of T)(path,
-                               delimiter:=ASCII.TAB,
-                               encoding:=encoding,
-                               nameMaps:=nameMaps)
+    Public Function LoadTsv(Of T As Class)(path$, encoding As Encoding, Optional nameMaps As NameMapping = Nothing) As IEnumerable(Of T)
+        Dim rowsData = TsvFileIO.LoadFile(path, encoding, skipFirstLine:=False) _
+            .Select(Function(r) New RowObject(r)) _
+            .ToArray
+        Dim file As New IO.File(rowsData)
+
+        If file.RowNumbers = 0 Then
+            Return New T() {}
+        Else
+            Return file.AsDataSource(Of T)(False, maps:=nameMaps)
+        End If
     End Function
 
     <Extension>
@@ -313,9 +271,10 @@ Public Module DocumentExtensions
         Dim keyIndex% = header.IndexOf(key)
         Dim mapIndex% = header.IndexOf(mapTo)
 
+        Const Missing$ = "Mapping: '{0} => {1}' is missing in the target csv file! ({2})"
+
         If keyIndex = -1 OrElse mapIndex = -1 Then
-            Dim msg$ =
-                $"Mapping: {key} --> {mapTo} is missing in the target csv file! ({header.ToArray.GetJson})"
+            Dim msg$ = String.Format(Missing, key, mapTo, header.ToArray.GetJson)
             Throw New KeyNotFoundException(msg)
         End If
 
@@ -451,5 +410,22 @@ Public Module DocumentExtensions
     <Extension>
     Public Function ParseDoc(csv$, Optional removesBlank As Boolean = False) As IO.File
         Return IO.File.Load(csv.LineTokens, trimBlanks:=removesBlank)
+    End Function
+
+    ''' <summary>
+    ''' 获取最后一行数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetLastRow(Of T As Class)(path$, Optional encoding As Encodings = Encodings.UTF8, Optional strict As Boolean = False) As T
+        Dim textEncoding As Encoding = encoding.CodePage
+        Dim header As RowObject = RowObject.TryParse(path.ReadFirstLine(textEncoding))
+        Dim data As RowObject = RowObject.TryParse(path.GetLastLine(textEncoding))
+        Dim subFrame As DataFrame = IO.DataFrame.CreateObject({header, data})
+        Dim buffer = Reflector.Convert(Of T)(subFrame, strict)
+        Return buffer.First
     End Function
 End Module

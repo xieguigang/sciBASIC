@@ -1,0 +1,14 @@
+.node {
+
+  fill: map(size, [RdYlBu:c12, 20]);
+  size: size;
+  stroke: map(type, [Set1:c8, category])
+  label: name
+
+}
+
+.edge {
+
+   
+
+}

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3053947d9cdaec93716b8d0ec46528ce, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::299ecf4456202d88edad01848ac39ad2, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@
     ' 
     '     Class line
     ' 
-    '         Properties: x1, x2, y1, y2
+    '         Properties: DashArray, x1, x2, y1, y2
     '         Operators: +
     ' 
     '     Class text
@@ -270,6 +270,9 @@ Namespace SVG.XML
         <XmlAttribute> Public Property x2 As Single
         <XmlAttribute> Public Property y1 As Single
         <XmlAttribute> Public Property x1 As Single
+
+        <XmlAttribute("stroke-dasharray")>
+        Public Property DashArray As Integer()
 
         Public Shared Operator +(line As line, offset As PointF) As line
             line = DirectCast(line.MemberwiseClone, line)

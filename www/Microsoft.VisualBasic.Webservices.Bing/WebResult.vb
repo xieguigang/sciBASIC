@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c382bb13912dca4fc9008d531dad8014, www\Microsoft.VisualBasic.Webservices.Bing\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::999849d80348c07cac01d96ef029b8c9, www\Microsoft.VisualBasic.Webservices.Bing\WebResult.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
 ''' 一个结果条目
@@ -83,7 +83,7 @@ Public Class WebResult : Inherits Http.WebResult
     End Function
 End Class
 
-Public Class SearchResult : Inherits BaseClass
+Public Class SearchResult
 
     Public Property Title As String
     ''' <summary>

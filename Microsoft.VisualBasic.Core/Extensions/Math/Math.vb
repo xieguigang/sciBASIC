@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86f1301294429c5c3046d67efcb2b35e, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::76f156726fd55b8b2d90add400da3052, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -35,14 +35,14 @@
     ' 
     '         Function: (+7 Overloads) Abs, Acos, Asin, Atan, Atan2
     '                   BigMul, (+2 Overloads) Ceiling, Cos, Cosh, Covariance
-    '                   Distance, (+2 Overloads) DivRem, (+6 Overloads) EuclideanDistance, Exp, Factorial
-    '                   FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot, IEEERemainder
-    '                   IsPowerOf2, (+2 Overloads) Log, Log10, Log2, LogN
-    '                   (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow, Pow2
-    '                   (+2 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, (+8 Overloads) Round, RSD
-    '                   (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin, Sinh
-    '                   Sqrt, Sum, Tan, Tanh, (+2 Overloads) Truncate
-    '                   WeighedAverage
+    '                   CumSum, Distance, (+2 Overloads) DivRem, (+6 Overloads) EuclideanDistance, Exp
+    '                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
+    '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, Log2
+    '                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
+    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, (+8 Overloads) Round
+    '                   RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin
+    '                   Sinh, Sqrt, (+5 Overloads) Sum, Tan, Tanh
+    '                   (+2 Overloads) Truncate, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/
@@ -1461,6 +1461,27 @@ Namespace Math
 #End Region
 
         ''' <summary>
+        ''' ``Math.Log(x, newBase:=2)``
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function Log2(x#) As Double
+            Return sys.Log(x, newBase:=2)
+        End Function
+
+        <Extension>
+        Public Iterator Function CumSum(vector As IEnumerable(Of Double)) As IEnumerable(Of Double)
+            Dim sum#
+
+            For Each x As Double In vector
+                sum += x
+                Yield sum
+            Next
+        End Function
+
+        ''' <summary>
         ''' 阶乘
         ''' </summary>
         ''' <param name="a"></param>
@@ -1755,6 +1776,53 @@ Namespace Math
             End If
         End Function
 
+#Region "Sum all tuple members"
+
+        ''' <summary>
+        ''' Sum all tuple members
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sum(t As ValueTuple(Of Double, Double)) As Double
+            Return t.Item1 + t.Item2
+        End Function
+
+        ''' <summary>
+        ''' Sum all tuple members
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sum(t As ValueTuple(Of Double, Double, Double)) As Double
+            Return t.Item1 + t.Item2 + t.Item3
+        End Function
+
+        ''' <summary>
+        ''' Sum all tuple members
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sum(t As ValueTuple(Of Double, Double, Double, Double)) As Double
+            Return t.Item1 + t.Item2 + t.Item3 + t.Item4
+        End Function
+
+        ''' <summary>
+        ''' Sum all tuple members
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sum(t As ValueTuple(Of Double, Double, Double, Double, Double)) As Double
+            Return t.Item1 + t.Item2 + t.Item3 + t.Item4 + t.Item5
+        End Function
+#End Region
+
         ''' <summary>
         ''' 计算出所有的数的乘积
         ''' </summary>
@@ -1780,6 +1848,18 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ProductALL([in] As IEnumerable(Of Integer)) As Double
+            Return [in].Select(Function(x) CDbl(x)).ProductALL
+        End Function
+
+        ''' <summary>
+        ''' 计算出所有的数的乘积
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ProductALL([in] As IEnumerable(Of Long)) As Double
             Return [in].Select(Function(x) CDbl(x)).ProductALL
         End Function
 

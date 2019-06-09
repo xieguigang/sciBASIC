@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7765c4c890b4db07f11093ed1fd113b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::9127888ecabdeee599f582565878195d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
     ' Author:
     ' 
@@ -91,7 +91,7 @@ Namespace Drawing2D.Colors
 
         Public Const DefaultPadding$ = "padding:50px 50px 100px 50px;"
 
-        ReadOnly defaultLegendSize As DefaultValue(Of Size) = New Size(800, 1024)
+        ReadOnly defaultLegendSize As [Default](Of  Size) = New Size(800, 1024)
 
         ''' <summary>
         ''' 竖直的颜色图例，输出的图例的大小默认为：``{800, 1024}``

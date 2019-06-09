@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59776ac4773aaa15a41bb82ca3f29dcd, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::02910dad45c4d59dbeeed97a2dcd1667, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,26 +33,18 @@
 
     '     Module Extensions
     ' 
-    '         Function: Add, NameCompare, NameFuzzyMatch
+    '         Function: NameCompare, NameFuzzyMatch
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports sys = System.Math
 
 Namespace ComponentModel.DataStructures.BinaryTree
 
     Public Module Extensions
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function Add(Of T)(tree As BinaryTree(Of NamedValue(Of T)), node As NamedValue(Of T)) As TreeNode(Of NamedValue(Of T))
-            Return tree.insert(node.Name, node)
-        End Function
 
         ''' <summary>
         ''' 字符串名字的比较规则：

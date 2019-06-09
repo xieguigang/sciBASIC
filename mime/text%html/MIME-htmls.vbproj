@@ -477,6 +477,7 @@
   <ItemGroup>
     <Compile Include="HTML\CSS\CSSLayer.vb" />
     <Compile Include="HTML\CSS\Extensions.vb" />
+    <Compile Include="HTML\CSS\Parser\UrlEvaluator.vb" />
     <Compile Include="HTML\CSS\Parser\Selector.vb" />
     <Compile Include="HTML\CSS\Parser\Enums\CssProperty.vb" />
     <Compile Include="HTML\CSS\Size.vb" />
@@ -513,7 +514,7 @@
     <Compile Include="HTML\Render\InitialContainer.vb" />
     <Compile Include="HTML\Render\Parser.vb" />
     <Compile Include="HTML\HtmlParser\DocParserAPI.vb" />
-    <Compile Include="HTML\TextString.vb" />
+    <Compile Include="HTML\HtmlParser\TextString.vb" />
     <Compile Include="HTML\Head\Meta.vb" />
     <Compile Include="HTML\Image.vb" />
     <Compile Include="HTML\HTML.vb" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21232f049b5d1c511122368246f07f25, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::fc9722d3dead7ea1fe31aeab80c665a3, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,6 @@
 
     ' Summaries:
 
-    '     Class ClassName
-    ' 
-    '         Properties: Name
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
     '     Module ClassMapper
     ' 
     '         Function: (+2 Overloads) ClassWriter, LoadIni, (+2 Overloads) MapParser, WriteClass
@@ -55,27 +48,6 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Settings.Inf
-
-    ''' <summary>
-    ''' 定义在Ini配置文件之中的Section的名称
-    ''' </summary>
-    <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
-    Public Class ClassName : Inherits Attribute
-
-        Public ReadOnly Property Name As String
-
-        ''' <summary>
-        ''' Defines the section name in the ini profile data.(定义在Ini配置文件之中的Section的名称)
-        ''' </summary>
-        ''' <param name="name"></param>
-        Sub New(name As String)
-            Me.Name = name
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Name
-        End Function
-    End Class
 
     ''' <summary>
     ''' 使用这个属性来标记需要进行序列化的对象属性: <see cref="DataFrameColumnAttribute"/>
@@ -104,8 +76,7 @@ Namespace ComponentModel.Settings.Inf
             End If
 
             Dim source = DataFrameColumnAttribute.LoadMapping(type)
-            Dim binds As BindProperty(Of DataFrameColumnAttribute)() =
-                source.Values.ToArray
+            Dim binds = source.Values.ToArray
 
             Return New NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) With {
                 .Name = name,
@@ -119,7 +90,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <typeparam name="T"></typeparam>
         ''' <param name="ini"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ClassWriter(Of T As {New, Class})(ini As IniFile) As T
             Return DirectCast(ClassWriter(ini, GetType(T)), T)
@@ -142,16 +113,22 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub ClassDumper(Of T As Class)(x As T, ini As IniFile)
-            Call ClassDumper(x, GetType(T), ini)
+            Call GetType(T).ClassDumper(x, ini)
         End Sub
 
-        Public Sub ClassDumper(x As Object, type As Type, ini As IniFile)
+        <Extension>
+        Public Sub ClassDumper(type As Type, x As Object, ini As IniFile)
             Dim maps = MapParser(type)
 
-            For Each map In maps.Value
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
                 Dim key As String = map.field.Name
                 Dim value As String = Scripting.ToString(map.GetValue(x))
-                Call ini.WriteValue(maps.Name, key, value)
+
+                If value.StringEmpty Then
+                    Call ini.WriteComment(maps.Name, $"{key}=<{map.Type.FullName}>", key)
+                Else
+                    Call ini.WriteValue(maps.Name, key, value)
+                End If
             Next
         End Sub
 

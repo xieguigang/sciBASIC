@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccf5802628dd544084f708d75dc2bd78, Data\BinaryData\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3a312545447d8bf372d830480bd473fa, Data\BinaryData\test\Module1.vb"
 
     ' Author:
     ' 
@@ -33,20 +33,32 @@
 
     ' Module Module1
     ' 
-    '     Sub: IOtest, Main, reflectionTest
+    '     Sub: IOtest, Main, reflectionTest, writeTest2
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Module Module1
 
+    Sub writeTest2()
+        Using out = New BinaryDataWriter("./sssss.txt".Open)
+            Dim buffer As New IO.MemoryStream(Encoding.UTF8.GetBytes("Hello world!!! 撒比大师大师框架汇顶科技安徽科技案发后看见爱上" & RandomASCIIString(8192) & "writerBuffer test success;"))
+
+            Call out.Write(buffer)
+        End Using
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call writeTest2()
 
         Call reflectionTest()
 

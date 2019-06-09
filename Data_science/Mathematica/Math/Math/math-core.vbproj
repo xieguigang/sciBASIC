@@ -431,10 +431,19 @@
     <Compile Include="Algebra\LP\Extensions.vb" />
     <Compile Include="Algebra\LP\LPP.vb" />
     <Compile Include="Algebra\LP\LPPSolution.vb" />
+    <Compile Include="Algebra\Matrix\NumpyExtensions.vb" />
     <Compile Include="Algebra\PCA.vb" />
     <Compile Include="Algebra\SVD.vb" />
+    <Compile Include="Algebra\Vector\Class\Linq.vb" />
+    <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Crc32.vb" />
+    <Compile Include="Distributions\DataBinBox.vb" />
+    <Compile Include="Distributions\CutBins.vb" />
+    <Compile Include="Distributions\pnorm.vb" />
+    <Compile Include="Distributions\Sample.vb" />
+    <Compile Include="Distributions\Gaussian.vb" />
+    <Compile Include="Quantile\DataQuartile.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
     <Compile Include="Scripting\Factors\NamedVectorFactory.vb" />
@@ -444,10 +453,6 @@
     <Compile Include="Quantile\Selector.vb" />
     <Compile Include="Quantile\Quartile.vb" />
     <Compile Include="Scripting\Factors\Extensions.vb" />
-    <Compile Include="Signals\TestProvider.vb" />
-    <Compile Include="Signals\DFT.vb" />
-    <Compile Include="Signals\FourierTransform.vb" />
-    <Compile Include="Signals\WaveletTransform.vb" />
     <Compile Include="Spline\BezierExtensions.vb" />
     <Compile Include="Spline\PolynomialNewton.vb" />
     <Compile Include="Spline\Extensions.vb" />
@@ -490,7 +495,7 @@
     <Compile Include="Spline\CubicSpline\CubicSplineVector.vb" />
     <Compile Include="Spline\CubicSpline\CubicEval.vb" />
     <Compile Include="Spline\CubicSpline\CubicSpline.vb" />
-    <Compile Include="Bootstraping.vb" />
+    <Compile Include="Distributions\Bootstraping.vb" />
     <Compile Include="Distributions\Beta.vb" />
     <Compile Include="Distributions\DirichletDistribution.vb" />
     <Compile Include="Distributions\Gamma.vb" />
@@ -591,7 +596,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

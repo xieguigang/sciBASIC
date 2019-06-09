@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f37acb492dd3799de69fbc2561394290, mime\application%json\Parser\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::6b9c567440de81f6bea54dddfb57d878, mime\application%json\Parser\JsonArray.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     '     Class JsonArray
     ' 
+    '         Properties: Length
+    ' 
     '         Function: BuildJsonString, ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: Add, Insert, Remove
@@ -51,6 +53,12 @@ Namespace Parser
         Implements IEnumerable(Of JsonElement)
 
         Dim list As New List(Of JsonElement)
+
+        Public ReadOnly Property Length As Integer
+            Get
+                Return list.Count
+            End Get
+        End Property
 
         Public Sub Add(element As JsonElement)
             Call list.Add(element)
@@ -83,7 +91,7 @@ Namespace Parser
         End Function
 
         Public Overrides Function ToString() As String
-            Return "JSONarray: {count: " & list.Count & "}"
+            Return "JsonArray: {count: " & list.Count & "}"
         End Function
 
         Public Overrides Function BuildJsonString() As String

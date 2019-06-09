@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::105f9bd3168858b0ba5679dffb4aad3f, Data\DataFrame\IO\csv\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::3c7195f86d7a41bd389c3a6460b04e29, Data\DataFrame\IO\csv\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace IO
 
@@ -100,11 +101,11 @@ Namespace IO
             Dim temp As New List(Of Char)
             ' 解析器是否是处于由双引号所产生的栈之中？
             Dim openStack As Boolean = False
-            Dim buffer As New Pointer(Of Char)(s)
+            Dim buffer As New CharPtr(s)
             Dim doubleQuot$ = quot & quot
 
             Do While Not buffer.EndRead
-                Dim c As Char = +buffer
+                Dim c As Char = ++buffer
 
                 If openStack Then
 

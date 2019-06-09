@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a98cc1f4fe646e19f766f0b16248f737, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\NamedTuple.vb"
+﻿#Region "Microsoft.VisualBasic::7fcc9d024b07357353ddd681a28a6080, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\NamedTuple.vb"
 
     ' Author:
     ' 

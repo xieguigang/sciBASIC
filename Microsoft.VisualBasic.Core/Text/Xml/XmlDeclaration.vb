@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6278acd072863b4988b7c39be91bc1f, Microsoft.VisualBasic.Core\Text\Xml\XmlDeclaration.vb"
+﻿#Region "Microsoft.VisualBasic::27027b5df5b26c037d3512bb2a33963e, Microsoft.VisualBasic.Core\Text\Xml\XmlDeclaration.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,6 @@
 
     '     Enum XmlEncodings
     ' 
-    '         GB2312, UTF16, UTF8
     ' 
     '  
     ' 
@@ -44,21 +43,24 @@
     '         Properties: [Default]
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: EncodingParser, ToString, XmlEncodingString, XmlStandaloneString
+    '         Function: EncodingParser, ToString, XmlStandaloneString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language.Default
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.Xml
 
     Public Enum XmlEncodings
-        UTF8
-        UTF16
-        GB2312
+        <Description("utf-8")> UTF8
+        <Description("utf-16")> UTF16
+        <Description("gb2312")> GB2312
     End Enum
 
     Public Structure XmlDeclaration
@@ -70,34 +72,33 @@ Namespace Text.Xml
         Sub New(declares As String)
             Dim s As String
 
-            s = Regex.Match(declares, "encoding=""\S+""", RegexICSng).Value
+            s = r.Match(declares, "encoding=""\S+""", RegexICSng).Value
             encoding = EncodingParser(s.GetStackValue("""", """"))
-            s = Regex.Match(declares, "standalone=""\S+""", RegexICSng).Value
+            s = r.Match(declares, "standalone=""\S+""", RegexICSng).Value
             standalone = s.GetStackValue("""", """").ParseBoolean
-            s = Regex.Match(declares, "version=""\S+""", RegexICSng).Value
+            s = r.Match(declares, "version=""\S+""", RegexICSng).Value
             version = s.GetStackValue("""", """")
         End Sub
 
-        Public Shared ReadOnly Property [Default] As XmlDeclaration =
-            New XmlDeclaration With {
-                .version = "1.0",
-                .standalone = True,
-                .encoding = XmlEncodings.UTF16
+        Public Shared ReadOnly Property [Default] As New XmlDeclaration With {
+            .version = defaultVersion1_0,
+            .standalone = True,
+            .encoding = XmlEncodings.UTF16
         }
+
+        Shared ReadOnly defaultVersion1_0 As [Default](Of String) = "1.0"
 
         ''' <summary>
         ''' &lt;?xml version="{<see cref="version"/>}" encoding="{<see cref="encoding"/>}" standalone="{<see cref="standalone"/>}"?>
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            If String.IsNullOrEmpty(version) Then
-                version = "1.0"
-            End If
-            Return $"<?xml version=""{version}"" encoding=""{XmlEncodingString(encoding)}"" standalone=""{XmlStandaloneString(standalone)}""?>"
-        End Function
-
-        Public Shared Function XmlEncodingString(enc As XmlEncodings) As String
-            Return If(enc = XmlEncodings.UTF8, "utf-8", "utf-16")
+            Dim attr As New Dictionary(Of String, String) From {
+                {"version", version Or defaultVersion1_0},
+                {"encoding", encoding.Description},
+                {"standalone", XmlStandaloneString(standalone)}
+            }
+            Return $"<?xml {attr.Select(Function(a) $"{a.Key}=""{a.Value}""").JoinBy(" ")} ?>"
         End Function
 
         Public Shared Function EncodingParser(enc As String) As XmlEncodings

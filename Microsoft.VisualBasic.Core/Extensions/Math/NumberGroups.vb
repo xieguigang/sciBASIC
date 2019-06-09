@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1714b08589beffbc1a086cc0914198cf, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::ee64778cc7eaf1f85ca6dfa928604a6c, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module NumberGroups
     ' 
-    '         Function: BinarySearch, (+2 Overloads) GroupBy, GroupByImpl, Groups, Match
-    '                   Min
+    '         Function: BinarySearch, (+2 Overloads) GroupBy, GroupByImpl, GroupByParallel, Groups
+    '                   Match, Min
     '         Interface IVector
     ' 
     '             Properties: Data
@@ -183,70 +183,72 @@ Namespace Math
         ''' <returns></returns>
         <Extension> Public Iterator Function GroupBy(Of T)(source As IEnumerable(Of T),
                                                            evaluate As Func(Of T, Double),
-                                                           equals As GenericLambda(Of Double).IEquals,
-                                                           Optional parallel As Boolean = False) As IEnumerable(Of NamedCollection(Of T))
-            If Not parallel Then
+                                                           equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
+            ' 先进行预处理：求值然后进行排序
+            Dim tagValues = source _
+                .Select(Function(o) (evaluate(o), o)) _
+                .OrderBy(Function(o) o.Item1) _
+                .ToArray
+            Dim means As New Average
+            Dim members As New List(Of T)
 
-                ' For Each group In source.AsList.GroupByImpl(evaluate, equals)
-                '     Yield group
-                ' Next
-
-                ' 先进行预处理：求值然后进行排序
-                Dim tagValues = source _
-                    .Select(Function(o) (evaluate(o), o)) _
-                    .OrderBy(Function(o) o.Item1) _
-                    .ToArray
-                Dim means As New Average
-                Dim members As New List(Of T)
-
-                ' 根据分组的平均值来进行分组操作
-                For Each x As (val#, o As T) In tagValues
-                    If means.N = 0 Then
+            ' 根据分组的平均值来进行分组操作
+            For Each x As (val#, o As T) In tagValues
+                If means.N = 0 Then
+                    means += x.Item1
+                    members += x.Item2
+                Else
+                    If equals(means.Average, x.Item1) Then
                         means += x.Item1
                         members += x.Item2
                     Else
-                        If equals(means.Average, x.Item1) Then
-                            means += x.Item1
-                            members += x.Item2
-                        Else
-                            Yield New NamedCollection(Of T)(CStr(means.Average), members)
+                        Yield New NamedCollection(Of T)(CStr(means.Average), members)
 
-                            means = New Average({x.Item1})
-                            members = New List(Of T) From {x.Item2}
-                        End If
+                        means = New Average({x.Item1})
+                        members = New List(Of T) From {x.Item2}
                     End If
-                Next
-
-                If members > 0 Then
-                    Yield New NamedCollection(Of T)(CStr(means.Average), members)
                 End If
-            Else
-                Dim partitions = source _
-                    .SplitIterator(20000) _
-                    .AsParallel _
-                    .Select(Function(part)
-                                Return part.AsList.GroupByImpl(evaluate, equals)
-                            End Function) _
-                    .IteratesALL _
-                    .AsList
+            Next
 
-                ' 先分割，再对name做分组
-                Dim union = partitions.GroupByImpl(Function(part) Val(part.Name), equals)
-
-                For Each unionGroup In union
-                    Dim name$ = unionGroup.Name
-                    Dim data = unionGroup _
-                        .Value _
-                        .Select(Function(member) member.Value) _
-                        .IteratesALL _
-                        .ToArray
-
-                    Yield New NamedCollection(Of T) With {
-                        .Name = name,
-                        .Value = data
-                    }
-                Next
+            If members > 0 Then
+                Yield New NamedCollection(Of T)(CStr(means.Average), members)
             End If
+        End Function
+
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension> Public Iterator Function GroupByParallel(Of T)(source As IEnumerable(Of T),
+                                                                   evaluate As Func(Of T, Double),
+                                                                   equals As GenericLambda(Of Double).IEquals,
+                                                                   Optional chunkSize% = 20000) As IEnumerable(Of NamedCollection(Of T))
+            Dim partitions = source _
+                .SplitIterator(parTokens:=chunkSize) _
+                .AsParallel _
+                .Select(Function(part)
+                            Return part.AsList.GroupByImpl(evaluate, equals)
+                        End Function) _
+                .IteratesALL _
+                .AsList
+
+            ' 先分割，再对name做分组
+            Dim union = partitions.GroupByImpl(Function(part) Val(part.Name), equals)
+
+            For Each unionGroup In union
+                Dim name$ = unionGroup.Name
+                Dim data = unionGroup _
+                    .Value _
+                    .Select(Function(member) member.Value) _
+                    .IteratesALL _
+                    .ToArray
+
+                Yield New NamedCollection(Of T) With {
+                    .Name = name,
+                    .Value = data
+                }
+            Next
         End Function
 
         <Extension>

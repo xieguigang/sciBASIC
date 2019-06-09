@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91dfb9232f7c617329088112842f55c1, Data\Trinity\NLP.vb"
+﻿#Region "Microsoft.VisualBasic::39f6d0203cfd765885d4f4749ac6e253, Data\Trinity\NLP.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Public Module NLPExtensions
 
             For Each word As String In sentence.Words
 
-                If word.IsOneOfA(keywords) Then
+                If word Like keywords Then
                     one += word
                 Else
                     If one.Count > 1 Then

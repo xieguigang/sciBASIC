@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::821d55e143717efa87faaa5fac65093f, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::d23ebabe712d1df46f7471ab9b7b0d96, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     '     Module Data
     ' 
-    '         Function: GetNodeNameDefine, GetTypeName, InternalIterates, LoadUltraLargeXMLDataSet, LoadXmlDataSet
-    '                   LoadXmlDocument, NodeInstanceBuilder, UltraLargeXmlNodesIterator
+    '         Function: GetNodeNameDefine, GetTypeName, GetXmlNodeDoc, InternalIterates, IteratesArrayNodes
+    '                   LoadUltraLargeXMLDataSet, LoadXmlDataSet, LoadXmlDocument, NodeInstanceBuilder, PopulateXmlElementText
+    '                   UltraLargeXmlNodesIterator
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,6 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
+Imports System.Xml.Schema
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 
@@ -61,7 +63,7 @@ Namespace Text.Xml.Linq
         ''' <param name="pathOrDoc"></param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' using internally XDocument.Load to parse whole XML at once
+        ''' using internally <see cref="XDocument.Load"/> to parse whole XML at once
         ''' </remarks>
         <Extension>
         Public Function LoadXmlDocument(pathOrDoc$, Optional preprocess As Func(Of String, String) = Nothing) As XmlDocument
@@ -86,6 +88,15 @@ Namespace Text.Xml.Linq
             End If
 
             Return xmlDoc
+        End Function
+
+        <Extension>
+        Public Function GetXmlNodeDoc(element As XElement) As XmlDocument
+            Using xmlReader As XmlReader = element.CreateReader()
+                Dim XmlDoc As New XmlDocument()
+                XmlDoc.Load(xmlReader)
+                Return XmlDoc
+            End Using
         End Function
 
         ''' <summary>
@@ -190,7 +201,7 @@ Namespace Text.Xml.Linq
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 从给定的文本之中利用反序列化从XML字符串构建出.NET对象
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="nodes"></param>
@@ -199,88 +210,76 @@ Namespace Text.Xml.Linq
         ''' <returns></returns>
         <Extension>
         Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$, xmlNode$) As IEnumerable(Of T)
-            Dim o As T
-            Dim sb As New StringBuilder
-            Dim TnodeName$ = GetType(T).GetNodeNameDefine
-            Dim process As Func(Of String, String)
-
-            ' 2017-12-22
-            ' 假若对象是存储在一个数组之中的，那么，可能会出现的一种情况就是
-            ' 在类型的定义之中，使用了xmlelement重新定义了节点的名字
-            ' 例如 <XmlElement("A")>
-            ' 那么在生成的XML文件之中的节点名称就是A
-            ' 但是元素A的类型定义却是 Public Class B ... End Class
-            ' 因为A不等于B，所以将无法正确的加载XML节点数据
-            ' 在这里进行名称的替换来消除这种错误
-            If TnodeName = xmlNode Then
-                ' 不需要进行替换
-                process = Function(s) s
-            Else
-                Dim leftTag% = 1 + xmlNode.Length
-                Dim rightTag% = 3 + xmlNode.Length
-
-                ' 在这里不尝试做直接替换，可能会误杀其他的节点
-                process = Function(block)
-                              block = block.Trim(ASCII.CR, ASCII.LF, " "c, ASCII.TAB)
-                              block = block.Substring(leftTag, block.Length - leftTag)
-                              block = block.Substring(0, block.Length - rightTag)
-                              block = "<" & TnodeName & block & "</" & TnodeName & ">"
-
-                              Return block
-                          End Function
-            End If
+            Dim handle As New DeserializeHandler(Of T)(xmlNode) With {
+                .ReplaceXmlns = replaceXmlns
+            }
 
             For Each xml As String In nodes
-
-                Call sb.Clear()
-                Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
-                Call sb.AppendLine(process(xml))
-
-                If Not replaceXmlns.StringEmpty Then
-                    Call sb.Replace($"xmlns=""{replaceXmlns}""", "")
-                End If
-
-                xml = sb.ToString
-                o = xml.LoadFromXml(Of T)
-
-                Yield o
+                Yield handle.LoadXml(xml)
             Next
         End Function
 
         ''' <summary>
         ''' Apply on a ultra large size XML database, which its data size is greater than 1GB to 100GB or even more.
+        ''' (这个函数是直接忽略掉根节点的名称以及属性的,使用这个函数只需要关注于需要提取的数据的节点名称即可)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="path$"></param>
-        ''' <param name="typeName$"></param>
-        ''' <param name="xmlns$"></param>
+        ''' <param name="path">文件路径</param>
+        ''' <param name="typeName">目标节点名称,默认是使用类型<typeparamref name="T"/>的名称</param>
+        ''' <param name="xmlns">``xmlns=...``,只需要给出等号后面的url即可</param>
         ''' <returns></returns>
         <Extension>
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
-            Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
-            Return nodeName _
-                .UltraLargeXmlNodesIterator(path) _
-                .NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName)
+            With GetType(T).GetTypeName([default]:=typeName)
+                Return .UltraLargeXmlNodesIterator(path) _
+                    .Select(Function(node) node.ToString) _
+                    .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef)
+            End With
+        End Function
+
+        ''' <summary>
+        ''' 可以使用函数<see cref="GetXmlNodeDoc(XElement)"/>来进行类型的转换操作
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <param name="typeName$"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IteratesArrayNodes(path$, typeName$) As IEnumerable(Of XElement)
+            Return typeName.UltraLargeXmlNodesIterator(path)
         End Function
 
         <Extension>
-        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of String)
+        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of XElement)
             Dim el As New Value(Of XElement)
-            Dim XML$
+            Dim settings As New XmlReaderSettings With {
+                .ValidationFlags = XmlSchemaValidationFlags.None,
+                .CheckCharacters = False,
+                .ConformanceLevel = ConformanceLevel.Document,
+                .ValidationType = ValidationType.None
+            }
 
-            Using reader As XmlReader = XmlReader.Create(path)
+            Using reader As XmlReader = XmlReader.Create(path, settings)
 
-                reader.MoveToContent()
+                Call reader.MoveToContent()
 
-                Do While (reader.Read()) ' Parse the file And return each of the child_node
+                Do While (reader.Read())
+                    ' Parse the file And return each of the child_node
                     If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
                         If (Not (el = XNode.ReadFrom(reader)) Is Nothing) Then
-                            XML = el.Value.ToString
-                            Yield XML
+                            Yield el.Value
                         End If
                     End If
                 Loop
             End Using
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function PopulateXmlElementText(Of T As Class)(path$, Optional typeName$ = Nothing) As IEnumerable(Of String)
+            Return GetType(T) _
+                .GetTypeName([default]:=typeName) _
+                .UltraLargeXmlNodesIterator(path)
         End Function
     End Module
 End Namespace

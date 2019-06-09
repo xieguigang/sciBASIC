@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca349d6e0759460572ca0507a22010cd, Microsoft.VisualBasic.Core\Language\Value\ByRefValueExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::899b7ab8fbcf82922a8bd20af3e995d9, Microsoft.VisualBasic.Core\Language\Value\ByRefValueExtensions.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,12 @@ Namespace Language.Values
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Split(s As ByRefString, ParamArray delimiter As Char()) As String()
             Return s.Value.Split(delimiter)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToLower(str As ByRefString) As String
+            Return Strings.LCase(str.Value)
         End Function
     End Module
 End Namespace

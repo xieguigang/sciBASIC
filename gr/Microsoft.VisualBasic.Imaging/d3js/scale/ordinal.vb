@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2299ff5a2b9989568e04462005204b83, gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
+﻿#Region "Microsoft.VisualBasic::7c10d8cc48b2242fc3ff407a29db2a56, gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -119,8 +120,11 @@ Namespace d3js.scale
             Return domain(values.ToStringArray)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(ordinal As OrdinalScale) As Double()
-            Return ordinal._range.ToArray
+            Return ordinal._range _
+                .AsEnumerable _
+                .ToArray
         End Operator
     End Class
 End Namespace

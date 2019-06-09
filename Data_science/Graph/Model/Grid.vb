@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7dab0189e1b93afadb334fe6668321f, Data_science\Graph\Model\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::b35535af12689de324279adcac79bf66, Data_science\Graph\Model\Grid.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class Grid
     ' 
-    '     Properties: Layout, Steps
+    '     Properties: layout, steps
     ' 
     '     Constructor: (+3 Overloads) Sub New
     '     Function: Index, ToString
@@ -52,15 +52,9 @@ Imports Microsoft.VisualBasic.Imaging
 Public Class Grid
 
     ReadOnly X, Y As OrderSelector(Of Double)
-    ReadOnly rect As RectangleF
 
-    Public ReadOnly Property Layout As RectangleF
-        Get
-            Return rect
-        End Get
-    End Property
-
-    Public ReadOnly Property Steps As SizeF
+    Public ReadOnly Property layout As RectangleF
+    Public ReadOnly Property steps As SizeF
 
     Sub New(size As Size, steps As SizeF)
         Call Me.New(New Rectangle(New Point, size), steps)
@@ -75,7 +69,7 @@ Public Class Grid
         Y = New OrderSelector(Of Double)(Math.seq(layout.Y, layout.Bottom, steps.Height))
 
         Me.steps = steps
-        Me.rect = layout
+        Me.layout = layout
     End Sub
 
     ''' <summary>
@@ -91,6 +85,6 @@ Public Class Grid
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"{rect} @ {steps}"
+        Return $"{layout} @ {steps}"
     End Function
 End Class
