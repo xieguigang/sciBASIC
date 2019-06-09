@@ -99,11 +99,11 @@ Namespace Kernel.Classifier
 
             Do Until (From sgm In errList Where sgm <= Sigma Select 1).Count / training.Length > 0.9
                 For Each Entity As NeuronEntity In training
-                    Dim y1 = neuron.Output(Entity.Properties)
+                    Dim y1 = neuron.Output(Entity.entityVector)
                     Dim d As Double = Entity.Y - y1
 
                     For i As Integer = 0 To neuron.Length - 1
-                        neuron.W(i) = neuron.W(i) + Lambda * d * Entity.Properties(i)
+                        neuron.W(i) = neuron.W(i) + Lambda * d * Entity.entityVector(i)
                     Next
 
                     Call errList.Add(d)

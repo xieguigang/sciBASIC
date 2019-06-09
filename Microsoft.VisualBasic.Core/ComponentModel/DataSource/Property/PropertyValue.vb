@@ -171,6 +171,16 @@ Namespace ComponentModel.DataSourceModel
             Return DirectCast(prop, PropertyValue(Of T))
         End Function
 
+        Public Shared Function Read(Of Cls As DynamicPropertyBase(Of T), V)(x As Cls, name As String) As PropertyValue(Of V)
+            Dim prop As Object = x(name)
+            If prop Is Nothing Then
+                prop = New [PropertyValue](Of V)
+                x(name) = prop
+                prop.obj = x
+            End If
+            Return DirectCast(prop, PropertyValue(Of V))
+        End Function
+
         Public Shared Function Read(Of Cls As DynamicPropertyBase(Of T))(x As Cls, pm As MethodBase) As PropertyValue(Of T)
             Return Read(Of Cls)(x, pm.Name)
         End Function

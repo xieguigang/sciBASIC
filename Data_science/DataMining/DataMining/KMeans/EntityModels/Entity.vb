@@ -69,7 +69,7 @@ Namespace KMeans
         <XmlAttribute> Public Property cluster As Integer
 
         Public Overrides Function ToString() As String
-            Return $"[{Properties.JoinBy(", ")}]"
+            Return $"[{entityVector.JoinBy(", ")}]"
         End Function
 
         ''' <summary>
@@ -82,7 +82,7 @@ Namespace KMeans
             Return New EntityClusterModel With {
                 .ID = uid,
                 .Cluster = cluster,
-                .Properties = Properties _
+                .Properties = entityVector _
                     .SeqIterator _
                     .ToDictionary(Function(x) CStr(x.i),
                                   Function(x) x.value)
@@ -92,14 +92,14 @@ Namespace KMeans
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="maps">名称字符串向量应该是和<see cref="Properties"/>属性向量等长的</param>
+        ''' <param name="maps">名称字符串向量应该是和<see cref="entityVector"/>属性向量等长的</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToDataModel(maps As String()) As EntityClusterModel
             Return New EntityClusterModel With {
                 .ID = uid,
                 .Cluster = cluster,
-                .Properties = Properties _
+                .Properties = entityVector _
                     .SeqIterator _
                     .ToDictionary(Function(x) maps(x.i),
                                   Function(x) x.value)
@@ -115,7 +115,7 @@ Namespace KMeans
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(a As ClusterEntity, b As ClusterEntity) As Boolean
-            Return a.uid.TextEquals(b.uid) AndAlso VectorEqualityComparer.VectorEqualsToAnother(a.Properties, b.Properties)
+            Return a.uid.TextEquals(b.uid) AndAlso VectorEqualityComparer.VectorEqualsToAnother(a.entityVector, b.entityVector)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

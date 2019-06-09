@@ -60,7 +60,7 @@ Namespace KMeans.CompleteLinkage
         Private mResultantClusterCompleteLinkage As Integer = -1
 
         Public Sub New(units As Double())
-            Properties = units
+            entityVector = units
         End Sub
 
         Public Sub New()

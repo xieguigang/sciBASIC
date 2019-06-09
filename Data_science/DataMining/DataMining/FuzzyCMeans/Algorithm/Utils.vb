@@ -59,12 +59,12 @@ Namespace FuzzyCMeans
         ''' 
         <Extension>
         Public Sub MarkClusterCenter(clusterCenterPoint As Entity, color As Color)
-            clusterCenterPoint.ReadProperty(Of Color)(NameOf(MarkClusterCenter)).value = color
+            clusterCenterPoint.Properties(NameOf(MarkClusterCenter)) = color
         End Sub
 
         <Extension>
         Public Function Fill(x As Entity) As Color
-            Return x.ReadProperty(Of Color)(NameOf(MarkClusterCenter))
+            Return x.Properties(NameOf(MarkClusterCenter))
         End Function
 
         Private Function MakeFuzzyClusters(points As List(Of Entity),
@@ -129,7 +129,7 @@ Namespace FuzzyCMeans
 
             For i As Integer = 0 To clusterCenters.Count - 1
                 Dim clusterCoordinatesSum As New List(Of Double)()
-                For Each coordinate As Double In clusterCenters(0).Properties
+                For Each coordinate As Double In clusterCenters(0).entityVector
                     clusterCoordinatesSum.Add(0)
                 Next
 
@@ -151,7 +151,7 @@ Namespace FuzzyCMeans
             For i As Integer = 0 To clusterCenters.Count - 1
                 Dim coordinatesSums As List(Of Double) = weightedPointCoordinateSums(i)
                 Dim newCoordinates As New Entity() With {
-                    .Properties = New Double(coordinatesSums.Count - 1) {},
+                    .entityVector = New Double(coordinatesSums.Count - 1) {},
                     .uid = clusterCenters(i).uid
                 }
 
