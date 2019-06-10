@@ -70,7 +70,7 @@ Namespace QLearning.DataModel
     ''' <summary>
     ''' Data model of the <see cref="QTable(Of T)"/>, you can using this object to stores the trained QL_AI into a file.
     ''' </summary>
-    Public Class QModel : Inherits BaseClass
+    Public Class QModel
 
         Public Property Actions As Action()
         Public Property ActionRange As Integer

@@ -73,7 +73,7 @@ Namespace Logical.FuzzyLogic
     ''' <summary>
     ''' Represents a membership function.
     ''' </summary>
-    Public Class MembershipFunction : Inherits BaseClass
+    Public Class MembershipFunction
 
 #Region "Constructors"
 

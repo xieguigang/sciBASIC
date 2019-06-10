@@ -91,7 +91,7 @@ Public Module Extensions
 
         Return New IntegerEntity With {
             .Class = Val(row.First),
-            .Properties = LQuery.ToArray
+            .entityVector = LQuery.ToArray
         }
     End Function
 
@@ -165,7 +165,7 @@ Public Module Extensions
                 .Select(Function(x)
                             Return New ClusterEntity With {
                                 .uid = x.ID,
-                                .Properties = x.Properties.Values.ToArray
+                                .entityVector = x.Properties.Values.ToArray
                             }
                         End Function) _
                 .ToArray

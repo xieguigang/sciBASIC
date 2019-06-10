@@ -143,7 +143,7 @@ Namespace FuzzyCMeans
                 For Each pair As KeyValuePair(Of Entity, List(Of Double)) In membershipMatrix
                     For Each annotation As Entity In coordinates
 
-                        If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, pair.Key.Properties) Then
+                        If VectorEqualityComparer.VectorEqualsToAnother(annotation.entityVector, pair.Key.entityVector) Then
                             Dim tooltip As New Dictionary(Of Integer, Double)
 
                             For i As Integer = 0 To pair.Value.Count - 1
@@ -188,7 +188,7 @@ Namespace FuzzyCMeans
 
                     For Each coordinate As Entity In coordinates
 
-                        If VectorEqualityComparer.VectorEqualsToAnother(oldClusterCenter.Properties, coordinate.Properties) Then
+                        If VectorEqualityComparer.VectorEqualsToAnother(oldClusterCenter.entityVector, coordinate.entityVector) Then
 #If DEBUG Then
                             Call $"ex-center {oldClusterCenter.uid}".__DEBUG_ECHO
 #End If
@@ -200,7 +200,7 @@ Namespace FuzzyCMeans
                     If Not isClusterCenterDataPoint Then
                         For Each annotation As Entity In coordinates
 
-                            If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, oldClusterCenter.Properties) Then
+                            If VectorEqualityComparer.VectorEqualsToAnother(annotation.entityVector, oldClusterCenter.entityVector) Then
 #If DEBUG Then
                                 Call $"remove center with coordinate {annotation.uid}".__DEBUG_ECHO
 #End If
@@ -217,7 +217,7 @@ Namespace FuzzyCMeans
 
                     For Each annotation As Entity In coordinates
 
-                        If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, clusterCenter.Properties) Then
+                        If VectorEqualityComparer.VectorEqualsToAnother(annotation.entityVector, clusterCenter.entityVector) Then
                             '  MarkClusterCenter(annotation, colorValues(i))
                             isExists = True
                             Exit For
@@ -228,7 +228,7 @@ Namespace FuzzyCMeans
 
                         '  Call MarkClusterCenter(ptClone, colorValues(i))
                         coordinates += ptClone = New Entity With {
-                            .Properties = clusterCenter.Properties.Clone,
+                            .entityVector = clusterCenter.entityVector.Clone,
                             .uid = clusterCenter.uid
                         }
 #If DEBUG Then

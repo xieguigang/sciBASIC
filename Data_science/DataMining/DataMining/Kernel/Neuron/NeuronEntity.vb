@@ -54,7 +54,7 @@ Namespace Kernel.Classifier
 
         Public Overrides Function ToString() As String
             Dim sBuilder As New StringBuilder(1024)
-            For Each p As Integer In Properties
+            For Each p As Integer In entityVector
                 Call sBuilder.AppendFormat("{0}, ", p)
             Next
             Call sBuilder.Remove(sBuilder.Length - 1, length:=1)
@@ -64,13 +64,13 @@ Namespace Kernel.Classifier
 
         Public Shared Widening Operator CType(properties As Double()) As NeuronEntity
             Return New NeuronEntity With {
-                .Properties = properties
+                .entityVector = properties
             }
         End Operator
 
         Public Shared Widening Operator CType(properties As Integer()) As NeuronEntity
             Return New NeuronEntity With {
-                .Properties = (From n In properties Select CType(n, Double)).ToArray
+                .entityVector = (From n In properties Select CType(n, Double)).ToArray
             }
         End Operator
     End Class

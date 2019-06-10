@@ -1,49 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::6dd6ac2cd5d1a5908727ee36fa137537, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GraphicsExtensions
-    ' 
-    '         Function: BackgroundGraphics, CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D
-    '                   (+3 Overloads) CreateGDIDevice, CreateGrayBitmap, EntireImage, GetBrush, GetBrushes
-    '                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
-    '                   IsValidGDIParameter, (+3 Overloads) LoadImage, (+2 Overloads) Opacity, OpenDevice, (+2 Overloads) PointF
-    '                   SaveIcon, SizeF, ToFloat, ToPoint, ToPoints
-    '                   ToStream
-    ' 
-    '         Sub: (+5 Overloads) DrawCircle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GraphicsExtensions
+' 
+'         Function: BackgroundGraphics, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+2 Overloads) CreateGDIDevice
+'                   CreateGrayBitmap, EntireImage, GDIPlusDeviceHandleFromImageFile, GetBrush, GetBrushes
+'                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
+'                   IsValidGDIParameter, (+2 Overloads) LoadImage, OpenDevice, (+2 Overloads) PointF, SaveIcon
+'                   SizeF, ToFloat, ToPoint, ToPoints, ToStream
+' 
+'         Sub: (+5 Overloads) DrawCircle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -513,6 +512,15 @@ Namespace Imaging
 
         Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function CreateGDIDevice(t As (width%, height%),
+                                                    Optional filled As Color = Nothing,
+                                                    <CallerMemberName>
+                                                    Optional trace$ = "",
+                                                    Optional dpi$ = "100,100") As Graphics2D
+            Return CreateGDIDevice(t.width, t.height, filled:=filled, dpi:=dpi, trace:=trace)
+        End Function
+
         ''' <summary>
         ''' 创建一个GDI+的绘图设备，默认的背景填充色为白色
         ''' </summary>
@@ -523,40 +531,32 @@ Namespace Imaging
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GDI+.Create")>
         <Extension> Public Function CreateGDIDevice(r As Size,
-                                                    Optional filled$ = NameOf(Color.White),
+                                                    Optional filled As Color = Nothing,
                                                     <CallerMemberName>
                                                     Optional trace$ = "",
                                                     Optional dpi$ = "100,100") As Graphics2D
-            Return r.CreateGDIDevice(filled.TranslateColor, trace, dpi)
+            Return CreateGDIDevice(r.Width, r.Height, filled:=filled, dpi:=dpi, trace:=trace)
         End Function
 
-        ''' <summary>
-        ''' 创建一个GDI+的绘图设备，默认的背景填充色为白色
-        ''' </summary>
-        ''' <param name="r"></param>
-        ''' <param name="filled">默认的背景填充颜色为白色</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        '''
-        <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Size, filled As Color,
-                                                    <CallerMemberName>
-                                                    Optional trace$ = "",
-                                                    Optional dpi$ = "100,100") As Graphics2D
+        Public Function CreateGDIDevice(width%, height%,
+                                        Optional filled As Color = Nothing,
+                                        <CallerMemberName>
+                                        Optional trace$ = "",
+                                        Optional dpi$ = "100,100") As Graphics2D
             Dim bitmap As Bitmap
 
-            If r.Width = 0 OrElse r.Height = 0 Then
+            If width = 0 OrElse height = 0 Then
                 Throw New Exception(InvalidSize)
             End If
 
             Try
-                bitmap = New Bitmap(r.Width, r.Height)
+                bitmap = New Bitmap(width, height)
 
                 With dpi.SizeParser
                     Call bitmap.SetResolution(.Width, .Height)
                 End With
             Catch ex As Exception
-                ex = New Exception(r.ToString, ex)
+                ex = New Exception(New Size(width, height).ToString, ex)
                 ex = New Exception(trace, ex)
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
                 Throw ex

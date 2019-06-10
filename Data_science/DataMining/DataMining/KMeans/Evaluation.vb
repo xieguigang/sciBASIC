@@ -45,7 +45,7 @@
                 Dim avgInDist As Double = 0
 
                 For Each individual2 In b
-                    avgInDist += individual1.Properties.EuclideanDistance(individual2.Properties)
+                    avgInDist += individual1.entityVector.EuclideanDistance(individual2.entityVector)
                 Next
 
                 avgInDist /= a.Length
@@ -70,7 +70,7 @@
                     For Each cluster2 In clusters
                         If Not cluster Is cluster2 Then
                             For Each individual2 In cluster2
-                                dist = individual1.Properties.EuclideanDistance(individual2.Properties)
+                                dist = individual1.entityVector.EuclideanDistance(individual2.entityVector)
 
                                 If dist < minOutDist Then
                                     minOutDist = dist
@@ -85,7 +85,7 @@
                 For Each individual1 In cluster
                     For Each individual2 In cluster
                         If Not individual1 Is individual2 Then
-                            dist = individual1.Properties.EuclideanDistance(individual2.Properties)
+                            dist = individual1.entityVector.EuclideanDistance(individual2.entityVector)
 
                             If dist > maxInDist Then
                                 maxInDist = dist

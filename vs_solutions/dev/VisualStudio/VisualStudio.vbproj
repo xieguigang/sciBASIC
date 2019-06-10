@@ -146,6 +146,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="sln\Global.vb" />
+    <Compile Include="sln\Parser.vb" />
+    <Compile Include="sln\Solution.vb" />
     <Compile Include="vbproj\Mics.vb" />
     <Compile Include="vbproj\ItemGroup.vb" />
     <Compile Include="vbproj\Project.vb" />
@@ -176,5 +179,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

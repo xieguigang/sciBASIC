@@ -59,6 +59,11 @@ Namespace Scripting.SymbolBuilder.VBLanguage
             Return table.ToDictionary(Function(map) AsVBIdentifier(map.Key), Function(map) map.Value)
         End Function
 
+        ''' <summary>
+        ''' Normalize the input text token as a valid VisualBasic identifier
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AsVBIdentifier(key As String) As String
             Return key.NormalizePathString(alphabetOnly:=True).Replace(" ", "_")

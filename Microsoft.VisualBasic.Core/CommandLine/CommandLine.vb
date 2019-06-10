@@ -84,7 +84,7 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    Public Class CommandLine : Inherits BaseClass
+    Public Class CommandLine
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
 
@@ -275,7 +275,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return CLICommandArgvs
+            Return cliCommandArgvs
         End Function
 
         ''' <summary>
@@ -972,10 +972,10 @@ Namespace CommandLine
         End Operator
 
         Public Shared Operator ^(args As CommandLine, [default] As String) As String
-            If args Is Nothing OrElse String.IsNullOrEmpty(args.CLICommandArgvs) Then
+            If args Is Nothing OrElse String.IsNullOrEmpty(args.cliCommandArgvs) Then
                 Return [default]
             Else
-                Return args.CLICommandArgvs
+                Return args.cliCommandArgvs
             End If
         End Operator
 

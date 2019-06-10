@@ -64,14 +64,14 @@ Namespace KMeans.Parallel
         <Extension> Public Function GetRaw(x As ClusterEntity) As Byte()
             Dim name As Byte() = Encoding.Unicode.GetBytes(x.uid)
             Dim buffer As Byte() =
-                New Byte(name.Length + RawStream.INT32 + (x.Properties.Length * RawStream.DblFloat) - 1) {}
+                New Byte(name.Length + RawStream.INT32 + (x.entityVector.Length * RawStream.DblFloat) - 1) {}
             Dim i As VBInteger = 0
             Dim nameLen As Byte() = BitConverter.GetBytes(name.Length)
 
             Call Array.ConstrainedCopy(nameLen, Scan0, buffer, i + nameLen.Length, nameLen.Length)
             Call Array.ConstrainedCopy(name, Scan0, buffer, i + name.Length, name.Length)
 
-            For Each d As Double In x.Properties
+            For Each d As Double In x.entityVector
                 Call Array.ConstrainedCopy(BitConverter.GetBytes(d), Scan0, buffer, i + RawStream.DblFloat, RawStream.DblFloat)
             Next
 
@@ -91,7 +91,7 @@ Namespace KMeans.Parallel
                       .Select(Function(buf) BitConverter.ToDouble(buf, Scan0)).ToArray
 
             Return New ClusterEntity With {
-                .Properties = props,
+                .entityVector = props,
                 .uid = Encoding.Unicode.GetString(name)
             }
         End Function

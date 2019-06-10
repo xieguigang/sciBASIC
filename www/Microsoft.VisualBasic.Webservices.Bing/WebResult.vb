@@ -83,7 +83,7 @@ Public Class WebResult : Inherits Http.WebResult
     End Function
 End Class
 
-Public Class SearchResult : Inherits BaseClass
+Public Class SearchResult
 
     Public Property Title As String
     ''' <summary>

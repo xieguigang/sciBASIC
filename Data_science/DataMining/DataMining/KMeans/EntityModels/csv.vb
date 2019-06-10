@@ -81,7 +81,7 @@ Namespace KMeans
         Public Function ToModel() As ClusterEntity
             Return New ClusterEntity With {
                 .uid = ID,
-                .Properties = Properties.Values.ToArray
+                .entityVector = Properties.Values.ToArray
             }
         End Function
 

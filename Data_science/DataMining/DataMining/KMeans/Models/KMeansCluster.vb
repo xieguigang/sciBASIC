@@ -105,12 +105,12 @@ Namespace KMeans
             Dim newCenterCoordinate As Double() = New Double(dimension - 1) {}
             For i As Integer = 0 To dimension - 1
                 For pointIndex As Integer = 0 To _innerList.Count - 1
-                    newCenterCoordinate(i) += _innerList(pointIndex).Properties(i)
+                    newCenterCoordinate(i) += _innerList(pointIndex).entityVector(i)
                 Next pointIndex
                 newCenterCoordinate(i) /= _innerList.Count
             Next i
             Dim ___center As T = Activator.CreateInstance(Of T)
-            ___center.Properties = newCenterCoordinate
+            ___center.entityVector = newCenterCoordinate
             Return ___center
         End Function
 
@@ -128,7 +128,7 @@ Namespace KMeans
             End If
 
             For count As Integer = 0 To data.Length - 1
-                _ClusterSum(count) = _ClusterSum(count) + data.Properties(count)
+                _ClusterSum(count) = _ClusterSum(count) + data.entityVector(count)
             Next
         End Sub
 

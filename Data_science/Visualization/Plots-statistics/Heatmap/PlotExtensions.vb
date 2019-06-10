@@ -137,7 +137,7 @@ Namespace Heatmap
                       In data
                       Select New ClusterEntity With {
                           .uid = x.Name,
-                          .Properties = keys _
+                          .entityVector = keys _
                               .Select(Function(k) x.Value(k)) _
                               .ToArray
                       }
@@ -166,7 +166,7 @@ Namespace Heatmap
                 .Select(Function(k)
                             Return New ClusterEntity With {
                                 .uid = k,
-                                .Properties = data _
+                                .entityVector = data _
                                     .Select(Function(x) x.Value(k)) _
                                     .ToArray
                             }
@@ -188,7 +188,7 @@ Namespace Heatmap
                     .Value = keysOrder _
                         .SeqIterator _
                         .ToDictionary(Function(x) x.value,
-                                      Function(x) entity.Properties(x.i))
+                                      Function(x) entity.entityVector(x.i))
                 }
                 Next
             Next

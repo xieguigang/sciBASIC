@@ -104,7 +104,7 @@ Namespace KMeans
                     dist = 0
 
                     For c As Integer = 0 To k - 1
-                        dist = points(i).Properties.EuclideanDistance(stepmedoids(c).Properties)
+                        dist = points(i).entityVector.EuclideanDistance(stepmedoids(c).entityVector)
 
                         If dist < minDist Then
                             points(i).cluster = c

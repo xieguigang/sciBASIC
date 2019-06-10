@@ -98,7 +98,7 @@ Namespace PCA
 
                             Return New ClusterEntity With {
                                 .uid = getlabel(pt.i),
-                                .Properties = {
+                                .entityVector = {
                                     point.X,
                                     point.Y
                                 }

@@ -112,7 +112,7 @@ Namespace d3js.SVG.CSS
         End Function
     End Class
 
-    Public Class CssValue : Inherits BaseClass
+    Public Class CssValue
 
         <DataFrameColumn> Public Property stroke As String
         <DataFrameColumn("stroke-width")> Public Property strokeWidth As String

@@ -332,7 +332,7 @@ Namespace KMeans
                               In clusters.SeqIterator.AsParallel
                               Let cluster As KMeansCluster(Of T) = c.value
                               Let clusterMean As Double() = cluster.means(x)
-                              Let distance As Double = x.Properties.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
+                              Let distance As Double = x.entityVector.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
                               Select New SeqValue(Of Double) With {
                                   .i = c.i,
                                   .value = distance
@@ -358,7 +358,7 @@ Namespace KMeans
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function means(Of T As EntityBase(Of Double))(cluster As KMeansCluster(Of T), x As T) As Double()
-            Return If(cluster.NumOfEntity = 0, New Double(x.Properties.Length - 1) {}, cluster.ClusterMean)
+            Return If(cluster.NumOfEntity = 0, New Double(x.entityVector.Length - 1) {}, cluster.ClusterMean)
         End Function
 
         <Extension>
@@ -378,10 +378,10 @@ Namespace KMeans
                 End If
 
                 If cluster = 0 Then
-                    firstClusterDistance = EuclideanDistance(dataPoint.Properties, clusterMean)
+                    firstClusterDistance = EuclideanDistance(dataPoint.entityVector, clusterMean)
                     position = cluster
                 Else
-                    secondClusterDistance = EuclideanDistance(dataPoint.Properties, clusterMean)
+                    secondClusterDistance = EuclideanDistance(dataPoint.entityVector, clusterMean)
 
                     If firstClusterDistance > secondClusterDistance Then ' 相比前一个cluster的计算结果，在这里有一个更好的计算结果，则使用这个对象的下标
                         firstClusterDistance = secondClusterDistance

@@ -182,12 +182,6 @@ Namespace SecurityString
             Return raw.GetMd5Hash
         End Function
 
-        <Extension>
-        Public Function GetMd5Hash(Of T As Language.BaseClass)(x As T) As String
-            Dim raw As String = x.__toString & x.GetHashCode
-            Return raw.GetMd5Hash
-        End Function
-
         ''' <summary>
         ''' Verify a hash against a string. 
         ''' </summary>

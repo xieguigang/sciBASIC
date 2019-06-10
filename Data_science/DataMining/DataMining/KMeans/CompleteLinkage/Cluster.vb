@@ -158,8 +158,8 @@ Namespace KMeans.CompleteLinkage
 
             ' At this point, we're guaranteed to have identical dimensions
             Dim ___dimension As Integer = c1.Length
-            Dim c1Coordinates As Double() = c1.Properties
-            Dim c2Coordinates As Double() = c2.Properties
+            Dim c1Coordinates As Double() = c1.entityVector
+            Dim c2Coordinates As Double() = c2.entityVector
 
             For dimenIndex As Integer = 0 To ___dimension - 1
                 distanceSquared += Math.Pow(((c1Coordinates(dimenIndex)) - c2Coordinates(dimenIndex)), 2)

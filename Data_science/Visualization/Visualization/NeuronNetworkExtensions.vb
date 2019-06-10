@@ -66,7 +66,7 @@ Public Module NeuronNetworkExtensions
 
         Return New NeuronEntity With {
             .Y = Val(row.First),
-            .Properties = LQuery.ToArray
+            .entityVector = LQuery.ToArray
         }
     End Function
 
