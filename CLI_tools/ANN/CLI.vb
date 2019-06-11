@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::c73bfb1bbca41991d58011a94d65eec4, CLI_tools\ANN\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, MinErrorSnapshot
-    '               ROCData, runTrainingCommon, Train
-    ' 
-    '     Sub: SummaryDebuggerDump
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, MinErrorSnapshot
+'               ROCData, runTrainingCommon, Train
+' 
+'     Sub: SummaryDebuggerDump
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -63,6 +64,17 @@ Module CLI
 
     <ExportAPI("/ROC")>
     <Usage("/ROC /in <result.csv> [/label.predicts <default=predicts> /label.actual <default=labels> /out <out.csv>]")>
+    <Description("Output a matrix file for draw a ROC curve")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              AcceptTypes:={GetType(IO.DataSet)},
+              Extensions:="*.csv",
+              Description:="The validation data file input.")>
+    <Argument("/label.predicts", True, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The column name label for read result data of the model prediction output. Value of this column should in range of [0, 1]")>
+    <Argument("/label.actual", True, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The column name label for read the actual classfication data. Value of this column should only be 0 or 1.")>
     Public Function ROCData(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim labelPredicts = args("/label.predicts") Or "predicts"
