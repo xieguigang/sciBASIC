@@ -107,7 +107,7 @@ Public Module StreamExtension
         For Each k In vars
             y += New NamedCollection(Of Double) With {
                 .Name = k,
-                .Value = New Double(minLen) {}
+                .value = New Double(minLen) {}
             }
         Next
 

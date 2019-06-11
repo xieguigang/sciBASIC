@@ -95,12 +95,12 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
                                                                    Let name As String = s(Scan0)
                                                                    Let values As Double() = s.Skip(1).Select(AddressOf Val).ToArray
                                                                    Select New NamedCollection(Of Double) With {
-                                                                       .Name = name,
+                                                                       .name = name,
                                                                        .Value = values
                                                                    }
         Return New ODEsOut With {
             .params = args,
-            .x = X.Skip(1).Select(AddressOf Val).ToArray,
+            .X = X.Skip(1).Select(AddressOf Val).ToArray,
             .y = yData.ToDictionary
         }
     End Function
