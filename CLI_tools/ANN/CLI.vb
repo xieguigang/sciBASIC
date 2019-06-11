@@ -79,7 +79,7 @@ Module CLI
         Dim in$ = args <= "/in"
         Dim labelPredicts = args("/label.predicts") Or "predicts"
         Dim labelActuals = args("/label.actual") Or "labels"
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.confusion.csv"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.confusionOf({labelActuals.NormalizePathString()}).csv"
         Dim result = DataFrame.LoadDataSet([in])
         Dim ROCMatrix = Validation _
             .ROC(result, Function(a, p) a(labelActuals) >= p, Function(a, p) a(labelPredicts) >= p) _
