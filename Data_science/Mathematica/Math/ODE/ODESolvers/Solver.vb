@@ -46,9 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' Solving the Ordinary differential equation(ODE) by using trapezoidal method.(使用梯形法求解常微分方程)
@@ -154,17 +152,17 @@ Public Module ODESolver
         Return out
     End Function
 
-    <Extension>
-    Public Function DataFrame(out As ODEOutput) As csv
-        Dim csv As New csv
+    '<Extension>
+    'Public Function DataFrame(out As ODEOutput) As csv
+    '    Dim csv As New csv
 
-        csv += {"X", "Y"}
-        csv += out.X _
-            .ToArray _
-            .Select(Function(x, i)
-                        Return New RowObject(New String() {x, out.Y(i)})
-                    End Function)
+    '    csv += {"X", "Y"}
+    '    csv += out.X _
+    '        .ToArray _
+    '        .Select(Function(x, i)
+    '                    Return New RowObject(New String() {x, out.Y(i)})
+    '                End Function)
 
-        Return csv
-    End Function
+    '    Return csv
+    'End Function
 End Module

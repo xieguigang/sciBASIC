@@ -117,8 +117,16 @@ Module CLI
         Dim in$ = args <= "/in"
         Dim sample$ = args <= "/sample"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.input_factors.csv"
-        Dim model As NeuralNetwork = [in].LoadXml(Of NeuralNetwork)
+        Dim model As NeuralNetwork
         Dim inputNames As String()
+
+        If [in].FileExists Then
+            model = [in].LoadXml(Of NeuralNetwork)
+        ElseIf [in].DirectoryExists Then
+            model = StoreProcedure.ScatteredLoader([in])
+        Else
+            Throw New InvalidProgramException($"'{[in]}' is missing on your file system!")
+        End If
 
         If sample.ExtensionSuffix.TextEquals("xml") Then
             inputNames = sample.LoadXml(Of DataSet).NormalizeMatrix.names

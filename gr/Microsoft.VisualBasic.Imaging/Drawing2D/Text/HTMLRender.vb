@@ -113,7 +113,7 @@ Namespace Drawing2D.Text
         ''' <param name="html"></param>
         ''' <param name="topleft">程序会以这个位置为原点进行布局的计算操作</param>
         <Extension>
-        Public Sub RenderHTML(g As IGraphics, html As TextString(), Optional topleft As Point = Nothing)
+        Public Sub RenderHTML(g As IGraphics, html As TextString(), Optional topleft As PointF = Nothing)
             Dim size As SizeF
 
             For Each fragment As TextString In html
@@ -131,17 +131,17 @@ Namespace Drawing2D.Text
         End Sub
 
         <Extension>
-        Private Function drawNormal(g As IGraphics, str As TextString, ByRef topleft As Point) As SizeF
+        Private Function drawNormal(g As IGraphics, str As TextString, ByRef topleft As PointF) As SizeF
             Dim font As Font = str.font
             Dim color As New SolidBrush(str.color.TranslateColor)
             Dim size As SizeF
             Dim hasLines As Integer = 0
             Dim offsetY%
-            Dim p As Point
+            Dim p As PointF
 
             For Each line As String In str.text.LineTokens
                 size = g.MeasureString(line, font)
-                p = New Point With {
+                p = New PointF With {
                     .X = topleft.X,
                     .Y = topleft.Y + offsetY
                 }
@@ -154,7 +154,7 @@ Namespace Drawing2D.Text
                 ' 没有换行, 则
                 ' X前进字符串的宽度
                 ' Y不变
-                topleft = New Point With {
+                topleft = New PointF With {
                     .X = topleft.X + size.Width,
                     .Y = topleft.Y
                 }
@@ -164,17 +164,17 @@ Namespace Drawing2D.Text
         End Function
 
         <Extension>
-        Private Function drawSub(g As IGraphics, text As TextString, ByRef topleft As Point) As SizeF
+        Private Function drawSub(g As IGraphics, text As TextString, ByRef topleft As PointF) As SizeF
             Dim font As Font = text.GetWeightedFont
             Dim size As SizeF = g.MeasureString(text.text, font)
             Dim color As New SolidBrush(text.color.TranslateColor)
 
             g.DrawString(
-                text, font, color, New Point With {
+                text, font, color, New PointF With {
                     .X = topleft.X,
                     .Y = topleft.Y + size.Height
             })
-            topleft = New Point With {
+            topleft = New PointF With {
                 .X = topleft.X + size.Width,
                 .Y = topleft.Y
             }
@@ -183,17 +183,17 @@ Namespace Drawing2D.Text
         End Function
 
         <Extension>
-        Private Function drawSup(g As IGraphics, text As TextString, ByRef topleft As Point) As SizeF
+        Private Function drawSup(g As IGraphics, text As TextString, ByRef topleft As PointF) As SizeF
             Dim font As Font = text.GetWeightedFont
             Dim size As SizeF = g.MeasureString(text.text, font)
             Dim color As New SolidBrush(text.color.TranslateColor)
 
             g.DrawString(
-                text, font, color, New Point With {
+                text, font, color, New PointF With {
                     .X = topleft.X,
                     .Y = topleft.Y
             })
-            topleft = New Point With {
+            topleft = New PointF With {
                 .X = topleft.X + size.Width,
                 .Y = topleft.Y
             }

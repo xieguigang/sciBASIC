@@ -137,18 +137,6 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
         Return Me.GetJson
     End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="csv$"></param>
-    ''' <param name="noVars">ODEs Parameter value is not exists in the data file?</param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function LoadFromDataFrame(csv$, Optional noVars As Boolean = False) As ODEsOut
-        Return StreamExtension.LoadFromDataFrame(csv, noVars)
-    End Function
-
     Public Iterator Function GetEnumerator() As IEnumerator(Of NamedCollection(Of Double)) Implements IEnumerable(Of NamedCollection(Of Double)).GetEnumerator
         For Each var As NamedCollection(Of Double) In y.Values
             Yield var

@@ -63,8 +63,8 @@ Public Module Outlier
     <Extension>
     Public Iterator Function DeleteOutlier(points As IEnumerable(Of PointF)) As IEnumerable(Of PointF)
         Dim lineVector = points.ToArray
-        Dim minX = Aggregate p In lineVector Into Min(p.X)
-        Dim minY = Aggregate p In lineVector Into Min(p.Y)
+        Dim minX = lineVector(Scan0).X  ' Aggregate p In lineVector Into Min(p.X)
+        Dim minY = lineVector(Scan0).Y  ' Aggregate p In lineVector Into Min(p.Y)
         Dim angles = lineVector.Select(Function(p) Trigonometric.GetAngle(minX, minY, p.X, p.Y)).AsVector
         Dim quartile = angles.Quartile
         Dim outliers = angles.Outlier(quartile).Outlier
