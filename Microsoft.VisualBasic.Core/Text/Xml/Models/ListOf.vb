@@ -49,6 +49,10 @@ Namespace Text.Xml.Models
 
     Public MustInherit Class ListOf(Of T) : Implements Enumeration(Of T)
 
+        ''' <summary>
+        ''' 在这个列表之中的元素数量的长度
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property size As Integer
             Get
                 Return getSize()

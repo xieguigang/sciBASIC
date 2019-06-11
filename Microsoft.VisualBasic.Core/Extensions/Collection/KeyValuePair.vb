@@ -207,6 +207,7 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
+    ''' 根据所给定的一个主键列表批量化取出目标字典之中的一部分数据构成一个新的字典子集对象
     ''' 函数会根据<see cref="keys"/>参数来做排序
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
