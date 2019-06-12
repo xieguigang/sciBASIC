@@ -3,56 +3,50 @@ Imports System.Text
 
 Namespace DecisionTree
 
-    Public NotInheritable Class CsvFileHandler
-        Private Sub New()
-        End Sub
-        Public Shared Function ImportFromCsvFile(filePath As String) As DataTable
+    Public Module CsvFileHandler
+
+        Public Function ImportFromCsvFile(filePath As String) As DataTable
             Dim rows = 0
             Dim data = New DataTable()
 
-            Try
-                Using reader = New StreamReader(File.OpenRead(filePath))
-                    While Not reader.EndOfStream
-                        Dim line = reader.ReadLine()
-                        Dim values = line.Substring(0, line.Length - 1).Split(";"c)
+            Using reader = New StreamReader(File.OpenRead(filePath))
+                While Not reader.EndOfStream
+                    Dim line = reader.ReadLine()
+                    Dim values = line.Substring(0, line.Length - 1).Split(";"c)
 
-                        For Each item As String In values
-                            If String.IsNullOrEmpty(item) OrElse String.IsNullOrWhiteSpace(item) Then
-                                Throw New Exception("Value can't be empty")
-                            End If
-
-                            If rows = 0 Then
-                                data.Columns.Add(item)
-                            End If
-                        Next
-
-                        If rows > 0 Then
-                            data.Rows.Add(values)
+                    For Each item As String In values
+                        If String.IsNullOrEmpty(item) OrElse String.IsNullOrWhiteSpace(item) Then
+                            Throw New Exception("Value can't be empty")
                         End If
 
-                        rows += 1
-
-                        If values.Length <> data.Columns.Count Then
-                            Throw New Exception("Row is shorter or longer than title row")
+                        If rows = 0 Then
+                            data.Columns.Add(item)
                         End If
-                    End While
-                End Using
+                    Next
 
-                Dim differentValuesOfLastColumn = MyAttribute.GetDifferentAttributeNamesOfColumn(data, data.Columns.Count - 1)
+                    If rows > 0 Then
+                        data.Rows.Add(values)
+                    End If
 
-                If differentValuesOfLastColumn.Count > 2 Then
-                    Throw New Exception("The last column is the result column and can contain only 2 different values")
-                End If
-            Catch ex As Exception
-                DisplayErrorMessage(ex.Message)
-                data = Nothing
-            End Try
+                    rows += 1
+
+                    If values.Length <> data.Columns.Count Then
+                        Throw New Exception("Row is shorter or longer than title row")
+                    End If
+                End While
+            End Using
+
+            Dim differentValuesOfLastColumn = MyAttribute.GetDifferentAttributeNamesOfColumn(data, data.Columns.Count - 1)
+
+            If differentValuesOfLastColumn.Count > 2 Then
+                Throw New Exception("The last column is the result column and can contain only 2 different values")
+            End If
 
             ' if no rows are entered or data == null, return null
             Return If(data.Rows.Count > 0, data, Nothing)
         End Function
 
-        Public Shared Sub ExportToCsvFile(data As DataTable, filePath As String)
+        Public Sub ExportToCsvFile(data As DataTable, filePath As String)
             If data.Columns.Count = 0 Then
                 Throw New Exception("Nothing to export")
             End If
@@ -83,11 +77,5 @@ Namespace DecisionTree
             Console.WriteLine("Data sucessfully exported")
             Console.ResetColor()
         End Sub
-
-        Private Shared Sub DisplayErrorMessage(errorMessage As String)
-            Console.ForegroundColor = ConsoleColor.Red
-            Console.WriteLine(vbLf & "{errorMessage}" & vbLf)
-            Console.ResetColor()
-        End Sub
-    End Class
+    End Module
 End Namespace

@@ -81,12 +81,14 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public Shared Function FromEnums(Of T As Structure)(Optional colors$() = Nothing) As ColorClass()
             Dim values As T() = Enums(Of T)()
+
             If colors.IsNullOrEmpty OrElse colors.Length < values.Length Then
                 colors$ = Imaging _
                     .ChartColors _
                     .Select(AddressOf Imaging.ToHtmlColor) _
                     .ToArray
             End If
+
             Dim out As ColorClass() = values _
                 .SeqIterator _
                 .Select(Function(v)
@@ -97,6 +99,7 @@ Namespace ComponentModel
                             }
                         End Function) _
                 .ToArray
+
             Return out
         End Function
 
