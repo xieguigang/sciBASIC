@@ -175,14 +175,14 @@ Namespace DecisionTree
         End Function
 
         Private Shared Function GetRootNode(data As DataTable, edge As String) As TreeNode
-            Dim attributes = New List(Of MyAttribute)()
+            Dim attributes = New List(Of NodeAttr)()
             Dim highestInformationGainIndex = -1
             Dim highestInformationGain = Double.MinValue
 
             ' Get all names, amount of attributes and attributes for every column             
             For i As Integer = 0 To data.Columns.Count - 2
-                Dim differentAttributenames = MyAttribute.GetDifferentAttributeNamesOfColumn(data, i)
-                attributes.Add(New MyAttribute(data.Columns(i).ToString(), differentAttributenames))
+                Dim differentAttributenames = NodeAttr.GetDifferentAttributeNamesOfColumn(data, i)
+                attributes.Add(New NodeAttr(data.Columns(i).ToString(), differentAttributenames))
             Next
 
             ' Calculate Entropy (S)

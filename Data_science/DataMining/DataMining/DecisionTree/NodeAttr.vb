@@ -1,6 +1,11 @@
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace DecisionTree
 
-    Public Class MyAttribute
+    ''' <summary>
+    ''' Node attribute value
+    ''' </summary>
+    Public Class NodeAttr
 
         Public ReadOnly Property name As String
         Public ReadOnly Property differentAttributeNames As List(Of String)
@@ -11,6 +16,10 @@ Namespace DecisionTree
             Me.name = name
             Me.differentAttributeNames = differentAttributenames
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"Dim {name} As {differentAttributeNames.GetJson} = {InformationGain}"
+        End Function
 
         Public Shared Function GetDifferentAttributeNamesOfColumn(data As DataTable, columnIndex As Integer) As List(Of String)
             Dim differentAttributes = New List(Of String)()
