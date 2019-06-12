@@ -51,22 +51,6 @@ Namespace FuzzyCMeans
 
     Partial Public Module FuzzyCMeansAlgorithm
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="clusterCenterPoint"></param>
-        ''' <param name="color"></param>
-        ''' 
-        <Extension>
-        Public Sub MarkClusterCenter(clusterCenterPoint As Entity, color As Color)
-            clusterCenterPoint.Properties(NameOf(MarkClusterCenter)) = color
-        End Sub
-
-        <Extension>
-        Public Function Fill(x As Entity) As Color
-            Return x.Properties(NameOf(MarkClusterCenter))
-        End Function
-
         Private Function MakeFuzzyClusters(points As List(Of Entity),
                                    clusterCenters As List(Of Entity),
                            fuzzificationParameter As Double,

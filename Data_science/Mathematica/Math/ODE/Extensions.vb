@@ -42,52 +42,10 @@
 Imports System.Linq.Expressions
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Module Extensions
-
-    ''' <summary>
-    ''' 使用PCC来了解各个变量之间的相关度
-    ''' </summary>
-    ''' <param name="df"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Pcc(df As ODEsOut) As IEnumerable(Of DataSet)
-        Return df.correlationImpl(AddressOf Correlations.GetPearson)
-    End Function
-
-    <Extension>
-    Private Iterator Function correlationImpl(df As ODEsOut, correlation As Correlations.ICorrelation) As IEnumerable(Of DataSet)
-        Dim vars$() = df.y.Keys.ToArray
-
-        For Each var As NamedCollection(Of Double) In df
-            Dim x As New DataSet With {
-                .ID = var.Name,
-                .Properties = New Dictionary(Of String, Double)
-            }
-
-            For Each name$ In vars
-                x.Properties(name$) = correlation(var.Value, df.y(name).Value)
-            Next
-
-            Yield x
-        Next
-    End Function
-
-    ''' <summary>
-    ''' 使用sPCC来了解各个变量之间的相关度
-    ''' </summary>
-    ''' <param name="df"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function SPcc(df As ODEsOut) As IEnumerable(Of DataSet)
-        Return df.correlationImpl(AddressOf Correlations.Spearman)
-    End Function
+<HideModuleName> Public Module Extensions
 
     ''' <summary>
     ''' Solve the target ODEs dynamics system by using the RK4 solver.
@@ -104,8 +62,7 @@ Public Module Extensions
         Dim ODEs As New GenericODEs(system.ToArray, df)
 
         With dt
-            Dim result As ODEsOut = ODEs _
-                .Solve((.to - .from) / .step, .from, .to)
+            Dim result As ODEsOut = ODEs.Solve((.to - .from) / .step, .from, .to)
             Return result
         End With
     End Function

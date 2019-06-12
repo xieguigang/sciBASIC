@@ -48,7 +48,7 @@ Namespace ComponentModel
 
         <Extension>
         Public Function ToEnumsTable(Of T)(classes As IEnumerable(Of ColorClass)) As Dictionary(Of T, ColorClass)
-            Return classes.ToDictionary(Function(c) DirectCast(CObj(c.int), T))
+            Return classes.ToDictionary(Function(c) DirectCast(CObj(c.enumInt), T))
         End Function
     End Module
 End Namespace

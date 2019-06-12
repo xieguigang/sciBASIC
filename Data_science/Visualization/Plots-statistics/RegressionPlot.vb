@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::842421fc4344e484db7f35a1578593ee, Data_science\Mathematica\Plot\Plots-statistics\RegressionPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module RegressionPlot
-    ' 
-    '     Function: Plot
-    ' 
-    ' /********************************************************************************/
+' Module RegressionPlot
+' 
+'     Function: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.Imaging.d3js
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -256,21 +257,21 @@ Public Module RegressionPlot
                 End If
 
                 If showLegend Then
-                    Dim eq$ = "f(x) = " & fit.Polynomial.ToString("G2")
-                    Dim R2$ = "R2 = " & fit.CorrelationCoefficient.ToString("F4")
+                    Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString("G2", html:=True)
+                    Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F4")
                     Dim pt As New PointF With {
                         .X = rect.Left + g.MeasureString("00", legendLabelFont).Width,
                         .Y = rect.Top + 20
                     }
 
-                    Call g.DrawString(eq, legendLabelFont, Brushes.Black, pt)
+                    Call g.DrawHtmlString(eq, legendLabelFont, Color.Black, pt)
 
                     pt = New PointF With {
                         .X = pt.X,
                         .Y = pt.Y + legendLabelFont.Height + 5
                     }
 
-                    Call g.DrawString(R2, legendLabelFont, Brushes.Black, pt)
+                    Call g.DrawHtmlString(R2, legendLabelFont, Color.Black, pt)
                 End If
 
                 If Not title.StringEmpty Then
@@ -287,6 +288,7 @@ Public Module RegressionPlot
             size.SizeParser,
             margin,
             bg,
-            plotInternal)
+            plotInternal
+        )
     End Function
 End Module

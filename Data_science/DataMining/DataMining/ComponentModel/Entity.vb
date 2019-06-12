@@ -46,6 +46,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
@@ -55,12 +56,13 @@ Namespace ComponentModel
     ''' An abstract property vector 
     ''' </summary>
     ''' <typeparam name="T">只允许数值类型</typeparam>
-    Public MustInherit Class EntityBase(Of T) : Inherits DynamicPropertyBase(Of Object)
+    Public MustInherit Class EntityBase(Of T)
 
         <XmlAttribute("T")>
         Public Overridable Property entityVector As T()
 
-        Default Public Overloads Property ItemValue(i%) As T
+        Default Public Overloads Property ItemValue(i As Integer) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return entityVector(i)
             End Get
@@ -70,40 +72,10 @@ Namespace ComponentModel
         End Property
 
         Public Overridable ReadOnly Property Length As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return entityVector.Length
             End Get
         End Property
-    End Class
-
-    ''' <summary>
-    ''' {Properties} -> Class
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Class IntegerEntity : Inherits EntityBase(Of Integer)
-
-        <XmlAttribute> Public Property [Class] As Integer
-
-        Public Overrides Function ToString() As String
-            Return $"<{String.Join("; ", entityVector)}> --> {[Class]}"
-        End Function
-
-        Default Public Overloads ReadOnly Property ItemValue(Index As Integer) As Integer
-            Get
-                Return entityVector(Index)
-            End Get
-        End Property
-
-        Public Shared Widening Operator CType(properties As Double()) As IntegerEntity
-            Return New IntegerEntity With {
-                .entityVector = (From x In properties Select CType(x, Integer)).ToArray
-            }
-        End Operator
-
-        Public Shared Widening Operator CType(properties As Integer()) As IntegerEntity
-            Return New IntegerEntity With {
-                .entityVector = properties
-            }
-        End Operator
     End Class
 End Namespace

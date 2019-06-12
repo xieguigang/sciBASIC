@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -55,6 +56,7 @@ Namespace FuzzyCMeans
         ''' </summary>
         ''' <returns></returns>
         Public Property Memberships As Dictionary(Of Integer, Double)
+        Public Property MarkClusterCenter As Color
 
         ''' <summary>
         ''' Max probably of <see cref="Memberships"/> its key value.
