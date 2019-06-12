@@ -23,5 +23,12 @@ Namespace DecisionTree
             Me.edge = edge
         End Sub
 
+        Public Overrides Function ToString() As String
+            If isLeaf Then
+                Return $"[{name}]"
+            Else
+                Return name
+            End If
+        End Function
     End Class
 End Namespace

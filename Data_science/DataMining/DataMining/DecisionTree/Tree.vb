@@ -13,6 +13,20 @@ Namespace DecisionTree
 
         Public Property root As TreeNode
 
+        ''' <summary>
+        ''' Create a new empty ID3 based decision tree.
+        ''' </summary>
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' Create a new decision tree and train for <see cref="root"/>.
+        ''' </summary>
+        ''' <param name="data"></param>
+        Sub New(data As DataTable)
+            root = Tree.Learn(data, "")
+        End Sub
+
         Public Shared Sub Print(node As TreeNode, result As String)
             If node?.childNodes Is Nothing OrElse node.childNodes.Count = 0 Then
                 Dim seperatedResult = result.Split(" "c)
@@ -85,8 +99,14 @@ Namespace DecisionTree
             Return result
         End Function
 
-        Public Shared Function Learn(data As DataTable, edgeName As String) As TreeNode
-            Dim root = GetRootNode(data, edgeName)
+        ''' <summary>
+        ''' Create tree of <see cref="root"/>
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="edgeName"></param>
+        ''' <returns></returns>
+        Public Shared Function Learn(data As DataTable, Optional edgeName As String = "") As TreeNode
+            Dim root As TreeNode = GetRootNode(data, edgeName)
 
             For Each item In root.nodeAttr.differentAttributeNames
                 ' if a leaf, leaf will be added in this method
