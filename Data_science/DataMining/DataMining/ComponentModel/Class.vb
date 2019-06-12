@@ -57,17 +57,17 @@ Namespace ComponentModel
         ''' Using for the data visualization.(RGB表达式, html颜色值或者名称)
         ''' </summary>
         ''' <returns></returns>
-        Public Property Color As String
+        Public Property color As String
         ''' <summary>
         ''' <see cref="Integer"/> encoding for this class.(即枚举类型)
         ''' </summary>
         ''' <returns></returns>
-        Public Property int As Integer
+        Public Property enumInt As Integer
         ''' <summary>
         ''' Class Name
         ''' </summary>
         ''' <returns></returns>
-        Public Property Name As String
+        Public Property name As String
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -91,9 +91,9 @@ Namespace ComponentModel
                 .SeqIterator _
                 .Select(Function(v)
                             Return New ColorClass With {
-                                .int = CInt(DirectCast(+v, Object)),
-                                .Color = colors(v),
-                                .Name = DirectCast(CObj((+v)), [Enum]).Description
+                                .enumInt = CInt(DirectCast(+v, Object)),
+                                .color = colors(v),
+                                .name = DirectCast(CObj((+v)), [Enum]).Description
                             }
                         End Function) _
                 .ToArray
@@ -101,7 +101,7 @@ Namespace ComponentModel
         End Function
 
         Public Shared Operator =(a As ColorClass, b As ColorClass) As Boolean
-            Return a.Color = b.Color AndAlso a.int = b.int AndAlso a.Name = b.Name
+            Return a.color = b.color AndAlso a.enumInt = b.enumInt AndAlso a.name = b.name
         End Operator
 
         Public Shared Operator <>(a As ColorClass, b As ColorClass) As Boolean

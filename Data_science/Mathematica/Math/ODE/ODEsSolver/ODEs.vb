@@ -124,10 +124,11 @@ Public MustInherit Class ODEs
     ''' <param name="dynext">
     ''' Returns the y(n+1) result from this parameter.(下一步的值y(n+1))
     ''' </param>
-    Private Sub __rungeKutta(dxn As Double,
-                             ByRef dyn As Vector,
-                             dh As Double,
-                             ByRef dynext As Vector)
+    Private Sub rungeKutta(dxn As Double,
+                           ByRef dyn As Vector,
+                           dh As Double,
+                           ByRef dynext As Vector)
+
         Call ODEs(dxn, dyn, K1)                             ' 求解K1
         Call ODEs(dxn + dh / 2, dyn + dh / 2 * K1, K2)      ' 求解K2
         Call ODEs(dxn + dh / 2, dyn + dh / 2 * K2, K3)      ' 求解K3
@@ -199,7 +200,8 @@ Public MustInherit Class ODEs
         Next
 
         For i As Integer = 0 To n
-            Call __rungeKutta(dx, darrayn, dh, darraynext)
+            Call rungeKutta(dx, darrayn, dh, darraynext)
+
             x += dx
             dx += dh
             darrayn = darraynext
@@ -243,7 +245,8 @@ Public MustInherit Class ODEs
     Protected MustOverride Sub func(dx#, ByRef dy As Vector)
 
     Private Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
-        For Each x As var In vars       ' 更新设置y的值
+        ' 更新设置y的值
+        For Each x As var In vars
             x.value = y(x.Index)
         Next
 
@@ -285,7 +288,9 @@ Public MustInherit Class ODEs
     Public Shared Function GetParameters(model As Type) As IEnumerable(Of String)
         Dim fields = CType(model, TypeInfo) _
             .DeclaredFields _
-            .Where(Function(f) (Not f.IsLiteral) AndAlso f.FieldType.Equals(GetType(Double)))
+            .Where(Function(f)
+                       Return (Not f.IsLiteral) AndAlso f.FieldType.Equals(GetType(Double))
+                   End Function)
         Return fields.Select(Function(f) f.Name)
     End Function
 
@@ -296,7 +301,9 @@ Public MustInherit Class ODEs
     Public Shared Function GetVariables(model As Type) As IEnumerable(Of String)
         Dim fields = CType(model, TypeInfo) _
             .DeclaredFields _
-            .Where(Function(f) f.FieldType.Equals(GetType(var)))
+            .Where(Function(f)
+                       Return f.FieldType.Equals(GetType(var))
+                   End Function)
         Return fields.Select(Function(f) f.Name)
     End Function
 End Class

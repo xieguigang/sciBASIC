@@ -6,8 +6,23 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports sys = System.Math
+Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 <HideModuleName> Public Module Extensions
+
+    <Extension>
+    Public Function DataFrame(out As ODEOutput) As csv
+        Dim csv As New csv
+
+        csv += {"X", "Y"}
+        csv += out.X _
+            .ToArray _
+            .Select(Function(x, i)
+                        Return New RowObject(New String() {x, out.Y(i)})
+                    End Function)
+
+        Return csv
+    End Function
 
     ''' <summary>
     ''' Generates datafram and then can makes the result save data into a csv file.
@@ -80,12 +95,12 @@ Imports sys = System.Math
                                                                    Let name As String = s(Scan0)
                                                                    Let values As Double() = s.Skip(1).Select(AddressOf Val).ToArray
                                                                    Select New NamedCollection(Of Double) With {
-                                                                       .Name = name,
+                                                                       .name = name,
                                                                        .Value = values
                                                                    }
         Return New ODEsOut With {
             .params = args,
-            .x = X.Skip(1).Select(AddressOf Val).ToArray,
+            .X = X.Skip(1).Select(AddressOf Val).ToArray,
             .y = yData.ToDictionary
         }
     End Function
