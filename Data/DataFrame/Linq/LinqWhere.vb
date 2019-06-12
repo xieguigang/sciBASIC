@@ -67,6 +67,10 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace IO.Linq
 
+    ''' <summary>
+    ''' 主要是为了构建通过命令行的通用化查询工具
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class LinqWhere(Of T As Class)
 
         Public ReadOnly Property Tokens As ExprToken()
@@ -76,8 +80,7 @@ Namespace IO.Linq
         ''' <summary>
         ''' 操作符代码
         ''' </summary>
-        ReadOnly _operations As Dictionary(Of String, __test) =
-            New Dictionary(Of String, __test) From {
+        ReadOnly _operations As New Dictionary(Of String, __test) From {
  _
             {">", AddressOf __gt},
             {"<", AddressOf __lt},

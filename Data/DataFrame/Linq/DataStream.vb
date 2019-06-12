@@ -89,15 +89,15 @@ Namespace IO.Linq
     Public Class SchemaReader : Implements ISchema
 
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
-        Public ReadOnly Property Headers As IReadOnlyCollection(Of String)
+        Public ReadOnly Property headers As IReadOnlyCollection(Of String)
 
         Sub New(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False)
             Call Me.New(RowObject.TryParse(fileName.ReadFirstLine(encoding), tsv))
         End Sub
 
         Sub New(firstLineHeaders As RowObject)
-            Headers = firstLineHeaders.ToArray
-            SchemaOridinal = Headers _
+            headers = firstLineHeaders.ToArray
+            SchemaOridinal = headers _
                 .SeqIterator _
                 .ToDictionary(Function(x) x.value.ToLower,
                               Function(x) x.i)
@@ -109,7 +109,7 @@ Namespace IO.Linq
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{Headers.JoinBy(", ")}]"
+            Return $"[{headers.JoinBy(", ")}]"
         End Function
     End Class
 
