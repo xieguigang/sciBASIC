@@ -52,7 +52,7 @@ Module KmedoidsTest
         Dim data = DataSet.LoadDataSet("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\bezdekIris.csv", uidMap:="class").ToArray
         Dim names = data.PropertyNames
         Dim points = data.Select(Function(d)
-                                     Return New ClusterEntity With {.Properties = d(names), .Extension = New ExtendedProps(New [Property](Of Object)("class", d.ID))}
+                                     Return New ClusterEntity With {.entityVector = d(names), .uid = d.ID}
                                  End Function).ToArray
 
         Dim result = points.DoKMedoids(3, 1000)
@@ -62,7 +62,7 @@ Module KmedoidsTest
                                       properties.Add("cluster", e.cluster)
 
                                       Return New EntityObject With {
-                                        .ID = e.Extension.DynamicHashTable!class,
+                                        .ID = e.uid,
                                         .Properties = properties
                                       }
                                   End Function).ToArray
