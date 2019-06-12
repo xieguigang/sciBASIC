@@ -1,10 +1,11 @@
 Imports System.Collections.Generic
 Imports System.Data
 Imports System.IO
+Imports Microsoft.VisualBasic.DataMining.DecisionTree
 
 Namespace DecisionTree
 
-    Public NotInheritable Class Program
+    Public NotInheritable Class DecisionTreeProgram
         Private Sub New()
         End Sub
         Friend Shared Sub Main(args As String())
@@ -138,7 +139,7 @@ Namespace DecisionTree
 
         Private Shared Sub CreateTreeAndHandleUserOperation(data As DataTable)
             Dim decisionTree = New Tree()
-            decisionTree.Root = Tree.Learn(data, "")
+            decisionTree.root = Tree.Learn(data, "")
             Dim returnToMainMenu = False
 
             Console.ForegroundColor = ConsoleColor.Green
@@ -159,7 +160,7 @@ Namespace DecisionTree
                         EndProgram()
                     ElseIf input.ToUpper().Equals("PRINT") Then
                         Console.WriteLine()
-                        Tree.Print(decisionTree.Root, decisionTree.Root.Name.ToUpper())
+                        Tree.Print(decisionTree.root, decisionTree.root.name.ToUpper())
                         Tree.PrintLegend("Due to the limitation of the console the tree is displayed as a list of every possible route. The colors indicate the following values:")
 
                         i -= 1
@@ -209,7 +210,7 @@ Namespace DecisionTree
 
                 ' if input was not to return to the main menu, the query will be processed
                 If Not returnToMainMenu Then
-                    Dim result = Tree.CalculateResult(decisionTree.Root, valuesForQuery, "")
+                    Dim result = Tree.CalculateResult(decisionTree.root, valuesForQuery, "")
 
                     Console.WriteLine()
 

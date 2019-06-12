@@ -96,6 +96,7 @@
     <Compile Include="Module1.vb" />
     <Compile Include="AprioriTest.vb" />
     <Compile Include="KmedoidsTest.vb" />
+    <Compile Include="DecisionTreeProgram.vb" />
     <Compile Include="SCStest.vb" />
     <Compile Include="TestingMain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

@@ -10,18 +10,11 @@ Namespace DecisionTree
     ''' > https://github.com/WolfgangOfner/DecisionTree
     ''' </summary>
     Public Class Tree
-        Public Property Root() As TreeNode
-            Get
-                Return m_Root
-            End Get
-            Set
-                m_Root = Value
-            End Set
-        End Property
-        Private m_Root As TreeNode
+
+        Public Property root As TreeNode
 
         Public Shared Sub Print(node As TreeNode, result As String)
-            If node?.ChildNodes Is Nothing OrElse node.ChildNodes.Count = 0 Then
+            If node?.childNodes Is Nothing OrElse node.childNodes.Count = 0 Then
                 Dim seperatedResult = result.Split(" "c)
 
                 For Each item In seperatedResult
@@ -37,22 +30,22 @@ Namespace DecisionTree
                         Console.ForegroundColor = ConsoleColor.Yellow
                     End If
 
-                    Console.Write("{item} ")
+                    Console.Write($"{item} ")
                     Console.ResetColor()
                 Next
 
                 Console.WriteLine()
 
             Else
-                For Each child In node.ChildNodes
-                    Print(child, result & " -- " & child.Edge.ToLower() & " --> " & child.Name.ToUpper())
+                For Each child In node.childNodes
+                    Print(child, result & " -- " & child.edge.ToLower() & " --> " & child.name.ToUpper())
                 Next
             End If
         End Sub
 
         Public Shared Sub PrintLegend(headline As String)
             Console.ForegroundColor = ConsoleColor.White
-            Console.WriteLine(vbLf & "{headline}")
+            Console.WriteLine(vbLf & $"{headline}")
             Console.ForegroundColor = ConsoleColor.Magenta
             Console.WriteLine("Magenta color indicates the root node")
             Console.ForegroundColor = ConsoleColor.Yellow
@@ -67,18 +60,18 @@ Namespace DecisionTree
         Public Shared Function CalculateResult(root As TreeNode, valuesForQuery As IDictionary(Of String, String), result As String) As String
             Dim valueFound = False
 
-            result += root.Name.ToUpper() & " -- "
+            result += root.name.ToUpper() & " -- "
 
-            If root.IsLeaf Then
-                result = root.Edge.ToLower() & " --> " & root.Name.ToUpper()
+            If root.isLeaf Then
+                result = root.edge.ToLower() & " --> " & root.name.ToUpper()
                 valueFound = True
             Else
-                For Each childNode In root.ChildNodes
+                For Each childNode In root.childNodes
                     For Each entry In valuesForQuery
-                        If childNode.Edge.ToUpper().Equals(entry.Value.ToUpper()) AndAlso root.Name.ToUpper().Equals(entry.Key.ToUpper()) Then
+                        If childNode.edge.ToUpper().Equals(entry.Value.ToUpper()) AndAlso root.name.ToUpper().Equals(entry.Key.ToUpper()) Then
                             valuesForQuery.Remove(entry.Key)
 
-                            Return result & CalculateResult(childNode, valuesForQuery, "{childNode.Edge.ToLower()} --> ")
+                            Return result & CalculateResult(childNode, valuesForQuery, $"{childNode.edge.ToLower()} --> ")
                         End If
                     Next
                 Next
@@ -95,15 +88,15 @@ Namespace DecisionTree
         Public Shared Function Learn(data As DataTable, edgeName As String) As TreeNode
             Dim root = GetRootNode(data, edgeName)
 
-            For Each item In root.NodeAttribute.DifferentAttributeNames
+            For Each item In root.nodeAttr.differentAttributeNames
                 ' if a leaf, leaf will be added in this method
                 Dim isLeaf = CheckIfIsLeaf(root, data, item)
 
                 ' make a recursive call as long as the node is not a leaf
                 If Not isLeaf Then
-                    Dim reducedTable = CreateSmallerTable(data, item, root.TableIndex)
+                    Dim reducedTable = CreateSmallerTable(data, item, root.index)
 
-                    root.ChildNodes.Add(Learn(reducedTable, item))
+                    root.childNodes.Add(Learn(reducedTable, item))
                 End If
             Next
 
@@ -116,7 +109,7 @@ Namespace DecisionTree
 
             ' get all leaf values for the attribute in question
             For i As Integer = 0 To data.Rows.Count - 1
-                If data.Rows(i)(root.TableIndex).ToString().Equals(attributeToCheck) Then
+                If data.Rows(i)(root.index).ToString().Equals(attributeToCheck) Then
                     allEndValues.Add(data.Rows(i)(data.Columns.Count - 1).ToString())
                 End If
             Next
@@ -128,7 +121,7 @@ Namespace DecisionTree
 
             ' create leaf with value to display and edge to the leaf
             If isLeaf Then
-                root.ChildNodes.Add(New TreeNode(True, allEndValues(0), attributeToCheck))
+                root.childNodes.Add(New TreeNode(True, allEndValues(0), attributeToCheck))
             End If
 
             Return isLeaf
@@ -184,7 +177,7 @@ Namespace DecisionTree
                 End If
             Next
 
-            Return New TreeNode(attributes(highestInformationGainIndex).Name, highestInformationGainIndex, attributes(highestInformationGainIndex), edge)
+            Return New TreeNode(attributes(highestInformationGainIndex).name, highestInformationGainIndex, attributes(highestInformationGainIndex), edge)
         End Function
 
         Private Shared Function GetGainForAllAttributes(data As DataTable, colIndex As Integer, entropyOfDataset As Double) As Double

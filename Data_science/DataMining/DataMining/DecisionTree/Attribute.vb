@@ -1,28 +1,16 @@
-Imports System.Collections.Generic
-Imports System.Data
-Imports System.Linq
-
 Namespace DecisionTree
 
     Public Class MyAttribute
-        Public Sub New(name__1 As String, differentAttributenames__2 As List(Of String))
-            Name = name__1
-            DifferentAttributeNames = differentAttributenames__2
+
+        Public ReadOnly Property name As String
+        Public ReadOnly Property differentAttributeNames As List(Of String)
+
+        Public Property InformationGain As Double
+
+        Public Sub New(name As String, differentAttributenames As List(Of String))
+            Me.name = name
+            Me.differentAttributeNames = differentAttributenames
         End Sub
-
-        Public ReadOnly Property Name() As String
-
-        Public ReadOnly Property DifferentAttributeNames() As List(Of String)
-
-        Public Property InformationGain() As Double
-            Get
-                Return m_InformationGain
-            End Get
-            Set
-                m_InformationGain = Value
-            End Set
-        End Property
-        Private m_InformationGain As Double
 
         Public Shared Function GetDifferentAttributeNamesOfColumn(data As DataTable, columnIndex As Integer) As List(Of String)
             Dim differentAttributes = New List(Of String)()

@@ -1,4 +1,3 @@
-Imports System.Data
 Imports System.IO
 Imports System.Text
 
@@ -63,7 +62,7 @@ Namespace DecisionTree
             ' add titles to the string builder
             For Each item In data.Columns
                 ' seperate values with a ;
-                sb.AppendFormat("{item};")
+                sb.AppendFormat($"{item};")
             Next
 
             sb.AppendLine()
@@ -72,7 +71,7 @@ Namespace DecisionTree
             For i As Integer = 0 To data.Rows.Count - 1
                 For j As Integer = 0 To data.Columns.Count - 1
                     ' seperate values with a ;
-                    sb.AppendFormat("{data.Rows[i][j]};")
+                    sb.AppendFormat($"{data.Rows(i)(j)};")
                 Next
 
                 sb.AppendLine()
