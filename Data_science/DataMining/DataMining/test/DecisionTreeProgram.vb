@@ -13,6 +13,12 @@ Namespace DecisionTree
 
             Dim data As DataTable = CsvFileHandler.ImportFromCsvFile("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.csv")
             Dim decisionTree As New Tree(data)
+            Dim valueForQuery As New Dictionary(Of String, String) From {{"Outlook", "Sunny"}, {"Temperatur", "Hot"}, {"Humidity", "High"}, {"Wind", "Weak"}}
+            Dim result = decisionTree.CalculateResult(valueForQuery)
+
+            valueForQuery = New Dictionary(Of String, String) From {{"Outlook", "Overcast"}, {"Temperatur", "Hot"}, {"Humidity", "High"}, {"Wind", "Weak"}}
+
+            result = decisionTree.CalculateResult(valueForQuery)
 
             Pause()
         End Sub

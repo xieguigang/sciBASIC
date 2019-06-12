@@ -1,6 +1,7 @@
 Imports System.Collections.Generic
 Imports System.Data
 Imports System.Linq
+Imports System.Runtime.CompilerServices
 
 Namespace DecisionTree
 
@@ -26,6 +27,11 @@ Namespace DecisionTree
         Sub New(data As DataTable)
             root = Tree.Learn(data, "")
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CalculateResult(valuesForQuery As IDictionary(Of String, String), Optional result As String = "") As String
+            Return CalculateResult(root, valuesForQuery, result)
+        End Function
 
         Public Shared Function CalculateResult(root As TreeNode, valuesForQuery As IDictionary(Of String, String), result As String) As String
             Dim valueFound = False
