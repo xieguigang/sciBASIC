@@ -22,7 +22,7 @@ Namespace DecisionTree
         End Function
 
         Public Shared Function GetDifferentAttributeNamesOfColumn(data As DataTable, columnIndex As Integer) As List(Of String)
-            Dim differentAttributes = New List(Of String)()
+            Dim differentAttributes As New List(Of String)()
 
             For i As Integer = 0 To data.Rows.Count - 1
                 Dim index = i
