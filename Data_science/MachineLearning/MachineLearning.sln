@@ -17,7 +17,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualB
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework", "..\DataMining\DataMining\Microsoft.VisualBasic.DataMining.Framework.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Microsoft.VisualBasic.DataMining.Framework", "..\DataMining\DataMining\DataMining.vbproj", "{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{AB20688F-19D2-4657-B7AB-473851354FBC}"
 EndProject
