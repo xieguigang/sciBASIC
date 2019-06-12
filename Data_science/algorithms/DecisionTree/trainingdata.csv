@@ -1,0 +1,15 @@
+Outlook;Temperatur;Humidity;Wind;NeedUmbrella;
+Sunny;Hot;High;Weak;Yes;
+Sunny;Hot;High;Strong;Yes;
+Overcast;Hot;High;Weak;No;
+Rain;Mild;High;Weak;No;
+Rain;Cool;Normal;Weak;No;
+Rain;Cool;Normal;Strong;Yes;
+Overcast;Cool;Normal;Strong;No;
+Sunny;Mild;High;Weak;Yes;
+Sunny;Cool;Normal;Weak;No;
+Rain;Mild;Normal;Weak;No;
+Sunny;Mild;Normal;Strong;No;
+Overcast;Mild;High;Strong;No;
+Overcast;Hot;Normal;Weak;No;
+Rain;Mild;High;Strong;Yes;
