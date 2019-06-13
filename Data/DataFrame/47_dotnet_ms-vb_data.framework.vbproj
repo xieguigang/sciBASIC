@@ -511,7 +511,6 @@
     <Compile Include="DATA\DataFrame.vb" />
     <Compile Include="DATA\MySQL.vb" />
     <Compile Include="DATA\RDataFrameHelpers.vb" />
-    <Compile Include="IO\BackendWriter.vb" />
     <Compile Include="IO\Generic\Extensions.vb" />
     <Compile Include="IO\Generic\DataSet.vb" />
     <Compile Include="IO\Generic\Table.vb" />
@@ -573,6 +572,7 @@
     <Compile Include="StorageProvider\Reflection\Attributes\ColumnAttributes.vb" />
     <Compile Include="StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb" />
     <Compile Include="StorageProvider\Reflection\StorageProviders\MetaAttributes.vb" />
+    <Compile Include="StorageProvider\Reflection\StorageProviders\DataFlowDirections.vb" />
     <Compile Include="StorageProvider\Reflection\StorageProviders\Reflection.vb" />
     <Compile Include="StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb" />
   </ItemGroup>

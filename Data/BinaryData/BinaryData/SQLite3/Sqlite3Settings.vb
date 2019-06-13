@@ -46,6 +46,12 @@ Namespace ManagedSqlite.Core
 
     Public Class Sqlite3Settings
 
+        ''' <summary>
+        ''' 在读取数据的时候,将blob数据块转换为base64字符串,默认不进行转换,保持原样输出
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property blobAsBase64 As Boolean = False
+
         Public Shared Function GetDefaultSettings() As [Default](Of Sqlite3Settings)
             Return New Sqlite3Settings
         End Function

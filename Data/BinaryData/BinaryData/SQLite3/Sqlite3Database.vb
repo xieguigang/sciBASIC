@@ -70,11 +70,12 @@ Namespace ManagedSqlite.Core
         Dim _sizeInPages As UInteger
         Dim _masterTable As Sqlite3MasterTable
 
-        Public Property Header() As DatabaseHeader
+        Public Property Header As DatabaseHeader
 
         Public ReadOnly Property GetTables() As IEnumerable(Of Sqlite3SchemaRow)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _masterTable.Tables
+                Return _masterTable.tables
             End Get
         End Property
 
@@ -86,6 +87,12 @@ Namespace ManagedSqlite.Core
             Call InitializeMasterTable()
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dbFile"></param>
+        ''' <param name="settings">Default is <see cref="Sqlite3Settings.GetDefaultSettings"/></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function OpenFile(dbFile As String, Optional settings As Sqlite3Settings = Nothing) As Sqlite3Database
             Return New Sqlite3Database(dbFile.Open(FileMode.Open, doClear:=False), settings)
@@ -107,6 +114,7 @@ Namespace ManagedSqlite.Core
         Private Sub InitializeMasterTable()
             ' Parse table on Page 1, the sqlite_master table
             Dim rootBtree As BTreePage = BTreePage.Parse(_reader, 1)
+            Dim table As Sqlite3Table
             ' Fake the schema for the sqlite_master table
             Dim schemaRow As New Sqlite3SchemaRow() With {
                  .Type = "table",
@@ -116,7 +124,7 @@ Namespace ManagedSqlite.Core
                  .Sql = "CREATE TABLE sqlite_master (type TEXT, name TEXT, tbl_name TEXT, rootpage INTEGER, sql TEXT);"
             }
 
-            Dim table As New Sqlite3Table(_reader, rootBtree, schemaRow)
+            table = New Sqlite3Table(_reader, rootBtree, schemaRow, _settings)
             _masterTable = New Sqlite3MasterTable(table)
         End Sub
 
@@ -130,7 +138,7 @@ Namespace ManagedSqlite.Core
 
                 ' Found it
                 Dim root As BTreePage = BTreePage.Parse(_reader, table.RootPage)
-                Dim tbl As New Sqlite3Table(_reader, root, table)
+                Dim tbl As New Sqlite3Table(_reader, root, table, _settings)
 
                 Return tbl
             Next
@@ -138,8 +146,9 @@ Namespace ManagedSqlite.Core
             Throw New Exception("Unable to find table named " & name)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Dispose() Implements IDisposable.Dispose
-            _reader.Dispose()
+            Call _reader.Dispose()
         End Sub
     End Class
 End Namespace

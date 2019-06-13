@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::8518579c1f15e168a087daea749ccd18, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface ISchema
-    ' 
-    '         Properties: SchemaOridinal
-    ' 
-    '         Function: GetOrdinal
-    ' 
-    '     Class RowBuilder
-    ' 
-    '         Properties: Columns, Defaults, HaveMetaAttribute, IndexedFields, MissingFields
-    '                     NonIndexed, SchemaProvider
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __tryFill, FillData, ToString
-    ' 
-    '         Sub: IndexOf, SolveReadOnlyMetaConflicts
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface ISchema
+' 
+'         Properties: SchemaOridinal
+' 
+'         Function: GetOrdinal
+' 
+'     Class RowBuilder
+' 
+'         Properties: Columns, Defaults, HaveMetaAttribute, IndexedFields, MissingFields
+'                     NonIndexed, SchemaProvider
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __tryFill, FillData, ToString
+' 
+'         Sub: IndexOf, SolveReadOnlyMetaConflicts
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
@@ -81,6 +82,8 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Columns As StorageProvider()
+        Public ReadOnly Property ColumnIndex As Index(Of String)
+
         Public ReadOnly Property SchemaProvider As SchemaProvider
 
         ''' <summary>
@@ -132,6 +135,7 @@ Namespace StorageProvider.ComponentModels
 
             HaveMetaAttribute = Not schemaProvider.MetaAttributes Is Nothing
             Defaults = DefaultAttribute.GetDefaultValues(schemaProvider.DeclaringType)
+            ColumnIndex = Columns.Select(Function(c) c.Name).ToArray
         End Sub
 
         ''' <summary>
@@ -216,6 +220,55 @@ Namespace StorageProvider.ComponentModels
 
                 For Each x In values
                     Call meta.Add(x.name, x.value)
+                Next
+
+                Call SchemaProvider _
+                    .MetaAttributes _
+                    .BindProperty _
+                    .SetValue(obj, meta, Nothing)
+            End If
+
+            Return obj
+        End Function
+
+        ''' <summary>
+        ''' 这个函数主要是应用于例如sqlite3, netcdf, hdf5等数据文件之中的所存储的对象的批量的反序列化操作
+        ''' </summary>
+        ''' <param name="row">从数据文件之中所读取出来的一帧数据</param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Function FillData(row As IEnumerable(Of NamedValue(Of Object)), obj As Object) As Object
+            Dim missing As New List(Of NamedValue(Of Object))
+            Dim propValue As Object
+            Dim column As StorageProvider
+            Dim i As VBInteger = Scan0
+
+            For Each field As NamedValue(Of Object) In row
+                If (i = ColumnIndex.IndexOf(field.Name)) = -1 Then
+                    missing += field
+
+                    Continue For
+                Else
+                    column = _Columns(i)
+                    propValue = field.Value
+                End If
+
+                If propValue Is Nothing Then
+                    propValue = Defaults(column.BindProperty.Name)
+                End If
+
+                If Not propValue Is Nothing AndAlso GetType(Byte()) Is propValue.GetType Then
+
+                End If
+
+                Call column.SetValue(obj, propValue)
+            Next
+
+            If HaveMetaAttribute Then
+                Dim meta As IDictionary = SchemaProvider.MetaAttributes.CreateDictionary
+
+                For Each x In missing
+                    Call meta.Add(x.Name, x.Value)
                 Next
 
                 Call SchemaProvider _

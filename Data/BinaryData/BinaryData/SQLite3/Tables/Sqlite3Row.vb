@@ -1,55 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::ae1fcbb2e9d2f62323cb2e928d1985d6, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3Row.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Sqlite3Row
-    ' 
-    '         Properties: ColumnData, RowId, Table
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) TryGetOrdinal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Sqlite3Row
+' 
+'         Properties: ColumnData, RowId, Table
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+2 Overloads) TryGetOrdinal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ManagedSqlite.Core.Tables
 
     Public Class Sqlite3Row
 
-        Public ReadOnly Property Table() As Sqlite3Table
-        Public ReadOnly Property RowId() As Long
-        Public ReadOnly Property ColumnData() As Object()
+        Public ReadOnly Property Table As Sqlite3Table
+        Public ReadOnly Property RowId As Long
+        Public ReadOnly Property ReadIndex As Long
+        Public ReadOnly Property ColumnData As Object()
 
         Default Public ReadOnly Property Item(field As Integer) As Object
             Get
@@ -60,11 +63,16 @@ Namespace ManagedSqlite.Core.Tables
         End Property
 
 
-        Friend Sub New(table As Sqlite3Table, rowId As Long, columnData As Object())
+        Friend Sub New(index&, table As Sqlite3Table, rowId As Long, columnData As Object())
             Me.Table = table
             Me.RowId = rowId
             Me.ColumnData = columnData
+            Me.ReadIndex = index
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"#{ReadIndex} [{RowId}] = {ColumnData.Select(AddressOf Scripting.ToString).GetJson}"
+        End Function
 
         Public Function TryGetOrdinal(index As UShort, ByRef value As Object) As Boolean
             value = Nothing
