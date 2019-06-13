@@ -281,7 +281,9 @@ Namespace Math
 
         ''' <summary>
         ''' Returns n unique random numbers in the range [1, n], inclusive. 
-        ''' This is equivalent to getting the first n numbers of some random permutation of the sequential numbers from 1 to max. 
+        ''' This is equivalent to getting the first n numbers of some random permutation of the sequential 
+        ''' numbers from 1 to max. 
+        ''' 
         ''' Runs in O(k^2) time.
         ''' </summary>
         ''' <param name="rand"></param>
