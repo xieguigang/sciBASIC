@@ -311,6 +311,14 @@ Public Module XmlExtensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function LoadFromXml(xml$, schema As Type, Optional throwEx As Boolean = True) As Object
+        If xml.StringEmpty Then
+            If throwEx Then
+                Throw New XmlException("Empty xml content!")
+            Else
+                Return Nothing
+            End If
+        End If
+
         Using stream As New StringReader(s:=xml)
             Try
                 Return New XmlSerializer(schema).Deserialize(stream)
