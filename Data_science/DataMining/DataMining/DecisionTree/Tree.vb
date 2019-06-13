@@ -22,7 +22,7 @@ Namespace DecisionTree
         ''' </summary>
         ''' <param name="data"></param>
         Sub New(data As DataTable)
-            root = Tree.Learn(data, "")
+            root = Tree.Learn(data)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
