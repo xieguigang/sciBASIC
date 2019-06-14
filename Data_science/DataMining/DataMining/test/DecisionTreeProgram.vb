@@ -32,12 +32,12 @@ Namespace DecisionTree
             Dim headers = lines(Scan0).Trim(";"c).Split(";"c)
             Dim rows = lines.Skip(1).Select(Function(line)
                                                 Dim t = line.Trim(";"c).Split(";"c)
-                                                Dim obj As New Entity With {.decisions = t.Last, .entityVector = t.Take(t.Length - 1).ToArray}
+                                                Dim obj As New Entity With {.entityVector = t}
 
                                                 Return obj
                                             End Function).ToArray
 
-            Return New DataTable With {.headers = headers.Take(headers.Length - 1).ToArray, .decisions = headers.Last, .rows = rows}
+            Return New DataTable With {.headers = headers, .rows = rows}
 
             'Dim rows = 0
             'Dim data = New DataTable()

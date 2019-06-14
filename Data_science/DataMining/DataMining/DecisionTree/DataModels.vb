@@ -7,13 +7,20 @@ Namespace DecisionTree
     ''' <summary>
     ''' A row in data table.(分类用的对象实例)
     ''' </summary>
+    ''' <remarks>
+    ''' 属性向量<see cref="Entity.entityVector"/>的最后一个值总是用来表示<see cref="Entity.decisions"/>结果值
+    ''' </remarks>
     Public Class Entity : Inherits EntityBase(Of String)
 
         ''' <summary>
         ''' 分类结果
         ''' </summary>
         ''' <returns></returns>
-        Public Property decisions As String
+        Public ReadOnly Property decisions As String
+            Get
+                Return entityVector(Length - 1)
+            End Get
+        End Property
 
         Public Overrides Function ToString() As String
             Return $"{decisions} ~ {MyBase.ToString}"
@@ -33,7 +40,12 @@ Namespace DecisionTree
         ''' 分类结果的显示标题
         ''' </summary>
         ''' <returns></returns>
-        Public Property decisions As String
+        Public ReadOnly Property decisions As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return headers.Last
+            End Get
+        End Property
 
         ''' <summary>
         ''' Training set data

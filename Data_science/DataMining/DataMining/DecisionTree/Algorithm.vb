@@ -67,8 +67,7 @@ Namespace DecisionTree
             For i As Integer = 0 To data.rows.Count - 1
                 If data.rows(i)(rootTableIndex).Equals(edgePointingToNextNode) Then
                     Dim row As New Entity With {
-                        .entityVector = data.rows(i).entityVector.ToArray,
-                        .decisions = data.rows(i).decisions
+                        .entityVector = data.rows(i).entityVector.ToArray
                     }
 
                     Call rows.Add(row)
@@ -90,7 +89,7 @@ Namespace DecisionTree
             Dim differentAttributenames As String()
 
             ' Get all names, amount of attributes and attributes for every column             
-            For i As Integer = 0 To data.columns - 1
+            For i As Integer = 0 To data.columns - 2
                 differentAttributenames = DecisionTree.Attributes.GetDifferentAttributeNamesOfColumn(data, i)
                 attributes.Add(New Attributes(data.headers(i), differentAttributenames))
             Next
