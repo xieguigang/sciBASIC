@@ -98,10 +98,10 @@ Namespace DecisionTree
             Dim tableEntropy As Double = CalculateTableEntropy(data)
 
             For i As Integer = 0 To attributes.Count - 1
-                attributes(i).InformationGain = GetGainForAllAttributes(data, i, tableEntropy)
+                attributes(i).informationGain = GetGainForAllAttributes(data, i, tableEntropy)
 
-                If attributes(i).InformationGain > highestInformationGain Then
-                    highestInformationGain = attributes(i).InformationGain
+                If attributes(i).informationGain > highestInformationGain Then
+                    highestInformationGain = attributes(i).informationGain
                     highestInformationGainIndex = i
                 End If
             Next

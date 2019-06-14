@@ -22,7 +22,11 @@ Namespace DecisionTree
             ' OUTLOOK -- overcast --> NO
             Dim result2 = decisionTree.CalculateResult(valueForQuery)
 
-            '  Call decisionTree.root.GetJson.SaveTo("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.json")
+            Call decisionTree.root.GetJson.SaveTo("./trainingdata.json")
+
+            Dim tree2 As New Tree("./trainingdata.json".LoadJsonFile(Of TreeNode))
+
+            Dim result3 = decisionTree.CalculateResult(valueForQuery)
 
             Pause()
         End Sub

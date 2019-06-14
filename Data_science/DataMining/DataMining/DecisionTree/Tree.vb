@@ -25,9 +25,21 @@ Namespace DecisionTree
             root = Tree.Learn(data)
         End Sub
 
+        ''' <summary>
+        ''' Load a trained decision tree model
+        ''' </summary>
+        ''' <param name="model">A trained model which comes from json/xml</param>
+        Sub New(model As TreeNode)
+            root = model
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalculateResult(valuesForQuery As IDictionary(Of String, String), Optional result As String = "") As String
             Return CalculateResult(root, valuesForQuery, result)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return root.attributes.ToString
         End Function
 
         Public Shared Function CalculateResult(root As TreeNode, valuesForQuery As IDictionary(Of String, String), result As String) As String
