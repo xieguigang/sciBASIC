@@ -2,17 +2,12 @@ Namespace DecisionTree
 
     Public Class TreeNode
 
-        Public ReadOnly Property name As String
-        Public ReadOnly Property edge As String
-        Public ReadOnly Property attributes As Attributes
-        Public ReadOnly Property childNodes As List(Of TreeNode)
-
-        ''' <summary>
-        ''' Table index
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property index As Integer
-        Public ReadOnly Property isLeaf As Boolean
+        Public Property name As String
+        Public Property edge As String
+        Public Property attributes As Attributes
+        Public Property childNodes As List(Of TreeNode)
+        Public Property index As Integer
+        Public Property isLeaf As Boolean
 
         Public Sub New(name As String, tableIndex As Integer, attributes As Attributes, edge As String)
             Me.name = name
@@ -26,6 +21,9 @@ Namespace DecisionTree
             Me.isLeaf = isleaf
             Me.name = name
             Me.edge = edge
+        End Sub
+
+        Sub New()
         End Sub
 
         Public Overrides Function ToString() As String

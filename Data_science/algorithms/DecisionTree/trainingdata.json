@@ -1,0 +1,79 @@
+{
+  "attributes": {
+    "differentAttributeNames": [ "Sunny", "Overcast", "Rain" ],
+    "informationGain": 0.24674981977443911,
+    "name": "Outlook"
+  },
+  "childNodes": [
+    {
+      "attributes": {
+        "differentAttributeNames": [ "High", "Normal" ],
+        "informationGain": 0.97095059445466858,
+        "name": "Humidity"
+      },
+      "childNodes": [
+        {
+          "attributes": null,
+          "childNodes": null,
+          "edge": "High",
+          "index": 0,
+          "isLeaf": true,
+          "name": "Yes"
+        },
+        {
+          "attributes": null,
+          "childNodes": null,
+          "edge": "Normal",
+          "index": 0,
+          "isLeaf": true,
+          "name": "No"
+        }
+      ],
+      "edge": "Sunny",
+      "index": 1,
+      "isLeaf": false,
+      "name": "Humidity"
+    },
+    {
+      "attributes": null,
+      "childNodes": null,
+      "edge": "Overcast",
+      "index": 0,
+      "isLeaf": true,
+      "name": "No"
+    },
+    {
+      "attributes": {
+        "differentAttributeNames": [ "Weak", "Strong" ],
+        "informationGain": 0.97095059445466858,
+        "name": "Wind"
+      },
+      "childNodes": [
+        {
+          "attributes": null,
+          "childNodes": null,
+          "edge": "Weak",
+          "index": 0,
+          "isLeaf": true,
+          "name": "No"
+        },
+        {
+          "attributes": null,
+          "childNodes": null,
+          "edge": "Strong",
+          "index": 0,
+          "isLeaf": true,
+          "name": "Yes"
+        }
+      ],
+      "edge": "Rain",
+      "index": 2,
+      "isLeaf": false,
+      "name": "Wind"
+    }
+  ],
+  "edge": "",
+  "index": 0,
+  "isLeaf": false,
+  "name": "Outlook"
+}
