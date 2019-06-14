@@ -59,7 +59,7 @@ Namespace DecisionTree
                     End While
                 End Using
 
-                Dim differentValuesOfLastColumn = NodeAttr.GetDifferentAttributeNamesOfColumn(data, data.Columns.Count - 1)
+                Dim differentValuesOfLastColumn = Attributes.GetDifferentAttributeNamesOfColumn(data, data.Columns.Count - 1)
 
                 If differentValuesOfLastColumn.Count > 2 Then
                     Throw New Exception("The last column is the result column and can contain only 2 different values")

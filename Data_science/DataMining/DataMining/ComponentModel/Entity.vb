@@ -48,7 +48,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel
 
@@ -58,9 +58,18 @@ Namespace ComponentModel
     ''' <typeparam name="T">只允许数值类型</typeparam>
     Public MustInherit Class EntityBase(Of T)
 
+        ''' <summary>
+        ''' Properties vector of current entity.
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute("T")>
         Public Overridable Property entityVector As T()
 
+        ''' <summary>
+        ''' Get/Set property value by index
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         Default Public Overloads Property ItemValue(i As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -71,11 +80,19 @@ Namespace ComponentModel
             End Set
         End Property
 
+        ''' <summary>
+        ''' Length of <see cref="entityVector"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return entityVector.Length
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return entityVector.GetJson
+        End Function
     End Class
 End Namespace

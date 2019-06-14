@@ -404,7 +404,7 @@
     <Compile Include="Clustering\FuzzyCMeans\Entity.vb" />
     <Compile Include="DecisionTree\Algorithm.vb" />
     <Compile Include="DecisionTree\VisualDebugger.vb" />
-    <Compile Include="DecisionTree\NodeAttr.vb" />
+    <Compile Include="DecisionTree\Attributes.vb" />
     <Compile Include="DecisionTree\CSVFileHandler.vb" />
     <Compile Include="DecisionTree\Tree.vb" />
     <Compile Include="DecisionTree\TreeNode.vb" />

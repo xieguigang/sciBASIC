@@ -5,7 +5,7 @@ Namespace DecisionTree
     ''' <summary>
     ''' Node attribute value
     ''' </summary>
-    Public Class NodeAttr
+    Public Class Attributes
 
         Public ReadOnly Property name As String
         Public ReadOnly Property differentAttributeNames As List(Of String)

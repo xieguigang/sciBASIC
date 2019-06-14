@@ -4,12 +4,12 @@ Namespace DecisionTree
 
         Public ReadOnly Property name As String
         Public ReadOnly Property edge As String
-        Public ReadOnly Property nodeAttr As NodeAttr
+        Public ReadOnly Property nodeAttr As Attributes
         Public ReadOnly Property childNodes As List(Of TreeNode)
         Public ReadOnly Property index As Integer
         Public ReadOnly Property isLeaf As Boolean
 
-        Public Sub New(name As String, tableIndex As Integer, nodeAttribute As NodeAttr, edge As String)
+        Public Sub New(name As String, tableIndex As Integer, nodeAttribute As Attributes, edge As String)
             Me.name = name
             index = tableIndex
             nodeAttr = nodeAttribute
