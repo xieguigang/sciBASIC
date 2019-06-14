@@ -1,4 +1,6 @@
-﻿Namespace DecisionTree
+﻿Imports System.Runtime.CompilerServices
+
+Namespace DecisionTree
 
     ''' <summary>
     ''' Algorithm module for train a new decision tree model
@@ -12,16 +14,16 @@
         ''' <param name="edgeName"></param>
         ''' <returns></returns>
         Public Function Learn(data As DataTable, Optional edgeName As String = "") As TreeNode
-            Dim root As TreeNode = GetRootNode(data, edgeName)
+            Dim root As TreeNode = data.GetRootNode(edgeName)
+            Dim reducedTable As DataTable
 
-            For Each item In root.nodeAttr.differentAttributeNames
+            For Each item As String In root.attributes.differentAttributeNames
                 ' if a leaf, leaf will be added in this method
                 Dim isLeaf = CheckIfIsLeaf(root, data, item)
 
                 ' make a recursive call as long as the node is not a leaf
                 If Not isLeaf Then
-                    Dim reducedTable = CreateSmallerTable(data, item, root.index)
-
+                    reducedTable = CreateSmallerTable(data, item, root.index)
                     root.childNodes.Add(Learn(reducedTable, item))
                 End If
             Next
@@ -31,12 +33,12 @@
 
         Private Function CheckIfIsLeaf(root As TreeNode, data As DataTable, attributeToCheck As String) As Boolean
             Dim isLeaf = True
-            Dim allEndValues = New List(Of String)()
+            Dim allEndValues As New List(Of String)()
 
             ' get all leaf values for the attribute in question
-            For i As Integer = 0 To data.Rows.Count - 1
-                If data.Rows(i)(root.index).ToString().Equals(attributeToCheck) Then
-                    allEndValues.Add(data.Rows(i)(data.Columns.Count - 1).ToString())
+            For i As Integer = 0 To data.rows.Count - 1
+                If data.rows(i)(root.index).Equals(attributeToCheck) Then
+                    allEndValues.Add(data.rows(i)(data.columns - 1).ToString())
                 End If
             Next
 
@@ -54,45 +56,46 @@
         End Function
 
         Private Function CreateSmallerTable(data As DataTable, edgePointingToNextNode As String, rootTableIndex As Integer) As DataTable
-            Dim smallerData = New DataTable()
-
+            ' create a new empty data table object
             ' add column titles
-            For i As Integer = 0 To data.Columns.Count - 1
-                smallerData.Columns.Add(data.Columns(i).ToString())
-            Next
+            Dim smallerData As New DataTable() With {
+                .headers = data.headers.ToArray
+            }
+            Dim rows As New List(Of Entity)
 
             ' add rows which contain edgePointingToNextNode to new datatable
-            For i As Integer = 0 To data.Rows.Count - 1
-                If data.Rows(i)(rootTableIndex).ToString().Equals(edgePointingToNextNode) Then
-                    Dim row = New String(data.Columns.Count - 1) {}
+            For i As Integer = 0 To data.rows.Count - 1
+                If data.rows(i)(rootTableIndex).Equals(edgePointingToNextNode) Then
+                    Dim row As New Entity With {
+                        .entityVector = data.rows(i).entityVector.ToArray
+                    }
 
-                    For j As Integer = 0 To data.Columns.Count - 1
-                        row(j) = data.Rows(i)(j).ToString()
-                    Next
-
-                    smallerData.Rows.Add(row)
+                    Call rows.Add(row)
                 End If
             Next
 
-            ' remove column which was already used as node            
-            smallerData.Columns.Remove(smallerData.Columns(rootTableIndex))
+            ' remove column which was already used as node       
+            smallerData.rows = rows.ToArray
+            smallerData.RemoveColumn(rootTableIndex)
 
             Return smallerData
         End Function
 
+        <Extension>
         Private Function GetRootNode(data As DataTable, edge As String) As TreeNode
-            Dim attributes = New List(Of NodeAttr)()
+            Dim attributes As New List(Of Attributes)()
             Dim highestInformationGainIndex = -1
             Dim highestInformationGain = Double.MinValue
+            Dim differentAttributenames As String()
 
             ' Get all names, amount of attributes and attributes for every column             
-            For i As Integer = 0 To data.Columns.Count - 2
-                Dim differentAttributenames = NodeAttr.GetDifferentAttributeNamesOfColumn(data, i)
-                attributes.Add(New NodeAttr(data.Columns(i).ToString(), differentAttributenames))
+            For i As Integer = 0 To data.columns - 2
+                differentAttributenames = DecisionTree.Attributes.GetDifferentAttributeNamesOfColumn(data, i)
+                attributes.Add(New Attributes(data.headers(i), differentAttributenames))
             Next
 
             ' Calculate Entropy (S)
-            Dim tableEntropy = CalculateTableEntropy(data)
+            Dim tableEntropy As Double = CalculateTableEntropy(data)
 
             For i As Integer = 0 To attributes.Count - 1
                 attributes(i).InformationGain = GetGainForAllAttributes(data, i, tableEntropy)
@@ -107,11 +110,11 @@
         End Function
 
         Private Function GetGainForAllAttributes(data As DataTable, colIndex As Integer, entropyOfDataset As Double) As Double
-            Dim totalRows = data.Rows.Count
+            Dim totalRows = data.rows.Length
             Dim amountForDifferentValue = GetAmountOfEdgesAndTotalPositivResults(data, colIndex)
-            Dim stepsForCalculation = New List(Of Double)()
+            Dim stepsForCalculation As New List(Of Double)()
 
-            For Each item In amountForDifferentValue
+            For Each item As Integer(,) In amountForDifferentValue
                 ' helper for calculation
                 Dim firstDivision = item(0, 1) / CDbl(item(0, 0))
                 Dim secondDivision = (item(0, 0) - item(0, 1)) / CDbl(item(0, 0))
@@ -125,41 +128,45 @@
             Next
 
             Dim gain = stepsForCalculation.[Select](Function(t, i) amountForDifferentValue(i)(0, 0) / CDbl(totalRows) * t).Sum()
-
             gain = entropyOfDataset - gain
 
             Return gain
         End Function
 
         Private Function CalculateTableEntropy(data As DataTable) As Double
-            Dim totalRows = data.Rows.Count
-            Dim amountForDifferentValue = GetAmountOfEdgesAndTotalPositivResults(data, data.Columns.Count - 1)
-
-            Dim stepsForCalculation = amountForDifferentValue.[Select](Function(item) item(0, 0) / CDbl(totalRows)).[Select](Function(division) -division * Math.Log(division, 2)).ToList()
+            Dim totalRows As Integer = data.rows.Length
+            Dim amountForDifferentValue = data.GetAmountOfEdgesAndTotalPositivResults(data.columns - 1)
+            Dim stepsForCalculation = amountForDifferentValue _
+                .[Select](Function(item) item(0, 0) / CDbl(totalRows)) _
+                .[Select](Function(division) -division * Math.Log(division, 2)) _
+                .ToList()
 
             Return stepsForCalculation.Sum()
         End Function
 
+        <Extension>
         Private Function GetAmountOfEdgesAndTotalPositivResults(data As DataTable, indexOfColumnToCheck As Integer) As List(Of Integer(,))
-            Dim foundValues = New List(Of Integer(,))()
+            Dim foundValues As New List(Of Integer(,))()
             Dim knownValues = CountKnownValues(data, indexOfColumnToCheck)
+            Dim array As Integer(,)
 
-            For Each item In knownValues
+            For Each item As String In knownValues
                 Dim amount = 0
                 Dim positiveAmount = 0
 
-                For i As Integer = 0 To data.Rows.Count - 1
-                    If data.Rows(i)(indexOfColumnToCheck).ToString().Equals(item) Then
+                For i As Integer = 0 To data.rows.Length - 1
+                    If data.rows(i)(indexOfColumnToCheck).Equals(item) Then
                         amount += 1
 
-                        ' Counts the positive cases and adds the sum later to the array for the calculation
-                        If data.Rows(i)(data.Columns.Count - 1).ToString().Equals(data.Rows(0)(data.Columns.Count - 1)) Then
+                        ' Counts the positive cases and adds the sum later 
+                        ' to the array for the calculation
+                        If data.rows(i).decisions.Equals(data.rows(0).decisions) Then
                             positiveAmount += 1
                         End If
                     End If
                 Next
 
-                Dim array As Integer(,) = {{amount, positiveAmount}}
+                array = {{amount, positiveAmount}}
                 foundValues.Add(array)
             Next
 
@@ -167,19 +174,19 @@
         End Function
 
         Private Function CountKnownValues(data As DataTable, indexOfColumnToCheck As Integer) As IEnumerable(Of String)
-            Dim knownValues = New List(Of String)()
+            Dim knownValues As New List(Of String)()
 
             ' add the value of the first row to the list
-            If data.Rows.Count > 0 Then
-                knownValues.Add(data.Rows(0)(indexOfColumnToCheck).ToString())
+            If data.rows.Length > 0 Then
+                knownValues.Add(data.rows(0)(indexOfColumnToCheck))
             End If
 
-            For j As Integer = 1 To data.Rows.Count - 1
+            For j As Integer = 1 To data.rows.Length - 1
                 Dim index = j
-                Dim newValue = knownValues.All(Function(item) Not data.Rows(index)(indexOfColumnToCheck).ToString().Equals(item))
+                Dim newValue = knownValues.All(Function(item) Not data.rows(index)(indexOfColumnToCheck).Equals(item))
 
                 If newValue Then
-                    knownValues.Add(data.Rows(j)(indexOfColumnToCheck).ToString())
+                    knownValues.Add(data.rows(j)(indexOfColumnToCheck))
                 End If
             Next
 

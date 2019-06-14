@@ -4,6 +4,7 @@
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.DataMining.DecisionTree
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace DecisionTree
 
@@ -14,11 +15,14 @@ Namespace DecisionTree
             Dim data As DataTable = CsvFileHandler.ImportFromCsvFile("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.csv")
             Dim decisionTree As New Tree(data)
             Dim valueForQuery As New Dictionary(Of String, String) From {{"Outlook", "Sunny"}, {"Temperatur", "Hot"}, {"Humidity", "High"}, {"Wind", "Weak"}}
+            ' OUTLOOK -- sunny --> HUMIDITY -- high --> YES
             Dim result = decisionTree.CalculateResult(valueForQuery)
 
             valueForQuery = New Dictionary(Of String, String) From {{"Outlook", "Overcast"}, {"Temperatur", "Hot"}, {"Humidity", "High"}, {"Wind", "Weak"}}
+            ' OUTLOOK -- overcast --> NO
+            Dim result2 = decisionTree.CalculateResult(valueForQuery)
 
-            result = decisionTree.CalculateResult(valueForQuery)
+            '  Call decisionTree.root.GetJson.SaveTo("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.json")
 
             Pause()
         End Sub
@@ -28,82 +32,93 @@ Namespace DecisionTree
         Private Sub New()
         End Sub
         Public Shared Function ImportFromCsvFile(filePath As String) As DataTable
-            Dim rows = 0
-            Dim data = New DataTable()
+            Dim lines = filePath.ReadAllLines
+            Dim headers = lines(Scan0).Trim(";"c).Split(";"c)
+            Dim rows = lines.Skip(1).Select(Function(line)
+                                                Dim t = line.Trim(";"c).Split(";"c)
+                                                Dim obj As New Entity With {.entityVector = t}
 
-            Try
-                Using reader = New StreamReader(File.OpenRead(filePath))
-                    While Not reader.EndOfStream
-                        Dim line = reader.ReadLine()
-                        Dim values = line.Substring(0, line.Length - 1).Split(";"c)
+                                                Return obj
+                                            End Function).ToArray
 
-                        For Each item As String In values
-                            If String.IsNullOrEmpty(item) OrElse String.IsNullOrWhiteSpace(item) Then
-                                Throw New Exception("Value can't be empty")
-                            End If
+            Return New DataTable With {.headers = headers, .rows = rows}
 
-                            If rows = 0 Then
-                                data.Columns.Add(item)
-                            End If
-                        Next
+            'Dim rows = 0
+            'Dim data = New DataTable()
 
-                        If rows > 0 Then
-                            data.Rows.Add(values)
-                        End If
+            'Try
+            '    Using reader = New StreamReader(File.OpenRead(filePath))
+            '        While Not reader.EndOfStream
+            '            Dim line = reader.ReadLine()
+            '            Dim values = line.Substring(0, line.Length - 1).Split(";"c)
 
-                        rows += 1
+            '            For Each item As String In values
+            '                If String.IsNullOrEmpty(item) OrElse String.IsNullOrWhiteSpace(item) Then
+            '                    Throw New Exception("Value can't be empty")
+            '                End If
 
-                        If values.Length <> data.Columns.Count Then
-                            Throw New Exception("Row is shorter or longer than title row")
-                        End If
-                    End While
-                End Using
+            '                If rows = 0 Then
+            '                    data.Columns.Add(item)
+            '                End If
+            '            Next
 
-                Dim differentValuesOfLastColumn = NodeAttr.GetDifferentAttributeNamesOfColumn(data, data.Columns.Count - 1)
+            '            If rows > 0 Then
+            '                data.Rows.Add(values)
+            '            End If
 
-                If differentValuesOfLastColumn.Count > 2 Then
-                    Throw New Exception("The last column is the result column and can contain only 2 different values")
-                End If
-            Catch ex As Exception
-                DisplayErrorMessage(ex.Message)
-                data = Nothing
-            End Try
+            '            rows += 1
 
-            ' if no rows are entered or data == null, return null
-            Return If(data.Rows.Count > 0, data, Nothing)
+            '            If values.Length <> data.Columns.Count Then
+            '                Throw New Exception("Row is shorter or longer than title row")
+            '            End If
+            '        End While
+            '    End Using
+
+            '    Dim differentValuesOfLastColumn = Attributes.GetDifferentAttributeNamesOfColumn(data, data.Columns.Count - 1)
+
+            '    If differentValuesOfLastColumn.Count > 2 Then
+            '        Throw New Exception("The last column is the result column and can contain only 2 different values")
+            '    End If
+            'Catch ex As Exception
+            '    DisplayErrorMessage(ex.Message)
+            '    data = Nothing
+            'End Try
+
+            '' if no rows are entered or data == null, return null
+            'Return If(data.Rows.Count > 0, data, Nothing)
         End Function
 
-        Public Shared Sub ExportToCsvFile(data As DataTable, filePath As String)
-            If data.Columns.Count = 0 Then
-                Throw New Exception("Nothing to export")
-            End If
+        'Public Shared Sub ExportToCsvFile(data As DataTable, filePath As String)
+        '    If data.Columns.Count = 0 Then
+        '        Throw New Exception("Nothing to export")
+        '    End If
 
-            Dim sb = New StringBuilder()
+        '    Dim sb = New StringBuilder()
 
-            ' add titles to the string builder
-            For Each item In data.Columns
-                ' seperate values with a ;
-                sb.AppendFormat("{item};")
-            Next
+        '    ' add titles to the string builder
+        '    For Each item In data.Columns
+        '        ' seperate values with a ;
+        '        sb.AppendFormat("{item};")
+        '    Next
 
-            sb.AppendLine()
+        '    sb.AppendLine()
 
-            ' add every row to the string builder
-            For i As Integer = 0 To data.Rows.Count - 1
-                For j As Integer = 0 To data.Columns.Count - 1
-                    ' seperate values with a ;
-                    sb.AppendFormat("{data.Rows[i][j]};")
-                Next
+        '    ' add every row to the string builder
+        '    For i As Integer = 0 To data.Rows.Count - 1
+        '        For j As Integer = 0 To data.Columns.Count - 1
+        '            ' seperate values with a ;
+        '            sb.AppendFormat("{data.Rows[i][j]};")
+        '        Next
 
-                sb.AppendLine()
-            Next
+        '        sb.AppendLine()
+        '    Next
 
-            File.WriteAllText(filePath, sb.ToString())
+        '    File.WriteAllText(filePath, sb.ToString())
 
-            Console.ForegroundColor = ConsoleColor.Green
-            Console.WriteLine("Data sucessfully exported")
-            Console.ResetColor()
-        End Sub
+        '    Console.ForegroundColor = ConsoleColor.Green
+        '    Console.WriteLine("Data sucessfully exported")
+        '    Console.ResetColor()
+        'End Sub
 
         Private Shared Sub DisplayErrorMessage(errorMessage As String)
             Console.ForegroundColor = ConsoleColor.Red
