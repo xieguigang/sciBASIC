@@ -13,6 +13,8 @@ Namespace RandomForests
         ''' <param name="n">随机森林之中的决策树的数量</param>
         ''' <param name="size">随机采样得到的子数据集内的样本数量</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Bagging(trainingSet As Entity(), n%, size%) As IEnumerable(Of Entity())
             Return Bootstraping _
@@ -30,6 +32,8 @@ Namespace RandomForests
         ''' </summary>
         ''' <param name="p"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Gini(p As IEnumerable(Of Double)) As Double
             Return 1 - (Aggregate pk As Double In p Into Sum(pk ^ 2))
