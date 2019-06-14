@@ -1,4 +1,4 @@
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 
 Namespace DecisionTree
 
@@ -46,6 +46,10 @@ Namespace DecisionTree
             Dim valueFound = False
 
             result += root.name.ToUpper() & " -- "
+            ' 因为在计算的过程之中，函数会删除查询字典之中的一些输入值
+            ' 所以为了不修改外部的数据
+            ' 在这里需要做一份数据拷贝
+            valuesForQuery = New Dictionary(Of String, String)(valuesForQuery)
 
             If root.isLeaf Then
                 result = root.edge.ToLower() & " --> " & root.name.ToUpper()

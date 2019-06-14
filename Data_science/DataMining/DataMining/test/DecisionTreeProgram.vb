@@ -19,6 +19,9 @@ Namespace DecisionTree
             Dim result = decisionTree.CalculateResult(valueForQuery)
 
             valueForQuery = New Dictionary(Of String, String) From {{"Outlook", "Overcast"}, {"Temperatur", "Hot"}, {"Humidity", "High"}, {"Wind", "Weak"}}
+
+            Dim query3 As New Dictionary(Of String, String)(valueForQuery)
+
             ' OUTLOOK -- overcast --> NO
             Dim result2 = decisionTree.CalculateResult(valueForQuery)
 
@@ -26,7 +29,7 @@ Namespace DecisionTree
 
             Dim tree2 As New Tree("./trainingdata.json".LoadJsonFile(Of TreeNode))
 
-            Dim result3 = decisionTree.CalculateResult(valueForQuery)
+            Dim result3 = decisionTree.CalculateResult(query3)
 
             Pause()
         End Sub
