@@ -17,7 +17,7 @@ Namespace DecisionTree
             Dim root As TreeNode = data.GetRootNode(edgeName)
             Dim reducedTable As DataTable
 
-            For Each item As String In root.nodeAttr.differentAttributeNames
+            For Each item As String In root.attributes.differentAttributeNames
                 ' if a leaf, leaf will be added in this method
                 Dim isLeaf = CheckIfIsLeaf(root, data, item)
 
@@ -136,12 +136,16 @@ Namespace DecisionTree
 
         Private Function CalculateTableEntropy(data As DataTable) As Double
             Dim totalRows As Integer = data.rows.Length
-            Dim amountForDifferentValue = GetAmountOfEdgesAndTotalPositivResults(data, data.columns - 1)
-            Dim stepsForCalculation = amountForDifferentValue.[Select](Function(item) item(0, 0) / CDbl(totalRows)).[Select](Function(division) -division * Math.Log(division, 2)).ToList()
+            Dim amountForDifferentValue = data.GetAmountOfEdgesAndTotalPositivResults(data.columns - 1)
+            Dim stepsForCalculation = amountForDifferentValue _
+                .[Select](Function(item) item(0, 0) / CDbl(totalRows)) _
+                .[Select](Function(division) -division * Math.Log(division, 2)) _
+                .ToList()
 
             Return stepsForCalculation.Sum()
         End Function
 
+        <Extension>
         Private Function GetAmountOfEdgesAndTotalPositivResults(data As DataTable, indexOfColumnToCheck As Integer) As List(Of Integer(,))
             Dim foundValues As New List(Of Integer(,))()
             Dim knownValues = CountKnownValues(data, indexOfColumnToCheck)
@@ -155,8 +159,9 @@ Namespace DecisionTree
                     If data.rows(i)(indexOfColumnToCheck).Equals(item) Then
                         amount += 1
 
-                        ' Counts the positive cases and adds the sum later to the array for the calculation
-                        If data.rows(i)(data.columns - 1).ToString().Equals(data.rows(0)(data.columns - 1)) Then
+                        ' Counts the positive cases and adds the sum later 
+                        ' to the array for the calculation
+                        If data.rows(i).decisions.Equals(data.rows(0).decisions) Then
                             positiveAmount += 1
                         End If
                     End If

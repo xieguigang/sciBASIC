@@ -30,6 +30,12 @@ Namespace DecisionTree
         Public Property headers As String()
 
         ''' <summary>
+        ''' 分类结果的显示标题
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property decisions As String
+
+        ''' <summary>
         ''' Training set data
         ''' </summary>
         ''' <returns></returns>
