@@ -91,7 +91,16 @@ Namespace DecisionTree
     Public Class ClassifyResult
 
         Public Property result As String
-        Public Property explains As List(Of String)
+        Public Property explains As New List(Of String)
 
+        Public Overrides Function ToString() As String
+            Dim reason As String = explains _
+                .Take(explains.Count - 1) _
+                .Split(2) _
+                .Select(Function(exp) $"({exp(Scan0)} Is '{exp(1)}')") _
+                .JoinBy(" And ")
+
+            Return $"{result} As [ {reason} ]"
+        End Function
     End Class
 End Namespace

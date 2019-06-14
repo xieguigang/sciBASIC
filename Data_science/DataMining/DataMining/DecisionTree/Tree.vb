@@ -35,7 +35,7 @@ Namespace DecisionTree
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalculateResult(valuesForQuery As IDictionary(Of String, String)) As ClassifyResult
-            Return CalculateResult(root, valuesForQuery, New ClassifyResult With {.explains = New List(Of String)})
+            Return CalculateResult(root, valuesForQuery, New ClassifyResult)
         End Function
 
         Public Overrides Function ToString() As String
@@ -52,7 +52,7 @@ Namespace DecisionTree
             valuesForQuery = New Dictionary(Of String, String)(valuesForQuery)
 
             If root.isLeaf Then
-                result.explains += root.edge
+                ' result.explains += root.edge
                 result.result = root.name.ToUpper()
                 valueFound = True
             Else
