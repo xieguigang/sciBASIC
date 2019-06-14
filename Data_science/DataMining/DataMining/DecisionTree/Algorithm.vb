@@ -38,7 +38,7 @@ Namespace DecisionTree
             ' get all leaf values for the attribute in question
             For i As Integer = 0 To data.rows.Count - 1
                 If data.rows(i)(root.index).Equals(attributeToCheck) Then
-                    allEndValues.Add(data.rows(i)(data.columns - 1).ToString())
+                    allEndValues.Add(data.rows(i).decisions)
                 End If
             Next
 
@@ -120,7 +120,7 @@ Namespace DecisionTree
                 Dim secondDivision = (item(0, 0) - item(0, 1)) / CDbl(item(0, 0))
 
                 ' prevent dividedByZeroException
-                If firstDivision = 0 OrElse secondDivision = 0 Then
+                If firstDivision = 0.0 OrElse secondDivision = 0.0 Then
                     stepsForCalculation.Add(0.0)
                 Else
                     stepsForCalculation.Add(-firstDivision * Math.Log(firstDivision, 2) - secondDivision * Math.Log(secondDivision, 2))
