@@ -5,10 +5,14 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace DecisionTree
 
     ''' <summary>
-    ''' A row in data table
+    ''' A row in data table.(分类用的对象实例)
     ''' </summary>
     Public Class Entity : Inherits EntityBase(Of String)
 
+        ''' <summary>
+        ''' 分类结果
+        ''' </summary>
+        ''' <returns></returns>
         Public Property decisions As String
 
         Public Overrides Function ToString() As String

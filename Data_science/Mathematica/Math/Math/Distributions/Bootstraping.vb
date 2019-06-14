@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::eee36ed7d82c3f2c5e731f87f1fbaa80, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Bootstraping
-    ' 
-    '         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Bootstraping
+' 
+'         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,8 +61,10 @@ Namespace Distributions
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Sample(x As Integer) As Vector
-            Return New Random().Permutation(x, x).AsVector
+        Public Function Sample(x As Integer) As Integer()
+            SyncLock seeds
+                Return seeds.Permutation(x, x)
+            End SyncLock
         End Function
 
         ''' <summary>
@@ -77,35 +79,36 @@ Namespace Distributions
         ''' 本质上，bootstrap算法是最大似然估计的一种实现，它和最大似然估计相比的优点在于，它不需要用参数来刻画总体分布。
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="source"></param>
-        ''' <param name="N"></param>
-        ''' <param name="B"></param>
+        ''' <param name="source">总体样本</param>
+        ''' <param name="N">每一个样本的大小</param>
+        ''' <param name="bags">采样的次数</param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function Samples(Of T)(source As IEnumerable(Of T), N As Integer, Optional B As Integer = 100) As IEnumerable(Of IntegerTagged(Of T()))
+        Public Iterator Function Samples(Of T)(source As IEnumerable(Of T), N As Integer, Optional bags As Integer = 100) As IEnumerable(Of SeqValue(Of T()))
             Dim array As T() = source.ToArray
-            Dim rnd As New Random
+            Dim sampleBags = Iterator Function() As IEnumerable(Of T)
+                                 For k As Integer = 0 To N - 1
+                                     ' 在这里是有放回的随机采样
+                                     Yield array(seeds.Next(array.Length))
+                                 Next
+                             End Function
 
-            For i As Integer = 0 To B
-                Dim ls As New List(Of T)
+            For i As Integer = 0 To bags
+                Call seeds.Next()
 
-                For k As Integer = 0 To N - 1
-                    ls += array(rnd.Next(array.Length))
-                Next
-
-                Yield New IntegerTagged(Of T()) With {
-                    .Tag = i,
-                    .Value = ls.ToArray
+                Yield New SeqValue(Of T()) With {
+                    .i = i,
+                    .value = sampleBags().ToArray
                 }
             Next
         End Function
 
         <Extension>
         Public Iterator Function Sampling(source As IEnumerable(Of Double), N%, Optional B% = 100) As IEnumerable(Of IntegerTagged(Of Vector))
-            For Each x As IntegerTagged(Of Double()) In Samples(source, N, B)
+            For Each x As SeqValue(Of Double()) In Samples(source, N, B)
                 Yield New IntegerTagged(Of Vector) With {
-                    .Tag = x.Tag,
-                    .Value = New Vector(x.Value)
+                    .Tag = x.i,
+                    .Value = New Vector(x.value)
                 }
             Next
         End Function
