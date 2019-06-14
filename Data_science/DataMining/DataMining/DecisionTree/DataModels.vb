@@ -23,7 +23,7 @@ Namespace DecisionTree
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"{decisions} ~ {MyBase.ToString}"
+            Return $"{decisions} ~ {entityVector.Take(Length - 1).GetJson}"
         End Function
 
     End Class
@@ -72,7 +72,7 @@ Namespace DecisionTree
 
         Public Sub RemoveColumn(index As Integer)
             headers = headers.Delete(index)
-            rows.DoEach(Sub(r) Call r.entityVector.Delete(index))
+            rows.DoEach(Sub(r) r.entityVector = r.entityVector.Delete(index))
         End Sub
 
         Public Overrides Function ToString() As String

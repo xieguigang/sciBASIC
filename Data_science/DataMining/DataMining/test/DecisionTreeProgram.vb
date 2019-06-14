@@ -12,7 +12,7 @@ Namespace DecisionTree
 
         Sub Main()
 
-            Dim data As DataTable = CsvFileHandler.ImportFromCsvFile("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.csv")
+            Dim data As DataTable = CsvFileHandler.ImportFromCsvFile("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.csv")
             Dim decisionTree As New Tree(data)
             Dim valueForQuery As New Dictionary(Of String, String) From {{"Outlook", "Sunny"}, {"Temperatur", "Hot"}, {"Humidity", "High"}, {"Wind", "Weak"}}
             ' OUTLOOK -- sunny --> HUMIDITY -- high --> YES
