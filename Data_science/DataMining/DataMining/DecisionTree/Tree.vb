@@ -34,33 +34,35 @@ Namespace DecisionTree
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CalculateResult(valuesForQuery As IDictionary(Of String, String), Optional result As String = "") As String
-            Return CalculateResult(root, valuesForQuery, result)
+        Public Function CalculateResult(valuesForQuery As IDictionary(Of String, String)) As ClassifyResult
+            Return CalculateResult(root, valuesForQuery, New ClassifyResult With {.explains = New List(Of String)})
         End Function
 
         Public Overrides Function ToString() As String
             Return root.attributes.ToString
         End Function
 
-        Public Shared Function CalculateResult(root As TreeNode, valuesForQuery As IDictionary(Of String, String), result As String) As String
+        Private Shared Function CalculateResult(root As TreeNode, valuesForQuery As IDictionary(Of String, String), result As ClassifyResult) As ClassifyResult
             Dim valueFound = False
 
-            result += root.name.ToUpper() & " -- "
+            result.explains += root.name.ToUpper
             ' 因为在计算的过程之中，函数会删除查询字典之中的一些输入值
             ' 所以为了不修改外部的数据
             ' 在这里需要做一份数据拷贝
             valuesForQuery = New Dictionary(Of String, String)(valuesForQuery)
 
             If root.isLeaf Then
-                result = root.edge.ToLower() & " --> " & root.name.ToUpper()
+                result.explains += root.edge
+                result.result = root.name.ToUpper()
                 valueFound = True
             Else
                 For Each childNode In root.childNodes
                     For Each entry In valuesForQuery
                         If childNode.edge.ToUpper().Equals(entry.Value.ToUpper()) AndAlso root.name.ToUpper().Equals(entry.Key.ToUpper()) Then
                             valuesForQuery.Remove(entry.Key)
+                            result.explains += childNode.edge
 
-                            Return result & CalculateResult(childNode, valuesForQuery, $"{childNode.edge.ToLower()} --> ")
+                            Return CalculateResult(childNode, valuesForQuery, result)
                         End If
                     Next
                 Next
@@ -68,7 +70,7 @@ Namespace DecisionTree
 
             ' if the user entered an invalid attribute
             If Not valueFound Then
-                result = "Attribute not found"
+                result.result = "Attribute not found"
             End If
 
             Return result

@@ -1,5 +1,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace DecisionTree
@@ -84,6 +85,13 @@ Namespace DecisionTree
         Public Overrides Function ToString() As String
             Return headers.GetJson
         End Function
+
+    End Class
+
+    Public Class ClassifyResult
+
+        Public Property result As String
+        Public Property explains As List(Of String)
 
     End Class
 End Namespace
