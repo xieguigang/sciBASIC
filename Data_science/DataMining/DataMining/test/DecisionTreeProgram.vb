@@ -20,9 +20,9 @@ Namespace DecisionTree
 
             valueForQuery = New Dictionary(Of String, String) From {{"Outlook", "Overcast"}, {"Temperatur", "Hot"}, {"Humidity", "High"}, {"Wind", "Weak"}}
             ' OUTLOOK -- overcast --> NO
-            result = decisionTree.CalculateResult(valueForQuery)
+            Dim result2 = decisionTree.CalculateResult(valueForQuery)
 
-            Call decisionTree.root.GetJson.SaveTo("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.json")
+            '  Call decisionTree.root.GetJson.SaveTo("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.json")
 
             Pause()
         End Sub
