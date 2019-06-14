@@ -11,6 +11,7 @@ Namespace DecisionTree
     ''' 属性向量<see cref="Entity.entityVector"/>的最后一个值总是用来表示<see cref="Entity.decisions"/>结果值
     ''' </remarks>
     Public Class Entity : Inherits EntityBase(Of String)
+        Implements ICloneable
 
         ''' <summary>
         ''' 分类结果
@@ -26,6 +27,11 @@ Namespace DecisionTree
             Return $"{decisions} ~ {entityVector.Take(Length - 1).GetJson}"
         End Function
 
+        Public Function Clone() As Object Implements ICloneable.Clone
+            Return New Entity With {
+                .entityVector = entityVector.ToArray
+            }
+        End Function
     End Class
 
     Public Class DataTable

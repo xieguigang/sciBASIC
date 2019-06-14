@@ -347,6 +347,7 @@
     <Compile Include="QLearning\QLearning.vb" />
     <Compile Include="QLearning\QState.vb" />
     <Compile Include="QLearning\QTable.vb" />
+    <Compile Include="RandomForests\Bootstraping.vb" />
     <Compile Include="RandomForests\RandomForests.vb" />
     <Compile Include="RandomForests\NamespaceDoc.vb" />
   </ItemGroup>
