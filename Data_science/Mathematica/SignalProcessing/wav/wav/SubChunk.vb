@@ -1,20 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.IO
-
-Module Module1
-
-    Sub Main()
-
-        Dim wav = "E:\VB_GamePads\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\SND_FISH_TROPICAL_03.wav".OpenBinaryReader
-        Dim header As File = File.ParseHeader(wav)
-
-
-
-        Pause()
-    End Sub
-
-End Module
-
-
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO
 
 Public MustInherit Class SubChunk
 
@@ -38,10 +23,10 @@ Public Class DataSubChunk : Inherits SubChunk
 
     Public Shared Function ParseData(wav As BinaryDataReader) As DataSubChunk
         Do While wav.ReadString(4) <> "data"
-            wav.Seek(-3, IO.SeekOrigin.Current)
+            wav.Seek(-3, SeekOrigin.Current)
         Loop
 
-        wav.Seek(-4, IO.SeekOrigin.Current)
+        Call wav.Seek(-4, SeekOrigin.Current)
 
         Return New DataSubChunk With {
             .ChunkID = wav.ReadString(4),

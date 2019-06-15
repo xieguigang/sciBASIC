@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D638F218-0A08-4557-B5F9-C07F2230419A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>wav.Module1</StartupObject>
-    <RootNamespace>wav</RootNamespace>
-    <AssemblyName>wav</AssemblyName>
+    <StartupObject>Microsoft.VisualBasic.Data.Wave.Module1</StartupObject>
+    <RootNamespace>Microsoft.VisualBasic.Data.Wave</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Data.Wave</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>wav.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>wav.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
