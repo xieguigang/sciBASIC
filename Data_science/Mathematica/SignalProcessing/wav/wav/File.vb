@@ -91,7 +91,7 @@ Public Class File
             .fileSize = wav.ReadInt32,
             .format = wav.ReadString(4),
             .fmt = FMTSubChunk.ParseChunk(wav),
-            .data = DataSubChunk.ParseData(wav)
+            .data = DataSubChunk.ParseData(wav, format:= .fmt)
         }
     End Function
 End Class
