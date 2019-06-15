@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b36d46c43ed2266bf6d1b09ab593d97, Data_science\Mathematica\Plot\test\ZScorePlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::6b36d46c43ed2266bf6d1b09ab593d97, Data_science\Visualization\test\ZScorePlotTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d023d7fc7492caa47bee98df912310ef, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::db4fe1c708a4a58a062bf44eb04c3577, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,10 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __columnType, __gets, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField
-    '                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal
-    '                   GetCollectionColumns, GetColumns, GetEnumColumns, GetEnumerator, GetField
-    '                   GetKeyValuePairColumn, getMeta, GetMetaAttributeColumn, getWriteProvider, IEnumerable_GetEnumerator
+    '         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField, ContainsProperty
+    '                   CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal, GetCollectionColumns
+    '                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
+    '                   getMeta, GetMetaAttributeColumn, gets, getWriteProvider, IEnumerable_GetEnumerator
     '                   ToString
     ' 
     '         Sub: Remove

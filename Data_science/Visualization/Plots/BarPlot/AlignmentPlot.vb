@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be423d52cea786b24e3f57b8cc403a7b, Data_science\Mathematica\Plot\Plots\BarPlot\AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::be423d52cea786b24e3f57b8cc403a7b, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
     ' Author:
     ' 

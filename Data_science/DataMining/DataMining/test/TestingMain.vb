@@ -1,4 +1,42 @@
-﻿'#Region "Microsoft.VisualBasic::e081a9ac42b857cb8ff8bf20072c4deb, Data_science\DataMining\DataMining\test\TestingMain.vb"
+﻿#Region "Microsoft.VisualBasic::79a2ffd32484253f1b3972e28dc56f76, Data_science\DataMining\DataMining\test\TestingMain.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+'#Region "Microsoft.VisualBasic::e081a9ac42b857cb8ff8bf20072c4deb, Data_science\DataMining\DataMining\test\TestingMain.vb"
 
 '    ' Author:
 '    ' 
@@ -254,3 +292,4 @@
 '        Call Console.Read()
 '    End Sub
 'End Module
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb045c4c0c39a1b02b4ad842690d78ac, Data_science\Mathematica\Plot\Plots\Scatter\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::cb045c4c0c39a1b02b4ad842690d78ac, Data_science\Visualization\Plots\Scatter\Heatmap.vb"
 
     ' Author:
     ' 

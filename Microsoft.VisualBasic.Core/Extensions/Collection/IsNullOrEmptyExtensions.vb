@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f899c843823147a2e0481013ca428911, Microsoft.VisualBasic.Core\Extensions\Collection\IsNullOrEmptyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d5e16014c313463cfdc1db5fb83d1bfd, Microsoft.VisualBasic.Core\Extensions\Collection\IsNullOrEmptyExtensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2fd43d2193f885ab527b98f035e4575, Data_science\DataMining\DataMining\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::03454dd8893006d4b17cfb05c4f0a268, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 
@@ -80,7 +80,7 @@ Namespace Serials.PeriodAnalysis
             Dim Trough As List(Of TimePoint) = New List(Of TimePoint)
             Dim TempChunk As Double() = New Double(WindowSize - 1) {}
 
-            For i As Integer = 0 To SerialsData.SerialsData.Count - 1 - WindowSize
+            For i As Integer = 0 To SerialsData.SerialsData.Length - 1 - WindowSize
                 Call Array.ConstrainedCopy(SerialsData.SerialsData, i, TempChunk, 0, WindowSize)
 
                 Dim Max As Double = Double.MinValue
@@ -109,7 +109,7 @@ Namespace Serials.PeriodAnalysis
                 '   End If
             Next
 
-            For i As Integer = SerialsData.SerialsData.Count - 1 - WindowSize To SerialsData.SerialsData.Count - 2
+            For i As Integer = SerialsData.SerialsData.Length - 1 - WindowSize To SerialsData.SerialsData.Length - 2
                 TempChunk = SerialsData.SerialsData.Skip(i).ToArray '       Call Array.ConstrainedCopy(SerialsData.SerialsData, i, TempChunk, 0, WindowSize)
 
                 Dim Max As Double = Double.MinValue
@@ -138,7 +138,7 @@ Namespace Serials.PeriodAnalysis
                 '   End If
             Next
 
-            Return FilteringData(Peaks, Trough, SerialsData.SerialsData.Count)
+            Return FilteringData(Peaks, Trough, SerialsData.SerialsData.Length)
         End Function
 
         Private Function FilteringData(Peaks As List(Of TimePoint), Trough As List(Of TimePoint), OriginalTimePoints As Integer) As SamplingData

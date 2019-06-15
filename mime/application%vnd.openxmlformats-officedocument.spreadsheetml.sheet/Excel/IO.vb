@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1c447b92273cdcfc99382317c1c8c09, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
+﻿#Region "Microsoft.VisualBasic::bb1205936f229f4a892e1b62100eefca, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     ' Module IO
     ' 
     '     Function: CreateReader, SaveTo, ToXML
+    ' 
+    '     Sub: UnZipHandler
     ' 
     ' /********************************************************************************/
 

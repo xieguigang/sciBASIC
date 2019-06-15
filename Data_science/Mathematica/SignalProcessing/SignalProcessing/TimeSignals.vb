@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e2019dc333919eb38ef2e93a0095656, Data_science\Mathematica\SignalProcessing\TimeSignals.vb"
+﻿#Region "Microsoft.VisualBasic::386f4666f498cdf2e8c0408435a662ea, Data_science\Mathematica\SignalProcessing\SignalProcessing\TimeSignals.vb"
 
     ' Author:
     ' 

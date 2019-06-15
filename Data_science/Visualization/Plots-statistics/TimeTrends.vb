@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::362d8a48d54289db8155454da6540db6, Data_science\Mathematica\Plot\Plots-statistics\TimeTrends.vb"
+﻿#Region "Microsoft.VisualBasic::362d8a48d54289db8155454da6540db6, Data_science\Visualization\Plots-statistics\TimeTrends.vb"
 
     ' Author:
     ' 

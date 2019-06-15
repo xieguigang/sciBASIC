@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b331eb87bf56a3a16799f96ea9679391, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ffe3c76b2706ef78a83bb46534112e17, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module DefaultExtensions
     ' 
-    '         Function: BaseName, NormalizePathString, Replace, Split, TrimSuffix
+    '         Function: BaseName, NormalizePathString, Replace, Split, ToLower
+    '                   TrimSuffix
     ' 
     ' 
     ' /********************************************************************************/

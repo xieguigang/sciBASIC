@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6e1fc354deb67a1ee57e3c547145b37, Data_science\Mathematica\Math\Math\Algebra\Vector\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::ad51791b4b463fdd6569af2b93135f77, Data_science\Mathematica\Math\Math\Algebra\Vector\Polynomial.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Factors, IsLinear
     ' 
-    '         Function: (+2 Overloads) ToString
+    '         Function: (+3 Overloads) ToString
     ' 
     ' 
     ' /********************************************************************************/

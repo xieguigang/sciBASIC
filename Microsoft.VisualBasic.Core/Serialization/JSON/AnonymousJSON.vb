@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::910c2f7377e4940238d177944b695acc, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
+﻿#Region "Microsoft.VisualBasic::85970f575669d31dd25b44f3643abf94, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module AnonymousJSONExtensions
     ' 
-    '         Function: AnonymousJSON, (+4 Overloads) GetJson
+    '         Function: AnonymousJSON, (+4 Overloads) GetJson, KeysJson
     ' 
     ' 
     ' /********************************************************************************/

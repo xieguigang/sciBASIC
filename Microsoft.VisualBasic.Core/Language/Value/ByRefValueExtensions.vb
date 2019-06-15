@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::899b7ab8fbcf82922a8bd20af3e995d9, Microsoft.VisualBasic.Core\Language\Value\ByRefValueExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2446ca5e7a58c773b86c45bd858bc4f2, Microsoft.VisualBasic.Core\Language\Value\ByRefValueExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ByRefValueExtensions
     ' 
-    '         Function: Split
+    '         Function: Split, ToLower
     ' 
     ' 
     ' /********************************************************************************/

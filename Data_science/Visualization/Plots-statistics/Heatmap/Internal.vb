@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::664673f920a5dbc254fa55d45255b1bb, Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::664673f920a5dbc254fa55d45255b1bb, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5edf9acba440d4bd079aada56b8ee60, Data_science\Mathematica\Plot\Plots\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::a5edf9acba440d4bd079aada56b8ee60, Data_science\Visualization\Plots\ImageData.vb"
 
     ' Author:
     ' 

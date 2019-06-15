@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6a76e616e2a7758b8f2855da730c3b8, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::ced60d52179f290950843cd79cc35712, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module MD5Hash
     ' 
-    '         Function: Fletcher32, GetFileMd5, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2
+    '         Function: Fletcher32, GetFileMd5, (+2 Overloads) GetHashCode, (+2 Overloads) GetMd5Hash, GetMd5Hash2
     '                   NewUid, SaltValue, Sha256ByteString, StringToByteArray, (+2 Overloads) ToLong
     '                   VerifyFile, VerifyMd5Hash
     ' 

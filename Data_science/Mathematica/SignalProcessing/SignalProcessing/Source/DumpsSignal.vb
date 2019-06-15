@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab264ba6af633ea183200078cf06f8ab, Data_science\Mathematica\SignalProcessing\Source\DumpsSignal.vb"
+﻿#Region "Microsoft.VisualBasic::ab264ba6af633ea183200078cf06f8ab, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\DumpsSignal.vb"
 
     ' Author:
     ' 

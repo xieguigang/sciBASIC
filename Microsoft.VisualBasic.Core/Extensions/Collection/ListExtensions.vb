@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65641fb76cd7bf9ec48813a890a4b0a4, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b8f5d35527c282e7618a88f09171b0a6, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     ' Module ListExtensions
     ' 
-    '     Function: __reversedTake, AppendAfter, AsHashList, AsHashSet, AsList
-    '               AsLoop, HasKey, Indexing, rand, Random
-    '               ReorderByKeys, Takes, (+2 Overloads) ToList, TopMostFrequent
+    '     Function: AppendAfter, AsHashList, AsHashSet, AsList, AsLoop
+    '               HasKey, Indexing, rand, Random, ReorderByKeys
+    '               (+2 Overloads) ToList, TopMostFrequent
     ' 
     '     Sub: DoEach, ForEach, Swap
     ' 

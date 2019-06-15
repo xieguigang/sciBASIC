@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84b12490fe4aa27e9347bf1e1e98ab6d, Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::0bcd4df69a14dd231fe70f4e6361e9bf, Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     ' 
     '     Class SchemaReader
     ' 
-    '         Properties: Headers, SchemaOridinal
+    '         Properties: headers, SchemaOridinal
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetOrdinal, ToString

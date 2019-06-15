@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76f156726fd55b8b2d90add400da3052, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::eb90b03c4d9f8570963a080301907815, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                   BigMul, (+2 Overloads) Ceiling, Cos, Cosh, Covariance
     '                   CumSum, Distance, (+2 Overloads) DivRem, (+6 Overloads) EuclideanDistance, Exp
     '                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
-    '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, Log2
+    '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, (+2 Overloads) Log2
     '                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
     '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, (+8 Overloads) Round
     '                   RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin

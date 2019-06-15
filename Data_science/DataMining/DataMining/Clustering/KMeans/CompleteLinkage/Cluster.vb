@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea79ca648b6573b0be66aa19322c68fe, Data_science\DataMining\DataMining\KMeans\CompleteLinkage\Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::0eb960d5fd560af2e1048a09de2e34de, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Cluster.vb"
 
     ' Author:
     ' 
