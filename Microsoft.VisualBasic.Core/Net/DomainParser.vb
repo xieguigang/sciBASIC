@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44df86484a49147534132f8a0e31b94d, Microsoft.VisualBasic.Core\Net\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::702658a0f3035fd8221dbcb9eb5490c9, Microsoft.VisualBasic.Core\Net\DomainParser.vb"
 
     ' Author:
     ' 

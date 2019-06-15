@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05a78cc61c118abb9f50a304d7c31b2b, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Link3D.vb"
+﻿#Region "Microsoft.VisualBasic::c6acdb69e27f1d97a1966e22b96e34c4, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Link3D.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

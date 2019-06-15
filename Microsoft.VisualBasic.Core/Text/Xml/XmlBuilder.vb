@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78afd42db1ad39f3890cf2ebe6c5bb71, Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::fd2ff3f1a3c166dddb91f6a45c9e7cd4, Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Namespace Text.Xml.Models
         End Function
 
         Public Overloads Shared Operator +(xb As XmlBuilder, node As XElement) As XmlBuilder
-            Call xb.Script.AppendLine(node.ToString)
+            Call xb.script.AppendLine(node.ToString)
             Return xb
         End Operator
     End Class

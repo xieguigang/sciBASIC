@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72d93d36d6f82b3acd1303da2ad76973, CLI_tools\ANN\Config.vb"
+﻿#Region "Microsoft.VisualBasic::99a4955079e744e9908b9b0263893d24, CLI_tools\ANN\Config.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,8 @@
     ' Class Config
     ' 
     '     Properties: [Default], default_active, hidden_size, hiddens_active, input_active
-    '                 iterations, learnRate, learnRateDecay, momentum, output_active
+    '                 iterations, learnRate, learnRateDecay, minErr, momentum
+    '                 output_active, scattered, selective
     ' 
     ' /********************************************************************************/
 
@@ -51,6 +52,7 @@ Public Class Config
     <DataFrameColumn> Public Property momentum As Double = 0.9
     <DataFrameColumn> Public Property learnRateDecay As Double = 0.0000000001
     <DataFrameColumn> Public Property iterations As Integer = 10000
+    <DataFrameColumn> Public Property minErr As Double = 0.01
 
 #Region "所使用的激活函数的配置"
     ''' <summary>
@@ -76,8 +78,11 @@ Public Class Config
     ''' ``a,b,c``使用逗号分隔的隐藏层每一层网络的节点数量的列表
     ''' </summary>
     ''' <returns></returns>
-    <DataFrameColumn> Public Property hidden_size As String
+    <DataFrameColumn> Public Property hidden_size As String = "100,100,100"
 
-    Public Shared ReadOnly Property [Default] As DefaultValue(Of Config) = New Config
+    <DataFrameColumn> Public Property selective As String = "no"
+    <DataFrameColumn> Public Property scattered As String = "no"
+
+    Public Shared ReadOnly Property [Default] As [Default](Of Config) = New Config
 
 End Class

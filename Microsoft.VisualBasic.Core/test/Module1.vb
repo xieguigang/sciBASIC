@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61f12d2829c168549b0adf8a8e164f5d, Microsoft.VisualBasic.Core\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::4943544b9dbbfa61d047f49d765bd551, Microsoft.VisualBasic.Core\test\Module1.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,25 @@
 
     ' Module Module1
     ' 
-    '     Sub: iniTest, Main
+    '     Sub: iniTest, Main, mytest2
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.My.JavaScript.ES6
 
 Module Module1
+
+    Sub mytest2()
+        Dim map As New Map
+
+
+
+
+
+    End Sub
 
     Sub Main()
         Call iniTest()

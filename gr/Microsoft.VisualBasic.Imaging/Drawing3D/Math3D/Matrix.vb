@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b20dcb83a362bba8687d376f0c57ad9, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::7d7e8fe7e37bc25e396b1dc1792e0bd6, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Matrix.vb"
 
     ' Author:
     ' 

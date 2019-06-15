@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee3a65ec7dc7847d9266cc6634efffd2, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\Models.vb"
+﻿#Region "Microsoft.VisualBasic::91cb0b4bbe8515648421f6affacc35ab, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\Models.vb"
 
     ' Author:
     ' 
@@ -67,7 +67,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

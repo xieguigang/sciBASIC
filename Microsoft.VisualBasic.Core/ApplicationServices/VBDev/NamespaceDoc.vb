@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7f1b9c05a476c17cde35a195a8922fc, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d326f1cea6f71bb0f99f44fb78e24b3c, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\NamespaceDoc.vb"
 
     ' Author:
     ' 

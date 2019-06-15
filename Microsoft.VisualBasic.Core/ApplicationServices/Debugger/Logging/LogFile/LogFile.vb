@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04b9290bc245ecb90817f46ed19b6514, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::99634e02bd3bb723482cefb5aa8536d9, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,14 @@
 
     '     Class LogFile
     ' 
-    '         Properties: FileName, NowTimeNormalizedString
+    '         Properties: FileName, FilePath, NowTimeNormalizedString
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __getDefaultPath, Read, ReadLine, Save, SaveLog
-    '                   SystemInfo, ToString
+    '         Function: Read, ReadLine, (+3 Overloads) Save, SaveLog, SystemInfo
+    '                   ToString
     ' 
-    '         Sub: Dispose, (+2 Overloads) LogException, (+4 Overloads) WriteLine
+    '         Sub: (+2 Overloads) Dispose, (+2 Overloads) LogException, (+4 Overloads) WriteLine
     ' 
     ' 
     ' /********************************************************************************/
@@ -51,8 +51,10 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Terminal.STDIO__
+Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Debugging.Logging
 
@@ -63,7 +65,7 @@ Namespace ApplicationServices.Debugging.Logging
     ''' <remarks>
     ''' 这个类模块将输入的信息格式化保存到文本文件之中，记录的信息包括信息头，消息文本，以及消息等级
     ''' </remarks>
-    Public Class LogFile : Inherits ITextFile
+    Public Class LogFile : Implements IFileReference
         Implements ISaveHandle
         Implements IDisposable
         Implements I_ConsoleDeviceHandle
@@ -79,7 +81,7 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <remarks></remarks>
         Public ReadOnly Property FileName As String
             Get
-                Return MyBase.FilePath.BaseName
+                Return FilePath.BaseName
             End Get
         End Property
 
@@ -94,6 +96,8 @@ Namespace ApplicationServices.Debugging.Logging
                 Return $"{Format(Now.Month, "00")}{ Format(Now.Day, "00")}{Format(Now.Hour, "00")}{Format(Now.Minute, "00")}{Format(Now.Second, "00")}"
             End Get
         End Property
+
+        Public Property FilePath As String Implements IFileReference.FilePath
 
         ''' <summary>
         ''' 
@@ -188,8 +192,8 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="Encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            FilePath = getPath(FilePath)
+        Public Function Save(FilePath$, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            FilePath = FilePath Or Me.FilePath.When(FilePath.StringEmpty)
             Return SaveLog()
         End Function
 
@@ -215,13 +219,45 @@ Namespace ApplicationServices.Debugging.Logging
             Return sBuilder.ToString
         End Function
 
-        Protected Overrides Function __getDefaultPath() As String
-            Return FilePath
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
         End Function
 
-        Protected Overrides Sub Dispose(disposing As Boolean)
-            Call SaveLog()
-            MyBase.Dispose(disposing)
+        Public Function Save() As Boolean
+            Return Save(FilePath)
+        End Function
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                    Call SaveLog()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            disposedValue = True
         End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace

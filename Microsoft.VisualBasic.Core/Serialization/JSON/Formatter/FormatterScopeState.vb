@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::825a83ffbbe8dddcddc7c2dc18f51d86, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\FormatterScopeState.vb"
+﻿#Region "Microsoft.VisualBasic::2f41f4c5c4d2398be38343660afc9b67, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\FormatterScopeState.vb"
 
     ' Author:
     ' 
@@ -58,6 +58,7 @@ Imports System.Collections.Generic
 Namespace Serialization.JSON.Formatter.Internals
 
     Friend NotInheritable Class FormatterScopeState
+
         Public Enum JsonScope
             [Object]
             Array

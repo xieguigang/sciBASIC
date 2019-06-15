@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d18e97c58432fc4f97b141f9e6bee43, Microsoft.VisualBasic.Core\Scripting\Runtime\BinaryOperator.vb"
+﻿#Region "Microsoft.VisualBasic::b78c275b4a9348fc00ecfb15990c859c, Microsoft.VisualBasic.Core\Scripting\Runtime\BinaryOperator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20ea60c9b109c4aabcfa50322fa1bdb0, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\Text\Grep.vb"
+﻿#Region "Microsoft.VisualBasic::813c516d5a093dbc9b6a6e40cb8f72be, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\Text\Grep.vb"
 
     ' Author:
     ' 
@@ -204,7 +204,7 @@ Namespace Language.UnixBash
         End Operator
 
         Public Shared Operator <<(grep As GrepRegx, file As Integer) As IEnumerable(Of String)
-            Return grep.__grep(FileHandles.__getHandle(file).FileName.IterateAllLines)
+            Return grep.__grep(My.File.GetHandle(file).FileName.IterateAllLines)
         End Operator
 
         Public Shared Operator >=(grep As GrepRegx, source As String) As IEnumerable(Of String)

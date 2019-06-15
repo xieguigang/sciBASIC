@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e42a9d1e76b663a0297d44c1eb5fb5a, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\Table.vb"
+﻿#Region "Microsoft.VisualBasic::3b8d61b2e49b24f41dbcb2d1e65263b8, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\Table.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TableParser
     ' 
-    '         Function: GetColumnsHTML, GetRowsHTML, GetTablesHTML
+    '         Function: GetColumnsHTML, GetRowsHTML, GetTablesHTML, ParseHtmlMeta
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,6 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -96,6 +97,26 @@ Namespace Text.Parser.HtmlParser
                 .Select(Function(s) s.GetValue) _
                 .ToArray
             Return cols
+        End Function
+
+        Const metaPattern$ = "<meta .+?/>"
+
+        <Extension>
+        Public Function ParseHtmlMeta(html As String) As Dictionary(Of String, String)
+            Dim list = html.Matches(metaPattern, RegexICSng).ToArray
+            Dim attrs As NamedValue(Of String)() = list _
+                .Select(Function(meta) meta.TagAttributes) _
+                .Select(Function(meta)
+                            Dim name = meta.FirstOrDefault(Function(a) a.Name.TextEquals("name"))
+                            Dim content = meta.FirstOrDefault(Function(a) a.Name.TextEquals("content"))
+
+                            Return New NamedValue(Of String)(name, content)
+                        End Function) _
+                .Where(Function(meta) Not meta.Name.StringEmpty) _
+                .ToArray
+            Dim table = attrs.ToDictionary(Function(a) a.Name, Function(a) a.Value)
+
+            Return table
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dab5b8e48380e9425fc862c3e563f1b5, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
+﻿#Region "Microsoft.VisualBasic::e2c52408585a6777b454473ee24ca3c1, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
 
     ' Author:
     ' 
@@ -99,7 +99,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.Language
 
 Namespace Layouts.Cola.GridRouter
 
@@ -149,7 +149,7 @@ Namespace Layouts.Cola.GridRouter
 
         Public Property getSourceIndex As IGetIndex
         Public Property getTargetIndex As IGetIndex
-        Public Property getMinSeparation As UnionType(Of Double)
+        Public Property getMinSeparation As [Variant](Of Double, Func(Of Link(Of Node), Double))
 
         Public Delegate Sub SetLinkLength(l As Link, value As Double)
 

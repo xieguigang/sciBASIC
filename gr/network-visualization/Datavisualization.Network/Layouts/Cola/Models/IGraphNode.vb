@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::140cbf7865daf2ad6e34dac643d7ae6f, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\IGraphNode.vb"
+﻿#Region "Microsoft.VisualBasic::e3b8e9e7c5f86befaa750e163617aa80, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\IGraphNode.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

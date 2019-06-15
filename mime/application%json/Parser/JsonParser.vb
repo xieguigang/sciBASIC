@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e10ecf7f66e505cfa15a59cd3b6f06c, mime\application%json\Parser\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::f2a0e986a34ce8b4ea4e0053852445af, mime\application%json\Parser\JsonParser.vb"
 
     ' Author:
     ' 
@@ -55,9 +55,9 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Language
 
 Namespace Parser
 
@@ -75,13 +75,12 @@ Namespace Parser
         'Const INVALID_RPC_CALL As Integer = 7
 
         Dim psErrors As String
-        Dim root As New Value(Of JsonElement)
 
-        Public ReadOnly Property JSONvalue() As JsonElement
-            Get
-                Return root
-            End Get
-        End Property
+        ''' <summary>
+        ''' The root node in json file
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property JSONvalue As JsonElement
 
         Public Function GetParserErrors() As String
             Return psErrors
@@ -92,14 +91,15 @@ Namespace Parser
         End Sub
 
         Public Function Open(file As String) As JsonElement
-            Using sr As New IO.StreamReader(file)
+            Using sr As New StreamReader(file)
                 Return OpenJSON(sr.ReadToEnd)
             End Using
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OpenJSON(jsonStr As String) As JsonElement
-            Return root = parse(jsonStr)
+            _JSONvalue = parse(jsonStr)
+            Return JSONvalue
         End Function
 
         ''' <summary>

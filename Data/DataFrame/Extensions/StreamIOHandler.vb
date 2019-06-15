@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::025fbe6259c714167e203fea1235fda3, Data\DataFrame\Extensions\StreamIOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::aaa42b0c45481e410d43d11f4e33f159, Data\DataFrame\Extensions\StreamIOHandler.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module StreamIOHandler
     ' 
-    '     Function: ISaveCsv
+    '     Function: ISaveCsv, ISaveDataFrame, ISaveDataSet, ISaveEntitySet
     ' 
     '     Sub: __initStreamIO_pointer
     ' 
@@ -51,12 +51,33 @@ Module StreamIOHandler
     ''' <summary>
     ''' 初始化函数指针，为``>>``语法提供csv流的支持
     ''' </summary>
-    Public Sub __initStreamIO_pointer()
-        Call IOHandler.SetHandle(AddressOf ISaveCsv)
-        Call $"Default IO handle has been changes to {DefaultSaveDescription}...".__INFO_ECHO
+    Friend Sub __initStreamIO_pointer()
+        Call IOHandler.RegisterHandle(AddressOf ISaveDataFrame, GetType(IEnumerable))
+        Call IOHandler.RegisterHandle(AddressOf ISaveCsv, GetType(File))
+        Call IOHandler.RegisterHandle(AddressOf ISaveCsv, GetType(DataFrame))
+
+        Call IOHandler.RegisterHandle(AddressOf ISaveDataSet, GetType(IEnumerable(Of DataSet)))
+        Call IOHandler.RegisterHandle(AddressOf ISaveDataSet, GetType(DataSet()))
+        Call IOHandler.RegisterHandle(AddressOf ISaveDataSet, GetType(List(Of DataSet)))
+
+        Call IOHandler.RegisterHandle(AddressOf ISaveEntitySet, GetType(IEnumerable(Of EntityObject)))
+        Call IOHandler.RegisterHandle(AddressOf ISaveEntitySet, GetType(EntityObject()))
+        Call IOHandler.RegisterHandle(AddressOf ISaveEntitySet, GetType(List(Of EntityObject)))
     End Sub
 
-    Public Function ISaveCsv(source As IEnumerable, path As String, encoding As Encoding) As Boolean
+    Public Function ISaveDataSet(source As IEnumerable(Of DataSet), path$, encoding As Encoding) As Boolean
+        Return source.SaveTo(path, encoding:=encoding, layout:=New Dictionary(Of String, Integer) From {{NameOf(DataSet.ID), -999}})
+    End Function
+
+    Public Function ISaveEntitySet(source As IEnumerable(Of EntityObject), path$, encoding As Encoding) As Boolean
+        Return source.SaveTo(path, encoding:=encoding, layout:=New Dictionary(Of String, Integer) From {{NameOf(EntityObject.ID), -999}})
+    End Function
+
+    Public Function ISaveCsv(source As File, path$, encoding As Encoding) As Boolean
+        Return source.Save(path, encoding)
+    End Function
+
+    Public Function ISaveDataFrame(source As IEnumerable, path As String, encoding As Encoding) As Boolean
         Dim o As Object = (From x In source Select x).FirstOrDefault
         Dim type As Type = o.GetType
 

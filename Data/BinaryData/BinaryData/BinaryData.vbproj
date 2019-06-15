@@ -301,23 +301,27 @@
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
     <Import Include="System.Data.Linq" />
     <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByteBuffer.vb" />
     <Compile Include="Extensions\FixLengthString.vb" />
     <Compile Include="Extensions\MSWindows.vb" />
-    <Compile Include="Repository\BinarySearchIndex.vb" />
+    <Compile Include="BitSet.vb" />
     <Compile Include="SQLite3\Helpers\BTreeTools.vb" />
     <Compile Include="SQLite3\Helpers\ReadonlyStream.vb" />
     <Compile Include="SQLite3\Helpers\SqliteDataStream.vb" />
     <Compile Include="SQLite3\Helpers\StreamHelper.vb" />
-    <Compile Include="SQLite3\Helpers\StringHelper.vb" />
     <Compile Include="SQLite3\Internal\ReaderBase.vb" />
+    <Compile Include="SQLite3\Extensions.vb" />
     <Compile Include="SQLite3\Objects\BTreeCellData.vb" />
     <Compile Include="SQLite3\Objects\BTreeInteriorTablePage.vb" />
     <Compile Include="SQLite3\Objects\BTreeLeafTablePage.vb" />
@@ -332,6 +336,7 @@
     <Compile Include="SQLite3\Objects\Headers\DatabaseHeader.vb" />
     <Compile Include="SQLite3\Sqlite3Database.vb" />
     <Compile Include="SQLite3\Sqlite3Settings.vb" />
+    <Compile Include="SQLite3\Schema\Schema.vb" />
     <Compile Include="SQLite3\Tables\Sqlite3MasterTable.vb" />
     <Compile Include="SQLite3\Tables\Sqlite3Row.vb" />
     <Compile Include="SQLite3\Tables\Sqlite3SchemaRow.vb" />

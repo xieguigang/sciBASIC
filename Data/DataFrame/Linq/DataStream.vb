@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e8d313950f41618f36281ca1c6437d6, Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::0bcd4df69a14dd231fe70f4e6361e9bf, Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     ' 
     '     Class SchemaReader
     ' 
-    '         Properties: Headers, SchemaOridinal
+    '         Properties: headers, SchemaOridinal
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetOrdinal, ToString
@@ -89,15 +89,15 @@ Namespace IO.Linq
     Public Class SchemaReader : Implements ISchema
 
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
-        Public ReadOnly Property Headers As IReadOnlyCollection(Of String)
+        Public ReadOnly Property headers As IReadOnlyCollection(Of String)
 
-        Sub New(fileName$, Optional encoding As Encoding = Nothing)
-            Call Me.New(RowObject.TryParse(fileName.ReadFirstLine(encoding)))
+        Sub New(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False)
+            Call Me.New(RowObject.TryParse(fileName.ReadFirstLine(encoding), tsv))
         End Sub
 
         Sub New(firstLineHeaders As RowObject)
-            Headers = firstLineHeaders.ToArray
-            SchemaOridinal = Headers _
+            headers = firstLineHeaders.ToArray
+            SchemaOridinal = headers _
                 .SeqIterator _
                 .ToDictionary(Function(x) x.value.ToLower,
                               Function(x) x.i)
@@ -109,7 +109,7 @@ Namespace IO.Linq
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{Headers.JoinBy(", ")}]"
+            Return $"[{headers.JoinBy(", ")}]"
         End Function
     End Class
 
@@ -122,13 +122,13 @@ Namespace IO.Linq
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function OpenHandle(fileName$, Optional encoding As Encoding = Nothing) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
-            Dim schema As New SchemaReader(fileName, encoding)
+        Public Function OpenHandle(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
+            Dim schema As New SchemaReader(fileName, encoding, tsv)
             Dim source As IEnumerable(Of RowObject) = fileName _
                 .IterateAllLines _
                 .Skip(1) _
                 .Select(Function(line)
-                            Return New RowObject(line)
+                            Return New RowObject(line, tsv)
                         End Function)
             Return (schema, source)
         End Function
@@ -152,10 +152,19 @@ Namespace IO.Linq
                    End Function
         End Function
 
+        ''' <summary>
+        ''' Using linq stream method for load a very large csv/tsv file.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="handle"></param>
+        ''' <param name="parallel"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsLinq(Of T As Class)(handle As (schema As SchemaReader, table As IEnumerable(Of RowObject)), Optional parallel As Boolean = False) As IEnumerable(Of T)
-            Dim castObject = handle.schema.CastObject(Of T)
-            Return handle.table.Populate(parallel,).Select(castObject)
+            Dim castObject As Func(Of RowObject, T) = handle.schema.CastObject(Of T)
+            Dim rows As IEnumerable(Of RowObject) = handle.table.Populate(parallel,)
+
+            Return rows.Select(castObject)
         End Function
 
         <Extension>

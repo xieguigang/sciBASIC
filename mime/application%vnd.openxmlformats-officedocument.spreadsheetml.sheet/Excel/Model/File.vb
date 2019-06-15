@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::490f990e399ece3c08f559c1180bb9b1, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::a3bbc84d3937439737310b3aa0054da3, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,7 @@ Public Class File : Implements IFileReference
     Friend ReadOnly modify As New Index(Of String)
     Friend ROOT$
 
-    Dim _filePath As DefaultValue(Of String)
+    Dim _filePath As [Default](Of  String)
 
     Public Property FilePath As String Implements IFileReference.FilePath
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

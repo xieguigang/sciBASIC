@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdba42e8269ae9237bf8c9a05039f7a2, mime\text%html\HTML\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::406df0058164c2b2d93481d00c11218a, mime\text%html\HTML\CSS\FontStyle.vb"
 
     ' Author:
     ' 
@@ -300,6 +300,10 @@ Namespace HTML.CSS
             Dim sb As New StringBuilder
 
             Call sb.Append($"font-style: {ToString(style)};")
+
+            If style = FontStyle.Bold Then
+                Call sb.Append("font-weight:bold;")
+            End If
 
             If size > 0 Then
                 sb.Append($"font-size: {size}px;")

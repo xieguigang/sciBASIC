@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f4d3bf292f808f4f03e1968d229bbec, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3MasterTable.vb"
+﻿#Region "Microsoft.VisualBasic::12b9d4cf84349cfaa9cc5c2bae56004e, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3MasterTable.vb"
 
     ' Author:
     ' 
@@ -33,25 +33,33 @@
 
     '     Class Sqlite3MasterTable
     ' 
-    '         Properties: Tables
+    '         Properties: schema, tables
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ParseTables, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Collections.Generic
-
 Namespace ManagedSqlite.Core.Tables
-    Friend Class Sqlite3MasterTable
-        Public ReadOnly Property Tables() As List(Of Sqlite3SchemaRow)
+
+    ''' <summary>
+    ''' 主表主要是记录用户创建的数据表的结构定义以及在数据库文件之中的读取偏移位置
+    ''' </summary>
+    Public Class Sqlite3MasterTable
+
+        Public ReadOnly Property tables As Sqlite3SchemaRow()
+        Public ReadOnly Property schema As Sqlite3SchemaRow
 
         Public Sub New(table As Sqlite3Table)
-            Tables = New List(Of Sqlite3SchemaRow)()
+            tables = ParseTables(table).ToArray
+            schema = table.SchemaDefinition
+        End Sub
 
-            Dim rows As IEnumerable(Of Sqlite3Row) = table.EnumerateRows()
+        Private Iterator Function ParseTables(master As Sqlite3Table) As IEnumerable(Of Sqlite3SchemaRow)
+            Dim rows As IEnumerable(Of Sqlite3Row) = master.EnumerateRows()
 
             For Each row As Sqlite3Row In rows
                 Dim other As New Sqlite3SchemaRow()
@@ -59,22 +67,26 @@ Namespace ManagedSqlite.Core.Tables
                 Dim lng As Long
 
                 row.TryGetOrdinal(0, str)
-                other.Type = str
+                other.type = str
 
                 row.TryGetOrdinal(1, str)
-                other.Name = str
+                other.name = str
 
                 row.TryGetOrdinal(2, str)
-                other.TableName = str
+                other.tableName = str
 
                 row.TryGetOrdinal(3, lng)
-                other.RootPage = CUInt(lng)
+                other.rootPage = CUInt(lng)
 
                 row.TryGetOrdinal(4, str)
                 other.Sql = str
 
-                Tables.Add(other)
+                Yield other
             Next
-        End Sub
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return schema.ToString
+        End Function
     End Class
 End Namespace

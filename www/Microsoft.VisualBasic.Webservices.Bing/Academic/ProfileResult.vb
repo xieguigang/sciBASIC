@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5315e9c53dff48039273b47ca38f0cdc, www\Microsoft.VisualBasic.Webservices.Bing\Academic\ProfileResult.vb"
+﻿#Region "Microsoft.VisualBasic::ac2058ec365ec33c55d65d6f90cdc2c5, www\Microsoft.VisualBasic.Webservices.Bing\Academic\ProfileResult.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,8 @@ Namespace Academic
     ''' https://cn.bing.com/academic/profile?id=24ca0003c2b5935f1335003ca712b889&amp;encoded=0&amp;v=paper_preview&amp;mkt=zh-cn
     ''' </summary>
     Public Module ProfileResult
+
+        ReadOnly htmlLink As String = HtmlStrips.Regexp("a")
 
         <Extension>
         Private Function GetTarget(a As String) As Link

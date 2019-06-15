@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::438e58d9a9be129cf4ac9a61e511a447, vs_solutions\dev\LicenseMgr\LicenseMgr\Content\SettingsAppearanceViewModel.vb"
+﻿#Region "Microsoft.VisualBasic::340ec83c9b335e42c3dfb73e45ead265, vs_solutions\dev\LicenseMgr\LicenseMgr\Content\SettingsAppearanceViewModel.vb"
 
     ' Author:
     ' 

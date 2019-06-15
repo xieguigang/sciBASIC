@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::930dc5a761796faea594280bf9ec105d, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::422192766447956499018257821163cb, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
 
     ' Author:
     ' 

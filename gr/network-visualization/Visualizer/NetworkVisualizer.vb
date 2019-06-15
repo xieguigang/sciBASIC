@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77ebdf5409a3077a727cc24ece6ff83a, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::922ea6770f1e30a11e2fff29561c862c, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -332,7 +332,7 @@ Public Module NetworkVisualizer
                     End If
 
                     For Each group In groups
-                        If group.Count > 2 AndAlso group.Key.IsOneOfA(hullPolygon) Then
+                        If group.Count > 2 AndAlso group.Key Like hullPolygon Then
                             Dim positions = group _
                                 .Select(Function(p) scalePos(p)) _
                                 .JarvisMatch _

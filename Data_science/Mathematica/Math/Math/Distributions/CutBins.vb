@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d1d81cc3c81b5edddfc02d5cc6f0805, Data_science\Mathematica\Math\Math\Distributions\CutBins.vb"
+﻿#Region "Microsoft.VisualBasic::d34f995b83cbb82d69b76b110696997b, Data_science\Mathematica\Math\Math\Distributions\CutBins.vb"
 
     ' Author:
     ' 
@@ -111,7 +111,7 @@ Namespace Distributions
             Dim size% = v.Length / k
 
             Return v _
-                .Split(size, echo:=False) _
+                .SplitIterator(size) _
                 .Select(Function(block)
                             Return New DataBinBox(Of T)(block, eval)
                         End Function)

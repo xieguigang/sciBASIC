@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c544f8387e2ea06860a151cd431936a, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::7dd5c1d2fee57d6554f72f09efdc32fe, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
     ' Author:
     ' 
@@ -296,12 +296,22 @@ Namespace Emit.Marshal
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator +(ptr As Pointer(Of T)) As SeqValue(Of T)
             Dim i% = ptr.index
-            ptr.index += 1
 
-            Return New SeqValue(Of T) With {
-                .i = i,
-                .value = ptr.buffer(i)
-            }
+            If ptr.EndRead Then
+                Return Nothing
+            Else
+                ' 2019-04-22 在这里会需要将index的位移放在endread判断的后面, 因为
+                ' 假设当前的读取位置是最后一个元素的话,则会因为在endread之前已经移动了指针导致
+                ' 被判断为endread,从而在前面的代码提前返回,出现不应该存在的空值bug 
+
+                ' move pointer forward
+                ptr.index += 1
+
+                Return New SeqValue(Of T) With {
+                    .i = i,
+                    .value = ptr.buffer(i)
+                }
+            End If
         End Operator
 
         ''' <summary>
@@ -312,6 +322,8 @@ Namespace Emit.Marshal
         ''' <returns></returns>
         Public Overloads Shared Operator -(ptr As Pointer(Of T)) As SeqValue(Of T)
             Dim i% = ptr.index
+
+            ' move pointer back one unit.
             ptr.index -= 1
 
             Return New SeqValue(Of T) With {

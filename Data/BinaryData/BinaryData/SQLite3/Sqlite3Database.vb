@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::673b6ce11259922ccd6c6eae821fa6cc, Data\BinaryData\BinaryData\SQLite3\Sqlite3Database.vb"
+﻿#Region "Microsoft.VisualBasic::08272abd3012d575eeb5c6b8c93e2a95, Data\BinaryData\BinaryData\SQLite3\Sqlite3Database.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetTable
+    '         Function: GetTable, OpenFile
     ' 
     '         Sub: Dispose, Initialize, InitializeMasterTable
     ' 
@@ -48,6 +48,7 @@
 
 Imports System.Collections.Generic
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
@@ -63,27 +64,39 @@ Namespace ManagedSqlite.Core
     ''' </summary>
     Public Class Sqlite3Database : Implements IDisposable
 
-        Private ReadOnly _settings As Sqlite3Settings
-        Private ReadOnly _reader As ReaderBase
+        ReadOnly _settings As Sqlite3Settings
+        ReadOnly _reader As ReaderBase
 
-        Private _sizeInPages As UInteger
-        Private _masterTable As Sqlite3MasterTable
+        Dim _sizeInPages As UInteger
+        Dim _masterTable As Sqlite3MasterTable
 
-        Public Property Header() As DatabaseHeader
+        Public Property Header As DatabaseHeader
 
         Public ReadOnly Property GetTables() As IEnumerable(Of Sqlite3SchemaRow)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _masterTable.Tables
+                Return _masterTable.tables
             End Get
         End Property
 
         Public Sub New(file As Stream, Optional settings As Sqlite3Settings = Nothing)
-            _settings = If(settings, New Sqlite3Settings())
+            _settings = settings Or Sqlite3Settings.GetDefaultSettings
             _reader = New ReaderBase(file)
 
-            Initialize()
-            InitializeMasterTable()
+            Call Initialize()
+            Call InitializeMasterTable()
         End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dbFile"></param>
+        ''' <param name="settings">Default is <see cref="Sqlite3Settings.GetDefaultSettings"/></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function OpenFile(dbFile As String, Optional settings As Sqlite3Settings = Nothing) As Sqlite3Database
+            Return New Sqlite3Database(dbFile.Open(FileMode.Open, doClear:=False), settings)
+        End Function
 
         Private Sub Initialize()
             Header = DatabaseHeader.Parse(_reader)
@@ -95,14 +108,13 @@ Namespace ManagedSqlite.Core
 
             ' TODO: Warn on mismatch
             _sizeInPages = Math.Max(expectedPages, Header.DatabaseSizeInPages)
-
             _reader.ApplySqliteDatabaseHeader(Header)
         End Sub
 
         Private Sub InitializeMasterTable()
             ' Parse table on Page 1, the sqlite_master table
             Dim rootBtree As BTreePage = BTreePage.Parse(_reader, 1)
-
+            Dim table As Sqlite3Table
             ' Fake the schema for the sqlite_master table
             Dim schemaRow As New Sqlite3SchemaRow() With {
                  .Type = "table",
@@ -112,7 +124,7 @@ Namespace ManagedSqlite.Core
                  .Sql = "CREATE TABLE sqlite_master (type TEXT, name TEXT, tbl_name TEXT, rootpage INTEGER, sql TEXT);"
             }
 
-            Dim table As New Sqlite3Table(_reader, rootBtree, schemaRow)
+            table = New Sqlite3Table(_reader, rootBtree, schemaRow, _settings)
             _masterTable = New Sqlite3MasterTable(table)
         End Sub
 
@@ -126,15 +138,17 @@ Namespace ManagedSqlite.Core
 
                 ' Found it
                 Dim root As BTreePage = BTreePage.Parse(_reader, table.RootPage)
-                Dim tbl As New Sqlite3Table(_reader, root, table)
+                Dim tbl As New Sqlite3Table(_reader, root, table, _settings)
+
                 Return tbl
             Next
 
             Throw New Exception("Unable to find table named " & name)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Dispose() Implements IDisposable.Dispose
-            _reader.Dispose()
+            Call _reader.Dispose()
         End Sub
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fd356624247730ac0b79e2c04911f69, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\NumberConversionRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::973866bc4205b47afed7a64437872819, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\NumberConversionRoutines.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,9 @@
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Scripting.Runtime
 
@@ -112,7 +115,9 @@ Namespace Scripting.Runtime
         ''' 安全的将目标对象转换为字符串值
         ''' </summary>
         ''' <param name="obj"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 如果目标是字节数组，则会被转换为base64字符串
+        ''' </returns>
         Public Function CStrSafe(obj As Object, Optional default$ = "") As String
             If obj Is Nothing Then
                 Return String.Empty
@@ -137,6 +142,23 @@ Namespace Scripting.Runtime
         Private Function CStrInternal(obj As Object, default$) As String
             Dim type As Type = obj.GetType
             Dim delg As INarrowingOperator(Of Object, String)
+
+            If type Is GetType(Byte()) OrElse type.IsInheritsFrom(GetType(IEnumerable(Of Byte))) Then
+                With CType(obj, IEnumerable(Of Byte)).ToArray
+                    Return .ToBase64String
+                End With
+            Else
+                Select Case type
+                    Case GetType(Integer())
+                        Return DirectCast(obj, Integer()).GetJson
+                    Case GetType(Long())
+                        Return DirectCast(obj, Long()).GetJson
+                    Case GetType(Double())
+                        Return DirectCast(obj, Double()).GetJson
+                    Case GetType(String())
+                        Return DirectCast(obj, String()).GetJson
+                End Select
+            End If
 
             ' 2018-3-18 假若找不到操作符的话，函数会返回Nothing
             ' 同样也需要将这个Nothing添加进入字典之中，否则在运行linq代码的时候

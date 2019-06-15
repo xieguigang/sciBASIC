@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e838fc26b7d9e845804f4d6f48bf2c12, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CloseSquareBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::9a90389d755caca5ca64fb98d74cd0c7, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CloseSquareBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: Execute
     ' 
     ' 
@@ -47,6 +48,13 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
     Friend NotInheritable Class CloseSquareBracketStrategy
         Implements ICharacterStrategy
 
+        ''' <summary>
+        ''' ]
+        ''' </summary>
+        Sub New()
+
+        End Sub
+
         Public Sub Execute(context As JsonFormatterStrategyContext) Implements ICharacterStrategy.Execute
             If context.IsProcessingString Then
                 context.AppendCurrentChar()
@@ -54,7 +62,7 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
             End If
 
             context.CloseCurrentScope()
-            context.BuildContextIndents()
+            ' context.BuildContextIndents()
             context.AppendCurrentChar()
         End Sub
 

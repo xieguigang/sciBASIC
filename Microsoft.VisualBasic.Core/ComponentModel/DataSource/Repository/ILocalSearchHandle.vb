@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d8adb0fe9174ca398087afbc12e82d2, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
+﻿#Region "Microsoft.VisualBasic::217afa2cb9160b3e9fb40fd75f7f495b, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
 
     ' Author:
     ' 

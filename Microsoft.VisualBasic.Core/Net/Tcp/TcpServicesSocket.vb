@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::028133c3f4f031e1437b06a59f5aa69e, Microsoft.VisualBasic.Core\Net\Tcp\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::616f0712cde4c97f32239f8fd30ed126, Microsoft.VisualBasic.Core\Net\Tcp\TcpServicesSocket.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
@@ -103,7 +104,7 @@ Namespace Net.Tcp
             End Get
         End Property
 
-        Shared ReadOnly defaultHandler As New DefaultValue(Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
+        Shared ReadOnly defaultHandler As New [Default](Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
 
         ''' <summary>
         ''' 消息处理的方法接口： Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String

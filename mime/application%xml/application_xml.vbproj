@@ -79,6 +79,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="xsd\elementTypes.vb" />
+    <Compile Include="xsd\NamespaceDoc.vb" />
     <Compile Include="xsd\XML.vb" />
     <Compile Include="xsd\Extensions.vb" />
   </ItemGroup>

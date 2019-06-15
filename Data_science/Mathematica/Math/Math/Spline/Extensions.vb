@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::587fdf07024bf97819d41ad9a0dfdc80, Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::767689f9597a8d66a00b6f279c6a05ca, Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Interpolation
 
+    <HideModuleName>
     Public Module Extensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

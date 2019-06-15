@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b94dceb095e4191465c1deb7de14d8, mime\text%html\Markups\Markup.vb"
+﻿#Region "Microsoft.VisualBasic::ebe014bdbcebb4d7a36a056b1fe7cb2c, mime\text%html\Markups\Markup.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Serialization
 ''' <summary>
 ''' The markup document(*.html, *.md) its document syntax structure object. 
 ''' </summary>
-Public Class Markup : Inherits BaseClass
+Public Class Markup
     Implements IEnumerable(Of PlantText)
 
     Public Property nodes As List(Of PlantText)

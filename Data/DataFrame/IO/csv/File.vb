@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49aa6dd2cbf24467b7535ceaad8bd8e3, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::9f6bee26067bc406b6a757561e3b5bb0, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -49,10 +49,10 @@
     ' 
     '             Properties: IsReadOnly, RowNumbers
     ' 
-    '             Function: __getDefaultPath, __LINQ_LOAD, __loads, Contains, (+2 Overloads) Distinct
-    '                       FastLoad, GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty
-    '                       Join, (+2 Overloads) Load, LoadTsv, Normalization, Parse
-    '                       Remove, RemoveSubRow
+    '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, FastLoad
+    '                       GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty, Join
+    '                       (+2 Overloads) Load, loads, LoadTsv, Normalization, Parse
+    '                       ReadHeaderRow, Remove, RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
     '                  RemoveAt
@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace IO
@@ -84,9 +85,10 @@ Namespace IO
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <ActiveViews(File.ActiveViews)> Public Class File : Inherits ITextFile
+    <ActiveViews(File.ActiveViews)> Public Class File
         Implements IEnumerable(Of RowObject)
         Implements IList(Of RowObject)
+        Implements ISaveHandle
 
         Friend Const ActiveViews =
 "header1,header2,header3,...
@@ -143,7 +145,7 @@ B21,B22,B23,...
                 Optional trimBlanks As Boolean = False)
 
             FilePath = path
-            _innerTable = __loads(path, encoding.CodePage, trimBlanks)
+            _innerTable = loads(path, encoding.CodePage, trimBlanks)
         End Sub
 
         Sub New(source As IEnumerable(Of RowObject), path As String)
@@ -388,7 +390,7 @@ B21,B22,B23,...
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return FilePath.ToFileURL
+            Return Headers.GetJson
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -407,15 +409,12 @@ B21,B22,B23,...
         ''' <returns></returns>
         Public Function Transpose() As File
             Dim buf As String()() = Me.Columns.MatrixTranspose
-
-            Return New File With {
-                .FilePath = FilePath,
-                ._innerTable =
-                    LinqAPI.MakeList(Of RowObject) <=
+            Dim tableRows = LinqAPI.MakeList(Of RowObject) <=
                         From i As Integer
                         In buf.First.Sequence
                         Select New RowObject(From line As String() In buf Select line(i))
-            }
+
+            Return New File With {._innerTable = tableRows}
         End Function
 
         ''' <summary>
@@ -594,8 +593,8 @@ B21,B22,B23,...
         ''' </summary>
         ''' <param name="Path"></param>
         ''' <remarks>当目标保存路径不存在的时候，会自动创建文件夹</remarks>
-        Public Overrides Function Save(Optional path$ = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return StreamIO.SaveDataFrame(Me, getPath(path), Encoding)
+        Public Function Save(path$, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Return StreamIO.SaveDataFrame(Me, path, Encoding)
         End Function
 
         ''' <summary>
@@ -673,18 +672,16 @@ B21,B22,B23,...
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function FastLoad(path As String, Optional Parallel As Boolean = True, Optional encoding As Encoding = Nothing) As File
+        Public Shared Function FastLoad(path As String, Optional parallel As Boolean = True, Optional encoding As Encoding = Nothing) As File
             If encoding Is Nothing Then
                 encoding = Encoding.Default
             End If
 
             Dim sw = Stopwatch.StartNew
             Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
-            Dim cData As File = New File With {
-                .FilePath = path
-            }
+            Dim cData As New File
 
-            If Parallel Then
+            If parallel Then
                 Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
                 Dim Rows = (From line As SeqValue(Of String)
                             In cache.AsParallel
@@ -712,12 +709,10 @@ B21,B22,B23,...
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Load(Path As String, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
-            Dim buf As List(Of RowObject) = __loads(Path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
-            Dim csv As New File With {
-                .FilePath = Path,
-                ._innerTable = buf
-            }
+        Public Shared Function Load(path$, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
+            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
+            Dim csv As New File With {._innerTable = buf}
+
             Return csv
         End Function
 
@@ -726,15 +721,24 @@ B21,B22,B23,...
             Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
+        Public Shared Function ReadHeaderRow(path$, Optional encoding As Encodings = Encodings.UTF8, Optional tsv As Boolean = False) As RowObject
+            Dim firstLine$ = path.ReadFirstLine(encoding.CodePage)
+
+            If tsv Then
+                Return New RowObject(firstLine.Split(ASCII.TAB))
+            Else
+                Return New RowObject(IO.CharsParser(firstLine))
+            End If
+        End Function
+
         ''' <summary>
         ''' 同时兼容本地文件和网络文件的
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Private Shared Function __loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
-            Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
-            Return Load(lines, trimBlanks)
+        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
+            Return Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks)
         End Function
 
         ''' <summary>
@@ -753,14 +757,17 @@ B21,B22,B23,...
                 __test = Function(s) True
             End If
 
-            Dim rows As List(Of RowObject) = (From s As SeqValue(Of String)
-                                              In buf.Skip(1).SeqIterator.AsParallel
-                                              Where __test(s.value)
-                                              Select row = New RowObject(s.value),
-                                                  i = s.i
-                                              Order By i Ascending) _
-                                                   .ToList(Function(x) x.row)
-            Return first + rows
+            Dim parallelLoad = Function() As IEnumerable(Of RowObject)
+                                   Dim loader = From s As SeqValue(Of String)
+                                                In buf.Skip(1).SeqIterator.AsParallel
+                                                Where __test(s.value)
+                                                Select row = New RowObject(s.value), i = s.i
+                                                Order By i Ascending
+
+                                   Return loader.Select(Function(r) r.row)
+                               End Function
+
+            Return first + parallelLoad().AsList
         End Function
 
         ''' <summary>
@@ -851,8 +858,7 @@ B21,B22,B23,...
             End If
 
             Return New File With {
-                ._innerTable = New List(Of RowObject)(dRows),
-                .FilePath = csv.FilePath
+                ._innerTable = New List(Of RowObject)(dRows)
             }
         End Function
 
@@ -886,6 +892,11 @@ B21,B22,B23,...
 
         Public Iterator Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsMatrix() As IEnumerable(Of IEnumerable(Of String))
+            Return _innerTable.Select(Function(r) r.AsEnumerable)
         End Function
 
         ''' <summary>
@@ -1002,8 +1013,8 @@ B21,B22,B23,...
             Call _innerTable.RemoveAt(index)
         End Sub
 
-        Protected Overrides Function __getDefaultPath() As String
-            Return FilePath
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
         End Function
 #End Region
     End Class

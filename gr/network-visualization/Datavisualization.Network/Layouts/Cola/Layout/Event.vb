@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b1eefcda39b046861a1d70379efa0d8, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Event.vb"
+﻿#Region "Microsoft.VisualBasic::0cb6025690528504570ed4f1051f7198, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Event.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1da77779b0fa6345eab9d0245bc4ae9b, Data_science\Mathematica\Math\Math.Statistics\Example\Fisher.vb"
+﻿#Region "Microsoft.VisualBasic::c34204250eaeef9094e055522fb33ca2, Data_science\Mathematica\Math\Math.Statistics\Example\Fisher.vb"
 
     ' Author:
     ' 

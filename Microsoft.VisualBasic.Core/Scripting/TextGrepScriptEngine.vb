@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faa7f30a7844fd960b343504efce3ed8, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::1f3e77cee1487311faf5ba5ef90dcc0f, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 
@@ -178,7 +178,7 @@ Namespace Scripting
         ''' Source in and then source out, no changes
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property DoNothing As DefaultValue(Of TextGrepScriptEngine)
+        Public Shared ReadOnly Property DoNothing As [Default](Of TextGrepScriptEngine)
             Get
                 Static opNothing As New TextGrepScriptEngine With {
                     ._operations = {},

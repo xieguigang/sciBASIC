@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cff685c85476790174d8057059d17ef5, Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
+﻿#Region "Microsoft.VisualBasic::221dea0227f74273b85f02afa7c50459, Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
 
     ' Author:
     ' 
@@ -42,29 +42,32 @@
     ' 
     '     Properties: SystemByteOrder
     ' 
+    '     Function: NeedsReversion
+    ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 ''' <summary>
 ''' Represents the possible endianness of binary data.
 ''' </summary>
 Public Enum ByteOrder As UShort
-	''' <summary>
-	''' The binary data is present in big endian.
-	''' </summary>
-	BigEndian = &Hfeff
+    ''' <summary>
+    ''' The binary data is present in big endian.
+    ''' </summary>
+    BigEndian = &HFEFF
 
-	''' <summary>
-	''' The binary data is present in little endian.
-	''' </summary>
-	LittleEndian = &Hfffe
+    ''' <summary>
+    ''' The binary data is present in little endian.
+    ''' </summary>
+    LittleEndian = &HFFFE
 End Enum
 
 ''' <summary>
 ''' Represents helper methods to handle data byte order.
 ''' </summary>
-Public Module ByteOrderHelper
+<HideModuleName> Public Module ByteOrderHelper
 
     Dim _systemByteOrder As ByteOrder
 
@@ -79,4 +82,10 @@ Public Module ByteOrderHelper
             Return _systemByteOrder
         End Get
     End Property
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function NeedsReversion(order As ByteOrder) As Boolean
+        Return order <> ByteOrderHelper.SystemByteOrder
+    End Function
 End Module

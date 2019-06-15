@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e43152b8985123ef72062e398545b19, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\SerializationIO.vb"
+﻿#Region "Microsoft.VisualBasic::4219c521e72d39e17751df0b2e128555, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\SerializationIO.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module SerializationIO
     ' 
-    '     Function: DumpSerial, SolveListStream
+    '     Function: DumpSerial, SaveAsTabularMapping, SolveListStream
     ' 
     ' /********************************************************************************/
 
@@ -43,10 +43,47 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Public Module SerializationIO
+
+    ''' <summary>
+    ''' Save as a tsv file, with data format like: 
+    ''' 
+    ''' ```
+    ''' <see cref="NamedValue(Of String).Name"/>\t<see cref="NamedValue(Of String).Value"/>\t<see cref="NamedValue(Of String).Description"/>
+    ''' ```
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveAsTabularMapping(source As IEnumerable(Of NamedValue(Of String)),
+                                         path$,
+                                         Optional saveDescrib As Boolean = False,
+                                         Optional saveHeaders$() = Nothing,
+                                         Optional encoding As Encodings = Encodings.ASCII) As Boolean
+        Dim content = source _
+            .Select(Function(row)
+                        With row
+                            If saveDescrib Then
+                                Return $"{ .Name}{ASCII.TAB}{ .Value}{ASCII.TAB}{ .Description}"
+                            Else
+                                Return $"{ .Name}{ASCII.TAB}{ .Value}"
+                            End If
+                        End With
+                    End Function)
+
+        If saveHeaders.IsNullOrEmpty Then
+            Return content.SaveTo(path, encoding.CodePage)
+        Else
+            Return {saveHeaders.JoinBy(ASCII.TAB)}.JoinIterates(content).SaveTo(path, encoding.CodePage)
+        End If
+    End Function
 
     <Extension>
     Public Function SolveListStream(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of String)

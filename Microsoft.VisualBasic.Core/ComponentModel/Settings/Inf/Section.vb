@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::164c15886ef11e6d91df8200793a24fd, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Section.vb"
+﻿#Region "Microsoft.VisualBasic::d9ba2514d25c6d20d89e7697a06f554f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Section.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace ComponentModel.Settings.Inf
         <XmlText>
         Public Property Comment As String
 
-        Shared ReadOnly emptyList As New DefaultValue(Of HashValue())(Function() {}, isLazy:=False)
+        Shared ReadOnly emptyList As New [Default](Of HashValue())(Function() {}, isLazy:=False)
 
         <XmlElement>
         Public Property Items As HashValue()

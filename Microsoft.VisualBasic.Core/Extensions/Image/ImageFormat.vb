@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2fbac009c5a6f0dc8a43ac3bdaa8e66, Microsoft.VisualBasic.Core\Extensions\Image\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::c57640bb26193712eea10857990983d5, Microsoft.VisualBasic.Core\Extensions\Image\ImageFormat.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
-Imports defaultFormat = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Drawing.Imaging.ImageFormat)
+Imports defaultFormat = Microsoft.VisualBasic.Language.Default.Default(Of System.Drawing.Imaging.ImageFormat)
 
 Namespace Imaging
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc3d63e9b616c9f0e2bbf504f86545d0, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::d23ebabe712d1df46f7471ab9b7b0d96, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
+Imports System.Xml.Schema
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 
@@ -251,8 +252,14 @@ Namespace Text.Xml.Linq
         <Extension>
         Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of XElement)
             Dim el As New Value(Of XElement)
+            Dim settings As New XmlReaderSettings With {
+                .ValidationFlags = XmlSchemaValidationFlags.None,
+                .CheckCharacters = False,
+                .ConformanceLevel = ConformanceLevel.Document,
+                .ValidationType = ValidationType.None
+            }
 
-            Using reader As XmlReader = XmlReader.Create(path)
+            Using reader As XmlReader = XmlReader.Create(path, settings)
 
                 Call reader.MoveToContent()
 

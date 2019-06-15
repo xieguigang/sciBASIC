@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97381be4f8e278a973062bd2d0782091, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::cc5560b306ec2224a6a3b55fc338d9d4, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEsOut.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,7 @@
     '     Properties: dx, HaveNaN, params, Resolution, x
     '                 y, y0
     ' 
-    '     Function: GetEnumerator, GetY0, IEnumerable_GetEnumerator, Join, LoadFromDataFrame
-    '               ToString
+    '     Function: GetEnumerator, GetY0, IEnumerable_GetEnumerator, Join, ToString
     ' 
     ' /********************************************************************************/
 
@@ -135,18 +134,6 @@ Public Class ODEsOut : Implements IEnumerable(Of NamedCollection(Of Double))
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
-    End Function
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="csv$"></param>
-    ''' <param name="noVars">ODEs Parameter value is not exists in the data file?</param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function LoadFromDataFrame(csv$, Optional noVars As Boolean = False) As ODEsOut
-        Return StreamExtension.LoadFromDataFrame(csv, noVars)
     End Function
 
     Public Iterator Function GetEnumerator() As IEnumerator(Of NamedCollection(Of Double)) Implements IEnumerable(Of NamedCollection(Of Double)).GetEnumerator

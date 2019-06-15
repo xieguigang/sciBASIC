@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fde8d8f83077bf1b81cbf7b36475626, Data_science\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4775eeb963a155e09574c94ee0fa5705, Data_science\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -141,7 +141,7 @@ Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function DefaultSteps(size As SizeF, Optional n% = 50) As DefaultValue(Of SizeF)
+    Public Function DefaultSteps(size As SizeF, Optional n% = 50) As [Default](Of  SizeF)
         Return New SizeF With {
             .Width = size.Width / 50,
             .Height = size.Height / 50

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0d68d9648108e57832a0f0b8898f177, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
+﻿#Region "Microsoft.VisualBasic::bb1205936f229f4a892e1b62100eefca, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,8 @@
     ' 
     '     Function: CreateReader, SaveTo, ToXML
     ' 
+    '     Sub: UnZipHandler
+    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -55,11 +57,44 @@ Public Module IO
     '  +------- <docProps>
     '  +------- <xl>
     '  +------- [Content_Types].xml
+    Private Sub UnZipHandler(xlsx$, ROOT$)
+        Dim success As Boolean = False
+        Dim exception As Exception = Nothing
 
-    Public Function CreateReader(xlsx$) As File
-        Dim ROOT$ = App.GetAppSysTempFile("-" & RandomASCIIString(6, skipSymbols:=True), App.PID)
+        ' 20190606 会随机性的出现本地文件头已损坏的错误？？
+        For i As Integer = 1 To 3
+            success = False
 
-        Call ZipLib.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+            Try
+                ZipLib.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+                success = True
+            Catch ex As Exception
+                exception = ex
+            End Try
+
+            If success Then
+                Exit For
+            End If
+        Next
+
+        If Not success Then
+            Throw exception
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 解压缩Excel文件然后读取其中的XML数据以构成DataFrame表格 
+    ''' </summary>
+    ''' <param name="xlsx"></param>
+    ''' <returns></returns>
+    Public Function CreateReader(xlsx As String) As File
+        Dim ROOT$ = App.GetAppSysTempFile(
+            ext:=RandomASCIIString(6, skipSymbols:=True),
+            sessionID:=App.PID,
+            prefix:="excel_xlsx_"
+        )
+
+        Call UnZipHandler(xlsx, ROOT)
 
         Dim contentType As ContentTypes = (ROOT & "/[Content_Types].xml").LoadXml(Of ContentTypes)
         Dim rels As New _rels(ROOT)

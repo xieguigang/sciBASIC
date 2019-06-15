@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e62e39055bf28759131eaecfc8fd28d, Data\DataFrame\DATA\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::63b83040d6ed4a7b35ec347b0248d972, Data\DataFrame\DATA\DataFrame.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -65,9 +66,32 @@ Namespace DATA
         ''' </summary>
         Dim entityList As Dictionary(Of EntityObject)
 
+        Default Public Property Item(id$, property$) As String
+            Get
+                Return entityList(id)([property])
+            End Get
+            Set(value As String)
+                entityList(id)([property]) = value
+            End Set
+        End Property
+
+        Default Public Property Item([property] As String) As String()
+            Get
+                Return entityList _
+                    .Values _
+                    .Select(Function(d) d([property])) _
+                    .ToArray
+            End Get
+            Set(value As String())
+                For Each i As SeqValue(Of EntityObject) In entityList.Values.SeqIterator
+                    i.value([property]) = value.ElementAtOrDefault(i)
+                Next
+            End Set
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(list As IEnumerable(Of EntityObject))
-            entityList = list.ToDictionary
+        Sub New(list As IEnumerable(Of EntityObject), Optional doUnique As Boolean = False)
+            entityList = list.ToDictionary(replaceOnDuplicate:=doUnique)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -117,8 +141,12 @@ Namespace DATA
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default, Optional uidMap$ = Nothing) As DataFrame
-            Return New DataFrame(EntityObject.LoadDataSet(path, uidMap:=uidMap))
+        Public Shared Function Load(path$,
+                                    Optional encoding As Encodings = Encodings.Default,
+                                    Optional uidMap$ = Nothing,
+                                    Optional doUnique As Boolean = False) As DataFrame
+
+            Return New DataFrame(EntityObject.LoadDataSet(path, uidMap:=uidMap), doUnique)
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of EntityObject) Implements IEnumerable(Of EntityObject).GetEnumerator

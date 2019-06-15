@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12826d208ac41a93beab4e252c673311, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::c8f36b0edfb7202aadaeacfc27e2b874, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,12 @@
 
     '     Class HistoryStacks
     ' 
-    '         Properties: HistoryList
+    '         Properties: FilePath, HistoryList
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: __getDefaultPath, __getHistory, MoveFirst, MoveLast, MoveNext
-    '                   MovePrevious, Save, ToString
+    '         Function: __getHistory, MoveFirst, MoveLast, MoveNext, MovePrevious
+    '                   (+2 Overloads) Save, ToString
     ' 
     '         Sub: __init, PushStack, StartInitialize
     '         Structure History
@@ -52,14 +52,16 @@
 
 #End Region
 
-Imports System.Xml.Serialization
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace Terminal
 
-    Public Class HistoryStacks : Inherits ITextFile
-        Implements ISaveHandle
+    Public Class HistoryStacks : Implements ISaveHandle
+        Implements IFileReference
 
         Dim _historyList As List(Of String)
         Dim _lsthistory As List(Of History)
@@ -78,6 +80,8 @@ Namespace Terminal
                 _lsthistory = value
             End Set
         End Property
+
+        Public Property FilePath As String Implements IFileReference.FilePath
 
         Dim LastHistory As History
 
@@ -167,13 +171,13 @@ Namespace Terminal
             Return String.Join(";  ", _historyList.Take(3).ToArray) & "......."
         End Function
 
-        Public Overrides Function Save(Optional Path As String = "", Optional encoding As System.Text.Encoding = Nothing) As Boolean
-            Path = MyBase.getPath(Path)
+        Public Function Save(Path$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Path = Path Or FilePath.When(Path.StringEmpty)
             Return Me.GetXml.SaveTo(Path, encoding)
         End Function
 
-        Protected Overrides Function __getDefaultPath() As String
-            Return FilePath
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
         End Function
     End Class
 End Namespace

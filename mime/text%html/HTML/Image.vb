@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11a8d9f44d6624ed9cf997f9d6419aaa, mime\text%html\HTML\Image.vb"
+﻿#Region "Microsoft.VisualBasic::0f2d318c28f007ae235731f5caea7bc9, mime\text%html\HTML\Image.vb"
 
     ' Author:
     ' 
@@ -92,7 +92,7 @@ Namespace HTML
         End Function
 
         Public Shared Function GetImages(html As String) As Image()
-            Dim data As String() = Regex.Matches(html, HtmlStrips.imgHtmlTagPattern, RegexICSng).ToArray
+            Dim data As String() = Regex.Matches(html, TagAttributeParser.imgHtmlTagPattern, RegexICSng).ToArray
             Dim res As Image() = data.Select(Function(tag) Image.ResParser(tag)).ToArray
             Return res
         End Function

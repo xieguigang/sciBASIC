@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdf82702e7b87f749d909b618498a8fe, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\ServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::fd61864e5140a82759af576fe66257e1, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\ServicesSocket.vb"
 
     ' Author:
     ' 
@@ -121,7 +121,7 @@ Namespace Net.Tcp.Persistent.Socket
             End Get
         End Property
 
-        Shared ReadOnly DefaultHandler As New DefaultValue(Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
+        Shared ReadOnly DefaultHandler As New [Default](Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
 
         ''' <summary>
         ''' 消息处理的方法接口： Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String

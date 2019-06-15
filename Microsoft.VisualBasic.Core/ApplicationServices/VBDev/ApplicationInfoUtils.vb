@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d769d01cfe5863149e541557a9abb7e8, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
+﻿#Region "Microsoft.VisualBasic::2123247c2dbf0e64ee9e4932a216e17b, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,8 @@ Namespace ApplicationServices.Development
                 .AssemblyCopyright = GetCopyRightsDetail(assm),
                 .AssemblyTitle = GetProductTitle(assm),
                 .AssemblyDescription = GetProductDescription(assm),
-                .Guid = GetGuid(assm)
+                .Guid = GetGuid(assm),
+                .AssemblyVersion = assm.GetVersion().ToString
             }
         End Function
 

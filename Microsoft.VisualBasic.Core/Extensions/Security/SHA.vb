@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5caf3c40553c288e3b39f57d2c5a9d3f, Microsoft.VisualBasic.Core\Extensions\Security\SHA.vb"
+﻿#Region "Microsoft.VisualBasic::aea2365815cc6204399888e7186c27d2, Microsoft.VisualBasic.Core\Extensions\Security\SHA.vb"
 
     ' Author:
     ' 
@@ -44,11 +44,8 @@
 
 #End Region
 
-Imports System.Security
-Imports System.Security.Cryptography
 Imports System.IO
-Imports System.Runtime.InteropServices
-Imports System.Text.RegularExpressions
+Imports System.Security.Cryptography
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
 

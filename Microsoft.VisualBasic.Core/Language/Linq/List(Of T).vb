@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45237ad47691e17ca3af9f9f855a37c9, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::450b660eb44b1164bc931b037f515d36, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -37,8 +37,9 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
-    '         Operators: (+5 Overloads) -, *, ^, (+8 Overloads) +, (+2 Overloads) <
-    '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
+    '         Operators: (+5 Overloads) -, *, ^, (+8 Overloads) +, <
+    '                    <=, (+2 Overloads) <>, (+2 Overloads) =, >, >=
+    '                    >>
     ' 
     ' 
     ' /********************************************************************************/
@@ -159,6 +160,15 @@ Namespace Language
                     index = Count + index  ' -1 -> count -1
                 End If
                 MyBase.Item(index) = value
+            End Set
+        End Property
+
+        Default Public Overloads Property Item(index As Integer?) As T
+            Get
+                Return Item(index.Value)
+            End Get
+            Set(value As T)
+                Item(index.Value) = value
             End Set
         End Property
 
@@ -554,6 +564,34 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' Elements count is greater than or equals to a specific number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator >=(list As List(Of T), count%) As Boolean
+            If list Is Nothing Then
+                Return 0 >= count
+            Else
+                Return list.Count >= count
+            End If
+        End Operator
+
+        ''' <summary>
+        ''' Elements count is less than or equals to a specific number?
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator <=(list As List(Of T), count%) As Boolean
+            If list Is Nothing Then
+                Return 0 <= count
+            Else
+                Return list.Count <= count
+            End If
+        End Operator
+
+        ''' <summary>
         ''' Assert that the element counts of this list object is equals to a specifc number?
         ''' </summary>
         ''' <param name="list"></param>
@@ -581,17 +619,6 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Dump this collection data to the file system.
-        ''' </summary>
-        ''' <param name="source"></param>
-        ''' <param name="path"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator >(source As List(Of T), path As String) As Boolean
-            Return IOHandler.DefaultHandle()(source, path, System.Text.Encoding.UTF8)
-        End Operator
-
-        ''' <summary>
         ''' <see cref="Count"/> of <paramref name="list"/> &gt; <paramref name="n"/>
         ''' </summary>
         ''' <param name="list"></param>
@@ -609,12 +636,8 @@ Namespace Language
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >>(source As List(Of T), path As Integer) As Boolean
-            Dim file As FileHandle = __getHandle(path)
+            Dim file As FileHandle = My.File.GetHandle(path)
             Return source > file.FileName
-        End Operator
-
-        Public Shared Operator <(source As List(Of T), path As String) As Boolean
-            Throw New NotImplementedException
         End Operator
 
         ''' <summary>
@@ -641,7 +664,7 @@ Namespace Language
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function [Default]() As DefaultValue(Of List(Of T))
+        Public Shared Function [Default]() As [Default](Of List(Of T))
             Return New List(Of T)
         End Function
 

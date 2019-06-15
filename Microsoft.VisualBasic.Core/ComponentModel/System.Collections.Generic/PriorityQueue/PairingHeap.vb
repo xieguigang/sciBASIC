@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1400783a2559af92a40be72543634fac, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
+﻿#Region "Microsoft.VisualBasic::c73bfb90554e5410139e2ebb022e563b, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.Collection

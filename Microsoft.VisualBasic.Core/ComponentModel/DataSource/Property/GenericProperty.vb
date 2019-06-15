@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d12500eeb4616cd2f9b2bc58e7a1c87, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\GenericProperty.vb"
+﻿#Region "Microsoft.VisualBasic::acba7167e1e900039f16d90d328b2d31, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\GenericProperty.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Class [Property]
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Operators: +
     ' 
     ' 
     ' /********************************************************************************/
@@ -81,5 +82,17 @@ Namespace ComponentModel.DataSourceModel
                 Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
             End Set
         End Property
+
+        Public Overloads Shared Narrowing Operator CType(properties As [Property](Of T)) As Dictionary(Of String, T)
+            Return properties.Properties
+        End Operator
+
+        Public Shared Operator +(base As [Property](Of T), append As [Property](Of T)) As [Property](Of T)
+            For Each item As NamedValue(Of T) In append.src
+                base(item.Name) = item.Value
+            Next
+
+            Return base
+        End Operator
     End Class
 End Namespace

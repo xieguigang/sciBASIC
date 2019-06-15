@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35aa700261a6aca04eda3079b697c959, Microsoft.VisualBasic.Core\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::2047894333de18074bc2425ea5d699dc, Microsoft.VisualBasic.Core\My\Log4VB.vb"
 
     ' Author:
     ' 
@@ -42,9 +42,9 @@
 
 #End Region
 
+Imports System.ComponentModel.Composition
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
-Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Terminal
 
 Namespace My
@@ -52,7 +52,7 @@ Namespace My
     ''' <summary>
     ''' VB.NET <see cref="Console"/> log framework.
     ''' </summary>
-    Public Module Log4VB
+    Module Log4VB
 
         Friend ReadOnly logs As New List(Of LoggingDriver)
 
@@ -144,7 +144,7 @@ Namespace My
             End If
 
 #If DEBUG Then
-        Call Debug.WriteLine(msg)
+            Call Debug.WriteLine(msg)
 #End If
         End Sub
     End Module

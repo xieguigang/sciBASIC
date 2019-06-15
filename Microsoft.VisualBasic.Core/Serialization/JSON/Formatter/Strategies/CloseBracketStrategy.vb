@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::116051cd787bc31e0721e7b25ec52fde, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::6e505faee304339630f6b3e462d36b90, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: Execute, PeformNonStringPrint
     ' 
     ' 
@@ -46,6 +47,13 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
 
     Friend NotInheritable Class CloseBracketStrategy
         Implements ICharacterStrategy
+
+        ''' <summary>
+        ''' }
+        ''' </summary>
+        Sub New()
+
+        End Sub
 
         Public Sub Execute(context As JsonFormatterStrategyContext) Implements ICharacterStrategy.Execute
             If context.IsProcessingString Then

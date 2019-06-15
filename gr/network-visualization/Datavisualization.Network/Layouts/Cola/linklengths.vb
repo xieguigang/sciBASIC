@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::938eefd31ff95d1e41d8d57f39d561cd, gr\network-visualization\Datavisualization.Network\Layouts\Cola\linklengths.vb"
+﻿#Region "Microsoft.VisualBasic::8b7615558b1f00b851e4f22b78ef851d, gr\network-visualization\Datavisualization.Network\Layouts\Cola\linklengths.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
 Imports sys = System.Math
@@ -129,6 +128,8 @@ Namespace Layouts.Cola
         ''' <param name="links"></param>
         ''' <param name="la"></param>
         ''' <param name="w"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) Math.Sqrt(unionCount(a, b) - intersectionCount(a, b)), la)
         End Sub
@@ -140,6 +141,8 @@ Namespace Layouts.Cola
         ''' <param name="links"></param>
         ''' <param name="la"></param>
         ''' <param name="w"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) If(sys.Min(a.Keys.Count, b.Keys.Count) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
         End Sub

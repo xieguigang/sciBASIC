@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a33647a4cbdc7ce8c8ff0703e711c55, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::d947146bbc7d375f7b9bce335f5ade86, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Sub: Clear, Delete
     ' 
-    '         Operators: +
+    '         Operators: +, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -145,7 +145,7 @@ Namespace ComponentModel.Collection
         ''' <param name="maps">如果是json加载，可能会出现空值的字典</param>
         ''' <param name="base%"></param>
         Sub New(maps As IDictionary(Of T, Integer), Optional base% = 0)
-            Static emptyIndex As DefaultValue(Of IDictionary(Of String, Integer)) =
+            Static emptyIndex As [Default](Of IDictionary(Of String, Integer)) =
                 New Dictionary(Of String, Integer)
 
             Me.base = base
@@ -275,6 +275,11 @@ Namespace ComponentModel.Collection
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(list As List(Of T)) As Index(Of T)
+            Return New Index(Of T)(source:=list)
+        End Operator
+
         ''' <summary>
         ''' Add a new key to this index object.
         ''' </summary>
@@ -284,6 +289,22 @@ Namespace ComponentModel.Collection
         Public Shared Operator +(index As Index(Of T), element As T) As Index(Of T)
             Call index.Add(element)
             Return index
+        End Operator
+
+        ''' <summary>
+        ''' <paramref name="item"/> is one of the element in <paramref name="indexr"/>
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <param name="indexr"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Like(item As T, indexr As Index(Of T)) As Boolean
+            If item Is Nothing OrElse indexr Is Nothing Then
+                Return False
+            Else
+                Return indexr(x:=item) > -1
+            End If
         End Operator
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator

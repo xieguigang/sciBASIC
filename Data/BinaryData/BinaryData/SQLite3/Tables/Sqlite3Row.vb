@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19762a7bc0040a32eb21a4665f7a0eb7, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3Row.vb"
+﻿#Region "Microsoft.VisualBasic::9faf9e3e6de9036dababf6420bd15464, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3Row.vb"
 
     ' Author:
     ' 
@@ -33,27 +33,46 @@
 
     '     Class Sqlite3Row
     ' 
-    '         Properties: ColumnData, RowId, Table
+    '         Properties: ColumnData, ReadIndex, RowId, Table
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) TryGetOrdinal
+    '         Function: ToString, (+2 Overloads) TryGetOrdinal
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ManagedSqlite.Core.Tables
-    Public Class Sqlite3Row
-        Public ReadOnly Property Table() As Sqlite3Table
-        Public ReadOnly Property RowId() As Long
-        Public ReadOnly Property ColumnData() As Object()
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-        Friend Sub New(table As Sqlite3Table, rowId As Long, columnData As Object())
+Namespace ManagedSqlite.Core.Tables
+
+    Public Class Sqlite3Row
+
+        Public ReadOnly Property Table As Sqlite3Table
+        Public ReadOnly Property RowId As Long
+        Public ReadOnly Property ReadIndex As Long
+        Public ReadOnly Property ColumnData As Object()
+
+        Default Public ReadOnly Property Item(field As Integer) As Object
+            Get
+                Dim value As Object = Nothing
+                Call TryGetOrdinal(field, value)
+                Return value
+            End Get
+        End Property
+
+
+        Friend Sub New(index&, table As Sqlite3Table, rowId As Long, columnData As Object())
             Me.Table = table
             Me.RowId = rowId
             Me.ColumnData = columnData
+            Me.ReadIndex = index
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"#{ReadIndex} [{RowId}] = {ColumnData.Select(AddressOf Scripting.ToString).GetJson}"
+        End Function
 
         Public Function TryGetOrdinal(index As UShort, ByRef value As Object) As Boolean
             value = Nothing

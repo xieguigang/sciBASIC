@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::163c1bd9e824642a2d07af1fc58cc36f, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Uniform.vb"
+﻿#Region "Microsoft.VisualBasic::fcd13a6ea45f1437f07f1c6c796a7ca5, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Uniform.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,10 @@
 
     '     Class Uniform
     ' 
+    '         Properties: Max, Min
+    ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetCDF, GetInvCDF, GetMax, GetMin, GetPDF
-    '                   Validate
+    '         Function: GetCDF, GetInvCDF, GetPDF, Validate
     ' 
     ' 
     ' /********************************************************************************/
@@ -54,26 +55,22 @@ Namespace Distributions.MethodOfMoments
     ''' <summary>
     ''' @author Will_and_Sara
     ''' </summary>
-    Public Class Uniform
-        Inherits Distributions.ContinuousDistribution
+    Public Class Uniform : Inherits Distributions.ContinuousDistribution
 
-        Private _Min As Double
-        Private _Max As Double
-        Public Overridable Function GetMin() As Double
-            Return _Min
-        End Function
-        Public Overridable Function GetMax() As Double
-            Return _Max
-        End Function
+        Public ReadOnly Property Min As Double
+        Public ReadOnly Property Max As Double
+
         Public Sub New()
             'for reflection
-            _Min = 0
-            _Max = 0
+            Min = 0
+            Max = 0
         End Sub
+
         Public Sub New(min As Double, max As Double)
-            _Min = min
-            _Max = max
+            min = min
+            max = max
         End Sub
+
         Public Sub New(data As Double())
             Dim BPM As New MomentFunctions.BasicProductMoments(data)
             _Min = BPM.Min()
@@ -105,10 +102,10 @@ Namespace Distributions.MethodOfMoments
                 Return 0
             End If
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errs As New List(Of Distributions.ContinuousDistributionError)
-            If _Min > _Max Then errs.Add(New Distributions.ContinuousDistributionError("The min cannot be greater than the max in the uniform distribuiton."))
-            Return errs
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Min > _Max Then
+                Yield New Exception("The min cannot be greater than the max in the uniform distribuiton.")
+            End If
         End Function
     End Class
 

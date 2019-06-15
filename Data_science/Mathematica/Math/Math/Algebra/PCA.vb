@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4056958ab038fd823bf937492bb9153c, Data_science\Mathematica\Math\Math\Algebra\PCA.vb"
+﻿#Region "Microsoft.VisualBasic::ee26e1443fe71a82632adeac0522f63f, Data_science\Mathematica\Math\Math\Algebra\PCA.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class PCA
     ' 
-    '         Properties: CumulativeVariance, ExplainedVariance, Loadings, StandardDeviations
+    '         Properties: CumulativeVariance, Eigenvalues, ExplainedVariance, Loadings, StandardDeviations
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: (+2 Overloads) adjust, Project
@@ -68,7 +68,13 @@ Namespace LinearAlgebra
     ''' </remarks>
     Public Class PCA
 
+        ''' <summary>
+        ''' 矩阵之中的每一列的数据的平均值
+        ''' </summary>
         Dim means As Vector
+        ''' <summary>
+        ''' 矩阵之中的每一列的数据的标准差
+        ''' </summary>
         Dim stdevs As Vector
 
         ''' <summary>
@@ -81,6 +87,12 @@ Namespace LinearAlgebra
         Dim S As Vector
 
         Dim center, scale As Boolean
+
+        Public ReadOnly Property Eigenvalues As Vector
+            Get
+                Return S.AsVector
+            End Get
+        End Property
 
         ''' <summary>
         ''' (Standard deviation) Returns the standard deviations of the principal components
@@ -147,7 +159,7 @@ Namespace LinearAlgebra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(matrix As GeneralMatrix, Optional center As Boolean = True, Optional scale As Boolean = False)
-            Call Me.New(vectors:=matrix, center:=center, scale:=scale)
+            Call Me.New(vectors:=matrix.RowVectors, center:=center, scale:=scale)
         End Sub
 
         Sub New(vectors As IEnumerable(Of Vector), Optional center As Boolean = True, Optional scale As Boolean = False)
@@ -194,6 +206,13 @@ Namespace LinearAlgebra
             Return P
         End Function
 
+        ''' <summary>
+        ''' 对数据集执行标准化
+        ''' </summary>
+        ''' <param name="dataset"></param>
+        ''' <param name="center"></param>
+        ''' <param name="scale"></param>
+        ''' <returns></returns>
         Private Function adjust(dataset As Vector(), center As Boolean, scale As Boolean) As Vector()
             If center Then
                 Dim columns = dataset(0) _
@@ -206,8 +225,14 @@ Namespace LinearAlgebra
                     .ToArray
 
                 means = columns.Select(Function(c) c.Average).AsVector
-                dataset = dataset.Select(Function(r) r - means).ToArray
                 stdevs = columns.Select(Function(c) c.StdError).AsVector
+                dataset = dataset _
+                    .Select(Function(r)
+                                ' 在这里每一行数据减去每一列的平均值
+                                ' 就是相当于这一行的每一个元素减去对应的列的平均值
+                                Return r - means
+                            End Function) _
+                    .ToArray
 
                 If scale Then
                     dataset = dataset _

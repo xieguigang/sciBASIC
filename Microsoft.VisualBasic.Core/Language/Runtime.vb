@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::592555dd2c6e5c688ee4eb66f89500f4, Microsoft.VisualBasic.Core\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::07b523fb539260b7cd01bff7c4c2311e, Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class ArgumentReference
-' 
-'         Properties: Expression, Key
-' 
-'         Function: ToString
-'         Operators: <>, =
-' 
-'     Class TypeSchema
-' 
-'         Properties: Type
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Equals, ToString
-'         Operators: (+2 Overloads) And, (+2 Overloads) Or
-' 
-'     Class Runtime
-' 
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    '     Class ArgumentReference
+    ' 
+    '         Properties: Expression, Key, ValueType
+    ' 
+    '         Function: [As], GetUnderlyingType, ToString
+    '         Operators: <>, =
+    ' 
+    '     Class TypeSchema
+    ' 
+    '         Properties: Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Equals, ToString
+    '         Operators: (+2 Overloads) And, (+2 Overloads) Or
+    ' 
+    '     Class Runtime
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -67,17 +67,15 @@ Namespace Language
     ''' <summary>
     ''' ``[name => value]`` tuple
     ''' </summary>
-    Public Class ArgumentReference
+    Public Class ArgumentReference : Inherits Value
         Implements INamedValue
-
-        Public name$, value
 
         Private Property Key As String Implements IKeyedEntity(Of String).Key
             Get
-                Return name
+                Return Name
             End Get
             Set(value As String)
-                name = value
+                Name = value
             End Set
         End Property
 
@@ -87,11 +85,12 @@ Namespace Language
             Get
                 Dim val$
 
-                Static [isNot] As New DefaultValue(Of Assert(Of String))(Function(var) False)
+                Static [isNot] As New [Default](Of Assert(Of String))(Function(var) False)
 
                 If value Is Nothing Then
                     val = null
                 ElseIf value.GetType Is GetType(String) Then
+                    ' string can be a variable name
                     If (isVar Or [isNot])(value) Then
                         val = value
                     Else
@@ -118,6 +117,11 @@ Namespace Language
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function GetUnderlyingType() As Type
+            Return ValueType
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [As](Of T)() As NamedValue(Of T)
             Return New NamedValue(Of T)(name, value)
         End Function
@@ -133,23 +137,23 @@ Namespace Language
         ''' <param name="value">argument value</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator =(var As ArgumentReference, value As Object) As ArgumentReference
-            var.value = value
+        Public Overloads Shared Operator =(var As ArgumentReference, value As Object) As ArgumentReference
+            var.Value = value
             Return var
         End Operator
 
-        Public Shared Operator <>(var As ArgumentReference, value As Object) As ArgumentReference
+        Public Overloads Shared Operator <>(var As ArgumentReference, value As Object) As ArgumentReference
             Throw New NotImplementedException
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
-            Return (arg.name, arg.value)
+        Public Overloads Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
+            Return (arg.Name, arg.Value)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(name As String) As ArgumentReference
-            Return New ArgumentReference With {.name = name}
+        Public Overloads Shared Widening Operator CType(name As String) As ArgumentReference
+            Return New ArgumentReference With {.Name = name}
         End Operator
     End Class
 

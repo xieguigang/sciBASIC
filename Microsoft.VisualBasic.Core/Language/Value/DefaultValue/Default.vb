@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b633a9cd1541cc2bdfb413e54c6bcb0a, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::7215eacef6da5d9f4c3c795ae8d23869, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '     Delegate Function
     ' 
     ' 
-    '     Interface IDefaultValue
+    '     Interface IDefault
     ' 
     '         Properties: DefaultValue
     ' 
@@ -45,7 +45,7 @@
     ' 
     '         Properties: IsEmpty
     ' 
-    '     Structure DefaultValue
+    '     Structure [Default]
     ' 
     '         Properties: DefaultValue, IsEmpty
     ' 
@@ -78,7 +78,7 @@ Namespace Language.Default
     ''' <returns></returns>
     Public Delegate Function BinaryAssert(Of T)(x As T, y As T) As Boolean
 
-    Public Interface IDefaultValue(Of T)
+    Public Interface IDefault(Of T)
         ReadOnly Property DefaultValue As T
     End Interface
 
@@ -93,10 +93,11 @@ Namespace Language.Default
     ''' The default value
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure DefaultValue(Of T) : Implements IDefaultValue(Of T)
+    Public Structure [Default](Of T)
+        Implements IDefault(Of T)
         Implements IsEmpty
 
-        Public ReadOnly Property DefaultValue As T Implements IDefaultValue(Of T).DefaultValue
+        Public ReadOnly Property DefaultValue As T Implements IDefault(Of T).DefaultValue
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If Not constructor Is Nothing Then
@@ -135,7 +136,9 @@ Namespace Language.Default
 #End Region
 
         ''' <summary>
-        ''' asset that if target value is null?
+        ''' asset that if target value is null? If this function returns true when 
+        ''' test on the object, means object value is missing or null, then default 
+        ''' value <see cref="DefaultValue"/> will be returns.
         ''' </summary>
         Dim assert As Assert(Of Object)
 
@@ -172,6 +175,15 @@ Namespace Language.Default
             Me.assert = assert Or defaultAssert
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="populator"></param>
+        ''' <param name="assert"></param>
+        ''' <param name="isLazy">
+        ''' + 如果这个参数为true，则表示表达式为lazy加载，只会执行一次
+        ''' + 反之当这个参数为false的时候，则表达式会不断的产生新的值
+        ''' </param>
         Sub New(populator As Func(Of T), Optional assert As Assert(Of Object) = Nothing, Optional isLazy As Boolean = True)
             If isLazy Then
                 Me.lazy = populator.AsLazy
@@ -182,12 +194,12 @@ Namespace Language.Default
             Me.assert = assert Or defaultAssert
         End Sub
 
-        Public Function [When](expression As Boolean) As DefaultValue(Of T)
+        Public Function [When](expression As Boolean) As [Default](Of T)
             assert = Function(null) expression
             Return Me
         End Function
 
-        Public Function [When](assert As Assert(Of T)) As DefaultValue(Of T)
+        Public Function [When](assert As Assert(Of T)) As [Default](Of T)
             Me.assert = Function(o) assert(DirectCast(o, T))
             Return Me
         End Function
@@ -204,16 +216,16 @@ Namespace Language.Default
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +([default] As DefaultValue(Of T), assert As Assert(Of Object)) As DefaultValue(Of T)
-            Return New DefaultValue(Of T) With {
+        Public Shared Operator +([default] As [Default](Of T), assert As Assert(Of Object)) As [Default](Of T)
+            Return New [Default](Of T) With {
                 .assert = assert,
                 .value = [default].value
             }
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +([default] As DefaultValue(Of T), assert As Expression(Of Func(Of Boolean))) As DefaultValue(Of T)
-            Return New DefaultValue(Of T) With {
+        Public Shared Operator +([default] As [Default](Of T), assert As Expression(Of Func(Of Boolean))) As [Default](Of T)
+            Return New [Default](Of T) With {
                 .assert = Function(null) (assert.Compile())(),
                 .value = [default].value
             }
@@ -228,7 +240,7 @@ Namespace Language.Default
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
+        Public Shared Operator Or(obj As T, [default] As [Default](Of T)) As T
             Return getDefault(obj, [default].DefaultValue, If([default].assert, ExceptionHandle.defaultHandler))
         End Operator
 
@@ -238,7 +250,7 @@ Namespace Language.Default
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Or([default] As DefaultValue(Of T), obj As T) As T
+        Public Shared Operator Or([default] As [Default](Of T), obj As T) As T
             Return getDefault([default].DefaultValue, obj, If([default].assert, ExceptionHandle.defaultHandler))
         End Operator
 
@@ -251,26 +263,26 @@ Namespace Language.Default
         ''' <param name="y"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Or(x As DefaultValue(Of T), y As DefaultValue(Of T)) As T
+        Public Shared Operator Or(x As [Default](Of T), y As [Default](Of T)) As T
             Return x.DefaultValue Or y
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(obj As T) As DefaultValue(Of T)
-            Return New DefaultValue(Of T) With {
+        Public Shared Widening Operator CType(obj As T) As [Default](Of T)
+            Return New [Default](Of T) With {
                 .value = obj,
                 .assert = AddressOf ExceptionHandle.Default
             }
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType([default] As DefaultValue(Of T)) As T
+        Public Shared Narrowing Operator CType([default] As [Default](Of T)) As T
             Return [default].DefaultValue
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(lazy As Func(Of T)) As DefaultValue(Of T)
-            Return New DefaultValue(Of T) With {
+        Public Shared Widening Operator CType(lazy As Func(Of T)) As [Default](Of T)
+            Return New [Default](Of T) With {
                 .lazy = lazy.AsLazy,
                 .assert = AddressOf ExceptionHandle.Default
             }

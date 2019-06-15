@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c4dae457a74d4ab5ec88e01c500590c, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Pareto.vb"
+﻿#Region "Microsoft.VisualBasic::d06100c688c5042a4c7596d0798b2fca, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Pareto.vb"
 
     ' Author:
     ' 
@@ -70,11 +70,11 @@ Namespace Distributions.LinearMoments
         End Sub
         Public Sub New(data As Double())
             Dim LM As New MomentFunctions.LinearMoments(data)
-            If LM.GetL2() = 0 Then
-                _K = (1 - 3 * LM.GetT3()) / (1 + LM.GetT3())
-                _Alpha = (1 + _K) * (2 + _K) * LM.GetL2()
-                _Xi = LM.GetL1() - (2 + _K) * LM.GetL2()
-                PeriodOfRecord = (LM.GetSampleSize())
+            If LM.L2() = 0 Then
+                _K = (1 - 3 * LM.T3()) / (1 + LM.T3())
+                _Alpha = (1 + _K) * (2 + _K) * LM.L2()
+                _Xi = LM.L1() - (2 + _K) * LM.L2()
+                PeriodOfRecord = (LM.SampleSize())
             Else
                 'coefficient of variation cannot be zero.
             End If
@@ -104,10 +104,8 @@ Namespace Distributions.LinearMoments
                 Return (value - _Xi) / _Alpha
             End If
         End Function
-        Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-            Dim errors As New List(Of Distributions.ContinuousDistributionError)
-            If _Alpha = 0 Then errors.Add(New Distributions.ContinuousDistributionError("Alpha cannot be zero"))
-            Return errors
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Alpha = 0 Then Yield New Exception("Alpha cannot be zero")
         End Function
     End Class
 

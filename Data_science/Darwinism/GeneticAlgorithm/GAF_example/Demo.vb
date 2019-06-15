@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b63a9a19482bb6d0bc5fd9426ccdd06, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
+﻿#Region "Microsoft.VisualBasic::a6ba67915b4876235a449e8a63a23bac, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,8 @@
     ' 
     '     Class MyVectorFitness
     ' 
+    '         Properties: Cacheable
+    ' 
     '         Function: Calculate
     ' 
     ' 
@@ -50,6 +52,7 @@
 
 #End Region
 
+Imports GAF_example
 Imports Microsoft.VisualBasic.Extensions
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
@@ -126,6 +129,12 @@ Public Class Demo
         Implements Fitness(Of MyVector)
 
         ReadOnly target As Integer() = {10, 20, 30, 40, 50}
+
+        Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of MyVector).Cacheable
+            Get
+                Return False
+            End Get
+        End Property
 
         Public Function Calculate(chromosome As MyVector) As Double Implements Fitness(Of MyVector).Calculate
             Return FitnessHelper.Calculate(chromosome.Vector, target)

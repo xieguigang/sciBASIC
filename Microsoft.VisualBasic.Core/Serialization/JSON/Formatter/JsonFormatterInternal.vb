@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::460a32264abe004592333ff95f42667f, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\JsonFormatterInternal.vb"
+﻿#Region "Microsoft.VisualBasic::82a6e9e2ddd3af5595828b70a1e6a6a9, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\JsonFormatterInternal.vb"
 
     ' Author:
     ' 
@@ -80,15 +80,14 @@ Namespace Serialization.JSON.Formatter.Internals
                 Return String.Empty
             End If
 
-            Dim input As New StringBuilder(json)
             Dim output As New StringBuilder()
 
-            Me.PrettyPrintCharacter(input, output)
+            Me.PrettyPrintCharacter(json.ToArray, output)
 
             Return output.ToString()
         End Function
 
-        Private Sub PrettyPrintCharacter(input As StringBuilder, output As StringBuilder)
+        Private Sub PrettyPrintCharacter(input As Char(), output As StringBuilder)
             For i As Integer = 0 To input.Length - 1
                 Me.context.PrettyPrintCharacter(input(i), output)
             Next

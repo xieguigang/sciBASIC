@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8682582cbfe5c37bf3fa8af2e775057c, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::b30abc77680cb9b03a1d97e1db20865c, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetProperty, ToString
+    '         Function: GetProperty, inspectType, ToString
     ' 
     '         Sub: TestDEMO
     ' 
@@ -168,8 +168,18 @@ Namespace Emit.Delegates
 
         Sub New(src As IEnumerable(Of T))
             data = src.ToArray
-            properties = type.Schema(PropertyAccess.NotSure, PublicProperty, True)
+            properties = inspectType(type)
         End Sub
+
+        Shared ReadOnly typeCache As New Dictionary(Of Type, Dictionary(Of String, PropertyInfo))
+
+        Private Shared Function inspectType(type As Type) As Dictionary(Of String, PropertyInfo)
+            If Not typeCache.ContainsKey(type) Then
+                typeCache(type) = type.Schema(PropertyAccess.NotSure, PublicProperty, True)
+            End If
+
+            Return typeCache(type)
+        End Function
 
         Public Overrides Function ToString() As String
             Return type.FullName

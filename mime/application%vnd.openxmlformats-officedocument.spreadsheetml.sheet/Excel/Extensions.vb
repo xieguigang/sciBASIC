@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca91aa7da34bfdf322f7c55f78d5913b, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::35913ebc6dc8a455025f99a3c1d73c30, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     ' Module Extensions
     ' 
+    '     Properties: Sheet1
+    ' 
     '     Function: CreateNew, EnumerateTables, FirstSheet, ReadTableAuto
     ' 
     ' /********************************************************************************/
@@ -42,10 +44,21 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 Public Module Extensions
+
+    ''' <summary>
+    ''' ``Sheet1`` is the default sheet name in excel file.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Sheet1 As [Default](Of  String)
+        Get
+            Return NameOf(Sheet1)
+        End Get
+    End Property
 
     ''' <summary>
     ''' Create a new empty excel xlsx file.

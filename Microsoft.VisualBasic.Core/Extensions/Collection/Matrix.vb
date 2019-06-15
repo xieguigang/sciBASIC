@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::499e821dafbf8883a7ac615c1f85bd7f, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::44bec93731efa49cd5c9e88b17824d27, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     ' Module MatrixExtensions
     ' 
     '     Function: DATA, GetCol, GetRow, GetSize, MAT
-    '               (+2 Overloads) Matrix, RowIterator, SetCol, SetRow, ToFloatMatrix
-    '               ToMatrix, ToVectorList
+    '               (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol, SetRow
+    '               SizeOf, ToFloatMatrix, ToMatrix, ToVectorList
     ' 
     ' /********************************************************************************/
 
@@ -145,6 +145,26 @@ Public Module MatrixExtensions
         Next
 
         Return newMAT
+    End Function
+
+    <Extension>
+    Public Function Rectangle(type As Type, m%, n%) As Array
+        Dim newMatrix As Array = Array.CreateInstance(type.MakeArrayType, m)
+
+        For i As Integer = 0 To m - 1
+            Call newMatrix.SetValue(Array.CreateInstance(type, n), i)
+        Next
+
+        Return newMatrix
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SizeOf(Of T)(rect As T()()) As Size
+        Return New Size With {
+            .Width = rect(Scan0).Length,
+            .Height = rect.Length
+        }
     End Function
 
     ''' <summary>

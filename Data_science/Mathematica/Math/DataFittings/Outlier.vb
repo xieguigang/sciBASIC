@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7547509921d18d4a9ed6d034ae7713a1, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
+﻿#Region "Microsoft.VisualBasic::03f84fc085d2bb20c5eb8b84edd7c849, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
 
     ' Author:
     ' 
@@ -63,8 +63,8 @@ Public Module Outlier
     <Extension>
     Public Iterator Function DeleteOutlier(points As IEnumerable(Of PointF)) As IEnumerable(Of PointF)
         Dim lineVector = points.ToArray
-        Dim minX = Aggregate p In lineVector Into Min(p.X)
-        Dim minY = Aggregate p In lineVector Into Min(p.Y)
+        Dim minX = lineVector(Scan0).X  ' Aggregate p In lineVector Into Min(p.X)
+        Dim minY = lineVector(Scan0).Y  ' Aggregate p In lineVector Into Min(p.Y)
         Dim angles = lineVector.Select(Function(p) Trigonometric.GetAngle(minX, minY, p.X, p.Y)).AsVector
         Dim quartile = angles.Quartile
         Dim outliers = angles.Outlier(quartile).Outlier

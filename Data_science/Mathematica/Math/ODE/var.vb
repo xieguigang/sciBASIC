@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8c41a09ae48c0907352908ed0d7984f, Data_science\Mathematica\Math\ODE\var.vb"
+﻿#Region "Microsoft.VisualBasic::72317781d7c6c1d96a9d85334ed3a822, Data_science\Mathematica\Math\ODE\var.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@ Public Class var : Inherits VBDouble
     Implements ICloneable
     Implements IAddress(Of Integer)
 
-    Public Property Index As Integer Implements IAddress(Of Integer).Address
+    Public Overloads Property Index As Integer Implements IAddress(Of Integer).Address
     Public Property Name As String Implements INamedValue.Key
     Public Overrides Property value As Double Implements Ivar.value
 

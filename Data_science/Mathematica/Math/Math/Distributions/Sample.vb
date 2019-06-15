@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdf5958ae4f1ea290b503672b12f29c9, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::efef4408cdd76f68c3c5c5aa29b9e482, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
 
     ' Author:
     ' 
@@ -104,8 +104,9 @@ Namespace Distributions
             Return {min, max}
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return GetJson
         End Function
     End Class
 End Namespace

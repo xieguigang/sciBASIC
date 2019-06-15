@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a5d74bcbf37cc89aba8d9eaff9082dc, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::ced60d52179f290950843cd79cc35712, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     '     Module MD5Hash
     ' 
-    '         Function: GetFileMd5, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2, NewUid
-    '                   SaltValue, StringToByteArray, (+2 Overloads) ToLong, VerifyFile, VerifyMd5Hash
+    '         Function: Fletcher32, GetFileMd5, (+2 Overloads) GetHashCode, (+2 Overloads) GetMd5Hash, GetMd5Hash2
+    '                   NewUid, SaltValue, Sha256ByteString, StringToByteArray, (+2 Overloads) ToLong
+    '                   VerifyFile, VerifyMd5Hash
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,7 +45,9 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Security.Cryptography
+Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
@@ -59,7 +62,7 @@ Namespace SecurityString
             Return GetMd5Hash(input)
         End Function
 
-        ReadOnly __hashProvider As New Md5HashProvider
+        ReadOnly hashProvider As New Md5HashProvider
 
         ''' <summary>
         ''' Calculate md5 hash value for the input string.
@@ -71,8 +74,8 @@ Namespace SecurityString
         <ExportAPI("Md5")>
         <Extension>
         Public Function GetMd5Hash(input As String) As String
-            SyncLock __hashProvider
-                Return __hashProvider.GetMd5Hash(input)
+            SyncLock hashProvider
+                Return hashProvider.GetMd5Hash(input)
             End SyncLock
         End Function
 
@@ -179,12 +182,6 @@ Namespace SecurityString
             Return raw.GetMd5Hash
         End Function
 
-        <Extension>
-        Public Function GetMd5Hash(Of T As Language.BaseClass)(x As T) As String
-            Dim raw As String = x.__toString & x.GetHashCode
-            Return raw.GetMd5Hash
-        End Function
-
         ''' <summary>
         ''' Verify a hash against a string. 
         ''' </summary>
@@ -270,6 +267,72 @@ Namespace SecurityString
                 hash(31)
             }
             Return chars.CharString
+        End Function
+
+        ''' <summary>
+        ''' sha256 computed byte array in a readable format.
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function Sha256ByteString(array() As Byte, Optional delimiter As Char = " "c) As String
+            Dim sb As New StringBuilder
+
+            For i As Integer = 0 To array.Length - 1
+                sb.Append($"{array(i):X2}")
+
+                If i Mod 4 = 3 Then
+                    sb.Append(delimiter)
+                End If
+            Next
+
+            Return sb.ToString.Trim(delimiter)
+        End Function
+
+        ''' <summary>
+        ''' Calculate the Fletcher32 checksum.
+        ''' </summary>
+        ''' <param name="bytes">the bytes data for verify</param>
+        ''' <param name="offset">initial offset</param>
+        ''' <param name="length">the message length (if odd, 0 is appended)</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' https://github.com/AKafakA/CSE5234_Group1/blob/ae055d2bb45be9ccf30bbf2bf9dfac4e6e982b1c/h2/src/main/org/h2/mvstore/DataUtils.java#L798
+        ''' </remarks>
+        <Extension>
+        Public Function Fletcher32(bytes As Byte(), offset%, length%) As Integer
+            Dim s1 As Integer = &HFFFF
+            Dim s2 As Integer = &HFFFF
+            Dim i As VBInteger = offset
+            Dim len As Integer = offset + (length And (Not 1))
+
+            Do While i < len
+                ' reduce after 360 words (each word is two bytes)
+                Dim [end] As Integer = System.Math.Min(CInt(i) + 720, len)
+
+                Do While i < [end]
+                    'ORIGINAL LINE: int x = ((bytes[i++] & &Hff) << 8) | (bytes[i++] & &Hff);
+                    Dim x As Integer = ((bytes(++i) And &HFF) << 8) Or (bytes(++i) And &HFF)
+                    s1 += x
+                    s2 += s1
+                Loop
+
+                s1 = (s1 And &HFFFF) + (CInt(CUInt(s1) >> 16))
+                s2 = (s2 And &HFFFF) + (CInt(CUInt(s2) >> 16))
+            Loop
+
+            If (length And 1) <> 0 Then
+                ' odd length: append 0
+                Dim x As Integer = (bytes(i) And &HFF) << 8
+                s1 += x
+                s2 += s1
+            End If
+
+            s1 = (s1 And &HFFFF) + (CInt(CUInt(s1) >> 16))
+            s2 = (s2 And &HFFFF) + (CInt(CUInt(s2) >> 16))
+
+            Return (s2 << 16) Or s1
         End Function
     End Module
 End Namespace

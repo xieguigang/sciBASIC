@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35e93eaee0f76bb39601df4b008bb983, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
+﻿#Region "Microsoft.VisualBasic::354602b18887368d56417b886441382a, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,9 @@
 
     '     Class Sqlite3SchemaRow
     ' 
-    '         Properties: Name, RootPage, Sql, TableName, Type
+    '         Properties: name, rootPage, Sql, tableName, type
+    ' 
+    '         Function: ParseSchema, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,11 +46,26 @@ Namespace ManagedSqlite.Core.Tables
 
     Public Class Sqlite3SchemaRow
 
-        Public Property Type() As String
-        Public Property Name() As String
-        Public Property TableName() As String
-        Public Property RootPage() As UInteger
-        Public Property Sql() As String
+        Public Property type As String
+        Public Property name As String
+        Public Property tableName As String
+        Public Property rootPage As UInteger
+        Public Property Sql As String
+
+        Public Overrides Function ToString() As String
+            Return Sql
+        End Function
+
+        Public Function ParseSchema(Optional removeNameEscape As Boolean = False) As Schema
+            Dim columns As String() = Sql _
+                .GetStackValue("(", ")") _
+                .StringSplit("\s*,\s*")
+
+            ' 有一些字段的名称可能是包含有空格或者小数点之类的,
+            ' 则这些字段名称会被[]转义
+            ' 在下面的构造函数调用过程之中会根据参数值来自动处理这些转义
+            Return New Schema(columns, removeNameEscape)
+        End Function
 
     End Class
 End Namespace

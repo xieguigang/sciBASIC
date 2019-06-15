@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4e0b2497aae3c53f4d6e58fdabfcb48, Data\BinaryData\BinaryData\SQLite3\Helpers\SqliteDataStream.vb"
+﻿#Region "Microsoft.VisualBasic::ef2a354c0087ebb4668bcef6c3a40702, Data\BinaryData\BinaryData\SQLite3\Helpers\SqliteDataStream.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: CanRead, CanSeek, Length, Position
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Read, Seek
     ' 
     ' 
@@ -45,18 +45,22 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 
 Namespace ManagedSqlite.Core.Helpers
+
     Friend Class SqliteDataStream
         Inherits ReadonlyStream
-        Private ReadOnly _reader As ReaderBase
-        Private _currentPage As UInteger
-        Private _dataOffset As UShort
-        Private _dataLengthRemaining As UShort
-        Private _nextPage As UInteger
 
-        Private _position As Long
-        Private _fullLengthRemaining As Long
+        ReadOnly _reader As ReaderBase
+
+        Dim _currentPage As UInteger
+        Dim _dataOffset As UShort
+        Dim _dataLengthRemaining As UShort
+        Dim _nextPage As UInteger
+
+        Dim _position As Long
+        Dim _fullLengthRemaining As Long
 
         ''' <summary>
         ''' 
@@ -76,6 +80,17 @@ Namespace ManagedSqlite.Core.Helpers
 
             Length = fullDataSize
             _fullLengthRemaining = fullDataSize
+        End Sub
+
+        Sub New(reader As ReaderBase, cell As BTreeCellData)
+            Call Me.New(
+                reader:=reader,
+                page:=cell.Page,
+                dataOffset:=CUShort(cell.CellOffset + cell.Cell.CellHeaderSize),
+                dataLength:=cell.Cell.DataSizeInCell,
+                overflowPage:=cell.Cell.FirstOverflowPage,
+                fullDataSize:=cell.Cell.DataSize
+            )
         End Sub
 
         Public Overrides Function Read(buffer As Byte(), offset As Integer, count As Integer) As Integer
@@ -122,11 +137,13 @@ Namespace ManagedSqlite.Core.Helpers
                 Return True
             End Get
         End Property
+
         Public Overrides ReadOnly Property CanSeek() As Boolean
             Get
                 Return False
             End Get
         End Property
+
         Public Overrides ReadOnly Property Length() As Long
 
         Public Overrides Property Position() As Long

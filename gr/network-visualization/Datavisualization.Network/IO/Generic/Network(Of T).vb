@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b67bd66d7ddf4b7f33fec0d8ba3931b9, gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::c539ccfe8489b68984fee2a071dc53aa, gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
 
     ' Author:
     ' 
@@ -161,7 +161,7 @@ Namespace FileStream.Generic
         ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overrides Function Save(Optional outDIR$ = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Overrides Function Save(outDIR$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             With outDIR Or App.CurrentDirectory.AsDefault
                 Call Nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding)
                 Call Edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding)

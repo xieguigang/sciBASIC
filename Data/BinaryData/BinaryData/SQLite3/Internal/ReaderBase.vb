@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6732667137e07c626d940c92d96dd15c, Data\BinaryData\BinaryData\SQLite3\Internal\ReaderBase.vb"
+﻿#Region "Microsoft.VisualBasic::ab543c266e2926f1b935d8992063ae37, Data\BinaryData\BinaryData\SQLite3\Internal\ReaderBase.vb"
 
     ' Author:
     ' 
@@ -50,35 +50,41 @@
 
 Imports System.Diagnostics
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Helpers
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
 Namespace ManagedSqlite.Core.Internal
-    Public Class ReaderBase
-        Implements IDisposable
-        Public ReadOnly Property Length() As Long
 
-        Public ReadOnly Property Position() As Long
+    Public Class ReaderBase : Implements IDisposable
+
+        ''' <summary>
+        ''' The binary file length
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Length As Long
+
+        Public ReadOnly Property Position As Long
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _stream.Position
             End Get
         End Property
 
-        Private ReadOnly _stream As Stream
-        Private ReadOnly _binaryReader As BinaryReader
-
-        Public Property TextEncoding() As SqliteEncoding
-
-        Private _encoding As Encoding
-
-        Public Property PageSize() As UShort
+        Public Property TextEncoding As SqliteEncoding
+        Public Property PageSize As UShort
 
         ''' <summary>
         ''' Reserved space at the end of every page
         ''' </summary>
         Public Property ReservedSpace() As Byte
+
+        ReadOnly _stream As Stream
+        ReadOnly _binaryReader As BinaryReader
+
+        Dim _encoding As Encoding
 
         Public Sub New(stream As Stream)
             _stream = stream
@@ -116,25 +122,24 @@ Namespace ManagedSqlite.Core.Internal
         End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            _stream.Dispose()
+            Call _stream.Dispose()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Function CheckMagicBytes(comparison As Byte(), Optional throwException As Boolean = True) As Boolean
             Return CheckMagicBytes(CUInt(comparison.Length), comparison, throwException)
         End Function
 
         Friend Function CheckMagicBytes(toRead As UInteger, comparison As Byte(), Optional throwException As Boolean = True) As Boolean
-            Debug.Assert(toRead >= comparison.Length)
-            CheckSize(toRead)
+            Call Debug.Assert(toRead >= comparison.Length)
+            Call CheckSize(toRead)
 
             Dim data As Byte() = _stream.ReadFully(CInt(toRead))
-
             Dim res As Boolean = data.SequenceEqual(comparison)
+
             If Not res AndAlso throwException Then
                 ' Note: This is the position after read
-                Throw New ArgumentException("The requested magic bytes did not match") 'With {
-                '.Data = {{NameOf(Stream.Position), _stream.Position}, {NameOf(toRead), toRead}, {NameOf(comparison), comparison.ToHex()}, {NameOf(data), data.ToHex()}}
-                '}
+                Throw New ArgumentException("The requested magic bytes did not match")
             End If
 
             Return res
@@ -146,6 +151,7 @@ Namespace ManagedSqlite.Core.Internal
             End If
 
             Dim dataLeft As Long = Length - _stream.Position
+
             If dataLeft < sizeWanted Then
                 Throw New ArgumentException("Source stream does not have enough data") 'With {
                 ' .Data = {{NameOf(Stream.Position), _stream.Position}, {NameOf(sizeWanted), sizeWanted}, {"SourceLength", Length}}
@@ -154,9 +160,8 @@ Namespace ManagedSqlite.Core.Internal
         End Sub
 
         Friend Sub SetPositionAndCheckSize(position As ULong, sizeWanted As UInteger, Optional throwException As Boolean = True)
-            SetPosition(position)
-
-            CheckSize(sizeWanted, throwException)
+            Call SetPosition(position)
+            Call CheckSize(sizeWanted, throwException)
         End Sub
 
         Friend Sub SetPosition(position As ULong)
@@ -179,10 +184,12 @@ Namespace ManagedSqlite.Core.Internal
             SetPositionAndCheckSize(position, CUInt(PageSize - offset))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Sub Skip(bytes As UInteger)
             _stream.Seek(bytes, SeekOrigin.Current)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ReadByte() As Byte
             Return _binaryReader.ReadByte()
         End Function
@@ -280,13 +287,15 @@ Namespace ManagedSqlite.Core.Internal
             Next
 
             ' Skip final byte
-            ReadByte()
+            Call ReadByte()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Read(count As Integer) As Byte()
             Return _stream.ReadFully(count)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Read(buffer As Byte(), offset As Integer, count As Integer) As Integer
             Return _stream.ReadFully(buffer, offset, count)
         End Function

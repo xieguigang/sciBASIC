@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57f11de4cb86058778dccee9ad51a67a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\WeightedChar.vb"
+﻿#Region "Microsoft.VisualBasic::f0b3709a47a69b50c0b2581b3f1df83d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\WeightedChar.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Namespace Drawing2D.Text.ASCIIArt
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Shared Function getDefaultCharSet() As DefaultValue(Of WeightedChar())
+        Friend Shared Function getDefaultCharSet() As [Default](Of  WeightedChar())
             Return CharSet.GenerateFontWeights()
         End Function
     End Class

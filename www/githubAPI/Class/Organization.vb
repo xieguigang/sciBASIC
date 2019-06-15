@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcf92272dcf598d90a92a179ed1d2462, www\githubAPI\Class\Organization.vb"
+﻿#Region "Microsoft.VisualBasic::ed9ba498bb06a26ce6a84e56f433e7b7, www\githubAPI\Class\Organization.vb"
 
     ' Author:
     ' 

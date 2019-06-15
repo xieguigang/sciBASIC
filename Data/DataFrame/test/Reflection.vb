@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3b9dca1fec916df2532c86d5780d6d3, Data\DataFrame\test\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::8a1e40038193c35737e2ea618ec124ed, Data\DataFrame\test\Reflection.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@
 
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 Module Reflection
 
@@ -64,6 +65,14 @@ Module Reflection
                 Call println("%s visit %s at %s", !ip, !url, !time)
             End With
         Next
+
+        With New VisualBasic
+            Call New DataFrame(
+                !X = {1, 2, 3, 4, 5},
+                !Y = {9, 8, 7, 6, 5}
+            ).csv _
+             .Save("./dataframe_test.csv")
+        End With
 
         Pause()
     End Sub

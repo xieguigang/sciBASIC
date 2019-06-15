@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fabe0f5f3b838c2968cbda4a144aedf5, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::be6da859a70b35c56d45b6240422e30a, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
     ' Module KeyValuePairExtensions
     ' 
     '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
-    '               AsNamedVector, AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples
-    '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData
-    '               IGrouping, IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll
-    '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection
-    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, SetOfKeyValuePairs
-    '               (+2 Overloads) Subset, Takes, (+3 Overloads) ToDictionary, Tsv, Tuple
-    '               (+2 Overloads) Values, XMLModel
+    '               AsNamedVector, AsTable, ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData
+    '               (+2 Overloads) EnumerateTuples, EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault
+    '               GroupByKey, HaveData, IGrouping, IterateNameCollections, IterateNameValues
+    '               IteratesAll, Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues
+    '               (+3 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects
+    '               SetOfKeyValuePairs, (+2 Overloads) Subset, tableInternal, Takes, (+3 Overloads) ToDictionary
+    '               Tsv, Tuple, (+2 Overloads) Values, XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 
@@ -66,6 +66,30 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' KeyValue pair data related extensions API.
 ''' </summary>
 Public Module KeyValuePairExtensions
+
+    ''' <summary>
+    ''' 这个拓展函数主要是针对值得构建比较耗时的操作，主要应用于数据缓存场景
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <param name="lazyValue"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ComputeIfAbsent(Of K, V)(table As Dictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
+        If Not table.ContainsKey(key) OrElse table(key) Is Nothing Then
+            table(key) = lazyValue(key)
+        End If
+
+        Return table(key)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetValueOrDefault(Of K, V)(key As K, table As Dictionary(Of K, V), Optional [default] As V = Nothing) As V
+        Return table.TryGetValue(key, [default]:=[default])
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -183,25 +207,7 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
-    ''' Target <paramref name="item"/> contains in <paramref name="define"/> list.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="item">对于空值,这个函数总是返回false</param>
-    ''' <param name="define"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function IsOneOfA(Of T)(item As T, define As Index(Of T)) As Boolean
-        ' System.ArgumentNullException: Value cannot be null.
-        ' Parameter name: key
-        If item Is Nothing Then
-            Return False
-        Else
-            Return define.IndexOf(item) > -1
-        End If
-    End Function
-
-    ''' <summary>
+    ''' 根据所给定的一个主键列表批量化取出目标字典之中的一部分数据构成一个新的字典子集对象
     ''' 函数会根据<see cref="keys"/>参数来做排序
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -214,10 +220,10 @@ Public Module KeyValuePairExtensions
     Public Function Subset(Of T)(table As Dictionary(Of String, T), keys$()) As Dictionary(Of String, T)
         Return keys _
             .Select(Function(key)
-                        Return (key:=key, Value:=table(key))
+                        Return (key:=key, val:=table(key))
                     End Function) _
             .ToDictionary(Function(o) o.key,
-                          Function(o) o.Value)
+                          Function(o) o.val)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -364,6 +370,7 @@ Public Module KeyValuePairExtensions
     <Extension>
     Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
         Return source _
+            .SafeQuery _
             .Select(Function(x) x.Value) _
             .ToArray
     End Function
@@ -678,14 +685,24 @@ Public Module KeyValuePairExtensions
     End Function
 
     <Extension>
-    Public Function ToDictionary(nc As NameValueCollection) As Dictionary(Of String, String)
-        Dim hash As New Dictionary(Of String, String)
+    Public Function ToDictionary(nc As NameValueCollection, Optional allStrings As Boolean = False) As [Variant](Of Dictionary(Of String, String), Dictionary(Of String, String()))
+        If allStrings Then
+            Dim table As New Dictionary(Of String, String())
 
-        For Each key As String In nc.AllKeys
-            hash(key) = nc(key)
-        Next
+            For Each key As String In nc.AllKeys
+                table(key) = nc.GetValues(key)
+            Next
 
-        Return hash
+            Return table
+        Else
+            Dim table As New Dictionary(Of String, String)
+
+            For Each key As String In nc.AllKeys
+                table(key) = nc(key)
+            Next
+
+            Return table
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -705,34 +722,48 @@ Public Module KeyValuePairExtensions
     ''' <param name="source"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T)) As Dictionary(Of T)
+    Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T), Optional replaceOnDuplicate As Boolean = False) As Dictionary(Of T)
         If source Is Nothing Then
 #If DEBUG Then
             Call sourceEmpty.Warning
 #End If
             Return New Dictionary(Of T)
+        Else
+            Dim currentKey As String = "NA"
+            Dim keys As New List(Of String)
+
+            Try
+                Return source.tableInternal(currentKey, keys, replaceOnDuplicate)
+            Catch ex As Exception
+                ex = New Exception(currentKey, ex)
+                ex = New Exception(keys.GetJson, ex)
+
+                Throw ex
+            End Try
         End If
+    End Function
 
-        Dim i As Integer = 0
-        Dim keys As New List(Of String)
-
-        Try
-            With New Dictionary(Of T)
+    <Extension>
+    Private Function tableInternal(Of T As INamedValue)(source As IEnumerable(Of T),
+                                                        ByRef currentKey$,
+                                                        ByRef keys As List(Of String),
+                                                        replaceOnDuplicate As Boolean) As Dictionary(Of T)
+        With New Dictionary(Of T)
+            If replaceOnDuplicate Then
                 For Each item As T In source
-                    Call .Add(item.Key, item)
-                    Call keys.Add(item.Key)
-
-                    i += 1
+                    .Item(item.Key) = item
                 Next
+            Else
+                For Each item As T In source
+                    currentKey = item.Key
 
-                Return .ByRef
-            End With
-        Catch ex As Exception
-            ex = New Exception("key --> [ " & source(i).Key & " ]", ex)
-            ex = New Exception("keys --> " & keys.GetJson, ex)
+                    Call .Add(currentKey, item)
+                    Call keys.Add(currentKey)
+                Next
+            End If
 
-            Throw ex
-        End Try
+            Return .ByRef
+        End With
     End Function
 
     ''' <summary>

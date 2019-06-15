@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6301ccfd71164d2ce589ec6b3677b6a, Microsoft.VisualBasic.Core\Extensions\Doc\LargeTextFile.vb"
+﻿#Region "Microsoft.VisualBasic::35b98f098b8ac4571c78e8ce214c30ae, Microsoft.VisualBasic.Core\Extensions\Doc\LargeTextFile.vb"
 
     ' Author:
     ' 
@@ -99,6 +99,11 @@ Public Module LargeTextFile
         End Using
     End Function
 
+    ''' <summary>
+    ''' Populate all lines of the text data from current stream reader object
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function IteratesStream(s As StreamReader) As IEnumerable(Of String)
         Do While Not s.EndOfStream

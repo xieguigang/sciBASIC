@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8243ea614c276ee3e2135a7f2db915af, Microsoft.VisualBasic.Core\Net\HTTP\sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::5a099b4ca8a8b710b5c0b912588cd2dc, Microsoft.VisualBasic.Core\Net\HTTP\sitemap.xml.vb"
 
     ' Author:
     ' 
@@ -115,13 +115,13 @@ Namespace Net.Http
         ''' </summary>
         Const xmlns$ = "<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">"
 
-        Public Function Save(Optional path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Dim xml As String = (Me.GetXml)
             xml = Regex.Replace(xml, "<urlset .*?>", xmlns)
             Return xml.SaveTo(path, encoding)
         End Function
 
-        Public Function Save(Optional path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(path, encoding.CodePage)
         End Function
 
