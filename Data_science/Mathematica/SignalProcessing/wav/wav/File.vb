@@ -16,16 +16,7 @@ Public Class File
             .magic = wav.ReadString(4),
             .fileSize = wav.ReadInt32,
             .format = wav.ReadString(4),
-            .fmt = New FMTSubChunk With {
-                .ChunkID = wav.ReadString(4),
-                .ChunkSize = wav.ReadInt32,
-                .audioFormat = wav.ReadInt16,
-                .Channels = wav.ReadInt16,
-                .SampleRate = wav.ReadInt32,
-                .ByteRate = wav.ReadInt32,
-                .BlockAlign = wav.ReadInt16,
-                .BitsPerSample = wav.ReadInt16
-            },
+            .fmt = FMTSubChunk.ParseChunk(wav),
             .data = DataSubChunk.ParseData(wav)
         }
     End Function
