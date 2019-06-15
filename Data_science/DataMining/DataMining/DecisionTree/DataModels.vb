@@ -86,6 +86,34 @@ Namespace DecisionTree
             Return headers.GetJson
         End Function
 
+        Public Shared Function [Imports](table As System.Data.DataTable) As DataTable
+            Dim headers = Iterator Function() As IEnumerable(Of String)
+                              For i As Integer = 0 To table.Columns.Count - 1
+                                  Yield table.Columns(i).ToString
+                              Next
+                          End Function().ToArray
+            Dim data As Entity() = Iterator Function() As IEnumerable(Of Entity)
+                                       Dim row As New List(Of String)
+
+                                       For i As Integer = 0 To table.Rows.Count - 1
+                                           For j As Integer = 0 To table.Columns.Count - 1
+                                               row += table.Rows(i)(j).ToString
+                                           Next
+
+                                           Yield New Entity With {
+                                               .entityVector = row.ToArray
+                                           }
+
+                                           row *= 0
+                                       Next
+                                   End Function().ToArray
+
+            Return New DataTable With {
+                .headers = headers,
+                .rows = data
+            }
+        End Function
+
     End Class
 
     Public Class ClassifyResult

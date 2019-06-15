@@ -7,7 +7,7 @@ Namespace RandomForests
 
     Public Class RandomForests
 
-        Public ReadOnly Property trees As Tree()
+        Public Property trees As Tree()
 
         Public Function Predicts(test As IDictionary(Of String, String)) As ClassifyResult
             Dim votes = trees.AsParallel _
