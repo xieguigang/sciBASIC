@@ -77,6 +77,6 @@ Public Class Signal : Inherits Vector(Of TimeSignal)
     End Sub
 
     Public Shared Operator +(a As Signal, b As Signal) As Signal
-
+        Throw New NotImplementedException
     End Operator
 End Class
