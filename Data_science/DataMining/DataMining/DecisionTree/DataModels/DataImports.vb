@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace DecisionTree.Data
 
@@ -52,6 +54,29 @@ Namespace DecisionTree.Data
                 }
 
                 row *= 0
+            Next
+        End Function
+
+        ''' <summary>
+        ''' Populate validation data set from table
+        ''' </summary>
+        ''' <param name="table"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function AsValidateSet(table As DataTable) As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))
+            Dim properties As SeqValue(Of String)() = table.headers _
+                .Take(table.columns - 1) _
+                .SeqIterator _
+                .ToArray
+
+            For Each test As Entity In table.rows
+                Dim result = test.decisions
+                Dim query = properties.ToDictionary(Function(header) header.value, Function(column) test(column))
+
+                Yield New NamedValue(Of Dictionary(Of String, String)) With {
+                    .Name = result,
+                    .Value = query
+                }
             Next
         End Function
     End Module
