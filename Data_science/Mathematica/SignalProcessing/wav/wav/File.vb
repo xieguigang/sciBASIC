@@ -48,13 +48,43 @@ Imports Microsoft.VisualBasic.Data.IO
 ''' </summary>
 Public Class File
 
+    ''' <summary>
+    ''' Contains the letters "RIFF" in ASCII form (0x52494646 big-endian form).
+    ''' </summary>
+    ''' <returns></returns>
     Public Property magic As String
+    ''' <summary>
+    ''' ``36 + SubChunk2Size``, or more precisely:
+    ''' 
+    ''' ```
+    ''' 4 + (8 + SubChunk1Size) + (8 + SubChunk2Size)
+    ''' ```
+    ''' 
+    ''' This Is the size of the rest of the chunk 
+    ''' following this number.  This Is the size Of the 
+    ''' entire file In bytes minus 8 bytes For the
+    ''' two fields Not included In this count:
+    ''' ChunkID And ChunkSize.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property fileSize As Integer
+    ''' <summary>
+    ''' Contains the letters "WAVE" (0x57415645 big-endian form).
+    ''' </summary>
+    ''' <returns></returns>
     Public Property format As String
+    ''' <summary>
+    ''' Subchunk1
+    ''' </summary>
+    ''' <returns></returns>
     Public Property fmt As FMTSubChunk
+    ''' <summary>
+    ''' Subchunk2
+    ''' </summary>
+    ''' <returns></returns>
     Public Property data As DataSubChunk
 
-    Public Shared Function ParseHeader(wav As BinaryDataReader) As File
+    Public Shared Function Open(wav As BinaryDataReader) As File
         Return New File With {
             .magic = wav.ReadString(4),
             .fileSize = wav.ReadInt32,
