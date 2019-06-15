@@ -4,12 +4,15 @@
 Imports Microsoft.VisualBasic.DataMining.DecisionTree
 Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 Namespace DecisionTree
 
     Module DecisionTreeProgram
 
         Sub Main()
+
+            Call treeTest2()
 
             Dim data As DataTable = CsvFileHandler.ImportFromCsvFile("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.csv")
             Dim decisionTree As New Tree(data)
@@ -29,6 +32,16 @@ Namespace DecisionTree
             Dim tree2 As New Tree("./trainingdata.json".LoadJsonFile(Of TreeNode))
 
             Dim result3 = decisionTree.CalculateResult(query3)
+
+            Pause()
+        End Sub
+
+
+        Sub treeTest2()
+            Dim data As DataTable = csv.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTrainData.csv").AsMatrix.Imports
+            Dim tree As New Tree(data)
+
+            '   Call tree.root.GetJson.SaveTo("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTrainData.json")
 
             Pause()
         End Sub

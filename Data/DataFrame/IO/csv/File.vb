@@ -894,6 +894,11 @@ B21,B22,B23,...
             Yield GetEnumerator()
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsMatrix() As IEnumerable(Of IEnumerable(Of String))
+            Return _innerTable.Select(Function(r) r.AsEnumerable)
+        End Function
+
         ''' <summary>
         ''' 判断目标数据文件是否为空
         ''' </summary>
