@@ -50,6 +50,7 @@ Public Class File
 
     ''' <summary>
     ''' Contains the letters "RIFF" in ASCII form (0x52494646 big-endian form).
+    ''' Resource Interchange File Format.
     ''' </summary>
     ''' <returns></returns>
     Public Property magic As String

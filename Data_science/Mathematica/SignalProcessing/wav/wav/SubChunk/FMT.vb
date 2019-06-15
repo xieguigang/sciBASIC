@@ -39,9 +39,14 @@ Public Class FMTSubChunk : Inherits SubChunk
     ''' <returns></returns>
     Public Property audioFormat As wFormatTag
     Public Property channels As Channels
-
+    ''' <summary>
+    ''' 22.05KHz/44.1kHz/48KHz
+    ''' </summary>
+    ''' <returns></returns>
     Public Property SampleRate As Integer
     ''' <summary>
+    ''' (bytes_per sec) 音频的码率，每秒播放的字节数。
+    ''' 
     ''' ```
     ''' SampleRate * NumChannels * BitsPerSample / 8
     ''' ```
@@ -65,6 +70,10 @@ Public Class FMTSubChunk : Inherits SubChunk
     ''' <returns></returns>
     Public Property BitsPerSample As Integer
 
+    ''' <summary>
+    ''' Pulse Code Modulation
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property isPCM As Boolean
         Get
             Return audioFormat = 1
