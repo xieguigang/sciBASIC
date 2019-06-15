@@ -1,8 +1,10 @@
 'Imports System.Collections.Generic
 'Imports System.Data
 'Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.DecisionTree
 Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
@@ -43,6 +45,17 @@ Namespace DecisionTree
 
             '   Call tree.root.GetJson.SaveTo("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTrainData.json")
 
+            Dim validations = csv.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTestData.csv").AsMatrix.Imports.AsValidateSet.ToArray
+            Dim runTest = Function(test As NamedValue(Of Dictionary(Of String, String)))
+                              Dim result = tree.CalculateResult(test.Value)
+                              Dim validates = result.result.ToLower = test.Name.ToLower
+
+                              Return New NamedValue(Of ClassifyResult) With {.Name = test.Name, .Value = result, .Description = validates}
+                          End Function
+
+            Dim validaTest = validations.Select(Function(test) test.DoCall(runTest)).GroupBy(Function(result) result.Description).Select(Function(g)
+                                                                                                                                             Return New NamedCollection(Of ClassifyResult)(g.Key, g.Select(Function(d) d.Value)) With {.Description = .Length}
+                                                                                                                                         End Function).ToArray
 
 
             Pause()
