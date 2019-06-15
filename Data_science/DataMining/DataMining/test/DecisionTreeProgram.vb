@@ -1,9 +1,8 @@
 'Imports System.Collections.Generic
 'Imports System.Data
 'Imports System.IO
-Imports System.IO
-Imports System.Text
 Imports Microsoft.VisualBasic.DataMining.DecisionTree
+Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace DecisionTree

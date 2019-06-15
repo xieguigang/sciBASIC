@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
 
 Namespace DecisionTree
 
