@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ee7345e300fbed36fc0d79a5ff88e94, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
+﻿#Region "Microsoft.VisualBasic::fb6e250282baa62911e6aa1ebaf10e83, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
 
     ' Author:
     ' 
@@ -31,40 +31,41 @@
 
     ' Summaries:
 
-    ' Class ItemGroup
+    '     Class ItemGroup
     ' 
-    '     Properties: [Imports], BootstrapperPackages, Compiles, Contents, EmbeddedResources
-    '                 Nones, ProjectReferences, References, TypeScriptCompiles
+    '         Properties: [Imports], BootstrapperPackages, Compiles, Contents, EmbeddedResources
+    '                     Nones, ProjectReferences, References, TypeScriptCompiles
     ' 
-    '     Function: ToString
+    '         Function: ToString
     ' 
-    ' Class ProjectReference
+    '     Class ProjectReference
     ' 
-    '     Properties: Name, Project
+    '         Properties: Name, Project
     ' 
-    ' Class IncludeItem
+    '     Class IncludeItem
     ' 
-    '     Properties: [Private], HintPath, Include
+    '         Properties: [Private], HintPath, Include
     ' 
-    '     Function: ToString
+    '         Function: ToString
     ' 
-    ' Class Compile
+    '     Class Compile
     ' 
-    '     Properties: AutoGen, DependentUpon, DesignTime, DesignTimeSharedInput, SubType
+    '         Properties: AutoGen, DependentUpon, DesignTime, DesignTimeSharedInput, SubType
     ' 
-    ' Class None
+    '     Class None
     ' 
-    '     Properties: CustomToolNamespace, Generator, LastGenOutput
+    '         Properties: CustomToolNamespace, Generator, LastGenOutput
     ' 
-    ' Class EmbeddedResource
+    '     Class EmbeddedResource
     ' 
-    '     Properties: CustomToolNamespace, DependentUpon, Generator, LastGenOutput, SubType
+    '         Properties: CustomToolNamespace, DependentUpon, Generator, LastGenOutput, SubType
     ' 
-    ' Class BootstrapperPackage
+    '     Class BootstrapperPackage
     ' 
-    '     Properties: Install, ProductName, Visible
+    '         Properties: Install, ProductName, Visible
     ' 
-    ' Class Content
+    '     Class Content
+    ' 
     ' 
     ' 
     ' 

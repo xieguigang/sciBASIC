@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb880065bf730a2e2e05c27f423535c3, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEs.vb"
+﻿#Region "Microsoft.VisualBasic::b069c6965891fc57a6efd660cdb66bc0, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEs.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Function: __getY0, GetParameters, GetVariables, Solve, TimePopulator
     ' 
-    '     Sub: __rungeKutta, ODEs
+    '     Sub: ODEs, rungeKutta
     ' 
     ' /********************************************************************************/
 

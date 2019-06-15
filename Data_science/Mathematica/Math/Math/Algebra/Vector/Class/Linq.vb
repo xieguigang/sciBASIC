@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28188e2469e758fa0fc2b77d46e4e46c, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::5804958548da23091ae2f38c9c45b45d, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Linq.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Linq
 

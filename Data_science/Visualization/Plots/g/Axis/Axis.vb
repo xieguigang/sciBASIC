@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::910fd1de79dd05f7823d750deb9471a8, Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::910fd1de79dd05f7823d750deb9471a8, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 

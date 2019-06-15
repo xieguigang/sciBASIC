@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2fd43d2193f885ab527b98f035e4575, Data_science\DataMining\DataMining\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::03454dd8893006d4b17cfb05c4f0a268, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 

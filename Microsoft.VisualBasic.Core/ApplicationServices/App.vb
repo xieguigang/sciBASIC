@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1619b7d906a1fd5023eb471a222d800, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::ca7e9546ec023050688b25a8b304ee13, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -45,10 +45,10 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __cli, __completeCLI, __getTEMP, __isMicrosoftPlatform, __listFiles
-    '               __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode, ElapsedMilliseconds
-    '               Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile
-    '               GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+    '     Function: __cli, __completeCLI, __isMicrosoftPlatform, __listFiles, __sysTEMP
+    '               (+2 Overloads) Argument, BugsFormatter, CLICode, ElapsedMilliseconds, Exit
+    '               FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables
+    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
     '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
     '               SelfFolk, SelfFolks, Shell, tempCode, TemporaryEnvironment
     '               TraceBugs

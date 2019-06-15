@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35a1a8b4dbee8ef34f3e55c16a20c1b8, vs_solutions\dev\VisualStudio\vbproj\Mics.vb"
+﻿#Region "Microsoft.VisualBasic::aa017c8df5fd4e9d20fb9ff6198503b4, vs_solutions\dev\VisualStudio\vbproj\Mics.vb"
 
     ' Author:
     ' 
@@ -31,21 +31,22 @@
 
     ' Summaries:
 
-    ' Class Target
+    '     Class Target
     ' 
-    '     Properties: Name
+    '         Properties: Name
     ' 
-    ' Class Import
+    '     Class Import
     ' 
-    '     Properties: Condition, Label, Project
+    '         Properties: Condition, Label, Project
     ' 
-    '     Function: ToString
+    '         Function: ToString
     ' 
-    ' Class ConditionValue
+    '     Class ConditionValue
     ' 
-    '     Properties: Condition, value
+    '         Properties: Condition, value
     ' 
-    '     Function: ToString
+    '         Function: ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99942d785eab134453d5e5879d452687, Data\BinaryData\BinaryData\SQLite3\Sqlite3Settings.vb"
+﻿#Region "Microsoft.VisualBasic::9b3b2d800541fbdd2bd3529c8f1458d4, Data\BinaryData\BinaryData\SQLite3\Sqlite3Settings.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Class Sqlite3Settings
+    ' 
+    '         Properties: blobAsBase64
     ' 
     '         Function: GetDefaultSettings
     ' 

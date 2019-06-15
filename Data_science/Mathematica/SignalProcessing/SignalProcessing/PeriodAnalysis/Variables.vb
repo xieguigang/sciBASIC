@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63b125db6d085c4d7f4dceb713b35b12, Data_science\DataMining\DataMining\PeriodAnalysis\Variables.vb"
+﻿#Region "Microsoft.VisualBasic::8b62eea148ad6109a9402dc84fead965, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeriodAnalysis\Variables.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Class TimePoint
     ' 
-    '         Properties: Time, Value
+    '         Properties: time, value
     ' 
     '         Function: CreateBufferObject, (+2 Overloads) GetData, ToString
     ' 

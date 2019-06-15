@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3af20474a85a0dceeb2e1d1c44381f54, gr\network-visualization\Datavisualization.Network\Layouts\Cola\JavaScriptHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::a510674e2a759a0f2473b744df1e8b73, gr\network-visualization\Datavisualization.Network\Layouts\Cola\JavaScriptHelpers.vb"
 
     ' Author:
     ' 

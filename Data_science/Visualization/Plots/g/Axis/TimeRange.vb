@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19e4e2db62875ce04243c900e161ee53, Data_science\Mathematica\Plot\Plots\g\Axis\TimeRange.vb"
+﻿#Region "Microsoft.VisualBasic::19e4e2db62875ce04243c900e161ee53, Data_science\Visualization\Plots\g\Axis\TimeRange.vb"
 
     ' Author:
     ' 
