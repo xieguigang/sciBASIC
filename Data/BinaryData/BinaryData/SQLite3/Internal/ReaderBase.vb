@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::0d17a10f8567b33bfffe9ee3e05642aa, Data\BinaryData\BinaryData\SQLite3\Internal\ReaderBase.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ReaderBase
-    ' 
-    '         Properties: Length, PageSize, Position, ReservedSpace, TextEncoding
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) CheckMagicBytes, (+2 Overloads) Read, ReadByte, ReadInt16, ReadInt32
-    '                   ReadInteger, ReadString, ReadUInt16, ReadUInt32, ReadVarInt
-    ' 
-    '         Sub: ApplySqliteDatabaseHeader, CheckSize, Dispose, SeekPage, SetPosition
-    '              SetPositionAndCheckSize, Skip, SkipVarInt
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ReaderBase
+' 
+'         Properties: Length, PageSize, Position, ReservedSpace, TextEncoding
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) CheckMagicBytes, (+2 Overloads) Read, ReadByte, ReadInt16, ReadInt32
+'                   ReadInteger, ReadString, ReadUInt16, ReadUInt32, ReadVarInt
+' 
+'         Sub: ApplySqliteDatabaseHeader, CheckSize, Dispose, SeekPage, SetPosition
+'              SetPositionAndCheckSize, Skip, SkipVarInt
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Diagnostics
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Helpers
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
@@ -59,16 +60,22 @@ Namespace ManagedSqlite.Core.Internal
 
     Public Class ReaderBase : Implements IDisposable
 
-        Public ReadOnly Property Length() As Long
+        ''' <summary>
+        ''' The binary file length
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Length As Long
 
-        Public ReadOnly Property Position() As Long
+        Public ReadOnly Property Position As Long
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _stream.Position
             End Get
         End Property
 
-        Public Property TextEncoding() As SqliteEncoding
-        Public Property PageSize() As UShort
+        Public Property TextEncoding As SqliteEncoding
+        Public Property PageSize As UShort
+
         ''' <summary>
         ''' Reserved space at the end of every page
         ''' </summary>
@@ -115,25 +122,24 @@ Namespace ManagedSqlite.Core.Internal
         End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            _stream.Dispose()
+            Call _stream.Dispose()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Function CheckMagicBytes(comparison As Byte(), Optional throwException As Boolean = True) As Boolean
             Return CheckMagicBytes(CUInt(comparison.Length), comparison, throwException)
         End Function
 
         Friend Function CheckMagicBytes(toRead As UInteger, comparison As Byte(), Optional throwException As Boolean = True) As Boolean
-            Debug.Assert(toRead >= comparison.Length)
-            CheckSize(toRead)
+            Call Debug.Assert(toRead >= comparison.Length)
+            Call CheckSize(toRead)
 
             Dim data As Byte() = _stream.ReadFully(CInt(toRead))
-
             Dim res As Boolean = data.SequenceEqual(comparison)
+
             If Not res AndAlso throwException Then
                 ' Note: This is the position after read
-                Throw New ArgumentException("The requested magic bytes did not match") 'With {
-                '.Data = {{NameOf(Stream.Position), _stream.Position}, {NameOf(toRead), toRead}, {NameOf(comparison), comparison.ToHex()}, {NameOf(data), data.ToHex()}}
-                '}
+                Throw New ArgumentException("The requested magic bytes did not match")
             End If
 
             Return res
@@ -145,6 +151,7 @@ Namespace ManagedSqlite.Core.Internal
             End If
 
             Dim dataLeft As Long = Length - _stream.Position
+
             If dataLeft < sizeWanted Then
                 Throw New ArgumentException("Source stream does not have enough data") 'With {
                 ' .Data = {{NameOf(Stream.Position), _stream.Position}, {NameOf(sizeWanted), sizeWanted}, {"SourceLength", Length}}
@@ -153,9 +160,8 @@ Namespace ManagedSqlite.Core.Internal
         End Sub
 
         Friend Sub SetPositionAndCheckSize(position As ULong, sizeWanted As UInteger, Optional throwException As Boolean = True)
-            SetPosition(position)
-
-            CheckSize(sizeWanted, throwException)
+            Call SetPosition(position)
+            Call CheckSize(sizeWanted, throwException)
         End Sub
 
         Friend Sub SetPosition(position As ULong)
@@ -178,10 +184,12 @@ Namespace ManagedSqlite.Core.Internal
             SetPositionAndCheckSize(position, CUInt(PageSize - offset))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Sub Skip(bytes As UInteger)
             _stream.Seek(bytes, SeekOrigin.Current)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ReadByte() As Byte
             Return _binaryReader.ReadByte()
         End Function
@@ -279,13 +287,15 @@ Namespace ManagedSqlite.Core.Internal
             Next
 
             ' Skip final byte
-            ReadByte()
+            Call ReadByte()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Read(count As Integer) As Byte()
             Return _stream.ReadFully(count)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Read(buffer As Byte(), offset As Integer, count As Integer) As Integer
             Return _stream.ReadFully(buffer, offset, count)
         End Function

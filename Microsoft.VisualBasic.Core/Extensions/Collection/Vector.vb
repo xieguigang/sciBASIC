@@ -244,7 +244,7 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Removes array element at index
+    ''' Removes array element at index.(请注意，这个函数并不会修改原来的数组，而是创建一个新的拷贝)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>

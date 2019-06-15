@@ -386,12 +386,14 @@ Namespace StorageProvider.ComponentModels
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="row">The csv header row.</param>
-        ''' <returns></returns>
-        Public Function CheckFieldConsistent(row As RowObject) As String
+        ''' <param name="headers">The csv header row.</param>
+        ''' <returns>
+        ''' 这个函数会输出警告信息,如果没有问题,则返回空字符串
+        ''' </returns>
+        Public Function CheckFieldConsistent(headers As RowObject) As String
             Dim sb As New StringBuilder
 
-            For Each field As String In row
+            For Each field As String In headers
                 If Not ContainsField(field) Then
                     If HasMetaAttributes Then
                         Call sb.AppendLine($"Field: `{field}` probably exists in meta field data.")
@@ -476,10 +478,10 @@ Namespace StorageProvider.ComponentModels
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function GetKeyValuePairColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As KeyValuePair()
-            Return __gets(Of KeyValuePair)(Properties, Function(type) type = ProviderIds.KeyValuePair).ToArray
+            Return gets(Of KeyValuePair)(Properties, Function(type) type = ProviderIds.KeyValuePair).ToArray
         End Function
 
-        Private Shared Function __gets(Of T As StorageProvider)(properties As Dictionary(Of PropertyInfo, StorageProvider), providerId As Func(Of ProviderIds, Boolean)) As IEnumerable(Of T)
+        Private Shared Function gets(Of T As StorageProvider)(properties As Dictionary(Of PropertyInfo, StorageProvider), providerId As Func(Of ProviderIds, Boolean)) As IEnumerable(Of T)
             Return From [Property] As StorageProvider
                    In properties.Values.AsParallel
                    Where providerId([Property].ProviderId) = True
@@ -497,7 +499,7 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="Properties"></param>
         ''' <returns></returns>
         Private Shared Function GetMetaAttributeColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider), strict As Boolean) As MetaAttribute
-            Dim MetaAttributes As MetaAttribute = __gets(Of MetaAttribute)(Properties, Function(type) type = ProviderIds.MetaAttribute).FirstOrDefault
+            Dim MetaAttributes As MetaAttribute = gets(Of MetaAttribute)(Properties, Function(type) type = ProviderIds.MetaAttribute).FirstOrDefault
 
             If MetaAttributes Is Nothing Then
                 Dim prop As PropertyInfo = Properties.Keys.FirstOrDefault
@@ -524,17 +526,17 @@ Namespace StorageProvider.ComponentModels
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function GetEnumColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As [Enum]()
-            Return __gets(Of [Enum])(Properties, Function(type) type = ProviderIds.Enum).ToArray
+            Return gets(Of [Enum])(Properties, Function(type) type = ProviderIds.Enum).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function GetCollectionColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As CollectionColumn()
-            Return __gets(Of CollectionColumn)(Properties, Function(type) type = ProviderIds.CollectionColumn).ToArray
+            Return gets(Of CollectionColumn)(Properties, Function(type) type = ProviderIds.CollectionColumn).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function GetColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As Column()
-            Return __gets(Of Column)(Properties, AddressOf __columnType).ToArray
+            Return gets(Of Column)(Properties, AddressOf __columnType).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

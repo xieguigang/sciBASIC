@@ -987,6 +987,7 @@
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Enumeration.vb" />
+    <Compile Include="Extensions\Collection\Linq\Pipeline.vb" />
     <Compile Include="Extensions\Collection\Linq\Takes.vb" />
     <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
     <Compile Include="Extensions\Collection\BucketExtensions.vb" />
