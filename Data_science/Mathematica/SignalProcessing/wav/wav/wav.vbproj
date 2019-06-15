@@ -116,7 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="File.vb" />
-    <Compile Include="SubChunk.vb" />
+    <Compile Include="SubChunk\Data.vb" />
+    <Compile Include="SubChunk\FMT.vb" />
+    <Compile Include="SubChunk\SubChunk.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
