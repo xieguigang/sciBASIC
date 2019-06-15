@@ -129,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.vb" />
+    <Compile Include="PeriodAnalysis\PeriodAnalysis.vb" />
+    <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Properties\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
