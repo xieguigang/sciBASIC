@@ -6,6 +6,24 @@ Namespace DecisionTree.Data
     <HideModuleName> Public Module DataImports
 
         <Extension>
+        Public Function [Imports](csv As IEnumerable(Of IEnumerable(Of String))) As DataTable
+            Dim matrix As IEnumerable(Of String)() = csv.ToArray
+            Dim headers As String() = matrix(Scan0).ToArray
+            Dim data As Entity() = matrix.Skip(1) _
+                .Select(Function(row)
+                            Return New Entity With {
+                                .entityVector = row.ToArray
+                            }
+                        End Function) _
+                .ToArray
+
+            Return New DataTable With {
+                .headers = headers,
+                .rows = data
+            }
+        End Function
+
+        <Extension>
         Public Function [Imports](table As System.Data.DataTable) As DataTable
             Dim headers = Iterator Function() As IEnumerable(Of String)
                               For i As Integer = 0 To table.Columns.Count - 1
