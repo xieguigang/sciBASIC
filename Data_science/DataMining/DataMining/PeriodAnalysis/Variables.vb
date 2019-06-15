@@ -68,32 +68,35 @@ Namespace Serials.PeriodAnalysis
         End Function
     End Structure
 
+    ''' <summary>
+    ''' 时间点数据
+    ''' </summary>
     Public Class TimePoint
-        Public Property Time As Integer
-        Public Property Value As Double
+        Public Property time As Integer
+        Public Property value As Double
 
         Public Overrides Function ToString() As String
-            Return String.Format("{0} --> {1}", Time, Value)
+            Return String.Format("{0} --> {1}", time, value)
         End Function
 
         Friend Shared Function GetData(source As IEnumerable(Of TimePoint), Time As Integer) As TimePoint
-            Dim LQuery = (From p In source Where p.Time = Time Select p).First
+            Dim LQuery = (From p In source Where p.time = Time Select p).First
             Return LQuery
         End Function
 
         Public Shared Function GetData(Time As Integer, source As IEnumerable(Of TimePoint)) As Double
-            Dim LQuery = (From p In source Where p.Time = Time Select p).ToArray
+            Dim LQuery = (From p In source Where p.time = Time Select p).ToArray
             If LQuery.IsNullOrEmpty Then
                 Return 0
             Else
-                Return LQuery.First.Value
+                Return LQuery.First.value
             End If
         End Function
 
-        Friend Shared Function CreateBufferObject(ChunkBuffer As Generic.IEnumerable(Of TimePoint)) As SortedDictionary(Of Integer, Double)
-            Dim Temp As SortedDictionary(Of Integer, Double) = New SortedDictionary(Of Integer, Double)
-            For Each p In ChunkBuffer
-                Call Temp.Add(p.Time, p.Value)
+        Friend Shared Function CreateBufferObject(buffer As IEnumerable(Of TimePoint)) As SortedDictionary(Of Integer, Double)
+            Dim Temp As New SortedDictionary(Of Integer, Double)
+            For Each p In buffer
+                Call Temp.Add(p.time, p.value)
             Next
 
             Return Temp

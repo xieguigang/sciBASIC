@@ -101,11 +101,11 @@ Namespace Serials.PeriodAnalysis
                 Next
 
                 '  If MaxIndex >= 0.2 * WindowSize AndAlso MaxIndex <= 0.8 * WindowSize Then '丢掉边界点
-                Call Peaks.Add(New TimePoint With {.Time = MaxIndex + i, .Value = Max})
+                Call Peaks.Add(New TimePoint With {.time = MaxIndex + i, .value = Max})
                 ' End If
 
                 '  If MinIndex >= 0.2 * WindowSize AndAlso MinIndex <= 0.8 * WindowSize Then
-                Call Trough.Add(New TimePoint With {.Time = MinIndex + i, .Value = Min})
+                Call Trough.Add(New TimePoint With {.time = MinIndex + i, .value = Min})
                 '   End If
             Next
 
@@ -130,11 +130,11 @@ Namespace Serials.PeriodAnalysis
                 Next
 
                 '  If MaxIndex >= 0.2 * WindowSize AndAlso MaxIndex <= 0.8 * WindowSize Then '丢掉边界点
-                Call Peaks.Add(New TimePoint With {.Time = MaxIndex + i, .Value = Max})
+                Call Peaks.Add(New TimePoint With {.time = MaxIndex + i, .value = Max})
                 ' End If
 
                 '  If MinIndex >= 0.2 * WindowSize AndAlso MinIndex <= 0.8 * WindowSize Then
-                Call Trough.Add(New TimePoint With {.Time = MinIndex + i, .Value = Min})
+                Call Trough.Add(New TimePoint With {.time = MinIndex + i, .value = Min})
                 '   End If
             Next
 
@@ -142,16 +142,16 @@ Namespace Serials.PeriodAnalysis
         End Function
 
         Private Function FilteringData(Peaks As List(Of TimePoint), Trough As List(Of TimePoint), OriginalTimePoints As Integer) As SamplingData
-            Dim PeaksId = (From p In Peaks Select p.Time Distinct).ToArray, TroughsId = (From p In Trough Select p.Time Distinct).ToArray
+            Dim PeaksId = (From p In Peaks Select p.time Distinct).ToArray, TroughsId = (From p In Trough Select p.time Distinct).ToArray
             Dim Sample As SamplingData = New SamplingData With {.Peaks = (From p In PeaksId Select TimePoint.GetData(Peaks, p)).AsList, .Trough = (From p In TroughsId Select TimePoint.GetData(Trough, p)).AsList}
             Dim Chunkbuffer As List(Of TimePoint) = New List(Of TimePoint)
             Call Chunkbuffer.AddRange(Sample.Peaks)
             Call Chunkbuffer.AddRange(Sample.Trough)
-            Sample.FiltedData = (From p In Chunkbuffer Select p Order By p.Time Ascending).AsList
+            Sample.FiltedData = (From p In Chunkbuffer Select p Order By p.time Ascending).AsList
 
             Dim PeaksBuffer = TimePoint.CreateBufferObject(Sample.Peaks), TroughBuffer = TimePoint.CreateBufferObject(Sample.Trough)
             Dim PreData = Sample.FiltedData.First
-            Dim Turn_CheckPeak As Boolean = PeaksBuffer.ContainsKey(PreData.Time)
+            Dim Turn_CheckPeak As Boolean = PeaksBuffer.ContainsKey(PreData.time)
             Dim FiltedList As New List(Of TimePoint)
             Dim TList As List(Of TimePoint) = New List(Of TimePoint)
 
@@ -161,24 +161,24 @@ Namespace Serials.PeriodAnalysis
 
             For Each NextData In Sample.FiltedData.Skip(1)
                 If Turn_CheckPeak Then  '假若PreData是一个峰值的话，则检查NextData是否为一个峰谷值
-                    If TroughBuffer.ContainsKey(NextData.Time) Then
+                    If TroughBuffer.ContainsKey(NextData.time) Then
                         Call FiltedList.Add(PreData) '假若为波谷，则添加  'PreData为波峰数据
                         Call TList.Add(PreData)
                         PreData = NextData
                         Turn_CheckPeak = False
                     Else
                         '否则，PreData为最大的的值
-                        If PreData.Value < NextData.Value Then
+                        If PreData.value < NextData.value Then
                             PreData = NextData
                         End If
                     End If
                 Else
-                    If PeaksBuffer.ContainsKey(NextData.Time) Then
+                    If PeaksBuffer.ContainsKey(NextData.time) Then
                         Call FiltedList.Add(PreData)
                         PreData = NextData
                         Turn_CheckPeak = True
                     Else
-                        If PreData.Value > NextData.Value Then
+                        If PreData.value > NextData.value Then
                             PreData = NextData
                         End If
                     End If
@@ -191,7 +191,7 @@ Namespace Serials.PeriodAnalysis
             Dim pre = TList.First
             For i As Integer = 1 To TList.Count - 1
                 Dim n = TList(i)
-                Call NewTList.Add(New TimePoint With {.Value = (n.Time - pre.Time), .Time = n.Time})
+                Call NewTList.Add(New TimePoint With {.value = (n.time - pre.time), .time = n.time})
                 pre = n
             Next
 
@@ -201,13 +201,13 @@ Namespace Serials.PeriodAnalysis
             Call Chunkbuffer.Clear()
 
             For i As Integer = 0 To Sample.TimePoints
-                Call Chunkbuffer.Add(New TimePoint With {.Time = i, .Value = value.Value})
+                Call Chunkbuffer.Add(New TimePoint With {.time = i, .value = value.value})
 
-                If i > value.Time Then
+                If i > value.time Then
                     idx += 1
                     If idx > NewTList.Count - 1 Then
-                        For j = value.Time To Sample.TimePoints
-                            Call Chunkbuffer.Add(New TimePoint With {.Time = j, .Value = value.Value})
+                        For j = value.time To Sample.TimePoints
+                            Call Chunkbuffer.Add(New TimePoint With {.time = j, .value = value.value})
                         Next
                         Exit For
                     End If
