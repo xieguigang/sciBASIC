@@ -6,6 +6,14 @@ Public Class DataSubChunk : Inherits SubChunk
 
     Public Property data As Sample()
 
+    Default Public ReadOnly Property channel(position As Integer) As Short()
+        Get
+            Return data _
+                .Select(Function(sample) sample.channels(position)) _
+                .ToArray
+        End Get
+    End Property
+
     Public Shared Function ParseData(wav As BinaryDataReader, format As FMTSubChunk) As DataSubChunk
         Do While wav.ReadString(4) <> "data"
             wav.Seek(-3, SeekOrigin.Current)
@@ -50,7 +58,9 @@ Public Structure Sample
     End Function
 
     Public Shared Iterator Function Parse16Bit(wav As BinaryDataReader, channels As Integer) As IEnumerable(Of Sample)
-        Do While Not wav.EndOfStream
+        Dim sampleSize = channels * 2
+
+        Do While Not wav.EndOfStream AndAlso (wav.Position + sampleSize <= wav.Length)
             Yield New Sample With {
                 .channels = wav.ReadInt16s(channels)
             }

@@ -48,7 +48,7 @@ Module Module1
 
     Sub Main()
 
-        Dim wav = "E:\VB_GamePads\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\SND_FISH_TROPICAL_03.wav".OpenBinaryReader
+        Dim wav = "E:\VB_GamePads\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\M1F1-int16-AFsp.wav".OpenBinaryReader
         Dim header As File = File.Open(wav)
 
         '    Dim chunks = header.data.data.Split(1024)
