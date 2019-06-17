@@ -485,7 +485,7 @@ Public Module Extensions
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
-    ''' <param name="index"></param>
+    ''' <param name="index">这个函数会自动处理空键名的情况</param>
     ''' <param name="[default]"></param>
     ''' <returns></returns>
     <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
