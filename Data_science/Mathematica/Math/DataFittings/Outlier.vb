@@ -67,16 +67,18 @@ Public Module Outlier
         Dim minY = lineVector(Scan0).Y  ' Aggregate p In lineVector Into Min(p.Y)
         Dim angles = lineVector.Select(Function(p) Trigonometric.GetAngle(minX, minY, p.X, p.Y)).AsVector
         Dim quartile = angles.Quartile
-        Dim outliers = angles.Outlier(quartile).Outlier
+        Dim normals = angles.Outlier(quartile).normal
 
         For i As Integer = 0 To lineVector.Length - 1
             Dim a = angles(i)
 
-            If outliers.Any(Function(x) Math.Abs(x - a) <= 0.001) Then
-                ' 这是一个异常点
-            Else
+            If normals.Any(Function(x) Math.Abs(x - a) <= 0.1) Then
+                ' 这是一个正常点
                 ' 返回正常点
                 Yield lineVector(i)
+            Else
+                ' 异常点
+                ' 不做任何事
             End If
         Next
     End Function

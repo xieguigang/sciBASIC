@@ -517,10 +517,13 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Save the object collection data dump into a csv file.(将一个对象数组之中的对象保存至一个Csv文件之中，请注意，这个方法仅仅会保存简单的基本数据类型的属性值)
+    ''' Save the object collection data dump into a csv file.
+    ''' (将一个对象数组之中的对象保存至一个Csv文件之中，请注意:
+    ''' + 这个方法仅仅会保存简单的基本数据类型的属性值
+    ''' + 并且这个方法仅适用于小型数据集, 如果需要保存大型数据集, 请使用Linq版本的拓展函数)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
+    ''' <param name="source">应该是List, Array或者Collection, 不应该是一个Linq拓展表达式</param>
     ''' <param name="path"></param>
     ''' <param name="strict">
     ''' If true then all of the simple data type property its value will be save to the data file,

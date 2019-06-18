@@ -62,7 +62,7 @@ Namespace Language.Perl
         Shared ReadOnly defaultHandler As New Assert(Of Object)(AddressOf [Default])
 
         ''' <summary>
-        ''' Returns True means test failure
+        ''' Returns True means test failure(<paramref name="obj"/> is nothing or empty!)
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
