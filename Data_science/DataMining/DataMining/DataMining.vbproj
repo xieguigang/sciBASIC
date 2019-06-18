@@ -402,6 +402,7 @@
     <Compile Include="Clustering\FuzzyCMeans\Algorithm\Utils.vb" />
     <Compile Include="Clustering\Clustering.vb" />
     <Compile Include="Clustering\FuzzyCMeans\Entity.vb" />
+    <Compile Include="ComponentModel\Discretizer.vb" />
     <Compile Include="DecisionTree\Algorithm.vb" />
     <Compile Include="DecisionTree\VisualDebugger.vb" />
     <Compile Include="DecisionTree\Attributes.vb" />
