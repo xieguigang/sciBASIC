@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d540a928cbec9348924984dec7f7135, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::9f6bee26067bc406b6a757561e3b5bb0, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -49,10 +49,10 @@
     ' 
     '             Properties: IsReadOnly, RowNumbers
     ' 
-    '             Function: __LINQ_LOAD, Contains, (+2 Overloads) Distinct, FastLoad, GetEnumerator
-    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, Join, (+2 Overloads) Load
-    '                       loads, LoadTsv, Normalization, Parse, ReadHeaderRow
-    '                       Remove, RemoveSubRow, Save
+    '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, FastLoad
+    '                       GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty, Join
+    '                       (+2 Overloads) Load, loads, LoadTsv, Normalization, Parse
+    '                       ReadHeaderRow, Remove, RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
     '                  RemoveAt
@@ -892,6 +892,11 @@ B21,B22,B23,...
 
         Public Iterator Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsMatrix() As IEnumerable(Of IEnumerable(Of String))
+            Return _innerTable.Select(Function(r) r.AsEnumerable)
         End Function
 
         ''' <summary>

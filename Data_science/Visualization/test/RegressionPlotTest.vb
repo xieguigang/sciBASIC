@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46846a79968d968d90bebaad8fd0979a, Data_science\Mathematica\Plot\test\RegressionPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::46846a79968d968d90bebaad8fd0979a, Data_science\Visualization\test\RegressionPlotTest.vb"
 
     ' Author:
     ' 

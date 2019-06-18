@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daadb75d3ebfdafd8d130606a00f4a38, Data_science\Mathematica\Math\ODE\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a813ff39dbc3234e2bf11e9e7eb0fd80, Data_science\Mathematica\Math\ODE\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: correlationImpl, Let, Pcc, Solve, SPcc
+    '     Function: Let, Solve
     ' 
     ' /********************************************************************************/
 

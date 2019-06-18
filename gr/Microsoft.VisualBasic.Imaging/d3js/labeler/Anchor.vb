@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca5c5151d1187ac4480f77c6a05613ea, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::45ac9a33c947aee64ce856d2139c6b56, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e3d8eaeac29e6e2d31a66eee7c73fd9, Data\BinaryData\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
+﻿#Region "Microsoft.VisualBasic::0e60943fa235537b1e6a63dd9725bb07, Data\BinaryData\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Structure BTreeHeader
     ' 
-    '         Function: Parse
+    '         Function: Parse, ToString
     ' 
     ' 
     ' /********************************************************************************/

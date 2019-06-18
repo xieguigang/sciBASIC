@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::031f5fcc0b550245c32403b96e41bd9e, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::30a099d1490b4b86e4a02b1e6d2f963d, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -244,7 +244,7 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Removes array element at index
+    ''' Removes array element at index.(请注意，这个函数并不会修改原来的数组，而是创建一个新的拷贝)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>

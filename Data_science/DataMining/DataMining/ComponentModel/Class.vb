@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb4168f6c72e295c2a06c16ded481641, Data_science\DataMining\DataMining\ComponentModel\Class.vb"
+﻿#Region "Microsoft.VisualBasic::cb7c12209490c29b0ba650281109540a, Data_science\DataMining\DataMining\ComponentModel\Class.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ColorClass
     ' 
-    '         Properties: Color, int, Name
+    '         Properties: color, enumInt, name
     ' 
     '         Function: FromEnums, ToString
     '         Operators: <>, =

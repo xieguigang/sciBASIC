@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::905b4c1f0e35aa6e905fa69737b6774a, Data_science\DataMining\DataMining\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::dd8966cba01faf90bb0500bcd7e24127, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
 
     ' Author:
     ' 

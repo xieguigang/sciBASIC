@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50f2e605b892092a30e287fa91ffc6b3, Data_science\Mathematica\Plot\data\PCA\PCA\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::50f2e605b892092a30e287fa91ffc6b3, Data_science\Visualization\data\PCA\PCA\Matrix.vb"
 
     ' Author:
     ' 

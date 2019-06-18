@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1606d6d642310b209c03bf5000922c51, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::25f4d9dd0564b9182edb3d12c3c923cf, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\LDM.vb"
 
     ' Author:
     ' 

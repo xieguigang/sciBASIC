@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6017807189950dc76db910bd15f48825, Data_science\DataMining\DataMining\DBSCAN\DbscanAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::6017807189950dc76db910bd15f48825, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
 
     ' Author:
     ' 

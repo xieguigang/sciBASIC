@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0743d2cffc813cbf5f50cfaf6e2c9841, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::1d82c1b4fe9db7f573466bf1aedd0a1a, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\BooleanVector.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: [False], [True], IsLogical
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Sum, ToString
+    '         Function: (+2 Overloads) Sum, ToString
     '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not, (+4 Overloads) Or
     ' 
     ' 

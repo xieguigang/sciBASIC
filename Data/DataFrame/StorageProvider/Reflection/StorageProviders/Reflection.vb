@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f8f7b8758c2f2366fd7405012bc44cb, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::d9871e59e7da15684f3fd386b75c2996, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -33,17 +33,8 @@
 
     '     Module Reflector
     ' 
-    '         Function: __save, Convert, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema, GetsRowData
-    '                   Load, LoadDataToObject, Save
-    '         Enum OperationTypes
-    ' 
-    '             ReadDataFromObject, WriteDataToObject
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
+    '         Function: __save, Convert, CreateRowBuilder, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema
+    '                   GetsRowData, Load, LoadDataToObject, Save
     ' 
     ' 
     ' /********************************************************************************/

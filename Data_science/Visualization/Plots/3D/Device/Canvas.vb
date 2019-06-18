@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f0f371de4d32a2226601903da474b4e, Data_science\Mathematica\Plot\Plots\3D\Device\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::9f0f371de4d32a2226601903da474b4e, Data_science\Visualization\Plots\3D\Device\Canvas.vb"
 
     ' Author:
     ' 

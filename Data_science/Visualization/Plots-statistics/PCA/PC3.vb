@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::378758b8a1b483c70dec6394042b204f, Data_science\Mathematica\Plot\Plots-statistics\PCA\PC3.vb"
+﻿#Region "Microsoft.VisualBasic::378758b8a1b483c70dec6394042b204f, Data_science\Visualization\Plots-statistics\PCA\PC3.vb"
 
     ' Author:
     ' 

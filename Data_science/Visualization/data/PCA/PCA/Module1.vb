@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56d056d2ab346e48034388638d38b322, Data_science\Mathematica\Plot\data\PCA\PCA\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::56d056d2ab346e48034388638d38b322, Data_science\Visualization\data\PCA\PCA\Module1.vb"
 
     ' Author:
     ' 

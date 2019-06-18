@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::480dded4ce5b30945c837bf8fa4567e3, Data_science\DataMining\DataMining\KMeans\EntityModels\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::ddb4c57bc1f3054fd3cec0e0518dba0c, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\Entity.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,7 @@
 
     '     Class ClusterEntity
     ' 
-    '         Properties: cluster
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class Entity
-    ' 
-    '         Properties: uid
+    '         Properties: cluster, uid
     ' 
     '         Function: (+2 Overloads) ToDataModel, ToString
     '         Operators: <>, =

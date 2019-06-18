@@ -1,0 +1,1275 @@
+{
+  "attributes": {
+    "differentAttributeNames": [ "0", "4-8", ">8", "1-3" ],
+    "informationGain": 1.0794760041764577,
+    "name": "bim"
+  },
+  "childNodes": [
+    {
+      "attributes": {
+        "differentAttributeNames": [ "quick", "medium", "leisurely" ],
+        "informationGain": 0.83957945631507036,
+        "name": "speed"
+      },
+      "childNodes": [
+        {
+          "attributes": null,
+          "childNodes": null,
+          "edge": "quick",
+          "index": 0,
+          "isLeaf": true,
+          "name": "Buck-I-Mart"
+        },
+        {
+          "attributes": {
+            "differentAttributeNames": [ "cold", "hot", "mild" ],
+            "informationGain": 0.58711512980139846,
+            "name": "temp"
+          },
+          "childNodes": [
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "cold",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Buck-I-Mart"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "sandwich", "soup" ],
+                "informationGain": 0.91829583405448956,
+                "name": "meal"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "sandwich",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "soup",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Buck-I-Mart"
+                }
+              ],
+              "edge": "hot",
+              "index": 0,
+              "isLeaf": false,
+              "name": "meal"
+            },
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "mild",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Oxley's cafe"
+            }
+          ],
+          "edge": "medium",
+          "index": 4,
+          "isLeaf": false,
+          "name": "temp"
+        },
+        {
+          "attributes": {
+            "differentAttributeNames": [ "hot", "mild", "cold" ],
+            "informationGain": 0.8553885422075338,
+            "name": "temp"
+          },
+          "childNodes": [
+            {
+              "attributes": {
+                "differentAttributeNames": [ "no", "yes" ],
+                "informationGain": 1,
+                "name": "coffee"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "no",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Buck-I-Mart"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "yes",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                }
+              ],
+              "edge": "hot",
+              "index": 1,
+              "isLeaf": false,
+              "name": "coffee"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ ">8", "0" ],
+                "informationGain": 1.5849625007211561,
+                "name": "oxley"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": ">8",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "sandwich", "soup" ],
+                    "informationGain": 1,
+                    "name": "meal"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "sandwich",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Brennan's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "soup",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    }
+                  ],
+                  "edge": "0",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "meal"
+                }
+              ],
+              "edge": "mild",
+              "index": 2,
+              "isLeaf": false,
+              "name": "oxley"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "0", "4-8", ">8", "1-3" ],
+                "informationGain": 0.59167277858232747,
+                "name": "oxley"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "0",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "4-8",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": ">8",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "1-3",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                }
+              ],
+              "edge": "cold",
+              "index": 2,
+              "isLeaf": false,
+              "name": "oxley"
+            }
+          ],
+          "edge": "leisurely",
+          "index": 4,
+          "isLeaf": false,
+          "name": "temp"
+        }
+      ],
+      "edge": "0",
+      "index": 0,
+      "isLeaf": false,
+      "name": "speed"
+    },
+    {
+      "attributes": {
+        "differentAttributeNames": [ "1-3", "4-8", "0", ">8" ],
+        "informationGain": 1.246416869793713,
+        "name": "oxley"
+      },
+      "childNodes": [
+        {
+          "attributes": {
+            "differentAttributeNames": [ "quick", "leisurely", "medium" ],
+            "informationGain": 0.97986875665115258,
+            "name": "speed"
+          },
+          "childNodes": [
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "quick",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Oxley's"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "sandwich", "other", "soup" ],
+                "informationGain": 1.5219280948873621,
+                "name": "meal"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "sandwich",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "other",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "no", "yes" ],
+                    "informationGain": 1,
+                    "name": "coffee"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "no",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "yes",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Brennan's"
+                    }
+                  ],
+                  "edge": "soup",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "coffee"
+                }
+              ],
+              "edge": "leisurely",
+              "index": 0,
+              "isLeaf": false,
+              "name": "meal"
+            },
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "medium",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Buck-I-Mart"
+            }
+          ],
+          "edge": "1-3",
+          "index": 0,
+          "isLeaf": false,
+          "name": "speed"
+        },
+        {
+          "attributes": {
+            "differentAttributeNames": [ "quick", "leisurely", "medium" ],
+            "informationGain": 1.3890976555739161,
+            "name": "speed"
+          },
+          "childNodes": [
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "quick",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Oxley's cafe"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "yes", "no" ],
+                "informationGain": 1.5,
+                "name": "coffee"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "yes",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "soup", "sandwich" ],
+                    "informationGain": 1,
+                    "name": "meal"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "soup",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "sandwich",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    }
+                  ],
+                  "edge": "no",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "meal"
+                }
+              ],
+              "edge": "leisurely",
+              "index": 1,
+              "isLeaf": false,
+              "name": "coffee"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "hot", "cold" ],
+                "informationGain": 0.81127812445913283,
+                "name": "temp"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "hot",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's cafe"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "cold",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Buck-I-Mart"
+                }
+              ],
+              "edge": "medium",
+              "index": 3,
+              "isLeaf": false,
+              "name": "temp"
+            }
+          ],
+          "edge": "4-8",
+          "index": 0,
+          "isLeaf": false,
+          "name": "speed"
+        },
+        {
+          "attributes": {
+            "differentAttributeNames": [ "quick", "leisurely", "medium" ],
+            "informationGain": 0.77934983729208507,
+            "name": "speed"
+          },
+          "childNodes": [
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "quick",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Oxley's"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "yes", "no" ],
+                "informationGain": 1.5849625007211561,
+                "name": "coffee"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "yes",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "other", "soup" ],
+                    "informationGain": 1,
+                    "name": "meal"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "other",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "soup",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    }
+                  ],
+                  "edge": "no",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "meal"
+                }
+              ],
+              "edge": "leisurely",
+              "index": 1,
+              "isLeaf": false,
+              "name": "coffee"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "yes", "no" ],
+                "informationGain": 1,
+                "name": "coffee"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "yes",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "no",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's cafe"
+                }
+              ],
+              "edge": "medium",
+              "index": 1,
+              "isLeaf": false,
+              "name": "coffee"
+            }
+          ],
+          "edge": "0",
+          "index": 0,
+          "isLeaf": false,
+          "name": "speed"
+        },
+        {
+          "attributes": {
+            "differentAttributeNames": [ "quick", "medium" ],
+            "informationGain": 1.1401156785146092,
+            "name": "speed"
+          },
+          "childNodes": [
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "quick",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Oxley's cafe"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "rainy", "snowy", "sunny" ],
+                "informationGain": 0.81127812445913283,
+                "name": "weather"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "rainy",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Buck-I-Mart"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "snowy",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Buck-I-Mart"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "sunny",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                }
+              ],
+              "edge": "medium",
+              "index": 2,
+              "isLeaf": false,
+              "name": "weather"
+            }
+          ],
+          "edge": ">8",
+          "index": 0,
+          "isLeaf": false,
+          "name": "speed"
+        }
+      ],
+      "edge": "4-8",
+      "index": 3,
+      "isLeaf": false,
+      "name": "oxley"
+    },
+    {
+      "attributes": {
+        "differentAttributeNames": [ "no", "yes" ],
+        "informationGain": 1.0430520043420393,
+        "name": "coffee"
+      },
+      "childNodes": [
+        {
+          "attributes": {
+            "differentAttributeNames": [ "hot", "cold", "mild" ],
+            "informationGain": 1.0408962319001938,
+            "name": "temp"
+          },
+          "childNodes": [
+            {
+              "attributes": {
+                "differentAttributeNames": [ "M", "R", "W", "T" ],
+                "informationGain": 1.5612781244591325,
+                "name": "day"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "M",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "quick", "medium", "leisurely" ],
+                    "informationGain": 0.57095059445466856,
+                    "name": "speed"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": {
+                        "differentAttributeNames": [ "other", "sandwich" ],
+                        "informationGain": 1,
+                        "name": "meal"
+                      },
+                      "childNodes": [
+                        {
+                          "attributes": null,
+                          "childNodes": null,
+                          "edge": "other",
+                          "index": 0,
+                          "isLeaf": true,
+                          "name": "Buck-I-Mart"
+                        },
+                        {
+                          "attributes": null,
+                          "childNodes": null,
+                          "edge": "sandwich",
+                          "index": 0,
+                          "isLeaf": true,
+                          "name": "Oxley's cafe"
+                        }
+                      ],
+                      "edge": "quick",
+                      "index": 0,
+                      "isLeaf": false,
+                      "name": "meal"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "medium",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's cafe"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "leisurely",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    }
+                  ],
+                  "edge": "R",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "speed"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "W",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "T",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                }
+              ],
+              "edge": "hot",
+              "index": 4,
+              "isLeaf": false,
+              "name": "day"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ ">8", "1-3", "4-8", "0" ],
+                "informationGain": 0.9456387231208403,
+                "name": "oxley"
+              },
+              "childNodes": [
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "quick", "leisurely", "medium" ],
+                    "informationGain": 0.81127812445913283,
+                    "name": "speed"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "quick",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "leisurely",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "medium",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Brennan's"
+                    }
+                  ],
+                  "edge": ">8",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "speed"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "T", "R", "M", "W" ],
+                    "informationGain": 1.3709505944546687,
+                    "name": "day"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "T",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "R",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    },
+                    {
+                      "attributes": {
+                        "differentAttributeNames": [ "grumpy", "busy" ],
+                        "informationGain": 1,
+                        "name": "mood"
+                      },
+                      "childNodes": [
+                        {
+                          "attributes": null,
+                          "childNodes": null,
+                          "edge": "grumpy",
+                          "index": 0,
+                          "isLeaf": true,
+                          "name": "Buck-I-Mart"
+                        },
+                        {
+                          "attributes": null,
+                          "childNodes": null,
+                          "edge": "busy",
+                          "index": 0,
+                          "isLeaf": true,
+                          "name": "Brennan's"
+                        }
+                      ],
+                      "edge": "M",
+                      "index": 3,
+                      "isLeaf": false,
+                      "name": "mood"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "W",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    }
+                  ],
+                  "edge": "1-3",
+                  "index": 3,
+                  "isLeaf": false,
+                  "name": "day"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "snowy", "rainy" ],
+                    "informationGain": 0.98522813603425163,
+                    "name": "weather"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "snowy",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Brennan's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "rainy",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    }
+                  ],
+                  "edge": "4-8",
+                  "index": 2,
+                  "isLeaf": false,
+                  "name": "weather"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "leisurely", "medium", "quick" ],
+                    "informationGain": 0.81127812445913283,
+                    "name": "speed"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "leisurely",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "medium",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "quick",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Brennan's"
+                    }
+                  ],
+                  "edge": "0",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "speed"
+                }
+              ],
+              "edge": "cold",
+              "index": 2,
+              "isLeaf": false,
+              "name": "oxley"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "leisurely", "quick", "medium" ],
+                "informationGain": 0.81127812445913283,
+                "name": "speed"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "leisurely",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Buck-I-Mart"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "quick",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's cafe"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "medium",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Buck-I-Mart"
+                }
+              ],
+              "edge": "mild",
+              "index": 0,
+              "isLeaf": false,
+              "name": "speed"
+            }
+          ],
+          "edge": "no",
+          "index": 4,
+          "isLeaf": false,
+          "name": "temp"
+        },
+        {
+          "attributes": {
+            "differentAttributeNames": [ "grumpy", "happy", "busy" ],
+            "informationGain": 0.53021670903658,
+            "name": "mood"
+          },
+          "childNodes": [
+            {
+              "attributes": {
+                "differentAttributeNames": [ "sandwich", "other", "soup" ],
+                "informationGain": 0.50325833477564574,
+                "name": "meal"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "sandwich",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "other",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "soup",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                }
+              ],
+              "edge": "grumpy",
+              "index": 1,
+              "isLeaf": false,
+              "name": "meal"
+            },
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "happy",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Brennan's"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ "medium", "quick", "leisurely" ],
+                "informationGain": 1.5219280948873624,
+                "name": "speed"
+              },
+              "childNodes": [
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "other", "soup" ],
+                    "informationGain": 1,
+                    "name": "meal"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "other",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's cafe"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "soup",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    }
+                  ],
+                  "edge": "medium",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "meal"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "other", "sandwich" ],
+                    "informationGain": 1,
+                    "name": "meal"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "other",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Brennan's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "sandwich",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    }
+                  ],
+                  "edge": "quick",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "meal"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "leisurely",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Brennan's"
+                }
+              ],
+              "edge": "busy",
+              "index": 0,
+              "isLeaf": false,
+              "name": "speed"
+            }
+          ],
+          "edge": "yes",
+          "index": 6,
+          "isLeaf": false,
+          "name": "mood"
+        }
+      ],
+      "edge": ">8",
+      "index": 2,
+      "isLeaf": false,
+      "name": "coffee"
+    },
+    {
+      "attributes": {
+        "differentAttributeNames": [ "quick", "leisurely", "medium" ],
+        "informationGain": 1.011504893635788,
+        "name": "speed"
+      },
+      "childNodes": [
+        {
+          "attributes": null,
+          "childNodes": null,
+          "edge": "quick",
+          "index": 0,
+          "isLeaf": true,
+          "name": "Buck-I-Mart"
+        },
+        {
+          "attributes": {
+            "differentAttributeNames": [ "no", "yes" ],
+            "informationGain": 0.8350407649952365,
+            "name": "coffee"
+          },
+          "childNodes": [
+            {
+              "attributes": {
+                "differentAttributeNames": [ "F", "M", "W", "R", "T" ],
+                "informationGain": 1.1403611636984849,
+                "name": "day"
+              },
+              "childNodes": [
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "sandwich", "other", "soup" ],
+                    "informationGain": 0.81127812445913283,
+                    "name": "meal"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "sandwich",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Brennan's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "other",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Brennan's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "soup",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    }
+                  ],
+                  "edge": "F",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "meal"
+                },
+                {
+                  "attributes": {
+                    "differentAttributeNames": [ "sandwich", "soup", "other" ],
+                    "informationGain": 0.91829583405448956,
+                    "name": "meal"
+                  },
+                  "childNodes": [
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "sandwich",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "soup",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Buck-I-Mart"
+                    },
+                    {
+                      "attributes": null,
+                      "childNodes": null,
+                      "edge": "other",
+                      "index": 0,
+                      "isLeaf": true,
+                      "name": "Oxley's"
+                    }
+                  ],
+                  "edge": "M",
+                  "index": 0,
+                  "isLeaf": false,
+                  "name": "meal"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "W",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "R",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "T",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                }
+              ],
+              "edge": "no",
+              "index": 4,
+              "isLeaf": false,
+              "name": "day"
+            },
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "yes",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Brennan's"
+            }
+          ],
+          "edge": "leisurely",
+          "index": 1,
+          "isLeaf": false,
+          "name": "coffee"
+        },
+        {
+          "attributes": {
+            "differentAttributeNames": [ "cold", "hot", "mild" ],
+            "informationGain": 0.83434702308525388,
+            "name": "temp"
+          },
+          "childNodes": [
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "cold",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Buck-I-Mart"
+            },
+            {
+              "attributes": {
+                "differentAttributeNames": [ ">8", "4-8" ],
+                "informationGain": 1,
+                "name": "oxley"
+              },
+              "childNodes": [
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": ">8",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's"
+                },
+                {
+                  "attributes": null,
+                  "childNodes": null,
+                  "edge": "4-8",
+                  "index": 0,
+                  "isLeaf": true,
+                  "name": "Oxley's cafe"
+                }
+              ],
+              "edge": "hot",
+              "index": 2,
+              "isLeaf": false,
+              "name": "oxley"
+            },
+            {
+              "attributes": null,
+              "childNodes": null,
+              "edge": "mild",
+              "index": 0,
+              "isLeaf": true,
+              "name": "Oxley's"
+            }
+          ],
+          "edge": "medium",
+          "index": 4,
+          "isLeaf": false,
+          "name": "temp"
+        }
+      ],
+      "edge": "1-3",
+      "index": 0,
+      "isLeaf": false,
+      "name": "speed"
+    }
+  ],
+  "edge": "",
+  "index": 4,
+  "isLeaf": false,
+  "name": "bim"
+}

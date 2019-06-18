@@ -1,4 +1,48 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::4770488b55f5c11ac5c63e16bd3b1be4, Data_science\DataMining\DataMining\DecisionTree\Algorithm.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Algorithm
+    ' 
+    '         Function: CalculateTableEntropy, CheckIfIsLeaf, CountKnownValues, CreateSmallerTable, GetAmountOfEdgesAndTotalPositivResults
+    '                   GetGainForAllAttributes, GetRootNode, Learn
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
 
 Namespace DecisionTree
 
@@ -38,7 +82,7 @@ Namespace DecisionTree
             ' get all leaf values for the attribute in question
             For i As Integer = 0 To data.rows.Count - 1
                 If data.rows(i)(root.index).Equals(attributeToCheck) Then
-                    allEndValues.Add(data.rows(i)(data.columns - 1).ToString())
+                    allEndValues.Add(data.rows(i).decisions)
                 End If
             Next
 
@@ -98,10 +142,10 @@ Namespace DecisionTree
             Dim tableEntropy As Double = CalculateTableEntropy(data)
 
             For i As Integer = 0 To attributes.Count - 1
-                attributes(i).InformationGain = GetGainForAllAttributes(data, i, tableEntropy)
+                attributes(i).informationGain = GetGainForAllAttributes(data, i, tableEntropy)
 
-                If attributes(i).InformationGain > highestInformationGain Then
-                    highestInformationGain = attributes(i).InformationGain
+                If attributes(i).informationGain > highestInformationGain Then
+                    highestInformationGain = attributes(i).informationGain
                     highestInformationGainIndex = i
                 End If
             Next
@@ -120,7 +164,7 @@ Namespace DecisionTree
                 Dim secondDivision = (item(0, 0) - item(0, 1)) / CDbl(item(0, 0))
 
                 ' prevent dividedByZeroException
-                If firstDivision = 0 OrElse secondDivision = 0 Then
+                If firstDivision = 0.0 OrElse secondDivision = 0.0 Then
                     stepsForCalculation.Add(0.0)
                 Else
                     stepsForCalculation.Add(-firstDivision * Math.Log(firstDivision, 2) - secondDivision * Math.Log(secondDivision, 2))

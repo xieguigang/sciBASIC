@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a65095f69e7c4dc235baedffeeda65d, Data_science\DataMining\DataMining\Kernel\Neuron\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::cf8402d0f1d848bf07dbf24c811558be, Data_science\DataMining\DataMining\Kernel\Neuron\Neuron.vb"
 
     ' Author:
     ' 

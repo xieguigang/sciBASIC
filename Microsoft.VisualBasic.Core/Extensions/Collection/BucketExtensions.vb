@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7381295ee76cf6758b168b4dbd068e4a, Microsoft.VisualBasic.Core\Extensions\Collection\BucketExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2874cf966dde9b3b6b71e903cf32a2d, Microsoft.VisualBasic.Core\Extensions\Collection\BucketExtensions.vb"
 
     ' Author:
     ' 
@@ -138,4 +138,3 @@ Imports Microsoft.VisualBasic.Language
         End With
     End Function
 End Module
-

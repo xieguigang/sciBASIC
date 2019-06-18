@@ -404,9 +404,11 @@
     <Compile Include="Clustering\FuzzyCMeans\Entity.vb" />
     <Compile Include="ComponentModel\Discretizer.vb" />
     <Compile Include="DecisionTree\Algorithm.vb" />
+    <Compile Include="DecisionTree\DataModels\DataTable.vb" />
+    <Compile Include="DecisionTree\DataModels\DataImports.vb" />
     <Compile Include="DecisionTree\VisualDebugger.vb" />
     <Compile Include="DecisionTree\Attributes.vb" />
-    <Compile Include="DecisionTree\DataModels.vb" />
+    <Compile Include="DecisionTree\DataModels\DataModels.vb" />
     <Compile Include="DecisionTree\Tree.vb" />
     <Compile Include="DecisionTree\TreeNode.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
@@ -433,9 +435,7 @@
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Abundance.vb" />
     <Compile Include="Validation.vb" />
-    <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
-    <Compile Include="PeriodAnalysis\PeriodAnalysis.vb" />
     <Compile Include="ValueMapping.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BNInfer.vb" />

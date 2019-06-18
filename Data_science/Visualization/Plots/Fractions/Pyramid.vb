@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edaf109102c304333ac7bb1211f54781, Data_science\Mathematica\Plot\Plots\Fractions\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::edaf109102c304333ac7bb1211f54781, Data_science\Visualization\Plots\Fractions\Pyramid.vb"
 
     ' Author:
     ' 
