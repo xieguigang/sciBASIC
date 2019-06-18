@@ -5,5 +5,6 @@
     ''' </summary>
     Public Class Discretizer
 
+
     End Class
 End Namespace

@@ -43,7 +43,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace Distributions
+Namespace Distributions.BinBox
 
     ''' <summary>
     ''' 进行数据分箱操作

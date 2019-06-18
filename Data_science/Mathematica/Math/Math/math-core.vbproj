@@ -438,8 +438,9 @@
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Crc32.vb" />
-    <Compile Include="Distributions\DataBinBox.vb" />
-    <Compile Include="Distributions\CutBins.vb" />
+    <Compile Include="Distributions\BinBox\BinMaps.vb" />
+    <Compile Include="Distributions\BinBox\DataBinBox.vb" />
+    <Compile Include="Distributions\BinBox\CutBins.vb" />
     <Compile Include="Distributions\pnorm.vb" />
     <Compile Include="Distributions\Sample.vb" />
     <Compile Include="Distributions\Gaussian.vb" />
