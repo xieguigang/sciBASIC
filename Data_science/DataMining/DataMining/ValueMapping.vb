@@ -40,6 +40,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 
 Public Module ValueMapping
 
@@ -72,8 +73,10 @@ Public Module ValueMapping
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Discretization(data As IEnumerable(Of Double))
-
+    Public Function Discretization(data As IEnumerable(Of Double), levels As Integer) As Discretizer
+        Return New Discretizer(data, levels)
     End Function
 End Module

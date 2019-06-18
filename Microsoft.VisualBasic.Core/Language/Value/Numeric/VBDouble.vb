@@ -100,6 +100,10 @@ Namespace Language
 
 #Region "Numeric operators"
 
+        ' 20190618 请注意，在这里的符号运算与VBInteger有着明显不同
+        ' VBInteger侧重于index offset的应用，所以符号运算可能会对原来的值做出修改
+        ' 而在这里因为侧重的是数学运算的应用，所以在这里的所有的符号运算都不会修改VBDouble对象原来的值
+
         ''' <summary>
         ''' n &lt; value &lt;= n2
         ''' 假若n 大于value，则返回最大值，上面的表达式肯定不成立
@@ -115,9 +119,21 @@ Namespace Language
             End If
         End Operator
 
+        Public Shared Operator <(x As VBDouble, y As Double) As VBDouble
+            Return x.Value < y
+        End Operator
+
+        Public Shared Operator >(x As VBDouble, y As Double) As VBDouble
+            Return x.Value > y
+        End Operator
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(n#, x As VBDouble) As Double
             Return n * x.Value
+        End Operator
+
+        Public Overloads Shared Operator +(x As VBDouble, y As Double) As Double
+            Return x.Value + y
         End Operator
 
         Public Overloads Shared Operator +(x As VBDouble, y As VBDouble) As Double
