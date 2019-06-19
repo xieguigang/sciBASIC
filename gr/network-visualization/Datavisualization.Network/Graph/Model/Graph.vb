@@ -139,6 +139,14 @@ Namespace Graph
             _adjacencySet = New Dictionary(Of String, Dictionary(Of String, List(Of Edge)))()
         End Sub
 
+        Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
+            Call MyBase.New(nodes, edges)
+
+            _nodeSet = New Dictionary(Of String, Node)()
+            _eventListeners = New List(Of IGraphEventListener)()
+            _adjacencySet = New Dictionary(Of String, Dictionary(Of String, List(Of Edge)))()
+        End Sub
+
         Public Sub Clear()
             Call vertices.Clear()
             Call edges.Clear()

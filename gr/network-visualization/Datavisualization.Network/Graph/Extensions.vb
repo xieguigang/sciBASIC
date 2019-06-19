@@ -70,7 +70,7 @@ Namespace Graph
         <Extension>
         Public Sub ApplyAnalysis(ByRef net As NetworkGraph)
 
-            For Each node In net.nodes
+            For Each node In net.vertex
                 node.data.Neighbours = net.GetNeighbours(node.Label).ToArray
             Next
         End Sub

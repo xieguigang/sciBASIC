@@ -182,7 +182,7 @@ Namespace Analysis
             Dim d%
 
             With net.graphEdges.ComputeDegreeData
-                For Each node In net.nodes
+                For Each node In net.vertex
 
                     If Not connectNodes.ContainsKey(node.Label) Then
                         ' 这个节点是孤立的节点，度为零

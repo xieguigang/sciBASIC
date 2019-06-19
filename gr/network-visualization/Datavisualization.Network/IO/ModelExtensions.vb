@@ -99,7 +99,7 @@ Namespace FileStream
             Dim nodes As New List(Of Node)
             Dim edges As New List(Of NetworkEdge)
 
-            For Each n In g.nodes
+            For Each n As Graph.Node In g.vertex
                 Dim data As New Dictionary(Of String, String)
 
                 If Not n.data.initialPostion Is Nothing Then
@@ -159,7 +159,7 @@ Namespace FileStream
         ''' <returns></returns>
         <Extension>
         Public Function ScaleRadius(ByRef graph As NetworkGraph, range As DoubleRange) As NetworkGraph
-            Dim nodes = graph.nodes.ToArray
+            Dim nodes = graph.vertex.ToArray
             Dim r#() = nodes _
                 .Select(Function(x) CDbl(x.data.radius)) _
                 .RangeTransform(range)
@@ -262,10 +262,7 @@ Namespace FileStream
                                          }
                                          Select New Edge(id, a, b, data)
 
-            Dim graph As New NetworkGraph With {
-                .nodes = New List(Of Graph.Node)(nodes),
-                .graphEdges = New List(Of Edge)(edges)
-            }
+            Dim graph As New NetworkGraph(nodes, edges)
             Return graph
         End Function
 
@@ -325,10 +322,7 @@ Namespace FileStream
                                                  geNodes(0),
                                                  geNodes(1),
                                                  New EdgeData)
-            Return New NetworkGraph With {
-                .graphEdges = gEdges,
-                .nodes = gNodes
-            }
+            Return New NetworkGraph(gNodes, gEdges)
         End Function
 
         ''' <summary>
@@ -343,7 +337,7 @@ Namespace FileStream
                 Call g.ComputeNodeDegrees
             End If
 
-            For Each node In g.nodes
+            For Each node In g.vertex
                 node.data.radius = Val(node.data!degree)
             Next
 

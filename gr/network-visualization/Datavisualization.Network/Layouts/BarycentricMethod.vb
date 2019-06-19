@@ -46,7 +46,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Layouts
@@ -186,34 +186,25 @@ Namespace Layouts
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Network"></param>
+        ''' <param name="network"></param>
         ''' <param name="cutoff"></param>
-        ''' <param name="_DEBUG_EXPORT"></param>
         ''' <returns></returns>
         ''' 
         <ExportAPI("Layout.ForceDirected")>
-        Public Function ForceDirectedLayout(Network As NetworkGraph,
-                                            size As Size,
-                                            Optional cutoff As Double = 100,
-                                            Optional _DEBUG_EXPORT As String = "") As NetworkGraph
-            Dim rand As New Random
-            Network.nodes =
-                LinqAPI.MakeList(Of Node) <= From node As Node
-                                             In Network.nodes
-                                             Let randl As Point = New Point With {
-                                                 .X = size.Width * rand.NextDouble(),
-                                                 .Y = size.Height * rand.NextDouble()
-                                             }
-                                             Select node.__setLoci(randl)
-            Call doLayout(Network, 1, size)
+        Public Function ForceDirectedLayout(network As NetworkGraph, size As Size, Optional cutoff As Double = 100) As NetworkGraph
+            Call network.vertex _
+                .DoEach(Sub(node As Node)
+                            Dim randl As New Point With {
+                                .X = size.Width * seeds.NextDouble(),
+                                .Y = size.Height * seeds.NextDouble()
+                            }
 
-            Return Network
-        End Function
+                            node.data.initialPostion.Point2D = randl
+                        End Sub)
 
-        <Extension>
-        Private Function __setLoci(node As Node, randl As Point) As Node
-            node.data.initialPostion.Point2D = randl
-            Return node
+            Call doLayout(network, 1, size)
+
+            Return network
         End Function
     End Module
 End Namespace

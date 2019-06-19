@@ -124,7 +124,7 @@ Namespace Graph
         Private Shared Function IterateTrees(graph As NetworkGraph, ByRef travels As Dictionary(Of Node, GraphTreeNode)) As GraphTreeNode()
             Dim trees As New List(Of GraphTreeNode)
 
-            For Each node As Node In graph.nodes
+            For Each node As Node In graph.vertex
                 Dim root As New GraphTreeNode With {
                     .Node = node
                 }

@@ -137,7 +137,7 @@ Namespace Layouts
         Public Sub doRandomLayout(ByRef net As NetworkGraph)
             Dim rnd As New Random
 
-            For Each x As Node In net.nodes
+            For Each x As Node In net.vertex
                 x.data.initialPostion = New FDGVector2 With {
                     .x = rnd.NextDouble * 1000,
                     .y = rnd.NextDouble * 1000
