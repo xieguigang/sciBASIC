@@ -113,12 +113,16 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
     ''' <summary>
     ''' <see cref="TV.Label"/> should contains its index value before this method was called.
+    ''' (如果已经存在目标ID的节点，则无操作)
     ''' </summary>
     ''' <param name="u"></param>
     ''' <returns></returns>
     Public Function AddVertex(u As V) As G
-        vertices += u
-        buffer.Add(u)
+        If Not vertices.Have(u) Then
+            vertices += u
+            buffer.Add(u)
+        End If
+
         Return Me
     End Function
 
