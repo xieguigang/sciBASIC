@@ -142,15 +142,16 @@ Namespace Graph
         Public Sub New()
             _nodeSet = New Dictionary(Of String, Node)()
             nodes = New List(Of Node)()
-            edges = New List(Of Edge)()
+            graphEdges = New List(Of Edge)()
             _eventListeners = New List(Of IGraphEventListener)()
             _adjacencySet = New Dictionary(Of String, Dictionary(Of String, List(Of Edge)))()
         End Sub
 
         Public Sub Clear() Implements IGraph.Clear
-            nodes.Clear()
-            edges.Clear()
-            _adjacencySet.Clear()
+            Call nodes.Clear()
+            Call edges.Clear()
+            Call graphEdges.Clear()
+            Call _adjacencySet.Clear()
         End Sub
 
         ''' <summary>
@@ -429,12 +430,12 @@ Namespace Graph
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"Network graph have {nodes.Count} nodes and {edges.Count} edges."
+            Return $"Network graph have {nodes.Count} nodes and {graphEdges.Count} edges."
         End Function
 
         Private Function Clone() As Object Implements ICloneable.Clone
             Dim copy As New NetworkGraph With {
-                .edges = New List(Of Edge)(edges),
+                .graphEdges = New List(Of Edge)(graphEdges),
                 .nodes = New List(Of Node)(nodes)
             }
             Return copy
