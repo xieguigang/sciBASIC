@@ -84,10 +84,10 @@
 '
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Math
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Namespace Layouts
 

@@ -57,7 +57,7 @@ Namespace Layouts
         ''' <summary>
         ''' Do nothing, just used for generate network layout
         ''' </summary>
-        Private Class __layoutGenerator : Inherits AbstractRenderer
+        Private Class layoutGenerator : Inherits AbstractRenderer
 
             Public Sub New(iForceDirected As IForceDirected)
                 MyBase.New(iForceDirected)
@@ -82,7 +82,7 @@ Namespace Layouts
 
         <Extension>
         Public Sub Updates(Of T As AbstractVector)(engine As ForceDirected(Of T), ByRef net As NetworkGraph, Optional loops As Integer = 100)
-            Dim updater As New __layoutGenerator(engine)
+            Dim updater As New layoutGenerator(engine)
 
             For i As Integer = 0 To loops - 1
                 Call updater.Draw(0.05F)
