@@ -429,6 +429,8 @@
     <Compile Include="Layouts\Cola\PowerGraph\Module.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\LinkSet.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\PowerEdge.vb" />
+    <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected3D.vb" />
+    <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected2D.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
@@ -450,10 +452,10 @@
     <Compile Include="Layouts\ForceDirected\Interfaces\IRenderer.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IVector.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\AbstractRenderer.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\AbstractVector.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\FDGVector2.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\FDGVector3.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\ForceDirected.vb" />
+    <Compile Include="Layouts\ForceDirected\Layout\Vectors\AbstractVector.vb" />
+    <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVector2.vb" />
+    <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVector3.vb" />
+    <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Point.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Spring.vb" />
     <Compile Include="IO\Generic\NameOf.vb" />

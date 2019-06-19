@@ -54,6 +54,9 @@ Namespace Layouts
 
     Public Module LayoutUpdater
 
+        ''' <summary>
+        ''' Do nothing, just used for generate network layout
+        ''' </summary>
         Private Class __layoutGenerator : Inherits AbstractRenderer
 
             Public Sub New(iForceDirected As IForceDirected)
