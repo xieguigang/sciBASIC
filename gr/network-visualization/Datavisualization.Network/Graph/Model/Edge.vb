@@ -95,7 +95,7 @@ Namespace Graph
             ID = iId
             U = iSource
             V = iTarget
-            Data = If(iData, New EdgeData())
+            data = If(iData, New EdgeData())
             Directed = False
         End Sub
 
@@ -105,7 +105,7 @@ Namespace Graph
         End Sub
 
         Public Property ID() As String
-        Public Property Data() As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).Data
+        Public Property data() As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).data
         Public Property Directed() As Boolean
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

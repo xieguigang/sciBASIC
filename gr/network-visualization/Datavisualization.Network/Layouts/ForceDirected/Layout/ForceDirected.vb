@@ -174,7 +174,7 @@ Namespace Layouts
 
         Public Function GetSpring(iEdge As Edge) As Spring
             If Not (m_edgeSprings.ContainsKey(iEdge.ID)) Then
-                Dim length As Single = iEdge.Data.length
+                Dim length As Single = iEdge.data.length
                 Dim existingSpring As Spring = Nothing
 
                 Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.U, iEdge.V)
@@ -376,7 +376,7 @@ Namespace Layouts
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
             If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
-                Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
+                Dim iniPosition As FDGVector2 = TryCast(iNode.data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
@@ -422,7 +422,7 @@ Namespace Layouts
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
             If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
-                Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
+                Dim iniPosition As FDGVector3 = TryCast(iNode.data.initialPostion, FDGVector3)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If

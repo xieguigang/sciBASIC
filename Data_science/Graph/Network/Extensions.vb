@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Network
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' 查找出网络模型之中可能的网络端点
@@ -84,7 +84,7 @@ Namespace Network
                                   .Where(Function(e) e.U Is n OrElse e.V Is n) _
                                   .FirstOrDefault
                           End Function
-            Dim edges = network.edges.Values.AsList
+            Dim edges As List(Of U) = network.edges.Values.AsList
 
             Do While edges > 0
                 Dim subnetwork As New NetworkGraph(Of Node, U)

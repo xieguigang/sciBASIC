@@ -99,7 +99,7 @@ Namespace Graph
     ''' <summary>
     ''' The network graph object model, corresponding network csv table data model is <see cref="FileStream.NetworkTables"/> 
     ''' </summary>
-    Public Class NetworkGraph
+    Public Class NetworkGraph : Inherits GraphTheory.Network.NetworkGraph(Of Node, Edge)
         Implements IGraph
         Implements ICloneable
 
@@ -109,8 +109,8 @@ Namespace Graph
         ''' 这个属性与<see cref="connectedNodes()"/>属性之间的区别就是这个属性之中还包含着孤立的没有任何连接的节点
         ''' </summary>
         ''' <returns></returns>
-        Public Property nodes() As List(Of Node) Implements IGraph.nodes
-        Public Property edges() As List(Of Edge) Implements IGraph.edges
+        Public Property nodes As List(Of Node) Implements IGraph.nodes
+        Public Property graphEdges As List(Of Edge) Implements IGraph.edges
 #End Region
 
         ''' <summary>
@@ -121,7 +121,7 @@ Namespace Graph
         ''' <returns></returns>
         Public ReadOnly Property connectedNodes() As Node()
             Get
-                Return edges _
+                Return graphEdges _
                     .Select(Function(d) d.Iterate2Nodes) _
                     .IteratesALL _
                     .Distinct _
@@ -169,7 +169,7 @@ Namespace Graph
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function AddEdge(i%, j%) As Edge
+        Public Overloads Function AddEdge(i%, j%) As Edge
             Return CreateEdge(GetElementByID(i), GetElementByID(j))
         End Function
 
@@ -177,9 +177,9 @@ Namespace Graph
             Return nodes.Where(Function(n) n.ID = id).FirstOrDefault
         End Function
 
-        Public Function AddEdge(iEdge As Edge) As Edge Implements IGraph.AddEdge
-            If Not edges.Contains(iEdge) Then
-                edges.Add(iEdge)
+        Public Overloads Function AddEdge(iEdge As Edge) As Edge Implements IGraph.AddEdge
+            If Not graphEdges.Contains(iEdge) Then
+                graphEdges.Add(iEdge)
             End If
 
             If Not (_adjacencySet.ContainsKey(iEdge.U.Label)) Then
@@ -193,7 +193,8 @@ Namespace Graph
                 _adjacencySet(iEdge.U.Label)(iEdge.V.Label).Add(iEdge)
             End If
 
-            notify()
+            Call notify()
+
             Return iEdge
         End Function
 
@@ -269,7 +270,7 @@ Namespace Graph
         ''' <param name="iTarget"></param>
         ''' <param name="iData"></param>
         ''' <returns></returns>
-        Public Function CreateEdge(iSource As Node, iTarget As Node, Optional iData As EdgeData = Nothing) As Edge Implements IGraph.CreateEdge
+        Public Overloads Function CreateEdge(iSource As Node, iTarget As Node, Optional iData As EdgeData = Nothing) As Edge Implements IGraph.CreateEdge
             If iSource Is Nothing OrElse iTarget Is Nothing Then
                 Return Nothing
             End If
@@ -280,7 +281,7 @@ Namespace Graph
             Return tNewEdge
         End Function
 
-        Public Function CreateEdge(iSource As String, iTarget As String, Optional iData As EdgeData = Nothing) As Edge Implements IGraph.CreateEdge
+        Public Overloads Function CreateEdge(iSource As String, iTarget As String, Optional iData As EdgeData = Nothing) As Edge Implements IGraph.CreateEdge
             If Not _nodeSet.ContainsKey(iSource) Then
                 Return Nothing
             End If
@@ -331,11 +332,11 @@ Namespace Graph
         End Sub
 
         Public Sub DetachNode(iNode As Node) Implements IGraph.DetachNode
-            edges.ForEach(Sub(e As Edge)
-                              If e.U.Label = iNode.Label OrElse e.V.Label = iNode.Label Then
-                                  Call RemoveEdge(e)
-                              End If
-                          End Sub)
+            graphEdges.ForEach(Sub(e As Edge)
+                                   If e.U.Label = iNode.Label OrElse e.V.Label = iNode.Label Then
+                                       Call RemoveEdge(e)
+                                   End If
+                               End Sub)
             notify()
         End Sub
 
@@ -368,34 +369,35 @@ Namespace Graph
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetNode(label As String) As Node
             Return nodes _
-                .Where(Function(n) n.Data.label = label) _
+                .Where(Function(n) n.data.label = label) _
                 .FirstOrDefault
         End Function
 
         Public Function GetEdge(label As String) As Edge
             Dim retEdge As Edge = Nothing
-            edges.ForEach(Sub(e As Edge)
-                              If e.Data.label = label Then
 
-                                  retEdge = e
-                              End If
-                          End Sub)
+            graphEdges.ForEach(Sub(e As Edge)
+                                   If e.data.label = label Then
+
+                                       retEdge = e
+                                   End If
+                               End Sub)
             Return retEdge
         End Function
 
         Public Sub Merge(iMergeGraph As NetworkGraph) Implements IGraph.Merge
             For Each n As Node In iMergeGraph.nodes
-                Dim mergeNode As New Node(_nextNodeId.ToString(), n.Data)
+                Dim mergeNode As New Node(_nextNodeId.ToString(), n.data)
                 AddNode(mergeNode)
                 _nextNodeId += 1
-                mergeNode.Data.origID = n.Label
+                mergeNode.data.origID = n.Label
             Next
 
-            For Each e As Edge In iMergeGraph.edges
-                Dim fromNode As Node = nodes.Find(Function(n) e.U.Label = n.Data.origID)
-                Dim toNode As Node = nodes.Find(Function(n) e.V.Label = n.Data.origID)
+            For Each e As Edge In iMergeGraph.graphEdges
+                Dim fromNode As Node = nodes.Find(Function(n) e.U.Label = n.data.origID)
+                Dim toNode As Node = nodes.Find(Function(n) e.V.Label = n.data.origID)
 
-                Dim tNewEdge As Edge = AddEdge(New Edge(_nextEdgeId.ToString(), fromNode, toNode, e.Data))
+                Dim tNewEdge As Edge = AddEdge(New Edge(_nextEdgeId.ToString(), fromNode, toNode, e.data))
                 _nextEdgeId += 1
             Next
         End Sub
@@ -409,7 +411,7 @@ Namespace Graph
         End Sub
 
         Public Sub FilterEdges(match As Predicate(Of Edge)) Implements IGraph.FilterEdges
-            For Each e As Edge In edges
+            For Each e As Edge In graphEdges
                 If Not match(e) Then
                     RemoveEdge(e)
                 End If

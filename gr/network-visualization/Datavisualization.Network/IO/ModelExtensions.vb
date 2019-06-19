@@ -102,22 +102,22 @@ Namespace FileStream
             For Each n In g.nodes
                 Dim data As New Dictionary(Of String, String)
 
-                If Not n.Data.initialPostion Is Nothing Then
+                If Not n.data.initialPostion Is Nothing Then
                     ' skip coordination information when no layout data.
-                    data("x") = n.Data.initialPostion.x
-                    data("y") = n.Data.initialPostion.y
+                    data("x") = n.data.initialPostion.x
+                    data("y") = n.data.initialPostion.y
                     ' data("z") = n.Data.initialPostion.z
                 End If
 
                 If Not properties Is Nothing Then
                     For Each key As String In properties
-                        data(key) = n.Data(key)
+                        data(key) = n.data(key)
                     Next
                 End If
 
                 nodes += New Node With {
                     .ID = n.Label,
-                    .NodeType = n.Data(names.REFLECTION_ID_MAPPING_NODETYPE),
+                    .NodeType = n.data(names.REFLECTION_ID_MAPPING_NODETYPE),
                     .Properties = data
                 }
             Next
@@ -126,10 +126,10 @@ Namespace FileStream
                 edges += New NetworkEdge With {
                     .FromNode = l.U.Label,
                     .ToNode = l.V.Label,
-                    .Interaction = l.Data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
+                    .Interaction = l.data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
                     .value = l.Weight,
                     .Properties = New Dictionary(Of String, String) From {
-                        {NameOf(EdgeData.label), l.Data.label}
+                        {NameOf(EdgeData.label), l.data.label}
                     }
                 }
             Next
@@ -161,11 +161,11 @@ Namespace FileStream
         Public Function ScaleRadius(ByRef graph As NetworkGraph, range As DoubleRange) As NetworkGraph
             Dim nodes = graph.nodes.ToArray
             Dim r#() = nodes _
-                .Select(Function(x) CDbl(x.Data.radius)) _
+                .Select(Function(x) CDbl(x.data.radius)) _
                 .RangeTransform(range)
 
             For i As Integer = 0 To nodes.Length - 1
-                nodes(i).Data.radius = r#(i)
+                nodes(i).data.radius = r#(i)
             Next
 
             Return graph
@@ -186,11 +186,11 @@ Namespace FileStream
             Select Case method
                 Case NameOf(Enumerable.Average)
                     orderProvider = Function(g)
-                                        Return Aggregate x In g Into Average(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
+                                        Return Aggregate x In g Into Average(Val(x.data(names.REFLECTION_ID_MAPPING_DEGREE)))
                                     End Function
                 Case NameOf(Enumerable.Sum)
                     orderProvider = Function(g)
-                                        Return Aggregate x In g Into Sum(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
+                                        Return Aggregate x In g Into Sum(Val(x.data(names.REFLECTION_ID_MAPPING_DEGREE)))
                                     End Function
             End Select
 
@@ -344,7 +344,7 @@ Namespace FileStream
             End If
 
             For Each node In g.nodes
-                node.Data.radius = Val(node.Data!degree)
+                node.data.radius = Val(node.data!degree)
             Next
 
             Return g

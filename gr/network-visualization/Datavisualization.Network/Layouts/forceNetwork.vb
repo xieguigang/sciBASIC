@@ -125,7 +125,7 @@ Namespace Layouts
 
             Call physicsEngine.EachNode(
                 Sub(node, point)
-                    node.Data.initialPostion = point.position
+                    node.data.initialPostion = point.position
                 End Sub)
 
             If Not progress Is Nothing Then
@@ -138,7 +138,7 @@ Namespace Layouts
             Dim rnd As New Random
 
             For Each x As Node In net.nodes
-                x.Data.initialPostion = New FDGVector2 With {
+                x.data.initialPostion = New FDGVector2 With {
                     .x = rnd.NextDouble * 1000,
                     .y = rnd.NextDouble * 1000
                 }
