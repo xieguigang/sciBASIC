@@ -42,9 +42,16 @@
 
 Namespace Network
 
+    ''' <summary>
+    ''' A network node model
+    ''' </summary>
     Public Class Node : Inherits Vertex
 
-        Public Property Degree As (In%, Out%)
+        ''' <summary>
+        ''' Node connection counts: [point_to_this_node, point_from_this_node]
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property degree As (In%, Out%)
 
     End Class
 End Namespace
