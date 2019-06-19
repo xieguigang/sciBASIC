@@ -697,7 +697,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 在字符串前面填充指定长度的00序列，假若输入的字符串长度大于fill的长度，则不再进行填充
+    ''' 在字符串前面填充指定长度的0字符序列，假若输入的字符串长度大于fill的长度，则不再进行填充
     ''' </summary>
     ''' <typeparam name="T">限定类型为字符串或者数值基础类型</typeparam>
     ''' <param name="n"></param>

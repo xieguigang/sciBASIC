@@ -46,7 +46,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Layouts
@@ -63,7 +63,7 @@ Namespace Layouts
         <Extension>
         Public Sub doLayout(Network As NetworkGraph, iterations As Integer, size As Size)
             Dim nodes As Node() = Network.connectedNodes
-            Dim edges As Edge() = Network.edges
+            Dim edges As Edge() = Network.graphEdges
 
             Dim k As Double = size.Width * size.Height / (nodes.Length * 1000)
             Dim c As Double = 3
@@ -81,8 +81,8 @@ Namespace Layouts
                             Continue For
                         End If
 
-                        Dim deltaX As Double = NodeB.Data.initialPostion.x - NodeA.Data.initialPostion.x
-                        Dim deltaY As Double = NodeB.Data.initialPostion.y - NodeA.Data.initialPostion.y
+                        Dim deltaX As Double = NodeB.data.initialPostion.x - NodeA.data.initialPostion.x
+                        Dim deltaY As Double = NodeB.data.initialPostion.y - NodeA.data.initialPostion.y
 
                         Dim distanceSquared As Double = deltaX * deltaX + deltaY * deltaY
 
@@ -96,16 +96,16 @@ Namespace Layouts
 
                         If distance < maxRepulsiveForceDistance Then
                             Dim repulsiveForce As Double = (k * k / distance)
-                            Dim fa As Point = NodeA.Data.Force
-                            Dim fb As Point = NodeB.Data.Force
+                            Dim fa As Point = NodeA.data.Force
+                            Dim fb As Point = NodeB.data.Force
 
                             fb.X = fb.X + (repulsiveForce * deltaX / distance)
                             fb.Y = fb.Y + (repulsiveForce * deltaY / distance)
                             fa.X = fa.X - (repulsiveForce * deltaX / distance)
                             fa.Y = fa.Y - (repulsiveForce * deltaY / distance)
 
-                            NodeA.Data.Force = fa
-                            NodeB.Data.Force = fb
+                            NodeA.data.Force = fa
+                            NodeB.data.Force = fb
                         End If
                     Next
                 Next
@@ -116,8 +116,8 @@ Namespace Layouts
                     Dim nodeA As Node = edge.U
                     Dim nodeB As Node = edge.V
 
-                    Dim deltaX As Double = nodeB.Data.initialPostion.x - nodeA.Data.initialPostion.x
-                    Dim deltaY As Double = nodeB.Data.initialPostion.y - nodeA.Data.initialPostion.y
+                    Dim deltaX As Double = nodeB.data.initialPostion.x - nodeA.data.initialPostion.x
+                    Dim deltaY As Double = nodeB.data.initialPostion.y - nodeA.data.initialPostion.y
 
                     Dim distanceSquared As Double = deltaX * deltaX + deltaY * deltaY
 
@@ -141,28 +141,28 @@ Namespace Layouts
                     Dim attractiveForce As Double = (distanceSquared - k * k) / k
 
                     ' Make edges stronger if people know each other.
-                    Dim weight As Double = edge.Data.weight
+                    Dim weight As Double = edge.data.weight
 
                     attractiveForce *= (System.Math.Log(weight) * 0.5) + 1
 
-                    Dim fa As Point = nodeA.Data.Force
-                    Dim fb As Point = nodeB.Data.Force
+                    Dim fa As Point = nodeA.data.Force
+                    Dim fb As Point = nodeB.data.Force
 
-                    fb.X = nodeB.Data.Force.X - attractiveForce * deltaX / distance
-                    fb.Y = nodeB.Data.Force.Y - attractiveForce * deltaY / distance
-                    fa.X = nodeA.Data.Force.X + attractiveForce * deltaX / distance
-                    fa.Y = nodeA.Data.Force.Y + attractiveForce * deltaY / distance
+                    fb.X = nodeB.data.Force.X - attractiveForce * deltaX / distance
+                    fb.Y = nodeB.data.Force.Y - attractiveForce * deltaY / distance
+                    fa.X = nodeA.data.Force.X + attractiveForce * deltaX / distance
+                    fa.Y = nodeA.data.Force.Y + attractiveForce * deltaY / distance
 
-                    nodeA.Data.Force = fa
-                    nodeB.Data.Force = fb
+                    nodeA.data.Force = fa
+                    nodeB.data.Force = fb
                 Next
 
                 ' Now move each node to its new location...
                 For a As Integer = 0 To nodes.Length - 1
                     Dim node As Node = nodes(a)
 
-                    Dim xMovement As Double = c * node.Data.Force.X
-                    Dim yMovement As Double = c * node.Data.Force.Y
+                    Dim xMovement As Double = c * node.data.Force.X
+                    Dim yMovement As Double = c * node.data.Force.Y
 
                     ' Limit movement values to stop nodes flying into oblivion.
                     Dim max As Double = 100
@@ -177,8 +177,8 @@ Namespace Layouts
                         yMovement = -max
                     End If
 
-                    node.Data.initialPostion.Point2D = New Point(node.Data.initialPostion.x + xMovement, node.Data.initialPostion.y + yMovement)
-                    node.Data.Force = New Point
+                    node.data.initialPostion.Point2D = New Point(node.data.initialPostion.x + xMovement, node.data.initialPostion.y + yMovement)
+                    node.data.Force = New Point
                 Next
             Next
         End Sub
@@ -186,34 +186,25 @@ Namespace Layouts
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Network"></param>
+        ''' <param name="network"></param>
         ''' <param name="cutoff"></param>
-        ''' <param name="_DEBUG_EXPORT"></param>
         ''' <returns></returns>
         ''' 
         <ExportAPI("Layout.ForceDirected")>
-        Public Function ForceDirectedLayout(Network As NetworkGraph,
-                                            size As Size,
-                                            Optional cutoff As Double = 100,
-                                            Optional _DEBUG_EXPORT As String = "") As NetworkGraph
-            Dim rand As New Random
-            Network.nodes =
-                LinqAPI.MakeList(Of Node) <= From node As Node
-                                             In Network.nodes
-                                             Let randl As Point = New Point With {
-                                                 .X = size.Width * rand.NextDouble(),
-                                                 .Y = size.Height * rand.NextDouble()
-                                             }
-                                             Select node.__setLoci(randl)
-            Call doLayout(Network, 1, size)
+        Public Function ForceDirectedLayout(network As NetworkGraph, size As Size, Optional cutoff As Double = 100) As NetworkGraph
+            Call network.vertex _
+                .DoEach(Sub(node As Node)
+                            Dim randl As New Point With {
+                                .X = size.Width * seeds.NextDouble(),
+                                .Y = size.Height * seeds.NextDouble()
+                            }
 
-            Return Network
-        End Function
+                            node.data.initialPostion.Point2D = randl
+                        End Sub)
 
-        <Extension>
-        Private Function __setLoci(node As Node, randl As Point) As Node
-            node.Data.initialPostion.Point2D = randl
-            Return node
+            Call doLayout(network, 1, size)
+
+            Return network
         End Function
     End Module
 End Namespace

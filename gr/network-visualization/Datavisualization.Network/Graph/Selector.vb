@@ -58,7 +58,7 @@ Namespace Graph
     Public Module Selector
 
         Public Interface IGraphValueContainer(Of T As GraphData)
-            Property Data As T
+            Property data As T
         End Interface
 
         ''' <summary>
@@ -91,10 +91,10 @@ Namespace Graph
             ElseIf dataValues.ContainsKey([property]) Then
                 reader = dataValues([property])
                 type = reader.PropertyType
-                Return Function(model) reader.GetValue(model.Data)
+                Return Function(model) reader.GetValue(model.data)
             Else
                 type = GetType(String)
-                Return Function(model) model.Data([property])
+                Return Function(model) model.data([property])
             End If
         End Function
 

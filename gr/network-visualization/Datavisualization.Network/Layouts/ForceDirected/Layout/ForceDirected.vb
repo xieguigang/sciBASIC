@@ -1,68 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::cb0d4de5c77e1ef0e003e691095c6a8f, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\ForceDirected.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NearestPoint
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class BoundingBox
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class ForceDirected
-    ' 
-    '         Properties: Damping, graph, Repulsion, Stiffness, Threadshold
-    '                     WithinThreashold
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetSpring, getTotalEnergy, Nearest
-    ' 
-    '         Sub: applyCoulombsLaw, applyHookesLaw, attractToCentre, Calculate, Clear
-    '              EachEdge, EachNode, SetPhysics, updatePosition, updateVelocity
-    ' 
-    '     Class ForceDirected2D
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetBoundingBox, GetPoint
-    ' 
-    '     Class ForceDirected3D
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetBoundingBox, GetPoint
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NearestPoint
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class BoundingBox
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class ForceDirected
+' 
+'         Properties: Damping, graph, Repulsion, Stiffness, Threadshold
+'                     WithinThreashold
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetSpring, getTotalEnergy, Nearest
+' 
+'         Sub: applyCoulombsLaw, applyHookesLaw, attractToCentre, Calculate, Clear
+'              EachEdge, EachNode, SetPhysics, updatePosition, updateVelocity
+' 
+'     Class ForceDirected2D
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetBoundingBox, GetPoint
+' 
+'     Class ForceDirected3D
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetBoundingBox, GetPoint
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -104,10 +104,6 @@
 '
 '
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Timers
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 
@@ -123,7 +119,7 @@ Namespace Layouts
 
         Public node As Node
         Public point As LayoutPoint
-        Public distance As System.Nullable(Of Single)
+        Public distance As Single?
     End Class
 
     Public Class BoundingBox
@@ -151,7 +147,7 @@ Namespace Layouts
 
         Protected m_nodePoints As Dictionary(Of String, LayoutPoint)
         Protected m_edgeSprings As Dictionary(Of String, Spring)
-        Public Property graph() As IGraph Implements IForceDirected.graph
+        Public Property graph() As NetworkGraph Implements IForceDirected.graph
 
         Public Sub Clear() Implements IForceDirected.Clear
             m_nodePoints.Clear()
@@ -159,7 +155,7 @@ Namespace Layouts
             graph.Clear()
         End Sub
 
-        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
+        Public Sub New(iGraph As NetworkGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
             graph = iGraph
             Stiffness = iStiffness
             Repulsion = iRepulsion
@@ -174,7 +170,7 @@ Namespace Layouts
 
         Public Function GetSpring(iEdge As Edge) As Spring
             If Not (m_edgeSprings.ContainsKey(iEdge.ID)) Then
-                Dim length As Single = iEdge.Data.length
+                Dim length As Single = iEdge.data.length
                 Dim existingSpring As Spring = Nothing
 
                 Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.U, iEdge.V)
@@ -214,34 +210,38 @@ Namespace Layouts
         ''' 库仑法则，所有的节点之间都存在着斥力
         ''' </summary>
         Protected Sub applyCoulombsLaw()
-            For Each n1 As Node In graph.nodes
-                Dim point1 As LayoutPoint = GetPoint(n1)
-                For Each n2 As Node In graph.nodes
-                    Dim point2 As LayoutPoint = GetPoint(n2)
-                    If point1 IsNot point2 Then
-                        Dim d As AbstractVector = point1.position - point2.position
-                        Dim distance As Single = d.Magnitude() + 0.1F
-                        Dim direction As AbstractVector = d.Normalize()
-                        If n1.Pinned AndAlso n2.Pinned Then
-                            point1.ApplyForce(direction * 0F)
-                            point2.ApplyForce(direction * 0F)
-                        ElseIf n1.Pinned Then
-                            point1.ApplyForce(direction * 0F)
-                            'point2.ApplyForce((direction * Repulsion) / (distance * distance * -1.0f));
-                            point2.ApplyForce((direction * Repulsion) / (distance * -1.0F))
-                        ElseIf n2.Pinned Then
-                            'point1.ApplyForce((direction * Repulsion) / (distance * distance));
-                            point1.ApplyForce((direction * Repulsion) / (distance))
-                            point2.ApplyForce(direction * 0F)
-                        Else
-                            '                             point1.ApplyForce((direction * Repulsion) / (distance * distance * 0.5f));
-                            '                             point2.ApplyForce((direction * Repulsion) / (distance * distance * -0.5f));
-                            point1.ApplyForce((direction * Repulsion) / (distance * 0.5F))
-                            point2.ApplyForce((direction * Repulsion) / (distance * -0.5F))
+            For Each n1 As Node In graph.vertex
+                Call applyCoulombsLaw(n1, GetPoint(n1))
+            Next
+        End Sub
 
-                        End If
+        Private Sub applyCoulombsLaw(n1 As Node, point1 As LayoutPoint)
+            For Each n2 As Node In graph.vertex
+                Dim point2 As LayoutPoint = GetPoint(n2)
+
+                If point1 IsNot point2 Then
+                    Dim d As AbstractVector = point1.position - point2.position
+                    Dim distance As Single = d.Magnitude() + 0.1F
+                    Dim direction As AbstractVector = d.Normalize()
+
+                    If n1.Pinned AndAlso n2.Pinned Then
+                        point1.ApplyForce(direction * 0F)
+                        point2.ApplyForce(direction * 0F)
+                    ElseIf n1.Pinned Then
+                        point1.ApplyForce(direction * 0F)
+                        'point2.ApplyForce((direction * Repulsion) / (distance * distance * -1.0f));
+                        point2.ApplyForce((direction * Repulsion) / (distance * -1.0F))
+                    ElseIf n2.Pinned Then
+                        'point1.ApplyForce((direction * Repulsion) / (distance * distance));
+                        point1.ApplyForce((direction * Repulsion) / (distance))
+                        point2.ApplyForce(direction * 0F)
+                    Else
+                        '                             point1.ApplyForce((direction * Repulsion) / (distance * distance * 0.5f));
+                        '                             point2.ApplyForce((direction * Repulsion) / (distance * distance * -0.5f));
+                        point1.ApplyForce((direction * Repulsion) / (distance * 0.5F))
+                        point2.ApplyForce((direction * Repulsion) / (distance * -0.5F))
                     End If
-                Next
+                End If
             Next
         End Sub
 
@@ -249,7 +249,7 @@ Namespace Layouts
         ''' 弹簧力，所有的通过边连接的节点间都存在着弹簧的牵引力
         ''' </summary>
         Protected Sub applyHookesLaw()
-            For Each e As Edge In graph.edges
+            For Each e As Edge In graph.graphEdges
                 Dim spring As Spring = GetSpring(e)
                 Dim d As AbstractVector = spring.point2.position - spring.point1.position
                 Dim displacement As Single = spring.Length - d.Magnitude()
@@ -274,7 +274,7 @@ Namespace Layouts
         End Sub
 
         Protected Sub attractToCentre()
-            For Each n As Node In graph.nodes
+            For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
                 If Not point.node.Pinned Then
                     Dim direction As AbstractVector = point.position * -1.0F
@@ -289,7 +289,7 @@ Namespace Layouts
         End Sub
 
         Protected Sub updateVelocity(iTimeStep As Single)
-            For Each n As Node In graph.nodes
+            For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
                 point.velocity.Add(point.acceleration * iTimeStep)
                 point.velocity.Multiply(Damping)
@@ -298,7 +298,7 @@ Namespace Layouts
         End Sub
 
         Protected Sub updatePosition(iTimeStep As Single)
-            For Each n As Node In graph.nodes
+            For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
                 point.position.Add(point.velocity * iTimeStep)
             Next
@@ -306,7 +306,7 @@ Namespace Layouts
 
         Protected Function getTotalEnergy() As Single
             Dim energy As Single = 0F
-            For Each n As Node In graph.nodes
+            For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
                 Dim speed As Single = point.velocity.Magnitude()
                 energy += 0.5F * point.mass * speed * speed
@@ -330,20 +330,20 @@ Namespace Layouts
 
 
         Public Sub EachEdge(del As EdgeAction) Implements IForceDirected.EachEdge
-            For Each e As Edge In graph.edges
+            For Each e As Edge In graph.graphEdges
                 del(e, GetSpring(e))
             Next
         End Sub
 
         Public Sub EachNode(del As NodeAction) Implements IForceDirected.EachNode
-            For Each n As Node In graph.nodes
+            For Each n As Node In graph.vertex
                 del(n, GetPoint(n))
             Next
         End Sub
 
         Public Function Nearest(position As AbstractVector) As NearestPoint Implements IForceDirected.Nearest
             Dim min As New NearestPoint()
-            For Each n As Node In graph.nodes
+            For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
                 Dim distance As Single = (point.position - position).Magnitude()
                 If min.distance Is Nothing OrElse distance < min.distance Then
@@ -370,13 +370,13 @@ Namespace Layouts
     Public Class ForceDirected2D
         Inherits ForceDirected(Of FDGVector2)
 
-        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
+        Public Sub New(iGraph As NetworkGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
             If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
-                Dim iniPosition As FDGVector2 = TryCast(iNode.Data.initialPostion, FDGVector2)
+                Dim iniPosition As FDGVector2 = TryCast(iNode.data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
@@ -386,10 +386,11 @@ Namespace Layouts
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox
-            Dim boundingBox__1 As New BoundingBox()
+            Dim boundingBox As New BoundingBox()
             Dim bottomLeft As FDGVector2 = TryCast(FDGVector2.Identity().Multiply(BoundingBox.defaultBB * -1.0F), FDGVector2)
             Dim topRight As FDGVector2 = TryCast(FDGVector2.Identity().Multiply(BoundingBox.defaultBB), FDGVector2)
-            For Each n As Node In graph.nodes
+
+            For Each n As Node In graph.vertex
                 Dim position As FDGVector2 = TryCast(GetPoint(n).position, FDGVector2)
 
                 If position.x < bottomLeft.x Then
@@ -405,24 +406,24 @@ Namespace Layouts
                     topRight.y = position.y
                 End If
             Next
-            Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
-            boundingBox__1.bottomLeftFront = bottomLeft.Subtract(padding)
-            boundingBox__1.topRightBack = topRight.Add(padding)
-            Return boundingBox__1
 
+            Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
+            boundingBox.bottomLeftFront = bottomLeft.Subtract(padding)
+            boundingBox.topRightBack = topRight.Add(padding)
+            Return boundingBox
         End Function
     End Class
 
     Public Class ForceDirected3D
         Inherits ForceDirected(Of FDGVector3)
 
-        Public Sub New(iGraph As IGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
+        Public Sub New(iGraph As NetworkGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
             If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
-                Dim iniPosition As FDGVector3 = TryCast(iNode.Data.initialPostion, FDGVector3)
+                Dim iniPosition As FDGVector3 = TryCast(iNode.data.initialPostion, FDGVector3)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If
@@ -432,10 +433,11 @@ Namespace Layouts
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox
-            Dim boundingBox__1 As New BoundingBox()
+            Dim boundingBox As New BoundingBox()
             Dim bottomLeft As FDGVector3 = TryCast(FDGVector3.Identity().Multiply(BoundingBox.defaultBB * -1.0F), FDGVector3)
             Dim topRight As FDGVector3 = TryCast(FDGVector3.Identity().Multiply(BoundingBox.defaultBB), FDGVector3)
-            For Each n As Node In graph.nodes
+
+            For Each n As Node In graph.vertex
                 Dim position As FDGVector3 = TryCast(GetPoint(n).position, FDGVector3)
                 If position.x < bottomLeft.x Then
                     bottomLeft.x = position.x
@@ -456,11 +458,13 @@ Namespace Layouts
                     topRight.z = position.z
                 End If
             Next
-            Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
-            boundingBox__1.bottomLeftFront = bottomLeft.Subtract(padding)
-            boundingBox__1.topRightBack = topRight.Add(padding)
-            Return boundingBox__1
 
+            Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
+
+            boundingBox.bottomLeftFront = bottomLeft.Subtract(padding)
+            boundingBox.topRightBack = topRight.Add(padding)
+
+            Return boundingBox
         End Function
     End Class
 End Namespace

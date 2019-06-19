@@ -164,10 +164,10 @@ Namespace Layouts
         Public Property node() As Node
         Public Property mass() As Single
             Get
-                Return node.Data.mass
+                Return node.data.mass
             End Get
             Private Set
-                node.Data.mass = Value
+                node.data.mass = Value
             End Set
         End Property
 

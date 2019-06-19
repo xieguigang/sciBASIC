@@ -151,7 +151,7 @@ Namespace Analysis.PageRank
         <Extension>
         Public Function Rank(g As WeightedPRGraph, Optional a# = 0.85, Optional e# = 0.000001) As Dictionary(Of String, Double)
             Dim d# = 1
-            Dim inverse# = 1 / g.Vertex.Length
+            Dim inverse# = 1 / g.size.vertex
 
             For Each vertex As WeightedPRNode In g _
                 .Vertex _

@@ -101,7 +101,7 @@ Namespace Graph
         ''' <param name="iData"></param>
         Public Sub New(iId As String, Optional iData As NodeData = Nothing)
             If iData IsNot Nothing Then
-                Data = iData.Clone
+                data = iData.Clone
             End If
 
             Label = iId
@@ -112,7 +112,7 @@ Namespace Graph
             Call Me.New(Nothing, Nothing)
         End Sub
 
-        Public Property Data As NodeData Implements IGraphValueContainer(Of NodeData).Data
+        Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
         Public Property Pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer
@@ -120,8 +120,8 @@ Namespace Graph
         End Function
 
         Public Overrides Function ToString() As String
-            If Not Data Is Nothing AndAlso Not Data.label.StringEmpty Then
-                Return $"{Label} ({Data.label})"
+            If Not data Is Nothing AndAlso Not data.label.StringEmpty Then
+                Return $"{Label} ({data.label})"
             Else
                 Return Label
             End If

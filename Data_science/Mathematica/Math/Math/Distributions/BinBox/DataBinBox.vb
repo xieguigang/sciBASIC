@@ -54,7 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
-Namespace Distributions
+Namespace Distributions.BinBox
 
     ''' <summary>
     ''' 数据分箱之中的一个bucket
@@ -68,7 +68,7 @@ Namespace Distributions
             End Get
         End Property
 
-        Public ReadOnly Property BinMaps(Optional method As BinMaps = Distributions.BinMaps.Mean) As Double()
+        Public ReadOnly Property BinMaps(Optional method As BinMaps = BinBox.BinMaps.Mean) As Double()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetBinMaps(bin, method, eval)
@@ -109,13 +109,13 @@ Namespace Distributions
             Dim v As Double() = data.Select(Function(x) eval(x)).ToArray
 
             Select Case method
-                Case Distributions.BinMaps.Mean
+                Case BinBox.BinMaps.Mean
                     Return v.Average.Replicate(v.Length).ToArray
 
-                Case Distributions.BinMaps.Median
+                Case BinBox.BinMaps.Median
                     Return v.Median.Replicate(v.Length).ToArray
 
-                Case Distributions.BinMaps.Boundary
+                Case BinBox.BinMaps.Boundary
                     Dim min = v.Min
                     Dim max = v.Max
 
@@ -135,19 +135,4 @@ Namespace Distributions
             End Select
         End Function
     End Class
-
-    Public Enum BinMaps
-        ''' <summary>
-        ''' 均值
-        ''' </summary>
-        Mean
-        ''' <summary>
-        ''' 中位数
-        ''' </summary>
-        Median
-        ''' <summary>
-        ''' 边界值
-        ''' </summary>
-        Boundary
-    End Enum
 End Namespace

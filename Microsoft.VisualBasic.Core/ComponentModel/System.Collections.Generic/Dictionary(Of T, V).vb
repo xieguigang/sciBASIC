@@ -210,6 +210,16 @@ Namespace ComponentModel.Collection
         End Function
 
         ''' <summary>
+        ''' Inline method alias of function <see cref="ContainsKey(String)"/> in parent class
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Have(item As V) As Boolean
+            Return MyBase.ContainsKey(item.Key)
+        End Function
+
+        ''' <summary>
         ''' If the value is not found in the hash directionary, then the default value will be returns, and the default value is nothing.
         ''' </summary>
         ''' <param name="name"></param>

@@ -73,7 +73,7 @@ Namespace Layouts
             ''' <param name="iNode"></param>
             ''' <param name="iPosition"></param>
             Protected Overrides Sub drawNode(iNode As Node, iPosition As AbstractVector)
-                iNode.Data.initialPostion = iPosition
+                iNode.data.initialPostion = iPosition
             End Sub
         End Class
 

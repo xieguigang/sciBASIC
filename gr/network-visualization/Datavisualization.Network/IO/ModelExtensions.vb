@@ -99,37 +99,37 @@ Namespace FileStream
             Dim nodes As New List(Of Node)
             Dim edges As New List(Of NetworkEdge)
 
-            For Each n In g.nodes
+            For Each n As Graph.Node In g.vertex
                 Dim data As New Dictionary(Of String, String)
 
-                If Not n.Data.initialPostion Is Nothing Then
+                If Not n.data.initialPostion Is Nothing Then
                     ' skip coordination information when no layout data.
-                    data("x") = n.Data.initialPostion.x
-                    data("y") = n.Data.initialPostion.y
+                    data("x") = n.data.initialPostion.x
+                    data("y") = n.data.initialPostion.y
                     ' data("z") = n.Data.initialPostion.z
                 End If
 
                 If Not properties Is Nothing Then
                     For Each key As String In properties
-                        data(key) = n.Data(key)
+                        data(key) = n.data(key)
                     Next
                 End If
 
                 nodes += New Node With {
                     .ID = n.Label,
-                    .NodeType = n.Data(names.REFLECTION_ID_MAPPING_NODETYPE),
+                    .NodeType = n.data(names.REFLECTION_ID_MAPPING_NODETYPE),
                     .Properties = data
                 }
             Next
 
-            For Each l As Edge In g.edges
+            For Each l As Edge In g.graphEdges
                 edges += New NetworkEdge With {
                     .FromNode = l.U.Label,
                     .ToNode = l.V.Label,
-                    .Interaction = l.Data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
+                    .Interaction = l.data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
                     .value = l.Weight,
                     .Properties = New Dictionary(Of String, String) From {
-                        {NameOf(EdgeData.label), l.Data.label}
+                        {NameOf(EdgeData.label), l.data.label}
                     }
                 }
             Next
@@ -159,13 +159,13 @@ Namespace FileStream
         ''' <returns></returns>
         <Extension>
         Public Function ScaleRadius(ByRef graph As NetworkGraph, range As DoubleRange) As NetworkGraph
-            Dim nodes = graph.nodes.ToArray
+            Dim nodes = graph.vertex.ToArray
             Dim r#() = nodes _
-                .Select(Function(x) CDbl(x.Data.radius)) _
+                .Select(Function(x) CDbl(x.data.radius)) _
                 .RangeTransform(range)
 
             For i As Integer = 0 To nodes.Length - 1
-                nodes(i).Data.radius = r#(i)
+                nodes(i).data.radius = r#(i)
             Next
 
             Return graph
@@ -186,11 +186,11 @@ Namespace FileStream
             Select Case method
                 Case NameOf(Enumerable.Average)
                     orderProvider = Function(g)
-                                        Return Aggregate x In g Into Average(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
+                                        Return Aggregate x In g Into Average(Val(x.data(names.REFLECTION_ID_MAPPING_DEGREE)))
                                     End Function
                 Case NameOf(Enumerable.Sum)
                     orderProvider = Function(g)
-                                        Return Aggregate x In g Into Sum(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
+                                        Return Aggregate x In g Into Sum(Val(x.data(names.REFLECTION_ID_MAPPING_DEGREE)))
                                     End Function
             End Select
 
@@ -262,10 +262,7 @@ Namespace FileStream
                                          }
                                          Select New Edge(id, a, b, data)
 
-            Dim graph As New NetworkGraph With {
-                .nodes = New List(Of Graph.Node)(nodes),
-                .edges = New List(Of Edge)(edges)
-            }
+            Dim graph As New NetworkGraph(nodes, edges)
             Return graph
         End Function
 
@@ -325,10 +322,7 @@ Namespace FileStream
                                                  geNodes(0),
                                                  geNodes(1),
                                                  New EdgeData)
-            Return New NetworkGraph With {
-                .edges = gEdges,
-                .nodes = gNodes
-            }
+            Return New NetworkGraph(gNodes, gEdges)
         End Function
 
         ''' <summary>
@@ -343,8 +337,8 @@ Namespace FileStream
                 Call g.ComputeNodeDegrees
             End If
 
-            For Each node In g.nodes
-                node.Data.radius = Val(node.Data!degree)
+            For Each node In g.vertex
+                node.data.radius = Val(node.data!degree)
             Next
 
             Return g

@@ -43,7 +43,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace Distributions
+Namespace Distributions.BinBox
 
     ''' <summary>
     ''' 进行数据分箱操作
@@ -67,6 +67,16 @@ Namespace Distributions
             Return FixedWidthBins(v, width, eval)
         End Function
 
+        ''' <summary>
+        ''' ### 数据等宽分箱
+        ''' 
+        ''' 将变量按照给定的值域宽度分为多个区间
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="v"></param>
+        ''' <param name="width">所给定的区间宽度</param>
+        ''' <param name="eval"></param>
+        ''' <returns></returns>
         Public Iterator Function FixedWidthBins(Of T)(v As T(), width#, eval As Evaluate(Of T)) As IEnumerable(Of DataBinBox(Of T))
             Dim x As New Value(Of Double)
             Dim len% = v.Length

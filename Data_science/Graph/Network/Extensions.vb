@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Network
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' 查找出网络模型之中可能的网络端点
@@ -78,16 +78,16 @@ Namespace Network
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, U)) As IEnumerable(Of NetworkGraph(Of Node, U))
-            Dim popEdge = Function(n As Node) As U
-                              Return network _
-                                  .Where(Function(e) e.U Is n OrElse e.V Is n) _
-                                  .FirstOrDefault
-                          End Function
-            Dim edges = network.edges.Values.AsList
+        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)}, Graph As {New, NetworkGraph(Of Node, U)})(network As NetworkGraph(Of Node, U)) As IEnumerable(Of Graph)
+            Dim edges As List(Of U) = network.edges.Values.AsList
+            Dim popFirstEdge = Function(n As Node) As U
+                                   Return edges _
+                                      .Where(Function(e) e.U Is n OrElse e.V Is n) _
+                                      .FirstOrDefault
+                               End Function
 
             Do While edges > 0
-                Dim subnetwork As New NetworkGraph(Of Node, U)
+                Dim subnetwork As New Graph
                 Dim edge As U = edges.First
                 Dim list As New List(Of Node)
 
@@ -95,6 +95,7 @@ Namespace Network
                 Call list.Add(edge.V)
 
                 Do While list > 0
+                    ' U和V是由edge带进来的，可能会产生重复
                     subnetwork.AddVertex(edge.U)
                     subnetwork.AddVertex(edge.V)
                     subnetwork.AddEdge(edge.U, edge.V)
@@ -110,7 +111,7 @@ Namespace Network
                     edge = Nothing
 
                     Do While edge Is Nothing AndAlso list > 0
-                        edge = popEdge(list.First)
+                        edge = popFirstEdge(list.First)
 
                         If edge Is Nothing Then
                             ' 当前的这个节点已经没有相连的边了，移除这个节点
