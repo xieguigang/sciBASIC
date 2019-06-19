@@ -177,7 +177,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         edges += New Edge With {
             .U = u,
             .V = v,
-            .Weight = weight
+            .weight = weight
         }
         If Not vertices.ContainsKey(u.Label) Then
             vertices += u
@@ -218,7 +218,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         edges += New Edge With {
             .U = buffer(i),
             .V = buffer(j),
-            .Weight = weight
+            .weight = weight
         }
 
         Return Me
@@ -248,7 +248,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         Return New Edge With {
             .U = vertices(u),
             .V = vertices(v),
-            .Weight = weight
+            .weight = weight
         }
     End Function
 

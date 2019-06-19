@@ -139,7 +139,7 @@ Imports Microsoft.VisualBasic.Linq
         Return New VertexEdge With {
             .U = edge.V,
             .V = edge.U,
-            .Weight = edge.Weight
+            .weight = edge.weight
         }
     End Function
 

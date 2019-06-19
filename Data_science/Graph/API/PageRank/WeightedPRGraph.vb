@@ -116,7 +116,7 @@ Namespace Analysis.PageRank
             End If
 
             With edges(edgeKey)
-                .Weight += weight
+                .weight += weight
 
                 If .U.ConnectedTargets Is Nothing Then
                     .U.ConnectedTargets = New WeightTable
