@@ -67,7 +67,7 @@ Namespace Network
                 Call AddVertex(node)
             Next
 
-            Me.edges = New Dictionary(Of Edge)(edges)
+            Me.edges = New Dictionary(Of Edge)(edges, overridesDuplicateds:=True)
         End Sub
     End Class
 End Namespace
