@@ -100,17 +100,16 @@ Namespace Layouts.Interfaces
     Public Delegate Sub NodeAction(edge As Node, point As LayoutPoint)
 
     Public Interface IForceDirected
+
         ReadOnly Property graph() As NetworkGraph
-
         ReadOnly Property Stiffness() As Single
-
         ReadOnly Property Repulsion() As Single
-
         ReadOnly Property Damping() As Single
-
-        Property Threadshold() As Single
         ' NOT Using
-        ReadOnly Property WithinThreashold() As Boolean
+        ReadOnly Property WithinThreshold() As Boolean
+
+        Property Threshold As Single
+
         Sub Clear()
 
         ''' <summary>

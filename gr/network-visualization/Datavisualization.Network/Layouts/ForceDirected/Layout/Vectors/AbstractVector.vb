@@ -91,9 +91,9 @@ Namespace Layouts
     Public MustInherit Class AbstractVector
         Implements IVector
 
-        Public Property x() As Single Implements IVector.x
-        Public Property y() As Single Implements IVector.y
-        Public Property z() As Single Implements IVector.z
+        Public Property x As Single Implements IVector.x
+        Public Property y As Single Implements IVector.y
+        Public Property z As Single Implements IVector.z
 
         Public Property Point2D As Point
             Get
@@ -117,7 +117,6 @@ Namespace Layouts
         Public MustOverride Function Multiply(n As Single) As AbstractVector Implements IVector.Multiply
         Public MustOverride Function Divide(n As Single) As AbstractVector Implements IVector.Divide
         Public MustOverride Function Magnitude() As Single Implements IVector.Magnitude
-        'public abstract public abstract AbstractVector Normal();
         Public MustOverride Function Normalize() As AbstractVector Implements IVector.Normalize
         Public MustOverride Function SetZero() As AbstractVector Implements IVector.SetZero
         Public MustOverride Function SetIdentity() As AbstractVector Implements IVector.SetIdentity

@@ -14,14 +14,18 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
-            If Not (m_nodePoints.ContainsKey(iNode.Label)) Then
-                Dim iniPosition As FDGVector2 = TryCast(iNode.data.initialPostion, FDGVector2)
+            Dim iniPosition As FDGVector2
+
+            If Not (nodePoints.ContainsKey(iNode.Label)) Then
+                iniPosition = TryCast(iNode.data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
-                m_nodePoints(iNode.Label) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+
+                nodePoints(iNode.Label) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
             End If
-            Return m_nodePoints(iNode.Label)
+
+            Return nodePoints(iNode.Label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox

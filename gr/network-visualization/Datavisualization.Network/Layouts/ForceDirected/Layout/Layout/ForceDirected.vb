@@ -112,31 +112,30 @@ Namespace Layouts
     Public MustInherit Class ForceDirected(Of Vector As IVector)
         Implements IForceDirected
 
-        Public Property Stiffness() As Single Implements IForceDirected.Stiffness
-        Public Property Repulsion() As Single Implements IForceDirected.Repulsion
-        Public Property Damping() As Single Implements IForceDirected.Damping
-        Public Property Threadshold() As Single Implements IForceDirected.Threadshold
-        Public Property WithinThreashold() As Boolean Implements IForceDirected.WithinThreashold
+        Public Property stiffness As Single Implements IForceDirected.Stiffness
+        Public Property repulsion As Single Implements IForceDirected.Repulsion
+        Public Property damping As Single Implements IForceDirected.Damping
+        Public Property threshold As Single Implements IForceDirected.Threshold
+        Public Property WithinThreshold As Boolean Implements IForceDirected.WithinThreshold
 
-        Protected m_nodePoints As Dictionary(Of String, LayoutPoint)
+        Protected nodePoints As Dictionary(Of String, LayoutPoint)
         Protected m_edgeSprings As Dictionary(Of String, Spring)
         Public Property graph() As NetworkGraph Implements IForceDirected.graph
 
         Public Sub Clear() Implements IForceDirected.Clear
-            m_nodePoints.Clear()
+            nodePoints.Clear()
             m_edgeSprings.Clear()
             graph.Clear()
         End Sub
 
         Public Sub New(iGraph As NetworkGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
             graph = iGraph
-            Stiffness = iStiffness
-            Repulsion = iRepulsion
-            Damping = iDamping
-            m_nodePoints = New Dictionary(Of String, LayoutPoint)()
+            stiffness = iStiffness
+            repulsion = iRepulsion
+            damping = iDamping
+            nodePoints = New Dictionary(Of String, LayoutPoint)()
             m_edgeSprings = New Dictionary(Of String, Spring)()
-
-            Threadshold = 0.01F
+            threshold = 0.01F
         End Sub
 
         Public MustOverride Function GetPoint(iNode As Node) As LayoutPoint Implements IForceDirected.GetPoint
@@ -174,7 +173,7 @@ Namespace Layouts
                     Return New Spring(existingSpring.point2, existingSpring.point1, 0F, 0F)
                 End If
 
-                m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.U), GetPoint(iEdge.V), length, Stiffness)
+                m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.U), GetPoint(iEdge.V), length, stiffness)
             End If
             Return m_edgeSprings(iEdge.ID)
         End Function
@@ -203,16 +202,16 @@ Namespace Layouts
                     ElseIf n1.Pinned Then
                         point1.ApplyForce(direction * 0F)
                         'point2.ApplyForce((direction * Repulsion) / (distance * distance * -1.0f));
-                        point2.ApplyForce((direction * Repulsion) / (distance * -1.0F))
+                        point2.ApplyForce((direction * repulsion) / (distance * -1.0F))
                     ElseIf n2.Pinned Then
                         'point1.ApplyForce((direction * Repulsion) / (distance * distance));
-                        point1.ApplyForce((direction * Repulsion) / (distance))
+                        point1.ApplyForce((direction * repulsion) / (distance))
                         point2.ApplyForce(direction * 0F)
                     Else
                         '                             point1.ApplyForce((direction * Repulsion) / (distance * distance * 0.5f));
                         '                             point2.ApplyForce((direction * Repulsion) / (distance * distance * -0.5f));
-                        point1.ApplyForce((direction * Repulsion) / (distance * 0.5F))
-                        point2.ApplyForce((direction * Repulsion) / (distance * -0.5F))
+                        point1.ApplyForce((direction * repulsion) / (distance * 0.5F))
+                        point2.ApplyForce((direction * repulsion) / (distance * -0.5F))
                     End If
                 End If
             Next
@@ -256,7 +255,7 @@ Namespace Layouts
 
                     Dim displacement As Single = direction.Magnitude()
                     direction = direction.Normalize()
-                    point.ApplyForce(direction * (Stiffness * displacement * 0.4F))
+                    point.ApplyForce(direction * (stiffness * displacement * 0.4F))
                 End If
             Next
         End Sub
@@ -265,25 +264,29 @@ Namespace Layouts
             For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
                 point.velocity.Add(point.acceleration * iTimeStep)
-                point.velocity.Multiply(Damping)
+                point.velocity.Multiply(damping)
                 point.acceleration.SetZero()
             Next
         End Sub
 
         Protected Sub updatePosition(iTimeStep As Single)
+            Dim point As LayoutPoint
+
             For Each n As Node In graph.vertex
-                Dim point As LayoutPoint = GetPoint(n)
+                point = GetPoint(n)
                 point.position.Add(point.velocity * iTimeStep)
             Next
         End Sub
 
         Protected Function getTotalEnergy() As Single
             Dim energy As Single = 0F
+
             For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
                 Dim speed As Single = point.velocity.Magnitude()
                 energy += 0.5F * point.mass * speed * speed
             Next
+
             Return energy
         End Function
 
@@ -294,10 +297,11 @@ Namespace Layouts
             attractToCentre()
             updateVelocity(iTimeStep)
             updatePosition(iTimeStep)
-            If getTotalEnergy() < Threadshold Then
-                WithinThreashold = True
+
+            If getTotalEnergy() < threshold Then
+                WithinThreshold = True
             Else
-                WithinThreashold = False
+                WithinThreshold = False
             End If
         End Sub
 
@@ -316,15 +320,20 @@ Namespace Layouts
 
         Public Function Nearest(position As AbstractVector) As NearestPoint Implements IForceDirected.Nearest
             Dim min As New NearestPoint()
+            Dim point As LayoutPoint
+            Dim distance As Single
+
             For Each n As Node In graph.vertex
-                Dim point As LayoutPoint = GetPoint(n)
-                Dim distance As Single = (point.position - position).Magnitude()
+                point = GetPoint(n)
+                distance = (point.position - position).Magnitude()
+
                 If min.distance Is Nothing OrElse distance < min.distance Then
                     min.node = n
                     min.point = point
                     min.distance = distance
                 End If
             Next
+
             Return min
         End Function
 
