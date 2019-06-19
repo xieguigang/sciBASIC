@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::4fb4eefea535d7445616c338383477b9, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NetworkGraph
-    ' 
-    '         Properties: connectedNodes, edges, nodes
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) AddEdge, AddNode, Clone, Copy, (+2 Overloads) CreateEdge
-    '                   (+2 Overloads) CreateNode, GetEdge, (+2 Overloads) GetEdges, GetElementByID, GetNode
-    '                   ToString
-    ' 
-    '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
-    '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
-    '              RemoveNode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NetworkGraph
+' 
+'         Properties: connectedNodes, edges, nodes
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) AddEdge, AddNode, Clone, Copy, (+2 Overloads) CreateEdge
+'                   (+2 Overloads) CreateNode, GetEdge, (+2 Overloads) GetEdges, GetElementByID, GetNode
+'                   ToString
+' 
+'         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
+'              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
+'              RemoveNode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -89,6 +89,7 @@
 '
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
@@ -179,8 +180,9 @@ Namespace Graph
         End Function
 
         Public Overloads Function AddEdge(iEdge As Edge) As Edge Implements IGraph.AddEdge
-            If Not graphEdges.Contains(iEdge) Then
-                graphEdges.Add(iEdge)
+            If Not edges.ContainsKey(iEdge.ID) Then
+                Call edges.Add(iEdge.ID, iEdge)
+                Call graphEdges.Add(iEdge)
             End If
 
             If Not (_adjacencySet.ContainsKey(iEdge.U.Label)) Then
@@ -342,6 +344,7 @@ Namespace Graph
         End Sub
 
         Public Sub RemoveEdge(iEdge As Edge) Implements IGraph.RemoveEdge
+            Call edges.Remove(iEdge.ID)
             Call graphEdges.Remove(iEdge)
 
             For Each x As KeyValuePair(Of String, Dictionary(Of String, List(Of Edge))) In _adjacencySet
@@ -374,15 +377,13 @@ Namespace Graph
                 .FirstOrDefault
         End Function
 
+        ''' <summary>
+        ''' Find edge by label data
+        ''' </summary>
+        ''' <param name="label"></param>
+        ''' <returns></returns>
         Public Function GetEdge(label As String) As Edge
-            Dim retEdge As Edge = Nothing
-
-            graphEdges.ForEach(Sub(e As Edge)
-                                   If e.data.label = label Then
-
-                                       retEdge = e
-                                   End If
-                               End Sub)
+            Dim retEdge As Edge = graphEdges.FirstOrDefault(Function(e) e.data.label = label)
             Return retEdge
         End Function
 
@@ -433,10 +434,18 @@ Namespace Graph
             Return $"Network graph have {nodes.Count} nodes and {graphEdges.Count} edges."
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' graphEdges和edges这两个元素集合应该都是等长的
+        ''' </remarks>
         Private Function Clone() As Object Implements ICloneable.Clone
             Dim copy As New NetworkGraph With {
                 .graphEdges = New List(Of Edge)(graphEdges),
-                .nodes = New List(Of Node)(nodes)
+                .nodes = New List(Of Node)(nodes),
+                .edges = New Dictionary(Of Edge)(edges.Values)
             }
             Return copy
         End Function
