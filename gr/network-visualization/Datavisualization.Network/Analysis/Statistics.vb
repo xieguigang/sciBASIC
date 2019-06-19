@@ -173,7 +173,7 @@ Namespace Analysis
         <Extension>
         Public Function ComputeNodeDegrees(ByRef net As NetworkGraph) As Dictionary(Of String, Integer)
             Dim connectNodes = net _
-                .edges _
+                .graphEdges _
                 .Select(Function(link) {link.U.Label, link.V.Label}) _
                 .IteratesALL _
                 .GroupBy(Function(id) id) _
@@ -181,7 +181,7 @@ Namespace Analysis
                               Function(list) list.Count)
             Dim d%
 
-            With net.edges.ComputeDegreeData
+            With net.graphEdges.ComputeDegreeData
                 For Each node In net.nodes
 
                     If Not connectNodes.ContainsKey(node.Label) Then

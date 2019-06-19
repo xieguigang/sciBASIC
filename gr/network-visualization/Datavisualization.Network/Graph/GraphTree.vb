@@ -150,7 +150,7 @@ Namespace Graph
                 Call treeTable.Add(current.Node, current)
             End If
 
-            For Each edge As Edge In graph.edges
+            For Each edge As Edge In graph.graphEdges
                 Dim [next] As GraphTreeNode = Nothing
 
                 With current
@@ -160,7 +160,7 @@ Namespace Graph
                         }
                         [next].Parents.Add(current)
                         .Childs.Add([next])
-                    ElseIf edge.v = .Node Then
+                    ElseIf edge.V = .Node Then
                         [next] = New GraphTreeNode With {
                             .Node = edge.U
                         }

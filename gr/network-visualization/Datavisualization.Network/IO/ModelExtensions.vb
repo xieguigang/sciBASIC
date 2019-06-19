@@ -122,7 +122,7 @@ Namespace FileStream
                 }
             Next
 
-            For Each l As Edge In g.edges
+            For Each l As Edge In g.graphEdges
                 edges += New NetworkEdge With {
                     .FromNode = l.U.Label,
                     .ToNode = l.V.Label,
@@ -264,7 +264,7 @@ Namespace FileStream
 
             Dim graph As New NetworkGraph With {
                 .nodes = New List(Of Graph.Node)(nodes),
-                .edges = New List(Of Edge)(edges)
+                .graphEdges = New List(Of Edge)(edges)
             }
             Return graph
         End Function
@@ -326,7 +326,7 @@ Namespace FileStream
                                                  geNodes(1),
                                                  New EdgeData)
             Return New NetworkGraph With {
-                .edges = gEdges,
+                .graphEdges = gEdges,
                 .nodes = gNodes
             }
         End Function

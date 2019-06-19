@@ -63,7 +63,7 @@ Namespace Layouts
         <Extension>
         Public Sub doLayout(Network As NetworkGraph, iterations As Integer, size As Size)
             Dim nodes As Node() = Network.connectedNodes
-            Dim edges As Edge() = Network.edges
+            Dim edges As Edge() = Network.graphEdges
 
             Dim k As Double = size.Width * size.Height / (nodes.Length * 1000)
             Dim c As Double = 3
