@@ -84,7 +84,7 @@ Public Module Debugger
                 Call draw(force, Brushes.SkyBlue)
             Next
 
-            '            绘制出合力
+            ' 绘制出合力
             Call draw(F.Sum, Brushes.Violet)
         End With
     End Sub
