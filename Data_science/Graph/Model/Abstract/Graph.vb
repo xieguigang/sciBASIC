@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::c2c1bc943e6c3d5ba74d3e3fdb4b61c9, Data_science\Graph\Model\Abstract\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Graph
-    ' 
-    '     Properties: Size, Vertex
-    ' 
-    '     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+3 Overloads) Delete
-    '               ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    ' Class Graph
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Class Graph
+' 
+'     Properties: Size, Vertex
+' 
+'     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+3 Overloads) Delete
+'               ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
+' 
+' Class Graph
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,6 +73,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' + <see cref="buffer"/>使用<see cref="TV.ID"/>来建立指针的索引
     ''' </summary>
     Protected vertices As New Dictionary(Of V)
+
+    ''' <summary>
+    ''' Visit nodes directly by index number
+    ''' </summary>
     Protected Friend buffer As New HashList(Of V)
 #End Region
 
@@ -80,7 +84,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' ``[numof(vertex), numof(edges)]``
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Size As (Vertex%, Edges%)
+    Public ReadOnly Property size As (vertex%, edges%)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return (vertices.Count, edges.Count)
@@ -88,13 +92,26 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     End Property
 
     ''' <summary>
-    ''' 这个图之中的所有的节点的集合
+    ''' 这个图之中的所有的节点的集合. 请注意，这个只读属性是一个枚举集合，
+    ''' 所以为了减少性能上的损失，不可以过多的使用下标来访问集合元素
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Vertex As V()
+    Public ReadOnly Property vertex As IEnumerable(Of V)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return buffer
+            Return vertices.Values
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 获取得到这个图中的所有的节点的边的集合，请注意，这个只读属性是一个枚举集合，
+    ''' 所以为了减少性能上的损失，不可以过多的使用下标来访问集合元素
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property graphEdges As IEnumerable(Of Edge)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return edges.Values
         End Get
     End Property
 

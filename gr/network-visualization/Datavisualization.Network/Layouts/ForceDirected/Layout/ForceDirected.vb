@@ -151,7 +151,7 @@ Namespace Layouts
 
         Protected m_nodePoints As Dictionary(Of String, LayoutPoint)
         Protected m_edgeSprings As Dictionary(Of String, Spring)
-        Public Property graph() As IGraph Implements IForceDirected.graph
+        Public Property graph() As NetworkGraph Implements IForceDirected.graph
 
         Public Sub Clear() Implements IForceDirected.Clear
             m_nodePoints.Clear()
@@ -249,7 +249,7 @@ Namespace Layouts
         ''' 弹簧力，所有的通过边连接的节点间都存在着弹簧的牵引力
         ''' </summary>
         Protected Sub applyHookesLaw()
-            For Each e As Edge In graph.edges
+            For Each e As Edge In graph.graphEdges
                 Dim spring As Spring = GetSpring(e)
                 Dim d As AbstractVector = spring.point2.position - spring.point1.position
                 Dim displacement As Single = spring.Length - d.Magnitude()
@@ -330,7 +330,7 @@ Namespace Layouts
 
 
         Public Sub EachEdge(del As EdgeAction) Implements IForceDirected.EachEdge
-            For Each e As Edge In graph.edges
+            For Each e As Edge In graph.graphEdges
                 del(e, GetSpring(e))
             Next
         End Sub
