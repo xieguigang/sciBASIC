@@ -342,7 +342,7 @@ Namespace Graph
         End Sub
 
         Public Sub RemoveEdge(iEdge As Edge) Implements IGraph.RemoveEdge
-            edges.Remove(iEdge)
+            Call graphEdges.Remove(iEdge)
 
             For Each x As KeyValuePair(Of String, Dictionary(Of String, List(Of Edge))) In _adjacencySet
                 For Each y As KeyValuePair(Of String, List(Of Edge)) In x.Value
