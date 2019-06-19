@@ -97,8 +97,8 @@ Namespace Layouts
 
         Protected forceDirected As IForceDirected
 
-        Public Sub New(iForceDirected As IForceDirected)
-            forceDirected = iForceDirected
+        Public Sub New(forceDirected As IForceDirected)
+            Me.forceDirected = forceDirected
         End Sub
 
         ''' <summary>
@@ -108,10 +108,12 @@ Namespace Layouts
         ''' <param name="physicsUpdate"></param>
         Public Sub Draw(iTimeStep As Single, Optional physicsUpdate As Boolean = True) Implements IRenderer.Draw
             If physicsUpdate Then
-                Call forceDirected.Calculate(iTimeStep)   '  计算力的变化
+                ' 计算力的变化
+                Call forceDirected.Calculate(iTimeStep)
             End If
 
-            Call Clear()    ' 清理画板
+            ' 清理画板
+            Call Clear()
             Call DirectDraw()
         End Sub
 

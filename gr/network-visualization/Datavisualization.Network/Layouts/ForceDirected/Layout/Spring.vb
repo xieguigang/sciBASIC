@@ -88,17 +88,17 @@ Namespace Layouts
 
     Public Class Spring
 
-        Public Sub New(iPoint1 As LayoutPoint, iPoint2 As LayoutPoint, iLength As Single, iK As Single)
-            point1 = iPoint1
-            point2 = iPoint2
-            Length = iLength
-            K = iK
-        End Sub
+        Public Property point1 As LayoutPoint
+        Public Property point2 As LayoutPoint
+        Public Property length As Single
+        Public Property K As Single
 
-        Public Property point1() As LayoutPoint
-        Public Property point2() As LayoutPoint
-        Public Property Length() As Single
-        Public Property K() As Single
+        Public Sub New(point1 As LayoutPoint, point2 As LayoutPoint, length As Single, K As Single)
+            Me.point1 = point1
+            Me.point2 = point2
+            Me.length = length
+            Me.K = K
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -107,28 +107,29 @@ Namespace Layouts
 
     Public Class NearestPoint
 
+        Public node As Node
+        Public point As LayoutPoint
+        Public distance As Single?
+
         Public Sub New()
             node = Nothing
             point = Nothing
             distance = Nothing
         End Sub
-
-        Public node As Node
-        Public point As LayoutPoint
-        Public distance As Single?
     End Class
 
     Public Class BoundingBox
-        Public Shared defaultBB As Single = 2.0F
-        Public Shared defaultPadding As Single = 0.07F
+
         ' ~5% padding
+        Public Const defaultBB As Single = 2.0F
+        Public Const defaultPadding As Single = 0.07F
+
+        Public topRightBack As AbstractVector
+        Public bottomLeftFront As AbstractVector
 
         Public Sub New()
             topRightBack = Nothing
             bottomLeftFront = Nothing
         End Sub
-
-        Public topRightBack As AbstractVector
-        Public bottomLeftFront As AbstractVector
     End Class
 End Namespace

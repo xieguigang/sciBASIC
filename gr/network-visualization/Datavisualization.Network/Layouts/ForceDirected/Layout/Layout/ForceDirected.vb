@@ -116,15 +116,16 @@ Namespace Layouts
         Public Property repulsion As Single Implements IForceDirected.Repulsion
         Public Property damping As Single Implements IForceDirected.Damping
         Public Property threshold As Single Implements IForceDirected.Threshold
-        Public Property WithinThreshold As Boolean Implements IForceDirected.WithinThreshold
+        Public Property withinThreshold As Boolean Implements IForceDirected.WithinThreshold
 
         Protected nodePoints As Dictionary(Of String, LayoutPoint)
-        Protected m_edgeSprings As Dictionary(Of String, Spring)
-        Public Property graph() As NetworkGraph Implements IForceDirected.graph
+        Protected edgeSprings As Dictionary(Of String, Spring)
+
+        Public Property graph As NetworkGraph Implements IForceDirected.graph
 
         Public Sub Clear() Implements IForceDirected.Clear
             nodePoints.Clear()
-            m_edgeSprings.Clear()
+            edgeSprings.Clear()
             graph.Clear()
         End Sub
 
@@ -134,22 +135,22 @@ Namespace Layouts
             repulsion = iRepulsion
             damping = iDamping
             nodePoints = New Dictionary(Of String, LayoutPoint)()
-            m_edgeSprings = New Dictionary(Of String, Spring)()
+            edgeSprings = New Dictionary(Of String, Spring)()
             threshold = 0.01F
         End Sub
 
         Public MustOverride Function GetPoint(iNode As Node) As LayoutPoint Implements IForceDirected.GetPoint
 
         Public Function GetSpring(iEdge As Edge) As Spring
-            If Not (m_edgeSprings.ContainsKey(iEdge.ID)) Then
+            If Not (edgeSprings.ContainsKey(iEdge.ID)) Then
                 Dim length As Single = iEdge.data.length
                 Dim existingSpring As Spring = Nothing
 
                 Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.U, iEdge.V)
                 If fromEdges IsNot Nothing Then
                     For Each e As Edge In fromEdges
-                        If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
-                            existingSpring = m_edgeSprings(e.ID)
+                        If existingSpring Is Nothing AndAlso edgeSprings.ContainsKey(e.ID) Then
+                            existingSpring = edgeSprings(e.ID)
                             Exit For
                         End If
 
@@ -162,8 +163,8 @@ Namespace Layouts
                 Dim toEdges As List(Of Edge) = graph.GetEdges(iEdge.V, iEdge.U)
                 If toEdges IsNot Nothing Then
                     For Each e As Edge In toEdges
-                        If existingSpring Is Nothing AndAlso m_edgeSprings.ContainsKey(e.ID) Then
-                            existingSpring = m_edgeSprings(e.ID)
+                        If existingSpring Is Nothing AndAlso edgeSprings.ContainsKey(e.ID) Then
+                            existingSpring = edgeSprings(e.ID)
                             Exit For
                         End If
                     Next
@@ -173,9 +174,9 @@ Namespace Layouts
                     Return New Spring(existingSpring.point2, existingSpring.point1, 0F, 0F)
                 End If
 
-                m_edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.U), GetPoint(iEdge.V), length, stiffness)
+                edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.U), GetPoint(iEdge.V), length, stiffness)
             End If
-            Return m_edgeSprings(iEdge.ID)
+            Return edgeSprings(iEdge.ID)
         End Function
 
         ''' <summary>
@@ -224,7 +225,7 @@ Namespace Layouts
             For Each e As Edge In graph.graphEdges
                 Dim spring As Spring = GetSpring(e)
                 Dim d As AbstractVector = spring.point2.position - spring.point1.position
-                Dim displacement As Single = spring.Length - d.Magnitude()
+                Dim displacement As Single = spring.length - d.Magnitude()
                 Dim direction As AbstractVector = d.Normalize()
 
                 If spring.point1.node.Pinned AndAlso spring.point2.node.Pinned Then

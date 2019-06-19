@@ -170,7 +170,7 @@ Namespace Layouts
             Return MyBase.GetHashCode()
         End Function
 
-        Public Overrides Function Equals(obj As System.Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             Return Me Is TryCast(obj, AbstractVector)
         End Function
 

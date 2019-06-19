@@ -86,17 +86,17 @@ Public Class Renderer : Inherits AbstractRenderer
         Dim ws As New Dictionary(Of Edge, Single)
         Dim nr As New Dictionary(Of Node, Single)
 
-        For Each edge As Edge In iForceDirected.graph.edges
-            Dim w As Single = CSng(5.0! * edge.Data.weight)
+        For Each edge As Edge In iForceDirected.graph.graphEdges
+            Dim w As Single = CSng(5.0! * edge.data.weight)
             w = If(w < 3.0!, 3.0!, w)
             Call ws.Add(edge, w)
         Next
-        For Each n As Node In iForceDirected.graph.nodes
-            Dim r As Single = n.Data.radius
+        For Each n As Node In iForceDirected.graph.vertex
+            Dim r As Single = n.data.radius
             If r = 0! Then
-                r = If(n.Data.Neighborhoods < 30,
-                    n.Data.Neighborhoods * 9,
-                    n.Data.Neighborhoods * 7)
+                r = If(n.data.Neighborhoods < 30,
+                    n.data.Neighborhoods * 9,
+                    n.data.Neighborhoods * 7)
                 r = If(r = 0, 20, r)
             End If
             Call nr.Add(n, r)

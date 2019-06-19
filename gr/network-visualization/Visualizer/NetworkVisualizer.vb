@@ -107,11 +107,11 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Private Function __scale(nodes As IEnumerable(Of Node), scale As SizeF) As Dictionary(Of Node, Point)
+    Private Function scales(nodes As IEnumerable(Of Node), scale As SizeF) As Dictionary(Of Node, Point)
         Dim table As New Dictionary(Of Node, Point)
 
         For Each n As Node In nodes
-            With n.Data.initialPostion.Point2D
+            With n.data.initialPostion.Point2D
                 Call table.Add(n, New Point(.X * scale.Width, .Y * scale.Height))
             End With
         Next
@@ -122,8 +122,8 @@ Public Module NetworkVisualizer
     <Extension>
     Public Function GetBounds(graph As NetworkGraph) As RectangleF
         Dim points As Point() = graph _
-            .nodes _
-            .__scale(scale:=New SizeF(1, 1)) _
+            .vertex _
+            .scales(scale:=New SizeF(1, 1)) _
             .Values _
             .ToArray
         Dim rect = points.GetBounds
@@ -189,10 +189,10 @@ Public Module NetworkVisualizer
 
         ' 获取得到当前的这个网络对象相对于图像的中心点的位移值
         Dim scalePos As Dictionary(Of Node, PointF) = net _
-            .nodes _
+            .vertex _
             .ToDictionary(Function(n) n,
                           Function(node)
-                              Return node.Data.initialPostion.Point2D.PointF
+                              Return node.data.initialPostion.Point2D.PointF
                           End Function)
         Dim offset As Point = scalePos _
             .CentralOffsets(frameSize) _
@@ -251,22 +251,22 @@ Public Module NetworkVisualizer
                 Call "Render network edges...".__INFO_ECHO
 
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
-                For Each edge As Edge In net.edges
+                For Each edge As Edge In net.graphEdges
                     Dim n As Node = edge.U
                     Dim otherNode As Node = edge.V
 
                     cl = DefaultEdgeColor
 
-                    If edge.Data.weight < 0.5 Then
+                    If edge.data.weight < 0.5 Then
                         cl = Color.LightGray
-                    ElseIf edge.Data.weight < 0.75 Then
+                    ElseIf edge.data.weight < 0.75 Then
                         cl = Color.Blue
                     End If
 
-                    Dim w! = CSng(5 * edge.Data.weight * scale) Or minLinkWidthValue
+                    Dim w! = CSng(5 * edge.data.weight * scale) Or minLinkWidthValue
                     Dim lineColor As New Pen(cl, w)
 
-                    With edge.Data!interaction_type
+                    With edge.data!interaction_type
                         If Not .IsNothing AndAlso edgeDashTypes.ContainsKey(.ByRef) Then
                             lineColor.DashStyle = edgeDashTypes(.ByRef)
                         End If
@@ -306,7 +306,7 @@ Public Module NetworkVisualizer
                 ' Graph will be draw
                 ' otherwise all of the nodes in target network graph will be draw onto the canvas.
                 Dim connectedNodes = net.connectedNodes.AsDefault
-                Dim drawPoints = net.nodes Or connectedNodes.When(hideDisconnectedNode)
+                Dim drawPoints = net.vertex.ToArray Or connectedNodes.When(hideDisconnectedNode)
 
                 If Not hullPolygonGroups.StringEmpty Then
                     Dim hullPolygon As Index(Of String)
