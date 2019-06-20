@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::f0ccf6fdaa270398907d4b7701547c2a, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\FDGVector2.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FDGVector2
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
-    '                   Magnitude, Multiply, Normal, Normalize, Random
-    '                   SetIdentity, SetZero, Subtract, Zero
-    '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, +, <>
-    '                    =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FDGVector2
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
+'                   Magnitude, Multiply, Normal, Normalize, Random
+'                   SetIdentity, SetZero, Subtract, Zero
+'         Operators: -, (+2 Overloads) *, (+2 Overloads) /, +, <>
+'                    =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -84,8 +84,10 @@
 '
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Math
 Imports System.Math
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Namespace Layouts
 
@@ -114,7 +116,7 @@ Namespace Layouts
             Return CInt(Truncate(x)) Xor CInt(Truncate(y))
         End Function
 
-        Public Overrides Function Equals(obj As System.Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then
                 Return False
@@ -221,17 +223,15 @@ Namespace Layouts
             Return New FDGVector2(1.0F, 1.0F)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Random() As AbstractVector
-
-            Dim retVec As New FDGVector2(10.0F * (RandomSingle() - 0.5F), 10.0F * (RandomSingle() - 0.5F))
-            Return retVec
+            Return New FDGVector2(10.0F * (RandomSingle() - 0.5F), 10.0F * (RandomSingle() - 0.5F))
         End Function
 
         Public Overloads Shared Operator +(a As FDGVector2, b As FDGVector2) As FDGVector2
-            Dim temp As New FDGVector2(a.x, a.y)
-            temp.Add(b)
-            Return temp
+            Return New FDGVector2(a.x, a.y).With(Function(f) f.Add(b))
         End Operator
+
         Public Overloads Shared Operator -(a As FDGVector2, b As FDGVector2) As FDGVector2
             Dim temp As New FDGVector2(a.x, a.y)
             temp.Subtract(b)

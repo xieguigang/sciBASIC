@@ -104,11 +104,11 @@ Public Module SVGExtensions
             New IGetPoint(AddressOf Get2DPoint))
         Dim nodes As circle() =
             LinqAPI.Exec(Of circle) <= From n As Graph.Node
-                                       In graph.nodes
+                                       In graph.vertex
                                        Let pos As Point = getPoint(n, rect, viewDistance)
                                        Let c As Color = If(
-                                               TypeOf n.Data.Color Is SolidBrush,
-                                               DirectCast(n.Data.Color, SolidBrush).Color,
+                                               TypeOf n.data.Color Is SolidBrush,
+                                               DirectCast(n.data.Color, SolidBrush).Color,
                                                Color.Black)
                                        Let r As Single = n.__getRadius
                                        Let pt As Point =
@@ -122,7 +122,7 @@ Public Module SVGExtensions
                                        }
         Dim links As line() =
             LinqAPI.Exec(Of line) <= From edge As Edge
-                                     In graph.edges
+                                     In graph.graphEdges
                                      Let source As Graph.Node = edge.U
                                      Let target As Graph.Node = edge.V
                                      Let pts As Point = getPoint(source, rect, viewDistance)
@@ -139,7 +139,7 @@ Public Module SVGExtensions
         Dim labels As SVG.XML.text() = LinqAPI.Exec(Of SVG.XML.text) <=
  _
             From n As Graph.Node
-            In graph.nodes
+            In graph.vertex
             Let pos As Point = getPoint(n, rect, viewDistance)
             Select New SVG.XML.text With {
                 .x = CStr(pos.X),
@@ -196,14 +196,14 @@ Public Module SVGExtensions
     <Extension>
     Public Sub WriteLayouts(ByRef graph As NetworkGraph, engine As IForceDirected)
         If TypeOf engine Is ForceDirected2D Then
-            For Each node As Graph.Node In graph.nodes
-                node.Data.initialPostion =
+            For Each node As Graph.Node In graph.vertex
+                node.data.initialPostion =
                     New FDGVector2(engine.GetPoint(node).position.Point2D)
             Next
         ElseIf TypeOf engine Is ForceDirected3D Then
-            For Each node As Graph.Node In graph.nodes
+            For Each node As Graph.Node In graph.vertex
                 Dim pos = engine.GetPoint(node).position
-                node.Data.initialPostion =
+                node.data.initialPostion =
                     New FDGVector3(pos.x, pos.y, pos.z)
             Next
         End If

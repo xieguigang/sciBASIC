@@ -154,12 +154,18 @@ Namespace ComponentModel.Collection
             Call MyBase.New(source)
         End Sub
 
-        Sub New(source As IEnumerable(Of V))
+        Sub New(source As IEnumerable(Of V), Optional overridesDuplicateds As Boolean = False)
             Call Me.New
 
-            For Each x As V In source
-                Call Add(x)
-            Next
+            If overridesDuplicateds Then
+                For Each x As V In source
+                    Me(x.Key) = x
+                Next
+            Else
+                For Each x As V In source
+                    Call Add(x)
+                Next
+            End If
         End Sub
 
         Public Function GetValueList() As List(Of V)

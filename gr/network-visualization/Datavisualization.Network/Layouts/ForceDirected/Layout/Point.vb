@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::79d1fdc499b1bca4dcc921f52ce1b798, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LayoutPoint
-    ' 
-    '         Properties: acceleration, mass, node, position, velocity
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) Equals, GetHashCode, ToString
-    ' 
-    '         Sub: ApplyForce
-    ' 
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LayoutPoint
+' 
+'         Properties: acceleration, mass, node, position, velocity
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) Equals, GetHashCode, ToString
+' 
+'         Sub: ApplyForce
+' 
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -86,11 +86,8 @@
 '
 '
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts
@@ -100,18 +97,32 @@ Namespace Layouts
     ''' </summary>
     Public Class LayoutPoint
 
-        Public Sub New(iPosition As AbstractVector, iVelocity As AbstractVector, iAcceleration As AbstractVector, iNode As Node)
-            position = iPosition
-            node = iNode
-            velocity = iVelocity
-            acceleration = iAcceleration
+        Public Property position As AbstractVector
+        Public Property node As Node
+        Public Property mass As Single
+            Get
+                Return node.data.mass
+            End Get
+            Private Set
+                node.data.mass = Value
+            End Set
+        End Property
+
+        Public Property velocity As AbstractVector
+        Public Property acceleration As AbstractVector
+
+        Public Sub New(position As AbstractVector, velocity As AbstractVector, acceleration As AbstractVector, node As Node)
+            Me.position = position
+            Me.node = node
+            Me.velocity = velocity
+            Me.acceleration = acceleration
         End Sub
 
         Public Overrides Function GetHashCode() As Integer
             Return position.GetHashCode()
         End Function
 
-        Public Overrides Function Equals(obj As System.Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then
                 Return False
@@ -119,7 +130,8 @@ Namespace Layouts
 
             ' If parameter cannot be cast to Point return false.
             Dim p As LayoutPoint = TryCast(obj, LayoutPoint)
-            If DirectCast(p, System.Object) Is Nothing Then
+
+            If DirectCast(p, Object) Is Nothing Then
                 Return False
             End If
 
@@ -152,6 +164,7 @@ Namespace Layouts
             Return (a.position = b.position)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(a As LayoutPoint, b As LayoutPoint) As Boolean
             Return Not (a = b)
         End Operator
@@ -159,20 +172,6 @@ Namespace Layouts
         Public Sub ApplyForce(force As AbstractVector)
             acceleration.Add(force / mass)
         End Sub
-
-        Public Property position() As AbstractVector
-        Public Property node() As Node
-        Public Property mass() As Single
-            Get
-                Return node.data.mass
-            End Get
-            Private Set
-                node.data.mass = Value
-            End Set
-        End Property
-
-        Public Property velocity() As AbstractVector
-        Public Property acceleration() As AbstractVector
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

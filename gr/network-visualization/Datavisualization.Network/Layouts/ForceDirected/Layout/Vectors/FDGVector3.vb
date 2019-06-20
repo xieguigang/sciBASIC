@@ -102,7 +102,6 @@ Namespace Layouts
             MyBase.New()
             x = iX
             y = iY
-
             z = iZ
         End Sub
 

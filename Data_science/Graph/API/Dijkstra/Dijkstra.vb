@@ -127,7 +127,7 @@ Namespace Dijkstra
 
                 ' Iterate through all connections and search for a connection which is shorter
                 For Each conn As VertexEdge In selectedConnections
-                    cost = conn.Weight + shortestPaths(conn.U).Cost
+                    cost = conn.weight + shortestPaths(conn.U).Cost
 
                     If shortestPaths(conn.V).Cost > cost Then
                         shortestPaths(conn.V).SetValue(shortestPaths(conn.U).Connections)

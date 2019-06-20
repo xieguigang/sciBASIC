@@ -450,16 +450,16 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="lines"></param>
     ''' <param name="Delimiter"></param>
-    ''' <param name="explicit"></param>
+    ''' <param name="strict"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(lines As IEnumerable(Of String), Optional delimiter$ = ",", Optional explicit As Boolean = True) As IEnumerable(Of T)
+    <Extension> Public Function AsDataSource(Of T As Class)(lines As IEnumerable(Of String), Optional delimiter$ = ",", Optional strict As Boolean = True) As IEnumerable(Of T)
         Dim splitter As String = String.Format(DataImports.SplitRegxExpression, delimiter)
         Dim rows As IEnumerable(Of RowObject) = From line As String
                                                 In lines
                                                 Select RowParsing(line, splitter)
         ' 解析完文本数据之后进行对象的反射加载操作
-        Return New File_csv(rows).AsDataSource(Of T)(explicit)
+        Return New File_csv(rows).AsDataSource(Of T)(strict)
     End Function
 
     ''' <summary>

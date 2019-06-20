@@ -41,6 +41,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 
 Namespace Network
 
@@ -55,8 +56,18 @@ Namespace Network
         ''' <param name="nodes"></param>
         ''' <param name="edges"></param>
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
-            Me.vertices = New Dictionary(Of Node)(nodes)
-            Me.edges = New Dictionary(Of Edge)(edges)
+            Dim index As VBInteger = Scan0
+
+            For Each node As Node In nodes
+                ' because the edge object have a reference to current node
+                ' so that the edge key will be updated automatic
+                ' after this node id have been updated
+                node.ID = ++index
+                ' initialize internal components
+                Call AddVertex(node)
+            Next
+
+            Me.edges = New Dictionary(Of Edge)(edges, overridesDuplicateds:=True)
         End Sub
     End Class
 End Namespace
