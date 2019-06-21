@@ -91,28 +91,11 @@ Namespace Graph
         Implements IInteraction
         Implements IGraphValueContainer(Of EdgeData)
 
-        Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
-            ID = iId
-            U = iSource
-            V = iTarget
-            data = If(iData, New EdgeData())
-            Directed = False
-        End Sub
+        Public Property ID As String
+        Public Property data As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).data
+        Public Property isDirected As Boolean
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New()
-            Call Me.New(Nothing, Nothing, Nothing, Nothing)
-        End Sub
-
-        Public Property ID() As String
-        Public Property data() As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).data
-        Public Property Directed() As Boolean
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function ToString() As String
-            Return ID
-        End Function
-
+#Region "Implements IInteraction"
         Private Property __source As String Implements IInteraction.source
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -132,6 +115,25 @@ Namespace Graph
                 Throw New NotImplementedException()
             End Set
         End Property
+#End Region
+
+        Public Sub New(id As String, source As Node, target As Node, Optional data As EdgeData = Nothing)
+            Me.ID = id
+            U = source
+            V = target
+            Me.data = If(data, New EdgeData())
+            isDirected = False
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New()
+            Call Me.New(Nothing, Nothing, Nothing, Nothing)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return ID
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetHashCode() As Integer

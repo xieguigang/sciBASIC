@@ -155,6 +155,19 @@ Namespace Graph
             origID = ""
         End Sub
 
+        Sub New(copy As NodeData)
+            Me.color = copy.color
+            Me.force = copy.force
+            Me.initialPostion = copy.initialPostion
+            Me.label = copy.label
+            Me.mass = copy.mass
+            Me.neighbours = copy.neighbours.ToArray
+            Me.origID = copy.origID
+            Me.Properties = New Dictionary(Of String, String)(copy.propertyTable)
+            Me.radius = copy.radius
+            Me.weights = copy.weights.ToArray
+        End Sub
+
         Public Function Clone() As NodeData
             Return DirectCast(Me.MemberwiseClone, NodeData)
         End Function
@@ -177,6 +190,17 @@ Namespace Graph
             MyBase.New()
 
             length = 1.0F
+        End Sub
+
+        ''' <summary>
+        ''' Value copy
+        ''' </summary>
+        ''' <param name="copy"></param>
+        Sub New(copy As EdgeData)
+            Me.label = copy.label
+            Me.length = copy.length
+            Me.weight = copy.weight
+            Me.Properties = New Dictionary(Of String, String)(copy.propertyTable)
         End Sub
 
         Public Overrides Function ToString() As String
