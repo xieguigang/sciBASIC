@@ -487,6 +487,12 @@ Namespace Graph
                 }
             Next
 
+            ' 可能存在有孤立的节点
+            ' 这个也需要添加加进来
+            For Each node As Node In Me.vertex
+                Call ComputeIfNotExists(vertices, node)
+            Next
+
             Dim copy As New NetworkGraph(vertices.Values, edges)
             Return copy
         End Function
