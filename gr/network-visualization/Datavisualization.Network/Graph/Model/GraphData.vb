@@ -107,37 +107,35 @@ Namespace Graph
 
     Public Class NodeData : Inherits GraphData
 
-        Public Sub New()
-            MyBase.New()
-            mass = 1.0F
-            initialPostion = Nothing
-            ' for merging the graph
-            origID = ""
-        End Sub
-
-        Public ReadOnly Property Neighborhoods As Integer
+        ''' <summary>
+        ''' Get length of the <see cref="neighbours"/> index array
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property neighborhoods As Integer
             Get
-                If Neighbours Is Nothing Then
+                If neighbours Is Nothing Then
                     Return 0
                 Else
-                    Return Neighbours.Length
+                    Return neighbours.Length
                 End If
             End Get
         End Property
 
         Public Property radius As Single
-        Public Property mass() As Single
-        Public Property initialPostion() As AbstractVector
-        Public Property origID() As String
-        Public Property Force As Point
+        Public Property mass As Single
+        Public Property initialPostion As AbstractVector
+        Public Property origID As String
+        Public Property force As Point
 
         ''' <summary>
         ''' 颜色<see cref="SolidBrush"/>或者绘图<see cref="TextureBrush"/>
         ''' </summary>
         ''' <returns></returns>
         <ScriptIgnore>
-        Public Property Color As Brush
-        <DumpNode> Public Property Weights As Double()
+        Public Property color As Brush
+
+        <DumpNode>
+        Public Property weights As Double()
 
         ''' <summary>
         ''' 与本节点相连接的其他节点的<see cref="Node.Label">编号</see>
@@ -145,7 +143,17 @@ Namespace Graph
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <DumpNode> Public Property Neighbours As Integer()
+        <DumpNode>
+        Public Property neighbours As Integer()
+
+        Public Sub New()
+            MyBase.New()
+
+            mass = 1.0F
+            initialPostion = Nothing
+            ' for merging the graph
+            origID = ""
+        End Sub
 
         Public Function Clone() As NodeData
             Return DirectCast(Me.MemberwiseClone, NodeData)
@@ -158,13 +166,18 @@ Namespace Graph
 
     Public Class EdgeData : Inherits GraphData
 
+        ''' <summary>
+        ''' 这个属性值一般是由两个节点之间的坐标位置所计算出来的欧几里得距离
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property length As Single
+        Public Property weight As Double
+
         Public Sub New()
             MyBase.New()
+
             length = 1.0F
         End Sub
-
-        Public Property length() As Single
-        Public Property weight As Double
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -177,16 +190,16 @@ Namespace Graph
 
     Public Class GraphData : Inherits IDynamicsTable
 
-        Public Sub New()
-            label = ""
-        End Sub
-
         ''' <summary>
         ''' The graph object display label.
         ''' (这个属性为显示的标题，与ID不一样，这个属性可能会出现重复值，所以不可以用这个标签来作为字典主键)
         ''' </summary>
         ''' <returns></returns>
         Public Property label() As String
+
+        Public Sub New()
+            label = ""
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
