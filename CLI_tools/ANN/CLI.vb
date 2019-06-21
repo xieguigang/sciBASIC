@@ -214,7 +214,15 @@ Module CLI
         ) With {.Selective = config.selective.ParseBoolean}
 
         trainingHelper.NeuronNetwork.LearnRateDecay = config.learnRateDecay
-        ' trainingHelper.Truncate = 20
+
+        If True = config.layerNormalize.ParseBoolean Then
+            For Each layer As Layer In trainingHelper.NeuronNetwork.HiddenLayer
+                layer.doNormalize = True
+            Next
+        End If
+        If config.dropoutRate > 0 AndAlso config.dropoutRate < 1 Then
+            Call trainingHelper.SetDropOut(percentage:=config.dropoutRate)
+        End If
 
         For Each sample As Sample In samples.PopulateNormalizedSamples(dummyExtends)
             Call trainingHelper.Add(sample.status, sample.target)

@@ -1360,34 +1360,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 随机的在目标集合中选取指定数目的子集合
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="counts">当目标数目大于或者等于目标集合的数目的时候，则返回目标集合</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function TakeRandomly(Of T)(source As IEnumerable(Of T), counts%) As T()
-        Dim array As T() = source.ToArray
-
-        If counts >= array.Length Then
-            Return source
-        Else
-            Dim out As T() = New T(counts - 1) {}
-            Dim input As New List(Of T)(array)
-            Dim random As New Random
-
-            For i As Integer = 0 To counts - 1
-                Dim ind As Integer = random.Next(input.Count)
-                out(i) = input(ind)
-                Call input.RemoveAt(ind)
-            Next
-
-            Return out
-        End If
-    End Function
-
-    ''' <summary>
     ''' Convert target object type collection into a string array using the Object.ToString() interface function.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

@@ -81,6 +81,12 @@ Namespace NeuralNetwork
         Public Property Value As Double
 
         ''' <summary>
+        ''' 当前的这个神经元节点是否是被随机失活的一个节点?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property isDroppedOut As Boolean
+
+        ''' <summary>
         ''' 当前的这个神经元对象的唯一标识符
         ''' </summary>
         ''' <returns></returns>
@@ -121,8 +127,10 @@ Namespace NeuralNetwork
         Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing, Optional guid As VBInteger = Nothing)
             Call Me.New(active, guid)
 
+            Dim synapse As Synapse
+
             For Each inputNeuron As Neuron In inputNeurons
-                Dim synapse As New Synapse(inputNeuron, Me)
+                synapse = New Synapse(inputNeuron, Me)
                 inputNeuron.OutputSynapses.Add(synapse)
                 InputSynapses.Add(synapse)
             Next
@@ -130,7 +138,7 @@ Namespace NeuralNetwork
 #End Region
 
         Public Overrides Function ToString() As String
-            Return $"bias={Bias}, bias_delta={BiasDelta}, gradient={Gradient}, value={Value}"
+            Return $"Dim {Guid} = {{bias:{Bias}, bias.delta:{BiasDelta}, gradient:{Gradient}, value:{Value}}}"
         End Function
 
 #Region "-- Values & Weights --"
@@ -142,12 +150,23 @@ Namespace NeuralNetwork
         ''' <remarks>
         ''' 赋值给<see cref="Value"/>,然后返回<see cref="Value"/>
         ''' </remarks>
-        Public Overridable Function CalculateValue() As Double
+        Public Overridable Function CalculateValue(doDropOut As Boolean) As Double
             ' 在这里的计算过程为:
             ' 使用突触链接的权重值乘上当该突触的上游输入节点的训练值 + 误差
             ' 使用遗传算法进行优化的时候,可以将bias设置零
             ' 用遗传算法生成的应该是网络的拓扑结构,而网络的拓扑结构是和突触链接的权重相关的
-            Value = activation.Function(InputSynapses.Sum(Function(a) a.Weight * a.InputNeuron.Value) + Bias)
+            If doDropOut Then
+                Value = InputSynapses _
+                    .Where(Function(edge)
+                               Return Not edge.InputNeuron.isDroppedOut
+                           End Function) _
+                    .Sum(Function(a) a.Weight * a.InputNeuron.Value)
+            Else
+                Value = InputSynapses.Sum(Function(a) a.Weight * a.InputNeuron.Value)
+            End If
+
+            Value = activation.Function(Value + Bias)
+
             Return Value
         End Function
 
@@ -184,8 +203,18 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="truncate">小于零表示不进行梯度剪裁</param>
         ''' <returns></returns>
-        Public Function CalculateGradient(truncate As Double) As Double
-            Gradient = OutputSynapses.Sum(Function(a) a.OutputNeuron.Gradient * a.Weight) * activation.Derivative(Value)
+        Public Function CalculateGradient(truncate As Double, doDropOut As Boolean) As Double
+            If doDropOut Then
+                Gradient = OutputSynapses _
+                    .Where(Function(edge)
+                               Return Not edge.OutputNeuron.isDroppedOut
+                           End Function) _
+                    .Sum(Function(a) a.OutputNeuron.Gradient * a.Weight)
+            Else
+                Gradient = OutputSynapses.Sum(Function(a) a.OutputNeuron.Gradient * a.Weight)
+            End If
+
+            Gradient = Gradient * activation.Derivative(Value)
 
             If truncate > 0 Then
                 If Gradient > truncate OrElse Gradient < -truncate Then
@@ -202,15 +231,26 @@ Namespace NeuralNetwork
         ''' <param name="learnRate"></param>
         ''' <param name="momentum"></param>
         ''' <returns></returns>
-        Public Function UpdateWeights(learnRate#, momentum#) As Integer
-            Dim prevDelta = BiasDelta
-            BiasDelta = learnRate * Gradient
-            Bias += BiasDelta + momentum * prevDelta
+        Public Function UpdateWeights(learnRate#, momentum#, doDropOut As Boolean) As Integer
+            Dim oldDelta As Double = BiasDelta
+            Dim edges As IEnumerable(Of Synapse)
 
-            For Each synapse As Synapse In InputSynapses
-                prevDelta = synapse.WeightDelta
+            BiasDelta = learnRate * Gradient
+            Bias += BiasDelta + momentum * oldDelta
+
+            If doDropOut Then
+                edges = InputSynapses _
+                    .Where(Function(edge)
+                               Return Not edge.InputNeuron.isDroppedOut
+                           End Function)
+            Else
+                edges = InputSynapses
+            End If
+
+            For Each synapse As Synapse In edges
+                oldDelta = synapse.WeightDelta
                 synapse.WeightDelta = learnRate * Gradient * synapse.InputNeuron.Value
-                synapse.Weight += synapse.WeightDelta + momentum * prevDelta
+                synapse.Weight += synapse.WeightDelta + momentum * oldDelta
             Next
 
             Return 0

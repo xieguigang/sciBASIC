@@ -90,6 +90,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
@@ -304,6 +305,7 @@ Namespace Graph
 
         Public Function GetEdges(iNode As Node) As List(Of Edge)
             Dim retEdgeList As New List(Of Edge)()
+
             If _adjacencySet.ContainsKey(iNode.Label) Then
                 For Each keyPair As KeyValuePair(Of String, List(Of Edge)) In _adjacencySet(iNode.Label)
                     For Each e As Edge In keyPair.Value
@@ -334,7 +336,7 @@ Namespace Graph
         End Sub
 
         Public Sub DetachNode(iNode As Node)
-            Call graphEdges.ToArray _
+            Call graphEdges _
                 .DoEach(Sub(e As Edge)
                             If e.U.Label = iNode.Label OrElse e.V.Label = iNode.Label Then
                                 Call RemoveEdge(e)
@@ -343,14 +345,18 @@ Namespace Graph
             notify()
         End Sub
 
-        Public Sub RemoveEdge(iEdge As Edge)
-            Call edges.Remove(iEdge.ID)
+        ''' <summary>
+        ''' Delete a graph edge connection from current network graph model
+        ''' </summary>
+        ''' <param name="edge"></param>
+        Public Sub RemoveEdge(edge As Edge)
+            Call edges.Remove(edge.ID)
 
             For Each x As KeyValuePair(Of String, Dictionary(Of String, List(Of Edge))) In _adjacencySet
                 For Each y As KeyValuePair(Of String, List(Of Edge)) In x.Value
                     Dim tEdges As List(Of Edge) = y.Value
-                    tEdges.Remove(iEdge)
-                    If tEdges.Count = 0 Then
+                    tEdges.Remove(edge)
+                    If tEdges = 0 Then
                         _adjacencySet(x.Key).Remove(y.Key)
                         Exit For
                     End If
@@ -434,20 +440,70 @@ Namespace Graph
         End Function
 
         ''' <summary>
+        ''' 应用于网络之中的节点对象的克隆
+        ''' </summary>
+        ''' <param name="vertices"></param>
+        ''' <param name="U"></param>
+        ''' <returns></returns>
+        Private Shared Function ComputeIfNotExists(vertices As Dictionary(Of Node), U As Node) As Node
+            If Not vertices.Have(U) Then
+                U = New Node With {
+                    .data = New NodeData(U.data),
+                    .degree = U.degree,
+                    .ID = U.ID,
+                    .Label = U.Label,
+                    .Pinned = U.Pinned
+                }
+                vertices.Add(U)
+            End If
+
+            Return vertices(DirectCast(U, INamedValue).Key)
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
         ''' graphEdges和edges这两个元素集合应该都是等长的
+        ''' 在这个函数之中会将节点以及边连接的值都进行复制
+        ''' 因为克隆之后的操作可能会涉及对边或者节点对象的修改操作
         ''' </remarks>
         Private Function Clone() As Object Implements ICloneable.Clone
-            Dim copy As New NetworkGraph With {
-                .vertices = New Dictionary(Of Node)(vertex),
-                .edges = New Dictionary(Of Edge)(edges.Values)
-            }
+            Dim vertices As New Dictionary(Of Node)
+            Dim edges As New List(Of Edge)
+
+            For Each edge As Edge In graphEdges
+                Dim U = ComputeIfNotExists(vertices, edge.U)
+                Dim V = ComputeIfNotExists(vertices, edge.V)
+
+                edges += New Edge With {
+                    .data = New EdgeData(edge.data),
+                    .U = U,
+                    .V = V,
+                    .ID = edge.ID,
+                    .isDirected = edge.isDirected,
+                    .weight = edge.weight
+                }
+            Next
+
+            ' 可能存在有孤立的节点
+            ' 这个也需要添加加进来
+            For Each node As Node In Me.vertex
+                Call ComputeIfNotExists(vertices, node)
+            Next
+
+            Dim copy As New NetworkGraph(vertices.Values, edges)
             Return copy
         End Function
 
+        ''' <summary>
+        ''' Perform a network graph model deep clone
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 经过克隆之后，节点和边对象已经完全切断了和之前的副本的所有引用关联
+        ''' </remarks>
         Public Function Copy() As NetworkGraph
             Return DirectCast(Clone(), NetworkGraph)
         End Function

@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::34d9d97cf092e8d3ac86897c7383d153, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Helpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Helpers
-    ' 
-    '         Properties: MaxEpochs, MinimumError
-    ' 
-    '         Function: GetRandom, (+2 Overloads) PopulateAllSynapses, ToDataMatrix
-    ' 
-    '     Enum TrainingType
-    ' 
-    '         Epoch, MinimumError
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Helpers
+' 
+'         Properties: MaxEpochs, MinimumError
+' 
+'         Function: GetRandom, (+2 Overloads) PopulateAllSynapses, ToDataMatrix
+' 
+'     Enum TrainingType
+' 
+'         Epoch, MinimumError
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.Math
 
 Namespace NeuralNetwork
 
@@ -68,9 +69,7 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' <see cref="Sigmoid"/> as default
         ''' </summary>
-        Friend ReadOnly defaultActivation As [Default](Of  IActivationFunction) = New Sigmoid
-
-        ReadOnly rand As New Random()
+        Friend ReadOnly defaultActivation As [Default](Of IActivationFunction) = New Sigmoid
 
         ''' <summary>
         ''' 通过这个帮助函数生成``[-1, 1]``之间的随机数
@@ -78,8 +77,8 @@ Namespace NeuralNetwork
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Function GetRandom() As Double
-            SyncLock rand
-                Return 2 * rand.NextDouble() - 1
+            SyncLock seeds
+                Return 2 * seeds.NextDouble() - 1
             End SyncLock
         End Function
 

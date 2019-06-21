@@ -159,7 +159,7 @@ Namespace QLearning
             _prevState = CType(map.Clone(), T)
 
             If randomGenerator.NextDouble() < ExplorationChance Then
-                _prevAction = __explore()
+                _prevAction = explore()
             Else
                 _prevAction = getBestAction(map)
             End If
@@ -203,7 +203,7 @@ Namespace QLearning
         ''' </summary>
         ''' <returns> index of action to take </returns>
         ''' <remarks>在这里得到可能的下一步的动作的在动作列表里面编号值， Index</remarks>
-        Protected Function __explore() As Integer
+        Protected Function explore() As Integer
             Return (New Random(Me.randomGenerator.Next(ActionRange + 100 * _prevAction))).Next(ActionRange)
         End Function
 
@@ -228,7 +228,7 @@ Namespace QLearning
         ''' HashMap </summary>
         ''' <param name="map"> </param>
         ''' <returns> String used as a key for the HashMap </returns>
-        Protected MustOverride Function __getMapString(map As T) As String
+        Protected MustOverride Function MapToString(map As T) As String
 
         ''' <summary>
         ''' The getActionsQValues function returns an array of Q values for
@@ -253,7 +253,7 @@ Namespace QLearning
                 ' If the current environment state is not in the program's memory, 
                 ' then store it, this is the so called learning
                 _Table += New Action With {
-                    .EnvirState = __getMapString(map),
+                    .EnvirState = MapToString(map),
                     .Qvalues = initialActions
                 }
 
@@ -269,7 +269,7 @@ Namespace QLearning
         ''' <param name="map"> current map (state) </param>
         ''' <returns> the Q-values stored of the Qtable entry of the map state, otherwise null if it is not found </returns>
         Public Overridable Function GetValues(map As T) As Single()
-            Dim mapKey As String = __getMapString(map)
+            Dim mapKey As String = MapToString(map)
 
             If Table.ContainsKey(mapKey) Then
                 Return Table(mapKey).Qvalues

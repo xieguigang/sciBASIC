@@ -96,16 +96,16 @@ Namespace Layouts
 
                         If distance < maxRepulsiveForceDistance Then
                             Dim repulsiveForce As Double = (k * k / distance)
-                            Dim fa As Point = NodeA.data.Force
-                            Dim fb As Point = NodeB.data.Force
+                            Dim fa As Point = NodeA.data.force
+                            Dim fb As Point = NodeB.data.force
 
                             fb.X = fb.X + (repulsiveForce * deltaX / distance)
                             fb.Y = fb.Y + (repulsiveForce * deltaY / distance)
                             fa.X = fa.X - (repulsiveForce * deltaX / distance)
                             fa.Y = fa.Y - (repulsiveForce * deltaY / distance)
 
-                            NodeA.data.Force = fa
-                            NodeB.data.Force = fb
+                            NodeA.data.force = fa
+                            NodeB.data.force = fb
                         End If
                     Next
                 Next
@@ -145,24 +145,24 @@ Namespace Layouts
 
                     attractiveForce *= (System.Math.Log(weight) * 0.5) + 1
 
-                    Dim fa As Point = nodeA.data.Force
-                    Dim fb As Point = nodeB.data.Force
+                    Dim fa As Point = nodeA.data.force
+                    Dim fb As Point = nodeB.data.force
 
-                    fb.X = nodeB.data.Force.X - attractiveForce * deltaX / distance
-                    fb.Y = nodeB.data.Force.Y - attractiveForce * deltaY / distance
-                    fa.X = nodeA.data.Force.X + attractiveForce * deltaX / distance
-                    fa.Y = nodeA.data.Force.Y + attractiveForce * deltaY / distance
+                    fb.X = nodeB.data.force.X - attractiveForce * deltaX / distance
+                    fb.Y = nodeB.data.force.Y - attractiveForce * deltaY / distance
+                    fa.X = nodeA.data.force.X + attractiveForce * deltaX / distance
+                    fa.Y = nodeA.data.force.Y + attractiveForce * deltaY / distance
 
-                    nodeA.data.Force = fa
-                    nodeB.data.Force = fb
+                    nodeA.data.force = fa
+                    nodeB.data.force = fb
                 Next
 
                 ' Now move each node to its new location...
                 For a As Integer = 0 To nodes.Length - 1
                     Dim node As Node = nodes(a)
 
-                    Dim xMovement As Double = c * node.data.Force.X
-                    Dim yMovement As Double = c * node.data.Force.Y
+                    Dim xMovement As Double = c * node.data.force.X
+                    Dim yMovement As Double = c * node.data.force.Y
 
                     ' Limit movement values to stop nodes flying into oblivion.
                     Dim max As Double = 100
@@ -178,7 +178,7 @@ Namespace Layouts
                     End If
 
                     node.data.initialPostion.Point2D = New Point(node.data.initialPostion.x + xMovement, node.data.initialPostion.y + yMovement)
-                    node.data.Force = New Point
+                    node.data.force = New Point
                 Next
             Next
         End Sub

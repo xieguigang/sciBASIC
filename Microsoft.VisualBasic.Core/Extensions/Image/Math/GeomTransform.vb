@@ -254,6 +254,12 @@ Namespace Imaging.Math2D
             Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
         End Function
 
+        ''' <summary>
+        ''' 计算两个坐标点之间的欧几里得距离
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Distance(a As Point, b As Point) As Double

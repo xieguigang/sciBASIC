@@ -112,7 +112,8 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <remarks>
         ''' 这个加载器函数主要是针对小文件使用的
         ''' </remarks>
-        <Extension> Public Function LoadModel(model As StoreProcedure.NeuralNetwork) As Network
+        <Extension>
+        Public Function LoadModel(model As StoreProcedure.NeuralNetwork) As Network
             Dim activations As LayerActives = LayerActives.FromXmlModel(
                 functions:=New Dictionary(Of String, ActiveFunction) From {
                     {"input", model.inputlayer.activation},

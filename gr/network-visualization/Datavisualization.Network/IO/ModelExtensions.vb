@@ -234,7 +234,7 @@ Namespace FileStream
                 Let c As Brush = nodeColor(n)
                 Let r As Single = getRadius(node:=n)
                 Let data As NodeData = New NodeData With {
-                    .Color = c,
+                    .color = c,
                     .radius = r,
                     .Properties = New Dictionary(Of String, String) From {
                         {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType},
@@ -306,7 +306,7 @@ Namespace FileStream
                                                    Let r = If(n.Degree <= 4, 4, n.Degree) * 5
                                                    Let nd As NodeData = New NodeData With {
                                                        .radius = r,
-                                                       .Color = New SolidBrush(randColor())
+                                                       .color = New SolidBrush(randColor())
                                                    }
                                                    Select New Graph.Node(n.name, nd)
 

@@ -82,6 +82,16 @@ Public Class Config
 
     <DataFrameColumn> Public Property selective As String = "no"
     <DataFrameColumn> Public Property scattered As String = "no"
+    ''' <summary>
+    ''' 只针对隐藏层有意义
+    ''' </summary>
+    ''' <returns></returns>
+    <DataFrameColumn> Public Property layerNormalize As String = "no"
+    ''' <summary>
+    ''' [0, 1]之间, 默认值为0表示不运行于dropout模式之下
+    ''' </summary>
+    ''' <returns></returns>
+    <DataFrameColumn> Public Property dropoutRate As Double = 0
 
     Public Shared ReadOnly Property [Default] As [Default](Of Config) = New Config
 

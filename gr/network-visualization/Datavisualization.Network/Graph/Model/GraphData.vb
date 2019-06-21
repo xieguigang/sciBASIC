@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::6bfcdac8df9dad77e5a50368885085a8, gr\network-visualization\Datavisualization.Network\Graph\Model\GraphData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NodeData
-    ' 
-    '         Properties: Color, Force, initialPostion, mass, Neighborhoods
-    '                     Neighbours, origID, radius, Weights
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Clone, ToString
-    ' 
-    '     Class EdgeData
-    ' 
-    '         Properties: length, weight
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Clone, ToString
-    ' 
-    '     Class GraphData
-    ' 
-    '         Properties: label
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NodeData
+' 
+'         Properties: Color, Force, initialPostion, mass, Neighborhoods
+'                     Neighbours, origID, radius, Weights
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Clone, ToString
+' 
+'     Class EdgeData
+' 
+'         Properties: length, weight
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Clone, ToString
+' 
+'     Class GraphData
+' 
+'         Properties: label
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -100,6 +100,7 @@ Imports System.Drawing
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -107,37 +108,35 @@ Namespace Graph
 
     Public Class NodeData : Inherits GraphData
 
-        Public Sub New()
-            MyBase.New()
-            mass = 1.0F
-            initialPostion = Nothing
-            ' for merging the graph
-            origID = ""
-        End Sub
-
-        Public ReadOnly Property Neighborhoods As Integer
+        ''' <summary>
+        ''' Get length of the <see cref="neighbours"/> index array
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property neighborhoods As Integer
             Get
-                If Neighbours Is Nothing Then
+                If neighbours Is Nothing Then
                     Return 0
                 Else
-                    Return Neighbours.Length
+                    Return neighbours.Length
                 End If
             End Get
         End Property
 
         Public Property radius As Single
-        Public Property mass() As Single
-        Public Property initialPostion() As AbstractVector
-        Public Property origID() As String
-        Public Property Force As Point
+        Public Property mass As Single
+        Public Property initialPostion As AbstractVector
+        Public Property origID As String
+        Public Property force As Point
 
         ''' <summary>
         ''' 颜色<see cref="SolidBrush"/>或者绘图<see cref="TextureBrush"/>
         ''' </summary>
         ''' <returns></returns>
         <ScriptIgnore>
-        Public Property Color As Brush
-        <DumpNode> Public Property Weights As Double()
+        Public Property color As Brush
+
+        <DumpNode>
+        Public Property weights As Double()
 
         ''' <summary>
         ''' 与本节点相连接的其他节点的<see cref="Node.Label">编号</see>
@@ -145,7 +144,30 @@ Namespace Graph
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <DumpNode> Public Property Neighbours As Integer()
+        <DumpNode>
+        Public Property neighbours As Integer()
+
+        Public Sub New()
+            MyBase.New()
+
+            mass = 1.0F
+            initialPostion = Nothing
+            ' for merging the graph
+            origID = ""
+        End Sub
+
+        Sub New(copy As NodeData)
+            Me.color = copy.color
+            Me.force = copy.force
+            Me.initialPostion = copy.initialPostion
+            Me.label = copy.label
+            Me.mass = copy.mass
+            Me.neighbours = copy.neighbours.SafeQuery.ToArray
+            Me.origID = copy.origID
+            Me.Properties = New Dictionary(Of String, String)(copy.Properties)
+            Me.radius = copy.radius
+            Me.weights = copy.weights.SafeQuery.ToArray
+        End Sub
 
         Public Function Clone() As NodeData
             Return DirectCast(Me.MemberwiseClone, NodeData)
@@ -158,13 +180,29 @@ Namespace Graph
 
     Public Class EdgeData : Inherits GraphData
 
+        ''' <summary>
+        ''' 这个属性值一般是由两个节点之间的坐标位置所计算出来的欧几里得距离
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property length As Single
+        Public Property weight As Double
+
         Public Sub New()
             MyBase.New()
+
             length = 1.0F
         End Sub
 
-        Public Property length() As Single
-        Public Property weight As Double
+        ''' <summary>
+        ''' Value copy
+        ''' </summary>
+        ''' <param name="copy"></param>
+        Sub New(copy As EdgeData)
+            Me.label = copy.label
+            Me.length = copy.length
+            Me.weight = copy.weight
+            Me.Properties = New Dictionary(Of String, String)(copy.Properties)
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
@@ -177,16 +215,16 @@ Namespace Graph
 
     Public Class GraphData : Inherits IDynamicsTable
 
-        Public Sub New()
-            label = ""
-        End Sub
-
         ''' <summary>
         ''' The graph object display label.
         ''' (这个属性为显示的标题，与ID不一样，这个属性可能会出现重复值，所以不可以用这个标签来作为字典主键)
         ''' </summary>
         ''' <returns></returns>
         Public Property label() As String
+
+        Public Sub New()
+            label = ""
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
