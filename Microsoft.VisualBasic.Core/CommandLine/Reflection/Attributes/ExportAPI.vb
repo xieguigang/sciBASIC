@@ -137,23 +137,24 @@ Namespace CommandLine.Reflection
 
         Public Function PrintView(HTML As Boolean) As String
             If HTML Then
-                Return __printViewHTML()
+                Return printViewHTML()
             Else
-                Return __printView()
+                Return printView()
             End If
         End Function
 
-        Private Function __printView()
-            Dim sbr As StringBuilder = New StringBuilder(1024)
-            Call sbr.AppendLine($"{NameOf(Name)}    = ""{Name}""")
-            Call sbr.AppendLine($"{NameOf(Info)}    = ""{Info}""")
-            Call sbr.AppendLine($"{NameOf(Usage)}   = ""{Usage}""")
-            Call sbr.AppendLine($"{NameOf(Example)} = ""{Example}""")
+        Private Function printView()
+            Dim sb As New StringBuilder(1024)
 
-            Return sbr.ToString
+            Call sb.AppendLine($"{NameOf(Name)}    = ""{Name}""")
+            Call sb.AppendLine($"{NameOf(Info)}    = ""{Info}""")
+            Call sb.AppendLine($"{NameOf(Usage)}   = ""{Usage}""")
+            Call sb.AppendLine($"{NameOf(Example)} = ""{Example}""")
+
+            Return sb.ToString
         End Function
 
-        Private Function __printViewHTML() As String
+        Private Function printViewHTML() As String
             Return ExportAPIAttribute.GenerateHtmlDoc(Me, "", "")
         End Function
 
