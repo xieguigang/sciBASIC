@@ -350,17 +350,6 @@ Namespace CommandLine
             Dim argvs As String() = CommandLineArgs.Skip(1).ToArray
             Dim i As Integer = apiInvoke(CommandName, argvs, help_argvs:=argvs)
 
-#If DEBUG Then
-            If Not App.GetVariable("pause.disable").ParseBoolean = True Then
-                Call Pause()
-            End If
-#Else
-            If Stack.TextEquals("Main") Then
-                If AutoPaused Then
-                    Call Pause()
-                End If
-            End If
-#End If
             Return i
         End Function
 
