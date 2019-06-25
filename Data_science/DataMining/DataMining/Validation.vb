@@ -100,7 +100,7 @@ Public Structure Validation
     ''' <summary>
     ''' 进行当前的预测鉴定分析的百分比等级，默认是0.5，即 50%
     ''' </summary>
-    Dim Percentile As Double
+    Dim Threshold As Double
 
     Public ReadOnly Property F1Score As Double
         Get
@@ -195,12 +195,34 @@ Public Structure Validation
             .FP = FP,
             .TN = TN,
             .TP = TP,
-            .Percentile = percentile,
+            .Threshold = percentile,
             .BER = 1 / 2 * (.FPR + FN / (FN + TP))
         }
     End Function
 
     Shared ReadOnly normalRange As [Default](Of Sequence) = New Sequence(0, 1, 100)
+
+    Public Shared Function AUC(validates As IEnumerable(Of Validation)) As Double
+        Dim data = validates.OrderBy(Function(d) d.Threshold).ToArray
+        Dim accumulate = Iterator Function() As IEnumerable(Of Double)
+                             Dim x2, x1 As Double
+                             Dim fx2, fx1 As Double
+
+                             ' x = 1 - Specificity
+                             ' y = Sensibility 
+
+                             For i As Integer = 1 To data.Length - 1
+                                 x2 = 100 - data(i).Specificity
+                                 x1 = 100 - data(i - 1).Specificity
+                                 fx2 = data(i).Sensibility
+                                 fx1 = data(i).Sensibility
+
+                                 Yield (fx2 + fx1) * (x2 - x1)
+                             Next
+                         End Function
+
+        Return accumulate().Sum / 2 / 100
+    End Function
 
     ''' <summary>
     ''' 生ROC曲线的绘制数据(这个函数产生的曲线默认是阈值在[0,1]之间的)
