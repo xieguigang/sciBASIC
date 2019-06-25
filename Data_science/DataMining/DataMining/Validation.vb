@@ -203,7 +203,9 @@ Public Structure Validation
     Shared ReadOnly normalRange As [Default](Of Sequence) = New Sequence(0, 1, 100)
 
     Public Shared Function AUC(validates As IEnumerable(Of Validation)) As Double
-        Dim data = validates.OrderBy(Function(d) d.Threshold).ToArray
+        Dim data As Validation() = validates _
+            .OrderByDescending(Function(d) d.Threshold) _
+            .ToArray
         Dim accumulate = Iterator Function() As IEnumerable(Of Double)
                              Dim x2, x1 As Double
                              Dim fx2, fx1 As Double
