@@ -324,8 +324,10 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\Threshold.vb" />
     <Compile Include="NeuralNetwork\Accelerator.vb" />
+    <Compile Include="NeuralNetwork\Models\HiddenLayers.vb" />
     <Compile Include="NeuralNetwork\Models\Layer.vb" />
     <Compile Include="NeuralNetwork\Importance.vb" />
+    <Compile Include="NeuralNetwork\Models\Protocols\Dropout.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Snapshot.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Formats\Scattered.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb" />

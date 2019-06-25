@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::72798286a8e71e898cf545a2a4a4fe6e, Data_science\MachineLearning\MachineLearning\NeuralNetwork\TrainingUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TrainingUtils
-    ' 
-    '         Properties: MinError, NeuronNetwork, Selective, TrainingSet, TrainingType
-    '                     Truncate, XP
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: CalculateError, TakeSnapshot, trainingImpl
-    ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TrainingUtils
+' 
+'         Properties: MinError, NeuronNetwork, Selective, TrainingSet, TrainingType
+'                     Truncate, XP
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: CalculateError, TakeSnapshot, trainingImpl
+' 
+'         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Protocols
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Text
@@ -74,6 +75,8 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <returns></returns>
         Public Property Selective As Boolean = True
+
+        Public ReadOnly Property dropOutRate As Double = 0
 
         ''' <summary>
         ''' 最终得到的训练结果神经网络
@@ -147,6 +150,20 @@ Namespace NeuralNetwork
             End If
         End Sub
 
+        Public Sub SetDropOut(percentage As Double)
+            _dropOutRate = percentage
+
+            For Each layer As Layer In network.HiddenLayer
+                layer.doDropOutMode = True
+            Next
+        End Sub
+
+        Public Sub SetLayerNormalize(opt As Boolean)
+            For Each layer As Layer In network.HiddenLayer
+                layer.doNormalize = opt
+            Next
+        End Sub
+
         ''' <summary>
         ''' 在这里添加训练使用的数据集
         ''' (请注意,因为ANN的output结果向量只输出``[0,1]``之间的结果,所以在训练的时候,output应该是被编码为0或者1的;
@@ -202,10 +219,21 @@ Namespace NeuralNetwork
             End Using
         End Sub
 
+        ''' <summary>
+        ''' 在这个函数之中实现一次训练循环过程
+        ''' </summary>
+        ''' <param name="dataSets"></param>
+        ''' <param name="parallel"></param>
+        ''' <param name="selective"></param>
+        ''' <returns></returns>
         Private Function trainingImpl(dataSets As Sample(), parallel As Boolean, selective As Boolean) As Double
             Dim errors As New List(Of Double)()
             Dim err#
             Dim outputSize% = dataSets(Scan0).target.Length
+
+            If dropOutRate > 0 Then
+                Call network.DoDropOut(percentage:=dropOutRate)
+            End If
 
             For Each dataSet As Sample In dataSets
                 If selective Then
