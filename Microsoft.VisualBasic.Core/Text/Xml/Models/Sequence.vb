@@ -78,7 +78,11 @@ Namespace Text.Xml.Models
         End Property
 
         Sub New(a#, b#, n%)
-            Me.range = New DoubleRange(a, b)
+            Call Me.New(New DoubleRange(a, b), n)
+        End Sub
+
+        Sub New(range As DoubleRange, Optional n% = 100)
+            Me.range = range
             Me.n = n
         End Sub
 
