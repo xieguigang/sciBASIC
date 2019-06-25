@@ -47,6 +47,10 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Text.Xml.Models
 
+    ''' <summary>
+    ''' 可以通过<see cref="AsEnumerable"/>拓展函数转换这个列表对象为枚举类型
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public MustInherit Class ListOf(Of T) : Implements Enumeration(Of T)
 
         ''' <summary>

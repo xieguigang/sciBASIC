@@ -198,7 +198,7 @@ Public Structure Validation
     End Function
 
     ''' <summary>
-    ''' 生ROC曲线的绘制数据
+    ''' 生ROC曲线的绘制数据(这个函数产生的曲线默认是阈值在[0,1]之间的)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="entity"></param>
