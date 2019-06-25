@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module ROCPlot
 
@@ -139,7 +140,9 @@ Public Module ROCPlot
             Ylabel:="Sensibility",
             drawAxis:=True,
             htmlLabel:=False,
-            title:=$"ROC (AUC={roc.title})"
+            title:=$"ROC (AUC={roc.title})",
+            labelFontStyle:=CSSFont.Win7VeryLarge,
+            tickFontStyle:=CSSFont.Win7Large
         )
 
         Return img

@@ -88,6 +88,6 @@ Module CLI
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ROC.png"
         Dim data = DataSet.LoadDataSet([in]).CreateSerial
 
-        Return ROCPlot.Plot(data).Save(out).CLICode
+        Return ROCPlot.Plot(data, showReference:=True).Save(out).CLICode
     End Function
 End Module
