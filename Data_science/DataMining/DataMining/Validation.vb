@@ -1,47 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::1e7de7d6a312b8ccaa2a4f13d5c812bb, Data_science\DataMining\DataMining\Validation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Structure Validation
-    ' 
-    '     Properties: F1Score, FbetaScore
-    ' 
-    '     Function: Calc, ROC, ToDataSet, ToString
-    ' 
-    ' /********************************************************************************/
+' Structure Validation
+' 
+'     Properties: F1Score, FbetaScore
+' 
+'     Function: Calc, ROC, ToDataSet, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 ''' <summary>
 ''' 验证结果描述
@@ -197,6 +200,8 @@ Public Structure Validation
         }
     End Function
 
+    Shared ReadOnly normalRange As [Default](Of Sequence) = New Sequence(0, 1, 100)
+
     ''' <summary>
     ''' 生ROC曲线的绘制数据(这个函数产生的曲线默认是阈值在[0,1]之间的)
     ''' </summary>
@@ -212,20 +217,16 @@ Public Structure Validation
     ''' 但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，
     ''' 在此引入ROC。
     ''' </remarks>
-    Public Shared Iterator Function ROC(Of T)(entity As IEnumerable(Of T),
-                                              getValidate As Func(Of T, Double, Boolean),
-                                              getPredict As Func(Of T, Double, Boolean),
-                                              Optional steps! = 0.01) As IEnumerable(Of Validation)
-
+    Public Shared Iterator Function ROC(Of T)(entity As IEnumerable(Of T), getValidate As Func(Of T, Double, Boolean), getPredict As Func(Of T, Double, Boolean), Optional threshold As Sequence = Nothing) As IEnumerable(Of Validation)
         Dim validate As Func(Of T, Boolean)
         Dim predict As Func(Of T, Boolean)
 
-        For pct As Double = 0 To 1 Step steps
+        For Each cutoff As Double In threshold.AsEnumerable
 #Disable Warning
-            validate = Function(x) getValidate(x, pct)
-            predict = Function(x) getPredict(x, pct)
+            validate = Function(x) getValidate(x, cutoff)
+            predict = Function(x) getPredict(x, cutoff)
 
-            Yield Validation.Calc(entity, validate, predict, percentile:=pct)
+            Yield Validation.Calc(entity, validate, predict, percentile:=cutoff)
 #Enable Warning
         Next
     End Function
