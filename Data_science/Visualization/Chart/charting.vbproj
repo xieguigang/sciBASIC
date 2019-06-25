@@ -251,6 +251,14 @@
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
       <Name>ODEsSolver</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plots-statistics\Plots.Statistics.vbproj">
+      <Project>{368EE92F-7AA0-47DF-BE48-2AE150369A4C}</Project>
+      <Name>Plots.Statistics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plots\Plots.vbproj">
+      <Project>{17F8E821-0A01-4975-9CAA-AC95251226D5}</Project>
+      <Name>Plots</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
