@@ -140,16 +140,4 @@ Public Module Extensions
 
         Return source
     End Function
-
-    <Extension>
-    Public Function ToKMeansModels(data As IEnumerable(Of DataSet)) As EntityClusterModel()
-        Return data.Select(
-            Function(d)
-                Return New EntityClusterModel With {
-                .ID = d.ID,
-                .Cluster = "",
-                .Properties = New Dictionary(Of String, Double)(d.Properties)
-            }
-            End Function).ToArray
-    End Function
 End Module
