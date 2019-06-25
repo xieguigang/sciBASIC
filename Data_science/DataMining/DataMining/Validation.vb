@@ -54,13 +54,40 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' </remarks>
 Public Structure Validation
 
+    ''' <summary>
+    ''' TNR
+    ''' </summary>
     Dim Specificity As Double
     ''' <summary>
-    ''' Recall
+    ''' Recall, TPR
     ''' </summary>
     Dim Sensibility As Double
     Dim Accuracy As Double
+    ''' <summary>
+    ''' PPV
+    ''' </summary>
     Dim Precision As Double
+    ''' <summary>
+    ''' balanced error rate
+    ''' </summary>
+    Dim BER As Double
+
+    Public ReadOnly Property FPR As Double
+        Get
+            Return FP / (FP + TN)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Negative predictive value
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property NPV As Double
+        Get
+            Return TN / (FN + TN)
+        End Get
+    End Property
+
     Dim All As Integer
     Dim TP As Integer
     Dim FP As Integer
@@ -165,7 +192,8 @@ Public Structure Validation
             .FP = FP,
             .TN = TN,
             .TP = TP,
-            .Percentile = percentile
+            .Percentile = percentile,
+            .BER = 1 / 2 * (.FPR + FN / (FN + TP))
         }
     End Function
 
