@@ -165,6 +165,7 @@ Module CLI
 
     <ExportAPI("/config.template")>
     <Usage("/config.template [/save <default=./config.ini>]")>
+    <Description("Create the default config file for the ANN model.")>
     Public Function ConfigTemplate(args As CommandLine) As Integer
         Return New Config().WriteProfile(args("/save") Or "./config.ini")
     End Function
@@ -177,6 +178,10 @@ Module CLI
     ''' <returns></returns>
     <ExportAPI("/training")>
     <Usage("/training /samples <sample_matrix.Xml> [/config <config.ini> /debug /parallel /GA.optimize /out <ANN.Xml>]")>
+    <Description("Training a ANN model based on the training set input.")>
+    <Argument("/samples", False, CLITypes.File, PipelineTypes.std_in,
+              Extensions:="*.Xml",
+              Description:="Training dataset as the data set input for the ANN model")>
     Public Function Train(args As CommandLine) As Integer
         Dim in$ = args <= "/samples"
         Dim parallel As Boolean = args("/parallel")
@@ -214,6 +219,7 @@ Module CLI
         ) With {.Selective = config.selective.ParseBoolean}
 
         trainingHelper.NeuronNetwork.LearnRateDecay = config.learnRateDecay
+        trainingHelper.Truncate = config.truncate
 
         If True = config.layerNormalize.ParseBoolean Then
             For Each layer As Layer In trainingHelper.NeuronNetwork.HiddenLayer

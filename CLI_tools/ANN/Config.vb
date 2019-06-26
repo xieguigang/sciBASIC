@@ -53,6 +53,7 @@ Public Class Config
     <DataFrameColumn> Public Property learnRateDecay As Double = 0.0000000001
     <DataFrameColumn> Public Property iterations As Integer = 10000
     <DataFrameColumn> Public Property minErr As Double = 0.01
+    <DataFrameColumn> Public Property truncate As Double = -1
 
 #Region "所使用的激活函数的配置"
     ''' <summary>
