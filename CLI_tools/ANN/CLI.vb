@@ -85,7 +85,7 @@ Module CLI
             .ROC(result, Function(a, p) a(labelActuals) >= p, Function(a, p) a(labelPredicts) >= p) _
             .Select(Function(level)
                         Return New IO.DataSet With {
-                            .ID = level.Percentile,
+                            .ID = level.Threshold,
                             .Properties = level.ToDataSet
                         }
                     End Function) _
