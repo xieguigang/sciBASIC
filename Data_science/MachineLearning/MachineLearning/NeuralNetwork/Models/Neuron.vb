@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::b2431b85fc08d912e40771a9ae437d41, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Neuron
-    ' 
-    '         Properties: Bias, BiasDelta, Gradient, Guid, InputSynapses
-    '                     OutputSynapses, Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: CalculateError, (+2 Overloads) CalculateGradient, CalculateValue, ToString, UpdateWeights
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Neuron
+' 
+'         Properties: Bias, BiasDelta, Gradient, Guid, InputSynapses
+'                     OutputSynapses, Value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: CalculateError, (+2 Overloads) CalculateGradient, CalculateValue, ToString, UpdateWeights
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -190,9 +190,7 @@ Namespace NeuralNetwork
             Gradient = CalculateError(target) * activation.Derivative(Value)
 
             If truncate > 0 Then
-                If Gradient > truncate OrElse Gradient < -truncate Then
-                    Gradient = Math.Sign(Gradient) * truncate
-                End If
+                Gradient = Helpers.ValueTruncate(Gradient, truncate)
             End If
 
             Return Gradient
@@ -217,9 +215,7 @@ Namespace NeuralNetwork
             Gradient = Gradient * activation.Derivative(Value)
 
             If truncate > 0 Then
-                If Gradient > truncate OrElse Gradient < -truncate Then
-                    Gradient = Math.Sign(Gradient) * truncate
-                End If
+                Gradient = Helpers.ValueTruncate(Gradient, truncate)
             End If
 
             Return Gradient

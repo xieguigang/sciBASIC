@@ -82,6 +82,26 @@ Namespace NeuralNetwork
             End SyncLock
         End Function
 
+        ''' <summary>
+        ''' 对值进行约束剪裁
+        ''' </summary>
+        ''' <param name="value#"></param>
+        ''' <param name="truncate#"></param>
+        ''' <returns></returns>
+        Friend Function ValueTruncate(value#, truncate#) As Double
+            If Double.IsNegativeInfinity(value) Then
+                value = -truncate
+            ElseIf Double.IsPositiveInfinity(value) Then
+                value = truncate
+            ElseIf Double.IsNaN(value) Then
+                value = 0
+            ElseIf value > truncate OrElse value < -truncate Then
+                value = Math.Sign(value) * truncate
+            End If
+
+            Return value
+        End Function
+
         <Extension>
         Friend Function PopulateAllSynapses(neuron As Neuron) As IEnumerable(Of Synapse)
             Return neuron.InputSynapses + neuron.OutputSynapses.AsList

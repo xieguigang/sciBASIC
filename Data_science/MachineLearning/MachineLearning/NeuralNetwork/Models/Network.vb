@@ -180,7 +180,9 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' 这个函数会返回<see cref="OutputLayer"/>
         ''' </summary>
-        ''' <param name="inputs"></param>
+        ''' <param name="inputs">
+        ''' 神经网路的输入层的输入数据,应该都是被归一化为[0,1]或者[-1,1]这两个区间内了的
+        ''' </param>
         ''' <returns></returns>
         Public Function ForwardPropagate(inputs As Double(), parallel As Boolean) As Layer
             Call InputLayer.Input(data:=inputs)
@@ -194,6 +196,10 @@ Namespace NeuralNetwork
         ''' 反向传播
         ''' </summary>
         ''' <param name="targets"></param>
+        ''' <remarks>
+        ''' 在反向传播之后,网络只会修改节点之间的突触边链接的权重值以及节点
+        ''' 的<see cref="Neuron.Gradient"/>值,没有修改节点的<see cref="Neuron.Value"/>值.
+        ''' </remarks>
         Public Sub BackPropagate(targets As Double(), truncate As Double, parallel As Boolean)
             LearnRate = LearnRate * remains
             Momentum = 1 - LearnRate

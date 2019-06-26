@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::4e4c5a212a854b8b9d5ee6d75ecb401a, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\DataSet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataSet
-    ' 
-    '         Properties: DataSamples, NormalizeMatrix, OutputSize, Size
-    ' 
-    '         Function: createExtends, PopulateNormalizedSamples, ToString
-    '         Class SampleList
-    ' 
-    '             Properties: items
-    ' 
-    '             Function: [Select], getCollection, getSize
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataSet
+' 
+'         Properties: DataSamples, NormalizeMatrix, OutputSize, Size
+' 
+'         Function: createExtends, PopulateNormalizedSamples, ToString
+'         Class SampleList
+' 
+'             Properties: items
+' 
+'             Function: [Select], getCollection, getSize
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NeuralNetwork.StoreProcedure
 
@@ -111,16 +112,21 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <returns></returns>
         Public Iterator Function PopulateNormalizedSamples(Optional dummyExtends% = 0) As IEnumerable(Of Sample)
             Dim input#()
+            Dim normSample As Sample
 
             For Each sample As Sample In DataSamples.items
                 input = NormalizeMatrix.NormalizeInput(sample)
-                sample = New Sample With {
+                normSample = New Sample With {
                     .ID = sample.ID,
                     .status = input,
                     .target = sample.target + createExtends(input, dummyExtends)
                 }
 
-                Yield sample
+                If sample.status.vector.Any(AddressOf IsNaNImaginary) Then
+                    Throw New InvalidProgramException("NaN value exists in your dataset: " & normSample.GetJson)
+                End If
+
+                Yield normSample
             Next
         End Function
 

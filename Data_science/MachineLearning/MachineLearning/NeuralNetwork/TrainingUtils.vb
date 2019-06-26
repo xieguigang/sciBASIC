@@ -104,7 +104,7 @@ Namespace NeuralNetwork
         Dim errors#
 
         ''' <summary>
-        ''' 训练所使用到的经验数量,即数据集的大小s
+        ''' 训练所使用到的经验数量,即数据集的大小size
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property XP As Integer
