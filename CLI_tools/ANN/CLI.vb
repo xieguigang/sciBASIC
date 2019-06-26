@@ -163,6 +163,20 @@ Module CLI
         End With
     End Function
 
+    <ExportAPI("/Export.NodeValue.Frames")>
+    <Usage("/Export.NodeValue.Frames /in <debugger.cdf> [/out <table.csv>]")>
+    <Description("Export node value of each iteration frame, for debug used only!")>
+    Public Function ExportValueFrames(args As CommandLine) As Integer
+        Dim dump$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{dump.TrimSuffix}.nodeValue_frames.csv"
+
+        Using cdf As netCDFReader = netCDFReader.Open(dump)
+
+        End Using
+
+        Return 0
+    End Function
+
     <ExportAPI("/config.template")>
     <Usage("/config.template [/save <default=./config.ini>]")>
     <Description("Create the default config file for the ANN model.")>
