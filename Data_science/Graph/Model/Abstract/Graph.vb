@@ -150,7 +150,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ExistEdge(edge As Edge) As Boolean
-        Return edges.ContainsKey(edge.Key)
+        Return edges.ContainsKey(edge.ID)
     End Function
 
     ''' <summary>

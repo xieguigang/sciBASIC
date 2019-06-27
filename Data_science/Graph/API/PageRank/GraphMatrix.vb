@@ -92,7 +92,7 @@ Namespace Analysis.PageRank
             Dim uid$
 
             For Each edge As VertexEdge In edges
-                uid = edge.Key
+                uid = edge.ID
 
                 If Not counts.ContainsKey(uid) Then
                     Call counts.Add(uid, (edge, 1))
