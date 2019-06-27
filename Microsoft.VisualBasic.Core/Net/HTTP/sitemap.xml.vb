@@ -125,7 +125,9 @@ Namespace Net.Http
             Return Save(path, encoding.CodePage)
         End Function
 
-        Public Shared Function ScanAllFiles(wwwroot$, host$, Optional changefreq As changefreqs = changefreqs.monthly) As sitemap
+        Shared ReadOnly htmlFiles As [Default](Of String()) = {"*.html", "*.htm"}
+
+        Public Shared Function ScanAllFiles(wwwroot$, host$, Optional fileTypes$() = Nothing, Optional changefreq As changefreqs = changefreqs.monthly) As sitemap
             Dim url As New List(Of url)
             Dim freq$ = changefreq.ToString
             Dim lastmod$ = $"{Now.Year}-{FillDateZero(Now.Month)}-{FillDateZero(Now.Day)}"
@@ -133,7 +135,7 @@ Namespace Net.Http
             wwwroot = wwwroot.GetDirectoryFullPath
             host = host.TrimDIR
 
-            For Each file$ In ls - l - r - "*.*" <= wwwroot
+            For Each file$ In ls - l - r - (fileTypes Or htmlFiles) <= wwwroot
                 file = file.Replace("\", "/").Replace(wwwroot, "")
                 file = host & file
                 url += New url With {
