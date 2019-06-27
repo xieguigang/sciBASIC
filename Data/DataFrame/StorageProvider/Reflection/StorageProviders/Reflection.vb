@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67db8400eef0eb78532c7256ffff785d, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::d9871e59e7da15684f3fd386b75c2996, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -33,17 +33,8 @@
 
     '     Module Reflector
     ' 
-    '         Function: __save, Convert, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema, GetsRowData
-    '                   Load, LoadDataToObject, Save
-    '         Enum OperationTypes
-    ' 
-    '             ReadDataFromObject, WriteDataToObject
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
+    '         Function: __save, Convert, CreateRowBuilder, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema
+    '                   GetsRowData, Load, LoadDataToObject, Save
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,6 +49,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
 
@@ -78,7 +70,7 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         <Extension> Public Function GetDataFrameworkTypeSchema(type As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
-            Dim Schema As TableSchema = TableSchema.CreateObject(type, Explicit).CopyReadDataFromObject
+            Dim Schema As TableSchema = TableSchema.CreateObjectInternal(type, Explicit).CopyReadDataFromObject
             Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) _
  _
                 () <= From columAttr As Column
@@ -105,18 +97,26 @@ Namespace StorageProvider.Reflection
         End Function
 #End If
 
+        Public Function CreateRowBuilder(Of T)(Optional strict As Boolean = False) As RowBuilder
+            Dim type As Type = GetType(T)
+            Dim schema As TableSchema = TableSchema.CreateObjectInternal(type, strict).CopyWriteDataToObject
+            Dim rowBuilder As New RowBuilder(schema)
+
+            Return rowBuilder
+        End Function
+
         ''' <summary>
         ''' 将Csv文件加载至一个目标集合之中以完成数据从文件之中的读取操作
         ''' </summary>
         ''' <param name="csv"></param>
         ''' <param name="type"></param>
-        ''' <param name="explicit"></param>
+        ''' <param name="strict"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
         <Extension>
-        Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional explicit As Boolean = False) As IEnumerable(Of Object)
-            Dim schema As TableSchema = TableSchema.CreateObject(type, explicit).CopyWriteDataToObject
+        Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional strict As Boolean = False) As IEnumerable(Of Object)
+            Dim schema As TableSchema = TableSchema.CreateObjectInternal(type, strict).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
             Dim parallel As Boolean = True
 
@@ -154,11 +154,7 @@ Namespace StorageProvider.Reflection
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Convert(Of TClass As Class)(df As DataFrame, Optional explicit As Boolean = True) As IEnumerable(Of TClass)
-            Return df _
-                .LoadDataToObject(GetType(TClass), explicit) _
-                .Select(Function(x)
-                            Return DirectCast(x, TClass)
-                        End Function)
+            Return df.LoadDataToObject(GetType(TClass), explicit).As(Of TClass)
         End Function
 
         ''' <summary>
@@ -247,7 +243,7 @@ Namespace StorageProvider.Reflection
                                Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
 
             Dim source As Object() = ___source.ToVector  ' 结束迭代器，防止Linq表达式重新计算
-            Dim schema As TableSchema = TableSchema.CreateObject(typeDef, strict).CopyReadDataFromObject
+            Dim schema As TableSchema = TableSchema.CreateObjectInternal(typeDef, strict).CopyReadDataFromObject
             Dim rowWriter As RowWriter = New RowWriter(schema, metaBlank, layout) _
                 .CacheIndex(source, reorderKeys)
 
@@ -355,18 +351,5 @@ Namespace StorageProvider.Reflection
                                                 Function(x) x.value)
             Return buf
         End Function
-
-        Public Enum OperationTypes
-            ''' <summary>
-            ''' 需要从对象之中读取数据，需要将数据写入文件的时候使用
-            ''' </summary>
-            ''' <remarks></remarks>
-            ReadDataFromObject
-            ''' <summary>
-            ''' 需要相对象写入数据，从文件之中加载数据的时候使用
-            ''' </summary>
-            ''' <remarks></remarks>
-            WriteDataToObject
-        End Enum
     End Module
 End Namespace

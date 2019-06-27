@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2428c8b81b4533d1c57afd73f2a6a82d, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::308e072d1212f022c32a889ef6a95c55, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: (+4 Overloads) AsDataSource, AsLinq, (+3 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
-    '               (+3 Overloads) LoadCsv, LoadDblVector, LoadStream, LoadTsv, SaveDataSet
-    '               (+2 Overloads) SaveTable, (+7 Overloads) SaveTo, TabExport, ToCsvDoc
+    '               (+3 Overloads) LoadCsv, LoadDataFrame, LoadDblVector, LoadStream, LoadTsv
+    '               SaveDataSet, (+2 Overloads) SaveTable, (+7 Overloads) SaveTo, TabExport, ToCsvDoc
     ' 
     '     Sub: Cable, ForEach
     '     Structure __loadHelper
@@ -84,6 +84,11 @@ Public Module Extensions
     Sub New()
         Call __initStreamIO_pointer()
     End Sub
+
+    <Extension>
+    Public Function LoadDataFrame(path As String, Optional encoding As Encoding = Nothing) As DATA.DataFrame
+        Return New DATA.DataFrame(EntityObject.LoadDataSet(path, encoding:=encoding))
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -204,14 +209,17 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="path">Csv file path</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetLocusMapName(path As String) As String
-        Dim first As String = path.ReadFirstLine
-        Dim tokens = IO.CharsParser(first)
-        Return tokens.FirstOrDefault
+        Return File.ReadHeaderRow(path).FirstOrDefault
     End Function
 
     <Extension>
-    Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo As String, Optional noTitle As Boolean = False, Optional encoding As Encodings = Encodings.UTF8) As Boolean
+    Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo$,
+                                             Optional noTitle As Boolean = False,
+                                             Optional encoding As Encodings = Encodings.UTF8) As Boolean
+
         Dim doc As File = Reflector.Save(source, False)
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
         Dim slines As String() = lines.Select(Function(x) x.AsLine(vbTab)).ToArray
@@ -219,7 +227,9 @@ Public Module Extensions
         Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
 
-    <Extension> Public Sub ForEach(Of T As Class)(path As String, invoke As Action(Of T))
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub ForEach(Of T As Class)(path As String, invoke As Action(Of T))
         Call DataStream.OpenHandle(path).ForEach(Of T)(invoke)
     End Sub
 
@@ -229,7 +239,10 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function AsLinq(Of T As Class)(path$, Optional parallel As Boolean = False) As IEnumerable(Of T)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsLinq(Of T As Class)(path$, Optional parallel As Boolean = False) As IEnumerable(Of T)
         Return DataLinqStream.OpenHandle(path).AsLinq(Of T)(parallel)
     End Function
 
@@ -265,6 +278,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="source"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DataFrame(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))) As EntityObject()
         Return source _
@@ -346,7 +361,8 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Create a dynamics data frame object from a csv document object.(从Csv文件之中创建一个数据框容器)
+    ''' Create a dynamics data frame object from a csv document object.
+    ''' (从Csv文件之中创建一个数据框容器)
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
@@ -363,13 +379,17 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dataSet"></param>
-    ''' <param name="explicit"></param>
+    ''' <param name="strict">
+    ''' If this parameter is true, which means if the property in target class <typeparamref name="T"/> is not marked
+    ''' <see cref="Column"/> attribute, then this property will be ignored.
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
-                                                            Optional explicit As Boolean = False,
-                                                            Optional skipEmpty As Boolean = True,
-                                                            Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+    <Extension>
+    Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
+                                                Optional strict As Boolean = False,
+                                                Optional skipEmpty As Boolean = True,
+                                                Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
         Dim sheet As File_csv
 
         If skipEmpty Then
@@ -384,7 +404,7 @@ Public Module Extensions
 
         Return IO.DataFrame _
             .CreateObject(file:=sheet) _
-            .AsDataSource(Of T)(explicit, maps)
+            .AsDataSource(Of T)(strict, maps)
     End Function
 
     ''' <summary>
@@ -508,6 +528,7 @@ Public Module Extensions
     ''' </param>
     ''' <param name="encoding"></param>
     ''' <param name="maps">``{meta_define -> custom}``</param>
+    ''' <param name="layout">可以通过这个参数来进行列顺序的重排，值越小表示排在越前面</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
@@ -531,13 +552,17 @@ Public Module Extensions
         Call EchoLine($"Save data to file:///{path}")
         Call EchoLine($"[CSV.Reflector] Reflector have {source.Count} lines of data to write.")
 
+        Dim objSeq = source.Select(Function(o) DirectCast(o, Object))
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
-            source.Select(Function(o) DirectCast(o, Object)),
-            GetType(T),
-            strict,
-            maps,
-            Not nonParallel,
-            metaBlank, reorderKeys, layout)
+            source:=objSeq,
+            type:=GetType(T),
+            Explicit:=strict,
+            maps:=maps,
+            parallel:=Not nonParallel,
+            metaBlank:=metaBlank,
+            reorderKeys:=reorderKeys,
+            layout:=layout
+        )
 
         If transpose Then
             csv = csv _
@@ -550,7 +575,8 @@ Public Module Extensions
         Dim success = csv.SaveDataFrame(
             path:=path,
             encoding:=encoding,
-            tsv:=tsv)
+            tsv:=tsv
+        )
 
         If success Then
             Call "CSV saved!".EchoLine
@@ -642,8 +668,8 @@ Public Module Extensions
     <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim row As IEnumerable(Of String) = From n As Double
                                             In data
-                                            Select s =
-                                                n.ToString
+                                            Select s = n.ToString
+
         Dim buf As New IO.File({New RowObject(row)})
         Return buf.Save(path, encoding.CodePage)
     End Function

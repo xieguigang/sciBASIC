@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::579ab68164d9260dca60a51e401fe1e9, Data\DataFrame.Extensions\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::79f2a16f800cb4ffdf222a98b2b1aac5, Data\DataFrame.Extensions\Schema.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <summary>
 ''' The schema project json file.
 ''' </summary>
-Public Class Schema : Inherits BaseClass
+Public Class Schema
 
     ''' <summary>
     ''' 默认的主文件的名称

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::957e340797ba8f7ecbcba1112f214e93, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::4fb4eefea535d7445616c338383477b9, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -99,7 +99,7 @@ Namespace Graph
     ''' <summary>
     ''' The network graph object model, corresponding network csv table data model is <see cref="FileStream.NetworkTables"/> 
     ''' </summary>
-    Public Class NetworkGraph : Inherits BaseClass
+    Public Class NetworkGraph
         Implements IGraph
         Implements ICloneable
 

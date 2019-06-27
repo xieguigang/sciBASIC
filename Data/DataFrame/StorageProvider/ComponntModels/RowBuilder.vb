@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab1665d270cd7f6e18a939e5703b35c8, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::aae287a303cb4291dad3674158751754, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
     ' Author:
     ' 
@@ -39,12 +39,12 @@
     ' 
     '     Class RowBuilder
     ' 
-    '         Properties: Columns, Defaults, HaveMetaAttribute, IndexedFields, MissingFields
-    '                     NonIndexed, SchemaProvider
+    '         Properties: ColumnIndex, Columns, Defaults, HaveMetaAttribute, IndexedFields
+    '                     MissingFields, NonIndexed, SchemaProvider
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __tryFill, FillData, ToString
+    '         Function: __tryFill, (+2 Overloads) FillData, ToString
     ' 
     '         Sub: IndexOf, SolveReadOnlyMetaConflicts
     ' 
@@ -53,6 +53,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
@@ -81,6 +82,8 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Columns As StorageProvider()
+        Public ReadOnly Property ColumnIndex As Index(Of String)
+
         Public ReadOnly Property SchemaProvider As SchemaProvider
 
         ''' <summary>
@@ -132,6 +135,7 @@ Namespace StorageProvider.ComponentModels
 
             HaveMetaAttribute = Not schemaProvider.MetaAttributes Is Nothing
             Defaults = DefaultAttribute.GetDefaultValues(schemaProvider.DeclaringType)
+            ColumnIndex = Columns.Select(Function(c) c.Name).ToArray
         End Sub
 
         ''' <summary>
@@ -139,8 +143,7 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="schema"></param>
         Public Sub IndexOf(schema As ISchema)
-            Dim setValue = New SetValue(Of StorageProvider)() _
-                .GetSet(NameOf(StorageProvider.Ordinal))
+            Dim setValue = New SetValue(Of StorageProvider)().GetSet(NameOf(StorageProvider.Ordinal))
             Dim LQuery() = LinqAPI.Exec(Of StorageProvider) _
  _
                 () <= From field As StorageProvider
@@ -167,10 +170,13 @@ Namespace StorageProvider.ComponentModels
                                             Function(field) field.Value)
             End With
 
-            With IndexedFields.Select(Function(i) i.BindProperty.Name).Indexing
+            With IndexedFields _
+                .Select(Function(i) i.BindProperty.Name) _
+                .Indexing
+
                 _MissingFields = Columns _
                     .Where(Function(field)
-                               Return Not field.BindProperty.Name.IsOneOfA(.ByRef) AndAlso Not field.IsMetaField
+                               Return Not field.BindProperty.Name Like .ByRef AndAlso Not field.IsMetaField
                            End Function) _
                     .ToArray
             End With
@@ -216,9 +222,59 @@ Namespace StorageProvider.ComponentModels
                     Call meta.Add(x.name, x.value)
                 Next
 
-                Call SchemaProvider.MetaAttributes _
-                                   .BindProperty _
-                                   .SetValue(obj, meta, Nothing)
+                Call SchemaProvider _
+                    .MetaAttributes _
+                    .BindProperty _
+                    .SetValue(obj, meta, Nothing)
+            End If
+
+            Return obj
+        End Function
+
+        ''' <summary>
+        ''' 这个函数主要是应用于例如sqlite3, netcdf, hdf5等数据文件之中的所存储的对象的批量的反序列化操作
+        ''' </summary>
+        ''' <param name="row">从数据文件之中所读取出来的一帧数据</param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Function FillData(row As IEnumerable(Of NamedValue(Of Object)), obj As Object) As Object
+            Dim missing As New List(Of NamedValue(Of Object))
+            Dim propValue As Object
+            Dim column As StorageProvider
+            Dim i As VBInteger = Scan0
+
+            For Each field As NamedValue(Of Object) In row
+                If (i = ColumnIndex.IndexOf(field.Name)) = -1 Then
+                    missing += field
+
+                    Continue For
+                Else
+                    column = _Columns(i)
+                    propValue = field.Value
+                End If
+
+                If propValue Is Nothing Then
+                    propValue = Defaults(column.BindProperty.Name)
+                End If
+
+                If Not propValue Is Nothing AndAlso GetType(Byte()) Is propValue.GetType Then
+
+                End If
+
+                Call column.SetValue(obj, propValue)
+            Next
+
+            If HaveMetaAttribute Then
+                Dim meta As IDictionary = SchemaProvider.MetaAttributes.CreateDictionary
+
+                For Each x In missing
+                    Call meta.Add(x.Name, x.Value)
+                Next
+
+                Call SchemaProvider _
+                    .MetaAttributes _
+                    .BindProperty _
+                    .SetValue(obj, meta, Nothing)
             End If
 
             Return obj

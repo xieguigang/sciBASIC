@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc6c01f59b9d15120314dc3e75fb0d3c, Data_science\Mathematica\Math\Math\FuzzyLogic\MembershipFunction.vb"
+﻿#Region "Microsoft.VisualBasic::3368ebe9b7c4bdcd8d69e3c4f3fd02ff, Data_science\Mathematica\Math\Math\FuzzyLogic\MembershipFunction.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,7 @@ Namespace Logical.FuzzyLogic
     ''' <summary>
     ''' Represents a membership function.
     ''' </summary>
-    Public Class MembershipFunction : Inherits BaseClass
+    Public Class MembershipFunction
 
 #Region "Constructors"
 

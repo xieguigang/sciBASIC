@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cd2f502c2bb29479d8383c99a8002d2, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1fdcb64ae24bd5da374378525524491e, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,11 @@
     ' 
     '     Module RandomExtensions
     ' 
-    '         Properties: Seeds
+    '         Properties: seeds
     ' 
     '         Function: GetNextBetween, (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian
-    '                   NextTriangular, Permutation, randf, RandomSingle, Seed
+    '                   NextInteger, NextTriangular, Permutation, randf, RandomSingle
+    '                   Seed
     ' 
     '         Sub: (+3 Overloads) Shuffle
     ' 
@@ -119,11 +120,28 @@ Namespace Math
         ''' 不同的代码重复使用这个种子，这样子可以尽量的模拟出真正的随机行为
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Seeds As New Random()
+        Public ReadOnly Property seeds As New Random()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function RandomSingle() As Single
+        Public Function RandomSingle() As Double
             Return seeds.NextDouble()
+        End Function
+
+        ''' <summary>
+        ''' Returns a non-negative random integer that is less than the specified maximum.
+        ''' </summary>
+        ''' <param name="upper">
+        ''' The exclusive upper bound of the random number to be generated. maxValue must
+        ''' be greater than or equal to 0.</param>
+        ''' <returns>
+        ''' A 32-bit signed integer that is greater than or equal to 0, and less than maxValue;
+        ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
+        ''' if maxValue equals 0, maxValue is returned.
+        ''' </returns>
+        Public Function NextInteger(upper As Integer) As Integer
+            SyncLock seeds
+                Return seeds.Next(upper)
+            End SyncLock
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -263,7 +281,9 @@ Namespace Math
 
         ''' <summary>
         ''' Returns n unique random numbers in the range [1, n], inclusive. 
-        ''' This is equivalent to getting the first n numbers of some random permutation of the sequential numbers from 1 to max. 
+        ''' This is equivalent to getting the first n numbers of some random permutation of the sequential 
+        ''' numbers from 1 to max. 
+        ''' 
         ''' Runs in O(k^2) time.
         ''' </summary>
         ''' <param name="rand"></param>

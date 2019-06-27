@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e510d29027e3313cbe9e3059375987cc, mime\text%html\HTML\CSS\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::cf82a88b484df116111383a454930959, mime\text%html\HTML\CSS\Stroke.vb"
 
     ' Author:
     ' 
@@ -106,7 +106,7 @@ Namespace HTML.CSS
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"stroke: {fill}; stroke-width: {width}px; stroke-dash: {dash};"
+            Return $"stroke: {fill}; stroke-width: {width}px; stroke-dash: {dash.ToString.ToLower};"
         End Function
 
         Shared ReadOnly __dashStyles As Dictionary(Of String, DashStyle) =

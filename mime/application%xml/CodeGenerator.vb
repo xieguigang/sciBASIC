@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c049a3a280cd0b41299a8cc8d995fee2, mime\application%xml\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::8344eeb7bce18e036596875d4d60ede6, mime\application%xml\CodeGenerator.vb"
 
     ' Author:
     ' 
@@ -39,6 +39,9 @@
 
 #End Region
 
+''' <summary>
+''' Generate the VB.NET class code based on the xsd definition
+''' </summary>
 Public Class CodeGenerator
 
 End Class

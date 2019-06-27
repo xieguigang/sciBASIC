@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e24a8af790466d6ed2e756a5b6b23219, Data_science\Mathematica\Math\Math\Algebra\Solvers\SOR.vb"
+﻿#Region "Microsoft.VisualBasic::8d4e1fb426e663ef1274d278cb5d3a98, Data_science\Mathematica\Math\Math\Algebra\Solvers\SOR.vb"
 
     ' Author:
     ' 

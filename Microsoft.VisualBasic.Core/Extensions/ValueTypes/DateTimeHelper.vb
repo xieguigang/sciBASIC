@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d63cd54a853a12b7706f778f74ce678c, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::40239572853fd7e8fbe27bf6f2d221e9, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, IsEmpty
-    '                   UnixTimeStamp, YYMMDD
+    '                   ReadableElapsedTime, UnixTimeStamp, YYMMDD
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,6 +45,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.C
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ValueTypes
 
@@ -195,6 +197,29 @@ Namespace ValueTypes
             Else
                 Return False
             End If
+        End Function
+
+        Public Function ReadableElapsedTime(microtime&, Optional format$ = "%.3f%s", Optional round% = 3) As String
+            Dim unit$
+            Dim time!
+
+            If microtime >= 1000 Then
+                unit = "s"
+                time = Math.Round(microtime / 1000, round)
+
+                If time >= 60 Then
+                    unit = "min"
+                    time = Math.Round(time / 60, round)
+                End If
+
+                format = sprintf(format, time, unit)
+            Else
+                unit = "ms"
+                time = microtime
+                format = sprintf("%s%s", time, unit)
+            End If
+
+            Return format
         End Function
     End Module
 End Namespace

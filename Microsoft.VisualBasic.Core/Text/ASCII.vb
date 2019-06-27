@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2ca89034398b6487e9edc6607f9bff1, Microsoft.VisualBasic.Core\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::f95d6aa886006fbd587e8bdb6fd181a5, Microsoft.VisualBasic.Core\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: AlphaNumericTable, Nonprintings, Symbols
     ' 
-    '         Function: IsASCIIString, ReplaceQuot, TrimNonPrintings
+    '         Function: IsASCIIString, IsNonPrinting, ReplaceQuot, TrimNonPrintings
     '         Class [Byte]
     ' 
     '             Function: GetASCIISymbols
@@ -51,6 +51,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Text
 
@@ -267,6 +268,8 @@ Namespace Text
         Public Const al% = Asc("a"c)
         Public Const zl% = Asc("z"c)
 
+        Public Const N As Integer = Asc("N"c)
+
         ''' <summary>
         ''' ASCII code for number ``0``
         ''' </summary>
@@ -281,12 +284,21 @@ Namespace Text
         ''' </summary>
         Public Const Mark As Char = "'"c
 
+        Shared ReadOnly nonPrintingBytes As Index(Of Byte) = Nonprintings _
+            .Select(Function(c) CByte(Asc(c))) _
+            .ToArray
+
         Public Shared Function TrimNonPrintings(s$) As String
             For Each c As Char In Nonprintings
                 Call s.Trim(c, "")
             Next
 
             Return s
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsNonPrinting(b As Byte) As Boolean
+            Return b Like nonPrintingBytes
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5225b4af5fd36e23f324d22b213f8db, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::01b78c11acae13f368db7b19f86f17bb, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Namespace d3js.scale
         Public MustOverride Function domain(values As IEnumerable(Of String)) As T
         Public MustOverride Function domain(values As IEnumerable(Of Integer)) As T
 
-        Shared ReadOnly defaultRange As DefaultValue(Of IEnumerable(Of Double))
+        Shared ReadOnly defaultRange As [Default](Of  IEnumerable(Of Double))
 
         Shared Sub New()
             defaultRange = DirectCast({0#, 1.0#}, IEnumerable(Of Double)).AsDefault

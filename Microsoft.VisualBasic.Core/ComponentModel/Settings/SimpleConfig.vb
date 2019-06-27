@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a343eafdd1b0b46b76e8050d5db83965, Microsoft.VisualBasic.Core\ComponentModel\Settings\SimpleConfig.vb"
+﻿#Region "Microsoft.VisualBasic::a33e499722e8f82ca55ee720a1cf47ca, Microsoft.VisualBasic.Core\ComponentModel\Settings\SimpleConfig.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Name, TypeInfo
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GenerateConfigurations, ToString, TryParse
+    '         Function: bindProperties, GenerateConfigurations, ToString, TryParse
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,6 +48,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports typeSchema = System.Reflection.TypeInfo
 
 Namespace ComponentModel.Settings
@@ -88,17 +89,7 @@ Namespace ComponentModel.Settings
             Dim type As typeSchema = GetType(T)
             Dim configType As Type = GetType(TConfig)
             Dim properties = type.GetProperties(BindingFlags.Instance Or BindingFlags.Public)
-            Dim LQuery = LinqAPI.Exec(Of BindProperty(Of TConfig)) _
- _
-                () <= From [property] As PropertyInfo
-                      In properties
-                      Let attrs As Object() = [property].GetCustomAttributes(
-                          attributeType:=configType,
-                          inherit:=True)
-                      Let info As Type = [property].PropertyType
-                      Where Not attrs.IsNullOrEmpty AndAlso StringParsers.ContainsKey(info)
-                      Let attr = DirectCast(attrs.First, TConfig)
-                      Select New BindProperty(Of TConfig)(attr, [property])
+            Dim LQuery = bindProperties(Of TConfig)(properties, configType).ToArray
 
             If LQuery.IsNullOrEmpty Then
                 Return
@@ -137,29 +128,43 @@ INSERT:
             Next
         End Function
 
+        Private Shared Function bindProperties(Of Tconfig As SimpleConfig)(properties As PropertyInfo(), configType As Type) As IEnumerable(Of BindProperty(Of Tconfig))
+            Return From [property] As PropertyInfo
+                   In properties
+                   Let attrs As Object() = [property].GetCustomAttributes(attributeType:=configType, inherit:=True)
+                   Let info As Type = [property].PropertyType
+                   Where Not attrs.IsNullOrEmpty AndAlso StringParsers.ContainsKey(info)
+                   Let attr = DirectCast(attrs.First, Tconfig)
+                   Select New BindProperty(Of Tconfig)(attr, [property])
+        End Function
+
+        Shared ReadOnly defaultFormat As New [Default](Of Func(Of String, String, String))(Function(name, value) $"{name}= {value}")
+
         ''' <summary>
         ''' 从类型实体生成配置文件数据
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="target"></param>
+        ''' <param name="formats">
+        ''' ``[name, value] => format_output``
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>类型实体之中的简单属性，只要具备可读属性即可被解析出来</remarks>
-        Public Shared Iterator Function GenerateConfigurations(Of T As Class)(target As T) As IEnumerable(Of String)
+        Public Shared Iterator Function GenerateConfigurations(Of T As Class)(target As T, Optional formats As Func(Of String, String, String) = Nothing) As IEnumerable(Of String)
             Dim type As Type = GetType(T)
             Dim schema = TryParse(Of T, SimpleConfig)(canRead:=True, canWrite:=False).ToArray
             Dim mlen As Integer = Aggregate cfg As SimpleConfig
                                   In schema.Select(Function(x) x.field)
                                   Let l = Len(cfg._Name)
                                   Into Max(l)
-
-            Dim bufs As New List(Of String)
+            Dim formatter = formats Or defaultFormat
 
             For Each [property] As BindProperty(Of SimpleConfig) In schema
                 Dim blank As New String(" ", mlen - Len([property].field._Name) + 2)
-                Dim Name As String = [property].field._Name & blank
+                Dim name As String = [property].field._Name & blank
                 Dim value As String = Scripting.ToString([property].GetValue(target))
 
-                Yield $"{Name}= {value}"
+                Yield formatter(name, value)
             Next
         End Function
     End Class

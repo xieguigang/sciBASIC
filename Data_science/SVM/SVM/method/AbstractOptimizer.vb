@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8d7cbda66dd0c628738f835b47679ee, Data_science\SVM\SVM\method\AbstractOptimizer.vb"
+﻿#Region "Microsoft.VisualBasic::025a62c63083e9eafc00650b70ec81ab, Data_science\SVM\SVM\method\AbstractOptimizer.vb"
 
     ' Author:
     ' 

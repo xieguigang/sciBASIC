@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a633ac53c544d1028f2d80841585290, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
+﻿#Region "Microsoft.VisualBasic::132bcc16d970a6deeae3a85e3aada97a, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: [As], binaryOperatorSelfLeft, CreateVector, GetDynamicMemberNames, GetJson
-    '                   TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember, TrySetMember, TryUnaryOperation
+    '                   inspectType, TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember, TrySetMember
+    '                   TryUnaryOperation
     ' 
     '         Sub: writeBuffer
     ' 
@@ -69,7 +70,17 @@ Namespace Language.Vectorization
         ''' 无参数的属性
         ''' </summary>
         Protected linq As DataValue(Of T)
-        Protected ReadOnly type As New VectorSchemaProvider(GetType(T))
+        Protected ReadOnly type As VectorSchemaProvider = inspectType(GetType(T))
+
+        Shared ReadOnly typeCache As New Dictionary(Of Type, VectorSchemaProvider)
+
+        Private Shared Function inspectType(type As Type) As VectorSchemaProvider
+            If Not typeCache.ContainsKey(type) Then
+                typeCache(type) = New VectorSchemaProvider(type)
+            End If
+
+            Return typeCache(type)
+        End Function
 
         Default Public Overloads Property Item(exp$) As Object
             Get

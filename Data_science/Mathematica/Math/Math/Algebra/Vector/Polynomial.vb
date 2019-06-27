@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba45700f98e2582724b0beb668e475dc, Data_science\Mathematica\Math\Math\Algebra\Vector\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::ad51791b4b463fdd6569af2b93135f77, Data_science\Mathematica\Math\Math\Algebra\Vector\Polynomial.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Factors, IsLinear
     ' 
-    '         Function: (+2 Overloads) ToString
+    '         Function: (+3 Overloads) ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -78,21 +78,37 @@ Namespace LinearAlgebra
             Return ToString(format:="F2")
         End Function
 
-        Public Overloads Function ToString(format As String) As String
+        Public Overloads Function ToString(format As String, Optional html As Boolean = False) As String
             Dim items = Factors _
                 .Select(Function(a, i)
                             If i = 0 Then
-                                Return a.ToString(format)
+                                Return ToString(a, format, html)
                             ElseIf i = 1 Then
-                                Return $"{a.ToString(format)}*X"
+                                Return $"{ToString(a, format, html)}*X"
                             Else
-                                Return $"{a.ToString(format)}*X^{i}"
+                                Return $"{ToString(a, format, html)}*X^{i}"
                             End If
                         End Function) _
                 .ToArray
             Dim Y$ = items.JoinBy(" + ")
 
             Return Y
+        End Function
+
+        Private Overloads Shared Function ToString(a As Double, format$, html As Boolean) As String
+            Dim text = a.ToString(format).ToLower
+
+            If Not html Then
+                Return text
+            Else
+                Dim t As String() = text.Split("e"c)
+
+                If t.Length = 1 Then
+                    Return text
+                Else
+                    Return $"{t(Scan0)}e<sup>{t(1)}</sup>"
+                End If
+            End If
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbc411f5f79c2ab95437fb3f8569f0cc, mime\text%yaml\1.2\Syntax\BlockScalarModifier.vb"
+﻿#Region "Microsoft.VisualBasic::2a3bc2feefb61f9a020768d46e1657e5, mime\text%yaml\1.2\Syntax\BlockScalarModifier.vb"
 
     ' Author:
     ' 

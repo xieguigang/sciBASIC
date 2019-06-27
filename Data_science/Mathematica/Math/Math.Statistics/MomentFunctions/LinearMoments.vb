@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6158f643749c0aa2cc5fe69c8827e7d, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\LinearMoments.vb"
+﻿#Region "Microsoft.VisualBasic::2b418f72a98360b0a393d3834b4dfbfe, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\LinearMoments.vb"
 
     ' Author:
     ' 
@@ -33,16 +33,15 @@
 
     '     Class LinearMoments
     ' 
+    '         Properties: L1, L2, L3, L4, Max
+    '                     Min, SampleSize, T1, T3, T4
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetL1, GetL2, GetL3, GetL4, GetMax
-    '                   GetMin, GetSampleSize, GetT1, GetT3, GetT4
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
-
-Imports System
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -58,19 +57,42 @@ Namespace MomentFunctions
     ''' </summary>
     Public Class LinearMoments
 
-        Private _L1 As Double
-        Private _L2 As Double
-        Private _L3 As Double
-        Private _L4 As Double
-        Private _Count As Integer
-        Private _Max As Double
-        Private _Min As Double
+        Public ReadOnly Property L1 As Double
+        Public ReadOnly Property L2 As Double
+        Public ReadOnly Property L3 As Double
+        Public ReadOnly Property L4 As Double
+        Public ReadOnly Property SampleSize As Integer
+        Public ReadOnly Property Max As Double
+        Public ReadOnly Property Min As Double
+
+        Public ReadOnly Property T1() As Double
+            Get
+                Return _L2 / _L1
+            End Get
+        End Property
+
+        Public ReadOnly Property T3() As Double
+            Get
+                Return _L3 / _L2
+            End Get
+        End Property
+
+        Public ReadOnly Property T4() As Double
+            Get
+                Return _L4 / _L2
+            End Get
+        End Property
 
         Public Sub New(data As Double())
-            Array.Sort(data) 'sorts ascending based on javadocs
-            _Count = data.Length
+            Dim Count = data.Length
+
+            ' sorts ascending based on javadocs
+            Call Array.Sort(data)
+
             _Min = data(0)
-            _Max = data(_Count - 1)
+            _Max = data(Count - 1)
+            _SampleSize = Count
+
             Dim cl2 As Long
             Dim cl3 As Long
             Dim cl4 As Long
@@ -81,56 +103,29 @@ Namespace MomentFunctions
             Dim sl2 As Double = 0
             Dim sl3 As Double = 0
             Dim sl4 As Double = 0
+
             For i As Integer = 0 To data.Length - 1
                 cl2 = CLng((i * (i - 1)) \ 2)
                 cl3 = CLng((cl2 * (i - 2)) \ 3)
-                cr1 = _Count - (i + 1)
-                cr2 = CLng(cr1 * ((_Count - (i + 2))) \ 2)
-                cr3 = CLng(cr2 * ((_Count - (i + 3))) \ 3)
+                cr1 = Count - (i + 1)
+                cr2 = CLng(cr1 * ((Count - (i + 2))) \ 2)
+                cr3 = CLng(cr2 * ((Count - (i + 3))) \ 3)
                 sl1 += data(i)
                 sl2 += data(i) * (i - cr1)
                 sl3 += data(i) * (cl2 - 2 * i * cr1 + cr2)
                 sl4 += data(i) * (cl3 - 3 * cl2 * cr1 + 3 * i * cr2 - cr3)
             Next i
-            cl2 = CLng(_Count) * (_Count - 1) \ 2 ' not sure order of operations is correct here..
-            cl3 = CLng(cl2) * (_Count - 2) \ 3
-            cl4 = CLng(cl3) * (_Count - 3) \ 4
-            _L1 = sl1 / _Count
+
+            ' not sure order of operations is correct here..
+            cl2 = CLng(Count) * (Count - 1) \ 2
+            cl3 = CLng(cl2) * (Count - 2) \ 3
+            cl4 = CLng(cl3) * (Count - 3) \ 4
+            _L1 = sl1 / Count
             _L2 = sl2 / cl2 \ 2
             _L3 = sl3 / cl3 \ 3
             _L4 = sl4 / cl4 \ 4
         End Sub
 
-        Public Overridable Function GetL1() As Double
-            Return _L1
-        End Function
-        Public Overridable Function GetL2() As Double
-            Return _L2
-        End Function
-        Public Overridable Function GetL3() As Double
-            Return _L3
-        End Function
-        Public Overridable Function GetL4() As Double
-            Return _L4
-        End Function
-        Public Overridable Function GetT1() As Double
-            Return _L2 / _L1
-        End Function
-        Public Overridable Function GetT3() As Double
-            Return _L3 / _L2
-        End Function
-        Public Overridable Function GetT4() As Double
-            Return _L4 / _L2
-        End Function
-        Public Overridable Function GetMax() As Double
-            Return _Max
-        End Function
-        Public Overridable Function GetMin() As Double
-            Return _Min
-        End Function
-        Public Overridable Function GetSampleSize() As Integer
-            Return _Count
-        End Function
     End Class
 
 End Namespace

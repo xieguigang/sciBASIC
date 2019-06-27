@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e805c11159e2b7e1590043a09177973, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::8285499753d9a6af809feac0b2e467e4, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -36,10 +36,10 @@
     '         Properties: HasValue, Value
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: [Default], Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
+    '         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
     '                   IsNothing, ToString
     '         Operators: -, (+3 Overloads) +, <=, <>, =
-    '                    >=
+    '                    >=, (+2 Overloads) Like
     '         Interface IValueOf
     ' 
     '             Properties: Value
@@ -52,6 +52,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -61,8 +62,7 @@ Namespace Language
     ''' You can applying this data type into a dictionary object to makes the mathematics calculation more easily.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Value(Of T) ': Implements ValueType
-        Implements IValueOf
+    Public Class Value(Of T) : Implements IValueOf
 
         ''' <summary>
         ''' This object have a <see cref="IValueOf.value"/> property for stores its data
@@ -87,6 +87,20 @@ Namespace Language
             Get
                 Return Not Value Is Nothing
             End Get
+        End Property
+
+        ''' <summary>
+        ''' Get data from <see cref="Value"/> through its index method
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Default Public Overridable Property Index(key As Object) As Object
+            Get
+                Return CObj(Value)(key)
+            End Get
+            Set(value As Object)
+                CObj(Me.Value)(key) = value
+            End Set
         End Property
 
         ''' <summary>
@@ -144,6 +158,10 @@ Namespace Language
             End If
         End Function
 
+        Public Overloads Function Equals(other As T) As Boolean
+            Return Value.Equals(other)
+        End Function
+
         ''' <summary>
         ''' The object value with a specific type define.
         ''' </summary>
@@ -167,7 +185,7 @@ Namespace Language
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetUnderlyingType() As Type
+        Public Overridable Function GetUnderlyingType() As Type
             Return GetType(T)
         End Function
 
@@ -255,6 +273,31 @@ Namespace Language
             Return o
         End Operator
 
+        ''' <summary>
+        ''' Type match operator, this may consider inherits of base type and interface implementation.
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Unlike this operation its behavior, the Variant type its type match operator 
+        ''' is a type exactly match operation.
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Like(o As Value(Of T), type As Type) As Boolean
+            If o.GetUnderlyingType Is type Then
+                Return True
+            End If
+
+            If type.IsInterface Then
+                Return o.GetUnderlyingType.ImplementInterface(type)
+            ElseIf type.IsClass Then
+                Return o.GetUnderlyingType.IsInheritsFrom(type)
+            Else
+                Return False
+            End If
+        End Operator
+
         Public Shared Operator <>(value As Value(Of T), o As T) As T
             Throw New NotSupportedException
         End Operator
@@ -262,9 +305,5 @@ Namespace Language
         Public Shared Operator >=(value As Value(Of T), o As T) As T
             Throw New NotSupportedException
         End Operator
-
-        'Public Shared Operator &(o As Value(Of T)) As T
-        '    Return o.value
-        'End Operator
     End Class
 End Namespace

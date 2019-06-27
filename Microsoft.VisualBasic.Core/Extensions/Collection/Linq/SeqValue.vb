@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::601a2e322f2e6105f4f384bb28e1a1b4, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::14c04f9e275fa69452350d6e3f26a155, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 
@@ -78,7 +78,12 @@ Namespace Linq
         ''' <returns></returns>
         Public Property value As T Implements Value(Of T).IValueOf.Value
 
+        ''' <summary>
+        ''' This indexed value have no value.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return i = 0 AndAlso value Is Nothing
             End Get
@@ -109,15 +114,33 @@ Namespace Linq
             Return list
         End Operator
 
+        ''' <summary>
+        ''' Calculation of: ``<see cref="SeqValue(Of T).i"/> Mod <paramref name="n"/>``
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Mod(i As SeqValue(Of T), n%) As Integer
             Return i.i Mod n
         End Operator
 
+        ''' <summary>
+        ''' Not equals to index i
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="i%"></param>
+        ''' <returns></returns>
         Public Shared Operator <>(v As SeqValue(Of T), i%) As Boolean
             Return v.i <> i
         End Operator
 
+        ''' <summary>
+        ''' Equals to index i
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="i%"></param>
+        ''' <returns></returns>
         Public Shared Operator =(v As SeqValue(Of T), i%) As Boolean
             Return v.i = i
         End Operator
@@ -187,4 +210,3 @@ Namespace Linq
         End Sub
     End Structure
 End Namespace
-

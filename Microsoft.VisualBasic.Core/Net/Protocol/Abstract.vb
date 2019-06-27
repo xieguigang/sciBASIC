@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e7ecf75c5801a83c00efe76814041b0, Microsoft.VisualBasic.Core\Net\Protocol\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::6f35238d4e079cd2d617b33b2fcecd44, Microsoft.VisualBasic.Core\Net\Protocol\Abstract.vb"
 
     ' Author:
     ' 

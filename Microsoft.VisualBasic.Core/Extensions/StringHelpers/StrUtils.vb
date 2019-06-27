@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d79cbd09968f5391220d64715bed468, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::5098038090a60f6bce70f3fd3e6523d3, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -109,7 +109,10 @@ Public Module StrUtils
     ''' </summary>
     ''' <param name="s$">The string to search for a match.</param>
     ''' <param name="pattern$">The regular expression pattern to match.</param>
-    ''' <param name="opts">A bitwise combination of the enumeration values that provide options for matching.</param>
+    ''' <param name="opts">
+    ''' A bitwise combination of the enumeration values that provide options for matching.
+    ''' (如果这个参数的值是<see cref="RegexOptions.None"/>的话，则当前的这个函数不会使用正则进行查找)
+    ''' </param>
     ''' <returns>
     ''' A new string that is identical to the input string, except that the replacement
     ''' string takes the place of each matched string. If pattern is not matched in the
@@ -119,7 +122,15 @@ Public Module StrUtils
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Remove(s$, pattern$, Optional opts As RegexOptions = RegexICSng) As String
-        Return r.Replace(s, pattern, "", opts)
+        If opts = RegexOptions.None Then
+            If pattern.StringEmpty Then
+                Return s
+            Else
+                Return s.Replace(pattern, "")
+            End If
+        Else
+            Return r.Replace(s, pattern, "", opts)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -180,12 +191,13 @@ Public Module StrUtils
         Return AscW(c)
     End Function
 
-    ReadOnly newRandom As New DefaultValue(Of Random)(Math.Seeds)
+    ReadOnly newRandom As New [Default](Of Random)(Math.seeds)
 
     ''' <summary>
     ''' 32-126
     ''' </summary>
-    ''' <param name="len%"></param>
+    ''' <param name="len"></param>
+    ''' <param name="seed">默认是使用<see cref="Math.seeds"/>来作为随机种子的</param>
     ''' <returns></returns>
     Public Function RandomASCIIString(len%, Optional skipSymbols As Boolean = False, Optional seed As Random = Nothing) As String
         With seed Or newRandom

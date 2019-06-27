@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17ae337c412ffce81ed1dfed8b7e810b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Path2D.vb"
+﻿#Region "Microsoft.VisualBasic::bf9d1c76cfe9fc4a2da6486333a0b8b0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Path2D.vb"
 
     ' Author:
     ' 

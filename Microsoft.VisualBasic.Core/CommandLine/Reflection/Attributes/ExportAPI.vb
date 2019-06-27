@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fb2ed20b45a699c4c701e22d8e822c5, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::71a782e4cecec4b04e00700de6a13612, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class LastUpdatedAttribute
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Class ExportAPIAttribute
@@ -57,10 +57,17 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace CommandLine.Reflection
 
+    ''' <summary>
+    ''' 主要是用于帮助标记命令行命令的更新时间,了解哪些命令可能是已经过时了的
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public Class LastUpdatedAttribute : Inherits Attribute
 
         Public ReadOnly [Date] As Date
+
+        Sub New([date] As Date)
+            Me.Date = [date]
+        End Sub
 
         Sub New([date] As String)
             Me.Date = Date.Parse([date])

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c1afc58d548efe40f1fc2abba45adc7, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
+﻿#Region "Microsoft.VisualBasic::1c56186ff156609005b1bd23082d0c9a, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Namespace HTTP
 

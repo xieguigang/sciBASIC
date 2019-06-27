@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 '查看程序集特性的值
 
-<Assembly: AssemblyTitle("zip")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("HP Inc.")>
+<Assembly: AssemblyTitle("Zip CLI")>
+<Assembly: AssemblyDescription("Zip CLI")>
+<Assembly: AssemblyCompany("xieguigang")>
 <Assembly: AssemblyProduct("zip")>
-<Assembly: AssemblyCopyright("Copyright © HP Inc. 2017")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2019")>
+<Assembly: AssemblyTrademark("sciBASIC.NET")>
 
 <Assembly: ComVisible(False)>
 

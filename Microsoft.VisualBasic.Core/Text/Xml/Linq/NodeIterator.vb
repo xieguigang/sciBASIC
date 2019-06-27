@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::799dd556114a1244adafcd5db8f75482, Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
+﻿#Region "Microsoft.VisualBasic::a105e1a3b491012a57d3acb07d226bf8, Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,8 @@ Namespace Text.Xml.Linq
 
     Public Module NodeIterator
 
-        Const ArrayOfTemplate$ = "<?xml version=""1.0"" encoding=""utf-16""?>
+        Friend Const XmlDeclare$ = "<?xml version=""1.0"" encoding=""utf-16""?>"
+        Friend Const ArrayOfTemplate$ = XmlDeclare & "
 <ArrayOf{0} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
 %s
 </ArrayOf{0}>"

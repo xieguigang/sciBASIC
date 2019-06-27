@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c414a5089a8f58612ff485c35371f78, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\StackTokens(Of Tokens).vb"
+﻿#Region "Microsoft.VisualBasic::69c1bc07585ea9155b404592040ec672, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\StackTokens(Of Tokens).vb"
 
     ' Author:
     ' 
@@ -42,8 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-Imports Microsoft.VisualBasic.Linq
 
 Namespace Scripting.TokenIcer
 

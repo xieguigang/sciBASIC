@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76f9cb8a765aa91e449bf017515e5811, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::14f6eba37cce671311b46ab764a7a2ab, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: ID
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: ContainsIDField, Copy, GetIDList, GetPropertyNames, (+4 Overloads) LoadDataSet
-    '                   readHeaders, ToString
+    '         Function: ContainsIDField, Copy, CreateFilter, GetIDList, GetPropertyNames
+    '                   (+4 Overloads) LoadDataSet, readHeaders, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -296,11 +296,24 @@ Namespace IO
             End With
         End Function
 
+        ''' <summary>
+        ''' 选出列的值等于目标字符串值的所有数据
+        ''' </summary>
+        ''' <param name="filter"><see cref="NamedValue(Of String).IsEmpty"/> means select all data.</param>
+        ''' <returns></returns>
+        Public Shared Function CreateFilter(filter As NamedValue(Of String)) As Func(Of EntityObject, Boolean)
+            If filter.IsEmpty Then
+                Return Function(obj) True
+            Else
+                Return Function(obj) obj(filter.Name) = filter.Value
+            End If
+        End Function
+
         Public Shared Function LoadDataSet(Of T As EntityObject)(stream As File, Optional ByRef uidMap$ = Nothing) As IEnumerable(Of T)
             Dim map As New Dictionary(Of String, String) From {
                 {uidMap Or stream(0, 0).AsDefault, NameOf(EntityObject.ID)}
             }
-            Return stream.AsDataSource(Of T)(explicit:=False, maps:=map)
+            Return stream.AsDataSource(Of T)(strict:=False, maps:=map)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

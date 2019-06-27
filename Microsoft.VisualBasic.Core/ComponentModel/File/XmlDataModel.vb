@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::286854e228755e98eb66f3c68d16232a, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::fd14a1e412dbfbcce36ab762392d0470, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,14 @@
     ' 
     '         Properties: TypeComment
     ' 
-    '         Function: GetTypeReferenceComment
+    '         Function: (+2 Overloads) GetTypeReferenceComment
+    ' 
+    '         Sub: SaveTypeComment
+    '         Interface IXmlType
+    ' 
+    '             Properties: TypeComment
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,43 +62,66 @@ Namespace ComponentModel
     ''' <summary>
     ''' 这个基类型对象主要是用来生成类型全称注释方便编写XML文件加载代码功能的
     ''' </summary>
-    Public MustInherit Class XmlDataModel
+    Public MustInherit Class XmlDataModel : Implements IXmlType
+
+        ''' <summary>
+        ''' 只适合最外层面的容器类型的对象来实现
+        ''' </summary>
+        Public Interface IXmlType
+            Property TypeComment As XmlComment
+        End Interface
 
         ''' <summary>
         ''' ReadOnly, Data model type tracking use Xml Comment.
         ''' </summary>
         ''' <returns></returns>
-        '''
+        ''' <remarks>
+        ''' JSON存储的时候,这个属性会被自动忽略掉
+        ''' </remarks>
         <DataMember>
         <IgnoreDataMember>
         <ScriptIgnore>
         <SoapIgnore>
         <XmlAnyElement>
-        Public Property TypeComment As XmlComment
+        Public Property TypeComment As XmlComment Implements IXmlType.TypeComment
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetTypeReferenceComment()
             End Get
             Set(value As XmlComment)
                 ' Do Nothing
-                ' 2018-6-5 this xml comment node cause bug when using xml deserialization
+                ' 2018-6-5 this xml comment node cause bug 
+                ' when using xml deserialization
             End Set
         End Property
 
         Private Function GetTypeReferenceComment() As XmlComment
-            Dim modelType As Type = Me.GetType
+            Return New XmlDocument().CreateComment(GetTypeReferenceComment(Me.GetType))
+        End Function
+
+        Public Shared Sub SaveTypeComment(model As IXmlType)
+            model.TypeComment = New XmlDocument().CreateComment(GetTypeReferenceComment(model.GetType))
+        End Sub
+
+        ''' <summary>
+        ''' 生成的注释信息是默认空了四个空格的
+        ''' </summary>
+        ''' <param name="modelType"></param>
+        ''' <returns></returns>
+        Public Shared Function GetTypeReferenceComment(modelType As Type, Optional indent% = 4) As String
             Dim fullName$ = modelType.FullName
             Dim assembly$ = modelType.Assembly.FullName
             Dim update As Date = File.GetLastWriteTime(modelType.Assembly.Location)
             Dim md5$ = modelType.Assembly.Location.GetFileMd5
-            Dim trace$ = vbCrLf &
-                "     model:     " & fullName & vbCrLf &
-                "     assembly:  " & assembly & vbCrLf &
-                "     md5:       " & md5 & vbCrLf &
-                "     timestamp: " & update.ToLongDateString & vbCrLf &
+            Dim indentBlank As New String(" "c, indent)
+            Dim traceInfo$ = vbCrLf &
+                $"{indentBlank} model:     " & fullName & vbCrLf &
+                $"{indentBlank} assembly:  " & assembly & vbCrLf &
+                $"{indentBlank} md5:       " & md5 & vbCrLf &
+                $"{indentBlank} timestamp: " & update.ToLongDateString & vbCrLf &
                 "  "
 
-            Return New XmlDocument().CreateComment(trace)
+            Return traceInfo
         End Function
     End Class
 End Namespace

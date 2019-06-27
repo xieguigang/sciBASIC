@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5864a0a7529331eb04731725cac6bc2b, Data_science\Mathematica\Math\Math\Crc32.vb"
+﻿#Region "Microsoft.VisualBasic::57494a88c004043ce4c5fbcbe6746563, Data_science\Mathematica\Math\Math\Crc32.vb"
 
     ' Author:
     ' 

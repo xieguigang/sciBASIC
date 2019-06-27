@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45e4cd8c74f686871747231d1fec6156, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::9490f2816c0da8b6b17f1427ef4dfc0e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
     ' Author:
     ' 
@@ -99,7 +99,7 @@ Namespace Drawing2D.Shapes
             Return rect
         End Function
 
-        Shared ReadOnly black As DefaultValue(Of String) = NameOf(black)
+        Shared ReadOnly black As [Default](Of  String) = NameOf(black)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function PathIterator(center As PointF, radius!, Optional vertices% = 30) As IEnumerable(Of PointF)

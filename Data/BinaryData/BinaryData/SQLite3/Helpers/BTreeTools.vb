@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b5b7c5298232075253c8ec5a0666b1, Data\BinaryData\BinaryData\SQLite3\Helpers\BTreeTools.vb"
+﻿#Region "Microsoft.VisualBasic::8b87e48927d79dbf31a5f3010c7a4181, Data\BinaryData\BinaryData\SQLite3\Helpers\BTreeTools.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,8 @@
 
     ' Summaries:
 
-    '     Class BTreeTools
+    '     Module BTreeTools
     ' 
-    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) WalkTableBTree
     ' 
     ' 
@@ -45,10 +44,10 @@ Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 
 Namespace ManagedSqlite.Core.Helpers
-    Friend NotInheritable Class BTreeTools
-        Private Sub New()
-        End Sub
-        Public Shared Function WalkTableBTree(node As BTreePage) As IEnumerable(Of BTreeCellData)
+
+    Module BTreeTools
+
+        Public Function WalkTableBTree(node As BTreePage) As IEnumerable(Of BTreeCellData)
             If node.[GetType]() Is GetType(BTreeInteriorTablePage) Then
                 Return WalkTableBTree(DirectCast(node, BTreeInteriorTablePage))
             End If
@@ -60,7 +59,7 @@ Namespace ManagedSqlite.Core.Helpers
             Throw New ArgumentException("Did not receive a compatible BTreePage", NameOf(node))
         End Function
 
-        Private Shared Iterator Function WalkTableBTree(interior As BTreeInteriorTablePage) As IEnumerable(Of BTreeCellData)
+        Private Iterator Function WalkTableBTree(interior As BTreeInteriorTablePage) As IEnumerable(Of BTreeCellData)
             ' Walk sub-pages and yield their data
             For Each cell As BTreeInteriorTablePage.Cell In interior.Cells
                 Dim subPage As BTreePage = BTreePage.Parse(interior.Reader, cell.LeftPagePointer)
@@ -80,11 +79,10 @@ Namespace ManagedSqlite.Core.Helpers
             End If
         End Function
 
-        Private Shared Iterator Function WalkTableBTree(leaf As BTreeLeafTablePage) As IEnumerable(Of BTreeCellData)
+        Private Iterator Function WalkTableBTree(leaf As BTreeLeafTablePage) As IEnumerable(Of BTreeCellData)
             ' Walk cells and yield their data
             For i As Integer = 0 To leaf.Cells.Length - 1
                 Dim cell As BTreeLeafTablePage.Cell = leaf.Cells(i)
-
                 Dim res As New BTreeCellData()
 
                 res.Cell = cell
@@ -94,5 +92,5 @@ Namespace ManagedSqlite.Core.Helpers
                 Yield res
             Next
         End Function
-    End Class
+    End Module
 End Namespace

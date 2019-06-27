@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb8beac19d7d95ce23104c8e5b978a72, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::cbfc9d45158f9faf061600d8c2b85dc1, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module CastStringVector
     ' 
-    '         Function: AsBoolean, (+3 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
-    '                   AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
+    '         Function: AsBoolean, (+4 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
+    '                   AsInteger, AsNumeric, AsSingle, AsType
     ' 
     ' 
     ' /********************************************************************************/
@@ -57,9 +57,18 @@ Namespace Scripting.Runtime
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsCharacter(values As Dictionary(Of String, Double)) As Dictionary(Of String, String)
-            Return values.ToDictionary(
-                Function(x) x.Key,
-                Function(x) CStr(x.Value))
+            Return values.ToDictionary(Function(x) x.Key, Function(x) CStr(x.Value))
+        End Function
+
+        ''' <summary>
+        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString(Object, String)"/>.
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsCharacter(values As Dictionary(Of String, Object), Optional null$ = Nothing) As Dictionary(Of String, String)
+            Return values.ToDictionary(Function(x) x.Key, Function(x) Scripting.ToString(x.Value, null))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -76,6 +85,13 @@ Namespace Scripting.Runtime
                         End Function)
         End Function
 
+        ''' <summary>
+        ''' 使用<see cref="Scripting.ToString(Object, String)"/>方法将对象集合转换为字符串序列
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="values"></param>
+        ''' <param name="null$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsCharacter(Of T)(values As IEnumerable(Of T), Optional null$ = "") As IEnumerable(Of String)
@@ -90,36 +106,42 @@ Namespace Scripting.Runtime
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsNumeric(values As Dictionary(Of String, String)) As Dictionary(Of String, Double)
-            Return values.ToDictionary(
-                Function(x) x.Key,
-                Function(x) x.Value.ParseNumeric)
+            Return values.ToDictionary(Function(x) x.Key, Function(x) x.Value.ParseNumeric)
         End Function
 
+        ''' <summary>
+        ''' 将字典之中的值转换为<see cref="Object"/>类型
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsGeneric(Of T)(values As Dictionary(Of String, T)) As Dictionary(Of String, Object)
-            Return values.ToDictionary(
-                Function(x) x.Key,
-                Function(x) CObj(x.Value))
+            Return values.ToDictionary(Function(x) x.Key, Function(x) CObj(x.Value))
         End Function
 
+        ''' <summary>
+        ''' 批量的将一个字符串集合解析转换为目标类型<typeparamref name="T"/>的对象的集合
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension> Public Function AsType(Of T)(source As IEnumerable(Of String)) As IEnumerable(Of T)
             Dim type As Type = GetType(T)
-            Dim [ctype] = InputHandler.CasterString(type)
+            Dim [ctype] As LoadObject = InputHandler.CasterString(type)
             Dim result = source.Select(Function(x) DirectCast([ctype](x), T))
             Return result
         End Function
 
+        ''' <summary>
+        ''' 将字符串集合转换为一个数值向量
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsDouble(source As IEnumerable(Of String)) As Double()
             Return source.AsType(Of Double).ToArray
-        End Function
-
-        <Extension>
-        Public Function AsNumeric(source As IEnumerable(Of String)) As Double()
-            Return source _
-                .Select(Function(s) s.ParseNumeric) _
-                .ToArray
         End Function
 
         <Extension>

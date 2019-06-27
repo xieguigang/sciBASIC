@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f7ffe7e41437ab78e418923939612d5, mime\text%yaml\1.2\ChompingMethod.vb"
+﻿#Region "Microsoft.VisualBasic::bedcc4bc233daac4c1f0f8f6ed56313c, mime\text%yaml\1.2\ChompingMethod.vb"
 
     ' Author:
     ' 

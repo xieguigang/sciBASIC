@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32705ed3f0660ed3f17ce9a2c1ee4084, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringBuilders.vb"
+﻿#Region "Microsoft.VisualBasic::26c3c2ec1dbdcd6fa55e11b18a4a62a9, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringBuilders.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module StringBuilders
     ' 
-    '     Function: (+2 Overloads) Replace
+    '     Function: (+2 Overloads) Replace, ToHex
     ' 
     ' /********************************************************************************/
 
@@ -48,6 +48,12 @@ Imports Microsoft.VisualBasic.Linq
 ''' <see cref="StringBuilder"/> helpers
 ''' </summary>
 Public Module StringBuilders
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToHex(data As Byte()) As String
+        Return BitConverter.ToString(data).Replace("-", "")
+    End Function
 
     ''' <summary>
     ''' 批量进行替换操作

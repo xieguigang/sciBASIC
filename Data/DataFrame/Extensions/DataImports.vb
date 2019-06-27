@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47b8fc75da42be9cdbfd236364aa0f29, Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::dcc9fea4d15817726fd0cce71653bd4b, Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -221,7 +221,7 @@ Public Module DataImports
     End Function
 
     ''' <summary>
-    ''' 从字符串集合之中推测可能的数据类型
+    ''' 从字符串集合之中推测可能的列数据的类型
     ''' </summary>
     ''' <param name="column"></param>
     ''' <returns></returns>

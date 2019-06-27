@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::786d616bfb0e39befe17a22d4a39201a, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Group.vb"
+﻿#Region "Microsoft.VisualBasic::359b22dca144f2297177c38b8a019722, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Group.vb"
 
     ' Author:
     ' 
@@ -35,58 +35,15 @@
     ' 
     '         Properties: id
     ' 
-    '     Interface IGroup
-    ' 
-    '         Properties: groups, leaves
-    ' 
-    '     Class IndexGroup
-    ' 
-    '         Properties: groups, id, index, leaves, padding
-    ' 
-    '     Class Group
-    ' 
-    '         Properties: groups, leaves, padding
-    ' 
-    '         Function: isGroup
-    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
-
-Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
 
     Public Interface Indexed
         Property id As Integer
     End Interface
-
-    Public Interface IGroup(Of TGroups, TLeaves) : Inherits Indexed
-        Property groups As List(Of TGroups)
-        Property leaves As List(Of TLeaves)
-    End Interface
-
-    Public Class IndexGroup : Inherits JavaScriptObject
-        Implements IGroup(Of Integer, Integer)
-
-        Public Property leaves As List(Of Integer) Implements IGroup(Of Integer, Integer).leaves
-        Public Property groups As List(Of Integer) Implements IGroup(Of Integer, Integer).groups
-        Public Property id As Integer Implements IGroup(Of Integer, Integer).id
-        Public Property padding As Double
-        Public Property index As Integer
-    End Class
-
-    Public Class Group : Inherits Node
-        Implements IGroup(Of Group, Node)
-
-        Public Property groups As List(Of Group) Implements IGroup(Of Group, Node).groups
-        Public Property leaves As List(Of Node) Implements IGroup(Of Group, Node).leaves
-        Public Property padding As Double?
-
-        Public Shared Function isGroup(g As Group) As Boolean
-            Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
-        End Function
-    End Class
 
 End Namespace

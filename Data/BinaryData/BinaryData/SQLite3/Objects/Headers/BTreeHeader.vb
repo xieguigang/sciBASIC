@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::522b1afabf9eeb7179c53982bf46e4cc, Data\BinaryData\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
+﻿#Region "Microsoft.VisualBasic::0e60943fa235537b1e6a63dd9725bb07, Data\BinaryData\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Structure BTreeHeader
     ' 
-    '         Function: Parse
+    '         Function: Parse, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,18 +44,19 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 
 Namespace ManagedSqlite.Core.Objects.Headers
+
     Friend Structure BTreeHeader
+
         Public Type As BTreeType
-
         Public FirstFreeBlock As UShort
-
         Public CellCount As UShort
-
         Public CellContentBegin As UShort
-
         Public CellContentFragmentedFreeBytes As Byte
-
         Public RightMostPointer As UInteger
+
+        Public Overrides Function ToString() As String
+            Return Type.ToString
+        End Function
 
         Public Shared Function Parse(reader As ReaderBase) As BTreeHeader
             reader.CheckSize(8)
@@ -70,7 +71,6 @@ Namespace ManagedSqlite.Core.Objects.Headers
 
             If res.Type = BTreeType.InteriorIndexBtreePage OrElse res.Type = BTreeType.InteriorTableBtreePage Then
                 reader.CheckSize(4)
-
                 res.RightMostPointer = reader.ReadUInt32()
             End If
 

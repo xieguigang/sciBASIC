@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb5036f3742ed4f7d079c74914c9b7ed, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::6d9e795c16a7e95236a1ca93281c82df, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,8 @@
 
     ' Module PrimitiveParser
     ' 
-    '     Properties: BooleanValues
-    ' 
-    '     Function: Eval, IsNumeric, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble
-    '               ParseInteger, ParseLong, ParseSingle
+    '     Function: Eval, IsBooleanFactor, IsInteger, IsNumeric, (+2 Overloads) ParseBoolean
+    '               ParseDate, ParseDouble, ParseInteger, ParseLong, ParseSingle
     ' 
     ' /********************************************************************************/
 
@@ -44,10 +42,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
-Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' Simple type parser extension function for <see cref="String"/>
@@ -71,20 +68,80 @@ Public Module PrimitiveParser
     ''' <summary>
     ''' 用于匹配任意实数的正则表达式
     ''' </summary>
+    ''' <remarks>
+    ''' 这个表达式并不用于<see cref="IsNumeric"/>, 但是其他的模块的代码可能会需要这个通用的表达式来做一些判断
+    ''' </remarks>
     Public Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
+
+#Region "text token pattern assert"
+    ' 2019-04-17 正则表达式的执行效率过低
 
     ''' <summary>
     ''' Is this token value string is a number?
     ''' </summary>
-    ''' <param name="str"></param>
     ''' <returns></returns>
     <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
-    <Extension> Public Function IsNumeric(str$) As Boolean
-        With str.GetString(ASCII.Quot)
-            Dim s$ = r.Match(.ByRef, NumericPattern).Value
-            Return .ByRef = s
-        End With
+    <Extension> Public Function IsNumeric(num As String) As Boolean
+        Dim dotCheck As Boolean = False
+        Dim c As Char = num(Scan0)
+        Dim offset As Integer = 0
+
+        If c = "-"c OrElse c = "+"c Then
+            ' check for number sign symbol
+            '
+            ' +3.0
+            ' -3.0
+            offset = 1
+        ElseIf c = "."c Then
+            ' check for 
+            ' 
+            ' .1 (0.1)
+            offset = 1
+            dotCheck = True
+        End If
+
+        For i As Integer = offset To num.Length - 1
+            c = num(i)
+
+            If Not c Like numbers Then
+                If c = "."c Then
+                    If dotCheck Then
+                        Return False
+                    Else
+                        dotCheck = True
+                    End If
+                ElseIf c = "E"c OrElse c = "e"c Then
+                    Return IsInteger(num, i + 1)
+                Else
+                    Return False
+                End If
+            End If
+        Next
+
+        Return True
     End Function
+
+    ReadOnly numbers As Index(Of Char) = {"0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c}
+
+    Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
+        Dim c As Char = num(Scan0)
+
+        ' check for number sign symbol
+        If c = "-"c OrElse c = "+"c Then
+            offset += 1
+        End If
+
+        For i As Integer = offset To num.Length - 1
+            c = num(i)
+
+            If Not c Like numbers Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
+#End Region
 
     ''' <summary>
     ''' <see cref="Integer"/> text parser
@@ -153,23 +210,35 @@ Public Module PrimitiveParser
     ''' <summary>
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
     ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property BooleanValues As New SortedDictionary(Of String, Boolean) From {
+    ReadOnly booleans As New SortedDictionary(Of String, Boolean) From {
  _
-            {"t", True}, {"true", True},
-            {"1", True},
-            {"y", True}, {"yes", True}, {"ok", True},
-            {"ok!", True},
-            {"success", True}, {"successful", True}, {"successfully", True}, {"succeeded", True},
-            {"right", True},
-            {"wrong", False},
-            {"failure", False}, {"failures", False},
-            {"exception", False},
-            {"error", False}, {"err", False},
-            {"f", False}, {"false", False},
-            {"0", False},
-            {"n", False}, {"no", False}
-        }
+        {"t", True}, {"true", True},
+        {"1", True},
+        {"y", True}, {"yes", True}, {"ok", True},
+        {"ok!", True},
+        {"success", True}, {"successful", True}, {"successfully", True}, {"succeeded", True},
+        {"right", True},
+        {"wrong", False},
+        {"failure", False}, {"failures", False},
+        {"exception", False},
+        {"error", False}, {"err", False},
+        {"f", False}, {"false", False},
+        {"0", False},
+        {"n", False}, {"no", False}
+    }
+
+    ''' <summary>
+    ''' 目标字符串是否可以被解析为一个逻辑值
+    ''' </summary>
+    ''' <param name="token"></param>
+    ''' <returns></returns>
+    Public Function IsBooleanFactor(token As String) As Boolean
+        If String.IsNullOrEmpty(token) Then
+            Return False
+        Else
+            Return booleans.ContainsKey(token.ToLower)
+        End If
+    End Function
 
     ''' <summary>
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
@@ -178,15 +247,17 @@ Public Module PrimitiveParser
     ''' <param name="str"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("Get.Boolean")> <Extension> Public Function ParseBoolean(str$) As Boolean
+    <ExportAPI("ParseBoolean")>
+    <Extension>
+    Public Function ParseBoolean(str$) As Boolean
         If String.IsNullOrEmpty(str) Then
             Return False
         Else
             str = str.ToLower.Trim
         End If
 
-        If BooleanValues.ContainsKey(key:=str) Then
-            Return BooleanValues(str)
+        If booleans.ContainsKey(key:=str) Then
+            Return booleans(str)
         Else
 #If DEBUG Then
             Call $"""{str}"" {NameOf([Boolean])} (null_value_definition)  ==> False".__DEBUG_ECHO
@@ -195,7 +266,9 @@ Public Module PrimitiveParser
         End If
     End Function
 
-    <Extension> <ExportAPI("Get.Boolean")> Public Function ParseBoolean(ch As Char) As Boolean
+    <ExportAPI("ParseBoolean")>
+    <Extension>
+    Public Function ParseBoolean(ch As Char) As Boolean
         If ch = ASCII.NUL Then
             Return False
         End If

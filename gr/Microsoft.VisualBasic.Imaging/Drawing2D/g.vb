@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea0b952d82b4fc57d72c49a364a82566, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::8b4eb29d2205ad3d8c238ba4abee0d4b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     ' 
     '     Module g
     ' 
-    '         Properties: ActiveDriver
+    '         Properties: ActiveDriver, DriverExtensionName
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -135,6 +135,16 @@ Namespace Drawing2D
         End Property
 
         ''' <summary>
+        ''' Get the image file extension name for current default image driver.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property DriverExtensionName As String
+            Get
+                Return "png" Or "svg".When(ActiveDriver = Drivers.SVG)
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖，
         ''' 通常情况下，默认引擎选用的是``gdi+``引擎
         ''' </summary>
@@ -167,8 +177,8 @@ Namespace Drawing2D
             End If
         End Function
 
-        ReadOnly defaultSize As DefaultValue(Of Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
-        ReadOnly defaultPaddingValue As DefaultValue(Of Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
+        ReadOnly defaultSize As [Default](Of  Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
+        ReadOnly defaultPaddingValue As [Default](Of  Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
 
         ''' <summary>
         ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100).

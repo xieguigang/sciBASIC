@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc6f4eec32e6147d850cb976cfb6baf8, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::4d5d5bef8e9a9b6e863af14d8d486dff, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -95,7 +95,7 @@ Public Module WebServiceUtils
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function isURL(url As String) As Boolean
-        Return url.InStrAny(Protocols) > -1
+        Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(Protocols) = 1
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -214,8 +214,8 @@ Public Module WebServiceUtils
         Return GenerateDictionary(tokens, transLower)
     End Function
 
-    ReadOnly urlEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
-    Friend ReadOnly noEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(Function(s) s)
+    ReadOnly urlEscaping As [Default](Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
+    Friend ReadOnly noEscaping As [Default](Of Func(Of String, String)) = New Func(Of String, String)(Function(s) s)
 
     ''' <summary>
     ''' 生成URL请求的参数
@@ -269,17 +269,32 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="encoding"></param>
+    ''' <param name="jswhitespace">
+    ''' 空格符号默认被转义为``+``, 如果这个参数为真的话,则空格会被转义为``%20``
+    ''' </param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' A extension method wrapper for <see cref="HttpUtility.UrlEncode"/>
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("URL.Encode")>
     <Extension>
-    Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing) As String
+    Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing, Optional jswhitespace As Boolean = False) As String
+        Dim component As String
+
         If encoding IsNot Nothing Then
-            Return HttpUtility.UrlEncode(s, encoding)
+            component = HttpUtility.UrlEncode(s, encoding)
         Else
-            Return HttpUtility.UrlEncode(s)
+            component = HttpUtility.UrlEncode(s)
         End If
+
+        If jswhitespace Then
+            ' 20190517 因为+号被转义为%2b,所以在这里可以直接替换
+            ' 由空格转义而得到的+符号为%20
+            component = component.Replace("+", "%20")
+        End If
+
+        Return component
     End Function
 
     <ExportAPI("URL.Encode")>
@@ -461,7 +476,7 @@ Public Module WebServiceUtils
                                      Optional proxy$ = Nothing,
                                      Optional contentEncoding As Encodings = Encodings.UTF8) As String
 
-        Static emptyBody As New DefaultValue(Of NameValueCollection) With {
+        Static emptyBody As New [Default](Of NameValueCollection) With {
             .Value = New NameValueCollection,
             .assert = Function(c)
                           Return c Is Nothing OrElse DirectCast(c, NameValueCollection).Count = 0
@@ -628,7 +643,7 @@ Public Module WebServiceUtils
     ''' 设置默认的http请求的user-agent，默认为Google Chrome的UA字符串
     ''' </summary>
     ''' <returns></returns>
-    Public Property DefaultUA As DefaultValue(Of String) = UserAgent.GoogleChrome
+    Public Property DefaultUA As [Default](Of String) = UserAgent.GoogleChrome
 
 #If FRAMEWORD_CORE Then
     ''' <summary>

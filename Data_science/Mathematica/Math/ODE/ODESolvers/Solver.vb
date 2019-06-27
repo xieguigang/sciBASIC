@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df99be25520531d4eef5bc4e815a6d16, Data_science\Mathematica\Math\ODE\ODESolvers\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::4c87e216c3764d6fe4e7da3675a271ff, Data_science\Mathematica\Math\ODE\ODESolvers\Solver.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     ' 
     '     Delegate Function
     ' 
-    '         Function: Allocate, DataFrame, Eluer, RK2, RK4
+    '         Function: Allocate, Eluer, RK2, RK4
     ' 
     ' 
     ' 
@@ -46,9 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' Solving the Ordinary differential equation(ODE) by using trapezoidal method.(使用梯形法求解常微分方程)
@@ -152,19 +150,5 @@ Public Module ODESolver
         Next
 
         Return out
-    End Function
-
-    <Extension>
-    Public Function DataFrame(out As ODEOutput) As csv
-        Dim csv As New csv
-
-        csv += {"X", "Y"}
-        csv += out.X _
-            .ToArray _
-            .Select(Function(x, i)
-                        Return New RowObject(New String() {x, out.Y(i)})
-                    End Function)
-
-        Return csv
     End Function
 End Module

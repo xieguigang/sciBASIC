@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::013e8197f83ab76241423b1ab8ab9295, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BitMap\HashModel.vb"
+﻿#Region "Microsoft.VisualBasic::ce7fcf8c2298aea2e88d29300d93b7cc, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BitMap\HashModel.vb"
 
     ' Author:
     ' 
@@ -98,7 +98,7 @@ Namespace ComponentModel
     Public Interface IHashHandle : Inherits IAddressOf, INamedValue
     End Interface
 
-    Public Class IHashValue(Of T As INamedValue) : Inherits BaseClass
+    Public Class IHashValue(Of T As INamedValue)
         Implements IHashHandle
 
         Public Property obj As T

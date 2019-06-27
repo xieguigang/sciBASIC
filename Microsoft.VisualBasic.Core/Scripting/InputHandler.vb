@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::596f71846844bdb52590ca05b439c19d, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::977e2800b5b5a1a01e74f93e04fd092e, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '         Properties: [String], CasterString, Types
     ' 
-    '         Function: [DirectCast], (+2 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+2 Overloads) CTypeDynamic
-    '                   DefaultTextParser, IsPrimitive, StringParser, ToString
+    '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+2 Overloads) CTypeDynamic
+    '                   DefaultTextParser, IsPrimitive, StringParser, (+2 Overloads) ToString
     ' 
     '         Sub: CapabilityPromise
     ' 
@@ -106,7 +106,7 @@ Namespace Scripting
         }
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function StringParser(type As Type) As DefaultValue(Of Func(Of String, Object))
+        Public Function StringParser(type As Type) As [Default](Of Func(Of String, Object))
             Return New Func(Of String, Object)(Function(s$) s.CTypeDynamic(type))
         End Function
 
@@ -174,7 +174,7 @@ Namespace Scripting
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function DefaultTextParser(Of T)() As DefaultValue(Of IStringParser(Of T))
+        Public Function DefaultTextParser(Of T)() As [Default](Of IStringParser(Of T))
             Return New IStringParser(Of T)(AddressOf CTypeDynamic(Of T)).AsDefault
         End Function
 
@@ -220,11 +220,13 @@ Namespace Scripting
         Public ReadOnly Property Types As New SortedDictionary(Of String, Type) From {
  _
                 {"string", GetType(String)},
+                {"char", GetType(Char)},
                 {"integer", GetType(Integer)},
                 {"int32", GetType(Integer)},
                 {"int64", GetType(Long)},
                 {"long", GetType(Long)},
                 {"double", GetType(Double)},
+                {"single", GetType(Single)},
                 {"byte", GetType(Byte)},
                 {"date", GetType(Date)},
                 {"logfile", GetType(LogFile)},
@@ -254,18 +256,33 @@ Namespace Scripting
         ''' <param name="name">Case insensitive.(类型的名称简写)</param>
         ''' <param name="ObjectGeneric">是否出错的时候返回<see cref="Object"/>类型，默认返回Nothing</param>
         ''' <returns></returns>
-        Public Function [GetType](name As Value(Of String), Optional ObjectGeneric As Boolean = False) As Type
-            If Types.ContainsKey(name = name.Value.ToLower) Then
-                Return Types(name)
+        Public Function [GetType](name As String, Optional objectGeneric As Boolean = False) As Type
+            Dim lowers = Strings.LCase(name)
+
+            If Types.ContainsKey(lowers) Then
+                Return Types(lowers)
             Else
                 Dim typeInfo As Type = Type.GetType(name, False, True)
 
-                If typeInfo Is Nothing AndAlso ObjectGeneric Then
+                If typeInfo Is Nothing AndAlso objectGeneric Then
                     Return GetType(Object)
                 Else
                     Return typeInfo
                 End If
             End If
+        End Function
+
+        ''' <summary>
+        ''' Get .NET <see cref="Type"/> definition info from its name.
+        ''' (类型获取失败会返回空值，大小写不敏感)
+        ''' </summary>
+        ''' <param name="name">Case insensitive.(类型的名称简写)</param>
+        ''' <param name="ObjectGeneric">是否出错的时候返回<see cref="Object"/>类型，默认返回Nothing</param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function [GetType](name As Value(Of String), Optional objectGeneric As Boolean = False) As Type
+            Return Scripting.GetType(name.Value, objectGeneric)
         End Function
 
         Public Function [GetType](obj As Object, Optional ObjectGeneric As Boolean = False) As Type
@@ -286,6 +303,11 @@ Namespace Scripting
         ''' <returns></returns>
         Public ReadOnly Property [String] As Type = GetType(String)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ToString(Of T)() As [Default](Of IToString(Of T))
+            Return New IToString(Of T)(AddressOf ToString)
+        End Function
+
         ''' <summary>
         ''' Does the <paramref name="inputtype"/> type can be cast to type <paramref name="DefType"/>.
         ''' (主要为了方便减少脚本编程模块的代码)
@@ -300,7 +322,12 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' <seealso cref="CStrSafe"/>, 出现错误的时候总是会返回空字符串的
+        ''' <seealso cref="CStrSafe"/>, 出现错误的时候总是会返回空字符串的，
+        ''' 
+        ''' 注意：
+        ''' 
+        ''' 1. 对于一些基础的数据类型例如<see cref="Integer"/>,<see cref="Long"/>等则是以json序列化来构建字符串值，
+        ''' 2. 对于<see cref="Byte"/>数组则是被编码为base64字符串
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>

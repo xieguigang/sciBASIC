@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51a99bb617ec13ff69b3a77f533fc455, gr\Microsoft.VisualBasic.Imaging\d3js\CSS.vb"
+﻿#Region "Microsoft.VisualBasic::81d378a52bec403ef725f8547eac0250, gr\Microsoft.VisualBasic.Imaging\d3js\CSS.vb"
 
     ' Author:
     ' 
@@ -112,7 +112,7 @@ Namespace d3js.SVG.CSS
         End Function
     End Class
 
-    Public Class CssValue : Inherits BaseClass
+    Public Class CssValue
 
         <DataFrameColumn> Public Property stroke As String
         <DataFrameColumn("stroke-width")> Public Property strokeWidth As String

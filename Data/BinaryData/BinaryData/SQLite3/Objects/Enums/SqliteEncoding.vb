@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7765bea6a68f1efad03bf95a933abbdb, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\SqliteEncoding.vb"
+﻿#Region "Microsoft.VisualBasic::df65db5b2e8fdf3b8ed05686d9fc2f6b, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\SqliteEncoding.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 #End Region
 
 Namespace ManagedSqlite.Core.Objects.Enums
+
     Public Enum SqliteEncoding As UInteger
         ' ReSharper disable once InconsistentNaming
         UTF8 = 1

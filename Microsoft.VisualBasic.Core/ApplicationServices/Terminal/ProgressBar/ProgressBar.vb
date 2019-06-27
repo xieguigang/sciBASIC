@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69c92af7ab12d4062da10cc3acdb7b99, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::62654a088843804f9eb38fd9f0772359, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -122,8 +122,8 @@ Namespace Terminal.ProgressBar
         ''' ###### 2017-11-6
         ''' Change from property to function to avoid bug caused application crashed
         ''' </remarks>
-        Public Shared Function DefaultTheme() As DefaultValue(Of ColorTheme)
-            Return New DefaultValue(Of ColorTheme) With {
+        Public Shared Function DefaultTheme() As [Default](Of ColorTheme)
+            Return New [Default](Of ColorTheme) With {
                 .Value = [Default](),
                 .assert = Function(t)
                               Return DirectCast(t, ColorTheme).IsEmpty

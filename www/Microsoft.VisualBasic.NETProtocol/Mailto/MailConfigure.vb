@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1e16fcd0a59824ca4da009db20e09f4, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailConfigure.vb"
+﻿#Region "Microsoft.VisualBasic::5bbe3ee72174feaee1338edff3ac068d, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailConfigure.vb"
 
     ' Author:
     ' 
@@ -103,7 +103,7 @@ Namespace Mailto
 
         Public Shared ReadOnly Property qiye163(account$, password$, Optional SSL As Boolean = True) As MailConfigure
             Get
-                Dim smtpSSLPort994 As DefaultValue(Of Integer) = 994
+                Dim smtpSSLPort994 As [Default](Of Integer) = 994
 
                 Return New MailConfigure With {
                     .Account = account,

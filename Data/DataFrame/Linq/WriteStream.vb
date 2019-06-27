@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f36e9b7ef514e329a3edcaec4d0e24f8, Data\DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::ebfe6127ba2455c9f12d1bb442c6f4d8, Data\DataFrame\Linq\WriteStream.vb"
 
     ' Author:
     ' 
@@ -142,7 +142,7 @@ Namespace IO.Linq
             Dim typeDef As Type = GetType(T)
             Dim Schema As SchemaProvider =
                 SchemaProvider _
-                .CreateObject(typeDef, explicit) _
+                .CreateObjectInternal(typeDef, explicit) _
                 .CopyReadDataFromObject
 
             _fileIO = write
@@ -202,6 +202,11 @@ Namespace IO.Linq
             End If
         End Function
 
+        ''' <summary>
+        ''' Write a object into the table file.
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function Flush(obj As T) As Boolean
             If obj Is Nothing Then
                 Return False

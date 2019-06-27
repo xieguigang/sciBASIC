@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ebc71fdb67d48bf040b74873efd927d, Microsoft.VisualBasic.Core\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::06f7567a419911201c422bd50b0f261a, Microsoft.VisualBasic.Core\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
 #End Region
 
 ''' <summary>
-''' The ``sciBASIC#`` runtime.
+''' The ``sciBASIC#`` framework library core runtime.
 ''' </summary>
 Friend Class NamespaceDoc
 End Class

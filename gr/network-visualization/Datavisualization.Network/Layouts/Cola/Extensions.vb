@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4ccae4ab6e4e58974e05fa0977f2300, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ef7482b25be3889001e79182d2dcc6de, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
 
     ' Author:
     ' 
@@ -54,8 +54,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

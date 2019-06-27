@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73c0cea7b0b20bc7e7dd66ca66207ae1, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\LinkSet.vb"
+﻿#Region "Microsoft.VisualBasic::6b38f8da7e46056d9979869c5673c925, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\LinkSet.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: count
     ' 
-    '         Function: contains, intersection
+    '         Function: contains, intersection, ToString
     ' 
     '         Sub: add, forAll, forAllModules, remove
     ' 
@@ -43,6 +43,8 @@
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts.Cola
 
@@ -115,6 +117,10 @@ Namespace Layouts.Cola
                       End Sub)
 
             Return result
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return sets.KeysJson
         End Function
     End Class
 End Namespace

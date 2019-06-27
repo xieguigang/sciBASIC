@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b36b1ad386fa7e69bc562e6dc6199a8, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Module.vb"
+﻿#Region "Microsoft.VisualBasic::e596222607bb4c44abc5ff539debfded, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Module.vb"
 
     ' Author:
     ' 
@@ -36,13 +36,16 @@
     '         Properties: isIsland, isLeaf, isPredefined
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
     '         Sub: getEdges
     ' 
     '     Class ModuleSet
     ' 
     '         Properties: count
     ' 
-    '         Function: contains, intersection, intersectionCount, modules
+    '         Function: contains, intersection, intersectionCount, modules, ToString
     ' 
     '         Sub: add, forAll, remove
     ' 
@@ -52,6 +55,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts.Cola
 
@@ -61,9 +66,9 @@ Namespace Layouts.Cola
         Public gid As Integer?
         Public id As Integer
 
-        Public outgoing As New LinkSets
-        Public incoming As New LinkSets
-        Public children As New ModuleSet
+        Public outgoing As LinkSets
+        Public incoming As LinkSets
+        Public children As ModuleSet
         Public definition As Dictionary(Of String, Object)
 
         Default Public Property LinkSetItem(name As String) As LinkSets
@@ -89,13 +94,13 @@ Namespace Layouts.Cola
 
         Public ReadOnly Property isLeaf() As Boolean
             Get
-                Return Me.children.Count() = 0
+                Return Me.children.count() = 0
             End Get
         End Property
 
         Public ReadOnly Property isIsland() As Boolean
             Get
-                Return Me.outgoing.Count() = 0 AndAlso Me.incoming.Count() = 0
+                Return Me.outgoing.count() = 0 AndAlso Me.incoming.count() = 0
             End Get
         End Property
 
@@ -111,11 +116,15 @@ Namespace Layouts.Cola
                        Optional children As ModuleSet = Nothing,
                        Optional definition As Dictionary(Of String, Object) = Nothing)
 
+            Static newLinkSets As New [Default](Of  LinkSets) With {.constructor = Function() New LinkSets}
+            Static newModuleSet As New [Default](Of  ModuleSet) With {.constructor = Function() New ModuleSet}
+            Static emptyTable As New [Default](Of  Dictionary(Of String, Object)) With {.constructor = Function() New Dictionary(Of String, Object)}
+
             Me.id = id
-            Me.outgoing = outgoing
-            Me.incoming = incoming
-            Me.children = children
-            Me.definition = definition
+            Me.outgoing = outgoing Or newLinkSets
+            Me.incoming = incoming Or newLinkSets
+            Me.children = children Or newModuleSet
+            Me.definition = definition Or emptyTable
         End Sub
 
         Public Sub getEdges(es As List(Of PowerEdge(Of Integer)))
@@ -125,6 +134,10 @@ Namespace Layouts.Cola
                                              End Sub)
                                End Sub)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"#{id} in={incoming}  out={outgoing}"
+        End Function
     End Class
 
     Public Class ModuleSet
@@ -172,6 +185,10 @@ Namespace Layouts.Cola
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function modules() As [Module]()
             Return table.Values.Where(Function(m) m.isPredefined).ToArray
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return table.Values.Select(Function(m) m.id).ToArray.GetJson
         End Function
     End Class
 End Namespace

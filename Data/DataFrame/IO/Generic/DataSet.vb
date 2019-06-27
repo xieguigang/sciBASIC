@@ -1,45 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::96a5050a6e3cb6f3b2c42fbabbfd5481, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::7a43770d9064e068fe5bbd75ad8c8011, Data\DataFrame\IO\Generic\DataSet.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class DataSet
-' 
-'         Properties: ID, MyHashCode, Vector
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: __getID, Copy, (+2 Overloads) LoadDataSet, SubSet, ToString
-' 
-' 
-' /********************************************************************************/
+    '     Class DataSet
+    ' 
+    '         Properties: ID, MyHashCode, Vector
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: __getID, Append, Copy, (+2 Overloads) LoadDataSet, SubSet
+    '                   ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -90,6 +91,22 @@ Namespace IO
             Me.ID = id
             Me.Properties = New Dictionary(Of String, Double)
         End Sub
+
+        Shared ReadOnly replace As New [Default](Of Func(Of Double, Double, Double))(Function(previous, now) now)
+
+        Public Function Append(data As [Property](Of Double), Optional duplicated As Func(Of Double, Double, Double) = Nothing) As DataSet
+            duplicated = duplicated Or DataSet.replace
+
+            For Each item In data.Properties
+                If Me.HasProperty(item.Key) Then
+                    Me(item.Key) = duplicated(Me(item.Key), item.Value)
+                Else
+                    Me.Properties.Add(item.Key, item.Value)
+                End If
+            Next
+
+            Return Me
+        End Function
 
         ''' <summary>
         ''' Copy prop[erty value
@@ -150,7 +167,7 @@ Namespace IO
                                                             Optional uidMap$ = Nothing,
                                                             Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
 
-            Dim mapFrom$ = uidMap Or New DefaultValue(Of String) With {
+            Dim mapFrom$ = uidMap Or New [Default](Of  String) With {
                 .lazy = New Func(Of String)(Function() __getID(path)).AsLazy
             }
             Return path.LoadCsv(Of T)(

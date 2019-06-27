@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::984824e9c2c4452c219eafc67fab5b13, mime\text%yaml\1.1\Base\YAMLScalarNode.vb"
+﻿#Region "Microsoft.VisualBasic::288272f623e0501f02cb2df7ca9d6e13, mime\text%yaml\1.1\Base\YAMLScalarNode.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f938c9b24e5615296777b3fb651345e, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::6f80cab578cdaaf40a82d831cf378d70, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Module1.vb"
 
     ' Author:
     ' 
@@ -43,8 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
 

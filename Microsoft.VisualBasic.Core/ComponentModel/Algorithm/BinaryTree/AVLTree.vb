@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e538c4f96221e04534fed8f2605736b5, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree.vb"
+﻿#Region "Microsoft.VisualBasic::81eec77cd0117693bed3fa2054025986, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Class AVLTree
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: Add, Remove
+    '         Function: Add, Find, Remove
     ' 
     '         Sub: Add, appendLeft, appendRight, Remove, removeCurrent
     '              removeLeft, removeRight
@@ -72,6 +72,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <param name="views">Display the key as string</param>
         Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
             MyBase.New(compares, views)
+        End Sub
+
+        Sub New(compares As IComparer(Of K), Optional views As Func(Of K, String) = Nothing)
+            MyBase.New(AddressOf compares.Compare, views)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -134,6 +138,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
                 End If
             End If
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Find(term As K) As BinaryTree(Of K, V)
+            Return root.Find(key:=term, compares:=compares)
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Remove(key As K)

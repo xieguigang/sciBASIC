@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cc637e31d6147fb3befb794a82449b6, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::196f606a0eab968477bea059d0ec3ace, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@
 Imports System.Drawing
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports DefaultFont = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Drawing.Font)
+Imports DefaultFont = Microsoft.VisualBasic.Language.Default.Default(Of System.Drawing.Font)
 
 Namespace Imaging
 

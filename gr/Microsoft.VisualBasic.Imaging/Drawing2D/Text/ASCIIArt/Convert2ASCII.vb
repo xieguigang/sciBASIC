@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43ff73c0f8da195bf4a129d4d56f7e97, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::dc5eb9187be0c7f8eed6147a68f052ba, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
     ' Author:
     ' 
@@ -135,7 +135,7 @@ Namespace Drawing2D.Text.ASCIIArt
             End Using
         End Sub
 
-        ReadOnly defaultFont As DefaultValue(Of Font) = SystemFonts.DefaultFont
+        ReadOnly defaultFont As [Default](Of  Font) = SystemFonts.DefaultFont
 
         ''' <summary>
         ''' 将字符转换为图像

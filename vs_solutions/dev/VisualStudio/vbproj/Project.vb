@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d42c46fea649bf22eff2916722e15ff, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
+﻿#Region "Microsoft.VisualBasic::6aa8d1d715d73b034a11b8250bdf235b, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
 
     ' Author:
     ' 
@@ -31,28 +31,13 @@
 
     ' Summaries:
 
-    ' Class Project
+    '     Class Project
     ' 
-    '     Properties: [Imports], DefaultTargets, ItemGroups, PropertyGroups, Targets
-    '                 ToolsVersion
+    '         Properties: [Imports], DefaultTargets, FilePath, ItemGroups, PropertyGroups
+    '                     Targets, ToolsVersion
     ' 
-    '     Function: GetProfile, (+2 Overloads) Save, ToString
+    '         Function: GetProfile, (+2 Overloads) Save, ToString
     ' 
-    ' Class Target
-    ' 
-    '     Properties: Name
-    ' 
-    ' Class Import
-    ' 
-    '     Properties: Condition, Label, Project
-    ' 
-    '     Function: ToString
-    ' 
-    ' Class ConditionValue
-    ' 
-    '     Properties: Condition, value
-    ' 
-    '     Function: ToString
     ' 
     ' /********************************************************************************/
 
@@ -66,77 +51,63 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-''' <summary>
-''' Visual Studio project XML file
-''' </summary>
-<XmlRoot("Project", [Namespace]:=Project.xmlns)>
-Public Class Project : Implements ISaveHandle
+Namespace vbproj
 
-    Public Const xmlns$ = "http://schemas.microsoft.com/developer/msbuild/2003"
+    ''' <summary>
+    ''' Visual Studio project XML file
+    ''' </summary>
+    <XmlRoot("Project", [Namespace]:=Project.xmlns)>
+    Public Class Project : Implements ISaveHandle, IFileReference
 
-    <XmlAttribute> Public Property ToolsVersion As String
-    <XmlAttribute> Public Property DefaultTargets As String
+        Public Const xmlns$ = "http://schemas.microsoft.com/developer/msbuild/2003"
 
-    <XmlElement("Import")>
-    Public Property [Imports] As Import()
+        <XmlAttribute> Public Property ToolsVersion As String
+        <XmlAttribute> Public Property DefaultTargets As String
 
-    <XmlElement("PropertyGroup")>
-    Public Property PropertyGroups As PropertyGroup()
-    <XmlElement("ItemGroup")>
-    Public Property ItemGroups As ItemGroup()
-    <XmlElement("Target")>
-    Public Property Targets As Target()
+        <XmlElement("Import")>
+        Public Property [Imports] As Import()
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetProfile(condition As String) As PropertyGroup
-        Return LinqAPI.DefaultFirst(Of PropertyGroup) _
+        <XmlElement("PropertyGroup")>
+        Public Property PropertyGroups As PropertyGroup()
+        <XmlElement("ItemGroup")>
+        Public Property ItemGroups As ItemGroup()
+        <XmlElement("Target")>
+        Public Property Targets As Target()
+
+        ''' <summary>
+        ''' 读取<see cref="AssemblyInfo"/>文件的时候会需要使用到这个属性
+        ''' </summary>
+        ''' <returns></returns>
+        Private Property FilePath As String Implements IFileReference.FilePath
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetProfile(condition As String) As PropertyGroup
+            If InStr(condition, "$(Configuration)") = 0 AndAlso InStr(condition, "$(Platform)") = 0 Then
+                condition = $"'$(Configuration)|$(Platform)' == '{condition}'"
+            Else
+                condition = condition.Trim
+            End If
+
+            Return LinqAPI.DefaultFirst(Of PropertyGroup) _
  _
-            () <= From x As PropertyGroup
-                  In PropertyGroups
-                  Where Not x.Condition.StringEmpty AndAlso
-                      condition.TextEquals(x.Condition)
-                  Select x
+                () <= From x As PropertyGroup
+                      In PropertyGroups
+                      Where Not x.Condition.StringEmpty AndAlso condition.TextEquals(x.Condition.Trim)
+                      Select x
+        End Function
 
-    End Function
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Return Me.GetXml.SaveTo(path, encoding)
+        End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Save(Optional path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
-        Return Me.GetXml.SaveTo(path, encoding)
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Save(Optional path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-        Return Save(path, encoding.CodePage)
-    End Function
-End Class
-
-Public Class Target
-    <XmlAttribute> Public Property Name As String
-End Class
-
-Public Class Import
-
-    <XmlAttribute> Public Property Project As String
-    <XmlAttribute> Public Property Condition As String
-    <XmlAttribute> Public Property Label As String
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
-
-Public Class ConditionValue
-
-    <XmlAttribute>
-    Public Property Condition As String
-    <XmlText>
-    Public Property value As String
-
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
+        End Function
+    End Class
+End Namespace

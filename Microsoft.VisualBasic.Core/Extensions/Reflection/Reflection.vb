@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa9a3eab7722f8a40dea9c3f0299d4c4, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::aa04d1dc805165e98f902dd149eca325, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -423,17 +423,21 @@ NULL:       If Not strict Then
         Dim baseType As Type = a.BaseType
 
         If Not strict Then
-            ' 在这里返回结果的话，depth为-1
 
+            ' 在这里返回结果的话，depth为-1
             If a Is base Then
                 Return True
             End If
 
             If a.IsGenericType AndAlso base.IsGenericType Then
+                Dim genericOfa As Type = a.GetGenericTypeDefinition
+                Dim typesOfa = a.GenericTypeArguments
+                Dim typesOfb = base.GenericTypeArguments
+
                 ' 2017-3-12
                 ' GetType(Dictionary(Of String, Double)).IsInheritsFrom(GetType(Dictionary(Of ,)))
 
-                If a.GetGenericTypeDefinition.Equals(base) Then
+                If typesOfb.Length = 0 AndAlso genericOfa.IsInheritsFrom(base, strict, depth) Then
                     Return True
                 End If
             End If

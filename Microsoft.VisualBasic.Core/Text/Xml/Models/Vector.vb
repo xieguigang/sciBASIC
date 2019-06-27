@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8560dbc62573187e2444d462773befc0, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::6258798671bb245e0a692469a3b5627e, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Class TermsVector
     ' 
-    '         Properties: Terms
+    '         Properties: terms
     ' 
     '         Function: ToString
     ' 
@@ -115,10 +115,10 @@ Namespace Text.Xml.Models
     Public Class TermsVector
 
         <XmlAttribute>
-        Public Property Terms As String()
+        Public Property terms As String()
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return terms.GetJson
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a339aaee29cd92d23b193bbf9b469efe, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::2fc962b5cafdc719056489d0069a2859, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Text
 <Package("IO")>
 Public Module IOExtensions
 
-    ReadOnly UTF8 As DefaultValue(Of Encoding) = Encoding.UTF8
+    ReadOnly UTF8 As [Default](Of Encoding) = Encoding.UTF8
 
     ''' <summary>
     ''' Open text writer interface from a given <see cref="Stream"/> <paramref name="s"/>. 
@@ -134,7 +134,7 @@ Public Module IOExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ReadVector(path As String) As Double()
-        Return File.ReadAllLines(path) _
+        Return IO.File.ReadAllLines(path) _
             .Select(Function(x) CDbl(x)) _
             .ToArray
     End Function
@@ -174,7 +174,7 @@ Public Module IOExtensions
             access = FileShare.Read
         End If
 
-        Return File.Open(path, mode, FileAccess.ReadWrite, access)
+        Return IO.File.Open(path, mode, FileAccess.ReadWrite, access)
     End Function
 
     ''' <summary>
@@ -209,7 +209,7 @@ Public Module IOExtensions
         If Not path.FileExists Then
             Return {}
         Else
-            Return File.ReadAllBytes(path)
+            Return IO.File.ReadAllBytes(path)
         End If
     End Function
 

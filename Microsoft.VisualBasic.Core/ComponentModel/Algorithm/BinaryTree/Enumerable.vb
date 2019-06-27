@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6d8f68f763e795298bf4e3465a363f5, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::a7cb59891d0578f90f7f4ec63df91fd5, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Enumerable
     ' 
-    '         Function: ClusterMembers, PopulateNodes, PopulateSequence, (+2 Overloads) Values
+    '         Function: PopulateNodes, PopulateSequence, (+2 Overloads) Values
     ' 
     ' 
     ' /********************************************************************************/
@@ -101,16 +101,6 @@ Namespace ComponentModel.Algorithm.BinaryTree
         <Extension>
         Public Function Values(Of K, V)(nodes As IEnumerable(Of BinaryTree(Of K, V))) As IEnumerable(Of V)
             Return nodes.Select(Function(n) n.Value)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function ClusterMembers(Of K, V)(node As BinaryTree(Of K, V)) As V()
-            If node Is Nothing Then
-                Return {}
-            Else
-                Return DirectCast(node!values, List(Of V)).ToArray
-            End If
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4f9d8c0fc5982abfaf06ab339d79622, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
+﻿#Region "Microsoft.VisualBasic::235f4d8d59917f34807eaa538d9bb0d0, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,12 @@
 
     ' Summaries:
 
-    ' 	Class Rayleigh
+    '     Class Rayleigh
     ' 
-    ' 	    Constructor: (+3 Overloads) Sub New
-    ' 	    Function: GetCDF, GetInvCDF, GetPDF, GetSigma, Validate
+    '         Properties: Sigma
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: GetCDF, GetInvCDF, GetPDF, Validate
     ' 
     ' 
     ' /********************************************************************************/
@@ -52,43 +54,38 @@ Imports System.Collections.Generic
 Namespace Distributions.MethodOfMoments
 
 
-	''' 
-	''' <summary>
-	''' @author Will_and_Sara
-	''' </summary>
-	Public Class Rayleigh
-		Inherits Distributions.ContinuousDistribution
+    ''' 
+    ''' <summary>
+    ''' @author Will_and_Sara
+    ''' </summary>
+    Public Class Rayleigh : Inherits Distributions.ContinuousDistribution
 
-		Private _Sigma As Double
-		Public Overridable Function GetSigma() As Double
-			Return _Sigma
-		End Function
-		Public Sub New()
-			'for reflection
-			_Sigma = 1
-		End Sub
-		Public Sub New( sigma As Double)
-			_Sigma = sigma
-		End Sub
-		Public Sub New( data As Double())
-			Dim BPM As New MomentFunctions.BasicProductMoments(data)
-			_Sigma = BPM.StDev()
-			PeriodOfRecord = (BPM.SampleSize())
-		End Sub
-		Public Overrides Function GetInvCDF( probability As Double) As Double
-			Return _Sigma * Math.Sqrt(-2*Math.Log(probability))
-		End Function
-		Public Overrides Function GetCDF( value As Double) As Double
-			Return 1-(Math.Exp(-(Math.Pow(value, 2))/(2*(Math.Pow(_Sigma,2)))))
-		End Function
-		Public Overrides Function GetPDF( value As Double) As Double
-			Return (value/(Math.Pow(_Sigma, 2)))* Math.Exp(-(Math.Pow(value, 2))/(2*(Math.Pow(_Sigma,2))))
-		End Function
-		Public Overrides Function Validate() As List(Of Distributions.ContinuousDistributionError)
-			Dim errs As New List(Of Distributions.ContinuousDistributionError)
-			If _Sigma<=0 Then errs.Add(New Distributions.ContinuousDistributionError("Sigma cannot be less than or equal to zero in the Rayleigh distribuiton."))
-			Return errs
-		End Function
-	End Class
+        Public ReadOnly Property Sigma As Double
+
+        Public Sub New()
+            'for reflection
+            _Sigma = 1
+        End Sub
+        Public Sub New(sigma As Double)
+            _Sigma = sigma
+        End Sub
+        Public Sub New(data As Double())
+            Dim BPM As New MomentFunctions.BasicProductMoments(data)
+            _Sigma = BPM.StDev()
+            PeriodOfRecord = (BPM.SampleSize())
+        End Sub
+        Public Overrides Function GetInvCDF(probability As Double) As Double
+            Return _Sigma * Math.Sqrt(-2 * Math.Log(probability))
+        End Function
+        Public Overrides Function GetCDF(value As Double) As Double
+            Return 1 - (Math.Exp(-(Math.Pow(value, 2)) / (2 * (Math.Pow(_Sigma, 2)))))
+        End Function
+        Public Overrides Function GetPDF(value As Double) As Double
+            Return (value / (Math.Pow(_Sigma, 2))) * Math.Exp(-(Math.Pow(value, 2)) / (2 * (Math.Pow(_Sigma, 2))))
+        End Function
+        Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
+            If _Sigma <= 0 Then Yield New Exception("Sigma cannot be less than or equal to zero in the Rayleigh distribuiton.")
+        End Function
+    End Class
 
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a6774d21c22f965b423980033c765c9, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\LicenseInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6e209f6e9b16a9f7d548e3d0e98f638f, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\LicenseInfo.vb"
 
     ' Author:
     ' 
@@ -83,7 +83,7 @@ Namespace ApplicationServices.Development
 
 #End Region
 
-    Public Class LicenseInfo : Inherits BaseClass
+    Public Class LicenseInfo
 
         Public Property Authors As NamedValue()
         Public Property Title As String

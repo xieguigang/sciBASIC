@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd67202ac61f2223f9202308f181b885, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::30a099d1490b4b86e4a02b1e6d2f963d, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -244,7 +244,7 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Removes array element at index
+    ''' Removes array element at index.(请注意，这个函数并不会修改原来的数组，而是创建一个新的拷贝)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
@@ -421,7 +421,11 @@ Public Module VectorExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IndexOf(Of T)(array As T(), o As T) As Integer
-        Return System.Array.IndexOf(array, value:=o)
+        If array.IsNullOrEmpty Then
+            Return -1
+        Else
+            Return System.Array.IndexOf(array, value:=o)
+        End If
     End Function
 
     ''' <summary>

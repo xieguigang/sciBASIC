@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b62a1d7f9d66f639a3303e7c9cfec66d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::7bde37a7efa216c325a9b29960090210, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: DrawHtmlText
     ' 
-    '         Sub: RenderHTML
+    '         Sub: (+2 Overloads) DrawHtmlString, RenderHTML
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,8 +45,10 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
 Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports GdiImage = System.Drawing.Image
 
 Namespace Drawing2D.Text
 
@@ -88,7 +90,8 @@ Namespace Drawing2D.Text
 
             Call HtmlRenderer.Render(
                 g, html,
-                location, maxWidth)
+                location, maxWidth
+            )
         End Sub
 
         ''' <summary>
@@ -98,9 +101,9 @@ Namespace Drawing2D.Text
         ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
         ''' <param name="maxSize$"></param>
         ''' <returns></returns>
-        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
+        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As GdiImage
             Using g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
-                Dim out As Image
+                Dim out As GdiImage
 
                 TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
                 out = g.ImageResource
@@ -109,5 +112,23 @@ Namespace Drawing2D.Text
                 Return out
             End Using
         End Function
+
+        <Extension>
+        Public Sub DrawHtmlString(g As IGraphics, text$, baseFontStyle As Font, defaultColor As Color, location As Point)
+            Dim tokens As TextString() = TextAPI _
+                .TryParse(text, baseFontStyle, defaultColor) _
+                .ToArray
+
+            Call g.RenderHTML(tokens, New PointF(location.X, location.Y))
+        End Sub
+
+        <Extension>
+        Public Sub DrawHtmlString(g As IGraphics, text$, baseFontStyle As Font, defaultColor As Color, location As PointF)
+            Dim tokens As TextString() = TextAPI _
+                .TryParse(text, baseFontStyle, defaultColor) _
+                .ToArray
+
+            Call g.RenderHTML(tokens, location)
+        End Sub
     End Module
 End Namespace

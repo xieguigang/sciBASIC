@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::804cbd1d18218dbd0e534189401cfe39, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Projection.vb"
+﻿#Region "Microsoft.VisualBasic::fa2864f88625a3d60cdaba934bc9ff39, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Projection.vb"
 
     ' Author:
     ' 
@@ -50,10 +50,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

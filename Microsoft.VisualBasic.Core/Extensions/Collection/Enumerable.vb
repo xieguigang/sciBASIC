@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3729b6eec8989cb5e5f901a6efe3ba6, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::1dd37d36153684f17defa3b71c50f41e, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     ' Module IEnumerations
     ' 
-    '     Function: [Next], CreateDictionary, (+2 Overloads) Differ, (+2 Overloads) FindByItemKey, FindByItemValue
-    '               (+2 Overloads) GetItem, GetItems, Take, (+2 Overloads) Takes, ToDictionary
-    '               ToEntryDictionary
+    '     Function: [Next], CreateDictionary, (+2 Overloads) Differ, ExceptType, (+2 Overloads) FindByItemKey
+    '               FindByItemValue, (+2 Overloads) GetItem, GetItems, OfType, Take
+    '               (+2 Overloads) Takes, ToDictionary, ToEntryDictionary
     ' 
     ' /********************************************************************************/
 
@@ -53,6 +53,13 @@ Imports Microsoft.VisualBasic.Text.Xml.Models.KeyValuePair
 <Extension>
 Public Module IEnumerations
 
+    <Extension>
+    Public Function OfType(Of A, B, T)(source As IEnumerable(Of [Variant](Of A, B))) As IEnumerable(Of T)
+        Return source _
+            .Where(Function(element) element Like GetType(T)) _
+            .Select(Function(e) DirectCast(e.Value, T))
+    End Function
+
     ''' <summary>
     ''' Get a random element
     ''' </summary>
@@ -66,15 +73,25 @@ Public Module IEnumerations
         Return data(random.Next(0, data.Length))
     End Function
 
-    <Extension> Public Function Differ(Of T As INamedValue, T2)(source As IEnumerable(Of T),
-                                                                ToDiffer As IEnumerable(Of T2),
-                                                                getId As Func(Of T2, String)) As String()
+    <Extension>
+    Public Iterator Function ExceptType(Of TIn, T As TIn)(src As IEnumerable(Of TIn)) As IEnumerable(Of TIn)
+        For Each element As TIn In src
+            If Not TypeOf element Is T Then
+                Yield element
+            End If
+        Next
+    End Function
+
+    <Extension>
+    Public Function Differ(Of T As INamedValue, T2)(source As IEnumerable(Of T),
+                                                    toDiffer As IEnumerable(Of T2),
+                                                    getId As Func(Of T2, String)) As String()
 
         Dim targetIndex As String() = (From item As T In source Select item.Key).ToArray
         Dim LQuery$() = LinqAPI.Exec(Of String) _
  _
             () <= From item As T2
-                  In ToDiffer
+                  In toDiffer
                   Let strId As String = getId(item)
                   Where Array.IndexOf(targetIndex, strId) = -1
                   Select strId
@@ -121,7 +138,7 @@ Public Module IEnumerations
     ''' <summary>
     ''' Text compare in case sensitive mode
     ''' </summary>
-    ReadOnly TextCompareStrict As DefaultValue(Of StringComparison) = StringComparison.Ordinal
+    ReadOnly TextCompareStrict As [Default](Of StringComparison) = StringComparison.Ordinal
 
     <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional strict As Boolean = True) As KeyValuePair()
         Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
@@ -257,7 +274,7 @@ Public Module IEnumerations
             End If
         Next
 
-        If duplicates.Count > 0 Then
+        If duplicates > 0 Then
             Call $"Dictionary table build complete, but there is dulplicated keys: {duplicates.GetJson}...".Warning
         End If
 

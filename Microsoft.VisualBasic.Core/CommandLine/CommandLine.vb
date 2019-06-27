@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4464cb58333d0414f78365e8ea7192e, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::f3029146fa5009244568a8ffb4e0a8d6, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -73,6 +72,11 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine
 
+    ' file path: C://path/to/file
+    ' standard input: std_in://
+    ' standard output: std_out://
+    ' memory mapping file: memory://file/uri
+
     ''' <summary>
     ''' A command line object that parse from the user input commandline string.
     ''' (从用户所输入的命令行字符串之中解析出来的命令行对象，标准的命令行格式为：
@@ -80,7 +84,7 @@ Namespace CommandLine
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    Public Class CommandLine : Inherits BaseClass
+    Public Class CommandLine
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
 
@@ -271,7 +275,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return CLICommandArgvs
+            Return cliCommandArgvs
         End Function
 
         ''' <summary>
@@ -474,15 +478,21 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function OpenStreamInput(param As String, Optional ByRef s As String = Nothing) As StreamReader
             Dim path As String = Me(param)
+            Dim type As FileTypes = StreamExtensions.FileType(path)
 
-            If path.FileExists Then
-                Return New StreamReader(New FileStream(path, FileMode.Open, access:=FileAccess.Read))
-            ElseIf Not String.IsNullOrEmpty(path) Then
-                s = path
-                Return Nothing
-            Else
-                Return New StreamReader(Console.OpenStandardInput)
-            End If
+            Select Case type
+                Case FileTypes.MemoryFile, FileTypes.PipelineFile
+                    Return New StreamReader(StreamExtensions.OpenForRead(path))
+                Case Else
+                    If path.FileExists Then
+                        Return New StreamReader(New FileStream(path, FileMode.Open, access:=FileAccess.Read))
+                    ElseIf Not String.IsNullOrEmpty(path) Then
+                        s = path
+                        Return Nothing
+                    Else
+                        Return New StreamReader(Console.OpenStandardInput)
+                    End If
+            End Select
         End Function
 
         ''' <summary>
@@ -493,12 +503,18 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
             Dim path$ = Me(param)
+            Dim type As FileTypes = StreamExtensions.FileType(path)
 
-            If path.StringEmpty Then
-                Return New StreamWriter(Console.OpenStandardOutput, encoding.CodePage)
-            Else
-                Return path.OpenWriter(encoding)
-            End If
+            Select Case type
+                Case FileTypes.MemoryFile, FileTypes.PipelineFile
+                    Return New StreamWriter(StreamExtensions.OpenForWrite(path))
+                Case Else
+                    If path.StringEmpty Then
+                        Return New StreamWriter(Console.OpenStandardOutput, encoding.CodePage)
+                    Else
+                        Return path.OpenWriter(encoding)
+                    End If
+            End Select
         End Function
 
         ''' <summary>
@@ -716,9 +732,9 @@ Namespace CommandLine
         ''' <typeparam name="T"></typeparam>
         ''' <param name="name">The optional argument parameter name</param>
         ''' <param name="[default]">The default value for returns when the parameter is not exists in the user input.</param>
-        ''' <param name="__ctype">The custom string parser for the CLI argument value</param>
+        ''' <param name="cast">The custom string parser for the CLI argument value</param>
         ''' <returns></returns>
-        Public Function GetValue(Of T)(name$, [default] As T, Optional __ctype As Func(Of String, T) = Nothing) As T
+        Public Function GetValue(Of T)(name$, [default] As T, Optional cast As Func(Of String, T) = Nothing) As T
             If Not Me.ContainsParameter(name, False) Then
                 If GetType(T).Equals(GetType(Boolean)) Then
                     If HavebFlag(name) Then
@@ -731,11 +747,11 @@ Namespace CommandLine
 
             Dim str As String = Me(name).DefaultValue
 
-            If __ctype Is Nothing Then
+            If cast Is Nothing Then
                 Dim value As Object = InputHandler.CTypeDynamic(str, GetType(T))
                 Return DirectCast(value, T)
             Else
-                Return __ctype(str)
+                Return cast(str)
             End If
         End Function
 
@@ -745,12 +761,10 @@ Namespace CommandLine
         ''' <param name="name">The parameter name, and its argument value should be a valid file path</param>
         ''' <param name="[default]">Default file path if the argument value is not exists</param>
         ''' <returns></returns>
-        Public Function OpenHandle(name$, Optional default$ = "") As VBInteger
-            Dim file As String = Me(name)
-            If String.IsNullOrEmpty(file) Then
-                file = [default]
-            End If
-            Return New VBInteger(FileHandles.OpenHandle(file))
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function OpenHandle(name$, Optional default$ = "", Optional encoding As Encodings = Encodings.UTF8) As VBInteger
+            Return My.File.OpenHandle(Me(name) Or [default].AsDefault, encoding)
         End Function
 #End Region
 
@@ -935,7 +949,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Overloads Shared Operator +(args As CommandLine, fs$) As Integer
             Dim path As String = args(fs)
-            Return FileHandles.OpenHandle(path)
+            Return My.File.OpenHandle(path)
         End Operator
 
         ''' <summary>
@@ -958,10 +972,10 @@ Namespace CommandLine
         End Operator
 
         Public Shared Operator ^(args As CommandLine, [default] As String) As String
-            If args Is Nothing OrElse String.IsNullOrEmpty(args.CLICommandArgvs) Then
+            If args Is Nothing OrElse String.IsNullOrEmpty(args.cliCommandArgvs) Then
                 Return [default]
             Else
-                Return args.CLICommandArgvs
+                Return args.cliCommandArgvs
             End If
         End Operator
 

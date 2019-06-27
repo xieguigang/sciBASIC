@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f78121b30774314de2828381cebcdea, Data\DataFrame.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a544b3c35437785c3dc92cca8bd4c252, Data\DataFrame.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language

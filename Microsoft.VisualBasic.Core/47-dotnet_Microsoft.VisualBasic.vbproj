@@ -34,7 +34,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -335,7 +335,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\smartnucl_integrative\biodeepDB\METLINApp\App\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -857,6 +857,48 @@
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WebAssembly|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\WebAssembly\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WebAssembly|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\WebAssembly\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WebAssembly|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\WebAssembly\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
@@ -913,6 +955,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
+    <Compile Include="CommandLine\Stream.vb" />
     <Compile Include="CommandLine\InteropService\InCompatible.vb" />
     <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
@@ -944,17 +987,22 @@
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Enumeration.vb" />
+    <Compile Include="Extensions\Collection\Linq\Pipeline.vb" />
+    <Compile Include="Extensions\Collection\Linq\Takes.vb" />
     <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
+    <Compile Include="Extensions\Collection\BucketExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
     <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
+    <Compile Include="Extensions\IO\IOStream.vb" />
     <Compile Include="Extensions\IO\Extensions\StreamHelper.vb" />
     <Compile Include="Extensions\IO\Extensions\SerializationIO.vb" />
     <Compile Include="Extensions\IO\Path\ProgramPathSearchTool.vb" />
     <Compile Include="Extensions\IO\Path\TemporaryEnvironment.vb" />
     <Compile Include="Extensions\IO\Path\Extensions.vb" />
+    <Compile Include="Extensions\Math\Correlations\Beta.vb" />
     <Compile Include="Extensions\Math\NumberEqualityComparer.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\Math\Information\UncheckHelpers.vb" />
@@ -965,13 +1013,16 @@
     <Compile Include="Extensions\Trinity\Word.vb" />
     <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
-    <Compile Include="Language\Language\JavaScript\Linq.vb" />
-    <Compile Include="Language\Language\JavaScript\JavaScriptObject.vb" />
-    <Compile Include="Language\Language\JavaScript\UnionType.vb" />
+    <Compile Include="My\JavaScript\ES6\Map.vb" />
+    <Compile Include="My\JavaScript\Linq.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="My\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Language\Value\CharStream.vb" />
-    <Compile Include="Net\HTTP\ZipStream.vb" />
+    <Compile Include="Language\Value\Variant.vb" />
+    <Compile Include="My\File.vb" />
+    <Compile Include="Net\HTTP\Stream\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
     <Compile Include="Net\HTTP\DataURI.vb" />
     <Compile Include="Language\Linq\Vectorization\Strings.vb" />
@@ -1045,7 +1096,6 @@
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Ranges\Relations.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\BucketIndexOf.vb" />
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
@@ -1112,14 +1162,17 @@
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
     <Compile Include="Scripting\Runtime\CType\Narrowing.vb" />
+    <Compile Include="Scripting\VisualBasic\Extensions.vb" />
+    <Compile Include="Scripting\VisualBasic\KeywordProcessor.vb" />
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Serialization\JSON\AnonymousJSON.vb" />
     <Compile Include="Text\Parser\CharEnumerator.vb" />
+    <Compile Include="Text\Parser\HtmlParser\TagAttributeParser.vb" />
     <Compile Include="Text\Parser\TryParse.vb" />
     <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
-    <Compile Include="Net\HTTP\GZStream.vb" />
+    <Compile Include="Net\HTTP\Stream\GZStream.vb" />
     <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />
@@ -1142,10 +1195,11 @@
     <Compile Include="Scripting\Runtime\Extensions.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\OperatorExpression.vb" />
     <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
-    <Compile Include="Scripting\VBLanguage.vb" />
+    <Compile Include="Scripting\VisualBasic\VBLanguage.vb" />
     <Compile Include="Text\GreekAlphabets.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
     <Compile Include="Text\Xml\Linq\DeserializeHandler.vb" />
+    <Compile Include="Text\Xml\Linq\DataSetWriter.vb" />
     <Compile Include="Text\Xml\Linq\NodeIterator.vb" />
     <Compile Include="Text\Xml\Models\ListOf.vb" />
     <Compile Include="Text\Xml\Models\StringValue.vb" />
@@ -1234,7 +1288,7 @@
     <Compile Include="Language\Language\Java\LogTricks.vb" />
     <Compile Include="Language\Language\Java\MathUtils.vb" />
     <Compile Include="Language\Language\Java\MersenneTwisterFast.vb" />
-    <Compile Include="Language\Value\Uid.vb" />
+    <Compile Include="ComponentModel\Uid.vb" />
     <Compile Include="Language\Language\C\CString.vb" />
     <Compile Include="Language\Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
@@ -1271,6 +1325,7 @@
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb" />
     <Compile Include="Text\Xml\Linq\Entity.vb" />
+    <Compile Include="Text\Xml\Models\ValueTuples\Extensions.vb" />
     <Compile Include="Text\Xml\Models\Vector.vb" />
     <Compile Include="Text\Xml\HtmlBuilder.vb" />
     <Compile Include="Text\Xml\XmlEntity.vb" />
@@ -1290,7 +1345,6 @@
     <Compile Include="Extensions\IO\Path\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
-    <Compile Include="Language\NET40_Compatible.vb" />
     <Compile Include="Language\Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
@@ -1364,7 +1418,6 @@
     <Compile Include="Language\NamespaceDoc.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\ls.vb" />
     <Compile Include="Language\Language\UnixBash\FileSystem\File.vb" />
-    <Compile Include="Language\BaseClass.vb" />
     <Compile Include="Language\Value\Numeric\Numeric.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\Text\Grep.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\WorkFlow.vb" />
@@ -1389,7 +1442,7 @@
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
     <Compile Include="Text\TextEncodings.vb" />
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
-    <Compile Include="Net\HTTP\Base64Codec.vb" />
+    <Compile Include="Net\HTTP\Stream\Base64Codec.vb" />
     <Compile Include="Extensions\WebServices\NetResponse.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
@@ -1514,7 +1567,6 @@
     <Compile Include="Extensions\Security\TripleDES.vb" />
     <Compile Include="Extensions\WebServices\WebServiceUtils.vb" />
     <Compile Include="ComponentModel\Settings\Inf\INIProfile.vb" />
-    <Compile Include="ComponentModel\File\ITextFile.vb" />
     <Compile Include="ComponentModel\Settings\Settings.vb" />
     <Compile Include="ComponentModel\Algorithm\base\Combination\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />

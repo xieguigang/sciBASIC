@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7fe8b0589d106faf6dee2e466b8ed88, tutorials\core.test\devToolTest.vb"
+﻿#Region "Microsoft.VisualBasic::f4ee5554c4ef765c4af6e9ba97f47faa, tutorials\core.test\devToolTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d91a6e3b3dfa090a48d0a02361697fa, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb"
+﻿#Region "Microsoft.VisualBasic::483cde5ad46acf2c65ce1061000bb57f, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb"
 
     ' Author:
     ' 
@@ -40,31 +40,21 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Namespace Math.Statistics.Linq
 
+    ''' <summary>
+    ''' 中位数计算拓展
+    ''' </summary>
     Public Module EnumerableStatsMedian
-        '
-        ' Summary:
-        '     Computes the Median of a sequence of nullable System.Decimal values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of nullable System.Decimal values to calculate the Median of.
-        '
-        ' Returns:
-        '     The Median of the sequence of values, or null if the source sequence is
-        '     empty or contains only values that are null.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.OverflowException:
-        '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+
+        ''' <summary>
+        ''' Computes the Median of a sequence of nullable System.Decimal values.
+        ''' </summary>
+        ''' <param name="source">A sequence of nullable System.Decimal values to calculate the Median of.</param>
+        ''' <returns>The Median of the sequence of values, or null if the source sequence is
+        ''' empty or contains only values that are null.</returns>
         <Extension>
         Public Function Median(source As IEnumerable(Of Decimal?)) As Decimal
             Dim values As IEnumerable(Of Decimal) = source.Coalesce()
@@ -75,26 +65,14 @@ Namespace Math.Statistics.Linq
 
             Return Nothing
         End Function
-        '
-        ' Summary:
-        '     Computes the Median of a sequence of System.Decimal values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of System.Decimal values to calculate the Median of.
-        '
-        ' Returns:
-        '     The Median of the sequence of values.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.InvalidOperationException:
-        '     source contains no elements.
-        '
-        '   System.OverflowException:
-        '     The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+
+        ''' <summary>
+        ''' Computes the Median of a sequence of System.Decimal values.
+        ''' </summary>
+        ''' <param name="source">A sequence of System.Decimal values to calculate the Median of.</param>
+        ''' <returns>
+        ''' The Median of the sequence of values.
+        ''' </returns>
         <Extension>
         Public Function Median(source As IEnumerable(Of Decimal)) As Decimal
             Dim sortedList = From number In source Order By number Select number

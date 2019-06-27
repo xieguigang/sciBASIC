@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6629b09098c0cb9d74a59c74a36819e1, Microsoft.VisualBasic.Core\ApplicationServices\Tools\OSVersionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3c118018626760676a3fc9601c964582, Microsoft.VisualBasic.Core\ApplicationServices\Tools\OSVersionInfo.vb"
 
     ' Author:
     ' 
@@ -87,11 +87,8 @@
 #End Region
 
 #Region "USINGS"
-Imports System.Collections.Generic
-Imports System.Diagnostics
 Imports System.Runtime.InteropServices
 Imports System.Runtime.InteropServices.Marshal
-Imports System.Text
 #End Region
 
 Namespace ApplicationServices
@@ -264,7 +261,7 @@ Namespace ApplicationServices
 
                 Dim osVersion As OperatingSystem = Environment.OSVersion
                 Dim osVersionInfo As New OSVERSIONINFOEX()
-                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersion(osVersionInfo) Then
                     Dim majorVersion As Integer = osVersion.Version.Major
@@ -658,7 +655,7 @@ Namespace ApplicationServices
 
                 Dim osVersion As OperatingSystem = Environment.OSVersion
                 Dim osVersionInfo As New OSVERSIONINFOEX()
-                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersion(osVersionInfo) Then
                     Dim majorVersion As Integer = osVersion.Version.Major
@@ -1074,7 +1071,7 @@ Namespace ApplicationServices
                 Dim servicePack__1 As String = String.Empty
                 Dim osVersionInfo As New OSVERSIONINFOEX()
 
-                osVersionInfo.dwOSVersionInfoSize = SizeOf(GetType(OSVERSIONINFOEX))
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(GetType(OSVERSIONINFOEX))
 
                 If GetVersion(osVersionInfo) Then
                     servicePack__1 = osVersionInfo.szCSDVersion

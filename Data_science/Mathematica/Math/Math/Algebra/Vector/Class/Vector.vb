@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc94d02ea73d3b83f73a360202426e02, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::afbe7a5576ae77967dee4d2f2ee66435, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,8 @@
     ' 
     '         Constructor: (+8 Overloads) Sub New
     '         Function: Abs, CumSum, DotProduct, Ones, Order
-    '                   Product, rand, ScaleToRange, SumMagnitudes, (+2 Overloads) ToString
+    '                   Product, rand, ScaleToRange, slice, SumMagnitudes
+    '                   (+2 Overloads) ToString
     '         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
     '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
@@ -59,6 +60,7 @@ Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
+Imports numpy = Microsoft.VisualBasic.Language.Python
 
 Namespace LinearAlgebra
 
@@ -746,6 +748,18 @@ Namespace LinearAlgebra
         End Operator
 #End Region
 #End Region
+
+        ''' <summary>
+        ''' 进行序列切片操作
+        ''' </summary>
+        ''' <param name="start%"></param>
+        ''' <param name="stop%"></param>
+        ''' <param name="steps%"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function slice(Optional start% = 0, Optional stop% = -1, Optional steps% = 1) As Vector
+            Return numpy.slice(buffer, start, [stop], steps).AsVector
+        End Function
 
         ''' <summary>
         ''' + http://mathworld.wolfram.com/DotProduct.html

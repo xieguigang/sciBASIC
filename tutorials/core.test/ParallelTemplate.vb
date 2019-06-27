@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2038d63109be2e31c78e20b19e0d15c6, tutorials\core.test\ParallelTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::5385add417dafd50030cea3ee7590cd5, tutorials\core.test\ParallelTemplate.vb"
 
     ' Author:
     ' 

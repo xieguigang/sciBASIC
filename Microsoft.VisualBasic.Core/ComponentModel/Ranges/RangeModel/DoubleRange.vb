@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9edc82b3a747bd847def004acbd510ba, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::cb551ec303f9cd2f31b64681ea0a05db, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '         Constructor: (+6 Overloads) Sub New
     '         Function: Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
     '                   ScaleMapping, (+2 Overloads) ToString, TryParse
-    '         Operators: *, <>, =
+    '         Operators: *, <>, =, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,6 +55,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Ranges.Model
 
@@ -62,7 +63,7 @@ Namespace ComponentModel.Ranges.Model
     ''' Represents a double range with minimum and maximum values
     ''' </summary>
     Public Class DoubleRange : Implements IRanges(Of Double)
-        Implements IEnumerable(Of Double)
+        Implements Enumeration(Of Double)
 
         ''' <summary>
         ''' Minimum value
@@ -231,6 +232,17 @@ Namespace ComponentModel.Ranges.Model
         End Operator
 
         ''' <summary>
+        ''' Value in this range or not?
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="range"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Like(x As Double, range As DoubleRange) As Boolean
+            Return range.IsInside(x)
+        End Operator
+
+        ''' <summary>
         ''' Scale numeric range
         ''' </summary>
         ''' <param name="range"></param>
@@ -284,13 +296,13 @@ Namespace ComponentModel.Ranges.Model
             Return value
         End Function
 
-        Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements IEnumerable(Of Double).GetEnumerator
+        Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
             For Each x In Me.Enumerate(100)
                 Yield x
             Next
         End Function
 
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
             Yield GetEnumerator()
         End Function
 

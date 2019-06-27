@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ab3a81bbc6479b11f7714e069e7fa5c, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
+﻿#Region "Microsoft.VisualBasic::fb6e250282baa62911e6aa1ebaf10e83, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
 
     ' Author:
     ' 
@@ -31,40 +31,41 @@
 
     ' Summaries:
 
-    ' Class ItemGroup
+    '     Class ItemGroup
     ' 
-    '     Properties: [Imports], BootstrapperPackages, Compiles, Contents, EmbeddedResources
-    '                 Nones, ProjectReferences, References, TypeScriptCompiles
+    '         Properties: [Imports], BootstrapperPackages, Compiles, Contents, EmbeddedResources
+    '                     Nones, ProjectReferences, References, TypeScriptCompiles
     ' 
-    '     Function: ToString
+    '         Function: ToString
     ' 
-    ' Class ProjectReference
+    '     Class ProjectReference
     ' 
-    '     Properties: Name, Project
+    '         Properties: Name, Project
     ' 
-    ' Class IncludeItem
+    '     Class IncludeItem
     ' 
-    '     Properties: [Private], HintPath, Include
+    '         Properties: [Private], HintPath, Include
     ' 
-    '     Function: ToString
+    '         Function: ToString
     ' 
-    ' Class Compile
+    '     Class Compile
     ' 
-    '     Properties: AutoGen, DependentUpon, DesignTime, DesignTimeSharedInput, SubType
+    '         Properties: AutoGen, DependentUpon, DesignTime, DesignTimeSharedInput, SubType
     ' 
-    ' Class None
+    '     Class None
     ' 
-    '     Properties: CustomToolNamespace, Generator, LastGenOutput
+    '         Properties: CustomToolNamespace, Generator, LastGenOutput
     ' 
-    ' Class EmbeddedResource
+    '     Class EmbeddedResource
     ' 
-    '     Properties: CustomToolNamespace, DependentUpon, Generator, LastGenOutput, SubType
+    '         Properties: CustomToolNamespace, DependentUpon, Generator, LastGenOutput, SubType
     ' 
-    ' Class BootstrapperPackage
+    '     Class BootstrapperPackage
     ' 
-    '     Properties: Install, ProductName, Visible
+    '         Properties: Install, ProductName, Visible
     ' 
-    ' Class Content
+    '     Class Content
+    ' 
     ' 
     ' 
     ' 
@@ -75,77 +76,80 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class ItemGroup
+Namespace vbproj
 
-    <XmlElement("Reference")>
-    Public Property References As IncludeItem()
-    <XmlElement("Import")>
-    Public Property [Imports] As IncludeItem()
-    <XmlElement("Compile")>
-    Public Property Compiles As Compile()
-    <XmlElement("TypeScriptCompile")>
-    Public Property TypeScriptCompiles As Compile()
-    <XmlElement("None")>
-    Public Property Nones As None()
-    <XmlElement("BootstrapperPackage")>
-    Public Property BootstrapperPackages As BootstrapperPackage()
-    <XmlElement("EmbeddedResource")>
-    Public Property EmbeddedResources As EmbeddedResource()
-    <XmlElement("Content")>
-    Public Property Contents As Content()
-    <XmlElement("ProjectReference")>
-    Public Property ProjectReferences As ProjectReference()
+    Public Class ItemGroup
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
-End Class
+        <XmlElement("Reference")>
+        Public Property References As IncludeItem()
+        <XmlElement("Import")>
+        Public Property [Imports] As IncludeItem()
+        <XmlElement("Compile")>
+        Public Property Compiles As Compile()
+        <XmlElement("TypeScriptCompile")>
+        Public Property TypeScriptCompiles As Compile()
+        <XmlElement("None")>
+        Public Property Nones As None()
+        <XmlElement("BootstrapperPackage")>
+        Public Property BootstrapperPackages As BootstrapperPackage()
+        <XmlElement("EmbeddedResource")>
+        Public Property EmbeddedResources As EmbeddedResource()
+        <XmlElement("Content")>
+        Public Property Contents As Content()
+        <XmlElement("ProjectReference")>
+        Public Property ProjectReferences As ProjectReference()
 
-Public Class ProjectReference : Inherits IncludeItem
-    Public Property Project As String
-    Public Property Name As String
-End Class
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+    End Class
 
-Public Class IncludeItem
+    Public Class ProjectReference : Inherits IncludeItem
+        Public Property Project As String
+        Public Property Name As String
+    End Class
 
-    <XmlAttribute>
-    Public Property Include As String
-    Public Property HintPath As String
-    Public Property [Private] As String
+    Public Class IncludeItem
 
-    Public Overrides Function ToString() As String
-        Return Include
-    End Function
-End Class
+        <XmlAttribute>
+        Public Property Include As String
+        Public Property HintPath As String
+        Public Property [Private] As String
 
-Public Class Compile : Inherits IncludeItem
-    Public Property AutoGen As String
-    Public Property DesignTime As String
-    Public Property DependentUpon As String
-    Public Property DesignTimeSharedInput As String
-    Public Property SubType As String
-End Class
+        Public Overrides Function ToString() As String
+            Return Include
+        End Function
+    End Class
 
-Public Class None : Inherits IncludeItem
-    Public Property Generator As String
-    Public Property LastGenOutput As String
-    Public Property CustomToolNamespace As String
-End Class
+    Public Class Compile : Inherits IncludeItem
+        Public Property AutoGen As String
+        Public Property DesignTime As String
+        Public Property DependentUpon As String
+        Public Property DesignTimeSharedInput As String
+        Public Property SubType As String
+    End Class
 
-Public Class EmbeddedResource : Inherits IncludeItem
-    Public Property DependentUpon As String
-    Public Property Generator As String
-    Public Property LastGenOutput As String
-    Public Property CustomToolNamespace As String
-    Public Property SubType As String
-End Class
+    Public Class None : Inherits IncludeItem
+        Public Property Generator As String
+        Public Property LastGenOutput As String
+        Public Property CustomToolNamespace As String
+    End Class
 
-Public Class BootstrapperPackage : Inherits IncludeItem
-    Public Property Visible As String
-    Public Property ProductName As String
-    Public Property Install As String
-End Class
+    Public Class EmbeddedResource : Inherits IncludeItem
+        Public Property DependentUpon As String
+        Public Property Generator As String
+        Public Property LastGenOutput As String
+        Public Property CustomToolNamespace As String
+        Public Property SubType As String
+    End Class
 
-Public Class Content : Inherits IncludeItem
+    Public Class BootstrapperPackage : Inherits IncludeItem
+        Public Property Visible As String
+        Public Property ProductName As String
+        Public Property Install As String
+    End Class
 
-End Class
+    Public Class Content : Inherits IncludeItem
+
+    End Class
+End Namespace

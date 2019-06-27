@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e72c1819df62abe71b1a2879fc89c6d0, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::994b1956aa075a24286a1fac61a9418f, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,8 @@
     ' 
     '     Properties: HttpRequestTimeOut
     ' 
-    '     Function: [GET], __get, __httpRequest, Get_PageContent, LogException
+    '     Function: [GET], BuildWebRequest, Get_PageContent, httpRequest, LogException
+    '               urlGet
     ' 
     ' /********************************************************************************/
 
@@ -48,6 +49,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
@@ -72,7 +74,8 @@ Public Module HttpGet
                                       Optional proxy As String = Nothing,
                                       Optional doNotRetry404 As Boolean = True,
                                       Optional UA$ = Nothing,
-                                      Optional refer$ = Nothing) As String
+                                      Optional refer$ = Nothing,
+                                      Optional ByRef is404 As Boolean = False) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -88,13 +91,17 @@ Public Module HttpGet
 
         Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
 
+        ' do status indicator reset
+        is404 = False
+
         ' 类似于php之中的file_get_contents函数,可以读取本地文件内容
         If File.Exists(url) Then
             Call "[Job DONE!]".__DEBUG_ECHO
             Return url.ReadAllText
         Else
             If isFileUrl Then
-                Call $"URL {url.ToFileURL} can not solved on your filesystem!".Warning
+                Call $"URL {url.ToFileURL} can not be solved on your filesystem!".Warning
+                is404 = True
                 Return ""
             End If
         End If
@@ -107,11 +114,11 @@ Public Module HttpGet
             headers(NameOf(refer)) = refer
         End If
 
-        Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)
+        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404)
     End Function
 
     <Extension>
-    Private Function __httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$) As String
+    Private Function httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$, ByRef is404 As Boolean) As String
         Dim retryTime As Integer = 0
 
         If String.IsNullOrEmpty(proxy) Then
@@ -119,8 +126,9 @@ Public Module HttpGet
         End If
 
         Try
-RETRY:      Return BuildWebRequest(url, headers, proxy, UA).__get()
+RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet()
         Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso DoNotRetry404
+            is404 = True
             Return LogException(url, New Exception(url, ex))
 
         Catch ex As Exception When retryTime < retries
@@ -138,12 +146,16 @@ RETRY:      Return BuildWebRequest(url, headers, proxy, UA).__get()
         End Try
     End Function
 
-    Private Function LogException(url As String, ex As Exception) As String
-        Dim exMessage As String = String.Format("Unable to get the http request!" & vbCrLf &
-                                                "  Url:=[{0}]" & vbCrLf &
-                                                "  EXCEPTION ===>" & vbCrLf & ex.ToString, url)
-        Call App.LogException(exMessage, NameOf([GET]) & "::HTTP_REQUEST_EXCEPTION")
-        Return ""
+    Private Function LogException(url$, ex As Exception) As String
+        Dim exMsg As String = {
+            "Unable to get the http request!",
+           $"  Url:=[{url}]",
+            "  EXCEPTION ===>",
+            "",
+            ex.ToString
+        }.JoinBy(ASCII.LF)
+
+        Return App.LogException(exMsg, NameOf([GET]) & "::HTTP_REQUEST_EXCEPTION")
     End Function
 
     Const doctorcomError$ = "Please login your Campus Broadband Network Client at first!"
@@ -176,7 +188,12 @@ RETRY:      Return BuildWebRequest(url, headers, proxy, UA).__get()
         Return webRequest
     End Function
 
-    <Extension> Private Function __get(webrequest As HttpWebRequest) As String
+    ''' <summary>
+    ''' Perform a web url query request
+    ''' </summary>
+    ''' <param name="webrequest"></param>
+    ''' <returns></returns>
+    <Extension> Private Function urlGet(webrequest As HttpWebRequest) As String
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim url As String = webrequest.RequestUri.ToString
 
@@ -197,9 +214,17 @@ RETRY:      Return BuildWebRequest(url, headers, proxy, UA).__get()
             If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
                 Call doctorcomError.PrintException
                 Return ""
+            Else
+                Dim time$ = ValueTypes.ReadableElapsedTime(timer.ElapsedMilliseconds)
+                Dim debug$ = $"[{url}] {title} - {Len(html)} chars in {time}"
+
+                If timer.ElapsedMilliseconds > 1000 Then
+                    Call debug.Warning
+                Else
+                    Call debug.__INFO_ECHO
+                End If
             End If
 
-            Call $"[{title}  {url}] --> sizeOf:={Len(html)} chars; response_time:={timer.ElapsedMilliseconds} ms.".__DEBUG_ECHO
 #If DEBUG Then
             Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
 #End If

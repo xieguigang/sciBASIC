@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c060bf707e7de1fa334f3c0d57f0545, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::f2705a35fc10cf97197c62b029e26ca9, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
 
     ' Author:
     ' 
@@ -121,9 +121,9 @@ Namespace SyntaxAPI.Vectors
         Public Overloads Property [GET](a As Vector, b As Vector) As T()
             Get
                 Dim x As Integer = a(0), y As Integer = b(0)
-                Dim ChunkBuffer As T() = New T(y - x - 1) {}
-                Call System.Array.ConstrainedCopy(Me.ToArray, x, ChunkBuffer, 0, ChunkBuffer.Length)
-                Return ChunkBuffer
+                Dim buffer As T() = New T(y - x - 1) {}
+                Call System.Array.ConstrainedCopy(Me.ToArray, x, buffer, 0, buffer.Length)
+                Return buffer
             End Get
             Set(value As T())
                 Dim x As Integer = a(0), y As Integer = b(0)

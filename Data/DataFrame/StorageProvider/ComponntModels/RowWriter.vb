@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b3b77799d10903e91fc18102984edde, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1613dea322043b1502edf5c092802103, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
@@ -164,7 +164,8 @@ Namespace StorageProvider.ComponentModels
             Columns.Where(Function(c)
                               For Each rc In ordered
                                   If rc Is c Then
-                                      Return False ' 是前面经过重新排序的column，则不考虑了      
+                                      ' 是前面经过重新排序的column，则不考虑了      
+                                      Return False
                                   End If
                               Next
 

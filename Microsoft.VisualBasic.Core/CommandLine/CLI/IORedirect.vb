@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67dabb8464e1b96fe6903eef62a69a31, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::a3471837b8895154ee1106f6135a2fed, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 
@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Terminal.STDIO__
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine
 
@@ -173,7 +174,7 @@ Namespace CommandLine
                        Optional displayStdOut As Boolean = True,
                        Optional displayDebug As Boolean = False)
 
-            Dim program$ = exe.GetString(""""c)
+            Dim program$ = exe.Trim(ASCII.Quot, " "c)
             Dim pInfo As New ProcessStartInfo(program, args.TrimNewLine.Trim) With {
                 .UseShellExecute = False
             }
@@ -275,9 +276,9 @@ Namespace CommandLine
 
             If displaDebug Then
                 Dim Exe As String = FileIO.FileSystem.GetFileInfo(processInfo.StartInfo.FileName).FullName.Replace("\", "/")
-                Dim argvs As String = (" " & processInfo.StartInfo.Arguments).Trim
+                Dim argvs As String = processInfo.StartInfo.Arguments
 
-                Call Console.WriteLine("   --> system(""file:""{0}""{1})", Exe, argvs)
+                Call Console.WriteLine("# ""{0}"" {1}", Exe, argvs)
             End If
 
             Try

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db59f3cb75a586efdba184cabac1c69a, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::47511b485a69bd473a64458aede8c0ce, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\NamedValues.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '     Structure [Property]
     ' 
-    '         Properties: Comment, name, value
+    '         Properties: comment, name, value
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
@@ -110,17 +110,17 @@ Namespace Text.Xml.Models
     ''' Property Info (Property Name and Property Value).
     ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
     ''' </summary>
-    Public Structure [Property] : Implements INamedValue
+    <XmlType("property")> Public Structure [Property] : Implements INamedValue
 
         <XmlAttribute> Public Property name As String Implements INamedValue.Key
         <XmlAttribute> Public Property value As String
         <XmlText>
-        Public Property Comment As String
+        Public Property comment As String
 
         Sub New(name$, value$, comment$)
             Me.name = name
             Me.value = value
-            Me.Comment = comment
+            Me.comment = comment
         End Sub
 
         Public Overrides Function ToString() As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0b7998a564eca3ee1a45d0047a67fa9, mime\application%json\Parser\JsonValue.vb"
+﻿#Region "Microsoft.VisualBasic::7607e531f0daa2eb23768dffd39c30a6, mime\application%json\Parser\JsonValue.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,17 @@
 
     '     Class JsonValue
     ' 
-    '         Properties: Value
+    '         Properties: value
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: BuildJsonString, GetStripString, ToString
+    '         Function: BuildJsonString, GetStripString, Literal, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Parser
 
@@ -52,14 +54,25 @@ Namespace Parser
     ''' </summary>
     Public Class JsonValue : Inherits JsonElement
 
-        Public Overloads Property Value As Object
+        Public Overloads Property value As Object
 
         Public Sub New()
         End Sub
 
         Public Sub New(obj As Object)
-            Value = obj
+            value = obj
         End Sub
+
+        Public Function Literal(typeOfT As Type) As Object
+            Select Case typeOfT
+                Case GetType(String)
+                    Return GetStripString()
+                Case GetType(Date)
+                    Return Casting.CastDate(GetStripString)
+                Case Else
+                    Return Scripting.CTypeDynamic(value, typeOfT)
+            End Select
+        End Function
 
         ''' <summary>
         ''' 处理转义等特殊字符串
@@ -67,14 +80,14 @@ Namespace Parser
         ''' <returns></returns>
         Public Function GetStripString() As String
             Dim s$ = Scripting _
-                .ToString(Value, "null") _
+                .ToString(value, "null") _
                 .GetString
             s = JsonParser.StripString(s)
             Return s
         End Function
 
         Public Overrides Function BuildJsonString() As String
-            Return Scripting.ToString(Value, "null")
+            Return Scripting.ToString(value, "null")
         End Function
 
         Public Overrides Function ToString() As String

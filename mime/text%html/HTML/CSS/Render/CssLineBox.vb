@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b2efbbe85a291c6fe00d48bbf0fb700, mime\text%html\HTML\CSS\Render\CssLineBox.vb"
+﻿#Region "Microsoft.VisualBasic::2517df96e27174be6becf86ec04c447c, mime\text%html\HTML\CSS\Render\CssLineBox.vb"
 
     ' Author:
     ' 
@@ -46,9 +46,9 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Math
+Imports rect = System.Drawing.Rectangle
 
 Namespace HTML.CSS.Render
 
@@ -238,8 +238,8 @@ Namespace HTML.CSS.Render
                 If Single.IsInfinity(Rectangles(b).Width) Then
                     Continue For
                 End If
-                g.FillRectangle(New SolidBrush(Color.FromArgb(50, Color.Black)), Rectangle.Round(Rectangles(b)))
-                g.DrawRectangle(Pens.Red, Rectangle.Round(Rectangles(b)))
+                g.FillRectangle(New SolidBrush(Color.FromArgb(50, Color.Black)), rect.Round(Rectangles(b)))
+                g.DrawRectangle(Pens.Red, rect.Round(Rectangles(b)))
             Next
         End Sub
 

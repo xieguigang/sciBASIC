@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83ff920f6807a2e8577da3334793bab1, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::0c0e35ae68f20ca3741110c66731ebf4, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
 
     ' Author:
     ' 
@@ -72,7 +72,7 @@ Namespace CommandLine.InteropService.SharedORM
         Public Overrides Function GetSourceCode() As String
             Dim vb As New StringBuilder
             Dim className$ = MyBase.exe _
-                .NormalizePathString(OnlyASCII:=True) _
+                .NormalizePathString(alphabetOnly:=True) _
                 .Replace(" ", "_")
             Dim rel$ = PathExtensions.RelativePath(App.Type.Assembly.Location.GetFullPath)
             Dim info$ = App.Type.NamespaceEntry.Description

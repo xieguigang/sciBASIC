@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9976cb4916591ebcf5b8595c27a22cfa, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::7aaf99a205d4a67af35d7827b2a91f2f, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Namespace ComponentModel.Ranges.Model
     ''' <summary>
     ''' Represents an <see cref="Integer"/> range with minimum and maximum values
     ''' </summary>
-    Public Class IntRange : Inherits BaseClass
+    Public Class IntRange
         Implements IRanges(Of Integer)
         Implements IEnumerable(Of Integer)
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4f69356b8fec846e1ca204128c26d3a, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::0b971f95937a975d61ec82a40a5de12a, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: Execute
     ' 
     ' 
@@ -45,6 +46,14 @@
 Namespace Serialization.JSON.Formatter.Internals.Strategies
     Friend NotInheritable Class CommaStrategy
         Implements ICharacterStrategy
+
+        ''' <summary>
+        ''' ,
+        ''' </summary>
+        Sub New()
+
+        End Sub
+
         Public Sub Execute(context As JsonFormatterStrategyContext) Implements ICharacterStrategy.Execute
             context.AppendCurrentChar()
 
@@ -52,7 +61,10 @@ Namespace Serialization.JSON.Formatter.Internals.Strategies
                 Return
             End If
 
-            context.BuildContextIndents()
+            If Not context.IsInArrayScope Then
+                context.BuildContextIndents()
+            End If
+
             context.IsProcessingVariableAssignment = False
         End Sub
 

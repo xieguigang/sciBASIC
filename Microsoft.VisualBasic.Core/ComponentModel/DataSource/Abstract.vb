@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c916db47a1e02a1208e8e73f9964dfa7, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::9e217abf5ba3f2929fef576bfb42c6e8, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Abstract.vb"
 
     ' Author:
     ' 

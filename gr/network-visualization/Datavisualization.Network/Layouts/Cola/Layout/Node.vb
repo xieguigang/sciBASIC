@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d76e0d0be88e8e01a01eb8262603692, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Node.vb"
+﻿#Region "Microsoft.VisualBasic::5f37db26d6eefa7cb553e181ab1118a7, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Node.vb"
 
     ' Author:
     ' 
@@ -38,12 +38,12 @@
     ' 
     '     Class Node
     ' 
-    '         Properties: bounds, fixed, fixedWeight, height, id
-    '                     px, py, variable, width, x
-    '                     y
+    '         Properties: bounds, fixed, fixedWeight, groups, height
+    '                     id, leaves, padding, px, py
+    '                     variable, width, x, y
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: makeRBTree
+    '         Function: isGroup, makeRBTree, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -53,7 +53,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 
@@ -99,36 +100,12 @@ Namespace Layouts.Cola
         Implements Indexed
         Implements IGraphNode
 
-        Public Property id As Integer Implements Indexed.id
+        Public Overridable Property id As Integer Implements Indexed.id
         Public name As String
         Public routerNode As Node
         Public prev As RBTree(Of Integer, Node)
         Public [next] As RBTree(Of Integer, Node)
         Public children As Integer()
-
-        'Default Public Property GetNode(direction As String) As RBTree(Of Integer, Node)
-        '    Get
-        '        Select Case direction
-        '            Case NameOf(prev)
-        '                Return prev
-        '            Case NameOf([next])
-        '                Return [next]
-        '            Case Else
-        '                Throw New NotImplementedException(direction)
-        '        End Select
-        '    End Get
-        '    Set
-        '        Select Case direction
-        '            Case NameOf(prev)
-        '                prev = Value
-        '            Case NameOf([next])
-        '                [next] = Value
-        '            Case Else
-        '                Throw New NotImplementedException(direction)
-        '        End Select
-        '    End Set
-        'End Property
-
         Public r As Rectangle2D
         Public v As Variable
         Public pos As Double
@@ -144,7 +121,14 @@ Namespace Layouts.Cola
         Public Overloads Property y As Double Implements IGraphNode.y
         Public Overloads Property fixed As Boolean Implements IGraphNode.fixed
         Public Property fixedWeight As Double? Implements IGraphNode.fixedWeight
-        Public parent As Group
+        Public parent As Node
+        Public Property groups As List(Of [Variant](Of Integer, Node))
+        Public Property leaves As List(Of [Variant](Of Integer, Node))
+        Public Property padding As Double?
+
+        Public Shared Function isGroup(g As Node) As Boolean
+            Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
+        End Function
 
         Sub New()
         End Sub
@@ -157,6 +141,10 @@ Namespace Layouts.Cola
             prev = makeRBTree()
             [next] = makeRBTree()
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"#{name}"
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function makeRBTree() As RBTree(Of Integer, Node)

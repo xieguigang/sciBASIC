@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::323e0de1a1c5d1409f3ce7767c824003, Microsoft.VisualBasic.Core\Text\Xml\Models\ListOf.vb"
+﻿#Region "Microsoft.VisualBasic::ff137ab3e344522ef1b34d24acdd29a3, Microsoft.VisualBasic.Core\Text\Xml\Models\ListOf.vb"
 
     ' Author:
     ' 
@@ -35,17 +35,24 @@
     ' 
     '         Properties: size
     ' 
+    '         Function: GenericEnumerator, GetEnumerator
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Text.Xml.Models
 
-    Public MustInherit Class ListOf
+    Public MustInherit Class ListOf(Of T) : Implements Enumeration(Of T)
 
+        ''' <summary>
+        ''' 在这个列表之中的元素数量的长度
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property size As Integer
             Get
                 Return getSize()
@@ -55,7 +62,18 @@ Namespace Text.Xml.Models
             End Set
         End Property
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of T) Implements Enumeration(Of T).GenericEnumerator
+            For Each x As T In getCollection()
+                Yield x
+            Next
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of T).GetEnumerator
+            Yield GenericEnumerator()
+        End Function
+
         Protected MustOverride Function getSize() As Integer
+        Protected MustOverride Function getCollection() As IEnumerable(Of T)
 
     End Class
 End Namespace

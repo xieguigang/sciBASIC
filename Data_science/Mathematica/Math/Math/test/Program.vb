@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56fd7ee0097f5a6173cb0ec4b360c93e, Data_science\Mathematica\Math\Math\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::db50ed336482acfe493e2f2a552d39d6, Data_science\Mathematica\Math\Math\test\Program.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 #End Region
 
 Imports System.Linq.Expressions
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations

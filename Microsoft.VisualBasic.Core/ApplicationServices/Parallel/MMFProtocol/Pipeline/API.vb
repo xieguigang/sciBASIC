@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53a24c9ae087ec7ba9772436439bf4b7, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\Pipeline\API.vb"
+﻿#Region "Microsoft.VisualBasic::3cb2b985d6842151b781445429322b32, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\Pipeline\API.vb"
 
     ' Author:
     ' 

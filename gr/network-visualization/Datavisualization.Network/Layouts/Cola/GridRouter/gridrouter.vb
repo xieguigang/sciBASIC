@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3239542053f5d48307244fa9aa874ae, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
+﻿#Region "Microsoft.VisualBasic::40742c5d7ddf2ca88a3e6cf2512a9d6b, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
 
     ' Author:
     ' 
@@ -61,9 +61,9 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math.Interpolation
+Imports Microsoft.VisualBasic.My.JavaScript
 Imports any = System.Object
 Imports number = System.Double
 

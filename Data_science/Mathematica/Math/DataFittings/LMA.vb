@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f225575faa7cd4b23550bb43155a157a, Data_science\Mathematica\Math\DataFittings\LMA.vb"
+﻿#Region "Microsoft.VisualBasic::c9911782e1be95ca40544e717be6f26a, Data_science\Mathematica\Math\DataFittings\LMA.vb"
 
     ' Author:
     ' 

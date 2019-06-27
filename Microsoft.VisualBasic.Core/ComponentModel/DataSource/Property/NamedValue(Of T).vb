@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04f1c568f523034097893e43b84b73af, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::529b3ac85939959a3564dad680f53aa1, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
 
     ' Author:
     ' 
@@ -49,7 +49,6 @@ Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataSourceModel
 
@@ -111,7 +110,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="name"></param>
         ''' <param name="value"></param>
-        Sub New(name$, value As T, Optional describ As String = Nothing)
+        Sub New(name$, Optional value As T = Nothing, Optional describ As String = Nothing)
             Me.Name = name
             Me.Value = value
             Me.Description = describ
@@ -198,6 +197,11 @@ Namespace ComponentModel.DataSourceModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(tuple As NamedValue(Of T), compares As T) As Boolean
             Return Not tuple = compares
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(value As NamedValue(Of T)) As T
+            Return value.Value
         End Operator
     End Structure
 End Namespace

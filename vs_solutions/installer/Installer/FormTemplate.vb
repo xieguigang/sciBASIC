@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0553ea59fe27479f0ec759764e40db3f, vs_solutions\installer\Installer\FormTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::06c7574d3cd53920f317b43465ce1d60, vs_solutions\installer\Installer\FormTemplate.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::481893c7090305a777c67dc50c42bb79, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::28fd81d6ba14428fc2014e6d4c719427, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,11 @@
     '     Module HtmlStrips
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetHtmlComments, GetImageLinks, GetInput, GetInputGroup, GetLinks
-    '                   GetSelectInputGroup, GetSelectOptions, GetSelectValue, GetValue, href
-    '                   HtmlLines, HTMLTitle, img, RemovesCSSstyles, RemovesFooter
+    '         Function: GetHtmlComments, GetInput, GetInputGroup, GetLinks, GetSelectInputGroup
+    '                   GetSelectOptions, GetSelectValue, GetValue, HtmlLines, HtmlList
+    '                   HTMLTitle, paragraph, Regexp, RemovesCSSstyles, RemovesFooter
     '                   RemovesHtmlComments, RemovesHtmlHead, RemovesHtmlStrong, RemovesImageLinks, RemovesJavaScript
-    '                   RemoveTags, (+2 Overloads) src, StripHTMLTags, stripTag, TagAttributes
-    '                   TrimResponseTail
+    '                   RemoveTags, StripHTMLTags, stripTag, TrimResponseTail
     ' 
     ' 
     ' /********************************************************************************/
@@ -51,7 +50,6 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -97,14 +95,16 @@ Namespace Text.Parser.HtmlParser
                 Return New String() {}
             Else
                 Dim links$() = r _
-                    .Matches(html, HtmlLink, RegexICSng) _
+                    .Matches(html, Regexp("a"), RegexICSng) _
                     .ToArray(AddressOf HtmlStrips.GetValue)
                 Return links
             End If
         End Function
 
-        Public Const HtmlLink$ = "<a\s.+?</a>"
-        Public Const HtmlPageTitle$ = "<title>.+</title>"
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Regexp(tagName As String) As String
+            Return $"<{tagName}.+?</{tagName}>"
+        End Function
 
         ''' <summary>
         ''' Parsing the title text from the html inputs.
@@ -112,7 +112,7 @@ Namespace Text.Parser.HtmlParser
         ''' <param name="html"></param>
         ''' <returns></returns>
         <Extension> Public Function HTMLTitle(html As String) As String
-            Dim title$ = r.Match(html, HtmlPageTitle, RegexICSng).Value
+            Dim title$ = r.Match(html, Regexp("title"), RegexICSng).Value
 
             If String.IsNullOrEmpty(title) Then
                 title = "null"
@@ -156,79 +156,30 @@ Namespace Text.Parser.HtmlParser
             Return s
         End Function
 
-        Const HtmlTags$ = "</?.+?(\s+.+?="".+?"")*>"
-        Const hrefPattern$ = "href\s*=\s*[""'].+?[""']"
-
         ''' <summary>
-        ''' Gets the link text in the html fragement text.
+        ''' 
         ''' </summary>
-        ''' <param name="html">A string that contains the url string pattern like: href="url_text"</param>
+        ''' <param name="html"></param>
+        ''' <param name="plainText">If this argument is value True, then all of the html format tag will be removes.</param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        '''
-        <ExportAPI("Html.Href")>
-        <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")> html$) As String
-            If String.IsNullOrEmpty(html) Then
-                Return ""
-            End If
-
-            Dim url$ = r _
-                .Match(html, hrefPattern, RegexOptions.IgnoreCase) _
-                .Value
-
-            If String.IsNullOrEmpty(url) Then
-                Return ""
-            Else
-                Return url.GetTagValue("=", trim:=True).Value.GetStackValue("""", """")
-            End If
-        End Function
-
-#Region "Parsing image source url from the img html tag."
-
-        Public Const imgHtmlTagPattern As String = "<img.+?src=.+?>"
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function GetImageLinks(html As String) As String()
-            Dim list$() = r _
-                .Matches(html, imgHtmlTagPattern, RegexICSng) _
-                .EachValue(Function(img) img.src) _
+        Public Function paragraph(html$, Optional plainText As Boolean = False) As IEnumerable(Of String)
+            Return html _
+                .Matches(Regexp("p"), RegexICSng) _
+                .Select(Function(p)
+                            If plainText Then
+                                Return p.StripHTMLTags
+                            Else
+                                Return p
+                            End If
+                        End Function) _
                 .ToArray
-
-            Return list
-        End Function
-
-        ''' <summary>
-        ''' Parsing image source url from the img html tag.
-        ''' </summary>
-        ''' <param name="img"></param>
-        ''' <returns></returns>
-        <Extension> Public Function src(img$) As String
-            If String.IsNullOrEmpty(img) Then
-                Return ""
-            Else
-                img = r.Match(img, "src\s*[=]\s*"".+?""", RegexOptions.IgnoreCase).Value
-            End If
-
-            If String.IsNullOrEmpty(img) Then
-                Return ""
-            Else
-                img = img.GetTagValue("=", trim:=True).Value.GetStackValue("""", """")
-                Return img
-            End If
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function src(img As (tag$, attrs As NamedValue(Of String)())) As String
-            Return img.attrs.GetByKey("src", True).Value
         End Function
 
         <Extension>
-        Public Function img(html$) As (tag$, attrs As NamedValue(Of String)())
-            Return ("img", r.Match(html, imgHtmlTagPattern, RegexICSng).Value.TagAttributes.ToArray)
+        Public Function HtmlList(html As String) As String()
+            Return html.Matches(Regexp("li"), RegexICSng).ToArray
         End Function
-#End Region
 
         ''' <summary>
         ''' 有些时候后面可能会存在多余的vbCrLf，则使用这个函数去除
@@ -249,8 +200,6 @@ Namespace Text.Parser.HtmlParser
                 Return value
             End If
         End Function
-
-        ReadOnly vbCrLfLen% = Len(vbCrLf)
 
         ''' <summary>
         ''' 获取两个尖括号之间的内容
@@ -347,18 +296,11 @@ Namespace Text.Parser.HtmlParser
             If html.StringEmpty Then
                 Return {}
             Else
-                Return Regex.Split(html, LineFeed, RegexICSng)
+                Return r.Split(html, LineFeed, RegexICSng)
             End If
         End Function
 
-        ' <area shape=rect	coords=40,45,168,70	href="/dbget-bin/www_bget?hsa05034"	title="hsa05034: Alcoholism" onmouseover="popupTimer(&quot;hsa05034&quot;, &quot;hsa05034: Alcoholism&quot;, &quot;#ffffff&quot;)" onmouseout="hideMapTn()" />
-        ''' <summary>
-        ''' The regexp pattern for the attributes in a html tag.
-        ''' </summary>
-        Const attributeParse$ = "(\S+?\s*[=]\s*"".+?"")|(\S+?\s*[=]\s*\S+)"
-
-        <Extension>
-        Private Function stripTag(ByRef tag$) As String
+        <Extension> Private Function stripTag(ByRef tag$) As String
             If tag Is Nothing Then
                 tag = ""
             Else
@@ -368,20 +310,6 @@ Namespace Text.Parser.HtmlParser
                     .Trim("/"c)
             End If
             Return tag
-        End Function
-
-        ''' <summary>
-        ''' 获取一个html标签之中的所有的attribute属性数据
-        ''' </summary>
-        ''' <param name="tag$"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function TagAttributes(tag As String) As IEnumerable(Of NamedValue(Of String))
-            Return Regex _
-                .Matches(tag.GetBetween("<", ">"), attributeParse, RegexICSng) _
-                .EachValue _
-                .Select(Function(t) t.GetTagValue("=", trim:=""""""))
         End Function
 
         ''' <summary>

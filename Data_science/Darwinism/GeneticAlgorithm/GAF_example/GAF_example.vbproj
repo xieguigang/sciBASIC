@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{92690464-6B13-47E8-B5DA-A683AD606AC6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>GAF_example.neuronTest</StartupObject>
+    <StartupObject>GAF_example.Demo</StartupObject>
     <RootNamespace>GAF_example</RootNamespace>
     <AssemblyName>GAF_example</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -140,11 +140,11 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\DataMining\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
+    <ProjectReference Include="..\..\..\DataMining\DataMining\Microsoft.VisualBasic.DataMining.Framework.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\MachineLearning\MachineLearning.vbproj">
+    <ProjectReference Include="..\..\..\MachineLearning\MachineLearning\MachineLearning.vbproj">
       <Project>{a43ec013-2b55-4d25-b9f1-96bd5fb1e577}</Project>
       <Name>MachineLearning</Name>
     </ProjectReference>

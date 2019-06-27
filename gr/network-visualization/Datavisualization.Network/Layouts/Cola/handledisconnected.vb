@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cb7c57f20303ce9ad86e9c73b0923e4, gr\network-visualization\Datavisualization.Network\Layouts\Cola\handledisconnected.vb"
+﻿#Region "Microsoft.VisualBasic::a050f9f1487733eadb6d684d9e87fd8c, gr\network-visualization\Datavisualization.Network\Layouts\Cola\handledisconnected.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,6 @@
 
 Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports Microsoft.VisualBasic.Language.JavaScript
 Imports any = System.Object
 Imports number = System.Double
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfa30b087e13472b88cc01edc0dbd362, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::0d5579c9fc12fc04f5b569afef34b659, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,6 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -79,7 +77,6 @@ Namespace Distributions
         ''' <param name="value"> the value that a likelihood will be returned for. </param>
         ''' <returns> the likelihood (defined by the concrete distribution) the specified value will occur in any given sample dataset (assuming the value is from the underlying distribution). </returns>
         Public MustOverride Function GetPDF(value As Double) As Double
-
 
         ''' <summary>
         ''' This function produces a value for a given probability, this value will represent the Non-Exceedance value for that probability. </summary>
@@ -123,13 +120,14 @@ Namespace Distributions
             Return New Vector(v)
         End Function
 
-        Public MustOverride Function Validate() As List(Of ContinuousDistributionError)
+        Public MustOverride Function Validate() As IEnumerable(Of Exception)
 
         ' <editor-fold defaultstate="collapsed" desc="Goodness of fit tests">
         Public Overridable Function Kolmogorov_SmirnovTest() As Double
             ' need to create a good empirical distribution.
             Return 0
         End Function
+
         Public Overridable Function AndersonDarlingTest() As Double
             'still need a good emperical distribution.
             Return 0
@@ -148,6 +146,7 @@ Namespace Distributions
             Next
             Return ParamNames
         End Function
+
         ''' <summary>
         ''' This function determines the current values for each parameter in this concrete implementation of the ContinuousDistribution </summary>
         ''' <returns> an array of object for each parameter in this class. </returns>
@@ -171,6 +170,7 @@ Namespace Distributions
             Next
             Return ParamVals
         End Function
+
         ''' <summary>
         ''' Creates a clone of the current ContinuousDistribution. </summary>
         ''' <returns> A ContinuousDistribution of the same type as the one this function is called on. </returns>
@@ -178,6 +178,7 @@ Namespace Distributions
             'create a new continuousdistribution and populate it from this using reflection.
             Dim Dist As ContinuousDistribution = Nothing
             Dim c As Type
+
             Try
                 c = Type.GetType(Me.GetType().Name)
                 Dist = CType(c.GetConstructor().NewInstance(), ContinuousDistribution)
@@ -190,15 +191,14 @@ Namespace Distributions
                             f.SetValue(Dist, f.GetInt(Me))
                         Case Else
                     End Select
-                Next f
-                'JAVA TO VB CONVERTER TODO TASK: There is no equivalent in VB to Java 'multi-catch' syntax:
-                '	Catch ClassNotFoundException Or NoSuchMethodException Or SecurityException Or InstantiationException Or IllegalAccessException Or System.ArgumentException Or InvocationTargetException ex
-                'java.util.logging.Logger.getLogger(GetType(ContinuousDistribution).Name).log(java.util.logging.Level.SEVERE, Nothing, ex)
+                Next
             Catch ex As Exception
 
             End Try
+
             Return Dist
         End Function
+
         Public Overrides Function Equals(dist As Object) As Boolean
             If dist.GetType().Name.Equals(Me.GetType().Name) Then
                 Dim thisParamValues As Object() = Me.GetParamValues()
@@ -207,7 +207,7 @@ Namespace Distributions
                 If thisParamValues.Length = thoseParamValues.Length Then
                     For i As Integer = 0 To thisParamValues.Length - 1
                         If thisParamValues(i) IsNot thoseParamValues(i) Then Return False
-                    Next i
+                    Next
                 Else
                     Return False
                 End If
@@ -216,6 +216,7 @@ Namespace Distributions
             End If
             Return True
         End Function
+
         Public Overrides Function GetHashCode() As Integer
             Dim hash As Integer = Me.GetType().Name.GetHashCode()
             Dim vals As Object() = Me.GetParamValues()
@@ -224,6 +225,7 @@ Namespace Distributions
             Next val
             Return hash
         End Function
+
         'Public Shared Function ReadFromXML( ele As Element) As ContinuousDistribution
         '		Dim Dist As ContinuousDistribution = Nothing
         '		Dim c As Type
@@ -294,15 +296,16 @@ Namespace Distributions
             Dim Random As New Random
             For i As Integer = 0 To _PeriodOfRecord - 1
                 result(i) = GetInvCDF(Random.NextDouble())
-            Next i
+            Next
             Return result
         End Function
+
         Public Overridable Function BootStrap(seed As Long) As Double()
             Dim result As Double() = New Double(_PeriodOfRecord - 1) {}
             Dim Random As New Random(seed)
             For i As Integer = 0 To _PeriodOfRecord - 1
                 result(i) = GetInvCDF(Random.NextDouble())
-            Next i
+            Next
             Return result
         End Function
     End Class
