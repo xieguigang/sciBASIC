@@ -204,7 +204,7 @@ Public Structure Validation
         }
     End Function
 
-    Shared ReadOnly normalRange As [Default](Of Sequence) = New Sequence(0, 1, 100)
+    Shared ReadOnly normalRange As [Default](Of Sequence) = New Sequence(0, 1, 10000)
 
     Public Shared Function AUC(validates As IEnumerable(Of Validation)) As Double
         Dim data As Validation() = validates _
@@ -249,7 +249,7 @@ Public Structure Validation
         Dim validate As Func(Of T, Boolean)
         Dim predict As Func(Of T, Boolean)
 
-        For Each cutoff As Double In threshold.AsEnumerable
+        For Each cutoff As Double In (threshold Or normalRange).AsEnumerable
 #Disable Warning
             validate = Function(x) getValidate(x, cutoff)
             predict = Function(x) getPredict(x, cutoff)
