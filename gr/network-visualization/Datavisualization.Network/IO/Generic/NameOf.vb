@@ -45,7 +45,7 @@ Namespace FileStream.Generic
     ''' <summary>
     ''' The preset names value for edge type <see cref="NetworkEdge"/> and node type <see cref="Node"/>
     ''' </summary>
-    Public Module [NameOf]
+    Public Module NamesOf
 
         ''' <summary>
         ''' <see cref="NetworkEdge.FromNode"/>

@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
+Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NamesOf
 
 Namespace FileStream
 
