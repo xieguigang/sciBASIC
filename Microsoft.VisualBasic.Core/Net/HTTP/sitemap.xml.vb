@@ -69,7 +69,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
 
-Namespace Net.H    ''' <summary>
+Namespace Net.Http
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <remarks>
