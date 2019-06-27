@@ -50,14 +50,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports V = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 
-Public Class VertexEdge : Inherits Edge(Of V)
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function EdgeKey(U%, V%) As String
-        Return $"{U}-{V}"
-    End Function
-End Class
-
 ''' <summary>
 ''' Direction: ``<see cref="U"/> -> <see cref="V"/>``.
 ''' (节点之间的边)

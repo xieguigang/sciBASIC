@@ -127,17 +127,16 @@ Namespace Graph
         ''' <summary>
         ''' <see cref="Node.Label"/>为键名
         ''' </summary>
-        Private _nodeSet As Dictionary(Of String, Node)
-        Private _adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))
+        Dim _nodeSet As Dictionary(Of String, Node)
+        Dim _adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))
 
-        Private _nextNodeId As Integer = 0
-        Private _nextEdgeId As Integer = 0
-        Private _eventListeners As List(Of IGraphEventListener)
+        Dim _nextNodeId As Integer = 0
+        Dim _nextEdgeId As Integer = 0
+        Dim _eventListeners As List(Of IGraphEventListener)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New()
-            _nodeSet = New Dictionary(Of String, Node)()
-            _eventListeners = New List(Of IGraphEventListener)()
-            _adjacencySet = New Dictionary(Of String, Dictionary(Of String, List(Of Edge)))()
+            Call Me.New({}, {})
         End Sub
 
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
