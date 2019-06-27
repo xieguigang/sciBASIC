@@ -156,16 +156,18 @@ Namespace Graph
         ''' <summary>
         ''' 添加节点然后返回这个新添加的节点
         ''' </summary>
-        ''' <param name="iNode"></param>
+        ''' <param name="node"></param>
         ''' <returns></returns>
-        Public Function AddNode(iNode As Node) As Node
-            If Not _nodeSet.ContainsKey(iNode.Label) Then
-                Call vertices.Add(iNode)
+        Public Function AddNode(node As Node) As Node
+            If Not _nodeSet.ContainsKey(node.Label) Then
+                vertices.Add(node)
+                node.ID = buffer.GetAvailablePos
+                buffer += node
             End If
 
-            _nodeSet(iNode.Label) = iNode
+            _nodeSet(node.Label) = node
             notify()
-            Return iNode
+            Return node
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
