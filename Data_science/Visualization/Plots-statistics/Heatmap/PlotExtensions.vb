@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::59724d2f50b2f2d53bb491b7f4fca4bb, Data_science\Visualization\Plots-statistics\Heatmap\PlotExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module PlotExtensions
-    ' 
-    '         Function: CorrelatesNormalized, KmeansReorder, LoadDataSet
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module PlotExtensions
+' 
+'         Function: CorrelatesNormalized, KmeansReorder, LoadDataSet
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,50 +49,11 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Correlations.Correlations
+Imports Microsoft.VisualBasic.Math.DataFrame
 
 Namespace Heatmap
 
     Public Module PlotExtensions
-
-        ''' <summary>
-        ''' 相比于<see cref="LoadDataSet(String, String, Boolean, Correlations.ICorrelation)"/>函数，这个函数处理的是没有经过归一化处理的原始数据
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <param name="correlation">假若这个参数为空，则默认使用<see cref="Correlations.GetPearson(Double(), Double())"/></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function CorrelatesNormalized(
-                                    data As IEnumerable(Of DataSet),
-                    Optional correlation As ICorrelation = Nothing) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
-
-            Dim dataset As DataSet() = data.ToArray
-            Dim keys$() = dataset(Scan0) _
-                .Properties _
-                .Keys _
-                .ToArray
-
-            correlation = correlation Or PearsonDefault
-
-            For Each x As DataSet In dataset
-                Dim out As New Dictionary(Of String, Double)
-                Dim array#() = keys _
-                    .Select(Of Double)(x) _
-                    .ToArray
-
-                For Each y As DataSet In dataset
-                    out(y.ID) = correlation(
-                        X:=array,
-                        Y:=keys _
-                            .Select(Of Double)(y) _
-                            .ToArray)
-                Next
-
-                Yield New NamedValue(Of Dictionary(Of String, Double)) With {
-                    .Name = x.ID,
-                    .Value = out
-                }
-            Next
-        End Function
 
         ''' <summary>
         ''' (这个函数是直接加在已经计算好了的相关度数据).假若使用这个直接加载数据来进行heatmap的绘制，
