@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.IO.netCDF
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Linq
 Imports Basic = Microsoft.VisualBasic.Language.Runtime
@@ -20,6 +21,7 @@ Public Module FrameExports
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetTimeIndex(cdf As netCDFReader) As String()
         Return cdf.getDataVariable("iterations") _
             .integers _

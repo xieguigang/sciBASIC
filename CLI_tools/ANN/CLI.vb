@@ -189,6 +189,16 @@ Module CLI
     End Function
 
     ''' <summary>
+    ''' Print all of the available activation functions for write config file.
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/list.activations")>
+    Public Function ListActiveFunction(args As CommandLine) As Integer
+
+    End Function
+
+    ''' <summary>
     ''' 这个函数会输出训练好的模型, 训练集测试结果, 错误率变化曲线图, 训练日志
     ''' 配置文件不存在的画，则使用默认的配置数据
     ''' </summary>

@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::7a43770d9064e068fe5bbd75ad8c8011, Data\DataFrame\IO\Generic\DataSet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataSet
-    ' 
-    '         Properties: ID, MyHashCode, Vector
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: __getID, Append, Copy, (+2 Overloads) LoadDataSet, SubSet
-    '                   ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataSet
+' 
+'         Properties: ID, MyHashCode, Vector
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: __getID, Append, Copy, (+2 Overloads) LoadDataSet, SubSet
+'                   ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -144,6 +144,12 @@ Namespace IO
         End Function
 
         ''' <summary>
+        ''' The dataset for this table loader should be in format like:
+        ''' 
+        ''' + First column should be a string value column for indicate the dataset row uniquely.
+        ''' + If the first column is not the rows' unique id, then <paramref name="uidMap"/> parameter should be provided for specific the which column is your datasets' uid column
+        ''' + Then all of the other column will be treated as the numeric property data
+        ''' 
         ''' <paramref name="uidMap"/>一般情况下会自动进行判断，不需要具体的设置
         ''' </summary>
         ''' <param name="path"></param>
@@ -167,7 +173,7 @@ Namespace IO
                                                             Optional uidMap$ = Nothing,
                                                             Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
 
-            Dim mapFrom$ = uidMap Or New [Default](Of  String) With {
+            Dim mapFrom$ = uidMap Or New [Default](Of String) With {
                 .lazy = New Func(Of String)(Function() __getID(path)).AsLazy
             }
             Return path.LoadCsv(Of T)(
