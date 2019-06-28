@@ -97,16 +97,16 @@ Namespace NeuralNetwork
             Me.Neurons = neurons
         End Sub
 
-        Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing, Optional guid As VBInteger = Nothing)
+        Sub New(size%, active As IActivationFunction, weight As Func(Of Double), Optional input As Layer = Nothing, Optional guid As VBInteger = Nothing)
             Neurons = New Neuron(size - 1) {}
 
             If input Is Nothing Then
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(active, guid)
+                    Neurons(i) = New Neuron(weight, active, guid)
                 Next
             Else
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(input.Neurons, active, guid)
+                    Neurons(i) = New Neuron(input.Neurons, weight, active, guid)
                 Next
             End If
         End Sub

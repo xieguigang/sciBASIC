@@ -104,12 +104,12 @@ Namespace NeuralNetwork
         ''' 创建的神经链接是空的
         ''' </summary>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(Optional active As IActivationFunction = Nothing, Optional id As VBInteger = Nothing)
+        Public Sub New(weight As Func(Of Double), Optional active As IActivationFunction = Nothing, Optional id As VBInteger = Nothing)
             InputSynapses = {}
             OutputSynapses = {}
-            Bias = Helpers.GetRandom()
-            Value = Helpers.GetRandom
-            BiasDelta = Helpers.GetRandom
+            Bias = weight()
+            Value = weight()
+            BiasDelta = weight()
             activation = active Or defaultActivation
 
             If Not id Is Nothing Then
@@ -124,13 +124,13 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="inputNeurons"></param>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing, Optional guid As VBInteger = Nothing)
-            Call Me.New(active, guid)
+        Public Sub New(inputNeurons As IEnumerable(Of Neuron), weight As Func(Of Double), Optional active As IActivationFunction = Nothing, Optional guid As VBInteger = Nothing)
+            Call Me.New(weight, active, guid)
 
             Dim synapse As Synapse
 
             For Each inputNeuron As Neuron In inputNeurons
-                synapse = New Synapse(inputNeuron, Me)
+                synapse = New Synapse(inputNeuron, Me, weight)
                 inputNeuron.OutputSynapses.Add(synapse)
                 InputSynapses.Add(synapse)
             Next

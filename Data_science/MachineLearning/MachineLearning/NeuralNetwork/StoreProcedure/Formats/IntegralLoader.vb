@@ -156,9 +156,11 @@ Namespace NeuralNetwork.StoreProcedure
                                                 active As IActivationFunction,
                                                 neuronDataTable As Dictionary(Of String, NeuronNode)) As IEnumerable(Of NamedValue(Of Neuron))
 
+            Dim null As Func(Of Double) = Function() 0
+
             For Each id As String In layer.neurons
                 Dim data As NeuronNode = neuronDataTable(id)
-                Dim neuron As New Neuron(active) With {
+                Dim neuron As New Neuron(null, active) With {
                     .Bias = data.bias,
                     .BiasDelta = data.delta,
                     .Gradient = data.gradient

@@ -70,13 +70,14 @@ Namespace NeuralNetwork
         ''' <see cref="Sigmoid"/> as default
         ''' </summary>
         Friend ReadOnly defaultActivation As [Default](Of IActivationFunction) = New Sigmoid
+        Friend ReadOnly randomWeight As New [Default](Of Func(Of Double))(AddressOf GetRandom)
 
         ''' <summary>
         ''' 通过这个帮助函数生成``[-1, 1]``之间的随机数
         ''' </summary>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Function GetRandom() As Double
+        Private Function GetRandom() As Double
             SyncLock seeds
                 Return 2 * seeds.NextDouble() - 1
             End SyncLock

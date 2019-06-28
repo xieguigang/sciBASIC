@@ -64,13 +64,22 @@ Namespace NeuralNetwork
         Public Property WeightDelta As Double
 #End Region
 
-        Public Sub New(inputNeuron As Neuron, outputNeuron As Neuron)
-            Me.InputNeuron = inputNeuron
-            Me.OutputNeuron = outputNeuron
+        Public Sub New(inputNeuron As Neuron, outputNeuron As Neuron, weight As Func(Of Double))
+            Call Me.New(inputNeuron, outputNeuron)
 
             ' 权重初始
-            Weight = Helpers.GetRandom()
-            WeightDelta = Helpers.GetRandom
+            Me.Weight = weight()
+            Me.WeightDelta = weight()
+        End Sub
+
+        ''' <summary>
+        ''' Create from xml model
+        ''' </summary>
+        ''' <param name="inputNeuron"></param>
+        ''' <param name="outputNeuron"></param>
+        Sub New(inputNeuron As Neuron, outputNeuron As Neuron)
+            Me.InputNeuron = inputNeuron
+            Me.OutputNeuron = outputNeuron
         End Sub
 
         Public Overrides Function ToString() As String

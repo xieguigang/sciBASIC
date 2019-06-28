@@ -133,19 +133,22 @@ Namespace NeuralNetwork
         Public Sub New(inputSize%, hiddenSize%(), outputSize%,
                        Optional learnRate# = 0.1,
                        Optional momentum# = 0.9,
-                       Optional active As LayerActives = Nothing)
+                       Optional active As LayerActives = Nothing,
+                       Optional weightInit As Func(Of Double) = Nothing)
 
             Dim activations As LayerActives = active Or LayerActives.GetDefaultConfig
             Dim guid As VBInteger = 100
+
+            weightInit = weightInit Or Helpers.randomWeight
 
             Me.LearnRate = learnRate
             Me.Momentum = momentum
             Me.Activations = activations.GetXmlModels
             Me.LearnRateDecay = 0.00000001
 
-            InputLayer = New Layer(inputSize, activations.input, guid:=guid)
-            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, activations.hiddens, guid)
-            OutputLayer = New Layer(outputSize, activations.output, input:=HiddenLayer.Output, guid:=guid)
+            InputLayer = New Layer(inputSize, activations.input, weightInit, guid:=guid)
+            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, weightInit, activations.hiddens, guid)
+            OutputLayer = New Layer(outputSize, activations.output, weightInit, input:=HiddenLayer.Output, guid:=guid)
         End Sub
 
         Public Overrides Function ToString() As String
