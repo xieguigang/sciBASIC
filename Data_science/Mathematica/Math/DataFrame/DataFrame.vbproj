@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Impute.vb" />
     <Compile Include="Correlation.vb" />
+    <Compile Include="MatrixVisit.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

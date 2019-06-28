@@ -10,6 +10,8 @@ Public Module Correlation
     ''' 这个函数是计算列之间的相关度的
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <Extension>
     Public Function CorrelationMatrix(data As IEnumerable(Of DataSet), Optional doCor As ICorrelation = Nothing) As IEnumerable(Of DataSet)
         Dim dataset As DataSet() = data.ToArray
         Dim columns = dataset.PropertyNames _
@@ -69,25 +71,33 @@ Public Module Correlation
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Pearson(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
-        Return data.CorrelatesNormalized(AddressOf GetPearson) _
-            .Select(Function(r)
-                        Return New DataSet With {
-                            .ID = r.Name,
-                            .Properties = r.Value
-                        }
-                    End Function)
+    Public Function Pearson(data As IEnumerable(Of DataSet), Optional visit As MatrixVisit = MatrixVisit.ByRow) As IEnumerable(Of DataSet)
+        If visit = MatrixVisit.ByRow Then
+            Return data.CorrelatesNormalized(AddressOf GetPearson) _
+                .Select(Function(r)
+                            Return New DataSet With {
+                                .ID = r.Name,
+                                .Properties = r.Value
+                            }
+                        End Function)
+        Else
+            Return data.CorrelationMatrix(AddressOf GetPearson)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Spearman(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
-        Return data.CorrelatesNormalized(AddressOf Correlations.Spearman) _
-            .Select(Function(r)
-                        Return New DataSet With {
-                            .ID = r.Name,
-                            .Properties = r.Value
-                        }
-                    End Function)
+    Public Function Spearman(data As IEnumerable(Of DataSet), Optional visit As MatrixVisit = MatrixVisit.ByRow) As IEnumerable(Of DataSet)
+        If visit = MatrixVisit.ByRow Then
+            Return data.CorrelatesNormalized(AddressOf Correlations.Spearman) _
+                .Select(Function(r)
+                            Return New DataSet With {
+                                .ID = r.Name,
+                                .Properties = r.Value
+                            }
+                        End Function)
+        Else
+            Return data.CorrelationMatrix(AddressOf Correlations.Spearman)
+        End If
     End Function
 End Module
