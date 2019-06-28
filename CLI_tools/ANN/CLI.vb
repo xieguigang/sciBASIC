@@ -231,6 +231,7 @@ Module CLI
                 .ToArray
         End If
 
+        Dim weightInit As Func(Of Double) = Helpers.UnifyWeightInitializer(Val(config.initializer)) Or Helpers.RandomWeightInitializer.When(config.initializer.TextEquals("random"))
         Dim defaultActive As [Default](Of String) = config.default_active Or ActiveFunction.Sigmoid
         Dim actives As New Activations.LayerActives With {
             .hiddens = ActiveFunction.Parse(config.hiddens_active Or defaultActive),
@@ -243,7 +244,8 @@ Module CLI
             samples.OutputSize + dummyExtends,
             config.learnRate,
             config.momentum,
-            actives
+            actives,
+            weightInit:=weightInit
         ) With {.Selective = config.selective.ParseBoolean}
 
         trainingHelper.NeuronNetwork.LearnRateDecay = config.learnRateDecay
@@ -258,7 +260,7 @@ Module CLI
             Call trainingHelper.SetDropOut(percentage:=config.dropoutRate)
         End If
 
-        For Each sample As Sample In samples.PopulateNormalizedSamples(dummyExtends)
+        For Each sample As Sample In samples.PopulateNormalizedSamples(alternativeNormalize:=config.normalize.TextEquals("min/max"))
             Call trainingHelper.Add(sample.status, sample.target)
         Next
 
@@ -360,11 +362,10 @@ Module CLI
         Dim parallel As Boolean = args("/parallel")
         Dim network As Network = [in].LoadXml(Of NeuralNetwork).LoadModel
         Dim training As New TrainingUtils(network)
-        Dim dummyExtends% = 8
 
         Helpers.MaxEpochs = args("/iterations") Or 10000
 
-        For Each sample As Sample In samples.LoadXml(Of DataSet).PopulateNormalizedSamples(8)
+        For Each sample As Sample In samples.LoadXml(Of DataSet).PopulateNormalizedSamples()
             Call training.Add(sample.status, sample.target)
         Next
 

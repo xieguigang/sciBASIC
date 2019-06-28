@@ -205,7 +205,6 @@ Namespace NeuralNetwork
         ''' </remarks>
         Public Sub BackPropagate(targets As Double(), truncate As Double, parallel As Boolean)
             LearnRate = LearnRate * remains
-            Momentum = 1 - LearnRate
 
             Call OutputLayer.CalculateGradient(targets, truncate)
             Call HiddenLayer.BackPropagate(LearnRate, Momentum, truncate, parallel)

@@ -74,9 +74,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="sample"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function NormalizeInput(sample As Sample) As Double()
-            Static normalRange As DoubleRange = {0, 1}
-
+        Public Function NormalizeInput(sample As Sample, Optional alternativeNormalize As Boolean = False) As Double()
             Return sample.status _
                 .vector _
                 .Select(Function(x, i)
@@ -85,9 +83,11 @@ Namespace NeuralNetwork.StoreProcedure
                             ElseIf x < matrix(i).min Then
                                 Return 0
                             Else
-                                x = matrix(i) _
-                                    .GetRange _
-                                    .ScaleMapping(x, normalRange)
+                                If alternativeNormalize Then
+                                    x = minMaxNormalize(x, i)
+                                Else
+                                    x = scalerNormalize(x, i)
+                                End If
                             End If
 
                             If x.IsNaNImaginary Then
@@ -97,6 +97,18 @@ Namespace NeuralNetwork.StoreProcedure
                             End If
                         End Function) _
                 .ToArray
+        End Function
+
+        Shared ReadOnly normalRange As DoubleRange = {0, 1}
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function scalerNormalize(x#, i%) As Double
+            Return matrix(i).GetRange.ScaleMapping(x, normalRange)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function minMaxNormalize(x#, i%) As Double
+            Return x / matrix(i).max
         End Function
 
         ''' <summary>

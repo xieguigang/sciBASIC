@@ -83,6 +83,14 @@ Namespace NeuralNetwork
             End SyncLock
         End Function
 
+        Public Function RandomWeightInitializer() As Func(Of Double)
+            Return AddressOf GetRandom
+        End Function
+
+        Public Function UnifyWeightInitializer(unify As Double) As Func(Of Double)
+            Return Function() unify
+        End Function
+
         ''' <summary>
         ''' 对值进行约束剪裁
         ''' </summary>
