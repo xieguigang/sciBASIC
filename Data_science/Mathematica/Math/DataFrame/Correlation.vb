@@ -25,7 +25,7 @@ Public Module Correlation
                     End Function) _
             .ToArray
 
-        Return Correlations.CorrelationMatrix(data, doCor) _
+        Return Correlations.CorrelationMatrix(columns, doCor) _
             .Select(Function(r)
                         Return New DataSet With {
                             .ID = r.Name,
