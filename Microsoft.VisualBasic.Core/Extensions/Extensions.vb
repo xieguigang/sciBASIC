@@ -1,68 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::af85067c1950efeca299c3e74fe4de37, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    ' 
-    ' Module Extensions
-    ' 
-    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
-    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DateToString, DriverRun
-    '               ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime, FuzzyMatching
-    '               GetHexInteger, (+2 Overloads) GetItem, GetValueOrNull, IndexOf, InsertOrUpdate
-    '               Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy
-    '               Keys, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement
-    '               MD5, ModifyValue, NotNull, (+2 Overloads) Offset, ParseDateTime
-    '               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
-    '               RunDriver, Second, SelectFile, SeqRandom, (+3 Overloads) Sequence
-    '               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice
-    '               (+2 Overloads) SplitMV, StdError, ToArray, ToBoolean, ToDictionary
-    '               ToNormalizedPathString, ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount
-    '               (+3 Overloads) TryGetValue, Unlist, WriteAddress
-    ' 
-    '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
-    '          SwapItem, SwapWith
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+' 
+' Module Extensions
+' 
+'     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
+'               (+2 Overloads) Average, CheckDuplicated, Constrain, DateToString, DriverRun
+'               ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime, FuzzyMatching
+'               GetHexInteger, (+2 Overloads) GetItem, GetValueOrNull, IndexOf, InsertOrUpdate
+'               Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy
+'               Keys, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement
+'               MD5, ModifyValue, NotNull, (+2 Overloads) Offset, ParseDateTime
+'               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
+'               RunDriver, Second, SelectFile, SeqRandom, (+3 Overloads) Sequence
+'               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice
+'               (+2 Overloads) SplitMV, StdError, ToArray, ToBoolean, ToDictionary
+'               ToNormalizedPathString, ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount
+'               (+3 Overloads) TryGetValue, Unlist, WriteAddress
+' 
+'     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
+'          SwapItem, SwapWith
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Globalization
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -107,6 +109,12 @@ Imports Microsoft.VisualBasic.Text.Similarity
 ''' <remarks></remarks>
 Public Module Extensions
 #End If
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToString(ms As MemoryStream, encoding As Encoding) As String
+        Return encoding.GetString(ms.ToArray, Scan0, ms.Length)
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
