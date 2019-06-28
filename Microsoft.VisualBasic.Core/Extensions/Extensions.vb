@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfb3db34a5324ad78a6b000b1bf5f6f1, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::af85067c1950efeca299c3e74fe4de37, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -46,9 +46,9 @@
     '               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
     '               RunDriver, Second, SelectFile, SeqRandom, (+3 Overloads) Sequence
     '               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice
-    '               (+2 Overloads) SplitMV, StdError, TakeRandomly, ToArray, ToBoolean
-    '               ToDictionary, ToNormalizedPathString, ToStringArray, ToVector, (+3 Overloads) TrimNull
-    '               TryCount, (+3 Overloads) TryGetValue, Unlist, WriteAddress
+    '               (+2 Overloads) SplitMV, StdError, ToArray, ToBoolean, ToDictionary
+    '               ToNormalizedPathString, ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount
+    '               (+3 Overloads) TryGetValue, Unlist, WriteAddress
     ' 
     '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
     '          SwapItem, SwapWith

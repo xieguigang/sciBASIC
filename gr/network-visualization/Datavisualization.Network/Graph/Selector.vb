@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5ba5532ccc589af03a1e7669766b51a, gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::ddcd84f45e7b4e4c243e9928649eefe3, gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Function: GenericSelector, SelectEdgeValue, SelectNodeValue
     '         Interface IGraphValueContainer
     ' 
-    '             Properties: Data
+    '             Properties: data
     ' 
     ' 
     ' 

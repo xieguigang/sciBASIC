@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83cbb40bf17cad157931ca6d5c33e8ed, Data_science\Visualization\Visualization\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3568d27bae2c091bb5c92f6aa85c2517, Data_science\Visualization\Visualization\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Module Extensions
     ' 
     '     Function: BuildTransactions, CastTo, ClusterResultFastLoad, Load, ToEntityObject
-    '               ToEntityObjects, ToKMeansModels
+    '               ToEntityObjects
     ' 
     ' /********************************************************************************/
 

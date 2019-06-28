@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfd2a7ee27b9fce5e9ab24172968512a, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\XlsxHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::e96b12a019cc88b81fe2be833b4415ef, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\XlsxHelpers.vb"
 
     ' Author:
     ' 

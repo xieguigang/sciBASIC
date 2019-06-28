@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32c718a2bfae582b0e7c1cf2087fed93, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::01198c864d5ef6fdbfe010732ae48a36, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
     '                   ToString
     ' 
-    '         Sub: Print
+    '         Sub: (+2 Overloads) Dispose, Print
     ' 
     ' 
     ' /********************************************************************************/

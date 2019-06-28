@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b9717e909712d5186672714931ddbe6, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a96cb85fcf17d0101fbb7e187ce62576, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: __directInvoke, DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke
-    '                   InvokeCLI
+    '         Function: DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke, InvokeCLI
+    '                   tryInvoke
     ' 
     ' 
     ' /********************************************************************************/

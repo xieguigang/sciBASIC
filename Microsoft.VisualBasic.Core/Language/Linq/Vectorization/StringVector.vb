@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::803acbf68a58f966e4f66334cbab4b62, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\StringVector.vb"
+﻿#Region "Microsoft.VisualBasic::621eabfe57bd52ef167a5dc0ece568d4, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\StringVector.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,10 @@
     '         Constructor: (+2 Overloads) Sub New
     '         Function: InStr, IsPattern, ToString
     '         Operators: <>, =, (+2 Overloads) Like
+    ' 
+    '     Module StringVectorHelpers
+    ' 
+    '         Function: ToLower
     ' 
     ' 
     ' /********************************************************************************/

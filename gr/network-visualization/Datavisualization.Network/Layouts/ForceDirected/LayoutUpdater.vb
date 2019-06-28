@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e52f3611a0b15cccbe78b1f14113789e, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
+﻿#Region "Microsoft.VisualBasic::7e7586b54deaf21bcac83a0ba42dbd93, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module LayoutUpdater
     ' 
     '         Sub: Updates
-    '         Class __layoutGenerator
+    '         Class layoutGenerator
     ' 
     '             Constructor: (+1 Overloads) Sub New
     '             Sub: Clear, drawEdge, drawNode

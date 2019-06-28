@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::922ea6770f1e30a11e2fff29561c862c, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::4763f352586fa38b7d56a08e9a74b8ab, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Properties: BackgroundColor, DefaultEdgeColor
     ' 
-    '     Function: __scale, AutoScaler, CentralOffsets, DrawImage, GetBounds
-    '               GetDisplayText
+    '     Function: AutoScaler, CentralOffsets, DrawImage, GetBounds, GetDisplayText
+    '               scales
     ' 
     '     Sub: drawLabels
     ' 

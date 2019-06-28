@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c277346d13945e6a9488806e0453888, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Takes.vb"
+﻿#Region "Microsoft.VisualBasic::5bb371dabfa029b99aea6eec5d9d3744, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Takes.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TakesExtension
     ' 
-    '         Function: __reversedTake, (+3 Overloads) Takes
+    '         Function: doReversedTake, (+2 Overloads) TakeRandomly, (+3 Overloads) Takes
     ' 
     ' 
     ' /********************************************************************************/

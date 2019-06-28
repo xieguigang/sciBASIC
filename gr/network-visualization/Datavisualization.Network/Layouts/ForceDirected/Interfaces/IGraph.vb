@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b098f0184ee23d5455d5bad76bb6141, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
+﻿#Region "Microsoft.VisualBasic::d0393b9937c2de03d7d5ee9319343bc2, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,6 @@
 
     ' Summaries:
 
-    '     Interface IGraph
-    ' 
-    '         Properties: edges, nodes
-    ' 
-    '         Function: AddEdge, AddNode, (+2 Overloads) CreateEdge, (+2 Overloads) CreateNode, GetEdges
-    ' 
-    '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
-    '              FilterEdges, FilterNodes, Merge, RemoveEdge, RemoveNode
-    ' 
     '     Interface IGraphEventListener
     ' 
     '         Sub: GraphChanged

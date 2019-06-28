@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9bb7c9e49ada4ca9bda5c4feb04a1b7, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
+﻿#Region "Microsoft.VisualBasic::8d4e54840cc150fbe1a372e269efabcd, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
 
     ' Author:
     ' 

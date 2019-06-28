@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::f6f1b667d6b87dde5ea86e0f308aa6b5, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::7d7d532944de312862f63820fcc2ed81, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Structure HistogramData
-' 
-'         Properties: LinePoint, width
-' 
-'         Function: ToString
-' 
-'     Class HistogramGroup
-' 
-'         Properties: Samples, XRange, YRange
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'     Structure HistProfile
-' 
-'         Properties: SerialData
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: GetLine
-' 
-' 
-' /********************************************************************************/
+    '     Structure HistogramData
+    ' 
+    '         Properties: LinePoint, width
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class HistogramGroup
+    ' 
+    '         Properties: Samples, XRange, YRange
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Structure HistProfile
+    ' 
+    '         Properties: SerialData
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: GetLine
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eab47dc0b9a749175d8c28e7842215b8, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::8d40999bb194fba65a645c5d5d83c4c6, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Edge
     ' 
-    '         Properties: __source, __target, Data, Directed, ID
+    '         Properties: __source, __target, data, ID, isDirected
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
