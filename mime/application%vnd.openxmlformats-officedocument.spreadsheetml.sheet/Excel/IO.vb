@@ -43,11 +43,11 @@
 
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Zip
+Imports Microsoft.VisualBasic.MIME.Office.Excel.Model.Directory
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
-Imports Microsoft.VisualBasic.MIME.Office.Excel.Model.Directory
 
 Public Module IO
 
@@ -66,7 +66,7 @@ Public Module IO
             success = False
 
             Try
-                ZipLib.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+                UnZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
                 success = True
             Catch ex As Exception
                 exception = ex
