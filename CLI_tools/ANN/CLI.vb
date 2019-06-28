@@ -235,7 +235,7 @@ Module CLI
         Dim parallel As Boolean = args("/parallel")
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}_ANN_trained.Xml"
         Dim samples As DataSet = [in].LoadXml(Of DataSet)
-        Dim config As Config = (args <= "/config").LoadProfile(Of Config) Or Config.Default
+        Dim config As Config = (args <= "/config").LoadProfile(Of Config) Or config.Default
         Dim hiddenSize As Integer()
 
         If config.hidden_size.StringEmpty Then

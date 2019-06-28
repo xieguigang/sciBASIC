@@ -92,6 +92,18 @@ Namespace NeuralNetwork.StoreProcedure
                 .ToArray
         End Function
 
+        Shared ReadOnly normalRange As DoubleRange = {0, 1}
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function scalerNormalize(x#, i%) As Double
+            Return matrix(i).GetRange.ScaleMapping(x, normalRange)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function minMaxNormalize(x#, i%) As Double
+            Return x / matrix(i).max
+        End Function
+
         ''' <summary>
         ''' 神经网络会要求输入的属性值之间是可以直接进行比较的,
         ''' 所以为了能够直接进行比较,
