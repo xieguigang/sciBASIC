@@ -42,4 +42,28 @@ Public Module Correlation
             }
         Next
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Pearson(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+        Return data.CorrelatesNormalized(AddressOf GetPearson) _
+            .Select(Function(r)
+                        Return New DataSet With {
+                            .ID = r.Name,
+                            .Properties = r.Value
+                        }
+                    End Function)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Spearman(data As IEnumerable(Of DataSet)) As IEnumerable(Of DataSet)
+        Return data.CorrelatesNormalized(AddressOf Correlations.Spearman) _
+            .Select(Function(r)
+                        Return New DataSet With {
+                            .ID = r.Name,
+                            .Properties = r.Value
+                        }
+                    End Function)
+    End Function
 End Module
