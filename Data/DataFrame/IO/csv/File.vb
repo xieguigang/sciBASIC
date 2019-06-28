@@ -749,18 +749,18 @@ B21,B22,B23,...
         ''' <returns></returns>
         Public Shared Function Load(buf As String(), trimBlanks As Boolean) As List(Of RowObject)
             Dim first As New RowObject(buf(Scan0))
-            Dim __test As Func(Of String, Boolean)
+            Dim test As Func(Of String, Boolean)
 
             If trimBlanks Then
-                __test = Function(s) Not s.IsEmptyRow(","c)
+                test = Function(s) Not s.IsEmptyRow(","c)
             Else
-                __test = Function(s) True
+                test = Function(s) True
             End If
 
             Dim parallelLoad = Function() As IEnumerable(Of RowObject)
                                    Dim loader = From s As SeqValue(Of String)
                                                 In buf.Skip(1).SeqIterator.AsParallel
-                                                Where __test(s.value)
+                                                Where test(s.value)
                                                 Select row = New RowObject(s.value), i = s.i
                                                 Order By i Ascending
 
@@ -810,14 +810,15 @@ B21,B22,B23,...
         ''' <summary>
         ''' 去除Csv文件之中的重复记录
         ''' </summary>
-        ''' <param name="File"></param>
-        ''' <param name="OrderBy">当为本参数指定一个非负数值的时候，程序会按照指定的列值进行排序</param>
-        ''' <param name="Asc">当进行排序操作的时候，是否按照升序进行排序，否则按照降序排序</param>
+        ''' <param name="file"></param>
+        ''' <param name="orderBy">当为本参数指定一个非负数值的时候，程序会按照指定的列值进行排序</param>
+        ''' <param name="asc">当进行排序操作的时候，是否按照升序进行排序，否则按照降序排序</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Distinct(File As String, Optional OrderBy As Integer = -1, Optional Asc As Boolean = True) As File
-            Dim csv As File = Load(File)
-            Return Distinct(csv, OrderBy, Asc)
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Distinct(file As String, Optional orderBy As Integer = -1, Optional asc As Boolean = True) As File
+            Return Distinct(Load(file), orderBy, asc)
         End Function
 
         ''' <summary>

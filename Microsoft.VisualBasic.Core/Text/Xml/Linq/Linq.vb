@@ -258,6 +258,10 @@ Namespace Text.Xml.Linq
             Return typeName.UltraLargeXmlNodesIterator(path)
         End Function
 
+        Public Function ArrayNodesFromDocument(documentText$, typeName$) As IEnumerable(Of XElement)
+            Return typeName.UltraLargeXmlNodesIterator(New MemoryStream(Encoding.UTF8.GetBytes(documentText)))
+        End Function
+
         <Extension>
         Private Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of XElement)
             Using file As Stream = path.Open(FileMode.Open)
