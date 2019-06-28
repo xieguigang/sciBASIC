@@ -197,7 +197,9 @@ Public Module Scatter
                          Optional interplot As Splines = Splines.None,
                          Optional densityColor As Boolean = False,
                          Optional tickFontStyle$ = CSSFont.Win7VeryLarge,
-                         Optional labelFontStyle$ = CSSFont.Win7VeryVeryLarge) As GraphicsData
+                         Optional labelFontStyle$ = CSSFont.Win7VeryVeryLargeNormal,
+                         Optional title$ = Nothing,
+                         Optional titleFontCSS$ = CSSFont.Win7VeryVeryLarge) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -231,7 +233,7 @@ Public Module Scatter
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,
-                    .Region = region,
+                    .region = region,
                     .AxisTicks = (XTicks, YTicks)
                 }
                 Dim gSize As Size = rect.Size
@@ -362,6 +364,17 @@ Public Module Scatter
                             legendRegionBorder)
                     End If
                 Next
+
+                If Not title.StringEmpty Then
+                    Dim fontOfTitle As Font = CSSFont.TryParse(titleFontCSS)
+                    Dim titleSize As SizeF = g.MeasureString(title, fontOfTitle)
+                    Dim position As New PointF With {
+                        .X = region.X + (region.Width - titleSize.Width) / 2,
+                        .Y = region.Y - titleSize.Height
+                    }
+
+                    Call g.DrawString(title, fontOfTitle, Brushes.Black, position)
+                End If
 
                 ' draw ablines
                 For Each line As Line In ablines.SafeQuery

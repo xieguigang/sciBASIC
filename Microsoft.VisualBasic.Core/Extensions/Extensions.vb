@@ -1089,11 +1089,14 @@ Public Module Extensions
     ''' <param name="MAT">为了方便理解和使用，矩阵使用数组的数组来表示的</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixTranspose(Of T)(MAT As IEnumerable(Of T())) As T()()
-        Dim LQuery As T()() = (From i As Integer
-                               In MAT.First.Sequence
-                               Select (From Line As T() In MAT Select Line(i)).ToArray).ToArray
-        Return LQuery
+    <Extension>
+    Public Iterator Function MatrixTranspose(Of T)(MAT As IEnumerable(Of T())) As IEnumerable(Of T())
+        Dim data = MAT.ToArray
+        Dim index = data(Scan0).Sequence.ToArray
+
+        For Each i As Integer In index
+            Yield (From line As T() In data Select line(i)).ToArray
+        Next
     End Function
 
     ''' <summary>
@@ -1103,14 +1106,24 @@ Public Module Extensions
     ''' <param name="MAT"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function MatrixTransposeIgnoredDimensionAgreement(Of T)(MAT As IEnumerable(Of T())) As T()()
-        Dim LQuery = (From i As Integer
-                      In (From n As T()
-                          In MAT
-                          Select n.Length
-                          Order By Length Ascending).First.Sequence
-                      Select (From Line In MAT Select Line(i)).ToArray).ToArray
-        Return LQuery
+    <Extension>
+    Public Iterator Function MatrixTransposeIgnoredDimensionAgreement(Of T)(MAT As IEnumerable(Of T()), Optional sizeByMax As Boolean = False) As IEnumerable(Of T())
+        Dim data = MAT.ToArray
+        Dim index As Integer
+
+        If sizeByMax Then
+            index = Aggregate row In data Into Max(row.Length)
+        Else
+            index = Aggregate row In data Into Min(row.Length)
+        End If
+
+        For Each i As Integer In index.Sequence
+            If sizeByMax Then
+                Yield (From line As T() In data Select line.ElementAtOrNull(i)).ToArray
+            Else
+                Yield (From line As T() In data Select line(i)).ToArray
+            End If
+        Next
     End Function
 
     ''' <summary>

@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::e1a21e91c831e933734811859ac6a315, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NeuralNetwork
-    ' 
-    '         Properties: connections, errors, hiddenlayers, inputlayer, learnRate
-    '                     momentum, neurons, outputlayer
-    ' 
-    '         Function: GetPredictLambda, Snapshot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NeuralNetwork
+' 
+'         Properties: connections, errors, hiddenlayers, inputlayer, learnRate
+'                     momentum, neurons, outputlayer
+' 
+'         Function: GetPredictLambda, Snapshot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Normalizer
 
 Namespace NeuralNetwork.StoreProcedure
 
@@ -78,10 +79,10 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="normalize">进行所输入的样本数据的归一化的矩阵</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetPredictLambda(normalize As NormalizeMatrix) As Func(Of Sample, Double())
+        Public Function GetPredictLambda(normalize As NormalizeMatrix, Optional method As Methods = Methods.NormalScaler) As Func(Of Sample, Double())
             With Me.LoadModel
                 Return Function(sample)
-                           Return .Compute(normalize.NormalizeInput(sample))
+                           Return .Compute(normalize.NormalizeInput(sample, method))
                        End Function
             End With
         End Function
@@ -95,6 +96,19 @@ Namespace NeuralNetwork.StoreProcedure
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Snapshot(instance As Network, Optional errors# = 0) As NeuralNetwork
             Return StoreProcedure.TakeSnapshot(instance, errors)
+        End Function
+
+        ''' <summary>
+        ''' 这个函数自动兼容XML文档模型或者超大型的文件夹模型数据
+        ''' </summary>
+        ''' <param name="handle"></param>
+        ''' <returns></returns>
+        Public Shared Function LoadModel(handle As String) As NeuralNetwork
+            If handle.FileLength > 0 Then
+                Return handle.LoadXml(Of NeuralNetwork)
+            Else
+                Return ScatteredLoader(store:=handle)
+            End If
         End Function
     End Class
 End Namespace

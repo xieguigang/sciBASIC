@@ -132,4 +132,12 @@ Namespace Language.Vectorization
             Return New BooleanVector(strings.Select(Function(str) str Like pattern))
         End Operator
     End Class
+
+    Public Module StringVectorHelpers
+
+        <Extension>
+        Public Function ToLower(str As IEnumerable(Of String)) As IEnumerable(Of String)
+            Return str.SafeQuery.Select(AddressOf base.LCase)
+        End Function
+    End Module
 End Namespace

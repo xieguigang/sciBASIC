@@ -265,3 +265,4 @@ storage.ide-wal
 /gr/3DEngineTest/App
 *.stackdump
 /CLI_tools/Apps
+/Data_science/Visualization/Apps

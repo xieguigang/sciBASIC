@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::6258798671bb245e0a692469a3b5627e, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NumericVector
-    ' 
-    '         Properties: Length, name, vector
-    ' 
-    '         Function: SequenceEqual, ToString
-    ' 
-    '     Class TermsVector
-    ' 
-    '         Properties: terms
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NumericVector
+' 
+'         Properties: Length, name, vector
+' 
+'         Function: SequenceEqual, ToString
+' 
+'     Class TermsVector
+' 
+'         Properties: terms
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Text.Xml.Models
@@ -57,9 +58,18 @@ Namespace Text.Xml.Models
     ''' <summary>
     ''' A <see cref="Double"/> type numeric sequence container
     ''' </summary>
-    <XmlType("numerics")> Public Class NumericVector
+    <XmlType("numerics")>
+    Public Class NumericVector : Implements Enumeration(Of Double)
 
+        ''' <summary>
+        ''' 可以用这个属性来简单的标记这个向量所属的对象名称
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property name As String
+        ''' <summary>
+        ''' 存储于XML文档之中的数据向量
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property vector As Double()
 
         ''' <summary>
@@ -102,6 +112,14 @@ Namespace Text.Xml.Models
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(v As Integer()) As NumericVector
+            Return New NumericVector With {
+                .name = "NULL",
+                .vector = v.Select(Function(x) CDbl(x)).ToArray
+            }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(v As NumericVector) As Double()
             Return v.vector
         End Operator
@@ -110,15 +128,31 @@ Namespace Text.Xml.Models
         Public Function SequenceEqual(input() As Double) As Boolean
             Return vector.SequenceEqual(input)
         End Function
+
+        Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
+            Return vector.AsEnumerable.GetEnumerator
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
+            Yield GenericEnumerator()
+        End Function
     End Class
 
-    Public Class TermsVector
+    Public Class TermsVector : Implements Enumeration(Of Double)
 
         <XmlAttribute>
         Public Property terms As String()
 
         Public Overrides Function ToString() As String
             Return terms.GetJson
+        End Function
+
+        Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
+            Return terms.AsEnumerable.GetEnumerator
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
+            Yield GenericEnumerator()
         End Function
     End Class
 End Namespace

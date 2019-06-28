@@ -408,7 +408,7 @@ B21,B22,B23,...
         ''' </summary>
         ''' <returns></returns>
         Public Function Transpose() As File
-            Dim buf As String()() = Me.Columns.MatrixTranspose
+            Dim buf As String()() = Me.Columns.MatrixTranspose.ToArray
             Dim tableRows = LinqAPI.MakeList(Of RowObject) <=
                         From i As Integer
                         In buf.First.Sequence

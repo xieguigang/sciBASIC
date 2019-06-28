@@ -40,7 +40,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 
 Public Module ValueMapping
 

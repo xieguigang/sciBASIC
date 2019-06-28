@@ -104,7 +104,7 @@ Namespace NeuralNetwork
         Dim errors#
 
         ''' <summary>
-        ''' 训练所使用到的经验数量,即数据集的大小s
+        ''' 训练所使用到的经验数量,即数据集的大小size
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property XP As Integer
@@ -131,8 +131,18 @@ Namespace NeuralNetwork
         Public Sub New(inputSize As Integer, hiddenSize As Integer(), outputSize As Integer,
                        Optional learnRate As Double = 0.1,
                        Optional momentum As Double = 0.9,
-                       Optional active As LayerActives = Nothing)
-            Call Me.New(New Network(inputSize, hiddenSize, outputSize, learnRate, momentum, active))
+                       Optional active As LayerActives = Nothing,
+                       Optional weightInit As Func(Of Double) = Nothing)
+
+            Call Me.New(New Network(
+                 inputSize:=inputSize,
+                 hiddenSize:=hiddenSize,
+                 outputSize:=outputSize,
+                 learnRate:=learnRate,
+                 momentum:=momentum,
+                 active:=active,
+                 weightInit:=weightInit
+            ))
         End Sub
 
         ''' <summary>

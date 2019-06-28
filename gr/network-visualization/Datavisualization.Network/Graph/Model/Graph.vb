@@ -127,17 +127,16 @@ Namespace Graph
         ''' <summary>
         ''' <see cref="Node.Label"/>为键名
         ''' </summary>
-        Private _nodeSet As Dictionary(Of String, Node)
-        Private _adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))
+        Dim _nodeSet As Dictionary(Of String, Node)
+        Dim _adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))
 
-        Private _nextNodeId As Integer = 0
-        Private _nextEdgeId As Integer = 0
-        Private _eventListeners As List(Of IGraphEventListener)
+        Dim _nextNodeId As Integer = 0
+        Dim _nextEdgeId As Integer = 0
+        Dim _eventListeners As List(Of IGraphEventListener)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New()
-            _nodeSet = New Dictionary(Of String, Node)()
-            _eventListeners = New List(Of IGraphEventListener)()
-            _adjacencySet = New Dictionary(Of String, Dictionary(Of String, List(Of Edge)))()
+            Call Me.New({}, {})
         End Sub
 
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
@@ -157,16 +156,18 @@ Namespace Graph
         ''' <summary>
         ''' 添加节点然后返回这个新添加的节点
         ''' </summary>
-        ''' <param name="iNode"></param>
+        ''' <param name="node"></param>
         ''' <returns></returns>
-        Public Function AddNode(iNode As Node) As Node
-            If Not _nodeSet.ContainsKey(iNode.Label) Then
-                Call vertices.Add(iNode)
+        Public Function AddNode(node As Node) As Node
+            If Not _nodeSet.ContainsKey(node.Label) Then
+                vertices.Add(node)
+                node.ID = buffer.GetAvailablePos
+                buffer += node
             End If
 
-            _nodeSet(iNode.Label) = iNode
+            _nodeSet(node.Label) = node
             notify()
-            Return iNode
+            Return node
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

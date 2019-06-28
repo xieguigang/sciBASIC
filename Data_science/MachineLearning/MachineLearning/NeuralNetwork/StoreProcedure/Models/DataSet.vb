@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::4e4c5a212a854b8b9d5ee6d75ecb401a, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\DataSet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataSet
-    ' 
-    '         Properties: DataSamples, NormalizeMatrix, OutputSize, Size
-    ' 
-    '         Function: createExtends, PopulateNormalizedSamples, ToString
-    '         Class SampleList
-    ' 
-    '             Properties: items
-    ' 
-    '             Function: [Select], getCollection, getSize
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataSet
+' 
+'         Properties: DataSamples, NormalizeMatrix, OutputSize, Size
+' 
+'         Function: createExtends, PopulateNormalizedSamples, ToString
+'         Class SampleList
+' 
+'             Properties: items
+' 
+'             Function: [Select], getCollection, getSize
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,8 +53,9 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NeuralNetwork.StoreProcedure
 
@@ -76,52 +77,7 @@ Namespace NeuralNetwork.StoreProcedure
         <XmlElement("normalization")>
         Public Property NormalizeMatrix As NormalizeMatrix
 
-        Public Class SampleList : Inherits ListOf(Of Sample)
-
-            ''' <summary>
-            ''' 样本列表
-            ''' </summary>
-            ''' <returns></returns>
-            <XmlElement("sample")> Public Property items As Sample()
-
-            Default Public ReadOnly Property Item(index As Integer) As Sample
-                <MethodImpl(MethodImplOptions.AggressiveInlining)>
-                Get
-                    Return items(index)
-                End Get
-            End Property
-
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Protected Overrides Function getSize() As Integer
-                Return items?.Length
-            End Function
-
-            Public Iterator Function [Select](Of T)(project As Func(Of Sample, Integer, T)) As IEnumerable(Of T)
-                Dim i As VBInteger = Scan0
-
-                For Each item As Sample In items
-                    Yield project(item, ++i)
-                Next
-            End Function
-
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Public Shared Widening Operator CType(samples As Sample()) As SampleList
-                Return New SampleList With {
-                    .items = samples
-                }
-            End Operator
-
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Public Shared Widening Operator CType(samples As List(Of Sample)) As SampleList
-                Return New SampleList With {
-                    .items = samples.ToArray
-                }
-            End Operator
-
-            Protected Overrides Function getCollection() As IEnumerable(Of Sample)
-                Return items
-            End Function
-        End Class
+        Public Property output As String()
 
         ''' <summary>
         ''' 样本的矩阵大小：``[属性长度, 样本数量]``
@@ -155,18 +111,23 @@ Namespace NeuralNetwork.StoreProcedure
         ''' This function will extends <see cref="Sample.target"/> when this parameter is greater than ZERO.
         ''' </param>
         ''' <returns></returns>
-        Public Iterator Function PopulateNormalizedSamples(Optional dummyExtends% = 0) As IEnumerable(Of Sample)
+        Public Iterator Function PopulateNormalizedSamples(Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler, Optional dummyExtends% = 0) As IEnumerable(Of Sample)
             Dim input#()
+            Dim normSample As Sample
 
             For Each sample As Sample In DataSamples.items
-                input = NormalizeMatrix.NormalizeInput(sample)
-                sample = New Sample With {
+                input = NormalizeMatrix.NormalizeInput(sample, method)
+                normSample = New Sample With {
                     .ID = sample.ID,
                     .status = input,
                     .target = sample.target + createExtends(input, dummyExtends)
                 }
 
-                Yield sample
+                If sample.status.vector.Any(AddressOf IsNaNImaginary) Then
+                    Throw New InvalidProgramException("NaN value exists in your dataset: " & normSample.GetJson)
+                End If
+
+                Yield normSample
             Next
         End Function
 

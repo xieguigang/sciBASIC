@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::985d5bf586cc254b1735ba74cfcccec6, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NormalizeMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NormalizeMatrix
-    ' 
-    '         Properties: matrix, names
-    ' 
-    '         Function: CreateFromSamples, NormalizeInput
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NormalizeMatrix
+' 
+'         Properties: matrix, names
+' 
+'         Function: CreateFromSamples, NormalizeInput
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Distributions
 
@@ -74,27 +74,20 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="sample"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function NormalizeInput(sample As Sample) As Double()
-            Static normalRange As DoubleRange = {0, 1}
-
+        Public Function NormalizeInput(sample As Sample, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double()
             Return sample.status _
                 .vector _
                 .Select(Function(x, i)
-                            If x > matrix(i).max Then
-                                Return 1
-                            ElseIf x < matrix(i).min Then
-                                Return 0
-                            Else
-                                x = matrix(i) _
-                                    .GetRange _
-                                    .ScaleMapping(x, normalRange)
-                            End If
-
-                            If x.IsNaNImaginary Then
-                                Return matrix(i).average
-                            Else
-                                Return x
-                            End If
+                            Select Case method
+                                Case Normalizer.Methods.NormalScaler
+                                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                                Case Normalizer.Methods.RelativeScaler
+                                    Return Normalizer.RelativeNormalize(matrix(i), x)
+                                Case Normalizer.Methods.RangeDiscretizer
+                                    Return Normalizer.RangeDiscretizer(matrix(i), x)
+                                Case Else
+                                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                            End Select
                         End Function) _
                 .ToArray
         End Function

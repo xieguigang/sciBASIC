@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Extensions
 
-    Friend ReadOnly blank As DefaultValue(Of Color) = Color.White
+    Friend ReadOnly blank As [Default](Of Color) = Color.White
 
     ''' <summary>
     ''' 

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29006.145
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{06881C78-AE48-45D0-A435-C8ED3AFB819B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{06881C78-AE48-45D0-A435-C8ED3AFB819B}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
@@ -487,8 +487,8 @@ Global
 		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.ProteoWizard.d|x86.Build.0 = Release|Any CPU
 		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Publish|Any CPU.ActiveCfg = Release|Any CPU
 		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Publish|Any CPU.Build.0 = Release|Any CPU
-		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Publish|x64.ActiveCfg = Release|Any CPU
-		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Publish|x64.Build.0 = Release|Any CPU
+		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Publish|x64.ActiveCfg = Publish|x64
+		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Publish|x64.Build.0 = Publish|x64
 		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Publish|x86.ActiveCfg = Release|Any CPU
 		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Publish|x86.Build.0 = Release|Any CPU
 		{9B2FB137-D117-4080-B78E-3C62B068F1A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -703,8 +703,8 @@ Global
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.ProteoWizard.d|x86.Build.0 = Release|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Publish|Any CPU.ActiveCfg = Release|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Publish|Any CPU.Build.0 = Release|Any CPU
-		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Publish|x64.ActiveCfg = Release|x64
-		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Publish|x64.Build.0 = Release|x64
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Publish|x64.ActiveCfg = Publish|x64
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Publish|x64.Build.0 = Publish|x64
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Publish|x86.ActiveCfg = Release|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Publish|x86.Build.0 = Release|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -919,8 +919,8 @@ Global
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.ProteoWizard.d|x86.Build.0 = Biodeep|Any CPU
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Publish|Any CPU.ActiveCfg = Biodeep|Any CPU
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Publish|Any CPU.Build.0 = Biodeep|Any CPU
-		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Publish|x64.ActiveCfg = Biodeep|x64
-		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Publish|x64.Build.0 = Biodeep|x64
+		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Publish|x64.ActiveCfg = Publish|x64
+		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Publish|x64.Build.0 = Publish|x64
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Publish|x86.ActiveCfg = Biodeep|Any CPU
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Publish|x86.Build.0 = Biodeep|Any CPU
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.Release|Any CPU.ActiveCfg = Release|Any CPU

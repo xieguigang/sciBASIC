@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 
-Namespace ComponentModel
+Namespace ComponentModel.Discretion
 
     ''' <summary>
     ''' 通过这个对象来执行对连续性数值的数据集的离散化操作

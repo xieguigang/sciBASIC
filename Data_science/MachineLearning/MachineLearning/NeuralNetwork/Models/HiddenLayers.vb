@@ -43,15 +43,15 @@ Namespace NeuralNetwork
         ''' <param name="input">s神经网络的输入层会作为隐藏层的输入</param>
         ''' <param name="size%"></param>
         ''' <param name="active"></param>
-        Sub New(input As Layer, size%(), active As IActivationFunction, guid As VBInteger)
-            Dim hiddenPortal As New Layer(size(Scan0), active, input, guid)
+        Sub New(input As Layer, size%(), weight As Func(Of Double), active As IActivationFunction, guid As VBInteger)
+            Dim hiddenPortal As New Layer(size(Scan0), active, weight, input, guid)
 
             Layers = New Layer(size.Length - 1) {}
             Layers(Scan0) = hiddenPortal
 
             ' 在隐藏层之中,前一层神经网络会作为后面的输出
             For i As Integer = 1 To size.Length - 1
-                Layers(i) = New Layer(size(i), active, input:=hiddenPortal, guid:=guid)
+                Layers(i) = New Layer(size(i), active, weight, input:=hiddenPortal, guid:=guid)
                 hiddenPortal = Layers(i)
             Next
 

@@ -91,7 +91,25 @@ Namespace Graph
         Implements IInteraction
         Implements IGraphValueContainer(Of EdgeData)
 
-        Public Property ID As String
+        Dim uniqueID As String = Nothing
+
+        ''' <summary>
+        ''' 如果什么也不赋值，则默认自动根据node编号来生成唯一id
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Property ID As String
+            Get
+                If uniqueID.StringEmpty Then
+                    Return MyBase.ID
+                Else
+                    Return uniqueID
+                End If
+            End Get
+            Set(value As String)
+                uniqueID = value
+            End Set
+        End Property
+
         Public Property data As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).data
         Public Property isDirected As Boolean
 
