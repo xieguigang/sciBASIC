@@ -197,7 +197,11 @@ Namespace NeuralNetwork
         ''' 小型的人工神经网络的训练,并不建议使用并行化
         ''' </param>
         Public Overrides Sub Train(Optional parallel As Boolean = False)
-            Dim trainingDataSet As Sample() = _dataSets.ToArray
+            ' 20190701 数据不打乱，网络极大可能拟合前面几个batch的样本分布
+            ' 
+            ' 训练所使用的样本数据的顺序可能会对结果产生影响
+            ' 所以在训练之前会需要打乱样本的顺序来避免出现问题
+            Dim trainingDataSet As Sample() = _dataSets.Shuffles
 
             If TrainingType = TrainingType.Epoch Then
                 Call Train(trainingDataSet, Helpers.MaxEpochs, parallel)
