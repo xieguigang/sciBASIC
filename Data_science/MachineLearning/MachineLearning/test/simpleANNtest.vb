@@ -88,7 +88,7 @@ Module simpleANNtest
 
         Helpers.MaxEpochs = 5000
 
-        trainer.SetDropOut(0.8)
+        ' trainer.SetDropOut(0.8)
 
         Call samples.DoEach(Sub(dset) trainer.Add(dset))
         Call trainer.Train(parallel:=True)
