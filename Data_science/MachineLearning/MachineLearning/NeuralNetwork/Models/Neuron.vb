@@ -193,6 +193,8 @@ Namespace NeuralNetwork
                 Gradient = Helpers.ValueTruncate(Gradient, truncate)
             End If
 
+            ' Gradient = Gradient + (If(Math.FlipCoin, 1, -1) * Math.seeds.NextDouble)
+
             Return Gradient
         End Function
 
