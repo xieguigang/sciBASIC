@@ -263,9 +263,13 @@ Namespace Text.Xml.Linq
         End Function
 
         <Extension>
-        Private Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of XElement)
+        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of XElement)
             Using file As Stream = path.Open(FileMode.Open)
-                Return UltraLargeXmlNodesIterator(nodeName, file)
+                For Each node In UltraLargeXmlNodesIterator(nodeName, file)
+                    ' 因为在这里打开了一个文件,假若不使用iterator迭代的话
+                    ' 文件会被直接关闭,导致无法读取
+                    Yield node
+                Next
             End Using
         End Function
 
