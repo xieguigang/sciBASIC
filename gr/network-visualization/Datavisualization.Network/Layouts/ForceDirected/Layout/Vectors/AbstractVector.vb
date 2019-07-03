@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7288f99b2166f83d07ff9689d03060b, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractVector.vb"
+﻿#Region "Microsoft.VisualBasic::185f53a9c2c3a9fa8645eb668b791212, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\AbstractVector.vb"
 
     ' Author:
     ' 

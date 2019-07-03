@@ -392,6 +392,7 @@
     <Compile Include="AprioriRules\Algorithm\Implementation\StrongRules.vb" />
     <Compile Include="AprioriRules\Helper\Encoding.vb" />
     <Compile Include="ComponentModel\Class.vb" />
+    <Compile Include="ComponentModel\Discretizer\NormalRangeDiscretizer.vb" />
     <Compile Include="ComponentModel\IntegerEntity.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
     <Compile Include="Clustering\DBSCAN\DatasetItemBase.vb" />
@@ -402,7 +403,8 @@
     <Compile Include="Clustering\FuzzyCMeans\Algorithm\Utils.vb" />
     <Compile Include="Clustering\Clustering.vb" />
     <Compile Include="Clustering\FuzzyCMeans\Entity.vb" />
-    <Compile Include="ComponentModel\Discretizer.vb" />
+    <Compile Include="ComponentModel\Discretizer\Discretizer.vb" />
+    <Compile Include="ComponentModel\Normalizer\Normalizations.vb" />
     <Compile Include="DecisionTree\Algorithm.vb" />
     <Compile Include="DecisionTree\DataModels\DataTable.vb" />
     <Compile Include="DecisionTree\DataModels\DataImports.vb" />

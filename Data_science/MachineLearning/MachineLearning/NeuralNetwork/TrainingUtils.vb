@@ -1,49 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::72798286a8e71e898cf545a2a4a4fe6e, Data_science\MachineLearning\MachineLearning\NeuralNetwork\TrainingUtils.vb"
+﻿#Region "Microsoft.VisualBasic::8b81d08ac99a8359c79740128d2d8240, Data_science\MachineLearning\MachineLearning\NeuralNetwork\TrainingUtils.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class TrainingUtils
-' 
-'         Properties: MinError, NeuronNetwork, Selective, TrainingSet, TrainingType
-'                     Truncate, XP
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: CalculateError, TakeSnapshot, trainingImpl
-' 
-'         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
-' 
-' 
-' /********************************************************************************/
+    '     Class TrainingUtils
+    ' 
+    '         Properties: dropOutRate, MinError, NeuronNetwork, Selective, TrainingSet
+    '                     TrainingType, Truncate, XP
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: CalculateError, TakeSnapshot, trainingImpl
+    ' 
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, SetDropOut, SetLayerNormalize
+    '              (+3 Overloads) Train
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -196,7 +197,11 @@ Namespace NeuralNetwork
         ''' 小型的人工神经网络的训练,并不建议使用并行化
         ''' </param>
         Public Overrides Sub Train(Optional parallel As Boolean = False)
-            Dim trainingDataSet As Sample() = _dataSets.ToArray
+            ' 20190701 数据不打乱，网络极大可能拟合前面几个batch的样本分布
+            ' 
+            ' 训练所使用的样本数据的顺序可能会对结果产生影响
+            ' 所以在训练之前会需要打乱样本的顺序来避免出现问题
+            Dim trainingDataSet As Sample() = _dataSets.Shuffles
 
             If TrainingType = TrainingType.Epoch Then
                 Call Train(trainingDataSet, Helpers.MaxEpochs, parallel)

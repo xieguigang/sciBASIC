@@ -77,7 +77,7 @@ Public Module Extensions
         Return New IVector(Of T)(source)
     End Function
 
-    Public Function FlipCoin(Optional headsCutoff% = 50, Optional ntimes% = 100) As Double
+    Public Function FlipCoin(Optional headsCutoff% = 50, Optional ntimes% = 100) As Boolean
         Dim rand As Integer = randf(0, ntimes)
 
         If rand >= headsCutoff Then

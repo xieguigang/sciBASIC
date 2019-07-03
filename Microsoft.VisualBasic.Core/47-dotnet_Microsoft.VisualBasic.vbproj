@@ -946,6 +946,9 @@
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
+    <Compile Include="ApplicationServices\Tools\Zip\StreamReader.vb" />
+    <Compile Include="ApplicationServices\Tools\Zip\UnZip.vb" />
+    <Compile Include="ApplicationServices\Tools\Zip\Options.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
@@ -1551,7 +1554,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
-    <Compile Include="ApplicationServices\ZipLib.vb" />
+    <Compile Include="ApplicationServices\Tools\Zip\ZipLib.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\CBusyIndicator.vb" />
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />

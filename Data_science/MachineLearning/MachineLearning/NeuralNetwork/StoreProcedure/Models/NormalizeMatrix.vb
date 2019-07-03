@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::985d5bf586cc254b1735ba74cfcccec6, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::239f80f363f39662d40b0267f5a2bd3b, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Distributions
 
@@ -74,41 +74,22 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="sample"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function NormalizeInput(sample As Sample, Optional alternativeNormalize As Boolean = False) As Double()
+        Public Function NormalizeInput(sample As Sample, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double()
             Return sample.status _
                 .vector _
                 .Select(Function(x, i)
-                            If x > matrix(i).max Then
-                                Return 1
-                            ElseIf x < matrix(i).min Then
-                                Return 0
-                            Else
-                                If alternativeNormalize Then
-                                    x = minMaxNormalize(x, i)
-                                Else
-                                    x = scalerNormalize(x, i)
-                                End If
-                            End If
-
-                            If x.IsNaNImaginary Then
-                                Return matrix(i).average
-                            Else
-                                Return x
-                            End If
+                            Select Case method
+                                Case Normalizer.Methods.NormalScaler
+                                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                                Case Normalizer.Methods.RelativeScaler
+                                    Return Normalizer.RelativeNormalize(matrix(i), x)
+                                Case Normalizer.Methods.RangeDiscretizer
+                                    Return Normalizer.RangeDiscretizer(matrix(i), x)
+                                Case Else
+                                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                            End Select
                         End Function) _
                 .ToArray
-        End Function
-
-        Shared ReadOnly normalRange As DoubleRange = {0, 1}
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function scalerNormalize(x#, i%) As Double
-            Return matrix(i).GetRange.ScaleMapping(x, normalRange)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function minMaxNormalize(x#, i%) As Double
-            Return x / matrix(i).max
         End Function
 
         ''' <summary>

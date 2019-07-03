@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf.XML
 Imports Microsoft.VisualBasic.Text.Xml
 
@@ -56,7 +56,7 @@ Namespace Vendor_3mf
         ''' <returns></returns>
         Public Function Open(zip$) As Project
             Dim tmp$ = App.GetAppSysTempFile("--" & zip.FileName, sessionID:=App.PID)
-            Call ZipLib.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
+            Call unzip.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
             Return Project.FromZipDirectory(tmp)
         End Function
 

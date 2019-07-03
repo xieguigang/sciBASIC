@@ -257,7 +257,9 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub Shuffle(Of T)(ByRef list As List(Of T))
-            Call seeds.Shuffle(list)
+            SyncLock seeds
+                Call seeds.Shuffle(list)
+            End SyncLock
         End Sub
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::820a1f34670a349d4a728bdce6f3ec81, gr\network-visualization\Datavisualization.Network\Layouts\BarycentricMethod.vb"
+﻿#Region "Microsoft.VisualBasic::2261783c20f9eb2ff55d69efe057d8b6, gr\network-visualization\Datavisualization.Network\Layouts\BarycentricMethod.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module BarycentricMethod
     ' 
-    '         Function: __setLoci, ForceDirectedLayout
+    '         Function: ForceDirectedLayout
     ' 
     '         Sub: doLayout
     ' 

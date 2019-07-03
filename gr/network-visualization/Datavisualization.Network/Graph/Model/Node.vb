@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78d42255adf7839b2dc3cef2b0efbf6c, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::0cd560117007fd93c08e2f1855f7fc7d, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Node
     ' 
-    '         Properties: Data, Pinned
+    '         Properties: data, Pinned
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Equals, GetHashCode, ToString

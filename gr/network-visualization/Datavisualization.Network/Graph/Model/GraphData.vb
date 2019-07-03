@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::6bfcdac8df9dad77e5a50368885085a8, gr\network-visualization\Datavisualization.Network\Graph\Model\GraphData.vb"
+﻿#Region "Microsoft.VisualBasic::9f4aa26b27402a5c7dc82a34c9cac269, gr\network-visualization\Datavisualization.Network\Graph\Model\GraphData.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class NodeData
-' 
-'         Properties: Color, Force, initialPostion, mass, Neighborhoods
-'                     Neighbours, origID, radius, Weights
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Clone, ToString
-' 
-'     Class EdgeData
-' 
-'         Properties: length, weight
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Clone, ToString
-' 
-'     Class GraphData
-' 
-'         Properties: label
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    '     Class NodeData
+    ' 
+    '         Properties: color, force, initialPostion, mass, neighborhoods
+    '                     neighbours, origID, radius, weights
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Clone, ToString
+    ' 
+    '     Class EdgeData
+    ' 
+    '         Properties: length, weight
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Clone, ToString
+    ' 
+    '     Class GraphData
+    ' 
+    '         Properties: label
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

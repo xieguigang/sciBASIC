@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98e8084ef8004c4f8043df914bd66040, Data_science\Mathematica\Math\Math\Distributions\DataBinBox.vb"
+﻿#Region "Microsoft.VisualBasic::b7fd650fd96777cb1865721179a84106, Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
 
     ' Author:
     ' 
@@ -37,14 +37,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetBinMaps
-    ' 
-    '     Enum BinMaps
-    ' 
-    '         Boundary, Mean, Median
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

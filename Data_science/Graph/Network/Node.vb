@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3f8afb9e81477564e96791d64e95d29, Data_science\Graph\Network\Node.vb"
+﻿#Region "Microsoft.VisualBasic::9508b735362dc18dd9b06988b7d1d3c8, Data_science\Graph\Network\Node.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Node
     ' 
-    '         Properties: Degree
+    '         Properties: degree
     ' 
     ' 
     ' /********************************************************************************/

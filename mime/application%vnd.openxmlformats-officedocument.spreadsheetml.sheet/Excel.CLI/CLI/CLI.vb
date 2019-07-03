@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::555075a8b58be438381e82756dfa1e29, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::ecf458711f90298607211013cb4e53c2, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\CLI.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     ' Module CLI
     ' 
-    '     Function: Association, cbind, FillZero, rbind, rbindGroup
-    '               Removes, Subtract, Union, Unique
+    '     Function: Association, cbind, rbind, rbindGroup, Removes
+    '               Subtract, Takes, Transpose, Union, Unique
     ' 
     ' /********************************************************************************/
 
@@ -66,8 +66,8 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     ''' </summary>
     ''' <param name="args"></param>
     ''' <returns></returns>
-    <ExportAPI("/Unique")>
-    <Usage("/Unique /in <dataset.csv> [/out <out.csv>]")>
+    <ExportAPI("/unique")>
+    <Usage("/unique /in <dataset.csv> [/out <out.csv>]")>
     <Description("Helper tools for make the ID column value uniques.")>
     <Group(Program.CsvTools)>
     Public Function Unique(args As CommandLine) As Integer
@@ -98,7 +98,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     ''' </summary>
     ''' <param name="args"></param>
     ''' <returns></returns>
-    <ExportAPI("/Cbind")>
+    <ExportAPI("/cbind")>
     <Usage("/cbind /in <a.csv> /append <b.csv> [/ID.a <default=ID> /ID.b <default=ID> /grep.ID <grep_script, default=""token <SPACE> first""> /unique /nothing.as.empty /out <ALL.csv>]")>
     <Description("Join of two table by a unique ID.")>
     <Argument("/in", False, CLITypes.File,
@@ -202,19 +202,6 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Return unionData.SaveTable(out).CLICode
     End Function
 
-    <ExportAPI("/fill.zero")>
-    <Usage("/fill.zero /in <dataset.csv> [/out <out.csv>]")>
-    Public Function FillZero(args As CommandLine) As Integer
-        Dim in$ = args <= "/in"
-        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.fillZero.csv"
-        Dim dataset = Microsoft.VisualBasic.Data.csv.IO _
-            .DataSet _
-            .LoadDataSet([in]) _
-            .ToArray
-
-        Return dataset.SaveTo(out).CLICode
-    End Function
-
     ''' <summary>
     ''' 指定文件夹之中的csv文件按照文件名中第一个小数点前面的单词作为分组的key，进行分组合并
     ''' </summary>
@@ -235,8 +222,8 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Return 0
     End Function
 
-    <ExportAPI("/Association")>
-    <Usage("/Association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /out <out.csv>]")>
+    <ExportAPI("/association")>
+    <Usage("/association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /out <out.csv>]")>
     Public Function Association(args As CommandLine) As Integer
         Dim a$ = args <= "/a"
         Dim b$ = args <= "/b"
@@ -295,8 +282,9 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     ''' <param name="args"></param>
     ''' <returns></returns>
     ''' 
-    <ExportAPI("/Subtract")>
-    <Usage("/Subtract /a <data.csv> /b <data.csv> [/out <subtract.csv>]")>
+    <ExportAPI("/subtract")>
+    <Description("Performing ``a - b`` subtract by row unique id.")>
+    <Usage("/subtract /a <data.csv> /b <data.csv> [/out <subtract.csv>]")>
     Public Function Subtract(args As CommandLine) As Integer
         Dim a$ = args <= "/a"
         Dim b$ = args <= "/b"
@@ -366,5 +354,47 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Call removedParts.SaveTo(removedOut)
 
         Return result.SaveTo(out).CLICode
+    End Function
+
+    <ExportAPI("/takes")>
+    <Description("Takes specific rows by a given row id list.")>
+    <Usage("/takes /in <data.csv> /id <id.list> [/reverse /out <takes.csv>]")>
+    <Argument("/reverse", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="If this argument is presents in the cli inputs, then all of the rows that not in input list will be output as result.")>
+    Public Function Takes(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim id$ = args <= "/id"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.{id.BaseName}.csv"
+        Dim idlist As Index(Of String) = id.ReadAllLines.Distinct.ToLower.ToArray
+        Dim data = EntityObject.LoadDataSet([in]).ToArray
+        Dim isReverse As Boolean = args("/reverse")
+        Dim result As EntityObject()
+
+        If Not isReverse Then
+            result = data _
+                .Where(Function(row)
+                           Return LCase(row.ID) Like idlist
+                       End Function) _
+                .ToArray
+        Else
+            result = data _
+                .Where(Function(row)
+                           Return Not LCase(row.ID) Like idlist
+                       End Function) _
+                .ToArray
+        End If
+
+        Return result.SaveTo(out).CLICode
+    End Function
+
+    <ExportAPI("/transpose")>
+    <Usage("/transpose /in <data.csv> [/out <data.transpose.csv>]")>
+    Public Function Transpose(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.transpose.csv"
+        Dim matrix = csv.Load([in]).Transpose
+
+        Return matrix.Save(out).CLICode
     End Function
 End Module

@@ -1,46 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::922ea6770f1e30a11e2fff29561c862c, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::4763f352586fa38b7d56a08e9a74b8ab, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NetworkVisualizer
-    ' 
-    '     Properties: BackgroundColor, DefaultEdgeColor
-    ' 
-    '     Function: __scale, AutoScaler, CentralOffsets, DrawImage, GetBounds
-    '               GetDisplayText
-    ' 
-    '     Sub: drawLabels
-    ' 
-    ' /********************************************************************************/
+' Module NetworkVisualizer
+' 
+'     Properties: BackgroundColor, DefaultEdgeColor
+' 
+'     Function: AutoScaler, CentralOffsets, DrawImage, GetBounds, GetDisplayText
+'               scales
+' 
+'     Sub: drawLabels
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,7 +50,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -59,6 +58,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -86,12 +86,12 @@ Public Module NetworkVisualizer
     ''' <returns></returns>
     <Extension>
     Public Function GetDisplayText(n As Node) As String
-        If n.Data Is Nothing OrElse (n.Data.origID.StringEmpty AndAlso n.Data.label.StringEmpty) Then
+        If n.data Is Nothing OrElse (n.data.origID.StringEmpty AndAlso n.data.label.StringEmpty) Then
             Return n.Label
-        ElseIf n.Data.label.StringEmpty Then
-            Return n.Data.origID
+        ElseIf n.data.label.StringEmpty Then
+            Return n.data.origID
         Else
-            Return n.Data.label
+            Return n.data.label
         End If
     End Function
 
@@ -179,9 +179,6 @@ Public Module NetworkVisualizer
                               Optional hullPolygonGroups$ = Nothing) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
-        Dim br As Brush
-        Dim rect As Rectangle
-        Dim cl As Color
 
         ' 1. 先将网络图形对象置于输出的图像的中心位置
         ' 2. 进行矢量图放大
@@ -245,169 +242,48 @@ Public Module NetworkVisualizer
         Dim minFontSizeValue = minFontSize.AsDefault(Function(size) Val(size) < minFontSize)
         Dim minRadiusValue = minRadius.AsDefault(Function(r) Val(r) < minRadius)
 
+        ' if required hide disconnected nodes, then only the connected node in the network 
+        ' Graph will be draw
+        ' otherwise all of the nodes in target network graph will be draw onto the canvas.
+        Dim connectedNodes = net.connectedNodes.AsDefault
+        Dim drawPoints = net.vertex.ToArray Or connectedNodes.When(hideDisconnectedNode)
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
+
+                Dim labels As New List(Of labelModel)
 
                 Call "Render network edges...".__INFO_ECHO
 
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
-                For Each edge As Edge In net.graphEdges
-                    Dim n As Node = edge.U
-                    Dim otherNode As Node = edge.V
-
-                    cl = DefaultEdgeColor
-
-                    If edge.data.weight < 0.5 Then
-                        cl = Color.LightGray
-                    ElseIf edge.data.weight < 0.75 Then
-                        cl = Color.Blue
-                    End If
-
-                    Dim w! = CSng(5 * edge.data.weight * scale) Or minLinkWidthValue
-                    Dim lineColor As New Pen(cl, w)
-
-                    With edge.data!interaction_type
-                        If Not .IsNothing AndAlso edgeDashTypes.ContainsKey(.ByRef) Then
-                            lineColor.DashStyle = edgeDashTypes(.ByRef)
-                        End If
-                    End With
-
-                    ' 在这里绘制的是节点之间相连接的边
-                    Dim a = scalePos(n), b = scalePos(otherNode)
-
-                    Try
-                        Call g.DrawLine(lineColor, a, b)
-                    Catch ex As Exception
-                        Dim line As New Dictionary(Of String, String) From {
-                            {NameOf(a), $"[{a.X}, {a.Y}]"},
-                            {NameOf(b), $"[{b.X}, {b.Y}]"}
-                        }
-
-                        If throwEx Then
-                            Throw New Exception(line.GetJson, ex)
-                        Else
-                            Call $"Ignore of this invalid line range: {line.GetJson}".Warning
-                        End If
-                    End Try
-                Next
-
-                defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
-
-                Dim pt As Point
-                Dim labels As New List(Of (label As Label, anchor As Anchor, style As Font, color As Brush))
+                Call g.drawEdges(net, scale, minLinkWidthValue, edgeDashTypes, scalePos, throwEx)
 
                 Call "Render network nodes...".__INFO_ECHO
+
+                defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
 
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
                 ' 最后通过退火算法计算出合适的节点标签文本的位置之后，再使用一个循环绘制出
                 ' 所有的节点的标签文本
 
-                ' if required hide disconnected nodes, then only the connected node in the network 
-                ' Graph will be draw
-                ' otherwise all of the nodes in target network graph will be draw onto the canvas.
-                Dim connectedNodes = net.connectedNodes.AsDefault
-                Dim drawPoints = net.vertex.ToArray Or connectedNodes.When(hideDisconnectedNode)
-
                 If Not hullPolygonGroups.StringEmpty Then
-                    Dim hullPolygon As Index(Of String)
-                    Dim groups = drawPoints _
-                        .GroupBy(Function(n) n.Data.Properties!nodeType) _
-                        .ToArray
-
-                    If hullPolygonGroups.TextEquals("max") Then
-                        hullPolygon = {
-                            groups.OrderByDescending(Function(node) node.Count) _
-                                  .First _
-                                  .Key
-                        }
-                    ElseIf hullPolygonGroups.TextEquals("min") Then
-                        hullPolygon = {
-                            groups.Where(Function(group) group.Count > 2) _
-                                  .OrderBy(Function(node) node.Count) _
-                                  .First _
-                                  .Key
-                        }
-                    Else
-                        hullPolygon = hullPolygonGroups.Split(","c)
-                    End If
-
-                    For Each group In groups
-                        If group.Count > 2 AndAlso group.Key Like hullPolygon Then
-                            Dim positions = group _
-                                .Select(Function(p) scalePos(p)) _
-                                .JarvisMatch _
-                                .Enlarge(1.25)
-                            Dim color As Color = group _
-                                .Select(Function(p)
-                                            Return DirectCast(p.Data.Color, SolidBrush).Color
-                                        End Function) _
-                                .Average
-
-                            Call g.DrawHullPolygon(positions, color)
-                        End If
-                    Next
+                    Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos)
                 End If
 
                 ' 在这里进行节点的绘制
-                For Each n As Node In drawPoints
-                    Dim r# = n.Data.radius
-
-                    ' 当网络之中没有任何边的时候，r的值会是NAN
-                    If r = 0# OrElse r.IsNaNImaginary Then
-                        r = If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7)
-                        r = If(r = 0, 9, r)
-                    End If
-
-                    r = (r * radiusScale) Or minRadiusValue
-
-                    With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
-                        br = n.Data.Color Or .ByRef
-                    End With
-
-                    Dim center As PointF = scalePos(n)
-
-                    With center
-                        pt = New Point(.X - r / 2, .Y - r / 2)
-                    End With
-
-                    Dim invalidRegion As Boolean = False
-
-                    rect = New Rectangle(pt, New Size(r, r))
-
-                    ' 绘制节点，目前还是圆形
-                    If TypeOf g Is Graphics2D Then
-                        Try
-                            Call g.FillPie(br, rect, 0, 360)
-                            Call g.DrawEllipse(stroke, rect)
-                        Catch ex As Exception
-                            If throwEx Then
-                                Throw New Exception(rect.GetJson, ex)
-                            Else
-                                Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
-                            End If
-
-                            invalidRegion = True
-                        End Try
-                    Else
-                        Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
-                    End If
-
-                    If (Not invalidRegion) AndAlso displayId Then
-
-                        Dim fontSize! = (baseFont.Size + r) / fontSizeFactor
-                        Dim font As New Font(baseFont.Name, fontSize Or minFontSizeValue, FontStyle.Bold)
-                        Dim label As New Label With {
-                            .text = n.GetDisplayText
-                        }
-
-                        With g.MeasureString(label.text, font)
-                            label.width = .Width
-                            label.height = .Height
-                        End With
-
-                        labels += (label, New Anchor(rect), font, br)
-                    End If
-                Next
+                Call g.drawVertexNodes(
+                    drawPoints:=drawPoints,
+                    radiusScale:=radiusScale,
+                    minRadiusValue:=minRadiusValue,
+                    minFontSizeValue:=minFontSizeValue,
+                    defaultColor:=defaultColor,
+                    stroke:=stroke,
+                    baseFont:=baseFont,
+                    scalePos:=scalePos,
+                    fontSizeFactor:=fontSizeFactor,
+                    throwEx:=throwEx,
+                    displayId:=displayId
+                )
 
                 If displayId Then
                     Call g.drawLabels(labels, frameSize, labelColorAsNodeColor)
@@ -419,13 +295,186 @@ Public Module NetworkVisualizer
         Return g.GraphicsPlots(frameSize, margin, background, plotInternal)
     End Function
 
+    <Extension>
+    Private Iterator Function drawVertexNodes(g As IGraphics, drawPoints As Node(),
+                                              radiusScale#,
+                                              minRadiusValue As [Default](Of Double),
+                                              minFontSizeValue As [Default](Of Single),
+                                              defaultColor As Color,
+                                              stroke As Pen,
+                                              baseFont As Font,
+                                              scalePos As Dictionary(Of Node, PointF),
+                                              fontSizeFactor#,
+                                              throwEx As Boolean,
+                                              displayId As Boolean) As IEnumerable(Of labelModel)
+        Dim pt As Point
+        Dim br As Brush
+        Dim rect As Rectangle
+
+        For Each n As Node In drawPoints
+            Dim r# = n.data.radius
+
+            ' 当网络之中没有任何边的时候，r的值会是NAN
+            If r = 0# OrElse r.IsNaNImaginary Then
+                r = If(n.data.neighborhoods < 30, n.data.neighborhoods * 9, n.data.neighborhoods * 7)
+                r = If(r = 0, 9, r)
+            End If
+
+            r = (r * radiusScale) Or minRadiusValue
+
+            With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
+                br = n.data.color Or .ByRef
+            End With
+
+            Dim center As PointF = scalePos(n)
+
+            With center
+                pt = New Point(.X - r / 2, .Y - r / 2)
+            End With
+
+            Dim invalidRegion As Boolean = False
+
+            rect = New Rectangle(pt, New Size(r, r))
+
+            ' 绘制节点，目前还是圆形
+            If TypeOf g Is Graphics2D Then
+                Try
+                    Call g.FillPie(br, rect, 0, 360)
+                    Call g.DrawEllipse(stroke, rect)
+                Catch ex As Exception
+                    If throwEx Then
+                        Throw New Exception(rect.GetJson, ex)
+                    Else
+                        Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
+                    End If
+
+                    invalidRegion = True
+                End Try
+            Else
+                Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
+            End If
+
+            ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
+            ' 则生成一个label绘制的数据模型
+            If (Not invalidRegion) AndAlso displayId Then
+                Dim fontSize! = (baseFont.Size + r) / fontSizeFactor
+                Dim font As New Font(baseFont.Name, fontSize Or minFontSizeValue, FontStyle.Bold)
+                Dim label As New Label With {
+                    .text = n.GetDisplayText
+                }
+
+                With g.MeasureString(label.text, font)
+                    label.width = .Width
+                    label.height = .Height
+                End With
+
+                Yield New labelModel With {
+                    .label = label,
+                    .anchor = New Anchor(rect),
+                    .style = font,
+                    .color = br
+                }
+            End If
+        Next
+    End Function
+
+    <Extension>
+    Private Sub drawhullPolygon(g As IGraphics, drawPoints As Node(), hullPolygonGroups$, scalePos As Dictionary(Of Node, PointF))
+        Dim hullPolygon As Index(Of String)
+        Dim groups = drawPoints _
+            .GroupBy(Function(n) n.data.Properties!nodeType) _
+            .ToArray
+
+        If hullPolygonGroups.TextEquals("max") Then
+            hullPolygon = {
+                groups.OrderByDescending(Function(node) node.Count) _
+                      .First _
+                      .Key
+            }
+        ElseIf hullPolygonGroups.TextEquals("min") Then
+            hullPolygon = {
+                groups.Where(Function(group) group.Count > 2) _
+                      .OrderBy(Function(node) node.Count) _
+                      .First _
+                      .Key
+            }
+        Else
+            hullPolygon = hullPolygonGroups.Split(","c)
+        End If
+
+        For Each group In groups
+            If group.Count > 2 AndAlso group.Key Like hullPolygon Then
+                Dim positions = group _
+                    .Select(Function(p) scalePos(p)) _
+                    .JarvisMatch _
+                    .Enlarge(1.25)
+                Dim color As Color = group _
+                    .Select(Function(p)
+                                Return DirectCast(p.data.color, SolidBrush).Color
+                            End Function) _
+                    .Average
+
+                Call g.DrawHullPolygon(positions, color)
+            End If
+        Next
+    End Sub
+
+    <Extension>
+    Private Sub drawEdges(g As IGraphics, net As NetworkGraph, scale#,
+                          minLinkWidthValue As [Default](Of Single),
+                          edgeDashTypes As Dictionary(Of String, DashStyle),
+                          scalePos As Dictionary(Of Node, PointF),
+                          throwEx As Boolean)
+        Dim cl As Color
+
+        For Each edge As Edge In net.graphEdges
+            Dim n As Node = edge.U
+            Dim otherNode As Node = edge.V
+
+            cl = DefaultEdgeColor
+
+            If edge.data.weight < 0.5 Then
+                cl = Color.LightGray
+            ElseIf edge.data.weight < 0.75 Then
+                cl = Color.Blue
+            End If
+
+            Dim w! = CSng(5 * edge.data.weight * scale) Or minLinkWidthValue
+            Dim lineColor As New Pen(cl, w)
+
+            With edge.data!interaction_type
+                If Not .IsNothing AndAlso edgeDashTypes.ContainsKey(.ByRef) Then
+                    lineColor.DashStyle = edgeDashTypes(.ByRef)
+                End If
+            End With
+
+            ' 在这里绘制的是节点之间相连接的边
+            Dim a = scalePos(n), b = scalePos(otherNode)
+
+            Try
+                Call g.DrawLine(lineColor, a, b)
+            Catch ex As Exception
+                Dim line As New Dictionary(Of String, String) From {
+                    {NameOf(a), $"[{a.X}, {a.Y}]"},
+                    {NameOf(b), $"[{b.X}, {b.Y}]"}
+                }
+
+                If throwEx Then
+                    Throw New Exception(line.GetJson, ex)
+                Else
+                    Call $"Ignore of this invalid line range: {line.GetJson}".Warning
+                End If
+            End Try
+        Next
+    End Sub
+
     ''' <summary>
     ''' 使用退火算法计算出节点标签文本的位置
     ''' </summary>
     ''' 
     <Extension>
     Private Sub drawLabels(g As IGraphics,
-                           labels As List(Of (label As Label, anchor As Anchor, style As Font, color As Brush)),
+                           labels As List(Of labelModel),
                            frameSize As Size,
                            labelColorAsNodeColor As Boolean)
         Dim br As Brush

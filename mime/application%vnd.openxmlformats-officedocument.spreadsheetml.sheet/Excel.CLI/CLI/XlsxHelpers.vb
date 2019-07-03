@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfd2a7ee27b9fce5e9ab24172968512a, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\XlsxHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::e96b12a019cc88b81fe2be833b4415ef, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\XlsxHelpers.vb"
 
     ' Author:
     ' 
@@ -67,7 +67,7 @@ Partial Module CLI
     Public Function PushTable(args As CommandLine) As Integer
         With args <= "/write"
 
-            Dim Excel As Xlsx = Xlsx.Open(.ByRef)
+            Dim Excel As MIME.Office.Excel.File = MIME.Office.Excel.File.Open(.ByRef)
             Dim table As csv = args <= "/table"
             Dim sheetName$ = args("/sheetName") Or .BaseName
 
@@ -114,7 +114,7 @@ Partial Module CLI
         With args("/out") Or defaultOut
 
             If sheetName = "*" Then
-                Dim excel = Xlsx.Open(args <= "/open")
+                Dim excel = MIME.Office.Excel.File.Open(args <= "/open")
 
                 For Each sheet As NamedValue(Of csv) In excel.EnumerateTables
                     Dim save$ = $"{ .ByRef}/{sheet.Name.NormalizePathString(False)}.csv"
@@ -123,7 +123,7 @@ Partial Module CLI
 
                 Return 0
             Else
-                Return Xlsx.Open(args <= "/open") _
+                Return MIME.Office.Excel.File.Open(args <= "/open") _
                     .GetTable(sheetName) _
                     .Save(.ByRef, encoding:=Encodings.UTF8) _
                     .CLICode
@@ -144,7 +144,7 @@ Partial Module CLI
                 csv = csv.Load(.ByRef)
 #Enable Warning
             Else
-                csv = Xlsx.Open(.ByRef).GetTable(sheetName:=args("/sheet") Or "Sheet1")
+                csv = MIME.Office.Excel.File.Open(.ByRef).GetTable(sheetName:=args("/sheet") Or "Sheet1")
             End If
         End With
 

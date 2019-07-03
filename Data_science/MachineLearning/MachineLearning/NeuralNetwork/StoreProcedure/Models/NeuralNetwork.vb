@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1a21e91c831e933734811859ac6a315, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::a9cc2a27262272a66c2f3cccf5c3e294, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: connections, errors, hiddenlayers, inputlayer, learnRate
     '                     momentum, neurons, outputlayer
     ' 
-    '         Function: GetPredictLambda, Snapshot
+    '         Function: GetPredictLambda, LoadModel, Snapshot
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,6 +46,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Normalizer
 
 Namespace NeuralNetwork.StoreProcedure
 
@@ -78,10 +79,10 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="normalize">进行所输入的样本数据的归一化的矩阵</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetPredictLambda(normalize As NormalizeMatrix) As Func(Of Sample, Double())
+        Public Function GetPredictLambda(normalize As NormalizeMatrix, Optional method As Methods = Methods.NormalScaler) As Func(Of Sample, Double())
             With Me.LoadModel
                 Return Function(sample)
-                           Return .Compute(normalize.NormalizeInput(sample))
+                           Return .Compute(normalize.NormalizeInput(sample, method))
                        End Function
             End With
         End Function
@@ -95,6 +96,19 @@ Namespace NeuralNetwork.StoreProcedure
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Snapshot(instance As Network, Optional errors# = 0) As NeuralNetwork
             Return StoreProcedure.TakeSnapshot(instance, errors)
+        End Function
+
+        ''' <summary>
+        ''' 这个函数自动兼容XML文档模型或者超大型的文件夹模型数据
+        ''' </summary>
+        ''' <param name="handle"></param>
+        ''' <returns></returns>
+        Public Shared Function LoadModel(handle As String) As NeuralNetwork
+            If handle.FileLength > 0 Then
+                Return handle.LoadXml(Of NeuralNetwork)
+            Else
+                Return ScatteredLoader(store:=handle)
+            End If
         End Function
     End Class
 End Namespace

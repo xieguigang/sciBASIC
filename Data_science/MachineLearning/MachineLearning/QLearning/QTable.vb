@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cb45d5896925135bc830ae0cf0b030b, Data_science\MachineLearning\MachineLearning\QLearning\QTable.vb"
+﻿#Region "Microsoft.VisualBasic::24c10bc2ca33d9c0e7c8e904281e3f73, Data_science\MachineLearning\MachineLearning\QLearning\QTable.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: __explore, getActionsQValues, getBestAction, GetValues, NextAction
+    '         Function: explore, getActionsQValues, getBestAction, GetValues, NextAction
     ' 
     '         Sub: UpdateQvalue
     ' 

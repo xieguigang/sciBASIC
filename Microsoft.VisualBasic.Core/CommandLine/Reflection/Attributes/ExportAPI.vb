@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71a782e4cecec4b04e00700de6a13612, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::fb69fc76f81f00cb04dcaaab9410eb37, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '         Properties: Example, Info, Name, Type, Usage
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __printView, __printViewHTML, GenerateHtmlDoc, PrintView, ToString
+    '         Function: GenerateHtmlDoc, printView, PrintView, printViewHTML, ToString
     ' 
     '     Interface IExportAPI
     ' 

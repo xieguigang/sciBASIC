@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::404333c4420507da6ef36d9fc44b1369, Data_science\Mathematica\Math\DataFrame\Impute.vb"
+﻿#Region "Microsoft.VisualBasic::afae429efa81ac54b008ebcd680ef4e8, Data_science\Mathematica\Math\DataFrame\Impute.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Public Module Impute
         Return data
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f943b98aa779a4e92d5d3ede1fa19f0, Data_science\Mathematica\SignalProcessing\wav\wav\File.vb"
+﻿#Region "Microsoft.VisualBasic::0365b2ced9b4d7fb76c46e71d54cd5f7, Data_science\Mathematica\SignalProcessing\wav\wav\File.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Properties: data, fileSize, fmt, format, magic
     ' 
-    '     Function: ParseHeader
+    '     Function: Open
     ' 
     ' /********************************************************************************/
 

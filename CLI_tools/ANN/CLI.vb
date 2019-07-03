@@ -1,44 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::3a504045db45c69fc6b79a304a4e2bac, CLI_tools\ANN\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::e9f7722af6ea456d94954a9fbb99686d, CLI_tools\ANN\CLI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module CLI
-' 
-'     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, MinErrorSnapshot
-'               ROCData, runTrainingCommon, Train
-' 
-'     Sub: SummaryDebuggerDump
-' 
-' /********************************************************************************/
+    ' Module CLI
+    ' 
+    '     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, ExportValueFrames
+    '               ListActiveFunction, MinErrorSnapshot, NormalizeSampleDebugger, ROCData, runTrainingCommon
+    '               Train
+    ' 
+    '     Sub: SummaryDebuggerDump
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -51,6 +52,8 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Normalizer
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -199,6 +202,24 @@ Module CLI
     End Function
 
     ''' <summary>
+    ''' 输出归一化之后的样本数据,测试用
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/sample.normalize")>
+    <Description("Debug used only.")>
+    <Usage("/sample.normalize /in <sample_matrix.Xml> [/method <name> /out <dataset.csv>]")>
+    Public Function NormalizeSampleDebugger(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim method$ = args("/method") Or $"{Normalizer.Methods.NormalScaler.Description}"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.{method}.csv"
+        Dim samples As DataSet = [in].LoadXml(Of DataSet)
+        Dim dataset = samples.NormalizeSample(Normalizer.ParseMethod(method))
+
+        Return dataset.SaveTo(out).CLICode
+    End Function
+
+    ''' <summary>
     ''' 这个函数会输出训练好的模型, 训练集测试结果, 错误率变化曲线图, 训练日志
     ''' 配置文件不存在的画，则使用默认的配置数据
     ''' </summary>
@@ -215,7 +236,7 @@ Module CLI
         Dim parallel As Boolean = args("/parallel")
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}_ANN_trained.Xml"
         Dim samples As DataSet = [in].LoadXml(Of DataSet)
-        Dim config As Config = (args <= "/config").LoadProfile(Of Config) Or Config.Default
+        Dim config As Config = (args <= "/config").LoadProfile(Of Config) Or config.Default
         Dim hiddenSize As Integer()
 
         If config.hidden_size.StringEmpty Then
@@ -260,7 +281,13 @@ Module CLI
             Call trainingHelper.SetDropOut(percentage:=config.dropoutRate)
         End If
 
-        For Each sample As Sample In samples.PopulateNormalizedSamples(alternativeNormalize:=config.normalize.TextEquals("min/max"))
+        Dim normalMethod As Methods = Normalizer.ParseMethod(config.normalize)
+        Dim testDataset = samples.NormalizeSample(normalMethod)
+
+        ' 将数据集写入文件之中,以确认被正确的归一化了
+        Call testDataset.SaveTo($"{out.ParentPath}/normalize={normalMethod}.csv")
+
+        For Each sample As Sample In samples.PopulateNormalizedSamples(method:=normalMethod)
             Call trainingHelper.Add(sample.status, sample.target)
         Next
 
@@ -336,6 +363,24 @@ Module CLI
                                     End With
 
                                     minError = err
+                                End If
+
+                                If i Mod 5 = 0 AndAlso trainer.dropOutRate > 0 Then
+                                    ' 因为在dropout模式下,有一部分的神经元随机失活
+                                    ' 所以非最小error的网络不一定是不和要求的
+                                    ' 在开启dropout模式之后,程序会定时写网络文件供调试监控
+                                    With trainer.TakeSnapshot
+                                        Call $"  [{circle.Hex}] start write dropout snapshot....".__DEBUG_ECHO
+                                        Call $"  Current min_error={err}".__INFO_ECHO
+
+                                        If multipleParts Then
+                                            Call .ScatteredStore(inFile.TrimSuffix & ".dropout")
+                                        Else
+                                            Call .GetXml.SaveTo(inFile.TrimSuffix & ".dropout.Xml", throwEx:=False)
+                                        End If
+
+                                        Call $"  [{(++circle).ToHexString}] done!".__INFO_ECHO
+                                    End With
                                 End If
                             End Sub) _
             .Train(parallel)

@@ -47,7 +47,7 @@ Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Netwo
 
 Namespace Analysis
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         <Extension>
         Public Function SearchIndex(net As NetGraph, from As Boolean) As Dictionary(Of String, Index(Of String))

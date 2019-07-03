@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8f62fc03e35c2ca92904453964c4dec, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\test.vb"
+﻿#Region "Microsoft.VisualBasic::139f0dbfcf4da3f97d04233ce967e2cf, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\test.vb"
 
     ' Author:
     ' 
@@ -76,7 +76,7 @@ Module test
     End Sub
 
     Sub IOtest()
-        Dim file = Xlsx.Open("E:\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\test\test.xlsx")
+        Dim file = Excel.File.Open("E:\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\test\test.xlsx")
         Dim table As New csv
 
         table += New RowObject({"", "ddddddddd", "+++++++"})

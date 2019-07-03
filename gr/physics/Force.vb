@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38a10d3ed253e9bc1ec4971674a64c07, gr\physics\Force.vb"
+﻿#Region "Microsoft.VisualBasic::ff12c433a4da43a5deb6338e381a4ef2, gr\physics\Force.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class Force
     ' 
-    '     Properties: Angle, source, Strength
+    '     Properties: angle, source, strength
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
