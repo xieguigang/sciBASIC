@@ -54,7 +54,7 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute("z-index")>
-        Property zIndex As Integer
+        Property nodes As Integer
 
     End Interface
 End Namespace

@@ -135,7 +135,7 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Creates an array from property <see cref="Value(Of T).IValueOf.value"/>
+        ''' Creates an array from property <see cref="Value(Of T).IValueOf.Value"/>
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>

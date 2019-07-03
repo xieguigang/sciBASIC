@@ -1,53 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::6c08f8c87bbd2e2b37b576bb3d33b755, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\[Namespace].vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class [Namespace]
-    ' 
-    '         Properties: [Namespace], AutoExtract, Description, TypeInfo
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: CreateInstance, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class [Namespace]
+' 
+'         Properties: [Namespace], AutoExtract, Description, TypeInfo
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: CreateInstance, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Reflection
-Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace CommandLine.Reflection
 
@@ -97,9 +94,9 @@ Namespace CommandLine.Reflection
         ''' <param name="Namespace">The name value of this namespace module.(本命名空间模块的名称值)</param>
         ''' <remarks></remarks>
         Sub New([Namespace] As String, Optional Description As String = "")
-            Me._Namespace = [Namespace]
-            Me._Description = Description
-            Me._TypeAutoExtract = False
+            Me.Namespace = [Namespace]
+            Me.Description = Description
+            Me.AutoExtract = False
         End Sub
 
         Protected Sub New()

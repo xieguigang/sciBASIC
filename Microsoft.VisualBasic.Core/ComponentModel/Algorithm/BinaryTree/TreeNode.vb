@@ -161,8 +161,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Sub
 
         Public Sub Copy(source As BinaryTree(Of K, V))
-            _Key = source.Key
-            _Value = source.Value
+            Key = source.Key
+            Value = source.Value
             additionals.Clear()
             additionals.AddRange(source.additionals)
         End Sub

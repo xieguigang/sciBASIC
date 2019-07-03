@@ -68,7 +68,7 @@ Namespace FileStream.Generic
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
         Implements ISaveHandle
 
-        Public Property Nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Key
+        Public Property nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Key
             Get
                 If __nodes Is Nothing Then
                     __nodes = New Dictionary(Of T_Node)
@@ -84,7 +84,7 @@ Namespace FileStream.Generic
             End Set
         End Property
 
-        Public Property Edges As T_Edge() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Value
+        Public Property edges As T_Edge() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Value
             Get
                 If __edges Is Nothing Then
                     __edges = New List(Of T_Edge)
@@ -129,12 +129,12 @@ Namespace FileStream.Generic
         ''' <remarks></remarks>
         Public Sub RemoveDuplicated()
             Dim LQuery As T_Edge() =
-                Edges _
+                edges _
                 .GroupBy(Function(ed) ed.GetNullDirectedGuid(True)) _
                 .Select(Function(g) g.First) _
                 .ToArray
 
-            Edges = LQuery
+            edges = LQuery
         End Sub
 
         ''' <summary>
@@ -145,11 +145,11 @@ Namespace FileStream.Generic
             Dim LQuery = LinqAPI.Exec(Of T_Edge) _
  _
                 () <= From x As T_Edge
-                      In Edges
+                      In edges
                       Where Not x.SelfLoop
                       Select x
 
-            Edges = LQuery
+            edges = LQuery
         End Sub
 
         ''' <summary>
@@ -163,8 +163,8 @@ Namespace FileStream.Generic
         ''' <remarks></remarks>
         Public Overrides Function Save(outDIR$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             With outDIR Or App.CurrentDirectory.AsDefault
-                Call Nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding)
-                Call Edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding)
+                Call nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding)
+                Call edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding)
             End With
 
             Return True
@@ -173,8 +173,8 @@ Namespace FileStream.Generic
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Load(directory As String) As Network(Of T_Node, T_Edge)
             Return New Network(Of T_Node, T_Edge) With {
-                .Edges = $"{directory}/network-edges.csv".LoadCsv(Of T_Edge),
-                .Nodes = $"{directory}/nodes.csv".LoadCsv(Of T_Node)
+                .edges = $"{directory}/network-edges.csv".LoadCsv(Of T_Edge),
+                .nodes = $"{directory}/nodes.csv".LoadCsv(Of T_Node)
             }
         End Function
 

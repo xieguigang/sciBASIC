@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::d066d726e6acaef4aac6ec562ca1b158, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GraphAPI
-    ' 
-    '         Function: (+2 Overloads) CreateGraph, (+2 Overloads) CytoscapeExportAsGraph, CytoscapeNetworkFromEdgeTable, OrderByDegrees, RemovesByDegree
-    '                   RemovesByDegreeQuantile, RemovesByKeyValue, ScaleRadius, Tabular, UsingDegreeAsRadius
-    ' 
-    '         Sub: AddEdges
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GraphAPI
+' 
+'         Function: (+2 Overloads) CreateGraph, (+2 Overloads) CytoscapeExportAsGraph, CytoscapeNetworkFromEdgeTable, OrderByDegrees, RemovesByDegree
+'                   RemovesByDegreeQuantile, RemovesByKeyValue, ScaleRadius, Tabular, UsingDegreeAsRadius
+' 
+'         Sub: AddEdges
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -94,8 +94,11 @@ Namespace FileStream
         ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
         ''' </summary>
         ''' <param name="g"></param>
+        ''' <param name="properties">
+        ''' The data property names of nodes and edges.
+        ''' </param>
         ''' <returns></returns>
-        <Extension> Public Function Tabular(g As NetworkGraph, Optional properties$() = Nothing) As NetworkTables
+        <Extension> Public Function Tabular(g As NetworkGraph, Optional properties$() = Nothing, Optional is2D As Boolean = True) As NetworkTables
             Dim nodes As New List(Of Node)
             Dim edges As New List(Of NetworkEdge)
 
@@ -106,11 +109,14 @@ Namespace FileStream
                     ' skip coordination information when no layout data.
                     data("x") = n.data.initialPostion.x
                     data("y") = n.data.initialPostion.y
-                    ' data("z") = n.Data.initialPostion.z
+
+                    If Not is2D Then
+                        data("z") = n.data.initialPostion.z
+                    End If
                 End If
 
                 If Not properties Is Nothing Then
-                    For Each key As String In properties
+                    For Each key As String In properties.Where(Function(p) n.data.HasProperty(p))
                         data(key) = n.data(key)
                     Next
                 End If
@@ -132,11 +138,19 @@ Namespace FileStream
                         {NameOf(EdgeData.label), l.data.label}
                     }
                 }
+
+                With edges.Last
+                    If Not properties Is Nothing Then
+                        For Each key As String In properties.Where(Function(p) l.data.HasProperty(p))
+                            .ItemValue(key) = l.data(key)
+                        Next
+                    End If
+                End With
             Next
 
             Return New NetworkTables With {
-                .Edges = edges,
-                .Nodes = nodes
+                .edges = edges,
+                .nodes = nodes
             }
         End Function
 
@@ -228,7 +242,7 @@ Namespace FileStream
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
  _
                 From n As Node
-                In net.Nodes
+                In net.nodes
                 Let id = n.ID
                 Let pos As AbstractVector = New FDGVector2(Val(n("x")), Val(n("y")))
                 Let c As Brush = nodeColor(n)
@@ -251,7 +265,7 @@ Namespace FileStream
             Dim edges As Edge() =
  _
                 LinqAPI.Exec(Of Edge) <= From edge As NetworkEdge
-                                         In net.Edges
+                                         In net.edges
                                          Let a = nodeTable(edge.FromNode)
                                          Let b = nodeTable(edge.ToNode)
                                          Let id = edge.GetNullDirectedGuid
@@ -353,7 +367,7 @@ Namespace FileStream
         <Extension>
         Public Function RemovesByDegreeQuantile(net As NetworkTables, Optional quantile# = 0.1, Optional ByRef removeIDs$() = Nothing) As NetworkTables
             Dim qCut& = net _
-                .Nodes _
+                .nodes _
                 .Select(Function(n) n(names.REFLECTION_ID_MAPPING_DEGREE)) _
                 .Select(Function(d) CLng(Val(d))) _
                 .GKQuantile() _
@@ -394,7 +408,7 @@ Namespace FileStream
             Dim key$ = cutoff.Name
             Dim threshold# = cutoff.Value
 
-            For Each node As Node In net.Nodes
+            For Each node As Node In net.nodes
                 Dim ndg# = Val(node(key))
 
                 If ndg > threshold Then
@@ -417,7 +431,7 @@ Namespace FileStream
             Dim edges As New List(Of NetworkEdge)
             Dim index As New Index(Of String)(removes)
 
-            For Each edge As NetworkEdge In net.Edges
+            For Each edge As NetworkEdge In net.edges
 
                 ' 如果边之中的任意一个节点被包含在index里面，
                 ' 即有小于cutoff值的节点， 则不会被添加
@@ -428,8 +442,8 @@ Namespace FileStream
             Next
 
             Return New NetworkTables With {
-                .Edges = edges,
-                .Nodes = nodes
+                .edges = edges,
+                .nodes = nodes
             }
         End Function
     End Module

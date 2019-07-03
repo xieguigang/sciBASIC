@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::d9c53c55eb8945e520360e651fc211f0, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Edges
-    ' 
-    '         Properties: Data, EdgeBetweenness, interaction, name, SUID
-    ' 
-    '         Function: GetConnectNodes, GetNodes, ToString
-    ' 
-    '     Class Nodes
-    ' 
-    '         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, Data
-    '                     Degree, Eccentricity, IsSingleNode, name, NeighborhoodConnectivity
-    '                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
-    '                     SharedName, Stress, SUID, TopologicalCoefficient
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Edges
+' 
+'         Properties: Data, EdgeBetweenness, interaction, name, SUID
+' 
+'         Function: GetConnectNodes, GetNodes, ToString
+' 
+'     Class Nodes
+' 
+'         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, Data
+'                     Degree, Eccentricity, IsSingleNode, name, NeighborhoodConnectivity
+'                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
+'                     SharedName, Stress, SUID, TopologicalCoefficient
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -109,14 +109,15 @@ Namespace FileStream.Cytoscape
         Public Property PartnerOfMultiEdgedNodePairs As String
         Public Property Radiality As String
         Public Property SelfLoops As String
-        <Column("shared name")> Public Property SharedName As String
+        <Column("shared name")>
+        Public Property SharedName As String
         Public Property Stress As String
         Public Property TopologicalCoefficient As String
         ''' <summary>
         ''' Dynamics extended data
         ''' </summary>
         ''' <returns></returns>
-        Public Property Data As Dictionary(Of String, String)
+        Public Property data As Dictionary(Of String, String)
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

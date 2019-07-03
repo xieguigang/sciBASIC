@@ -83,12 +83,12 @@ Namespace Layouts
         ''' </param>
         <ExportAPI("Layout.ForceDirected")>
         <Extension>
-        Public Sub doForceLayout(ByRef net As NetworkGraph,
-                                 Optional Stiffness# = 80,
-                                 Optional Repulsion# = 4000,
-                                 Optional Damping# = 0.83,
-                                 Optional iterations% = 1000,
-                                 Optional showProgress As Boolean = False)
+        Public Function doForceLayout(ByRef net As NetworkGraph,
+                                      Optional Stiffness# = 80,
+                                      Optional Repulsion# = 4000,
+                                      Optional Damping# = 0.83,
+                                      Optional iterations% = 1000,
+                                      Optional showProgress As Boolean = False) As NetworkGraph
 
             Dim physicsEngine As New ForceDirected2D(net, Stiffness, Repulsion, Damping)
             Dim tick As Action(Of Integer)
@@ -131,7 +131,9 @@ Namespace Layouts
             If Not progress Is Nothing Then
                 Call progress.Dispose()
             End If
-        End Sub
+
+            Return net
+        End Function
 
         <Extension>
         Public Sub doRandomLayout(ByRef net As NetworkGraph)

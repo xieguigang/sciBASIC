@@ -90,7 +90,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' (这个属性会首先查找标记的自定义属性的名称结果，如果不存在才会使用属性或者字段的反射成员名称)
         ''' </summary>
         ''' <returns></returns>
-        Public Property Identity As String Implements IReadOnlyId.Identity, INamedValue.Key
+        Public Property Identity As String Implements IReadOnlyId.Key, INamedValue.Key
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If name.StringEmpty Then

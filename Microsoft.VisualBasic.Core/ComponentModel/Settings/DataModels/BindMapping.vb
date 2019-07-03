@@ -91,7 +91,7 @@ Namespace ComponentModel.Settings
             End Get
         End Property
 
-        Public Overrides Property Name As String Implements IProfileTable.Name
+        Public Overrides Property Name As String Implements IProfileTable.nodes
             Get
                 Return MyBase.Name
             End Get
@@ -109,7 +109,7 @@ Namespace ComponentModel.Settings
             End Set
         End Property
 
-        Public Overrides Property Description As String Implements IProfileTable.Description
+        Public Overrides Property Description As String Implements IProfileTable.edges
             Get
                 Return MyBase.Description
             End Get

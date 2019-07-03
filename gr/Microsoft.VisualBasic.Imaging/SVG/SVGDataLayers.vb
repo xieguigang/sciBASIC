@@ -103,7 +103,7 @@ Namespace SVG
 
         Private Iterator Function updateLayerIndex(Of T As CSSLayer)(nodes As IEnumerable(Of T)) As IEnumerable(Of T)
             For Each node As T In nodes
-                node.zIndex = ++zlayer
+                node.nodes = ++zlayer
                 Yield node
             Next
         End Function

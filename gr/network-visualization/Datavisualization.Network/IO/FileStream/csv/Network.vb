@@ -50,7 +50,7 @@ Namespace FileStream
 
     ''' <summary>
     ''' The csv table file format of the network graph object model: <see cref="NetworkGraph"/>.
-    ''' (在这个对象之中包括了一个<see cref="Node"/>和<see cref="Edges"/>节点和边列表，可以直接用于CSV文件的读写操作)
+    ''' (在这个对象之中包括了一个<see cref="Node"/>和<see cref="edges"/>节点和边列表，可以直接用于CSV文件的读写操作)
     ''' </summary>
     Public Class NetworkTables : Inherits Network(Of Node, NetworkEdge)
 
@@ -60,15 +60,15 @@ Namespace FileStream
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of NetworkEdge))
             Call MyBase.New()
 
-            Me.Nodes = nodes.ToArray
-            Me.Edges = edges.ToArray
+            Me.nodes = nodes.ToArray
+            Me.edges = edges.ToArray
         End Sub
 
         Sub New(edges As IEnumerable(Of NetworkEdge), nodes As IEnumerable(Of Node))
             Call MyBase.New()
 
-            Me.Nodes = nodes.ToArray
-            Me.Edges = edges.ToArray
+            Me.nodes = nodes.ToArray
+            Me.edges = edges.ToArray
         End Sub
 
         ''' <summary>
@@ -77,7 +77,7 @@ Namespace FileStream
         ''' <param name="node"></param>
         ''' <returns></returns>
         Public Function Links(node As String) As Integer
-            Dim count% = Edges _
+            Dim count% = edges _
                 .Where(Function(x) x.Contains(node)) _
                 .Count
             Return count
@@ -134,8 +134,8 @@ Namespace FileStream
             Dim tables = SearchNetworkTable(directory:=DIR)
 
             Return New NetworkTables With {
-                .Edges = tables.edges.LoadCsv(Of NetworkEdge),
-                .Nodes = tables.nodes.LoadCsv(Of Node)
+                .edges = tables.edges.LoadCsv(Of NetworkEdge),
+                .nodes = tables.nodes.LoadCsv(Of Node)
             }
         End Function
     End Class

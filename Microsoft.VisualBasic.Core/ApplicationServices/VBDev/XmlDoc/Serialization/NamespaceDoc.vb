@@ -74,7 +74,9 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                               Function(nsGroup)
                                   Return nsGroup _
                                       .Select(Function(doc) doc.Summary) _
-                                      .Where(Function(s) Not s.StringEmpty) _
+                                      .Where(Function(s)
+                                                 Return Not s.StringEmpty
+                                             End Function) _
                                       .Distinct _
                                       .JoinBy(ASCII.LF & ASCII.LF)
                               End Function)

@@ -65,7 +65,7 @@ Namespace Language
     Public Class Value(Of T) : Implements IValueOf
 
         ''' <summary>
-        ''' This object have a <see cref="IValueOf.value"/> property for stores its data
+        ''' This object have a <see cref="IValueOf.Value"/> property for stores its data
         ''' </summary>
         Public Interface IValueOf
 

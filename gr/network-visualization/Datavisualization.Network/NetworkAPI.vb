@@ -70,12 +70,12 @@ Public Module NetworkAPI
 
     <ExportAPI("Get.NetworkEdges")>
     Public Function GetNHetworkEdges(Network As ______NETWORK__) As FileStream.NetworkEdge()
-        Return Network.Edges
+        Return Network.edges
     End Function
 
     <ExportAPI("Get.NetworkNodes")>
     Public Function GetNetworkNodes(Network As ______NETWORK__) As FileStream.Node()
-        Return Network.Nodes
+        Return Network.nodes
     End Function
 
     <ExportAPI("Save")>

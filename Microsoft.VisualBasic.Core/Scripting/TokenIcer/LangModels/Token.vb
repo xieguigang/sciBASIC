@@ -91,7 +91,7 @@ Namespace Scripting.TokenIcer
         ''' The text that makes up the token.
         ''' </summary>
         ''' <returns></returns>
-        <XmlText> Public Property Value As String Implements Value(Of String).IValueOf.value
+        <XmlText> Public Property Value As String Implements Value(Of String).IValueOf.Value
 
         ''' <summary>
         ''' You must keep the UNDEFINED type equals to ZERO!.
