@@ -72,6 +72,16 @@ Namespace ComponentModel
         End Interface
 
         ''' <summary>
+        ''' The external css/xsl file name for styling current xml file
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' This property is only works for the root element type
+        ''' </remarks>
+        <XmlIgnore>
+        Public Property Stylesheet As String
+
+        ''' <summary>
         ''' ReadOnly, Data model type tracking use Xml Comment.
         ''' </summary>
         ''' <returns></returns>
