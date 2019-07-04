@@ -98,7 +98,7 @@ Namespace NeuralNetwork.StoreProcedure
         End Property
 
         ''' <summary>
-        ''' 
+        ''' Populates all of the normalized training dataset from current matrix data object.
         ''' </summary>
         ''' <param name="dummyExtends%">
         ''' This function will extends <see cref="Sample.target"/> when this parameter is greater than ZERO.
