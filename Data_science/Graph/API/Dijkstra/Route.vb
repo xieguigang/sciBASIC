@@ -60,7 +60,7 @@ Namespace Dijkstra
     Public Class Route : Implements IList(Of Connection)
         Implements IReadOnlyId
 
-        Public ReadOnly Property Identity As String Implements IReadOnlyId.Key
+        Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
 
         ReadOnly route As List(Of Connection)
         ReadOnly vertex As New HashList(Of Vertex)

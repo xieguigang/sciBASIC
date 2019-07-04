@@ -60,7 +60,7 @@ Namespace Graph.Abstract
     ''' Node model in the network
     ''' </summary>
     Public Interface INode
-        Property nodes As String
+        Property Id As String
         Property NodeType As String
     End Interface
 

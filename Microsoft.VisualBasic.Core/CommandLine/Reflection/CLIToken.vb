@@ -72,7 +72,7 @@ Namespace CommandLine.Reflection
         ''' Name of this token object, this can be parameter name or api name.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property Name As String Implements IReadOnlyId.Key
+        Public Overridable ReadOnly Property Name As String Implements IReadOnlyId.Identity
 
         ''' <summary>
         ''' Init this token by using <see cref="name"/> value.
