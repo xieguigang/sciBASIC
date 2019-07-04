@@ -179,7 +179,7 @@ Namespace ComponentModel
         ''' The map source
         ''' </summary>
         ''' <returns></returns>
-        Public Property Key As T1 Implements IMap.nodes
+        Public Property Key As T1 Implements IMap.Key
         ''' <summary>
         ''' The mapped target value.
         ''' </summary>
@@ -199,7 +199,7 @@ Namespace ComponentModel
         ''' 与<see cref="IKeyValuePairObject(Of TKey, TValue)"/>相比，这个类型更加倾向于特定化的描述两个对象之间的一一对应关系
         ''' </summary>
         Public Interface IMap
-            Property nodes As T1
+            Property Key As T1
             Property Maps As V
         End Interface
 
@@ -233,7 +233,7 @@ Namespace ComponentModel
         ''' <remarks>
         ''' 虽然说这个对象也实现了<see cref="INamedValue"/>接口，但是Key也可能是会出现重复的
         ''' </remarks>
-        Public Property Key As String Implements Map(Of String, String).IMap.nodes, INamedValue.Key
+        Public Property Key As String Implements Map(Of String, String).IMap.Key, INamedValue.Key
         Public Property Maps As String Implements Map(Of String, String).IMap.Maps
 
         ''' <summary>

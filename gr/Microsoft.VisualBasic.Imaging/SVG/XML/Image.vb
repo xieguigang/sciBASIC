@@ -70,7 +70,7 @@ Namespace SVG.XML
         <XmlAttribute("href", [Namespace]:=SVGWriter.Xlink)>
         Public Property data As String
         <XmlAttribute("z-index")>
-        Public Property zIndex As Integer Implements CSSLayer.nodes
+        Public Property zIndex As Integer Implements CSSLayer.zIndex
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetGDIObject() As Bitmap

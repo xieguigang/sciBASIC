@@ -74,7 +74,7 @@ Namespace SVG
         <Extension>
         Private Sub drawLayer(g As Graphics2D, layer As ICanvas)
             ' draw layer components, order by CSS zindex asc
-            For Each element As CSSLayer In layer.PopulateLayers.OrderBy(Function(l) l.nodes)
+            For Each element As CSSLayer In layer.PopulateLayers.OrderBy(Function(l) l.zIndex)
                 Select Case element.GetType
                     Case GetType(g)
 
