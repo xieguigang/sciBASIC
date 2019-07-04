@@ -353,6 +353,7 @@
     <Compile Include="RandomForests\Bootstraping.vb" />
     <Compile Include="RandomForests\RandomForests.vb" />
     <Compile Include="RandomForests\NamespaceDoc.vb" />
+    <Compile Include="RandomForests\StorageProcedure\MatrixLoader.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -390,8 +391,6 @@
   <ItemGroup>
     <Content Include="NeuralNetwork\ActiveFunctions\Copyright.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RandomForests\StorageProcedure\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -150,7 +150,22 @@ Namespace DecisionTree
                 End If
             Next
 
-            Return New TreeNode(attributes(highestInformationGainIndex).name, highestInformationGainIndex, attributes(highestInformationGainIndex), edge)
+            If highestInformationGainIndex = -1 Then
+                Return New TreeNode(isleaf:=True, name:=data.headers(Scan0), edge:=edge) With {
+                    .attributes = New Attributes With {
+                        .differentAttributeNames = {},
+                        .informationGain = highestInformationGain,
+                        .name = ""
+                    }
+                }
+            Else
+                Return New TreeNode(
+                    name:=attributes(highestInformationGainIndex).name,
+                    tableIndex:=highestInformationGainIndex,
+                    attributes:=attributes(highestInformationGainIndex),
+                    edge:=edge
+                )
+            End If
         End Function
 
         Private Function GetGainForAllAttributes(data As DataTable, colIndex As Integer, entropyOfDataset As Double) As Double

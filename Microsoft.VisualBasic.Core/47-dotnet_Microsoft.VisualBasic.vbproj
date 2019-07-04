@@ -1079,11 +1079,11 @@
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb" />
     <Compile Include="ComponentModel\DriverModel.vb" />
     <Compile Include="ComponentModel\DataSource\Tsv.vb" />
-    <Compile Include="ComponentModel\DataSource\Property\NamedCollection%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\NamedCollection.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
-    <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
-    <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\NamedValue.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\IMatched.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\Repository.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\SQL.vb" />
@@ -1117,7 +1117,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\BinaryPriorityQueue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\KeyDictionary.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />
     <Compile Include="ApplicationServices\Utils.vb" />
@@ -1186,7 +1186,7 @@
     <Compile Include="Language\Linq\Indexer.vb" />
     <Compile Include="Language\Linq\Vectorization\Vector.vb" />
     <Compile Include="Language\Linq\Vectorization\VectorShadows.vb" />
-    <Compile Include="Language\Linq\List%28Of T%29.vb" />
+    <Compile Include="Language\Linq\List.vb" />
     <Compile Include="Language\Language\Perl\die.vb" />
     <Compile Include="Language\API.vb" />
     <Compile Include="Language\Value\DefaultValue\Default.vb" />
@@ -1209,7 +1209,7 @@
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\ILocalSearchHandle.vb" />
     <Compile Include="Extensions\Collection\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />

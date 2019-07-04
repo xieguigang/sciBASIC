@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::3ead46b1be9bd8821ab413ca97682387, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileTable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ProfileTable
-    ' 
-    '         Properties: Description, Name, Type, value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: SetValue
-    ' 
-    '     Interface IProfileTable
-    ' 
-    '         Properties: Description, Name, Type, value
-    ' 
-    '     Module IniExtensions
-    ' 
-    '         Function: LoadIni
-    ' 
-    '         Sub: WriteIni
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ProfileTable
+' 
+'         Properties: Description, Name, Type, value
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: ToString
+' 
+'         Sub: SetValue
+' 
+'     Interface IProfileTable
+' 
+'         Properties: Description, Name, Type, value
+' 
+'     Module IniExtensions
+' 
+'         Function: LoadIni
+' 
+'         Sub: WriteIni
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,10 +66,10 @@ Namespace ComponentModel.Settings
     Public Class ProfileTable : Implements INamedValue
         Implements IProfileTable
 
-        Public Property Name As String Implements INamedValue.Key, IProfileTable.Name
+        Public Property Name As String Implements INamedValue.Key, IProfileTable.name
         Public Property value As String Implements IProfileTable.value
-        Public Property Type As ValueTypes Implements IProfileTable.Type
-        Public Property Description As String Implements IProfileTable.Description
+        Public Property Type As ValueTypes Implements IProfileTable.type
+        Public Property Description As String Implements IProfileTable.edges
 
         Sub New()
         End Sub
@@ -93,10 +93,10 @@ Namespace ComponentModel.Settings
 
     Public Interface IProfileTable
 
-        Property Name As String
+        Property name As String
         ReadOnly Property value As String
-        Property Type As ValueTypes
-        Property Description As String
+        Property type As ValueTypes
+        Property edges As String
 
     End Interface
 

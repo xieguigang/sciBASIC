@@ -85,8 +85,8 @@ Namespace Analysis
             VBDebugger.Mute = False
 
             Dim out As New FileStream.NetworkTables With {
-                .Edges = edges,
-                .Nodes = nodes
+                .edges = edges,
+                .nodes = nodes
             }
 
             If trim Then

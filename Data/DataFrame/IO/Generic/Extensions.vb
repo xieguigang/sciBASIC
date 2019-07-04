@@ -249,8 +249,9 @@ Namespace IO
             Dim props As Dictionary(Of String, String) = data _
                 .GroupBy(Function(p) p.Property) _
                 .ToDictionary(Function(k) k.Key,
-                              Function(v) v.Select(
-                              Function(s) s.Value).JoinBy("; "))
+                              Function(v)
+                                  Return v.Select(Function(s) s.Value).JoinBy("; ")
+                              End Function)
 
             Return New EntityObject With {
                 .ID = g.Key,

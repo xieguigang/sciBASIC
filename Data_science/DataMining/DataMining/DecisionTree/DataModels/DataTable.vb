@@ -49,6 +49,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace DecisionTree.Data
 
+    ''' <summary>
+    ''' 训练集样本数据表
+    ''' </summary>
     Public Class DataTable
 
         ''' <summary>

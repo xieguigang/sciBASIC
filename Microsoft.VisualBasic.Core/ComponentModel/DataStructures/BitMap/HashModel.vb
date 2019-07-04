@@ -113,7 +113,7 @@ Namespace ComponentModel
         End Property
 
         Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            _Address = address
+            Me.Address = address
         End Sub
     End Class
 

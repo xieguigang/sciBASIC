@@ -124,7 +124,7 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public ReadOnly Property [Next] As LinkNode(Of T)
             Get
-                Return New LinkNode(Of T)(list.Next(node.Key), list)
+                Return New LinkNode(Of T)(list.Next(node.Address), list)
             End Get
         End Property
 
@@ -134,7 +134,7 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public ReadOnly Property Previous As LinkNode(Of T)
             Get
-                Return New LinkNode(Of T)(list.Previous(node.Key), list)
+                Return New LinkNode(Of T)(list.Previous(node.Address), list)
             End Get
         End Property
 
@@ -178,7 +178,7 @@ Namespace ComponentModel
         End Function
 
         Public Function [Next](x As T) As T
-            Return [Next](x.Key)
+            Return [Next](x.Address)
         End Function
 
         Public Function [Next](x As String) As T
@@ -192,7 +192,7 @@ Namespace ComponentModel
         End Function
 
         Public Function Previous(x As T) As T
-            Dim pos As Integer = __innerHash(x.Key).Address
+            Dim pos As Integer = __innerHash(x.Address).Address
             Return __innerList(pos - 1)
         End Function
 
@@ -210,21 +210,21 @@ Namespace ComponentModel
         End Function
 
         Public Function Current(i As Integer) As LinkNode(Of T)
-            Dim name As String = __innerList(i).Key
+            Dim name As String = __innerList(i).Address
             Return New LinkNode(Of T)(name, Me)
         End Function
 
         Public Sub Remove(x As String)
             Dim n As T = Current(x).node
             __innerList(n.Address) = Nothing
-            __innerHash.Remove(n.Key)
+            __innerHash.Remove(n.Address)
             __emptys.Enqueue(n.Address)
         End Sub
 
         Public Sub Remove(i As Integer)
             Dim n As T = __innerList(i)
             __innerList(n.Address) = Nothing
-            __innerHash.Remove(n.Key)
+            __innerHash.Remove(n.Address)
             __emptys.Enqueue(n.Address)
         End Sub
 
@@ -238,7 +238,7 @@ Namespace ComponentModel
             Call x.Assign(address:=i)
 
             __innerList(i) = x
-            __innerHash(x.Key) = x
+            __innerHash(x.Address) = x
         End Sub
 
         Public Sub Add(source As IEnumerable(Of T))

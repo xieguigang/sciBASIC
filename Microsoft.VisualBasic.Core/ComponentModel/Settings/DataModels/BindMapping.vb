@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::e0a9595bc0b1c257b7653e2b0eaef4a9, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\BindMapping.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class BindMapping
-    ' 
-    '         Properties: AsOutString, BindProperty, Description, Name, Type
-    '                     Value
-    ' 
-    '         Function: Initialize, IsFsysValid
-    ' 
-    '         Sub: [Set]
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class BindMapping
+' 
+'         Properties: AsOutString, BindProperty, Description, Name, Type
+'                     Value
+' 
+'         Function: Initialize, IsFsysValid
+' 
+'         Sub: [Set]
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,7 +61,7 @@ Namespace ComponentModel.Settings
                 .Name = attr.Name,
                 .Description = attr.Description,
                 .Type = attr.Type,
-                ._bindProperty = prop,
+                ._BindProperty = prop,
                 ._target = obj
             }
             Return maps
@@ -77,7 +77,7 @@ Namespace ComponentModel.Settings
 
         Public Sub [Set](value As String)
             Dim obj As Object =
-                Scripting.CTypeDynamic(value, _bindProperty.PropertyType)
+                Scripting.CTypeDynamic(value, _BindProperty.PropertyType)
             Call _BindProperty.SetValue(_target, obj, Nothing)
         End Sub
 
@@ -91,7 +91,7 @@ Namespace ComponentModel.Settings
             End Get
         End Property
 
-        Public Overrides Property Name As String Implements IProfileTable.Name
+        Public Overrides Property Name As String Implements IProfileTable.name
             Get
                 Return MyBase.Name
             End Get
@@ -100,7 +100,7 @@ Namespace ComponentModel.Settings
             End Set
         End Property
 
-        Public Overrides Property Type As ValueTypes Implements IProfileTable.Type
+        Public Overrides Property Type As ValueTypes Implements IProfileTable.type
             Get
                 Return MyBase.Type
             End Get
@@ -109,7 +109,7 @@ Namespace ComponentModel.Settings
             End Set
         End Property
 
-        Public Overrides Property Description As String Implements IProfileTable.Description
+        Public Overrides Property Description As String Implements IProfileTable.edges
             Get
                 Return MyBase.Description
             End Get

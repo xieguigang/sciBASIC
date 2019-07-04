@@ -78,6 +78,8 @@ Imports r = System.Text.RegularExpressions.Regex
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    Public Const CaseInsensitive As StringComparison = StringComparison.OrdinalIgnoreCase
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function PadEnd(str$, padLen%, Optional padString As Char = " "c) As String

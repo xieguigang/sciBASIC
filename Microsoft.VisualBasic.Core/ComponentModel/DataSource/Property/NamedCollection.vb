@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::08d6e18b64d878f41024814b367a7a88, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure NamedCollection
-    ' 
-    '         Properties: Description, IsEmpty, Length, Name, Value
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: GetEnumerator, GetValues, IEnumerable_GetEnumerator, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure NamedCollection
+' 
+'         Properties: Description, IsEmpty, Length, Name, Value
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: GetEnumerator, GetValues, IEnumerable_GetEnumerator, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -96,7 +96,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 这个集合对象的标识符名称
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property Name As String Implements _
+        <XmlAttribute> Public Property name As String Implements _
             IKeyedEntity(Of String).Key,
             IKeyValuePairObject(Of String, T()).Key,
             IGrouping(Of String, T).Key
@@ -105,13 +105,13 @@ Namespace ComponentModel.DataSourceModel
         ''' 目标集合对象
         ''' </summary>
         ''' <returns></returns>
-        Public Property Value As T() Implements IKeyValuePairObject(Of String, T()).Value, Value(Of T()).IValueOf.Value
+        Public Property value As T() Implements IKeyValuePairObject(Of String, T()).Value, Value(Of T()).IValueOf.Value
 
         ''' <summary>
         ''' 目标集合对象的描述信息
         ''' </summary>
         ''' <returns></returns>
-        Public Property Description As String
+        Public Property description As String
 
         ''' <summary>
         ''' 当前的这个命名的目标集合对象是否是空对象？
@@ -120,18 +120,18 @@ Namespace ComponentModel.DataSourceModel
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Name Is Nothing AndAlso Value Is Nothing
+                Return name Is Nothing AndAlso value Is Nothing
             End Get
         End Property
 
         Default Public Property Item(index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value(index)
+                Return value(index)
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As T)
-                Me.Value(index) = value
+                Me.value(index) = value
             End Set
         End Property
 
@@ -142,7 +142,7 @@ Namespace ComponentModel.DataSourceModel
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value.Length
+                Return value.Length
             End Get
         End Property
 
@@ -153,9 +153,9 @@ Namespace ComponentModel.DataSourceModel
         Sub New(source As IEnumerable(Of NamedValue(Of T)))
             Dim array = source.ToArray
 
-            Name = array(Scan0).Name
-            Value = array.Select(Function(x) x.Value).ToArray
-            Description = array _
+            name = array(Scan0).Name
+            value = array.Select(Function(x) x.Value).ToArray
+            description = array _
                 .Select(Function(x) x.Description) _
                 .Where(Function(s) Not s.StringEmpty) _
                 .Distinct _
@@ -164,8 +164,8 @@ Namespace ComponentModel.DataSourceModel
 
         Sub New(xmlNode As NamedVector(Of T))
             With xmlNode
-                Name = .name
-                Value = .vector
+                name = .name
+                value = .vector
             End With
         End Sub
 
@@ -174,16 +174,16 @@ Namespace ComponentModel.DataSourceModel
         End Sub
 
         Sub New(name$, value As T(), Optional description$ = Nothing)
-            Me.Name = name
-            Me.Description = description
-            Me.Value = value
+            Me.name = name
+            Me.description = description
+            Me.value = value
         End Sub
 
         Public Function GetValues() As NamedValue(Of T)()
-            Dim name$ = Me.Name
-            Dim describ$ = Description
+            Dim name$ = Me.name
+            Dim describ$ = description
 
-            Return Value _
+            Return value _
                 .Select(Function(v)
                             Return New NamedValue(Of T) With {
                                 .Name = name,
@@ -195,11 +195,11 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Overrides Function ToString() As String
-            Return Name
+            Return name
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In Value.SafeQuery
+            For Each x As T In value.SafeQuery
                 Yield x
             Next
         End Function

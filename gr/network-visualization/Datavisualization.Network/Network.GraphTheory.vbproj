@@ -460,7 +460,7 @@
     <Compile Include="Layouts\ForceDirected\Layout\Spring.vb" />
     <Compile Include="IO\Generic\NameOf.vb" />
     <Compile Include="IO\FileStream\csv\Edge.vb" />
-    <Compile Include="IO\Generic\Network%28Of T%29.vb" />
+    <Compile Include="IO\Generic\Network.vb" />
     <Compile Include="IO\FileStream\csv\Node.vb" />
     <Compile Include="Graph\Abstract.vb" />
     <Compile Include="NamespaceDoc.vb" />
