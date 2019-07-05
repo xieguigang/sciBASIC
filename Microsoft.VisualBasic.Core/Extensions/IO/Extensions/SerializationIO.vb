@@ -85,6 +85,12 @@ Public Module SerializationIO
         End If
     End Function
 
+    ''' <summary>
+    ''' Get string collection from input file 
+    ''' </summary>
+    ''' <param name="path">allows plain text/string array json/xml</param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function SolveListStream(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of String)
         Select Case path.ExtensionSuffix.ToLower
@@ -99,6 +105,13 @@ Public Module SerializationIO
         End Select
     End Function
 
+    ''' <summary>
+    ''' Save a given list of <see cref="PointF"/> data into a csv file.
+    ''' </summary>
+    ''' <param name="points"></param>
+    ''' <param name="csv"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function DumpSerial(points As IEnumerable(Of PointF), csv$, Optional encoding As Encodings = Encodings.UTF8WithoutBOM) As Boolean
         Using writer As StreamWriter = csv.OpenWriter(encoding)
