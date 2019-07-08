@@ -80,14 +80,14 @@ Namespace Darwinism.GAF
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
         ReadOnly chromosomesComparator As Fitness(Of Chr)
-
-        ''' <summary>
-        ''' listeners of genetic algorithm iterations (handle callback afterwards)
-        ''' </summary>
-        ReadOnly iterationListeners As New List(Of IterationReporter(Of GeneticAlgorithm(Of Chr)))
         ReadOnly seeds As IRandomSeeds
 
-        Public ReadOnly Property Population As Population(Of Chr)
+        ''' <summary>
+        ''' 因为在迭代的过程中，旧的种群会被新的种群所替代
+        ''' 所以在这里不可以加readonly修饰
+        ''' </summary>
+        Dim population As Population(Of Chr)
+
         ''' <summary>
         ''' A function for calculate genome fitness in current environment.
         ''' </summary>
@@ -95,14 +95,16 @@ Namespace Darwinism.GAF
         Public ReadOnly Property Fitness As Fitness(Of Chr)
 
         Public ReadOnly Property Best As Chr
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Population(0)
+                Return population(0)
             End Get
         End Property
 
         Public ReadOnly Property Worst As Chr
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Population(Population.Size - 1)
+                Return population(population.Size - 1)
             End Get
         End Property
 
@@ -127,7 +129,7 @@ Namespace Darwinism.GAF
         ''' -1 means no cache
         ''' </param>
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing, Optional cacheSize% = 10000)
-            Me.Population = population
+            Me.population = population
             Me.Fitness = fitnessFunc
             Me.seeds = seeds Or randfSeeds
 
@@ -137,7 +139,7 @@ Namespace Darwinism.GAF
                 Me.chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate, capacity:=cacheSize)
             End If
 
-            Me.Population.SortPopulationByFitness(Me, chromosomesComparator)
+            Me.population.SortPopulationByFitness(Me, chromosomesComparator)
 
             If population.parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
@@ -146,14 +148,14 @@ Namespace Darwinism.GAF
 
         Public Sub Evolve()
             Dim i% = 0
-            Dim parentPopulationSize As Integer = Population.Size
-            Dim newPopulation As New Population(Of Chr)(_Population.Pcompute) With {
-                .parallel = Population.parallel
+            Dim parentPopulationSize As Integer = population.Size
+            Dim newPopulation As New Population(Of Chr)(population.Pcompute) With {
+                .parallel = population.parallel
             }
 
             Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)
                 ' 旧的原有的种群
-                newPopulation.Add(Population(i))
+                newPopulation.Add(population(i))
                 i += 1
             Loop
 
@@ -169,7 +171,7 @@ Namespace Darwinism.GAF
 
             newPopulation.SortPopulationByFitness(Me, chromosomesComparator) ' 通过fitness排序来进行择优
             newPopulation.Trim(parentPopulationSize)                         ' 剪裁掉后面的对象，达到淘汰的效果
-            _Population = newPopulation                                      ' 新种群替代旧的种群
+            population = newPopulation                                       ' 新种群替代旧的种群
         End Sub
 
         ''' <summary>
@@ -178,14 +180,14 @@ Namespace Darwinism.GAF
         ''' <param name="i%"></param>
         ''' <returns></returns>
         Private Iterator Function evolIterate(i%) As IEnumerable(Of Chr)
-            Dim chromosome As Chr = Population(i)
+            Dim chromosome As Chr = population(i)
             Dim mutated As Chr = chromosome.Mutate()   ' 突变
             Dim rnd As Random = seeds()
-            Dim otherChromosome As Chr = Population.Random(rnd)  ' 突变体和其他个体随机杂交
+            Dim otherChromosome As Chr = population.Random(rnd)  ' 突变体和其他个体随机杂交
             Dim crossovered As IList(Of Chr) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
 
             ' --------- 新修改的
-            otherChromosome = Population.Random(rnd)
+            otherChromosome = population.Random(rnd)
             crossovered = crossovered.Join(chromosome.Crossover(otherChromosome))
             ' ---------
 
