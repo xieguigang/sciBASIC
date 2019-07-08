@@ -140,17 +140,19 @@ B21,B22,B23,...
         ''' Load document from path
         ''' </summary>
         ''' <param name="path"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(path As String,
                 Optional encoding As Encodings = Encodings.Default,
-                Optional trimBlanks As Boolean = False)
+                Optional trimBlanks As Boolean = False,
+                Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing)
 
-            FilePath = path
-            _innerTable = loads(path, encoding.CodePage, trimBlanks)
+            _innerTable = loads(path, encoding.CodePage, trimBlanks, skipWhile)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(source As IEnumerable(Of RowObject), path As String)
             Call Me.New(source)
-            FilePath = path
         End Sub
 
         ''' <summary>
@@ -671,30 +673,48 @@ B21,B22,B23,...
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function FastLoad(path As String, Optional parallel As Boolean = True, Optional encoding As Encoding = Nothing) As File
-            If encoding Is Nothing Then
-                encoding = Encoding.Default
-            End If
+        ''' <remarks>
+        ''' 因为这个函数是直接通过利用逗号做切割，所以效率是非常高的，但是对文本的格式要求非常高
+        ''' </remarks>
+        Public Shared Function FastLoad(path As String,
+                                        Optional parallel As Boolean = True,
+                                        Optional encoding As Encoding = Nothing,
+                                        Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
 
             Dim sw = Stopwatch.StartNew
-            Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
+            Dim lines As String() = path.MapNetFile.ReadAllLines(encoding Or DefaultEncoding)
+            Dim headers As New RowObject(lines(Scan0))
             Dim cData As New File
+            Dim headerIndex As Integer = headers.IndexOf(skipWhile.Name)
 
             If parallel Then
                 Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
-                Dim Rows = (From line As SeqValue(Of String)
-                            In cache.AsParallel
-                            Let __innerList As List(Of String) = line.value.Split(","c).AsList
-                            Select i = line.i,
-                                data = New RowObject With {.buffer = __innerList}
-                            Order By i Ascending)
-                cData._innerTable = (From item In Rows Select item.data).AsList
+                Dim Rows = From line As SeqValue(Of String)
+                           In cache.AsParallel
+                           Let __innerList As RowObject = New RowObject(line.value.Split(","c))
+                           Select i = line.i,
+                                data = __innerList
+                           Order By i Ascending
+
+                If headerIndex >= 0 Then
+                    cData._innerTable = (From item In Rows Where Not skipWhile.Value(item.data(headerIndex)) Select item.data).AsList
+                Else
+                    cData._innerTable = (From item In Rows Select item.data).AsList
+                End If
             Else
-                Dim Rows = (From strLine As String In lines
-                            Let InternalList As List(Of String) = strLine.Split(","c).AsList
-                            Select New RowObject With {.buffer = InternalList}).AsList
-                cData._innerTable = Rows
+                Dim Rows = From strLine As String In lines
+                           Let InternalList As RowObject = New RowObject(strLine.Split(","c))
+                           Select InternalList
+
+                If headerIndex >= 0 Then
+                    cData._innerTable = Rows _
+                        .Where(Function(r)
+                                   Return Not skipWhile.Value(r(headerIndex))
+                               End Function) _
+                        .AsList
+                Else
+                    cData._innerTable = Rows.AsList
+                End If
             End If
 
             Call $"CSV data ""{path.ToFileURL}"" load done!   {sw.ElapsedMilliseconds}ms.".__DEBUG_ECHO
@@ -715,7 +735,9 @@ B21,B22,B23,...
                                     Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
 
             Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks, skipWhile)
-            Dim csv As New File With {._innerTable = buf}
+            Dim csv As New File With {
+                ._innerTable = buf
+            }
 
             Return csv
         End Function
@@ -751,7 +773,7 @@ B21,B22,B23,...
         ''' <param name="buf"></param>
         ''' <param name="trimBlanks">如果这个选项为真，则会移除所有全部都是逗号分隔符``,,,,,,,,,``的空白行</param>
         ''' <returns></returns>
-        Public Shared Function Load(buf As String(), trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+        Public Shared Function Load(buf As String(), trimBlanks As Boolean, Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of RowObject)
             Dim first As New RowObject(buf(Scan0))
             Dim test As Func(Of String, Boolean)
             Dim headerIndex As Integer = first.IndexOf(skipWhile.Name)
@@ -802,8 +824,8 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Parse(content$, Optional trimBlanks As Boolean = True) As File
-            Return New File(Load(content.LineTokens, trimBlanks))
+        Public Shared Function Parse(content$, Optional trimBlanks As Boolean = True, Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+            Return New File(Load(content.LineTokens, trimBlanks, skipWhile))
         End Function
 #End Region
 

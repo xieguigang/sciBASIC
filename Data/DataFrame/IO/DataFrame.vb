@@ -346,7 +346,7 @@ Namespace IO
             If fast Then
                 file = file.FastLoad(path, True, encoding, skipWhile)
             Else
-                file = file.Load(path, encoding, skipWhile)
+                file = File.Load(path, encoding, , skipWhile)
             End If
 
             Return CreateObject(file)
