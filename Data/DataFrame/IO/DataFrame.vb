@@ -338,13 +338,15 @@ Namespace IO
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Function Load(path As String, encoding As Encoding, Optional fast As Boolean = False) As DataFrame
+        Public Overloads Shared Function Load(path As String, encoding As Encoding,
+                                              Optional fast As Boolean = False,
+                                              Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As DataFrame
             Dim file As File
 
             If fast Then
-                file = File.FastLoad(path, True, encoding)
+                file = file.FastLoad(path, True, encoding, skipWhile)
             Else
-                file = File.Load(path, encoding)
+                file = file.Load(path, encoding, skipWhile)
             End If
 
             Return CreateObject(file)

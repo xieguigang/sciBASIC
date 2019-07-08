@@ -709,8 +709,12 @@ B21,B22,B23,...
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Load(path$, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
-            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
+        Public Shared Function Load(path$,
+                                    Optional encoding As Encoding = Nothing,
+                                    Optional trimBlanks As Boolean = False,
+                                    Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+
+            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks, skipWhile)
             Dim csv As New File With {._innerTable = buf}
 
             Return csv
@@ -737,8 +741,8 @@ B21,B22,B23,...
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
-            Return Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks)
+        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+            Return Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks, skipWhile)
         End Function
 
         ''' <summary>
@@ -747,14 +751,19 @@ B21,B22,B23,...
         ''' <param name="buf"></param>
         ''' <param name="trimBlanks">如果这个选项为真，则会移除所有全部都是逗号分隔符``,,,,,,,,,``的空白行</param>
         ''' <returns></returns>
-        Public Shared Function Load(buf As String(), trimBlanks As Boolean) As List(Of RowObject)
+        Public Shared Function Load(buf As String(), trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
             Dim first As New RowObject(buf(Scan0))
             Dim test As Func(Of String, Boolean)
+            Dim headerIndex As Integer = first.IndexOf(skipWhile.Name)
 
             If trimBlanks Then
                 test = Function(s) Not s.IsEmptyRow(","c)
             Else
                 test = Function(s) True
+            End If
+
+            If headerIndex = -1 AndAlso Not skipWhile.Name.StringEmpty Then
+                Call $"Required test for skip on field: [{skipWhile.Name}], but no such field exists in current file data...".Warning
             End If
 
             Dim parallelLoad = Function() As IEnumerable(Of RowObject)
@@ -763,8 +772,23 @@ B21,B22,B23,...
                                                 Where test(s.value)
                                                 Select row = New RowObject(s.value), i = s.i
                                                 Order By i Ascending
+                                   Dim testForSkip = skipWhile.Value
 
-                                   Return loader.Select(Function(r) r.row)
+                                   If headerIndex = -1 Then
+                                       ' returns all
+                                       Return loader.Select(Function(r) r.row)
+                                   Else
+                                       Return loader _
+                                           .Where(Function(r)
+                                                      If testForSkip(r.row(headerIndex)) Then
+                                                          ' is a row not needed...
+                                                          Return False
+                                                      Else
+                                                          Return True
+                                                      End If
+                                                  End Function) _
+                                           .Select(Function(r) r.row)
+                                   End If
                                End Function
 
             Return first + parallelLoad().AsList
