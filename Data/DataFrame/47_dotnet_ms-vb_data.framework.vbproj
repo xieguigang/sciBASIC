@@ -511,13 +511,14 @@
     <Compile Include="DATA\DataFrame.vb" />
     <Compile Include="DATA\MySQL.vb" />
     <Compile Include="DATA\RDataFrameHelpers.vb" />
+    <Compile Include="IO\csv\FileLoader.vb" />
     <Compile Include="IO\Generic\Extensions.vb" />
     <Compile Include="IO\Generic\DataSet.vb" />
     <Compile Include="IO\Generic\Table.vb" />
     <Compile Include="IO\DataFrame.vb" />
     <Compile Include="IO\Generic\EntityObject.vb" />
     <Compile Include="IO\csv\File.vb" />
-    <Compile Include="IO\csv\HTMLWriter.vb" />
+    <Compile Include="DATA\HTMLWriter.vb" />
     <Compile Include="IO\MetaData\Meta.vb" />
     <Compile Include="IO\MetaData\GenericMeta.vb" />
     <Compile Include="IO\NetStream\File.vb" />

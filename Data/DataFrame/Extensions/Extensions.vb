@@ -518,7 +518,7 @@ Public Module Extensions
     ''' </param>
     ''' <returns></returns>
     <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As IEnumerable(Of T)
-        Return New File(File.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
+        Return New File(FileLoader.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
     End Function
 
     ''' <summary>
