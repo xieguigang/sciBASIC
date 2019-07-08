@@ -74,6 +74,10 @@ Namespace Darwinism.GAF.Helper
         ''' </summary>
         ''' <param name="v#"></param>
         ''' <param name="random"></param>
+        ''' <param name="index">
+        ''' + 如果这个坐标参数大于等于零,则会直接按照这个坐标值对指定位置的目标进行突变
+        ''' + 反之小于零的时候,则是随机选取一个位置的目标进行突变
+        ''' </param>
         ''' <remarks>
         ''' 在进行突变的时候应该是按照给定的范围来进行突变的
         ''' </remarks>
@@ -152,7 +156,7 @@ Namespace Darwinism.GAF.Helper
         <Extension>
         Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize%, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
             Dim population As New Population(Of T)(parallel) With {
-                .Parallel = True
+                .parallel = True
             }
 
             For i As Integer = 0 To populationSize - 1

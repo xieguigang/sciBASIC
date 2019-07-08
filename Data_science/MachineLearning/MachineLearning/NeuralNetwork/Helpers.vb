@@ -112,9 +112,10 @@ Namespace NeuralNetwork
             Return value
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Friend Function PopulateAllSynapses(neuron As Neuron) As IEnumerable(Of Synapse)
-            Return neuron.InputSynapses + neuron.OutputSynapses.AsList
+            Return neuron.InputSynapses.AsEnumerable + neuron.OutputSynapses.AsList
         End Function
 
         <Extension>

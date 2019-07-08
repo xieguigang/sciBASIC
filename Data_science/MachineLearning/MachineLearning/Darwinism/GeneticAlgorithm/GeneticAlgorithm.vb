@@ -130,7 +130,7 @@ Namespace Darwinism.GAF
 
             Me.Population.SortPopulationByFitness(Me, chromosomesComparator)
 
-            If population.Parallel Then
+            If population.parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
             End If
             If seeds Is Nothing Then
@@ -144,7 +144,7 @@ Namespace Darwinism.GAF
             Dim i% = 0
             Dim parentPopulationSize As Integer = Population.Size
             Dim newPopulation As New Population(Of Chr)(_Population.Pcompute) With {
-                .Parallel = Population.Parallel
+                .parallel = Population.parallel
             }
 
             Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)

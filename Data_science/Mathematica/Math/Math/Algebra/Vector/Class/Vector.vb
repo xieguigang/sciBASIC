@@ -476,12 +476,13 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(a As Double, v1 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) * a
             Next
+
             Return v2
         End Operator
 
@@ -498,9 +499,9 @@ Namespace LinearAlgebra
             Dim M0 = v2.[Dim]
 
             If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
-            '如果向量维数不匹配，给出告警信息
 
             Dim sum As Double
 
@@ -523,9 +524,9 @@ Namespace LinearAlgebra
             Dim M0 = v2.[Dim]
 
             If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
-            '如果向量维数不匹配，给出告警信息
 
             Dim vvmat As New Matrix(N0, N0)
 
@@ -604,6 +605,24 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator ^(n As Double, v As Vector) As Vector
             Return New Vector(From p As Double In v Select n ^ p)
+        End Operator
+
+        Public Overloads Shared Operator ^(x As Vector, p As Vector) As Vector
+            Dim N0 = x.[Dim]
+            Dim M0 = p.[Dim]
+
+            If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
+                Throw New ArgumentException("Inner vector dimensions must agree！")
+            End If
+
+            Dim v2 As New Vector(N0)
+
+            For j As Integer = 0 To N0 - 1
+                v2(j) = x(j) * p(j)
+            Next
+
+            Return v2
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

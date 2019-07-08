@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::f879a05ff59821afc450e2eab07314ef, Data_science\MachineLearning\Bootstrapping\EigenvectorBootstrapping.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module EigenvectorBootstrapping
-    ' 
-    '     Function: (+3 Overloads) DefaultEigenvector, GetSample, GetVars, KMeans, LoadData
-    ' 
-    ' Delegate Function
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module EigenvectorBootstrapping
+' 
+'     Function: (+3 Overloads) DefaultEigenvector, GetSample, GetVars, KMeans, LoadData
+' 
+' Delegate Function
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports ODEsDataFrame = Microsoft.VisualBasic.Math.Calculus
 
 Public Module EigenvectorBootstrapping
 
@@ -67,12 +68,12 @@ Public Module EigenvectorBootstrapping
     <Extension>
     Public Function LoadData(DIR As String, eigenvector As Dictionary(Of String, Eigenvector), Optional partN As Integer = 20) As IEnumerable(Of VectorTagged(Of Dictionary(Of String, Double)))
         Return (ls - l - r - wildcards("*.csv") <= DIR) _
-            .Select(AddressOf ODEsOut.LoadFromDataFrame) _
+            .Select(AddressOf ODEsDataFrame.LoadFromDataFrame) _
             .Sampling(eigenvector, partN)
     End Function
 
     Public Function GetVars(DIR As String) As String()
-        Dim data As ODEsOut = ODEsOut.LoadFromDataFrame((ls - l - r - wildcards("*.csv") <= DIR).First)
+        Dim data As ODEsOut = ODEsDataFrame.LoadFromDataFrame((ls - l - r - wildcards("*.csv") <= DIR).First)
         Return data.y.Keys.ToArray
     End Function
 
@@ -114,11 +115,14 @@ Public Module EigenvectorBootstrapping
 
         Call "Load data complete!".__DEBUG_ECHO
 
-        Dim datasets As Entity() = strTags.Select(
-            Function(x) New Entity With {
-                .uid = x.Description,
-                .Properties = x.Value.Tag  ' 在这里使用特征向量作为属性来进行聚类操作
-        }).ToArray
+        Dim datasets As ClusterEntity() = strTags _
+            .Select(Function(x)
+                        Return New ClusterEntity With {
+                            .uid = x.Description,
+                            .entityVector = x.Value.Tag  ' 在这里使用特征向量作为属性来进行聚类操作
+                        }
+                    End Function) _
+            .ToArray
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 
@@ -131,12 +135,12 @@ Public Module EigenvectorBootstrapping
                         .ToDictionary(Function(x) x.Name,
                                       Function(x) x.Group.ToArray)
 
-        For Each cluster As KMeansCluster(Of Entity) In clusters
+        For Each cluster As KMeansCluster(Of ClusterEntity) In clusters
             Dim key As Double() = cluster.ClusterMean  ' out之中的key
             Dim tmp As New List(Of NamedValue(Of Dictionary(Of String, Double)()))   ' out之中的value
 
-            For Each x As Entity In cluster
-                Dim rawKey As String = x.Properties.GetJson
+            For Each x As ClusterEntity In cluster
+                Dim rawKey As String = x.entityVector.GetJson
                 Dim rawParams =
                     raw(rawKey).Select(Function(o) o.Value.Value)
 
@@ -172,13 +176,13 @@ Public Module EigenvectorBootstrapping
 
         For Each key As SeqValue(Of String) In eig.Keys.SeqIterator
             out.y(+key) = New NamedCollection(Of Double) With {
-                .Name = +key,
-                .Value = serials(key.i).Split(2).Select(Function(o) o(0))
+                .name = +key,
+                .value = serials(key.i).Split(2).Select(Function(o) o(0))
             }
         Next
 
         out.x = out.y.Values _
-            .First.Value _
+            .First.value _
             .Sequence _
             .Select(Function(x) CDbl(x)) _
             .ToArray

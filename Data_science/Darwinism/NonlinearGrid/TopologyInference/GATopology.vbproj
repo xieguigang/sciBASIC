@@ -5,13 +5,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <StartupObject>TopologyInference.Program</StartupObject>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
     <RootNamespace>TopologyInference</RootNamespace>
     <AssemblyName>TopologyInference</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -69,8 +70,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NetworkDemo.vb" />
-    <Compile Include="Program.vb" />
+    <Compile Include="GA\Genome.vb" />
+    <Compile Include="Models\Correlation.vb" />
+    <Compile Include="Models\System.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -108,25 +110,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Data\DataFrame\+VB_DataFrame.vbproj">
-      <Project>{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}</Project>
-      <Name>+VB_DataFrame</Name>
+    <ProjectReference Include="..\..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
+      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
+      <Name>47_dotnet_ms-vb_data.framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj">
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</Project>
-      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Bootstrapping\Bootstrapping.vbproj">
-      <Project>{B21B924A-D67F-4554-8946-A154563394B2}</Project>
-      <Name>Bootstrapping</Name>
+    <ProjectReference Include="..\..\..\DataMining\DataMining\DataMining.vbproj">
+      <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
+      <Name>DataMining</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Mathematical\Math\Microsoft.VisualBasic.Mathematical.vbproj">
-      <Project>{E3367B88-5D0C-495A-8273-331656D4B5AA}</Project>
-      <Name>Microsoft.VisualBasic.Mathematical</Name>
+    <ProjectReference Include="..\..\..\MachineLearning\MachineLearning\MachineLearning.vbproj">
+      <Project>{a43ec013-2b55-4d25-b9f1-96bd5fb1e577}</Project>
+      <Name>MachineLearning</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Mathematical\ODE\ODEsSolver.vbproj">
-      <Project>{14E0B048-3A0D-4FD6-AA79-9B815D6F1B30}</Project>
-      <Name>ODEsSolver</Name>
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
+      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
+      <Name>math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

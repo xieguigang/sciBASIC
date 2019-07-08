@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4B877AB2-E15F-4AA9-B7D6-7C11B2213F10}</ProjectGuid>
+    <ProjectGuid>{1B42809B-603F-4CEA-A0DB-91276582B9CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.DataMining</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.DataMining.Framework</AssemblyName>

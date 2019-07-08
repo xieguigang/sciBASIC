@@ -60,19 +60,50 @@ Namespace NeuralNetwork.StoreProcedure
     <HideModuleName>
     Public Module IntegralLoader
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <remarks>
+        ''' 在人工神经网络之中, 神经元节点并不是太多, 数量上产生影响的是神经元之间的链接对象
+        ''' </remarks>
         Private Class neuronLoader
 
             Public inputLayer As Dictionary(Of String, Neuron)
             Public outputLayer As Dictionary(Of String, Neuron)
             Public hiddenLayer As List(Of Dictionary(Of String, Neuron))
 
-            Public neuronBucket As BucketDictionary(Of String, Neuron)
+            Default Public ReadOnly Property GetById(id As String) As Neuron
+                Get
+                    SyncLock inputLayer
+                        If inputLayer.ContainsKey(id) Then
+                            Return inputLayer(id)
+                        End If
+                    End SyncLock
+                    SyncLock outputLayer
+                        If outputLayer.ContainsKey(id) Then
+                            Return outputLayer(id)
+                        End If
+                    End SyncLock
+                    SyncLock hiddenLayer
+                        For Each layer In hiddenLayer
+                            If layer.ContainsKey(id) Then
+                                Return layer(id)
+                            End If
+                        Next
+                    End SyncLock
+
+                    Throw New InvalidProgramException("Network data model was broken!")
+                End Get
+            End Property
 
         End Class
 
         <Extension>
         Private Function createNeuronBuckets(model As StoreProcedure.NeuralNetwork, activations As LayerActives) As neuronLoader
             Dim neuronDataTable = model.neurons.ToDictionary(Function(n) n.id)
+
+            Call "Start to create neuron nodes...".__DEBUG_ECHO
+
             Dim inputLayer As Dictionary(Of String, Neuron) = model.inputlayer _
                 .createNeurons(activations.input, neuronDataTable) _
                 .ToDictionary(Function(n) n.Name,
@@ -93,15 +124,39 @@ Namespace NeuralNetwork.StoreProcedure
                 .AsList
 
             ' 构建神经元之间的链接
-            Dim neurons As New BucketDictionary(Of String, Neuron)(hiddenLayer + inputLayer + outputLayer)
+            ' Dim neurons As New BucketDictionary(Of String, Neuron)(hiddenLayer + inputLayer + outputLayer)
             Dim loader As New neuronLoader With {
                 .hiddenLayer = hiddenLayer,
                 .inputLayer = inputLayer,
-                .outputLayer = outputLayer,
-                .neuronBucket = neurons
+                .outputLayer = outputLayer', .neuronBucket = neurons
             }
 
+            Call "Job done!".__INFO_ECHO
+
             Return loader
+        End Function
+
+        <Extension>
+        Private Function addLink(edge As Synapse, neurons As neuronLoader) As Integer
+            Dim inNeuron As Neuron = neurons(edge.in)
+            Dim outNeuron As Neuron = neurons(edge.out)
+            Dim output As New ANN.Synapse(inNeuron, outNeuron) With {
+                .Weight = edge.w,
+                .WeightDelta = edge.delta
+            }
+            Dim input As New ANN.Synapse(inNeuron, outNeuron) With {
+                .Weight = edge.w,
+                .WeightDelta = edge.delta
+            }
+
+            SyncLock inNeuron
+                inNeuron.OutputSynapses.Add(output)
+            End SyncLock
+            SyncLock outNeuron
+                outNeuron.InputSynapses.Add(input)
+            End SyncLock
+
+            Return 0
         End Function
 
         ''' <summary>
@@ -120,34 +175,28 @@ Namespace NeuralNetwork.StoreProcedure
                     {"output", model.outputlayer.activation},
                     {"hiddens", model.hiddenlayers.activation}
                 })
-            Dim connectedLinks As New Index(Of String)
-            Dim loader = model.createNeuronBuckets(activations)
-            Dim neurons As BucketDictionary(Of String, Neuron) = loader.neuronBucket
+            Dim neurons As neuronLoader = model.createNeuronBuckets(activations)
 
-            For Each edge As StoreProcedure.Synapse In model.connections
-                If connectedLinks.IndexOf($"{edge.in} = {edge.out}") = -1 Then
-                    Dim inNeuron As Neuron = neurons(edge.in)
-                    Dim outNeuron As Neuron = neurons(edge.out)
-                    Dim output As New ANN.Synapse(inNeuron, outNeuron) With {
-                        .Weight = edge.w,
-                        .WeightDelta = edge.delta
-                    }
-                    Dim input As New ANN.Synapse(inNeuron, outNeuron) With {
-                        .Weight = edge.w,
-                        .WeightDelta = edge.delta
-                    }
+            Call "Create neuron synapse links in parallel...".__DEBUG_ECHO
 
-                    inNeuron.OutputSynapses.Add(output)
-                    outNeuron.InputSynapses.Add(input)
-                End If
-            Next
+            ' The size of edge links between the neuron nodes in ANN network is huge
+            ' parallel can make this process fast
+            ' maybe
+            Call model.connections _
+                .GroupBy(Function(edge) $"{edge.in} = {edge.out}") _
+                .AsParallel _
+                .Select(Function(edge) edge.First) _
+                .Select(Function(edge) edge.addLink(neurons)) _
+                .ToArray
+
+            Call "Job done!".__INFO_ECHO
 
             Return New Network(activations) With {
                 .LearnRate = model.learnRate,
                 .Momentum = model.momentum,
-                .InputLayer = New Layer(loader.inputLayer.Values.ToArray),
-                .OutputLayer = New Layer(loader.outputLayer.Values.ToArray),
-                .HiddenLayer = New HiddenLayers(loader.hiddenLayer.Select(Function(c) New Layer(c.Values.ToArray)))
+                .InputLayer = New Layer(neurons.inputLayer.Values.ToArray),
+                .OutputLayer = New Layer(neurons.outputLayer.Values.ToArray),
+                .HiddenLayer = New HiddenLayers(neurons.hiddenLayer.Select(Function(c) New Layer(c.Values.ToArray)))
             }
         End Function
 
