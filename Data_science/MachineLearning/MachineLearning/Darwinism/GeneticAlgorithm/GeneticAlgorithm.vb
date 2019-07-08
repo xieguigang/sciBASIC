@@ -66,6 +66,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Darwinism.GAF
 
@@ -134,7 +135,7 @@ Namespace Darwinism.GAF
                 Call "Genetic Algorithm running in parallel mode.".Warning
             End If
             If seeds Is Nothing Then
-                seeds = Function() New Random(Now.Millisecond)
+                seeds = Function() randf.seeds
             End If
 
             Me.seeds = seeds
