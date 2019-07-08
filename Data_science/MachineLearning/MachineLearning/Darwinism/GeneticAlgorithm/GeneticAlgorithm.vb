@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::1101c126e3ee0249053f169381f8ded5, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GeneticAlgorithm
-    ' 
-    '         Properties: Best, Fitness, ParentChromosomesSurviveCount, Population, Worst
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: evolIterate, GetFitness
-    ' 
-    '         Sub: Clear, Evolve
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GeneticAlgorithm
+' 
+'         Properties: Best, Fitness, ParentChromosomesSurviveCount, Population, Worst
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: evolIterate, GetFitness
+' 
+'         Sub: Clear, Evolve
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,7 @@
 ' *****************************************************************************
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
@@ -87,6 +88,10 @@ Namespace Darwinism.GAF
         ReadOnly seeds As IRandomSeeds
 
         Public ReadOnly Property Population As Population(Of Chr)
+        ''' <summary>
+        ''' A function for calculate genome fitness in current environment.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Fitness As Fitness(Of Chr)
 
         Public ReadOnly Property Best As Chr
@@ -108,6 +113,8 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
 
+        Shared ReadOnly randfSeeds As New [Default](Of IRandomSeeds)(Function() randf.seeds)
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -122,6 +129,7 @@ Namespace Darwinism.GAF
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing, Optional cacheSize% = 10000)
             Me.Population = population
             Me.Fitness = fitnessFunc
+            Me.seeds = seeds Or randfSeeds
 
             If cacheSize <= 0 Then
                 Me.chromosomesComparator = fitnessFunc
@@ -134,11 +142,6 @@ Namespace Darwinism.GAF
             If population.parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
             End If
-            If seeds Is Nothing Then
-                seeds = Function() randf.seeds
-            End If
-
-            Me.seeds = seeds
         End Sub
 
         Public Sub Evolve()
