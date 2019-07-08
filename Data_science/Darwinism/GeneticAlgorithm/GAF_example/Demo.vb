@@ -81,7 +81,7 @@ Public Class Demo
     Public Class MyVector : Implements Chromosome(Of MyVector), ICloneable
 
         Shared ReadOnly random As New Random()
-        ReadOnly _vector As Double() = New Double(4) {}
+        ReadOnly _vector As Double() = {50, 50, 50, 50, 50}
 
         ''' <summary>
         ''' Returns clone of current chromosome, which is mutated a bit
