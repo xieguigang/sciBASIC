@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::faf52a4319703c35d813c929d9982e5e, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GeneticHelper
-    ' 
-    '         Function: InitialPopulation
-    ' 
-    '         Sub: ByteMutate, Crossover, (+2 Overloads) Mutate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GeneticHelper
+' 
+'         Function: InitialPopulation
+' 
+'         Sub: ByteMutate, Crossover, (+2 Overloads) Mutate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,6 +69,11 @@ Namespace Darwinism.GAF.Helper
 
 #Region "Numeric Value Mutation"
 
+        ' 20190709
+        ' integer类型不适合突变计算
+        ' 所有的染色体都应该是double类型的
+        ' 所以在这里将integer类型的突变帮助函数删除了
+
         ''' <summary>
         ''' Returns clone of current chromosome, which is mutated a bit
         ''' </summary>
@@ -83,28 +88,22 @@ Namespace Darwinism.GAF.Helper
         ''' </remarks>
         <Extension> Public Sub Mutate(ByRef v#(), random As Random, Optional index% = -1000)
             Dim delta# = (v.Max - v.Min) / 10
-            Dim mutationValue# = (random.NextDouble * delta) * If(random.NextDouble >= 0.5, 1, -1)
+            Dim mutationValue#
+
+            ' 20190709 如果v向量全部都是零或者相等数值的话
+            ' 将无法产生突变
+            ' 在这里测试下，添加一个小数来完成突变
+            If delta = 0R Then
+                delta = 0.0000001
+            End If
+
+            mutationValue = (random.NextDouble * delta) * If(random.NextDouble >= 0.5, 1, -1)
 
             If index < 0 Then
                 v(random.Next(v.Length)) += mutationValue
             Else
                 v(index) += mutationValue
             End If
-        End Sub
-
-        ''' <summary>
-        ''' Returns clone of current chromosome, which is mutated a bit
-        ''' </summary>
-        ''' <param name="v%"></param>
-        ''' <param name="random"></param>
-        <Extension> Public Sub Mutate(ByRef v%(), random As Random)
-            ' just select random element of vector
-            ' and increase or decrease it on small value
-            Dim index As Integer = random.Next(v.Length)
-            Dim delta# = (v.Max - v.Min) / 10
-            Dim mutationValue# = (random.NextDouble * delta) * If(random.NextDouble >= 0.5, 1, -1)
-
-            v(index) += mutationValue
         End Sub
 #End Region
 
@@ -155,6 +154,7 @@ Namespace Darwinism.GAF.Helper
         ''' </summary>
         <Extension>
         Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize%, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
+            Dim chr As T
             Dim population As New Population(Of T)(parallel) With {
                 .parallel = True
             }
@@ -162,9 +162,10 @@ Namespace Darwinism.GAF.Helper
             For i As Integer = 0 To populationSize - 1
                 ' each member of initial population
                 ' is mutated clone of base chromosome
-                Dim chr As T = base.Mutate()
-                Call population.Add(chr)
+                chr = base.Mutate()
+                population.Add(chr)
             Next
+
             Return population
         End Function
     End Module
