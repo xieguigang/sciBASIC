@@ -64,7 +64,7 @@ Public Module JSONSerializer
         For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
             [property] = reader.Value
             valueType = [property].PropertyType
-            members += $"""{reader.Key}"": {valueType.GetJson([property].GetValue(obj, Nothing))}"
+            members += $"""{reader.Key}"": {valueType.GetJson([property].GetValue(obj, Nothing), maskReadonly)}"
         Next
 
         Return $"{{
