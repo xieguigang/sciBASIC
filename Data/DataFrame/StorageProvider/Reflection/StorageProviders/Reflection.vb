@@ -173,7 +173,8 @@ Namespace StorageProvider.Reflection
                                             Optional encoding As Encoding = Nothing,
                                             Optional fast As Boolean = False,
                                             Optional maps As Dictionary(Of String, String) = Nothing,
-                                            Optional mute As Boolean = False) As IEnumerable(Of T)
+                                            Optional mute As Boolean = False,
+                                            Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As IEnumerable(Of T)
             If Not path.FileExists Then
                 ' 空文件
                 Call $"Csv file ""{path.ToFileURL}"" is empty!".Warning
@@ -183,7 +184,7 @@ Namespace StorageProvider.Reflection
             End If
 
             ' read csv data
-            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast)
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast, skipWhile)
             Dim buffer As IEnumerable(Of T)
 
             If Not maps Is Nothing Then

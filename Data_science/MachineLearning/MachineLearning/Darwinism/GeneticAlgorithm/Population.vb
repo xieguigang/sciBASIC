@@ -87,15 +87,7 @@ Namespace Darwinism.GAF
         ''' 是否使用并行模式在排序之前来计算出fitness
         ''' </summary>
         ''' <returns></returns>
-        Public Property Parallel As Boolean = False
-
-        ''' <summary>
-        ''' Add chromosome
-        ''' </summary>
-        ''' <param name="chromosome"></param>
-        Public Sub Add(chromosome As Chr)
-            Call chromosomes.Add(chromosome)
-        End Sub
+        Public Property parallel As Boolean = False
 
         ''' <summary>
         ''' The number of chromosome elements in the inner list
@@ -132,6 +124,14 @@ Namespace Darwinism.GAF
                 Return chromosomes(index)
             End Get
         End Property
+
+        ''' <summary>
+        ''' Add chromosome
+        ''' </summary>
+        ''' <param name="chromosome"></param>
+        Public Sub Add(chromosome As Chr)
+            Call chromosomes.Add(chromosome)
+        End Sub
 
         Public Sub SortPopulationByFitness(comparator As IComparer(Of Chr))
             Call Arrays.Shuffle(chromosomes)
@@ -174,7 +174,7 @@ Namespace Darwinism.GAF
         Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As Fitness(Of Chr))
             Call Arrays.Shuffle(chromosomes)
 
-            If Parallel AndAlso comparator.Cacheable Then
+            If parallel AndAlso comparator.Cacheable Then
                 Call parallelCacheFitness(GA, comparator)
             End If
 

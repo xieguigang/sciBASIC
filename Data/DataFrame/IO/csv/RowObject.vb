@@ -509,8 +509,17 @@ Namespace IO
             Return buffer.Remove(item)
         End Function
 
+        ''' <summary>
+        ''' 查找目标在行之中的索引号，也就是列的编号
+        ''' </summary>
+        ''' <param name="item">如果字符串是空的话或者查找失败，则返回-1</param>
+        ''' <returns></returns>
         Public Function IndexOf(item As String) As Integer Implements IList(Of String).IndexOf
-            Return buffer.IndexOf(item)
+            If item.StringEmpty Then
+                Return -1
+            Else
+                Return buffer.IndexOf(item)
+            End If
         End Function
 
         ''' <summary>

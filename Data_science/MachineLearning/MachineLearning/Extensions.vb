@@ -41,10 +41,10 @@
 
 Imports System.Runtime.CompilerServices
 
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     ''' <summary>
-    ''' Small delta for GA mutations
+    ''' Generate small delta for GA mutations
     ''' </summary>
     ''' <param name="x#"></param>
     ''' <param name="d#"></param>

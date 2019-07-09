@@ -61,12 +61,12 @@ Namespace NeuralNetwork
         ''' 这个神经元对象和上一层神经元之间的突触链接列表
         ''' </summary>
         ''' <returns></returns>
-        Public Property InputSynapses As Synapse()
+        Public Property InputSynapses As List(Of Synapse)
         ''' <summary>
         ''' 这个神经元对象和下一层神经元之间的突触链接列表
         ''' </summary>
         ''' <returns></returns>
-        Public Property OutputSynapses As Synapse()
+        Public Property OutputSynapses As List(Of Synapse)
         Public Property Bias As Double
         Public Property BiasDelta As Double
         Public Property Gradient As Double
@@ -105,8 +105,8 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
         Public Sub New(weight As Func(Of Double), Optional active As IActivationFunction = Nothing, Optional id As VBInteger = Nothing)
-            InputSynapses = {}
-            OutputSynapses = {}
+            InputSynapses = New List(Of Synapse)
+            OutputSynapses = New List(Of Synapse)
             Bias = weight()
             Value = weight()
             BiasDelta = weight()
@@ -128,6 +128,11 @@ Namespace NeuralNetwork
             Call Me.New(weight, active, guid)
 
             Dim synapse As Synapse
+
+            ' 20190708 
+            ' 因为input和output都是数组,在这里直接使用Add拓展函数
+            ' 会导致频繁的内存复制
+            ' 所以才会产生初始化效率过低的问题
 
             For Each inputNeuron As Neuron In inputNeurons
                 synapse = New Synapse(inputNeuron, Me, weight)

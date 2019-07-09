@@ -471,6 +471,9 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <param name="encoding"></param>
     ''' <param name="maps">``Csv.Field -> <see cref="PropertyInfo.Name"/>``</param>
+    ''' <param name="skipWhile">
+    ''' [fieldName => test] 如果目标csv文件数据集非常大的话，可以使用这个函数来过滤掉一些数据行，以减少数据量
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function LoadCsv(Of T As Class)(path$,
@@ -478,7 +481,8 @@ Public Module Extensions
                                                        Optional encoding As Encoding = Nothing,
                                                        Optional fast As Boolean = False,
                                                        Optional maps As NameMapping = Nothing,
-                                                       Optional mute As Boolean = False) As List(Of T)
+                                                       Optional mute As Boolean = False,
+                                                       Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of T)
         Dim buffer As List(Of T)
         Dim fs$, ms&
 
@@ -489,7 +493,8 @@ Public Module Extensions
                 path, explicit, encoding,
                 fast:=fast,
                 maps:=maps,
-                mute:=mute
+                mute:=mute,
+                skipWhile:=skipWhile
             ).AsList
             ms = .ElapsedMilliseconds
             fs = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
@@ -513,7 +518,7 @@ Public Module Extensions
     ''' </param>
     ''' <returns></returns>
     <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As IEnumerable(Of T)
-        Return New File(File.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
+        Return New File(FileLoader.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
     End Function
 
     ''' <summary>
