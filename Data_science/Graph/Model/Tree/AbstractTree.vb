@@ -44,10 +44,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 
+<DataContract>
 Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
 
     ''' <summary>
