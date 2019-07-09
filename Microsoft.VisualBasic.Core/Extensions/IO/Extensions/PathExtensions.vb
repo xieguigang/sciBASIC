@@ -1082,15 +1082,12 @@ Public Module PathExtensions
     ''' <returns></returns>
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimSuffix(file As String) As String
-        Try
-            Dim path$ = file.FixPath.TrimEnd("/"c, "\"c)
-            Dim fileInfo = FileIO.FileSystem.GetFileInfo(path$)
-            Dim Name As String = BaseName(fileInfo.FullName)
-            Return $"{fileInfo.Directory.FullName}/{Name}"
-        Catch ex As Exception
-            ex = New Exception($"{NameOf(file)} --> {file}", ex)
-            Throw ex
-        End Try
+        Dim tokens$() = file.Replace("\"c, "/"c).Split("/"c)
+        Dim fileNameTokens = tokens.Last.Split("."c)
+        Dim directory = tokens.Take(tokens.Length - 1).JoinBy("/")
+        Dim fileName$ = fileNameTokens.Take(fileNameTokens.Length - 1).JoinBy(".")
+
+        Return $"{directory}/{fileName}"
     End Function
 
     ''' <summary>

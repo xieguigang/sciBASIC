@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.Serialization
 ''' <summary>
 ''' The Nonlinear Grid Dynamics System
 ''' </summary>
+''' <remarks>
+''' 理论上可以拟合任意一个系统
+''' </remarks>
 Public Class GridSystem : Implements ICloneable(Of GridSystem)
 
     Public Property A As Vector

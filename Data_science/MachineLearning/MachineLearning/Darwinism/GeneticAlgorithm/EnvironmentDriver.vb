@@ -90,7 +90,10 @@ Namespace Darwinism.GAF
                     If Not reporter Is Nothing Then
                         Call reporter(i, .ByRef, core)
                     End If
-                    If .CompareTo(Threshold) < 0 Then
+
+                    ' NaN的结果值与阈值相比较也是小于零的
+                    ' 在这里跳过NaN值的测试
+                    If Not .IsNaNImaginary AndAlso .CompareTo(Threshold) < 0 Then
                         Exit For
                     End If
                 End With

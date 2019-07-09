@@ -8,8 +8,8 @@
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
-    <RootNamespace>TopologyInference</RootNamespace>
-    <AssemblyName>TopologyInference</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -23,7 +23,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>TopologyInference.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -33,7 +33,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>TopologyInference.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -47,6 +47,48 @@
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Publish\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Publish\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -70,9 +112,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GA\Environment.vb" />
     <Compile Include="GA\Genome.vb" />
     <Compile Include="Models\Correlation.vb" />
     <Compile Include="Models\System.vb" />
+    <Compile Include="Loader.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -88,6 +132,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Storage\GridMatrix.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -110,6 +155,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Data\BinaryData\BinaryData\BinaryData.vbproj">
+      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
+      <Name>BinaryData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Data\BinaryData\DataStorage\DataStorage.vbproj">
+      <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
+      <Name>DataStorage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>

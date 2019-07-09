@@ -1,51 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::06ab6252af80d8c2aed113f67b712ba3, Data_science\Graph\Model\Tree\AbstractTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class AbstractTree
-    ' 
-    '     Properties: Childs, Count, IsLeaf, IsRoot, Parent
-    '                 QualifyName
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) CountLeafs, EnumerateChilds, ToString
-    ' 
-    ' /********************************************************************************/
+' Class AbstractTree
+' 
+'     Properties: Childs, Count, IsLeaf, IsRoot, Parent
+'                 QualifyName
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+2 Overloads) CountLeafs, EnumerateChilds, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
+Imports System.Web.Script.Serialization
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 
+<DataContract>
 Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
 
     ''' <summary>
@@ -53,6 +57,16 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     ''' </summary>
     ''' <returns></returns>
     Public Property Childs As Dictionary(Of K, T)
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 在序列化之中会需要忽略掉这个属性，否则会产生无限递归
+    ''' </remarks>
+    <XmlIgnore>
+    <ScriptIgnore>
     Public Property Parent As T
 
     Dim qualDeli$ = "."
@@ -114,6 +128,10 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
 
     Sub New(Optional qualDeli$ = ".")
         Me.qualDeli = qualDeli
+    End Sub
+
+    Sub New()
+        Call Me.New(".")
     End Sub
 
     ''' <summary>
