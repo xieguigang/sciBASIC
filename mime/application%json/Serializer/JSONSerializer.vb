@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.Language
@@ -38,9 +39,19 @@ Public Module JSONSerializer
     <Extension>
     Private Function populateObjectJson(schema As Type, obj As Object) As String
         Dim members As New List(Of String)
+        ' 会需要忽略掉有<ScriptIgnore>标记的属性
+        Dim memberReaders = schema _
+            .Schema(PropertyAccess.Readable, nonIndex:=True) _
+            .Where(Function(p)
+                       Return p.Value.GetAttribute(Of ScriptIgnoreAttribute) Is Nothing
+                   End Function)
+        Dim [property] As PropertyInfo
+        Dim valueType As Type
 
-        For Each reader As KeyValuePair(Of String, PropertyInfo) In schema.Schema(PropertyAccess.Readable, nonIndex:=True)
-            members += $"""{reader.Key}"": {reader.Value.PropertyType.GetJson(reader.Value.GetValue(obj, Nothing))}"
+        For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
+            [property] = reader.Value
+            valueType = [property].PropertyType
+            members += $"""{reader.Key}"": {valueType.GetJson([property].GetValue(obj, Nothing))}"
         Next
 
         Return $"{{

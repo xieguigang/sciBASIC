@@ -427,6 +427,8 @@ NULL:       If Not strict Then
             ' 在这里返回结果的话，depth为-1
             If a Is base Then
                 Return True
+            ElseIf depth > 16 Then
+                Return False
             End If
 
             If a.IsGenericType AndAlso base.IsGenericType Then
@@ -437,7 +439,7 @@ NULL:       If Not strict Then
                 ' 2017-3-12
                 ' GetType(Dictionary(Of String, Double)).IsInheritsFrom(GetType(Dictionary(Of ,)))
 
-                If typesOfb.Length = 0 AndAlso genericOfa.IsInheritsFrom(base, strict, depth) Then
+                If typesOfb.Length = 0 AndAlso genericOfa.IsInheritsFrom(base, strict, depth + 1) Then
                     Return True
                 End If
             End If
