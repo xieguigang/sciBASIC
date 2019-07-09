@@ -62,6 +62,10 @@ Public Class Tree(Of T, K) : Inherits AbstractTree(Of Tree(Of T, K), K)
     Sub New(Optional qualDeli$ = ".")
         MyBase.New(qualDeli)
     End Sub
+
+    Sub New()
+        Call MyBase.New(".")
+    End Sub
 End Class
 
 ''' <summary>

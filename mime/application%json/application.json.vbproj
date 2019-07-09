@@ -282,6 +282,7 @@
     </Compile>
     <Compile Include="Serializer\ExtendedDictionary.vb" />
     <Compile Include="Serializer\Deserializer.vb" />
+    <Compile Include="Serializer\JSONSerializer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -130,6 +130,10 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
         Me.qualDeli = qualDeli
     End Sub
 
+    Sub New()
+        Call Me.New(".")
+    End Sub
+
     ''' <summary>
     ''' Returns the values of <see cref="Childs"/>
     ''' </summary>
