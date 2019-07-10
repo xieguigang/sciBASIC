@@ -23,7 +23,13 @@ Public Class Genome : Implements Chromosome(Of Genome)
     End Sub
 
     Public Function CalculateError(status As Vector, target As Double) As Double
-        Return Math.Abs(chromosome.Evaluate(status) - target)
+        Dim predicts = chromosome.Evaluate(status)
+
+        If predicts.IsNaNImaginary Then
+            Return Double.MaxValue
+        Else
+            Return Math.Abs(predicts - target)
+        End If
     End Function
 
     Public Iterator Function Crossover(another As Genome) As IEnumerable(Of Genome) Implements Chromosome(Of Genome).Crossover
