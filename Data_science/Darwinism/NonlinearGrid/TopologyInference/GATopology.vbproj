@@ -112,6 +112,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Debugger.vb" />
     <Compile Include="GA\Environment.vb" />
     <Compile Include="GA\Genome.vb" />
     <Compile Include="Models\Correlation.vb" />
