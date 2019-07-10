@@ -80,9 +80,15 @@ Namespace NeuralNetwork.StoreProcedure
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Size With {
-                    .Width = DataSamples(Scan0).status.Length,
+                    .Width = width,
                     .Height = DataSamples.size
                 }
+            End Get
+        End Property
+
+        Public ReadOnly Property width As Integer
+            Get
+                Return DataSamples(Scan0).status.Length
             End Get
         End Property
 

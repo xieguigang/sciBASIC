@@ -619,7 +619,7 @@ Namespace LinearAlgebra
             Dim v2 As New Vector(N0)
 
             For j As Integer = 0 To N0 - 1
-                v2(j) = x(j) * p(j)
+                v2(j) = x(j) ^ p(j)
             Next
 
             Return v2

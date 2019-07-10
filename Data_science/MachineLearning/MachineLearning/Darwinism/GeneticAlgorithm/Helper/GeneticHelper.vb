@@ -128,7 +128,7 @@ Namespace Darwinism.GAF.Helper
         ''' Siblings are actually new chromosomes, 
         ''' created using any of crossover strategy
         ''' 
-        ''' (两个向量的长度必须要一致)
+        ''' (两个向量的长度必须要一致, 输入的两个数组参数会被同时修改值)
         ''' </summary>
         ''' <param name="random"></param>
         ''' <param name="v1#"></param>

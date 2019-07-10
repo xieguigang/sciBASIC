@@ -184,7 +184,7 @@ Namespace Darwinism.GAF
             Dim mutated As Chr = chromosome.Mutate()   ' 突变
             Dim rnd As Random = seeds()
             Dim otherChromosome As Chr = population.Random(rnd)  ' 突变体和其他个体随机杂交
-            Dim crossovered As IList(Of Chr) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
+            Dim crossovered As IEnumerable(Of Chr) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
 
             ' --------- 新修改的
             otherChromosome = population.Random(rnd)
