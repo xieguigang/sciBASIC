@@ -886,5 +886,10 @@ Namespace LinearAlgebra
         Public Shared Function rand(size%) As Vector
             Return Extensions.rand(size)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function rand(min#, max#, size%) As Vector
+            Return Extensions.rand(size, {min, max})
+        End Function
     End Class
 End Namespace

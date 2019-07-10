@@ -18,7 +18,7 @@ Public Module Loader
             .C = width.SeqIterator _
                 .Select(Function(null)
                             Return New Correlation With {
-                                .B = New Vector(0.01, width)
+                                .B = Vector.rand(-0.01, 0.01, width)
                             }
                         End Function) _
                 .ToArray
