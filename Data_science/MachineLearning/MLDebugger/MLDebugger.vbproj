@@ -125,8 +125,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ANNDebugger.vb" />
-    <Compile Include="FrameExports.vb" />
+    <Compile Include="ANN\ANNDebugger.vb" />
+    <Compile Include="ANN\FrameExports.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
