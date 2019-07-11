@@ -154,7 +154,8 @@ Namespace Graph
         End Sub
 
         ''' <summary>
-        ''' 添加节点然后返回这个新添加的节点
+        ''' 添加节点然后返回这个新添加的节点，如果节点不存在的话，
+        ''' 则会自动更新<see cref="Node.ID"/>之后添加进入图之中
         ''' </summary>
         ''' <param name="node"></param>
         ''' <returns></returns>
@@ -286,6 +287,13 @@ Namespace Graph
             Return tNewEdge
         End Function
 
+        ''' <summary>
+        ''' 这个会自动添加新创建的边对象，因为这个函数的含义是在图之中创建一条新的边连接
+        ''' </summary>
+        ''' <param name="iSource"></param>
+        ''' <param name="iTarget"></param>
+        ''' <param name="iData"></param>
+        ''' <returns></returns>
         Public Overloads Function CreateEdge(iSource As String, iTarget As String, Optional iData As EdgeData = Nothing) As Edge
             If Not _nodeSet.ContainsKey(iSource) Then
                 Return Nothing
