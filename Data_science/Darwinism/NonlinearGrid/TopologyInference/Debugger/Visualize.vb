@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Public Module Visualize
 
     ''' <summary>
-    ''' 
+    ''' Create network graph model from the grid system status.
     ''' </summary>
     ''' <param name="grid"></param>
     ''' <param name="cutoff">
