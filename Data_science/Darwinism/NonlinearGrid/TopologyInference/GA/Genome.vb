@@ -45,8 +45,13 @@ Public Class Genome : Implements Chromosome(Of Genome)
                 Dim i As Integer = randf.NextInteger(upper:=width)
                 Dim j As Integer = randf.NextInteger(upper:=width)
 
-                ' crossover C
-                randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
+                If FlipCoin() Then
+                    ' crossover C
+                    randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
+                Else
+                    ' crossover P
+                    randf.seeds.Crossover(a.P(i).W.Array, b.P(j).W.Array)
+                End If
             End If
         End SyncLock
 
@@ -64,9 +69,12 @@ Public Class Genome : Implements Chromosome(Of Genome)
             ' mutate one bit in A vector
             ' A only have -1, 0, 1
             chromosome.A(i) = A(randf.NextInteger(upper:=3))
-        Else
+        ElseIf FlipCoin(50) Then
             ' mutate one bit in C vector
             chromosome.C(i).B.Array.Mutate(randf.seeds)
+        Else
+            ' mutate one bit in P vector
+            chromosome.P(i).W.Array.Mutate(randf.seeds)
         End If
 
         Return clone
@@ -79,8 +87,9 @@ Public Class Genome : Implements Chromosome(Of Genome)
             .Select(Function(i)
                         Dim sign = chromosome.A(i)
                         Dim c = chromosome.C(i).B.Sum
+                        Dim p = chromosome.P(i).W.Sum
 
-                        Return sign * c
+                        Return sign * (c + p)
                     End Function) _
             .ToArray _
             .GetJson

@@ -62,9 +62,16 @@ Module Program
         End If
 
         Dim trainingSet = inFile.LoadXml(Of DataSet)
-        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width))
+
+        Call RunFitProcess(trainingSet.DataSamples.AsEnumerable, trainingSet.width, out, seed, popSize)
+
+        Return 0
+    End Function
+
+    Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%)
+        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(width))
         Dim population As Population(Of Genome) = New Genome(chromesome).InitialPopulation(popSize)
-        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable)
+        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet)
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness)
         Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
             .Iterations = 10000,
@@ -79,7 +86,5 @@ Module Program
                                              .SaveTo(outFile)
                                    End Sub)
         Call engine.Train()
-
-        Return 0
-    End Function
+    End Sub
 End Module

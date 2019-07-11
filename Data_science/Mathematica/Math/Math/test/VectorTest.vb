@@ -46,6 +46,15 @@ Imports numpy = Microsoft.VisualBasic.Math.NumpyExtensions
 Module VectorTest
 
     Sub Main()
+        Dim aa As Vector = {0, 0, 0, 0}
+        Dim taa = 1 / aa
+        Dim NaN = aa * taa
+
+        Dim inf = 1 / 0
+        Dim nanQ = 0 * inf
+
+        Pause()
+
         Dim x As Double() = {423, 4, 2, 4, 24, 2, 3, 423, 4, 2, 3, 4, 23, 4, 2, 4, 2, 3, 4, 2, 4, 2}
         Dim y As Vector = Vector.Call(Of Double)(New Func(Of Double, Double, Double)(AddressOf Math.Log), x, 2).ToArray
         Dim z As Vector = Vector.Call(Function(a, b) a / b, x, 1000000)

@@ -1832,8 +1832,16 @@ Namespace Math
         Public Function ProductALL([in] As IEnumerable(Of Double)) As Double
             Dim product# = 1
 
+            ' 因为会存在 0 * Inf = NaN
+            ' 所以在下面做了一下if判断来避免出现这种情况的NaN值
+
             For Each x As Double In [in]
-                product *= x
+                ' 0乘上任何数应该都是零来的
+                If x = 0R Then
+                    Return 0
+                Else
+                    product *= x
+                End If
             Next
 
             Return product

@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::15eb7af8cd81fff6cb808edffdbe559e, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class List
-    ' 
-    '         Properties: First, Last
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
-    '         Operators: (+5 Overloads) -, *, ^, (+8 Overloads) +, <
-    '                    <=, (+2 Overloads) <>, (+2 Overloads) =, >, >=
-    '                    >>
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class List
+' 
+'         Properties: First, Last
+' 
+'         Constructor: (+5 Overloads) Sub New
+'         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
+'         Operators: (+5 Overloads) -, *, ^, (+8 Overloads) +, <
+'                    <=, (+2 Overloads) <>, (+2 Overloads) =, >, >=
+'                    >>
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
@@ -64,7 +64,7 @@ Namespace Language
     ''' (加强版的<see cref="System.Collections.Generic.List(Of T)"/>)
     ''' </summary>
     ''' <typeparam name="T">The type of elements in the list.</typeparam>
-    Public Class List(Of T) : Inherits Generic.List(Of T)
+    Public Class List(Of T) : Inherits System.Collections.Generic.List(Of T)
 
 #Region "Improvements Index"
 
@@ -74,17 +74,17 @@ Namespace Language
         ''' <returns></returns>
         Public Property Last As T
             Get
-                If Count = 0 Then
+                If Count() = 0 Then
                     Return Nothing
                 Else
-                    Return MyBase.Item(Count - 1)
+                    Return MyBase.Item(Count() - 1)
                 End If
             End Get
             Set(value As T)
-                If Count = 0 Then
+                If Count() = 0 Then
                     Call Add(value)
                 Else
-                    MyBase.Item(Count - 1) = value
+                    MyBase.Item(Count() - 1) = value
                 End If
             End Set
         End Property
@@ -95,14 +95,14 @@ Namespace Language
         ''' <returns></returns>
         Public Property First As T
             Get
-                If Count = 0 Then
+                If Count() = 0 Then
                     Return Nothing
                 Else
                     Return MyBase.Item(0)
                 End If
             End Get
             Set(value As T)
-                If Count = 0 Then
+                If Count() = 0 Then
                     Call Add(value)
                 Else
                     MyBase.Item(Scan0) = value
@@ -151,13 +151,13 @@ Namespace Language
         Default Public Overloads Property Item(index%) As T
             Get
                 If index < 0 Then
-                    index = Count + index  ' -1 -> count -1
+                    index = Count() + index  ' -1 -> count -1
                 End If
                 Return MyBase.Item(index)
             End Get
             Set(value As T)
                 If index < 0 Then
-                    index = Count + index  ' -1 -> count -1
+                    index = Count() + index  ' -1 -> count -1
                 End If
                 MyBase.Item(index) = value
             End Set
@@ -425,6 +425,13 @@ Namespace Language
         Public Shared Operator +(list As List(Of T), [iterator] As Func(Of IEnumerable(Of T))) As List(Of T)
             Return list + iterator()
         End Operator
+
+        ' 下面的操作符会导致重载失败
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        'Public Overloads Shared Operator +(list As List(Of T), index As Index(Of T)) As List(Of T)
+        '    Call list.AddRange(index.Objects)
+        '    Return list
+        'End Operator
 
         ''' <summary>
         ''' Append <paramref name="list2"/> to the end of <paramref name="list1"/>

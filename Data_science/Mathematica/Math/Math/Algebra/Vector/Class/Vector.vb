@@ -297,11 +297,18 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(v1 As Vector, v2#()) As Vector
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v3 As New Vector(N0)
 
+            ' 0 * Inf = NaN
+            ' 零乘上任意数应该都是零的?
+
             For j As Integer = 0 To N0 - 1
-                v3(j) = v1(j) * v2(j)
+                If (v1(j) = 0R OrElse v2(j) = 0R) Then
+                    v3(j) = 0
+                Else
+                    v3(j) = v1(j) * v2(j)
+                End If
             Next
 
             Return v3

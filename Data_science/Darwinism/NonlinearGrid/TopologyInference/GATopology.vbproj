@@ -115,6 +115,7 @@
     <Compile Include="Debugger.vb" />
     <Compile Include="GA\Environment.vb" />
     <Compile Include="GA\Genome.vb" />
+    <Compile Include="Models\PWeight.vb" />
     <Compile Include="Models\Correlation.vb" />
     <Compile Include="Models\System.vb" />
     <Compile Include="Loader.vb" />

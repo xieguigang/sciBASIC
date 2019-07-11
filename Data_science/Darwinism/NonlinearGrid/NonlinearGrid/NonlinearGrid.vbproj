@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1F9B3E34-9470-4E57-86EA-350D5179C720}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>NonlinearGrid.Program</StartupObject>
+    <StartupObject>NonlinearGrid.DEMO</StartupObject>
     <RootNamespace>NonlinearGrid</RootNamespace>
     <AssemblyName>NonlinearGrid</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -115,6 +115,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DEMO.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
