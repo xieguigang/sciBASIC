@@ -13,6 +13,15 @@ Public Module Visualize
     ''' 系统中的变量与结果之间的相关度因子的阈值，低于这个阈值的边都会被删掉，也就是只会留下相关度较高的边
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 对于一个网格系统而言, 其计算格式为: ``Xi ^ (c * Xj)``. 因为对于c * Xj而言:
+    ''' 
+    ''' + 乘积结果肯定是越大,则Xi越大, 此时Xi项目对系统输出的结果的影响也越大
+    ''' + 假若c为负数的时候,则Xi指数计算结果接近于零,c越小Xi项目越接近于零,此时Xi项目对系统输出的结果的影响也越小
+    ''' + 当c接近于零的时候,其对Xi没有影响度,因为Xi^0 =1, 影响整个Xi的只能够从其他的系统变量因子获取
+    ''' 
+    ''' 所以c因子可以看作为Xj与Xi之间的相关度, 只不过这个相关度是位于整个[负无穷, 正无穷]之间的
+    ''' </remarks>
     <Extension>
     Public Function CreateGraph(grid As GridMatrix, Optional cutoff# = 1) As NetworkGraph
         Dim g As New NetworkGraph

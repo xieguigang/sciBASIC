@@ -146,6 +146,9 @@ Namespace Darwinism.GAF
             End If
         End Sub
 
+        ''' <summary>
+        ''' 完成一次种群的迭代进化
+        ''' </summary>
         Public Sub Evolve()
             Dim i% = 0
             Dim parentPopulationSize As Integer = population.Size
@@ -164,11 +167,18 @@ Namespace Darwinism.GAF
             For Each c As Chr In parentPopulationSize% _
                 .Sequence _
                 .Select(AddressOf evolIterate) _
-                .IteratesALL ' 并行化计算每一个突变迭代
+                .IteratesALL
 
+                ' 并行化计算每一个突变迭代
+                ' 将新的突变个体添加进入种群之中
                 Call newPopulation.Add(c)
             Next
 
+            ' 下面的两个步骤是机器学习的关键
+            ' 通过排序,将错误率最小的种群排在前面
+            ' 错误率最大的种群排在后面
+            ' 然后对种群进行裁剪,将错误率比较大的种群删除
+            ' 从而实现了择优进化, 即程序模型对我们的训练数据集产生了学习
             newPopulation.SortPopulationByFitness(Me, chromosomesComparator) ' 通过fitness排序来进行择优
             newPopulation.Trim(parentPopulationSize)                         ' 剪裁掉后面的对象，达到淘汰的效果
             population = newPopulation                                       ' 新种群替代旧的种群
@@ -177,19 +187,25 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 并行化过程之中的单个迭代
         ''' </summary>
-        ''' <param name="i%"></param>
+        ''' <param name="i">种群之中的个体的序号,也就是即将发生的目标个体</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 进化发生的契机是个体的突变,这体现在
+        '''
+        ''' 1. 个体的基因组的变异,可能产生错误率更低的新个体
+        ''' 2. 突变体和其他个体随机杂交,可能会产生错误率更低的新个体
+        '''
+        ''' 在这个函数中,需要完成的就是这两种突变的发生
+        ''' </remarks>
         Private Iterator Function evolIterate(i%) As IEnumerable(Of Chr)
             Dim chromosome As Chr = population(i)
-            Dim mutated As Chr = chromosome.Mutate()   ' 突变
+            Dim mutated As Chr = chromosome.Mutate()
             Dim rnd As Random = seeds()
-            Dim otherChromosome As Chr = population.Random(rnd)  ' 突变体和其他个体随机杂交
-            Dim crossovered As IEnumerable(Of Chr) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
+            Dim otherChromosome As Chr = population.Random(rnd)
+            Dim crossovered As IEnumerable(Of Chr) = mutated.Crossover(otherChromosome)
 
-            ' --------- 新修改的
             otherChromosome = population.Random(rnd)
             crossovered = crossovered.Join(chromosome.Crossover(otherChromosome))
-            ' ---------
 
             Yield mutated
 
