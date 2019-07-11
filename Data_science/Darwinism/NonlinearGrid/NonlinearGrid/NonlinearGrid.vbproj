@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1F9B3E34-9470-4E57-86EA-350D5179C720}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>NonlinearGrid.DEMO</StartupObject>
+    <StartupObject>NonlinearGrid.Program</StartupObject>
     <RootNamespace>NonlinearGrid</RootNamespace>
     <AssemblyName>NonlinearGrid</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -177,6 +177,10 @@
     <ProjectReference Include="..\..\..\MachineLearning\MachineLearning\MachineLearning.vbproj">
       <Project>{a43ec013-2b55-4d25-b9f1-96bd5fb1e577}</Project>
       <Name>MachineLearning</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MachineLearning\MLDebugger\MLDebugger.vbproj">
+      <Project>{ccbf36ab-506d-48a2-9150-a3762d4120ec}</Project>
+      <Name>MLDebugger</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
