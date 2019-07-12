@@ -20,6 +20,10 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
 
     ''' <summary>
     ''' Evaluate the system dynamics
+    ''' 
+    ''' ```
+    ''' C + A * X ^ C
+    ''' ```
     ''' </summary>
     ''' <param name="X"></param>
     ''' <returns></returns>

@@ -7,6 +7,12 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
+''' <summary>
+''' 
+''' </summary>
+''' <remarks>
+''' 在系统之中的各个部件之间的突变以及杂交事件应该都是相互独立的
+''' </remarks>
 Public Class Genome : Implements Chromosome(Of Genome)
 
     Friend ReadOnly chromosome As GridSystem
@@ -37,17 +43,20 @@ Public Class Genome : Implements Chromosome(Of Genome)
         Dim b = another.chromosome.Clone
 
         SyncLock randf.seeds
-            ' If FlipCoin() Then
-            ' crossover A
-            randf.seeds.Crossover(a.A.Array, b.A.Array)
-            ' Else
-            ' dim(A) is equals to dim(C) and is equals to dim(X)
-            Dim i As Integer = randf.NextInteger(upper:=width)
-            Dim j As Integer = randf.NextInteger(upper:=width)
+            If FlipCoin() Then
+                ' crossover A
+                randf.seeds.Crossover(a.A.Array, b.A.Array)
+            End If
 
-            ' If FlipCoin() Then
-            ' crossover C
-            randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
+            If FlipCoin() Then
+                ' dim(A) is equals to dim(C) and is equals to dim(X)
+                Dim i As Integer = randf.NextInteger(upper:=width)
+                Dim j As Integer = randf.NextInteger(upper:=width)
+
+                ' If FlipCoin() Then
+                ' crossover C
+                randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
+            End If
             'Else
             '    ' crossover P
             '    randf.seeds.Crossover(a.P(i).W.Array, b.P(j).W.Array)
@@ -70,29 +79,32 @@ Public Class Genome : Implements Chromosome(Of Genome)
             ' A only have -1, 0, 1
             chromosome.A(i) = A(randf.NextInteger(upper:=3))
             ' ElseIf FlipCoin(50) Then
+        End If
 
-            If FlipCoin() Then
-                If chromosome.AC = 0 Then
-                    chromosome.AC = 1
-                ElseIf FlipCoin() Then
-                    chromosome.AC += randf.randf(0, chromosome.AC * 0.1)
-                Else
-                    chromosome.AC -= randf.randf(0, chromosome.AC * 0.1)
-                End If
+        If FlipCoin() Then
+            If chromosome.AC = 0 Then
+                chromosome.AC = 1
+            ElseIf FlipCoin() Then
+                chromosome.AC += randf.randf(0, chromosome.AC * 0.1)
+            Else
+                chromosome.AC -= randf.randf(0, chromosome.AC * 0.1)
             End If
-        Else
+        End If
+
+        If FlipCoin() Then
             ' mutate one bit in C vector
             chromosome.C(i).B.Array.Mutate(randf.seeds)
             ' mutate one bit in P vector
             ' chromosome.P(i).W.Array.Mutate(randf.seeds)
-            If FlipCoin() Then
-                If chromosome.C(i).BC = 0 Then
-                    chromosome.C(i).BC = 1
-                ElseIf FlipCoin() Then
-                    chromosome.C(i).BC += randf.randf(0, chromosome.C(i).BC * 0.1)
-                Else
-                    chromosome.C(i).BC -= randf.randf(0, chromosome.C(i).BC * 0.1)
-                End If
+        End If
+
+        If FlipCoin() Then
+            If chromosome.C(i).BC = 0 Then
+                chromosome.C(i).BC = 1
+            ElseIf FlipCoin() Then
+                chromosome.C(i).BC += randf.randf(0, chromosome.C(i).BC * 0.1)
+            Else
+                chromosome.C(i).BC -= randf.randf(0, chromosome.C(i).BC * 0.1)
             End If
         End If
 

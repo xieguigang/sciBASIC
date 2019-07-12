@@ -17,6 +17,11 @@ Public Class Correlation : Implements ICloneable(Of Correlation)
 
     ReadOnly sigmoid As New BipolarSigmoid
 
+    ''' <summary>
+    ''' sigmoid(C + B*X)
+    ''' </summary>
+    ''' <param name="X"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Evaluate(X As Vector) As Double
         ' 通过sigmoid函数强制约束输出到[-1, 1]这个区间内
