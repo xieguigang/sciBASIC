@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("NonlinearGrid")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("NonlinearGrid")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTitle("Nonlinear Grid Dynamics System Host")>
+<Assembly: AssemblyDescription("Nonlinear Grid Dynamics System Host")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
+<Assembly: AssemblyProduct("sciBASIC.NET")>
+<Assembly: AssemblyCopyright("Copyright © sciBASIC.NET 2019")>
+<Assembly: AssemblyTrademark("sciBASIC.NET")>
 
 <Assembly: ComVisible(False)>
 
