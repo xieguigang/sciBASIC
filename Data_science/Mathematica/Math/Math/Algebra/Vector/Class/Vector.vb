@@ -289,6 +289,26 @@ Namespace LinearAlgebra
             Return v3
         End Operator
 
+        Public Overloads Shared Operator *(data As IEnumerable(Of Double), x As Vector) As Vector
+            Dim N0 As Integer = x.[Dim]
+            Dim v3 As New Vector(N0)
+            Dim i As Integer = Scan0
+
+            ' 0 * Inf = NaN
+            ' 零乘上任意数应该都是零的?
+            For Each a As Double In data
+                If (a = 0R OrElse x(i) = 0R) Then
+                    v3(i) = 0
+                Else
+                    v3(i) = a * x(i)
+                End If
+
+                i += 1
+            Next
+
+            Return v3
+        End Operator
+
         ''' <summary>
         ''' 向量乘法算符重载，分量分别相乘，相当于MATLAB中的``.*``算符
         ''' </summary>
