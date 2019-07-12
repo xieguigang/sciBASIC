@@ -1,9 +1,20 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Module Visualize
+
+    <Extension>
+    Public Iterator Function NodeImportance(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
+        For Each factor As NumericVector In grid.correlations
+            Yield New NamedValue(Of Double) With {
+                .Name = factor.name,
+                .Value = factor.vector.Sum
+            }
+        Next
+    End Function
 
     ''' <summary>
     ''' Create network graph model from the grid system status.
@@ -28,12 +39,20 @@ Public Module Visualize
         Dim node As Node
         Dim variableNames As New List(Of String)
         Dim edge As EdgeData
+        Dim importance As Dictionary(Of String, Double) = grid _
+            .NodeImportance _
+            .ToDictionary(Function(n) n.Name,
+                          Function(n)
+                              Return n.Value
+                          End Function)
 
         For Each factor As NumericVector In grid.correlations
             node = New Node With {
                 .data = New NodeData With {
                     .label = factor.name,
-                    .origID = factor.name
+                    .origID = factor.name,
+                    .mass = importance(factor.name),
+                    .radius = importance(factor.name)
                 },
                 .Label = factor.name,
                 .ID = 0

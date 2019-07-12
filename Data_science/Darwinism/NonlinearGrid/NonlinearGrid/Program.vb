@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
@@ -34,8 +35,29 @@ Module Program
         Return network.Save(out, Encodings.ASCII).CLICode
     End Function
 
+    <ExportAPI("/factor.impacts")>
+    <Usage("/factor.impacts /in <model.Xml> [/out <out.csv>]")>
+    Public Function ExportFactorImpact(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim model = [in].LoadXml(Of GridMatrix)
+        Dim impacts = model.NodeImportance.ToArray
+
+        With args <= "/out"
+            If .StringEmpty Then
+                Call impacts.ToCsvDoc _
+                    .AsMatrix _
+                    .Select(Function(r) r.ToArray) _
+                    .PrintTable
+            Else
+                Call impacts.SaveTo(.ByRef)
+            End If
+        End With
+
+        Return 0
+    End Function
+
     <ExportAPI("/summary")>
-    <Usage("/summary /in <model.Xml> /data <trainingSet.Xml>")>
+    <Usage("/summary /in <model.Xml> /data <trainingSet.Xml> [/out <out.csv>]")>
     Public Function Summary(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim data$ = args <= "/data"
@@ -55,12 +77,19 @@ Module Program
                         }
                     End Function) _
             .ToArray
-        Dim strings = summaryResult.ToCsvDoc _
-            .AsMatrix _
-            .Select(Function(r) r.ToArray) _
-            .ToArray
 
-        Call strings.PrintTable
+        With args <= "/out"
+            If .StringEmpty Then
+                Dim strings = summaryResult.ToCsvDoc _
+                    .AsMatrix _
+                    .Select(Function(r) r.ToArray) _
+                    .ToArray
+
+                Call strings.PrintTable
+            Else
+                Call summaryResult.SaveTo(.ByRef)
+            End If
+        End With
 
         Return 0
     End Function
