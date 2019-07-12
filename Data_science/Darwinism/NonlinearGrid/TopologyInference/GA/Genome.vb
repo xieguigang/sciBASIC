@@ -111,6 +111,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
                         Return chromosome.AC + sign * (c) '+ p)
                     End Function) _
             .ToArray _
-            .GetJson
+            .GetJson _
+            .MD5
     End Function
 End Class
