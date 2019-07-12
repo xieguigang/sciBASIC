@@ -37,22 +37,22 @@ Public Class Genome : Implements Chromosome(Of Genome)
         Dim b = another.chromosome.Clone
 
         SyncLock randf.seeds
-            If FlipCoin() Then
-                ' crossover A
-                randf.seeds.Crossover(a.A.Array, b.A.Array)
-            Else
-                ' dim(A) is equals to dim(C) and is equals to dim(X)
-                Dim i As Integer = randf.NextInteger(upper:=width)
-                Dim j As Integer = randf.NextInteger(upper:=width)
+            ' If FlipCoin() Then
+            ' crossover A
+            randf.seeds.Crossover(a.A.Array, b.A.Array)
+            ' Else
+            ' dim(A) is equals to dim(C) and is equals to dim(X)
+            Dim i As Integer = randf.NextInteger(upper:=width)
+            Dim j As Integer = randf.NextInteger(upper:=width)
 
-                ' If FlipCoin() Then
-                ' crossover C
-                randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
-                'Else
-                '    ' crossover P
-                '    randf.seeds.Crossover(a.P(i).W.Array, b.P(j).W.Array)
-                'End If
-            End If
+            ' If FlipCoin() Then
+            ' crossover C
+            randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
+            'Else
+            '    ' crossover P
+            '    randf.seeds.Crossover(a.P(i).W.Array, b.P(j).W.Array)
+            'End If
+            ' End If
         End SyncLock
 
         Yield New Genome(a)
@@ -71,11 +71,29 @@ Public Class Genome : Implements Chromosome(Of Genome)
             chromosome.A(i) = A(randf.NextInteger(upper:=3))
             ' ElseIf FlipCoin(50) Then
 
+            If FlipCoin() Then
+                If chromosome.AC = 0 Then
+                    chromosome.AC = 1
+                ElseIf FlipCoin() Then
+                    chromosome.AC += randf.randf(0, chromosome.AC * 0.1)
+                Else
+                    chromosome.AC -= randf.randf(0, chromosome.AC * 0.1)
+                End If
+            End If
         Else
             ' mutate one bit in C vector
             chromosome.C(i).B.Array.Mutate(randf.seeds)
             ' mutate one bit in P vector
             ' chromosome.P(i).W.Array.Mutate(randf.seeds)
+            If FlipCoin() Then
+                If chromosome.C(i).BC = 0 Then
+                    chromosome.C(i).BC = 1
+                ElseIf FlipCoin() Then
+                    chromosome.C(i).BC += randf.randf(0, chromosome.C(i).BC * 0.1)
+                Else
+                    chromosome.C(i).BC -= randf.randf(0, chromosome.C(i).BC * 0.1)
+                End If
+            End If
         End If
 
         Return clone
@@ -87,10 +105,10 @@ Public Class Genome : Implements Chromosome(Of Genome)
             .SeqIterator _
             .Select(Function(i)
                         Dim sign = chromosome.A(i)
-                        Dim c = chromosome.C(i).B.Sum
+                        Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
                         ' Dim p = chromosome.P(i).W.Sum
 
-                        Return sign * (c) '+ p)
+                        Return chromosome.AC + sign * (c) '+ p)
                     End Function) _
             .ToArray _
             .GetJson
