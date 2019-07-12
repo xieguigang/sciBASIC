@@ -15,6 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+.vs
 
 storage.ide
 storage.ide-journal
@@ -266,3 +267,4 @@ storage.ide-wal
 *.stackdump
 /CLI_tools/Apps
 /Data_science/Visualization/Apps
+/Data_science/Mathematica/CUDA/test/Dll1/.vs

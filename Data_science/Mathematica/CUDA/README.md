@@ -1,0 +1,1 @@
+GPU accelerated computing ``C++`` code module for sciBASIC.NET
