@@ -85,13 +85,13 @@ Module Program
 
         Call trainingSet.DataSamples _
             .AsEnumerable _
-            .RunFitProcess(trainingSet.width, out, seed, popSize)
+            .RunFitProcess(trainingSet.width, out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names)
 
         Return 0
     End Function
 
     <Extension>
-    Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%)
+    Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%, factorNames$())
         Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(width))
         Dim population As Population(Of Genome) = New Genome(chromesome).InitialPopulation(popSize)
         Dim fitness As Fitness(Of Genome) = New Environment(trainingSet)
@@ -104,7 +104,7 @@ Module Program
         Call engine.AttachReporter(Sub(i, e, g)
                                        Call EnvironmentDriver(Of Genome).CreateReport(i, e, g).ToString.__DEBUG_ECHO
                                        Call g.Best _
-                                             .CreateSnapshot(e) _
+                                             .CreateSnapshot(factorNames, e) _
                                              .GetXml _
                                              .SaveTo(outFile)
                                    End Sub)
