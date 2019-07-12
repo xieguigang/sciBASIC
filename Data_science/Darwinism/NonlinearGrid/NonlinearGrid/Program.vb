@@ -36,11 +36,19 @@ Module Program
     End Function
 
     <ExportAPI("/factor.impacts")>
-    <Usage("/factor.impacts /in <model.Xml> [/out <out.csv>]")>
+    <Usage("/factor.impacts /in <model.Xml> [/order <asc/desc> /out <out.csv>]")>
     Public Function ExportFactorImpact(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim model = [in].LoadXml(Of GridMatrix)
         Dim impacts = model.NodeImportance.ToArray
+
+        If args.ContainsParameter("/order") Then
+            If args("/order").DefaultValue.TextEquals("asc") Then
+                impacts = impacts.OrderBy(Function(x) x.Value).ToArray
+            Else
+                impacts = impacts.OrderByDescending(Function(x) x.Value).ToArray
+            End If
+        End If
 
         With args <= "/out"
             If .StringEmpty Then
@@ -57,7 +65,7 @@ Module Program
     End Function
 
     <ExportAPI("/summary")>
-    <Usage("/summary /in <model.Xml> /data <trainingSet.Xml> [/out <out.csv>]")>
+    <Usage("/summary /in <model.Xml> /data <trainingSet.Xml> [/order <asc/desc> /out <out.csv>]")>
     Public Function Summary(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim data$ = args <= "/data"
@@ -77,6 +85,14 @@ Module Program
                         }
                     End Function) _
             .ToArray
+
+        If args.ContainsParameter("/order") Then
+            If args("/order").DefaultValue.TextEquals("asc") Then
+                summaryResult = summaryResult.OrderBy(Function(r) r!errors).ToArray
+            Else
+                summaryResult = summaryResult.OrderByDescending(Function(r) r!errors).ToArray
+            End If
+        End If
 
         With args <= "/out"
             If .StringEmpty Then
