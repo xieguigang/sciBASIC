@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -21,6 +22,7 @@ Module Program
 
     <ExportAPI("/dump.network")>
     <Usage("/dump.network /in <model.Xml> [/threshold <default=1> /out <out.directory>]")>
+    <Description("Export a correlation network from a grid system model.")>
     Public Function DumpAsNetwork(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim threshold As Double = args("/threshold")
@@ -65,6 +67,7 @@ Module Program
 
     <ExportAPI("/training")>
     <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /out <output_model.Xml>]")>
+    <Description("Training a grid system use GA method.")>
     Public Function trainGA(args As CommandLine) As Integer
         Dim inFile As String = args <= "/in"
         Dim out$ = args("/out") Or $"{inFile.TrimSuffix}.minError.Xml"

@@ -59,7 +59,7 @@ Namespace Darwinism.Models
     Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
-        Protected caclFitness As Func(Of Individual, Double)
+        Protected caclFitness As Fitness(Of Individual)
         Protected indivToString As Func(Of Individual, String)
         Protected maxCapacity%
 
@@ -77,7 +77,7 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
         ''' <param name="toString">Obj to dictionary key</param>
-        Sub New(cacl As Func(Of Individual, Double), capacity%, Optional toString As Func(Of Individual, String) = Nothing)
+        Sub New(cacl As Fitness(Of Individual), capacity%, Optional toString As Func(Of Individual, String) = Nothing)
             caclFitness = cacl
             indivToString = toString Or objToString
             maxCapacity = capacity
@@ -92,6 +92,10 @@ Namespace Darwinism.Models
         ''' <param name="[in]"></param>
         ''' <returns></returns>
         Public Function Fitness([in] As Individual) As Double Implements Fitness(Of Individual).Calculate
+            If Not caclFitness.Cacheable Then
+                Return caclFitness.Calculate([in])
+            End If
+
             Dim key$ = indivToString([in])
             Dim fit As Double
 
@@ -99,7 +103,7 @@ Namespace Darwinism.Models
                 If cache.ContainsKey(key$) Then
                     fit = cache(key$)
                 Else
-                    fit = caclFitness([in])
+                    fit = caclFitness.Calculate([in])
                     cache.Add(key$, fit)
 
                     If cache.Count >= maxCapacity Then

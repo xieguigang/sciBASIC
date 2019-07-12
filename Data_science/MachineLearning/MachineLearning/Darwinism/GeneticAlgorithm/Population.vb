@@ -147,7 +147,7 @@ Namespace Darwinism.GAF
         Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of Chr), source As NamedValue(Of Chr)()) As IEnumerable(Of NamedValue(Of Double))
             Return From x As NamedValue(Of Chr)
                    In source.AsParallel
-                   Let fit As Double = GA.Fitness.Calculate(x.Value)
+                   Let fit As Double = GA.chromosomesComparator.Calculate(x.Value)
                    Select New NamedValue(Of Double) With {
                        .Name = x.Name,
                        .Value = fit

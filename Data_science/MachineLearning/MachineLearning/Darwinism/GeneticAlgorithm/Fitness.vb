@@ -63,7 +63,9 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Namespace Darwinism.GAF
 
     ''' <summary>
-    ''' 描述了如何从将目标染色体计算为fitness，从而能够量化突变带来的的优点
+    ''' A function wrapper for calculate genome fitness in current environment.
+    ''' 
+    ''' (描述了如何从将目标染色体计算为fitness，从而能够量化突变带来的的优点)
     ''' </summary>
     ''' <typeparam name="Chr">
     ''' 这个泛型类型应该是集成至<see cref="Chromosome(Of Chr)"/>,但是为了兼容``DifferentialEvolution``

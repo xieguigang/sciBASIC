@@ -79,20 +79,14 @@ Namespace Darwinism.GAF
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly chromosomesComparator As Fitness(Of Chr)
-        ReadOnly seeds As IRandomSeeds
+        Friend ReadOnly chromosomesComparator As Fitness(Of Chr)
+        Friend ReadOnly seeds As IRandomSeeds
 
         ''' <summary>
         ''' 因为在迭代的过程中，旧的种群会被新的种群所替代
         ''' 所以在这里不可以加readonly修饰
         ''' </summary>
         Dim population As Population(Of Chr)
-
-        ''' <summary>
-        ''' A function for calculate genome fitness in current environment.
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property Fitness As Fitness(Of Chr)
 
         Public ReadOnly Property Best As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -130,13 +124,12 @@ Namespace Darwinism.GAF
         ''' </param>
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing, Optional cacheSize% = 10000)
             Me.population = population
-            Me.Fitness = fitnessFunc
             Me.seeds = seeds Or randfSeeds
 
             If cacheSize <= 0 Then
                 Me.chromosomesComparator = fitnessFunc
             Else
-                Me.chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate, capacity:=cacheSize)
+                Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize)
             End If
 
             Me.population.SortPopulationByFitness(Me, chromosomesComparator)

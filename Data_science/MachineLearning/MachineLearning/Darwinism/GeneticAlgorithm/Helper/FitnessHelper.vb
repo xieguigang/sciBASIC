@@ -86,13 +86,20 @@ Namespace Darwinism.GAF.Helper
         ''' </remarks>
         <Extension>
         Public Function AverageError(errors As IEnumerable(Of Double)) As Double
-            With errors.Where(Function(e) Not e.IsNaNImaginary AndAlso e < Double.MaxValue).ToArray
-                If .Length = 0 Then
-                    Return Double.MaxValue
-                Else
-                    Return .Average
-                End If
-            End With
+            Dim rawErrs = errors.ToArray
+            Dim errVector As Double() = rawErrs _
+                .Select(Function(e)
+                            If Not e.IsNaNImaginary AndAlso
+                                e <> Double.MaxValue AndAlso
+                                e <> Double.MinValue Then
+                                Return e
+                            Else
+                                Return Long.MaxValue
+                            End If
+                        End Function) _
+                .ToArray
+
+            Return errVector.Average
         End Function
     End Module
 End Namespace
