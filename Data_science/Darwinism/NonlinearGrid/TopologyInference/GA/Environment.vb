@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Class Environment : Implements Fitness(Of Genome)
 
-    Dim matrix As (status As Vector, target As Double)()
+    Dim matrix As (status As Vector, target As Double, targetID$)()
 
     Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Genome).Cacheable
         Get
@@ -16,7 +16,11 @@ Public Class Environment : Implements Fitness(Of Genome)
     Sub New(trainingSet As IEnumerable(Of Sample))
         matrix = trainingSet _
             .Select(Function(sample)
-                        Return (sample.status.vector.AsVector, sample.target(Scan0))
+                        Return (
+                            sample.status.vector.AsVector,
+                            sample.target(Scan0),
+                            sample.target(Scan0).ToString
+                        )
                     End Function) _
             .ToArray
     End Sub
@@ -28,8 +32,12 @@ Public Class Environment : Implements Fitness(Of Genome)
         ' 在这里应该是使用平均值来避免这个问题
         Return matrix _
             .Select(Function(sample)
-                        Return chromosome.CalculateError(sample.status, sample.target)
+                        Dim err = chromosome.CalculateError(sample.status, sample.target)
+
+                        Return (errors:=err, id:=sample.targetID)
                     End Function) _
-            .AverageError
+            .GroupBy(Function(g) g.id) _
+            .Select(Function(g) g.Select(Function(s) s.errors).AverageError) _
+            .Average
     End Function
 End Class
