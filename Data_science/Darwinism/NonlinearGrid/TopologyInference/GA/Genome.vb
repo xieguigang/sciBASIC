@@ -65,7 +65,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
         ' dim(A) is equals to dim(C) and is equals to dim(X)
         Dim i As Integer = randf.NextInteger(upper:=width)
 
-        If FlipCoin(40) Then
+        If FlipCoin() Then
             ' mutate one bit in A vector
             ' A only have -1, 0, 1
             chromosome.A(i) = A(randf.NextInteger(upper:=3))
