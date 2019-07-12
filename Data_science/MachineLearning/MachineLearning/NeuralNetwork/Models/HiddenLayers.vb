@@ -80,9 +80,16 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        ''' <summary>
+        ''' 在反向传播的过程中,layer之间的计算顺序是反过来的
+        ''' 在这里构建这样子的一个颠倒顺序的缓存,可以减少一些不必要的操作
+        ''' </summary>
+        ReadOnly reverseLayers As Layer()
+
         Friend Sub New(layers As IEnumerable(Of Layer))
             Me.Layers = layers.ToArray
             Me.Size = Me.Layers.Length
+            Me.reverseLayers = Me.Layers.Reverse.ToArray
         End Sub
 
         ''' <summary>
@@ -104,6 +111,7 @@ Namespace NeuralNetwork
             Next
 
             Me.Size = size.Length
+            Me.reverseLayers = Me.Layers.Reverse.ToArray
         End Sub
 
         ''' <summary>
@@ -113,26 +121,24 @@ Namespace NeuralNetwork
         ''' 因为输入的样本信息在网络之中的传播是有方向性的
         ''' 所以这个函数的layer之间不可以出现并行关系
         ''' </remarks>
-        Public Sub ForwardPropagate(parallel As Boolean)
+        Public Sub ForwardPropagate(parallel As Boolean, truncate As Double)
             For Each layer As Layer In Layers
                 ' 2018-12-19
                 ' 虽然隐藏层数量比较少,但是每一个隐藏层之中,神经元节点数量可能会很多
                 ' 所以下面的这个函数的调用,内部实现应该是并行的?
-                Call layer.CalculateValue(parallel)
+                Call layer.CalculateValue(parallel, truncate)
             Next
         End Sub
 
         Public Sub BackPropagate(learnRate#, momentum#, truncate#, parallel As Boolean)
-            Dim reverse = Layers.Reverse.ToArray
-
             ' 因为在调用函数计算之后,值变了
             ' 所以在这里会需要使用两个for each
             ' 不然计算会出bug
-            For Each revLayer As Layer In reverse
-                Call revLayer.CalculateGradient(parallel, truncate)
+            For Each layer As Layer In reverseLayers
+                Call layer.CalculateGradient(parallel, truncate)
             Next
-            For Each revLayer As Layer In reverse
-                Call revLayer.UpdateWeights(learnRate, momentum, parallel)
+            For Each layer As Layer In reverseLayers
+                Call layer.UpdateWeights(learnRate, momentum, parallel)
             Next
         End Sub
 

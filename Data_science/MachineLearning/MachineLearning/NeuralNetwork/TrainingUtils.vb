@@ -69,7 +69,15 @@ Namespace NeuralNetwork
         ''' 对<see cref="Neuron.Gradient"/>的剪裁限制阈值，小于等于零表示不进行剪裁，默认不剪裁
         ''' </summary>
         ''' <returns></returns>
-        Public Property Truncate As Double = -1
+        Public Property Truncate As Double
+            Get
+                Return network.Truncate
+            End Get
+            Set(value As Double)
+                network.Truncate = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' 是否对训练样本数据集进行选择性的训练，假若目标样本在当前所训练的模型上面
         ''' 所计算得到的预测结果和其真实结果的误差足够小的话，目标样本将不会再进行训练
@@ -269,7 +277,7 @@ Namespace NeuralNetwork
                 ' 首先根据当前样本进行计算
                 ' 然后根据误差调整响应节点的权重
                 Call network.ForwardPropagate(dataSet.status, parallel)
-                Call network.BackPropagate(dataSet.target, Truncate, parallel)
+                Call network.BackPropagate(dataSet.target, parallel)
                 Call errors.Add(CalculateError(network, dataSet.target))
             Next
 

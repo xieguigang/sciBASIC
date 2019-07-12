@@ -114,6 +114,8 @@ Namespace NeuralNetwork.StoreProcedure
                         Return New Threshold
                     Case NameOf(Activations.ReLU)
                         Return New ReLU
+                    Case NameOf(Activations.HyperbolicTangent)
+                        Return New HyperbolicTangent
                     Case Else
 #If DEBUG Then
                         Call $"Missing model: {name}".Warning

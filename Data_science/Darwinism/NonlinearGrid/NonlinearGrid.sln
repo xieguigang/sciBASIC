@@ -19,7 +19,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataMining", "..\..\DataMin
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MachineLearning", "..\..\MachineLearning\MachineLearning\MachineLearning.vbproj", "{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "NonlinearGrid", "NonlinearGrid\NonlinearGrid.vbproj", "{1F9B3E34-9470-4E57-86EA-350D5179C720}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Grid", "NonlinearGrid\Grid.vbproj", "{1F9B3E34-9470-4E57-86EA-350D5179C720}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataStorage", "..\..\..\Data\BinaryData\DataStorage\DataStorage.vbproj", "{3C79AE03-A766-4B61-BDC4-824D78481B53}"
 EndProject

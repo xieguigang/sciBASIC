@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="FileTest.vb" />
+    <Compile Include="activeTest.vb" />
     <Compile Include="simpleANNtest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

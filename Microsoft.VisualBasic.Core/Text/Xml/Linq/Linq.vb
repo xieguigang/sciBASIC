@@ -228,19 +228,29 @@ Namespace Text.Xml.Linq
         ''' <param name="path">文件路径</param>
         ''' <param name="typeName">目标节点名称,默认是使用类型<typeparamref name="T"/>的名称</param>
         ''' <param name="xmlns">``xmlns=...``,只需要给出等号后面的url即可</param>
+        ''' <param name="selector">
+        ''' 在加载数据集的时候,过滤掉一些不使用的数据,可以节省很多内存以及减少数据的加载时间.
+        ''' 因为后续的Xml反序列化操作在大数据集合下话费的时间会非常长
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
+        Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$,
+                                                                Optional typeName$ = Nothing,
+                                                                Optional xmlns$ = Nothing,
+                                                                Optional selector As Func(Of XElement, Boolean) = Nothing) As IEnumerable(Of T)
             With GetType(T).GetTypeName([default]:=typeName)
-                Return .UltraLargeXmlNodesIterator(path) _
+                Return .UltraLargeXmlNodesIterator(path, selector) _
                     .Select(Function(node) node.ToString) _
                     .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef)
             End With
         End Function
 
-        Public Function LoadArrayNodes(Of T As Class)(documentText$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
+        Public Function LoadArrayNodes(Of T As Class)(documentText$,
+                                                      Optional typeName$ = Nothing,
+                                                      Optional xmlns$ = Nothing,
+                                                      Optional selector As Func(Of XElement, Boolean) = Nothing) As IEnumerable(Of T)
             With GetType(T).GetTypeName([default]:=typeName)
-                Return .UltraLargeXmlNodesIterator(New MemoryStream(Encoding.UTF8.GetBytes(documentText))) _
+                Return .UltraLargeXmlNodesIterator(New MemoryStream(Encoding.UTF8.GetBytes(documentText)), selector) _
                     .Select(Function(node) node.ToString) _
                     .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef)
             End With
@@ -254,18 +264,19 @@ Namespace Text.Xml.Linq
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function IteratesArrayNodes(path$, typeName$) As IEnumerable(Of XElement)
-            Return typeName.UltraLargeXmlNodesIterator(path)
+        Public Function IteratesArrayNodes(path$, typeName$, Optional selector As Func(Of XElement, Boolean) = Nothing) As IEnumerable(Of XElement)
+            Return typeName.UltraLargeXmlNodesIterator(path, selector)
         End Function
 
-        Public Function ArrayNodesFromDocument(documentText$, typeName$) As IEnumerable(Of XElement)
-            Return typeName.UltraLargeXmlNodesIterator(New MemoryStream(Encoding.UTF8.GetBytes(documentText)))
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ArrayNodesFromDocument(documentText$, typeName$, Optional selector As Func(Of XElement, Boolean) = Nothing) As IEnumerable(Of XElement)
+            Return typeName.UltraLargeXmlNodesIterator(New MemoryStream(Encoding.UTF8.GetBytes(documentText)), selector)
         End Function
 
         <Extension>
-        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of XElement)
+        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$, selector As Func(Of XElement, Boolean)) As IEnumerable(Of XElement)
             Using file As Stream = path.Open(FileMode.Open)
-                For Each node In UltraLargeXmlNodesIterator(nodeName, file)
+                For Each node In UltraLargeXmlNodesIterator(nodeName, file, selector)
                     ' 因为在这里打开了一个文件,假若不使用iterator迭代的话
                     ' 文件会被直接关闭,导致无法读取
                     Yield node
@@ -274,7 +285,7 @@ Namespace Text.Xml.Linq
         End Function
 
         <Extension>
-        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, documentText As Stream) As IEnumerable(Of XElement)
+        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, documentText As Stream, selector As Func(Of XElement, Boolean)) As IEnumerable(Of XElement)
             Dim el As New Value(Of XElement)
             Dim settings As New XmlReaderSettings With {
                 .ValidationFlags = XmlSchemaValidationFlags.None,
@@ -291,7 +302,13 @@ Namespace Text.Xml.Linq
                     ' Parse the file And return each of the child_node
                     If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
                         If (Not (el = XNode.ReadFrom(reader)) Is Nothing) Then
-                            Yield el.Value
+                            If Not selector Is Nothing Then
+                                If selector(el.Value) Then
+                                    Yield el.Value
+                                End If
+                            Else
+                                Yield el.Value
+                            End If
                         End If
                     End If
                 Loop
@@ -300,10 +317,12 @@ Namespace Text.Xml.Linq
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function PopulateXmlElementText(Of T As Class)(path$, Optional typeName$ = Nothing) As IEnumerable(Of String)
+        Public Function PopulateXmlElementText(Of T As Class)(path$,
+                                                              Optional typeName$ = Nothing,
+                                                              Optional selector As Func(Of XElement, Boolean) = Nothing) As IEnumerable(Of String)
             Return GetType(T) _
                 .GetTypeName([default]:=typeName) _
-                .UltraLargeXmlNodesIterator(path)
+                .UltraLargeXmlNodesIterator(path, selector)
         End Function
     End Module
 End Namespace

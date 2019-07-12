@@ -22,7 +22,7 @@ Public Module Loader
                             '
                             ' 但是如果样本之中的X向量中存在一个非常小的数,则会反而被无限放大??
                             Return New Correlation With {
-                                .B = Vector.rand(-0.05, 0, width)
+                                .B = Vector.rand(-1 ^ 10, 1 ^ -10, width)
                             }
                         End Function) _
                 .ToArray,
@@ -39,6 +39,12 @@ Public Module Loader
         }
     End Function
 
+    ''' <summary>
+    ''' Create dataset of the factors in the grid system, and then we are able to save the model to file
+    ''' </summary>
+    ''' <param name="genome"></param>
+    ''' <param name="error#"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function CreateSnapshot(genome As Genome, error#) As GridMatrix

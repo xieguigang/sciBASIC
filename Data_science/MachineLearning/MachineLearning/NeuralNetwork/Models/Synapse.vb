@@ -64,6 +64,35 @@ Namespace NeuralNetwork
         Public Property WeightDelta As Double
 #End Region
 
+        ''' <summary>
+        ''' ``a.Weight * a.InputNeuron.Value``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Value As Double
+            Get
+                ' 在这里为了防止出现 0 * Inf = NaN 的情况出现
+                If Weight = 0R OrElse InputNeuron.Value = 0 Then
+                    Return 0
+                Else
+                    Return Weight * InputNeuron.Value
+                End If
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' ``a.OutputNeuron.Gradient * a.Weight``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Gradient As Double
+            Get
+                If OutputNeuron.Gradient = 0R OrElse Weight = 0R Then
+                    Return 0
+                Else
+                    Return OutputNeuron.Gradient * Weight
+                End If
+            End Get
+        End Property
+
         Public Sub New(inputNeuron As Neuron, outputNeuron As Neuron, weight As Func(Of Double))
             Call Me.New(inputNeuron, outputNeuron)
 

@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::56243c01bc66bfe7b1d456ab53f07120, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IActivationFunction
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IActivationFunction
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@
 ' andrew.kirillov@gmail.com
 '
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
 Namespace NeuralNetwork.Activations
@@ -54,59 +55,56 @@ Namespace NeuralNetwork.Activations
     ''' <summary>
     ''' Activation function interface.
     ''' </summary>
-    ''' 
-    ''' <remarks>All activation functions, which are supposed to be used with
+    ''' <remarks>
+    ''' All activation functions, which are supposed to be used with
     ''' neurons, which calculate their output as a function of weighted sum of
     ''' their inputs, should implement this interfaces.
     ''' </remarks>
-    ''' 
     Public MustInherit Class IActivationFunction
 
         Public MustOverride ReadOnly Property Store As ActiveFunction
 
         ''' <summary>
+        ''' 因为激活函数在求导之后,结果值可能会出现无穷大
+        ''' 所以可以利用这个值来限制求导之后的结果最大值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Truncate As Double = 100
+
+        Default Public ReadOnly Property Evaluate(x As Double) As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me.Function(x)
+            End Get
+        End Property
+
+        Public Overridable Function CalculateDerivative(x As Double) As Double
+            If Truncate > 0 Then
+                Return ValueTruncate(Derivative(x), Truncate)
+            Else
+                Return Derivative(x)
+            End If
+        End Function
+
+        ''' <summary>
         ''' Calculates function value.
         ''' </summary>
-        '''
         ''' <param name="x">Function input value.</param>
-        ''' 
         ''' <returns>Function output value, <i>f(x)</i>.</returns>
-        '''
-        ''' <remarks>The method calculates function value at point <paramref name="x"/>.</remarks>
-        '''
+        ''' <remarks>
+        ''' The method calculates function value at point <paramref name="x"/>.
+        ''' </remarks>
         Public MustOverride Function [Function](x As Double) As Double
 
         ''' <summary>
         ''' Calculates function derivative.
         ''' </summary>
-        ''' 
         ''' <param name="x">Function input value.</param>
-        ''' 
         ''' <returns>Function derivative, <i>f'(x)</i>.</returns>
-        ''' 
-        ''' <remarks>The method calculates function derivative at point <paramref name="x"/>.</remarks>
-        '''
-        Public MustOverride Function Derivative(x As Double) As Double
-
-        ''' <summary>
-        ''' Calculates function derivative.
-        ''' </summary>
-        ''' 
-        ''' <param name="y">Function output value - the value, which was obtained
-        ''' with the help of "Function" method.</param>
-        ''' 
-        ''' <returns>Function derivative, <i>f'(x)</i>.</returns>
-        ''' 
-        ''' <remarks><para>The method calculates the same derivative value as the
-        ''' <see cref="Derivative"/> method, but it takes not the input <b>x</b> value
-        ''' itself, but the function value, which was calculated previously with
-        ''' the help of "Function" method.</para>
-        ''' 
-        ''' <para><note>Some applications require as function value, as derivative value,
-        ''' so they can save the amount of calculations using this method to calculate derivative.</note></para>
+        ''' <remarks>
+        ''' The method calculates function derivative at point <paramref name="x"/>.
         ''' </remarks>
-        ''' 
-        Public MustOverride Function Derivative2(y As Double) As Double
+        Protected MustOverride Function Derivative(x As Double) As Double
 
         ''' <summary>
         ''' 必须要重写这个函数来将函数对象序列化为表达式字符串文本

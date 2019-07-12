@@ -1,46 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::194dd28275848e8c3d56262299d73a30, Data_science\DataMining\DataMining\Validation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Structure Validation
-    ' 
-    '     Properties: F1Score, FbetaScore, FPR, NPV
-    ' 
-    '     Function: AUC, Calc, ROC, ToDataSet, ToString
-    ' 
-    ' /********************************************************************************/
+' Structure Validation
+' 
+'     Properties: F1Score, FbetaScore, FPR, NPV
+' 
+'     Function: AUC, Calc, ROC, ToDataSet, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -245,17 +247,79 @@ Public Structure Validation
     ''' 但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，
     ''' 在此引入ROC。
     ''' </remarks>
-    Public Shared Iterator Function ROC(Of T)(entity As IEnumerable(Of T), getValidate As Func(Of T, Double, Boolean), getPredict As Func(Of T, Double, Boolean), Optional threshold As Sequence = Nothing) As IEnumerable(Of Validation)
+    Public Shared Iterator Function ROC(Of T)(entity As IEnumerable(Of T),
+                                              getValidate As Func(Of T, Double, Boolean),
+                                              getPredict As Func(Of T, Double, Boolean),
+                                              Optional threshold As [Variant](Of Sequence, Func(Of T, Double)) = Nothing) As IEnumerable(Of Validation)
+
         Dim validate As Func(Of T, Boolean)
         Dim predict As Func(Of T, Boolean)
+        Dim dataArray As T() = entity.ToArray
+        Dim thresholdPopulator = Function() As IEnumerable(Of Double)
+                                     If threshold Is Nothing Then
+                                         Return normalRange.DefaultValue.AsEnumerable
+                                     ElseIf threshold Like GetType(Sequence) Then
+                                         Return threshold.TryCast(Of Sequence).AsEnumerable
+                                     Else
+                                         Return dataArray.Select(threshold.TryCast(Of Func(Of T, Double)))
+                                     End If
+                                 End Function
 
-        For Each cutoff As Double In (threshold Or normalRange).AsEnumerable
+        For Each cutoff As Double In thresholdPopulator()
 #Disable Warning
             validate = Function(x) getValidate(x, cutoff)
             predict = Function(x) getPredict(x, cutoff)
 
-            Yield Validation.Calc(entity, validate, predict, percentile:=cutoff)
+            Yield Validation.Calc(dataArray, validate, predict, percentile:=cutoff)
 #Enable Warning
         Next
+    End Function
+End Structure
+
+Public Structure Validate
+
+    Dim actuals As Double()
+    Dim predicts As Double()
+
+    Public ReadOnly Property err As Double
+        Get
+            Dim predicts = Me.predicts
+
+            Return actuals _
+                .Select(Function(x, i) Math.Abs(x - predicts(i))) _
+                .Average
+        End Get
+    End Property
+
+    Public ReadOnly Property width As Integer
+        Get
+            Return actuals.Length
+        End Get
+    End Property
+
+    Public Shared Iterator Function ROC(data As IEnumerable(Of Validate),
+                                        Optional threshold As Sequence = Nothing,
+                                        Optional outputLabels$() = Nothing) As IEnumerable(Of NamedCollection(Of Validation))
+
+        Dim dataArray = data.ToArray
+        Dim width = dataArray(Scan0).width
+
+        If outputLabels.IsNullOrEmpty Then
+            outputLabels = width.SeqIterator.Select(Function(i) $"output_i").ToArray
+        End If
+
+#Disable Warning
+        For i As Integer = 0 To width - 1
+            Yield New NamedCollection(Of Validation) With {
+                .name = outputLabels(i),
+                .value = Validation.ROC(Of Validate)(
+                    entity:=dataArray,
+                    getValidate:=Function(x, cutoff) x.actuals(i) >= cutoff,
+                    getPredict:=Function(x, cutoff) x.predicts(i) >= cutoff,
+                    threshold:=threshold Or Validation.normalRange
+                )
+            }
+        Next
+#Enable Warning
     End Function
 End Structure

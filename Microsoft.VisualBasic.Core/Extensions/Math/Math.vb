@@ -920,18 +920,16 @@ Namespace Math
         Public Function Round(a As Double) As Double
             Return sys.Round(a)
         End Function
-        '
-        ' Summary:
-        '     Returns the hyperbolic cosine of the specified angle.
-        '
-        ' Parameters:
-        '   value:
-        '     An angle, measured in radians.
-        '
-        ' Returns:
-        '     The hyperbolic cosine of value. If value is equal to System.Double.NegativeInfinity
-        '     or System.Double.PositiveInfinity, System.Double.PositiveInfinity is returned.
-        '     If value is equal to System.Double.NaN, System.Double.NaN is returned.
+
+        ''' <summary>
+        ''' Returns the hyperbolic cosine of the specified angle.
+        ''' </summary>
+        ''' <param name="value">An angle, measured in radians.</param>
+        ''' <returns>
+        ''' The hyperbolic cosine of value. If value is equal to System.Double.NegativeInfinity
+        ''' or System.Double.PositiveInfinity, System.Double.PositiveInfinity is returned.
+        ''' If value is equal to System.Double.NaN, System.Double.NaN is returned.
+        ''' </returns>
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Cosh(value As Double) As Double

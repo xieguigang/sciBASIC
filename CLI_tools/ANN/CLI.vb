@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::e9f7722af6ea456d94954a9fbb99686d, CLI_tools\ANN\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, ExportValueFrames
-    '               ListActiveFunction, MinErrorSnapshot, NormalizeSampleDebugger, ROCData, runTrainingCommon
-    '               Train
-    ' 
-    '     Sub: SummaryDebuggerDump
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, ExportValueFrames
+'               ListActiveFunction, MinErrorSnapshot, NormalizeSampleDebugger, ROCData, runTrainingCommon
+'               Train
+' 
+'     Sub: SummaryDebuggerDump
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Debugger
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports DataFrame = Microsoft.VisualBasic.Data.csv.IO.DataFrame
 Imports Excel = Microsoft.VisualBasic.Data.csv.IO.DataSet
 
@@ -252,7 +253,7 @@ Module CLI
         Dim parallel As Boolean = args("/parallel")
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}_ANN_trained.Xml"
         Dim samples As DataSet = [in].LoadXml(Of DataSet)
-        Dim config As Config = (args <= "/config").LoadProfile(Of Config) Or config.Default
+        Dim config As Config = (args <= "/config").LoadProfile(Of Config) Or Config.Default
         Dim hiddenSize As Integer()
 
         If config.hidden_size.StringEmpty Then
@@ -362,6 +363,8 @@ Module CLI
                                 End If
 
                                 If err < minError Then
+                                    Call $"Current AUC on training set:={trainer.AUC.GetJson}".__INFO_ECHO
+
                                     ' 因为这个只是保存一个临时文件,可能在测试的时候会因为占用
                                     ' 这个临时文件而导致保存失败
                                     ' 所以在这里忽略掉这个错误就好了

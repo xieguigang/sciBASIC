@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::ac0dce7cd6f70d23927ae3fd8e3b7a6e, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Network.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Network
-    ' 
-    '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
-    '                     Momentum, OutputLayer
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: Compute, ForwardPropagate, ToString
-    ' 
-    '         Sub: BackPropagate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Network
+' 
+'         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
+'                     Momentum, OutputLayer
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: Compute, ForwardPropagate, ToString
+' 
+'         Sub: BackPropagate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,13 +58,14 @@ Namespace NeuralNetwork
     ''' <summary>
     ''' 人工神经网络计算用的对象模型
     ''' 
-    ''' https://github.com/trentsartain/Neural-Network
+    ''' > https://github.com/trentsartain/Neural-Network
     ''' </summary>
     Public Class Network : Inherits Model
 
 #Region "-- Properties --"
         Public Property LearnRate As Double
         Public Property Momentum As Double
+        Public Property Truncate As Double = -1
 
         ''' <summary>
         ''' 通过这个属性可以枚举出所有的输入层的神经元节点
@@ -189,8 +190,8 @@ Namespace NeuralNetwork
         ''' <returns></returns>
         Public Function ForwardPropagate(inputs As Double(), parallel As Boolean) As Layer
             Call InputLayer.Input(data:=inputs)
-            Call HiddenLayer.ForwardPropagate(parallel)
-            Call OutputLayer.CalculateValue()
+            Call HiddenLayer.ForwardPropagate(parallel, Truncate)
+            Call OutputLayer.CalculateValue(truncate:=Truncate)
 
             Return OutputLayer
         End Function
@@ -203,11 +204,11 @@ Namespace NeuralNetwork
         ''' 在反向传播之后,网络只会修改节点之间的突触边链接的权重值以及节点
         ''' 的<see cref="Neuron.Gradient"/>值,没有修改节点的<see cref="Neuron.Value"/>值.
         ''' </remarks>
-        Public Sub BackPropagate(targets As Double(), truncate As Double, parallel As Boolean)
+        Public Sub BackPropagate(targets As Double(), parallel As Boolean)
             LearnRate = LearnRate * remains
 
-            Call OutputLayer.CalculateGradient(targets, truncate)
-            Call HiddenLayer.BackPropagate(LearnRate, Momentum, truncate, parallel)
+            Call OutputLayer.CalculateGradient(targets, Truncate)
+            Call HiddenLayer.BackPropagate(LearnRate, Momentum, Truncate, parallel)
             Call OutputLayer.UpdateWeights(LearnRate, Momentum, parallel)
         End Sub
 

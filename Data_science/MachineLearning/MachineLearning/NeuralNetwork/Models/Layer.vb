@@ -151,10 +151,10 @@ Namespace NeuralNetwork
         ''' 在这个函数之中完成<see cref="Neuron.CalculateValue"/>函数的调用之后
         ''' 将会更新<see cref="Neuron.Value"/>属性值
         ''' </remarks>
-        Public Sub CalculateValue(Optional parallel As Boolean = False)
+        Public Sub CalculateValue(Optional parallel As Boolean = False, Optional truncate As Double = -1)
             If Not parallel Then
                 For Each neuron As Neuron In allActiveNodes()
-                    Call neuron.CalculateValue(doDropOutMode)
+                    Call neuron.CalculateValue(doDropOutMode, truncate)
                 Next
             Else
                 ' 在这里将结果值赋值到一个临时的匿名变量中
@@ -166,7 +166,7 @@ Namespace NeuralNetwork
                 ' 所以在这里的并行是没有问题的
                 With Aggregate neuron As Neuron
                      In allActiveNodes.AsParallel
-                     Let run = neuron.CalculateValue(doDropOutMode)
+                     Let run = neuron.CalculateValue(doDropOutMode, truncate)
                      Into Sum(run)
                 End With
             End If
