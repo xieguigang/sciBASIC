@@ -150,7 +150,8 @@ Namespace Darwinism.GAF
             Return New outPrint With {
                 .iter = iteration,
                 .fit = bestFit,
-                .chromosome = best.ToString
+                .chromosome = best.ToString,
+                .MutationRate = best.MutationRate
             }
         End Function
     End Class
@@ -160,15 +161,16 @@ Namespace Darwinism.GAF
         Public Property iter%
         Public Property fit#
         Public Property chromosome$
+        Public Property MutationRate#
 
         Public Shared Sub PrintTitle()
             ' just for pretty print
-            Console.WriteLine($"{NameOf(outPrint.iter)}{vbTab}{NameOf(outPrint.fit)}{vbTab}{NameOf(outPrint.chromosome)}")
+            Console.WriteLine($"{NameOf(outPrint.iter)}{vbTab}{NameOf(outPrint.fit)}{vbTab}{NameOf(outPrint.chromosome)}({NameOf(outPrint.MutationRate)})")
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"{iter}{vbTab}{fit}{vbTab}{chromosome}"
+            Return $"{iter}{vbTab}{fit}{vbTab}{chromosome}({MutationRate})"
         End Function
     End Structure
 End Namespace
