@@ -1,4 +1,36 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::5a8ee1ca10032ef241bd50cfc7b4fbda, gr\avi\Encoder.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Encoder
+    ' 
+    '     Properties: settings, streams
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: getVideoDataLength, getVideoHeaderLength
+    ' 
+    '     Sub: WriteBuffer
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 
 ''' <summary>
 ''' A simple VB.NET AVI encoder
@@ -113,5 +145,6 @@ Public Class Encoder
         Return len
     End Function
 End Class
+
 
 

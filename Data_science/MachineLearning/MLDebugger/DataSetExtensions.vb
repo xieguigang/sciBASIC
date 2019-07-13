@@ -1,4 +1,29 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::c42923418d5ba071f4e96a9cd11b7d54, Data_science\MachineLearning\MLDebugger\DataSetExtensions.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module DataSetExtensions
+    ' 
+    '     Function: SampleSetCreator, ToTable
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Table = Microsoft.VisualBasic.Data.csv.IO.DataSet
@@ -73,3 +98,4 @@ Public Module DataSetExtensions
         End If
     End Function
 End Module
+

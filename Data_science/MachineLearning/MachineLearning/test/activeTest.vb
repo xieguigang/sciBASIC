@@ -1,4 +1,31 @@
-﻿Imports Microsoft.VisualBasic.Data.csv
+﻿#Region "Microsoft.VisualBasic::35c00082bceaab5b142f1c3add276633, Data_science\MachineLearning\MachineLearning\test\activeTest.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module activeTest
+    ' 
+    '     Function: runTest
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 
@@ -38,3 +65,4 @@ Module activeTest
         Next
     End Function
 End Module
+

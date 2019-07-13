@@ -1,4 +1,29 @@
-﻿Imports System.Reflection
+﻿#Region "Microsoft.VisualBasic::21888c874650a99927cccd32e21d6b80, mime\application%json\Serializer\JSONSerializer.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module JSONSerializer
+    ' 
+    '     Function: (+2 Overloads) GetJson, populateArrayJson, populateObjectJson, populateTableJson
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -120,3 +145,4 @@ Public Module JSONSerializer
         End If
     End Function
 End Module
+

@@ -1,4 +1,31 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::4c4e6ab7dbbb10e7b3a1c0610c591d94, Data_science\Darwinism\NonlinearGrid\TopologyInference\Models\Correlation.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Correlation
+    ' 
+    '     Properties: B, BC
+    ' 
+    '     Function: Clone, Evaluate, ToString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization
@@ -43,3 +70,4 @@ Public Class Correlation : Implements ICloneable(Of Correlation)
         }
     End Function
 End Class
+

@@ -1,4 +1,31 @@
-﻿Imports System.ComponentModel
+﻿#Region "Microsoft.VisualBasic::f570fea059e88979270951842516b392, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Program
+    ' 
+    '     Function: DumpAsNetwork, ExportFactorImpact, Main, trainGA, ValidationSummary
+    ' 
+    '     Sub: RunFitProcess
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
@@ -167,3 +194,4 @@ Module Program
         Call engine.Train()
     End Sub
 End Module
+

@@ -1,4 +1,30 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::677f39aab76dbb6f4685a5f5b343465f, Data_science\Graph\Model\Tree\TermTree.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class TermTree
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) Add, newChild, Visit
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -68,3 +94,4 @@ Public Class TermTree(Of T) : Inherits Tree(Of T, String)
         End If
     End Function
 End Class
+

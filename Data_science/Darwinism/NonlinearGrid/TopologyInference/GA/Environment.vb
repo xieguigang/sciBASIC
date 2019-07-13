@@ -1,4 +1,32 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
+﻿#Region "Microsoft.VisualBasic::bcc3ef1ab0aefafbd21aab7ff2781072, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Environment.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Environment
+    ' 
+    '     Properties: Cacheable
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Calculate
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -41,3 +69,4 @@ Public Class Environment : Implements Fitness(Of Genome)
             .Average
     End Function
 End Class
+

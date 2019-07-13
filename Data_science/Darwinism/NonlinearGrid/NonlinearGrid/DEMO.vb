@@ -1,4 +1,31 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿#Region "Microsoft.VisualBasic::9e29f0812aaaf5f6c6c7ddba6e52681b, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\DEMO.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module DEMO
+    ' 
+    '     Function: populate
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Debugger
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
@@ -25,3 +52,4 @@ Module DEMO
         Next
     End Function
 End Module
+

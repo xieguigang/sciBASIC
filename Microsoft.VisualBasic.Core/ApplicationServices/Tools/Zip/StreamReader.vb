@@ -1,4 +1,30 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::a7764170bb2462a44609972063c01f91, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\StreamReader.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module ZipStreamReader
+    ' 
+    '         Function: LoadZipArchive
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel

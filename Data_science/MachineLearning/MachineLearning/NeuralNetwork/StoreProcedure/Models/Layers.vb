@@ -1,4 +1,38 @@
-﻿Imports System.Xml.Serialization
+﻿#Region "Microsoft.VisualBasic::f372f7b4aa9ecafd00346610d382b015, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\Layers.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class NeuronLayer
+    ' 
+    '         Properties: activation, id, neurons
+    ' 
+    '         Function: getCollection, getSize
+    ' 
+    '     Class HiddenLayer
+    ' 
+    '         Properties: activation, layers
+    ' 
+    '         Function: getCollection, getSize
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Text.Xml.Models

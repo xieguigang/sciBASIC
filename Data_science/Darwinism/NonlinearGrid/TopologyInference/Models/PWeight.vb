@@ -1,4 +1,31 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::2f8189d87ac0b1fe88f6e572dbd7c27b, Data_science\Darwinism\NonlinearGrid\TopologyInference\Models\PWeight.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class PWeight
+    ' 
+    '     Properties: W
+    ' 
+    '     Function: Clone, Evaluate, ToString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization
 
@@ -21,3 +48,4 @@ Public Class PWeight : Implements ICloneable(Of PWeight)
         }
     End Function
 End Class
+

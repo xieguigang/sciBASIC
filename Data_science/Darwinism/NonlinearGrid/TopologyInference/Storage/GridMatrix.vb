@@ -1,4 +1,35 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::4866f94686ba7dc8655873f8c6aaa52a, Data_science\Darwinism\NonlinearGrid\TopologyInference\Storage\GridMatrix.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class GridMatrix
+    ' 
+    '     Properties: [const], [error], correlations, direction
+    ' 
+    '     Function: CreateSystem
+    ' 
+    ' Class Constants
+    ' 
+    '     Properties: A, B
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text.Xml.Models

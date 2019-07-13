@@ -1,4 +1,32 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::fec059265e5e2696aa1f5a34f72599a6, gr\avi\FrameStream.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class FrameStream
+    ' 
+    '     Properties: length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 
 Public Class FrameStream
 
@@ -31,3 +59,4 @@ Public Class FrameStream
         End Using
     End Operator
 End Class
+

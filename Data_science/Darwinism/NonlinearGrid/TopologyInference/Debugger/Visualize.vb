@@ -1,4 +1,29 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::37a71051fba2035c4002b9ec092afc80, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Visualize
+    ' 
+    '     Function: CreateGraph, NodeImportance
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
@@ -89,3 +114,4 @@ Public Module Visualize
         Return g
     End Function
 End Module
+

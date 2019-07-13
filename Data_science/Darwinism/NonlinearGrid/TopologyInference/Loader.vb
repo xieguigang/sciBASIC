@@ -1,4 +1,29 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::268d333caa16ea068203118239e90bb7, Data_science\Darwinism\NonlinearGrid\TopologyInference\Loader.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Loader
+    ' 
+    '     Function: CreateSnapshot, EmptyGridSystem
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -84,3 +109,4 @@ Public Module Loader
         '}
     End Function
 End Module
+

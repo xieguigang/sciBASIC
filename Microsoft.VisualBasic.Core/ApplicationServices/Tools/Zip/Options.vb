@@ -1,4 +1,42 @@
-﻿Namespace ApplicationServices.Zip
+﻿#Region "Microsoft.VisualBasic::ebdf46fff322a8fbaf22989b286305b2, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\Options.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum Overwrite
+    ' 
+    '         Always, IfNewer, Never
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ArchiveAction
+    ' 
+    '         [Error], Ignore, Merge, Replace
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace ApplicationServices.Zip
 
     ''' <summary>
     ''' Used to specify what our overwrite policy

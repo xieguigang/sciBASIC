@@ -1,4 +1,36 @@
-﻿Public Class UInt8Array : Implements IDisposable
+﻿#Region "Microsoft.VisualBasic::7c8ce47675043b58e307221665a7df68, gr\avi\UInt8Array.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class UInt8Array
+    ' 
+    '     Properties: length
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: subarray, ToString
+    ' 
+    '     Sub: (+2 Overloads) Dispose, Flush, writeBytes, writeInt, writeLong
+    '          writeShort, writeString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Public Class UInt8Array : Implements IDisposable
 
     Dim buf As Byte()
     Dim path As String
@@ -105,3 +137,4 @@
 #End Region
 
 End Class
+

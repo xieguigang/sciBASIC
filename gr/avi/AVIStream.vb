@@ -1,4 +1,35 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::43e9203dcfedb3e14e9a3f052533d2a7, gr\avi\AVIStream.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class AVIStream
+    ' 
+    '     Properties: fps, frames, height, width
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: writeDataBuffer, writeHeaderBuffer
+    ' 
+    '     Sub: (+2 Overloads) addFrame, addRGBFrame
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 

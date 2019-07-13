@@ -1,4 +1,32 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::5f80fab1bf1ad811ac17baf7b84cd753, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Genome.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Genome
+    ' 
+    '     Properties: MutationRate
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: CalculateError, Crossover, Mutate, ToString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
@@ -135,3 +163,4 @@ Public Class Genome : Implements Chromosome(Of Genome)
             .MD5
     End Function
 End Class
+

@@ -1,29 +1,13 @@
-﻿#Region "Microsoft.VisualBasic::c4413fa78074fe69f86ad0fb74817ad2, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Synapse.vb"
+﻿#Region "Microsoft.VisualBasic::3bc70e7ab4390cf25f6f94ceb7c787d9, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Synapse.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
     ' 
     ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
     ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
     ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -33,7 +17,8 @@
 
     '     Class Synapse
     ' 
-    '         Properties: InputNeuron, OutputNeuron, Weight, WeightDelta
+    '         Properties: Gradient, InputNeuron, OutputNeuron, Value, Weight
+    '                     WeightDelta
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString

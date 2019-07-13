@@ -1,4 +1,31 @@
-﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
+﻿#Region "Microsoft.VisualBasic::559ebed958966bfa966125ce239b6526, Data_science\Darwinism\NonlinearGrid\TopologyInference\Models\System.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class GridSystem
+    ' 
+    '     Properties: A, AC, C
+    ' 
+    '     Function: Clone, Evaluate
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization
 
 ''' <summary>
@@ -46,3 +73,4 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
         }
     End Function
 End Class
+

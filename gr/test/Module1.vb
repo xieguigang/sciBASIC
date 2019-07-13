@@ -1,4 +1,30 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::dbe8fb4c679765fb91d1034f433ea215, gr\test\Module1.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Module1
+    ' 
+    '     Sub: Main
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.AVIMedia
 
@@ -20,4 +46,5 @@ Module Module1
     End Sub
 
 End Module
+
 

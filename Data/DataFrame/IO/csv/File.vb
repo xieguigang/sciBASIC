@@ -1,29 +1,13 @@
-﻿#Region "Microsoft.VisualBasic::4fdd7f2ffe255ddb4563bd967fc5df1a, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::64f4ca56f4151ab62aff41a49ff2a032, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
     ' 
     ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
     ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
     ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -49,10 +33,10 @@
     ' 
     '             Properties: IsReadOnly, RowNumbers
     ' 
-    '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, FastLoad
-    '                       GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty, Join
-    '                       (+2 Overloads) Load, loads, LoadTsv, Normalization, Parse
-    '                       ReadHeaderRow, Remove, RemoveSubRow, Save
+    '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, GetEnumerator
+    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, Join, Load
+    '                       loads, LoadTsv, Normalization, Parse, ReadHeaderRow
+    '                       Remove, RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
     '                  RemoveAt

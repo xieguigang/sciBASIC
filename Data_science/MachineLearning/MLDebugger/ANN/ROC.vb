@@ -1,4 +1,29 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::52b3bfc7329c189a5f30e38b750c4108, Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module ROC
+    ' 
+    '     Function: AUC
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -39,3 +64,4 @@ Public Module ROC
         Return validateAUCs
     End Function
 End Module
+

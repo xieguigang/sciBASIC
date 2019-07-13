@@ -1,45 +1,29 @@
-﻿#Region "Microsoft.VisualBasic::08d6e18b64d878f41024814b367a7a88, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::e99182a5af91e1e16afeddacac8e0b8e, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Structure NamedCollection
-' 
-'         Properties: Description, IsEmpty, Length, Name, Value
-' 
-'         Constructor: (+4 Overloads) Sub New
-'         Function: GetEnumerator, GetValues, IEnumerable_GetEnumerator, ToString
-' 
-' 
-' /********************************************************************************/
+    '     Structure NamedCollection
+    ' 
+    '         Properties: description, IsEmpty, Length, name, value
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: GetEnumerator, GetValues, IEnumerable_GetEnumerator, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

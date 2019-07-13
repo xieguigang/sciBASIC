@@ -1,4 +1,31 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::e85963fb49b4e27cd84ff84757290198, Data_science\Mathematica\CUDA\test\test\Module1.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Module1
+    ' 
+    '     Function: test2
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 
 Module Module1
 
@@ -37,3 +64,4 @@ Module Module1
         Return j
     End Function
 End Module
+

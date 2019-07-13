@@ -1,4 +1,30 @@
-﻿Imports System.Math
+﻿#Region "Microsoft.VisualBasic::6adc12c449dc763ef6e290cbf198eda7, gr\network-visualization\Datavisualization.Network\Analysis\CorrelationGraph.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module CorrelationGraph
+    ' 
+    '         Function: CreateCorrelationGraph
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language

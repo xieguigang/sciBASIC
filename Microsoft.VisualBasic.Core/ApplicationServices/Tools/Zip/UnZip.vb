@@ -1,4 +1,32 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::c75882c2ae2d3f489422ea4953d52775, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\UnZip.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module UnZip
+    ' 
+    '         Function: ExtractToSelfDirectory
+    ' 
+    '         Sub: ExtractToFileInternal, ImprovedExtractToDirectory, ImprovedExtractToFile
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection

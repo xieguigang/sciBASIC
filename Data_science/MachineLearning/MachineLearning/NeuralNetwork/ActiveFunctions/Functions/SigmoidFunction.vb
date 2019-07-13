@@ -1,29 +1,13 @@
-﻿#Region "Microsoft.VisualBasic::838f076db36740c3fe6d736304358f57, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\SigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::d3f9c219c2f6cc5d6f74421f62d0b979, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\SigmoidFunction.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
     ' 
     ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
     ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
     ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
@@ -35,7 +19,7 @@
     ' 
     '         Properties: Store
     ' 
-    '         Function: [Function], Derivative, Derivative2, ToString
+    '         Function: [Function], Derivative, ToString
     ' 
     ' 
     ' /********************************************************************************/
