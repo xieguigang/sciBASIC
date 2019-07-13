@@ -35,7 +35,7 @@ Public Class AVIStream
     ''' Adds a frame-array to the frame list.
     ''' </summary>
     ''' <param name="imgData">
-    ''' the data of an image; a flat array containing (r, g, b, a) values.
+    ''' the data of an image; a flat array containing ``(r, g, b, a)`` values.
     ''' </param>
     Public Sub addRGBFrame(imgData As Byte())
         Dim frame As Byte() = New Byte(imgData.Length - 1) {}
@@ -60,59 +60,59 @@ Public Class AVIStream
         If hexIdx = "db" Then hexIdx = "0" & hexIdx
         If hexIdx.Length = 3 Then hexIdx = "0" & hexIdx
 
-        stream.writeString(0, "LIST") ';
-        stream.writeInt(4, 148 + frames.Count * 4 * 2) ';
-        stream.writeString(8, "strl") ';
-        stream.writeString(12, "strh") ';
-        stream.writeInt(16, 56) ';
-        stream.writeString(20, "vids") '; // fourCC
-        stream.writeString(24, "DIB ") '; // Uncompressed
-        stream.writeInt(28, 0) '; // Flags
-        stream.writeShort(32, 1) '; // Priority
-        stream.writeShort(34, 0) '; // Language
-        stream.writeInt(36, 0) '; // Initial frames
-        stream.writeInt(40, 1) '; // Scale
-        stream.writeInt(44, fps) '; // Rate
-        stream.writeInt(48, 0) '; // Startdelay
-        stream.writeInt(52, frames.Count) '; // Length
-        stream.writeInt(56, CInt(width) * CInt(height) * 4 + 8) '; // suggested buffer size
-        stream.writeInt(60, -1) '; // quality
-        stream.writeInt(64, 0) '; // sampleSize
-        stream.writeShort(68, 0) '; // Rect left
-        stream.writeShort(70, 0) '; // Rect top
-        stream.writeShort(72, width) '; // Rect width
-        stream.writeShort(74, height) '; // Rect height
+        stream.writeString(0, "LIST")
+        stream.writeInt(4, 148 + frames.Count * 4 * 2)
+        stream.writeString(8, "strl")
+        stream.writeString(12, "strh")
+        stream.writeInt(16, 56)
+        stream.writeString(20, "vids")    ' fourCC
+        stream.writeString(24, "DIB ")    ' Uncompressed
+        stream.writeInt(28, 0)            ' Flags
+        stream.writeShort(32, 1)          ' Priority
+        stream.writeShort(34, 0)          ' Language
+        stream.writeInt(36, 0)            ' Initial frames
+        stream.writeInt(40, 1)            ' Scale
+        stream.writeInt(44, fps)          ' Rate
+        stream.writeInt(48, 0)            ' Startdelay
+        stream.writeInt(52, frames.Count) ' Length
+        stream.writeInt(56, CInt(width) * CInt(height) * 4 + 8) ' suggested buffer size
+        stream.writeInt(60, -1)       ' quality
+        stream.writeInt(64, 0)        ' sampleSize
+        stream.writeShort(68, 0)      ' Rect left
+        stream.writeShort(70, 0)      ' Rect top
+        stream.writeShort(72, width)  ' Rect width
+        stream.writeShort(74, height) ' Rect height
 
-        stream.writeString(76, "strf") ';
-        stream.writeInt(80, 40) ';
-        stream.writeInt(84, 40) '; // struct size
-        stream.writeInt(88, width) '; // width
-        stream.writeInt(92, -height) '; // height
-        stream.writeShort(96, 1) '; // planes
-        stream.writeShort(98, 32) '; // bits per pixel
-        stream.writeInt(100, 0) '; // compression
-        stream.writeInt(104, 0) '; // image size
-        stream.writeInt(108, 0) '; // x pixels per meter
-        stream.writeInt(112, 0) '; // y pixels per meter
-        stream.writeInt(116, 0) '; // colortable used
-        stream.writeInt(120, 0) '; // colortable important
+        stream.writeString(76, "strf")
+        stream.writeInt(80, 40)
+        stream.writeInt(84, 40)      ' struct size
+        stream.writeInt(88, width)   ' width
+        stream.writeInt(92, -height) ' height
+        stream.writeShort(96, 1)     ' planes
+        stream.writeShort(98, 32)    ' bits per pixel
+        stream.writeInt(100, 0)      ' compression
+        stream.writeInt(104, 0)      ' image size
+        stream.writeInt(108, 0)      ' x pixels per meter
+        stream.writeInt(112, 0)      ' y pixels per meter
+        stream.writeInt(116, 0)      ' colortable used
+        stream.writeInt(120, 0)      ' colortable important
 
-        stream.writeString(124, "indx") ';
-        stream.writeInt(128, 24 + frames.Count * 4 * 2) '; // size
-        stream.writeShort(132, 2) '; // LongsPerEntry
-        stream.writeBytes(134, {0, &H1}) '; // indexSubType + indexType
-        stream.writeInt(136, frames.Count) '; // numIndexEntries
-        stream.writeString(140, hexIdx) '; // chunkID
-        stream.writeLong(144, dataOffset) '; // data offset
-        stream.writeInt(152, 0) '; // reserved
+        stream.writeString(124, "indx")
+        stream.writeInt(128, 24 + frames.Count * 4 * 2) ' size
+        stream.writeShort(132, 2)                       ' LongsPerEntry
+        stream.writeBytes(134, {0, &H1})                ' indexSubType + indexType
+        stream.writeInt(136, frames.Count)              ' numIndexEntries
+        stream.writeString(140, hexIdx)                 ' chunkID
+        stream.writeLong(144, dataOffset)               ' data offset
+        stream.writeInt(152, 0)                         ' reserved
 
         Dim offset = 0
 
-        For i As Integer = 0 To Me.frames.Count - 1 ' // index entries
-            stream.writeInt(156 + i * 8, offset) '; // offset
-            stream.writeInt(160 + i * 8, frames(i).Length + 8) '; // size
+        For i As Integer = 0 To Me.frames.Count - 1            ' index entries
+            stream.writeInt(156 + i * 8, offset)               ' offset
+            stream.writeInt(160 + i * 8, frames(i).length + 8) ' size
 
-            offset += Me.frames(i).Length + 8
+            offset += Me.frames(i).length + 8
         Next
 
         Return 156 + Me.frames.Count * 4 * 2

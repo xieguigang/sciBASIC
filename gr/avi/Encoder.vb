@@ -27,11 +27,11 @@ Public Class Encoder
             offset += getVideoDataLength(streams(i))
         Next
 
-        Dim moviOffset = streamHeaderLength + 12 + ' /* RIFF */ 
-            12 + '/* hdrl */ 
-            8 +' /* avih */ 
-            56 +'/* struct */ 
-            12 '/* movi */;
+        Dim moviOffset = streamHeaderLength + 12 + ' RIFF 
+            12 + ' hdrl 
+            8 +  ' avih  
+            56 + ' struct  
+            12   ' movi 
 
         Dim buffer As New UInt8Array(path, moviOffset + offset)
 
@@ -40,21 +40,21 @@ Public Class Encoder
 
         buffer.writeString(12, "LIST")
         buffer.writeInt(16, 68 + streamHeaderLength)
-        buffer.writeString(20, "hdrl") '; // hdrl list
-        buffer.writeString(24, "avih") '; // avih chunk
-        buffer.writeInt(28, 56) '; // avih size
+        buffer.writeString(20, "hdrl") ' hdrl list
+        buffer.writeString(24, "avih") ' avih chunk
+        buffer.writeInt(28, 56)        ' avih size
 
-        buffer.writeInt(32, 66665) ';
-        buffer.writeInt(36, 0) '; // MaxBytesPerSec
-        buffer.writeInt(40, 2) '; // Padding (In bytes)
-        buffer.writeInt(44, 0) '; // Flags
-        buffer.writeInt(48, frames) '; // Total Frames
-        buffer.writeInt(52, 0) '; // Initial Frames
-        buffer.writeInt(56, streams.Count) '; // Total Streams
-        buffer.writeInt(60, 0) '; // Suggested Buffer size
-        buffer.writeInt(64, settings.width) '; // pixel width
-        buffer.writeInt(68, settings.height) '; // pixel height
-        buffer.writeInt(72, 0) '; // Reserved int[4]
+        buffer.writeInt(32, 66665)
+        buffer.writeInt(36, 0)         ' MaxBytesPerSec
+        buffer.writeInt(40, 2)         ' Padding (In bytes)
+        buffer.writeInt(44, 0)         ' Flags
+        buffer.writeInt(48, frames)    ' Total Frames
+        buffer.writeInt(52, 0)         ' Initial Frames
+        buffer.writeInt(56, streams.Count)   ' Total Streams
+        buffer.writeInt(60, 0)               ' Suggested Buffer size
+        buffer.writeInt(64, settings.width)  ' pixel width
+        buffer.writeInt(68, settings.height) ' pixel height
+        buffer.writeInt(72, 0) '; Reserved int[4]
         buffer.writeInt(76, 0) ';
         buffer.writeInt(80, 0) ';
         buffer.writeInt(84, 0) ';
@@ -91,13 +91,13 @@ Public Class Encoder
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function getVideoHeaderLength(frameLen As Integer) As Integer
-        Return 12 +' strl 
-            8 +' strh 
-            56 +' struct  
-            8 +' strf 
-            40 + ' struct  
-            8 +' indx 
-            24 +' struct 
+        Return 12 + ' strl 
+            8 +     ' strh 
+            56 +    ' struct  
+            8 +     ' strf 
+            40 +    ' struct  
+            8 +     ' indx 
+            24 +    ' struct 
             frameLen * 4 * 2
     End Function
 
@@ -106,7 +106,8 @@ Public Class Encoder
         Dim frames = stream.frames
 
         For i As Integer = 0 To frames.Count - 1
-            len += 8 + frames(i).length + If(frames(i).length Mod 2 = 0, 0, 1) ' Pad if chunk Not in word boundary
+            ' Pad if chunk Not in word boundary
+            len += 8 + frames(i).length + If(frames(i).length Mod 2 = 0, 0, 1)
         Next
 
         Return len
