@@ -48,12 +48,12 @@ Public Class Genome : Implements Chromosome(Of Genome)
         Dim b = another.chromosome.Clone
 
         SyncLock randf.seeds
-            If FlipCoin(20) Then
+            If FlipCoin(40) Then
                 ' crossover A
                 randf.seeds.Crossover(a.A.Array, b.A.Array)
             End If
 
-            If FlipCoin(20) Then
+            If FlipCoin(40) Then
                 ' dim(A) is equals to dim(C) and is equals to dim(X)
                 Dim i As Integer = randf.NextInteger(upper:=width)
                 Dim j As Integer = randf.NextInteger(upper:=width)
@@ -79,14 +79,14 @@ Public Class Genome : Implements Chromosome(Of Genome)
         ' dim(A) is equals to dim(C) and is equals to dim(X)
         Dim i As Integer
 
-        If FlipCoin(10) Then
+        If FlipCoin() Then
             ' mutate one bit in A vector
             ' A only have -1, 0, 1
             chromosome.A.Array.Mutate(randf.seeds, rate:=MutationRate)
             ' ElseIf FlipCoin(50) Then
         End If
 
-        If FlipCoin(10) Then
+        If FlipCoin() Then
             If chromosome.AC = 0 Then
                 chromosome.AC = 1
             ElseIf FlipCoin() Then
@@ -96,7 +96,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
             End If
         End If
 
-        If FlipCoin(10) Then
+        If FlipCoin() Then
             i = randf.NextInteger(upper:=width)
             ' mutate one bit in C vector
             chromosome.C(i).B.Array.Mutate(randf.seeds, rate:=MutationRate)
@@ -104,7 +104,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
             ' chromosome.P(i).W.Array.Mutate(randf.seeds)
         End If
 
-        If FlipCoin(10) Then
+        If FlipCoin() Then
             i = randf.NextInteger(upper:=width)
 
             If chromosome.C(i).BC = 0 Then
