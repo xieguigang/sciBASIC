@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' A simple VB.NET AVI encoder
@@ -34,7 +35,7 @@ Public Class Encoder
             56 +'/* struct */ 
             12 '/* movi */;
 
-        Dim Buffer As New BinaryDataWriter(path.Open(, doClear:=True))
+        Dim Buffer As New BinaryDataWriter(path.Open(, doClear:=True), Encodings.ASCII)
         Buffer.Write("RIFF", BinaryStringFormat.NoPrefixOrTermination) ' 0
         Buffer.Seek(8, IO.SeekOrigin.Begin)
         Buffer.Write("AVI ", BinaryStringFormat.NoPrefixOrTermination) ' 8
