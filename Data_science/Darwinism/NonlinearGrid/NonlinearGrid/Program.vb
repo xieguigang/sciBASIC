@@ -12,6 +12,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Text
 Imports Table = Microsoft.VisualBasic.Data.csv.IO.DataSet
 
@@ -109,6 +110,11 @@ Module Program
                 Call summaryResult.SaveTo(.ByRef)
             End If
         End With
+
+        Call VBDebugger.WaitOutput()
+        Call Console.WriteLine()
+        Call Console.WriteLine()
+        Call summaryResult.Select(Function(r) r!errors).Summary
 
         Return 0
     End Function

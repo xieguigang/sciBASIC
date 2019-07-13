@@ -238,6 +238,11 @@ Namespace Quantile
         '    Next
         'End Sub
 
+        ''' <summary>
+        ''' 默认是输出到标准输出上的
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="dev"></param>
         <Extension>
         Public Sub Summary(data As IEnumerable(Of Double), Optional dev As TextWriter = Nothing)
             Dim v#() = data.ToArray
