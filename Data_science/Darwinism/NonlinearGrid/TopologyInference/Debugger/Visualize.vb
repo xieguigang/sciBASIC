@@ -8,10 +8,18 @@ Public Module Visualize
 
     <Extension>
     Public Iterator Function NodeImportance(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
-        For Each factor As NumericVector In grid.correlations
+        For i As Integer = 0 To grid.correlations.Length - 1
+            Dim factor As NumericVector = grid.correlations(i)
+            Dim c As Double = grid.const.B(i)
+            Dim impact As Double = c + factor.vector.Sum
+
+            If grid.direction(i) = 0R Then
+                impact = 0
+            End If
+
             Yield New NamedValue(Of Double) With {
-                .Name = factor.name,
-                .Value = factor.vector.Sum
+               .Name = factor.name,
+               .Value = impact
             }
         Next
     End Function

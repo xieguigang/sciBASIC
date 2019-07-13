@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Debugger
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports DataFrame = Microsoft.VisualBasic.Data.csv.IO.DataFrame
 Imports Excel = Microsoft.VisualBasic.Data.csv.IO.DataSet

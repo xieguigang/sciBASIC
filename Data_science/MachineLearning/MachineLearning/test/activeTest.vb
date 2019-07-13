@@ -22,17 +22,17 @@ Module activeTest
                 .Properties = New Dictionary(Of String, Double) From {
                     {"input", x},
                     {"BipolarSigmoid", BipolarSigmoid(x)},
-                    {"BipolarSigmoid/dt", BipolarSigmoid.Derivative(x)},
+                    {"BipolarSigmoid/dt", BipolarSigmoid.CalculateDerivative(x)},
                     {"HyperbolicTangent", HyperbolicTangent(x)},
-                    {"HyperbolicTangent/dt", HyperbolicTangent.Derivative(x)},
+                    {"HyperbolicTangent/dt", HyperbolicTangent.CalculateDerivative(x)},
                     {"ReLU", ReLU(x)},
-                    {"ReLU/dt", ReLU.Derivative(x)},
+                    {"ReLU/dt", ReLU.CalculateDerivative(x)},
                     {"Sigmoid", Sigmoid(x)},
-                    {"Sigmoid/dt", Sigmoid.Derivative(x)},
+                    {"Sigmoid/dt", Sigmoid.CalculateDerivative(x)},
                     {"SigmoidFunction", SigmoidFunction(x)},
-                    {"SigmoidFunction/dt", SigmoidFunction.Derivative(x)},
+                    {"SigmoidFunction/dt", SigmoidFunction.CalculateDerivative(x)},
                     {"Threshold", Threshold(x)},
-                    {"Threshold/dt", Threshold.Derivative(x)}
+                    {"Threshold/dt", Threshold.CalculateDerivative(x)}
                 }
             }
         Next

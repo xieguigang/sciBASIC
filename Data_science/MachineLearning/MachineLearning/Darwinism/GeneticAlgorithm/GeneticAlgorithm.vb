@@ -213,6 +213,16 @@ Namespace Darwinism.GAF
         End Function
 
         ''' <summary>
+        ''' 更新种群中的每一个个体的突变变异程度
+        ''' </summary>
+        ''' <param name="newRate"></param>
+        Public Sub UpdateMutationRate(newRate As Double)
+            For i As Integer = 0 To population.Size - 1
+                population(i).MutationRate = newRate
+            Next
+        End Sub
+
+        ''' <summary>
         ''' Clear the internal cache
         ''' </summary>
         ''' 

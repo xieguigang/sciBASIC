@@ -60,7 +60,17 @@ Public Module Loader
                                 .vector = c.B.ToArray
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .[const] = New Constants With {
+                .A = genome.chromosome.AC,
+                .B = New NumericVector With {
+                    .name = "correlations_const",
+                    .vector = genome.chromosome _
+                        .C _
+                        .Select(Function(ci) ci.BC) _
+                        .ToArray
+                }
+            }
         }
         '    .weights = genome.chromosome _
         '        .P _

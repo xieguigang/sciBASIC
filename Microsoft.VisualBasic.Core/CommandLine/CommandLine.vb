@@ -389,7 +389,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="parameterName"></param>
         ''' <returns></returns>
-        Public Function ContainsParameter(parameterName As String, trim As Boolean) As Boolean
+        Public Function ContainsParameter(parameterName As String, Optional trim As Boolean = False) As Boolean
             Dim namer As String = If(trim, parameterName.TrimParamPrefix, parameterName)
             Dim LQuery = LinqAPI.DefaultFirst(Of Integer) _
  _

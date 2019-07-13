@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::ca5f6adb13464179b62e474ff158fce1, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Accelerator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GAExtensions
-    ' 
-    '         Function: GetSynapseGroups
-    ' 
-    '         Sub: doPrint, RunGAAccelerator
-    ' 
-    '     Class WeightVector
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Clone, Crossover, Mutate, ToString
-    ' 
-    '     Class Fitness
-    ' 
-    '         Properties: Cacheable
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Calculate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GAExtensions
+' 
+'         Function: GetSynapseGroups
+' 
+'         Sub: doPrint, RunGAAccelerator
+' 
+'     Class WeightVector
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Clone, Crossover, Mutate, ToString
+' 
+'     Class Fitness
+' 
+'         Properties: Cacheable
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Calculate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.SecurityString
 
 Namespace NeuralNetwork.Accelerator
@@ -113,6 +113,7 @@ Namespace NeuralNetwork.Accelerator
 
         Shared ReadOnly random As New Random
         ReadOnly keyCache As New Md5HashProvider
+        Public Property MutationRate As Double Implements Chromosome(Of WeightVector).MutationRate
 
         Sub New(Optional synapses As NamedCollection(Of Synapse)() = Nothing)
             If Not synapses Is Nothing Then
@@ -146,7 +147,7 @@ Namespace NeuralNetwork.Accelerator
 
         Public Function Mutate() As WeightVector Implements Chromosome(Of WeightVector).Mutate
             Dim result As WeightVector = Me.Clone()
-            Call result.weights.Mutate(random)
+            Call result.weights.Mutate(random, rate:=MutationRate)
             Return result
         End Function
 
@@ -154,7 +155,8 @@ Namespace NeuralNetwork.Accelerator
             Dim weights#() = New Double(Me.weights.Length - 1) {}
             Call Array.Copy(Me.weights, Scan0, weights, Scan0, weights.Length)
             Return New WeightVector() With {
-                .weights = weights
+                .weights = weights,
+                .MutationRate = MutationRate
             }
         End Function
     End Class

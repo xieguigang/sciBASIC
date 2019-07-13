@@ -11,7 +11,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Text
 Imports Table = Microsoft.VisualBasic.Data.csv.IO.DataSet
 
@@ -36,11 +37,19 @@ Module Program
     End Function
 
     <ExportAPI("/factor.impacts")>
-    <Usage("/factor.impacts /in <model.Xml> [/out <out.csv>]")>
+    <Usage("/factor.impacts /in <model.Xml> [/order <asc/desc> /out <out.csv>]")>
     Public Function ExportFactorImpact(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim model = [in].LoadXml(Of GridMatrix)
         Dim impacts = model.NodeImportance.ToArray
+
+        If args.ContainsParameter("/order") Then
+            If args("/order").DefaultValue.TextEquals("asc") Then
+                impacts = impacts.OrderBy(Function(x) x.Value).ToArray
+            Else
+                impacts = impacts.OrderByDescending(Function(x) x.Value).ToArray
+            End If
+        End If
 
         With args <= "/out"
             If .StringEmpty Then
@@ -56,9 +65,10 @@ Module Program
         Return 0
     End Function
 
-    <ExportAPI("/summary")>
-    <Usage("/summary /in <model.Xml> /data <trainingSet.Xml> [/out <out.csv>]")>
-    Public Function Summary(args As CommandLine) As Integer
+    <ExportAPI("/validates")>
+    <Usage("/validates /in <model.Xml> /data <trainingSet.Xml> [/order <asc/desc> /out <out.csv>]")>
+    <Description("Do model validations.")>
+    Public Function ValidationSummary(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim data$ = args <= "/data"
         Dim model = [in].LoadXml(Of GridMatrix).CreateSystem
@@ -78,6 +88,16 @@ Module Program
                     End Function) _
             .ToArray
 
+        If args.ContainsParameter("/order") Then
+            If args("/order").DefaultValue.TextEquals("asc") Then
+                summaryResult = summaryResult.OrderBy(Function(r) r!errors).ToArray
+            Else
+                summaryResult = summaryResult _
+                    .OrderByDescending(Function(r) r!errors) _
+                    .ToArray
+            End If
+        End If
+
         With args <= "/out"
             If .StringEmpty Then
                 Dim strings = summaryResult.ToCsvDoc _
@@ -91,11 +111,17 @@ Module Program
             End If
         End With
 
+        Call VBDebugger.WaitOutput()
+        Call Console.WriteLine()
+        Call Console.WriteLine($"DataFitting Errors={summaryResult.GroupBy(Function(r) r!actual.ToString).Select(Function(g) g.Select(Function(r) r!errors).Average).Average}")
+        Call Console.WriteLine()
+        Call summaryResult.Select(Function(r) r!errors).Summary
+
         Return 0
     End Function
 
     <ExportAPI("/training")>
-    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /out <output_model.Xml>]")>
+    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /rate <default=0.1> /out <output_model.Xml>]")>
     <Description("Training a grid system use GA method.")>
     Public Function trainGA(args As CommandLine) As Integer
         Dim inFile As String = args <= "/in"
@@ -111,18 +137,19 @@ Module Program
         End If
 
         Dim trainingSet = inFile.LoadXml(Of DataSet)
+        Dim rate As Double = args("/rate") Or 0.1
 
         Call trainingSet.DataSamples _
             .AsEnumerable _
-            .RunFitProcess(trainingSet.width, out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names)
+            .RunFitProcess(trainingSet.width, out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names, mutationRate:=rate)
 
         Return 0
     End Function
 
     <Extension>
-    Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%, factorNames$())
+    Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%, factorNames$(), mutationRate As Double)
         Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(width))
-        Dim population As Population(Of Genome) = New Genome(chromesome).InitialPopulation(popSize)
+        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize)
         Dim fitness As Fitness(Of Genome) = New Environment(trainingSet)
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness)
         Dim engine As New EnvironmentDriver(Of Genome)(ga) With {

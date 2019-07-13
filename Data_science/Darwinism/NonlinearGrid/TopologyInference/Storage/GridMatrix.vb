@@ -8,6 +8,7 @@ Public Class GridMatrix : Inherits XmlDataModel
     Public Property [error] As Double
 
     Public Property direction As NumericVector
+    Public Property [const] As Constants
 
     <XmlElement("correlations")>
     Public Property correlations As NumericVector()
@@ -19,12 +20,14 @@ Public Class GridMatrix : Inherits XmlDataModel
         Return New GridSystem With {
             .A = direction.vector,
             .C = correlations _
-                .Select(Function(r)
+                .Select(Function(r, i)
                             Return New Correlation With {
-                                .B = r.vector
+                                .B = r.vector,
+                                .BC = If([const] Is Nothing, 0, [const].B(i))
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .AC = If([const] Is Nothing, 0, [const].A)
         }
         '    .P = weights 
         '        .Select(Function(r)
@@ -36,4 +39,9 @@ Public Class GridMatrix : Inherits XmlDataModel
         '}
     End Function
 
+End Class
+
+Public Class Constants
+    Public Property A As Double
+    Public Property B As NumericVector
 End Class

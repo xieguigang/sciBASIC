@@ -86,8 +86,8 @@ Namespace Darwinism.GAF.Helper
         ''' <remarks>
         ''' 在进行突变的时候应该是按照给定的范围来进行突变的
         ''' </remarks>
-        <Extension> Public Sub Mutate(ByRef v#(), random As Random, Optional index% = -1000)
-            Dim delta# = (v.Max - v.Min) / 10
+        <Extension> Public Sub Mutate(ByRef v#(), random As Random, Optional index% = -1000, Optional rate# = 0.1)
+            Dim delta# = (v.Max - v.Min) * rate
             Dim mutationValue#
 
             ' 20190709 如果v向量全部都是零或者相等数值的话
@@ -135,6 +135,7 @@ Namespace Darwinism.GAF.Helper
         ''' <param name="v2#"></param>
         <Extension>
         Public Sub Crossover(Of T)(random As Random, ByRef v1 As T(), ByRef v2 As T())
+            ' 在这里减掉1是为了防止两个变量被全部替换掉
             Dim index As Integer = random.Next(v1.Length - 1)
             Dim tmp As T
 
