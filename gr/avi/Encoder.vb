@@ -35,57 +35,63 @@ Public Class Encoder
             56 +'/* struct */ 
             12 '/* movi */;
 
-        Dim Buffer As New BinaryDataWriter(path.Open(, doClear:=True), Encodings.ASCII)
-        Buffer.Write("RIFF", BinaryStringFormat.NoPrefixOrTermination) ' 0
-        Buffer.Seek(8, IO.SeekOrigin.Begin)
-        Buffer.Write("AVI ", BinaryStringFormat.NoPrefixOrTermination) ' 8
+        Dim buffer As New BinaryDataWriter(path.Open(, doClear:=True), Encodings.ASCII)
 
-        Buffer.Write("LIST", BinaryStringFormat.NoPrefixOrTermination) ' 12
-        Buffer.Write(68 + streamHeaderLength) ' 16;
-        Buffer.Write("hdrl", BinaryStringFormat.NoPrefixOrTermination) ' 20; // hdrl list
-        Buffer.Write("avih", BinaryStringFormat.NoPrefixOrTermination) ' 24; // avih chunk
-        Buffer.Write(56) ' 28; // avih size
+        buffer.ByteOrder = ByteOrder.LittleEndian
 
-        Buffer.Write(66665) ' 32;
-        Buffer.Write(0) ' 36; // MaxBytesPerSec
-        Buffer.Write(2) '40; // Padding (In bytes)
-        Buffer.Write(0) '44; // Flags
-        Buffer.Write(frames) ' 48; // Total Frames
-        Buffer.Write(0) '52; // Initial Frames
-        Buffer.Write(Me.streams.Count) ' 56; // Total Streams
-        Buffer.Write(0) ' 60; // Suggested Buffer size
-        Buffer.Write(Me.settings.width) ' 64; // pixel width
-        Buffer.Write(Me.settings.height) ' 68; // pixel height
-        Buffer.Write(0) ' 72; // Reserved int[4]
-        Buffer.Write(0) ' 76;
-        Buffer.Write(0) ' 80;
-        Buffer.Write(0) ' 84;
+        buffer.Write("RIFF", BinaryStringFormat.NoPrefixOrTermination) ' 0
+        buffer.Seek(8, IO.SeekOrigin.Begin)
+        buffer.Write("AVI ", BinaryStringFormat.NoPrefixOrTermination) ' 8
+
+        buffer.Write("LIST", BinaryStringFormat.NoPrefixOrTermination) ' 12
+        buffer.Write(68 + streamHeaderLength) ' 16;
+        buffer.Write("hdrl", BinaryStringFormat.NoPrefixOrTermination) ' 20; // hdrl list
+        buffer.Write("avih", BinaryStringFormat.NoPrefixOrTermination) ' 24; // avih chunk
+        buffer.Write(56) ' 28; // avih size
+
+        buffer.Write(66665) ' 32;
+        buffer.Write(0) ' 36; // MaxBytesPerSec
+        buffer.Write(2) '40; // Padding (In bytes)
+        buffer.Write(0) '44; // Flags
+        buffer.Write(frames) ' 48; // Total Frames
+        buffer.Write(0) '52; // Initial Frames
+        buffer.Write(Me.streams.Count) ' 56; // Total Streams
+        buffer.Write(0) ' 60; // Suggested Buffer size
+        buffer.Write(Me.settings.width) ' 64; // pixel width
+        buffer.Write(Me.settings.height) ' 68; // pixel height
+        buffer.Write(0) ' 72; // Reserved int[4]
+        buffer.Write(0) ' 76;
+        buffer.Write(0) ' 80;
+        buffer.Write(0) ' 84;
 
         Dim Len = 88
+        Dim dataOffsetValue%
         Offset = 0
         For i As Integer = 0 To Me.streams.Count - 1
-            Buffer.Seek(88 + Offset, IO.SeekOrigin.Begin)
-            Len += Me.streams(i).writeHeaderBuffer(i, moviOffset + dataOffset(i), Buffer)
+            buffer.Seek(88 + Offset, IO.SeekOrigin.Begin)
+            dataOffsetValue = moviOffset + dataOffset(i)
+            Len += Me.streams(i).writeHeaderBuffer(i, dataOffsetValue, buffer)
         Next
 
-        Buffer.Seek(Len, IO.SeekOrigin.Begin)
-        Buffer.Write("LIST", BinaryStringFormat.NoPrefixOrTermination)
-        Buffer.Seek(Len + 8, IO.SeekOrigin.Begin)
-        Buffer.Write("movi", BinaryStringFormat.NoPrefixOrTermination)
+        buffer.Seek(Len, IO.SeekOrigin.Begin)
+        buffer.Write("LIST", BinaryStringFormat.NoPrefixOrTermination)
+        buffer.Seek(Len + 8, IO.SeekOrigin.Begin)
+        buffer.Write("movi", BinaryStringFormat.NoPrefixOrTermination)
 
         Dim moviLen = 4
         For i As Integer = 0 To Me.streams.Count - 1
-            Buffer.Seek(Len + 8 + moviLen, IO.SeekOrigin.Begin)
-            moviLen += Me.streams(i).writeDataBuffer(i, Buffer)
+            dataOffsetValue = Len + 8 + moviLen
+            buffer.Seek(dataOffsetValue, IO.SeekOrigin.Begin)
+            moviLen += Me.streams(i).writeDataBuffer(i, buffer)
         Next
 
-        Buffer.Seek(Len + 4, IO.SeekOrigin.Begin)
-        Buffer.Write(moviLen)
-        Buffer.Seek(4, IO.SeekOrigin.Begin)
-        Buffer.Write(Len + moviLen)
+        buffer.Seek(Len + 4, IO.SeekOrigin.Begin)
+        buffer.Write(moviLen)
+        buffer.Seek(4, IO.SeekOrigin.Begin)
+        buffer.Write(Len + moviLen)
 
-        Call Buffer.Flush()
-        Call Buffer.Close()
+        Call buffer.Flush()
+        Call buffer.Close()
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -200,8 +206,8 @@ Public Class AviStream
         Call stream.Write("strf", BinaryStringFormat.NoPrefixOrTermination) ' 76;
         Call stream.Write(40) ' 80;
         Call stream.Write(40) ' 84; // struct size
-        Call stream.Write(Me.width) ' 88; // width
-        Call stream.Write(-Me.height) ' 92; // height
+        Call stream.Write(CInt(Me.width)) ' 88; // width
+        Call stream.Write(CInt(-Me.height)) ' 92; // height
         Call stream.Write(1S) ' 96; // planes
         Call stream.Write(32S) ' 98; // bits per pixel
         Call stream.Write(0) ' 100; // compression
@@ -217,7 +223,7 @@ Public Class AviStream
         Call stream.Write(New Byte() {0, &H1}) ' 134; // indexSubType + indexType
         Call stream.Write(Me.frames.Count) ' 136; // numIndexEntries
         Call stream.Write(hexIdx, BinaryStringFormat.NoPrefixOrTermination) ' 140; // chunkID
-        Call stream.Write(dataOffset) ' 144; // data offset
+        Call stream.Write(CLng(dataOffset)) ' 144; // data offset
         Call stream.Write(0) ' 152; // reserved
 
         Dim Offset = 0
