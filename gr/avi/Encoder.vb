@@ -56,6 +56,7 @@ Public Class Encoder
 
     Public ReadOnly Property settings As Settings
     Public ReadOnly Property streams As New List(Of AVIStream)
+    Public ReadOnly Property main As New AVIMainHeader
 
     Sub New(settings As Settings)
         Me.settings = settings
@@ -64,11 +65,9 @@ Public Class Encoder
     Public Sub WriteBuffer(path As String)
         Dim dataOffset As Integer() = New Integer(Me.streams.Count - 1) {}
         Dim offset& = 0
-        Dim frames = 0
         Dim streamHeaderLength = 0
 
         For i As Integer = 0 To Me.streams.Count - 1
-            frames += Me.streams(i).frames.Count
             streamHeaderLength += getVideoHeaderLength(Me.streams(i).frames.Count)
             dataOffset(i) = offset
             offset += getVideoDataLength(streams(i))
@@ -88,23 +87,8 @@ Public Class Encoder
         buffer.writeString(12, "LIST")
         buffer.writeInt(16, 68 + streamHeaderLength)
         buffer.writeString(20, "hdrl") ' hdrl list
-        buffer.writeString(24, "avih") ' avih chunk
-        buffer.writeInt(28, 56)        ' avih size
 
-        buffer.writeInt(32, 66665)
-        buffer.writeInt(36, 0)         ' MaxBytesPerSec
-        buffer.writeInt(40, 2)         ' Padding (In bytes)
-        buffer.writeInt(44, 0)         ' Flags
-        buffer.writeInt(48, frames)    ' Total Frames
-        buffer.writeInt(52, 0)         ' Initial Frames
-        buffer.writeInt(56, streams.Count)   ' Total Streams
-        buffer.writeInt(60, 0)               ' Suggested Buffer size
-        buffer.writeInt(64, settings.width)  ' pixel width
-        buffer.writeInt(68, settings.height) ' pixel height
-        buffer.writeInt(72, 0) '; Reserved int[4]
-        buffer.writeInt(76, 0) ';
-        buffer.writeInt(80, 0) ';
-        buffer.writeInt(84, 0) ';
+        Call main.Write(buffer, Me)
 
         Dim len& = 88
         Dim dataOffsetValue&
