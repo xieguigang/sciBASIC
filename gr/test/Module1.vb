@@ -9,12 +9,14 @@ Module Module1
         Dim avi As New Encoder(New Settings With {.width = frame.Width, .height = frame.Height})
         Dim stream As New AVIStream(24, frame.Width, frame.Height)
 
-        For i As Integer = 0 To 1024
+        For i As Integer = 0 To 4096
             Call stream.addFrame(frame)
         Next
 
         Call avi.streams.Add(stream)
-        Call avi.WriteBuffer("X:\avi.js-master\avi.js-master\src\test.avi")
+        Call avi.WriteBuffer("X:\avi.js-master\avi.js-master\src\test222222.avi")
+
+        Pause()
     End Sub
 
 End Module
