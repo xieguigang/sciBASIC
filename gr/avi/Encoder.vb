@@ -63,7 +63,7 @@ Public Class Encoder
 
     Public Sub WriteBuffer(path As String)
         Dim dataOffset As Integer() = New Integer(Me.streams.Count - 1) {}
-        Dim offset = 0
+        Dim offset& = 0
         Dim frames = 0
         Dim streamHeaderLength = 0
 
@@ -106,8 +106,8 @@ Public Class Encoder
         buffer.writeInt(80, 0) ';
         buffer.writeInt(84, 0) ';
 
-        Dim len = 88
-        Dim dataOffsetValue%
+        Dim len& = 88
+        Dim dataOffsetValue&
         Dim subChunk As UInt8Array
 
         offset = Scan0
@@ -116,18 +116,17 @@ Public Class Encoder
             dataOffsetValue = moviOffset + dataOffset(i)
             subChunk = buffer.subarray(88 + offset)
             len += Me.streams(i).writeHeaderBuffer(subChunk, i, dataOffsetValue)
-            buffer.Flush(subChunk)
         Next
 
         buffer.writeString(len, "LIST")
         buffer.writeString(len + 8, "movi")
 
-        Dim moviLen = 4
+        Dim moviLen& = 4
+
         For i As Integer = 0 To Me.streams.Count - 1
             dataOffsetValue = len + 8 + moviLen
             subChunk = buffer.subarray(dataOffsetValue)
             moviLen += streams(i).writeDataBuffer(subChunk, i)
-            buffer.Flush(subChunk)
         Next
 
         buffer.writeInt(len + 4, moviLen)
@@ -148,8 +147,8 @@ Public Class Encoder
             frameLen * 4 * 2
     End Function
 
-    Public Shared Function getVideoDataLength(stream As AVIStream) As Integer
-        Dim len = 0
+    Public Shared Function getVideoDataLength(stream As AVIStream) As Long
+        Dim len& = 0
         Dim frames = stream.frames
 
         For i As Integer = 0 To frames.Count - 1

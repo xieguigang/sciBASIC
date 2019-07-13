@@ -1,117 +1,120 @@
 ﻿#Region "Microsoft.VisualBasic::b4c6cf1fdb754cc37475717210cfd02f, gr\avi\UInt8Array.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class UInt8Array
-    ' 
-    '     Properties: length
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: subarray, ToString
-    ' 
-    '     Sub: (+2 Overloads) Dispose, Flush, writeBytes, writeInt, writeLong
-    '          writeShort, writeString
-    ' 
-    ' /********************************************************************************/
+' Class UInt8Array
+' 
+'     Properties: length
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: subarray, ToString
+' 
+'     Sub: (+2 Overloads) Dispose, Flush, writeBytes, writeInt, writeLong
+'          writeShort, writeString
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
+
 Public Class UInt8Array : Implements IDisposable
 
-    Dim buf As Byte()
+    Dim buffer As FileStream
     Dim path As String
-    Dim begin As Integer
+    Dim begin As Long = Scan0
 
-    Public ReadOnly Property length As Integer
-        Get
-            Return buf.Length
-        End Get
+    Public ReadOnly Property length As Long
+
+    Private WriteOnly Property buf(location As Long) As Byte()
+        Set(value As Byte())
+            Call buffer.Seek(begin + location, SeekOrigin.Begin)
+            Call buffer.Write(value, Scan0, value.Length)
+        End Set
     End Property
 
-    Sub New(path As String, size As Integer)
+    Sub New(path As String, size As Long)
         Me.path = path
-        Me.buf = New Byte(size - 1) {}
+        Me.buffer = path.Open(FileMode.OpenOrCreate, doClear:=True)
+        Me.length = size
     End Sub
 
     Private Sub New()
     End Sub
 
-    Public Function subarray(begin As Integer) As UInt8Array
-        Dim subChunk As Byte() = New Byte(buf.Length - begin - 1) {}
-        Call Array.ConstrainedCopy(buf, begin, subChunk, Scan0, subChunk.Length)
+    Public Function subarray(begin As Long) As UInt8Array
         Return New UInt8Array With {
-            .buf = subChunk,
-            .begin = begin
+            .buffer = buffer,
+            .begin = begin,
+            .path = path
         }
     End Function
 
-    Public Sub Flush(subchunk As UInt8Array)
-        Call Array.ConstrainedCopy(subchunk.buf, Scan0, buf, subchunk.begin, subchunk.length)
+    Public Sub writeBytes(idx As Long, bytes As Byte())
+        buf(idx) = bytes
     End Sub
 
-    Public Sub writeBytes(idx As Integer, bytes As Byte())
-        For i As Integer = 0 To bytes.Length - 1
-            buf(idx + i) = bytes(i)
-        Next
+    Public Sub writeShort(idx As Long, num As Short)
+        buf(idx) = {num And 255, (num >> 8) And 255}
     End Sub
 
-    Public Sub writeShort(idx As Integer, num As Short)
-        buf(idx) = num And 255
-        buf(idx + 1) = (num >> 8) And 255
+    Public Sub writeInt(idx As Long, num As Integer)
+        buf(idx) = {
+            (num) And 255,
+            (num >> 8) And 255,
+            (num >> 16) And 255,
+            (num >> 24) And 255
+        }
     End Sub
 
-    Public Sub writeInt(idx As Integer, num As Integer)
-        buf(idx) = num And 255
-        buf(idx + 1) = (num >> 8) And 255
-        buf(idx + 2) = (num >> 16) And 255
-        buf(idx + 3) = (num >> 24) And 255
+    Public Sub writeLong(idx As Long, num As Long)
+        buf(idx) = {
+            (num) And 255,
+            (num >> 8) And 255,
+            (num >> 16) And 255,
+            (num >> 24) And 255,
+            0, 0, 0, 0
+        }
     End Sub
 
-    Public Sub writeLong(idx As Integer, num As Long)
-        buf(idx) = num And 255
-        buf(idx + 1) = (num >> 8) And 255
-        buf(idx + 2) = (num >> 16) And 255
-        buf(idx + 3) = (num >> 24) And 255
-        buf(idx + 4) = 0
-        buf(idx + 5) = 0
-        buf(idx + 6) = 0
-        buf(idx + 7) = 0
-    End Sub
+    Public Sub writeString(idx As Long, str As String)
+        Dim bytes As Byte() = New Byte(str.Length - 1) {}
 
-    Public Sub writeString(idx As Integer, str As String)
         For i As Integer = 0 To str.Length - 1
-            buf(idx + i) = Asc(str.Chars(i)) And 255
+            bytes(i) = Asc(str.Chars(i)) And 255
         Next
+
+        buf(idx) = bytes
     End Sub
 
     Public Overrides Function ToString() As String
@@ -126,8 +129,8 @@ Public Class UInt8Array : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects).
-                Call buf.FlushStream(path)
-                Call buf.Free
+                Call buffer.Flush()
+                Call buffer.Close()
             End If
 
             ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

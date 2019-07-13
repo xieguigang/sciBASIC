@@ -173,8 +173,8 @@ Public Class AVIStream
     ''' </summary>
     ''' <param name="idx">the stream index</param>
     ''' <returns></returns>
-    Public Function writeDataBuffer(buf As UInt8Array, idx As Integer) As Integer
-        Dim len = 0
+    Public Function writeDataBuffer(buf As UInt8Array, idx As Integer) As Long
+        Dim len& = 0
         Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
 
         If hexIdx = "db" Then hexIdx = "0" & hexIdx
@@ -182,10 +182,10 @@ Public Class AVIStream
 
         For i As Integer = 0 To Me.frames.Count - 1
             buf.writeString(len, hexIdx)
-            buf.writeInt(len + 4, frames(i).Length)
+            buf.writeInt(len + 4, frames(i).length)
             buf.writeBytes(len + 8, frames(i))
 
-            len += frames(i).Length + 8
+            len += frames(i).length + 8
         Next
 
         Return len
