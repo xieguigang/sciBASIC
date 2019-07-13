@@ -18,7 +18,7 @@ Public Class Encoder
     End Sub
 
     Public Sub WriteBuffer(path As String)
-        Dim dataOffset = {}
+        Dim dataOffset As Integer() = New Integer(Me.streams.Count - 1) {}
         Dim Offset = 0
         Dim frames = 0
         Dim streamHeaderLength = 0
@@ -129,7 +129,9 @@ Public Class AviStream
     End Sub
 
     Public Sub addFrame(image As Bitmap)
-        Call addFrame(BitmapBuffer.FromBitmap(image).ToArray)
+        Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image, Imaging.ImageLockMode.ReadOnly)
+            Call addFrame(bitmap.ToArray)
+        End Using
     End Sub
 
     Public Sub addFrame(imagePixels As Color())
@@ -184,7 +186,7 @@ Public Class AviStream
         Call stream.Write(Me.fps) '44; // Rate
         Call stream.Write(0) '48 // Startdelay
         Call stream.Write(Me.frames.Count) '52; // Length
-        Call stream.Write(Me.width * Me.height * 4 + 8) ' 56; // suggested buffer size
+        Call stream.Write(CInt(Me.width) * CInt(Me.height) * 4 + 8) ' 56; // suggested buffer size
         Call stream.Write(-1) ' 60; // quality
         Call stream.Write(0) ' 64; // sampleSize
         Call stream.Write(0S) ' 68; // Rect left
