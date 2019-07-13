@@ -169,7 +169,9 @@ Public Class AviStream
     ''' <returns></returns>
     Public Function writeHeaderBuffer(idx%, dataOffset%, stream As BinaryDataWriter) As Integer
         Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
-        If (hexIdx.Length = 3) Then hexIdx = "0" & hexIdx
+
+        If hexIdx = "db" Then hexIdx = "0" & hexIdx
+        If hexIdx.Length = 3 Then hexIdx = "0" & hexIdx
 
         Call stream.Write("LIST", BinaryStringFormat.NoPrefixOrTermination) '0
         Call stream.Write(148 + frames.Count * 4 * 2) '4
@@ -237,7 +239,9 @@ Public Class AviStream
     Public Function writeDataBuffer(idx As Integer, stream As BinaryDataWriter) As Integer
         Dim Len = 0
         Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
-        If (hexIdx.Length = 3) Then hexIdx = "0" & hexIdx
+
+        If hexIdx = "db" Then hexIdx = "0" & hexIdx
+        If hexIdx.Length = 3 Then hexIdx = "0" & hexIdx
 
         For i As Integer = 0 To Me.frames.Count - 1
             Call stream.Write(hexIdx, BinaryStringFormat.NoPrefixOrTermination) ' 0
