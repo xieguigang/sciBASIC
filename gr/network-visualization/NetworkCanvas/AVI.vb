@@ -6,18 +6,21 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.AVIMedia
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module AVI
 
+    ReadOnly defaultArguments As [Default](Of ForceDirectedArgs) = ForceDirectedArgs.DefaultNew
+
     <Extension>
     Public Function DoRenderVideo(network As NetworkGraph,
                                   frameSize As [Variant](Of Size, Integer(), String),
-                                  physics As ForceDirectedArgs,
+                                  Optional physics As ForceDirectedArgs = Nothing,
                                   Optional ShowLabels As Boolean = True,
                                   Optional render3D As Boolean = False,
                                   Optional fps As Integer = 24,
-                                  Optional drawFrames As Integer = 8192) As Encoder
+                                  Optional drawFrames As Integer = 2048) As Encoder
         Dim canvasSize As Size
         Dim renderer As Renderer
 
@@ -35,6 +38,8 @@ Public Module AVI
         Dim g As Graphics
         Dim region As New Rectangle(New Point, canvasSize)
         Dim engine As IForceDirected
+
+        physics = physics Or defaultArguments
 
         If render3D Then
             engine = New ForceDirected3D(network, physics.Stiffness, physics.Repulsion, physics.Damping)
