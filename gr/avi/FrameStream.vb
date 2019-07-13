@@ -56,9 +56,11 @@ Public Class FrameStream
         temp = ref
 
         Using writer As New BinaryWriter(ref.Open(FileMode.OpenOrCreate, doClear:=False))
-            begin = writer.BaseStream.Length + 1
+            begin = writer.BaseStream.Length + 1L
 
-            writer.Seek(begin, SeekOrigin.Begin)
+            ' 因为writer的seek函数的offset为Integer类型
+            ' 直接调用seek会溢出
+            writer.BaseStream.Seek(begin, SeekOrigin.Begin)
             writer.Write(buf)
             writer.Flush()
         End Using

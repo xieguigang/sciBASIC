@@ -11,7 +11,7 @@ Module testRenderAVI
             App.HOME & "\Resources\xcb-main-Edges.csv",
             App.HOME & "\Resources\xcb-main-Nodes.csv")
 
-        Dim video = AVI.DoRenderVideo(graph, {1440, 900})
+        Dim video = AVI.DoRenderVideo(graph, {1024, 768}, drawFrames:=1024)
 
         Call video.WriteBuffer("X:\network.avi")
     End Sub
