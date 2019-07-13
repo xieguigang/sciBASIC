@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::cbdbd1d5aaeafb139d67c68845b70b9b, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: (+2 Overloads) GKQuantile, QuantileLevels, SelectByQuantile, Threshold
-    ' 
-    '         Sub: Summary
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: (+2 Overloads) GKQuantile, QuantileLevels, SelectByQuantile, Threshold
+' 
+'         Sub: Summary
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Quantile
 
@@ -238,6 +239,8 @@ Namespace Quantile
         '    Next
         'End Sub
 
+        Const SummaryTemplate$ = "Estimated {0:F2}% quantile as {1} with {2} sample data (mean:={3}, std:={4})."
+
         ''' <summary>
         ''' 默认是输出到标准输出上的
         ''' </summary>
@@ -245,13 +248,19 @@ Namespace Quantile
         ''' <param name="dev"></param>
         <Extension>
         Public Sub Summary(data As IEnumerable(Of Double), Optional dev As TextWriter = Nothing)
-            Dim v#() = data.ToArray
+            Dim v As Vector = data.ToArray
             Dim q As QuantileEstimationGK = v.GKQuantile
 
             With dev Or App.StdOut
+                Call .WriteLine()
+                Call .WriteLine("# Data summary")
+                Call .WriteLine()
+                Call .WriteLine($"Total={v.Length}")
+
                 For Each quantile As Double In {0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
                     Dim estimate# = q.Query(quantile)
-                    Dim out$ = String.Format("Estimated {0:F2}% quantile as {1}", quantile * 100, estimate)
+                    Dim lessthan = v(v <= estimate)
+                    Dim out$ = String.Format(SummaryTemplate, quantile * 100, estimate, lessthan.Length, lessthan.Average, lessthan.StdError)
 
                     .WriteLine(out)
                 Next
