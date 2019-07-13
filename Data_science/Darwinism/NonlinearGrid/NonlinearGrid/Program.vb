@@ -182,6 +182,8 @@ Module Program
         Dim trainingSet = inFile.LoadXml(Of DataSet)
         Dim rate As Double = args("/rate") Or 0.1
 
+        Call $"Mutation rate = {rate}".__DEBUG_ECHO
+        Call $"Population size = {popSize}".__DEBUG_ECHO
         Call trainingSet.DataSamples _
             .AsEnumerable _
             .RunFitProcess(trainingSet.width, out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names, mutationRate:=rate)
@@ -191,10 +193,15 @@ Module Program
 
     <Extension>
     Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%, factorNames$(), mutationRate As Double)
+        Call "Create a base chromosome".__DEBUG_ECHO
         Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(width))
+        Call "Initialize populations".__DEBUG_ECHO
         Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize)
+        Call "Initialize environment".__DEBUG_ECHO
         Dim fitness As Fitness(Of Genome) = New Environment(trainingSet)
+        Call "Create algorithm engine".__DEBUG_ECHO
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness)
+        Call "Load driver".__DEBUG_ECHO
         Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
             .Iterations = 10000,
             .Threshold = 0.005
@@ -207,6 +214,8 @@ Module Program
                                              .GetXml _
                                              .SaveTo(outFile)
                                    End Sub)
+
+        Call "Run GA!".__DEBUG_ECHO
         Call engine.Train()
     End Sub
 End Module

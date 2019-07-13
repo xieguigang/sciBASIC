@@ -104,7 +104,7 @@ Public Class AVIStream
     ''' <param name="idx">the stream index</param>
     ''' <param name="dataOffset">the offset of the stream data from the beginning of the file</param>
     ''' <returns></returns>
-    Public Function writeHeaderBuffer(stream As UInt8Array, idx%, dataOffset%) As Integer
+    Public Function writeHeaderBuffer(stream As UInt8Array, idx%, dataOffset As Long) As Integer
         Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
 
         If hexIdx = "db" Then hexIdx = "0" & hexIdx
