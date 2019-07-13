@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::43ec4d5274d161f25d02c4befaded7c2, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class EnvironmentDriver
-    ' 
-    '         Properties: Iterations, Threshold
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateReport
-    ' 
-    '         Sub: Terminate, Train
-    ' 
-    '     Structure outPrint
-    ' 
-    '         Properties: chromosome, fit, iter
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: PrintTitle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class EnvironmentDriver
+' 
+'         Properties: Iterations, Threshold
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateReport
+' 
+'         Sub: Terminate, Train
+' 
+'     Structure outPrint
+' 
+'         Properties: chromosome, fit, iter
+' 
+'         Function: ToString
+' 
+'         Sub: PrintTitle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -75,6 +75,11 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Property Iterations As Integer
         Public Property Threshold As Double
+        ''' <summary>
+        ''' 可以打开这个开关来自动调整突变程度，可以在一定程度上避免局部最优
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property AutoAdjustMutationRate As Boolean
 
         ''' <summary>
         ''' 创建一个新的环境压力驱动程序,用来驱动模型的进化学习
@@ -85,6 +90,14 @@ Namespace Darwinism.GAF
         End Sub
 
         Public Overrides Sub Train(Optional parallel As Boolean = False)
+            Dim errStatSize As Integer = 100
+            Dim errors As New Queue(Of Double)(capacity:=errStatSize)
+            Dim previousErrAverage As Double = Double.MaxValue
+
+            For i As Integer = 0 To errStatSize
+                Call errors.Enqueue(Long.MaxValue)
+            Next
+
             terminated = False
 
             For i As Integer = 0 To Iterations
@@ -103,6 +116,13 @@ Namespace Darwinism.GAF
                     ' 在这里跳过NaN值的测试
                     If Not .IsNaNImaginary AndAlso .CompareTo(Threshold) < 0 Then
                         Exit For
+                    Else
+                        If AutoAdjustMutationRate Then
+                            Call errors.Enqueue(.ByRef)
+                            Call errors.Dequeue()
+
+
+                        End If
                     End If
                 End With
             Next

@@ -103,6 +103,12 @@ Namespace Darwinism.Models
     Public Interface Chromosome(Of Chr As Chromosome(Of Chr))
 
         ''' <summary>
+        ''' 突变的变异程度，这个值应该是位于(0, 1)闭区间内的
+        ''' </summary>
+        ''' <returns></returns>
+        Property MutationRate As Double
+
+        ''' <summary>
         ''' In genetic algorithms, crossover is a genetic operator used to vary the programming 
         ''' of a chromosome or chromosomes from one generation to the next. It is analogous to 
         ''' reproduction and biological crossover, upon which genetic algorithms are based. 

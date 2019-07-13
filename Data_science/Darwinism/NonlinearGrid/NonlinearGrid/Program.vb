@@ -121,7 +121,7 @@ Module Program
     End Function
 
     <ExportAPI("/training")>
-    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /out <output_model.Xml>]")>
+    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /rate <default=0.1> /out <output_model.Xml>]")>
     <Description("Training a grid system use GA method.")>
     Public Function trainGA(args As CommandLine) As Integer
         Dim inFile As String = args <= "/in"
@@ -137,18 +137,19 @@ Module Program
         End If
 
         Dim trainingSet = inFile.LoadXml(Of DataSet)
+        Dim rate As Double = args("/rate") Or 0.1
 
         Call trainingSet.DataSamples _
             .AsEnumerable _
-            .RunFitProcess(trainingSet.width, out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names)
+            .RunFitProcess(trainingSet.width, out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names, mutationRate:=rate)
 
         Return 0
     End Function
 
     <Extension>
-    Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%, factorNames$())
+    Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%, factorNames$(), mutationRate As Double)
         Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(width))
-        Dim population As Population(Of Genome) = New Genome(chromesome).InitialPopulation(popSize)
+        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize)
         Dim fitness As Fitness(Of Genome) = New Environment(trainingSet)
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness)
         Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
