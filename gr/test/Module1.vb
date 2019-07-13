@@ -9,7 +9,7 @@ Module Module1
         Dim avi As New Encoder(New Settings With {.width = frame.Width, .height = frame.Height})
         Dim stream As New AviStream(24, frame.Width, frame.Height)
 
-        For i As Integer = 0 To 10
+        For i As Integer = 0 To 1024
             Call stream.addFrame(frame)
         Next
 
