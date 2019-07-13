@@ -65,7 +65,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StreamWriter.vb" />
+    <Compile Include="UInt8Array.vb" />
     <Compile Include="Encoder.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
