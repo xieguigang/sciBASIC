@@ -255,6 +255,8 @@ Namespace Quantile
 
                     .WriteLine(out)
                 Next
+
+                Call .Flush()
             End With
         End Sub
     End Module
