@@ -56,10 +56,11 @@ Public Class Encoder
 
     Public ReadOnly Property settings As Settings
     Public ReadOnly Property streams As New List(Of AVIStream)
-    Public ReadOnly Property main As New AVIMainHeader
+    Public ReadOnly Property main As AVIMainHeader
 
     Sub New(settings As Settings)
         Me.settings = settings
+        Me.main = New AVIMainHeader(Me)
     End Sub
 
     Public Sub WriteBuffer(path As String)
@@ -88,7 +89,7 @@ Public Class Encoder
         buffer.writeInt(16, 68 + streamHeaderLength)
         buffer.writeString(20, "hdrl") ' hdrl list
 
-        Call main.Write(buffer, Me)
+        Call main.Write(buffer)
 
         Dim len& = 88
         Dim dataOffsetValue&
