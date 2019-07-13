@@ -39,10 +39,10 @@ Public Class Encoder
         Buffer.Seek(8, IO.SeekOrigin.Begin)
         Buffer.Write("AVI ", BinaryStringFormat.NoPrefixOrTermination) ' 8
 
-        Buffer.Write("LIST") ' 12
+        Buffer.Write("LIST", BinaryStringFormat.NoPrefixOrTermination) ' 12
         Buffer.Write(68 + streamHeaderLength) ' 16;
-        Buffer.Write("hdrl") ' 20; // hdrl list
-        Buffer.Write("avih") ' 24; // avih chunk
+        Buffer.Write("hdrl", BinaryStringFormat.NoPrefixOrTermination) ' 20; // hdrl list
+        Buffer.Write("avih", BinaryStringFormat.NoPrefixOrTermination) ' 24; // avih chunk
         Buffer.Write(56) ' 28; // avih size
 
         Buffer.Write(66665) ' 32;
@@ -168,7 +168,7 @@ Public Class AviStream
     ''' <param name="dataOffset">the offset of the stream data from the beginning of the file</param>
     ''' <returns></returns>
     Public Function writeHeaderBuffer(idx%, dataOffset%, stream As BinaryDataWriter) As Integer
-        Dim hexIdx = idx.ToHexString & "db"
+        Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
         If (hexIdx.Length = 3) Then hexIdx = "0" & hexIdx
 
         Call stream.Write("LIST", BinaryStringFormat.NoPrefixOrTermination) '0
@@ -176,8 +176,8 @@ Public Class AviStream
         Call stream.Write("strl", BinaryStringFormat.NoPrefixOrTermination) ' 8
         Call stream.Write("strh", BinaryStringFormat.NoPrefixOrTermination) ' 12
         Call stream.Write(56) ' 16
-        Call stream.Write("vids") ' 20 // fourCC
-        Call stream.Write("DIB ") ' 24 // Uncompressed
+        Call stream.Write("vids", BinaryStringFormat.NoPrefixOrTermination) ' 20 // fourCC
+        Call stream.Write("DIB ", BinaryStringFormat.NoPrefixOrTermination) ' 24 // Uncompressed
         Call stream.Write(0) '28 // Flags
         Call stream.Write(1S) ' 32 // Priority
         Call stream.Write(0S) '34 // Language
@@ -194,7 +194,7 @@ Public Class AviStream
         Call stream.Write(Me.width) ' 72; // Rect width
         Call stream.Write(Me.height) '74 // Rect height
 
-        Call stream.Write("strf") ' 76;
+        Call stream.Write("strf", BinaryStringFormat.NoPrefixOrTermination) ' 76;
         Call stream.Write(40) ' 80;
         Call stream.Write(40) ' 84; // struct size
         Call stream.Write(Me.width) ' 88; // width
@@ -236,7 +236,7 @@ Public Class AviStream
     ''' <returns></returns>
     Public Function writeDataBuffer(idx As Integer, stream As BinaryDataWriter) As Integer
         Dim Len = 0
-        Dim hexIdx = idx.ToHexString & "db"
+        Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
         If (hexIdx.Length = 3) Then hexIdx = "0" & hexIdx
 
         For i As Integer = 0 To Me.frames.Count - 1
