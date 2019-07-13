@@ -77,6 +77,12 @@ Public Module Extensions
         Return New IVector(Of T)(source)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="headsCutoff">这个参数用来调整事件的发生概率，这个参数值越小，事件越容易发生</param>
+    ''' <param name="ntimes%"></param>
+    ''' <returns></returns>
     Public Function FlipCoin(Optional headsCutoff% = 50, Optional ntimes% = 100) As Boolean
         Dim rand As Integer = randf(0, ntimes)
 
