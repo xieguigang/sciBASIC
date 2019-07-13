@@ -152,7 +152,6 @@ Namespace Darwinism.GAF
                 .fit = bestFit,
                 .chromosome = best.ToString,
                 .MutationRate = best.MutationRate
-                .chromosome = best.ToString
             }
         End Function
     End Class
