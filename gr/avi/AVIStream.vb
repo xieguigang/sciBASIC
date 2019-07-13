@@ -9,10 +9,13 @@ Public Class AVIStream
     Public Property height As Short
     Public Property frames As New List(Of FrameStream)
 
+    ReadOnly temp$
+
     Sub New(fps%, width As Short, height As Short)
         Me.fps = fps
         Me.width = width
         Me.height = height
+        Me.temp = App.GetAppSysTempFile(".rgb_frames", App.PID, prefix:=GetHashCode.ToHexString)
     End Sub
 
     Public Sub addFrame(image As Bitmap)
@@ -45,7 +48,7 @@ Public Class AVIStream
             frame(i + 2) = imgData(i)
         Next
 
-        frames.Add(New FrameStream(GetHashCode, frame))
+        frames.Add(New FrameStream(temp, frame))
     End Sub
 
     ''' <summary>
