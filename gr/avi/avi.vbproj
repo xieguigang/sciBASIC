@@ -65,6 +65,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AVIStream.vb" />
+    <Compile Include="Settings.vb" />
     <Compile Include="UInt8Array.vb" />
     <Compile Include="Encoder.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
