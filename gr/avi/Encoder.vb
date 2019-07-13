@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 ''' <summary>
 ''' A simple VB.NET AVI encoder
@@ -11,6 +12,10 @@ Public Class Encoder
 
     Public ReadOnly settings As Settings
     Public ReadOnly Property streams As New List(Of AviStream)
+
+    Sub New(settings As Settings)
+        Me.settings = settings
+    End Sub
 
     Public Sub WriteBuffer(path As String)
         Dim dataOffset = {}
@@ -116,6 +121,26 @@ Public Class AviStream
     Public Property width As Short
     Public Property height As Short
     Public Property frames As New List(Of Byte())
+
+    Sub New(fps%, width As Short, height As Short)
+        Me.fps = fps
+        Me.width = width
+        Me.height = height
+    End Sub
+
+    Public Sub addFrame(image As Bitmap)
+        Call addFrame(BitmapBuffer.FromBitmap(image).ToArray)
+    End Sub
+
+    Public Sub addFrame(imagePixels As Color())
+        Dim bytes As New List(Of Byte)
+
+        For Each pixel In imagePixels
+            bytes.AddRange({pixel.R, pixel.G, pixel.B, pixel.A})
+        Next
+
+        Call addRGBFrame(bytes.ToArray)
+    End Sub
 
     ''' <summary>
     ''' Adds a frame-array to the frame list.
