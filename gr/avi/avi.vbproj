@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AVIStream.vb" />
+    <Compile Include="FrameStream.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="UInt8Array.vb" />
     <Compile Include="Encoder.vb" />
