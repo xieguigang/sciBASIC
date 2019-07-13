@@ -50,7 +50,7 @@ Module Module1
         Dim avi As New Encoder(New Settings With {.width = frame.Width, .height = frame.Height})
         Dim stream As New AVIStream(24, frame.Width, frame.Height)
 
-        For i As Integer = 0 To 4096
+        For i As Integer = 0 To 120
             Call stream.addFrame(frame)
         Next
 

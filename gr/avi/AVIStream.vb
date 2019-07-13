@@ -159,7 +159,8 @@ Public Class AVIStream
         Dim offset As Long = 0
 
         For i As Integer = 0 To Me.frames.Count - 1            ' index entries
-            stream.writeInt(156 + i * 8, offset)               ' offset
+            ' 原先这里是writeInt，但是大文件溢出了
+            stream.writeLong(156 + i * 8, offset)              ' offset
             stream.writeInt(160 + i * 8, frames(i).length + 8) ' size
 
             offset += Me.frames(i).length + 8

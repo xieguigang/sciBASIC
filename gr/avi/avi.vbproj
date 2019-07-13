@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="AVIStream.vb" />
     <Compile Include="AVIMainHeader.vb" />
+    <Compile Include="AVIStreamHeader.vb" />
     <Compile Include="FrameStream.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="UInt8Array.vb" />
