@@ -321,6 +321,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Darwinism\GeneticAlgorithm\EnvironmentDriver.vb" />
+    <Compile Include="DataSet\NamespaceDoc.vb" />
     <Compile Include="IterationReporter.vb" />
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Fitness.vb" />

@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Distributions
 
-Namespace NeuralNetwork.StoreProcedure
+Namespace StoreProcedure
 
     ''' <summary>
     ''' 进行所输入的样本数据的归一化的矩阵

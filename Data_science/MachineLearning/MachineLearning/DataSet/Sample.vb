@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace NeuralNetwork.StoreProcedure
+Namespace StoreProcedure
 
     ''' <summary>
     ''' The training dataset

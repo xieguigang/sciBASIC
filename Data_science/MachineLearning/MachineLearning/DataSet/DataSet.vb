@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace NeuralNetwork.StoreProcedure
+Namespace StoreProcedure
 
     ''' <summary>
     ''' A training dataset that stored in XML file.
