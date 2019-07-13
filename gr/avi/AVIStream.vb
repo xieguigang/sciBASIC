@@ -156,7 +156,7 @@ Public Class AVIStream
         stream.writeLong(144, dataOffset)               ' data offset
         stream.writeInt(152, 0)                         ' reserved
 
-        Dim offset = 0
+        Dim offset As Long = 0
 
         For i As Integer = 0 To Me.frames.Count - 1            ' index entries
             stream.writeInt(156 + i * 8, offset)               ' offset

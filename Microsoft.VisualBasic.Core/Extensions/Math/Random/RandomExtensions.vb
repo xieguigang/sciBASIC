@@ -96,22 +96,16 @@ Namespace Math
             Return Math.Abs(CInt(Math.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
 
-        Const RandfMultiply# = 10000
-
         ''' <summary>
         ''' 返回<paramref name="min"/>到<paramref name="max"/>区间之内的一个和实数
         ''' </summary>
         ''' <param name="min"></param>
         ''' <param name="max"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function randf(min As Double, max As Double) As Double
-            Dim minInteger& = CLng(sys.Truncate(min * RandfMultiply))
-            Dim maxInteger& = CLng(sys.Truncate(max * RandfMultiply))
-            Dim randInteger& = CLng(RandomNumbers.rand()) * CLng(RandomNumbers.rand())
-            Dim diffInteger& = maxInteger - minInteger
-            Dim resultInteger& = randInteger Mod diffInteger + minInteger
-
-            Return resultInteger / RandfMultiply
+            Return seeds.NextDouble(min, max)
         End Function
 
         ''' <summary>
