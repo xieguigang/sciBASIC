@@ -42,9 +42,9 @@ End Class
 
 Public Class AviStream
 
-    Public Property fps As Double
-    Public Property width As Integer
-    Public Property height As Integer
+    Public Property fps As Integer
+    Public Property width As Short
+    Public Property height As Short
     Public Property frames As New List(Of Byte())
 
     Dim stream As BinaryDataWriter
@@ -66,6 +66,12 @@ Public Class AviStream
         frames.Add(frame)
     End Sub
 
+    ''' <summary>
+    ''' Writes the avi header to a buffer.
+    ''' </summary>
+    ''' <param name="idx">the stream index</param>
+    ''' <param name="dataOffset">the offset of the stream data from the beginning of the file</param>
+    ''' <returns></returns>
     Public Function writeHeaderBuffer(idx%, dataOffset%) As Integer
         Dim hexIdx = idx.ToHexString & "db"
         If (hexIdx.Length = 3) Then hexIdx = "0" & hexIdx
@@ -78,42 +84,73 @@ Public Class AviStream
         Call stream.Write("vids") ' 20 // fourCC
         Call stream.Write("DIB ") ' 24 // Uncompressed
         Call stream.Write(0) '28 // Flags
-        writeShort(buf, 32, 1); // Priority
-		writeShort(buf, 34, 0); // Language
-		writeInt(buf, 36, 0); // Initial frames
-		writeInt(buf, 40, 1); // Scale
-		writeInt(buf, 44, this.fps); // Rate
-		writeInt(buf, 48, 0); // Startdelay
-		writeInt(buf, 52, this.frames.length); // Length
-		writeInt(buf, 56, this.width * this.height * 4 + 8); // suggested buffer size
-		writeInt(buf, 60, -1); // quality
-		writeInt(buf, 64, 0); // sampleSize
-		writeShort(buf, 68, 0); // Rect left
-		writeShort(buf, 70, 0); // Rect top
-		writeShort(buf, 72, this.width); // Rect width
-		writeShort(buf, 74, this.height); // Rect height
-		
-		writeString(buf, 76, 'strf');
-        writeInt(buf, 80, 40);
-        writeInt(buf, 84, 40); // struct size
-		writeInt(buf, 88, this.width); // width
-		writeInt(buf, 92, -this.height); // height
-		writeShort(buf, 96, 1); // planes
-		writeShort(buf, 98, 32); // bits per pixel
-		writeInt(buf, 100, 0); // compression
-		writeInt(buf, 104, 0); // image size
-		writeInt(buf, 108, 0); // x pixels per meter
-		writeInt(buf, 112, 0); // y pixels per meter
-		writeInt(buf, 116, 0); // colortable used
-		writeInt(buf, 120, 0); // colortable important
-		
-		writeString(buf, 124, 'indx');
-        writeInt(buf, 128, 24 + this.frames.length * 4 * 2); // size
-        writeShort(buf, 132, 2); // LongsPerEntry
-		writeBytes(buf, 134, [0, 0x01]); // indexSubType + indexType
-		writeInt(buf, 136, this.frames.length); // numIndexEntries
-		writeString(buf, 140, hexIdx); // chunkID
-		writeLong(buf, 144, dataOffset); // data offset
-		writeInt(buf, 152, 0); // reserved
+        Call stream.Write(1S) ' 32 // Priority
+        Call stream.Write(0S) '34 // Language
+        Call stream.Write(0) ' 36; // Initial frames
+        Call stream.Write(1) ' 40; // Scale
+        Call stream.Write(Me.fps) '44; // Rate
+        Call stream.Write(0) '48 // Startdelay
+        Call stream.Write(Me.frames.Count) '52; // Length
+        Call stream.Write(Me.width * Me.height * 4 + 8) ' 56; // suggested buffer size
+        Call stream.Write(-1) ' 60; // quality
+        Call stream.Write(0) ' 64; // sampleSize
+        Call stream.Write(0S) ' 68; // Rect left
+        Call stream.Write(0S) ' 70; // Rect top
+        Call stream.Write(Me.width) ' 72; // Rect width
+        Call stream.Write(Me.height) '74 // Rect height
+
+        Call stream.Write("strf") ' 76;
+        Call stream.Write(40) ' 80;
+        Call stream.Write(40) ' 84; // struct size
+        Call stream.Write(Me.width) ' 88; // width
+        Call stream.Write(-Me.height) ' 92; // height
+        Call stream.Write(1S) ' 96; // planes
+        Call stream.Write(32S) ' 98; // bits per pixel
+        Call stream.Write(0) ' 100; // compression
+        Call stream.Write(0) ' 104; // image size
+        Call stream.Write(0) ' 108; // x pixels per meter
+        Call stream.Write(0) ' 112; // y pixels per meter
+        Call stream.Write(0) ' 116; // colortable used
+        Call stream.Write(0) ' 120; // colortable important
+
+        Call stream.Write("indx", BinaryStringFormat.NoPrefixOrTermination) ' 124;
+        Call stream.Write(24 + Me.frames.Count * 4 * 2) ' 128; // size
+        Call stream.Write(2S) ' 132; // LongsPerEntry
+        Call stream.Write(New Byte() {0, &H1}) ' 134; // indexSubType + indexType
+        Call stream.Write(Me.frames.Count) ' 136; // numIndexEntries
+        Call stream.Write(hexIdx, BinaryStringFormat.NoPrefixOrTermination) ' 140; // chunkID
+        Call stream.Write(dataOffset) ' 144; // data offset
+        Call stream.Write(0) ' 152; // reserved
+
+        Dim Offset = 0
+        For i As Integer = 0 To Me.frames.Count - 1 ' // index entries
+            stream.Seek(156 + i * 8, IO.SeekOrigin.Begin)
+            stream.Write(Offset) ' ; // offset
+            stream.Seek(160 + i * 8, IO.SeekOrigin.Begin)
+            stream.Write(Me.frames(i).Length + 8) '; // size
+            Offset += Me.frames(i).Length + 8
+        Next
+
+        Return 156 + Me.frames.Count * 4 * 2
+    End Function
+
+    ''' <summary>
+    ''' Writes the frame data of a stream to the buffer.
+    ''' </summary>
+    ''' <param name="idx">the stream index</param>
+    ''' <returns></returns>
+    Public Function writeDataBuffer(idx As Integer) As Integer
+        Dim Len = 0
+        Dim hexIdx = idx.ToHexString & "db"
+        If (hexIdx.Length = 3) Then hexIdx = "0" & hexIdx
+
+        For i As Integer = 0 To Me.frames.Count - 1
+            Call stream.Write(hexIdx, BinaryStringFormat.NoPrefixOrTermination) ' 0
+            Call stream.Write(Me.frames(i).Length) ' 4
+            Call stream.Write(Me.frames(i)) ' 8
+            Len += Me.frames(i).Length + 8
+        Next
+
+        Return Len
     End Function
 End Class
