@@ -113,6 +113,7 @@ Namespace NeuralNetwork.Accelerator
 
         Shared ReadOnly random As New Random
         ReadOnly keyCache As New Md5HashProvider
+        Public Property MutationRate As Double Implements Chromosome(Of WeightVector).MutationRate
 
         Sub New(Optional synapses As NamedCollection(Of Synapse)() = Nothing)
             If Not synapses Is Nothing Then
@@ -146,7 +147,7 @@ Namespace NeuralNetwork.Accelerator
 
         Public Function Mutate() As WeightVector Implements Chromosome(Of WeightVector).Mutate
             Dim result As WeightVector = Me.Clone()
-            Call result.weights.Mutate(random)
+            Call result.weights.Mutate(random, rate:=MutationRate)
             Return result
         End Function
 
@@ -154,7 +155,8 @@ Namespace NeuralNetwork.Accelerator
             Dim weights#() = New Double(Me.weights.Length - 1) {}
             Call Array.Copy(Me.weights, Scan0, weights, Scan0, weights.Length)
             Return New WeightVector() With {
-                .weights = weights
+                .weights = weights,
+                .MutationRate = MutationRate
             }
         End Function
     End Class

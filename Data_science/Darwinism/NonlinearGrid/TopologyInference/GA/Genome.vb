@@ -21,15 +21,16 @@ Public Class Genome : Implements Chromosome(Of Genome)
     ''' Number of system variables.
     ''' </summary>
     ReadOnly width As Integer
+
     ''' <summary>
     ''' 突变程度
     ''' </summary>
-    ReadOnly rate As Double
+    Public Property MutationRate As Double Implements Chromosome(Of Genome).MutationRate
 
     Sub New(chr As GridSystem, mutationRate As Double)
-        chromosome = chr
-        width = chr.A.Dim
-        rate = mutationRate
+        Me.chromosome = chr
+        Me.width = chr.A.Dim
+        Me.MutationRate = mutationRate
     End Sub
 
     Public Function CalculateError(status As Vector, target As Double) As Double
@@ -68,12 +69,12 @@ Public Class Genome : Implements Chromosome(Of Genome)
             ' End If
         End SyncLock
 
-        Yield New Genome(a, rate)
-        Yield New Genome(b, rate)
+        Yield New Genome(a, MutationRate)
+        Yield New Genome(b, MutationRate)
     End Function
 
     Public Function Mutate() As Genome Implements Chromosome(Of Genome).Mutate
-        Dim clone As New Genome(Me.chromosome.Clone, rate)
+        Dim clone As New Genome(Me.chromosome.Clone, MutationRate)
         Dim chromosome = clone.chromosome
         ' dim(A) is equals to dim(C) and is equals to dim(X)
         Dim i As Integer
@@ -81,7 +82,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
         If FlipCoin() Then
             ' mutate one bit in A vector
             ' A only have -1, 0, 1
-            chromosome.A.Array.Mutate(randf.seeds, rate:=Me.rate)
+            chromosome.A.Array.Mutate(randf.seeds, rate:=MutationRate)
             ' ElseIf FlipCoin(50) Then
         End If
 
@@ -89,16 +90,16 @@ Public Class Genome : Implements Chromosome(Of Genome)
             If chromosome.AC = 0 Then
                 chromosome.AC = 1
             ElseIf FlipCoin() Then
-                chromosome.AC += randf.randf(0, chromosome.AC * Me.rate)
+                chromosome.AC += randf.randf(0, chromosome.AC * MutationRate)
             Else
-                chromosome.AC -= randf.randf(0, chromosome.AC * Me.rate)
+                chromosome.AC -= randf.randf(0, chromosome.AC * MutationRate)
             End If
         End If
 
         If FlipCoin() Then
             i = randf.NextInteger(upper:=width)
             ' mutate one bit in C vector
-            chromosome.C(i).B.Array.Mutate(randf.seeds, rate:=Me.rate)
+            chromosome.C(i).B.Array.Mutate(randf.seeds, rate:=MutationRate)
             ' mutate one bit in P vector
             ' chromosome.P(i).W.Array.Mutate(randf.seeds)
         End If
@@ -109,9 +110,9 @@ Public Class Genome : Implements Chromosome(Of Genome)
             If chromosome.C(i).BC = 0 Then
                 chromosome.C(i).BC = 1
             ElseIf FlipCoin() Then
-                chromosome.C(i).BC += randf.randf(0, chromosome.C(i).BC * Me.rate)
+                chromosome.C(i).BC += randf.randf(0, chromosome.C(i).BC * MutationRate)
             Else
-                chromosome.C(i).BC -= randf.randf(0, chromosome.C(i).BC * Me.rate)
+                chromosome.C(i).BC -= randf.randf(0, chromosome.C(i).BC * MutationRate)
             End If
         End If
 
