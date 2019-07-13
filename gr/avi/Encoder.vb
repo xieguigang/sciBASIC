@@ -24,7 +24,7 @@ Public Class Encoder
             frames += Me.streams(i).frames.Count
             streamHeaderLength += getVideoHeaderLength(Me.streams(i).frames.Count)
             dataOffset(i) = offset
-            offset += getVideoDataLength(Me.streams(i).frames.ToArray)
+            offset += getVideoDataLength(streams(i))
         Next
 
         Dim moviOffset = streamHeaderLength + 12 + ' /* RIFF */ 
@@ -101,11 +101,12 @@ Public Class Encoder
             frameLen * 4 * 2
     End Function
 
-    Public Shared Function getVideoDataLength(frames As Byte()()) As Integer
+    Public Shared Function getVideoDataLength(stream As AVIStream) As Integer
         Dim len = 0
+        Dim frames = stream.frames
 
-        For i As Integer = 0 To frames.Length - 1
-            len += 8 + frames(i).Length + If(frames(i).Length Mod 2 = 0, 0, 1) ' Pad if chunk Not in word boundary
+        For i As Integer = 0 To frames.Count - 1
+            len += 8 + frames(i).length + If(frames(i).length Mod 2 = 0, 0, 1) ' Pad if chunk Not in word boundary
         Next
 
         Return len

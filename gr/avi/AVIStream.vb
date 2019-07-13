@@ -7,7 +7,7 @@ Public Class AVIStream
     Public Property fps As Integer
     Public Property width As Short
     Public Property height As Short
-    Public Property frames As New List(Of Byte())
+    Public Property frames As New List(Of FrameStream)
 
     Sub New(fps%, width As Short, height As Short)
         Me.fps = fps
@@ -45,7 +45,7 @@ Public Class AVIStream
             frame(i + 2) = imgData(i)
         Next
 
-        frames.Add(frame)
+        frames.Add(New FrameStream(GetHashCode, frame))
     End Sub
 
     ''' <summary>

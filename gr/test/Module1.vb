@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
-Imports avi
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.AVIMedia
 
 Module Module1
 
