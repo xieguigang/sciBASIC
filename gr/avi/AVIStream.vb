@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Public Class AVIStream
@@ -15,7 +16,7 @@ Public Class AVIStream
     End Sub
 
     Public Sub addFrame(image As Bitmap)
-        Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image, Imaging.ImageLockMode.ReadOnly)
+        Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image, ImageLockMode.ReadOnly)
             Call addFrame(bitmap.ToArray)
         End Using
     End Sub
@@ -105,11 +106,13 @@ Public Class AVIStream
         stream.writeLong(144, dataOffset) '; // data offset
         stream.writeInt(152, 0) '; // reserved
 
-        Dim Offset = 0
+        Dim offset = 0
+
         For i As Integer = 0 To Me.frames.Count - 1 ' // index entries
-            stream.writeInt(156 + i * 8, Offset) '; // offset
+            stream.writeInt(156 + i * 8, offset) '; // offset
             stream.writeInt(160 + i * 8, frames(i).Length + 8) '; // size
-            Offset += Me.frames(i).Length + 8
+
+            offset += Me.frames(i).Length + 8
         Next
 
         Return 156 + Me.frames.Count * 4 * 2
@@ -121,19 +124,20 @@ Public Class AVIStream
     ''' <param name="idx">the stream index</param>
     ''' <returns></returns>
     Public Function writeDataBuffer(buf As UInt8Array, idx As Integer) As Integer
-        Dim Len = 0
+        Dim len = 0
         Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
 
         If hexIdx = "db" Then hexIdx = "0" & hexIdx
         If hexIdx.Length = 3 Then hexIdx = "0" & hexIdx
 
         For i As Integer = 0 To Me.frames.Count - 1
-            buf.writeString(Len, hexIdx)
-            buf.writeInt(Len + 4, frames(i).Length)
-            buf.writeBytes(Len + 8, frames(i))
-            Len += Me.frames(i).Length + 8
+            buf.writeString(len, hexIdx)
+            buf.writeInt(len + 4, frames(i).Length)
+            buf.writeBytes(len + 8, frames(i))
+
+            len += frames(i).Length + 8
         Next
 
-        Return Len
+        Return len
     End Function
 End Class

@@ -7,7 +7,7 @@
 ''' </summary>
 Public Class Encoder
 
-    Public ReadOnly settings As Settings
+    Public ReadOnly Property settings As Settings
     Public ReadOnly Property streams As New List(Of AVIStream)
 
     Sub New(settings As Settings)
@@ -16,22 +16,24 @@ Public Class Encoder
 
     Public Sub WriteBuffer(path As String)
         Dim dataOffset As Integer() = New Integer(Me.streams.Count - 1) {}
-        Dim Offset = 0
+        Dim offset = 0
         Dim frames = 0
         Dim streamHeaderLength = 0
+
         For i As Integer = 0 To Me.streams.Count - 1
             frames += Me.streams(i).frames.Count
             streamHeaderLength += getVideoHeaderLength(Me.streams(i).frames.Count)
-            dataOffset(i) = Offset
-            Offset += getVideoDataLength(Me.streams(i).frames.ToArray)
+            dataOffset(i) = offset
+            offset += getVideoDataLength(Me.streams(i).frames.ToArray)
         Next
+
         Dim moviOffset = streamHeaderLength + 12 + ' /* RIFF */ 
             12 + '/* hdrl */ 
             8 +' /* avih */ 
             56 +'/* struct */ 
             12 '/* movi */;
 
-        Dim buffer As New UInt8Array(path, moviOffset + Offset)
+        Dim buffer As New UInt8Array(path, moviOffset + offset)
 
         buffer.writeString(0, "RIFF") ' 0
         buffer.writeString(8, "AVI ") ' 8
@@ -60,10 +62,12 @@ Public Class Encoder
         Dim len = 88
         Dim dataOffsetValue%
         Dim subChunk As UInt8Array
-        Offset = 0
+
+        offset = Scan0
+
         For i As Integer = 0 To Me.streams.Count - 1
             dataOffsetValue = moviOffset + dataOffset(i)
-            subChunk = buffer.subarray(88 + Offset)
+            subChunk = buffer.subarray(88 + offset)
             len += Me.streams(i).writeHeaderBuffer(subChunk, i, dataOffsetValue)
             buffer.Flush(subChunk)
         Next
@@ -99,9 +103,11 @@ Public Class Encoder
 
     Public Shared Function getVideoDataLength(frames As Byte()()) As Integer
         Dim len = 0
+
         For i As Integer = 0 To frames.Length - 1
             len += 8 + frames(i).Length + If(frames(i).Length Mod 2 = 0, 0, 1) ' Pad if chunk Not in word boundary
         Next
+
         Return len
     End Function
 End Class
