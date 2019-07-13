@@ -10,7 +10,77 @@ Imports Microsoft.VisualBasic.Data.IO
 Public Class Encoder
 
     Public ReadOnly settings As Settings
-    Public ReadOnly Property streams As BinaryDataWriter
+    Public ReadOnly Property streams As New List(Of AviStream)
+
+    Public Sub WriteBuffer(path As String)
+        Dim dataOffset = {}
+        Dim Offset = 0
+        Dim frames = 0
+        Dim streamHeaderLength = 0
+        For i As Integer = 0 To Me.streams.Count - 1
+            frames += Me.streams(i).frames.Count
+            streamHeaderLength += getVideoHeaderLength(Me.streams(i).frames.Count)
+            dataOffset(i) = Offset
+            Offset += getVideoDataLength(Me.streams(i).frames.ToArray)
+        Next
+        Dim moviOffset = streamHeaderLength + 12 + ' /* RIFF */ 
+            12 + '/* hdrl */ 
+            8 +' /* avih */ 
+            56 +'/* struct */ 
+            12 '/* movi */;
+
+        Dim Buffer As New BinaryDataWriter(path.Open(, doClear:=True))
+        Buffer.Write("RIFF", BinaryStringFormat.NoPrefixOrTermination) ' 0
+        Buffer.Seek(8, IO.SeekOrigin.Begin)
+        Buffer.Write("AVI ", BinaryStringFormat.NoPrefixOrTermination) ' 8
+
+        Buffer.Write("LIST") ' 12
+        Buffer.Write(68 + streamHeaderLength) ' 16;
+        Buffer.Write("hdrl") ' 20; // hdrl list
+        Buffer.Write("avih") ' 24; // avih chunk
+        Buffer.Write(56) ' 28; // avih size
+
+        Buffer.Write(66665) ' 32;
+        Buffer.Write(0) ' 36; // MaxBytesPerSec
+        Buffer.Write(2) '40; // Padding (In bytes)
+        Buffer.Write(0) '44; // Flags
+        Buffer.Write(frames) ' 48; // Total Frames
+        Buffer.Write(0) '52; // Initial Frames
+        Buffer.Write(Me.streams.Count) ' 56; // Total Streams
+        Buffer.Write(0) ' 60; // Suggested Buffer size
+        Buffer.Write(Me.settings.width) ' 64; // pixel width
+        Buffer.Write(Me.settings.height) ' 68; // pixel height
+        Buffer.Write(0) ' 72; // Reserved int[4]
+        Buffer.Write(0) ' 76;
+        Buffer.Write(0) ' 80;
+        Buffer.Write(0) ' 84;
+
+        Dim Len = 88
+        Offset = 0
+        For i As Integer = 0 To Me.streams.Count - 1
+            Buffer.Seek(88 + Offset, IO.SeekOrigin.Begin)
+            Len += Me.streams(i).writeHeaderBuffer(i, moviOffset + dataOffset(i), Buffer)
+        Next
+
+        Buffer.Seek(Len, IO.SeekOrigin.Begin)
+        Buffer.Write("LIST", BinaryStringFormat.NoPrefixOrTermination)
+        Buffer.Seek(Len + 8, IO.SeekOrigin.Begin)
+        Buffer.Write("movi", BinaryStringFormat.NoPrefixOrTermination)
+
+        Dim moviLen = 4
+        For i As Integer = 0 To Me.streams.Count - 1
+            Buffer.Seek(Len + 8 + moviLen, IO.SeekOrigin.Begin)
+            moviLen += Me.streams(i).writeDataBuffer(i, Buffer)
+        Next
+
+        Buffer.Seek(Len + 4, IO.SeekOrigin.Begin)
+        Buffer.Write(moviLen)
+        Buffer.Seek(4, IO.SeekOrigin.Begin)
+        Buffer.Write(Len + moviLen)
+
+        Call Buffer.Flush()
+        Call Buffer.Close()
+    End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function getVideoHeaderLength(frameLen As Integer) As Integer
@@ -24,7 +94,7 @@ Public Class Encoder
             frameLen * 4 * 2
     End Function
 
-    Shared Function getVideoDataLength(frames As Array) As Integer
+    Public Shared Function getVideoDataLength(frames As Array) As Integer
         Dim Len = 0
         For i As Integer = 0 To frames.Length - 1
             Len += 8 + frames(i).length + If(frames(i).length Mod 2 = 0, 0, 1) ' Pad if chunk Not in word boundary
@@ -46,8 +116,6 @@ Public Class AviStream
     Public Property width As Short
     Public Property height As Short
     Public Property frames As New List(Of Byte())
-
-    Dim stream As BinaryDataWriter
 
     ''' <summary>
     ''' Adds a frame-array to the frame list.
@@ -72,7 +140,7 @@ Public Class AviStream
     ''' <param name="idx">the stream index</param>
     ''' <param name="dataOffset">the offset of the stream data from the beginning of the file</param>
     ''' <returns></returns>
-    Public Function writeHeaderBuffer(idx%, dataOffset%) As Integer
+    Public Function writeHeaderBuffer(idx%, dataOffset%, stream As BinaryDataWriter) As Integer
         Dim hexIdx = idx.ToHexString & "db"
         If (hexIdx.Length = 3) Then hexIdx = "0" & hexIdx
 
@@ -139,7 +207,7 @@ Public Class AviStream
     ''' </summary>
     ''' <param name="idx">the stream index</param>
     ''' <returns></returns>
-    Public Function writeDataBuffer(idx As Integer) As Integer
+    Public Function writeDataBuffer(idx As Integer, stream As BinaryDataWriter) As Integer
         Dim Len = 0
         Dim hexIdx = idx.ToHexString & "db"
         If (hexIdx.Length = 3) Then hexIdx = "0" & hexIdx
