@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5D35E122-11C0-4B18-BE08-E658A3F20323}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>avi</RootNamespace>
-    <AssemblyName>avi</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Imaging.AVIMedia</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Imaging.AVIMedia</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>avi.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.AVIMedia.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>avi.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.AVIMedia.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>

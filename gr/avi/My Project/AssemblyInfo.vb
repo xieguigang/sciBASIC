@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("simple VB.NET AVI encoder")>
-<Assembly: AssemblyDescription("simple VB.NET AVI encoder")>
+<Assembly: AssemblyTitle("simple VB.NET AVI encoder for data visualization of Machine learning result")>
+<Assembly: AssemblyDescription("simple VB.NET AVI encoder for data visualization of Machine learning result")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("avi")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
+<Assembly: AssemblyCopyright("Copyright © sciBASIC.NET 2019")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
