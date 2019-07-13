@@ -294,6 +294,7 @@
     <Compile Include="Canvas3D\Input3D.vb" />
     <Compile Include="IGraphicsEngine.vb" />
     <Compile Include="InputDevice.vb" />
+    <Compile Include="AVI.vb" />
     <Compile Include="Styling\UI\ColorMaps.Designer.vb">
       <DependentUpon>ColorMaps.vb</DependentUpon>
     </Compile>
