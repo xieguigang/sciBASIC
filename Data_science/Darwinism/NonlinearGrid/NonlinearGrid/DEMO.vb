@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Debugger
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 
 Module DEMO
 

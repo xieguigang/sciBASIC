@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator.GAExtensions
+Imports StoreModel = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure.NeuralNetwork
 
 Public Class ANNDebugger
 
@@ -109,7 +110,7 @@ Public Class ANNDebugger
 
         If [error] < minErr Then
             minErr = [error]
-            StoreProcedure.NeuralNetwork _
+            StoreModel _
                 .Snapshot(model) _
                 .GetXml _
                 .SaveTo(snapShotTemp)
