@@ -42,6 +42,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization
@@ -58,7 +59,7 @@ Public Class Correlation : Implements ICloneable(Of Correlation)
     Public Property B As Vector
     Public Property BC As Double
 
-    ' ReadOnly sigmoid As New BipolarSigmoid
+    ReadOnly sigmoid As New BipolarSigmoid
 
     ''' <summary>
     ''' sigmoid(C + B*X)
@@ -73,8 +74,7 @@ Public Class Correlation : Implements ICloneable(Of Correlation)
         ' 添加了BipolarSigmoid函数的约束之后可以避免出现这种情况
         ' Return BC + sigmoid.Function((B * X).Sum)
 
-        ' Reciprocal gamma function
-        Dim c As Vector = BC + 1 / MathGamma.gamma(B * X)
+        Dim c As Vector = BC + sigmoid(B * X)
         Return c.Sum
     End Function
 
