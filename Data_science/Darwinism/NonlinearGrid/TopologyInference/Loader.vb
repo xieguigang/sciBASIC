@@ -75,7 +75,7 @@ Public Module Loader
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing) As GridSystem
+    Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing, Optional power As Vector = Nothing) As GridSystem
         Return New GridSystem With {
             .A = cor Or New Vector(0.01, width).AsDefault,
             .C = width.SeqIterator _
@@ -86,8 +86,16 @@ Public Module Loader
                             ' 但是如果样本之中的X向量中存在一个非常小的数,则会反而被无限放大??
                             ' 为了避免出现 0 ^ -c = Inf的情况出现
                             ' 这个C向量应该全部都是零初始化，这样子系统初始状态为 Sum(X)
+                            Dim powerFactor As Vector
+
+                            If power Is Nothing Then
+                                powerFactor = Vector.rand(0, 0.001, width)
+                            Else
+                                powerFactor = New Vector(power)
+                            End If
+
                             Return New Correlation With {
-                                .B = Vector.rand(0, 0.001, width),
+                                .B = powerFactor,
                                 .BC = 0.005
                             }
                         End Function) _

@@ -185,22 +185,22 @@ Module Program
 
         Call $"Mutation rate = {rate}".__DEBUG_ECHO
         Call $"Population size = {popSize}".__DEBUG_ECHO
-        Call trainingSet.DataSamples _
-            .AsEnumerable _
-            .RunFitProcess(trainingSet.width, out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names, mutationRate:=rate)
+        Call trainingSet _
+            .RunFitProcess(out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names, mutationRate:=rate)
 
         Return 0
     End Function
 
     <Extension>
-    Public Sub RunFitProcess(trainingSet As IEnumerable(Of Sample), width%, outFile$, seed As GridSystem, popSize%, factorNames$(), mutationRate As Double)
-        Dim cor As Vector = trainingSet.Correlation
+    Public Sub RunFitProcess(trainingSet As DataSet, outFile$, seed As GridSystem, popSize%, factorNames$(), mutationRate As Double)
+        Dim cor As Vector = trainingSet.DataSamples.AsEnumerable.Correlation
+        Dim max As Vector = trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
         Call "Create a base chromosome".__DEBUG_ECHO
-        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(width, cor))
+        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, max))
         Call "Initialize populations".__DEBUG_ECHO
         Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize)
         Call "Initialize environment".__DEBUG_ECHO
-        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet)
+        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable)
         Call "Create algorithm engine".__DEBUG_ECHO
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness)
         Call "Load driver".__DEBUG_ECHO
