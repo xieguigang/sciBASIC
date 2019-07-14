@@ -94,7 +94,11 @@ Namespace Darwinism.GAF.Helper
                                 e <> Double.MinValue Then
                                 Return e
                             Else
-                                Return Long.MaxValue
+                                ' 前面在这里使用的是Long.Max
+                                ' 因为Long.Max最多只有 10 ^ 18
+                                ' 所以可能会造成一个最优解的假象
+                                ' 如果目标函数产生的实际值很大的话
+                                Return 10 ^ 200
                             End If
                         End Function) _
                 .ToArray
