@@ -152,7 +152,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
             i = randf.NextInteger(upper:=width)
 
             If chromosome.C(i).BC = 0 Then
-                chromosome.C(i).BC = 1
+                chromosome.C(i).BC = -1
             ElseIf FlipCoin() Then
                 chromosome.C(i).BC += randf.randf(0, chromosome.C(i).BC * MutationRate)
             Else
