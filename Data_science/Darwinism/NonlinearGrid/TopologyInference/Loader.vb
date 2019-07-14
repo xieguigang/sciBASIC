@@ -66,7 +66,7 @@ Public Module Loader
                             ' 这个C向量应该全部都是零初始化，这样子系统初始状态为 Sum(X)
                             Return New Correlation With {
                                 .B = Vector.Zero(width),
-                                .BC = 1
+                                .BC = 0.005
                             }
                         End Function) _
                 .ToArray
