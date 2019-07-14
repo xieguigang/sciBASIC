@@ -174,8 +174,8 @@ Public Structure ColorTheme
         End Get
     End Property
 
-    Public Shared ReadOnly Property DefaultTheme As New DefaultValue(Of ColorTheme) With {
-            .LazyValue = New Lazy(Of ColorTheme)(Function() [Default]()),
+    Public Shared ReadOnly Property DefaultTheme As New [Default](Of ColorTheme) With {
+            .lazy = New Lazy(Of ColorTheme)(Function() [Default]()),
             .assert = Function(t)
                           Return DirectCast(t, ColorTheme).IsEmpty
                       End Function
