@@ -62,9 +62,11 @@ Public Module Loader
                             ' 从而避免一开始就出现无穷大的结果???
                             '
                             ' 但是如果样本之中的X向量中存在一个非常小的数,则会反而被无限放大??
+                            ' 为了避免出现 0 ^ -c = Inf的情况出现
+                            ' 这个C向量应该全部都是零初始化，这样子系统初始状态为 Sum(X)
                             Return New Correlation With {
                                 .B = Vector.Zero(width),
-                                .BC = -1
+                                .BC = 1
                             }
                         End Function) _
                 .ToArray
