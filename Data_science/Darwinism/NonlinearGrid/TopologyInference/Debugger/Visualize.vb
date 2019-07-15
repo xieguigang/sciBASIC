@@ -69,7 +69,7 @@ Public Module Visualize
     End Function
 
     <Extension>
-    Public Iterator Function NodeImportance(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
+    Public Iterator Function NodeImpacts(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
         For i As Integer = 0 To grid.correlations.Length - 1
             Dim factor As NumericVector = grid.correlations(i)
             Dim c As Double = grid.const.B(i)
@@ -82,6 +82,25 @@ Public Module Visualize
             Yield New NamedValue(Of Double) With {
                .Name = factor.name,
                .Value = impact
+            }
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function NodeCorrelation(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
+        Dim impacts = grid.NodeImpacts.ToArray
+
+        For i As Integer = 0 To grid.correlations.Length - 1
+            If impacts(i).Value < 0 Then
+                Continue For
+            End If
+
+            Dim A As Double = grid.direction(i)
+
+            Yield New NamedValue(Of Double) With {
+                .Name = impacts(i).Name,
+                .Value = impacts(i).Value * A,
+                .Description = impacts(i).Value
             }
         Next
     End Function
@@ -110,7 +129,7 @@ Public Module Visualize
         Dim variableNames As New List(Of String)
         Dim edge As EdgeData
         Dim importance As Dictionary(Of String, Double) = grid _
-            .NodeImportance _
+            .NodeImpacts _
             .ToDictionary(Function(n) n.Name,
                           Function(n)
                               Return n.Value
@@ -122,7 +141,10 @@ Public Module Visualize
                     .label = factor.name,
                     .origID = factor.name,
                     .mass = importance(factor.name),
-                    .radius = importance(factor.name)
+                    .radius = importance(factor.name),
+                    .Properties = New Dictionary(Of String, String) From {
+                        {"impacts", importance(factor.name)}
+                    }
                 },
                 .Label = factor.name,
                 .ID = 0
@@ -141,7 +163,10 @@ Public Module Visualize
                     ' 以及低相关度的节点链接
                     edge = New EdgeData With {
                         .label = $"{factor.name} ^ {variableNames(i)}",
-                        .weight = factor(i)
+                        .weight = factor(i),
+                        .Properties = New Dictionary(Of String, String) From {
+                            {"correlation", factor(i)}
+                        }
                     }
                     g.CreateEdge(factor.name, variableNames(i), edge)
                 End If
