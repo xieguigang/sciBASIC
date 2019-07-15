@@ -42,7 +42,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.Language
@@ -51,20 +50,28 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Public Module Visualize
 
     <Extension>
-    Public Function ROC(result As IEnumerable(Of DataSet), Optional positiveRange As Boolean = True) As IEnumerable(Of Validation)
+    Public Function ROC(result As IEnumerable(Of FittingValidation), Optional positiveRange As Boolean = True) As IEnumerable(Of Validation)
         With result.ToArray
-            Dim range As New DoubleRange(.Select(Function(d) d!actual))
-            Dim seq As New Sequence With {.range = range, .n = 100}
-            Dim getPredicts As Func(Of DataSet, Double, Boolean) =
+            Dim range As New DoubleRange(.Select(Function(d) d.actual))
+            Dim seq As New Sequence With {
+                .range = range,
+                .n = 100
+            }
+            Dim getPredicts As Func(Of FittingValidation, Double, Boolean) =
                 Function(x, t)
-                    If x!fit < 0 AndAlso positiveRange Then
+                    If x.predicts < 0 AndAlso positiveRange Then
                         Return 0 >= t
                     Else
-                        Return x!fit >= t
+                        Return x.predicts >= t
                     End If
                 End Function
 
-            Return Validation.ROC(Of DataSet)(.ByRef, Function(x, t) x!actual >= t, getPredicts, threshold:=seq)
+            Return Validation.ROC(Of FittingValidation)(
+                entity:= .ByRef,
+                getValidate:=Function(x, t) x.actual >= t,
+                getPredict:=getPredicts,
+                threshold:=seq
+            )
         End With
     End Function
 
