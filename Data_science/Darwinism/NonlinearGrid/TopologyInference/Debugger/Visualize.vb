@@ -51,12 +51,20 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Public Module Visualize
 
     <Extension>
-    Public Function ROC(result As IEnumerable(Of DataSet)) As IEnumerable(Of Validation)
+    Public Function ROC(result As IEnumerable(Of DataSet), Optional positiveRange As Boolean = True) As IEnumerable(Of Validation)
         With result.ToArray
             Dim range As New DoubleRange(.Select(Function(d) d!actual))
             Dim seq As New Sequence With {.range = range, .n = 100}
+            Dim getPredicts As Func(Of DataSet, Double, Boolean) =
+                Function(x, t)
+                    If x!fit < 0 AndAlso positiveRange Then
+                        Return 0 >= t
+                    Else
+                        Return x!fit >= t
+                    End If
+                End Function
 
-            Return Validation.ROC(Of DataSet)(.ByRef, Function(x, t) x!actual >= t, Function(x, t) x!fit >= t, threshold:=seq)
+            Return Validation.ROC(Of DataSet)(.ByRef, Function(x, t) x!actual >= t, getPredicts, threshold:=seq)
         End With
     End Function
 
