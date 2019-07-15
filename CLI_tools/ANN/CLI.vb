@@ -100,6 +100,36 @@ Module CLI
         Return ROCMatrix.SaveTo(out).CLICode
     End Function
 
+    <ExportAPI("/validates")>
+    <Usage("/validates /in <validateSet.Xml> /model <ANN.xml/directory> /trainingSet <dataset.XML> [/out <result.csv>]")>
+    Public Function RunValidates(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim model = NeuralNetwork.LoadModel(handle:=args <= "/model")
+        Dim trainingSet = (args <= "/trainingSet").LoadXml(Of DataSet)
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}_validates.csv"
+        Dim validateSet = [in].LoadXml(Of DataSet)
+        Dim runPredict = model.GetPredictLambda(trainingSet.NormalizeMatrix)
+        Dim result = validateSet.DataSamples _
+            .AsEnumerable _
+            .Select(Function(d)
+                        Dim predicts As Double() = runPredict(d)
+                        Dim output As New Excel With {
+                            .ID = d.ID,
+                            .Properties = New Dictionary(Of String, Double)
+                        }
+
+                        For i As Integer = 0 To validateSet.output.Length - 1
+                            output(validateSet.output(i)) = d.target(i)
+                            output($"{validateSet.output(i)}(predicts)") = predicts(i)
+                        Next
+
+                        Return output
+                    End Function) _
+            .ToArray
+
+        Return result.SaveTo(out).CLICode
+    End Function
+
     <ExportAPI("/Summary.Debugger.Dump")>
     <Usage("/Summary.Debugger.Dump /in <debugger_out.cdf>")>
     Public Sub SummaryDebuggerDump(args As CommandLine)

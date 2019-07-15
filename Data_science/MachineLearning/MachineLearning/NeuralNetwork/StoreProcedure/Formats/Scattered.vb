@@ -115,7 +115,8 @@ Namespace NeuralNetwork.StoreProcedure
                                 }
 
                                 Return edge
-                            End Function)
+                            End Function) _
+                    .ToArray
             End Using
         End Function
 
