@@ -43,6 +43,7 @@
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -65,6 +66,29 @@ Module Program
 
     Public Function Main() As Integer
         Return GetType(Program).RunCLI(App.CommandLine)
+    End Function
+
+    <ExportAPI("/formula.R")>
+    <Usage("/formula.R /in <model.Xml> [/out <formula.R>]")>
+    Public Function Formula(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or ([in].TrimSuffix & ".formula.R")
+        Dim model As GridMatrix = [in].LoadXml(Of GridMatrix)
+        Dim formulaText$ = model.const.A & " + " &
+            model.correlations _
+                .Select(Function(c, i)
+                            Return $"{model.const.B(i)} + " & c.AsEnumerable.Select(Function(cj, j) $"({c} * X[{j + 1}])").JoinBy(" + ")
+                        End Function) _
+                .Select(Function(power, i)
+                            Return $"({model.direction(i)} * (X[{i + 1}] ^ ({power})))"
+                        End Function) _
+                .JoinBy(" + ")
+
+        Return $"
+grid <- function(X) {{
+    {formulaText};
+}}".SaveTo(out, Encoding.ASCII) _
+   .CLICode
     End Function
 
     <ExportAPI("/dump.network")>
