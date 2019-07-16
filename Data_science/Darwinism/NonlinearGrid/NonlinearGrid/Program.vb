@@ -82,7 +82,7 @@ Module Program
                 .Select(Function(power, i)
                             Return $"({model.direction(i)} * (X[{i + 1}] ^ ({power})))"
                         End Function) _
-                .JoinBy(" + ")
+                .JoinBy(" + " & vbCrLf)
 
         Return $"
 grid <- function(X) {{
