@@ -55,12 +55,12 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.ReplacementStrategy
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Text
-Imports Table = Microsoft.VisualBasic.Data.csv.IO.DataSet
 
 Module Program
 
@@ -231,7 +231,7 @@ grid <- function(X) {{
         Call "Initialize environment".__DEBUG_ECHO
         Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable)
         Call "Create algorithm engine".__DEBUG_ECHO
-        Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness)
+        Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.EliteCrossbreed)
         Call "Load driver".__DEBUG_ECHO
         Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
             .Iterations = 10000,

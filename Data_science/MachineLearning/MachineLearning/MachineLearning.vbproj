@@ -320,6 +320,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Darwinism\GeneticAlgorithm\ReplacementStrategy.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\EnvironmentDriver.vb" />
     <Compile Include="DataSet\NamespaceDoc.vb" />
     <Compile Include="IterationReporter.vb" />

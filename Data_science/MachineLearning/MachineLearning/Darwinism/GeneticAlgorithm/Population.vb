@@ -88,9 +88,17 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <returns></returns>
         Public Property parallel As Boolean = False
+        ''' <summary>
+        ''' 种群的大小
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property initialSize As Integer
 
         ''' <summary>
-        ''' The number of chromosome elements in the inner list
+        ''' The number of chromosome elements in current population.
+        ''' (请注意,这个属性的值是随着<see cref="Add"/>方法的调用而变化的,
+        ''' 如果只需要获取得到种群的固定大小,可以使用<see cref="initialSize"/>
+        ''' 属性)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Size As Integer
@@ -118,7 +126,7 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property Item(index%) As Chr
+        Default Public ReadOnly Property Item(index As Integer) As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return chromosomes(index)
