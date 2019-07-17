@@ -71,7 +71,7 @@ Namespace ManagedSqlite.Core
                            End Function
 
             For Each column As String In columns
-                tokens = column.StringSplit("\s+")
+                tokens = column.TrimNewLine.StringSplit("\s+")
                 name = [nameOf](tokens)
                 field = New NamedValue(Of String) With {
                     .Name = name,
