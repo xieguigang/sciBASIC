@@ -50,6 +50,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class GridMatrix : Inherits XmlDataModel
@@ -61,8 +62,8 @@ Public Class GridMatrix : Inherits XmlDataModel
 
     <XmlElement("correlations")>
     Public Property correlations As NumericVector()
-    ' <XmlElement("weights")>
-    ' Public Property weights As NumericVector()
+    <XmlElement("weights")>
+    Public Property weights As NumericVector
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CreateSystem() As GridSystem
@@ -76,16 +77,9 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A)
+            .AC = If([const] Is Nothing, 0, [const].A),
+            .P = If(weights Is Nothing, Vector.rand(0, 10, direction.Length), New Vector(weights.vector))
         }
-        '    .P = weights 
-        '        .Select(Function(r)
-        '                    Return New PWeight With {
-        '                        .W = r.vector
-        '                    }
-        '                End Function) _
-        '        .ToArray
-        '}
     End Function
 
     Public Overloads Function ToString(lang As Languages) As String
