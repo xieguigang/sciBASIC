@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6f3b5144db49c530543e62920605973, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
+﻿#Region "Microsoft.VisualBasic::b6f3b5144db49c530543e62920605973, ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
 
     ' Author:
     ' 

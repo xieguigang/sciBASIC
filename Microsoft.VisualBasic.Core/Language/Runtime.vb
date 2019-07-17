@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07b523fb539260b7cd01bff7c4c2311e, Microsoft.VisualBasic.Core\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::07b523fb539260b7cd01bff7c4c2311e, Language\Runtime.vb"
 
     ' Author:
     ' 

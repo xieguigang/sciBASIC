@@ -56,13 +56,14 @@ Public Module Loader
         Dim cor = Iterator Function() As IEnumerable(Of Double)
                       Dim array As Double()
                       Dim pcc As Double
-
+#Disable Warning
                       For i As Integer = 0 To dataArray(Scan0).status.Length - 1
                           array = dataArray.Select(Function(r) r.status(i)).ToArray
                           pcc = Correlations.GetPearson(array, target)
 
                           Yield pcc
                       Next
+#Enable Warning
                   End Function
 
         Return New Vector(cor())
@@ -99,19 +100,9 @@ Public Module Loader
                                 .BC = 0.005
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .P = Vector.rand(0, 10, size:=width)
         }
-        '    .P = width.SeqIterator _
-        '        .Select(Function(null)
-        '                    ' 累乘效应是十分大的,所以在一开始应该
-        '                    ' 是全部设置为零,这样子权重系数就全部都是1
-        '                    ' 没有对结果产生影响
-        '                    Return New PWeight With {
-        '                        .W = Vector.Zero(width)
-        '                    }
-        '                End Function) _
-        '        .ToArray
-        '}
     End Function
 
     ''' <summary>
@@ -144,17 +135,11 @@ Public Module Loader
                         .Select(Function(ci) ci.BC) _
                         .ToArray
                 }
+            },
+            .weights = New NumericVector With {
+                .name = "Km",
+                .vector = genome.chromosome.P
             }
         }
-        '    .weights = genome.chromosome _
-        '        .P _
-        '        .Select(Function(p, i)
-        '                    Return New NumericVector With {
-        '                        .name = i,
-        '                        .vector = p.W.ToArray
-        '                    }
-        '                End Function) _
-        '        .ToArray
-        '}
     End Function
 End Module

@@ -43,9 +43,12 @@
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -53,17 +56,30 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.ReplacementStrategy
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Text
-Imports Table = Microsoft.VisualBasic.Data.csv.IO.DataSet
 
 Module Program
 
     Public Function Main() As Integer
         Return GetType(Program).RunCLI(App.CommandLine)
+    End Function
+
+    <ExportAPI("/formula.R")>
+    <Usage("/formula.R /in <model.Xml> [/out <formula.R>]")>
+    Public Function Formula(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or ([in].TrimSuffix & ".formula.R")
+        Dim model As GridMatrix = [in].LoadXml(Of GridMatrix)
+
+        Return model _
+            .ToString(lang:=Languages.R) _
+            .SaveTo(out, Encoding.ASCII) _
+            .CLICode
     End Function
 
     <ExportAPI("/dump.network")>
@@ -75,17 +91,24 @@ Module Program
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.threshold={threshold}.network/"
         Dim matrix As GridMatrix = [in].LoadXml(Of GridMatrix)
         Dim graph As NetworkGraph = matrix.CreateGraph(cutoff:=threshold)
-        Dim network = graph.Tabular
+        Dim network = graph.Tabular({"impacts", "correlation"})
 
         Return network.Save(out, Encodings.ASCII).CLICode
     End Function
 
     <ExportAPI("/factor.impacts")>
-    <Usage("/factor.impacts /in <model.Xml> [/order <asc/desc> /out <out.csv>]")>
+    <Usage("/factor.impacts /in <model.Xml> [/order <asc/desc> /correlation /out <out.csv>]")>
     Public Function ExportFactorImpact(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim model = [in].LoadXml(Of GridMatrix)
-        Dim impacts = model.NodeImportance.ToArray
+        Dim isCor As Boolean = args("/correlation")
+        Dim impacts As NamedValue(Of Double)()
+
+        If isCor Then
+            impacts = model.NodeCorrelation.ToArray
+        Else
+            impacts = model.NodeImpacts.ToArray
+        End If
 
         If args.ContainsParameter("/order") Then
             If args("/order").DefaultValue.TextEquals("asc") Then
@@ -121,23 +144,26 @@ Module Program
             .Select(Function(sample, i)
                         Dim result = model.Evaluate(sample.status.vector)
 
-                        Return New Table With {
-                            .ID = sample.ID,
-                            .Properties = New Dictionary(Of String, Double) From {
-                                {"actual", sample.target(Scan0)},
-                                {"fit", result},
-                                {"errors", Math.Abs(sample.target(Scan0) - result)}
-                            }
+                        Return New FittingValidation With {
+                            .sampleID = sample.ID,
+                            .actual = sample.target(Scan0),
+                            .predicts = result
                         }
                     End Function) _
             .ToArray
+        Dim R2Test = dataset.DataSamples _
+            .Select(Function(sample, i)
+                        Return New TrainingSet(sample)
+                    End Function) _
+            .ToArray _
+            .DoCall(apply:=Function(d) model.R2(d, True))
 
         If args.ContainsParameter("/order") Then
             If args("/order").DefaultValue.TextEquals("asc") Then
-                summaryResult = summaryResult.OrderBy(Function(r) r!errors).ToArray
+                summaryResult = summaryResult.OrderBy(Function(r) r.errors).ToArray
             Else
                 summaryResult = summaryResult _
-                    .OrderByDescending(Function(r) r!errors) _
+                    .OrderByDescending(Function(r) r.errors) _
                     .ToArray
             End If
         End If
@@ -157,9 +183,10 @@ Module Program
 
         Call VBDebugger.WaitOutput()
         Call Console.WriteLine()
-        Call Console.WriteLine($"DataFitting Errors={summaryResult.GroupBy(Function(r) r!actual.ToString).Select(Function(g) g.Select(Function(r) r!errors).Average).Average}")
+        Call Console.WriteLine($"DataFitting Errors={summaryResult.GroupBy(Function(r) r.actual.ToString).Select(Function(g) g.Select(Function(r) r.errors).Average).Average}")
+        Call Console.WriteLine($"R2_error={R2Test}")
         Call Console.WriteLine()
-        Call summaryResult.Select(Function(r) r!errors).Summary
+        Call summaryResult.Select(Function(r) r.errors).Summary
 
         Return 0
     End Function
@@ -198,11 +225,11 @@ Module Program
         Call "Create a base chromosome".__DEBUG_ECHO
         Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, max))
         Call "Initialize populations".__DEBUG_ECHO
-        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize)
+        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize, parallel:=True)
         Call "Initialize environment".__DEBUG_ECHO
-        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable)
+        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable, FitnessMethods.R2)
         Call "Create algorithm engine".__DEBUG_ECHO
-        Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness)
+        Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
         Call "Load driver".__DEBUG_ECHO
         Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
             .Iterations = 10000,

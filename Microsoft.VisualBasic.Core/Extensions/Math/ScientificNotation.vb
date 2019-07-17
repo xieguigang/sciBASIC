@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81dc3bbe4b63f750c4ac4b1effa1ee76, Microsoft.VisualBasic.Core\Extensions\Math\ScientificNotation.vb"
+﻿#Region "Microsoft.VisualBasic::81dc3bbe4b63f750c4ac4b1effa1ee76, Extensions\Math\ScientificNotation.vb"
 
     ' Author:
     ' 

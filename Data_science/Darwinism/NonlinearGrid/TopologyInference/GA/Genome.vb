@@ -77,6 +77,16 @@ Public Class Genome : Implements Chromosome(Of Genome)
         Me.MutationRate = mutationRate
     End Sub
 
+    ''' <summary>
+    ''' <see cref="GridSystem.Evaluate(Vector)"/>
+    ''' </summary>
+    ''' <param name="X"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Evaluate(X As Vector) As Double
+        Return chromosome.Evaluate(X)
+    End Function
+
     Public Function CalculateError(status As Vector, target As Double) As Double
         Dim predicts = chromosome.Evaluate(status)
 
@@ -106,11 +116,10 @@ Public Class Genome : Implements Chromosome(Of Genome)
                 ' crossover C
                 randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
             End If
-            'Else
-            '    ' crossover P
-            '    randf.seeds.Crossover(a.P(i).W.Array, b.P(j).W.Array)
-            'End If
-            ' End If
+
+            If FlipCoin(40) Then
+                randf.seeds.Crossover(a.P.Array, b.P.Array)
+            End If
         End SyncLock
 
         Yield New Genome(a, MutationRate)
@@ -131,6 +140,11 @@ Public Class Genome : Implements Chromosome(Of Genome)
         End If
 
         If FlipCoin() Then
+            ' mutate one bit in P vector
+            chromosome.P.Array.Mutate(randf.seeds, rate:=MutationRate)
+        End If
+
+        If FlipCoin() Then
             If chromosome.AC = 0 Then
                 chromosome.AC = 1
             ElseIf FlipCoin() Then
@@ -144,8 +158,6 @@ Public Class Genome : Implements Chromosome(Of Genome)
             i = randf.NextInteger(upper:=width)
             ' mutate one bit in C vector
             chromosome.C(i).B.Array.Mutate(randf.seeds, rate:=MutationRate)
-            ' mutate one bit in P vector
-            ' chromosome.P(i).W.Array.Mutate(randf.seeds)
         End If
 
         If FlipCoin() Then
@@ -172,9 +184,9 @@ Public Class Genome : Implements Chromosome(Of Genome)
             .Select(Function(i)
                         Dim sign = chromosome.A(i)
                         Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
-                        ' Dim p = chromosome.P(i).W.Sum
+                        Dim p = chromosome.P(i)
 
-                        Return chromosome.AC + sign * (c) '+ p)
+                        Return chromosome.AC + sign * c / p
                     End Function) _
             .ToArray _
             .GetJson _

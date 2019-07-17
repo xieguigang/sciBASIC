@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4f476bccb1fc043519be1073163b50f, Microsoft.VisualBasic.Core\Extensions\Collection\AnonymousTypeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d4f476bccb1fc043519be1073163b50f, Extensions\Collection\AnonymousTypeHelper.vb"
 
     ' Author:
     ' 

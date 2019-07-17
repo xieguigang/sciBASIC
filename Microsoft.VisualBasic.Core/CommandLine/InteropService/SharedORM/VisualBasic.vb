@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12fe77c4e4c9cda30cfbdc6575522baa, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::12fe77c4e4c9cda30cfbdc6575522baa, CommandLine\InteropService\SharedORM\VisualBasic.vb"
 
     ' Author:
     ' 

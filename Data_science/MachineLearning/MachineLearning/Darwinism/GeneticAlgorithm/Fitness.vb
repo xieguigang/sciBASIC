@@ -95,6 +95,14 @@ Namespace Darwinism.GAF
         ''' 
         ''' (假若是并行模式的之下，还要求这个函数是线程安全的)
         ''' </summary>
-        Function Calculate(chromosome As Chr) As Double
+        ''' <param name="parallel">
+        ''' 在计算函数的内部是否是应该是并行的?
+        ''' 
+        ''' 应该遵循以下的准则:
+        ''' 
+        ''' 1. 如果外部调用这个计算函数是并行的,那么这个parallel参数应该设置为false
+        ''' 2. 如果是单线程的外部代码调用这个计算函数,那么这个parallel参数可以是true,即在函数的内部实现并行化
+        ''' </param>
+        Function Calculate(chromosome As Chr, parallel As Boolean) As Double
     End Interface
 End Namespace

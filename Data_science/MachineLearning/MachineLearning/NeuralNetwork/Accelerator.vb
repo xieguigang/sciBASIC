@@ -181,7 +181,7 @@ Namespace NeuralNetwork.Accelerator
             End Get
         End Property
 
-        Public Function Calculate(chromosome As WeightVector) As Double Implements Fitness(Of WeightVector).Calculate
+        Public Function Calculate(chromosome As WeightVector, parallel As Boolean) As Double Implements Fitness(Of WeightVector).Calculate
             For i As Integer = 0 To chromosome.weights.Length - 1
                 For Each s In synapses(i)
                     s.Weight = chromosome.weights(i)

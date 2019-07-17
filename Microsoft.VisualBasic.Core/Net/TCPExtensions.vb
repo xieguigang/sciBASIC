@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff05fb0b3da4b5b58b11bd4c7a53a712, Microsoft.VisualBasic.Core\Net\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ff05fb0b3da4b5b58b11bd4c7a53a712, Net\TCPExtensions.vb"
 
     ' Author:
     ' 

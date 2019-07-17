@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef16285bcf1dd1e43c4720a98796fe49, Microsoft.VisualBasic.Core\Language\Value\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::ef16285bcf1dd1e43c4720a98796fe49, Language\Value\Pointer.vb"
 
     ' Author:
     ' 

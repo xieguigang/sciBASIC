@@ -69,7 +69,7 @@ Namespace ManagedSqlite.Core.Internal
         Public ReadOnly Property Position As Long
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _stream.Position
+                Return stream.Position
             End Get
         End Property
 
@@ -81,16 +81,15 @@ Namespace ManagedSqlite.Core.Internal
         ''' </summary>
         Public Property ReservedSpace() As Byte
 
-        ReadOnly _stream As Stream
-        ReadOnly _binaryReader As BinaryReader
+        ReadOnly stream As Stream
+        ReadOnly binaryReader As BinaryReader
 
         Dim _encoding As Encoding
 
         Public Sub New(stream As Stream)
-            _stream = stream
-            Length = _stream.Length
-
-            _binaryReader = New BinaryReader(stream)
+            Me.stream = stream
+            Me.Length = Me.stream.Length
+            Me.binaryReader = New BinaryReader(stream)
         End Sub
 
         Friend Sub New(stream As Stream, origin As ReaderBase)
@@ -122,7 +121,7 @@ Namespace ManagedSqlite.Core.Internal
         End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            Call _stream.Dispose()
+            Call stream.Dispose()
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -134,7 +133,7 @@ Namespace ManagedSqlite.Core.Internal
             Call Debug.Assert(toRead >= comparison.Length)
             Call CheckSize(toRead)
 
-            Dim data As Byte() = _stream.ReadFully(CInt(toRead))
+            Dim data As Byte() = stream.ReadFully(CInt(toRead))
             Dim res As Boolean = data.SequenceEqual(comparison)
 
             If Not res AndAlso throwException Then
@@ -150,7 +149,7 @@ Namespace ManagedSqlite.Core.Internal
                 Return
             End If
 
-            Dim dataLeft As Long = Length - _stream.Position
+            Dim dataLeft As Long = Length - stream.Position
 
             If dataLeft < sizeWanted Then
                 Throw New ArgumentException("Source stream does not have enough data") 'With {
@@ -165,7 +164,7 @@ Namespace ManagedSqlite.Core.Internal
         End Sub
 
         Friend Sub SetPosition(position As ULong)
-            Dim newPosition As ULong = CULng(_stream.Seek(CLng(position), SeekOrigin.Begin))
+            Dim newPosition As ULong = CULng(stream.Seek(CLng(position), SeekOrigin.Begin))
 
             If newPosition <> position Then
                 Throw New ArgumentException($"Unable to seek to position {position}")
@@ -179,63 +178,63 @@ Namespace ManagedSqlite.Core.Internal
 
             ' Note: Pages are 1-indexed
             Dim position As ULong = (page - 1) * PageSize
-            position += offset
 
+            position += offset
             SetPositionAndCheckSize(position, CUInt(PageSize - offset))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Sub Skip(bytes As UInteger)
-            _stream.Seek(bytes, SeekOrigin.Current)
+            stream.Seek(bytes, SeekOrigin.Current)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ReadByte() As Byte
-            Return _binaryReader.ReadByte()
+            Return binaryReader.ReadByte()
         End Function
 
         Public Function ReadUInt16() As UShort
-            Dim res As UShort = _binaryReader.ReadByte()
+            Dim res As UShort = binaryReader.ReadByte()
             res <<= 8
-            res += _binaryReader.ReadByte()
+            res += binaryReader.ReadByte()
 
             Return res
         End Function
 
         Public Function ReadUInt32() As UInteger
-            Dim res As UInteger = _binaryReader.ReadByte()
+            Dim res As UInteger = binaryReader.ReadByte()
             res <<= 8
 
-            res += _binaryReader.ReadByte()
+            res += binaryReader.ReadByte()
             res <<= 8
 
-            res += _binaryReader.ReadByte()
+            res += binaryReader.ReadByte()
             res <<= 8
 
-            res += _binaryReader.ReadByte()
+            res += binaryReader.ReadByte()
 
             Return res
         End Function
 
         Public Function ReadInt16() As Short
-            Dim res As Short = _binaryReader.ReadByte()
+            Dim res As Short = binaryReader.ReadByte()
             res <<= 8
-            res += _binaryReader.ReadByte()
+            res += binaryReader.ReadByte()
 
             Return res
         End Function
 
         Public Function ReadInt32() As Integer
-            Dim res As Integer = _binaryReader.ReadByte()
+            Dim res As Integer = binaryReader.ReadByte()
             res <<= 8
 
-            res += _binaryReader.ReadByte()
+            res += binaryReader.ReadByte()
             res <<= 8
 
-            res += _binaryReader.ReadByte()
+            res += binaryReader.ReadByte()
             res <<= 8
 
-            res += _binaryReader.ReadByte()
+            res += binaryReader.ReadByte()
 
             Return res
         End Function
@@ -292,12 +291,12 @@ Namespace ManagedSqlite.Core.Internal
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Read(count As Integer) As Byte()
-            Return _stream.ReadFully(count)
+            Return stream.ReadFully(count)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Read(buffer As Byte(), offset As Integer, count As Integer) As Integer
-            Return _stream.ReadFully(buffer, offset, count)
+            Return stream.ReadFully(buffer, offset, count)
         End Function
 
         Public Function ReadInteger(bytes As Byte) As Long

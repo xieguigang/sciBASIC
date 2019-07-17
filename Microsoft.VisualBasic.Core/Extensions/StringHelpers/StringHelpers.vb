@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b305f8c8e7602eaebe3fd0e05001ea4, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::0b305f8c8e7602eaebe3fd0e05001ea4, Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -86,6 +86,11 @@ Public Module StringHelpers
         Return str.PadRight(padLen, padString)
     End Function
 
+    ''' <summary>
+    ''' 将字符串中的所有的<see cref="ASCII.NUL"/>给移除
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function TrimNull(str As String) As String

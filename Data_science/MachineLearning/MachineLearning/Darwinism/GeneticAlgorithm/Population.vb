@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::3fb93b58e337be0490745193348e1106, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class Population
-    ' 
-    '         Properties: parallel, Random, Size
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    '         Sub: Add, parallelCacheFitness, (+2 Overloads) SortPopulationByFitness, Trim
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Class Population
+' 
+'         Properties: parallel, Random, Size
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
+' 
+'         Sub: Add, parallelCacheFitness, (+2 Overloads) SortPopulationByFitness, Trim
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +70,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
@@ -88,9 +89,17 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <returns></returns>
         Public Property parallel As Boolean = False
+        ''' <summary>
+        ''' 种群的大小
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property initialSize As Integer
 
         ''' <summary>
-        ''' The number of chromosome elements in the inner list
+        ''' The number of chromosome elements in current population.
+        ''' (请注意,这个属性的值是随着<see cref="Add"/>方法的调用而变化的,
+        ''' 如果只需要获取得到种群的固定大小,可以使用<see cref="initialSize"/>
+        ''' 属性)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Size As Integer
@@ -109,6 +118,7 @@ Namespace Darwinism.GAF
                 ' TODO improve random generator
                 ' maybe use pattern strategy ?
                 Dim indx As Integer = rnd.Next(numOfChromosomes)
+
                 Return chromosomes(indx)
             End Get
         End Property
@@ -118,7 +128,7 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property Item(index%) As Chr
+        Default Public ReadOnly Property Item(index As Integer) As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return chromosomes(index)
@@ -134,7 +144,7 @@ Namespace Darwinism.GAF
         End Sub
 
         Public Sub SortPopulationByFitness(comparator As IComparer(Of Chr))
-            Call Arrays.Shuffle(chromosomes)
+            ' Call Arrays.Shuffle(chromosomes)
             Call chromosomes.Sort(comparator)
         End Sub
 
@@ -144,25 +154,37 @@ Namespace Darwinism.GAF
         ''' <param name="GA"></param>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of Chr), source As NamedValue(Of Chr)()) As IEnumerable(Of NamedValue(Of Double))
+        Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of Chr), source As NamedValue(Of Chr)(), parallelFlag As Boolean) As IEnumerable(Of NamedValue(Of Double))
             Return From x As NamedValue(Of Chr)
-                   In source.AsParallel
-                   Let fit As Double = GA.chromosomesComparator.Calculate(x.Value)
+                   In source.Populate(parallel:=parallelFlag)
+                   Let fit As Double = GA.chromosomesComparator.Calculate(x.Value, parallel:=Not parallelFlag)
                    Select New NamedValue(Of Double) With {
                        .Name = x.Name,
                        .Value = fit
                    }
         End Function
 
-        Friend ReadOnly Pcompute As ParallelComputing(Of Chr) = AddressOf GA_PLinq
+        Friend ReadOnly Pcompute As ParallelComputing(Of Chr)
 
         ''' <summary>
         ''' 如果<paramref name="parallel"/>参数不是空的，则会启用这个参数的并行计算
         ''' </summary>
         ''' <param name="parallel"></param>
-        Public Sub New(Optional parallel As ParallelComputing(Of Chr) = Nothing)
+        Public Sub New(Optional parallel As [Variant](Of ParallelComputing(Of Chr), Boolean) = Nothing)
             If Not parallel Is Nothing Then
-                Pcompute = parallel
+                If parallel Like GetType(Boolean) Then
+                    Dim flag As Boolean = parallel
+
+                    Pcompute = Function(ga, source)
+                                   Return GA_PLinq(ga, source, parallelFlag:=flag)
+                               End Function
+                Else
+                    Pcompute = parallel
+                End If
+            Else
+                Pcompute = Function(ga, source)
+                               Return GA_PLinq(ga, source, parallelFlag:=True)
+                           End Function
             End If
         End Sub
 
@@ -171,14 +193,16 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
-        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As Fitness(Of Chr))
-            Call Arrays.Shuffle(chromosomes)
+        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
+            ' Call Arrays.Shuffle(chromosomes)
 
             If parallel AndAlso comparator.Cacheable Then
                 Call parallelCacheFitness(GA, comparator)
             End If
 
-            chromosomes = (From c As Chr In chromosomes.AsParallel Order By comparator.Calculate(c) Ascending).AsList
+            chromosomes = (From c As Chr
+                           In chromosomes.AsParallel
+                           Order By comparator.Fitness(c, parallel:=False) Ascending).AsList
         End Sub
 
         Private Sub parallelCacheFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
@@ -189,7 +213,9 @@ Namespace Darwinism.GAF
                                 .Value = x
                             }
                         End Function) _
-                .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
+                .Where(Function(x)
+                           Return Not comparator.cache.ContainsKey(x.Name)
+                       End Function) _
                 .ToArray
             Dim fitness As NamedValue(Of Double)() = Pcompute(GA, source).ToArray
 
@@ -203,9 +229,15 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' shortening population till specific number
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Trim(len As Integer)
             chromosomes = chromosomes.SubList(0, len)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"A population with capacity {initialSize}, current size {Size}. //{GetType(Chr).FullName}"
+        End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Chr) Implements IEnumerable(Of Chr).GetEnumerator
             For Each x As Chr In chromosomes

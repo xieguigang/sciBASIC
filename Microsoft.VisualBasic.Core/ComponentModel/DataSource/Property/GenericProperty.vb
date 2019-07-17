@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acba7167e1e900039f16d90d328b2d31, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\GenericProperty.vb"
+﻿#Region "Microsoft.VisualBasic::acba7167e1e900039f16d90d328b2d31, ComponentModel\DataSource\Property\GenericProperty.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cd618d84602bb5e02f7e78ba29bf818, Microsoft.VisualBasic.Core\test\LinqExpressiontest.vb"
+﻿#Region "Microsoft.VisualBasic::1cd618d84602bb5e02f7e78ba29bf818, test\LinqExpressiontest.vb"
 
     ' Author:
     ' 

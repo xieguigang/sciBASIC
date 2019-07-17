@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f6029f7d263e9acd500eab48089d79d, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\ls.vb"
+﻿#Region "Microsoft.VisualBasic::2f6029f7d263e9acd500eab48089d79d, Language\Language\UnixBash\Shell\ls.vb"
 
     ' Author:
     ' 

@@ -953,6 +953,7 @@
     <Compile Include="ApplicationServices\VBDev\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\CodeSign.vb" />
+    <Compile Include="ApplicationServices\VBDev\Signature\SupportedLanguages.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\LicenseInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
@@ -1350,7 +1351,7 @@
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
     <Compile Include="Language\Language\UnixBash\FileSystem\PathMapper.vb" />
-    <Compile Include="Language\Language\UnixBash\LinuxRunHelper.vb" />
+    <Compile Include="My\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
@@ -1653,6 +1654,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\RangeModel\Copyright.txt" />
+    <None Include="Resources\scripts\bashRunner.sh" />
+    <None Include="Resources\scripts\help.sh" />
     <Content Include="Serialization\JSON\Formatter\license.txt" />
     <None Include="README.md" />
   </ItemGroup>

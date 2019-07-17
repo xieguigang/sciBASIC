@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6248876d415b08d11e14bdad794e4f3c, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\BindProperty.vb"
+﻿#Region "Microsoft.VisualBasic::6248876d415b08d11e14bdad794e4f3c, ComponentModel\DataSource\SchemaMaps\BindProperty.vb"
 
     ' Author:
     ' 

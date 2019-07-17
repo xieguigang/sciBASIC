@@ -1,54 +1,82 @@
 ﻿#Region "Microsoft.VisualBasic::0100ec0939f4ea78a3103bbbc075974d, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Visualize
-    ' 
-    '     Function: CreateGraph, NodeImportance
-    ' 
-    ' /********************************************************************************/
+' Module Visualize
+' 
+'     Function: CreateGraph, NodeImportance
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Module Visualize
 
     <Extension>
-    Public Iterator Function NodeImportance(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
+    Public Function ROC(result As IEnumerable(Of FittingValidation), Optional positiveRange As Boolean = True) As IEnumerable(Of Validation)
+        With result.ToArray
+            Dim range As New DoubleRange(.Select(Function(d) d.actual))
+            Dim seq As New Sequence With {
+                .range = range,
+                .n = 100
+            }
+            Dim getPredicts As Func(Of FittingValidation, Double, Boolean) =
+                Function(x, t)
+                    If x.predicts < 0 AndAlso positiveRange Then
+                        Return 0 >= t
+                    Else
+                        Return x.predicts >= t
+                    End If
+                End Function
+
+            Return Validation.ROC(Of FittingValidation)(
+                entity:= .ByRef,
+                getValidate:=Function(x, t) x.actual >= t,
+                getPredict:=getPredicts,
+                threshold:=seq
+            )
+        End With
+    End Function
+
+    <Extension>
+    Public Iterator Function NodeImpacts(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
         For i As Integer = 0 To grid.correlations.Length - 1
             Dim factor As NumericVector = grid.correlations(i)
             Dim c As Double = grid.const.B(i)
@@ -61,6 +89,25 @@ Public Module Visualize
             Yield New NamedValue(Of Double) With {
                .Name = factor.name,
                .Value = impact
+            }
+        Next
+    End Function
+
+    <Extension>
+    Public Iterator Function NodeCorrelation(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
+        Dim impacts = grid.NodeImpacts.ToArray
+
+        For i As Integer = 0 To grid.correlations.Length - 1
+            If impacts(i).Value < 0 Then
+                Continue For
+            End If
+
+            Dim A As Double = grid.direction(i)
+
+            Yield New NamedValue(Of Double) With {
+                .Name = impacts(i).Name,
+                .Value = impacts(i).Value * A,
+                .Description = impacts(i).Value
             }
         Next
     End Function
@@ -89,7 +136,7 @@ Public Module Visualize
         Dim variableNames As New List(Of String)
         Dim edge As EdgeData
         Dim importance As Dictionary(Of String, Double) = grid _
-            .NodeImportance _
+            .NodeImpacts _
             .ToDictionary(Function(n) n.Name,
                           Function(n)
                               Return n.Value
@@ -101,7 +148,10 @@ Public Module Visualize
                     .label = factor.name,
                     .origID = factor.name,
                     .mass = importance(factor.name),
-                    .radius = importance(factor.name)
+                    .radius = importance(factor.name),
+                    .Properties = New Dictionary(Of String, String) From {
+                        {"impacts", importance(factor.name)}
+                    }
                 },
                 .Label = factor.name,
                 .ID = 0
@@ -120,7 +170,10 @@ Public Module Visualize
                     ' 以及低相关度的节点链接
                     edge = New EdgeData With {
                         .label = $"{factor.name} ^ {variableNames(i)}",
-                        .weight = factor(i)
+                        .weight = factor(i),
+                        .Properties = New Dictionary(Of String, String) From {
+                            {"correlation", factor(i)}
+                        }
                     }
                     g.CreateEdge(factor.name, variableNames(i), edge)
                 End If

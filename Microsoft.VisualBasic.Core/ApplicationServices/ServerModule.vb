@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2da983e326a439e3d78ee22104032cec, Microsoft.VisualBasic.Core\ApplicationServices\ServerModule.vb"
+﻿#Region "Microsoft.VisualBasic::2da983e326a439e3d78ee22104032cec, ApplicationServices\ServerModule.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04b70b48eab1dafca8861e45bd5803df, Microsoft.VisualBasic.Core\Scripting\VisualBasic\KeywordProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::04b70b48eab1dafca8861e45bd5803df, Scripting\VisualBasic\KeywordProcessor.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19bfdec5cef80f52096f361a1993ed21, Microsoft.VisualBasic.Core\My\JavaScript\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::19bfdec5cef80f52096f361a1993ed21, My\JavaScript\JavaScriptObject.vb"
 
     ' Author:
     ' 

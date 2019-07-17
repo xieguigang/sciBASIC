@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02b80c6918fe4a22a9d16e6a9f216b54, Microsoft.VisualBasic.Core\My\File.vb"
+﻿#Region "Microsoft.VisualBasic::02b80c6918fe4a22a9d16e6a9f216b54, My\File.vb"
 
     ' Author:
     ' 
