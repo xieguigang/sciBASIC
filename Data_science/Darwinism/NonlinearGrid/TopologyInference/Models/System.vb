@@ -88,4 +88,8 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
                 .ToArray            ' .P = P.Select(Function(pi) pi.Clone).ToArray
         }
     End Function
+
+    Public Overrides Function ToString() As String
+        Return ""
+    End Function
 End Class

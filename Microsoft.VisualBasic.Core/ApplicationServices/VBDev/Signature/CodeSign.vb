@@ -59,13 +59,6 @@ Namespace ApplicationServices.Development
     ''' </summary>
     Public Module CodeSign
 
-        Public Enum Languages
-            VisualBasic
-            R
-            PHP
-            TypeScript
-        End Enum
-
         Const PhpHeaderRegion$ = "#region ""PHP\\Foundation[:]{2}.*"".+?#endregion"
         Const TypeScriptHeaderRegion$ = "//#region ""Microsoft.TypeScript[:]{2}.*"".+?//#endregion"
         Const ROpenHeaderRegion$ = "#Region ""Microsoft.ROpen[:]{2}.*"".+?#End Region"

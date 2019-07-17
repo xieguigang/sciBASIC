@@ -94,8 +94,12 @@ Namespace Darwinism.Models
         Public Function Fitness([in] As Individual) As Double Implements Fitness(Of Individual).Calculate
             If Not caclFitness.Cacheable Then
                 Return caclFitness.Calculate([in])
+            Else
+                Return getOrCacheOfFitness([in])
             End If
+        End Function
 
+        Private Function getOrCacheOfFitness([in] As Individual) As Double
             Dim key$ = indivToString([in])
             Dim fit As Double
 

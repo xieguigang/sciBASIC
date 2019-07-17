@@ -44,6 +44,7 @@
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -74,21 +75,11 @@ Module Program
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or ([in].TrimSuffix & ".formula.R")
         Dim model As GridMatrix = [in].LoadXml(Of GridMatrix)
-        Dim formulaText$ = model.const.A & " + " &
-            model.correlations _
-                .Select(Function(c, i)
-                            Return $"{model.const.B(i)} + " & c.AsEnumerable.Select(Function(cj, j) $"({cj} * X[{j + 1}])").JoinBy(" + ")
-                        End Function) _
-                .Select(Function(power, i)
-                            Return $"({model.direction(i)} * (X[{i + 1}] ^ ({power})))"
-                        End Function) _
-                .JoinBy(" + " & vbCrLf)
 
-        Return $"
-grid <- function(X) {{
-    {formulaText};
-}}".SaveTo(out, Encoding.ASCII) _
-   .CLICode
+        Return model _
+            .ToString(lang:=Languages.R) _
+            .SaveTo(out, Encoding.ASCII) _
+            .CLICode
     End Function
 
     <ExportAPI("/dump.network")>
@@ -160,6 +151,12 @@ grid <- function(X) {{
                         }
                     End Function) _
             .ToArray
+        Dim R2Test = dataset.DataSamples _
+            .Select(Function(sample, i)
+                        Return New TrainingSet(sample)
+                    End Function) _
+            .ToArray _
+            .DoCall(apply:=Function(d) model.R2(d))
 
         If args.ContainsParameter("/order") Then
             If args("/order").DefaultValue.TextEquals("asc") Then
@@ -187,6 +184,7 @@ grid <- function(X) {{
         Call VBDebugger.WaitOutput()
         Call Console.WriteLine()
         Call Console.WriteLine($"DataFitting Errors={summaryResult.GroupBy(Function(r) r.actual.ToString).Select(Function(g) g.Select(Function(r) r.errors).Average).Average}")
+        Call Console.WriteLine($"R2_error={R2Test}")
         Call Console.WriteLine()
         Call summaryResult.Select(Function(r) r.errors).Summary
 
@@ -227,9 +225,9 @@ grid <- function(X) {{
         Call "Create a base chromosome".__DEBUG_ECHO
         Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, max))
         Call "Initialize populations".__DEBUG_ECHO
-        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize)
+        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize, parallel:=True)
         Call "Initialize environment".__DEBUG_ECHO
-        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable)
+        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable, FitnessMethods.R2)
         Call "Create algorithm engine".__DEBUG_ECHO
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.EliteCrossbreed)
         Call "Load driver".__DEBUG_ECHO

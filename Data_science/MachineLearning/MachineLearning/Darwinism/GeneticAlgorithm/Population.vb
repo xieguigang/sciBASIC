@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::3fb93b58e337be0490745193348e1106, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class Population
-    ' 
-    '         Properties: parallel, Random, Size
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    '         Sub: Add, parallelCacheFitness, (+2 Overloads) SortPopulationByFitness, Trim
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Class Population
+' 
+'         Properties: parallel, Random, Size
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
+' 
+'         Sub: Add, parallelCacheFitness, (+2 Overloads) SortPopulationByFitness, Trim
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +70,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
@@ -152,9 +153,9 @@ Namespace Darwinism.GAF
         ''' <param name="GA"></param>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of Chr), source As NamedValue(Of Chr)()) As IEnumerable(Of NamedValue(Of Double))
+        Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of Chr), source As NamedValue(Of Chr)(), parallelFlag As Boolean) As IEnumerable(Of NamedValue(Of Double))
             Return From x As NamedValue(Of Chr)
-                   In source.AsParallel
+                   In source.Populate(parallel:=parallelFlag)
                    Let fit As Double = GA.chromosomesComparator.Calculate(x.Value)
                    Select New NamedValue(Of Double) With {
                        .Name = x.Name,
@@ -162,15 +163,27 @@ Namespace Darwinism.GAF
                    }
         End Function
 
-        Friend ReadOnly Pcompute As ParallelComputing(Of Chr) = AddressOf GA_PLinq
+        Friend ReadOnly Pcompute As ParallelComputing(Of Chr)
 
         ''' <summary>
         ''' 如果<paramref name="parallel"/>参数不是空的，则会启用这个参数的并行计算
         ''' </summary>
         ''' <param name="parallel"></param>
-        Public Sub New(Optional parallel As ParallelComputing(Of Chr) = Nothing)
+        Public Sub New(Optional parallel As [Variant](Of ParallelComputing(Of Chr), Boolean) = Nothing)
             If Not parallel Is Nothing Then
-                Pcompute = parallel
+                If parallel Like GetType(Boolean) Then
+                    Dim flag As Boolean = parallel
+
+                    Pcompute = Function(ga, source)
+                                   Return GA_PLinq(ga, source, parallelFlag:=flag)
+                               End Function
+                Else
+                    Pcompute = parallel
+                End If
+            Else
+                Pcompute = Function(ga, source)
+                               Return GA_PLinq(ga, source, parallelFlag:=True)
+                           End Function
             End If
         End Sub
 

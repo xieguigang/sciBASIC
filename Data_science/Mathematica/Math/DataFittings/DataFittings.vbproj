@@ -314,6 +314,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Evaluation.vb" />
     <Compile Include="Linear\MLR.vb" />
     <Compile Include="LMA.vb" />
     <Compile Include="Linear\IFitted.vb" />

@@ -114,7 +114,7 @@
   <ItemGroup>
     <Compile Include="Debugger\Debugger.vb" />
     <Compile Include="Debugger\Visualize.vb" />
-    <Compile Include="GA\MultipleTarget.vb" />
+    <Compile Include="GA\FitnessMethods.vb" />
     <Compile Include="GA\Environment.vb" />
     <Compile Include="GA\Genome.vb" />
     <Compile Include="Models\PWeight.vb" />
@@ -200,10 +200,17 @@
       <Project>{ccbf36ab-506d-48a2-9150-a3762d4120ec}</Project>
       <Name>MLDebugger</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Mathematica\Math\DataFittings\DataFittings.vbproj">
+      <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
+      <Name>DataFittings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

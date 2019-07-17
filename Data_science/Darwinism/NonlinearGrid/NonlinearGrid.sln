@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.25802.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29021.104
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GATopology", "TopologyInference\GATopology.vbproj", "{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics", "..\..\..\gr\physics\physics.vbproj", "{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Network.GraphTheory", "..\..\..\gr\network-visualization\Datavisualization.Network\Network.GraphTheory.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataFittings", "..\..\Mathematica\Math\DataFittings\DataFittings.vbproj", "{FC125B0D-1942-496F-B502-9C0EB80E35B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1661,6 +1663,126 @@ Global
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.Yilia-Release_x64|x64.Build.0 = Release|x64
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.Yilia-Release_x64|x86.ActiveCfg = Release|x86
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.Yilia-Release_x64|x86.Build.0 = Release|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep_UNIX_x64|Any CPU.ActiveCfg = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep_UNIX_x64|Any CPU.Build.0 = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep_UNIX_x64|x64.ActiveCfg = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep_UNIX_x64|x64.Build.0 = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep_UNIX_x64|x86.ActiveCfg = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep_UNIX_x64|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep|Any CPU.ActiveCfg = Biodeep|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep|Any CPU.Build.0 = Biodeep|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep|x64.ActiveCfg = Biodeep|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep|x64.Build.0 = Biodeep|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep|x86.ActiveCfg = Biodeep|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biodeep|x86.Build.0 = Biodeep|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack|Any CPU.ActiveCfg = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack|Any CPU.Build.0 = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack|x64.ActiveCfg = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack|x64.Build.0 = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack|x86.ActiveCfg = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack-Debug|x64.ActiveCfg = Debug|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack-Debug|x64.Build.0 = Debug|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack-Debug|x86.ActiveCfg = Debug|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Biostack-Debug|x86.Build.0 = Debug|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Debug|x64.ActiveCfg = Debug|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Debug|x64.Build.0 = Debug|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Debug|x86.ActiveCfg = Debug|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Debug|x86.Build.0 = Debug|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.DEMO|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.DEMO|Any CPU.Build.0 = Debug|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.DEMO|x64.ActiveCfg = Debug|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.DEMO|x64.Build.0 = Debug|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.DEMO|x86.ActiveCfg = Debug|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.DEMO|x86.Build.0 = Debug|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.docs|Any CPU.ActiveCfg = docs|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.docs|Any CPU.Build.0 = docs|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.docs|x64.ActiveCfg = docs|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.docs|x64.Build.0 = docs|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.docs|x86.ActiveCfg = docs|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.docs|x86.Build.0 = docs|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(Release_X64)|Any CPU.ActiveCfg = GCModeller(Release_X64)|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(Release_X64)|Any CPU.Build.0 = GCModeller(Release_X64)|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(Release_X64)|x64.ActiveCfg = GCModeller(Release_X64)|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(Release_X64)|x64.Build.0 = GCModeller(Release_X64)|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(Release_X64)|x86.ActiveCfg = GCModeller(Release_X64)|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(Release_X64)|x86.Build.0 = GCModeller(Release_X64)|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(UNIX-Release_X64)|Any CPU.ActiveCfg = GCModeller(UNIX-Release_X64)|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(UNIX-Release_X64)|Any CPU.Build.0 = GCModeller(UNIX-Release_X64)|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(UNIX-Release_X64)|x64.ActiveCfg = GCModeller(UNIX-Release_X64)|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(UNIX-Release_X64)|x64.Build.0 = GCModeller(UNIX-Release_X64)|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(UNIX-Release_X64)|x86.ActiveCfg = GCModeller(UNIX-Release_X64)|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GCModeller(UNIX-Release_X64)|x86.Build.0 = GCModeller(UNIX-Release_X64)|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GTA5-game-test|Any CPU.ActiveCfg = GCModeller(UNIX-Release_X64)|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GTA5-game-test|Any CPU.Build.0 = GCModeller(UNIX-Release_X64)|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GTA5-game-test|x64.ActiveCfg = GCModeller(UNIX-Release_X64)|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GTA5-game-test|x64.Build.0 = GCModeller(UNIX-Release_X64)|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GTA5-game-test|x86.ActiveCfg = GCModeller(UNIX-Release_X64)|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.GTA5-game-test|x86.Build.0 = GCModeller(UNIX-Release_X64)|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.installer_x64|Any CPU.ActiveCfg = installer_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.installer_x64|Any CPU.Build.0 = installer_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.installer_x64|x64.ActiveCfg = installer_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.installer_x64|x64.Build.0 = installer_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.installer_x64|x86.ActiveCfg = installer_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.installer_x64|x86.Build.0 = installer_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|Any CPU.ActiveCfg = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|Any CPU.Build.0 = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|x64.ActiveCfg = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|x64.Build.0 = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|x86.ActiveCfg = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|x64.Build.0 = Publish|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|x86.ActiveCfg = Publish|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|x86.Build.0 = Publish|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Publish|Any CPU.ActiveCfg = Publish|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Publish|Any CPU.Build.0 = Publish|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Publish|x64.ActiveCfg = Publish|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Publish|x64.Build.0 = Publish|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Publish|x86.ActiveCfg = Publish|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Publish|x86.Build.0 = Publish|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release|x64.ActiveCfg = Release|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release|x64.Build.0 = Release|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release|x86.ActiveCfg = Release|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release|x86.Build.0 = Release|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release2|x64.ActiveCfg = Release|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release2|x64.Build.0 = Release|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release2|x86.ActiveCfg = Release|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Release2|x86.Build.0 = Release|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.sciBASIC.NET-test-release|Any CPU.ActiveCfg = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.sciBASIC.NET-test-release|Any CPU.Build.0 = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.sciBASIC.NET-test-release|x64.ActiveCfg = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.sciBASIC.NET-test-release|x64.Build.0 = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.sciBASIC.NET-test-release|x86.ActiveCfg = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.sciBASIC.NET-test-release|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Surveillance-of-infectious-diseases|Any CPU.ActiveCfg = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Surveillance-of-infectious-diseases|Any CPU.Build.0 = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Surveillance-of-infectious-diseases|x64.ActiveCfg = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Surveillance-of-infectious-diseases|x64.Build.0 = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Surveillance-of-infectious-diseases|x86.ActiveCfg = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Surveillance-of-infectious-diseases|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.WebAssembly|Any CPU.ActiveCfg = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.WebAssembly|Any CPU.Build.0 = Biodeep_UNIX_x64|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.WebAssembly|x64.ActiveCfg = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.WebAssembly|x64.Build.0 = Biodeep_UNIX_x64|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.WebAssembly|x86.ActiveCfg = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.WebAssembly|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Yilia-Release_x64|Any CPU.ActiveCfg = Release|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Yilia-Release_x64|Any CPU.Build.0 = Release|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Yilia-Release_x64|x64.ActiveCfg = Release|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Yilia-Release_x64|x64.Build.0 = Release|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Yilia-Release_x64|x86.ActiveCfg = Release|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.Yilia-Release_x64|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1678,6 +1800,7 @@ Global
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F} = {10CE283A-ECD9-437C-A0DA-DF606F12E4D0}
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2} = {10CE283A-ECD9-437C-A0DA-DF606F12E4D0}
 		{076315EE-B598-40DC-9280-C71CDF9B6A48} = {10CE283A-ECD9-437C-A0DA-DF606F12E4D0}
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6} = {84B5840C-5280-422D-A8FD-6E72DC0A5059}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC3EDC95-266E-45DC-9380-F8A2E75A685D}
