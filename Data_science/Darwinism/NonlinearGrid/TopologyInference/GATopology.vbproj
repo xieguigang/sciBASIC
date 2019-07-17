@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="Debugger\Debugger.vb" />
     <Compile Include="Debugger\Visualize.vb" />
+    <Compile Include="GA\MultipleTarget.vb" />
     <Compile Include="GA\Environment.vb" />
     <Compile Include="GA\Genome.vb" />
     <Compile Include="Models\PWeight.vb" />
