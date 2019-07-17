@@ -67,7 +67,7 @@ Namespace Darwinism.Models
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get
-                Return True
+                Return caclFitness.Cacheable
             End Get
         End Property
 
@@ -91,15 +91,15 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <returns></returns>
-        Public Function Fitness([in] As Individual) As Double Implements Fitness(Of Individual).Calculate
+        Public Function Fitness([in] As Individual, parallel As Boolean) As Double Implements Fitness(Of Individual).Calculate
             If Not caclFitness.Cacheable Then
-                Return caclFitness.Calculate([in])
+                Return caclFitness.Calculate([in], parallel)
             Else
-                Return getOrCacheOfFitness([in])
+                Return getOrCacheOfFitness([in], parallel)
             End If
         End Function
 
-        Private Function getOrCacheOfFitness([in] As Individual) As Double
+        Private Function getOrCacheOfFitness([in] As Individual, parallel As Boolean) As Double
             Dim key$ = indivToString([in])
             Dim fit As Double
 
@@ -107,7 +107,7 @@ Namespace Darwinism.Models
                 If cache.ContainsKey(key$) Then
                     fit = cache(key$)
                 Else
-                    fit = caclFitness.Calculate([in])
+                    fit = caclFitness.Calculate([in], parallel)
                     cache.Add(key$, fit)
 
                     If cache.Count >= maxCapacity Then

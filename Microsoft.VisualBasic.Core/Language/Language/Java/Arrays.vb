@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Language.Java
 
@@ -64,8 +65,7 @@ Namespace Language.Java
 
         <Extension>
         Public Function Shuffle(Of T)(ByRef list As List(Of T)) As List(Of T)
-            Dim rnd As New Random
-            Call rnd.Shuffle(list)
+            Call randf.seeds.Shuffle(list)
             Return list
         End Function
 

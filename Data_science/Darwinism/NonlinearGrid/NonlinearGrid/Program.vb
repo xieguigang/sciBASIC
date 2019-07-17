@@ -156,7 +156,7 @@ Module Program
                         Return New TrainingSet(sample)
                     End Function) _
             .ToArray _
-            .DoCall(apply:=Function(d) model.R2(d))
+            .DoCall(apply:=Function(d) model.R2(d, True))
 
         If args.ContainsParameter("/order") Then
             If args("/order").DefaultValue.TextEquals("asc") Then
@@ -229,7 +229,7 @@ Module Program
         Call "Initialize environment".__DEBUG_ECHO
         Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable, FitnessMethods.R2)
         Call "Create algorithm engine".__DEBUG_ECHO
-        Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.EliteCrossbreed)
+        Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
         Call "Load driver".__DEBUG_ECHO
         Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
             .Iterations = 10000,

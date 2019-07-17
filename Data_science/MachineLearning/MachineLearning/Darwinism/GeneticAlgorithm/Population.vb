@@ -118,6 +118,7 @@ Namespace Darwinism.GAF
                 ' TODO improve random generator
                 ' maybe use pattern strategy ?
                 Dim indx As Integer = rnd.Next(numOfChromosomes)
+
                 Return chromosomes(indx)
             End Get
         End Property
@@ -143,7 +144,7 @@ Namespace Darwinism.GAF
         End Sub
 
         Public Sub SortPopulationByFitness(comparator As IComparer(Of Chr))
-            Call Arrays.Shuffle(chromosomes)
+            ' Call Arrays.Shuffle(chromosomes)
             Call chromosomes.Sort(comparator)
         End Sub
 
@@ -156,7 +157,7 @@ Namespace Darwinism.GAF
         Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of Chr), source As NamedValue(Of Chr)(), parallelFlag As Boolean) As IEnumerable(Of NamedValue(Of Double))
             Return From x As NamedValue(Of Chr)
                    In source.Populate(parallel:=parallelFlag)
-                   Let fit As Double = GA.chromosomesComparator.Calculate(x.Value)
+                   Let fit As Double = GA.chromosomesComparator.Calculate(x.Value, parallel:=Not parallelFlag)
                    Select New NamedValue(Of Double) With {
                        .Name = x.Name,
                        .Value = fit
@@ -192,14 +193,16 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
-        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As Fitness(Of Chr))
-            Call Arrays.Shuffle(chromosomes)
+        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
+            ' Call Arrays.Shuffle(chromosomes)
 
             If parallel AndAlso comparator.Cacheable Then
                 Call parallelCacheFitness(GA, comparator)
             End If
 
-            chromosomes = (From c As Chr In chromosomes.AsParallel Order By comparator.Calculate(c) Ascending).AsList
+            chromosomes = (From c As Chr
+                           In chromosomes.AsParallel
+                           Order By comparator.Fitness(c, parallel:=False) Ascending).AsList
         End Sub
 
         Private Sub parallelCacheFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
@@ -210,7 +213,9 @@ Namespace Darwinism.GAF
                                 .Value = x
                             }
                         End Function) _
-                .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
+                .Where(Function(x)
+                           Return Not comparator.cache.ContainsKey(x.Name)
+                       End Function) _
                 .ToArray
             Dim fitness As NamedValue(Of Double)() = Pcompute(GA, source).ToArray
 
@@ -224,9 +229,15 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' shortening population till specific number
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Trim(len As Integer)
             chromosomes = chromosomes.SubList(0, len)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"A population with capacity {initialSize}, current size {Size}. //{GetType(Chr).FullName}"
+        End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Chr) Implements IEnumerable(Of Chr).GetEnumerator
             For Each x As Chr In chromosomes

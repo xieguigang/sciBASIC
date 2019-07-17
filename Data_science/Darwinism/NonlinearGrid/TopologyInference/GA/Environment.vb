@@ -90,7 +90,7 @@ Public Class Environment : Implements Fitness(Of Genome)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Calculate(chromosome As Genome) As Double Implements Fitness(Of Genome).Calculate
-        Return fitness(chromosome, matrix)
+    Public Function Calculate(chromosome As Genome, parallel As Boolean) As Double Implements Fitness(Of Genome).Calculate
+        Return fitness(chromosome, matrix, parallel)
     End Function
 End Class

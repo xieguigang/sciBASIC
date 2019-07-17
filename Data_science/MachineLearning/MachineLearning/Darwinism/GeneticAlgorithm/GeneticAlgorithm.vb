@@ -215,9 +215,14 @@ Namespace Darwinism.GAF
             Next
         End Function
 
+        ''' <summary>
+        ''' 调用这个函数的代码应该是非并行的
+        ''' </summary>
+        ''' <param name="chromosome"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
-            Return chromosomesComparator.Calculate(chromosome)
+            Return chromosomesComparator.Calculate(chromosome, parallel:=True)
         End Function
 
         ''' <summary>

@@ -56,13 +56,14 @@ Public Module Loader
         Dim cor = Iterator Function() As IEnumerable(Of Double)
                       Dim array As Double()
                       Dim pcc As Double
-
+#Disable Warning
                       For i As Integer = 0 To dataArray(Scan0).status.Length - 1
                           array = dataArray.Select(Function(r) r.status(i)).ToArray
                           pcc = Correlations.GetPearson(array, target)
 
                           Yield pcc
                       Next
+#Enable Warning
                   End Function
 
         Return New Vector(cor())
