@@ -67,7 +67,7 @@ Namespace ManagedSqlite.Core.Objects
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{type.Description} ~ {length}"
+            Return $"{name}: {type.Description} ~ {length}"
         End Function
     End Class
 End Namespace
