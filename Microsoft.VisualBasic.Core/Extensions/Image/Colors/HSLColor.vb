@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45855f7d800a11f96a3687251100b5fa, Microsoft.VisualBasic.Core\Extensions\Image\Colors\HSLColor.vb"
+﻿#Region "Microsoft.VisualBasic::45855f7d800a11f96a3687251100b5fa, Extensions\Image\Colors\HSLColor.vb"
 
     ' Author:
     ' 

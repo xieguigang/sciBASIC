@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54168908a8a088c83e19233d15cbb460, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\CodeSign.vb"
+﻿#Region "Microsoft.VisualBasic::54168908a8a088c83e19233d15cbb460, ApplicationServices\VBDev\Signature\CodeSign.vb"
 
     ' Author:
     ' 

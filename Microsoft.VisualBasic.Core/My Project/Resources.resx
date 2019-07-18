@@ -130,4 +130,10 @@
   <data name="List_of_MIME_types___Internet_Media_Types_" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Net\MIME\List of MIME types  (Internet Media Types).txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="bashRunner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scripts\bashRunner.sh;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scripts\help.sh;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

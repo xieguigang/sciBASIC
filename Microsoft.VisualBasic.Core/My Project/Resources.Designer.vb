@@ -61,6 +61,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property bashRunner() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("bashRunner", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to ?&lt;html&gt;
         '''&lt;head&gt;
         '''&lt;title&gt;The Code Project Open License (CPOL)&lt;/title&gt;
@@ -100,6 +110,16 @@ Namespace My.Resources
         Friend ReadOnly Property gpl() As String
             Get
                 Return ResourceManager.GetString("gpl", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property help() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("help", resourceCulture)
+                Return CType(obj,Byte())
             End Get
         End Property
         

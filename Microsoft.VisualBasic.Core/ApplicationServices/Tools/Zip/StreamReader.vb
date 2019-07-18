@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7764170bb2462a44609972063c01f91, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\StreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::a7764170bb2462a44609972063c01f91, ApplicationServices\Tools\Zip\StreamReader.vb"
 
     ' Author:
     ' 

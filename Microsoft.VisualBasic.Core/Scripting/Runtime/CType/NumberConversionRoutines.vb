@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::973866bc4205b47afed7a64437872819, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\NumberConversionRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::973866bc4205b47afed7a64437872819, Scripting\Runtime\CType\NumberConversionRoutines.vb"
 
     ' Author:
     ' 

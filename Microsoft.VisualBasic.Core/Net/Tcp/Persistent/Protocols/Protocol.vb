@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::758cc9918a9da55982bf9c28321da545, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Protocols\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::758cc9918a9da55982bf9c28321da545, Net\Tcp\Persistent\Protocols\Protocol.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::236e26fa514031145c6e91dcd119e08b, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::236e26fa514031145c6e91dcd119e08b, ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
     ' Author:
     ' 

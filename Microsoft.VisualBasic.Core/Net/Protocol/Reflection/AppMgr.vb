@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d39cd878fc06a992f1453c699e3e6462, Microsoft.VisualBasic.Core\Net\Protocol\Reflection\AppMgr.vb"
+﻿#Region "Microsoft.VisualBasic::d39cd878fc06a992f1453c699e3e6462, Net\Protocol\Reflection\AppMgr.vb"
 
     ' Author:
     ' 

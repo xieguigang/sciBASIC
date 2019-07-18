@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11501b66fa7bf72a5a64efd475ccad78, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::11501b66fa7bf72a5a64efd475ccad78, Extensions\Image\Math\GeomTransform.vb"
 
     ' Author:
     ' 

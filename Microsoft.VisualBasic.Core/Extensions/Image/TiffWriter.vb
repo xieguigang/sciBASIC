@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03ff858003686cc92d3eab5acd654e71, Microsoft.VisualBasic.Core\Extensions\Image\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::03ff858003686cc92d3eab5acd654e71, Extensions\Image\TiffWriter.vb"
 
     ' Author:
     ' 

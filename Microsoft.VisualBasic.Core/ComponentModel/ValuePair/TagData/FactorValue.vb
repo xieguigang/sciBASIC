@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f6f962adb352ccd0e7877755b9c8e5, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\FactorValue.vb"
+﻿#Region "Microsoft.VisualBasic::e5f6f962adb352ccd0e7877755b9c8e5, ComponentModel\ValuePair\TagData\FactorValue.vb"
 
     ' Author:
     ' 

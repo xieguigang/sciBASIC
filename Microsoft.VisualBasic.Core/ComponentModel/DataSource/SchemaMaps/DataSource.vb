@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::633a486a87f1e57733543dbb7304615f, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::633a486a87f1e57733543dbb7304615f, ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 

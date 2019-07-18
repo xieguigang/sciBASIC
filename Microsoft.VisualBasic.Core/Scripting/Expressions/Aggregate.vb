@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10c538a5029327a24db621be937c1762, Microsoft.VisualBasic.Core\Scripting\Expressions\Aggregate.vb"
+﻿#Region "Microsoft.VisualBasic::10c538a5029327a24db621be937c1762, Scripting\Expressions\Aggregate.vb"
 
     ' Author:
     ' 

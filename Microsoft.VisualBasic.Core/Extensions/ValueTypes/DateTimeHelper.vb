@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40239572853fd7e8fbe27bf6f2d221e9, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::40239572853fd7e8fbe27bf6f2d221e9, Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
