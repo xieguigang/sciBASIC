@@ -178,7 +178,8 @@ Public Module NetworkVisualizer
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups$ = Nothing) As GraphicsData
 
-        Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
+        ' 所绘制的图像输出的尺寸大小
+        Dim frameSize As Size = canvasSize.SizeParser
 
         ' 1. 先将网络图形对象置于输出的图像的中心位置
         ' 2. 进行矢量图放大
@@ -271,7 +272,7 @@ Public Module NetworkVisualizer
                 End If
 
                 ' 在这里进行节点的绘制
-                Call g.drawVertexNodes(
+                labels += g.drawVertexNodes(
                     drawPoints:=drawPoints,
                     radiusScale:=radiusScale,
                     minRadiusValue:=minRadiusValue,
@@ -285,7 +286,11 @@ Public Module NetworkVisualizer
                     displayId:=displayId
                 )
 
-                If displayId Then
+                If displayId AndAlso labels = 0 Then
+                    Call "There is no node label data could be draw currently, please check your data....".Warning
+                End If
+
+                If displayId AndAlso labels > 0 Then
                     Call g.drawLabels(labels, frameSize, labelColorAsNodeColor)
                 End If
             End Sub
@@ -310,6 +315,8 @@ Public Module NetworkVisualizer
         Dim pt As Point
         Dim br As Brush
         Dim rect As Rectangle
+
+        Call "Rendering nodes...".__DEBUG_ECHO
 
         For Each n As Node In drawPoints
             Dim r# = n.data.radius

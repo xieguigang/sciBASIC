@@ -93,7 +93,7 @@ Public Module KeyValuePairExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Selects(Of K, V)(table As Dictionary(Of K, V), ParamArray keys As K()) As IEnumerable
+    Public Function Selects(Of K, V)(table As Dictionary(Of K, V), ParamArray keys As K()) As IEnumerable(Of V)
         Return From key As K In keys Select table(key)
     End Function
 

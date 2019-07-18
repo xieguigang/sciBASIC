@@ -91,7 +91,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -307,6 +306,9 @@ Namespace Graph
         End Function
 
         Public Function GetEdges(iNode1 As Node, iNode2 As Node) As List(Of Edge)
+            If iNode1 Is Nothing OrElse iNode2 Is Nothing Then
+                Return Nothing
+            End If
             If _adjacencySet.ContainsKey(iNode1.Label) AndAlso _adjacencySet(iNode1.Label).ContainsKey(iNode2.Label) Then
                 Return _adjacencySet(iNode1.Label)(iNode2.Label)
             End If

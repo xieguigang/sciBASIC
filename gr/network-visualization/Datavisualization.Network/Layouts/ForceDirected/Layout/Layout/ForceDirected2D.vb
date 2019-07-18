@@ -42,15 +42,13 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 
 Namespace Layouts
 
     ''' <summary>
     ''' Layout provider engine for the 2D network graphics.
     ''' </summary>
-    Public Class ForceDirected2D
-        Inherits ForceDirected(Of FDGVector2)
+    Public Class ForceDirected2D : Inherits ForceDirected(Of FDGVector2)
 
         Public Sub New(iGraph As NetworkGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)

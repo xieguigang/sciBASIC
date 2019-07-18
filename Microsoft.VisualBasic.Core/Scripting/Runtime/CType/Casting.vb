@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Scripting.Runtime
 
@@ -343,6 +344,10 @@ Namespace Scripting.Runtime
             ElseIf obj.IsPattern("\d+") Then
                 ' unix timestamp
                 Return CLng(Val(obj)).FromUnixTimeStamp
+            ElseIf obj.IsPattern("/Date\(\d+\+\d+\)/") Then
+                ' /Date(1559115042272+0800)/
+                ' json格式的
+                Return DateTimeHelper.ToDate(obj.Match("\d+[+-]\d+"))
             Else
                 Return DateTime.Parse(obj)
             End If

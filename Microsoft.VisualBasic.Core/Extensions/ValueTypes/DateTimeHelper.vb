@@ -221,5 +221,25 @@ Namespace ValueTypes
 
             Return format
         End Function
+
+        ' var s = "1364835180000-0700"
+        ' alert(toDate(s)); // Tue Apr 02 2013 09:53:00 GMT+1000 (EST)
+
+        ''' <summary>
+        ''' Parse date string in json value format.
+        ''' </summary>
+        ''' <param name="s">Where s Is a time value with offset</param>
+        ''' <returns></returns>
+        Public Function ToDate(s As String) As Date
+            ' Include factor to convert mins to ms in sign
+            Dim sign = If(s.IndexOf("-") > -1, 60000.0, -60000.0)
+            Dim twoParts = s.StringSplit("[\+\-]")
+            Dim l As Integer = twoParts(1).Length
+            ' Convert offset in milliseconds
+            Dim offset = sign * twoParts(1).Substring(l - 2, 2) + sign * twoParts(1).Substring(l - 4, 2) * 60
+
+            ' Add offset to time value to get UTC And create date object 
+            Return New Date(Long.Parse(twoParts(0)) + offset)
+        End Function
     End Module
 End Namespace
