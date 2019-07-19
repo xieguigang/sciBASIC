@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78d42255adf7839b2dc3cef2b0efbf6c, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::0cd560117007fd93c08e2f1855f7fc7d, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Node
     ' 
-    '         Properties: Data, Pinned
+    '         Properties: data, Pinned
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Equals, GetHashCode, ToString
@@ -101,7 +101,7 @@ Namespace Graph
         ''' <param name="iData"></param>
         Public Sub New(iId As String, Optional iData As NodeData = Nothing)
             If iData IsNot Nothing Then
-                Data = iData.Clone
+                data = iData.Clone
             End If
 
             Label = iId
@@ -112,7 +112,7 @@ Namespace Graph
             Call Me.New(Nothing, Nothing)
         End Sub
 
-        Public Property Data As NodeData Implements IGraphValueContainer(Of NodeData).Data
+        Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
         Public Property Pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer
@@ -120,8 +120,8 @@ Namespace Graph
         End Function
 
         Public Overrides Function ToString() As String
-            If Not Data Is Nothing AndAlso Not Data.label.StringEmpty Then
-                Return $"{Label} ({Data.label})"
+            If Not data Is Nothing AndAlso Not data.label.StringEmpty Then
+                Return $"{Label} ({data.label})"
             Else
                 Return Label
             End If

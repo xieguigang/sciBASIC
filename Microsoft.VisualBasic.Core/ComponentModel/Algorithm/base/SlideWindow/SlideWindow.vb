@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55887b85c423188685b1e6a8ce5ae35f, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
+﻿#Region "Microsoft.VisualBasic::7975f639c9878a467e69a57bf62f0424, ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Structure SlideWindow
     ' 
-    '         Properties: Index, Items, Left, Length, Right
+    '         Properties: Index, Items, left, Length, right
     ' 
     '         Function: GetEnumerator, GetEnumerator1, ToString
     ' 
@@ -81,9 +81,9 @@ Namespace ComponentModel.Algorithm.base
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If index < 0 Then
-                    Return _Items(Length + index)
+                    Return Items(Length + index)
                 Else
-                    Return _Items(index)
+                    Return Items(index)
                 End If
             End Get
         End Property
@@ -95,12 +95,12 @@ Namespace ComponentModel.Algorithm.base
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Left As Integer Implements IRange(Of Integer).Min
+        Public Property left As Integer Implements IRange(Of Integer).Min
 
-        Public ReadOnly Property Right As Integer Implements IRange(Of Integer).Max
+        Public ReadOnly Property right As Integer Implements IRange(Of Integer).Max
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Left + Length
+                Return left + Length
             End Get
         End Property
 

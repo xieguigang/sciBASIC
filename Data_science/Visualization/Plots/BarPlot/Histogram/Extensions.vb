@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e567c8fd1cd96733c26960a2ecb25bfc, Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::852aa3effee3f1da81d005e1efbf7494, Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 
 Namespace BarPlot.Histogram
 

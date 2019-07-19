@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b64257dc60d51537a40699dcda33a4a3, gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::32966bea95ce7b2eec3f45f85c6661bd, gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
-Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
+Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NamesOf
 Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkTables
 
 Namespace Analysis
@@ -68,14 +68,14 @@ Namespace Analysis
                              End If
                          End Sub
 
-            For Each edge As NetworkEdge In net.Edges
+            For Each edge As NetworkEdge In net.edges
                 ' count只会统计edge链接的两个node，故而假若node是孤立的节点，
                 ' 则在这个for循环之中是没有被包含进入结果之中的
                 Call counts(node:=edge.FromNode)
                 Call counts(node:=edge.ToNode)
             Next
 
-            For Each node In net.Nodes
+            For Each node In net.nodes
                 ' 补齐这些孤立的节点
                 If Not degree.ContainsKey(node.ID) Then
                     degree.Add(node.ID, 0)
@@ -104,10 +104,10 @@ Namespace Analysis
             Dim degrees As Dictionary(Of String, Integer) = net.GetDegrees
             Dim d%
 
-            With net.Edges.ComputeDegreeData
+            With net.edges.ComputeDegreeData
                 ' 通过节点之间的边链接关系计算出indegre和outdegree
                 ' 如果边连接是没有方向的，则这个计算结果无意义
-                For Each node As FileStream.Node In net.Nodes
+                For Each node As FileStream.Node In net.nodes
                     'If Not degrees.ContainsKey(node.ID) Then
                     '    Dim ex As New Exception("nodes: " & net.Nodes.Keys.GetJson)
                     '    ex = New Exception("degrees: " & degrees.GetJson, ex)
@@ -173,34 +173,36 @@ Namespace Analysis
         <Extension>
         Public Function ComputeNodeDegrees(ByRef net As NetworkGraph) As Dictionary(Of String, Integer)
             Dim connectNodes = net _
-                .edges _
+                .graphEdges _
                 .Select(Function(link) {link.U.Label, link.V.Label}) _
                 .IteratesALL _
                 .GroupBy(Function(id) id) _
                 .ToDictionary(Function(ID) ID.Key,
-                              Function(list) list.Count)
+                              Function(list)
+                                  Return list.Count
+                              End Function)
             Dim d%
 
-            With net.edges.ComputeDegreeData
-                For Each node In net.nodes
+            With net.graphEdges.ComputeDegreeData
+                For Each node In net.vertex
 
                     If Not connectNodes.ContainsKey(node.Label) Then
                         ' 这个节点是孤立的节点，度为零
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, 0)
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, 0)
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, 0)
+                        node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE, 0)
+                        node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, 0)
+                        node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, 0)
 
                     Else
                         d = connectNodes(node.Label)
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
+                        node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
 
                         If .in.ContainsKey(node.Label) Then
                             d = .in(node.Label)
-                            node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
+                            node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
                         End If
                         If .out.ContainsKey(node.Label) Then
                             d = .out(node.Label)
-                            node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
+                            node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
                         End If
                     End If
                 Next
@@ -216,10 +218,12 @@ Namespace Analysis
         ''' <returns></returns>
         <Extension>
         Public Function NodesGroupCount(net As NetGraph) As Dictionary(Of String, Integer)
-            Return net.Nodes _
+            Return net.nodes _
                 .GroupBy(Function(n) n.NodeType) _
                 .ToDictionary(Function(x) x.Key,
-                              Function(c) c.Count)
+                              Function(c)
+                                  Return c.Count
+                              End Function)
         End Function
     End Module
 End Namespace

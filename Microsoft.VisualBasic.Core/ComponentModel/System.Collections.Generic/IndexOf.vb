@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d947146bbc7d375f7b9bce335f5ade86, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::54e85494a04f696bb8540d6846ed52dc, ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Sub: Clear, Delete
     ' 
-    '         Operators: +, (+2 Overloads) Like
+    '         Operators: (+2 Overloads) +, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,6 +50,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -289,6 +290,11 @@ Namespace ComponentModel.Collection
         Public Shared Operator +(index As Index(Of T), element As T) As Index(Of T)
             Call index.Add(element)
             Return index
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(list As List(Of T), index As Index(Of T)) As List(Of T)
+            Return list + index.Objects
         End Operator
 
         ''' <summary>

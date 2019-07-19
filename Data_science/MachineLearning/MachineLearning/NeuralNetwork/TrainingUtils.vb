@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72798286a8e71e898cf545a2a4a4fe6e, Data_science\MachineLearning\MachineLearning\NeuralNetwork\TrainingUtils.vb"
+﻿#Region "Microsoft.VisualBasic::9b3b80ec44503a2763e013dbf9987e77, Data_science\MachineLearning\MachineLearning\NeuralNetwork\TrainingUtils.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,15 @@
 
     '     Class TrainingUtils
     ' 
-    '         Properties: MinError, NeuronNetwork, Selective, TrainingSet, TrainingType
-    '                     Truncate, XP
+    '         Properties: dropOutRate, MinError, NeuronNetwork, Selective, TrainingSet
+    '                     TrainingType, Truncate, XP
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: CalculateError, TakeSnapshot, trainingImpl
     ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, SetDropOut, SetLayerNormalize
+    '              (+3 Overloads) Train
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,7 +51,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Protocols
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Text
 
@@ -67,13 +69,23 @@ Namespace NeuralNetwork
         ''' 对<see cref="Neuron.Gradient"/>的剪裁限制阈值，小于等于零表示不进行剪裁，默认不剪裁
         ''' </summary>
         ''' <returns></returns>
-        Public Property Truncate As Double = -1
+        Public Property Truncate As Double
+            Get
+                Return network.Truncate
+            End Get
+            Set(value As Double)
+                network.Truncate = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' 是否对训练样本数据集进行选择性的训练，假若目标样本在当前所训练的模型上面
         ''' 所计算得到的预测结果和其真实结果的误差足够小的话，目标样本将不会再进行训练
         ''' </summary>
         ''' <returns></returns>
         Public Property Selective As Boolean = True
+
+        Public ReadOnly Property dropOutRate As Double = 0
 
         ''' <summary>
         ''' 最终得到的训练结果神经网络
@@ -101,7 +113,7 @@ Namespace NeuralNetwork
         Dim errors#
 
         ''' <summary>
-        ''' 训练所使用到的经验数量,即数据集的大小s
+        ''' 训练所使用到的经验数量,即数据集的大小size
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property XP As Integer
@@ -128,8 +140,18 @@ Namespace NeuralNetwork
         Public Sub New(inputSize As Integer, hiddenSize As Integer(), outputSize As Integer,
                        Optional learnRate As Double = 0.1,
                        Optional momentum As Double = 0.9,
-                       Optional active As LayerActives = Nothing)
-            Call Me.New(New Network(inputSize, hiddenSize, outputSize, learnRate, momentum, active))
+                       Optional active As LayerActives = Nothing,
+                       Optional weightInit As Func(Of Double) = Nothing)
+
+            Call Me.New(New Network(
+                 inputSize:=inputSize,
+                 hiddenSize:=hiddenSize,
+                 outputSize:=outputSize,
+                 learnRate:=learnRate,
+                 momentum:=momentum,
+                 active:=active,
+                 weightInit:=weightInit
+            ))
         End Sub
 
         ''' <summary>
@@ -145,6 +167,20 @@ Namespace NeuralNetwork
             If Not _dataSets.Count = 0 Then
                 Call _dataSets.RemoveLast
             End If
+        End Sub
+
+        Public Sub SetDropOut(percentage As Double)
+            _dropOutRate = percentage
+
+            For Each layer As Layer In network.HiddenLayer
+                layer.doDropOutMode = True
+            Next
+        End Sub
+
+        Public Sub SetLayerNormalize(opt As Boolean)
+            For Each layer As Layer In network.HiddenLayer
+                layer.doNormalize = opt
+            Next
         End Sub
 
         ''' <summary>
@@ -169,7 +205,11 @@ Namespace NeuralNetwork
         ''' 小型的人工神经网络的训练,并不建议使用并行化
         ''' </param>
         Public Overrides Sub Train(Optional parallel As Boolean = False)
-            Dim trainingDataSet As Sample() = _dataSets.ToArray
+            ' 20190701 数据不打乱，网络极大可能拟合前面几个batch的样本分布
+            ' 
+            ' 训练所使用的样本数据的顺序可能会对结果产生影响
+            ' 所以在训练之前会需要打乱样本的顺序来避免出现问题
+            Dim trainingDataSet As Sample() = _dataSets.Shuffles
 
             If TrainingType = TrainingType.Epoch Then
                 Call Train(trainingDataSet, Helpers.MaxEpochs, parallel)
@@ -202,10 +242,21 @@ Namespace NeuralNetwork
             End Using
         End Sub
 
+        ''' <summary>
+        ''' 在这个函数之中实现一次训练循环过程
+        ''' </summary>
+        ''' <param name="dataSets"></param>
+        ''' <param name="parallel"></param>
+        ''' <param name="selective"></param>
+        ''' <returns></returns>
         Private Function trainingImpl(dataSets As Sample(), parallel As Boolean, selective As Boolean) As Double
             Dim errors As New List(Of Double)()
             Dim err#
             Dim outputSize% = dataSets(Scan0).target.Length
+
+            If dropOutRate > 0 Then
+                Call network.DoDropOut(percentage:=dropOutRate)
+            End If
 
             For Each dataSet As Sample In dataSets
                 If selective Then
@@ -226,7 +277,7 @@ Namespace NeuralNetwork
                 ' 首先根据当前样本进行计算
                 ' 然后根据误差调整响应节点的权重
                 Call network.ForwardPropagate(dataSet.status, parallel)
-                Call network.BackPropagate(dataSet.target, Truncate, parallel)
+                Call network.BackPropagate(dataSet.target, parallel)
                 Call errors.Add(CalculateError(network, dataSet.target))
             Next
 

@@ -170,8 +170,8 @@ Public Module WeightedLinearRegression
             RSS = RSS + W(k) * DY(k) * DY(k)
         Next
         Dim SSQ As Double = RSS / NDF
-        Dim RYSQ = 1 - RSS / TSS
-        Dim FReg = 9999999
+        Dim RYSQ# = 1 - RSS / TSS
+        Dim FReg# = 9999999
         If RYSQ < 0.9999999 Then
             FReg = RYSQ / (1 - RYSQ) * NDF / (N - 1)
         End If

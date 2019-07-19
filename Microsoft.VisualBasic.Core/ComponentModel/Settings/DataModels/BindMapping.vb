@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0a9595bc0b1c257b7653e2b0eaef4a9, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\BindMapping.vb"
+﻿#Region "Microsoft.VisualBasic::ef3317fb5e61d1d32694c9f58aec294d, ComponentModel\Settings\DataModels\BindMapping.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Namespace ComponentModel.Settings
                 .Name = attr.Name,
                 .Description = attr.Description,
                 .Type = attr.Type,
-                ._bindProperty = prop,
+                ._BindProperty = prop,
                 ._target = obj
             }
             Return maps
@@ -77,7 +77,7 @@ Namespace ComponentModel.Settings
 
         Public Sub [Set](value As String)
             Dim obj As Object =
-                Scripting.CTypeDynamic(value, _bindProperty.PropertyType)
+                Scripting.CTypeDynamic(value, _BindProperty.PropertyType)
             Call _BindProperty.SetValue(_target, obj, Nothing)
         End Sub
 
@@ -91,7 +91,7 @@ Namespace ComponentModel.Settings
             End Get
         End Property
 
-        Public Overrides Property Name As String Implements IProfileTable.Name
+        Public Overrides Property Name As String Implements IProfileTable.name
             Get
                 Return MyBase.Name
             End Get
@@ -100,7 +100,7 @@ Namespace ComponentModel.Settings
             End Set
         End Property
 
-        Public Overrides Property Type As ValueTypes Implements IProfileTable.Type
+        Public Overrides Property Type As ValueTypes Implements IProfileTable.type
             Get
                 Return MyBase.Type
             End Get
@@ -109,7 +109,7 @@ Namespace ComponentModel.Settings
             End Set
         End Property
 
-        Public Overrides Property Description As String Implements IProfileTable.Description
+        Public Overrides Property Description As String Implements IProfileTable.edges
             Get
                 Return MyBase.Description
             End Get

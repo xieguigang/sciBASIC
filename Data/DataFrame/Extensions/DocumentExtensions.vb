@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fecbd73a836b1a700b47ff91c4e9e99, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2dc505de7b89fabdb97ad95c51525f41, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -409,7 +409,7 @@ Public Module DocumentExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDoc(csv$, Optional removesBlank As Boolean = False) As IO.File
-        Return IO.File.Load(csv.LineTokens, trimBlanks:=removesBlank)
+        Return FileLoader.Load(csv.LineTokens, trimBlanks:=removesBlank)
     End Function
 
     ''' <summary>

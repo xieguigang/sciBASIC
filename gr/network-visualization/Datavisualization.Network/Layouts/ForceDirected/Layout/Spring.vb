@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cabf9120e06ef9e0c4b58c902c400c5a, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Spring.vb"
+﻿#Region "Microsoft.VisualBasic::8d3630ce3d12501be83f4273fc7b23fd, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Spring.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,18 @@
 
     '     Class Spring
     ' 
-    '         Properties: K, Length, point1, point2
+    '         Properties: K, length, point1, point2
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
+    ' 
+    '     Class NearestPoint
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class BoundingBox
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
@@ -81,30 +89,55 @@
 '
 '
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts
 
     Public Class Spring
 
-        Public Sub New(iPoint1 As LayoutPoint, iPoint2 As LayoutPoint, iLength As Single, iK As Single)
-            point1 = iPoint1
-            point2 = iPoint2
-            Length = iLength
-            K = iK
-        End Sub
+        Public Property point1 As LayoutPoint
+        Public Property point2 As LayoutPoint
+        Public Property length As Single
+        Public Property K As Single
 
-        Public Property point1() As LayoutPoint
-        Public Property point2() As LayoutPoint
-        Public Property Length() As Single
-        Public Property K() As Single
+        Public Sub New(point1 As LayoutPoint, point2 As LayoutPoint, length As Single, K As Single)
+            Me.point1 = point1
+            Me.point2 = point2
+            Me.length = length
+            Me.K = K
+        End Sub
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
+    End Class
+
+    Public Class NearestPoint
+
+        Public node As Node
+        Public point As LayoutPoint
+        Public distance As Single?
+
+        Public Sub New()
+            node = Nothing
+            point = Nothing
+            distance = Nothing
+        End Sub
+    End Class
+
+    Public Class BoundingBox
+
+        ' ~5% padding
+        Public Const defaultBB As Single = 2.0F
+        Public Const defaultPadding As Single = 0.07F
+
+        Public topRightBack As AbstractVector
+        Public bottomLeftFront As AbstractVector
+
+        Public Sub New()
+            topRightBack = Nothing
+            bottomLeftFront = Nothing
+        End Sub
     End Class
 End Namespace

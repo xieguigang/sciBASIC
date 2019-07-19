@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f95a3ff6d6bca8bbc34caaf3b1579224, mime\text%html\MarkDown\TOC.vb"
+﻿#Region "Microsoft.VisualBasic::6dc646e972d34806caae719b9d88c674, mime\text%html\MarkDown\TOC.vb"
 
     ' Author:
     ' 
@@ -117,7 +117,8 @@ Namespace MarkDown
             Dim pos%
 
             For Each headerGroup As IGrouping(Of String, String) In headers.GroupBy(Function(s) s)
-                pos = 1  ' start 参数必须要大于零
+                ' start 参数必须要大于零
+                pos = 1
 
                 Do While True
                     pos = InStr(pos, md, headerGroup.Key)
@@ -127,7 +128,8 @@ Namespace MarkDown
                             .i = pos,
                             .value = headerGroup.Key
                         }
-                        pos += 1  ' 必须要往前位移一个字符，否则会出现死循环
+                        ' 必须要往前位移一个字符，否则会出现死循环
+                        pos += 1
                     Else
                         Exit Do
                     End If

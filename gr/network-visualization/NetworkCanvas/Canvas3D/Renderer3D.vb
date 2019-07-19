@@ -74,7 +74,7 @@ Public Class Renderer3D : Inherits Renderer
     Public Property rotate As Double = Math.PI / 3
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
-        Dim rect As Rectangle = __regionProvider()
+        Dim rect As Rectangle = regionProvider()
         Dim pos1 As Point = New Point3D(iPosition1.x, iPosition1.y, iPosition1.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
@@ -87,7 +87,7 @@ Public Class Renderer3D : Inherits Renderer
             .RotateZ(rotate) _
             .Project(rect.Width, rect.Height, 256, ViewDistance).PointXY
         '   pos2 = GraphToScreen(pos2, rect)
-        Dim canvas As Graphics = __graphicsProvider()
+        Dim canvas As Graphics = graphicsProvider()
 
         SyncLock canvas
             Dim w As Single = widthHash(iEdge)
@@ -109,14 +109,14 @@ Public Class Renderer3D : Inherits Renderer
             Return
         End If
 
-        Dim client As Rectangle = __regionProvider()
+        Dim client As Rectangle = regionProvider()
         Dim pos As Point = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
             .Project(client.Width, client.Height, 256, ViewDistance) _
             .PointXY ' 调整FOV参数的效果不太好
-        Dim canvas As Graphics = __graphicsProvider()
+        Dim canvas As Graphics = graphicsProvider()
 
         '   pos = GraphToScreen(pos, __regionProvider())
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b77cc38cfaa6ce58bdf6ede328bdbaf, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Bifurcation\Bifurcation.vb"
+﻿#Region "Microsoft.VisualBasic::b7028edfdcc321713f08823dbf00d78b, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Bifurcation\Bifurcation.vb"
 
     ' Author:
     ' 
@@ -142,12 +142,14 @@ Namespace MonteCarlo
                                                     ncluster%, stop%,
                                                     uidProvider As Func(Of ODEsOut, String)) As IEnumerable(Of Cluster)
 
-            Dim inputs As New List(Of Entity)  ' Kmeans的输入数据
+            Dim inputs As New List(Of ClusterEntity)  ' Kmeans的输入数据
 
             For Each v As ODEsOut In validResults
-                inputs += New Entity With {
+                inputs += New ClusterEntity With {
                     .uid = uidProvider(v),
-                    .Properties = ys.Select(Function(name$) v.y(name).Value).ToVector
+                    .entityVector = ys _
+                        .Select(Function(name$) v.y(name).value) _
+                        .ToVector
                 }
             Next
 
@@ -155,13 +157,13 @@ Namespace MonteCarlo
                 ncluster = inputs.Count / 10
             End If
 
-            Dim result As ClusterCollection(Of Entity) =
+            Dim result As ClusterCollection(Of ClusterEntity) =
                 inputs.ClusterDataSet(ncluster,
                                       debug:=True,
                                       [stop]:=[stop],
                                       parallel:=True)
 
-            For Each cluster As SeqValue(Of KMeansCluster(Of Entity)) In result.SeqIterator
+            For Each cluster As SeqValue(Of KMeansCluster(Of ClusterEntity)) In result.SeqIterator
                 Dim datas As Dictionary(Of String, Double()) =
                     (+cluster) _
                     .Select(Function(x) x.uid) _

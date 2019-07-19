@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9928d4825a3c5729db59978172a613af, Data_science\Graph\Model\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::533cfb64eccbe479f112aaee5fba2a55, Data_science\Graph\Model\Tree\Tree.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Properties: Data
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     ' Class Tree
     ' 
@@ -47,16 +47,24 @@
 
 #End Region
 
+Imports System.Runtime.Serialization
+
 ''' <summary>
 ''' Tree node with data..(可以直接被使用的树对象类型)
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
+''' 
+<DataContract>
 Public Class Tree(Of T, K) : Inherits AbstractTree(Of Tree(Of T, K), K)
 
     Public Property Data As T
 
     Sub New(Optional qualDeli$ = ".")
         MyBase.New(qualDeli)
+    End Sub
+
+    Sub New()
+        Call MyBase.New(".")
     End Sub
 End Class
 

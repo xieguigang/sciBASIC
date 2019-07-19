@@ -257,6 +257,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="labelModel.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Canvas.vb" />
     <Compile Include="Styling\Expression\BrushExpression.vb" />

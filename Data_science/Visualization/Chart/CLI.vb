@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::584f02c0e696c6e3b28b322d4e0a5310, Data_science\Visualization\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::7055cd412191253fce6a7a4bbf2cc2ce, Data_science\Visualization\Chart\CLI.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module CLI
     ' 
-    '     Function: KMeansCluster, Scatter
+    '     Function: KMeansCluster, ROC, Scatter
     ' 
     ' /********************************************************************************/
 
@@ -42,16 +42,26 @@
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.visualize
 Imports Microsoft.VisualBasic.DataMining.KMeans
 
 Module CLI
 
     <ExportAPI("/Scatter")>
     <Usage("/Scatter /in <data.csv> /x <fieldX> /y <fieldY> [/label.X <labelX> /label.Y <labelY> /color <default=black> /out <out.png>]")>
-    <Description("")>
+    <Description("Scatter plot based on a given dataset.")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              AcceptTypes:={GetType(DataSet)},
+              Extensions:="*.csv",
+              Description:="The target dataset table. And this dataset file should contains two fields for X,Y data at least.")>
+    <Argument("/x", False, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The column name for read X data in target dataset.")>
+    <Argument("/y", False, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The column name for read Y data in target dataset.")>
     Public Function Scatter(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim fx$ = args <= "/x"
@@ -79,5 +89,15 @@ Module CLI
             .Kmeans(expected:=n)
 
         Return clusters.SaveTo(out).CLICode
+    End Function
+
+    <ExportAPI("/ROC")>
+    <Usage("/ROC /in <validate.test.csv> [/out <ROC.png>]")>
+    Public Function ROC(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ROC.png"
+        Dim data = DataSet.LoadDataSet([in]).CreateSerial
+
+        Return ROCPlot.Plot(data, showReference:=True).Save(out).CLICode
     End Function
 End Module

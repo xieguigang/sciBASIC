@@ -121,7 +121,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -946,10 +946,14 @@
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
+    <Compile Include="ApplicationServices\Tools\Zip\StreamReader.vb" />
+    <Compile Include="ApplicationServices\Tools\Zip\UnZip.vb" />
+    <Compile Include="ApplicationServices\Tools\Zip\Options.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\CodeSign.vb" />
+    <Compile Include="ApplicationServices\VBDev\Signature\SupportedLanguages.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\LicenseInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
@@ -1076,11 +1080,11 @@
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb" />
     <Compile Include="ComponentModel\DriverModel.vb" />
     <Compile Include="ComponentModel\DataSource\Tsv.vb" />
-    <Compile Include="ComponentModel\DataSource\Property\NamedCollection%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\NamedCollection.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
-    <Compile Include="ComponentModel\DataSource\Property\NamedValue%28Of T%29.vb" />
-    <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\NamedValue.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\IMatched.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\Repository.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\SQL.vb" />
@@ -1099,7 +1103,8 @@
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
-    <Compile Include="ComponentModel\Ranges\Sequence.vb" />
+    <Compile Include="Serialization\ICloneable.vb" />
+    <Compile Include="Text\Xml\Models\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
@@ -1114,7 +1119,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\BinaryPriorityQueue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\KeyDictionary.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />
     <Compile Include="ApplicationServices\Utils.vb" />
@@ -1183,7 +1188,7 @@
     <Compile Include="Language\Linq\Indexer.vb" />
     <Compile Include="Language\Linq\Vectorization\Vector.vb" />
     <Compile Include="Language\Linq\Vectorization\VectorShadows.vb" />
-    <Compile Include="Language\Linq\List%28Of T%29.vb" />
+    <Compile Include="Language\Linq\List.vb" />
     <Compile Include="Language\Language\Perl\die.vb" />
     <Compile Include="Language\API.vb" />
     <Compile Include="Language\Value\DefaultValue\Default.vb" />
@@ -1206,7 +1211,7 @@
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\ILocalSearchHandle.vb" />
     <Compile Include="Extensions\Collection\Enumerable.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
@@ -1346,7 +1351,7 @@
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
     <Compile Include="Language\Language\UnixBash\FileSystem\PathMapper.vb" />
-    <Compile Include="Language\Language\UnixBash\LinuxRunHelper.vb" />
+    <Compile Include="My\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
@@ -1551,7 +1556,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
-    <Compile Include="ApplicationServices\ZipLib.vb" />
+    <Compile Include="ApplicationServices\Tools\Zip\ZipLib.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\CBusyIndicator.vb" />
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />
@@ -1649,6 +1654,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\RangeModel\Copyright.txt" />
+    <None Include="Resources\scripts\bashRunner.sh" />
+    <None Include="Resources\scripts\help.sh" />
     <Content Include="Serialization\JSON\Formatter\license.txt" />
     <None Include="README.md" />
   </ItemGroup>

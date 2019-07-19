@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::610a393d701c20a84a50f39a94e1e8c8, Data_science\Graph\API\Dijkstra\Dijkstra.vb"
+﻿#Region "Microsoft.VisualBasic::c34ce6aa9105317d2f001cd07a8b2fb3, Data_science\Graph\API\Dijkstra\Dijkstra.vb"
 
     ' Author:
     ' 
@@ -127,7 +127,7 @@ Namespace Dijkstra
 
                 ' Iterate through all connections and search for a connection which is shorter
                 For Each conn As VertexEdge In selectedConnections
-                    cost = conn.Weight + shortestPaths(conn.U).Cost
+                    cost = conn.weight + shortestPaths(conn.U).Cost
 
                     If shortestPaths(conn.V).Cost > cost Then
                         shortestPaths(conn.V).SetValue(shortestPaths(conn.U).Connections)

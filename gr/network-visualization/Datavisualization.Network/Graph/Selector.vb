@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5ba5532ccc589af03a1e7669766b51a, gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::ddcd84f45e7b4e4c243e9928649eefe3, gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Function: GenericSelector, SelectEdgeValue, SelectNodeValue
     '         Interface IGraphValueContainer
     ' 
-    '             Properties: Data
+    '             Properties: data
     ' 
     ' 
     ' 
@@ -58,7 +58,7 @@ Namespace Graph
     Public Module Selector
 
         Public Interface IGraphValueContainer(Of T As GraphData)
-            Property Data As T
+            Property data As T
         End Interface
 
         ''' <summary>
@@ -91,10 +91,10 @@ Namespace Graph
             ElseIf dataValues.ContainsKey([property]) Then
                 reader = dataValues([property])
                 type = reader.PropertyType
-                Return Function(model) reader.GetValue(model.Data)
+                Return Function(model) reader.GetValue(model.data)
             Else
                 type = GetType(String)
-                Return Function(model) model.Data([property])
+                Return Function(model) model.data([property])
             End If
         End Function
 

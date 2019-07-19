@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be6da859a70b35c56d45b6240422e30a, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::be6da859a70b35c56d45b6240422e30a, Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -93,7 +93,7 @@ Public Module KeyValuePairExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Selects(Of K, V)(table As Dictionary(Of K, V), ParamArray keys As K()) As IEnumerable
+    Public Function Selects(Of K, V)(table As Dictionary(Of K, V), ParamArray keys As K()) As IEnumerable(Of V)
         Return From key As K In keys Select table(key)
     End Function
 

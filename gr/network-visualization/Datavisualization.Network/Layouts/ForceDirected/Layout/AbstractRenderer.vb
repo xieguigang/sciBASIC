@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da2b965099430ef906be2c8d0a12f935, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::26198b2cb036b2ecebdbc7875d65edc7, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractRenderer.vb"
 
     ' Author:
     ' 
@@ -81,12 +81,8 @@
 '
 '
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
-Imports Microsoft.VisualBasic.Parallel
 
 Namespace Layouts
 
@@ -101,8 +97,8 @@ Namespace Layouts
 
         Protected forceDirected As IForceDirected
 
-        Public Sub New(iForceDirected As IForceDirected)
-            forceDirected = iForceDirected
+        Public Sub New(forceDirected As IForceDirected)
+            Me.forceDirected = forceDirected
         End Sub
 
         ''' <summary>
@@ -112,10 +108,12 @@ Namespace Layouts
         ''' <param name="physicsUpdate"></param>
         Public Sub Draw(iTimeStep As Single, Optional physicsUpdate As Boolean = True) Implements IRenderer.Draw
             If physicsUpdate Then
-                Call forceDirected.Calculate(iTimeStep)   '  计算力的变化
+                ' 计算力的变化
+                Call forceDirected.Calculate(iTimeStep)
             End If
 
-            Call Clear()    ' 清理画板
+            ' 清理画板
+            Call Clear()
             Call DirectDraw()
         End Sub
 

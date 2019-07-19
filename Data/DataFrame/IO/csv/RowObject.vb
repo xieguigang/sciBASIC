@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60e1f955859548ef9cce7e06bb91e2f2, Data\DataFrame\IO\csv\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::ff018822952cd5219236d3e253306035, Data\DataFrame\IO\csv\RowObject.vb"
 
     ' Author:
     ' 
@@ -509,8 +509,17 @@ Namespace IO
             Return buffer.Remove(item)
         End Function
 
+        ''' <summary>
+        ''' 查找目标在行之中的索引号，也就是列的编号
+        ''' </summary>
+        ''' <param name="item">如果字符串是空的话或者查找失败，则返回-1</param>
+        ''' <returns></returns>
         Public Function IndexOf(item As String) As Integer Implements IList(Of String).IndexOf
-            Return buffer.IndexOf(item)
+            If item.StringEmpty Then
+                Return -1
+            Else
+                Return buffer.IndexOf(item)
+            End If
         End Function
 
         ''' <summary>

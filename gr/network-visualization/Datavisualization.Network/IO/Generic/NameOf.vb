@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04ce147213c685696ea8ec07c40a4e91, gr\network-visualization\Datavisualization.Network\IO\Generic\NameOf.vb"
+﻿#Region "Microsoft.VisualBasic::e83918c71948532ae816052639a6ff51, gr\network-visualization\Datavisualization.Network\IO\Generic\NameOf.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Module [NameOf]
+    '     Module NamesOf
     ' 
     ' 
     ' 
@@ -45,7 +45,7 @@ Namespace FileStream.Generic
     ''' <summary>
     ''' The preset names value for edge type <see cref="NetworkEdge"/> and node type <see cref="Node"/>
     ''' </summary>
-    Public Module [NameOf]
+    Public Module NamesOf
 
         ''' <summary>
         ''' <see cref="NetworkEdge.FromNode"/>

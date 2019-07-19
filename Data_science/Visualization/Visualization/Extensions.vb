@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83cbb40bf17cad157931ca6d5c33e8ed, Data_science\Visualization\Visualization\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3568d27bae2c091bb5c92f6aa85c2517, Data_science\Visualization\Visualization\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Module Extensions
     ' 
     '     Function: BuildTransactions, CastTo, ClusterResultFastLoad, Load, ToEntityObject
-    '               ToEntityObjects, ToKMeansModels
+    '               ToEntityObjects
     ' 
     ' /********************************************************************************/
 
@@ -139,17 +139,5 @@ Public Module Extensions
                 .ToArray
 
         Return source
-    End Function
-
-    <Extension>
-    Public Function ToKMeansModels(data As IEnumerable(Of DataSet)) As EntityClusterModel()
-        Return data.Select(
-            Function(d)
-                Return New EntityClusterModel With {
-                .ID = d.ID,
-                .Cluster = "",
-                .Properties = New Dictionary(Of String, Double)(d.Properties)
-            }
-            End Function).ToArray
     End Function
 End Module

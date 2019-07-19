@@ -88,6 +88,7 @@ Namespace ManagedSqlite.Core.Tables
 
             Dim rowData As Object()
             Dim index As VBInteger = Scan0
+            Dim row As Sqlite3Row
 
             For Each cell As BTreeCellData In cells
                 ' Create a new stream to cover any fragmentation that might occur
@@ -95,8 +96,9 @@ Namespace ManagedSqlite.Core.Tables
                 ' And will overflow to any other pages as needed
                 Using dataStream As New SqliteDataStream(Me.reader, cell)
                     rowData = ParseRow(dataStream, metaInfo)
+                    row = New Sqlite3Row(++index, Me, cell.Cell.RowId, rowData)
 
-                    Yield New Sqlite3Row(++index, Me, cell.Cell.RowId, rowData)
+                    Yield row
                 End Using
             Next
         End Function

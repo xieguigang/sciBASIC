@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9394265d110bfaaaf690b080d6ace772, Microsoft.VisualBasic.Core\Language\Language\Perl\die.vb"
+﻿#Region "Microsoft.VisualBasic::a7a8fff568ee72cb38ef07d77677d424, Language\Language\Perl\die.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Namespace Language.Perl
         Shared ReadOnly defaultHandler As New Assert(Of Object)(AddressOf [Default])
 
         ''' <summary>
-        ''' Returns True means test failure
+        ''' Returns True means test failure(<paramref name="obj"/> is nothing or empty!)
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>

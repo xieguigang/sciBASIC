@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f16df7a68e216fb6636a197519702e0e, Data_science\DataMining\DataMining\test\KmedoidsTest.vb"
+﻿#Region "Microsoft.VisualBasic::928207e415a54cd7822190ea41ccd707, Data_science\DataMining\DataMining\test\KmedoidsTest.vb"
 
     ' Author:
     ' 
@@ -111,5 +111,3 @@
 
 '    End Sub
 'End Module
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afbe7a5576ae77967dee4d2f2ee66435, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::d9f6a4c29522eb14d67c4e060c412af6, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,9 @@
     ' 
     '         Constructor: (+8 Overloads) Sub New
     '         Function: Abs, CumSum, DotProduct, Ones, Order
-    '                   Product, rand, ScaleToRange, slice, SumMagnitudes
+    '                   Product, (+2 Overloads) rand, ScaleToRange, slice, SumMagnitudes
     '                   (+2 Overloads) ToString
-    '         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+4 Overloads) +
+    '         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
     '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
     ' 
@@ -289,6 +289,26 @@ Namespace LinearAlgebra
             Return v3
         End Operator
 
+        Public Overloads Shared Operator *(data As IEnumerable(Of Double), x As Vector) As Vector
+            Dim N0 As Integer = x.[Dim]
+            Dim v3 As New Vector(N0)
+            Dim i As Integer = Scan0
+
+            ' 0 * Inf = NaN
+            ' 零乘上任意数应该都是零的?
+            For Each a As Double In data
+                If (a = 0R OrElse x(i) = 0R) Then
+                    v3(i) = 0
+                Else
+                    v3(i) = a * x(i)
+                End If
+
+                i += 1
+            Next
+
+            Return v3
+        End Operator
+
         ''' <summary>
         ''' 向量乘法算符重载，分量分别相乘，相当于MATLAB中的``.*``算符
         ''' </summary>
@@ -297,11 +317,18 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(v1 As Vector, v2#()) As Vector
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v3 As New Vector(N0)
 
+            ' 0 * Inf = NaN
+            ' 零乘上任意数应该都是零的?
+
             For j As Integer = 0 To N0 - 1
-                v3(j) = v1(j) * v2(j)
+                If (v1(j) = 0R OrElse v2(j) = 0R) Then
+                    v3(j) = 0
+                Else
+                    v3(j) = v1(j) * v2(j)
+                End If
             Next
 
             Return v3
@@ -476,12 +503,13 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(a As Double, v1 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) * a
             Next
+
             Return v2
         End Operator
 
@@ -498,9 +526,9 @@ Namespace LinearAlgebra
             Dim M0 = v2.[Dim]
 
             If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
-            '如果向量维数不匹配，给出告警信息
 
             Dim sum As Double
 
@@ -523,9 +551,9 @@ Namespace LinearAlgebra
             Dim M0 = v2.[Dim]
 
             If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
-            '如果向量维数不匹配，给出告警信息
 
             Dim vvmat As New Matrix(N0, N0)
 
@@ -604,6 +632,24 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator ^(n As Double, v As Vector) As Vector
             Return New Vector(From p As Double In v Select n ^ p)
+        End Operator
+
+        Public Overloads Shared Operator ^(x As Vector, p As Vector) As Vector
+            Dim N0 = x.[Dim]
+            Dim M0 = p.[Dim]
+
+            If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
+                Throw New ArgumentException("Inner vector dimensions must agree！")
+            End If
+
+            Dim v2 As New Vector(N0)
+
+            For j As Integer = 0 To N0 - 1
+                v2(j) = x(j) ^ p(j)
+            Next
+
+            Return v2
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -866,6 +912,11 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function rand(size%) As Vector
             Return Extensions.rand(size)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function rand(min#, max#, size%) As Vector
+            Return Extensions.rand(size, {min, max})
         End Function
     End Class
 End Namespace

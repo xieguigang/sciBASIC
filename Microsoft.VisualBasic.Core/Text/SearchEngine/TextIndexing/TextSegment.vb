@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4d500803df92a3b5f6a6b9bd64382f3, Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextSegment.vb"
+﻿#Region "Microsoft.VisualBasic::f4d500803df92a3b5f6a6b9bd64382f3, Text\SearchEngine\TextIndexing\TextSegment.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f943b98aa779a4e92d5d3ede1fa19f0, Data_science\Mathematica\SignalProcessing\wav\wav\File.vb"
+﻿#Region "Microsoft.VisualBasic::0365b2ced9b4d7fb76c46e71d54cd5f7, Data_science\Mathematica\SignalProcessing\wav\wav\File.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Properties: data, fileSize, fmt, format, magic
     ' 
-    '     Function: ParseHeader
+    '     Function: Open
     ' 
     ' /********************************************************************************/
 
@@ -48,28 +48,50 @@ Imports Microsoft.VisualBasic.Data.IO
 ''' </summary>
 Public Class File
 
+    ''' <summary>
+    ''' Contains the letters "RIFF" in ASCII form (0x52494646 big-endian form).
+    ''' Resource Interchange File Format.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property magic As String
+    ''' <summary>
+    ''' ``36 + SubChunk2Size``, or more precisely:
+    ''' 
+    ''' ```
+    ''' 4 + (8 + SubChunk1Size) + (8 + SubChunk2Size)
+    ''' ```
+    ''' 
+    ''' This Is the size of the rest of the chunk 
+    ''' following this number.  This Is the size Of the 
+    ''' entire file In bytes minus 8 bytes For the
+    ''' two fields Not included In this count:
+    ''' ChunkID And ChunkSize.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property fileSize As Integer
+    ''' <summary>
+    ''' Contains the letters "WAVE" (0x57415645 big-endian form).
+    ''' </summary>
+    ''' <returns></returns>
     Public Property format As String
+    ''' <summary>
+    ''' Subchunk1
+    ''' </summary>
+    ''' <returns></returns>
     Public Property fmt As FMTSubChunk
+    ''' <summary>
+    ''' Subchunk2
+    ''' </summary>
+    ''' <returns></returns>
     Public Property data As DataSubChunk
 
-    Public Shared Function ParseHeader(wav As BinaryDataReader) As File
+    Public Shared Function Open(wav As BinaryDataReader) As File
         Return New File With {
             .magic = wav.ReadString(4),
             .fileSize = wav.ReadInt32,
             .format = wav.ReadString(4),
-            .fmt = New FMTSubChunk With {
-                .ChunkID = wav.ReadString(4),
-                .ChunkSize = wav.ReadInt32,
-                .audioFormat = wav.ReadInt16,
-                .Channels = wav.ReadInt16,
-                .SampleRate = wav.ReadInt32,
-                .ByteRate = wav.ReadInt32,
-                .BlockAlign = wav.ReadInt16,
-                .BitsPerSample = wav.ReadInt16
-            },
-            .data = DataSubChunk.ParseData(wav)
+            .fmt = FMTSubChunk.ParseChunk(wav),
+            .data = DataSubChunk.ParseData(wav, format:= .fmt)
         }
     End Function
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d67a4fe261d4ba5d0ac5199d387007b2, Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d3c086de764e7d82649f94920ed0c961, Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: Kmeans, ValueGroups
+    '         Function: Kmeans, ToKMeansModels, ValueGroups
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,12 +41,28 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace KMeans
 
     Public Module Extensions
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToKMeansModels(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As EntityClusterModel()
+            Return data _
+                .Select(Function(d)
+                            Return New EntityClusterModel With {
+                                .ID = d.Key,
+                                .Cluster = "",
+                                .Properties = New Dictionary(Of String, Double)(d.Properties)
+                            }
+                        End Function) _
+                .ToArray
+        End Function
 
         ''' <summary>
         ''' Grouping the numeric values by using the kmeans cluserting operations.

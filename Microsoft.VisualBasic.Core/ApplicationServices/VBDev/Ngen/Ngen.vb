@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b310ee0f8bdbd4e9321dc03255d2197, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Ngen\Ngen.vb"
+﻿#Region "Microsoft.VisualBasic::6b310ee0f8bdbd4e9321dc03255d2197, ApplicationServices\VBDev\Ngen\Ngen.vb"
 
     ' Author:
     ' 

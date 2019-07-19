@@ -163,7 +163,7 @@ Namespace Darwinism
             ' linked list that has our population inside
 
             Dim bestFit# = Integer.MaxValue
-            Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual)(target, capacity:=PopulationSize * 100).Fitness
+            Dim fitnessFunction As Func(Of Individual, Boolean, Double) = AddressOf New FitnessPool(Of Individual)(target, capacity:=PopulationSize * 100).Fitness
             Dim i As VBInteger = Scan0
 
             If randomGenerator Is Nothing Then
@@ -241,7 +241,7 @@ Namespace Darwinism
             i = 0
             Do While (++i < PopulationSize)
                 Dim candidate As Individual = population(i.Value - 1)
-                If (fitnessFunction(bestFitness) > fitnessFunction(candidate)) Then
+                If (fitnessFunction(bestFitness, True) > fitnessFunction(candidate, True)) Then
                     bestFitness = candidate
                 End If
             Loop
@@ -270,7 +270,7 @@ Namespace Darwinism
                                                    bestFit#,
                                                    iterates%,
                                                 iteratePrints As Action(Of outPrint),
-                                              fitnessFunction As Func(Of Individual, Double),
+                                              fitnessFunction As Func(Of Individual, Boolean, Double),
                                               randomGenerator As IRandomSeeds) As DoubleTagged(Of Individual())
             Dim random As Random = randomGenerator()
             Dim populationSize% = population.Length
@@ -322,8 +322,8 @@ Namespace Darwinism
                 ' else isn't needed because we cloned original to candidate
 
                 ' see if Is better than original, if so replace
-                Dim originalFitness# = fitnessFunction(original)
-                Dim candidateFitness# = fitnessFunction(candidate)
+                Dim originalFitness# = fitnessFunction(original, True)
+                Dim candidateFitness# = fitnessFunction(candidate, True)
 
                 If (originalFitness > candidateFitness) Then
                     population(x) = candidate

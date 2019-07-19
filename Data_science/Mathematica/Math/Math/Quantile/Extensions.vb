@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbdbd1d5aaeafb139d67c68845b70b9b, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c467a56440af380986568daf1faabfa3, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Quantile
 
@@ -238,18 +239,33 @@ Namespace Quantile
         '    Next
         'End Sub
 
+        Const SummaryTemplate$ = "Estimated {0:F2}% quantile as {1} with {2} sample data (mean:={3}, std:={4})."
+
+        ''' <summary>
+        ''' 默认是输出到标准输出上的
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="dev"></param>
         <Extension>
         Public Sub Summary(data As IEnumerable(Of Double), Optional dev As TextWriter = Nothing)
-            Dim v#() = data.ToArray
+            Dim v As Vector = data.ToArray
             Dim q As QuantileEstimationGK = v.GKQuantile
 
             With dev Or App.StdOut
-                For Each quantile As Double In {0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
+                Call .WriteLine()
+                Call .WriteLine("# Data summary")
+                Call .WriteLine()
+                Call .WriteLine($"Total={v.Length}")
+
+                For Each quantile As Double In {0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
                     Dim estimate# = q.Query(quantile)
-                    Dim out$ = String.Format("Estimated {0:F2}% quantile as {1}", quantile * 100, estimate)
+                    Dim lessthan = v(v <= estimate)
+                    Dim out$ = String.Format(SummaryTemplate, quantile * 100, estimate, lessthan.Length, lessthan.Average, lessthan.StdError)
 
                     .WriteLine(out)
                 Next
+
+                Call .Flush()
             End With
         End Sub
     End Module

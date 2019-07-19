@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b9717e909712d5186672714931ddbe6, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a96cb85fcf17d0101fbb7e187ce62576, CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: __directInvoke, DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke
-    '                   InvokeCLI
+    '         Function: DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke, InvokeCLI
+    '                   tryInvoke
     ' 
     ' 
     ' /********************************************************************************/
@@ -216,7 +216,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DirectInvoke(callParameters As Object(), Optional [Throw] As Boolean = True) As Object
-            Return __directInvoke(callParameters, Me.target, [Throw])
+            Return tryInvoke(callParameters, Me.target, [Throw])
         End Function
 
         ''' <summary>
@@ -226,7 +226,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="target"></param>
         ''' <param name="[throw]"></param>
         ''' <returns></returns>
-        Private Function __directInvoke(callParameters As Object(), target As Object, [throw] As Boolean) As Object
+        Private Function tryInvoke(callParameters As Object(), target As Object, [throw] As Boolean) As Object
             Dim rtvl As Object
 
             Try
@@ -242,7 +242,8 @@ Namespace CommandLine.Reflection.EntryPoints
                 ex = New Exception(paramTrace, ex)
                 ex = New VisualBasicAppException(ex, EntryPoint.GetFullName(True))
 
-                VBDebugger.Mute = False ' Enable output the exception details on the console.
+                ' Enable output the exception details on the console.
+                VBDebugger.Mute = False
 
                 Call App.LogException(ex, trace)
                 Call DebuggerArgs.SaveErrorLog(App.BugsFormatter(ex))
@@ -291,7 +292,7 @@ Namespace CommandLine.Reflection.EntryPoints
                 callParameters = parameters
             End If
 
-            Return __directInvoke(callParameters, target, [Throw])
+            Return tryInvoke(callParameters, target, [Throw])
         End Function
 
         ''' <summary>

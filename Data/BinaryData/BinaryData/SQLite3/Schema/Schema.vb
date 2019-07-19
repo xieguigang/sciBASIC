@@ -71,7 +71,15 @@ Namespace ManagedSqlite.Core
                            End Function
 
             For Each column As String In columns
-                tokens = column.StringSplit("\s+")
+                tokens = column.TrimNewLine.StringSplit("\s+")
+
+                If tokens(Scan0) = "CONSTRAINT" AndAlso tokens.Last.IsPattern("\(.+\)") Then
+                    ' 索引约束之类的表结构信息
+                    ' 则跳过这个非字段定义的表结构信息
+                    ' CONSTRAINT [pk_CdbCompound] PRIMARY KEY ([Id])
+                    Continue For
+                End If
+
                 name = [nameOf](tokens)
                 field = New NamedValue(Of String) With {
                     .Name = name,

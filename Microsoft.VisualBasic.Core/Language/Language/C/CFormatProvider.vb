@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abc29bef6478452ab678c9fd162e74ab, Microsoft.VisualBasic.Core\Language\Language\C\CFormatProvider.vb"
+﻿#Region "Microsoft.VisualBasic::abc29bef6478452ab678c9fd162e74ab, Language\Language\C\CFormatProvider.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42246cedc1c9dfdf20257a117892dc69, CLI_tools\rundll32\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c50cd7b161793324a73956d91c37c893, CLI_tools\rundll32\Program.vb"
 
     ' Author:
     ' 
@@ -39,11 +39,9 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Extensions
-Imports Microsoft.VisualBasic.ConsoleDevice.STDIO
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine
-Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Extensions
 
 'rundll32 <assembly_path> <commandline_arguments>
 'rundll32 --help
@@ -51,14 +49,14 @@ Imports System.Text
 
 Module Program
 
-    Public Function CreateInstance(AssemblyPath As String, Name As String) As Microsoft.VisualBasic.CommandLine.Interpreter
+    Public Function CreateInstance(AssemblyPath As String, Name As String) As Interpreter
         Dim AssemblyType As System.Reflection.Assembly = System.Reflection.Assembly.LoadFrom(AssemblyPath)
-        Dim EntryType As System.Type = GetType(Microsoft.VisualBasic.CommandLine.Reflection.RunDllEntryPoint)
+        Dim EntryType As Type = GetType(RunDllEntryPoint)
         Dim LQuery = (From [Module] As System.Reflection.TypeInfo
                       In AssemblyType.DefinedTypes
                       Let attributes As Object() = [Module].GetCustomAttributes(EntryType, inherit:=False)
                       Where Not attributes Is Nothing AndAlso attributes.Count = 1
-                      Select Entry = DirectCast(attributes.First, Microsoft.VisualBasic.CommandLine.Reflection.RunDllEntryPoint), [Module]).ToArray
+                      Select Entry = DirectCast(attributes.First, RunDllEntryPoint), [Module]).ToArray
 
         If LQuery.IsNullOrEmpty Then '没有找到执行入口点
             Return Nothing
@@ -71,22 +69,22 @@ Module Program
                 If Find.IsNullOrEmpty Then
                     Return Nothing
                 Else
-                    Dim Type As System.Type = Find.First
-                    Return New Microsoft.VisualBasic.CommandLine.Interpreter(Type)
+                    Dim Type As Type = Find.First
+                    Return New Interpreter(Type)
                 End If
             Else
                 GoTo First
             End If
 
         Else
-First:      Dim Type As System.Type = LQuery.First.Module
-            Return New Microsoft.VisualBasic.CommandLine.Interpreter(Type)
+First:      Dim Type As Type = LQuery.First.Module
+            Return New Interpreter(Type)
         End If
     End Function
 
     Public Function Main() As Integer
         Dim strCommand As String = App.Command
-        Dim Tokens As String() = Microsoft.VisualBasic.CommandLine.GetTokens(strCommand)
+        Dim Tokens As String() = CLITools.GetTokens(strCommand)
 
         If String.IsNullOrEmpty(strCommand) OrElse String.Equals(Tokens.First.ToLower, "--help") Then
             Dim strMessage As String =

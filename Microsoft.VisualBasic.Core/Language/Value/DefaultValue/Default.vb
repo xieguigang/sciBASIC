@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7215eacef6da5d9f4c3c795ae8d23869, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::7215eacef6da5d9f4c3c795ae8d23869, Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 

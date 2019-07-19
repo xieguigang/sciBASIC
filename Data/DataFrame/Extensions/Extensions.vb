@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::308e072d1212f022c32a889ef6a95c55, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e718daea6d5774f043586d1b874deb07, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -450,16 +450,16 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="lines"></param>
     ''' <param name="Delimiter"></param>
-    ''' <param name="explicit"></param>
+    ''' <param name="strict"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(lines As IEnumerable(Of String), Optional delimiter$ = ",", Optional explicit As Boolean = True) As IEnumerable(Of T)
+    <Extension> Public Function AsDataSource(Of T As Class)(lines As IEnumerable(Of String), Optional delimiter$ = ",", Optional strict As Boolean = True) As IEnumerable(Of T)
         Dim splitter As String = String.Format(DataImports.SplitRegxExpression, delimiter)
         Dim rows As IEnumerable(Of RowObject) = From line As String
                                                 In lines
                                                 Select RowParsing(line, splitter)
         ' 解析完文本数据之后进行对象的反射加载操作
-        Return New File_csv(rows).AsDataSource(Of T)(explicit)
+        Return New File_csv(rows).AsDataSource(Of T)(strict)
     End Function
 
     ''' <summary>
@@ -471,6 +471,9 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <param name="encoding"></param>
     ''' <param name="maps">``Csv.Field -> <see cref="PropertyInfo.Name"/>``</param>
+    ''' <param name="skipWhile">
+    ''' [fieldName => test] 如果目标csv文件数据集非常大的话，可以使用这个函数来过滤掉一些数据行，以减少数据量
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function LoadCsv(Of T As Class)(path$,
@@ -478,7 +481,8 @@ Public Module Extensions
                                                        Optional encoding As Encoding = Nothing,
                                                        Optional fast As Boolean = False,
                                                        Optional maps As NameMapping = Nothing,
-                                                       Optional mute As Boolean = False) As List(Of T)
+                                                       Optional mute As Boolean = False,
+                                                       Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of T)
         Dim buffer As List(Of T)
         Dim fs$, ms&
 
@@ -489,7 +493,8 @@ Public Module Extensions
                 path, explicit, encoding,
                 fast:=fast,
                 maps:=maps,
-                mute:=mute
+                mute:=mute,
+                skipWhile:=skipWhile
             ).AsList
             ms = .ElapsedMilliseconds
             fs = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
@@ -513,14 +518,17 @@ Public Module Extensions
     ''' </param>
     ''' <returns></returns>
     <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As IEnumerable(Of T)
-        Return New File(File.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
+        Return New File(FileLoader.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
     End Function
 
     ''' <summary>
-    ''' Save the object collection data dump into a csv file.(将一个对象数组之中的对象保存至一个Csv文件之中，请注意，这个方法仅仅会保存简单的基本数据类型的属性值)
+    ''' Save the object collection data dump into a csv file.
+    ''' (将一个对象数组之中的对象保存至一个Csv文件之中，请注意:
+    ''' + 这个方法仅仅会保存简单的基本数据类型的属性值
+    ''' + 并且这个方法仅适用于小型数据集, 如果需要保存大型数据集, 请使用Linq版本的拓展函数)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
+    ''' <param name="source">应该是List, Array或者Collection, 不应该是一个Linq拓展表达式</param>
     ''' <param name="path"></param>
     ''' <param name="strict">
     ''' If true then all of the simple data type property its value will be save to the data file,

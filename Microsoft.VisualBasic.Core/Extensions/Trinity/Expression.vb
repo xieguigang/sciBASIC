@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfa46ec31b7a74506e4a53da0e692eca, Microsoft.VisualBasic.Core\Extensions\Trinity\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::252bfaa89ee13252e7c43a4b3ae4f611, Extensions\Trinity\Expression.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Data.Trinity
 
@@ -50,11 +51,25 @@ Namespace Data.Trinity
     ''' </summary>
     Public Module Expression
 
+        ''' <summary>
+        ''' If <paramref name="list"/> contains no elements or it is nothing, then this function will returns nothing
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="comma$"></param>
+        ''' <param name="andalso$"></param>
+        ''' <param name="etc$"></param>
+        ''' <param name="joinSpace"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Concatenate(list As IEnumerable(Of String), Optional comma$ = ",", Optional andalso$ = "and", Optional etc$ = "etc", Optional joinSpace As Boolean = True) As String
-            Dim space$ = If(joinSpace, " ", "")
+            Dim space As String = "" Or " ".When(joinSpace)
+            Dim dataArray As String() = list.SafeQuery.ToArray
 
-            With list.ToArray
+            If dataArray.Length = 0 Then
+                Return Nothing
+            End If
+
+            With dataArray
                 If .Length = 1 Then
                     Return .ByRef(0)
                 ElseIf .Length < 8 Then

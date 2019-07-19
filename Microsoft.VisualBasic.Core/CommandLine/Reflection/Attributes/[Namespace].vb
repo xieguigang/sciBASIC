@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c08f8c87bbd2e2b37b576bb3d33b755, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\[Namespace].vb"
+﻿#Region "Microsoft.VisualBasic::55234b4e078ecfd7de610386fc031c73, CommandLine\Reflection\Attributes\[Namespace].vb"
 
     ' Author:
     ' 
@@ -43,11 +43,8 @@
 
 #End Region
 
-Imports System.Reflection
-Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace CommandLine.Reflection
 
@@ -97,9 +94,9 @@ Namespace CommandLine.Reflection
         ''' <param name="Namespace">The name value of this namespace module.(本命名空间模块的名称值)</param>
         ''' <remarks></remarks>
         Sub New([Namespace] As String, Optional Description As String = "")
-            Me._Namespace = [Namespace]
-            Me._Description = Description
-            Me._TypeAutoExtract = False
+            Me.Namespace = [Namespace]
+            Me.Description = Description
+            Me.AutoExtract = False
         End Sub
 
         Protected Sub New()

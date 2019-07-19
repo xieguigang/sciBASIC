@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28f82a53403b422ae84815b0547e60a3, gr\network-visualization\NetworkCanvas\InputDevice.vb"
+﻿#Region "Microsoft.VisualBasic::a0fb3482d69433b6bf2e277a6ca281dc, gr\network-visualization\NetworkCanvas\InputDevice.vb"
 
     ' Author:
     ' 
@@ -74,8 +74,8 @@ Public Class InputDevice : Implements IDisposable
     Protected dragNode As Node
 
     Protected Overridable Function __getNode(p As Point) As Node
-        For Each node As Node In Canvas.Graph.nodes
-            Dim r As Single = node.Data.radius
+        For Each node As Node In Canvas.Graph.vertex
+            Dim r As Single = node.data.radius
             Dim v As FDGVector2 = TryCast(Canvas.fdgPhysics.GetPoint(node).position, FDGVector2)
             Dim npt As Point =
                 Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)

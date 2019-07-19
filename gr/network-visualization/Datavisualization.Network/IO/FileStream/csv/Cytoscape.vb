@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9c53c55eb8945e520360e651fc211f0, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
+﻿#Region "Microsoft.VisualBasic::ed522b9afa92eedd806891ab202319f9, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Class Nodes
     ' 
-    '         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, Data
+    '         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, data
     '                     Degree, Eccentricity, IsSingleNode, name, NeighborhoodConnectivity
     '                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
     '                     SharedName, Stress, SUID, TopologicalCoefficient
@@ -109,14 +109,15 @@ Namespace FileStream.Cytoscape
         Public Property PartnerOfMultiEdgedNodePairs As String
         Public Property Radiality As String
         Public Property SelfLoops As String
-        <Column("shared name")> Public Property SharedName As String
+        <Column("shared name")>
+        Public Property SharedName As String
         Public Property Stress As String
         Public Property TopologicalCoefficient As String
         ''' <summary>
         ''' Dynamics extended data
         ''' </summary>
         ''' <returns></returns>
-        Public Property Data As Dictionary(Of String, String)
+        Public Property data As Dictionary(Of String, String)
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

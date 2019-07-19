@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a43770d9064e068fe5bbd75ad8c8011, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::6c73eceb4399f6db719bf096b9ec7684, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -144,6 +144,12 @@ Namespace IO
         End Function
 
         ''' <summary>
+        ''' The dataset for this table loader should be in format like:
+        ''' 
+        ''' + First column should be a string value column for indicate the dataset row uniquely.
+        ''' + If the first column is not the rows' unique id, then <paramref name="uidMap"/> parameter should be provided for specific the which column is your datasets' uid column
+        ''' + Then all of the other column will be treated as the numeric property data
+        ''' 
         ''' <paramref name="uidMap"/>一般情况下会自动进行判断，不需要具体的设置
         ''' </summary>
         ''' <param name="path"></param>
@@ -167,7 +173,7 @@ Namespace IO
                                                             Optional uidMap$ = Nothing,
                                                             Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
 
-            Dim mapFrom$ = uidMap Or New [Default](Of  String) With {
+            Dim mapFrom$ = uidMap Or New [Default](Of String) With {
                 .lazy = New Func(Of String)(Function() __getID(path)).AsLazy
             }
             Return path.LoadCsv(Of T)(

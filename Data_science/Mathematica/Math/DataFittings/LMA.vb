@@ -75,7 +75,7 @@ Public Module LMA
     End Structure
 
     <Extension>
-    Public Function NonLinearFit(matrix As IEnumerable(Of FitInput), Optional iterations% = 2000)
+    Public Function NonLinearFit(matrix As IEnumerable(Of FitInput), Optional iterations% = 2000) As Object
 
         Throw New NotImplementedException
     End Function

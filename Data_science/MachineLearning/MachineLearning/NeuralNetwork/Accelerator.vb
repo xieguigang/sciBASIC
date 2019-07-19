@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca5f6adb13464179b62e474ff158fce1, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Accelerator.vb"
+﻿#Region "Microsoft.VisualBasic::b823ae09a060b15f4b88505d40cda877, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Accelerator.vb"
 
     ' Author:
     ' 
@@ -39,6 +39,8 @@
     ' 
     '     Class WeightVector
     ' 
+    '         Properties: MutationRate
+    ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Clone, Crossover, Mutate, ToString
     ' 
@@ -59,7 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.SecurityString
 
 Namespace NeuralNetwork.Accelerator
@@ -113,6 +115,7 @@ Namespace NeuralNetwork.Accelerator
 
         Shared ReadOnly random As New Random
         ReadOnly keyCache As New Md5HashProvider
+        Public Property MutationRate As Double Implements Chromosome(Of WeightVector).MutationRate
 
         Sub New(Optional synapses As NamedCollection(Of Synapse)() = Nothing)
             If Not synapses Is Nothing Then
@@ -146,7 +149,7 @@ Namespace NeuralNetwork.Accelerator
 
         Public Function Mutate() As WeightVector Implements Chromosome(Of WeightVector).Mutate
             Dim result As WeightVector = Me.Clone()
-            Call result.weights.Mutate(random)
+            Call result.weights.Mutate(random, rate:=MutationRate)
             Return result
         End Function
 
@@ -154,7 +157,8 @@ Namespace NeuralNetwork.Accelerator
             Dim weights#() = New Double(Me.weights.Length - 1) {}
             Call Array.Copy(Me.weights, Scan0, weights, Scan0, weights.Length)
             Return New WeightVector() With {
-                .weights = weights
+                .weights = weights,
+                .MutationRate = MutationRate
             }
         End Function
     End Class
@@ -177,7 +181,7 @@ Namespace NeuralNetwork.Accelerator
             End Get
         End Property
 
-        Public Function Calculate(chromosome As WeightVector) As Double Implements Fitness(Of WeightVector).Calculate
+        Public Function Calculate(chromosome As WeightVector, parallel As Boolean) As Double Implements Fitness(Of WeightVector).Calculate
             For i As Integer = 0 To chromosome.weights.Length - 1
                 For Each s In synapses(i)
                     s.Weight = chromosome.weights(i)

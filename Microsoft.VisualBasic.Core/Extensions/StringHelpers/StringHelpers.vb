@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c3c010903b99c4c526b4b91d717f856, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::0b305f8c8e7602eaebe3fd0e05001ea4, Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -78,12 +78,19 @@ Imports r = System.Text.RegularExpressions.Regex
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    Public Const CaseInsensitive As StringComparison = StringComparison.OrdinalIgnoreCase
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function PadEnd(str$, padLen%, Optional padString As Char = " "c) As String
         Return str.PadRight(padLen, padString)
     End Function
 
+    ''' <summary>
+    ''' 将字符串中的所有的<see cref="ASCII.NUL"/>给移除
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function TrimNull(str As String) As String
@@ -697,7 +704,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 在字符串前面填充指定长度的00序列，假若输入的字符串长度大于fill的长度，则不再进行填充
+    ''' 在字符串前面填充指定长度的0字符序列，假若输入的字符串长度大于fill的长度，则不再进行填充
     ''' </summary>
     ''' <typeparam name="T">限定类型为字符串或者数值基础类型</typeparam>
     ''' <param name="n"></param>

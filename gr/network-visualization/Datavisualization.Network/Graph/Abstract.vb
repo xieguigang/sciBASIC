@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0385968331012f193b1c3d5347a606c2, gr\network-visualization\Datavisualization.Network\Graph\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::c4bebf35bbfcc74dddece24e02485123, gr\network-visualization\Datavisualization.Network\Graph\Abstract.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Interface INode
     ' 
-    '         Properties: ID, NodeType
+    '         Properties: Id, NodeType
     ' 
     '     Interface IInteraction
     ' 
@@ -60,7 +60,7 @@ Namespace Graph.Abstract
     ''' Node model in the network
     ''' </summary>
     Public Interface INode
-        Property ID As String
+        Property Id As String
         Property NodeType As String
     End Interface
 

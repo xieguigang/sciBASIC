@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caae9ed0bce84a2a283d34c9e4367048, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::4f967b32a35764690c19ec884768c35f, Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -135,7 +135,7 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Creates an array from property <see cref="Value(Of T).IValueOf.value"/>
+        ''' Creates an array from property <see cref="Value(Of T).IValueOf.Value"/>
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>

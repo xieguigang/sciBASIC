@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ead46b1be9bd8821ab413ca97682387, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileTable.vb"
+﻿#Region "Microsoft.VisualBasic::25116c411d3081067fe2931bf057c3b6, ComponentModel\Settings\DataModels\ProfileTable.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     ' 
     '     Interface IProfileTable
     ' 
-    '         Properties: Description, Name, Type, value
+    '         Properties: edges, name, type, value
     ' 
     '     Module IniExtensions
     ' 
@@ -66,10 +66,10 @@ Namespace ComponentModel.Settings
     Public Class ProfileTable : Implements INamedValue
         Implements IProfileTable
 
-        Public Property Name As String Implements INamedValue.Key, IProfileTable.Name
+        Public Property Name As String Implements INamedValue.Key, IProfileTable.name
         Public Property value As String Implements IProfileTable.value
-        Public Property Type As ValueTypes Implements IProfileTable.Type
-        Public Property Description As String Implements IProfileTable.Description
+        Public Property Type As ValueTypes Implements IProfileTable.type
+        Public Property Description As String Implements IProfileTable.edges
 
         Sub New()
         End Sub
@@ -93,10 +93,10 @@ Namespace ComponentModel.Settings
 
     Public Interface IProfileTable
 
-        Property Name As String
+        Property name As String
         ReadOnly Property value As String
-        Property Type As ValueTypes
-        Property Description As String
+        Property type As ValueTypes
+        Property edges As String
 
     End Interface
 

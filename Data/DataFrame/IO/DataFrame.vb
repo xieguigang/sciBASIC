@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efaa02e2d12dee7f5c0b73deddafe809, Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::f4abfe67cbc4a8901c98dd336f0b8e58, Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 
@@ -338,13 +338,15 @@ Namespace IO
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Function Load(path As String, encoding As Encoding, Optional fast As Boolean = False) As DataFrame
+        Public Overloads Shared Function Load(path As String, encoding As Encoding,
+                                              Optional fast As Boolean = False,
+                                              Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As DataFrame
             Dim file As File
 
             If fast Then
-                file = File.FastLoad(path, True, encoding)
+                file = FileLoader.FastLoad(path, True, encoding, skipWhile)
             Else
-                file = File.Load(path, encoding)
+                file = File.Load(path, encoding, , skipWhile)
             End If
 
             Return CreateObject(file)

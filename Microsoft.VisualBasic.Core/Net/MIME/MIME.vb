@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cdec5721aa1408d7d39aa55ce6cf26f, Microsoft.VisualBasic.Core\Net\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::57c15c7a6904d026effc96807ea2f0e2, Net\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: ContentTypes, SuffixTable, UnknownType
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __loadContents
+    '         Function: loadContents
     ' 
     ' 
     ' /********************************************************************************/
@@ -84,17 +84,18 @@ Namespace Net.Protocols.ContentTypes
             SuffixTable = My.Resources _
                 .List_of_MIME_types___Internet_Media_Types_ _
                 .LineTokens _
-                .__loadContents _
+                .loadContents _
                 .Where(Function(x) Not x.IsEmpty) _
                 .GroupBy(Function(x) x.FileExt.ToLower) _
                 .ToDictionary(Function(x) x.Key,
                               Function(x) x.First)
-            ContentTypes = SuffixTable.Values _
+            ContentTypes = SuffixTable _
+                .Values _
                 .ToDictionary(Function(x) x.MIMEType.ToLower)
         End Sub
 
         <Extension>
-        Private Iterator Function __loadContents(lines As IEnumerable(Of String)) As IEnumerable(Of ContentType)
+        Private Iterator Function loadContents(lines As IEnumerable(Of String)) As IEnumerable(Of ContentType)
             lines = From line As String
                     In lines.Skip(1)
                     Where Not String.IsNullOrWhiteSpace(line)
