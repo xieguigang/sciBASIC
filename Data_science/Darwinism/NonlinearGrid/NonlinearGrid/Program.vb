@@ -232,7 +232,7 @@ Module Program
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
         Call "Load driver".__DEBUG_ECHO
         Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
-            .Iterations = 10000,
+            .Iterations = 1000000,
             .Threshold = 0.005
         }
 

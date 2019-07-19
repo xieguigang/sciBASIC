@@ -59,7 +59,6 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
     Public Property AC As Double
     Public Property A As Vector
     Public Property C As Correlation()
-    Public Property P As Vector
 
     ''' <summary>
     ''' Evaluate the system dynamics
@@ -73,7 +72,7 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
     Public Function Evaluate(X As Vector) As Double
         Dim C As Vector = Me.C.Select(Function(ci) ci.Evaluate(X)).AsVector
         Dim F As Vector = X ^ C
-        Dim fx As Vector = A * F / (P + F)
+        Dim fx As Vector = A * F
         Dim result = AC + fx.Sum
 
         Return result
@@ -85,8 +84,7 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
             .AC = AC,
             .C = C _
                 .Select(Function(ci) ci.Clone) _
-                .ToArray,
-            .P = New Vector(P.AsEnumerable)
+                .ToArray
         }
     End Function
 

@@ -51,7 +51,17 @@ Module CLI
 
     <ExportAPI("/Scatter")>
     <Usage("/Scatter /in <data.csv> /x <fieldX> /y <fieldY> [/label.X <labelX> /label.Y <labelY> /color <default=black> /out <out.png>]")>
-    <Description("")>
+    <Description("Scatter plot based on a given dataset.")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              AcceptTypes:={GetType(DataSet)},
+              Extensions:="*.csv",
+              Description:="The target dataset table. And this dataset file should contains two fields for X,Y data at least.")>
+    <Argument("/x", False, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The column name for read X data in target dataset.")>
+    <Argument("/y", False, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The column name for read Y data in target dataset.")>
     Public Function Scatter(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim fx$ = args <= "/x"

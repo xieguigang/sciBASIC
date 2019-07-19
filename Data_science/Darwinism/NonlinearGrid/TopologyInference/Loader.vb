@@ -100,8 +100,7 @@ Public Module Loader
                                 .BC = 0.005
                             }
                         End Function) _
-                .ToArray,
-            .P = Vector.rand(0, 10, size:=width)
+                .ToArray
         }
     End Function
 
@@ -135,10 +134,6 @@ Public Module Loader
                         .Select(Function(ci) ci.BC) _
                         .ToArray
                 }
-            },
-            .weights = New NumericVector With {
-                .name = "Km",
-                .vector = genome.chromosome.P
             }
         }
     End Function

@@ -62,8 +62,7 @@ Public Class GridMatrix : Inherits XmlDataModel
 
     <XmlElement("correlations")>
     Public Property correlations As NumericVector()
-    <XmlElement("weights")>
-    Public Property weights As NumericVector
+
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CreateSystem() As GridSystem
@@ -77,8 +76,7 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A),
-            .P = If(weights Is Nothing, Vector.rand(0, 10, direction.Length), New Vector(weights.vector))
+            .AC = If([const] Is Nothing, 0, [const].A)
         }
     End Function
 
