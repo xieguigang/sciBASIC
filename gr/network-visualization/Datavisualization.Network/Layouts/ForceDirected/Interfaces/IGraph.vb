@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b098f0184ee23d5455d5bad76bb6141, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
+﻿#Region "Microsoft.VisualBasic::d0393b9937c2de03d7d5ee9319343bc2, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,6 @@
 
     ' Summaries:
 
-    '     Interface IGraph
-    ' 
-    '         Properties: edges, nodes
-    ' 
-    '         Function: AddEdge, AddNode, (+2 Overloads) CreateEdge, (+2 Overloads) CreateNode, GetEdges
-    ' 
-    '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
-    '              FilterEdges, FilterNodes, Merge, RemoveEdge, RemoveNode
-    ' 
     '     Interface IGraphEventListener
     ' 
     '         Sub: GraphChanged
@@ -91,33 +82,6 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 
 Namespace Layouts.Interfaces
-
-    Public Interface IGraph
-
-        Sub Clear()
-        Function AddNode(iNode As Node) As Node
-        Function AddEdge(iEdge As Edge) As Edge
-        Sub CreateNodes(iDataList As List(Of NodeData))
-        Sub CreateNodes(iNameList As List(Of String))
-        Sub CreateEdges(iDataList As List(Of Triple(Of String, String, EdgeData)))
-        Sub CreateEdges(iDataList As List(Of KeyValuePair(Of String, String)))
-        Function CreateNode(data As NodeData) As Node
-        Function CreateNode(name As String) As Node
-        Function CreateEdge(iSource As Node, iTarget As Node, Optional iData As EdgeData = Nothing) As Edge
-        Function CreateEdge(iSource As String, iTarget As String, Optional iData As EdgeData = Nothing) As Edge
-        Function GetEdges(iNode1 As Node, iNode2 As Node) As List(Of Edge)
-        Sub RemoveNode(iNode As Node)
-        Sub DetachNode(iNode As Node)
-        Sub RemoveEdge(iEdge As Edge)
-        Sub Merge(iMergeGraph As NetworkGraph)
-        Sub FilterNodes(match As Predicate(Of Node))
-        Sub FilterEdges(match As Predicate(Of Edge))
-        Sub AddGraphListener(iListener As IGraphEventListener)
-
-        ReadOnly Property nodes() As List(Of Node)
-        ReadOnly Property edges() As List(Of Edge)
-
-    End Interface
 
     Public Interface IGraphEventListener
         Sub GraphChanged()

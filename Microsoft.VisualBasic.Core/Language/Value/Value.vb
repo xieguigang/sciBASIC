@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8285499753d9a6af809feac0b2e467e4, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::0b90476016445e61712b1eaa6b985953, Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,7 @@ Namespace Language
     Public Class Value(Of T) : Implements IValueOf
 
         ''' <summary>
-        ''' This object have a <see cref="IValueOf.value"/> property for stores its data
+        ''' This object have a <see cref="IValueOf.Value"/> property for stores its data
         ''' </summary>
         Public Interface IValueOf
 

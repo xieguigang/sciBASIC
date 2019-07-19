@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb90b03c4d9f8570963a080301907815, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::23bfca6cd869b18336b2081c03ddf765, Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -920,18 +920,16 @@ Namespace Math
         Public Function Round(a As Double) As Double
             Return sys.Round(a)
         End Function
-        '
-        ' Summary:
-        '     Returns the hyperbolic cosine of the specified angle.
-        '
-        ' Parameters:
-        '   value:
-        '     An angle, measured in radians.
-        '
-        ' Returns:
-        '     The hyperbolic cosine of value. If value is equal to System.Double.NegativeInfinity
-        '     or System.Double.PositiveInfinity, System.Double.PositiveInfinity is returned.
-        '     If value is equal to System.Double.NaN, System.Double.NaN is returned.
+
+        ''' <summary>
+        ''' Returns the hyperbolic cosine of the specified angle.
+        ''' </summary>
+        ''' <param name="value">An angle, measured in radians.</param>
+        ''' <returns>
+        ''' The hyperbolic cosine of value. If value is equal to System.Double.NegativeInfinity
+        ''' or System.Double.PositiveInfinity, System.Double.PositiveInfinity is returned.
+        ''' If value is equal to System.Double.NaN, System.Double.NaN is returned.
+        ''' </returns>
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Cosh(value As Double) As Double
@@ -1832,8 +1830,16 @@ Namespace Math
         Public Function ProductALL([in] As IEnumerable(Of Double)) As Double
             Dim product# = 1
 
+            ' 因为会存在 0 * Inf = NaN
+            ' 所以在下面做了一下if判断来避免出现这种情况的NaN值
+
             For Each x As Double In [in]
-                product *= x
+                ' 0乘上任何数应该都是零来的
+                If x = 0R Then
+                    Return 0
+                Else
+                    product *= x
+                End If
             Next
 
             Return product

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b8ec8a564ea48316af97c0e2daa02e6, Microsoft.VisualBasic.Core\CommandLine\Reflection\Grouping.vb"
+﻿#Region "Microsoft.VisualBasic::9b8ec8a564ea48316af97c0e2daa02e6, CommandLine\Reflection\Grouping.vb"
 
     ' Author:
     ' 

@@ -63,7 +63,7 @@ Namespace ManagedSqlite.Core.Objects.Enums
 
         Public Function TryParse(type As String) As SqliteDataType
             Select Case Strings.LCase(type)
-                Case "integer"
+                Case "integer", "int"
                     Return SqliteDataType.Integer
                 Case "float", "double"
                     Return SqliteDataType.Float
@@ -72,7 +72,11 @@ Namespace ManagedSqlite.Core.Objects.Enums
                 Case "blob"
                     Return SqliteDataType.Blob
                 Case Else
-                    Throw New NotImplementedException(type)
+                    If type.IsPattern("varchar\(\d+\)") Then
+                        Return SqliteDataType.Text
+                    Else
+                        Throw New NotImplementedException(type)
+                    End If
             End Select
         End Function
     End Module

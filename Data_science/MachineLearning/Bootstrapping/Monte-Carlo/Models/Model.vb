@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5b6bdc4ae50f996d73fda81c6a8250f, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Models\Model.vb"
+﻿#Region "Microsoft.VisualBasic::9382ae738ab105898f408a9461cfb95c, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Models\Model.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Emit
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MonteCarlo
 

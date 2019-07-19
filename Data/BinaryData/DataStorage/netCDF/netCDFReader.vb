@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32c718a2bfae582b0e7c1cf2087fed93, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::01198c864d5ef6fdbfe010732ae48a36, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
     '                   ToString
     ' 
-    '         Sub: Print
+    '         Sub: (+2 Overloads) Dispose, Print
     ' 
     ' 
     ' /********************************************************************************/
@@ -63,7 +63,7 @@ Namespace netCDF
     ''' <remarks>
     ''' https://github.com/cheminfo-js/netcdfjs
     ''' </remarks>
-    Public Class netCDFReader
+    Public Class netCDFReader : Implements IDisposable
 
         Dim buffer As BinaryDataReader
         Dim header As Header
@@ -284,5 +284,38 @@ Namespace netCDF
         Public Sub Print()
             Call Me.toString(New StreamWriter(Console.OpenStandardOutput))
         End Sub
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' 要检测冗余调用
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)。
+                    Call buffer.Dispose()
+                End If
+
+                ' TODO: 释放未托管资源(未托管对象)并在以下内容中替代 Finalize()。
+                ' TODO: 将大型字段设置为 null。
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: 仅当以上 Dispose(disposing As Boolean)拥有用于释放未托管资源的代码时才替代 Finalize()。
+        'Protected Overrides Sub Finalize()
+        '    ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' Visual Basic 添加此代码以正确实现可释放模式。
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+            Dispose(True)
+            ' TODO: 如果在以上内容中替代了 Finalize()，则取消注释以下行。
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace

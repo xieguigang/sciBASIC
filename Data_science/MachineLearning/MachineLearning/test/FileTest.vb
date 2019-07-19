@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d96b82f7862b8756cb1d5c0e9624981, Data_science\MachineLearning\MachineLearning\test\FileTest.vb"
+﻿#Region "Microsoft.VisualBasic::6bfb78124e6b9775d18c928aed9b2180, Data_science\MachineLearning\MachineLearning\test\FileTest.vb"
 
     ' Author:
     ' 
@@ -39,11 +39,12 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Module FileTest
     Sub Main()
@@ -81,7 +82,11 @@ Module FileTest
 
         Dim trainer As New TrainingUtils(5, {10, 100, 30, 50}, 4)
 
-        Helpers.MaxEpochs = 1000
+        Helpers.MaxEpochs = 100000
+
+        ' config drop out mode
+        '  trainer.SetDropOut(0.45)
+        trainer.SetLayerNormalize(True)
 
         Dim snapshot As New Snapshot(trainer.NeuronNetwork)
 
@@ -101,11 +106,16 @@ Module FileTest
         Dim model1 = Scattered.ScatteredLoader("./scatters/").LoadModel
         Dim model2 = "./format1.Xml".LoadXml(Of StoreProcedure.NeuralNetwork).LoadModel
 
+        ' predicts should be 
+        ' 0, 0, 0, 1
         Dim predict1 = model1.Compute(1, 1, 1, 1, 0)
         Dim predict2 = model2.Compute(1, 1, 1, 1, 0)
 
         Call StoreProcedure.NeuralNetwork.Snapshot(model1).GetXml.SaveTo("./scatterLoaded.Xml")
         Call StoreProcedure.NeuralNetwork.Snapshot(model2).GetXml.SaveTo("./interalLoaded.Xml")
+
+        Call Console.WriteLine(predict1.GetJson)
+        Call Console.WriteLine(predict2.GetJson)
 
         Pause()
     End Sub

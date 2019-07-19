@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f8ae72c2ae98d959e791c85f72ce6d, Data_science\Darwinism\GAF_test2\Program.vb"
+﻿#Region "Microsoft.VisualBasic::e6609e03cabe28b8d657fb97c8198c6f, Data_science\Darwinism\GAF_test2\Program.vb"
 
     ' Author:
     ' 
@@ -42,18 +42,18 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
-Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Protocol
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.csv.DocumentExtensions
 Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
-Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Mathematical.Interpolation
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
+Imports Microsoft.VisualBasic.Math.Calculus
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports ODEsDataFrame = Microsoft.VisualBasic.Math.Calculus
 
 Module Program
 
@@ -74,27 +74,27 @@ Module Program
         Call result.DataFrame("#TIME") _
             .Save("./Kinetics_of_influenza_A_virus_infection_in_humans.csv", Encodings.ASCII)
 
-        Dim sT = result.y("T").Value.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
-        Dim sI = result.y("I").Value.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
-        Dim sV = result.y("V").Value.SeqIterator.ToArray(Function(i) New PointF(result.x(i), +i))
+        Dim sT = result.y("T").value.SeqIterator.Select(Function(i) New PointF(result.x(i), +i)).ToArray
+        Dim sI = result.y("I").value.SeqIterator.Select(Function(i) New PointF(result.x(i), +i)).ToArray
+        Dim sV = result.y("V").value.SeqIterator.Select(Function(i) New PointF(result.x(i), +i)).ToArray
 
         Call {
             Scatter.FromPoints(sT, "red", "Susceptible Cells"),
             Scatter.FromPoints(sI, "lime", "Infected Cells")
         }.Plot(fill:=False) _
-         .SaveAs("./Kinetics_of_influenza_A_virus_infection_in_humans-TI.png")
+         .Save("./Kinetics_of_influenza_A_virus_infection_in_humans-TI.png")
 
         Call {
             Scatter.FromPoints(sV, "skyblue", "Virus Load")
         }.Plot(fill:=False) _
-         .SaveAs("./Kinetics_of_influenza_A_virus_infection_in_humans-V.png")
+         .Save("./Kinetics_of_influenza_A_virus_infection_in_humans-V.png")
     End Sub
 
     Public Sub BuildFakeObservationForTest()
-        Dim result As ODEsOut = ODEsOut _
+        Dim result As ODEsOut = ODEsDataFrame _
             .LoadFromDataFrame("./Kinetics_of_influenza_A_virus_infection_in_humans.csv")
         Dim sampleSize% = 100
-        Dim xlabels#() = result.x.Split(sampleSize).ToArray(Function(block) block.Average)
+        Dim xlabels#() = result.x.Split(sampleSize).Select(Function(block) block.Average).ToArray
         Dim samples As NamedValue(Of Double())() =
             LinqAPI.Exec(Of NamedValue(Of Double())) <=
  _
@@ -102,7 +102,8 @@ Module Program
             In result.y.Values
             Let sample As Double() = y.Value _
                 .Split(sampleSize) _
-                .ToArray(Function(block) block.Average)
+                .Select(Function(block) block.Average) _
+                .ToArray
             Select New NamedValue(Of Double()) With {
                 .Name = y.Name,
                 .Value = sample
@@ -126,15 +127,18 @@ Module Program
             In samples.Values
             Let raw As PointF() = x _
                 .SeqIterator _
-                .ToArray(Function(xi) New PointF(+xi, y:=sample.Value(xi)))
+                .Select(Function(xi) New PointF(+xi, y:=sample.Value(xi))) _
+                .ToArray
             Let cubicInterplots = CubicSpline.RecalcSpline(raw, 50).ToArray
             Let newData As Double() = cubicInterplots _
-                .ToArray(Function(pt) CDbl(pt.Y))
+                .Select(Function(pt) CDbl(pt.Y)) _
+                .ToArray
             Select New NamedValue(Of Double()) With {
                 .Name = sample.Name,
                 .Value = newData,
                 .Description = cubicInterplots _
-                    .ToArray(Function(pt) pt.X) _
+                    .Select(Function(pt) pt.X) _
+                    .ToArray _
                     .GetJson  ' just needs the x value for the test
             }
 

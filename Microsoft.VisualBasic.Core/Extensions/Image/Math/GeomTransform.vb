@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71378490a7a35c2c967fcd61fa45b447, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::11501b66fa7bf72a5a64efd475ccad78, Extensions\Image\Math\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -254,6 +254,12 @@ Namespace Imaging.Math2D
             Return sys.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
         End Function
 
+        ''' <summary>
+        ''' 计算两个坐标点之间的欧几里得距离
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Distance(a As Point, b As Point) As Double

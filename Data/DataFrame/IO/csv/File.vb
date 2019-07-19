@@ -1,70 +1,71 @@
-﻿#Region "Microsoft.VisualBasic::9f6bee26067bc406b6a757561e3b5bb0, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::64f4ca56f4151ab62aff41a49ff2a032, Data\DataFrame\IO\csv\File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class File
-    ' 
-    '         Properties: Cell, EstimatedFileSize, Headers, Rows, Width
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
-    '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
-    '                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
-    '                   Trim
-    ' 
-    '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
-    ' 
-    '         Operators: (+2 Overloads) +
-    '         Delegate Function
-    ' 
-    '             Properties: IsReadOnly, RowNumbers
-    ' 
-    '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, FastLoad
-    '                       GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty, Join
-    '                       (+2 Overloads) Load, loads, LoadTsv, Normalization, Parse
-    '                       ReadHeaderRow, Remove, RemoveSubRow, Save
-    ' 
-    '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
-    '                  RemoveAt
-    ' 
-    '             Operators: <, <=, >, >=
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class File
+' 
+'         Properties: Cell, EstimatedFileSize, Headers, Rows, Width
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
+'                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
+'                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
+'                   Trim
+' 
+'         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
+' 
+'         Operators: (+2 Overloads) +
+'         Delegate Function
+' 
+'             Properties: IsReadOnly, RowNumbers
+' 
+'             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, GetEnumerator
+'                       GetEnumerator1, IndexOf, IsNullOrEmpty, Join, Load
+'                       loads, LoadTsv, Normalization, Parse, ReadHeaderRow
+'                       Remove, RemoveSubRow, Save
+' 
+'             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
+'                  RemoveAt
+' 
+'             Operators: <, <=, >, >=
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -140,17 +141,19 @@ B21,B22,B23,...
         ''' Load document from path
         ''' </summary>
         ''' <param name="path"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(path As String,
                 Optional encoding As Encodings = Encodings.Default,
-                Optional trimBlanks As Boolean = False)
+                Optional trimBlanks As Boolean = False,
+                Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing)
 
-            FilePath = path
-            _innerTable = loads(path, encoding.CodePage, trimBlanks)
+            _innerTable = loads(path, encoding.CodePage, trimBlanks, skipWhile)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(source As IEnumerable(Of RowObject), path As String)
             Call Me.New(source)
-            FilePath = path
         End Sub
 
         ''' <summary>
@@ -408,7 +411,7 @@ B21,B22,B23,...
         ''' </summary>
         ''' <returns></returns>
         Public Function Transpose() As File
-            Dim buf As String()() = Me.Columns.MatrixTranspose
+            Dim buf As String()() = Me.Columns.MatrixTranspose.ToArray
             Dim tableRows = LinqAPI.MakeList(Of RowObject) <=
                         From i As Integer
                         In buf.First.Sequence
@@ -664,54 +667,21 @@ B21,B22,B23,...
         End Operator
 
         ''' <summary>
-        ''' If you are sure about your csv data document have no character such like " or, in a cell, then you can try using this fast load method to load your csv data.
-        ''' if not, please using the <see cref="load"></see> method to avoid of the data damages.
-        ''' (假若你确信你的数据文件之中仅含有数字之类的数据，则可以尝试使用本方法进行快速加载，假若文件之中每一个单元格还含有引起歧义的例如双引号或者逗号，则请不要使用本方法进行加载)
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <param name="encoding"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function FastLoad(path As String, Optional parallel As Boolean = True, Optional encoding As Encoding = Nothing) As File
-            If encoding Is Nothing Then
-                encoding = Encoding.Default
-            End If
-
-            Dim sw = Stopwatch.StartNew
-            Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
-            Dim cData As New File
-
-            If parallel Then
-                Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
-                Dim Rows = (From line As SeqValue(Of String)
-                            In cache.AsParallel
-                            Let __innerList As List(Of String) = line.value.Split(","c).AsList
-                            Select i = line.i,
-                                data = New RowObject With {.buffer = __innerList}
-                            Order By i Ascending)
-                cData._innerTable = (From item In Rows Select item.data).AsList
-            Else
-                Dim Rows = (From strLine As String In lines
-                            Let InternalList As List(Of String) = strLine.Split(","c).AsList
-                            Select New RowObject With {.buffer = InternalList}).AsList
-                cData._innerTable = Rows
-            End If
-
-            Call $"CSV data ""{path.ToFileURL}"" load done!   {sw.ElapsedMilliseconds}ms.".__DEBUG_ECHO
-
-            Return cData
-        End Function
-
-        ''' <summary>
         ''' Load the csv data document from a given path.(从指定的文件路径之中加载一个CSV格式的数据文件)
         ''' </summary>
         ''' <param name="Path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Load(path$, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
-            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
-            Dim csv As New File With {._innerTable = buf}
+        Public Shared Function Load(path$,
+                                    Optional encoding As Encoding = Nothing,
+                                    Optional trimBlanks As Boolean = False,
+                                    Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+
+            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks, skipWhile)
+            Dim csv As New File With {
+                ._innerTable = buf
+            }
 
             Return csv
         End Function
@@ -737,37 +707,10 @@ B21,B22,B23,...
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
-            Return Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks)
-        End Function
-
-        ''' <summary>
-        ''' 排序操作在这里会不会大幅度的影响性能？
-        ''' </summary>
-        ''' <param name="buf"></param>
-        ''' <param name="trimBlanks">如果这个选项为真，则会移除所有全部都是逗号分隔符``,,,,,,,,,``的空白行</param>
-        ''' <returns></returns>
-        Public Shared Function Load(buf As String(), trimBlanks As Boolean) As List(Of RowObject)
-            Dim first As New RowObject(buf(Scan0))
-            Dim __test As Func(Of String, Boolean)
-
-            If trimBlanks Then
-                __test = Function(s) Not s.IsEmptyRow(","c)
-            Else
-                __test = Function(s) True
-            End If
-
-            Dim parallelLoad = Function() As IEnumerable(Of RowObject)
-                                   Dim loader = From s As SeqValue(Of String)
-                                                In buf.Skip(1).SeqIterator.AsParallel
-                                                Where __test(s.value)
-                                                Select row = New RowObject(s.value), i = s.i
-                                                Order By i Ascending
-
-                                   Return loader.Select(Function(r) r.row)
-                               End Function
-
-            Return first + parallelLoad().AsList
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+            Return FileLoader.Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks, skipWhile)
         End Function
 
         ''' <summary>
@@ -778,8 +721,8 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Parse(content$, Optional trimBlanks As Boolean = True) As File
-            Return New File(Load(content.LineTokens, trimBlanks))
+        Public Shared Function Parse(content$, Optional trimBlanks As Boolean = True, Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+            Return New File(FileLoader.Load(content.LineTokens, trimBlanks, skipWhile))
         End Function
 #End Region
 
@@ -810,14 +753,15 @@ B21,B22,B23,...
         ''' <summary>
         ''' 去除Csv文件之中的重复记录
         ''' </summary>
-        ''' <param name="File"></param>
-        ''' <param name="OrderBy">当为本参数指定一个非负数值的时候，程序会按照指定的列值进行排序</param>
-        ''' <param name="Asc">当进行排序操作的时候，是否按照升序进行排序，否则按照降序排序</param>
+        ''' <param name="file"></param>
+        ''' <param name="orderBy">当为本参数指定一个非负数值的时候，程序会按照指定的列值进行排序</param>
+        ''' <param name="asc">当进行排序操作的时候，是否按照升序进行排序，否则按照降序排序</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Distinct(File As String, Optional OrderBy As Integer = -1, Optional Asc As Boolean = True) As File
-            Dim csv As File = Load(File)
-            Return Distinct(csv, OrderBy, Asc)
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Distinct(file As String, Optional orderBy As Integer = -1, Optional asc As Boolean = True) As File
+            Return Distinct(Load(file), orderBy, asc)
         End Function
 
         ''' <summary>
@@ -1016,6 +960,14 @@ B21,B22,B23,...
         Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(path, encoding.CodePage)
         End Function
+
+        Public Sub Save(output As StreamWriter, Optional isTsv As Boolean = False)
+            Dim delimiter$ = "," Or vbTab.When(isTsv)
+
+            For Each row As RowObject In Me
+                Call output.WriteLine(row.AsLine(delimiter))
+            Next
+        End Sub
 #End Region
     End Class
 End Namespace

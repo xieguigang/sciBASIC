@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b7127a7d070a01aec8e63d927e6d0ca, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Node.vb"
+﻿#Region "Microsoft.VisualBasic::2a59f7cff3f138c0ce372ef833dab3dd, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Node.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Namespace FileStream
         ''' 这个节点的标识符
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property ID As String Implements INamedValue.Key, INode.ID
+        Public Overridable Property ID As String Implements INamedValue.Key, INode.Id
         ''' <summary>
         ''' Node data groups identifier.(这个节点的分组类型的定义)
         ''' </summary>

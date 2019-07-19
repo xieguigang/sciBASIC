@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4770488b55f5c11ac5c63e16bd3b1be4, Data_science\DataMining\DataMining\DecisionTree\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::77ddb8b447eb5abf2e4b04bf15e9dd67, Data_science\DataMining\DataMining\DecisionTree\Algorithm.vb"
 
     ' Author:
     ' 
@@ -150,7 +150,22 @@ Namespace DecisionTree
                 End If
             Next
 
-            Return New TreeNode(attributes(highestInformationGainIndex).name, highestInformationGainIndex, attributes(highestInformationGainIndex), edge)
+            If highestInformationGainIndex = -1 Then
+                Return New TreeNode(isleaf:=True, name:=data.headers(Scan0), edge:=edge) With {
+                    .attributes = New Attributes With {
+                        .differentAttributeNames = {},
+                        .informationGain = highestInformationGain,
+                        .name = ""
+                    }
+                }
+            Else
+                Return New TreeNode(
+                    name:=attributes(highestInformationGainIndex).name,
+                    tableIndex:=highestInformationGainIndex,
+                    attributes:=attributes(highestInformationGainIndex),
+                    edge:=edge
+                )
+            End If
         End Function
 
         Private Function GetGainForAllAttributes(data As DataTable, colIndex As Integer, entropyOfDataset As Double) As Double

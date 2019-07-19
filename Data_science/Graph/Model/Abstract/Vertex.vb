@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::246a672c6f01481e94d1655b8f272c59, Data_science\Graph\Model\Abstract\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::f553a75e1013a377c589b05ccb818213, Data_science\Graph\Model\Abstract\Vertex.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 
 #End Region
 
+Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -51,6 +52,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 ''' <summary>
 ''' 图之中的节点
 ''' </summary>
+''' 
+<DataContract>
 Public Class Vertex : Implements INamedValue
     Implements IAddressOf
 

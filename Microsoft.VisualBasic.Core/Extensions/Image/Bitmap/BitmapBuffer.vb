@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a647313fb64d477e080229f308b3733, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::1a312091558bad2f52a060f5e955bf87, Extensions\Image\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -180,13 +180,14 @@ Namespace Imaging.BitmapImage
             Return BitmapBuffer.FromBitmap(New Bitmap(res))
         End Function
 
-        Public Shared Function FromBitmap(curBitmap As Bitmap) As BitmapBuffer
+        Public Shared Function FromBitmap(curBitmap As Bitmap, Optional mode As ImageLockMode = ImageLockMode.ReadWrite) As BitmapBuffer
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
             Dim bmpData As BitmapData = curBitmap.LockBits(
-                rect,
-                ImageLockMode.ReadWrite,
-                curBitmap.PixelFormat)
+                rect:=rect,
+                flags:=mode,
+                format:=curBitmap.PixelFormat
+            )
 
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0

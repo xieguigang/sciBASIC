@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8ef6ef550ec131a6b5f7d63ec19611a, Data_science\Darwinism\GAF_test2\Kinetics_of_influenza_A_virus_infection_in_humans.vb"
+﻿#Region "Microsoft.VisualBasic::ab1854e7b35f4e1435cce11a1418628b, Data_science\Darwinism\GAF_test2\Kinetics_of_influenza_A_virus_infection_in_humans.vb"
 
     ' Author:
     ' 
@@ -46,8 +46,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism
-Imports Microsoft.VisualBasic.Mathematical.Calculus
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Calculus
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
 ''' ##### Kinetics of influenza A virus infection in humans
@@ -81,7 +81,7 @@ Public Class Kinetics_of_influenza_A_virus_infection_in_humans : Inherits ODEs
     End Function
 End Class
 
-Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits GAF.Model
+Public Class Kinetics_of_influenza_A_virus_infection_in_humans_Model : Inherits GAF.ODEs.Model
 
     Dim T As var
     Dim I As var

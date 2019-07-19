@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3bbc84d3937439737310b3aa0054da3, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::caf7d1f20731408c078462b9a00a0bd4, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@
 
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
@@ -73,12 +73,12 @@ Public Class File : Implements IFileReference
     Friend ReadOnly modify As New Index(Of String)
     Friend ROOT$
 
-    Dim _filePath As [Default](Of  String)
+    Dim _filePath As [Default](Of String)
 
     Public Property FilePath As String Implements IFileReference.FilePath
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return _filePath.Value
+            Return _filePath.value
         End Get
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Set(value As String)

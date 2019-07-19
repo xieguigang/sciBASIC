@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a2992138e9e7423d9198b9a47be833d, Microsoft.VisualBasic.Core\CommandLine\Interpreters\InteractiveConsole.vb"
+﻿#Region "Microsoft.VisualBasic::7a2992138e9e7423d9198b9a47be833d, CommandLine\Interpreters\InteractiveConsole.vb"
 
     ' Author:
     ' 
@@ -149,6 +149,9 @@ Namespace CommandLine
                     Call MyBase.Execute(args:=New CommandLine With {.Name = "?"})
                     Call Console.WriteLine()
                     Call Console.WriteLine()
+
+                Case "pwd"
+                    Call Console.WriteLine(App.CurrentDirectory)
 
                 Case "/@set"
 

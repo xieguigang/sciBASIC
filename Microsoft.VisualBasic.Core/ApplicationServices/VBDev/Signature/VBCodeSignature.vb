@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45d21ea902dbe434ef06bebc197d1579, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
+﻿#Region "Microsoft.VisualBasic::1b37f25638311a163beee708b6f8bb00, ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
 
     ' Author:
     ' 
@@ -221,7 +221,9 @@ Namespace ApplicationServices.Development
                     .Where(Function(s) s.Name <> "New") _
                     .GroupBy(Function(m) m.Value) _
                     .ToDictionary(Function(t) t.Key,
-                                  Function(l) l.Keys.memberList)
+                                  Function(l)
+                                      Return l.Keys.memberList
+                                  End Function)
 
                 If constructors.Length > 0 Then
                     members += container.Description & $"    Constructor: (+{constructors.Count} Overloads) Sub New"

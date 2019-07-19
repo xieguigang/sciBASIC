@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bfa8c331950f2133f1db8f7393819af, vs_solutions\dev\vbproj\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a14f1ac6d747e513298d68dd6ef31d4a, vs_solutions\dev\vbproj\Program.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 
 Imports System.ComponentModel
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbproj
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeHelper
 Imports Microsoft.VisualBasic.Language

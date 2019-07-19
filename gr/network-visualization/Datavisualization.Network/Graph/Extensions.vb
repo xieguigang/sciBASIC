@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed079fb1f5beb4d02aad9a2d3fbaf16a, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3c47a3eb8410c791a4fb5c0be1e82290, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -69,15 +69,14 @@ Namespace Graph
 
         <Extension>
         Public Sub ApplyAnalysis(ByRef net As NetworkGraph)
-
-            For Each node In net.nodes
-                node.Data.Neighbours = net.GetNeighbours(node.Label).ToArray
+            For Each node In net.vertex
+                node.data.neighbours = net.GetNeighbours(node.Label).ToArray
             Next
         End Sub
 
         <Extension>
         Public Iterator Function GetNeighbours(net As NetworkGraph, node As String) As IEnumerable(Of Integer)
-            For Each edge As Edge In net.edges
+            For Each edge As Edge In net.graphEdges
                 Dim connected As String = edge.GetConnectedNode(node)
                 If Not String.IsNullOrEmpty(connected) Then
                     Yield CInt(connected)

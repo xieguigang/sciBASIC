@@ -53,7 +53,11 @@ Namespace ManagedSqlite.Core.Tables
         Public Property Sql As String
 
         Public Overrides Function ToString() As String
-            Return Sql
+            If type.TextEquals("table") Then
+                Return Sql
+            Else
+                Return $"[{type}] {tableName}|{name}"
+            End If
         End Function
 
         Public Function ParseSchema(Optional removeNameEscape As Boolean = False) As Schema

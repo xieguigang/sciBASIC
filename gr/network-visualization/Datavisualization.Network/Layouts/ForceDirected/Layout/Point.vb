@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79d1fdc499b1bca4dcc921f52ce1b798, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
+﻿#Region "Microsoft.VisualBasic::f0da6460ad27eb002707f419ee229263, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
 
     ' Author:
     ' 
@@ -86,11 +86,8 @@
 '
 '
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts
@@ -100,18 +97,32 @@ Namespace Layouts
     ''' </summary>
     Public Class LayoutPoint
 
-        Public Sub New(iPosition As AbstractVector, iVelocity As AbstractVector, iAcceleration As AbstractVector, iNode As Node)
-            position = iPosition
-            node = iNode
-            velocity = iVelocity
-            acceleration = iAcceleration
+        Public Property position As AbstractVector
+        Public Property node As Node
+        Public Property mass As Single
+            Get
+                Return node.data.mass
+            End Get
+            Private Set
+                node.data.mass = Value
+            End Set
+        End Property
+
+        Public Property velocity As AbstractVector
+        Public Property acceleration As AbstractVector
+
+        Public Sub New(position As AbstractVector, velocity As AbstractVector, acceleration As AbstractVector, node As Node)
+            Me.position = position
+            Me.node = node
+            Me.velocity = velocity
+            Me.acceleration = acceleration
         End Sub
 
         Public Overrides Function GetHashCode() As Integer
             Return position.GetHashCode()
         End Function
 
-        Public Overrides Function Equals(obj As System.Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then
                 Return False
@@ -119,7 +130,8 @@ Namespace Layouts
 
             ' If parameter cannot be cast to Point return false.
             Dim p As LayoutPoint = TryCast(obj, LayoutPoint)
-            If DirectCast(p, System.Object) Is Nothing Then
+
+            If DirectCast(p, Object) Is Nothing Then
                 Return False
             End If
 
@@ -152,6 +164,7 @@ Namespace Layouts
             Return (a.position = b.position)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(a As LayoutPoint, b As LayoutPoint) As Boolean
             Return Not (a = b)
         End Operator
@@ -159,20 +172,6 @@ Namespace Layouts
         Public Sub ApplyForce(force As AbstractVector)
             acceleration.Add(force / mass)
         End Sub
-
-        Public Property position() As AbstractVector
-        Public Property node() As Node
-        Public Property mass() As Single
-            Get
-                Return node.Data.mass
-            End Get
-            Private Set
-                node.Data.mass = Value
-            End Set
-        End Property
-
-        Public Property velocity() As AbstractVector
-        Public Property acceleration() As AbstractVector
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

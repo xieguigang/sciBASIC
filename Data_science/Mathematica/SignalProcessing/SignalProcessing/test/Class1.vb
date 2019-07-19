@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::335084b3735db3c00a4fe4f17856eb27, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::9d169e36ad388ba26b791510368051fe, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\Class1.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.Data.Wave
 Imports Microsoft.VisualBasic.Data.IO
 
@@ -48,10 +47,10 @@ Module Module1
 
     Sub Main()
 
-        Dim wav = "E:\VB_GamePads\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\SND_FISH_TROPICAL_03.wav".OpenBinaryReader
-        Dim header As File = File.ParseHeader(wav)
+        Dim wav = "E:\VB_GamePads\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\M1F1-int16-AFsp.wav".OpenBinaryReader
+        Dim header As File = File.Open(wav)
 
-
+        '    Dim chunks = header.data.data.Split(1024)
 
         Pause()
     End Sub

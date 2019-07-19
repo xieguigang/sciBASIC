@@ -98,11 +98,12 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -149,7 +150,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>./bin</OutputPath>
+    <OutputPath>bin\x86\Debug\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -266,6 +267,36 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\DEMO\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\DEMO\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\DEMO\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -289,7 +320,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Darwinism\GeneticAlgorithm\ReplacementStrategy.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\EnvironmentDriver.vb" />
+    <Compile Include="DataSet\NamespaceDoc.vb" />
     <Compile Include="IterationReporter.vb" />
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Fitness.vb" />
@@ -316,26 +349,31 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="NeuralNetwork\ActiveFunctions\BipolarSigmoid.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\BipolarSigmoid.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\HyperbolicTangent.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\LayerActives.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\IActivationFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\ReLU.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\SigmoidFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Threshold.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\ReLU.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\SigmoidFunction.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\Sigmoid.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\Threshold.vb" />
     <Compile Include="NeuralNetwork\Accelerator.vb" />
+    <Compile Include="NeuralNetwork\Models\HiddenLayers.vb" />
     <Compile Include="NeuralNetwork\Models\Layer.vb" />
     <Compile Include="NeuralNetwork\Importance.vb" />
+    <Compile Include="NeuralNetwork\Models\Protocols\Dropout.vb" />
+    <Compile Include="DataSet\SampleList.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Models\Layers.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Snapshot.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Formats\Scattered.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\NamespaceDoc.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\CreateSnapshot.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\Models\Sample.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\Models\NormalizeMatrix.vb" />
+    <Compile Include="DataSet\Sample.vb" />
+    <Compile Include="DataSet\NormalizeMatrix.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\Neuron.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\Models\DataSet.vb" />
+    <Compile Include="DataSet\DataSet.vb" />
     <Compile Include="NeuralNetwork\Helpers.vb" />
     <Compile Include="NeuralNetwork\Models\Network.vb" />
     <Compile Include="NeuralNetwork\Models\Neuron.vb" />
@@ -350,6 +388,7 @@
     <Compile Include="RandomForests\Bootstraping.vb" />
     <Compile Include="RandomForests\RandomForests.vb" />
     <Compile Include="RandomForests\NamespaceDoc.vb" />
+    <Compile Include="RandomForests\StorageProcedure\MatrixLoader.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -376,7 +415,7 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.vbproj">
-      <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
+      <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
       <Name>DataMining</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mathematica\Math\Math\math-core.vbproj">
@@ -387,8 +426,6 @@
   <ItemGroup>
     <Content Include="NeuralNetwork\ActiveFunctions\Copyright.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RandomForests\StorageProcedure\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

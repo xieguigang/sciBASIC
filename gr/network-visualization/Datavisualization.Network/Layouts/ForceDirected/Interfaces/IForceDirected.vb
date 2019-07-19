@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15ca8b146eacf0ec7aab16b515c5ab10, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::384d8105e1e3958a8df33e9383277dec, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IForceDirected.vb"
 
     ' Author:
     ' 
@@ -39,8 +39,8 @@
     ' 
     '     Interface IForceDirected
     ' 
-    '         Properties: Damping, graph, Repulsion, Stiffness, Threadshold
-    '                     WithinThreashold
+    '         Properties: Damping, graph, Repulsion, Stiffness, Threshold
+    '                     WithinThreshold
     ' 
     '         Function: GetBoundingBox, GetPoint, Nearest
     ' 
@@ -92,9 +92,6 @@
 '
 '
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Namespace Layouts.Interfaces
@@ -103,17 +100,16 @@ Namespace Layouts.Interfaces
     Public Delegate Sub NodeAction(edge As Node, point As LayoutPoint)
 
     Public Interface IForceDirected
-        ReadOnly Property graph() As IGraph
 
+        ReadOnly Property graph() As NetworkGraph
         ReadOnly Property Stiffness() As Single
-
         ReadOnly Property Repulsion() As Single
-
         ReadOnly Property Damping() As Single
-
-        Property Threadshold() As Single
         ' NOT Using
-        ReadOnly Property WithinThreashold() As Boolean
+        ReadOnly Property WithinThreshold() As Boolean
+
+        Property Threshold As Single
+
         Sub Clear()
 
         ''' <summary>

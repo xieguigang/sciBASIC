@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::397da3e51c2d9470babd11128a044e12, Data\BinaryData\DataStorage\netCDF\Components\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::27bb47af904856479df933bd2fa06a6c, Data\BinaryData\DataStorage\netCDF\Components\CDFData.vb"
 
     ' Author:
     ' 
@@ -233,17 +233,17 @@ Namespace netCDF.Components
         Public Shared Widening Operator CType(data As (values As Object(), type As CDFDataTypes)) As CDFData
             Select Case data.type
                 Case CDFDataTypes.BYTE
-                    Return data.values.As(Of Byte)
+                    Return data.values.As(Of Byte).ToArray
                 Case CDFDataTypes.CHAR
-                    Return data.values.As(Of Char)
+                    Return data.values.As(Of Char).ToArray
                 Case CDFDataTypes.DOUBLE
-                    Return data.values.As(Of Double)
+                    Return data.values.As(Of Double).ToArray
                 Case CDFDataTypes.FLOAT
-                    Return data.values.As(Of Single)
+                    Return data.values.As(Of Single).ToArray
                 Case CDFDataTypes.INT
-                    Return data.values.As(Of Integer)
+                    Return data.values.As(Of Integer).ToArray
                 Case CDFDataTypes.SHORT
-                    Return data.values.As(Of Short)
+                    Return data.values.As(Of Short).ToArray
                 Case Else
                     Return New CDFData
             End Select

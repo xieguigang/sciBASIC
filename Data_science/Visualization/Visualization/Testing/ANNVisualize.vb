@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b388827267abfc67a8df632cdd063112, Data_science\Visualization\Visualization\Testing\ANNVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::dfbe095a80503fa2abc15aec9a86d6b3, Data_science\Visualization\Visualization\Testing\ANNVisualize.vb"
 
     ' Author:
     ' 
@@ -78,6 +78,9 @@ Module ANNVisualize
         Call ANN.Add({1, 1, 1, 0, 0}, {1, 0, 1})
         Call ANN.Add({1, 1, 0, 0, 1}, {1, 0, 1})
 
+
+        Call ANN.SetLayerNormalize(True)
+
         Call ANN.Train()
 
         Call ANN.NeuronNetwork.Compute(1, 1, 1, 1, 1).GetJson.__DEBUG_ECHO
@@ -86,7 +89,7 @@ Module ANNVisualize
 
 
         Call ANN.TakeSnapshot.GetXml.SaveTo("./ANN_snapshot.Xml")
-        Call ANN.NeuronNetwork.VisualizeModel.Save("./ANN_network/")
+        Call ANN.NeuronNetwork.VisualizeModel(0.98).Save("./ANN_network/")
 
         Pause()
     End Sub
@@ -94,7 +97,7 @@ Module ANNVisualize
     Sub test2()
         Dim activations As New LayerActives With {
             .input = New SigmoidFunction,
-            .output = New BipolarSigmoidFunction,
+            .output = New BipolarSigmoid,
             .hiddens = New Sigmoid
         }
         Dim ANN As New TrainingUtils(5, {10, 13, 60, 30, 6}, 3, momentum:=0.9, active:=activations)

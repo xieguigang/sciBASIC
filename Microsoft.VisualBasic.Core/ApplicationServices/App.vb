@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca7e9546ec023050688b25a8b304ee13, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::11d59e8cf799bd8b63b30b390b05215b, ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -45,8 +45,8 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __cli, __completeCLI, __isMicrosoftPlatform, __listFiles, __sysTEMP
-    '               (+2 Overloads) Argument, BugsFormatter, CLICode, ElapsedMilliseconds, Exit
+    '     Function: __cli, __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument
+    '               BugsFormatter, CLICode, ElapsedMilliseconds, Exit, finalizeCLI
     '               FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables
     '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
     '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
@@ -1174,7 +1174,7 @@ Public Module App
         If args.Name.TextEquals("/i") Then
             ' 交互式终端模式
             Dim console As New InteractiveConsole(App)
-            Return __completeCLI(console.RunApp)
+            Return finalizeCLI(console.RunApp)
         Else
             Dim program As New Interpreter(App, caller:=caller) With {
                 .ExecuteEmptyCli = executeEmpty,
@@ -1182,7 +1182,7 @@ Public Module App
                 .ExecuteFile = executeFile
             }
 
-            Return __completeCLI(program.Execute(args))
+            Return finalizeCLI(program.Execute(args))
         End If
     End Function
 
@@ -1424,7 +1424,7 @@ Public Module App
     ReadOnly __GCThread As New UpdateThread(10 * 60 * 1000, AddressOf App.__GCThreadInvoke)
 
     Dim _CLIAutoClean As Boolean = False
-    Dim __exitHooks As New List(Of Action)
+    Dim appExitHooks As New List(Of Action)
 
     ''' <summary>
     ''' 这里添加在应用程序退出执行的时候所需要完成的任务
@@ -1433,19 +1433,21 @@ Public Module App
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AddExitCleanHook(hook As Action)
-        SyncLock __exitHooks
-            With __exitHooks
+        SyncLock appExitHooks
+            With appExitHooks
                 Call .Add(hook)
             End With
         End SyncLock
     End Sub
+
+    Public Const FlagInternalPipeline As String = "--internal_pipeline"
 
     ''' <summary>
     ''' 自动停止GC当前程序的线程
     ''' </summary>
     ''' <param name="state"></param>
     ''' <returns></returns>
-    Private Function __completeCLI(state As Integer) As Integer
+    Private Function finalizeCLI(state As Integer) As Integer
         App._Running = False
 
         If _CLIAutoClean Then
@@ -1457,7 +1459,7 @@ Public Module App
         Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine()
 
-        For Each hook As Action In __exitHooks
+        For Each hook As Action In appExitHooks
             Call hook()
         Next
 
@@ -1465,13 +1467,23 @@ Public Module App
         Call Console.WriteLine()
 
 #If DEBUG Then
+        ' 20190623 在这里禁止程序在调试模式下，如果处于内部流程的调用
+        ' 可能会导致调试不方便，在这里通过设置这个流程标记来禁用掉
+        ' 被调用的内部流程子进程的调试暂停功能
+
+        ' app /command /opts /@set --internal_pipeline=TRUE
+
         ' this option enable you disable the pause in debug mode 
         ' when the program is going to end.
-        If Not App.GetVariable("pause.disable").ParseBoolean = True Then
+        If Not App.GetVariable(name:=FlagInternalPipeline).ParseBoolean = True Then
             ' 应用程序在 debug 模式下会自动停止在这里
+            ' 在这里调试模式下结束之前自动暂停是为了
+            ' 方便查看程序的命令行终端上面的输出信息
+            '
             Call Pause()
         End If
 #End If
+
         Return state
     End Function
 

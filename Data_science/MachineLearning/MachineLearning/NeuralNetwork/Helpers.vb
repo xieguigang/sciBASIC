@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34d9d97cf092e8d3ac86897c7383d153, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::bf2b1fb33400785a6bf0c7dca7345fb3, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Helpers.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: MaxEpochs, MinimumError
     ' 
-    '         Function: GetRandom, (+2 Overloads) PopulateAllSynapses, ToDataMatrix
+    '         Function: GetRandom, (+2 Overloads) PopulateAllSynapses, RandomWeightInitializer, UnifyWeightInitializer, ValueTruncate
     ' 
     '     Enum TrainingType
     ' 
@@ -56,7 +56,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports Microsoft.VisualBasic.Math
 
 Namespace NeuralNetwork
 
@@ -68,24 +69,52 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' <see cref="Sigmoid"/> as default
         ''' </summary>
-        Friend ReadOnly defaultActivation As [Default](Of  IActivationFunction) = New Sigmoid
-
-        ReadOnly rand As New Random()
+        Friend ReadOnly defaultActivation As [Default](Of IActivationFunction) = New Sigmoid
+        Friend ReadOnly randomWeight As New [Default](Of Func(Of Double))(AddressOf GetRandom)
 
         ''' <summary>
         ''' 通过这个帮助函数生成``[-1, 1]``之间的随机数
         ''' </summary>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Function GetRandom() As Double
-            SyncLock rand
-                Return 2 * rand.NextDouble() - 1
+        Private Function GetRandom() As Double
+            SyncLock seeds
+                Return 2 * seeds.NextDouble() - 1
             End SyncLock
         End Function
 
+        Public Function RandomWeightInitializer() As Func(Of Double)
+            Return AddressOf GetRandom
+        End Function
+
+        Public Function UnifyWeightInitializer(unify As Double) As Func(Of Double)
+            Return Function() unify
+        End Function
+
+        ''' <summary>
+        ''' 对值进行约束剪裁
+        ''' </summary>
+        ''' <param name="value#"></param>
+        ''' <param name="truncate">修建的阈值应该是一个正实数来的</param>
+        ''' <returns></returns>
+        Friend Function ValueTruncate(value#, truncate#) As Double
+            If Double.IsNegativeInfinity(value) Then
+                value = -truncate
+            ElseIf Double.IsPositiveInfinity(value) Then
+                value = truncate
+            ElseIf Double.IsNaN(value) Then
+                value = 0
+            ElseIf value > truncate OrElse value < -truncate Then
+                value = Math.Sign(value) * truncate
+            End If
+
+            Return value
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Friend Function PopulateAllSynapses(neuron As Neuron) As IEnumerable(Of Synapse)
-            Return neuron.InputSynapses + neuron.OutputSynapses.AsList
+            Return neuron.InputSynapses.AsEnumerable + neuron.OutputSynapses.AsList
         End Function
 
         <Extension>
@@ -97,25 +126,6 @@ Namespace NeuralNetwork
                     Next
                 Next
             Next
-        End Function
-
-        <Extension>
-        Public Function ToDataMatrix(Of T As {New, DynamicPropertyBase(Of Double), INamedValue})(samples As IEnumerable(Of Sample), names$(), outputNames$()) As IEnumerable(Of T)
-            Dim nameIndex = names.SeqIterator
-            Dim outsIndex = outputNames.SeqIterator
-
-            Return samples _
-                .Select(Function(sample)
-                            Dim row As New T
-
-                            row.Key = sample.ID
-                            row.Properties = New Dictionary(Of String, Double)
-
-                            Call nameIndex.DoEach(Sub(i) Call row.Add(i.value, sample.status(i)))
-                            Call outsIndex.DoEach(Sub(i) Call row.Add(i.value, sample.target(i)))
-
-                            Return row
-                        End Function)
         End Function
     End Module
 

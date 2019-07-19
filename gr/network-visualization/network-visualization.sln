@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27906.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Network.GraphTheory", "Datavisualization.Network\Network.GraphTheory.vbproj", "{076315EE-B598-40DC-9280-C71CDF9B6A48}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GraphTheory", "..\..\Data_science\Graph\GraphTheory.vbproj", "{203BC68F-A0CD-443A-AB62-4AF4110F752F}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "avi", "..\avi\avi.vbproj", "{5D35E122-11C0-4B18-BE08-E658A3F20323}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -792,6 +794,72 @@ Global
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Surveillance-of-infectious-diseases|x64.Build.0 = Surveillance-of-infectious-diseases|x64
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Surveillance-of-infectious-diseases|x86.ActiveCfg = Surveillance-of-infectious-diseases|x86
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.Surveillance-of-infectious-diseases|x86.Build.0 = Surveillance-of-infectious-diseases|x86
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep_UNIX_x64|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep_UNIX_x64|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep_UNIX_x64|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep_UNIX_x64|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep_UNIX_x64|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep_UNIX_x64|x86.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Biodeep|x86.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Debug|x64.ActiveCfg = Debug|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Debug|x64.Build.0 = Debug|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Debug|x86.Build.0 = Debug|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.docs|x64.ActiveCfg = Debug|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.docs|x64.Build.0 = Debug|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.docs|x86.ActiveCfg = Debug|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.docs|x86.Build.0 = Debug|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(Release_X64)|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(Release_X64)|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(Release_X64)|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(Release_X64)|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(Release_X64)|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(Release_X64)|x86.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(UNIX-Release_X64)|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(UNIX-Release_X64)|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(UNIX-Release_X64)|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(UNIX-Release_X64)|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(UNIX-Release_X64)|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.GCModeller(UNIX-Release_X64)|x86.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.installer_x64|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.installer_x64|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.installer_x64|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.installer_x64|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.installer_x64|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.installer_x64|x86.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Publish|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Publish|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Publish|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Publish|x86.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release|x86.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release2|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release2|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release2|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release2|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release2|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Release2|x86.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Surveillance-of-infectious-diseases|Any CPU.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Surveillance-of-infectious-diseases|Any CPU.Build.0 = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Surveillance-of-infectious-diseases|x64.ActiveCfg = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Surveillance-of-infectious-diseases|x64.Build.0 = Release|x64
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Surveillance-of-infectious-diseases|x86.ActiveCfg = Release|Any CPU
+		{5D35E122-11C0-4B18-BE08-E658A3F20323}.Surveillance-of-infectious-diseases|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -807,6 +875,7 @@ Global
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2} = {93EB1A06-EB99-4EDC-9BB8-E720F882F572}
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB} = {93EB1A06-EB99-4EDC-9BB8-E720F882F572}
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F} = {93EB1A06-EB99-4EDC-9BB8-E720F882F572}
+		{5D35E122-11C0-4B18-BE08-E658A3F20323} = {93EB1A06-EB99-4EDC-9BB8-E720F882F572}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEE6594C-2712-48E8-A352-579E50CE7660}

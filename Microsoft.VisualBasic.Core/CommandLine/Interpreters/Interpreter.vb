@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e620fb8eb27263060062a9f41fb09948, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::dcfc8f9f59421f3383f29e83fa30780e, CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -264,7 +264,7 @@ Namespace CommandLine
                 Return doc.SaveTo($"{output}/{App.AssemblyName}.md", Encoding.UTF8).CLICode
 
             ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
-                Return BashShell()
+                Return My.BashShell()
 
             ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
                 Dim namespace$ = CLI("/namespace") Or "CLI"
@@ -350,17 +350,6 @@ Namespace CommandLine
             Dim argvs As String() = CommandLineArgs.Skip(1).ToArray
             Dim i As Integer = apiInvoke(CommandName, argvs, help_argvs:=argvs)
 
-#If DEBUG Then
-            If Not App.GetVariable("pause.disable").ParseBoolean = True Then
-                Call Pause()
-            End If
-#Else
-            If Stack.TextEquals("Main") Then
-                If AutoPaused Then
-                    Call Pause()
-                End If
-            End If
-#End If
             Return i
         End Function
 

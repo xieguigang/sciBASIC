@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bf7d1500902e14a80ffc40ccd29e9fb, gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::163cde90a0f681671c108582b3c36ece, gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,9 @@
 
     '     Module forceNetwork
     ' 
-    '         Sub: (+2 Overloads) doForceLayout, doRandomLayout
+    '         Function: doForceLayout
+    ' 
+    '         Sub: doForceLayout, doRandomLayout
     ' 
     ' 
     ' /********************************************************************************/
@@ -83,12 +85,12 @@ Namespace Layouts
         ''' </param>
         <ExportAPI("Layout.ForceDirected")>
         <Extension>
-        Public Sub doForceLayout(ByRef net As NetworkGraph,
-                                 Optional Stiffness# = 80,
-                                 Optional Repulsion# = 4000,
-                                 Optional Damping# = 0.83,
-                                 Optional iterations% = 1000,
-                                 Optional showProgress As Boolean = False)
+        Public Function doForceLayout(ByRef net As NetworkGraph,
+                                      Optional Stiffness# = 80,
+                                      Optional Repulsion# = 4000,
+                                      Optional Damping# = 0.83,
+                                      Optional iterations% = 1000,
+                                      Optional showProgress As Boolean = False) As NetworkGraph
 
             Dim physicsEngine As New ForceDirected2D(net, Stiffness, Repulsion, Damping)
             Dim tick As Action(Of Integer)
@@ -125,20 +127,22 @@ Namespace Layouts
 
             Call physicsEngine.EachNode(
                 Sub(node, point)
-                    node.Data.initialPostion = point.position
+                    node.data.initialPostion = point.position
                 End Sub)
 
             If Not progress Is Nothing Then
                 Call progress.Dispose()
             End If
-        End Sub
+
+            Return net
+        End Function
 
         <Extension>
         Public Sub doRandomLayout(ByRef net As NetworkGraph)
             Dim rnd As New Random
 
-            For Each x As Node In net.nodes
-                x.Data.initialPostion = New FDGVector2 With {
+            For Each x As Node In net.vertex
+                x.data.initialPostion = New FDGVector2 With {
                     .x = rnd.NextDouble * 1000,
                     .y = rnd.NextDouble * 1000
                 }

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::748ccf4f1bb49013f3136484edea0d5b, gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::62c872f71e92e09406128ffcce24fe8d, gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
 
     ' Author:
     ' 
@@ -40,18 +40,12 @@
 
 #End Region
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
-Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Styling
 
@@ -64,9 +58,9 @@ Namespace Styling
         End Function
 
         <Extension>
-        Public Function DegreeAsSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = names.REFLECTION_ID_MAPPING_DEGREE) As Map(Of Node, Double)()
+        Public Function DegreeAsSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = NamesOf.REFLECTION_ID_MAPPING_DEGREE) As Map(Of Node, Double)()
             Dim valDegree = Function(node As Node)
-                                Return node.Data(degree).ParseDouble
+                                Return node.data(degree).ParseDouble
                             End Function
             Return nodes.DegreeAsSize(
                 getDegree:=valDegree,

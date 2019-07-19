@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f5dc2d2723bf368ee62ccf0148ba17d, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DefaultAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::8f5dc2d2723bf368ee62ccf0148ba17d, ComponentModel\DataSource\DefaultAttribute.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72583ecbe0ad701ec1f8fbc8c7be7a1c, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
+﻿#Region "Microsoft.VisualBasic::72583ecbe0ad701ec1f8fbc8c7be7a1c, ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
 
     ' Author:
     ' 

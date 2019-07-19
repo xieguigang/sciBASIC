@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ace0d2cf316361ee4908b71b18ba6dd, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::5ace0d2cf316361ee4908b71b18ba6dd, ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
 
     ' Author:
     ' 

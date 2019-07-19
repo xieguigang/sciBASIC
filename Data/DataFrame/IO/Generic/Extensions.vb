@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a6f2f7b2f712da8128b0fb08d5847db, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::43664211ae70ec59bbe2e5656e712c1b, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -249,8 +249,9 @@ Namespace IO
             Dim props As Dictionary(Of String, String) = data _
                 .GroupBy(Function(p) p.Property) _
                 .ToDictionary(Function(k) k.Key,
-                              Function(v) v.Select(
-                              Function(s) s.Value).JoinBy("; "))
+                              Function(v)
+                                  Return v.Select(Function(s) s.Value).JoinBy("; ")
+                              End Function)
 
             Return New EntityObject With {
                 .ID = g.Key,

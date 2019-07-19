@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5634f43c94bdb22e3618a857fa74744, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::143777c791dfc55b96e82f8fcc5ba0e4, Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,7 @@ Imports System.Text.RegularExpressions
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
@@ -90,12 +91,14 @@ Namespace Serialization.JSON
                                       Optional simpleDict As Boolean = True,
                                       Optional knownTypes As IEnumerable(Of Type) = Nothing) As String
 
+            Static emptyTypeList As [Default](Of IEnumerable(Of Type)) = New Type() {}
+
             Using ms As New MemoryStream()
                 Call ms.writeJson(
                     obj:=obj,
                     type:=type,
                     simpleDict:=simpleDict,
-                    knownTypes:=knownTypes
+                    knownTypes:=knownTypes Or emptyTypeList
                 )
 
                 If indent Then

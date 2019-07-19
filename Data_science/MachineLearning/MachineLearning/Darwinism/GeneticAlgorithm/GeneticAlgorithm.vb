@@ -1,48 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::1101c126e3ee0249053f169381f8ded5, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::7dab08e9c49cb049fcd68b14fbb2cbd0, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GeneticAlgorithm
-    ' 
-    '         Properties: Best, Fitness, ParentChromosomesSurviveCount, Population, Worst
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: evolIterate, GetFitness
-    ' 
-    '         Sub: Clear, Evolve
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GeneticAlgorithm
+' 
+'         Properties: Best, ParentChromosomesSurviveCount, Worst
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: evolIterate, GetFitness
+' 
+'         Sub: Clear, Evolve, UpdateMutationRate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,9 +63,12 @@
 ' *****************************************************************************
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.ReplacementStrategy
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Darwinism.GAF
 
@@ -77,26 +80,27 @@ Namespace Darwinism.GAF
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly chromosomesComparator As Fitness(Of Chr)
+        Friend ReadOnly chromosomesComparator As Fitness(Of Chr)
+        Friend ReadOnly seeds As IRandomSeeds
 
         ''' <summary>
-        ''' listeners of genetic algorithm iterations (handle callback afterwards)
+        ''' 因为在迭代的过程中，旧的种群会被新的种群所替代
+        ''' 所以在这里不可以加readonly修饰
         ''' </summary>
-        ReadOnly iterationListeners As New List(Of IterationReporter(Of GeneticAlgorithm(Of Chr)))
-        ReadOnly seeds As IRandomSeeds
-
-        Public ReadOnly Property Population As Population(Of Chr)
-        Public ReadOnly Property Fitness As Fitness(Of Chr)
+        Dim population As Population(Of Chr)
+        Dim popStrategy As IStrategy(Of Chr)
 
         Public ReadOnly Property Best As Chr
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Population(0)
+                Return population(0)
             End Get
         End Property
 
         Public ReadOnly Property Worst As Chr
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Population(Population.Size - 1)
+                Return population(population.Size - 1)
             End Get
         End Property
 
@@ -106,6 +110,8 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <returns></returns>
         Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
+
+        Shared ReadOnly randfSeeds As New [Default](Of IRandomSeeds)(Function() randf.seeds)
 
         ''' <summary>
         ''' 
@@ -118,38 +124,42 @@ Namespace Darwinism.GAF
         ''' <param name="cacheSize">
         ''' -1 means no cache
         ''' </param>
-        Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing, Optional cacheSize% = 10000)
-            Me.Population = population
-            Me.Fitness = fitnessFunc
+        Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr),
+                       Optional replacementStrategy As Strategies = Strategies.Naive,
+                       Optional seeds As IRandomSeeds = Nothing,
+                       Optional cacheSize% = 10000)
+
+            Me.population = population
+            Me.seeds = seeds Or randfSeeds
 
             If cacheSize <= 0 Then
                 Me.chromosomesComparator = fitnessFunc
             Else
-                Me.chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate, capacity:=cacheSize)
+                Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize)
             End If
 
-            Me.Population.SortPopulationByFitness(Me, chromosomesComparator)
+            Me.population.SortPopulationByFitness(Me, chromosomesComparator)
+            Me.popStrategy = replacementStrategy.GetStrategy(Of Chr)
 
-            If population.Parallel Then
+            If population.parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
             End If
-            If seeds Is Nothing Then
-                seeds = Function() New Random(Now.Millisecond)
-            End If
-
-            Me.seeds = seeds
         End Sub
 
+        ''' <summary>
+        ''' 完成一次种群的迭代进化
+        ''' </summary>
         Public Sub Evolve()
             Dim i% = 0
-            Dim parentPopulationSize As Integer = Population.Size
-            Dim newPopulation As New Population(Of Chr)(_Population.Pcompute) With {
-                .Parallel = Population.Parallel
+            Dim parentPopulationSize As Integer = population.Size
+            Dim newPopulation As New Population(Of Chr)(population.Pcompute) With {
+                .parallel = population.parallel,
+                .initialSize = population.initialSize
             }
 
             Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)
                 ' 旧的原有的种群
-                newPopulation.Add(Population(i))
+                newPopulation.Add(population(i))
                 i += 1
             Loop
 
@@ -158,32 +168,45 @@ Namespace Darwinism.GAF
             For Each c As Chr In parentPopulationSize% _
                 .Sequence _
                 .Select(AddressOf evolIterate) _
-                .IteratesALL ' 并行化计算每一个突变迭代
+                .IteratesALL
 
+                ' 并行化计算每一个突变迭代
+                ' 将新的突变个体添加进入种群之中
                 Call newPopulation.Add(c)
             Next
 
-            newPopulation.SortPopulationByFitness(Me, chromosomesComparator) ' 通过fitness排序来进行择优
-            newPopulation.Trim(parentPopulationSize)                         ' 剪裁掉后面的对象，达到淘汰的效果
-            _Population = newPopulation                                      ' 新种群替代旧的种群
+            ' 下面的两个步骤是机器学习的关键
+            ' 通过排序,将错误率最小的种群排在前面
+            ' 错误率最大的种群排在后面
+            ' 然后对种群进行裁剪,将错误率比较大的种群删除
+            ' 从而实现了择优进化, 即程序模型对我们的训练数据集产生了学习
+
+            ' 新种群替代旧的种群
+            population = popStrategy.newPopulation(newPopulation, Me)
         End Sub
 
         ''' <summary>
         ''' 并行化过程之中的单个迭代
         ''' </summary>
-        ''' <param name="i%"></param>
+        ''' <param name="i">种群之中的个体的序号,也就是即将发生的目标个体</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 进化发生的契机是个体的突变,这体现在
+        '''
+        ''' 1. 个体的基因组的变异,可能产生错误率更低的新个体
+        ''' 2. 突变体和其他个体随机杂交,可能会产生错误率更低的新个体
+        '''
+        ''' 在这个函数中,需要完成的就是这两种突变的发生
+        ''' </remarks>
         Private Iterator Function evolIterate(i%) As IEnumerable(Of Chr)
-            Dim chromosome As Chr = Population(i)
-            Dim mutated As Chr = chromosome.Mutate()   ' 突变
+            Dim chromosome As Chr = population(i)
+            Dim mutated As Chr = chromosome.Mutate()
             Dim rnd As Random = seeds()
-            Dim otherChromosome As Chr = Population.Random(rnd)  ' 突变体和其他个体随机杂交
-            Dim crossovered As IList(Of Chr) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
+            Dim otherChromosome As Chr = population.Random(rnd)
+            Dim crossovered As IEnumerable(Of Chr) = mutated.Crossover(otherChromosome)
 
-            ' --------- 新修改的
-            otherChromosome = Population.Random(rnd)
+            otherChromosome = population.Random(rnd)
             crossovered = crossovered.Join(chromosome.Crossover(otherChromosome))
-            ' ---------
 
             Yield mutated
 
@@ -192,10 +215,25 @@ Namespace Darwinism.GAF
             Next
         End Function
 
+        ''' <summary>
+        ''' 调用这个函数的代码应该是非并行的
+        ''' </summary>
+        ''' <param name="chromosome"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
-            Return chromosomesComparator.Calculate(chromosome)
+            Return chromosomesComparator.Calculate(chromosome, parallel:=True)
         End Function
+
+        ''' <summary>
+        ''' 更新种群中的每一个个体的突变变异程度
+        ''' </summary>
+        ''' <param name="newRate"></param>
+        Public Sub UpdateMutationRate(newRate As Double)
+            For i As Integer = 0 To population.Size - 1
+                population(i).MutationRate = newRate
+            Next
+        End Sub
 
         ''' <summary>
         ''' Clear the internal cache

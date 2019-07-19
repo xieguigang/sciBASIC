@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d40809643d92cc17a0d8def94e6640ca, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\vbnet.vb"
+﻿#Region "Microsoft.VisualBasic::a69aafc7e68b530d3d920e4c7a11b6a4, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\vbnet.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.IO.Compression
-Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace FileStream
@@ -58,7 +58,7 @@ Namespace FileStream
         ''' <returns></returns>
         Public Shared Function Load(vbnet$) As NetworkTables
             Dim tmp = App.GetAppSysTempFile(, sessionID:=App.PID)
-            Call ZipLib.ImprovedExtractToDirectory(vbnet, tmp, Overwrite.Always)
+            Call UnZip.ImprovedExtractToDirectory(vbnet, tmp, Overwrite.Always)
             Return NetworkTables.Load(tmp)
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f5621b4e5556f6cbc4f27f4ce3d77b6, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\API.vb"
+﻿#Region "Microsoft.VisualBasic::6016951a6b4aae9d931bc139a1a4cd19, CommandLine\InteropService\SharedORM\API.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -82,7 +83,15 @@ Namespace CommandLine.InteropService.SharedORM
             Dim params As NamedValue(Of String)()
 
             Try
-                params = arguments.BuildArguments(optionals, booleans)
+                With arguments.BuildArguments(optionals, booleans)
+                    If .ByRef Like GetType(NamedValue(Of String)) Then
+                        params = {
+                            .TryCast(Of NamedValue(Of String))
+                        }
+                    Else
+                        params = .TryCast(Of NamedValue(Of String)())
+                    End If
+                End With
             Catch ex As Exception
                 Dim msg$ = $"Invalid commandline usage({usage})!" & vbCrLf & vbCrLf
                 Dim details = New Dictionary(Of String, String()) From {
@@ -99,7 +108,10 @@ Namespace CommandLine.InteropService.SharedORM
             Dim model As New CommandLine With {
                 .Name = name,
                 .__arguments = params.AsList,
-                .BoolFlags = booleans.Select(AddressOf LCase).ToArray,
+                .BoolFlags = booleans _
+                    .SafeQuery _
+                    .Select(AddressOf LCase) _
+                    .ToArray,
                 .cliCommandArgvs = usage
             }
 
@@ -114,7 +126,15 @@ Namespace CommandLine.InteropService.SharedORM
         ''' <param name="booleans$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function BuildArguments(args$(), optionals$(), ByRef booleans$()) As NamedValue(Of String)()
+        Public Function BuildArguments(args$(), optionals$(), ByRef booleans$()) As [Variant](Of NamedValue(Of String)(), NamedValue(Of String))
+            If args.Length = 1 Then
+                ' 类似于 /command term 这样子的情况
+                Return New NamedValue(Of String) With {
+                    .Name = Nothing,
+                    .Value = args(Scan0)
+                }
+            End If
+
             Dim out As List(Of NamedValue(Of String)) = args _
                 .Split(2) _
                 .Select(Function(a)
@@ -130,7 +150,7 @@ Namespace CommandLine.InteropService.SharedORM
                 .CreateParameterValues(False, note:=NameOf(optionals)) _
                 .ToArray
 
-            Return out
+            Return out.ToArray
         End Function
 
         <Extension>

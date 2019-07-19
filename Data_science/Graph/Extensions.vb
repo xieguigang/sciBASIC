@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4775eeb963a155e09574c94ee0fa5705, Data_science\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::643cf195e33532960ca3136a4d1eb265, Data_science\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     ''' <summary>
     ''' Visit tree node by a given path token
@@ -74,6 +74,12 @@ Public Module Extensions
         Return node
     End Function
 
+    ''' <summary>
+    ''' Travel to root node from current tree node.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="tree"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function BacktrackingRoot(Of T)(tree As Tree(Of T)) As Tree(Of T)
         Do While Not tree.IsRoot
@@ -83,12 +89,27 @@ Public Module Extensions
         Return tree
     End Function
 
+    ''' <summary>
+    ''' Inline extension of function calls <see cref="Add(Of T, K)(Graph, Tree(Of T, K))"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="K"></typeparam>
+    ''' <param name="tree"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function CreateGraph(Of T, K)(tree As Tree(Of T, K)) As Graph
         Return New Graph().Add(tree)
     End Function
 
+    ''' <summary>
+    ''' Convert a tree to graph
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="K"></typeparam>
+    ''' <param name="g"></param>
+    ''' <param name="tree"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function Add(Of T, K)(g As Graph, tree As Tree(Of T, K)) As Graph
         Dim childs = tree _
@@ -118,12 +139,12 @@ Public Module Extensions
         Return New VertexEdge With {
             .U = edge.V,
             .V = edge.U,
-            .Weight = edge.Weight
+            .weight = edge.weight
         }
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Generate 2D grid data model by a given [x,y] range value.
     ''' </summary>
     ''' <param name="xy"></param>
     ''' <param name="steps">如果这个参数为空的话，默认分为50份</param>

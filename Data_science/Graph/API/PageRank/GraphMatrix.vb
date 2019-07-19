@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c8ea1c76e5d42c37f3a1836336c23b8, Data_science\Graph\API\PageRank\GraphMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::3ceefbd1a13e126eb20d284064cee627, Data_science\Graph\API\PageRank\GraphMatrix.vb"
 
     ' Author:
     ' 
@@ -92,7 +92,7 @@ Namespace Analysis.PageRank
             Dim uid$
 
             For Each edge As VertexEdge In edges
-                uid = edge.Key
+                uid = edge.ID
 
                 If Not counts.ContainsKey(uid) Then
                     Call counts.Add(uid, (edge, 1))

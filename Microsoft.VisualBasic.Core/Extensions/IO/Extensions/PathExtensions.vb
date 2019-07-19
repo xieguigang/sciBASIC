@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31f6f271dc682f2d4497fac16d1ef8ce, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4f5d0dea545dc27fb96d0c4b194c8f5d, Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -1082,15 +1082,12 @@ Public Module PathExtensions
     ''' <returns></returns>
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimSuffix(file As String) As String
-        Try
-            Dim path$ = file.FixPath.TrimEnd("/"c, "\"c)
-            Dim fileInfo = FileIO.FileSystem.GetFileInfo(path$)
-            Dim Name As String = BaseName(fileInfo.FullName)
-            Return $"{fileInfo.Directory.FullName}/{Name}"
-        Catch ex As Exception
-            ex = New Exception($"{NameOf(file)} --> {file}", ex)
-            Throw ex
-        End Try
+        Dim tokens$() = file.Replace("\"c, "/"c).Split("/"c)
+        Dim fileNameTokens = tokens.Last.Split("."c)
+        Dim directory = tokens.Take(tokens.Length - 1).JoinBy("/")
+        Dim fileName$ = fileNameTokens.Take(fileNameTokens.Length - 1).JoinBy(".")
+
+        Return $"{directory}/{fileName}"
     End Function
 
     ''' <summary>

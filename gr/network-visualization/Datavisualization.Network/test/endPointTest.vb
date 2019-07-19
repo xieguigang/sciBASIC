@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d97b2cc76da548e5009ac1d807022da1, gr\network-visualization\Datavisualization.Network\test\endPointTest.vb"
+﻿#Region "Microsoft.VisualBasic::13e99a2aaa102db3432cf23086cc4a88, gr\network-visualization\Datavisualization.Network\test\endPointTest.vb"
 
     ' Author:
     ' 
@@ -39,20 +39,23 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+
 Module endPointTest
 
     Sub Main()
-        'Dim g = ExampleNetwork()
+        Dim g = ExampleNetwork()
 
 
-        'For Each subNet In g.IteratesSubNetworks
+        For Each subNet In g.IteratesSubNetworks(Of NetworkGraph)
 
-        '    Dim endPoints = subNet.EndPoints
+            Dim endPoints = subNet.EndPoints
 
-        '    Pause()
+            Pause()
 
-        'Next
+        Next
 
-        'Pause()
+        Pause()
     End Sub
 End Module

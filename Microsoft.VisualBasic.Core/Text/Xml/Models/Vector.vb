@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6258798671bb245e0a692469a3b5627e, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::4f0214ae618650f3a99c95a879d49d42, Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -35,13 +35,13 @@
     ' 
     '         Properties: Length, name, vector
     ' 
-    '         Function: SequenceEqual, ToString
+    '         Function: GenericEnumerator, GetEnumerator, SequenceEqual, ToString
     ' 
     '     Class TermsVector
     ' 
     '         Properties: terms
     ' 
-    '         Function: ToString
+    '         Function: GenericEnumerator, GetEnumerator, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,6 +50,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Text.Xml.Models
@@ -57,9 +58,18 @@ Namespace Text.Xml.Models
     ''' <summary>
     ''' A <see cref="Double"/> type numeric sequence container
     ''' </summary>
-    <XmlType("numerics")> Public Class NumericVector
+    <XmlType("numerics")>
+    Public Class NumericVector : Implements Enumeration(Of Double)
 
+        ''' <summary>
+        ''' 可以用这个属性来简单的标记这个向量所属的对象名称
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property name As String
+        ''' <summary>
+        ''' 存储于XML文档之中的数据向量
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property vector As Double()
 
         ''' <summary>
@@ -102,6 +112,14 @@ Namespace Text.Xml.Models
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(v As Integer()) As NumericVector
+            Return New NumericVector With {
+                .name = "NULL",
+                .vector = v.Select(Function(x) CDbl(x)).ToArray
+            }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(v As NumericVector) As Double()
             Return v.vector
         End Operator
@@ -110,15 +128,31 @@ Namespace Text.Xml.Models
         Public Function SequenceEqual(input() As Double) As Boolean
             Return vector.SequenceEqual(input)
         End Function
+
+        Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
+            Return vector.AsEnumerable.GetEnumerator
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
+            Yield GenericEnumerator()
+        End Function
     End Class
 
-    Public Class TermsVector
+    Public Class TermsVector : Implements Enumeration(Of Double)
 
         <XmlAttribute>
         Public Property terms As String()
 
         Public Overrides Function ToString() As String
             Return terms.GetJson
+        End Function
+
+        Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
+            Return terms.AsEnumerable.GetEnumerator
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
+            Yield GenericEnumerator()
         End Function
     End Class
 End Namespace

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-16"?>
+<layer xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" size="5" id="output">
+  <activation name="SigmoidFunction" />
+  <neuron>33B</neuron>
+  <neuron>33C</neuron>
+  <neuron>33D</neuron>
+  <neuron>33E</neuron>
+  <neuron>33F</neuron>
+</layer>

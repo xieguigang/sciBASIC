@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b159f1c94a8213718d5184faa947479, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::dc7756339c69f92d177f5c55ae477242, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
+Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NamesOf
 
 Namespace FileStream
 
@@ -94,49 +94,63 @@ Namespace FileStream
         ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
         ''' </summary>
         ''' <param name="g"></param>
+        ''' <param name="properties">
+        ''' The data property names of nodes and edges.
+        ''' </param>
         ''' <returns></returns>
-        <Extension> Public Function Tabular(g As NetworkGraph, Optional properties$() = Nothing) As NetworkTables
+        <Extension> Public Function Tabular(g As NetworkGraph, Optional properties$() = Nothing, Optional is2D As Boolean = True) As NetworkTables
             Dim nodes As New List(Of Node)
             Dim edges As New List(Of NetworkEdge)
 
-            For Each n In g.nodes
+            For Each n As Graph.Node In g.vertex
                 Dim data As New Dictionary(Of String, String)
 
-                If Not n.Data.initialPostion Is Nothing Then
+                If Not n.data.initialPostion Is Nothing Then
                     ' skip coordination information when no layout data.
-                    data("x") = n.Data.initialPostion.x
-                    data("y") = n.Data.initialPostion.y
-                    ' data("z") = n.Data.initialPostion.z
+                    data("x") = n.data.initialPostion.x
+                    data("y") = n.data.initialPostion.y
+
+                    If Not is2D Then
+                        data("z") = n.data.initialPostion.z
+                    End If
                 End If
 
                 If Not properties Is Nothing Then
-                    For Each key As String In properties
-                        data(key) = n.Data(key)
+                    For Each key As String In properties.Where(Function(p) n.data.HasProperty(p))
+                        data(key) = n.data(key)
                     Next
                 End If
 
                 nodes += New Node With {
                     .ID = n.Label,
-                    .NodeType = n.Data(names.REFLECTION_ID_MAPPING_NODETYPE),
+                    .NodeType = n.data(names.REFLECTION_ID_MAPPING_NODETYPE),
                     .Properties = data
                 }
             Next
 
-            For Each l As Edge In g.edges
+            For Each l As Edge In g.graphEdges
                 edges += New NetworkEdge With {
                     .FromNode = l.U.Label,
                     .ToNode = l.V.Label,
-                    .Interaction = l.Data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
-                    .value = l.Weight,
+                    .Interaction = l.data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
+                    .value = l.weight,
                     .Properties = New Dictionary(Of String, String) From {
-                        {NameOf(EdgeData.label), l.Data.label}
+                        {NameOf(EdgeData.label), l.data.label}
                     }
                 }
+
+                With edges.Last
+                    If Not properties Is Nothing Then
+                        For Each key As String In properties.Where(Function(p) l.data.HasProperty(p))
+                            .ItemValue(key) = l.data(key)
+                        Next
+                    End If
+                End With
             Next
 
             Return New NetworkTables With {
-                .Edges = edges,
-                .Nodes = nodes
+                .edges = edges,
+                .nodes = nodes
             }
         End Function
 
@@ -159,13 +173,13 @@ Namespace FileStream
         ''' <returns></returns>
         <Extension>
         Public Function ScaleRadius(ByRef graph As NetworkGraph, range As DoubleRange) As NetworkGraph
-            Dim nodes = graph.nodes.ToArray
+            Dim nodes = graph.vertex.ToArray
             Dim r#() = nodes _
-                .Select(Function(x) CDbl(x.Data.radius)) _
+                .Select(Function(x) CDbl(x.data.radius)) _
                 .RangeTransform(range)
 
             For i As Integer = 0 To nodes.Length - 1
-                nodes(i).Data.radius = r#(i)
+                nodes(i).data.radius = r#(i)
             Next
 
             Return graph
@@ -186,11 +200,11 @@ Namespace FileStream
             Select Case method
                 Case NameOf(Enumerable.Average)
                     orderProvider = Function(g)
-                                        Return Aggregate x In g Into Average(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
+                                        Return Aggregate x In g Into Average(Val(x.data(names.REFLECTION_ID_MAPPING_DEGREE)))
                                     End Function
                 Case NameOf(Enumerable.Sum)
                     orderProvider = Function(g)
-                                        Return Aggregate x In g Into Sum(Val(x.Data(names.REFLECTION_ID_MAPPING_DEGREE)))
+                                        Return Aggregate x In g Into Sum(Val(x.data(names.REFLECTION_ID_MAPPING_DEGREE)))
                                     End Function
             End Select
 
@@ -228,13 +242,13 @@ Namespace FileStream
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
  _
                 From n As Node
-                In net.Nodes
+                In net.nodes
                 Let id = n.ID
                 Let pos As AbstractVector = New FDGVector2(Val(n("x")), Val(n("y")))
                 Let c As Brush = nodeColor(n)
                 Let r As Single = getRadius(node:=n)
                 Let data As NodeData = New NodeData With {
-                    .Color = c,
+                    .color = c,
                     .radius = r,
                     .Properties = New Dictionary(Of String, String) From {
                         {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType},
@@ -251,7 +265,7 @@ Namespace FileStream
             Dim edges As Edge() =
  _
                 LinqAPI.Exec(Of Edge) <= From edge As NetworkEdge
-                                         In net.Edges
+                                         In net.edges
                                          Let a = nodeTable(edge.FromNode)
                                          Let b = nodeTable(edge.ToNode)
                                          Let id = edge.GetNullDirectedGuid
@@ -262,10 +276,7 @@ Namespace FileStream
                                          }
                                          Select New Edge(id, a, b, data)
 
-            Dim graph As New NetworkGraph With {
-                .nodes = New List(Of Graph.Node)(nodes),
-                .edges = New List(Of Edge)(edges)
-            }
+            Dim graph As New NetworkGraph(nodes, edges)
             Return graph
         End Function
 
@@ -309,7 +320,7 @@ Namespace FileStream
                                                    Let r = If(n.Degree <= 4, 4, n.Degree) * 5
                                                    Let nd As NodeData = New NodeData With {
                                                        .radius = r,
-                                                       .Color = New SolidBrush(randColor())
+                                                       .color = New SolidBrush(randColor())
                                                    }
                                                    Select New Graph.Node(n.name, nd)
 
@@ -325,10 +336,7 @@ Namespace FileStream
                                                  geNodes(0),
                                                  geNodes(1),
                                                  New EdgeData)
-            Return New NetworkGraph With {
-                .edges = gEdges,
-                .nodes = gNodes
-            }
+            Return New NetworkGraph(gNodes, gEdges)
         End Function
 
         ''' <summary>
@@ -343,8 +351,8 @@ Namespace FileStream
                 Call g.ComputeNodeDegrees
             End If
 
-            For Each node In g.nodes
-                node.Data.radius = Val(node.Data!degree)
+            For Each node In g.vertex
+                node.data.radius = Val(node.data!degree)
             Next
 
             Return g
@@ -359,7 +367,7 @@ Namespace FileStream
         <Extension>
         Public Function RemovesByDegreeQuantile(net As NetworkTables, Optional quantile# = 0.1, Optional ByRef removeIDs$() = Nothing) As NetworkTables
             Dim qCut& = net _
-                .Nodes _
+                .nodes _
                 .Select(Function(n) n(names.REFLECTION_ID_MAPPING_DEGREE)) _
                 .Select(Function(d) CLng(Val(d))) _
                 .GKQuantile() _
@@ -400,7 +408,7 @@ Namespace FileStream
             Dim key$ = cutoff.Name
             Dim threshold# = cutoff.Value
 
-            For Each node As Node In net.Nodes
+            For Each node As Node In net.nodes
                 Dim ndg# = Val(node(key))
 
                 If ndg > threshold Then
@@ -423,7 +431,7 @@ Namespace FileStream
             Dim edges As New List(Of NetworkEdge)
             Dim index As New Index(Of String)(removes)
 
-            For Each edge As NetworkEdge In net.Edges
+            For Each edge As NetworkEdge In net.edges
 
                 ' 如果边之中的任意一个节点被包含在index里面，
                 ' 即有小于cutoff值的节点， 则不会被添加
@@ -434,8 +442,8 @@ Namespace FileStream
             Next
 
             Return New NetworkTables With {
-                .Edges = edges,
-                .Nodes = nodes
+                .edges = edges,
+                .nodes = nodes
             }
         End Function
     End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eab47dc0b9a749175d8c28e7842215b8, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::8d40999bb194fba65a645c5d5d83c4c6, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Edge
     ' 
-    '         Properties: __source, __target, Data, Directed, ID
+    '         Properties: __source, __target, data, ID, isDirected
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
@@ -91,28 +91,29 @@ Namespace Graph
         Implements IInteraction
         Implements IGraphValueContainer(Of EdgeData)
 
-        Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
-            ID = iId
-            U = iSource
-            V = iTarget
-            Data = If(iData, New EdgeData())
-            Directed = False
-        End Sub
+        Dim uniqueID As String = Nothing
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New()
-            Call Me.New(Nothing, Nothing, Nothing, Nothing)
-        End Sub
+        ''' <summary>
+        ''' 如果什么也不赋值，则默认自动根据node编号来生成唯一id
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Property ID As String
+            Get
+                If uniqueID.StringEmpty Then
+                    Return MyBase.ID
+                Else
+                    Return uniqueID
+                End If
+            End Get
+            Set(value As String)
+                uniqueID = value
+            End Set
+        End Property
 
-        Public Property ID() As String
-        Public Property Data() As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).Data
-        Public Property Directed() As Boolean
+        Public Property data As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).data
+        Public Property isDirected As Boolean
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function ToString() As String
-            Return ID
-        End Function
-
+#Region "Implements IInteraction"
         Private Property __source As String Implements IInteraction.source
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -132,6 +133,25 @@ Namespace Graph
                 Throw New NotImplementedException()
             End Set
         End Property
+#End Region
+
+        Public Sub New(id As String, source As Node, target As Node, Optional data As EdgeData = Nothing)
+            Me.ID = id
+            U = source
+            V = target
+            Me.data = If(data, New EdgeData())
+            isDirected = False
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New()
+            Call Me.New(Nothing, Nothing, Nothing, Nothing)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return ID
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetHashCode() As Integer
