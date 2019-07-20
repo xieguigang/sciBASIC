@@ -41,3 +41,34 @@ pub mod trigonometric {
         return atn(x, 500) + 2.0 * Atn(1.0, 500);
     }
 }
+
+struct Point {
+    x: f64,
+    y: f64,
+}
+
+/// an "inherent impl" block defines the methods available directly on a type
+impl Point {
+
+    /// this method is available on any Point, and automatically borrows the
+    /// Point value
+    fn to_string(&self) -> String { 
+        return std::fmt("[{}, {}]", self.x, self.y);
+    }
+
+    fn len(&self) -> f64 {
+        let magnitude = (self.x * self.x + self.y * self.y);
+        let distToZERO = magnitude.sqrt();
+
+        return distToZERO;
+    }
+
+    fn distanceTo(&self, b: &mut Point) -> f64 {
+        let x = self.x - b.x;
+        let y = self.y - b.y;
+        let magnitude = (x * x + y * y);
+        let dist = magnitude.sqrt();
+
+        return dist;
+    }
+}
