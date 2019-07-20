@@ -50,7 +50,6 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class GridMatrix : Inherits XmlDataModel
