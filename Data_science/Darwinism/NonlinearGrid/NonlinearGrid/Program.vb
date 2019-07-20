@@ -132,6 +132,24 @@ Module Program
         Return 0
     End Function
 
+    <ExportAPI("/validates.ROC")>
+    <Usage("/validates.ROC /validates <fittingValitation.csv> [/out <output.csv>]")>
+    Public Function ValidationROC(args As CommandLine) As Integer
+        Dim outputResult$ = args("/validates")
+        Dim out$ = args("/out") Or (outputResult.TrimSuffix & ".validation_ROC.csv")
+        Dim result = outputResult.LoadCsv(Of FittingValidation)
+        Dim ROC = result.ROC _
+            .Select(Function(d)
+                        Return New IO.DataSet With {
+                            .ID = d.Threshold,
+                            .Properties = d.ToDataSet
+                        }
+                    End Function) _
+            .ToArray
+
+        Return ROC.SaveTo(out).CLICode
+    End Function
+
     <ExportAPI("/validates")>
     <Usage("/validates /in <model.Xml> /data <trainingSet.Xml> [/order <asc/desc> /out <out.csv>]")>
     <Description("Do model validations.")>

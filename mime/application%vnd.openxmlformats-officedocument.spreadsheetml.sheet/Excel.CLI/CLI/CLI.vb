@@ -137,7 +137,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
     <ExportAPI("/rbind")>
     <Description("Row bind(merge tables directly) of the csv tables")>
-    <Usage("/rbind /in <*.csv.DIR> [/out <EXPORT.csv>]")>
+    <Usage("/rbind /in <*.csv.DIR> [/order_by <column_name> /out <EXPORT.csv>]")>
     <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
               Description:="A directory path that contains csv files that will be merge into one file directly.")>
     <Group(Program.CsvTools)>
@@ -145,6 +145,14 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Dim [in] As String = args("/in")
         Dim out$ = args("/out") Or ([in].Split("*"c).First.TrimDIR & ".rbind.csv")
         Dim source$()
+        Dim order_by$ = args("/order_by")
+        Dim orderMethod As Func(Of Dictionary(Of String, String), Double) = Nothing
+
+        If Not order_by.StringEmpty Then
+            orderMethod = Function(propData)
+                              Return Val(propData(order_by).Select(AddressOf AscW).JoinBy(""))
+                          End Function
+        End If
 
         If InStr([in], "*") > 0 Then
             Dim t$() = [in].Split("*"c)
@@ -159,7 +167,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         End If
 
         Return source _
-            .DirectAppends(EXPORT:=out) _
+            .DirectAppends(EXPORT:=out, orderBy:=orderMethod) _
             .CLICode
     End Function
 
