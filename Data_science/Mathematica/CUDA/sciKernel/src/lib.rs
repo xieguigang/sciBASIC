@@ -1,6 +1,6 @@
 #[no_mangle]
-pub extern fn pearson(x: Vec<f64>, y: Vec<f64>) -> f64 {
-    let n: usize = x.len();
+pub extern fn pearson(x: &[f64], y: &[f64], size: i32) -> f64 {
+    let n : usize = size as usize;
     let mut yt: f64;
     let mut xt: f64;
     let mut syy = 0.0;

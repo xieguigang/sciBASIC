@@ -2,7 +2,7 @@
 
 Module App
 
-    Public Declare Function GetPearson Lib "sciKernel.dll" Alias "pearson" (x As Double(), y As Double()) As Double
+    Public Declare Function GetPearson Lib "sciKernel.dll" Alias "pearson" (ByRef x As Double(), ByRef y As Double()) As Double
 
     Sub Main()
         Dim x As Double() = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
