@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cdec5721aa1408d7d39aa55ce6cf26f, Microsoft.VisualBasic.Core\Net\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::57c15c7a6904d026effc96807ea2f0e2, Net\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: ContentTypes, SuffixTable, UnknownType
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __loadContents
+    '         Function: loadContents
     ' 
     ' 
     ' /********************************************************************************/

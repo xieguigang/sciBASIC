@@ -57,15 +57,15 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <summary>
     ''' Gets the graphics source
     ''' </summary>
-    Protected __graphicsProvider As Func(Of Graphics)
+    Protected graphicsProvider As Func(Of Graphics)
     ''' <summary>
     ''' gets the graphics region for the projections: <see cref="GraphToScreen"/> and <see cref="ScreenToGraph"/>
     ''' </summary>
-    Protected __regionProvider As Func(Of Rectangle)
+    Protected regionProvider As Func(Of Rectangle)
 
     Public ReadOnly Property ClientRegion As Rectangle
         Get
-            Return __regionProvider()
+            Return regionProvider()
         End Get
     End Property
 
@@ -79,8 +79,9 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <param name="iForceDirected"></param>
     Public Sub New(canvas As Func(Of Graphics), regionProvider As Func(Of Rectangle), iForceDirected As IForceDirected)
         MyBase.New(iForceDirected)
-        __graphicsProvider = canvas
-        __regionProvider = regionProvider
+
+        Me.graphicsProvider = canvas
+        Me.regionProvider = regionProvider
 
         ' using cache
         Dim ws As New Dictionary(Of Edge, Single)
@@ -94,9 +95,9 @@ Public Class Renderer : Inherits AbstractRenderer
         For Each n As Node In iForceDirected.graph.vertex
             Dim r As Single = n.data.radius
             If r = 0! Then
-                r = If(n.data.Neighborhoods < 30,
-                    n.data.Neighborhoods * 9,
-                    n.data.Neighborhoods * 7)
+                r = If(n.data.neighborhoods < 30,
+                    n.data.neighborhoods * 9,
+                    n.data.neighborhoods * 7)
                 r = If(r = 0, 20, r)
             End If
             Call nr.Add(n, r)
@@ -109,15 +110,15 @@ Public Class Renderer : Inherits AbstractRenderer
     Public Property ZeroFilter As Boolean = True
 
     Public Overrides Sub DirectDraw()
-        forceDirected.EachEdge(AddressOf __invokeEdgeDraw)
+        forceDirected.EachEdge(AddressOf doEdgeDrawing)
         forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
     End Sub
 
-    Protected Sub __invokeEdgeDraw(edge As Edge, spring As Spring)
+    Protected Sub doEdgeDrawing(edge As Edge, spring As Spring)
         If ZeroFilter Then
-            If (edge.U.Data.radius < 0.6 OrElse edge.V.Data.radius < 0.6) Then
+            If (edge.U.data.radius < 0.6 OrElse edge.V.data.radius < 0.6) Then
                 Return
-            ElseIf edge.u.Data.radius > 500 OrElse edge.v.Data.radius > 500 Then
+            ElseIf edge.U.data.radius > 500 OrElse edge.V.data.radius > 500 Then
                 Return
             End If
         End If
@@ -153,7 +154,7 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <returns></returns>
     Public Function ScreenToGraph(iScreenPos As Point) As FDGVector2
         Dim retVec As New FDGVector2()
-        Dim rect = __regionProvider()
+        Dim rect = regionProvider()
         retVec.x = CSng(iScreenPos.X) - (CSng(rect.Right - rect.Left) / 2.0F)
         retVec.y = CSng(iScreenPos.Y) - (CSng(rect.Bottom - rect.Top) / 2.0F)
         Return retVec
@@ -169,10 +170,10 @@ Public Class Renderer : Inherits AbstractRenderer
     Protected radiushash As IReadOnlyDictionary(Of Node, Single)
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
-        Dim rect As Rectangle = __regionProvider()
+        Dim rect As Rectangle = regionProvider()
         Dim pos1 As Point = GraphToScreen(TryCast(iPosition1, FDGVector2), rect)
         Dim pos2 As Point = GraphToScreen(TryCast(iPosition2, FDGVector2), rect)
-        Dim canvas As Graphics = __graphicsProvider()
+        Dim canvas As Graphics = graphicsProvider()
 
         SyncLock canvas
             Dim w As Single = widthHash(iEdge)
@@ -183,15 +184,16 @@ Public Class Renderer : Inherits AbstractRenderer
                 pos1.X,
                 pos1.Y,
                 pos2.X,
-                pos2.Y)
+                pos2.Y
+            )
         End SyncLock
     End Sub
 
     Public Property Font As Font = New Font(FontFace.SegoeUI, 6, FontStyle.Regular)
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
-        Dim pos As Point = GraphToScreen(TryCast(iPosition, FDGVector2), __regionProvider())
-        Dim canvas As Graphics = __graphicsProvider()
+        Dim pos As Point = GraphToScreen(TryCast(iPosition, FDGVector2), regionProvider())
+        Dim canvas As Graphics = graphicsProvider()
 
         SyncLock canvas
             Dim r As Single = radiushash(n)

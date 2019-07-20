@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a55db275422fac8c7cd30fc5b1d99117, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\EventProc.vb"
+﻿#Region "Microsoft.VisualBasic::a55db275422fac8c7cd30fc5b1d99117, ApplicationServices\Terminal\Utility\EventProc.vb"
 
     ' Author:
     ' 

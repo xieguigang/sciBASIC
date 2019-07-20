@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1101c126e3ee0249053f169381f8ded5, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::7dab08e9c49cb049fcd68b14fbb2cbd0, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
 ' Author:
 ' 
@@ -33,13 +33,13 @@
 
 '     Class GeneticAlgorithm
 ' 
-'         Properties: Best, Fitness, ParentChromosomesSurviveCount, Population, Worst
+'         Properties: Best, ParentChromosomesSurviveCount, Worst
 ' 
 '         Constructor: (+1 Overloads) Sub New
 ' 
 '         Function: evolIterate, GetFitness
 ' 
-'         Sub: Clear, Evolve
+'         Sub: Clear, Evolve, UpdateMutationRate
 ' 
 ' 
 ' /********************************************************************************/
@@ -65,6 +65,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.ReplacementStrategy
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
@@ -87,6 +88,7 @@ Namespace Darwinism.GAF
         ''' 所以在这里不可以加readonly修饰
         ''' </summary>
         Dim population As Population(Of Chr)
+        Dim popStrategy As IStrategy(Of Chr)
 
         Public ReadOnly Property Best As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -122,7 +124,11 @@ Namespace Darwinism.GAF
         ''' <param name="cacheSize">
         ''' -1 means no cache
         ''' </param>
-        Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing, Optional cacheSize% = 10000)
+        Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr),
+                       Optional replacementStrategy As Strategies = Strategies.Naive,
+                       Optional seeds As IRandomSeeds = Nothing,
+                       Optional cacheSize% = 10000)
+
             Me.population = population
             Me.seeds = seeds Or randfSeeds
 
@@ -133,6 +139,7 @@ Namespace Darwinism.GAF
             End If
 
             Me.population.SortPopulationByFitness(Me, chromosomesComparator)
+            Me.popStrategy = replacementStrategy.GetStrategy(Of Chr)
 
             If population.parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
@@ -146,7 +153,8 @@ Namespace Darwinism.GAF
             Dim i% = 0
             Dim parentPopulationSize As Integer = population.Size
             Dim newPopulation As New Population(Of Chr)(population.Pcompute) With {
-                .parallel = population.parallel
+                .parallel = population.parallel,
+                .initialSize = population.initialSize
             }
 
             Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)
@@ -172,9 +180,9 @@ Namespace Darwinism.GAF
             ' 错误率最大的种群排在后面
             ' 然后对种群进行裁剪,将错误率比较大的种群删除
             ' 从而实现了择优进化, 即程序模型对我们的训练数据集产生了学习
-            newPopulation.SortPopulationByFitness(Me, chromosomesComparator) ' 通过fitness排序来进行择优
-            newPopulation.Trim(parentPopulationSize)                         ' 剪裁掉后面的对象，达到淘汰的效果
-            population = newPopulation                                       ' 新种群替代旧的种群
+
+            ' 新种群替代旧的种群
+            population = popStrategy.newPopulation(newPopulation, Me)
         End Sub
 
         ''' <summary>
@@ -207,9 +215,14 @@ Namespace Darwinism.GAF
             Next
         End Function
 
+        ''' <summary>
+        ''' 调用这个函数的代码应该是非并行的
+        ''' </summary>
+        ''' <param name="chromosome"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
-            Return chromosomesComparator.Calculate(chromosome)
+            Return chromosomesComparator.Calculate(chromosome, parallel:=True)
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c71009e0225d2870c29d8c5d2d8dfd81, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Threshold.vb"
+﻿#Region "Microsoft.VisualBasic::a20051ab27c55b1616c1f2d77979d508, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\Threshold.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Store
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: [Function], Derivative, Derivative2, ToString
+    '         Function: [Function], CalculateDerivative, Derivative, ToString
     ' 
     ' 
     ' /********************************************************************************/

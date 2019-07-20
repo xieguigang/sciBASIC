@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::838f076db36740c3fe6d736304358f57, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\SigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::d3f9c219c2f6cc5d6f74421f62d0b979, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\SigmoidFunction.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Store
     ' 
-    '         Function: [Function], Derivative, Derivative2, ToString
+    '         Function: [Function], Derivative, ToString
     ' 
     ' 
     ' /********************************************************************************/

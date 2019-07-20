@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d4e54840cc150fbe1a372e269efabcd, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
+﻿#Region "Microsoft.VisualBasic::21b9b51d5d48f125373ce6cd24bdbc60, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module IntegralLoader
     ' 
-    '         Function: createNeuronBuckets, createNeurons, LoadModel
+    '         Function: addLink, createNeuronBuckets, createNeurons, LoadModel
     '         Class neuronLoader
     ' 
     ' 

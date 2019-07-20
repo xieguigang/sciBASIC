@@ -1,4 +1,51 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::43e9203dcfedb3e14e9a3f052533d2a7, gr\avi\AVIStream.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class AVIStream
+    ' 
+    '     Properties: fps, frames, height, width
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: writeDataBuffer, writeHeaderBuffer
+    ' 
+    '     Sub: (+2 Overloads) addFrame, addRGBFrame
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
@@ -57,7 +104,7 @@ Public Class AVIStream
     ''' <param name="idx">the stream index</param>
     ''' <param name="dataOffset">the offset of the stream data from the beginning of the file</param>
     ''' <returns></returns>
-    Public Function writeHeaderBuffer(stream As UInt8Array, idx%, dataOffset%) As Integer
+    Public Function writeHeaderBuffer(stream As UInt8Array, idx%, dataOffset As Long) As Integer
         Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
 
         If hexIdx = "db" Then hexIdx = "0" & hexIdx
@@ -109,10 +156,11 @@ Public Class AVIStream
         stream.writeLong(144, dataOffset)               ' data offset
         stream.writeInt(152, 0)                         ' reserved
 
-        Dim offset = 0
+        Dim offset As Long = 0
 
         For i As Integer = 0 To Me.frames.Count - 1            ' index entries
-            stream.writeInt(156 + i * 8, offset)               ' offset
+            ' 原先这里是writeInt，但是大文件溢出了
+            stream.writeLong(156 + i * 8, offset)              ' offset
             stream.writeInt(160 + i * 8, frames(i).length + 8) ' size
 
             offset += Me.frames(i).length + 8
@@ -126,8 +174,8 @@ Public Class AVIStream
     ''' </summary>
     ''' <param name="idx">the stream index</param>
     ''' <returns></returns>
-    Public Function writeDataBuffer(buf As UInt8Array, idx As Integer) As Integer
-        Dim len = 0
+    Public Function writeDataBuffer(buf As UInt8Array, idx As Integer) As Long
+        Dim len& = 0
         Dim hexIdx = idx.ToHexString.TrimStart("0"c) & "db"
 
         If hexIdx = "db" Then hexIdx = "0" & hexIdx
@@ -135,10 +183,10 @@ Public Class AVIStream
 
         For i As Integer = 0 To Me.frames.Count - 1
             buf.writeString(len, hexIdx)
-            buf.writeInt(len + 4, frames(i).Length)
+            buf.writeInt(len + 4, frames(i).length)
             buf.writeBytes(len + 8, frames(i))
 
-            len += frames(i).Length + 8
+            len += frames(i).length + 8
         Next
 
         Return len

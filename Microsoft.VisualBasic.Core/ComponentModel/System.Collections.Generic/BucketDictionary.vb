@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3833795011a6ed46058df56330aca07e, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::3833795011a6ed46058df56330aca07e, ComponentModel\System.Collections.Generic\BucketDictionary.vb"
 
     ' Author:
     ' 

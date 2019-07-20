@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29a9366500996532fe82cc1072f8675c, Microsoft.VisualBasic.Core\ApplicationServices\Tools\WinForm\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::29a9366500996532fe82cc1072f8675c, ApplicationServices\Tools\WinForm\Extensions.vb"
 
     ' Author:
     ' 

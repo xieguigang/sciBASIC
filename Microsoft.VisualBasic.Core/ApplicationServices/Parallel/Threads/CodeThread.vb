@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e100823622f774acbd1bd5233f9a410, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\CodeThread.vb"
+﻿#Region "Microsoft.VisualBasic::8e100823622f774acbd1bd5233f9a410, ApplicationServices\Parallel\Threads\CodeThread.vb"
 
     ' Author:
     ' 

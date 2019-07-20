@@ -1,45 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::e9f7722af6ea456d94954a9fbb99686d, CLI_tools\ANN\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::c360afb37bee4cb321bbb8963cb93f79, CLI_tools\ANN\CLI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module CLI
-' 
-'     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, ExportValueFrames
-'               ListActiveFunction, MinErrorSnapshot, NormalizeSampleDebugger, ROCData, runTrainingCommon
-'               Train
-' 
-'     Sub: SummaryDebuggerDump
-' 
-' /********************************************************************************/
+    ' Module CLI
+    ' 
+    '     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, ExportValueFrames
+    '               ListActiveFunction, MinErrorSnapshot, NormalizeSampleDebugger, ROCData, runTrainingCommon
+    '               Tabular, Train
+    ' 
+    '     Sub: SummaryDebuggerDump
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -98,6 +98,36 @@ Module CLI
             .ToArray
 
         Return ROCMatrix.SaveTo(out).CLICode
+    End Function
+
+    <ExportAPI("/validates")>
+    <Usage("/validates /in <validateSet.Xml> /model <ANN.xml/directory> /trainingSet <dataset.XML> [/out <result.csv>]")>
+    Public Function RunValidates(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim model = NeuralNetwork.LoadModel(handle:=args <= "/model")
+        Dim trainingSet = (args <= "/trainingSet").LoadXml(Of DataSet)
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}_validates.csv"
+        Dim validateSet = [in].LoadXml(Of DataSet)
+        Dim runPredict = model.GetPredictLambda(trainingSet.NormalizeMatrix)
+        Dim result = validateSet.DataSamples _
+            .AsEnumerable _
+            .Select(Function(d)
+                        Dim predicts As Double() = runPredict(d)
+                        Dim output As New Excel With {
+                            .ID = d.ID,
+                            .Properties = New Dictionary(Of String, Double)
+                        }
+
+                        For i As Integer = 0 To validateSet.output.Length - 1
+                            output(validateSet.output(i)) = d.target(i)
+                            output($"{validateSet.output(i)}(predicts)") = predicts(i)
+                        Next
+
+                        Return output
+                    End Function) _
+            .ToArray
+
+        Return result.SaveTo(out).CLICode
     End Function
 
     <ExportAPI("/Summary.Debugger.Dump")>

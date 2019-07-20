@@ -1,46 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::4763f352586fa38b7d56a08e9a74b8ab, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::b2f66d928edd12e27d9d86207ee541ff, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module NetworkVisualizer
-' 
-'     Properties: BackgroundColor, DefaultEdgeColor
-' 
-'     Function: AutoScaler, CentralOffsets, DrawImage, GetBounds, GetDisplayText
-'               scales
-' 
-'     Sub: drawLabels
-' 
-' /********************************************************************************/
+    ' Module NetworkVisualizer
+    ' 
+    '     Properties: BackgroundColor, DefaultEdgeColor
+    ' 
+    '     Function: AutoScaler, CentralOffsets, DrawImage, drawVertexNodes, GetBounds
+    '               GetDisplayText, scales
+    ' 
+    '     Sub: drawEdges, drawhullPolygon, drawLabels
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -178,7 +178,8 @@ Public Module NetworkVisualizer
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups$ = Nothing) As GraphicsData
 
-        Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
+        ' 所绘制的图像输出的尺寸大小
+        Dim frameSize As Size = canvasSize.SizeParser
 
         ' 1. 先将网络图形对象置于输出的图像的中心位置
         ' 2. 进行矢量图放大
@@ -271,7 +272,7 @@ Public Module NetworkVisualizer
                 End If
 
                 ' 在这里进行节点的绘制
-                Call g.drawVertexNodes(
+                labels += g.drawVertexNodes(
                     drawPoints:=drawPoints,
                     radiusScale:=radiusScale,
                     minRadiusValue:=minRadiusValue,
@@ -285,7 +286,11 @@ Public Module NetworkVisualizer
                     displayId:=displayId
                 )
 
-                If displayId Then
+                If displayId AndAlso labels = 0 Then
+                    Call "There is no node label data could be draw currently, please check your data....".Warning
+                End If
+
+                If displayId AndAlso labels > 0 Then
                     Call g.drawLabels(labels, frameSize, labelColorAsNodeColor)
                 End If
             End Sub
@@ -310,6 +315,8 @@ Public Module NetworkVisualizer
         Dim pt As Point
         Dim br As Brush
         Dim rect As Rectangle
+
+        Call "Rendering nodes...".__DEBUG_ECHO
 
         For Each n As Node In drawPoints
             Dim r# = n.data.radius

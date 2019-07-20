@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34ffd702ee29a0994c79627b0593a018, Data_science\MachineLearning\MLDebugger\ANNDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::f44e4739fb2344dd15c2e520e078e304, Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
 
     ' Author:
     ' 

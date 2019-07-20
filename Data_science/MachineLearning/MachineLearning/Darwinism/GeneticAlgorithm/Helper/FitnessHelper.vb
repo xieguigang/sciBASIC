@@ -1,42 +1,42 @@
-﻿#Region "Microsoft.VisualBasic::cbd4c957db9e1539c078b0e70bc13f5f, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb"
+﻿#Region "Microsoft.VisualBasic::66ecf16d68854b44518f45aa638a56b4, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module FitnessHelper
-' 
-'         Function: (+2 Overloads) Calculate
-' 
-' 
-' /********************************************************************************/
+    '     Module FitnessHelper
+    ' 
+    '         Function: AverageError, (+2 Overloads) Calculate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -94,7 +94,11 @@ Namespace Darwinism.GAF.Helper
                                 e <> Double.MinValue Then
                                 Return e
                             Else
-                                Return Long.MaxValue
+                                ' 前面在这里使用的是Long.Max
+                                ' 因为Long.Max最多只有 10 ^ 18
+                                ' 所以可能会造成一个最优解的假象
+                                ' 如果目标函数产生的实际值很大的话
+                                Return 10 ^ 200
                             End If
                         End Function) _
                 .ToArray

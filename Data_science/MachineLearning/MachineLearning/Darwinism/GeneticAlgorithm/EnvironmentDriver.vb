@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::43ec4d5274d161f25d02c4befaded7c2, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
+﻿#Region "Microsoft.VisualBasic::ab95250b748b7bf6235a85eae1e84094, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class EnvironmentDriver
-' 
-'         Properties: Iterations, Threshold
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: CreateReport
-' 
-'         Sub: Terminate, Train
-' 
-'     Structure outPrint
-' 
-'         Properties: chromosome, fit, iter
-' 
-'         Function: ToString
-' 
-'         Sub: PrintTitle
-' 
-' 
-' /********************************************************************************/
+    '     Class EnvironmentDriver
+    ' 
+    '         Properties: AutoAdjustMutationRate, Iterations, Threshold
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CreateReport
+    ' 
+    '         Sub: Terminate, Train
+    ' 
+    '     Structure outPrint
+    ' 
+    '         Properties: chromosome, fit, iter, MutationRate
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: PrintTitle
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -152,7 +152,6 @@ Namespace Darwinism.GAF
                 .fit = bestFit,
                 .chromosome = best.ToString,
                 .MutationRate = best.MutationRate
-                .chromosome = best.ToString
             }
         End Function
     End Class

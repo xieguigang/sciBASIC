@@ -79,7 +79,7 @@ Namespace ManagedSqlite.Core.Tables
                 other.rootPage = CUInt(lng)
 
                 row.TryGetOrdinal(4, str)
-                other.Sql = str
+                other.Sql = str.TrimNull
 
                 Yield other
             Next

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faf52a4319703c35d813c929d9982e5e, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b7624f0c81d66ee419500728730b78fb, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
 ' Author:
 ' 
@@ -35,7 +35,7 @@
 ' 
 '         Function: InitialPopulation
 ' 
-'         Sub: ByteMutate, Crossover, (+2 Overloads) Mutate
+'         Sub: ByteMutate, Crossover, Mutate
 ' 
 ' 
 ' /********************************************************************************/
@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF.Helper
@@ -154,10 +155,11 @@ Namespace Darwinism.GAF.Helper
         ''' (如果<paramref name="parallel"/>计算函数是空值，则整个GA的计算过程为串行计算过程)
         ''' </summary>
         <Extension>
-        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize%, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
+        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize%, Optional parallel As [Variant](Of ParallelComputing(Of T), Boolean) = Nothing) As Population(Of T)
             Dim chr As T
             Dim population As New Population(Of T)(parallel) With {
-                .parallel = True
+                .parallel = True,
+                .initialSize = populationSize
             }
 
             For i As Integer = 0 To populationSize - 1

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bed11e068fc896e1e7f8d9a91311ec0a, Microsoft.VisualBasic.Core\Language\Language\UnixBash\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b3a106c39670fb151d62b3b32d984b29, My\LinuxRunHelper.vb"
 
     ' Author:
     ' 
@@ -33,19 +33,18 @@
 
     '     Module LinuxRunHelper
     ' 
-    '         Function: BashRun, BashShell, MonoRun, PerlShell, ScriptMe
+    '         Function: BashRun, BashShell, MonoRun
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Reflection
-Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.Text
 
-Namespace Language.UnixBash
+Namespace My
 
     ''' <summary>
     ''' mono shortcuts
@@ -53,61 +52,40 @@ Namespace Language.UnixBash
     Public Module LinuxRunHelper
 
         ''' <summary>
-        ''' perl ./<see cref="Assembly"/> @ARGV
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function ScriptMe() As String
-            Dim cmd As String = Assembly.GetEntryAssembly.Location
-            Dim perl As String =
-$"#!/usr/bin/perl
-
-use strict;
-use warnings;
-use File::Basename;
-use File::Spec;
-
-my $cli = join "" "", @ARGV;
-
-print ""{App.AssemblyName} << $cli\n"";
-system(""mono {cmd.CLIPath} $cli"");
-"
-            Return perl
-        End Function
-
-        ''' <summary>
         ''' Run from bash shell
         ''' </summary>
         ''' <returns></returns>
         Public Function BashRun() As String
-            Dim cmd As String = Assembly.GetEntryAssembly.Location
-            Dim bash As String =
-$"#!/bin/sh
+            Dim appName = App.AssemblyName
+            Dim bash As String = Encodings.UTF8WithoutBOM _
+                .CodePage _
+                .GetString(My.Resources.bashRunner) _
+                .Replace("{appName}", appName) _
+                .LineTokens _
+                .JoinBy(ASCII.LF)
 
-cli=""$@"";
-
-echo ""{App.AssemblyName} <<< $@"";
-mono ""{cmd}"" $cli
-"
-            Return bash.Replace(vbCr, "")
+            Return bash
         End Function
 
         ''' <summary>
         ''' 这里比perl脚本掉调用有一个缺点，在运行前还需要使用命令修改为可执行权限
+        ''' 
+        ''' ```
         ''' 'sudo chmod 777 cmd.sh'
+        ''' ```
         ''' </summary>
         ''' <returns></returns>
         Public Function BashShell() As Integer
-            Dim path As String = Assembly.GetEntryAssembly.Location.TrimSuffix
-            Return BashRun.SaveTo(path, Encoding.ASCII)
-        End Function
+            Dim path As String = App.ExecutablePath.TrimSuffix
+            Dim bash As String = BashRun()
 
-        ''' <summary>
-        ''' Execute command using perl script
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function PerlShell() As Integer
-            Dim path As String = Assembly.GetEntryAssembly.Location.TrimSuffix & ".pl"
-            Return ScriptMe.SaveTo(path)
+            ' 在这里写入的bash脚本都是没有文件拓展名的
+            '
+            ' 同时写入man命令帮助脚本
+            Call My.Resources.help.FlushStream(path.ParentPath & "/help")
+            Call BashRun.SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
+
+            Return 0
         End Function
 
         Public Function MonoRun(app As String, CLI As String) As ProcessEx

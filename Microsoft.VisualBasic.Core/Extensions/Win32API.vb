@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f903f8ae677be928cbb9e50da4bd1a5, Microsoft.VisualBasic.Core\Extensions\Win32API.vb"
+﻿#Region "Microsoft.VisualBasic::6f903f8ae677be928cbb9e50da4bd1a5, Extensions\Win32API.vb"
 
     ' Author:
     ' 

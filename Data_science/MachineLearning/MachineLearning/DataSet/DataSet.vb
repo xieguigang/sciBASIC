@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cb0d9aa89de3d0c999b126252c37418, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::38d600c30d78a034d84c619a570141de, Data_science\MachineLearning\MachineLearning\DataSet\DataSet.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Class DataSet
     ' 
     '         Properties: DataSamples, NormalizeMatrix, output, OutputSize, Size
+    '                     width
     ' 
     '         Function: createExtends, PopulateNormalizedSamples, ToString
     ' 

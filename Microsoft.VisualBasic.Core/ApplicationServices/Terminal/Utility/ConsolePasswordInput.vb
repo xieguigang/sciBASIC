@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a327073d8c1912fb6d47e38285e938b0, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
+﻿#Region "Microsoft.VisualBasic::a327073d8c1912fb6d47e38285e938b0, ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
 
     ' Author:
     ' 

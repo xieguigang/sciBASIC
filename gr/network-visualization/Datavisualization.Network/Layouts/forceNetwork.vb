@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58fc6d6d5784e9240f63ef698e8361de, gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::163cde90a0f681671c108582b3c36ece, gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,9 @@
 
     '     Module forceNetwork
     ' 
-    '         Sub: (+2 Overloads) doForceLayout, doRandomLayout
+    '         Function: doForceLayout
+    ' 
+    '         Sub: doForceLayout, doRandomLayout
     ' 
     ' 
     ' /********************************************************************************/

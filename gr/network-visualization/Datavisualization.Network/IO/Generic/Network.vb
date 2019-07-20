@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c539ccfe8489b68984fee2a071dc53aa, gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::0abbf070d59aa78a4178bc831f6e9e99, gr\network-visualization\Datavisualization.Network\IO\Generic\Network.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Network
     ' 
-    '         Properties: Edges, IsEmpty, Nodes
+    '         Properties: edges, IsEmpty, nodes
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

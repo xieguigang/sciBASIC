@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1be3e946ad55ffa176526dc9a2f4699f, Microsoft.VisualBasic.Core\Net\Tcp\TcpRequest.vb"
+﻿#Region "Microsoft.VisualBasic::1be3e946ad55ffa176526dc9a2f4699f, Net\Tcp\TcpRequest.vb"
 
     ' Author:
     ' 

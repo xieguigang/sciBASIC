@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e65beab6040acf729be3390f8369c04, Data_science\Mathematica\Math\DataFrame\Correlation.vb"
+﻿#Region "Microsoft.VisualBasic::34463f5b11d7217102871b5f64a86aac, Data_science\Mathematica\Math\DataFrame\Correlation.vb"
 
     ' Author:
     ' 
@@ -142,4 +142,3 @@ Public Module Correlation
         End If
     End Function
 End Module
-

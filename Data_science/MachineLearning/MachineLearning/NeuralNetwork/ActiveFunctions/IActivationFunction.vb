@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56243c01bc66bfe7b1d456ab53f07120, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::9ce82021a245cc6bda6eafdf0907a545, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
 
 ' Author:
 ' 
@@ -33,7 +33,9 @@
 
 '     Class IActivationFunction
 ' 
+'         Properties: Truncate
 ' 
+'         Function: CalculateDerivative
 ' 
 ' 
 ' /********************************************************************************/
@@ -49,6 +51,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace NeuralNetwork.Activations
 
@@ -75,6 +78,13 @@ Namespace NeuralNetwork.Activations
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me.Function(x)
+            End Get
+        End Property
+
+        Default Public ReadOnly Property Evaluate(a As Vector) As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New Vector(From x As Double In a Select Me.Function(x))
             End Get
         End Property
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d694d627bbafac9f48b71e6d7b851182, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::dcfc8f9f59421f3383f29e83fa30780e, CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -264,7 +264,7 @@ Namespace CommandLine
                 Return doc.SaveTo($"{output}/{App.AssemblyName}.md", Encoding.UTF8).CLICode
 
             ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
-                Return BashShell()
+                Return My.BashShell()
 
             ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
                 Dim namespace$ = CLI("/namespace") Or "CLI"

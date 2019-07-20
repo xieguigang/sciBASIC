@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d65684dc5d5f8fecadfeac41e2e710a2, Microsoft.VisualBasic.Core\Extensions\Security\TripleDES.vb"
+﻿#Region "Microsoft.VisualBasic::d65684dc5d5f8fecadfeac41e2e710a2, Extensions\Security\TripleDES.vb"
 
     ' Author:
     ' 

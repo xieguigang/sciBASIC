@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed8d48b8c84ebd0c77f8a4aec0cbf1a0, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::67c92bbcb37fdfceb876fe78a811a6bc, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\Neuron.vb"
 
     ' Author:
     ' 
@@ -42,18 +42,6 @@
     '         Properties: bias, delta, gradient, id
     ' 
     '         Function: ToString
-    ' 
-    '     Class NeuronLayer
-    ' 
-    '         Properties: activation, id, neurons
-    ' 
-    '         Function: getCollection, getSize
-    ' 
-    '     Class HiddenLayer
-    ' 
-    '         Properties: activation, layers
-    ' 
-    '         Function: getCollection, getSize
     ' 
     ' 
     ' /********************************************************************************/

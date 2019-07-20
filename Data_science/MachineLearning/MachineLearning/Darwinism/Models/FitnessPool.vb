@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a86f864c3b5086630c5a79f1ed043721, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::de57b1bf046c699441eebb4f0918c154, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 
@@ -67,7 +67,7 @@ Namespace Darwinism.Models
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get
-                Return True
+                Return caclFitness.Cacheable
             End Get
         End Property
 
@@ -91,11 +91,15 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <returns></returns>
-        Public Function Fitness([in] As Individual) As Double Implements Fitness(Of Individual).Calculate
+        Public Function Fitness([in] As Individual, parallel As Boolean) As Double Implements Fitness(Of Individual).Calculate
             If Not caclFitness.Cacheable Then
-                Return caclFitness.Calculate([in])
+                Return caclFitness.Calculate([in], parallel)
+            Else
+                Return getOrCacheOfFitness([in], parallel)
             End If
+        End Function
 
+        Private Function getOrCacheOfFitness([in] As Individual, parallel As Boolean) As Double
             Dim key$ = indivToString([in])
             Dim fit As Double
 
@@ -103,7 +107,7 @@ Namespace Darwinism.Models
                 If cache.ContainsKey(key$) Then
                     fit = cache(key$)
                 Else
-                    fit = caclFitness.Calculate([in])
+                    fit = caclFitness.Calculate([in], parallel)
                     cache.Add(key$, fit)
 
                     If cache.Count >= maxCapacity Then

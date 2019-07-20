@@ -203,7 +203,7 @@ Public Module LeastSquares
         Next
 
         result.RMSE = Math.Sqrt(result.SSE / CDbl(length))
-        result.ErrorTest = err
+        result.ErrorTest = err.ToArray
     End Sub
 
     Private Sub gaussSolve(n%, ByRef A As List(Of Double), ByRef x#(), ByRef b As List(Of Double))

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a8c91c0ad8ef5c53b5d3524bda27932, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\Scattered.vb"
+﻿#Region "Microsoft.VisualBasic::cf93b9654d3045787d884c07bb78a79f, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\Scattered.vb"
 
     ' Author:
     ' 
@@ -115,7 +115,8 @@ Namespace NeuralNetwork.StoreProcedure
                                 }
 
                                 Return edge
-                            End Function)
+                            End Function) _
+                    .ToArray
             End Using
         End Function
 

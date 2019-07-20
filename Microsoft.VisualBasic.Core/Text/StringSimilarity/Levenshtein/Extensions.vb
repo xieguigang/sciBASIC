@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05d9ecdacf1a7d59575c150f068399d1, Microsoft.VisualBasic.Core\Text\StringSimilarity\Levenshtein\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::05d9ecdacf1a7d59575c150f068399d1, Text\StringSimilarity\Levenshtein\Extensions.vb"
 
     ' Author:
     ' 

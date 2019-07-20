@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ed2f8e34c36d88c77f3237525a5e88e, Microsoft.VisualBasic.Core\Serialization\Controls\Contrls.vb"
+﻿#Region "Microsoft.VisualBasic::8ed2f8e34c36d88c77f3237525a5e88e, Serialization\Controls\Contrls.vb"
 
     ' Author:
     ' 

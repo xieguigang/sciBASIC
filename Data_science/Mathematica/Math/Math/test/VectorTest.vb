@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1efb391abb2db1374c30b3feb7ed3512, Data_science\Mathematica\Math\Math\test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::d8c29cc86662446cb5362b6bc3bd5b25, Data_science\Mathematica\Math\Math\test\VectorTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d531d05aafd7ea58451795acc1a03ad, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::d1c59b3d414151d828ccee637dc6b49d, ApplicationServices\Tools\Zip\ZipLib.vb"
 
     ' Author:
     ' 
@@ -33,27 +33,9 @@
 
     '     Module ZipLib
     ' 
+    '         Function: IsADirectoryEntry, IsSourceFolderZip
     ' 
-    '         Enum Overwrite
-    ' 
-    '             Always, IfNewer, Never
-    ' 
-    ' 
-    ' 
-    '         Enum ArchiveAction
-    ' 
-    '             [Error], Ignore, Merge, Replace
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: ExtractToSelfDirectory, IsADirectoryEntry, IsSourceFolderZip
-    ' 
-    '     Sub: AddToArchive, DirectoryArchive, ExtractToFileInternal, FileArchive, ImprovedExtractToDirectory
-    '          ImprovedExtractToFile
+    '         Sub: AddToArchive, AppendZip, DirectoryArchive, FileArchive
     ' 
     ' 
     ' /********************************************************************************/

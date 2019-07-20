@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04b70b48eab1dafca8861e45bd5803df, Microsoft.VisualBasic.Core\Scripting\VisualBasic\KeywordProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::04b70b48eab1dafca8861e45bd5803df, Scripting\VisualBasic\KeywordProcessor.vb"
 
     ' Author:
     ' 
@@ -56,27 +56,27 @@ Namespace Scripting.SymbolBuilder.VBLanguage
         ''' List of VB.NET language keywords
         ''' </summary>
         Public Const VBKeywords$ =
-            "|AddHandler|AddressOf|Alias|And|AndAlso|As|" &
-            "|Boolean|ByRef|Byte|" &
+            "|AddHandler|AddressOf|Alias|And|AndAlso|As|Ascending|" &
+            "|Boolean|ByRef|Byte|By|" &
             "|Call|Case|Catch|CBool|CByte|CChar|CDate|CDec|CDbl|Char|CInt|Class|CLng|CObj|Const|Continue|CSByte|CShort|CSng|CStr|CType|CUInt|CULng|CUShort|" &
             "|Date|Decimal|Declare|Default|Delegate|Dim|DirectCast|Do|Double|" &
             "|Each|Else|ElseIf|End|EndIf|Enum|Erase|Error|Event|Exit|" &
-            "|False|Finally|For|Friend|Function|" &
+            "|False|Finally|For|Friend|Function|From|" &
             "|Get|GetType|GetXMLNamespace|Global|GoSub|GoTo|" &
             "|Handles|" &
             "|If|Implements|Imports|In|Inherits|Integer|Interface|Is|IsNot|" &
             "|Let|Lib|Like|Long|Loop|" &
-            "|Me|Mod|Module|MustInherit|MustOverride|MyBase|MyClass|" &
+            "|Me|Mod|Module|MustInherit|MustOverride|MyBase|MyClass|My|" &
             "|Namespace|Narrowing|New|Next|Not|Nothing|NotInheritable|NotOverridable|NameOf|" &
-            "|Object|Of|On|Operator|Option|Optional|Or|OrElse|Overloads|Overridable|Overrides|" &
+            "|Object|Of|On|Operator|Option|Optional|Or|OrElse|Overloads|Overridable|Overrides|Order|" &
             "|ParamArray|Partial|Private|Property|Protected|Public|" &
             "|RaiseEvent|ReadOnly|ReDim|REM|RemoveHandler|Resume|Return|" &
             "|SByte|Select|Set|Shadows|Shared|Short|Single|Static|Step|Stop|String|Structure|Sub|SyncLock|" &
             "|Then|Throw|To|True|Try|TryCast|TypeOf|" &
             "|Variant|" &
             "|Wend|" &
-            "|UInteger|ULong|UShort|Using|" &
-            "|When|While|Widening|With|WithEvents|WriteOnly|" &
+            "|UInteger|ULong|UShort|Using|Union|" &
+            "|When|While|Widening|With|WithEvents|WriteOnly|Where|" &
             "|Xor|" &
             "|Yield|"
 
@@ -84,7 +84,7 @@ Namespace Scripting.SymbolBuilder.VBLanguage
         ''' Tokenize of <see cref="VBKeywords"/>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Words As String()
+        Public Shared ReadOnly Property TokenWords As String()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return VBKeywords _

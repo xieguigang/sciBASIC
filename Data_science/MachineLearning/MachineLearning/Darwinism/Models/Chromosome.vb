@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d3752fefaa82cb3646c850dbaa04f85, Data_science\MachineLearning\MachineLearning\Darwinism\Models\Chromosome.vb"
+﻿#Region "Microsoft.VisualBasic::7a4f895040835c72c538afa5f6a30da8, Data_science\MachineLearning\MachineLearning\Darwinism\Models\Chromosome.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Interface Chromosome
+    ' 
+    '         Properties: MutationRate
     ' 
     '         Function: Crossover, Mutate
     ' 

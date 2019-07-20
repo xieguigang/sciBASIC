@@ -1,4 +1,48 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::158cd2cd924466c8c6349ca7a19f7134, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Genome.vb"
+
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+' /********************************************************************************/
+
+' Summaries:
+
+' Class Genome
+' 
+'     Properties: MutationRate
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: CalculateError, Crossover, Mutate, ToString
+' 
+' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
@@ -27,11 +71,23 @@ Public Class Genome : Implements Chromosome(Of Genome)
     ''' </summary>
     Public Property MutationRate As Double Implements Chromosome(Of Genome).MutationRate
 
+    Const CrossOverRate As Double = 30
+
     Sub New(chr As GridSystem, mutationRate As Double)
         Me.chromosome = chr
         Me.width = chr.A.Dim
         Me.MutationRate = mutationRate
     End Sub
+
+    ''' <summary>
+    ''' <see cref="GridSystem.Evaluate(Vector)"/>
+    ''' </summary>
+    ''' <param name="X"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Evaluate(X As Vector) As Double
+        Return chromosome.Evaluate(X)
+    End Function
 
     Public Function CalculateError(status As Vector, target As Double) As Double
         Dim predicts = chromosome.Evaluate(status)
@@ -48,12 +104,12 @@ Public Class Genome : Implements Chromosome(Of Genome)
         Dim b = another.chromosome.Clone
 
         SyncLock randf.seeds
-            If FlipCoin(40) Then
+            If FlipCoin(CrossOverRate) Then
                 ' crossover A
                 randf.seeds.Crossover(a.A.Array, b.A.Array)
             End If
 
-            If FlipCoin(40) Then
+            If FlipCoin(CrossOverRate) Then
                 ' dim(A) is equals to dim(C) and is equals to dim(X)
                 Dim i As Integer = randf.NextInteger(upper:=width)
                 Dim j As Integer = randf.NextInteger(upper:=width)
@@ -62,11 +118,6 @@ Public Class Genome : Implements Chromosome(Of Genome)
                 ' crossover C
                 randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
             End If
-            'Else
-            '    ' crossover P
-            '    randf.seeds.Crossover(a.P(i).W.Array, b.P(j).W.Array)
-            'End If
-            ' End If
         End SyncLock
 
         Yield New Genome(a, MutationRate)
@@ -100,15 +151,15 @@ Public Class Genome : Implements Chromosome(Of Genome)
             i = randf.NextInteger(upper:=width)
             ' mutate one bit in C vector
             chromosome.C(i).B.Array.Mutate(randf.seeds, rate:=MutationRate)
-            ' mutate one bit in P vector
-            ' chromosome.P(i).W.Array.Mutate(randf.seeds)
         End If
 
         If FlipCoin() Then
             i = randf.NextInteger(upper:=width)
 
             If chromosome.C(i).BC = 0 Then
-                chromosome.C(i).BC = 1
+                ' BC为负数的时候可能会出现0^-c = Inf的问题
+                ' 所以还是正实数会比较好
+                chromosome.C(i).BC = 0.001
             ElseIf FlipCoin() Then
                 chromosome.C(i).BC += randf.randf(0, chromosome.C(i).BC * MutationRate)
             Else
@@ -126,9 +177,8 @@ Public Class Genome : Implements Chromosome(Of Genome)
             .Select(Function(i)
                         Dim sign = chromosome.A(i)
                         Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
-                        ' Dim p = chromosome.P(i).W.Sum
 
-                        Return chromosome.AC + sign * (c) '+ p)
+                        Return chromosome.AC + sign * c
                     End Function) _
             .ToArray _
             .GetJson _
