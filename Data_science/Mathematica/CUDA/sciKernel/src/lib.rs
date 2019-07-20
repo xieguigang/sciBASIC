@@ -1,3 +1,4 @@
+/// Pearson correlations
 #[no_mangle]
 pub extern fn pearson(x: &[f64], y: &[f64], size: i32) -> f64 {
     let n : usize = size as usize;
@@ -9,6 +10,7 @@ pub extern fn pearson(x: &[f64], y: &[f64], size: i32) -> f64 {
     let mut ay = 0.0;
     let mut ax = 0.0;
 
+    // finds the mean
     for j in 0..n {
         ax = ax + x[j];
         ay = ay + y[j];
@@ -17,6 +19,7 @@ pub extern fn pearson(x: &[f64], y: &[f64], size: i32) -> f64 {
     ax = ax / (n as f64);
     ay = ay / (n as f64);
 
+    // compute correlation coefficient
     for j in 0..n {
         xt = x[j] - ax;
         yt = y[j] - ay;
