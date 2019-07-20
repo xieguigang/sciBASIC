@@ -1,5 +1,5 @@
 pub mod trigonometric {
-    
+
     /// 1/2 PI
     const halfPI: f64 = std::f64::consts::PI / 2.0;
 
@@ -30,5 +30,14 @@ pub mod trigonometric {
         }
 
         return x * y;
+    }
+
+    /// Inverse Cotangent（反余切）  
+    /// 
+    /// ``Arccotan(X) = Atn(X) + 2 * Atn(1)``
+    /// 
+    #[no_mangle]
+    pub extern fn arccotan(x: f64)  -> f64 {
+        return atn(x, 500) + 2.0 * Atn(1.0, 500);
     }
 }
