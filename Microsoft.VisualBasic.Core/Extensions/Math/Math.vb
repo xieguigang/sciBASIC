@@ -466,23 +466,17 @@ Namespace Math
                 Return 0
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns an integer that indicates the sign of a double-precision floating-point
-        '     number.
-        '
-        ' Parameters:
-        '   value:
-        '     A signed number.
-        '
-        ' Returns:
-        '     A number that indicates the sign of value, as shown in the following table.Return
-        '     value Meaning -1 value is less than zero. 0 value is equal to zero. 1 value is
-        '     greater than zero.
-        '
-        ' Exceptions:
-        '   T:System.ArithmeticException:
-        '     value is equal to System.Double.NaN.
+
+        ''' <summary>
+        ''' Returns an integer that indicates the sign of a double-precision floating-point
+        ''' number.
+        ''' </summary>
+        ''' <param name="value">A signed number.</param>
+        ''' <returns>
+        ''' A number that indicates the sign of value, as shown in the following table.Return
+        ''' value Meaning -1 value is less than zero. 0 value is equal to zero. 1 value is
+        ''' greater than zero.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sign(value As Double) As Integer
             If value > 0 Then
