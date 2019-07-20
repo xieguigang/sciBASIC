@@ -147,11 +147,12 @@ Public Class Genome : Implements Chromosome(Of Genome)
             End If
         End If
 
-        If FlipCoin() Then
-            i = randf.NextInteger(upper:=width)
-            ' mutate one bit in C vector
-            chromosome.C(i).B.Array.Mutate(randf.seeds, rate:=MutationRate)
-        End If
+        For j As Integer = 0 To chromosome.C.Length - 1
+            If FlipCoin() Then
+                ' mutate one bit in C vector
+                chromosome.C(j).B.Array.Mutate(randf.seeds, rate:=MutationRate)
+            End If
+        Next
 
         If FlipCoin() Then
             i = randf.NextInteger(upper:=width)
