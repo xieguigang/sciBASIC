@@ -52,7 +52,7 @@ impl Point {
 
     /// this method is available on any Point, and automatically borrows the
     /// Point value
-    fn to_string(&self) -> String { 
+    fn toString(&self) -> String { 
         return std::fmt("[{}, {}]", self.x, self.y);
     }
 
