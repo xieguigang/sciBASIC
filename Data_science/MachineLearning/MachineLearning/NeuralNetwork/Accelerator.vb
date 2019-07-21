@@ -87,7 +87,9 @@ Namespace NeuralNetwork.Accelerator
             Dim population As Population(Of WeightVector) = New WeightVector(synapses).InitialPopulation(populationSize)
             Dim fitness As Fitness(Of WeightVector) = New Fitness(network, synapses, trainingSet)
             Dim ga As New GeneticAlgorithm(Of WeightVector)(population, fitness)
-            Dim engine As New EnvironmentDriver(Of WeightVector)(ga) With {
+            Dim engine As New EnvironmentDriver(Of WeightVector)(ga, Sub(null, nullErr)
+                                                                         ' do nothing
+                                                                     End Sub) With {
                 .Iterations = iterations,
                 .Threshold = 0.005
             }
