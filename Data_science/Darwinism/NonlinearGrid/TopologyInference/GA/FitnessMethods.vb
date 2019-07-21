@@ -108,6 +108,6 @@ Public Module FitnessMethodExtensions
                           Next
                       End Function
 
-        Return R2Group().Max
+        Return R2Group().Average
     End Function
 End Module
