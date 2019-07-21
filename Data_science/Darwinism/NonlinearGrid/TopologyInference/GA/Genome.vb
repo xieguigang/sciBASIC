@@ -222,8 +222,13 @@ Public Class Genome : Implements Chromosome(Of Genome)
             .Select(Function(i)
                         Dim sign = chromosome.A(i)
                         Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
+                        Dim S = chromosome.AC + sign * c
 
-                        Return chromosome.AC + sign * c
+                        If chromosome.Vol = 0R OrElse S = 0R Then
+                            Return 0
+                        Else
+                            Return chromosome.Vol * S / (chromosome.K + S)
+                        End If
                     End Function) _
             .ToArray _
             .GetJson _
