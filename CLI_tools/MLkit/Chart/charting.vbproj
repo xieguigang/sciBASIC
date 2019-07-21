@@ -60,7 +60,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\CLI_tools\Apps\</OutputPath>
+    <OutputPath>..\Apps\</OutputPath>
     <DocumentationFile>charting.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -276,19 +276,19 @@
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>DataMining</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\ODE\ODEsSolver.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
       <Name>ODEsSolver</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plots-statistics\Plots.Statistics.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Visualization\Plots-statistics\Plots.Statistics.vbproj">
       <Project>{368EE92F-7AA0-47DF-BE48-2AE150369A4C}</Project>
       <Name>Plots.Statistics</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plots\Plots.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Visualization\Plots\Plots.vbproj">
       <Project>{17F8E821-0A01-4975-9CAA-AC95251226D5}</Project>
       <Name>Plots</Name>
     </ProjectReference>
