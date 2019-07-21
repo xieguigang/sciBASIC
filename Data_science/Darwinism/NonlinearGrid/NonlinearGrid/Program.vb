@@ -256,7 +256,14 @@ Module Program
         Call "Create algorithm engine".__DEBUG_ECHO
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
         Call "Load driver".__DEBUG_ECHO
-        Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
+
+        Dim takeBestSnapshot = Sub(best As Genome, error#)
+                                   Call best _
+                                       .CreateSnapshot(factorNames, [error]) _
+                                       .GetXml _
+                                       .SaveTo(outFile.TrimSuffix & $"_localOptimal/{[error]}.Xml")
+                               End Sub
+        Dim engine As New EnvironmentDriver(Of Genome)(ga, takeBestSnapshot) With {
             .Iterations = 1000000,
             .Threshold = 0.005
         }
