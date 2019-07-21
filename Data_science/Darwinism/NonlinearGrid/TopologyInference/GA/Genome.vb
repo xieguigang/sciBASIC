@@ -123,10 +123,42 @@ Public Class Genome : Implements Chromosome(Of Genome)
                 ' crossover C
                 randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
             End If
+
+            If FlipCoin(CrossOverRate) Then
+                Dim tmp#
+
+                tmp = a.Vol
+                a.Vol = b.Vol
+                b.Vol = tmp
+            End If
+
+            If FlipCoin(CrossOverRate) Then
+                Dim tmp#
+
+                tmp = a.K
+                a.K = b.K
+                b.K = tmp
+            End If
         End SyncLock
 
         Yield New Genome(a, MutationRate, truncate)
         Yield New Genome(b, MutationRate, truncate)
+    End Function
+
+    Private Function valueMutate(x As Double) As Double
+        If x = 0R Then
+            Return 1
+        ElseIf FlipCoin() Then
+            x += randf.randf(0, x * MutationRate)
+        Else
+            x -= randf.randf(0, x * MutationRate)
+        End If
+
+        If Math.Abs(x) > truncate Then
+            x = Math.Sign(x) * randf.seeds.Next * truncate
+        End If
+
+        Return x
     End Function
 
     Public Function Mutate() As Genome Implements Chromosome(Of Genome).Mutate
@@ -143,17 +175,15 @@ Public Class Genome : Implements Chromosome(Of Genome)
         End If
 
         If FlipCoin() Then
-            If chromosome.AC = 0 Then
-                chromosome.AC = 1
-            ElseIf FlipCoin() Then
-                chromosome.AC += randf.randf(0, chromosome.AC * MutationRate)
-            Else
-                chromosome.AC -= randf.randf(0, chromosome.AC * MutationRate)
-            End If
+            chromosome.AC = valueMutate(chromosome.AC)
+        End If
 
-            If Math.Abs(chromosome.AC) > truncate Then
-                chromosome.AC = Math.Sign(chromosome.AC) * randf.seeds.Next * truncate
-            End If
+        If FlipCoin() Then
+            chromosome.Vol = valueMutate(chromosome.Vol)
+        End If
+
+        If FlipCoin() Then
+            chromosome.K = valueMutate(chromosome.K)
         End If
 
         For j As Integer = 0 To chromosome.C.Length - 1
