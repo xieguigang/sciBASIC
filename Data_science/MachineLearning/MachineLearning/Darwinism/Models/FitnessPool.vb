@@ -59,9 +59,9 @@ Namespace Darwinism.Models
     Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
-        Protected caclFitness As Fitness(Of Individual)
-        Protected indivToString As Func(Of Individual, String)
-        Protected maxCapacity%
+        Protected Friend caclFitness As Fitness(Of Individual)
+        Protected Friend indivToString As Func(Of Individual, String)
+        Protected Friend maxCapacity%
 
         Shared ReadOnly objToString As New [Default](Of  Func(Of Individual, String))(AddressOf Scripting.ToString)
 

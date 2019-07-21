@@ -76,7 +76,7 @@ Namespace Darwinism.GAF
     ''' The GA engine core
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Class GeneticAlgorithm(Of Chr As Chromosome(Of Chr)) : Inherits Model
+    Public Class GeneticAlgorithm(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits Model
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
@@ -87,8 +87,9 @@ Namespace Darwinism.GAF
         ''' 因为在迭代的过程中，旧的种群会被新的种群所替代
         ''' 所以在这里不可以加readonly修饰
         ''' </summary>
-        Dim population As Population(Of Chr)
-        Dim popStrategy As IStrategy(Of Chr)
+        Public ReadOnly Property population As Population(Of Chr)
+
+        Public ReadOnly Property popStrategy As IStrategy(Of Chr)
 
         Public ReadOnly Property Best As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -146,6 +147,14 @@ Namespace Darwinism.GAF
             End If
         End Sub
 
+        Public Function GetRawFitnessModel() As Fitness(Of Chr)
+            If TypeOf chromosomesComparator Is FitnessPool(Of Chr) Then
+                Return DirectCast(chromosomesComparator, FitnessPool(Of Chr)).caclFitness
+            Else
+                Return chromosomesComparator
+            End If
+        End Function
+
         ''' <summary>
         ''' 完成一次种群的迭代进化
         ''' </summary>
@@ -182,7 +191,7 @@ Namespace Darwinism.GAF
             ' 从而实现了择优进化, 即程序模型对我们的训练数据集产生了学习
 
             ' 新种群替代旧的种群
-            population = popStrategy.newPopulation(newPopulation, Me)
+            _population = popStrategy.newPopulation(newPopulation, Me)
         End Sub
 
         ''' <summary>
