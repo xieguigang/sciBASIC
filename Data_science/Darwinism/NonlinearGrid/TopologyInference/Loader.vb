@@ -79,8 +79,8 @@ Public Module Loader
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing, Optional power As Vector = Nothing) As GridSystem
         Return New GridSystem With {
-            .Vol = 1,
-            .K = 1,
+            .Vol = 100000,
+            .K = 10,
             .A = cor Or New Vector(0.01, width).AsDefault,
             .C = width.SeqIterator _
                 .Select(Function(null)

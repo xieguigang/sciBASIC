@@ -252,7 +252,7 @@ Module Program
         Call $"value truncate at ABS limits {truncate}".__DEBUG_ECHO
         Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate, truncate).InitialPopulation(popSize, parallel:=True)
         Call "Initialize environment".__DEBUG_ECHO
-        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable, FitnessMethods.R2)
+        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable, FitnessMethods.LabelGroupAverage)
         Call "Create algorithm engine".__DEBUG_ECHO
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
         Call "Load driver".__DEBUG_ECHO
