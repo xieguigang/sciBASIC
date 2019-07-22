@@ -51,3 +51,14 @@ pub extern fn pearson(x: &[f64], y: &[f64], size: i32) -> f64 {
     return pcc;
 }
 
+/// Calculate euclidean distance between two vector.
+#[no_mangle]
+pub extern fn distance(a: &[f64], b: &[f64], size: i32) -> f64 {
+    let mut magnitude = 0.0;
+
+    for i in 0..size {
+        magnitude = magnitude + (a[i] - b[i]).powf(2);
+    }
+
+    return magnitude.sqrt();
+}

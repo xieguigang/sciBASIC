@@ -131,13 +131,31 @@ Namespace Darwinism.GAF
                             Dim seed As Chr = bestSeed _
                                 .Mutate _
                                 .With(Sub(c) c.MutationRate = core.Best.MutationRate)
-                            Dim newPop As Population(Of Chr) = core.Best.InitialPopulation(core.population.initialSize, parallel:=True)
-                            Dim newCore As New GeneticAlgorithm(Of Chr)(newPop, core.GetRawFitnessModel, core.popStrategy.type, core.seeds)
+                            ' do not add the local best result when reset the GA system
+                            ' so add base is set to false
+                            Dim newPop As Population(Of Chr) = core.Best.InitialPopulation(
+                                populationSize:=core.population.initialSize,
+                                parallel:=True,
+                                addBase:=False
+                            )
+                            Dim newCore As New GeneticAlgorithm(Of Chr)(
+                                population:=newPop,
+                                fitnessFunc:=core.GetRawFitnessModel,
+                                replacementStrategy:=core.popStrategy.type,
+                                seeds:=core.seeds
+                            )
 
                             core = newCore
 
                             Call "GA module do RE-seeding as local optimal solution was found...".Warning
                             Call takeBestSnapshot(bestSeed, .ByRef)
+
+                            ' 如果在这里不替换一下的话
+                            ' 会导致频繁出现重置的现象
+                            For j As Integer = 0 To errStatSize / 2
+                                Call errors.Enqueue(Long.MaxValue)
+                                Call errors.Dequeue()
+                            Next
                         End If
                     End If
                 End With

@@ -77,9 +77,7 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A),
-            .K = Km,
-            .Vol = Vol
+            .AC = If([const] Is Nothing, 0, [const].A)',            '.K = Km,        ' .Vol = Vol
         }
     End Function
 
