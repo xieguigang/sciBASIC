@@ -50,7 +50,6 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class GridMatrix : Inherits XmlDataModel
@@ -63,6 +62,8 @@ Public Class GridMatrix : Inherits XmlDataModel
     <XmlElement("correlations")>
     Public Property correlations As NumericVector()
 
+    Public Property Vol As Double
+    Public Property Km As Double
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CreateSystem() As GridSystem
@@ -76,7 +77,9 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A)
+            .AC = If([const] Is Nothing, 0, [const].A),
+            .K = Km,
+            .Vol = Vol
         }
     End Function
 

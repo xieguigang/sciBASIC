@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Language
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Module Loader
 
@@ -78,6 +79,8 @@ Public Module Loader
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing, Optional power As Vector = Nothing) As GridSystem
         Return New GridSystem With {
+            .Vol = 100000,
+            .K = 10,
             .A = cor Or New Vector(0.01, width).AsDefault,
             .C = width.SeqIterator _
                 .Select(Function(null)
@@ -134,7 +137,20 @@ Public Module Loader
                         .Select(Function(ci) ci.BC) _
                         .ToArray
                 }
-            }
+            },
+            .Km = genome.chromosome.K,
+            .Vol = genome.chromosome.Vol
         }
     End Function
+
+    <Extension>
+    Friend Sub Truncate(vec As Vector, limits As Double)
+        Dim ref = vec.Array
+
+        For i As Integer = 0 To vec.Length - 1
+            If Math.Abs(ref(i)) > limits Then
+                ref(i) = Math.Sign(ref(i)) * randf.seeds.NextDouble * (limits)
+            End If
+        Next
+    End Sub
 End Module

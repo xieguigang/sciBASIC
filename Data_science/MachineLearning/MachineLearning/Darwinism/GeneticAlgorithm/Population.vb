@@ -75,9 +75,9 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
 
-    Public Delegate Function ParallelComputing(Of chr As Chromosome(Of chr))(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
+    Public Delegate Function ParallelComputing(Of chr As {Class, Chromosome(Of chr)})(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
 
-    Public Class Population(Of Chr As Chromosome(Of Chr))
+    Public Class Population(Of Chr As {Class, Chromosome(Of Chr)})
         Implements IEnumerable(Of Chr)
 
         Const DEFAULT_NUMBER_OF_CHROMOSOMES As Integer = 32

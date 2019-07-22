@@ -1,1 +1,1 @@
-GPU accelerated computing ``C++`` code module for sciBASIC.NET
+GPU accelerated computing ``rust`` code module for sciBASIC.NET

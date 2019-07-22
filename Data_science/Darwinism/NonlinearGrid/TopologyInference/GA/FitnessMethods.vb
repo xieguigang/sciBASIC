@@ -80,27 +80,34 @@ Public Module FitnessMethodExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function R2(target As GridSystem, trainingSet As TrainingSet(), parallel As Boolean) As Double
-        Dim X As Vector() = trainingSet.Select(Function(d) d.X).ToArray
-        Dim Y As Double() = trainingSet.Select(Function(d) d.Y).ToArray
-        Dim yfit As Func(Of Vector, Double) =
-            Function(xi)
-                Dim fx As Double = target.Evaluate(xi)
+        Dim R2Group = Iterator Function() As IEnumerable(Of Double)
+                          For Each type As IGrouping(Of String, TrainingSet) In trainingSet.GroupBy(Function(d) d.targetID)
+                              Dim sampleArray = type.ToArray
+                              Dim X As Vector() = sampleArray.Select(Function(d) d.X).ToArray
+                              Dim Y As Double() = sampleArray.Select(Function(d) d.Y).ToArray
+                              Dim yfit As Func(Of Vector, Double) =
+                                  Function(xi)
+                                      Dim fx As Double = target.Evaluate(xi)
 
-                If fx.IsNaNImaginary Then
-                    Return 10 ^ 200
-                Else
-                    Return fx
-                End If
-            End Function
-        Dim evaluate = Evaluation.Calculate(X, Y, yfit, parallel)
-        Dim R2result As Double = evaluate.R_square
+                                      If fx.IsNaNImaginary Then
+                                          Return 10 ^ 200
+                                      Else
+                                          Return fx
+                                      End If
+                                  End Function
+                              Dim evaluate = Evaluation.Calculate(X, Y, yfit, parallel)
+                              Dim R2result As Double = evaluate.R_square
 
-        ' 在进行比较的时候
-        ' NaN值是会被判定为比其他的double值都要小的?
-        If R2result.IsNaNImaginary Then
-            Return 10 ^ 200
-        Else
-            Return 1 - R2result
-        End If
+                              ' 在进行比较的时候
+                              ' NaN值是会被判定为比其他的double值都要小的?
+                              If R2result.IsNaNImaginary Then
+                                  Yield 10 ^ 200
+                              Else
+                                  Yield 1 - R2result
+                              End If
+                          Next
+                      End Function
+
+        Return R2Group().Average
     End Function
 End Module

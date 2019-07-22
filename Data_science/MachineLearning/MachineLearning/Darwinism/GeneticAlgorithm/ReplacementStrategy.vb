@@ -3,8 +3,8 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF.ReplacementStrategy
 
-    Public Interface IStrategy(Of Chr As Chromosome(Of Chr))
-
+    Public Interface IStrategy(Of Chr As {Class, Chromosome(Of Chr)})
+        ReadOnly Property type As Strategies
         Function newPopulation(newPop As Population(Of Chr), GA As GeneticAlgorithm(Of Chr)) As Population(Of Chr)
     End Interface
 
@@ -16,7 +16,7 @@ Namespace Darwinism.GAF.ReplacementStrategy
     <HideModuleName> Public Module Extensions
 
         <Extension>
-        Public Function GetStrategy(Of genome As Chromosome(Of genome))(strategy As Strategies) As IStrategy(Of genome)
+        Public Function GetStrategy(Of genome As {Class, Chromosome(Of genome)})(strategy As Strategies) As IStrategy(Of genome)
             Select Case strategy
                 Case Strategies.EliteCrossbreed
                     Return New EliteReplacement(Of genome)
@@ -30,8 +30,14 @@ Namespace Darwinism.GAF.ReplacementStrategy
     ''' 最简单的种群更替策略
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Structure SimpleReplacement(Of Chr As Chromosome(Of Chr))
+    Public Structure SimpleReplacement(Of Chr As {Class, Chromosome(Of Chr)})
         Implements IStrategy(Of Chr)
+
+        Public ReadOnly Property type As Strategies Implements IStrategy(Of Chr).type
+            Get
+                Return Strategies.Naive
+            End Get
+        End Property
 
         ''' <summary>
         ''' 下面的两个步骤是机器学习的关键
@@ -56,10 +62,16 @@ Namespace Darwinism.GAF.ReplacementStrategy
     ''' 种群的精英杂交更替策略
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Class EliteReplacement(Of Chr As Chromosome(Of Chr))
+    Public Class EliteReplacement(Of Chr As {Class, Chromosome(Of Chr)})
         Implements IStrategy(Of Chr)
 
-        Dim ranf As Random = Math.seeds
+        ReadOnly ranf As Random = Math.seeds
+
+        Public ReadOnly Property type As Strategies Implements IStrategy(Of Chr).type
+            Get
+                Return Strategies.EliteCrossbreed
+            End Get
+        End Property
 
         ''' <summary>
         ''' 只保留10%的个体,然后这些个体杂交补充到种群的大小

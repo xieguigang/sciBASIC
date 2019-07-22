@@ -102,7 +102,7 @@ Namespace Darwinism.Models
     ''' free-form And evolving genetic representations.
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Interface Chromosome(Of Chr As Chromosome(Of Chr))
+    Public Interface Chromosome(Of Chr As {Class, Chromosome(Of Chr)})
 
         ''' <summary>
         ''' 突变的变异程度，这个值应该是位于(0, 1)闭区间内的

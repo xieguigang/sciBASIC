@@ -1,61 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::ab95250b748b7bf6235a85eae1e84094, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class EnvironmentDriver
-    ' 
-    '         Properties: AutoAdjustMutationRate, Iterations, Threshold
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateReport
-    ' 
-    '         Sub: Terminate, Train
-    ' 
-    '     Structure outPrint
-    ' 
-    '         Properties: chromosome, fit, iter, MutationRate
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: PrintTitle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class EnvironmentDriver
+' 
+'         Properties: AutoAdjustMutationRate, Iterations, Threshold
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateReport
+' 
+'         Sub: Terminate, Train
+' 
+'     Structure outPrint
+' 
+'         Properties: chromosome, fit, iter, MutationRate
+' 
+'         Function: ToString
+' 
+'         Sub: PrintTitle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
@@ -64,10 +66,11 @@ Namespace Darwinism.GAF
     ''' 发生种群进化所需要的环境压力产生器
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Class EnvironmentDriver(Of Chr As Chromosome(Of Chr)) : Inherits IterationReporter(Of GeneticAlgorithm(Of Chr))
+    Public Class EnvironmentDriver(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits IterationReporter(Of GeneticAlgorithm(Of Chr))
 
         Dim core As GeneticAlgorithm(Of Chr)
         Dim terminated As Boolean = False
+        Dim takeBestSnapshot As Action(Of Chr, Double)
 
         ''' <summary>
         ''' 需要运行的总的迭代次数
@@ -75,25 +78,24 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Property Iterations As Integer
         Public Property Threshold As Double
-        ''' <summary>
-        ''' 可以打开这个开关来自动调整突变程度，可以在一定程度上避免局部最优
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property AutoAdjustMutationRate As Boolean
 
         ''' <summary>
         ''' 创建一个新的环境压力驱动程序,用来驱动模型的进化学习
         ''' </summary>
         ''' <param name="ga"></param>
-        Sub New(ga As GeneticAlgorithm(Of Chr))
+        Sub New(ga As GeneticAlgorithm(Of Chr), takeBestSnapshot As Action(Of Chr, Double))
             Me.core = ga
+            Me.takeBestSnapshot = takeBestSnapshot
         End Sub
 
         Public Overrides Sub Train(Optional parallel As Boolean = False)
-            Dim errStatSize As Integer = 100
+            Dim errStatSize As Integer = 50
             Dim errors As New Queue(Of Double)(capacity:=errStatSize)
             Dim previousErrAverage As Double = Double.MaxValue
 
+            ' 如果这个队列中的误差值全部都是一样的话
+            ' 则将当前的种群销毁
+            ' 将best突变一个位点后，自动重新初始化
             For i As Integer = 0 To errStatSize
                 Call errors.Enqueue(Long.MaxValue)
             Next
@@ -117,11 +119,25 @@ Namespace Darwinism.GAF
                     If Not .IsNaNImaginary AndAlso .CompareTo(Threshold) < 0 Then
                         Exit For
                     Else
-                        If AutoAdjustMutationRate Then
-                            Call errors.Enqueue(.ByRef)
-                            Call errors.Dequeue()
+                        Call errors.Enqueue(.ByRef)
+                        Call errors.Dequeue()
 
+                        Dim firstError# = errors.First
 
+                        If Math.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
+                            ' 因为已经很长时间没有变化误差了
+                            ' 所以最佳的个体肯定已经陷入了局部最优
+                            Dim bestSeed As Chr = core.Best
+                            Dim seed As Chr = bestSeed _
+                                .Mutate _
+                                .With(Sub(c) c.MutationRate = core.Best.MutationRate)
+                            Dim newPop As Population(Of Chr) = core.Best.InitialPopulation(core.population.initialSize, parallel:=True)
+                            Dim newCore As New GeneticAlgorithm(Of Chr)(newPop, core.GetRawFitnessModel, core.popStrategy.type, core.seeds)
+
+                            core = newCore
+
+                            Call "GA module do RE-seeding as local optimal solution was found...".Warning
+                            Call takeBestSnapshot(bestSeed, .ByRef)
                         End If
                     End If
                 End With

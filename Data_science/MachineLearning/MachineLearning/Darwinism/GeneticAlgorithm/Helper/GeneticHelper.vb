@@ -155,7 +155,7 @@ Namespace Darwinism.GAF.Helper
         ''' (如果<paramref name="parallel"/>计算函数是空值，则整个GA的计算过程为串行计算过程)
         ''' </summary>
         <Extension>
-        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize%, Optional parallel As [Variant](Of ParallelComputing(Of T), Boolean) = Nothing) As Population(Of T)
+        Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, populationSize%, Optional parallel As [Variant](Of ParallelComputing(Of T), Boolean) = Nothing) As Population(Of T)
             Dim chr As T
             Dim population As New Population(Of T)(parallel) With {
                 .parallel = True,
