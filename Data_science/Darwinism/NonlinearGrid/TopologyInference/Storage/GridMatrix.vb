@@ -62,8 +62,8 @@ Public Class GridMatrix : Inherits XmlDataModel
     <XmlElement("correlations")>
     Public Property correlations As NumericVector()
 
-    Public Property Vol As Double
-    Public Property Km As Double
+    ' Public Property Vol As Double
+    ' Public Property Km As Double
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CreateSystem() As GridSystem
@@ -77,9 +77,7 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A),
-            .K = Km,
-            .Vol = Vol
+            .AC = If([const] Is Nothing, 0, [const].A)',            '.K = Km,        ' .Vol = Vol
         }
     End Function
 

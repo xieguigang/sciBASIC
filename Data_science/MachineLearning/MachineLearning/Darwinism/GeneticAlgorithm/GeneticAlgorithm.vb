@@ -121,9 +121,12 @@ Namespace Darwinism.GAF
         ''' <param name="fitnessFunc">
         ''' Calculates the fitness of the mutated chromesome in <paramref name="population"/>
         ''' </param>
-        ''' <param name="seeds"></param>
+        ''' <param name="seeds">The random number generator.</param>
         ''' <param name="cacheSize">
         ''' -1 means no cache
+        ''' </param>
+        ''' <param name="replacementStrategy">
+        ''' Strategy for new population replace the old population.
         ''' </param>
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr),
                        Optional replacementStrategy As Strategies = Strategies.Naive,

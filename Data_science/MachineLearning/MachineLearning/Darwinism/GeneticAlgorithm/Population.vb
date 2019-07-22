@@ -175,16 +175,23 @@ Namespace Darwinism.GAF
                 If parallel Like GetType(Boolean) Then
                     Dim flag As Boolean = parallel
 
+                    ' use the internal parallel computing api
                     Pcompute = Function(ga, source)
                                    Return GA_PLinq(ga, source, parallelFlag:=flag)
                                End Function
+
+                    Me.parallel = flag
                 Else
+                    Me.parallel = True
+
+                    ' use external parallel computing api
                     Pcompute = parallel
                 End If
             Else
                 Pcompute = Function(ga, source)
                                Return GA_PLinq(ga, source, parallelFlag:=True)
                            End Function
+                parallel = True
             End If
         End Sub
 
@@ -201,7 +208,7 @@ Namespace Darwinism.GAF
             End If
 
             chromosomes = (From c As Chr
-                           In chromosomes.AsParallel
+                           In chromosomes.Populate(parallel)
                            Order By comparator.Fitness(c, parallel:=False) Ascending).AsList
         End Sub
 

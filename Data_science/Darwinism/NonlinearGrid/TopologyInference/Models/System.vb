@@ -60,8 +60,8 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
     Public Property A As Vector
     Public Property C As Correlation()
 
-    Public Property Vol As Double
-    Public Property K As Double
+    ' Public Property Vol As Double
+    ' Public Property K As Double
 
     ''' <summary>
     ''' Evaluate the system dynamics
@@ -74,15 +74,18 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
     ''' <returns></returns>
     Public Function Evaluate(X As Vector) As Double
         Dim C As Vector = Me.C.Select(Function(ci) ci.Evaluate(X)).AsVector
+        ' 20190722 当X中存在负数的时候,假设对应的C相关因子为小数负数,则会出现NaN计算结果值
         Dim F As Vector = X ^ C
         Dim fx As Vector = A * F
         Dim S = AC + fx.Sum
 
-        If Vol = 0R OrElse S = 0R Then
-            Return 0
-        Else
-            Return (Vol * S) / (K + S)
-        End If
+        'If Vol = 0R OrElse S = 0R Then
+        '    Return 0
+        'Else
+        '    Return (Vol * S) / (K + S)
+        'End If
+
+        Return S
     End Function
 
     Public Function Clone() As GridSystem Implements ICloneable(Of GridSystem).Clone
@@ -91,9 +94,7 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
             .AC = AC,
             .C = C _
                 .Select(Function(ci) ci.Clone) _
-                .ToArray,
-            .K = K,
-            .Vol = Vol
+                .ToArray            ' .K = K,      .Vol = Vol
         }
     End Function
 
