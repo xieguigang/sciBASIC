@@ -226,6 +226,10 @@ Module Program
             Call "No input file was found!".PrintException
         Else
             seed = If(model.FileExists, model.LoadXml(Of GridMatrix).CreateSystem, Nothing)
+
+            If Not seed Is Nothing Then
+                Call $"Load trained model from {model}".__INFO_ECHO
+            End If
         End If
 
         Dim trainingSet = inFile.LoadXml(Of DataSet)
