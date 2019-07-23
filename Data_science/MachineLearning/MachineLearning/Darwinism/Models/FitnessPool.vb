@@ -63,7 +63,7 @@ Namespace Darwinism.Models
         Protected Friend indivToString As Func(Of Individual, String)
         Protected Friend maxCapacity%
 
-        Shared ReadOnly objToString As New [Default](Of  Func(Of Individual, String))(AddressOf Scripting.ToString)
+        Friend Shared ReadOnly objToString As New [Default](Of Func(Of Individual, String))(AddressOf Scripting.ToString)
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get
