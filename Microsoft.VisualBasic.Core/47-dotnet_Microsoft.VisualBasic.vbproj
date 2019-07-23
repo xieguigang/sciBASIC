@@ -947,6 +947,8 @@
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
+    <Compile Include="ApplicationServices\Tools\Plugin\Loader.vb" />
+    <Compile Include="ApplicationServices\Tools\Plugin\PluginAttribute.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\StreamReader.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\UnZip.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\Options.vb" />

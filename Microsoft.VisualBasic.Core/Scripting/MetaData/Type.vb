@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::d8bc1d00cad0b167ad1d2d6d37f66594, Scripting\MetaData\Type.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TypeInfo
-    ' 
-    '         Properties: assm, FullIdentity, SystemKnownType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: [GetType], LoadAssembly, ToString
-    ' 
-    '         Sub: __infoParser
-    ' 
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TypeInfo
+' 
+'         Properties: assm, FullIdentity, SystemKnownType
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: [GetType], LoadAssembly, ToString
+' 
+'         Sub: __infoParser
+' 
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Scripting.MetaData
 
@@ -91,7 +92,7 @@ Namespace Scripting.MetaData
         End Sub
 
         Private Shared Sub doInfoParser(info As Type, ByRef assm As String, ByRef id As String)
-            assm = FileIO.FileSystem.GetFileInfo(info.Assembly.Location).Name
+            assm = info.Assembly.Location.FileName
             id = info.FullName
         End Sub
 
@@ -104,8 +105,8 @@ Namespace Scripting.MetaData
         ''' then using the location <see cref="App.HOME"/> as default.
         ''' </summary>
         ''' <returns></returns>
-        Public Function LoadAssembly(Optional DIR As String = Nothing) As Assembly
-            Dim path As String = If(Not DIR.DirectoryExists, App.HOME, DIR) & "/" & Me.assm
+        Public Function LoadAssembly(Optional DIR As DefaultString = Nothing) As Assembly
+            Dim path As String = $"{DIR Or App.HOME}/{Me.assm}"
             Dim assm As Assembly = Assembly.LoadFile(path)
             Return assm
         End Function
@@ -119,6 +120,7 @@ Namespace Scripting.MetaData
 
             If knownFirst Then
                 type = Scripting.GetType(fullIdentity)
+
                 If Not type Is Nothing Then
                     Return type
                 End If
