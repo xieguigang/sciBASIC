@@ -80,12 +80,8 @@ Namespace Darwinism.GAF
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        Friend ReadOnly chromosomesComparator As Fitness(Of Chr)
+        Friend ReadOnly chromosomesComparator As FitnessPool(Of Chr)
         Friend ReadOnly seeds As IRandomSeeds
-        ''' <summary>
-        ''' Get unique id of each genome
-        ''' </summary>
-        Friend ReadOnly toUniqueKey As Func(Of Chr, String)
 
         ''' <summary>
         ''' 因为在迭代的过程中，旧的种群会被新的种群所替代
@@ -140,15 +136,8 @@ Namespace Darwinism.GAF
 
             Me.population = population
             Me.seeds = seeds Or randfSeeds
-            Me.toUniqueKey = toString Or FitnessPool(Of Chr).objToString
-
-            If cacheSize <= 0 Then
-                Me.chromosomesComparator = fitnessFunc
-            Else
-                Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize, toString:=toString)
-            End If
-
-            Me.population.SortPopulationByFitness(Me, chromosomesComparator)
+            Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize, toString:=toString)
+            Me.population.SortPopulationByFitness(chromosomesComparator)
             Me.popStrategy = replacementStrategy.GetStrategy(Of Chr)
 
             If population.parallel Then

@@ -60,10 +60,14 @@ Namespace Darwinism.Models
 
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
         Protected Friend caclFitness As Fitness(Of Individual)
+        ''' <summary>
+        ''' Get unique id of each genome
+        ''' </summary>
         Protected Friend indivToString As Func(Of Individual, String)
         Protected Friend maxCapacity%
 
         Friend Shared ReadOnly objToString As New [Default](Of Func(Of Individual, String))(AddressOf Scripting.ToString)
+        Friend Shared ReadOnly defaultCacheSize As [Default](Of Integer) = 10000
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get
@@ -80,7 +84,12 @@ Namespace Darwinism.Models
         Sub New(cacl As Fitness(Of Individual), capacity%, Optional toString As Func(Of Individual, String) = Nothing)
             caclFitness = cacl
             indivToString = toString Or objToString
-            maxCapacity = capacity
+            maxCapacity = capacity Or defaultCacheSize
+
+            If capacity <= 0 AndAlso cacl.Cacheable Then
+                Call $"Target environment marked as cacheable, but cache size is invalid...".Warning
+                Call $"Use default cache size for fitness: {defaultCacheSize.DefaultValue}".__INFO_ECHO
+            End If
         End Sub
 
         Sub New()
