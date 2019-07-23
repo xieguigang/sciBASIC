@@ -229,7 +229,7 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
-            Return chromosomesComparator.Calculate(chromosome, parallel:=True)
+            Return chromosomesComparator.Fitness(chromosome, parallel:=True)
         End Function
 
         ''' <summary>
