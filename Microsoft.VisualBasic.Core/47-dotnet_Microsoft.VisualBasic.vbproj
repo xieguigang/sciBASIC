@@ -942,6 +942,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
@@ -1129,7 +1130,7 @@
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
     <Compile Include="Extensions\Collection\Linq\NumericSequence.vb" />
     <Compile Include="Extensions\Collection\Linq\Which.vb" />
-    <Compile Include="ApplicationServices\Debugger\VisualBasicAppException.vb" />
+    <Compile Include="ApplicationServices\Debugger\Exception\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Collection\AnonymousTypeHelper.vb" />
     <Compile Include="Extensions\Image\Bitmap\Effects.vb" />

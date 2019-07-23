@@ -77,6 +77,8 @@ Namespace Net.Abstract
 
 #Region "Delegate Abstract Interface"
 
+    Public Delegate Function SendMessageInvoke(Message As String) As String
+
     Public Delegate Sub ForceCloseHandle(socket As StateObject)
 
     ''' <summary>
@@ -131,6 +133,6 @@ Namespace Net.Abstract
         ''' (这个函数指针用于处理来自于客户端的请求)
         ''' </summary>
         ''' <remarks></remarks>
-        Property Responsehandler As DataRequestHandler
+        Property ResponseHandler As DataRequestHandler
     End Interface
 End Namespace

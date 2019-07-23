@@ -356,19 +356,19 @@ Namespace Net.Tcp.Persistent.Socket
 
             If bytesBuffer.IsNullOrEmpty Then Return
 
-            Call state.ChunkBuffer.AddRange(bytesBuffer)
+            Call state.received.AddRange(bytesBuffer)
 
-            Dim TempBuffer = state.ChunkBuffer.ToArray
+            Dim TempBuffer = state.received.ToArray
             Dim request = New RequestStream(TempBuffer)
 
             If Not request.FullRead Then Return
 
-            Call state.ChunkBuffer.Clear()
+            Call state.received.Clear()
 
             If TempBuffer.Length > request.TotalBytes Then
                 TempBuffer = TempBuffer.Skip(request.TotalBytes).ToArray
                 ' 含有剩余的剪裁后的数据
-                Call state.ChunkBuffer.AddRange(TempBuffer)
+                Call state.received.AddRange(TempBuffer)
             End If
 
             Try

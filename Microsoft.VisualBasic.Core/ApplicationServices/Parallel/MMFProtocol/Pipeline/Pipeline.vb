@@ -63,7 +63,7 @@ Namespace Parallel.MMFProtocol.Pipeline
         Sub New(Optional port As Integer = API.PeplinePort)
             _protocols = New ProtocolHandler(Me)
             _netSocket = New TcpServicesSocket(port)
-            _netSocket.Responsehandler = AddressOf _protocols.HandleRequest
+            _netSocket.ResponseHandler = AddressOf _protocols.HandleRequest
 
             Call Parallel.RunTask(AddressOf _netSocket.Run)
         End Sub

@@ -31,7 +31,7 @@ Public Module FitnessMethodExtensions
     <Extension>
     Public Function NaiveAverage(target As Genome, trainingSet As TrainingSet(), parallel As Boolean) As Double
         Return trainingSet _
-            .Populate(parallel) _
+            .AsParallel _
             .Select(Function(sample)
                         Return target.CalculateError(sample.X, sample.Y)
                     End Function) _
@@ -45,7 +45,7 @@ Public Module FitnessMethodExtensions
         ' 所以使用MAX来作为fitness的话,会因为结果都是Inf而导致前期没有办法收敛
         ' 在这里应该是使用平均值来避免这个问题
         Return trainingSet _
-            .Populate(parallel) _
+            .AsParallel _
             .Select(Function(sample)
                         Dim err = target.CalculateError(sample.X, sample.Y)
 

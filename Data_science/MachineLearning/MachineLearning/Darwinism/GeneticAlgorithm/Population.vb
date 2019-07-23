@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
+Imports Microsoft.VisualBasic.Parallel.Linq
 
 Namespace Darwinism.GAF
 
@@ -88,7 +89,7 @@ Namespace Darwinism.GAF
         ''' 是否使用并行模式在排序之前来计算出fitness
         ''' </summary>
         ''' <returns></returns>
-        Public Property parallel As Boolean = False
+        Public Property parallel As Boolean = True
         ''' <summary>
         ''' 种群的大小
         ''' </summary>
@@ -175,23 +176,16 @@ Namespace Darwinism.GAF
                 If parallel Like GetType(Boolean) Then
                     Dim flag As Boolean = parallel
 
-                    ' use the internal parallel computing api
                     Pcompute = Function(ga, source)
                                    Return GA_PLinq(ga, source, parallelFlag:=flag)
                                End Function
-
-                    Me.parallel = flag
                 Else
-                    Me.parallel = True
-
-                    ' use external parallel computing api
                     Pcompute = parallel
                 End If
             Else
                 Pcompute = Function(ga, source)
                                Return GA_PLinq(ga, source, parallelFlag:=True)
                            End Function
-                parallel = True
             End If
         End Sub
 
@@ -201,15 +195,23 @@ Namespace Darwinism.GAF
         ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
         Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
-            ' Call Arrays.Shuffle(chromosomes)
-
             If parallel AndAlso comparator.Cacheable Then
                 Call parallelCacheFitness(GA, comparator)
             End If
 
-            chromosomes = (From c As Chr
-                           In chromosomes.Populate(parallel)
-                           Order By comparator.Fitness(c, parallel:=False) Ascending).AsList
+            'chromosomes = LQuerySchedule _
+            '    .LQuery(inputs:=chromosomes,
+            '            task:=Function(chr)
+            '                      Return (Fitness:=comparator.Fitness(chr, parallel:=False), chr:=chr)
+            '                  End Function,
+            '            partitionSize:=chromosomes.Count / App.CPUCoreNumbers
+            '    ) _
+            '    .OrderBy(Function(c) c.Fitness) _
+            '    .Select(Function(c) c.chr) _
+            '    .AsList
+            chromosomes = chromosomes _
+                .OrderBy(Function(c) comparator.Fitness(c, parallel:=True)) _
+                .AsList
         End Sub
 
         Private Sub parallelCacheFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))

@@ -213,8 +213,11 @@ Module Program
     End Function
 
     <ExportAPI("/training")>
-    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /rate <default=0.1> /truncate <default=1000> /out <output_model.Xml>]")>
+    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /rate <default=0.1> /range.positive /truncate <default=1000> /out <output_model.Xml>]")>
     <Description("Training a grid system use GA method.")>
+    <Argument("/range.positive", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="All of the output value is in positive value range, values should greater than or equals to ZERO.")>
     Public Function trainGA(args As CommandLine) As Integer
         Dim inFile As String = args <= "/in"
         Dim out$ = args("/out") Or $"{inFile.TrimSuffix}.minError.Xml"
@@ -235,6 +238,7 @@ Module Program
         Dim trainingSet = inFile.LoadXml(Of DataSet)
         Dim rate As Double = args("/rate") Or 0.1
         Dim truncate As Double = args("/truncate") Or 1000.0
+        Dim allPositive As Boolean = args("/range.positive")
 
         Call $"Mutation rate = {rate}".__DEBUG_ECHO
         Call $"Population size = {popSize}".__DEBUG_ECHO
@@ -243,21 +247,26 @@ Module Program
                 out, seed, popSize,
                 factorNames:=trainingSet.NormalizeMatrix.names,
                 mutationRate:=rate,
-                truncate:=truncate
+                truncate:=truncate,
+                allPositive:=allPositive
         )
 
         Return 0
     End Function
 
     <Extension>
-    Public Sub RunFitProcess(trainingSet As DataSet, outFile$, seed As GridSystem, popSize%, factorNames$(), mutationRate As Double, truncate As Double)
+    Public Sub RunFitProcess(trainingSet As DataSet, outFile$, seed As GridSystem, popSize%, factorNames$(),
+                             mutationRate As Double,
+                             truncate As Double,
+                             allPositive As Boolean)
+
         Dim cor As Vector = trainingSet.DataSamples.AsEnumerable.Correlation
         Dim max As Vector = trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
         Call "Create a base chromosome".__DEBUG_ECHO
         Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, max))
         Call "Initialize populations".__DEBUG_ECHO
         Call $"value truncate at ABS limits {truncate}".__DEBUG_ECHO
-        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate, truncate).InitialPopulation(popSize, parallel:=False)
+        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate, truncate, allPositive).InitialPopulation(popSize, parallel:=True)
         Call "Initialize environment".__DEBUG_ECHO
         Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable, FitnessMethods.LabelGroupAverage)
         Call "Create algorithm engine".__DEBUG_ECHO

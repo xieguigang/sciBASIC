@@ -67,15 +67,15 @@ Namespace Scripting.MetaData
         ''' <see cref="Type.FullName"/>.(类型源)
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property FullIdentity As String
+        <XmlAttribute> Public Property fullIdentity As String
 
         ''' <summary>
         ''' Is this type object is a known system type?(是否是已知的类型？)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property SystemKnownType As Boolean
+        Public ReadOnly Property isSystemKnownType As Boolean
             Get
-                Return Not Scripting.GetType(FullIdentity) Is Nothing
+                Return Not Scripting.GetType(fullIdentity) Is Nothing
             End Get
         End Property
 
@@ -87,16 +87,16 @@ Namespace Scripting.MetaData
         ''' </summary>
         ''' <param name="info"></param>
         Sub New(info As Type)
-            Call __infoParser(info, assm, FullIdentity)
+            Call doInfoParser(info, assm, fullIdentity)
         End Sub
 
-        Private Shared Sub __infoParser(info As Type, ByRef assm As String, ByRef id As String)
+        Private Shared Sub doInfoParser(info As Type, ByRef assm As String, ByRef id As String)
             assm = FileIO.FileSystem.GetFileInfo(info.Assembly.Location).Name
             id = info.FullName
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{assm}!{FullIdentity}"
+            Return $"{assm}!{fullIdentity}"
         End Function
 
         ''' <summary>
@@ -118,14 +118,14 @@ Namespace Scripting.MetaData
             Dim type As Type
 
             If knownFirst Then
-                type = Scripting.GetType(FullIdentity)
+                type = Scripting.GetType(fullIdentity)
                 If Not type Is Nothing Then
                     Return type
                 End If
             End If
 
             Dim assm As Assembly = LoadAssembly()
-            type = assm.GetType(Me.FullIdentity)
+            type = assm.GetType(Me.fullIdentity)
             Return type
         End Function
 
@@ -137,9 +137,9 @@ Namespace Scripting.MetaData
         ''' <returns></returns>
         Public Overloads Shared Operator =(a As TypeInfo, b As Type) As Boolean
             Dim assm As String = Nothing, type As String = Nothing
-            Call __infoParser(b, assm, type)
+            Call doInfoParser(b, assm, type)
             Return String.Equals(a.assm, assm, StringComparison.OrdinalIgnoreCase) AndAlso
-                String.Equals(a.FullIdentity, type, StringComparison.Ordinal)
+                String.Equals(a.fullIdentity, type, StringComparison.Ordinal)
         End Operator
 
         Public Overloads Shared Operator <>(a As TypeInfo, b As Type) As Boolean

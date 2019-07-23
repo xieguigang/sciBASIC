@@ -92,11 +92,13 @@ Namespace Darwinism.Models
         ''' <param name="[in]"></param>
         ''' <returns></returns>
         Public Function Fitness([in] As Individual, parallel As Boolean) As Double Implements Fitness(Of Individual).Calculate
-            If Not caclFitness.Cacheable Then
-                Return caclFitness.Calculate([in], parallel)
-            Else
-                Return getOrCacheOfFitness([in], parallel)
-            End If
+            SyncLock caclFitness
+                If Not caclFitness.Cacheable Then
+                    Return caclFitness.Calculate([in], parallel)
+                Else
+                    Return getOrCacheOfFitness([in], parallel)
+                End If
+            End SyncLock
         End Function
 
         Private Function getOrCacheOfFitness([in] As Individual, parallel As Boolean) As Double
