@@ -78,13 +78,15 @@ pub mod statistics {
         } 
     }
 
-    trait [T] {
+    trait Linq<T> {
 
-        pub fn projects<V, F>(&self, projector : F) -> [V] 
-            where F : Fn(T) -> V {
+        fn projects<T, V, F>(&self, projector : F) -> [V] where F : Fn(T) -> V;     
+    }
 
+    impl Linq<T> for [T] {
+        fn projects<T, F>(&self, projector : F) -> [f64] where F : Fn(T) -> f64 {
             let n = self.len();
-            let mut result: [V, n];
+            let mut result: [f64, n];
             
             for i in 0..n {
                 result[i] = projector(self[i]);
