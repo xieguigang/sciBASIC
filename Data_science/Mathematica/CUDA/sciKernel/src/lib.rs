@@ -1,3 +1,6 @@
+include!("statistics.rs");
+include!("trigonometric.rs");
+
 /// #[link(name = "sciKernel", vers = "1.01", author = "xieguigang")];
 /// #[crate_type = "dylib"];
 
