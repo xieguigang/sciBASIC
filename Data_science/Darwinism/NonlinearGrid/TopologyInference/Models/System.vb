@@ -85,7 +85,7 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
         '    Return (Vol * S) / (K + S)
         'End If
 
-        Return S
+        Return Math.E ^ S
     End Function
 
     Public Function Clone() As GridSystem Implements ICloneable(Of GridSystem).Clone
