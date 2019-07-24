@@ -98,15 +98,12 @@ Public Module Visualize
         Dim impacts = grid.NodeImpacts.ToArray
 
         For i As Integer = 0 To grid.correlations.Length - 1
-            If impacts(i).Value < 0 Then
-                Continue For
-            End If
-
             Dim A As Double = grid.direction(i)
+            Dim B As Double = Math.E ^ impacts(i).Value
 
             Yield New NamedValue(Of Double) With {
                 .Name = impacts(i).Name,
-                .Value = impacts(i).Value * A,
+                .Value = B * A,
                 .Description = impacts(i).Value
             }
         Next
