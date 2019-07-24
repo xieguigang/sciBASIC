@@ -147,7 +147,7 @@ Namespace Darwinism.GAF
 
         Public Function GetRawFitnessModel() As Fitness(Of Chr)
             If TypeOf chromosomesComparator Is FitnessPool(Of Chr) Then
-                Return DirectCast(chromosomesComparator, FitnessPool(Of Chr)).caclFitness
+                Return DirectCast(chromosomesComparator, FitnessPool(Of Chr)).evaluateFitness
             Else
                 Return chromosomesComparator
             End If

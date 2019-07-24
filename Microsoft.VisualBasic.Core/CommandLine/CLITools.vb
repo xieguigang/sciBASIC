@@ -106,6 +106,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         <Extension> Public Function CreateParameterValues(tokens$(), includeLogicals As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
             Dim list As New List(Of NamedValue(Of String))
+            Dim key As String
 
             If tokens.IsNullOrEmpty Then
                 Return list
@@ -138,7 +139,7 @@ Namespace CommandLine
                 Dim s As String = tokens([next])
 
                 ' 当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                If IsPossibleLogicFlag(s) Then
+                If tokens(i).ToLower <> "/@set" AndAlso IsPossibleLogicFlag(s) Then
                     If includeLogicals Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
@@ -146,7 +147,7 @@ Namespace CommandLine
                     Continue For
                 Else
                     ' 下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
-                    Dim key As String = tokens(i).ToLower
+                    key = tokens(i).ToLower
                     list += New NamedValue(Of String)(key, s, note)
 
                     i += 1

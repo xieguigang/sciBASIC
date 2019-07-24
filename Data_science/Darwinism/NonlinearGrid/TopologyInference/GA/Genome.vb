@@ -244,18 +244,17 @@ Public Class Genome : Implements Chromosome(Of Genome)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return width _
+        Return ToString(chromosome)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Shared Function ToString(chromosome As GridSystem) As String
+        Return chromosome.A.Length _
             .SeqIterator _
             .Select(Function(i)
                         Dim sign = chromosome.A(i)
                         Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
-                        Dim S = chromosome.AC + sign * c
-
-                        'If chromosome.Vol = 0R OrElse S = 0R Then
-                        '    Return 0
-                        'Else
-                        '    Return chromosome.Vol * S / (chromosome.K + S)
-                        'End If
+                        Dim S = $"{chromosome.AC} + {sign} * {c}"
 
                         Return S
                     End Function) _

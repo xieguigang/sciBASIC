@@ -113,15 +113,21 @@ Public Module Loader
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateSnapshot(genome As Genome, names$(), error#) As GridMatrix
+    Public Function CreateSnapshot(genome As Genome, Optional names$() = Nothing, Optional error# = -1) As GridMatrix
         Return New GridMatrix With {
             .[error] = [error],
             .direction = genome.chromosome.A.ToArray,
             .correlations = genome.chromosome _
                 .C _
                 .Select(Function(c, i)
+                            Dim factorName$ = names.ElementAtOrDefault(i)
+
+                            If factorName.StringEmpty Then
+                                factorName = $"factor_{i}"
+                            End If
+
                             Return New NumericVector With {
-                                .name = names(i),
+                                .name = factorName,
                                 .vector = c.B.ToArray
                             }
                         End Function) _

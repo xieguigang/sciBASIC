@@ -59,7 +59,9 @@ Namespace Darwinism.Models
     Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
-        Protected Friend caclFitness As Fitness(Of Individual)
+
+        Public ReadOnly Property evaluateFitness As Fitness(Of Individual)
+
         ''' <summary>
         ''' Get unique id of each genome
         ''' </summary>
@@ -71,7 +73,7 @@ Namespace Darwinism.Models
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get
-                Return caclFitness.Cacheable
+                Return evaluateFitness.Cacheable
             End Get
         End Property
 
@@ -82,7 +84,7 @@ Namespace Darwinism.Models
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
         ''' <param name="toString">Obj to dictionary key</param>
         Sub New(cacl As Fitness(Of Individual), capacity%, Optional toString As Func(Of Individual, String) = Nothing)
-            caclFitness = cacl
+            evaluateFitness = cacl
             indivToString = toString Or objToString
             maxCapacity = capacity Or defaultCacheSize
 
@@ -101,9 +103,9 @@ Namespace Darwinism.Models
         ''' <param name="[in]"></param>
         ''' <returns></returns>
         Public Function Fitness([in] As Individual, parallel As Boolean) As Double Implements Fitness(Of Individual).Calculate
-            SyncLock caclFitness
-                If Not caclFitness.Cacheable Then
-                    Return caclFitness.Calculate([in], parallel)
+            SyncLock evaluateFitness
+                If Not evaluateFitness.Cacheable Then
+                    Return evaluateFitness.Calculate([in], parallel)
                 Else
                     Return getOrCacheOfFitness([in], parallel)
                 End If
@@ -118,7 +120,7 @@ Namespace Darwinism.Models
                 If cache.ContainsKey(key$) Then
                     fit = cache(key$)
                 Else
-                    fit = caclFitness.Calculate([in], parallel)
+                    fit = evaluateFitness.Calculate([in], parallel)
                     cache.Add(key$, fit)
 
                     If cache.Count >= maxCapacity Then
