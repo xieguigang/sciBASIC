@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::b2f66d928edd12e27d9d86207ee541ff, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NetworkVisualizer
-    ' 
-    '     Properties: BackgroundColor, DefaultEdgeColor
-    ' 
-    '     Function: AutoScaler, CentralOffsets, DrawImage, drawVertexNodes, GetBounds
-    '               GetDisplayText, scales
-    ' 
-    '     Sub: drawEdges, drawhullPolygon, drawLabels
-    ' 
-    ' /********************************************************************************/
+' Module NetworkVisualizer
+' 
+'     Properties: BackgroundColor, DefaultEdgeColor
+' 
+'     Function: AutoScaler, CentralOffsets, DrawImage, drawVertexNodes, GetBounds
+'               GetDisplayText, scales
+' 
+'     Sub: drawEdges, drawhullPolygon, drawLabels
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports sys = System.Math
 
 ''' <summary>
 ''' Image drawing of a network model
@@ -131,11 +132,22 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Public Function AutoScaler(graph As NetworkGraph, frameSize As Size) As SizeF
+    Public Function AutoScaler(graph As NetworkGraph, frameSize As Size, padding As Padding) As SizeF
         With graph.GetBounds
             Return New SizeF(
-                frameSize.Width / .Width,
-                frameSize.Height / .Height)
+                frameSize.Width / (.Width + padding.Horizontal),
+                frameSize.Height / (.Height + padding.Vertical)
+            )
+        End With
+    End Function
+
+    <Extension>
+    Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As Size, padding As Padding) As SizeF
+        With shape.GetBounds
+            Return New SizeF(
+                frameSize.Width / (.Width + padding.Horizontal),
+                frameSize.Height / (.Height + padding.Vertical)
+            )
         End With
     End Function
 
@@ -151,8 +163,11 @@ Public Module NetworkVisualizer
     ''' <param name="background">背景色或者背景图片的文件路径</param>
     ''' <param name="defaultColor"></param>
     ''' <param name="nodePoints">如果还需要获取得到节点的绘图位置的话，则可以使用这个可选参数来获取返回</param>
-    ''' <param name="fontSizeFactor">这个参数值越小，字体会越大</param>
     ''' <param name="hullPolygonGroups">需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组</param>
+    ''' <param name="nodeRadius">By default all of the node have the same radius size</param>
+    ''' <param name="labelFontBase">
+    ''' 这个参数会提供字体的一些基础样式,字体的大小会从节点的属性中计算出来
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Draw.Image")>
     <Extension>
@@ -164,14 +179,11 @@ Public Module NetworkVisualizer
                               Optional displayId As Boolean = True,
                               Optional labelColorAsNodeColor As Boolean = False,
                               Optional nodeStroke$ = WhiteStroke,
-                              Optional scale# = 1.2,
                               Optional minLinkWidth! = 2,
-                              Optional radiusScale# = 1.25,
-                              Optional minRadius# = 5,
-                              Optional minFontSize! = 10,
+                              Optional nodeRadius As [Variant](Of Func(Of Node, Single), Single) = Nothing,
+                              Optional fontSize As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
                               Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
-                              Optional fontSizeFactor# = 1.5,
                               Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
@@ -180,6 +192,13 @@ Public Module NetworkVisualizer
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As Size = canvasSize.SizeParser
+        Dim margin As Padding = CSS.Padding.TryParse(
+            padding, New Padding With {
+                .Bottom = 100,
+                .Left = 100,
+                .Right = 100,
+                .Top = 100
+            })
 
         ' 1. 先将网络图形对象置于输出的图像的中心位置
         ' 2. 进行矢量图放大
@@ -197,12 +216,14 @@ Public Module NetworkVisualizer
             .ToPoint
 
         ' 进行位置偏移
+        ' 将网络图形移动到画布的中央区域
         scalePos = scalePos.ToDictionary(Function(node) node.Key,
                                          Function(point)
                                              Return point.Value.OffSet2D(offset)
                                          End Function)
         ' 进行矢量放大
-        Dim scalePoints = scalePos.Values.Enlarge(scale)
+        Dim scale As SizeF = scalePos.Values.AutoScaler(frameSize, margin)
+        Dim scalePoints = scalePos.Values.Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
 
         With scalePos.Keys.AsList
             For i As Integer = 0 To .Count - 1
@@ -214,13 +235,6 @@ Public Module NetworkVisualizer
 
         Call "Initialize gdi objects...".__INFO_ECHO
 
-        Dim margin As Padding = CSS.Padding.TryParse(
-            padding, New Padding With {
-                .Bottom = 100,
-                .Left = 100,
-                .Right = 100,
-                .Top = 100
-            })
         Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke).GDIObject
         Dim baseFont As Font = CSSFont.TryParse(
             labelFontBase, New CSSFont With {
@@ -240,27 +254,42 @@ Public Module NetworkVisualizer
 
         ' 在这里不可以使用 <=，否则会导致等于最小值的时候出现无限循环的bug
         Dim minLinkWidthValue = minLinkWidth.AsDefault(Function(width) CInt(width) < minLinkWidth)
-        Dim minFontSizeValue = minFontSize.AsDefault(Function(size) Val(size) < minFontSize)
-        Dim minRadiusValue = minRadius.AsDefault(Function(r) Val(r) < minRadius)
+        Dim fontSizeMapper As Func(Of Node, Single)
+        Dim nodeRadiusMapper As Func(Of Node, Single)
+
+        If fontSize Is Nothing Then
+            fontSizeMapper = Function() 16.0!
+        ElseIf fontSize Like GetType(Single) Then
+            Dim fsize As Single = fontSize
+            fontSizeMapper = Function() fsize
+        Else
+            fontSizeMapper = fontSize
+        End If
+
+        If nodeRadius Is Nothing Then
+            Dim min = sys.Min(frameSize.Width, frameSize.Height) / 25
+            nodeRadiusMapper = Function() min
+        ElseIf nodeRadius Like GetType(Single) Then
+            Dim radius As Single = nodeRadius
+            nodeRadiusMapper = Function() radius
+        Else
+            nodeRadiusMapper = nodeRadius
+        End If
 
         ' if required hide disconnected nodes, then only the connected node in the network 
         ' Graph will be draw
         ' otherwise all of the nodes in target network graph will be draw onto the canvas.
         Dim connectedNodes = net.connectedNodes.AsDefault
         Dim drawPoints = net.vertex.ToArray Or connectedNodes.When(hideDisconnectedNode)
+        Dim labels As New List(Of labelModel)
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
-
-                Dim labels As New List(Of labelModel)
-
                 Call "Render network edges...".__INFO_ECHO
-
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
-                Call g.drawEdges(net, scale, minLinkWidthValue, edgeDashTypes, scalePos, throwEx)
+                Call g.drawEdges(net, minLinkWidthValue, edgeDashTypes, scalePos, throwEx)
 
                 Call "Render network nodes...".__INFO_ECHO
-
                 defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
 
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
@@ -274,14 +303,12 @@ Public Module NetworkVisualizer
                 ' 在这里进行节点的绘制
                 labels += g.drawVertexNodes(
                     drawPoints:=drawPoints,
-                    radiusScale:=radiusScale,
-                    minRadiusValue:=minRadiusValue,
-                    minFontSizeValue:=minFontSizeValue,
+                    radiusValue:=nodeRadiusMapper,
+                    fontSizeValue:=fontSizeMapper,
                     defaultColor:=defaultColor,
                     stroke:=stroke,
                     baseFont:=baseFont,
                     scalePos:=scalePos,
-                    fontSizeFactor:=fontSizeFactor,
                     throwEx:=throwEx,
                     displayId:=displayId
                 )
@@ -300,16 +327,28 @@ Public Module NetworkVisualizer
         Return g.GraphicsPlots(frameSize, margin, background, plotInternal)
     End Function
 
+    Public Function DirectMapRadius(Optional scale# = 1) As Func(Of Node, Single)
+        Return Function(n)
+                   Dim r As Single = n.data.radius
+
+                   ' 当网络之中没有任何边的时候，r的值会是NAN
+                   If r = 0# OrElse r.IsNaNImaginary Then
+                       r = If(n.data.neighborhoods < 30, n.data.neighborhoods * 9, n.data.neighborhoods * 7)
+                       r = If(r = 0, 9, r)
+                   End If
+
+                   Return r * scale
+               End Function
+    End Function
+
     <Extension>
     Private Iterator Function drawVertexNodes(g As IGraphics, drawPoints As Node(),
-                                              radiusScale#,
-                                              minRadiusValue As [Default](Of Double),
-                                              minFontSizeValue As [Default](Of Single),
+                                              radiusValue As Func(Of Node, Single),
+                                              fontSizeValue As Func(Of Node, Single),
                                               defaultColor As Color,
                                               stroke As Pen,
                                               baseFont As Font,
                                               scalePos As Dictionary(Of Node, PointF),
-                                              fontSizeFactor#,
                                               throwEx As Boolean,
                                               displayId As Boolean) As IEnumerable(Of labelModel)
         Dim pt As Point
@@ -319,15 +358,7 @@ Public Module NetworkVisualizer
         Call "Rendering nodes...".__DEBUG_ECHO
 
         For Each n As Node In drawPoints
-            Dim r# = n.data.radius
-
-            ' 当网络之中没有任何边的时候，r的值会是NAN
-            If r = 0# OrElse r.IsNaNImaginary Then
-                r = If(n.data.neighborhoods < 30, n.data.neighborhoods * 9, n.data.neighborhoods * 7)
-                r = If(r = 0, 9, r)
-            End If
-
-            r = (r * radiusScale) Or minRadiusValue
+            Dim r# = radiusValue(n)
 
             With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
                 br = n.data.color Or .ByRef
@@ -364,8 +395,15 @@ Public Module NetworkVisualizer
             ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
             ' 则生成一个label绘制的数据模型
             If (Not invalidRegion) AndAlso displayId Then
-                Dim fontSize! = (baseFont.Size + r) / fontSizeFactor
-                Dim font As New Font(baseFont.Name, fontSize Or minFontSizeValue, FontStyle.Bold)
+                Dim fontSize! = fontSizeValue(n)
+                Dim font As New Font(
+                    baseFont.Name,
+                    fontSize,
+                    baseFont.Style,
+                    baseFont.Unit,
+                    baseFont.GdiCharSet,
+                    baseFont.GdiVerticalFont
+                )
                 Dim label As New Label With {
                     .text = n.GetDisplayText
                 }
@@ -427,7 +465,7 @@ Public Module NetworkVisualizer
     End Sub
 
     <Extension>
-    Private Sub drawEdges(g As IGraphics, net As NetworkGraph, scale#,
+    Private Sub drawEdges(g As IGraphics, net As NetworkGraph,
                           minLinkWidthValue As [Default](Of Single),
                           edgeDashTypes As Dictionary(Of String, DashStyle),
                           scalePos As Dictionary(Of Node, PointF),
@@ -446,7 +484,7 @@ Public Module NetworkVisualizer
                 cl = Color.Blue
             End If
 
-            Dim w! = CSng(5 * edge.data.weight * scale) Or minLinkWidthValue
+            Dim w! = CSng(5 * edge.data.weight * 2) Or minLinkWidthValue
             Dim lineColor As New Pen(cl, w)
 
             With edge.data!interaction_type
@@ -488,7 +526,7 @@ Public Module NetworkVisualizer
         Dim rect As Rectangle
 
         Call d3js _
-            .labeler _
+            .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
             .Anchors(labels.Select(Function(x) x.anchor)) _
             .Labels(labels.Select(Function(x) x.label)) _
             .Size(frameSize) _

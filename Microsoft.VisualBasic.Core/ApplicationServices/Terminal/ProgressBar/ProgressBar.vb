@@ -411,6 +411,14 @@ Namespace Terminal.ProgressBar
             Return Me.GetJson
         End Function
 
+        Shared ReadOnly NaN As Double = New TimeSpan(
+            days:=9999999,' 10658576,
+            hours:=23,
+            minutes:=59,
+            seconds:=59,
+            milliseconds:=59
+        ).TotalMilliseconds
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -427,6 +435,12 @@ Namespace Terminal.ProgressBar
 
             Dim lefts = (1 - cur) / d   ' lefts = 100% - currents
             Dim time = lefts * Elapsed
+
+            ' System.OverflowException: TimeSpan overflowed because the duration is too long.
+            If time > NaN Then
+                time = NaN
+            End If
+
             Dim estimates = TimeSpan.FromMilliseconds(time)
             Return estimates
         End Function

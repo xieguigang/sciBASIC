@@ -287,6 +287,9 @@ Module CLI
         Dim config As Config = (args <= "/config").LoadProfile(Of Config) Or Config.Default
         Dim hiddenSize As Integer()
 
+        Call "ANN network configuration:".__INFO_ECHO
+        Call config.GetJson(indent:=True).__INFO_ECHO
+
         If config.hidden_size.StringEmpty Then
             hiddenSize = {
                 CInt(samples.Size.Width * 1.25),

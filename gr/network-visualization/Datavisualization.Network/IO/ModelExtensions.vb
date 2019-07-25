@@ -155,7 +155,8 @@ Namespace FileStream
         End Function
 
         ''' <summary>
-        ''' Create a <see cref="NetworkGraph"/> model from csv table data
+        ''' Create a <see cref="NetworkGraph"/> model from csv table data.
+        ''' (这个函数会将节点的degree属性值映射为节点的radius)
         ''' </summary>
         ''' <param name="net"></param>
         ''' <returns></returns>
@@ -233,6 +234,10 @@ Namespace FileStream
                                     Return Val(s)
                                 End If
                             End Function
+
+            If Not net.nodes.All(Function(node) node.NodeType.Contains(names.REFLECTION_ID_MAPPING_DEGREE)) Then
+                Call $"Not all of the nodes contains degree value, nodes' radius will use default value: {defaultRadius}".Warning
+            End If
 
             If nodeColor Is Nothing Then
                 Dim br As New SolidBrush(defaultBrush.TranslateColor)

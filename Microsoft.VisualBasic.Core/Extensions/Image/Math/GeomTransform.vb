@@ -354,6 +354,7 @@ Namespace Imaging.Math2D
             Dim ymax = array.Max(Function(pt) pt.Y)
             Dim topLeft As New PointF(xmin, ymin)
             Dim size As New SizeF(xmax - xmin, ymax - ymin)
+
             Return New RectangleF(topLeft, size)
         End Function
 
