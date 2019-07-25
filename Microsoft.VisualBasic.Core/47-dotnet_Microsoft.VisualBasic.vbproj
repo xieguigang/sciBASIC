@@ -794,7 +794,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biostack\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=True</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -899,6 +899,42 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'node-debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\node-debug\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'node-debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\node-debug\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'node-debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\node-debug\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
@@ -942,10 +978,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
+    <Compile Include="ApplicationServices\Tools\Plugin\Loader.vb" />
+    <Compile Include="ApplicationServices\Tools\Plugin\PluginAttribute.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\StreamReader.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\UnZip.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\Options.vb" />
@@ -1129,7 +1168,7 @@
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
     <Compile Include="Extensions\Collection\Linq\NumericSequence.vb" />
     <Compile Include="Extensions\Collection\Linq\Which.vb" />
-    <Compile Include="ApplicationServices\Debugger\VisualBasicAppException.vb" />
+    <Compile Include="ApplicationServices\Debugger\Exception\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Collection\AnonymousTypeHelper.vb" />
     <Compile Include="Extensions\Image\Bitmap\Effects.vb" />

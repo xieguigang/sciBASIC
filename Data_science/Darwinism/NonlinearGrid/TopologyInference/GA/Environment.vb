@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -88,6 +89,16 @@ Public Class Environment : Implements Fitness(Of Genome)
             .ToArray
         fitness = method.GetMethod
     End Sub
+
+    Public Iterator Function GetTrainingSet() As IEnumerable(Of NamedValue(Of Double()))
+        For Each sample In matrix
+            Yield New NamedValue(Of Double()) With {
+                .Name = sample.targetID,
+                .Description = sample.Y,
+                .Value = sample.X.ToArray
+            }
+        Next
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Calculate(chromosome As Genome, parallel As Boolean) As Double Implements Fitness(Of Genome).Calculate

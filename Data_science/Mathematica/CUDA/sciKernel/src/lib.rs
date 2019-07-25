@@ -1,5 +1,8 @@
-// #[link(name = "sciKernel", vers = "1.01", author = "xieguigang")];
-// #[crate_type = "dylib"];
+include!("statistics.rs");
+include!("trigonometric.rs");
+
+/// #[link(name = "sciKernel", vers = "1.01", author = "xieguigang")];
+/// #[crate_type = "dylib"];
 
 /// get number sign
 macro_rules! f64_sign {
@@ -56,8 +59,8 @@ pub extern fn pearson(x: &[f64], y: &[f64], size: i32) -> f64 {
 pub extern fn distance(a: &[f64], b: &[f64], size: i32) -> f64 {
     let mut magnitude = 0.0;
 
-    for i in 0..size {
-        magnitude = magnitude + (a[i] - b[i]).powf(2);
+    for i in (0..size as usize) {
+        magnitude = magnitude + (a[i] - b[i]).powf(2.0);
     }
 
     return magnitude.sqrt();

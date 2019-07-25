@@ -69,6 +69,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
     ''' 约束变异所产生的值的上限
     ''' </summary>
     ReadOnly truncate As Double
+    ReadOnly rangePositive As Boolean
 
     ''' <summary>
     ''' 突变程度
@@ -77,11 +78,12 @@ Public Class Genome : Implements Chromosome(Of Genome)
 
     Const CrossOverRate As Double = 30
 
-    Sub New(chr As GridSystem, mutationRate As Double, truncate As Double)
+    Sub New(chr As GridSystem, mutationRate As Double, truncate As Double, rangePositive As Boolean)
         Me.chromosome = chr
         Me.width = chr.A.Dim
         Me.MutationRate = mutationRate
         Me.truncate = truncate
+        Me.rangePositive = rangePositive
     End Sub
 
     ''' <summary>
@@ -97,7 +99,9 @@ Public Class Genome : Implements Chromosome(Of Genome)
     Public Function CalculateError(status As Vector, target As Double) As Double
         Dim predicts = chromosome.Evaluate(status)
 
-        If predicts.IsNaNImaginary Then
+        If rangePositive AndAlso predicts < 0 Then
+            Return target
+        ElseIf predicts.IsNaNImaginary Then
             Return Double.MaxValue
         Else
             Return Math.Abs(predicts - target)
@@ -124,13 +128,24 @@ Public Class Genome : Implements Chromosome(Of Genome)
                 randf.seeds.Crossover(a.C(i).B.Array, b.C(j).B.Array)
             End If
 
-            'If FlipCoin(CrossOverRate) Then
-            '    Dim tmp#
+            If FlipCoin(CrossOverRate) Then
+                Dim tmp#
+                ' dim(A) is equals to dim(C) and is equals to dim(X)
+                Dim i As Integer = randf.NextInteger(upper:=width)
+                Dim j As Integer = randf.NextInteger(upper:=width)
 
-            '    tmp = a.Vol
-            '    a.Vol = b.Vol
-            '    b.Vol = tmp
-            'End If
+                tmp = a.C(i).BC
+                a.C(i).BC = b.C(j).BC
+                b.C(j).BC = tmp
+            End If
+
+            If FlipCoin(CrossOverRate) Then
+                Dim tmp#
+
+                tmp = a.AC
+                a.AC = b.AC
+                b.AC = tmp
+            End If
 
             'If FlipCoin(CrossOverRate) Then
             '    Dim tmp#
@@ -141,8 +156,8 @@ Public Class Genome : Implements Chromosome(Of Genome)
             'End If
         End SyncLock
 
-        Yield New Genome(a, MutationRate, truncate)
-        Yield New Genome(b, MutationRate, truncate)
+        Yield New Genome(a, MutationRate, truncate, rangePositive)
+        Yield New Genome(b, MutationRate, truncate, rangePositive)
     End Function
 
     Private Function valueMutate(x As Double) As Double
@@ -162,7 +177,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
     End Function
 
     Public Function Mutate() As Genome Implements Chromosome(Of Genome).Mutate
-        Dim clone As New Genome(Me.chromosome.Clone, MutationRate, truncate)
+        Dim clone As New Genome(Me.chromosome.Clone, MutationRate, truncate, rangePositive)
         Dim chromosome = clone.chromosome
         ' dim(A) is equals to dim(C) and is equals to dim(X)
         Dim i As Integer
@@ -194,17 +209,17 @@ Public Class Genome : Implements Chromosome(Of Genome)
             End If
         Next
 
-        If FlipCoin() Then
-            chromosome.K = valueMutate(chromosome.K)
-        End If
+        'If FlipCoin() Then
+        '    chromosome.K = valueMutate(chromosome.K)
+        'End If
 
-        For j As Integer = 0 To chromosome.C.Length - 1
-            If FlipCoin() Then
-                ' mutate one bit in C vector
-                chromosome.C(j).B.Array.Mutate(randf.seeds, rate:=MutationRate)
-                chromosome.C(j).B.Truncate(limits:=truncate)
-            End If
-        Next
+        'For j As Integer = 0 To chromosome.C.Length - 1
+        '    If FlipCoin() Then
+        '        ' mutate one bit in C vector
+        '        chromosome.C(j).B.Array.Mutate(randf.seeds, rate:=MutationRate)
+        '        chromosome.C(j).B.Truncate(limits:=truncate)
+        '    End If
+        'Next
 
         If FlipCoin() Then
             i = randf.NextInteger(upper:=width)
@@ -229,18 +244,17 @@ Public Class Genome : Implements Chromosome(Of Genome)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return width _
+        Return ToString(chromosome)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Shared Function ToString(chromosome As GridSystem) As String
+        Return chromosome.A.Length _
             .SeqIterator _
             .Select(Function(i)
                         Dim sign = chromosome.A(i)
                         Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
-                        Dim S = chromosome.AC + sign * c
-
-                        'If chromosome.Vol = 0R OrElse S = 0R Then
-                        '    Return 0
-                        'Else
-                        '    Return chromosome.Vol * S / (chromosome.K + S)
-                        'End If
+                        Dim S = $"{chromosome.AC} + {sign} * {c}"
 
                         Return S
                     End Function) _

@@ -96,7 +96,7 @@ Namespace Net.Tcp
         ''' (这个函数指针用于处理来自于客户端的请求)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Property Responsehandler As DataRequestHandler Implements IServicesSocket.Responsehandler
+        Public Property ResponseHandler As DataRequestHandler Implements IServicesSocket.ResponseHandler
 
         Public ReadOnly Property IsShutdown As Boolean Implements IServicesSocket.IsShutdown
             Get
@@ -109,40 +109,40 @@ Namespace Net.Tcp
         ''' <summary>
         ''' 消息处理的方法接口： Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String
         ''' </summary>
-        ''' <param name="LocalPort">监听的本地端口号，假若需要进行端口映射的话，则可以在<see cref="Run"></see>方法之中设置映射的端口号</param>
+        ''' <param name="localPort">监听的本地端口号，假若需要进行端口映射的话，则可以在<see cref="Run"></see>方法之中设置映射的端口号</param>
         ''' <remarks></remarks>
-        Sub New(Optional LocalPort As Integer = 11000,
-                Optional exHandler As ExceptionHandler = Nothing)
+        Sub New(Optional localPort As Integer = 11000,
+                Optional exceptionHandler As ExceptionHandler = Nothing)
 
-            Me._LocalPort = LocalPort
-            Me._exceptionHandle = exHandler Or defaultHandler
+            Me._LocalPort = localPort
+            Me._exceptionHandle = exceptionHandler Or defaultHandler
         End Sub
 
         ''' <summary>
         ''' 短连接socket服务端
         ''' </summary>
-        ''' <param name="DataArrivalEventHandler"></param>
+        ''' <param name="requestEventHandler"></param>
         ''' <param name="localPort"></param>
-        ''' <param name="exHandler"></param>
-        Sub New(DataArrivalEventHandler As DataRequestHandler, localPort%, Optional exHandler As ExceptionHandler = Nothing)
-            Me.Responsehandler = DataArrivalEventHandler
-            Me._exceptionHandle = exHandler Or defaultHandler
+        ''' <param name="exceptionHandler"></param>
+        Sub New(requestEventHandler As DataRequestHandler, localPort%, Optional exceptionHandler As ExceptionHandler = Nothing)
+            Me.ResponseHandler = requestEventHandler
+            Me._exceptionHandle = exceptionHandler Or defaultHandler
             Me._LocalPort = localPort
         End Sub
 
         ''' <summary>
         ''' 函数返回Socket的注销方法
         ''' </summary>
-        ''' <param name="DataArrivalEventHandler">Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String</param>
-        ''' <param name="LocalPort"></param>
-        ''' <param name="exHandler"></param>
+        ''' <param name="requestEventHandler">Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String</param>
+        ''' <param name="localPort"></param>
+        ''' <param name="exceptionHandler"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function BeginListen(DataArrivalEventHandler As DataRequestHandler,
-                                           Optional LocalPort As Integer = 11000,
-                                           Optional exHandler As ExceptionHandler = Nothing) As Action
+        Public Shared Function BeginListen(requestEventHandler As DataRequestHandler,
+                                           Optional localPort As Integer = 11000,
+                                           Optional exceptionHandler As ExceptionHandler = Nothing) As Action
 
-            With New TcpServicesSocket(DataArrivalEventHandler, LocalPort, exHandler)
+            With New TcpServicesSocket(requestEventHandler, localPort, exceptionHandler)
                 Call New Action(AddressOf .Run).BeginInvoke(Nothing, Nothing)
                 Return AddressOf .Dispose
             End With
@@ -166,7 +166,7 @@ Namespace Net.Tcp
         ''' <remarks></remarks>
         Public Function Run() As Integer Implements ITaskDriver.Run, IServicesSocket.Run
             ' Establish the local endpoint for the socket.
-            Dim localEndPoint As TcpEndPoint = New TcpEndPoint(System.Net.IPAddress.Any, _LocalPort)
+            Dim localEndPoint As New TcpEndPoint(System.Net.IPAddress.Any, _LocalPort)
             Return Run(localEndPoint)
         End Function
 
@@ -201,26 +201,11 @@ Namespace Net.Tcp
                 Call $"{MethodBase.GetCurrentMethod().GetFullName}  ==> {localEndPoint.ToString}".__DEBUG_ECHO
 #End If
             End Try
-#Region ""
-            'If SelfMapping Then  '端口转发映射设置
-            '    Call Console.WriteLine("Self port mapping @wan_port={0} --->@lan_port", _LocalPort)
-            '    If Microsoft.VisualBasic.PortMapping.SetPortsMapping(_LocalPort, _LocalPort) = False Then
-            '        Call Console.WriteLine("Ports mapping is not successful!")
-            '    End If
-            'Else
-            '    If Not PortMapping < 100 Then
-            '        Call Console.WriteLine("Ports mapping wan_port={0}  ----->  lan_port={1}", PortMapping, LocalPort)
-            '        If False = SetPortsMapping(PortMapping, _LocalPort) Then
-            '            Call Console.WriteLine("Ports mapping is not successful!")
-            '        End If
-            '    End If
-            'End If
-#End Region
+
             _threadEndAccept = True
             _Running = True
 
             While Not Me.disposedValue
-
                 If _threadEndAccept Then
                     _threadEndAccept = False
 
@@ -251,7 +236,6 @@ Namespace Net.Tcp
         Public Sub AcceptCallback(ar As IAsyncResult)
             ' Get the socket that handles the client request.
             Dim listener As Socket = DirectCast(ar.AsyncState, Socket)
-
             ' End the operation.
             Dim handler As Socket
 
@@ -275,8 +259,7 @@ Namespace Net.Tcp
             End Try
 
             _threadEndAccept = True
-
-        End Sub 'AcceptCallback
+        End Sub
 
         Private Sub ForceCloseHandle(RemoteEndPoint As EndPoint)
             Call $"Connection was force closed by {RemoteEndPoint.ToString}, services thread abort!".__DEBUG_ECHO
@@ -303,10 +286,10 @@ Namespace Net.Tcp
             If bytesRead > 0 Then
 
                 ' There  might be more data, so store the data received so far.
-                state.ChunkBuffer.AddRange(state.readBuffer.Takes(bytesRead))
+                state.received.AddRange(state.readBuffer.Takes(bytesRead))
                 ' Check for end-of-file tag. If it is not there, read
                 ' more data.
-                state.readBuffer = state.ChunkBuffer.ToArray
+                state.readBuffer = state.received.ToArray
 
                 ' 得到的是原始的请求数据
                 Dim requestData As New RequestStream(state.readBuffer)
@@ -323,7 +306,7 @@ Namespace Net.Tcp
                     End Try
                 End If
             End If
-        End Sub 'ReadCallback
+        End Sub
 
         ''' <summary>
         ''' All the data has been read from the client. Display it on the console.
@@ -341,8 +324,9 @@ Namespace Net.Tcp
                 If requestData.IsPing Then
                     requestData = NetResponse.RFC_OK
                 Else
-                    requestData = Me.Responsehandler()(requestData, remoteEP)
+                    requestData = Me.ResponseHandler()(requestData, remoteEP)
                 End If
+
                 Call Send(handler, requestData)
             Catch ex As Exception
                 Call _exceptionHandle(ex)
@@ -368,7 +352,7 @@ Namespace Net.Tcp
             byteData = New RequestStream(0, 0, byteData).Serialize
             ' Begin sending the data to the remote device.
             Call handler.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), handler)
-        End Sub 'Send
+        End Sub
 
         Private Sub Send(handler As Socket, data As RequestStream)
             ' Convert the string data to byte data using ASCII encoding.
@@ -385,7 +369,7 @@ Namespace Net.Tcp
 
             Call handler.Shutdown(SocketShutdown.Both)
             Call handler.Close()
-        End Sub 'SendCallback
+        End Sub
 
         ''' <summary>
         ''' SERVER_INTERNAL_EXCEPTION，Server encounter an internal exception during processing
@@ -444,6 +428,5 @@ Namespace Net.Tcp
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
     End Class
 End Namespace

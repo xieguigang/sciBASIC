@@ -53,10 +53,10 @@ Namespace Parallel.Threads
         Protected ReadOnly thread As Thread
 
         Sub New()
-            thread = New Thread(AddressOf __run)
+            thread = New Thread(AddressOf run)
         End Sub
 
-        Protected MustOverride Sub __run()
+        Protected MustOverride Sub run()
 
         Public Shared Function GetThread(x As CodeThread) As Thread
             Return x.thread

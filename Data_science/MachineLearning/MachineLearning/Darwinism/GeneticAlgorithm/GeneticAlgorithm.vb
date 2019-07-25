@@ -80,7 +80,7 @@ Namespace Darwinism.GAF
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        Friend ReadOnly chromosomesComparator As Fitness(Of Chr)
+        Friend ReadOnly chromosomesComparator As FitnessPool(Of Chr)
         Friend ReadOnly seeds As IRandomSeeds
 
         ''' <summary>
@@ -131,18 +131,13 @@ Namespace Darwinism.GAF
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr),
                        Optional replacementStrategy As Strategies = Strategies.Naive,
                        Optional seeds As IRandomSeeds = Nothing,
-                       Optional cacheSize% = 10000)
+                       Optional cacheSize% = 10000,
+                       Optional toString As Func(Of Chr, String) = Nothing)
 
             Me.population = population
             Me.seeds = seeds Or randfSeeds
-
-            If cacheSize <= 0 Then
-                Me.chromosomesComparator = fitnessFunc
-            Else
-                Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize)
-            End If
-
-            Me.population.SortPopulationByFitness(Me, chromosomesComparator)
+            Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize, toString:=toString)
+            Me.population.SortPopulationByFitness(chromosomesComparator)
             Me.popStrategy = replacementStrategy.GetStrategy(Of Chr)
 
             If population.parallel Then
@@ -152,7 +147,7 @@ Namespace Darwinism.GAF
 
         Public Function GetRawFitnessModel() As Fitness(Of Chr)
             If TypeOf chromosomesComparator Is FitnessPool(Of Chr) Then
-                Return DirectCast(chromosomesComparator, FitnessPool(Of Chr)).caclFitness
+                Return DirectCast(chromosomesComparator, FitnessPool(Of Chr)).evaluateFitness
             Else
                 Return chromosomesComparator
             End If
@@ -234,7 +229,7 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
-            Return chromosomesComparator.Calculate(chromosome, parallel:=True)
+            Return chromosomesComparator.Fitness(chromosome, parallel:=True)
         End Function
 
         ''' <summary>

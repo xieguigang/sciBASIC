@@ -62,9 +62,9 @@ Namespace Parallel
         ''' <remarks></remarks>
         <Extension> Public Function Invoke(tasks As Action(), numOfThreads As Integer) As Integer
             Dim getTask As Func(Of Action, Func(Of Integer)) =
-                Function(task) AddressOf New __invokeHelper With {
-                    .__task = task
-                }.Task
+                Function(task) AddressOf New invokeHelper With {
+                    .task = task
+                }.RunTask
             Dim invokes As Func(Of Integer)() =
                 LinqAPI.Exec(Of Func(Of Integer)) <= From action As Action
                                                      In tasks
@@ -72,12 +72,12 @@ Namespace Parallel
             Return BatchTasks.BatchTask(invokes, numOfThreads).Length
         End Function
 
-        Private Structure __invokeHelper
+        Private Structure invokeHelper
 
-            Dim __task As Action
+            Dim task As Action
 
-            Public Function Task() As Integer
-                Call __task()
+            Public Function RunTask() As Integer
+                Call task()
                 Return 0
             End Function
         End Structure

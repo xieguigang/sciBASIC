@@ -157,11 +157,10 @@ Namespace Darwinism.GAF.Helper
         <Extension>
         Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T,
                                                                              populationSize%,
-                                                                             Optional parallel As [Variant](Of ParallelComputing(Of T), Boolean) = Nothing,
+                                                                             Optional parallel As [Variant](Of ParallelComputeFitness(Of T), Boolean) = Nothing,
                                                                              Optional addBase As Boolean = True) As Population(Of T)
             Dim chr As T
             Dim population As New Population(Of T)(parallel) With {
-                .parallel = True,
                 .initialSize = populationSize
             }
 

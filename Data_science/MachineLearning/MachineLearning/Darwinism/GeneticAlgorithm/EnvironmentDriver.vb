@@ -89,7 +89,7 @@ Namespace Darwinism.GAF
         End Sub
 
         Public Overrides Sub Train(Optional parallel As Boolean = False)
-            Dim errStatSize As Integer = 50
+            Dim errStatSize As Integer = 200
             Dim errors As New Queue(Of Double)(capacity:=errStatSize)
             Dim previousErrAverage As Double = Double.MaxValue
 
@@ -160,6 +160,8 @@ Namespace Darwinism.GAF
                     End If
                 End With
             Next
+
+            Call "Exit GA training loop due to the reason of reach iteration Upbound...".__DEBUG_ECHO
         End Sub
 
         ''' <summary>

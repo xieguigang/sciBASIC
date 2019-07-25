@@ -59,15 +59,21 @@ Namespace Darwinism.Models
     Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
-        Protected Friend caclFitness As Fitness(Of Individual)
+
+        Public ReadOnly Property evaluateFitness As Fitness(Of Individual)
+
+        ''' <summary>
+        ''' Get unique id of each genome
+        ''' </summary>
         Protected Friend indivToString As Func(Of Individual, String)
         Protected Friend maxCapacity%
 
-        Shared ReadOnly objToString As New [Default](Of  Func(Of Individual, String))(AddressOf Scripting.ToString)
+        Friend Shared ReadOnly objToString As New [Default](Of Func(Of Individual, String))(AddressOf Scripting.ToString)
+        Friend Shared ReadOnly defaultCacheSize As [Default](Of Integer) = 10000
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get
-                Return caclFitness.Cacheable
+                Return evaluateFitness.Cacheable
             End Get
         End Property
 
@@ -78,9 +84,14 @@ Namespace Darwinism.Models
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
         ''' <param name="toString">Obj to dictionary key</param>
         Sub New(cacl As Fitness(Of Individual), capacity%, Optional toString As Func(Of Individual, String) = Nothing)
-            caclFitness = cacl
+            evaluateFitness = cacl
             indivToString = toString Or objToString
-            maxCapacity = capacity
+            maxCapacity = capacity Or defaultCacheSize
+
+            If capacity <= 0 AndAlso cacl.Cacheable Then
+                Call $"Target environment marked as cacheable, but cache size is invalid...".Warning
+                Call $"Use default cache size for fitness: {defaultCacheSize.DefaultValue}".__INFO_ECHO
+            End If
         End Sub
 
         Sub New()
@@ -92,11 +103,13 @@ Namespace Darwinism.Models
         ''' <param name="[in]"></param>
         ''' <returns></returns>
         Public Function Fitness([in] As Individual, parallel As Boolean) As Double Implements Fitness(Of Individual).Calculate
-            If Not caclFitness.Cacheable Then
-                Return caclFitness.Calculate([in], parallel)
-            Else
-                Return getOrCacheOfFitness([in], parallel)
-            End If
+            SyncLock evaluateFitness
+                If Not evaluateFitness.Cacheable Then
+                    Return evaluateFitness.Calculate([in], parallel)
+                Else
+                    Return getOrCacheOfFitness([in], parallel)
+                End If
+            End SyncLock
         End Function
 
         Private Function getOrCacheOfFitness([in] As Individual, parallel As Boolean) As Double
@@ -107,7 +120,7 @@ Namespace Darwinism.Models
                 If cache.ContainsKey(key$) Then
                     fit = cache(key$)
                 Else
-                    fit = caclFitness.Calculate([in], parallel)
+                    fit = evaluateFitness.Calculate([in], parallel)
                     cache.Add(key$, fit)
 
                     If cache.Count >= maxCapacity Then

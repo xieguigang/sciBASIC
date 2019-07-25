@@ -51,8 +51,8 @@ Namespace Darwinism.GAF.ReplacementStrategy
         ''' <param name="GA"></param>
         ''' <returns></returns>
         Public Function newPopulation(newPop As Population(Of Chr), GA As GeneticAlgorithm(Of Chr)) As Population(Of Chr) Implements IStrategy(Of Chr).newPopulation
-            Call newPop.SortPopulationByFitness(GA, GA.chromosomesComparator) ' 通过fitness排序来进行择优
-            Call newPop.Trim(newPop.initialSize)                              ' 剪裁掉后面的对象，达到淘汰的效果
+            Call newPop.SortPopulationByFitness(GA.chromosomesComparator) ' 通过fitness排序来进行择优
+            Call newPop.Trim(newPop.initialSize)                          ' 剪裁掉后面的对象，达到淘汰的效果
 
             Return newPop
         End Function
@@ -83,7 +83,7 @@ Namespace Darwinism.GAF.ReplacementStrategy
             Dim x, y As Chr
 
             ' 通过fitness排序来进行择优
-            Call newPop.SortPopulationByFitness(GA, GA.chromosomesComparator)
+            Call newPop.SortPopulationByFitness(GA.chromosomesComparator)
             Call newPop.Trim(newPop.initialSize * 0.1)
 
             ' 对剩下的精英个体进行杂交,补充种群的成员

@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::d8bc1d00cad0b167ad1d2d6d37f66594, Scripting\MetaData\Type.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TypeInfo
-    ' 
-    '         Properties: assm, FullIdentity, SystemKnownType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: [GetType], LoadAssembly, ToString
-    ' 
-    '         Sub: __infoParser
-    ' 
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TypeInfo
+' 
+'         Properties: assm, FullIdentity, SystemKnownType
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: [GetType], LoadAssembly, ToString
+' 
+'         Sub: __infoParser
+' 
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Scripting.MetaData
 
@@ -67,15 +68,15 @@ Namespace Scripting.MetaData
         ''' <see cref="Type.FullName"/>.(类型源)
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property FullIdentity As String
+        <XmlAttribute> Public Property fullIdentity As String
 
         ''' <summary>
         ''' Is this type object is a known system type?(是否是已知的类型？)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property SystemKnownType As Boolean
+        Public ReadOnly Property isSystemKnownType As Boolean
             Get
-                Return Not Scripting.GetType(FullIdentity) Is Nothing
+                Return Not Scripting.GetType(fullIdentity) Is Nothing
             End Get
         End Property
 
@@ -87,16 +88,16 @@ Namespace Scripting.MetaData
         ''' </summary>
         ''' <param name="info"></param>
         Sub New(info As Type)
-            Call __infoParser(info, assm, FullIdentity)
+            Call doInfoParser(info, assm, fullIdentity)
         End Sub
 
-        Private Shared Sub __infoParser(info As Type, ByRef assm As String, ByRef id As String)
-            assm = FileIO.FileSystem.GetFileInfo(info.Assembly.Location).Name
+        Private Shared Sub doInfoParser(info As Type, ByRef assm As String, ByRef id As String)
+            assm = info.Assembly.Location.FileName
             id = info.FullName
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{assm}!{FullIdentity}"
+            Return $"{assm}!{fullIdentity}"
         End Function
 
         ''' <summary>
@@ -104,8 +105,8 @@ Namespace Scripting.MetaData
         ''' then using the location <see cref="App.HOME"/> as default.
         ''' </summary>
         ''' <returns></returns>
-        Public Function LoadAssembly(Optional DIR As String = Nothing) As Assembly
-            Dim path As String = If(Not DIR.DirectoryExists, App.HOME, DIR) & "/" & Me.assm
+        Public Function LoadAssembly(Optional DIR As DefaultString = Nothing) As Assembly
+            Dim path As String = $"{DIR Or App.HOME}/{Me.assm}"
             Dim assm As Assembly = Assembly.LoadFile(path)
             Return assm
         End Function
@@ -118,14 +119,15 @@ Namespace Scripting.MetaData
             Dim type As Type
 
             If knownFirst Then
-                type = Scripting.GetType(FullIdentity)
+                type = Scripting.GetType(fullIdentity)
+
                 If Not type Is Nothing Then
                     Return type
                 End If
             End If
 
             Dim assm As Assembly = LoadAssembly()
-            type = assm.GetType(Me.FullIdentity)
+            type = assm.GetType(Me.fullIdentity)
             Return type
         End Function
 
@@ -137,9 +139,9 @@ Namespace Scripting.MetaData
         ''' <returns></returns>
         Public Overloads Shared Operator =(a As TypeInfo, b As Type) As Boolean
             Dim assm As String = Nothing, type As String = Nothing
-            Call __infoParser(b, assm, type)
+            Call doInfoParser(b, assm, type)
             Return String.Equals(a.assm, assm, StringComparison.OrdinalIgnoreCase) AndAlso
-                String.Equals(a.FullIdentity, type, StringComparison.Ordinal)
+                String.Equals(a.fullIdentity, type, StringComparison.Ordinal)
         End Operator
 
         Public Overloads Shared Operator <>(a As TypeInfo, b As Type) As Boolean

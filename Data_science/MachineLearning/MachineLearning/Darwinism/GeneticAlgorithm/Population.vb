@@ -75,7 +75,13 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
 
-    Public Delegate Function ParallelComputing(Of chr As {Class, Chromosome(Of chr)})(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
+    ''' <summary>
+    ''' 遗传算法的主要限速步骤是在fitness的计算之上
+    ''' </summary>
+    ''' <typeparam name="chr"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    Public Delegate Function ParallelComputeFitness(Of chr As {Class, Chromosome(Of chr)})(comparator As FitnessPool(Of chr), source As IEnumerable(Of chr)) As IEnumerable(Of NamedValue(Of Double))
 
     Public Class Population(Of Chr As {Class, Chromosome(Of Chr)})
         Implements IEnumerable(Of Chr)
@@ -85,10 +91,16 @@ Namespace Darwinism.GAF
         Dim chromosomes As New List(Of Chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
 
         ''' <summary>
+        ''' 主要是通过这个比较耗时的计算部分实现并行化来
+        ''' 加速整个计算过程
+        ''' </summary>
+        Friend ReadOnly Pcompute As ParallelComputeFitness(Of Chr)
+
+        ''' <summary>
         ''' 是否使用并行模式在排序之前来计算出fitness
         ''' </summary>
         ''' <returns></returns>
-        Public Property parallel As Boolean = False
+        Public Property parallel As Boolean = True
         ''' <summary>
         ''' 种群的大小
         ''' </summary>
@@ -136,54 +148,23 @@ Namespace Darwinism.GAF
         End Property
 
         ''' <summary>
-        ''' Add chromosome
-        ''' </summary>
-        ''' <param name="chromosome"></param>
-        Public Sub Add(chromosome As Chr)
-            Call chromosomes.Add(chromosome)
-        End Sub
-
-        Public Sub SortPopulationByFitness(comparator As IComparer(Of Chr))
-            ' Call Arrays.Shuffle(chromosomes)
-            Call chromosomes.Sort(comparator)
-        End Sub
-
-        ''' <summary>
-        ''' 使用PLinq进行并行计算
-        ''' </summary>
-        ''' <param name="GA"></param>
-        ''' <param name="source"></param>
-        ''' <returns></returns>
-        Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of Chr), source As NamedValue(Of Chr)(), parallelFlag As Boolean) As IEnumerable(Of NamedValue(Of Double))
-            Return From x As NamedValue(Of Chr)
-                   In source.Populate(parallel:=parallelFlag)
-                   Let fit As Double = GA.chromosomesComparator.Calculate(x.Value, parallel:=Not parallelFlag)
-                   Select New NamedValue(Of Double) With {
-                       .Name = x.Name,
-                       .Value = fit
-                   }
-        End Function
-
-        Friend ReadOnly Pcompute As ParallelComputing(Of Chr)
-
-        ''' <summary>
         ''' 如果<paramref name="parallel"/>参数不是空的，则会启用这个参数的并行计算
         ''' </summary>
         ''' <param name="parallel"></param>
-        Public Sub New(Optional parallel As [Variant](Of ParallelComputing(Of Chr), Boolean) = Nothing)
+        Public Sub New(Optional parallel As [Variant](Of ParallelComputeFitness(Of Chr), Boolean) = Nothing)
             If Not parallel Is Nothing Then
                 If parallel Like GetType(Boolean) Then
                     Dim flag As Boolean = parallel
 
-                    Pcompute = Function(ga, source)
-                                   Return GA_PLinq(ga, source, parallelFlag:=flag)
+                    Pcompute = Function(envir, source)
+                                   Return GA_PLinq(envir, source, parallelFlag:=flag)
                                End Function
                 Else
                     Pcompute = parallel
                 End If
             Else
-                Pcompute = Function(ga, source)
-                               Return GA_PLinq(ga, source, parallelFlag:=True)
+                Pcompute = Function(envir, source)
+                               Return GA_PLinq(envir, source, parallelFlag:=True)
                            End Function
             End If
         End Sub
@@ -191,40 +172,49 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' 这里是ODEs参数估计的限速步骤
         ''' </summary>
-        ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
-        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
-            ' Call Arrays.Shuffle(chromosomes)
+        Friend Sub SortPopulationByFitness(comparator As FitnessPool(Of Chr))
+            Dim fitness = Pcompute(comparator, chromosomes) _
+                .GroupBy(Function(fit) fit.Name) _
+                .ToDictionary(Function(fit) fit.Key,
+                              Function(group)
+                                  ' 因为可能会存在一样的染色体
+                                  ' 所以在这里必须要分组之后再构建字典
+                                  Return group.OrderByDescending(Function(fit) fit.Value) _
+                                      .First _
+                                      .Value
+                              End Function)
 
-            If parallel AndAlso comparator.Cacheable Then
-                Call parallelCacheFitness(GA, comparator)
-            End If
-
-            chromosomes = (From c As Chr
-                           In chromosomes.AsParallel
-                           Order By comparator.Fitness(c, parallel:=False) Ascending).AsList
+            chromosomes = chromosomes _
+                .OrderBy(Function(c)
+                             Return fitness(comparator.indivToString(c))
+                         End Function) _
+                .AsList
         End Sub
 
-        Private Sub parallelCacheFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
-            Dim source As NamedValue(Of Chr)() = chromosomes _
-                .Select(Function(x)
-                            Return New NamedValue(Of Chr) With {
-                                .Name = x.ToString,
-                                .Value = x
-                            }
-                        End Function) _
-                .Where(Function(x)
-                           Return Not comparator.cache.ContainsKey(x.Name)
-                       End Function) _
-                .ToArray
-            Dim fitness As NamedValue(Of Double)() = Pcompute(GA, source).ToArray
-
-            For Each x As NamedValue(Of Double) In fitness
-                If Not comparator.cache.ContainsKey(x.Name) Then
-                    Call comparator.cache.Add(x.Name, x.Value)
-                End If
-            Next
+        ''' <summary>
+        ''' Add chromosome
+        ''' </summary>
+        ''' <param name="chromosome"></param>
+        Public Sub Add(chromosome As Chr)
+            Call chromosomes.Add(chromosome)
         End Sub
+
+        ''' <summary>
+        ''' 使用PLinq进行并行计算
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        Private Shared Function GA_PLinq(comparator As FitnessPool(Of Chr), source As IEnumerable(Of Chr), parallelFlag As Boolean) As IEnumerable(Of NamedValue(Of Double))
+            Return From c As Chr
+                   In source.Populate(parallel:=parallelFlag)
+                   Let fit As Double = comparator.Fitness(c, parallel:=Not parallelFlag)
+                   Let key As String = comparator.indivToString(c)
+                   Select New NamedValue(Of Double) With {
+                       .Name = key,
+                       .Value = fit
+                   }
+        End Function
 
         ''' <summary>
         ''' shortening population till specific number
@@ -240,8 +230,8 @@ Namespace Darwinism.GAF
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Chr) Implements IEnumerable(Of Chr).GetEnumerator
-            For Each x As Chr In chromosomes
-                Yield x
+            For Each chr As Chr In chromosomes
+                Yield chr
             Next
         End Function
 
