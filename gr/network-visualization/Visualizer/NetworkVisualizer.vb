@@ -169,6 +169,11 @@ Public Module NetworkVisualizer
     ''' 这个参数会提供字体的一些基础样式,字体的大小会从节点的属性中计算出来
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 一些内置的样式支持:
+    ''' 
+    ''' + 节点的颜色或者纹理: <see cref="NodeData.color"/>
+    ''' </remarks>
     <ExportAPI("Draw.Image")>
     <Extension>
     Public Function DrawImage(net As NetworkGraph,
@@ -252,6 +257,8 @@ Public Module NetworkVisualizer
             getNodeLabel = Function(node) node.GetDisplayText
         End If
 
+        defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
+
         ' 在这里不可以使用 <=，否则会导致等于最小值的时候出现无限循环的bug
         Dim minLinkWidthValue = minLinkWidth.AsDefault(Function(width) CInt(width) < minLinkWidth)
         Dim fontSizeMapper As Func(Of Node, Single)
@@ -290,8 +297,6 @@ Public Module NetworkVisualizer
                 Call g.drawEdges(net, minLinkWidthValue, edgeDashTypes, scalePos, throwEx)
 
                 Call "Render network nodes...".__INFO_ECHO
-                defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
-
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
                 ' 最后通过退火算法计算出合适的节点标签文本的位置之后，再使用一个循环绘制出
                 ' 所有的节点的标签文本
@@ -490,6 +495,8 @@ Public Module NetworkVisualizer
             With edge.data!interaction_type
                 If Not .IsNothing AndAlso edgeDashTypes.ContainsKey(.ByRef) Then
                     lineColor.DashStyle = edgeDashTypes(.ByRef)
+                ElseIf edgeDashTypes.ContainsKey(edge.ID) Then
+                    lineColor.DashStyle = edgeDashTypes(edge.ID)
                 End If
             End With
 
@@ -524,6 +531,7 @@ Public Module NetworkVisualizer
                            labelColorAsNodeColor As Boolean)
         Dim br As Brush
         Dim rect As Rectangle
+        Dim lx, ly As Single
 
         Call d3js _
             .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
@@ -541,13 +549,23 @@ Public Module NetworkVisualizer
                     br = New SolidBrush(DirectCast(br, SolidBrush).Color.Darken(0.005))
                 End If
 
+                lx = .label.X
+                ly = .label.Y
+
                 With g.MeasureString(.label.text, .style)
-                    rect = New Rectangle(
-                        label.label.X,
-                        label.label.Y,
-                        .Width,
-                        .Height
-                    )
+                    If lx < 0 Then
+                        lx = 1
+                    ElseIf lx + .Width > frameSize.Width Then
+                        lx -= (lx + .Width - frameSize.Width) + 5
+                    End If
+
+                    If ly < 0 Then
+                        ly = 1
+                    ElseIf ly + .Height > frameSize.Height Then
+                        ly -= (ly + .Height - frameSize.Height) + 5
+                    End If
+
+                    rect = New Rectangle(lx, ly, .Width, .Height)
                 End With
 
                 Dim path As GraphicsPath = Imaging.GetStringPath(
@@ -558,7 +576,7 @@ Public Module NetworkVisualizer
                     StringFormat.GenericTypographic
                 )
 
-                Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
+                Call g.DrawString(.label.text, .style, br, lx, ly)
 
                 ' 绘制轮廓（描边）
                 ' Call g.FillPath(br, path)

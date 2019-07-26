@@ -50,6 +50,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class GridMatrix : Inherits XmlDataModel
@@ -61,9 +62,11 @@ Public Class GridMatrix : Inherits XmlDataModel
 
     <XmlElement("correlations")>
     Public Property correlations As NumericVector()
-
-    ' Public Property Vol As Double
-    ' Public Property Km As Double
+    ''' <summary>
+    ''' 训练这个网格模型所使用的样本的数据分布矩阵
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property samples As NormalizeMatrix
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CreateSystem() As GridSystem
@@ -77,69 +80,10 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A)',            '.K = Km,        ' .Vol = Vol
+            .AC = If([const] Is Nothing, 0, [const].A),
+            .Amplify = [const].Amplify,
+            .delay = [const].Delay
         }
-    End Function
-
-    Public Overloads Function ToString(lang As Languages) As String
-        Dim visitX = Function(i As Integer)
-                         Select Case lang
-                             Case Languages.TypeScript
-                                 Return $"X[{i}]"
-                             Case Languages.PHP
-                                 Return $"$X[{i}]"
-                             Case Languages.R
-                                 Return $"X[{i + 1}]"
-                             Case Languages.VisualBasic
-                                 Return $"X({i})"
-                             Case Else
-                                 Return $"X({i})"
-                         End Select
-                     End Function
-        Dim pow = Function(x$, y$)
-                      Select Case lang
-                          Case Languages.VisualBasic, Languages.R
-                              Return $"({x} ^ {y})"
-                          Case Languages.TypeScript
-                              Return $"Math.pow({x}, {y})"
-                          Case Else
-                              Return $"pow({x}, {y})"
-                      End Select
-                  End Function
-        Dim formulaText As String = [const].A & " + " &
-            correlations _
-                .Select(Function(c, i)
-                            Return $"{[const].B(i)} + " & c _
-                                .AsEnumerable _
-                                .Select(Function(cj, j)
-                                            Return $"({cj} * {visitX(j)}])"
-                                        End Function) _
-                                .JoinBy(" + ")
-                        End Function) _
-                .Select(Function(power, i)
-                            Return $"({direction(i)} * {pow(visitX(i), power)})"
-                        End Function) _
-                .JoinBy(" + " & vbCrLf)
-
-        Select Case lang
-            Case Languages.VisualBasic
-                Return $"Public Function Grid(X As Double()) As Double
-    Return {formulaText}
-End Function"
-            Case Languages.TypeScript
-                Return $"export function Grid(X: number[]) : number {{
-    return {formulaText};
-}}"
-            Case Languages.R
-                Return $"
-Grid <- function(X) {{
-    {formulaText};
-}}"
-            Case Else
-                Return $"function Grid($x) {{
-    return {formulaText};
-}}"
-        End Select
     End Function
 
     Public Overrides Function ToString() As String
@@ -151,4 +95,6 @@ End Class
 Public Class Constants
     Public Property A As Double
     Public Property B As NumericVector
+    Public Property Amplify As Double
+    Public Property Delay As Double
 End Class

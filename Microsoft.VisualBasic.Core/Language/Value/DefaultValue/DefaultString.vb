@@ -86,8 +86,8 @@ Namespace Language.Default
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function LoadXml(Of T)() As T
-            Return DefaultValue.LoadXml(Of T)
+        Public Function LoadXml(Of T)(Optional throwEx As Boolean = True) As T
+            Return DefaultValue.LoadXml(Of T)(throwEx:=throwEx)
         End Function
 
         ''' <summary>

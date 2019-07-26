@@ -225,6 +225,10 @@ Namespace ComponentModel.Ranges.Model
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
+        Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
+            Return New DoubleRange(vector.Min, vector.Max)
+        End Operator
+
         Public Shared Widening Operator CType(data As VectorShadows(Of Single)) As DoubleRange
             Return data _
                 .Select(Function(s) CDbl(s)) _

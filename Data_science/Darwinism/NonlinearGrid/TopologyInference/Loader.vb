@@ -101,7 +101,9 @@ Public Module Loader
                                 .BC = 0.005
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .Amplify = 1, ' 在最开始增幅应该是一,意味着没有改变
+            .delay = 1
         }
     End Function
 
@@ -113,7 +115,7 @@ Public Module Loader
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateSnapshot(genome As Genome, Optional names$() = Nothing, Optional error# = -1) As GridMatrix
+    Public Function CreateSnapshot(genome As Genome, dist As NormalizeMatrix, Optional names$() = Nothing, Optional error# = -1) As GridMatrix
         Return New GridMatrix With {
             .[error] = [error],
             .direction = genome.chromosome.A.ToArray,
@@ -140,8 +142,11 @@ Public Module Loader
                         .C _
                         .Select(Function(ci) ci.BC) _
                         .ToArray
-                }
-            }            ' .Km = genome.chromosome.K,   ' .Vol = genome.chromosome.Vol
+                },
+                .Amplify = genome.chromosome.Amplify,
+                .Delay = genome.chromosome.delay
+            },
+            .samples = dist
         }
     End Function
 
