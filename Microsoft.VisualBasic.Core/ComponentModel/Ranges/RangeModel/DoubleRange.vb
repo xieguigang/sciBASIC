@@ -121,6 +121,10 @@ Namespace ComponentModel.Ranges.Model
             Call Me.New(range.Min, range.Max)
         End Sub
 
+        Sub New(vec As Vector(Of Double))
+            Call Me.New(vec.AsEnumerable)
+        End Sub
+
         ''' <summary>
         ''' Value copy
         ''' </summary>
