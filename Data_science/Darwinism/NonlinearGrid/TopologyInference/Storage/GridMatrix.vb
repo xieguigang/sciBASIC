@@ -50,6 +50,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class GridMatrix : Inherits XmlDataModel
@@ -61,9 +62,11 @@ Public Class GridMatrix : Inherits XmlDataModel
 
     <XmlElement("correlations")>
     Public Property correlations As NumericVector()
-
-    ' Public Property Vol As Double
-    ' Public Property Km As Double
+    ''' <summary>
+    ''' 训练这个网格模型所使用的样本的数据分布矩阵
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property samples As NormalizeMatrix
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CreateSystem() As GridSystem
@@ -77,7 +80,9 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A)',            '.K = Km,        ' .Vol = Vol
+            .AC = If([const] Is Nothing, 0, [const].A),
+            .Amplify = [const].Amplify,
+            .delay = [const].Delay
         }
     End Function
 
@@ -151,4 +156,6 @@ End Class
 Public Class Constants
     Public Property A As Double
     Public Property B As NumericVector
+    Public Property Amplify As Double
+    Public Property Delay As Double
 End Class

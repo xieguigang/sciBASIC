@@ -139,6 +139,11 @@ Namespace NeuralNetwork.Activations
             Return (1 / (1 + Math.Exp(-_Alpha * x)))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function doCall(x#, alpha#) As Double
+            Return (1 / (1 + Math.Exp(-alpha * x)))
+        End Function
+
         ''' <summary>
         ''' Calculates function derivative.
         ''' </summary>

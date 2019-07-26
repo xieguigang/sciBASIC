@@ -120,7 +120,7 @@ Namespace Layouts
         Public Shared Function DefaultNew() As ForceDirectedArgs
             Return New ForceDirectedArgs With {
                 .Damping = Parameters.DefaultDamping,
-                .Iterations = 1500,
+                .Iterations = 5000,
                 .Repulsion = Parameters.DefaultRepulsion,
                 .Stiffness = Parameters.DefaultStiffness
             }

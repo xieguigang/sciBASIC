@@ -234,14 +234,10 @@ Namespace FileStream
                                     Return Val(s)
                                 End If
                             End Function
+            Dim defaultColor As Brush = New SolidBrush(defaultBrush.TranslateColor)
 
-            If Not net.nodes.All(Function(node) node.NodeType.Contains(names.REFLECTION_ID_MAPPING_DEGREE)) Then
+            If Not net.nodes.All(Function(node) node.Properties.ContainsKey(names.REFLECTION_ID_MAPPING_DEGREE)) Then
                 Call $"Not all of the nodes contains degree value, nodes' radius will use default value: {defaultRadius}".Warning
-            End If
-
-            If nodeColor Is Nothing Then
-                Dim br As New SolidBrush(defaultBrush.TranslateColor)
-                nodeColor = Function(n) br
             End If
 
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
@@ -250,7 +246,7 @@ Namespace FileStream
                 In net.nodes
                 Let id = n.ID
                 Let pos As AbstractVector = New FDGVector2(Val(n("x")), Val(n("y")))
-                Let c As Brush = nodeColor(n)
+                Let c As Brush = If(nodeColor Is Nothing, defaultColor, nodeColor(n))
                 Let r As Single = getRadius(node:=n)
                 Let data As NodeData = New NodeData With {
                     .color = c,

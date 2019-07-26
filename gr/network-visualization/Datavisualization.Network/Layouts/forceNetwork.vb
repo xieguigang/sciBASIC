@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts
 
@@ -61,11 +62,11 @@ Namespace Layouts
         ''' <param name="showProgress"></param>
         <ExportAPI("Layout.ForceDirected")>
         <Extension>
-        Public Sub doForceLayout(ByRef net As NetworkGraph, parameters As ForceDirectedArgs, Optional showProgress As Boolean = False)
+        Public Function doForceLayout(ByRef net As NetworkGraph, parameters As ForceDirectedArgs, Optional showProgress As Boolean = False) As NetworkGraph
             With parameters
-                Call net.doForceLayout(.Stiffness, .Repulsion, .Damping, .Iterations, showProgress:=showProgress)
+                Return net.doForceLayout(.Stiffness, .Repulsion, .Damping, .Iterations, showProgress:=showProgress)
             End With
-        End Sub
+        End Function
 
         ''' <summary>
         ''' Applies the force directed layout. Parameter can be read from a ``*.ini`` profile file by using <see cref="Parameters.Load"/>
@@ -138,15 +139,17 @@ Namespace Layouts
         End Function
 
         <Extension>
-        Public Sub doRandomLayout(ByRef net As NetworkGraph)
-            Dim rnd As New Random
+        Public Function doRandomLayout(ByRef network As NetworkGraph) As NetworkGraph
+            SyncLock randf.seeds
+                For Each x As Node In network.vertex
+                    x.data.initialPostion = New FDGVector2 With {
+                        .x = randf.seeds.NextDouble * 1000,
+                        .y = randf.seeds.NextDouble * 1000
+                    }
+                Next
+            End SyncLock
 
-            For Each x As Node In net.vertex
-                x.data.initialPostion = New FDGVector2 With {
-                    .x = rnd.NextDouble * 1000,
-                    .y = rnd.NextDouble * 1000
-                }
-            Next
-        End Sub
+            Return network
+        End Function
     End Module
 End Namespace

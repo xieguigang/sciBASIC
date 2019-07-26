@@ -39,11 +39,13 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
@@ -109,6 +111,9 @@ Public Module Visualize
         Next
     End Function
 
+    ReadOnly redColor$ = Color.Red.ToHtmlColor
+    ReadOnly blueColor$ = Color.SkyBlue.ToHtmlColor
+
     ''' <summary>
     ''' Create network graph model from the grid system status.
     ''' </summary>
@@ -147,7 +152,8 @@ Public Module Visualize
                     .mass = importance(factor.name),
                     .radius = importance(factor.name),
                     .Properties = New Dictionary(Of String, String) From {
-                        {"impacts", importance(factor.name)}
+                        {"impacts", importance(factor.name)},
+                        {"color", If(importance(factor.name) > 0, redColor, blueColor)}
                     }
                 },
                 .Label = factor.name,
@@ -169,7 +175,8 @@ Public Module Visualize
                         .label = $"{factor.name} ^ {variableNames(i)}",
                         .weight = factor(i),
                         .Properties = New Dictionary(Of String, String) From {
-                            {"correlation", factor(i)}
+                            {"correlation", factor(i)},
+                            {"dash", If(factor(i) > 0, "solid", "dash")}
                         }
                     }
                     g.CreateEdge(factor.name, variableNames(i), edge)

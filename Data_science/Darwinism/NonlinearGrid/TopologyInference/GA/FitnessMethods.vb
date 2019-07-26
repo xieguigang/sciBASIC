@@ -49,6 +49,11 @@ Public Module FitnessMethodExtensions
             .Select(Function(sample)
                         Dim err = target.CalculateError(sample.X, sample.Y)
 
+                        ' 降低零结果的误差权重
+                        If sample.X = 0R Then
+                            err *= 2
+                        End If
+
                         Return (errors:=err, id:=sample.targetID)
                     End Function) _
             .GroupBy(Function(g) g.id) _
