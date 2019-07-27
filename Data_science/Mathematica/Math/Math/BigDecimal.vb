@@ -386,7 +386,7 @@ Public Structure BigDecimal
 
     'Does division on two BigDecimal numbers
     Public Shared Operator /(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As BigDecimal
-        Return Div(Num1, Num2, Precision:=10000)
+        Return Div(Num1, Num2, Precision:=50000)
     End Operator
 
     'Does division on two BigDecimal numbers with specified precision (no rounding)
