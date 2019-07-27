@@ -1,5 +1,5 @@
 include!("math_macro.rs");
-include!("statistics.rs");
+include!("statistics/statistics.rs");
 include!("trigonometric.rs");
 include!("randf.rs");
 

@@ -1,22 +1,22 @@
-macro_rules! math.log {
+macro_rules! math_log {
     ($x: expr) => {
         $x.log();
     };
 }
 
-macro_rules! math.sqrt {
+macro_rules! math_sqrt {
     ($x: expr) => {
         $x.sqrt();
     };
 }
 
-macro_rules! math.cos {
+macro_rules! math_cos {
     ($x: expr) => {
         $x.cos();
     };
 }
 
-macro_rules! math.sin {
+macro_rules! math_sin {
     ($x: expr) => {
         $x.sin();
     };
