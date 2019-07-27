@@ -27,7 +27,7 @@ Namespace Hypothesis.FishersExact
             If n <= 1 Then
                 Return 0.0
             Else
-                Return lngamma(n + 1)
+                Return lngamm(n + 1)
             End If
         End Function
 

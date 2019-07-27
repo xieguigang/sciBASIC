@@ -47,7 +47,7 @@ Module Fisher
     Sub Main()
 
 
-        Dim p222 = FishersExactTest.FishersExact(35, 70, 265, 1930)
+        Dim p222 = FishersExactTest.FishersExact(65, 70, 235, 19930)
 
         Console.WriteLine(p222.ToString)
 
