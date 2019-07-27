@@ -9,6 +9,10 @@ Namespace Hypothesis.FishersExact
         Public Property n As Integer
         Public Property prob As Double
         Public Property valid As Boolean
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 
     ''' <summary>
