@@ -90,7 +90,9 @@ Namespace Distributions
         ''' </summary>
         ''' <param name="z"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' http://lib.stat.cmu.edu/apstat/245
+        ''' </remarks>
         <Extension>
         Public Function lngamma(z As Double) As Double
             If (z < 0) Then Return 0
@@ -102,7 +104,9 @@ Namespace Distributions
             Next
 
             Dim t As Double = z + g_ln + 0.5
-            Return 0.5 * sys.Log(2 * sys.PI) + (z + 0.5) * sys.Log(t) - t + sys.Log(x) - sys.Log(z)
+            Dim lngm = 0.5 * sys.Log(2 * sys.PI) + (z + 0.5) * sys.Log(t) - t + sys.Log(x) - sys.Log(z)
+
+            Return lngm
         End Function
 
         ''' <summary>
