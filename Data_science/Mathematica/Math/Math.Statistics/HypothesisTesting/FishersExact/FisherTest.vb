@@ -79,7 +79,7 @@ Namespace Hypothesis.FishersExact
         ''' <param name="n_1"></param>
         ''' <param name="n"></param>
         ''' <returns></returns>
-        Public Function exact(n11 As i32, n1_ As i32, n_1 As i32, n As i32) As (f64, f64, f64, f64, f64)
+        Public Function exact(n11 As i32, n1_ As i32, n_1 As i32, n As i32) As (f64, f64, f64, f64, f64, HyperState)
             Dim sleft As f64
             Dim sright As f64
             Dim sless As f64
@@ -98,7 +98,7 @@ Namespace Hypothesis.FishersExact
                 min = 0
             End If
             If min = max Then
-                Return (1.0, 1.0, 1.0, 1.0, 1.0)
+                Return (1.0, 1.0, 1.0, 1.0, 1.0, New HyperState)
             End If
 
             Dim s As New HyperState
@@ -148,7 +148,7 @@ Namespace Hypothesis.FishersExact
                 slarg = sright
             End If
 
-            Return (prob, sleft, sright, sless, slarg)
+            Return (prob, sleft, sright, sless, slarg, s)
         End Function
 
         ''' <summary>
@@ -165,7 +165,7 @@ Namespace Hypothesis.FishersExact
         ''' ```
         ''' use fishers_exact:fishers_exact;
         '''
-        ''' let p = fishers_exact(&[1,9,11,3]).unwrap();
+        ''' let p = fishers_exact(&amp;[1,9,11,3]).unwrap();
         '''
         ''' assert!((p.less_pvalue - 0.001346).abs() &lt; 0.0001);
         ''' assert!((p.greater_pvalue - 0.9999663).abs() &lt; 0.0001);
@@ -186,7 +186,7 @@ Namespace Hypothesis.FishersExact
             Dim n1_ = n11 + n12
             Dim n_1 = n11 + n21
             Dim n = n11 + n12 + n21 + n22
-            Dim rtvl As (noname#, sleft#, sright#, sless#, slarg#) = exact(n11, n1_, n_1, n)
+            Dim rtvl As (prob#, sleft#, sright#, sless#, slarg#, hyper_stat As HyperState) = exact(n11, n1_, n_1, n)
 
             left = rtvl.sless
             right = rtvl.slarg
@@ -199,7 +199,9 @@ Namespace Hypothesis.FishersExact
             Return New FishersExactPvalues With {
                 .two_tail_pvalue = twotail,
                 .less_pvalue = left,
-                .greater_pvalue = right
+                .greater_pvalue = right,
+                .prob = rtvl.prob,
+                .hyper_state = rtvl.hyper_stat
             }
         End Function
     End Module

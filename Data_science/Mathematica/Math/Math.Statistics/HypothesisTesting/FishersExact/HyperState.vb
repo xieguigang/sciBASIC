@@ -19,6 +19,9 @@ Namespace Hypothesis.FishersExact
     ''' `FishersExactPvalues` holds the pvalues calculated by the `fishers_exact` function.
     ''' </summary>
     Public Class FishersExactPvalues
+
+        Public Property prob As Double
+
         ''' <summary>
         ''' pvalue for the two-tailed test. Use this when there Is no prior alternative.
         ''' </summary>
@@ -38,6 +41,8 @@ Namespace Hypothesis.FishersExact
         ''' </summary>
         ''' <returns></returns>
         Public Property greater_pvalue As Double
+
+        Public Property hyper_state As HyperState
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
