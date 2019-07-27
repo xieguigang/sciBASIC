@@ -93,7 +93,9 @@ Namespace Hypothesis.FishersExact
             If n_1 < max Then
                 max = n_1
             End If
+
             Dim min = n1_ + n_1 - n
+
             If min < 0 Then
                 min = 0
             End If
@@ -200,7 +202,6 @@ Namespace Hypothesis.FishersExact
                 .two_tail_pvalue = twotail,
                 .less_pvalue = left,
                 .greater_pvalue = right,
-                .prob = rtvl.prob,
                 .hyper_state = rtvl.hyper_stat
             }
         End Function

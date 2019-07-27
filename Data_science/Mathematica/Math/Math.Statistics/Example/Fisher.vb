@@ -49,6 +49,7 @@ Module Fisher
 
         Dim p222 = FishersExactTest.FishersExact(65, 70, 235, 19930)
 
+        Console.WriteLine(FisherTest.FisherPvalue(65, 70, 235, 19930))
         Console.WriteLine(p222.ToString)
 
         Pause()

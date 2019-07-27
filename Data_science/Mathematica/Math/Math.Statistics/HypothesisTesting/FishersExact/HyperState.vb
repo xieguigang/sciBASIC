@@ -20,8 +20,6 @@ Namespace Hypothesis.FishersExact
     ''' </summary>
     Public Class FishersExactPvalues
 
-        Public Property prob As Double
-
         ''' <summary>
         ''' pvalue for the two-tailed test. Use this when there Is no prior alternative.
         ''' </summary>
