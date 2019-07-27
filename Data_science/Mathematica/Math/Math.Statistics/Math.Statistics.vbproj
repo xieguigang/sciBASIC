@@ -326,6 +326,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HypothesisTesting\FishersExact\HyperState.vb" />
     <Compile Include="HypothesisTesting\FisherTest.vb" />
     <Compile Include="HypothesisTesting\T-test\TestResult.vb" />
     <Compile Include="HypothesisTesting\Hypothesis.vb" />
@@ -400,8 +401,6 @@
       <Name>math-core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HypothesisTesting\FishersExact\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

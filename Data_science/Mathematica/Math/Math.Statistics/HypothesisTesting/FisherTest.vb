@@ -71,6 +71,8 @@ Public Module FisherTest
     ''' |**Non-Studying**|   c   |    d    |   c + d   |
     ''' |*Column Total*  | a + c |  b + d  | a+b+c+d=n |
     ''' 
+    ''' 这个函数通过下面的阶乘计算来计算FisherTest的pvalue值
+    ''' 
     ''' ```
     ''' p = ((a+b)!(c+d)!(a+c)!(b+d)!)/(a!b!c!d!n!)
     ''' ```
