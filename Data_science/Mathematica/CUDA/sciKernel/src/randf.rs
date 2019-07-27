@@ -1,5 +1,3 @@
-include!("math_macro.rs");
-
 pub mod crandn {
 
     const Mlng : i64 =  2147483648;

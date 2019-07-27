@@ -5,18 +5,18 @@
 // http://opensource.org/licenses/MIT>, at your option. This file may not be
 // copied, modified, or distributed except according to those terms.
 
-//! Fisher's exact test.
-//!
-//! Implements a 2×2 Fishers exact test. Use this to test the independence of two
-//! categorical variables when the sample sizes are small.
-//!
-//! For an approachable explanation of Fisher's exact test, see
-//! [Fisher's exact test of independence](http://www.biostathandbook.com/fishers.html) by
-//! John H. McDonald in the [Handbook of Biological Statistics](http://www.biostathandbook.com/).
-//!
-//! The test is computed using code ported from Øyvind Langsrud's JavaScript
-//! implementation at [http://www.langsrud.com/fisher.htm](http://www.langsrud.com/fisher.htm),
-//! used with permission.
+///! Fisher's exact test.
+///!
+///! Implements a 2×2 Fishers exact test. Use this to test the independence of two
+///! categorical variables when the sample sizes are small.
+///!
+///! For an approachable explanation of Fisher's exact test, see
+///! [Fisher's exact test of independence](http://www.biostathandbook.com/fishers.html) by
+///! John H. McDonald in the [Handbook of Biological Statistics](http://www.biostathandbook.com/).
+///!
+///! The test is computed using code ported from Øyvind Langsrud's JavaScript
+///! implementation at [http://www.langsrud.com/fisher.htm](http://www.langsrud.com/fisher.htm),
+///! used with permission.
 
 /// https://github.com/cpearce/fishers_exact
 
