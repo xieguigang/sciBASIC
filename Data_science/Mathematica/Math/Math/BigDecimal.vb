@@ -77,6 +77,12 @@ Public Structure BigDecimal
     End Property
 #End Region
 
+    Private Shared ReadOnly defaultPrecision As Integer = 1000
+
+    Shared Sub New()
+        defaultPrecision = App.GetVariable("big_decimal.precision").ParseInteger
+    End Sub
+
 #Region "Unsigned Integer Constructors"
     'Construct a BigDecimal number from Byte
     Sub New(ByVal Num As Byte)
@@ -384,9 +390,14 @@ Public Structure BigDecimal
         Return PowN10(BigInteger.Multiply(Num1.value, Num2.value).ToString, O)
     End Operator
 
-    'Does division on two BigDecimal numbers
+    ''' <summary>
+    ''' Does division on two BigDecimal numbers
+    ''' </summary>
+    ''' <param name="Num1"></param>
+    ''' <param name="Num2"></param>
+    ''' <returns></returns>
     Public Shared Operator /(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As BigDecimal
-        Return Div(Num1, Num2, Precision:=50000)
+        Return Div(Num1, Num2, Precision:=defaultPrecision)
     End Operator
 
     'Does division on two BigDecimal numbers with specified precision (no rounding)
