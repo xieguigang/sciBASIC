@@ -305,5 +305,15 @@ Namespace Language
         Public Shared Operator >=(value As Value(Of T), o As T) As T
             Throw New NotSupportedException
         End Operator
+
+        Public Shared Operator Like(ref As Value(Of T), val As T) As Boolean
+            If ref Is Nothing OrElse Not ref.HasValue Then
+                Return val Is Nothing
+            ElseIf val Is Nothing Then
+                Return False
+            Else
+                Return ref.Value.Equals(val)
+            End If
+        End Operator
     End Class
 End Namespace
