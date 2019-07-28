@@ -50,7 +50,6 @@
 
 Imports System.IO
 Imports System.IO.MemoryMappedFiles
-Imports System.Security.AccessControl
 
 Namespace CommandLine
 
