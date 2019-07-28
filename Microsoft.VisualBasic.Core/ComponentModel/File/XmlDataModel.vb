@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c463731b5ea4ea70468881dc9e813dba, ComponentModel\File\XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::c463731b5ea4ea70468881dc9e813dba, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
 
     ' Author:
     ' 

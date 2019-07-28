@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1be3e946ad55ffa176526dc9a2f4699f, Net\Tcp\TcpRequest.vb"
+﻿#Region "Microsoft.VisualBasic::1bccba128c0a261d17fe23f3ccffc941, Microsoft.VisualBasic.Core\Net\Tcp\TcpRequest.vb"
 
     ' Author:
     ' 
@@ -36,14 +36,11 @@
     '         Properties: LocalIPAddress
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: LocalConnection, OperationTimeOut, (+2 Overloads) SendMessage, ToString
-    '         Delegate Function
     ' 
-    '             Function: (+4 Overloads) SendMessage
+    '         Function: LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
     ' 
-    '             Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
-    '                  SendCallback
-    ' 
+    '         Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
+    '              SendCallback
     ' 
     ' 
     ' /********************************************************************************/

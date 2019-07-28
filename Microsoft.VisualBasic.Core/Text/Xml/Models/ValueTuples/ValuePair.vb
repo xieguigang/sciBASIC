@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::797fff98dcd673f44f853ce792bece13, Text\Xml\Models\ValueTuples\ValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::797fff98dcd673f44f853ce792bece13, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\ValuePair.vb"
 
     ' Author:
     ' 

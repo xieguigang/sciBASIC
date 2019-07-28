@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a96cb85fcf17d0101fbb7e187ce62576, CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a96cb85fcf17d0101fbb7e187ce62576, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 

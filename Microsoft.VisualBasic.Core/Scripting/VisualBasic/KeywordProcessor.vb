@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04b70b48eab1dafca8861e45bd5803df, Scripting\VisualBasic\KeywordProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::e3def9fdd143b474305f796dd8a75cfb, Microsoft.VisualBasic.Core\Scripting\VisualBasic\KeywordProcessor.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class KeywordProcessor
     ' 
-    '         Properties: Words
+    '         Properties: TokenWords
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: AutoEscapeVBKeyword

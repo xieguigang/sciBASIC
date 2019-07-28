@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11d59e8cf799bd8b63b30b390b05215b, ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::11d59e8cf799bd8b63b30b390b05215b, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 

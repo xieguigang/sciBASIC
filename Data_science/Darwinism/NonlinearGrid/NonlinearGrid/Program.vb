@@ -1,43 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::03976b42f1e58a8561e28d2d7f3a6600, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
+﻿#Region "Microsoft.VisualBasic::f53ea4cb803ce18a2357508aef6f9545, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Program
-' 
-'     Function: DumpAsNetwork, ExportFactorImpact, Main, trainGA, ValidationSummary
-' 
-'     Sub: RunFitProcess
-' 
-' /********************************************************************************/
+    ' Module Program
+    ' 
+    '     Function: DumpAsNetwork, ExportFactorImpact, Formula, Main, trainGA
+    '               ValidationROC, ValidationSummary
+    ' 
+    '     Sub: RunFitProcess
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

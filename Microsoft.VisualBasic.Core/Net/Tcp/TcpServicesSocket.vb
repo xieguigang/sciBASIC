@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::616f0712cde4c97f32239f8fd30ed126, Net\Tcp\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::9f480709d70a6e517457954ef02b6176, Microsoft.VisualBasic.Core\Net\Tcp\TcpServicesSocket.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class TcpServicesSocket
     ' 
-    '         Properties: IsShutdown, LocalPort, Responsehandler, Running
+    '         Properties: IsShutdown, LocalPort, ResponseHandler, Running
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

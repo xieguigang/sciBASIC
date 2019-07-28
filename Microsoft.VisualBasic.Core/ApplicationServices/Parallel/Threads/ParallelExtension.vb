@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::add210b8a4f87e7cf23051aaaa02d33d, ApplicationServices\Parallel\Threads\ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::d644612bcbf5b4839c5ed206221a2c94, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
 
     ' Author:
     ' 

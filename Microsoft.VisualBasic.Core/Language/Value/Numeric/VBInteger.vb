@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8ecacf552b36759cf81b824b85b5923, Language\Value\Numeric\VBInteger.vb"
+﻿#Region "Microsoft.VisualBasic::f8ecacf552b36759cf81b824b85b5923, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBInteger.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99182a5af91e1e16afeddacac8e0b8e, ComponentModel\DataSource\Property\NamedCollection.vb"
+﻿#Region "Microsoft.VisualBasic::e99182a5af91e1e16afeddacac8e0b8e, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection.vb"
 
     ' Author:
     ' 

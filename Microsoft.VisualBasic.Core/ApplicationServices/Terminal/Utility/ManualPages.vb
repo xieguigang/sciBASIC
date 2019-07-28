@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::022c48ff60aa11fbd66b2c657c58ba1c, ApplicationServices\Terminal\Utility\ManualPages.vb"
+﻿#Region "Microsoft.VisualBasic::022c48ff60aa11fbd66b2c657c58ba1c, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ManualPages.vb"
 
     ' Author:
     ' 

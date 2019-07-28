@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54168908a8a088c83e19233d15cbb460, ApplicationServices\VBDev\Signature\CodeSign.vb"
+﻿#Region "Microsoft.VisualBasic::dd2889b664c11a2f7e649fa774042171, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\CodeSign.vb"
 
     ' Author:
     ' 
@@ -33,16 +33,7 @@
 
     '     Module CodeSign
     ' 
-    ' 
-    '         Enum Languages
-    ' 
-    '             PHP, R, TypeScript, VisualBasic
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: ParseHeaderRegion, SignCode
+    '         Function: ParseHeaderRegion, SignCode
     ' 
     ' 
     ' /********************************************************************************/

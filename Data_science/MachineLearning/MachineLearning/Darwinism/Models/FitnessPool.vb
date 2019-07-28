@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de57b1bf046c699441eebb4f0918c154, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::afb7747c21b0aaf559bc11cfd3c99dc0, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,11 @@
 
     '     Class FitnessPool
     ' 
-    '         Properties: Cacheable
+    '         Properties: Cacheable, evaluateFitness
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: Fitness
+    '         Function: Fitness, getOrCacheOfFitness
     ' 
     '         Sub: Clear
     ' 

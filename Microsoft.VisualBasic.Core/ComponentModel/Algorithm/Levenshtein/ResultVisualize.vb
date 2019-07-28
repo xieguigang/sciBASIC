@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08ea5c7237abc19bd95da3aca099d9bb, ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::08ea5c7237abc19bd95da3aca099d9bb, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb"
 
     ' Author:
     ' 

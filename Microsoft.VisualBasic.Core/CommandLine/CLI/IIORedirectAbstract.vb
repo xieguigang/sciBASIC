@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::243559093d758b5dce647e9e05713362, CommandLine\CLI\IIORedirectAbstract.vb"
+﻿#Region "Microsoft.VisualBasic::243559093d758b5dce647e9e05713362, Microsoft.VisualBasic.Core\CommandLine\CLI\IIORedirectAbstract.vb"
 
     ' Author:
     ' 

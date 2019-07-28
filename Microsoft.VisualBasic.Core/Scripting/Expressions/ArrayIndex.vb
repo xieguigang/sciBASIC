@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b6226b1eef6db682e0798b5b09dee22, Scripting\Expressions\ArrayIndex.vb"
+﻿#Region "Microsoft.VisualBasic::2b6226b1eef6db682e0798b5b09dee22, Microsoft.VisualBasic.Core\Scripting\Expressions\ArrayIndex.vb"
 
     ' Author:
     ' 

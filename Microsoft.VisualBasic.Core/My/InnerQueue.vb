@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1110699dc4dd396363970e2d12d42435, My\InnerQueue.vb"
+﻿#Region "Microsoft.VisualBasic::1110699dc4dd396363970e2d12d42435, Microsoft.VisualBasic.Core\My\InnerQueue.vb"
 
     ' Author:
     ' 
