@@ -61,7 +61,7 @@ Namespace Net.Tcp.Persistent.Socket
         Public ReadOnly ConnectTime As Date = Now
 
         Sub New(Socket As StateObject)
-            Me.ChunkBuffer = Socket.ChunkBuffer
+            Me.received = Socket.received
             Me.readBuffer = Socket.readBuffer
             Me.workSocket = Socket.workSocket
         End Sub

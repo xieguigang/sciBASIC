@@ -187,6 +187,10 @@ Public Module crandn
         Return goal
     End Function
 
+    Const Mlng As Long = 2147483648UI
+    Const namda As Long = 314159269
+    Const C As Long = 453806245
+
     ''' <summary>
     ''' 混合同余法产生[0，1]均匀分布随机数向量
     ''' </summary>
@@ -206,22 +210,16 @@ Public Module crandn
         '     * m--------向量维数
         '     * seed-----种子
         '    -------------------------------------------------
-
-        Const M__2 As Long = 2147483648UI
-        Const namda As Long = 314159269
-        Const C As Long = 453806245
-
-        '结果
         Dim goal As New Vector(m)
         Dim x0 As Long = seed
         Dim x1 As Long
 
         For k As Integer = 0 To m - 1
-            x1 = (x0 * namda + C) Mod M__2
+            x1 = (x0 * namda + C) Mod Mlng
             '得到余数
 
             '通过乘以1.0把整数运算变为浮点数运算，否则结果都为0
-            goal(k) = x1 * 1.0 / M__2
+            goal(k) = x1 * 1.0 / Mlng
 
             '下一个起点以之前的余数为种子
             x0 = x1
@@ -234,27 +232,21 @@ Public Module crandn
     ''' 混合同余法生成[0，1]均匀分布随机矩阵
     ''' 与随机向量函数同名重载
     ''' </summary>
-    ''' <param name="m__1">矩阵维数</param>
+    ''' <param name="m">矩阵维数</param>
     ''' <param name="n">矩阵维数</param>
     ''' <param name="seed">种子</param>
     ''' <returns></returns>
-    Public Function rand(m__1 As Integer, n As Integer, seed As Integer) As MAT
-
-        Const M__2 As Long = 2147483648UI
-        Const namda As Long = 314159269
-        Const C As Long = 453806245
-
-        Dim goal As New MAT(m__1, n)
-
+    Public Function rand(m As Integer, n As Integer, seed As Integer) As MAT
+        Dim goal As New MAT(m, n)
         Dim x0 As Long = seed
         Dim x1 As Long
 
-        For i As Integer = 0 To m__1 - 1
+        For i As Integer = 0 To m - 1
             For j As Integer = 0 To n - 1
-                x1 = (x0 * namda + C) Mod M__2
+                x1 = (x0 * namda + C) Mod Mlng
                 '得到余数
 
-                goal(i, j) = x1 * 1.0 / M__2
+                goal(i, j) = x1 * 1.0 / Mlng
 
 
                 x0 = x1

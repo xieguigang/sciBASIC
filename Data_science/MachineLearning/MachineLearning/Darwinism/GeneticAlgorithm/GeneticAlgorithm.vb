@@ -76,19 +76,20 @@ Namespace Darwinism.GAF
     ''' The GA engine core
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Class GeneticAlgorithm(Of Chr As Chromosome(Of Chr)) : Inherits Model
+    Public Class GeneticAlgorithm(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits Model
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        Friend ReadOnly chromosomesComparator As Fitness(Of Chr)
+        Friend ReadOnly chromosomesComparator As FitnessPool(Of Chr)
         Friend ReadOnly seeds As IRandomSeeds
 
         ''' <summary>
         ''' 因为在迭代的过程中，旧的种群会被新的种群所替代
         ''' 所以在这里不可以加readonly修饰
         ''' </summary>
-        Dim population As Population(Of Chr)
-        Dim popStrategy As IStrategy(Of Chr)
+        Public ReadOnly Property population As Population(Of Chr)
+
+        Public ReadOnly Property popStrategy As IStrategy(Of Chr)
 
         Public ReadOnly Property Best As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -120,31 +121,37 @@ Namespace Darwinism.GAF
         ''' <param name="fitnessFunc">
         ''' Calculates the fitness of the mutated chromesome in <paramref name="population"/>
         ''' </param>
-        ''' <param name="seeds"></param>
+        ''' <param name="seeds">The random number generator.</param>
         ''' <param name="cacheSize">
         ''' -1 means no cache
+        ''' </param>
+        ''' <param name="replacementStrategy">
+        ''' Strategy for new population replace the old population.
         ''' </param>
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr),
                        Optional replacementStrategy As Strategies = Strategies.Naive,
                        Optional seeds As IRandomSeeds = Nothing,
-                       Optional cacheSize% = 10000)
+                       Optional cacheSize% = 10000,
+                       Optional toString As Func(Of Chr, String) = Nothing)
 
             Me.population = population
             Me.seeds = seeds Or randfSeeds
-
-            If cacheSize <= 0 Then
-                Me.chromosomesComparator = fitnessFunc
-            Else
-                Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize)
-            End If
-
-            Me.population.SortPopulationByFitness(Me, chromosomesComparator)
+            Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize, toString:=toString)
+            Me.population.SortPopulationByFitness(chromosomesComparator)
             Me.popStrategy = replacementStrategy.GetStrategy(Of Chr)
 
             If population.parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
             End If
         End Sub
+
+        Public Function GetRawFitnessModel() As Fitness(Of Chr)
+            If TypeOf chromosomesComparator Is FitnessPool(Of Chr) Then
+                Return DirectCast(chromosomesComparator, FitnessPool(Of Chr)).evaluateFitness
+            Else
+                Return chromosomesComparator
+            End If
+        End Function
 
         ''' <summary>
         ''' 完成一次种群的迭代进化
@@ -182,7 +189,7 @@ Namespace Darwinism.GAF
             ' 从而实现了择优进化, 即程序模型对我们的训练数据集产生了学习
 
             ' 新种群替代旧的种群
-            population = popStrategy.newPopulation(newPopulation, Me)
+            _population = popStrategy.newPopulation(newPopulation, Me)
         End Sub
 
         ''' <summary>
@@ -222,7 +229,7 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
-            Return chromosomesComparator.Calculate(chromosome, parallel:=True)
+            Return chromosomesComparator.Fitness(chromosome, parallel:=True)
         End Function
 
         ''' <summary>

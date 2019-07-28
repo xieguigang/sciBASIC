@@ -121,6 +121,10 @@ Namespace ComponentModel.Ranges.Model
             Call Me.New(range.Min, range.Max)
         End Sub
 
+        Sub New(vec As Vector(Of Double))
+            Call Me.New(vec.AsEnumerable)
+        End Sub
+
         ''' <summary>
         ''' Value copy
         ''' </summary>
@@ -223,6 +227,10 @@ Namespace ComponentModel.Ranges.Model
 
         Public Shared Widening Operator CType(tuple As (min&, max&)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
+        End Operator
+
+        Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
+            Return New DoubleRange(vector.Min, vector.Max)
         End Operator
 
         Public Shared Widening Operator CType(data As VectorShadows(Of Single)) As DoubleRange

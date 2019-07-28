@@ -116,6 +116,10 @@ Namespace NeuralNetwork.StoreProcedure
                         Return New ReLU
                     Case NameOf(Activations.HyperbolicTangent)
                         Return New HyperbolicTangent
+                    Case NameOf(Activations.Sinc)
+                        Return New Sinc
+                    Case NameOf(Activations.Softplus)
+                        Return New Softplus
                     Case Else
 #If DEBUG Then
                         Call $"Missing model: {name}".Warning

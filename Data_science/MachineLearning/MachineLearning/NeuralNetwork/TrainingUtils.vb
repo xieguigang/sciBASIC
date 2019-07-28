@@ -229,8 +229,11 @@ Namespace NeuralNetwork
                     errors = trainingImpl(dataSets, parallel, Selective)
                     ETA = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
                     msg = $"Iterations: [{i}/{numEpochs}], errors={errors}{vbTab}learn_rate={network.LearnRate} {ETA}"
-                    progress.SetProgress(tick.StepProgress, msg)
-
+#If UNIX Then
+                    Call msg.__INFO_ECHO
+#Else
+                    Call progress.SetProgress(tick.StepProgress, msg)
+#End If
                     If errors < 0.0001 Then
                         Selective = False
                     End If
@@ -310,12 +313,20 @@ Namespace NeuralNetwork
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Shared Function CalculateError(neuronNetwork As Network, targets As Double()) As Double
-            Return neuronNetwork.OutputLayer _
+            Dim err# = neuronNetwork.OutputLayer _
                 .Neurons _
                 .Select(Function(n, i)
                             Return Math.Abs(n.CalculateError(targets(i)))
                         End Function) _
                 .Sum()
+
+            Const maxErr# = 10 ^ 255
+
+            If err.IsNaNImaginary Then
+                Return maxErr
+            Else
+                Return err
+            End If
         End Function
 #End Region
 

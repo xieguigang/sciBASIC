@@ -175,7 +175,20 @@ Namespace Drawing2D
         ''' <param name="shape">矢量图形的点集合</param>
         ''' <param name="scale#"></param>
         ''' <returns></returns>
-        <Extension> Public Function Enlarge(shape As IEnumerable(Of PointF), scale#) As PointF()
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Enlarge(shape As IEnumerable(Of PointF), scale#) As PointF()
+            Return Enlarge(shape, (scale, scale))
+        End Function
+
+        ''' <summary>
+        ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
+        ''' </summary>
+        ''' <param name="shape">矢量图形的点集合</param>
+        ''' <param name="scale#"></param>
+        ''' <returns></returns>
+        <Extension> Public Function Enlarge(shape As IEnumerable(Of PointF), scale As (width#, height#)) As PointF()
             Dim shapeVector = shape.ToArray
             Dim center = shapeVector.Centre
             Dim x As New Vector(shapeVector.Select(Function(pt) pt.X))
@@ -183,10 +196,8 @@ Namespace Drawing2D
             Dim b = x - CDbl(center.X)
             Dim a = y - CDbl(center.Y)
             Dim c = Vector.Sqrt(b ^ 2 + a ^ 2)
-            Dim cs = c * scale
-            Dim dc = cs - c
-            Dim dx = (b / c) * dc
-            Dim dy = (a / c) * dc
+            Dim dx = (b / c) * (c * scale.width - c)
+            Dim dy = (a / c) * (c * scale.height - c)
 
             For i As Integer = 0 To c.Length - 1
                 ' 2018-3-6 如果有个点是位于shape的中心，那么在scale之后c值为零

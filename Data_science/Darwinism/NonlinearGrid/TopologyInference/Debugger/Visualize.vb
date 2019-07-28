@@ -39,12 +39,16 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Module Visualize
@@ -98,15 +102,12 @@ Public Module Visualize
         Dim impacts = grid.NodeImpacts.ToArray
 
         For i As Integer = 0 To grid.correlations.Length - 1
-            If impacts(i).Value < 0 Then
-                Continue For
-            End If
-
             Dim A As Double = grid.direction(i)
+            Dim B As Double = Math.E ^ impacts(i).Value
 
             Yield New NamedValue(Of Double) With {
                 .Name = impacts(i).Name,
-                .Value = impacts(i).Value * A,
+                .Value = B * A,
                 .Description = impacts(i).Value
             }
         Next
@@ -142,6 +143,29 @@ Public Module Visualize
                               Return n.Value
                           End Function)
 
+        Dim impacts As Vector = importance.Values.AsVector
+        Dim posValues As DoubleRange = impacts(impacts > 0)
+        Dim negValues As DoubleRange = impacts(impacts < 0)
+        ' get color sequence and then removes white colors
+        Dim JetColors As Color() = Imaging.ColorSequence(, name:="Jet").Where(Function(c) Not c.IsBlackOrWhite(offset:=20)).ToArray
+        Dim posColor As Color() = Imaging.ColorSequence(, name:=ColorMap.PatternHot).Where(Function(c) Not c.IsBlackOrWhite(offset:=20)).ToArray
+        Dim negColor As Color() = Imaging.ColorSequence(, name:=ColorMap.PatternWinter).Where(Function(c) Not c.IsBlackOrWhite(offset:=20)).ToArray
+        Dim getColor = Function(impact As Double) As Color
+                           Dim index As Integer
+                           Dim colors As Color()
+
+                           If impact > 0 Then
+                               index = posValues.ScaleMapping(impact, {0, posColor.Length - 1})
+                               colors = posColor
+                           Else
+                               index = negValues.ScaleMapping(impact, {0, negColor.Length - 1})
+                               index = (negColor.Length - 1) - index
+                               colors = negColor
+                           End If
+
+                           Return colors(index)
+                       End Function
+
         For Each factor As NumericVector In grid.correlations
             node = New Node With {
                 .data = New NodeData With {
@@ -150,7 +174,9 @@ Public Module Visualize
                     .mass = importance(factor.name),
                     .radius = importance(factor.name),
                     .Properties = New Dictionary(Of String, String) From {
-                        {"impacts", importance(factor.name)}
+                        {"impacts", importance(factor.name)},
+                        {"color", getColor(importance(factor.name)).ToHtmlColor},
+                        {"size", Math.Abs(importance(factor.name))}
                     }
                 },
                 .Label = factor.name,
@@ -160,6 +186,12 @@ Public Module Visualize
             variableNames += factor.name
             g.AddNode(node)
         Next
+
+        Dim correlations As DoubleRange = grid _
+            .correlations _
+            .Select(Function(c) c.vector) _
+            .IteratesALL _
+            .ToArray
 
         For Each factor As NumericVector In grid.correlations
             For i As Integer = 0 To factor.Length - 1
@@ -172,7 +204,10 @@ Public Module Visualize
                         .label = $"{factor.name} ^ {variableNames(i)}",
                         .weight = factor(i),
                         .Properties = New Dictionary(Of String, String) From {
-                            {"correlation", factor(i)}
+                            {"correlation", factor(i)},
+                            {"dash", If(factor(i) > 0, "solid", "dash")},
+                            {"width", Math.Abs(factor(i))},
+                            {"color", JetColors(correlations.ScaleMapping(factor(i), {0, JetColors.Length - 1})).ToHtmlColor}
                         }
                     }
                     g.CreateEdge(factor.name, variableNames(i), edge)
