@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 <CLI>
 <Description("")>
@@ -103,11 +104,23 @@ Module Program
     End Function
 
     <ExportAPI("/factor.impacts")>
-    <Usage("/factor.impacts /in <model.Xml> [/order <asc/desc> /correlation /out <out.csv>]")>
+    <Usage("/factor.impacts /in <model.Xml> [/order <asc/desc> /correlation /names <names_map.csv> /out <out.csv>]")>
+    <Argument("/names", True, CLITypes.File,
+              AcceptTypes:={GetType(NamedValue)},
+              Extensions:="*.csv",
+              Description:="If this argument is present in the commandline input, then the names in trainingSet will 
+              be used as unique id for get display name title from this map file.")>
     Public Function ExportFactorImpact(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim model = [in].LoadXml(Of GridMatrix)
         Dim isCor As Boolean = args("/correlation")
+        Dim names As Dictionary(Of String, String) = args("/names") _
+            .LoadCsv(Of NamedValue) _
+            .SafeQuery _
+            .ToDictionary(Function(id) id.name,
+                          Function(title)
+                              Return title.text
+                          End Function)
         Dim impacts As NamedValue(Of Double)()
 
         If isCor Then
@@ -115,6 +128,19 @@ Module Program
         Else
             impacts = model.NodeImpacts.ToArray
         End If
+
+        impacts = impacts _
+            .Select(Function(tuple)
+                        Dim title = names.TryGetValue(tuple.Name, [default]:=tuple.Name)
+                        Dim rtvl As New NamedValue(Of Double) With {
+                        .Name = title,
+                        .Value = tuple.Value,
+                        .Description = tuple.Description
+                        }
+
+                        Return rtvl
+                    End Function) _
+            .ToArray
 
         If args.ContainsParameter("/order") Then
             If args("/order").DefaultValue.TextEquals("asc") Then
