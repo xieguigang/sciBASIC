@@ -68,7 +68,11 @@ Public Module ROC
                               getValidate:=Function(x, threshold) x.actuals(i) >= threshold,
                               getPredict:=Function(x, threshold) x.predicts(i) >= threshold,
                               threshold:=thresholdSeq
-                          ).ToArray
+                          ).Where(Function(threshold)
+                                      Return Not threshold.Specificity.IsNaNImaginary AndAlso
+                                             Not threshold.Sensibility.IsNaNImaginary
+                                  End Function) _
+                           .ToArray
                           Dim AUCValue = Validation.AUC(validations)
 
                           Return AUCValue

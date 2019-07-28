@@ -42,7 +42,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports Microsoft.VisualBasic.MethodsExtension
 
 Namespace Parallel
 

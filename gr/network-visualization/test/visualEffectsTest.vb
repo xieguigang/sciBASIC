@@ -67,6 +67,6 @@ Module visualEffectsTest
 
         Call g.doForceLayout
         Call g.ComputeNodeDegrees
-        Call g.DrawImage("2000,2000", scale:=3.5, radiusScale:=5, fontSizeFactor:=5).Save("./test.png")
+        Call g.DrawImage("2000,2000").Save("./test.png")
     End Sub
 End Module

@@ -42,16 +42,19 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Normalizer
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
@@ -63,6 +66,8 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Text
 
+<CLI>
+<Description("")>
 Module Program
 
     Public Function Main() As Integer
@@ -91,7 +96,7 @@ Module Program
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.threshold={threshold}.network/"
         Dim matrix As GridMatrix = [in].LoadXml(Of GridMatrix)
         Dim graph As NetworkGraph = matrix.CreateGraph(cutoff:=threshold)
-        Dim network = graph.Tabular({"impacts", "correlation"})
+        Dim network = graph.Tabular({"impacts", "correlation", "color", "dash", "size", "width"})
 
         Return network.Save(out, Encodings.ASCII).CLICode
     End Function
@@ -132,6 +137,24 @@ Module Program
         Return 0
     End Function
 
+    <ExportAPI("/validates.ROC")>
+    <Usage("/validates.ROC /validates <fittingValitation.csv> [/out <output.csv>]")>
+    Public Function ValidationROC(args As CommandLine) As Integer
+        Dim outputResult$ = args("/validates")
+        Dim out$ = args("/out") Or (outputResult.TrimSuffix & ".validation_ROC.csv")
+        Dim result = outputResult.LoadCsv(Of FittingValidation)
+        Dim ROC = result.ROC _
+            .Select(Function(d)
+                        Return New IO.DataSet With {
+                            .ID = d.Threshold,
+                            .Properties = d.ToDataSet
+                        }
+                    End Function) _
+            .ToArray
+
+        Return ROC.SaveTo(out).CLICode
+    End Function
+
     <ExportAPI("/validates")>
     <Usage("/validates /in <model.Xml> /data <trainingSet.Xml> [/order <asc/desc> /out <out.csv>]")>
     <Description("Do model validations.")>
@@ -139,10 +162,12 @@ Module Program
         Dim in$ = args <= "/in"
         Dim data$ = args <= "/data"
         Dim model = [in].LoadXml(Of GridMatrix).CreateSystem
+        Dim rawSample As NormalizeMatrix = [in].LoadXml(Of GridMatrix).samples
         Dim dataset = data.LoadXml(Of DataSet)
         Dim summaryResult = dataset.DataSamples _
             .Select(Function(sample, i)
-                        Dim result = model.Evaluate(sample.status.vector)
+                        Dim input As Vector = rawSample.NormalizeInput(sample, Methods.NormalScaler)
+                        Dim result = model.Evaluate(input)
 
                         Return New FittingValidation With {
                             .sampleID = sample.ID,
@@ -192,46 +217,102 @@ Module Program
     End Function
 
     <ExportAPI("/training")>
-    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /rate <default=0.1> /out <output_model.Xml>]")>
+    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /rate <default=0.1> /validateSet <validateSet.Xml> /range.positive /truncate <default=1000> /parallel <processor_plugin> /out <output_model.Xml>]")>
     <Description("Training a grid system use GA method.")>
+    <Argument("/range.positive", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="All of the output value is in positive value range, values should greater than or equals to ZERO.")>
     Public Function trainGA(args As CommandLine) As Integer
         Dim inFile As String = args <= "/in"
         Dim out$ = args("/out") Or $"{inFile.TrimSuffix}.minError.Xml"
         Dim model$ = args("/model")
         Dim seed As GridSystem = Nothing
         Dim popSize% = args("/popSize") Or 5000
+        Dim Pcompute As ParallelComputeFitness(Of Genome) = Nothing
+
+        If args.ContainsParameter("/parallel") Then
+            Dim parallelPlugin = (args <= "/parallel").GetTagValue("::", trim:=True)
+            Dim plugin As MethodInfo
+            Dim fullName$ = (App.HOME & "/" & parallelPlugin.Name).GetFullPath
+
+            Call $"Load parallel computing plugin:  {parallelPlugin}".__INFO_ECHO
+            Call $"fullName={fullName}".__INFO_ECHO
+
+            plugin = ApplicationServices.Plugin.GetPluginMethod(fullName, parallelPlugin.Value)
+            Pcompute = plugin.CreateDelegate(GetType(ParallelComputeFitness(Of Genome)))
+        End If
 
         If Not inFile.FileExists Then
             Call "No input file was found!".PrintException
         Else
             seed = If(model.FileExists, model.LoadXml(Of GridMatrix).CreateSystem, Nothing)
+
+            If Not seed Is Nothing Then
+                Call $"Load trained model from {model}".__INFO_ECHO
+            End If
         End If
 
         Dim trainingSet = inFile.LoadXml(Of DataSet)
+        Dim validateSet = args("/validateSet").LoadXml(Of DataSet)(throwEx:=False)
         Dim rate As Double = args("/rate") Or 0.1
+        Dim truncate As Double = args("/truncate") Or 1000.0
+        Dim allPositive As Boolean = args("/range.positive")
 
         Call $"Mutation rate = {rate}".__DEBUG_ECHO
         Call $"Population size = {popSize}".__DEBUG_ECHO
         Call trainingSet _
-            .RunFitProcess(out, seed, popSize, factorNames:=trainingSet.NormalizeMatrix.names, mutationRate:=rate)
+            .RunFitProcess(
+                validateSet,
+                out, seed, popSize,
+                factorNames:=trainingSet.NormalizeMatrix.names,
+                mutationRate:=rate,
+                truncate:=truncate,
+                allPositive:=allPositive,
+                Pcompute:=Pcompute
+        )
 
         Return 0
     End Function
 
     <Extension>
-    Public Sub RunFitProcess(trainingSet As DataSet, outFile$, seed As GridSystem, popSize%, factorNames$(), mutationRate As Double)
+    Public Sub RunFitProcess(trainingSet As DataSet, validateSet As DataSet, outFile$, seed As GridSystem, popSize%, factorNames$(),
+                             mutationRate As Double,
+                             truncate As Double,
+                             allPositive As Boolean,
+                             Pcompute As ParallelComputeFitness(Of Genome))
+
         Dim cor As Vector = trainingSet.DataSamples.AsEnumerable.Correlation
         Dim max As Vector = trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
         Call "Create a base chromosome".__DEBUG_ECHO
         Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, max))
         Call "Initialize populations".__DEBUG_ECHO
-        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate).InitialPopulation(popSize, parallel:=True)
+        Call $"value truncate at ABS limits {truncate}".__DEBUG_ECHO
+        Dim parallel As [Variant](Of ParallelComputeFitness(Of Genome), Boolean)
+
+        If Pcompute Is Nothing Then
+            parallel = True
+        Else
+            parallel = Pcompute
+        End If
+
+        Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate, truncate, allPositive).InitialPopulation(popSize, parallel)
         Call "Initialize environment".__DEBUG_ECHO
-        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet.DataSamples.AsEnumerable, FitnessMethods.R2)
+        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
         Call "Create algorithm engine".__DEBUG_ECHO
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
         Call "Load driver".__DEBUG_ECHO
-        Dim engine As New EnvironmentDriver(Of Genome)(ga) With {
+
+        Dim takeBestSnapshot = Sub(best As Genome, error#)
+                                   Call best _
+                                       .CreateSnapshot(
+                                            dist:=trainingSet.NormalizeMatrix,
+                                            names:=factorNames,
+                                            [error]:=[error]
+                                       ) _
+                                       .GetXml _
+                                       .SaveTo(outFile.TrimSuffix & $"_localOptimal/{[error]}.Xml")
+                               End Sub
+        Dim engine As New EnvironmentDriver(Of Genome)(ga, takeBestSnapshot) With {
             .Iterations = 1000000,
             .Threshold = 0.005
         }
@@ -239,7 +320,7 @@ Module Program
         Call engine.AttachReporter(Sub(i, e, g)
                                        Call EnvironmentDriver(Of Genome).CreateReport(i, e, g).ToString.__DEBUG_ECHO
                                        Call g.Best _
-                                             .CreateSnapshot(factorNames, e) _
+                                             .CreateSnapshot(trainingSet.NormalizeMatrix, factorNames, e) _
                                              .GetXml _
                                              .SaveTo(outFile)
                                    End Sub)

@@ -501,13 +501,13 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="param"></param>
         ''' <returns></returns>
-        Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
+        Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8, Optional size& = 512 * 1024 * 1024) As StreamWriter
             Dim path$ = Me(param)
             Dim type As FileTypes = StreamExtensions.FileType(path)
 
             Select Case type
                 Case FileTypes.MemoryFile, FileTypes.PipelineFile
-                    Return New StreamWriter(StreamExtensions.OpenForWrite(path))
+                    Return New StreamWriter(StreamExtensions.OpenForWrite(path, size))
                 Case Else
                     If path.StringEmpty Then
                         Return New StreamWriter(Console.OpenStandardOutput, encoding.CodePage)

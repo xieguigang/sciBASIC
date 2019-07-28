@@ -60,7 +60,7 @@ Namespace Parallel
         ''' 
         <Extension>
         Public Function OperationTimeOut(Of T, TOut)(handle As Func(Of T, TOut), [In] As T, ByRef Out As TOut, TimeOut As Double) As Boolean
-            Dim invoke As New __backgroundTask(Of TOut)(Function() handle([In]))
+            Dim invoke As New backgroundTask(Of TOut)(Function() handle([In]))
             Dim i As Integer
 
             TimeOut = TimeOut * 1000

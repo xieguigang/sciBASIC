@@ -95,7 +95,8 @@ Namespace Parallel.Tasks
         ''' <returns></returns>
         Public Function Run() As AsyncHandle(Of TOut)
             If IsCompleted Then
-                _Handle = Task.BeginInvoke(Nothing, Nothing) ' 假若没有执行完毕也调用的话，会改变handle
+                ' 假若没有执行完毕也调用的话，会改变handle
+                _Handle = Task.BeginInvoke(Nothing, Nothing)
             End If
 
             Return Me

@@ -61,7 +61,7 @@ Namespace Parallel.Tasks
     ''' <returns></returns>
     Public Delegate Function IBackgroundTask(Of T)() As T
 
-    Friend Class __backgroundTask(Of T) : Inherits IParallelTask
+    Friend Class backgroundTask(Of T) : Inherits IParallelTask
 
         ''' <summary>
         ''' 获取得到任务线程执行的输出结果
@@ -103,7 +103,7 @@ Namespace Parallel.Tasks
             _RunningTask = False
         End Sub
 
-        Public Function Start() As __backgroundTask(Of T)
+        Public Function Start() As backgroundTask(Of T)
             If Not TaskRunning Then
                 _taskThread.Start()
                 _TaskComplete = False

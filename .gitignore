@@ -268,3 +268,6 @@ storage.ide-wal
 /CLI_tools/Apps
 /Data_science/Visualization/Apps
 /Data_science/Mathematica/CUDA/test/Dll1/.vs
+/Data_science/Mathematica/CUDA/test/App
+/Data_science/Mathematica/CUDA/App
+/CLI_tools/MLkit/Apps
