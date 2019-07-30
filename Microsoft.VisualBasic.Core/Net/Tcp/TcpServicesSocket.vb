@@ -178,6 +178,33 @@ Namespace Net.Tcp
         ''' </summary>
         ''' <remarks></remarks>
         Public Function Run(localEndPoint As TcpEndPoint) As Integer Implements IServicesSocket.Run
+            Dim callback As AsyncCallback
+
+            Call startSocket(localEndPoint)
+
+            While Not Me.disposedValue
+                If _threadEndAccept Then
+                    _threadEndAccept = False
+
+                    callback = New AsyncCallback(AddressOf AcceptCallback)
+
+                    Try
+                        ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
+                        Call _servicesSocket.BeginAccept(callback, _servicesSocket)
+                    Catch ex As Exception
+                        Call App.LogException(ex)
+                    End Try
+                End If
+
+                Call Thread.Sleep(1)
+            End While
+
+            _Running = False
+
+            Return 0
+        End Function
+
+        Private Sub startSocket(localEndPoint As TcpEndPoint)
             _LocalPort = localEndPoint.Port
             ' Create a TCP/IP socket.
             _servicesSocket = New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
@@ -204,26 +231,7 @@ Namespace Net.Tcp
 
             _threadEndAccept = True
             _Running = True
-
-            While Not Me.disposedValue
-                If _threadEndAccept Then
-                    _threadEndAccept = False
-
-                    Dim callback As New AsyncCallback(AddressOf AcceptCallback)
-                    Try
-                        Call _servicesSocket.BeginAccept(callback, _servicesSocket)  ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
-                    Catch ex As Exception
-                        Call App.LogException(ex)
-                    End Try
-                End If
-
-                Call Thread.Sleep(1)
-            End While
-
-            _Running = False
-
-            Return 0
-        End Function
+        End Sub
 
         Public ReadOnly Property Running As Boolean = False Implements IServicesSocket.IsRunning
 
