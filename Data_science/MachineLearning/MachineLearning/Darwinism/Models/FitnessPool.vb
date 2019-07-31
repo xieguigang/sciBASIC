@@ -91,6 +91,8 @@ Namespace Darwinism.Models
             If capacity <= 0 AndAlso cacl.Cacheable Then
                 Call $"Target environment marked as cacheable, but cache size is invalid...".Warning
                 Call $"Use default cache size for fitness: {defaultCacheSize.DefaultValue}".__INFO_ECHO
+            ElseIf cacl.Cacheable Then
+                Call $"Fitness was marked as cacheable with cache table size {capacity}".__INFO_ECHO
             End If
         End Sub
 

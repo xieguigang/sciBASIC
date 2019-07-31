@@ -298,6 +298,24 @@ Namespace ComponentModel.Collection
         End Operator
 
         ''' <summary>
+        ''' Delete items from source <paramref name="index"/> and then returns the new modify index collection
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(index As Index(Of T), list As List(Of T)) As Index(Of T)
+            Dim table = index.maps
+
+            For Each item As T In list
+                If table.ContainsKey(item) Then
+                    Call table.Remove(item)
+                End If
+            Next
+
+            Return New Index(Of T)(table.Keys)
+        End Operator
+
+        ''' <summary>
         ''' <paramref name="item"/> is one of the element in <paramref name="indexr"/>
         ''' </summary>
         ''' <param name="item"></param>

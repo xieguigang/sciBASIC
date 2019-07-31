@@ -173,6 +173,10 @@ Namespace Darwinism.GAF
             End If
         End Sub
 
+        Friend Sub New(parallel As ParallelComputeFitness(Of Chr))
+            Pcompute = parallel
+        End Sub
+
         ''' <summary>
         ''' 这里是ODEs参数估计的限速步骤
         ''' </summary>

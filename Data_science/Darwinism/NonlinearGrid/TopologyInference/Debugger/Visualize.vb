@@ -131,7 +131,7 @@ Public Module Visualize
     ''' 所以c因子可以看作为Xj与Xi之间的相关度, 只不过这个相关度是位于整个[负无穷, 正无穷]之间的
     ''' </remarks>
     <Extension>
-    Public Function CreateGraph(grid As GridMatrix, Optional cutoff# = 1) As NetworkGraph
+    Public Function CreateGraph(grid As GridMatrix, Optional cutoff# = 1, Optional nameTitles As Dictionary(Of String, String) = Nothing) As NetworkGraph
         Dim g As New NetworkGraph
         Dim node As Node
         Dim variableNames As New List(Of String)
@@ -166,6 +166,10 @@ Public Module Visualize
                            Return colors(index)
                        End Function
 
+        If nameTitles Is Nothing Then
+            nameTitles = New Dictionary(Of String, String)
+        End If
+
         For Each factor As NumericVector In grid.correlations
             node = New Node With {
                 .data = New NodeData With {
@@ -176,7 +180,8 @@ Public Module Visualize
                     .Properties = New Dictionary(Of String, String) From {
                         {"impacts", importance(factor.name)},
                         {"color", getColor(importance(factor.name)).ToHtmlColor},
-                        {"size", Math.Abs(importance(factor.name))}
+                        {"size", Math.Abs(importance(factor.name))},
+                        {"title", nameTitles.TryGetValue(factor.name, [default]:=factor.name)}
                     }
                 },
                 .Label = factor.name,

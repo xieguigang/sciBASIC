@@ -64,7 +64,7 @@ Public Class Environment : Implements Fitness(Of Genome)
 
     Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Genome).Cacheable
         Get
-            Return False
+            Return True
         End Get
     End Property
 
