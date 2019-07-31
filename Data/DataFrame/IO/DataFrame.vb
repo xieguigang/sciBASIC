@@ -338,7 +338,8 @@ Namespace IO
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Function Load(path As String, encoding As Encoding,
+        Public Overloads Shared Function Load(path As String,
+                                              Optional encoding As Encoding = Nothing,
                                               Optional fast As Boolean = False,
                                               Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As DataFrame
             Dim file As File
@@ -362,12 +363,12 @@ Namespace IO
             Return File.Parse(content).AsDataSource(Of T)
         End Function
 
-        Private Shared Function __getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
+        Private Shared Function getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
             Return LinqAPI.MakeList(Of String) _
  _
                 () <= From strValue As String
                       In table.First
-                      Let s = __reviewColumnHeader(strValue)
+                      Let s = reviewColumnHeader(strValue)
                       Select s
 
         End Function
@@ -384,7 +385,7 @@ Namespace IO
         ''' <param name="strValue"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Shared Function __reviewColumnHeader(strValue As String) As String
+        Private Shared Function reviewColumnHeader(strValue As String) As String
             If String.IsNullOrEmpty(strValue) Then
                 Call EmptyWarning.Warning
                 Return ""
@@ -414,16 +415,16 @@ Namespace IO
         ''' <param name="file"></param>
         ''' <returns></returns>
         Public Overloads Shared Function CreateObject(file As File) As DataFrame
-            Return __createObject(file)
+            Return createObjectInternal(file)
         End Function
 
         Private Shared Sub Initialize(table As List(Of RowObject), dataframe As DataFrame)
             dataframe._innerTable = table.Skip(1).AsList
-            dataframe.columnList = __getColumnList(table)
+            dataframe.columnList = getColumnList(table)
             dataframe._SchemaOridinal = __createSchemaOridinal(dataframe)
         End Sub
 
-        Private Shared Function __createObject(file As File) As DataFrame
+        Private Shared Function createObjectInternal(file As File) As DataFrame
             Dim dataframe As New DataFrame
             Call Initialize(file._innerTable, dataframe)
             Return dataframe
@@ -481,6 +482,24 @@ Namespace IO
             Return current.Column(ordinal)
         End Function
 
+        Public Function GetValueLambda(columnName$, Optional caseSensitive As Boolean = True) As Func(Of RowObject, String)
+            Dim index As Integer = GetOrdinal(Column:=columnName)
+
+            If index = -1 AndAlso caseSensitive Then
+                Return Function(r) Nothing
+            ElseIf index = -1 Then
+                With Which.IsTrue(columnList.Select(Function(c) c.TextEquals(columnName)))
+                    If .IsNullOrEmpty Then
+                        Return Function(r) Nothing
+                    Else
+                        index = .ByRef(Scan0)
+                    End If
+                End With
+            End If
+
+            Return Function(r) r(index)
+        End Function
+
         ''' <summary>
         ''' The data frame object start to reading the data in this table, if the current pointer is reach 
         ''' the top of the lines then this function will returns FALSE to stop the reading loop.
@@ -523,10 +542,15 @@ Namespace IO
             Return _innerTable(p).ToString
         End Function
 
+        ''' <summary>
+        ''' Subset of the dataframe object by given column field names
+        ''' </summary>
+        ''' <param name="columnList"></param>
+        ''' <returns></returns>
         Public Function [Select](columnList As String()) As DataFrame
             Dim newTable As New List(Of RowObject)
-            Dim pList As Integer() =
-                GetOrdinalSchema(columnList)   'Location pointer to the column
+            ' Location pointer to the column
+            Dim pList As Integer() = GetOrdinalSchema(columnList)
 
             Call Me.Reset()
 
