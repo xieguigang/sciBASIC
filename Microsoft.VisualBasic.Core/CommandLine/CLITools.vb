@@ -208,48 +208,6 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' (\\)192.168.1.239\blablabla
-        ''' 前面的两个斜杠可能被预处理的时候被清除掉了
-        ''' 所以在这里只匹配IP地址和后面的路径部分
-        ''' </summary>
-        Const BrokenWindowsNetworkDirectoryPattern = "\d+(\.\d+){3}\.+"
-        Const WindowsNetworkDirectoryPattern = "\\{2}" & BrokenWindowsNetworkDirectoryPattern
-
-        <Extension>
-        Private Iterator Function fixWindowsNetworkDirectory(tokens As String()) As IEnumerable(Of String)
-            Dim trim$
-            Dim matchBroken$
-
-            For Each token As String In tokens
-                If App.IsMicrosoftPlatform AndAlso App.RunningInGitBash Then
-                    ' 只针对Windows环境中的git bash环境进行修复
-                    ' 因为gitbash会对\进行转义
-                    ' 所以 \\192.168.1.239 之类的网络路径会被强制转义为 \192.168.1.239 即当前驱动器的某一个文件夹
-                    If token.IsPattern(WindowsNetworkDirectoryPattern) Then
-                        ' 已经是一个完整的路径了，直接返回
-                        Yield token
-                    Else
-                        trim = token.TrimStart("\"c)
-                        matchBroken = trim.Match(BrokenWindowsNetworkDirectoryPattern, RegexOptions.Singleline)
-
-                        If trim <> token AndAlso InStr(trim, matchBroken) = 1 Then
-                            Yield "\\" & trim
-                        Else
-                            ' 这不是一个网络路径
-                            ' 则不需要进行修复
-                            ' 直接返回原始的字符串即可
-                            Yield token
-                        End If
-                    End If
-                Else
-                    ' 不是运行于gitbash之上的
-                    ' 不需要修补，直接返回
-                    Yield token
-                End If
-            Next
-        End Function
-
-        ''' <summary>
         ''' Try parsing the cli command string from the string value.(尝试着从文本行之中解析出命令行参数信息)
         ''' </summary>
         ''' <param name="args">The commandline arguments which is user inputs from the terminal.</param>
