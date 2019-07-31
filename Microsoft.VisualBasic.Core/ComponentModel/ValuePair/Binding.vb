@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00ff821a099908e75295b177c069fae6, ComponentModel\ValuePair\Binding.vb"
+﻿#Region "Microsoft.VisualBasic::00ff821a099908e75295b177c069fae6, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\Binding.vb"
 
     ' Author:
     ' 

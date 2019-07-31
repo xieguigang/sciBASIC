@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c34204250eaeef9094e055522fb33ca2, Data_science\Mathematica\Math\Math.Statistics\Example\Fisher.vb"
+﻿#Region "Microsoft.VisualBasic::988275e92e47fc46635f172eabef3f06, Data_science\Mathematica\Math\Math.Statistics\Example\Fisher.vb"
 
     ' Author:
     ' 
@@ -40,10 +40,20 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Statistics
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.FishersExact
 
 Module Fisher
 
     Sub Main()
+
+
+        Dim p222 = FishersExactTest.FishersExact(65, 70, 235, 19930)
+
+        Console.WriteLine(FisherTest.FisherPvalue(65, 70, 235, 19930))
+        Console.WriteLine(p222.ToString)
+
+        Pause()
+
         Dim p = FisherTest.FisherPvalue(1, 9, 11, 3) '0.0013460761879122358
         Dim p2 = FisherTest.FisherPvalue(0, 10, 12, 2) '3.3651904697805894E-05
         Dim p3 = FisherTest.FisherPvalue(3, 40, 297, 19960) '0.021858115774312393

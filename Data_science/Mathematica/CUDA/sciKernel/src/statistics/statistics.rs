@@ -12,8 +12,8 @@ pub mod statistics {
     #[no_mangle]
     pub extern fn stdErr(x: &[f64]) -> f64 {
         let mean : f64 = x.average();
-        let sum: f64 = x.projects(|a: f64| (a - mean).powf(2)).sum();
-        let result : f64 = (sum / x.len()).sqrt();
+        let sum: f64 = x.projects(|a: f64| (a - mean).powf(2.0)).sum();
+        let result : f64 = (sum / x.len() as f64).sqrt();
 
         return result;
     }

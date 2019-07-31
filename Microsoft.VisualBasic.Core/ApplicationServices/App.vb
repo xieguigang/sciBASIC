@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11d59e8cf799bd8b63b30b390b05215b, ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::11d59e8cf799bd8b63b30b390b05215b, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -234,17 +234,23 @@ Public Module App
     ''' <returns></returns>
     Private Function __cli() As CommandLine.CommandLine
         ' 第一个参数为应用程序的文件路径，不需要
-        Dim tokens$() =
-            Environment.GetCommandLineArgs _
+        Dim args$() = Environment.GetCommandLineArgs
+        Dim tokens$() = args _
             .Skip(1) _
             .Select(Function(t) t.Replace(gitBash, "")) _
             .ToArray
         Dim cliString$ = tokens.JoinBy(" ")
         Dim cli = CLITools.TryParse(tokens, False, cliString)
+
         Return cli
     End Function
 
+    Private Function isRunningOnGitBash() As Boolean
+        Return Environment.GetCommandLineArgs.Any(Function(a) InStr(a, gitBash) > 0)
+    End Function
+
     Public ReadOnly Property Github As String = LICENSE.githubURL
+    Public ReadOnly Property RunningInGitBash As Boolean = isRunningOnGitBash()
 
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or

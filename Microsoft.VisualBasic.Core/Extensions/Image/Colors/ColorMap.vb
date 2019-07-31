@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7063b31bfaa6a47452dfdac198c6b7a, Extensions\Image\Colors\ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::cba66bc5764906a8c76972e977bc71f2, Microsoft.VisualBasic.Core\Extensions\Image\Colors\ColorMap.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ColorMapsExtensions
     ' 
-    '         Function: (+2 Overloads) ColorSequence
+    '         Function: (+2 Overloads) ColorSequence, IsBlackOrWhite
     '         Delegate Function
     ' 
     ' 
@@ -68,6 +68,20 @@ Namespace Imaging
     ''' 
     <Package("ColorMap", Publisher:="Jack J. H. Xu", Category:=APICategories.UtilityTools)>
     Public Module ColorMapsExtensions
+
+        ''' <summary>
+        ''' Is this given color value is near black or white
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function IsBlackOrWhite(c As Color, Optional offset As Integer = 5) As Boolean
+            Dim upperBound As Integer = 255 - offset
+            Dim isblack As Boolean = c.R <= offset AndAlso c.G <= offset AndAlso c.B <= offset
+            Dim isWhite As Boolean = c.R >= upperBound AndAlso c.G >= upperBound AndAlso c.B >= upperBound
+
+            Return isblack Or isWhite
+        End Function
 
         ''' <summary>
         ''' <paramref name="mapName"/>大小写不敏感

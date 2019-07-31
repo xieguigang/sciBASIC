@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cf3afd1d2bbc347842a59265e4b701e, gr\network-visualization\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::5902daeef0d58252270f07be64308405, gr\network-visualization\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Function: (+2 Overloads) GraphToScreen, ScreenToGraph
     ' 
-    '     Sub: __invokeEdgeDraw, Clear, DirectDraw, drawEdge, drawNode
+    '     Sub: Clear, DirectDraw, doEdgeDrawing, drawEdge, drawNode
     ' 
     ' /********************************************************************************/
 

@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::3fb93b58e337be0490745193348e1106, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
+﻿#Region "Microsoft.VisualBasic::591ceb818c08c791a727b01cf58bf1c0, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Delegate Function
-' 
-' 
-'     Class Population
-' 
-'         Properties: parallel, Random, Size
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
-' 
-'         Sub: Add, parallelCacheFitness, (+2 Overloads) SortPopulationByFitness, Trim
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Delegate Function
+    ' 
+    ' 
+    '     Class Population
+    ' 
+    '         Properties: initialSize, parallel, Random, Size
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator, ToString
+    ' 
+    '         Sub: Add, SortPopulationByFitness, Trim
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -159,13 +159,17 @@ Namespace Darwinism.GAF
                     Pcompute = Function(envir, source)
                                    Return GA_PLinq(envir, source, parallelFlag:=flag)
                                End Function
+
+                    Call "Parallel computing use internal GA_PLinq api".__INFO_ECHO
                 Else
                     Pcompute = parallel
+                    Call $"Parallel computing use external api: {Pcompute.ToString}".__INFO_ECHO
                 End If
             Else
                 Pcompute = Function(envir, source)
                                Return GA_PLinq(envir, source, parallelFlag:=True)
                            End Function
+                Call "Parallel computing use internal GA_PLinq api by default, as the parallel parameter is not specific...".__DEBUG_ECHO
             End If
         End Sub
 

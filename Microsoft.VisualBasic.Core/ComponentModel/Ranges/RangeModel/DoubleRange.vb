@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb551ec303f9cd2f31b64681ea0a05db, ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::d8cc465def7099c7702cb05d320c8746, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Length, Max, Min
     ' 
-    '         Constructor: (+6 Overloads) Sub New
+    '         Constructor: (+7 Overloads) Sub New
     '         Function: Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
     '                   ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =, (+2 Overloads) Like
@@ -119,6 +119,10 @@ Namespace ComponentModel.Ranges.Model
 
         Sub New(range As IntRange)
             Call Me.New(range.Min, range.Max)
+        End Sub
+
+        Sub New(vec As Vector(Of Double))
+            Call Me.New(vec.AsEnumerable)
         End Sub
 
         ''' <summary>
@@ -223,6 +227,10 @@ Namespace ComponentModel.Ranges.Model
 
         Public Shared Widening Operator CType(tuple As (min&, max&)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
+        End Operator
+
+        Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
+            Return New DoubleRange(vector.Min, vector.Max)
         End Operator
 
         Public Shared Widening Operator CType(data As VectorShadows(Of Single)) As DoubleRange

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edd83d4783e00dc7011b4047766dd73f, Serialization\BinaryDumping\Buffer.vb"
+﻿#Region "Microsoft.VisualBasic::edd83d4783e00dc7011b4047766dd73f, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\Buffer.vb"
 
     ' Author:
     ' 

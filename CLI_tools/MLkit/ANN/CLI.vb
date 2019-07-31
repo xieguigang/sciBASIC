@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c360afb37bee4cb321bbb8963cb93f79, CLI_tools\ANN\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::8a9ee523d5e669a4f1d71b490e2f1ce6, CLI_tools\MLkit\ANN\CLI.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, ExportValueFrames
     '               ListActiveFunction, MinErrorSnapshot, NormalizeSampleDebugger, ROCData, runTrainingCommon
-    '               Tabular, Train
+    '               RunValidates, Tabular, Train
     ' 
     '     Sub: SummaryDebuggerDump
     ' 

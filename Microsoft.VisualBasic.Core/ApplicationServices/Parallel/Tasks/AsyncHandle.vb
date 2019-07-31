@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ad42454b00ba27b8315decee04bc742, ApplicationServices\Parallel\Tasks\AsyncHandle.vb"
+﻿#Region "Microsoft.VisualBasic::abe0e686dd1e1517f830f2fdbc7dd72f, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\AsyncHandle.vb"
 
     ' Author:
     ' 

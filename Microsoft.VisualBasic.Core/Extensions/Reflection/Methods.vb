@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::965a865aa28a8655735ad083bc1825d6, Extensions\Reflection\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::965a865aa28a8655735ad083bc1825d6, Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
 
     ' Author:
     ' 

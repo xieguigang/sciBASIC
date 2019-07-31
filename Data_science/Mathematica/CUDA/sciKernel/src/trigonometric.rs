@@ -38,7 +38,7 @@ pub mod trigonometric {
     /// 
     #[no_mangle]
     pub extern fn arccotan(x: f64)  -> f64 {
-        return atn(x, 500) + 2.0 * Atn(1.0, 500);
+        return atn(x, 500) + 2.0 * atn(1.0, 500);
     }
 }
 
@@ -53,7 +53,7 @@ impl Point {
     /// this method is available on any Point, and automatically borrows the
     /// Point value
     fn toString(&self) -> String { 
-        return std::fmt("[{}, {}]", self.x, self.y);
+        return format!("[{}, {}]", self.x, self.y);
     }
 
     fn len(&self) -> f64 {

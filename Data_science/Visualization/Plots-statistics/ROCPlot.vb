@@ -81,6 +81,11 @@ Public Module ROCPlot
         }
     End Function
 
+    ''' <summary>
+    ''' This file should contains at least two fields: <see cref="Validation.Specificity"/> and <see cref="Validation.Sensibility"/>
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreateSerial(test As IEnumerable(Of DataSet)) As SerialData
         Dim data As DataSet() = test.ToArray

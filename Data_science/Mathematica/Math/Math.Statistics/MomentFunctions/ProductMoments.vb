@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16d34404bd9206109b1b5082211699ba, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
+﻿#Region "Microsoft.VisualBasic::22a892bca1fd45770e9a38fca1eb961c, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,15 @@ Namespace MomentFunctions
     ''' </summary>
     Public Class ProductMoments
 
+        Public ReadOnly Property Median As Double
+        Public ReadOnly Property Skew As Double
+        Public ReadOnly Property Kurtosis As Double
+        Public ReadOnly Property Min As Double
+        Public ReadOnly Property Max As Double
+        Public ReadOnly Property Mean As Double
+        Public ReadOnly Property StandardDeviation As Double
+        Public ReadOnly Property SampleSize As Integer
+
         Public Sub New(data As Double())
             Dim count = data.Length
             Dim BPM As New BasicProductMoments(data)
@@ -86,22 +95,6 @@ Namespace MomentFunctions
             'figure out an efficent algorithm for median...
             Median = data.Median
         End Sub
-
-        Public ReadOnly Property Median As Double
-
-        Public ReadOnly Property Skew() As Double
-
-        Public ReadOnly Property Kurtosis() As Double
-
-        Public ReadOnly Property Min() As Double
-
-        Public ReadOnly Property Max() As Double
-
-        Public ReadOnly Property Mean() As Double
-
-        Public ReadOnly Property StandardDeviation() As Double
-
-        Public ReadOnly Property SampleSize() As Integer
 
         Public Overrides Function ToString() As String
             Return GetJson

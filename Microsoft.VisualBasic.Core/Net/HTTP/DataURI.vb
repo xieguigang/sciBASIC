@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30ac82b8e9a5ffa17467b35f518157d4, Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::30ac82b8e9a5ffa17467b35f518157d4, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 

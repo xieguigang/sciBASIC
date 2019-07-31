@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4aab5d65673186dcf22de324c7b683d1, ApplicationServices\Parallel\Threading.vb"
+﻿#Region "Microsoft.VisualBasic::f9683810290dc0fe5b22bfab369b6ce2, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threading.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,9 @@
     '     Module InvokesHelper
     ' 
     '         Function: Invoke
-    '         Structure __invokeHelper
+    '         Structure invokeHelper
     ' 
-    '             Function: Task
+    '             Function: RunTask
     ' 
     ' 
     ' 

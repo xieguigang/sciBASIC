@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba69b268287687d4453b6df22cbcea97, ComponentModel\DataSource\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::ba69b268287687d4453b6df22cbcea97, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Iterator.vb"
 
     ' Author:
     ' 

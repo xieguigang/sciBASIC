@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ca4432abb56f696770dff685f902005, tutorials\core.test\reflectionTest.vb"
+﻿#Region "Microsoft.VisualBasic::29e621c2f7755e88fcd68e59145237cd, tutorials\core.test\reflectionTest.vb"
 
     ' Author:
     ' 

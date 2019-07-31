@@ -1,41 +1,41 @@
-﻿#Region "Microsoft.VisualBasic::0100ec0939f4ea78a3103bbbc075974d, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
+﻿#Region "Microsoft.VisualBasic::d08a87ebc22bc46412d23db125271d88, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Visualize
-' 
-'     Function: CreateGraph, NodeImportance
-' 
-' /********************************************************************************/
+    ' Module Visualize
+    ' 
+    '     Function: CreateGraph, NodeCorrelation, NodeImpacts, ROC
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,8 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Module Visualize
@@ -111,9 +113,6 @@ Public Module Visualize
         Next
     End Function
 
-    ReadOnly redColor$ = Color.Red.ToHtmlColor
-    ReadOnly blueColor$ = Color.SkyBlue.ToHtmlColor
-
     ''' <summary>
     ''' Create network graph model from the grid system status.
     ''' </summary>
@@ -144,6 +143,29 @@ Public Module Visualize
                               Return n.Value
                           End Function)
 
+        Dim impacts As Vector = importance.Values.AsVector
+        Dim posValues As DoubleRange = impacts(impacts > 0)
+        Dim negValues As DoubleRange = impacts(impacts < 0)
+        ' get color sequence and then removes white colors
+        Dim JetColors As Color() = Imaging.ColorSequence(, name:="Jet").Where(Function(c) Not c.IsBlackOrWhite(offset:=20)).ToArray
+        Dim posColor As Color() = Imaging.ColorSequence(, name:=ColorMap.PatternHot).Where(Function(c) Not c.IsBlackOrWhite(offset:=20)).ToArray
+        Dim negColor As Color() = Imaging.ColorSequence(, name:=ColorMap.PatternWinter).Where(Function(c) Not c.IsBlackOrWhite(offset:=20)).ToArray
+        Dim getColor = Function(impact As Double) As Color
+                           Dim index As Integer
+                           Dim colors As Color()
+
+                           If impact > 0 Then
+                               index = posValues.ScaleMapping(impact, {0, posColor.Length - 1})
+                               colors = posColor
+                           Else
+                               index = negValues.ScaleMapping(impact, {0, negColor.Length - 1})
+                               index = (negColor.Length - 1) - index
+                               colors = negColor
+                           End If
+
+                           Return colors(index)
+                       End Function
+
         For Each factor As NumericVector In grid.correlations
             node = New Node With {
                 .data = New NodeData With {
@@ -153,7 +175,8 @@ Public Module Visualize
                     .radius = importance(factor.name),
                     .Properties = New Dictionary(Of String, String) From {
                         {"impacts", importance(factor.name)},
-                        {"color", If(importance(factor.name) > 0, redColor, blueColor)}
+                        {"color", getColor(importance(factor.name)).ToHtmlColor},
+                        {"size", Math.Abs(importance(factor.name))}
                     }
                 },
                 .Label = factor.name,
@@ -163,6 +186,12 @@ Public Module Visualize
             variableNames += factor.name
             g.AddNode(node)
         Next
+
+        Dim correlations As DoubleRange = grid _
+            .correlations _
+            .Select(Function(c) c.vector) _
+            .IteratesALL _
+            .ToArray
 
         For Each factor As NumericVector In grid.correlations
             For i As Integer = 0 To factor.Length - 1
@@ -176,7 +205,9 @@ Public Module Visualize
                         .weight = factor(i),
                         .Properties = New Dictionary(Of String, String) From {
                             {"correlation", factor(i)},
-                            {"dash", If(factor(i) > 0, "solid", "dash")}
+                            {"dash", If(factor(i) > 0, "solid", "dash")},
+                            {"width", Math.Abs(factor(i))},
+                            {"color", JetColors(correlations.ScaleMapping(factor(i), {0, JetColors.Length - 1})).ToHtmlColor}
                         }
                     }
                     g.CreateEdge(factor.name, variableNames(i), edge)

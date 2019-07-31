@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9f6a4c29522eb14d67c4e060c412af6, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::f7c572f83f40da06c45c020d8887ce72, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -176,7 +176,7 @@ Namespace LinearAlgebra
         Public ReadOnly Property Range As DoubleRange
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New DoubleRange(Me)
+                Return New DoubleRange(Me.AsEnumerable)
             End Get
         End Property
 
@@ -725,7 +725,7 @@ Namespace LinearAlgebra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(v As Vector) As DoubleRange
-            Return New DoubleRange(v)
+            Return New DoubleRange(v.AsEnumerable)
         End Operator
 
         ''' <summary>

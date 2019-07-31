@@ -567,6 +567,7 @@
     <Compile Include="Algebra\Vector\Class\Linq.vb" />
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
+    <Compile Include="BigDecimal.vb" />
     <Compile Include="Crc32.vb" />
     <Compile Include="Distributions\BinBox\BinMaps.vb" />
     <Compile Include="Distributions\BinBox\DataBinBox.vb" />

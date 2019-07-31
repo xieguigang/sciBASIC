@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b30abc77680cb9b03a1d97e1db20865c, Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::b30abc77680cb9b03a1d97e1db20865c, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 

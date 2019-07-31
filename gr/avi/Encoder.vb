@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b83e88a67de3560b043c93a7866756f0, gr\avi\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::aad705cc49500f777372edcd446ab136, gr\avi\Encoder.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class Encoder
     ' 
-    '     Properties: settings, streams
+    '     Properties: main, settings, streams
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 

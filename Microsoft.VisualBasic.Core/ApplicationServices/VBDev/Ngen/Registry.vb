@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64625ae6702b8f28df8c85a6224313e0, ApplicationServices\VBDev\Ngen\Registry.vb"
+﻿#Region "Microsoft.VisualBasic::64625ae6702b8f28df8c85a6224313e0, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Ngen\Registry.vb"
 
     ' Author:
     ' 

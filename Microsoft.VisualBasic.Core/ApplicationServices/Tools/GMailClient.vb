@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::079bb93832659dcad79f67bc008fa45b, ApplicationServices\Tools\GMailClient.vb"
+﻿#Region "Microsoft.VisualBasic::079bb93832659dcad79f67bc008fa45b, Microsoft.VisualBasic.Core\ApplicationServices\Tools\GMailClient.vb"
 
     ' Author:
     ' 

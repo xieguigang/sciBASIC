@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::001b8cce47ecce5f7b8273fbd965f952, ComponentModel\DataSource\Repository\QueryCache.vb"
+﻿#Region "Microsoft.VisualBasic::001b8cce47ecce5f7b8273fbd965f952, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\QueryCache.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43e9203dcfedb3e14e9a3f052533d2a7, gr\avi\AVIStream.vb"
+﻿#Region "Microsoft.VisualBasic::4fbe28b0a4894d1c88b368d50b3a719b, gr\avi\AVIStream.vb"
 
     ' Author:
     ' 

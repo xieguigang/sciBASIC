@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc7756339c69f92d177f5c55ae477242, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::13c98d30d937c6f38f699fa43d16e8b2, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
 
     ' Author:
     ' 
@@ -259,7 +259,13 @@ Namespace FileStream
                     },
                     .initialPostion = pos,
                     .label = n!name
-                }
+                }.With(Sub(nd)
+                           For Each key As String In n.Properties.Keys
+                               If Not nd.Properties.ContainsKey(key) Then
+                                   Call nd.Properties.Add(key, n.Properties(key))
+                               End If
+                           Next
+                       End Sub)
                 Select New Graph.Node(id, data)
 
             Dim nodeTable As New Dictionary(Of Graph.Node)(nodes)
@@ -267,14 +273,20 @@ Namespace FileStream
  _
                 LinqAPI.Exec(Of Edge) <= From edge As NetworkEdge
                                          In net.edges
-                                         Let a = nodeTable(edge.FromNode)
-                                         Let b = nodeTable(edge.ToNode)
+                                         Let a = nodeTable(edge.fromNode)
+                                         Let b = nodeTable(edge.toNode)
                                          Let id = edge.GetNullDirectedGuid
                                          Let data As EdgeData = New EdgeData With {
                                              .Properties = New Dictionary(Of String, String) From {
-                                                 {names.REFLECTION_ID_MAPPING_INTERACTION_TYPE, edge.Interaction}
+                                                 {names.REFLECTION_ID_MAPPING_INTERACTION_TYPE, edge.interaction}
                                              }
-                                         }
+                                         }.With(Sub(ed)
+                                                    For Each key As String In edge.Properties.Keys
+                                                        If Not ed.Properties.ContainsKey(key) Then
+                                                            Call ed.Properties.Add(key, edge.Properties(key))
+                                                        End If
+                                                    Next
+                                                End Sub)
                                          Select New Edge(id, a, b, data)
 
             Dim graph As New NetworkGraph(nodes, edges)

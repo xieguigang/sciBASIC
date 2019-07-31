@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c544f50f316b66eab1c81133873f716f, Language\Linq\Vectorization\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::c544f50f316b66eab1c81133873f716f, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\SchemaProvider.vb"
 
     ' Author:
     ' 
