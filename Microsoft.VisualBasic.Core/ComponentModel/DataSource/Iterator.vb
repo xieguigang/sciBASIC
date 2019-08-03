@@ -55,7 +55,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports System.Threading.Thread
 
 Namespace ComponentModel.DataSourceModel
 
@@ -123,7 +122,8 @@ Namespace ComponentModel.DataSourceModel
             _started = True
 
             ' Single thread safely
-            For Each x As Object In _source ' 单线程安全
+            ' 单线程安全
+            For Each x As Object In _source
                 Call receiveDone.WaitOne()
                 Call receiveDone.Reset()
 
@@ -151,7 +151,8 @@ Namespace ComponentModel.DataSourceModel
         ''' Sets the enumerator to its initial position, which is before the first element in the collection.
         ''' </summary>
         Public Sub Reset() Implements IEnumerator.Reset
-            If Not _forEach Is Nothing Then  ' 终止这条线程然后再新建
+            If Not _forEach Is Nothing Then
+                ' 终止这条线程然后再新建
                 Call _forEach.Abort()
             End If
 
@@ -173,7 +174,8 @@ Namespace ComponentModel.DataSourceModel
         ''' true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
         ''' </returns>
         Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
-            If ReadDone Then  ' 在移动之前已经读取完毕了
+            If ReadDone Then
+                ' 在移动之前已经读取完毕了
                 _Current = Nothing
                 Return False
             End If

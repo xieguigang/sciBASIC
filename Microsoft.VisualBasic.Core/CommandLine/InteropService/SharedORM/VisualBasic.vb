@@ -200,7 +200,7 @@ Namespace CommandLine.InteropService.SharedORM
             Dim out As New List(Of String)
             Dim param$
 
-            If API.__arguments = 1 AndAlso API.__arguments(Scan0).Name.StringEmpty Then
+            If API.arguments = 1 AndAlso API.arguments(Scan0).Name.StringEmpty Then
                 ' /command <term>
                 out += $"term As String"
             Else
@@ -260,7 +260,7 @@ Namespace CommandLine.InteropService.SharedORM
             Dim CLI As New StringBuilder
             Dim vbcode$
 
-            If Api.__arguments = 1 AndAlso Api.__arguments(Scan0).Name.StringEmpty Then
+            If Api.arguments = 1 AndAlso Api.arguments(Scan0).Name.StringEmpty Then
                 ' /command <term>
                 vbcode = "    Call CLI.Append($""{term}"")"
                 CLI.AppendLine(vbcode)

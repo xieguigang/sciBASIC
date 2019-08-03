@@ -74,8 +74,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Dim field As T
         Dim name As String
 
-        ReadOnly __setValue As Action(Of Object, Object)
-        ReadOnly __getValue As Func(Of Object, Object)
+        Friend ReadOnly handleSetValue As Action(Of Object, Object)
+        Friend ReadOnly handleGetValue As Func(Of Object, Object)
 
 #Region "Property List"
 
@@ -140,8 +140,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
             ' Compile the property get/set as the delegate
             With prop
-                __setValue = AddressOf prop.SetValue  ' .DeclaringType.PropertySet(.Name)
-                __getValue = AddressOf prop.GetValue  ' .DeclaringType.PropertyGet(.Name)
+                handleSetValue = AddressOf prop.SetValue  ' .DeclaringType.PropertySet(.Name)
+                handleGetValue = AddressOf prop.GetValue  ' .DeclaringType.PropertyGet(.Name)
             End With
         End Sub
 
@@ -170,8 +170,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             End If
 
             With field
-                __setValue = AddressOf field.SetValue  ' .DeclaringType.FieldSet(.Name)
-                __getValue = AddressOf field.GetValue  ' .DeclaringType.FieldGet(.Name)
+                handleSetValue = AddressOf field.SetValue  ' .DeclaringType.FieldSet(.Name)
+                handleGetValue = AddressOf field.GetValue  ' .DeclaringType.FieldGet(.Name)
             End With
         End Sub
 
@@ -190,10 +190,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             End If
 
             With field
-                __setValue = Sub(a, b)
-                                 Throw New ReadOnlyException
-                             End Sub
-                __getValue = Function(obj) method.Invoke(obj, {})
+                handleSetValue = Sub(a, b)
+                                     Throw New ReadOnlyException
+                                 End Sub
+                handleGetValue = Function(obj) method.Invoke(obj, {})
             End With
         End Sub
 
@@ -233,7 +233,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public Sub SetValue(obj As Object, value As Object) Implements IProperty.SetValue
             ' 2017-6-26 目前value参数为空值的话，会报错，故而在这里添加了一个If分支判断
             If value IsNot Nothing Then
-                Call __setValue(obj, value)
+                Call handleSetValue(obj, value)
             End If
         End Sub
 
@@ -270,7 +270,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValue(x As Object) As Object Implements IProperty.GetValue
-            Return __getValue(x)
+            Return handleGetValue(x)
         End Function
 
         ''' <summary>

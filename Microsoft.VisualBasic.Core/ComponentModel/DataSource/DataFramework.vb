@@ -240,6 +240,11 @@ Namespace ComponentModel.DataSourceModel
         ''' Object <see cref="Object.ToString"/> methods.
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 在这个和Scripting命名空间下的基础类型的判断不一样
+        ''' 在这里只会判断.NET框架中的基础类型
+        ''' 在Scripting命名空间下的基础类型,是规定为所有包含有类型和字符串值之间的隐式转换的类型
+        ''' </remarks>
         Public ReadOnly Property StringBuilders As New Dictionary(Of Type, IStringBuilder) From {
  _
             {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
@@ -319,7 +324,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function CreateObject(Of T)(source As IEnumerable(Of T)) As DataTable
-            Dim columns = __initSchema(GetType(T))
+            Dim columns = ParseSchemaInternal(GetType(T))
             Dim table As New DataTable
             Dim type As Type
 
@@ -348,17 +353,16 @@ Namespace ComponentModel.DataSourceModel
         ''' Retrive data from a specific datatable object.(从目标数据表中获取数据)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="DataTable"></param>
+        ''' <param name="dataTable"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function GetValue(Of T)(DataTable As DataTable) As T()
-            Dim Columns = __initSchema(GetType(T))
-            Dim rtvlData As T() = New T(DataTable.Rows.Count - 1) {}
+        Public Function GetValue(Of T)(dataTable As DataTable) As T()
+            Dim Columns = ParseSchemaInternal(GetType(T))
+            Dim rtvlData As T() = New T(dataTable.Rows.Count - 1) {}
             Dim i As Integer = 0
 
-            Dim Schema As List(Of KeyValuePair(Of Integer, PropertyInfo)) =
-                New List(Of KeyValuePair(Of Integer, PropertyInfo))
-            For Each column As DataColumn In DataTable.Columns
+            Dim schema As List(Of KeyValuePair(Of Integer, PropertyInfo)) = New List(Of KeyValuePair(Of Integer, PropertyInfo))
+            For Each column As DataColumn In dataTable.Columns
                 Dim LQuery As BindProperty(Of DataFrameColumnAttribute) =
                     LinqAPI.DefaultFirst(Of BindProperty(Of DataFrameColumnAttribute)) <=
                         From schemaColumn As BindProperty(Of DataFrameColumnAttribute)
@@ -367,13 +371,13 @@ Namespace ComponentModel.DataSourceModel
                         Select schemaColumn
 
                 If Not LQuery.IsNull Then
-                    Call Schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery.member))
+                    Call schema.Add(New KeyValuePair(Of Integer, PropertyInfo)(column.Ordinal, LQuery.member))
                 End If
             Next
 
-            For Each row As DataRow In DataTable.Rows
+            For Each row As DataRow In dataTable.Rows
                 Dim obj As T = Activator.CreateInstance(Of T)()
-                For Each column In Schema
+                For Each column In schema
                     Dim value = row.Item(column.Key)
                     If IsDBNull(value) OrElse value Is Nothing Then
                         Continue For
@@ -387,10 +391,10 @@ Namespace ComponentModel.DataSourceModel
             Return rtvlData
         End Function
 
-        Private Function __initSchema(type As Type) As Dictionary(Of String, BindProperty(Of DataFrameColumnAttribute))
+        Private Function ParseSchemaInternal(type As Type) As Dictionary(Of String, BindProperty(Of DataFrameColumnAttribute))
             Dim dataType As Type = GetType(DataFrameColumnAttribute)
             Dim props As PropertyInfo() = type.GetProperties
-            Dim Columns = (From [property] As PropertyInfo
+            Dim columns = (From [property] As PropertyInfo
                            In props
                            Let attrs As Object() = [property].GetCustomAttributes(dataType, True)
                            Where Not attrs.IsNullOrEmpty
@@ -398,26 +402,29 @@ Namespace ComponentModel.DataSourceModel
                                DirectCast(attrs.First, DataFrameColumnAttribute), [property]
                            Order By colMaps.Index Ascending).AsList
 
-            For Each column In Columns
+            For Each column In columns
                 If String.IsNullOrEmpty(column.colMaps.Name) Then
                     Call column.colMaps.SetNameValue(column.property.Name)
                 End If
             Next
 
             Dim unIndexColumn = (From col
-                                 In Columns
+                                 In columns
                                  Where col.colMaps.Index <= 0
                                  Select col  ' 未建立索引的对象按照名称排序
                                  Order By col.colMaps.Name Ascending).ToArray ' 由于在后面会涉及到修改list对象，所以在这里使用ToArray来隔绝域list的关系，避免出现冲突
 
+            ' 将未建立索引的对象放置到列表的最末尾
             For Each col In unIndexColumn
-                Call Columns.Remove(col)
-                Call Columns.Add(col) '将未建立索引的对象放置到列表的最末尾
+                Call columns.Remove(col)
+                Call columns.Add(col)
             Next
 
-            Return Columns.ToDictionary(
+            Return columns.ToDictionary(
                 Function(x) x.colMaps.Name,
-                Function(x) New BindProperty(Of DataFrameColumnAttribute)(x.colMaps, x.property))
+                Function(x)
+                    Return New BindProperty(Of DataFrameColumnAttribute)(x.colMaps, x.property)
+                End Function)
         End Function
     End Module
 End Namespace

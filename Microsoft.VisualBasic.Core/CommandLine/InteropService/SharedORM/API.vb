@@ -107,7 +107,7 @@ Namespace CommandLine.InteropService.SharedORM
 
             Dim model As New CommandLine With {
                 .Name = name,
-                .__arguments = params.AsList,
+                .arguments = params.AsList,
                 .BoolFlags = booleans _
                     .SafeQuery _
                     .Select(AddressOf LCase) _

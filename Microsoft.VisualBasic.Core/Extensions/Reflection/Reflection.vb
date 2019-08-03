@@ -53,6 +53,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
@@ -149,25 +150,11 @@ Public Module EmitReflection
     ''' by a ``StreamReader()``.
     ''' </remarks>
     Public Sub RunApp(app As String, Optional CLI As String = "", Optional cs As Boolean = False)
-        Dim bufs As Byte() = app.GetMapPath.ReadBinary ' Works on both local file or network file. 
+        ' Works on both local file or network file. 
+        Dim bufs As Byte() = app.GetMapPath.ReadBinary
 
         Try
-            Dim assm As Assembly = Assembly.Load(bufs) ' or assm = Reflection.Assembly.Load(New WebClient().DownloadData("https://...."))
-            Dim method As MethodInfo = assm.EntryPoint
-
-            If (Not method Is Nothing) Then
-                Dim o As Object = assm.CreateInstance(method.Name)
-
-                If String.IsNullOrEmpty(CLI) Then
-                    Dim null As Object() = If(cs, {Nothing}, Nothing)
-                    Call method.Invoke(o, null)
-                Else
-                    ' if your app receives parameters
-                    Call method.Invoke(o, New Object() {CommandLine.GetTokens(CLI)})
-                End If
-            Else
-                Throw New NullReferenceException($"'{app}' No App Entry Point was found!")
-            End If
+            Call bufs.runAppInternal(CLI, isCsApp:=cs)
         Catch ex As Exception
             ex = New Exception("CLI:=" & CLI, ex)
             ex = New Exception("app:=" & app, ex)
@@ -176,6 +163,27 @@ Public Module EmitReflection
 #End If
             Throw ex
         End Try
+    End Sub
+
+    <Extension>
+    Private Sub runAppInternal(app As Byte(), cli$, isCsApp As Boolean)
+        ' or assm = Reflection.Assembly.Load(New WebClient().DownloadData("https://...."))
+        Dim assm As Assembly = Assembly.Load(app)
+        Dim method As MethodInfo = assm.EntryPoint
+        Dim null As Object() = If(isCsApp, {Nothing}, Nothing)
+
+        If (Not method Is Nothing) Then
+            Dim o As Object = assm.CreateInstance(method.Name)
+
+            If String.IsNullOrEmpty(cli) Then
+                Call method.Invoke(o, null)
+            Else
+                ' if your app receives parameters
+                Call method.Invoke(o, New Object() {CommandLine.GetTokens(cli)})
+            End If
+        Else
+            Throw New NullReferenceException($"'{app}' No App Entry Point was found!")
+        End If
     End Sub
 
 #Region "IsNumericType"
@@ -223,6 +231,8 @@ Public Module EmitReflection
         Dim mBase As MethodInfo = (From m As MethodInfo In methods
                                    Where String.Equals([nameOf], m.Name)
                                    Select m).FirstOrDefault
+        Dim APIExport As ExportAPIAttribute
+
         If mBase Is Nothing Then
 NULL:       If Not strict Then
                 Return [nameOf]
@@ -230,7 +240,8 @@ NULL:       If Not strict Then
                 Return ""
             End If
         Else
-            Dim APIExport As ExportAPIAttribute = mBase.GetCustomAttribute(Of ExportAPIAttribute)
+            APIExport = mBase.GetCustomAttribute(Of ExportAPIAttribute)
+
             If APIExport Is Nothing Then
                 GoTo NULL
             Else
@@ -359,15 +370,16 @@ NULL:       If Not strict Then
     ''' <summary>
     ''' 目标类型是不是VisualBasic之中的``Module``模块类型？
     ''' </summary>
-    ''' <param name="typeDef"></param>
+    ''' <param name="type"></param>
     ''' <returns></returns>
     <ExportAPI("Is.Module")>
-    <Extension> Public Function IsModule(typeDef As Type) As Boolean
-        If typeDef.Name.IndexOf("$") > -1 OrElse typeDef.Name.IndexOf("`") > -1 Then
-            Return False ' 匿名类型
+    <Extension> Public Function IsModule(type As Type) As Boolean
+        If type.Name.IndexOf("$") > -1 OrElse type.Name.IndexOf("`") > -1 Then
+            ' 匿名类型
+            Return False
         End If
 
-        Return typeDef.IsClass
+        Return type.IsClass
     End Function
 
     ''' <summary>
@@ -376,29 +388,28 @@ NULL:       If Not strict Then
     ''' <typeparam name="T"></typeparam>
     ''' <typeparam name="TProperty"></typeparam>
     ''' <param name="collection"></param>
-    ''' <param name="Name">使用System.NameOf()操作符来获取</param>
+    ''' <param name="name">使用System.NameOf()操作符来获取</param>
     ''' <returns></returns>
-    <Extension> Public Function [Get](Of T, TProperty)(collection As ICollection(Of T), Name As String, Optional TrimNull As Boolean = True) As TProperty()
-        Dim Type As Type = GetType(T)
-        Dim Properties = (From p In Type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
-                          Where String.Equals(p.Name, Name)
-                          Select p).ToArray
-        If Properties.IsNullOrEmpty Then
+    <Extension> Public Function [Get](Of T, TProperty)(collection As ICollection(Of T), name As String, Optional trimNull As Boolean = True) As TProperty()
+        Dim properties = DataFramework.Schema(Of T)(PropertyAccess.Readable, nonIndex:=True)
+
+        If properties.IsNullOrEmpty OrElse Not properties.ContainsKey(name) Then
             Return New TProperty() {}
         End If
 
-        Dim [Property] As PropertyInfo = Properties.First
+        Dim [property] As PropertyInfo = properties(name)
         Dim resultBuffer As TProperty()
+        Dim LQuery = From obj As T In collection.AsParallel
+                     Let value As Object = [property].GetValue(obj, Nothing)
+                     Let cast = If(value Is Nothing, Nothing, DirectCast(value, TProperty))
+                     Select cast
 
-        If TrimNull Then
-            resultBuffer = (From obj As T In collection.AsParallel
-                            Let value As Object = [Property].GetValue(obj, Nothing)
-                            Where Not value Is Nothing
-                            Select DirectCast(value, TProperty)).ToArray
+        If trimNull Then
+            resultBuffer = LQuery _
+                .Where(Function(item) Not item Is Nothing) _
+                .ToArray
         Else
-            resultBuffer = (From obj As T In collection.AsParallel
-                            Let value As Object = [Property].GetValue(obj, Nothing)
-                            Select If(value Is Nothing, Nothing, DirectCast(value, TProperty))).ToArray
+            resultBuffer = LQuery.ToArray
         End If
 
         Return resultBuffer
@@ -466,8 +477,7 @@ NULL:       If Not strict Then
     ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
     Public Function Description(Of T)() As String
-        Dim typeRef As Type = GetType(T)
-        Return typeRef.Description
+        Return GetType(T).Description
     End Function
 
     ''' <summary>
@@ -476,13 +486,13 @@ NULL:       If Not strict Then
     ''' <returns></returns>
     '''
     <ExportAPI("Get.Description")>
-    <Extension> Public Function Description(typeRef As Type) As String
-        Dim CustomAttrs As Object() = typeRef.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
+    <Extension> Public Function Description(type As Type) As String
+        Dim customAttrs As Object() = type.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
 
-        If Not CustomAttrs.IsNullOrEmpty Then
-            Return CType(CustomAttrs(Scan0), DescriptionAttribute).Description
+        If Not customAttrs.IsNullOrEmpty Then
+            Return CType(customAttrs(Scan0), DescriptionAttribute).Description
         Else
-            Return typeRef.Name
+            Return type.Name
         End If
     End Function
 
@@ -527,9 +537,7 @@ NULL:       If Not strict Then
     ''' <param name="default$"></param>
     ''' <returns></returns>
     <Extension> Public Function Description(m As MemberInfo, Optional default$ = Nothing) As String
-        Dim customAttrs() = m.GetCustomAttributes(
-            GetType(DescriptionAttribute),
-            inherit:=False)
+        Dim customAttrs() = m.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
 
         If Not customAttrs.IsNullOrEmpty Then
             Return DirectCast(customAttrs(Scan0), DescriptionAttribute).Description
@@ -571,19 +579,21 @@ NULL:       If Not strict Then
     End Function
 
     ''' <summary>
-    ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.(只允许枚举类型，其他的都返回空集合)
+    ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.
+    ''' (只允许枚举类型，其他的都返回空集合)
     ''' </summary>
     ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
     ''' <returns></returns>
     Public Function Enums(Of T As Structure)() As T()
-        Dim EnumType As Type = GetType(T)
-        If Not EnumType.IsInheritsFrom(GetType(System.Enum)) Then
+        Dim enumType As Type = GetType(T)
+
+        If Not enumType.IsInheritsFrom(GetType(System.Enum)) Then
             Return Nothing
         End If
 
         Dim EnumValues As Object() =
             Scripting _
-            .CastArray(Of System.Enum)(EnumType.GetEnumValues) _
+            .CastArray(Of System.Enum)(enumType.GetEnumValues) _
             .Select(Of Object)(Function(ar)
                                    Return DirectCast(ar, Object)
                                End Function) _
@@ -591,6 +601,7 @@ NULL:       If Not strict Then
         Dim values As T() = EnumValues _
             .Select(Of T)(Function([enum]) DirectCast([enum], T)) _
             .ToArray
+
         Return values
     End Function
 
@@ -653,19 +664,21 @@ NULL:       If Not strict Then
     <ExportAPI("GetValue")>
     <Extension> Public Function GetValue(Type As Type, obj As Object, Name As String) As Object
         Try
-            Return __getValue(Type, obj, Name)
+            Return getValueInternal(Type, obj, Name)
         Catch ex As Exception
             Return App.LogException(ex, $"{GetType(Extensions).FullName}::{NameOf(GetValue)}")
         End Try
     End Function
 
-    Private Function __getValue(Type As Type, obj As Object, Name As String) As Object
-        Dim [property] = Type.GetProperty(Name, BindingFlags.Public Or BindingFlags.Instance)
+    Private Function getValueInternal(type As Type, obj As Object, Name As String) As Object
+        Dim [property] = type.GetProperty(Name, BindingFlags.Public Or BindingFlags.Instance)
+
         If [property] Is Nothing Then
             Return Nothing
+        Else
+            Dim value = [property].GetValue(obj, Nothing)
+            Return value
         End If
-        Dim value = [property].GetValue(obj, Nothing)
-        Return value
     End Function
 
     ''' <summary>
@@ -688,36 +701,34 @@ NULL:       If Not strict Then
     ''' <summary>
     ''' Try convert the type specific collection data type into a generic enumerable collection data type.(尝试将目标集合类型转换为通用的枚举集合类型)
     ''' </summary>
-    ''' <param name="Type">The type specific collection data type.(特定类型的集合对象类型，当然也可以是泛型类型)</param>
+    ''' <param name="type">The type specific collection data type.(特定类型的集合对象类型，当然也可以是泛型类型)</param>
     ''' <returns>If the target data type is not a collection data type then the original data type will be returns and the function displays a warning message.</returns>
     ''' <remarks></remarks>
     '''
     <ExportAPI("Collection2GenericIEnumerable", Info:="Try convert the type specific collection data type into a generic enumerable collection data type.")>
-    <Extension> Public Function Collection2GenericIEnumerable(
-                                                        Type As Type,
-                                                        Optional DebuggerMessage As Boolean = True) As Type
+    <Extension> Public Function Collection2GenericIEnumerable(type As Type, Optional showDebugMsg As Boolean = True) As Type
 
-        If Array.IndexOf(Type.GetInterfaces, GetType(IEnumerable)) = -1 Then
-EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"" is not a collection type!".__DEBUG_ECHO
-            Return Type
+        If Array.IndexOf(type.GetInterfaces, GetType(IEnumerable)) = -1 Then
+EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" is not a collection type!".__DEBUG_ECHO
+            Return type
         End If
 
-        Dim GenericType As Type = GetType(Generic.IEnumerable(Of )) 'Type.GetType("System.Collections.Generic.IEnumerable")
-        Dim ElementType As Type = Type.GetElementType
+        Dim genericType As Type = GetType(Generic.IEnumerable(Of )) 'Type.GetType("System.Collections.Generic.IEnumerable")
+        Dim elementType As Type = type.GetElementType
 
-        If ElementType Is Nothing Then
-            Dim Generics = Type.GenericTypeArguments
+        If elementType Is Nothing Then
+            Dim generics = type.GenericTypeArguments
 
-            If Generics.IsNullOrEmpty Then
+            If generics.IsNullOrEmpty Then
                 GoTo EXIT_
             Else
-                ElementType = Generics(Scan0)
+                elementType = generics(Scan0)
             End If
         End If
 
-        GenericType = GenericType.MakeGenericType({ElementType})
+        genericType = genericType.MakeGenericType({elementType})
 
-        Return GenericType
+        Return genericType
     End Function
 #End If
 
@@ -826,10 +837,10 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function GetAttribute(Of T As Attribute)([Property] As PropertyInfo) As T
-        Dim Attributes As Object() = [Property].GetCustomAttributes(GetType(T), True)
+        Dim attrs As Object() = [Property].GetCustomAttributes(GetType(T), True)
 
-        If Not Attributes Is Nothing AndAlso Attributes.Length = 1 Then
-            Dim CustomAttr As T = CType(Attributes(0), T)
+        If Not attrs Is Nothing AndAlso attrs.Length = 1 Then
+            Dim CustomAttr As T = CType(attrs(0), T)
 
             If Not CustomAttr Is Nothing Then
                 Return CustomAttr
@@ -846,16 +857,27 @@ EXIT_:      If DebuggerMessage Then Call $"[WARN] Target type ""{Type.FullName}"
     ''' <typeparam name="T"></typeparam>
     ''' <param name="args">构造函数里面的参数信息</param>
     ''' <returns></returns>
-    Public Function CreateObject(Of T)(args As Object(),
-                                       Optional throwEx As Boolean = True,
-                                       <CallerMemberName> Optional caller As String = "") As T
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function CreateObject(Of T)(args As Object(), Optional throwEx As Boolean = True, <CallerMemberName> Optional caller As String = "") As T
+        Return GetType(T).CreateObject(args, throwEx, caller)
+    End Function
+
+    <Extension>
+    Public Function CreateObject(type As Type, args As Object(), Optional throwEx As Boolean = True, <CallerMemberName> Optional caller$ = Nothing) As Object
         Try
-            Dim obj As Object =
-                Activator.CreateInstance(GetType(T), args)
-            Return DirectCast(obj, T)
+            Dim obj As Object = Activator.CreateInstance(type, args)
+
+            If obj Is Nothing Then
+                Return Nothing
+            Else
+                Return obj
+            End If
         Catch ex As Exception
             Dim params As String() = args _
-                .Select(Function(x) x.GetType.FullName & " ==> " & GetObjectJson(x, x.GetType)) _
+                .Select(Function(a)
+                            Return a.GetType.FullName & " => " & GetObjectJson(a.GetType, a)
+                        End Function) _
                 .ToArray
             ex = New Exception(String.Join(vbCrLf, params), ex)
             ex = New Exception("@" & caller, ex)

@@ -58,8 +58,8 @@ Namespace ComponentModel.DataSourceModel
     ''' <typeparam name="T"></typeparam>
     Public Class PropertyValue(Of T) : Inherits Value(Of T)
 
-        ReadOnly __get As Func(Of T)
-        ReadOnly __set As Action(Of T)
+        ReadOnly handleGet As Func(Of T)
+        ReadOnly handleSet As Action(Of T)
 
         ''' <summary>
         ''' The Extension property value.
@@ -67,13 +67,15 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         Public Overrides Property value As T
             Get
-                Return __get()
+                Return handleGet()
             End Get
             Set(value As T)
-                MyBase.value = value
+                MyBase.Value = value
 
-                If Not __set Is Nothing Then
-                    Call __set(value)  ' 因为在初始化的时候会对这个属性赋值，但是set没有被初始化，所以会出错，在这里加了一个if判断来避免空引用的错误
+                If Not handleSet Is Nothing Then
+                    ' 因为在初始化的时候会对这个属性赋值，但是set没有被初始化，
+                    ' 所以会出错， 在这里加了一个if判断来避免空引用的错误
+                    Call handleSet(value)
                 End If
             End Set
         End Property
@@ -90,16 +92,16 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="[get]">请勿使用<see cref="GetValue"/></param>函数，否则会出现栈空间溢出
         ''' <param name="[set]">请勿使用<see cref="SetValue"/></param>方法，否则会出现栈空间溢出
         Sub New([get] As Func(Of T), [set] As Action(Of T))
-            __get = [get]
-            __set = [set]
+            handleGet = [get]
+            handleSet = [set]
         End Sub
 
         ''' <summary>
         ''' Tag property value.(默认是将数据写入到基本类型的值之中)
         ''' </summary>
         Sub New()
-            __get = Function() MyBase.value
-            __set = Sub(v) MyBase.value = v
+            handleGet = Function() MyBase.Value
+            handleSet = Sub(v) MyBase.Value = v
         End Sub
 
         ''' <summary>
@@ -108,7 +110,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="value"></param>
         ''' <returns></returns>
         Public Function SetValue(value As T) As DynamicPropertyBase(Of T)
-            Call __set(value)
+            Call handleSet(value)
             Return obj
         End Function
 

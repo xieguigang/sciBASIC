@@ -99,7 +99,7 @@ Namespace CommandLine.InteropService.SharedORM
                         .cliCommandArgvs = api.Name,
                         .SingleValue = api.Name,
                         .Tokens = {api.Name},
-                        .__arguments = New List(Of NamedValue(Of String))
+                        .arguments = New List(Of NamedValue(Of String))
                     }
                     Call $"{api.EntryPointFullName(relativePath:=True)} is nothing!".Warning
                 Else

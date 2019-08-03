@@ -112,8 +112,22 @@ Namespace Text.Xml.Models
     ''' </summary>
     <XmlType("property")> Public Structure [Property] : Implements INamedValue
 
+        ''' <summary>
+        ''' The property name
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property name As String Implements INamedValue.Key
+
+        ''' <summary>
+        ''' The property value in text string type 
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property value As String
+
+        ''' <summary>
+        ''' Data annotation comment.
+        ''' </summary>
+        ''' <returns></returns>
         <XmlText>
         Public Property comment As String
 

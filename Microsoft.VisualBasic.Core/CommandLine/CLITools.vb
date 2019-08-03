@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::117f5bb9d589f01614330c293222e0f2, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module CLITools
-    ' 
-    '         Function: __checkKeyDuplicated, Args, CreateObject, CreateParameterValues, Equals
-    '                   GetLogicalFlags, GetTokens, IsPossibleLogicFlag, Join, makesureQuot
-    '                   Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
-    ' 
-    '         Sub: tupleParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module CLITools
+' 
+'         Function: __checkKeyDuplicated, Args, CreateObject, CreateParameterValues, Equals
+'                   GetLogicalFlags, GetTokens, IsPossibleLogicFlag, Join, makesureQuot
+'                   Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
+' 
+'         Sub: tupleParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -226,6 +226,8 @@ Namespace CommandLine
 
             If tokens.Length = 0 Then
                 Return New CommandLine
+            Else
+                tokens = tokens.fixWindowsNetworkDirectory.ToArray
             End If
 
             Dim bools$() = tokens _
@@ -248,9 +250,9 @@ Namespace CommandLine
             End If
 
             If tokens.Length > 1 Then
-                cli.__arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
+                cli.arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
 
-                Dim Dk As String() = __checkKeyDuplicated(cli.__arguments)
+                Dim Dk As String() = __checkKeyDuplicated(cli.arguments)
 
                 If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key$ = String.Join(", ", Dk)
@@ -530,7 +532,7 @@ Namespace CommandLine
 
             Return New CommandLine With {
                 .Name = name,
-                .__arguments = parameters,
+                .arguments = parameters,
                 .Tokens = tokens.Join(bFlags).ToArray,
                 .BoolFlags = bFlags.SafeQuery.ToArray
             }
@@ -573,7 +575,7 @@ Namespace CommandLine
                 End If
             Next
 
-            For Each arg As NamedValue(Of String) In args1.__arguments
+            For Each arg As NamedValue(Of String) In args1.arguments
                 Dim value2 As String = args2(arg.Name)
 
                 If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then

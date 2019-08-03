@@ -159,14 +159,22 @@ Namespace Darwinism.GAF
                     Pcompute = Function(envir, source)
                                    Return GA_PLinq(envir, source, parallelFlag:=flag)
                                End Function
+
+                    Call "Parallel computing use internal GA_PLinq api".__INFO_ECHO
                 Else
                     Pcompute = parallel
+                    Call $"Parallel computing use external api: {Pcompute.ToString}".__INFO_ECHO
                 End If
             Else
                 Pcompute = Function(envir, source)
                                Return GA_PLinq(envir, source, parallelFlag:=True)
                            End Function
+                Call "Parallel computing use internal GA_PLinq api by default, as the parallel parameter is not specific...".__DEBUG_ECHO
             End If
+        End Sub
+
+        Friend Sub New(parallel As ParallelComputeFitness(Of Chr))
+            Pcompute = parallel
         End Sub
 
         ''' <summary>

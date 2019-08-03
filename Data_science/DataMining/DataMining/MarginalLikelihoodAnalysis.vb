@@ -98,14 +98,20 @@ Public Class MarginalLikelihoodAnalysis
     Public Property Burnin As Integer
     Public ReadOnly Property LogMarginalLikelihood As Double
         Get
-            If Not marginalLikelihoodCalculated Then calculate()
+            If Not marginalLikelihoodCalculated Then
+                calculate()
+            End If
+
             Return _logMarginalLikelihood
         End Get
     End Property
 
     Public ReadOnly Property BootstrappedSE As Double
         Get
-            If Not marginalLikelihoodCalculated Then calculate()
+            If Not marginalLikelihoodCalculated Then
+                calculate()
+            End If
+
             Return _bootstrappedSE
         End Get
     End Property
@@ -147,7 +153,7 @@ Public Class MarginalLikelihoodAnalysis
 
         For i As Integer = 0 To size - 1
             sum = LogTricks.logSum(sum, v(i))
-        Next i
+        Next
 
         Return sum - Math.Log(size)
     End Function
@@ -163,13 +169,13 @@ Public Class MarginalLikelihoodAnalysis
 
         For i As Integer = 0 To size - 1
             sum += v(i)
-        Next i
+        Next
 
         Dim denominator As Double = LogTricks.logZero
 
         For i As Integer = 0 To size - 1
             denominator = LogTricks.logSum(denominator, sum - v(i))
-        Next i
+        Next
 
         Return sum - denominator + Math.Log(size)
     End Function
@@ -254,9 +260,10 @@ Public Class MarginalLikelihoodAnalysis
 
         Dim bottom As Double = logN + logDelta - logInvDelta
         Dim top As Double = bottom + Pdata
+        Dim weight As Double
 
         For i As Integer = 0 To n - 1
-            Dim weight As Double = -LogTricks.logSum(logDelta, offset + v(i))
+            weight = -LogTricks.logSum(logDelta, offset + v(i))
             top = LogTricks.logSum(top, weight + v(i))
             bottom = LogTricks.logSum(bottom, weight)
         Next

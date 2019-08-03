@@ -87,7 +87,9 @@ Public Module FitnessMethodExtensions
         Return trainingSet _
             .AsParallel _
             .Select(Function(sample)
-                        Return target.CalculateError(sample.X, sample.Y)
+                        SyncLock sample
+                            Return target.CalculateError(sample.X, sample.Y)
+                        End SyncLock
                     End Function) _
             .AverageError
     End Function
@@ -101,14 +103,16 @@ Public Module FitnessMethodExtensions
         Return trainingSet _
             .AsParallel _
             .Select(Function(sample)
-                        Dim err = target.CalculateError(sample.X, sample.Y)
+                        SyncLock sample
+                            Dim err = target.CalculateError(sample.X, sample.Y)
 
-                        ' 降低零结果的误差权重
-                        If sample.X = 0R Then
-                            err *= 2
-                        End If
+                            ' 降低零结果的误差权重
+                            If sample.X = 0R Then
+                                err *= 2
+                            End If
 
-                        Return (errors:=err, id:=sample.targetID)
+                            Return (errors:=err, id:=sample.targetID)
+                        End SyncLock
                     End Function) _
             .GroupBy(Function(g) g.id) _
             .Select(Function(g)

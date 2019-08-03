@@ -62,6 +62,13 @@ Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Serialization.BinaryDumping
 
+    ''' <summary>
+    ''' A biffer object with byte length prefix
+    ''' </summary>
+    ''' <remarks>
+    ''' 如果是类似于Memory map file的数据流,由于Memory map file的预分配大小可能会大于实际的数据大小
+    ''' 所以会需要使用一个长度的prefix来保证数据可以被正确读取,反序列化
+    ''' </remarks>
     Public Structure Buffer : Implements ISerializable
 
         Dim Length As Long

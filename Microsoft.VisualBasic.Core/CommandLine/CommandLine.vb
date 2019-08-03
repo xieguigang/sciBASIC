@@ -88,7 +88,7 @@ Namespace CommandLine
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
 
-        Friend __arguments As New List(Of NamedValue(Of String))
+        Friend arguments As New List(Of NamedValue(Of String))
         ''' <summary>
         ''' 原始的命令行字符串
         ''' </summary>
@@ -129,7 +129,7 @@ Namespace CommandLine
         Public ReadOnly Property ParameterList As NamedValue(Of String)()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __arguments.ToArray
+                Return arguments.ToArray
             End Get
         End Property
 
@@ -140,7 +140,7 @@ Namespace CommandLine
         Public ReadOnly Property Keys As String()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __arguments.Select(Function(v) v.Name).ToArray
+                Return arguments.Select(Function(v) v.Name).ToArray
             End Get
         End Property
 
@@ -213,7 +213,7 @@ Namespace CommandLine
         Default Public ReadOnly Property Item(paramName As String) As DefaultString
             Get
                 Dim LQuery As NamedValue(Of String) =
-                    __arguments _
+                    arguments _
                         .Where(Function(x)
                                    Return String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase) OrElse
                                           String.Equals(x.Name.Trim("\", "/", "-"), paramName, StringComparison.OrdinalIgnoreCase)
@@ -313,15 +313,15 @@ Namespace CommandLine
             Call sb.AppendLine("---------------------------------------------------------")
             Call sb.AppendLine()
 
-            If __arguments.Count = 0 Then
+            If arguments.Count = 0 Then
                 Call sb.AppendLine("No parameter was define in this commandline.")
                 Return sb.ToString
             End If
 
             Dim MaxSwitchName As Integer = (From item As NamedValue(Of String)
-                                            In __arguments
+                                            In arguments
                                             Select Len(item.Name)).Max
-            For Each sw As NamedValue(Of String) In __arguments
+            For Each sw As NamedValue(Of String) In arguments
                 Call sb.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
             Next
 
@@ -394,7 +394,7 @@ Namespace CommandLine
             Dim LQuery = LinqAPI.DefaultFirst(Of Integer) _
  _
                 () <= From para As NamedValue(Of String)
-                      In Me.__arguments  '  名称都是没有处理过的
+                      In Me.arguments  '  名称都是没有处理过的
                       Where String.Equals(namer, para.Name, StringComparison.OrdinalIgnoreCase)
                       Select 100
 
@@ -685,9 +685,9 @@ Namespace CommandLine
             Dim i% = LinqAPI.DefaultFirst(Of Integer)(-1) _
  _
                 <= From entry As NamedValue(Of String)
-                   In Me.__arguments
+                   In Me.arguments
                    Where String.Equals(parameter, entry.Name, StringComparison.OrdinalIgnoreCase)
-                   Select __arguments.IndexOf(entry)
+                   Select arguments.IndexOf(entry)
 
             Return i
         End Function
@@ -775,7 +775,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements IEnumerable(Of NamedValue(Of String)).GetEnumerator
-            Dim source As New List(Of NamedValue(Of String))(Me.__arguments)
+            Dim source As New List(Of NamedValue(Of String))(Me.arguments)
 
             If Not Me.BoolFlags.IsNullOrEmpty Then
                 source += From name As String
@@ -799,7 +799,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(item As NamedValue(Of String)) Implements ICollection(Of NamedValue(Of String)).Add
-            Call __arguments.Add(item)
+            Call arguments.Add(item)
         End Sub
 
         ''' <summary>
@@ -818,10 +818,10 @@ Namespace CommandLine
             }
 
             If Not allowDuplicated Then
-                For i As Integer = 0 To __arguments.Count - 1
-                    With __arguments(i)
+                For i As Integer = 0 To arguments.Count - 1
+                    With arguments(i)
                         If .Name.TextEquals(key) Then
-                            __arguments(i) = item
+                            arguments(i) = item
                             Return
                         End If
                     End With
@@ -830,7 +830,7 @@ Namespace CommandLine
                 ' 没有查找到需要被替换掉的下标，则直接在下面的代码之中进行添加
             End If
 
-            __arguments += item
+            arguments += item
         End Sub
 
         ''' <summary>
@@ -839,7 +839,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Clear() Implements ICollection(Of NamedValue(Of String)).Clear
-            Call __arguments.Clear()
+            Call arguments.Clear()
         End Sub
 
         ''' <summary>
@@ -851,7 +851,7 @@ Namespace CommandLine
             Dim LQuery% = LinqAPI.DefaultFirst(-1) _
  _
                 <= From obj As NamedValue(Of String)
-                   In Me.__arguments
+                   In Me.arguments
                    Where String.Equals(obj.Name, item.Name, StringComparison.OrdinalIgnoreCase)
                    Select 100
 
@@ -860,7 +860,7 @@ Namespace CommandLine
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub CopyTo(array() As NamedValue(Of String), arrayIndex As Integer) Implements ICollection(Of NamedValue(Of String)).CopyTo
-            Call __arguments.ToArray.CopyTo(array, arrayIndex)
+            Call arguments.ToArray.CopyTo(array, arrayIndex)
         End Sub
 
         ''' <summary>
@@ -872,7 +872,7 @@ Namespace CommandLine
         Public ReadOnly Property Count As Integer Implements ICollection(Of NamedValue(Of String)).Count
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Me.__arguments.Count
+                Return Me.arguments.Count
             End Get
         End Property
 
@@ -892,14 +892,14 @@ Namespace CommandLine
             Dim LQuery = LinqAPI.DefaultFirst(Of NamedValue(Of String)) _
  _
                 () <= From obj As NamedValue(Of String)
-                      In Me.__arguments
+                      In Me.arguments
                       Where String.Equals(obj.Name, paramName, StringComparison.OrdinalIgnoreCase)
                       Select obj
 
             If LQuery.IsEmpty Then
                 Return False
             Else
-                Call __arguments.Remove(LQuery)
+                Call arguments.Remove(LQuery)
                 Return True
             End If
         End Function
@@ -926,7 +926,7 @@ Namespace CommandLine
             Dim list As New List(Of NamedValue(Of String))
 
             list += From arg As NamedValue(Of String)
-                    In __arguments.SafeQuery
+                    In arguments.SafeQuery
                     Select New NamedValue(Of String) With {
                         .Name = arg.Name,
                         .Value = arg.Value

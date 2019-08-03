@@ -71,7 +71,7 @@ Namespace Layouts
 
         Public Shared Function Load(Optional out$ = Nothing, Optional [default] As ForceDirectedArgs = Nothing) As ForceDirectedArgs
             Dim b As Boolean = False
-            Dim ini As Parameters = LoadProfile(Of Parameters)(b)
+            Dim ini As Parameters = LoadProfile(Of Parameters)(b, path:=out)
 
             If Not b Then
                 ini.ForceDirectedArgs = [default] Or New ForceDirectedArgs With {
