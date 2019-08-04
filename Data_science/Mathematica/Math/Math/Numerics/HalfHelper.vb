@@ -26,7 +26,7 @@ Namespace Numerics
             Dim e As UInteger = 0
             ' Zero exponent
             ' While not normalized
-            While (m And &H800000) Is 0
+            While (m And &H800000) = 0
                 e -= &H800000
                 ' Decrement exponent (1<<23)
                 ' Shift mantissa                
@@ -43,10 +43,10 @@ Namespace Numerics
         Private Shared Function GenerateMantissaTable() As UInteger()
             Dim mantissaTable = New UInteger(2047) {}
             mantissaTable(0) = 0
-            For i As var = 1 To 1023
+            For i As Integer = 1 To 1023
                 mantissaTable(i) = ConvertMantissa(i)
             Next
-            For i As var = 1024 To 2047
+            For i As Integer = 1024 To 2047
                 mantissaTable(i) = CUInt(&H38000000 + ((i - 1024) << 13))
             Next
 
@@ -55,12 +55,12 @@ Namespace Numerics
         Private Shared Function GenerateExponentTable() As UInteger()
             Dim exponentTable = New UInteger(63) {}
             exponentTable(0) = 0
-            For i As var = 1 To 30
+            For i As Integer = 1 To 30
                 exponentTable(i) = CUInt(i << 23)
             Next
             exponentTable(31) = &H47800000
             exponentTable(32) = &H80000000UI
-            For i As var = 33 To 62
+            For i As Integer = 33 To 62
                 exponentTable(i) = CUInt(&H80000000UI + ((i - 32) << 23))
             Next
             exponentTable(63) = &HC7800000UI
@@ -70,11 +70,11 @@ Namespace Numerics
         Private Shared Function GenerateOffsetTable() As UShort()
             Dim offsetTable = New UShort(63) {}
             offsetTable(0) = 0
-            For i As var = 1 To 31
+            For i As Integer = 1 To 31
                 offsetTable(i) = 1024
             Next
             offsetTable(32) = 0
-            For i As var = 33 To 63
+            For i As Integer = 33 To 63
                 offsetTable(i) = 1024
             Next
 
@@ -82,7 +82,7 @@ Namespace Numerics
         End Function
         Private Shared Function GenerateBaseTable() As UShort()
             Dim baseTable = New UShort(511) {}
-            For i As var = 0 To 255
+            For i As Integer = 0 To 255
                 Dim e = CSByte(127 - i)
                 If e > 24 Then
                     ' Very small numbers map to zero
@@ -111,7 +111,7 @@ Namespace Numerics
         End Function
         Private Shared Function GenerateShiftTable() As SByte()
             Dim shiftTable = New SByte(511) {}
-            For i As var = 0 To 255
+            For i As Integer = 0 To 255
                 Dim e = CSByte(127 - i)
                 If e > 24 Then
                     ' Very small numbers map to zero
