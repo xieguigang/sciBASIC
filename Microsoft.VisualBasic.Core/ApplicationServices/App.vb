@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11d59e8cf799bd8b63b30b390b05215b, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::ed4057f3d45b6a99718b0c840eed4f72, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -39,19 +39,18 @@
     '                 InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp
     '                 LogErrDIR, NanoTime, NextTempName, OutFile, PID
     '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunTimeDirectory
-    '                 StartTime, StartupDirectory, StdErr, StdOut, SysTemp
-    '                 UnixTimeStamp, UserHOME, Version
+    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunningInGitBash
+    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdOut
+    '                 SysTemp, UnixTimeStamp, UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __cli, __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument
-    '               BugsFormatter, CLICode, ElapsedMilliseconds, Exit, finalizeCLI
-    '               FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables
-    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
-    '               SelfFolk, SelfFolks, Shell, tempCode, TemporaryEnvironment
-    '               TraceBugs
+    '     Function: __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter
+    '               CLICode, ElapsedMilliseconds, Exit, finalizeCLI, FormatTime
+    '               GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile
+    '               GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable
+    '               (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal, SelfFolk
+    '               SelfFolks, Shell, tempCode, TemporaryEnvironment, TraceBugs
     ' 
     '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
     '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin

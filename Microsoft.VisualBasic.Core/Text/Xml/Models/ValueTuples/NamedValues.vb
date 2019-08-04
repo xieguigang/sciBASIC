@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47511b485a69bd473a64458aede8c0ce, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::95a7885518dd8f37520a3b952bd6e8a9, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\NamedValues.vb"
 
     ' Author:
     ' 

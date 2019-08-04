@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4d82f54970726f4abaea67353f4c006, CLI_tools\MLkit\mathpad\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7e2b4da7d271b6a20fdbf2d99995426f, CLI_tools\MLkit\mathpad\Program.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Module Program
         Return 0
     End Function
 End Module
-

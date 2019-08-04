@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45668ccfd0b4024a0f7095c6977b76cc, gr\network-visualization\NetworkCanvas\AVI.vb"
+﻿#Region "Microsoft.VisualBasic::ae020fdfbaee6e688fcefad00350969e, gr\network-visualization\NetworkCanvas\AVI.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@ Public Module AVI
         Return video
     End Function
 End Module
-

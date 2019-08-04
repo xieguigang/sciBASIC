@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebfa022563deab9de813e238f25b4f23, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::587fe76edd1b1658bf6c230bfac12179, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,15 @@
 
     ' Module EmitReflection
     ' 
-    '     Function: [Get], __getValue, API, AsLambda, Category
-    '               Collection2GenericIEnumerable, CreateObject, (+6 Overloads) Description, Enums, ExampleInfo
-    '               FullName, GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint
-    '               GetDouble, GetFullName, GetInt, (+2 Overloads) GetReadWriteProperties, GetTypeElement
-    '               GetTypesHelper, (+2 Overloads) GetValue, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
+    '     Function: [Get], API, AsLambda, Category, Collection2GenericIEnumerable
+    '               (+2 Overloads) CreateObject, (+6 Overloads) Description, Enums, ExampleInfo, FullName
+    '               GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint, GetDouble
+    '               GetFullName, GetInt, (+2 Overloads) GetReadWriteProperties, GetTypeElement, GetTypesHelper
+    '               (+2 Overloads) GetValue, getValueInternal, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
     '               IsNonParametric, IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite
     '               Source, Usage
     ' 
-    '     Sub: RunApp
+    '     Sub: RunApp, runAppInternal
     ' 
     ' /********************************************************************************/
 

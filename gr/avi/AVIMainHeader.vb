@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6d479ffd13c7c6c410f79c1c7288316, gr\avi\AVIMainHeader.vb"
+﻿#Region "Microsoft.VisualBasic::f83090b249f368ecc6c293035e6a5586, gr\avi\AVIMainHeader.vb"
 
     ' Author:
     ' 
@@ -155,4 +155,3 @@ Public Class AVIMainHeader
         buffer.writeInt(84, 0)                     ';
     End Sub
 End Class
-

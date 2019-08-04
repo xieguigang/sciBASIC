@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d23e8571b6d0f49960ce269c546f2736, Data_science\Visualization\Plots\BarPlot\Data.vb"
+﻿#Region "Microsoft.VisualBasic::32192bab248baba5e59d3bfaf10981d4, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
 
     ' Author:
     ' 
@@ -31,18 +31,11 @@
 
     ' Summaries:
 
-    '     Class BarDataSample
-    ' 
-    '         Properties: data, StackedSum, Tag
-    ' 
-    '         Function: ToString
-    ' 
     '     Class BarDataGroup
     ' 
     '         Properties: Index, Samples, Serials
     ' 
-    '         Function: Asc, Desc, FromDistributes, Reorder, sortInternal
-    '                   ToString
+    '         Function: Asc, Desc, Reorder, sortInternal, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ffe6881ea86a4bcf64f0d7d7f8e9ec9, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::38800f3dcbb663b37b43bab7bfcd361f, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
 
     ' Author:
     ' 
@@ -39,8 +39,8 @@
     '         Function: DictionaryTable, getOrCache, (+2 Overloads) Schema, ValueTable
     '         Delegate Function
     ' 
-    '             Function: __initSchema, CreateObject, GetValue, IsComplexType, IsNumericType
-    '                       IsPrimitive, valueToString
+    '             Function: CreateObject, GetValue, IsComplexType, IsNumericType, IsPrimitive
+    '                       ParseSchemaInternal, valueToString
     ' 
     ' 
     ' 

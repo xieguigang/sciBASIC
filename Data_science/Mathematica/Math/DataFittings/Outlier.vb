@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f66cb21d78ecf48f8137f5e83cddc293, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
+﻿#Region "Microsoft.VisualBasic::deb49187e45c2b9e63113465d1bcfe7b, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Outlier
     ' 
-    '     Function: DeleteOutlier, OrderSequenceOutlierIndex
+    '     Function: DeleteOutlier, DeleteOutlierInternal, OrderSequenceOutlierIndex
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be423d52cea786b24e3f57b8cc403a7b, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9d8f9a4e2843815a97c23b7cbedc2880, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module AlignmentPlot
     ' 
-    '         Function: __createHits, HighlightGroups, Hit, Keys, PlotAlignment
+    '         Function: createHits, HighlightGroups, Hit, Keys, PlotAlignment
     '                   PlotAlignmentGroups, Values
     '         Structure Signal
     ' 

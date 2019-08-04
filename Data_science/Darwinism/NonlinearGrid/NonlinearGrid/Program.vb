@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f53ea4cb803ce18a2357508aef6f9545, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
+﻿#Region "Microsoft.VisualBasic::fdb49616c25f19b56dc9a8beb0832b17, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     ' Module Program
     ' 
-    '     Function: DumpAsNetwork, ExportFactorImpact, Formula, Main, trainGA
-    '               ValidationROC, ValidationSummary
+    '     Function: DumpAsNetwork, ExportFactorImpact, Formula, loadNameMaps, Main
+    '               trainGA, ValidationROC, ValidationSummary
     ' 
     '     Sub: RunFitProcess
     ' 

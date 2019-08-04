@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd5adaa7cce7ab3b998dd2cc7c445e13, gr\network-visualization\test\testRenderAVI.vb"
+﻿#Region "Microsoft.VisualBasic::013f6df58ee7ae3e4beb7251f0ef2b94, gr\network-visualization\test\testRenderAVI.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Module testRenderAVI
         Call video.WriteBuffer("D:\network.avi")
     End Sub
 End Module
-
