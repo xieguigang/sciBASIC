@@ -575,6 +575,7 @@
     <Compile Include="Distributions\pnorm.vb" />
     <Compile Include="Distributions\Sample.vb" />
     <Compile Include="Distributions\Gaussian.vb" />
+    <Compile Include="Numerics\UncheckedInteger.vb" />
     <Compile Include="Numerics\Half.vb" />
     <Compile Include="Numerics\HalfHelper.vb" />
     <Compile Include="Quantile\DataQuartile.vb" />
@@ -590,7 +591,7 @@
     <Compile Include="Spline\BezierExtensions.vb" />
     <Compile Include="Spline\PolynomialNewton.vb" />
     <Compile Include="Spline\Extensions.vb" />
-    <Compile Include="Numerics\UncheckInteger.vb" />
+    <Compile Include="Numerics\UncheckIntegerHelpers.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />
     <Compile Include="HashMaps\Unchecked.vb" />
