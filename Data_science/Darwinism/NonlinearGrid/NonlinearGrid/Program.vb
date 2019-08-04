@@ -315,9 +315,9 @@ Module Program
                              Pcompute As ParallelComputeFitness(Of Genome))
 
         Dim cor As Vector = trainingSet.DataSamples.AsEnumerable.Correlation
-        Dim max As Vector = trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
+        Dim max As Vector = Nothing  ' trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
         Call "Create a base chromosome".__DEBUG_ECHO
-        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, max))
+        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, power:=max))
         Call "Initialize populations".__DEBUG_ECHO
         Call $"value truncate at ABS limits {truncate}".__DEBUG_ECHO
         Dim parallel As [Variant](Of ParallelComputeFitness(Of Genome), Boolean)

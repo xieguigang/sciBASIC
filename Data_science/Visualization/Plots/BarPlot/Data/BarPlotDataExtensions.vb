@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-Namespace BarPlot
+Namespace BarPlot.Data
 
     Public Module BarPlotDataExtensions
 

@@ -43,12 +43,39 @@ Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 <CLI> Module CLI
+
+    <ExportAPI("/barplot")>
+    <Usage("/barplot /in <data.csv> [/name <default=Name> /value <default=Value> /size <default=2000,1700> /out <plot.png>]")>
+    Public Function BarPlotCLI(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim name$ = args("/name") Or "Name"
+        Dim value$ = args("/value") Or "Value"
+        Dim size$ = args("/size") Or "2000,1700"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.barplot.png"
+        Dim data As NamedValue(Of Double)() = EntityObject _
+            .LoadDataSet([in], uidMap:=name) _
+            .Select(Function(d)
+                        Return New NamedValue(Of Double) With {
+                            .Name = d.ID,
+                            .Value = d(value).ParseDouble
+                        }
+                    End Function) _
+            .ToArray
+        Dim barData As BarDataGroup = data.SimpleSerials
+        Dim image = BarPlotAPI.Plot(barData, size.SizeParser)
+
+        Return image.Save(out).CLICode
+    End Function
 
     <ExportAPI("/Scatter")>
     <Usage("/Scatter /in <data.csv> /x <fieldX> /y <fieldY> [/label.X <labelX> /label.Y <labelY> /color <default=black> /out <out.png>]")>

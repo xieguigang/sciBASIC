@@ -93,7 +93,7 @@ Public Module Loader
                             Dim powerFactor As Vector
 
                             If power Is Nothing Then
-                                powerFactor = Vector.rand(0, 0.001, width)
+                                powerFactor = Vector.rand(0, 10, width)
                             Else
                                 powerFactor = New Vector(power)
                             End If

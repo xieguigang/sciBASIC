@@ -491,8 +491,8 @@ Namespace BarPlot
             End If
 
             Dim isHighlight = highlights.Hit(err)
-            Dim qh = query.__createHits(isHighlight)
-            Dim sh = subject.__createHits(isHighlight)
+            Dim qh = query.createHits(isHighlight)
+            Dim sh = subject.createHits(isHighlight)
             Dim out As New List(Of (xmin#, xmax#, query#, subject#))
 
             For Each x In highlights
@@ -512,7 +512,7 @@ Namespace BarPlot
         End Function
 
         <Extension>
-        Private Function __createHits(data As Signal(), ishighlight As Func(Of Double, (err#, x#, yes As Boolean))) As Dictionary(Of Double, (x As List(Of Double), y#))
+        Private Function createHits(data As Signal(), ishighlight As Func(Of Double, (err#, x#, yes As Boolean))) As Dictionary(Of Double, (x As List(Of Double), y#))
             Dim hits As New Dictionary(Of Double, (x As List(Of Double), y#))
             Dim source As IEnumerable(Of signals) = data _
                 .Select(Function(x) x.signals) _

@@ -103,7 +103,7 @@ Namespace BarPlot
                 Sub(ByRef g, region)
                     Call data _
                         .ToArray _
-                        .__plotInternal(g, region,
+                        .plotInternal(g, region,
                                         interval:=interval * region.PlotRegion.Width,
                                         labelFont:=labelFont,
                                         shadowOffset:=shadowOffset)
@@ -111,11 +111,11 @@ Namespace BarPlot
         End Function
 
         <Extension>
-        Private Sub __plotInternal(data As BarSerial(),
-                                   g As IGraphics, region As GraphicsRegion,
-                                   interval%,
-                                   labelFont$,
-                                   shadowOffset%)
+        Private Sub plotInternal(data As BarSerial(),
+                                 g As IGraphics, region As GraphicsRegion,
+                                 interval%,
+                                 labelFont$,
+                                 shadowOffset%)
 
             Dim scaler As New Mapper(
                 range:=New Scaling(data.Select(Function(o) o.Value), horizontal:=False),

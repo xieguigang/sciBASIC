@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::1abdf6951f06d4b1eec8c1ba7f52190d, Data_science\Visualization\Plots\BarPlot\BarPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module BarPlotAPI
-    ' 
-    '         Function: FromData, Plot, Rectangle
-    ' 
-    '         Sub: __plot1
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module BarPlotAPI
+' 
+'         Function: FromData, Plot, Rectangle
+' 
+'         Sub: __plot1
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
@@ -60,7 +61,7 @@ Namespace BarPlot
     ''' <summary>
     ''' 这个不像<see cref="Histogram"/>用于描述若干组连续的数据，这个是将数据按照标签分组来表述出来的
     ''' </summary>
-    Public Module BarPlotAPI
+    <HideModuleName> Public Module BarPlotAPI
 
         ''' <summary>
         ''' Bar data plot
@@ -94,7 +95,7 @@ Namespace BarPlot
             Return GraphicsPlots(
                 size, margin,
                 bg,
-                Sub(ByRef g, grect) Call __plot1(
+                Sub(ByRef g, grect) Call plotImpl(
                     g, grect,
                     data,
                     bg,
@@ -115,23 +116,27 @@ Namespace BarPlot
         ''' <param name="showLegend"></param>
         ''' <param name="legendPos"></param>
         ''' <param name="legendBorder"></param>
-        Private Sub __plot1(ByRef g As IGraphics, grect As GraphicsRegion,
-                            data As BarDataGroup,
-                            bg$,
-                            showGrid As Boolean,
-                            stacked As Boolean,
-                            stackReorder As Boolean,
-                            showLegend As Boolean,
-                            legendPos As Point,
-                            legendBorder As Stroke,
-                            legendFont As Font)
+        Private Sub plotImpl(ByRef g As IGraphics, grect As GraphicsRegion,
+                             data As BarDataGroup,
+                             bg$,
+                             showGrid As Boolean,
+                             stacked As Boolean,
+                             stackReorder As Boolean,
+                             showLegend As Boolean,
+                             legendPos As Point,
+                             legendBorder As Stroke,
+                             legendFont As Font)
 
             Dim scaler As New Scaling(data, stacked, False)
             Dim mapper As New Mapper(scaler)
-            Dim n As Integer = If(
-                stacked,
-                data.Samples.Length,
-                data.Samples.Sum(Function(x) x.data.Length) - 1)
+            Dim n As Integer
+
+            If stacked Then
+                n = data.Samples.Length
+            Else
+                n = data.Samples.Sum(Function(x) x.data.Length) - 1
+            End If
+
             Dim dxStep As Double = (grect.Size.Width - grect.Padding.Horizontal - 2 * grect.Padding.Horizontal) / n
             Dim interval As Double = grect.Padding.Horizontal / n
             Dim left As Single = grect.Padding.Left
