@@ -75,8 +75,8 @@ Namespace System
 		''' </summary>
 		''' <param name="value">The value to represent as a System.Half.</param>
 		Public Sub New(value As Single)
-			Me = HalfHelper.SingleToHalf(value)
-		End Sub
+            Me.Value = HalfHelper.SingleToHalf(value).Value
+        End Sub
 
 		''' <summary>
 		''' Initializes a new instance of System.Half to the value of the specified 32-bit signed integer.
@@ -205,31 +205,31 @@ Namespace System
 			Return HalfHelper.Negate(half)
 		End Operator
 
-		''' <summary>
-		''' Increments the System.Half operand by 1.
-		''' </summary>
-		''' <param name="half">The System.Half operand.</param>
-		''' <returns>The value of half incremented by 1.</returns>
-		Public Shared Operator (half As Half) As Half
-			Return CType(half + 1F, Half)
-		End Operator
+        '      ''' <summary>
+        '      ''' Increments the System.Half operand by 1.
+        '      ''' </summary>
+        '      ''' <param name="half">The System.Half operand.</param>
+        '      ''' <returns>The value of half incremented by 1.</returns>
+        '      Public Shared Operator ++(half As Half) As Half
+        '          Return CType(half + 1.0F, Half)
+        '      End Operator
 
-		''' <summary>
-		''' Decrements the System.Half operand by one.
-		''' </summary>
-		''' <param name="half">The System.Half operand.</param>
-		''' <returns>The value of half decremented by 1.</returns>
-		Public Shared Operator (half As Half) As Half
-			Return CType(half - 1F, Half)
-		End Operator
+        '      ''' <summary>
+        '      ''' Decrements the System.Half operand by one.
+        '      ''' </summary>
+        '      ''' <param name="half">The System.Half operand.</param>
+        '      ''' <returns>The value of half decremented by 1.</returns>
+        '      Public Shared Operator (half As Half) As Half
+        '	Return CType(half - 1F, Half)
+        'End Operator
 
-		''' <summary>
-		''' Adds two specified System.Half values.
-		''' </summary>
-		''' <param name="half1">A System.Half.</param>
-		''' <param name="half2">A System.Half.</param>
-		''' <returns>The System.Half result of adding half1 and half2.</returns>
-		Public Shared Operator +(half1 As Half, half2 As Half) As Half
+        ''' <summary>
+        ''' Adds two specified System.Half values.
+        ''' </summary>
+        ''' <param name="half1">A System.Half.</param>
+        ''' <param name="half2">A System.Half.</param>
+        ''' <returns>The System.Half result of adding half1 and half2.</returns>
+        Public Shared Operator +(half1 As Half, half2 As Half) As Half
 			Return CType(half1 + CSng(half2), Half)
 		End Operator
 
@@ -351,8 +351,8 @@ Namespace System
 		''' <param name="value">A Unicode character.</param>
 		''' <returns>A System.Half that represents the converted Unicode character.</returns>
 		Public Shared Widening Operator CType(value As Char) As Half
-			Return New Half(CSng(value))
-		End Operator
+            Return New Half(CSng(AscW(value)))
+        End Operator
 
 		''' <summary>
 		''' Converts a 32-bit signed integer to a System.Half.
@@ -414,8 +414,8 @@ Namespace System
 		''' <param name="value">A System.Half to convert.</param>
 		''' <returns>A Unicode character that represents the converted System.Half.</returns>
 		Public Shared Narrowing Operator CType(value As Half) As Char
-			Return CChar(CSng(value))
-		End Operator
+            Return Chr(CSng(value))
+        End Operator
 
 		''' <summary>
 		''' Converts a System.Half to a 16-bit signed integer.
@@ -543,77 +543,71 @@ Namespace System
 			Return CULng(Math.Truncate(CSng(value)))
 		End Operator
 
-		#End Region
+#End Region
 
-		''' <summary>
-		''' Compares this instance to a specified System.Half object.
-		''' </summary>
-		''' <param name="other">A System.Half object.</param>
-		''' <returns>
-		''' A signed number indicating the relative values of this instance and value.
-		''' Return Value Meaning Less than zero This instance is less than value. Zero
-		''' This instance is equal to value. Greater than zero This instance is greater than value.
-		''' </returns>
-		Public Function CompareTo(other As Half) As Integer
-			Dim result = 0
-			If Me < other Then
-				result = -1
-			ElseIf Me > other Then
-				result = 1
-			ElseIf Me <> other Then
-				If Not IsNaN(Me) Then
-					result = 1
-				ElseIf Not IsNaN(other) Then
-					result = -1
-				End If
-			End If
+        ''' <summary>
+        ''' Compares this instance to a specified System.Half object.
+        ''' </summary>
+        ''' <param name="other">A System.Half object.</param>
+        ''' <returns>
+        ''' A signed number indicating the relative values of this instance and value.
+        ''' Return Value Meaning Less than zero This instance is less than value. Zero
+        ''' This instance is equal to value. Greater than zero This instance is greater than value.
+        ''' </returns>
+        Public Function CompareTo(other As Half) As Integer Implements IComparable(Of Half).CompareTo
+            Dim result = 0
+            If Me < other Then
+                result = -1
+            ElseIf Me > other Then
+                result = 1
+            ElseIf Me <> other Then
+                If Not IsNaN(Me) Then
+                    result = 1
+                ElseIf Not IsNaN(other) Then
+                    result = -1
+                End If
+            End If
 
-			Return result
-		End Function
+            Return result
+        End Function
 
-		''' <summary>
-		''' Compares this instance to a specified System.Object.
-		''' </summary>
-		''' <param name="obj">An System.Object or null.</param>
-		''' <returns>
-		''' A signed number indicating the relative values of this instance and value.
-		''' Return Value Meaning Less than zero This instance is less than value. Zero
-		''' This instance is equal to value. Greater than zero This instance is greater
-		''' than value. -or- value is null.
-		''' </returns>
-		''' <exception cref="System.ArgumentException">value is not a System.Half</exception>
-		Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
-			Dim result As Integer
-			Select Case obj
-				Case Nothing
-					result = 1
-					Exit Select
-				Case Half
-					result = CompareTo(CType(obj, Half))
-					Exit Select
-				Case Else
-					Throw New ArgumentException("Object must be of type Half.")
-			End Select
+        ''' <summary>
+        ''' Compares this instance to a specified System.Object.
+        ''' </summary>
+        ''' <param name="obj">An System.Object or null.</param>
+        ''' <returns>
+        ''' A signed number indicating the relative values of this instance and value.
+        ''' Return Value Meaning Less than zero This instance is less than value. Zero
+        ''' This instance is equal to value. Greater than zero This instance is greater
+        ''' than value. -or- value is null.
+        ''' </returns>
+        ''' <exception cref="System.ArgumentException">value is not a System.Half</exception>
+        Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
+            If obj Is Nothing Then
+                Return 1
+            ElseIf Not obj.GetType Is GetType(Half) Then
+                Throw New ArgumentException("Object must be of type Half.")
+            Else
+                Return CompareTo(CType(obj, Half))
+            End If
+        End Function
 
-			Return result
-		End Function
+        ''' <summary>
+        ''' Returns a value indicating whether this instance and a specified System.Half object represent the same value.
+        ''' </summary>
+        ''' <param name="other">A System.Half object to compare to this instance.</param>
+        ''' <returns>true if value is equal to this instance; otherwise, false.</returns>
+        Public Overloads Function Equals(other As Half) As Boolean Implements IEquatable(Of Half).Equals
+            Return other = Me OrElse IsNaN(other) AndAlso IsNaN(Me)
+        End Function
 
-		''' <summary>
-		''' Returns a value indicating whether this instance and a specified System.Half object represent the same value.
-		''' </summary>
-		''' <param name="other">A System.Half object to compare to this instance.</param>
-		''' <returns>true if value is equal to this instance; otherwise, false.</returns>
-		Public Overloads Function Equals(other As Half) As Boolean
-			Return other = Me OrElse IsNaN(other) AndAlso IsNaN(Me)
-		End Function
-
-		''' <summary>
-		''' Returns a value indicating whether this instance and a specified System.Object
-		''' represent the same type and value.
-		''' </summary>
-		''' <param name="obj">An System.Object.</param>
-		''' <returns>true if value is a System.Half and equal to this instance; otherwise, false.</returns>
-		Public Overrides Function Equals(obj As Object) As Boolean
+        ''' <summary>
+        ''' Returns a value indicating whether this instance and a specified System.Object
+        ''' represent the same type and value.
+        ''' </summary>
+        ''' <param name="obj">An System.Object.</param>
+        ''' <returns>true if value is a System.Half and equal to this instance; otherwise, false.</returns>
+        Public Overrides Function Equals(obj As Object) As Boolean
 			Dim result = False
 			If Not (TypeOf obj Is Half) Then
 				Return False
@@ -685,10 +679,10 @@ Namespace System
 		''' <param name="bits">Binary representation of System.Half value</param>
 		''' <returns>A half-precision floating point number formed by its binary representation.</returns>
 		Public Shared Function ToHalf(bits As UShort) As Half
-			Return New Half() With { _
-				Key .Value = bits _
-			}
-		End Function
+            Return New Half With {
+                .Value = bits
+            }
+        End Function
 
 		''' <summary>
 		''' Returns a value indicating the sign of a half-precision floating-point number.
