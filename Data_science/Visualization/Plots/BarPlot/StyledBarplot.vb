@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af059caa80f26b888c6289040613ab57, Data_science\Visualization\Plots\BarPlot\StyledBarplot.vb"
+﻿#Region "Microsoft.VisualBasic::548d9f6bce4deca5fcf55f4bc50d84b7, Data_science\Visualization\Plots\BarPlot\StyledBarplot.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: ColorRendering, Plot
     ' 
-    '         Sub: __plotInternal
+    '         Sub: plotInternal
     '         Structure BarSerial
     ' 
     '             Function: ToString
@@ -103,7 +103,7 @@ Namespace BarPlot
                 Sub(ByRef g, region)
                     Call data _
                         .ToArray _
-                        .__plotInternal(g, region,
+                        .plotInternal(g, region,
                                         interval:=interval * region.PlotRegion.Width,
                                         labelFont:=labelFont,
                                         shadowOffset:=shadowOffset)
@@ -111,11 +111,11 @@ Namespace BarPlot
         End Function
 
         <Extension>
-        Private Sub __plotInternal(data As BarSerial(),
-                                   g As IGraphics, region As GraphicsRegion,
-                                   interval%,
-                                   labelFont$,
-                                   shadowOffset%)
+        Private Sub plotInternal(data As BarSerial(),
+                                 g As IGraphics, region As GraphicsRegion,
+                                 interval%,
+                                 labelFont$,
+                                 shadowOffset%)
 
             Dim scaler As New Mapper(
                 range:=New Scaling(data.Select(Function(o) o.Value), horizontal:=False),

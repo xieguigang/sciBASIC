@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cad912ae1140ccfb151d96a22f387105, ComponentModel\Ranges\Selector\IntTag.vb"
+﻿#Region "Microsoft.VisualBasic::cad912ae1140ccfb151d96a22f387105, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\IntTag.vb"
 
     ' Author:
     ' 

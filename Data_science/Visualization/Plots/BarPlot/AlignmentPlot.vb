@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be423d52cea786b24e3f57b8cc403a7b, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9d8f9a4e2843815a97c23b7cbedc2880, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module AlignmentPlot
     ' 
-    '         Function: __createHits, HighlightGroups, Hit, Keys, PlotAlignment
+    '         Function: createHits, HighlightGroups, Hit, Keys, PlotAlignment
     '                   PlotAlignmentGroups, Values
     '         Structure Signal
     ' 
@@ -491,8 +491,8 @@ Namespace BarPlot
             End If
 
             Dim isHighlight = highlights.Hit(err)
-            Dim qh = query.__createHits(isHighlight)
-            Dim sh = subject.__createHits(isHighlight)
+            Dim qh = query.createHits(isHighlight)
+            Dim sh = subject.createHits(isHighlight)
             Dim out As New List(Of (xmin#, xmax#, query#, subject#))
 
             For Each x In highlights
@@ -512,7 +512,7 @@ Namespace BarPlot
         End Function
 
         <Extension>
-        Private Function __createHits(data As Signal(), ishighlight As Func(Of Double, (err#, x#, yes As Boolean))) As Dictionary(Of Double, (x As List(Of Double), y#))
+        Private Function createHits(data As Signal(), ishighlight As Func(Of Double, (err#, x#, yes As Boolean))) As Dictionary(Of Double, (x As List(Of Double), y#))
             Dim hits As New Dictionary(Of Double, (x As List(Of Double), y#))
             Dim source As IEnumerable(Of signals) = data _
                 .Select(Function(x) x.signals) _

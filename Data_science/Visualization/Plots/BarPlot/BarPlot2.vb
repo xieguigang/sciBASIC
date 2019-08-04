@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb4445a629d4fc8f17cc50bc44248a3a, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::082f6aa874eb6ea645f641f500e04aed, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 
@@ -42,8 +42,8 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -154,7 +154,7 @@ Namespace BarPlot
                     End If
                 End Sub
 
-            Return GraphicsPlots(size, margin, bg, plotInternal)
+            Return g.GraphicsPlots(size, margin, bg, plotInternal)
         End Function
     End Module
 End Namespace

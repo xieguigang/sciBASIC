@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef3317fb5e61d1d32694c9f58aec294d, ComponentModel\Settings\DataModels\BindMapping.vb"
+﻿#Region "Microsoft.VisualBasic::ef3317fb5e61d1d32694c9f58aec294d, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\BindMapping.vb"
 
     ' Author:
     ' 

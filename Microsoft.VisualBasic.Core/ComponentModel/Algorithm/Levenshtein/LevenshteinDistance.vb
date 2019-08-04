@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b934dbc1d0d334500ccbc8997fed1dc, ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::1b934dbc1d0d334500ccbc8997fed1dc, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb"
 
     ' Author:
     ' 

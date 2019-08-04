@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c5d4db15b39642422e000842d5f6b9b, CommandLine\CLI\ProcExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0c5d4db15b39642422e000842d5f6b9b, Microsoft.VisualBasic.Core\CommandLine\CLI\ProcExtensions.vb"
 
     ' Author:
     ' 

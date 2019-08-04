@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a105e1a3b491012a57d3acb07d226bf8, Text\Xml\Linq\NodeIterator.vb"
+﻿#Region "Microsoft.VisualBasic::a105e1a3b491012a57d3acb07d226bf8, Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
 
     ' Author:
     ' 

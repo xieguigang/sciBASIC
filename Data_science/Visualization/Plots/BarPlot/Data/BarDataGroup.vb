@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d23e8571b6d0f49960ce269c546f2736, Data_science\Visualization\Plots\BarPlot\Data.vb"
+﻿#Region "Microsoft.VisualBasic::32192bab248baba5e59d3bfaf10981d4, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
 
     ' Author:
     ' 
@@ -31,18 +31,11 @@
 
     ' Summaries:
 
-    '     Class BarDataSample
-    ' 
-    '         Properties: data, StackedSum, Tag
-    ' 
-    '         Function: ToString
-    ' 
     '     Class BarDataGroup
     ' 
     '         Properties: Index, Samples, Serials
     ' 
-    '         Function: Asc, Desc, FromDistributes, Reorder, sortInternal
-    '                   ToString
+    '         Function: Asc, Desc, Reorder, sortInternal, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -51,7 +44,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Imaging
@@ -62,38 +54,7 @@ Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace BarPlot
-
-    ''' <summary>
-    ''' Named value of double vector.
-    ''' </summary>
-    Public Class BarDataSample : Implements INamedValue
-
-        ''' <summary>
-        ''' 分组名称
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Tag As String Implements INamedValue.Key
-        ''' <summary>
-        ''' 当前分组下的每一个序列的数据值
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property data As Double()
-
-        ''' <summary>
-        ''' The sum of <see cref="data"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property StackedSum As Double
-            Get
-                Return data.Sum
-            End Get
-        End Property
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-    End Class
+Namespace BarPlot.Data
 
     Public Class BarDataGroup : Inherits ProfileGroup
 
@@ -189,42 +150,6 @@ Namespace BarPlot
                 .Index = Index,
                 .Samples = groups,
                 .Serials = serials
-            }
-        End Function
-
-        ''' <summary>
-        ''' 这个应该是生成直方图的数据
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <param name="base!"></param>
-        ''' <param name="color$"></param>
-        ''' <returns></returns>
-        Public Shared Function FromDistributes(data As IEnumerable(Of Double), Optional base! = 10.0F, Optional color$ = "darkblue") As BarDataGroup
-            Dim source = data.Distributes(base!)
-            Dim bg As Color = color.ToColor(onFailure:=Drawing.Color.DarkBlue)
-            Dim values As New List(Of Double)
-            Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) _
- _
-                () <= From lv As Integer
-                      In source.Keys
-                      Let tag As String = lv.ToString
-                      Select New NamedValue(Of Color) With {
-                          .Name = tag,
-                          .Value = bg
-                      }
-
-            For Each x As NamedValue(Of Color) In serials
-                values += source(CInt(x.Name)).Value
-            Next
-
-            Return New BarDataGroup With {
-                .Serials = serials,
-                .Samples = {
-                    New BarDataSample With {
-                        .Tag = "Distribution",
-                        .data = values
-                    }
-                }
             }
         End Function
     End Class

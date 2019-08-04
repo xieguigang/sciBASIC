@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e61dd6f3ed4c08397368f16e7769142f, CommandLine\Reflection\Attributes\ActiveViews.vb"
+﻿#Region "Microsoft.VisualBasic::e61dd6f3ed4c08397368f16e7769142f, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ActiveViews.vb"
 
     ' Author:
     ' 

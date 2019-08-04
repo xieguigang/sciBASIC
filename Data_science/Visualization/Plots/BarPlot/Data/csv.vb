@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdeef3d6f8e5e5f6eb8b37285ee127b3, Data_science\Visualization\Plots\csv\BarData.vb"
+﻿#Region "Microsoft.VisualBasic::8466ce68e7d0106deacf6f7b06018791, Data_science\Visualization\Plots\BarPlot\Data\csv.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Module BarData
+    '     Module BarDataTableExtensions
     ' 
     '         Function: (+4 Overloads) LoadBarData, LoadBarDataExcel
     ' 
@@ -43,15 +43,15 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.csv.Excel
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeColorThemes
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 
-Namespace csv
+Namespace BarPlot.Data
 
     ''' <summary>
     ''' 
@@ -65,7 +65,7 @@ Namespace csv
     ''' ...
     ''' ```
     ''' </summary>
-    Public Module BarData
+    Public Module BarDataTableExtensions
 
         ''' <summary>
         ''' Loading bar plot data table from specific excel sheet.

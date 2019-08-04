@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11d59e8cf799bd8b63b30b390b05215b, ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::ed4057f3d45b6a99718b0c840eed4f72, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -39,19 +39,18 @@
     '                 InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp
     '                 LogErrDIR, NanoTime, NextTempName, OutFile, PID
     '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunTimeDirectory
-    '                 StartTime, StartupDirectory, StdErr, StdOut, SysTemp
-    '                 UnixTimeStamp, UserHOME, Version
+    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunningInGitBash
+    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdOut
+    '                 SysTemp, UnixTimeStamp, UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __cli, __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument
-    '               BugsFormatter, CLICode, ElapsedMilliseconds, Exit, finalizeCLI
-    '               FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables
-    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
-    '               SelfFolk, SelfFolks, Shell, tempCode, TemporaryEnvironment
-    '               TraceBugs
+    '     Function: __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter
+    '               CLICode, ElapsedMilliseconds, Exit, finalizeCLI, FormatTime
+    '               GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile
+    '               GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable
+    '               (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal, SelfFolk
+    '               SelfFolks, Shell, tempCode, TemporaryEnvironment, TraceBugs
     ' 
     '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
     '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
@@ -194,7 +193,7 @@ Public Module App
     ''' Gets the command-line arguments for this <see cref="Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __cli()
+    Public ReadOnly Property CommandLine As CommandLine.CommandLine = GitBashEnvironment.GetCLIArgs()
 
     ''' <summary>
     ''' Get argument value from <see cref="CommandLine"/>.
@@ -223,28 +222,8 @@ Public Module App
         Return CommandLine(name)
     End Function
 
-    ''' <summary>
-    ''' Enable .NET application running from git bash terminal
-    ''' </summary>
-    Const gitBash$ = "C:/Program Files/Git"
-
-    ''' <summary>
-    ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
-    ''' </summary>
-    ''' <returns></returns>
-    Private Function __cli() As CommandLine.CommandLine
-        ' 第一个参数为应用程序的文件路径，不需要
-        Dim tokens$() =
-            Environment.GetCommandLineArgs _
-            .Skip(1) _
-            .Select(Function(t) t.Replace(gitBash, "")) _
-            .ToArray
-        Dim cliString$ = tokens.JoinBy(" ")
-        Dim cli = CLITools.TryParse(tokens, False, cliString)
-        Return cli
-    End Function
-
     Public ReadOnly Property Github As String = LICENSE.githubURL
+    Public ReadOnly Property RunningInGitBash As Boolean = GitBashEnvironment.isRunningOnGitBash()
 
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or

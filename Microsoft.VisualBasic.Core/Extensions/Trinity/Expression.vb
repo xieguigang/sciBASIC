@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::252bfaa89ee13252e7c43a4b3ae4f611, Extensions\Trinity\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::252bfaa89ee13252e7c43a4b3ae4f611, Microsoft.VisualBasic.Core\Extensions\Trinity\Expression.vb"
 
     ' Author:
     ' 

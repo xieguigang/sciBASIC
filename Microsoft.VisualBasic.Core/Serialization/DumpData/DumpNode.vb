@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0f2f77a01e83aa65f0fb79975f1dd5d, Serialization\DumpData\DumpNode.vb"
+﻿#Region "Microsoft.VisualBasic::d0f2f77a01e83aa65f0fb79975f1dd5d, Microsoft.VisualBasic.Core\Serialization\DumpData\DumpNode.vb"
 
     ' Author:
     ' 

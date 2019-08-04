@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e2e47467413833e6181b7ac1c226ab6, Text\Patterns\Wildcards.vb"
+﻿#Region "Microsoft.VisualBasic::3e2e47467413833e6181b7ac1c226ab6, Microsoft.VisualBasic.Core\Text\Patterns\Wildcards.vb"
 
     ' Author:
     ' 

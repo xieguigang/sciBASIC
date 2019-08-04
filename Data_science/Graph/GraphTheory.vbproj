@@ -427,6 +427,8 @@
     <Compile Include="API\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Model\Abstract\General.vb" />
     <Compile Include="Model\Tree\AbstractTree.vb" />
+    <Compile Include="Model\Tree\KdTree\KdTree.vb" />
+    <Compile Include="Model\Tree\KdTree\Node.vb" />
     <Compile Include="Model\Tree\TermTree.vb" />
     <Compile Include="Model\Tree\Trie.vb" />
     <Compile Include="Model\Abstract\Edge.vb" />

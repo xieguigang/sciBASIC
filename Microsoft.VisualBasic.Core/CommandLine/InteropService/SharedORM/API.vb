@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6016951a6b4aae9d931bc139a1a4cd19, CommandLine\InteropService\SharedORM\API.vb"
+﻿#Region "Microsoft.VisualBasic::5cd88ee07e972e5bb1a7c6ea90754f54, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\API.vb"
 
     ' Author:
     ' 
@@ -107,7 +107,7 @@ Namespace CommandLine.InteropService.SharedORM
 
             Dim model As New CommandLine With {
                 .Name = name,
-                .__arguments = params.AsList,
+                .arguments = params.AsList,
                 .BoolFlags = booleans _
                     .SafeQuery _
                     .Select(AddressOf LCase) _

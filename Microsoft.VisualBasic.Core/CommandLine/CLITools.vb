@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50dde47202ca31fb123169568f81031d, CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::c88f1ab496a70fade4cc8cca8f21437b, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -226,6 +226,8 @@ Namespace CommandLine
 
             If tokens.Length = 0 Then
                 Return New CommandLine
+            Else
+                tokens = tokens.fixWindowsNetworkDirectory.ToArray
             End If
 
             Dim bools$() = tokens _
@@ -248,9 +250,9 @@ Namespace CommandLine
             End If
 
             If tokens.Length > 1 Then
-                cli.__arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
+                cli.arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
 
-                Dim Dk As String() = __checkKeyDuplicated(cli.__arguments)
+                Dim Dk As String() = __checkKeyDuplicated(cli.arguments)
 
                 If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key$ = String.Join(", ", Dk)
@@ -530,7 +532,7 @@ Namespace CommandLine
 
             Return New CommandLine With {
                 .Name = name,
-                .__arguments = parameters,
+                .arguments = parameters,
                 .Tokens = tokens.Join(bFlags).ToArray,
                 .BoolFlags = bFlags.SafeQuery.ToArray
             }
@@ -573,7 +575,7 @@ Namespace CommandLine
                 End If
             Next
 
-            For Each arg As NamedValue(Of String) In args1.__arguments
+            For Each arg As NamedValue(Of String) In args1.arguments
                 Dim value2 As String = args2(arg.Name)
 
                 If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then

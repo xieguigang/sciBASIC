@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a56b87de0549fba0c00b69401e7b326, gr\avi\FrameStream.vb"
+﻿#Region "Microsoft.VisualBasic::ee1594793836462f564cc264ea8e05f2, gr\avi\FrameStream.vb"
 
     ' Author:
     ' 

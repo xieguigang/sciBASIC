@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72161cb2bc7a67b671ab5d92614771da, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
+﻿#Region "Microsoft.VisualBasic::83bba7ef77be0d3f45c78abbffeda50c, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
 
     ' Author:
     ' 
@@ -81,6 +81,11 @@ Public Module ROCPlot
         }
     End Function
 
+    ''' <summary>
+    ''' This file should contains at least two fields: <see cref="Validation.Specificity"/> and <see cref="Validation.Sensibility"/>
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreateSerial(test As IEnumerable(Of DataSet)) As SerialData
         Dim data As DataSet() = test.ToArray

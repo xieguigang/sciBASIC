@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e93d47961896d9fcaad122fc7e9c01ed, ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
+﻿#Region "Microsoft.VisualBasic::e93d47961896d9fcaad122fc7e9c01ed, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
 
     ' Author:
     ' 
