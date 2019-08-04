@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2c9a815a23622c9e4141f970511d85b, Net\Tcp\Persistent\Socket\WorkSocket.vb"
+﻿#Region "Microsoft.VisualBasic::10cce9d76897118ee60637cf9e3747da, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\WorkSocket.vb"
 
     ' Author:
     ' 

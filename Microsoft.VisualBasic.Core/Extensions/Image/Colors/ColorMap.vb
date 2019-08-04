@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7063b31bfaa6a47452dfdac198c6b7a, Extensions\Image\Colors\ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::cba66bc5764906a8c76972e977bc71f2, Microsoft.VisualBasic.Core\Extensions\Image\Colors\ColorMap.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ColorMapsExtensions
     ' 
-    '         Function: (+2 Overloads) ColorSequence
+    '         Function: (+2 Overloads) ColorSequence, IsBlackOrWhite
     '         Delegate Function
     ' 
     ' 

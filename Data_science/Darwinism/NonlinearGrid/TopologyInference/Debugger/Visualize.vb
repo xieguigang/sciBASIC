@@ -1,41 +1,41 @@
-﻿#Region "Microsoft.VisualBasic::0100ec0939f4ea78a3103bbbc075974d, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
+﻿#Region "Microsoft.VisualBasic::bf600269353a14971db21abcdc7b302b, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Visualize
-' 
-'     Function: CreateGraph, NodeImportance
-' 
-' /********************************************************************************/
+    ' Module Visualize
+    ' 
+    '     Function: CreateGraph, NodeCorrelation, NodeImpacts, ROC
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -79,16 +79,23 @@ Public Module Visualize
         End With
     End Function
 
+    ''' <summary>
+    ''' 只计算指数部分
+    ''' </summary>
+    ''' <param name="grid"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' impact影响系数只是用来描述指标对目标函数的值的改变的影响程度
+    ''' 当impact为正实数的时候, 目标指标会对目标函数产生实际影响
+    ''' 当impact为零的时候,指数项计算结果等于1,目标指标对目标函数的结果值产生有限的影响
+    ''' 当impact小于零的时候,指数项计算结果趋向于零,目标指标对目标函数的结果值无影响
+    ''' </remarks>
     <Extension>
     Public Iterator Function NodeImpacts(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
         For i As Integer = 0 To grid.correlations.Length - 1
             Dim factor As NumericVector = grid.correlations(i)
             Dim c As Double = grid.const.B(i)
             Dim impact As Double = c + factor.vector.Sum
-
-            If grid.direction(i) = 0R Then
-                impact = 0
-            End If
 
             Yield New NamedValue(Of Double) With {
                .Name = factor.name,
@@ -97,6 +104,14 @@ Public Module Visualize
         Next
     End Function
 
+    ''' <summary>
+    ''' 相关性则是计算 a * E ^ P 整个表达式
+    ''' </summary>
+    ''' <param name="grid"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 含义与相关性系数相似,正实数表示正相关,负实数表示负相关,零表示不相关
+    ''' </remarks>
     <Extension>
     Public Iterator Function NodeCorrelation(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
         Dim impacts = grid.NodeImpacts.ToArray
@@ -131,7 +146,7 @@ Public Module Visualize
     ''' 所以c因子可以看作为Xj与Xi之间的相关度, 只不过这个相关度是位于整个[负无穷, 正无穷]之间的
     ''' </remarks>
     <Extension>
-    Public Function CreateGraph(grid As GridMatrix, Optional cutoff# = 1) As NetworkGraph
+    Public Function CreateGraph(grid As GridMatrix, Optional cutoff# = 1, Optional nameTitles As Dictionary(Of String, String) = Nothing) As NetworkGraph
         Dim g As New NetworkGraph
         Dim node As Node
         Dim variableNames As New List(Of String)
@@ -166,6 +181,10 @@ Public Module Visualize
                            Return colors(index)
                        End Function
 
+        If nameTitles Is Nothing Then
+            nameTitles = New Dictionary(Of String, String)
+        End If
+
         For Each factor As NumericVector In grid.correlations
             node = New Node With {
                 .data = New NodeData With {
@@ -176,7 +195,8 @@ Public Module Visualize
                     .Properties = New Dictionary(Of String, String) From {
                         {"impacts", importance(factor.name)},
                         {"color", getColor(importance(factor.name)).ToHtmlColor},
-                        {"size", Math.Abs(importance(factor.name))}
+                        {"size", Math.Abs(importance(factor.name))},
+                        {"title", nameTitles.TryGetValue(factor.name, [default]:=factor.name)}
                     }
                 },
                 .Label = factor.name,

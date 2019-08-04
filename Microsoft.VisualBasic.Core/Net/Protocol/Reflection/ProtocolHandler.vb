@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9fc2b90e6ed847e0a43175fe081b3d1, Net\Protocol\Reflection\ProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::d883b5e7df0927d02a228167bb2da654, Microsoft.VisualBasic.Core\Net\Protocol\Reflection\ProtocolHandler.vb"
 
     ' Author:
     ' 

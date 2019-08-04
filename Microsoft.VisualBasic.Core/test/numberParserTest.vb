@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c807892e94cf5a85a1978080727ee91, test\numberParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::1c807892e94cf5a85a1978080727ee91, Microsoft.VisualBasic.Core\test\numberParserTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2123247c2dbf0e64ee9e4932a216e17b, ApplicationServices\VBDev\ApplicationInfoUtils.vb"
+﻿#Region "Microsoft.VisualBasic::2123247c2dbf0e64ee9e4932a216e17b, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
     ' Author:
     ' 

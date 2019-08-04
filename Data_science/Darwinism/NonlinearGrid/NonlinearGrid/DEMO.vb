@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56eb4c6f98e1ce4a4d37922d2fc455fc, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\DEMO.vb"
+﻿#Region "Microsoft.VisualBasic::ed1233bad93ca839957ced8b78056fdb, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\DEMO.vb"
 
     ' Author:
     ' 
@@ -41,12 +41,24 @@
 
 #End Region
 
+Imports System.Numerics
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Debugger
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Module DEMO
+
+    'Sub bigIntegerbinaryEncoderDemo()
+    '    Dim network As New List(Of Sample)
+    '    Dim value As Double
+
+    '    For i As Long = 1000000 To 1000000 + 1000
+    '        value =
+    '        network += New Sample With {.ID = i.ToHexString, .status = New NumericVector With {.name = i, .vector = New BigInteger(i * 1.0E+128).ToByteArray}, .target =}
+    '    Next
+    'End Sub
 
     Sub Main()
         Dim network As New List(Of Sample)

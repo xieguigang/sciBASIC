@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1696f908c778b7346677fded1a4d746b, ComponentModel\Algorithm\base\Combination\Comb.vb"
+﻿#Region "Microsoft.VisualBasic::1696f908c778b7346677fded1a4d746b, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\Combination\Comb.vb"
 
     ' Author:
     ' 

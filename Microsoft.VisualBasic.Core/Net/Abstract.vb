@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a491bd98f891310b14cf4957ddae8936, Net\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::287d2bd71c6f3b8c3d072d4d519edb8f, Microsoft.VisualBasic.Core\Net\Abstract.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,9 @@
     ' 
     ' 
     ' 
+    '     Delegate Function
+    ' 
+    ' 
     '     Delegate Sub
     ' 
     ' 
@@ -49,7 +52,9 @@
     ' 
     '     Interface IDataRequestHandler
     ' 
-    '         Properties: Responsehandler
+    '         Properties: ResponseHandler
+    ' 
+    ' 
     ' 
     ' 
     ' 

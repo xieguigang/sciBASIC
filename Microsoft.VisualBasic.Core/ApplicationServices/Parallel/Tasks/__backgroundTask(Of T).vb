@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::869b09ad14c8f2c6c6f514616cbc3e82, ApplicationServices\Parallel\Tasks\__backgroundTask(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::c60deb7b2b37593b3ba785850c01201e, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\__backgroundTask(Of T).vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Delegate Function
     ' 
     ' 
-    '     Class __backgroundTask
+    '     Class backgroundTask
     ' 
     '         Properties: ExecuteException, TaskHandle, Value
     ' 

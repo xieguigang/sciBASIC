@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2705a35fc10cf97197c62b029e26ca9, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::96ebf5a3dbb33acb0c3f9b656137cf24, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
 
     ' Author:
     ' 
@@ -53,6 +53,10 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace SyntaxAPI.Vectors
 
+    ''' <summary>
+    ''' 在这个泛型向量之中,仅包含有对元素对象的访问方法的封装,并没有涉及类型解析等反射操作
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class GenericVector(Of T) : Inherits Vector(Of T)
         Implements IEnumerable(Of T)
         Implements IDisposable

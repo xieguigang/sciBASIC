@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("ANN")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("Artificial Neural Network training cli tool")>
+<Assembly: AssemblyDescription("Artificial Neural Network training cli tool")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
 <Assembly: AssemblyProduct("ANN")>
-<Assembly: AssemblyCopyright("Copyright ©  2018")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2018")>
+<Assembly: AssemblyTrademark("MLkit")>
 
 <Assembly: ComVisible(False)>
 

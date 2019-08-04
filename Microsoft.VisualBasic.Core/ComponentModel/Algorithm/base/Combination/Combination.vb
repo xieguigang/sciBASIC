@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c3e852a5ac5d3e681d3d88fdeea1ba6, ComponentModel\Algorithm\base\Combination\Combination.vb"
+﻿#Region "Microsoft.VisualBasic::0c3e852a5ac5d3e681d3d88fdeea1ba6, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\Combination\Combination.vb"
 
     ' Author:
     ' 

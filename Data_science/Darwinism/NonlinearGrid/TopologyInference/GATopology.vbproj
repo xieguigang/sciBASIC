@@ -179,6 +179,7 @@
   <ItemGroup>
     <Compile Include="Debugger\Debugger.vb" />
     <Compile Include="Debugger\Visualize.vb" />
+    <Compile Include="GA\TrainingSet.vb" />
     <Compile Include="GA\FitnessMethods.vb" />
     <Compile Include="GA\Environment.vb" />
     <Compile Include="GA\Genome.vb" />

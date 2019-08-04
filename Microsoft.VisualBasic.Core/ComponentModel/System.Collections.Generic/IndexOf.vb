@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54e85494a04f696bb8540d6846ed52dc, ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::279ccec4836decd3842544a2f77b87b3, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Sub: Clear, Delete
     ' 
-    '         Operators: (+2 Overloads) +, (+2 Overloads) Like
+    '         Operators: -, (+2 Overloads) +, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -295,6 +295,24 @@ Namespace ComponentModel.Collection
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(list As List(Of T), index As Index(Of T)) As List(Of T)
             Return list + index.Objects
+        End Operator
+
+        ''' <summary>
+        ''' Delete items from source <paramref name="index"/> and then returns the new modify index collection
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(index As Index(Of T), list As List(Of T)) As Index(Of T)
+            Dim table = index.maps
+
+            For Each item As T In list
+                If table.ContainsKey(item) Then
+                    Call table.Remove(item)
+                End If
+            Next
+
+            Return New Index(Of T)(table.Keys)
         End Operator
 
         ''' <summary>

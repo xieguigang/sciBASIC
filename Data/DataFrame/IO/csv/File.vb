@@ -1,67 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::64f4ca56f4151ab62aff41a49ff2a032, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::3b2b47964896cb36d8a71fb44377986e, Data\DataFrame\IO\csv\File.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class File
-' 
-'         Properties: Cell, EstimatedFileSize, Headers, Rows, Width
-' 
-'         Constructor: (+4 Overloads) Sub New
-' 
-'         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
-'                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
-'                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
-'                   Trim
-' 
-'         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
-' 
-'         Operators: (+2 Overloads) +
-'         Delegate Function
-' 
-'             Properties: IsReadOnly, RowNumbers
-' 
-'             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, GetEnumerator
-'                       GetEnumerator1, IndexOf, IsNullOrEmpty, Join, Load
-'                       loads, LoadTsv, Normalization, Parse, ReadHeaderRow
-'                       Remove, RemoveSubRow, Save
-' 
-'             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
-'                  RemoveAt
-' 
-'             Operators: <, <=, >, >=
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Class File
+    ' 
+    '         Properties: Cell, EstimatedFileSize, Headers, Rows, Width
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
+    '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
+    '                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
+    '                   Trim
+    ' 
+    '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
+    ' 
+    '         Operators: (+2 Overloads) +
+    '         Delegate Function
+    ' 
+    '             Properties: IsReadOnly, RowNumbers
+    ' 
+    '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, GetEnumerator
+    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, Join, Load
+    '                       loads, LoadTsv, Normalization, Parse, ReadHeaderRow
+    '                       Remove, RemoveSubRow, Save
+    ' 
+    '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
+    '                  RemoveAt, Save
+    ' 
+    '             Operators: <, <=, >, >=
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

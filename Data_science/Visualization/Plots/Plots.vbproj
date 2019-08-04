@@ -322,8 +322,10 @@
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
     <Compile Include="BarPlot\AlignmentPlot.vb" />
+    <Compile Include="BarPlot\Data\BarDataSample.vb" />
+    <Compile Include="BarPlot\Data\Constructor.vb" />
     <Compile Include="BarPlot\Histogram\Extensions.vb" />
-    <Compile Include="BarPlot\BarPlotDataExtensions.vb" />
+    <Compile Include="BarPlot\Data\BarPlotDataExtensions.vb" />
     <Compile Include="BarPlot\RectangleStyles.vb" />
     <Compile Include="BarPlot\StackedBarPlot.vb" />
     <Compile Include="BarPlot\StyledBarplot.vb" />
@@ -336,7 +338,7 @@
     <Compile Include="g\Axis\TimeRange.vb" />
     <Compile Include="g\Canvas.vb" />
     <Compile Include="Scatter\Bubble.vb" />
-    <Compile Include="csv\BarData.vb" />
+    <Compile Include="BarPlot\Data\csv.vb" />
     <Compile Include="Fractions\TreeMap.vb" />
     <Compile Include="Fractions\FractionData.vb" />
     <Compile Include="Fractions\Pyramid.vb" />
@@ -351,7 +353,7 @@
     <Compile Include="g\Legends\Legend.vb" />
     <Compile Include="csv\SerialData.vb" />
     <Compile Include="g\Legends\LegendStyles.vb" />
-    <Compile Include="BarPlot\Data.vb" />
+    <Compile Include="BarPlot\Data\BarDataGroup.vb" />
     <Compile Include="Contour.vb" />
     <Compile Include="BarPlot\Histogram\Histogram.vb" />
     <Compile Include="ImageData.vb" />

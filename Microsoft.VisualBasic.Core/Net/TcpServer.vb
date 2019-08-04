@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0584f8ecab066252fddf83e4bcdaf65, Net\TcpServer.vb"
+﻿#Region "Microsoft.VisualBasic::b0584f8ecab066252fddf83e4bcdaf65, Microsoft.VisualBasic.Core\Net\TcpServer.vb"
 
     ' Author:
     ' 

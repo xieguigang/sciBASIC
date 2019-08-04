@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d15e03f189cfb4385a3670b0c012f3f, CommandLine\Interpreters\View\CommandHelp.vb"
+﻿#Region "Microsoft.VisualBasic::7d15e03f189cfb4385a3670b0c012f3f, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\CommandHelp.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66694617b20c7369b1e33346e177bfe2, Language\Language\Python\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::66694617b20c7369b1e33346e177bfe2, Microsoft.VisualBasic.Core\Language\Language\Python\Collection.vb"
 
     ' Author:
     ' 

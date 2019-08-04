@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b37f25638311a163beee708b6f8bb00, ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
+﻿#Region "Microsoft.VisualBasic::1b37f25638311a163beee708b6f8bb00, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb1ee2643f8913577fc3056a8b97d978, Language\Value\ByRefValueExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::bb1ee2643f8913577fc3056a8b97d978, Microsoft.VisualBasic.Core\Language\Value\ByRefValueExtensions.vb"
 
     ' Author:
     ' 

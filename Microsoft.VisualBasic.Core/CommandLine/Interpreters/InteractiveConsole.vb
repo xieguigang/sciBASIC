@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a2992138e9e7423d9198b9a47be833d, CommandLine\Interpreters\InteractiveConsole.vb"
+﻿#Region "Microsoft.VisualBasic::a81bd0b1b80c9a6f5b784848047b19ce, Microsoft.VisualBasic.Core\CommandLine\Interpreters\InteractiveConsole.vb"
 
     ' Author:
     ' 

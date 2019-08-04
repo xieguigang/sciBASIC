@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99753ec5166b18cdaceb4e0fe015449, Extensions\CodeDOM\CodeDOM.vb"
+﻿#Region "Microsoft.VisualBasic::e99753ec5166b18cdaceb4e0fe015449, Microsoft.VisualBasic.Core\Extensions\CodeDOM\CodeDOM.vb"
 
     ' Author:
     ' 

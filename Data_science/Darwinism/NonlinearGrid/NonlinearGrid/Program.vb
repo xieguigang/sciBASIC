@@ -1,43 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::03976b42f1e58a8561e28d2d7f3a6600, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
+﻿#Region "Microsoft.VisualBasic::fdb49616c25f19b56dc9a8beb0832b17, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Program
-' 
-'     Function: DumpAsNetwork, ExportFactorImpact, Main, trainGA, ValidationSummary
-' 
-'     Sub: RunFitProcess
-' 
-' /********************************************************************************/
+    ' Module Program
+    ' 
+    '     Function: DumpAsNetwork, ExportFactorImpact, Formula, loadNameMaps, Main
+    '               trainGA, ValidationROC, ValidationSummary
+    ' 
+    '     Sub: RunFitProcess
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -89,17 +90,29 @@ Module Program
     End Function
 
     <ExportAPI("/dump.network")>
-    <Usage("/dump.network /in <model.Xml> [/threshold <default=1> /out <out.directory>]")>
+    <Usage("/dump.network /in <model.Xml> [/threshold <default=1> /names <names_map.csv> /out <out.directory>]")>
     <Description("Export a correlation network from a grid system model.")>
     Public Function DumpAsNetwork(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim threshold As Double = args("/threshold")
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.threshold={threshold}.network/"
         Dim matrix As GridMatrix = [in].LoadXml(Of GridMatrix)
-        Dim graph As NetworkGraph = matrix.CreateGraph(cutoff:=threshold)
-        Dim network = graph.Tabular({"impacts", "correlation", "color", "dash", "size", "width"})
+        Dim names As Dictionary(Of String, String) = args("/names").DefaultValue.loadNameMaps
+        Dim graph As NetworkGraph = matrix.CreateGraph(cutoff:=threshold, nameTitles:=names)
+        Dim network = graph.Tabular({"impacts", "correlation", "color", "dash", "size", "width", "title"})
 
         Return network.Save(out, Encodings.ASCII).CLICode
+    End Function
+
+    <Extension>
+    Private Function loadNameMaps(mapTable As String) As Dictionary(Of String, String)
+        Return mapTable _
+            .LoadCsv(Of NamedValue) _
+            .SafeQuery _
+            .ToDictionary(Function(id) id.name,
+                          Function(title)
+                              Return title.text
+                          End Function)
     End Function
 
     <ExportAPI("/factor.impacts")>
@@ -113,13 +126,7 @@ Module Program
         Dim in$ = args <= "/in"
         Dim model = [in].LoadXml(Of GridMatrix)
         Dim isCor As Boolean = args("/correlation")
-        Dim names As Dictionary(Of String, String) = args("/names") _
-            .LoadCsv(Of NamedValue) _
-            .SafeQuery _
-            .ToDictionary(Function(id) id.name,
-                          Function(title)
-                              Return title.text
-                          End Function)
+        Dim names As Dictionary(Of String, String) = args("/names").DefaultValue.loadNameMaps
         Dim impacts As NamedValue(Of Double)()
 
         If isCor Then
@@ -132,9 +139,9 @@ Module Program
             .Select(Function(tuple)
                         Dim title = names.TryGetValue(tuple.Name, [default]:=tuple.Name)
                         Dim rtvl As New NamedValue(Of Double) With {
-                        .Name = title,
-                        .Value = tuple.Value,
-                        .Description = tuple.Description
+                            .Name = title,
+                            .Value = tuple.Value,
+                            .Description = tuple.Description
                         }
 
                         Return rtvl
@@ -308,9 +315,9 @@ Module Program
                              Pcompute As ParallelComputeFitness(Of Genome))
 
         Dim cor As Vector = trainingSet.DataSamples.AsEnumerable.Correlation
-        Dim max As Vector = trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
+        Dim max As Vector = Nothing  ' trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
         Call "Create a base chromosome".__DEBUG_ECHO
-        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, max))
+        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, power:=max))
         Call "Initialize populations".__DEBUG_ECHO
         Call $"value truncate at ABS limits {truncate}".__DEBUG_ECHO
         Dim parallel As [Variant](Of ParallelComputeFitness(Of Genome), Boolean)

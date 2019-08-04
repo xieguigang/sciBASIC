@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7055cd412191253fce6a7a4bbf2cc2ce, Data_science\Visualization\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::ea4b1b523082c25071bbb2405d2fa9dc, CLI_tools\MLkit\Chart\CLI.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module CLI
     ' 
-    '     Function: KMeansCluster, ROC, Scatter
+    '     Function: BarPlotCLI, KMeansCluster, ROC, Scatter
     ' 
     ' /********************************************************************************/
 
@@ -41,13 +41,41 @@
 
 Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
-Module CLI
+<CLI> Module CLI
+
+    <ExportAPI("/barplot")>
+    <Usage("/barplot /in <data.csv> [/name <default=Name> /value <default=Value> /size <default=2000,1700> /out <plot.png>]")>
+    Public Function BarPlotCLI(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim name$ = args("/name") Or "Name"
+        Dim value$ = args("/value") Or "Value"
+        Dim size$ = args("/size") Or "2000,1700"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.barplot.png"
+        Dim data As NamedValue(Of Double)() = EntityObject _
+            .LoadDataSet([in], uidMap:=name) _
+            .Select(Function(d)
+                        Return New NamedValue(Of Double) With {
+                            .Name = d.ID,
+                            .Value = d(value).ParseDouble
+                        }
+                    End Function) _
+            .ToArray
+        Dim barData As BarDataGroup = data.SimpleSerials
+        Dim image = BarPlotAPI.Plot(barData, size.SizeParser)
+
+        Return image.Save(out).CLICode
+    End Function
 
     <ExportAPI("/Scatter")>
     <Usage("/Scatter /in <data.csv> /x <fieldX> /y <fieldY> [/label.X <labelX> /label.Y <labelY> /color <default=black> /out <out.png>]")>
@@ -93,11 +121,18 @@ Module CLI
 
     <ExportAPI("/ROC")>
     <Usage("/ROC /in <validate.test.csv> [/out <ROC.png>]")>
+    <Description("Draw ROC chart plot.")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              AcceptTypes:={GetType(DataSet)},
+              Extensions:="*.csv",
+              Description:="This file should contains at least two fields: ``Specificity`` and ``Sensibility``.")>
     Public Function ROC(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ROC.png"
         Dim data = DataSet.LoadDataSet([in]).CreateSerial
 
-        Return ROCPlot.Plot(data, showReference:=True).Save(out).CLICode
+        Return ROCPlot.Plot(data, showReference:=True) _
+            .Save(out) _
+            .CLICode
     End Function
 End Module

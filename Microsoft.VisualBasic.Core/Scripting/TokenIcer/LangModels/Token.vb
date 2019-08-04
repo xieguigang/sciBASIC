@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fffce487e1390b4d89c80f247130cc2, Scripting\TokenIcer\LangModels\Token.vb"
+﻿#Region "Microsoft.VisualBasic::7fffce487e1390b4d89c80f247130cc2, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\Token.vb"
 
     ' Author:
     ' 
