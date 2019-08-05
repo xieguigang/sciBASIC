@@ -74,6 +74,7 @@ Namespace Graph.Abstract
         Property Interaction As String
     End Interface
 
+    <HideModuleName>
     Public Module ExtensionsAPI
 
         <Extension>
@@ -88,11 +89,11 @@ Namespace Graph.Abstract
         End Function
 
         <Extension>
-        Public Function GetConnectedNode(Node As IInteraction, a As String) As String
-            If String.Equals(Node.source, a) Then
-                Return Node.target
-            ElseIf String.Equals(Node.target, a) Then
-                Return Node.source
+        Public Function GetConnectedNode(edge As IInteraction, a As String) As String
+            If String.Equals(edge.source, a) Then
+                Return edge.target
+            ElseIf String.Equals(edge.target, a) Then
+                Return edge.source
             Else
                 Return ""
             End If

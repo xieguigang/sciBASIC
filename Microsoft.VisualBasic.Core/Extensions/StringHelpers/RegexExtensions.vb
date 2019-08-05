@@ -56,6 +56,25 @@ Imports Microsoft.VisualBasic.Language
 Public Module RegexExtensions
 
     ''' <summary>
+    ''' Determines whether the beginning of this string instance matches the specified
+    ''' string.
+    ''' </summary>
+    ''' <param name="str">The string to compare.</param>
+    ''' <param name="pattern"></param>
+    ''' <param name="opt"></param>
+    ''' <returns>true if value matches the beginning of this string; otherwise, false.</returns>
+    <Extension>
+    Public Function StartsWith(str$, pattern$, opt As RegexOptions) As Boolean
+        Dim match$ = str.Match(pattern, opt)
+
+        If match.StringEmpty Then
+            Return False
+        Else
+            Return str.StartsWith(match)
+        End If
+    End Function
+
+    ''' <summary>
     ''' Determines whether the end of this string instance matches the specified string pattern.
     ''' </summary>
     ''' <param name="str$"></param>

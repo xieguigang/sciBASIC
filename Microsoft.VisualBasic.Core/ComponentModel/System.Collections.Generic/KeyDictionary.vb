@@ -272,11 +272,11 @@ Namespace ComponentModel.Collection
         ''' <summary>
         ''' 假若目标元素不存在于本字典之中，则会返回False
         ''' </summary>
-        ''' <param name="x"></param>
+        ''' <param name="vec"></param>
         ''' <returns></returns>
-        Public Overloads Function Remove(x As V) As Boolean
-            If Me.ContainsKey(x.Key) Then
-                Return Me.Remove(x.Key)
+        Public Overloads Function Remove(vec As V) As Boolean
+            If Me.ContainsKey(vec.Key) Then
+                Return Me.Remove(vec.Key)
             Else
                 Return False
             End If

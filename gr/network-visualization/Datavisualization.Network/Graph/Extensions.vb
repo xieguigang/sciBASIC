@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -67,19 +68,31 @@ Namespace Graph
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 生成诸如degree之类的信息
+        ''' </summary>
+        ''' <param name="net"></param>
         <Extension>
         Public Sub ApplyAnalysis(ByRef net As NetworkGraph)
             For Each node In net.vertex
                 node.data.neighbours = net.GetNeighbours(node.Label).ToArray
+                node.data(NamesOf.REFLECTION_ID_MAPPING_DEGREE) = node.data.neighborhoods
             Next
         End Sub
 
+        ''' <summary>
+        ''' 枚举出和当前的给定编号的节点所连接的节点的索引编号
+        ''' </summary>
+        ''' <param name="net"></param>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function GetNeighbours(net As NetworkGraph, node As String) As IEnumerable(Of Integer)
             For Each edge As Edge In net.graphEdges
                 Dim connected As String = edge.GetConnectedNode(node)
+
                 If Not String.IsNullOrEmpty(connected) Then
-                    Yield CInt(connected)
+                    Yield net.GetNode(connected).ID
                 End If
             Next
         End Function
