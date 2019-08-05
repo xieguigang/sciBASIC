@@ -625,7 +625,7 @@ Namespace LinearAlgebra
         ''' <param name="n"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator ^(v As Vector, n As Integer) As Vector
+        Public Overloads Shared Operator ^(v As Vector, n As Double) As Vector
             Return New Vector(From d As Double In v Select d ^ n)
         End Operator
 

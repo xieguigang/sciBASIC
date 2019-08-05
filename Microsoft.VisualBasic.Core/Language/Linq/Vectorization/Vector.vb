@@ -69,7 +69,7 @@ Namespace Language.Vectorization
         ''' Gets the element counts in this vector collection
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Length As Integer
+        Public Overridable ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.Length
@@ -343,9 +343,9 @@ Namespace Language.Vectorization
             Return $"{buffer.Length} @ {GetType(T).FullName}"
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x In buffer
-                Yield x
+        Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each element As T In buffer
+                Yield element
             Next
         End Function
 
