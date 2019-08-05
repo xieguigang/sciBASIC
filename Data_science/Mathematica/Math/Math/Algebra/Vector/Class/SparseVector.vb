@@ -6,7 +6,7 @@ Namespace LinearAlgebra
     ''' 稀疏的向量
     ''' </summary>
     ''' <remarks>
-    ''' 在这个向量中存在大量的零
+    ''' 在这个向量中存在大量的零，主要适用于节省计算内存
     ''' </remarks>
     Public Class SparseVector : Inherits Vector
 
@@ -98,6 +98,14 @@ Namespace LinearAlgebra
         Public Overloads Shared Operator ^(v As SparseVector, p As Double) As SparseVector
             ' 0 ^ p = 0
             Return New SparseVector(v.buffer.Select(Function(x) x ^ p), v.index, v.dimension)
+        End Operator
+
+        Public Overloads Shared Operator ^(x As SparseVector, y As Vector) As SparseVector
+            If x.Dim <> y.Dim Then
+                Throw New InvalidConstraintException()
+            End If
+
+
         End Operator
     End Class
 End Namespace
