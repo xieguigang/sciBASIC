@@ -33,7 +33,8 @@ Namespace Numerics
                 ' Shift mantissa                
                 m <<= 1
             End While
-            m = m And CUInt(Not &H800000)
+            ' m = m And CUInt(Not &H800000)
+            m = m And CType(Not &H800000, UncheckedInteger).UncheckUInt32
             ' Clear leading 1 bit
             e += &H38800000
             ' Adjust bias ((127-14)<<23)
@@ -142,22 +143,27 @@ Namespace Numerics
 
         Public Shared Function HalfToSingle(half As Half) As Single
             Dim result = MantissaTable(OffsetTable(half.Value >> 10) + (half.Value And &H3FF)) + ExponentTable(half.Value >> 10)
-            Return CType(New Pointer(Of UInteger)(result), Pointer(Of Single)).Target
+            Dim bytes = BitConverter.GetBytes(result)
+            Dim sng As Single = BitConverter.ToSingle(bytes, Scan0)
+
+            ' Return CType(New Pointer(Of UInteger)(result), Pointer(Of Single)).Target
+            Return sng
         End Function
 
         Public Shared Function SingleToHalf([single] As Single) As Half
-            Dim value = CType(New Pointer(Of Single)([single]), Pointer(Of UInteger)).Target
-
+            ' Dim value = CType(New Pointer(Of Single)([single]), Pointer(Of UInteger)).Target
+            Dim bytes = BitConverter.GetBytes([single])
+            Dim value = BitConverter.ToUInt32(bytes, Scan0)
             Dim result = CUShort(BaseTable((value >> 23) And &H1FF) + ((value And &H7FFFFF) >> ShiftTable(value >> 23)))
             Return Half.ToHalf(result)
         End Function
 
-        Public Shared Function Negate(half__1 As Half) As Half
-            Return Half.ToHalf(CUShort(half__1.Value Xor &H8000))
+        Public Shared Function Negate(half As Half) As Half
+            Return Half.ToHalf(CUShort(half.Value Xor &H8000))
         End Function
 
-        Public Shared Function Abs(half__1 As Half) As Half
-            Return Half.ToHalf(CUShort(half__1.Value And &H7FFF))
+        Public Shared Function Abs(half As Half) As Half
+            Return Half.ToHalf(CUShort(half.Value And &H7FFF))
         End Function
 
         Public Shared Function IsNaN(half As Half) As Boolean

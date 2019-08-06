@@ -28,6 +28,15 @@ Namespace Numerics
             End Set
         End Property
 
+        Public ReadOnly Property UncheckUInt32 As UInt32
+            Get
+                Dim bytes As Byte() = BitConverter.GetBytes(intValueLo)
+                Dim uint As UInt32 = BitConverter.ToUInt32(bytes, Scan0)
+
+                Return uint
+            End Get
+        End Property
+
         Private Sub New(newLongValue As Long)
             longValue = newLongValue
         End Sub
