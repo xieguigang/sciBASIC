@@ -107,7 +107,7 @@ Namespace HashMaps
             Next
         End Sub
 
-        ReadOnly __hashBlizzard_seed2 As BigInteger = &HEEEEEEEE
+        ReadOnly hashBlizzard_seed2 As BigInteger = &HEEEEEEEE
 
         ''' <summary>
         ''' 暴雪公司出名的哈希码.
@@ -129,20 +129,21 @@ Namespace HashMaps
         ''' 暴雪公司著名的 HashMap .
         ''' 测试了 二千万 GUID, 没有重复.但运算量比较大。
         ''' </summary>
-        ''' <param name="KeyByte"></param>
+        ''' <param name="keyByte"></param>
         ''' <param name="HasType">HasType =[0 ,1 ,2] </param>
         ''' <returns></returns>
-        Public Function HashBlizzard(KeyByte() As Byte, Optional HasType As dwHashTypes = dwHashTypes.Position) As ULong
-            Dim L% = KeyByte.Length - 1
+        Public Function HashBlizzard(keyByte() As Byte, Optional HasType As dwHashTypes = dwHashTypes.Position) As ULong
+            Dim L% = keyByte.Length - 1
             Dim seed1 As BigInteger = &H7FED7FED
-            Dim seed2 As BigInteger = __hashBlizzard_seed2
-            Dim LoopID% = 0
+            Dim seed2 As BigInteger = hashBlizzard_seed2
+            Dim loopID% = 0
+            Dim ascCode%
 
-            While (LoopID < L)
-                Dim ascCode% = KeyByte(LoopID)
+            While (loopID < L)
+                ascCode = keyByte(loopID)
                 seed1 = cryptTable((HasType << 8) + ascCode) Xor (seed1 + seed2)
                 seed2 = ascCode + seed1 + seed2 + (seed2 << 5) + 3
-                LoopID += 1
+                loopID += 1
             End While
 
             Return seed1.uncheckedULong

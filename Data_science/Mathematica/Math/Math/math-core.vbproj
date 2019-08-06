@@ -568,7 +568,7 @@
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Numerics\BigDecimal.vb" />
-    <Compile Include="Crc32.vb" />
+    <Compile Include="HashMaps\Crc32.vb" />
     <Compile Include="Distributions\BinBox\BinMaps.vb" />
     <Compile Include="Distributions\BinBox\DataBinBox.vb" />
     <Compile Include="Distributions\BinBox\CutBins.vb" />
@@ -594,7 +594,6 @@
     <Compile Include="Numerics\UncheckIntegerHelpers.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />
-    <Compile Include="HashMaps\Unchecked.vb" />
     <Compile Include="Algebra\Vector\Extensions.vb" />
     <Compile Include="Algebra\Matrix.NET\Extensions.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />

@@ -1,6 +1,7 @@
 Imports System.Runtime.InteropServices
 
 Namespace Numerics
+
     ''' <summary>
     ''' Helper class for Half conversions and some low level operations.
     ''' This class is internally used in the Half class.
