@@ -1,6 +1,4 @@
-Imports System.Diagnostics
 Imports System.Globalization
-Imports System.Runtime.InteropServices
 
 Namespace Numerics
     ''' <summary>
@@ -83,7 +81,6 @@ Namespace Numerics
         ''' </summary>
         ''' <param name="value">The value to represent as a System.Half.</param>
         Public Sub New(value As Integer)
-
             Me.New(CSng(value))
         End Sub
 
@@ -92,7 +89,6 @@ Namespace Numerics
         ''' </summary>
         ''' <param name="value">The value to represent as a System.Half.</param>
         Public Sub New(value As Long)
-
             Me.New(CSng(value))
         End Sub
 
@@ -101,7 +97,6 @@ Namespace Numerics
         ''' </summary>
         ''' <param name="value">The value to represent as a System.Half.</param>
         Public Sub New(value As Double)
-
             Me.New(CSng(value))
         End Sub
 
@@ -110,7 +105,6 @@ Namespace Numerics
         ''' </summary>
         ''' <param name="value">The value to represent as a System.Half.</param>
         Public Sub New(value As Decimal)
-
             Me.New(CSng(value))
         End Sub
 
@@ -119,7 +113,6 @@ Namespace Numerics
         ''' </summary>
         ''' <param name="value">The value to represent as a System.Half.</param>
         Public Sub New(value As UInteger)
-
             Me.New(CSng(value))
         End Sub
 
@@ -128,7 +121,6 @@ Namespace Numerics
         ''' </summary>
         ''' <param name="value">The value to represent as a System.Half.</param>
         Public Sub New(value As ULong)
-
             Me.New(CSng(value))
         End Sub
 

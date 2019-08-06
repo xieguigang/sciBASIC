@@ -1,3 +1,4 @@
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
 Namespace Numerics
@@ -12,15 +13,21 @@ Namespace Numerics
     ''' </remarks>
     <ComVisible(False)>
     Friend NotInheritable Class HalfHelper
+
         Private Sub New()
         End Sub
+
         Private Shared ReadOnly MantissaTable As UInteger() = GenerateMantissaTable()
         Private Shared ReadOnly ExponentTable As UInteger() = GenerateExponentTable()
         Private Shared ReadOnly OffsetTable As UShort() = GenerateOffsetTable()
         Private Shared ReadOnly BaseTable As UShort() = GenerateBaseTable()
         Private Shared ReadOnly ShiftTable As SByte() = GenerateShiftTable()
 
-        ' Transforms the subnormal representation to a normalized one. 
+        ''' <summary>
+        ''' Transforms the subnormal representation to a normalized one. 
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         Private Shared Function ConvertMantissa(i As Integer) As UInteger
             Dim m = CUInt(i << 13)
             ' Zero pad mantissa bits
@@ -38,8 +45,8 @@ Namespace Numerics
             ' Clear leading 1 bit
             e += &H38800000
             ' Adjust bias ((127-14)<<23)
-            Return m Or e
             ' Return combined number
+            Return m Or e
         End Function
 
         Private Shared Function GenerateMantissaTable() As UInteger()
@@ -54,6 +61,7 @@ Namespace Numerics
 
             Return mantissaTable
         End Function
+
         Private Shared Function GenerateExponentTable() As UInteger()
             Dim exponentTable = New UInteger(63) {}
             exponentTable(0) = 0
@@ -69,6 +77,7 @@ Namespace Numerics
 
             Return exponentTable
         End Function
+
         Private Shared Function GenerateOffsetTable() As UShort()
             Dim offsetTable = New UShort(63) {}
             offsetTable(0) = 0
@@ -82,6 +91,7 @@ Namespace Numerics
 
             Return offsetTable
         End Function
+
         Private Shared Function GenerateBaseTable() As UShort()
             Dim baseTable = New UShort(511) {}
             For i As Integer = 0 To 255
@@ -111,6 +121,7 @@ Namespace Numerics
 
             Return baseTable
         End Function
+
         Private Shared Function GenerateShiftTable() As SByte()
             Dim shiftTable = New SByte(511) {}
             For i As Integer = 0 To 255
@@ -158,26 +169,32 @@ Namespace Numerics
             Return Half.ToHalf(result)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Negate(half As Half) As Half
             Return Half.ToHalf(CUShort(half.Value Xor &H8000))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Abs(half As Half) As Half
             Return Half.ToHalf(CUShort(half.Value And &H7FFF))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsNaN(half As Half) As Boolean
             Return (half.Value And &H7FFF) > &H7C00
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsInfinity(half As Half) As Boolean
             Return (half.Value And &H7FFF) = &H7C00
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsPositiveInfinity(half As Half) As Boolean
             Return half.Value = &H7C00
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsNegativeInfinity(half As Half) As Boolean
             Return half.Value = &HFC00
         End Function
