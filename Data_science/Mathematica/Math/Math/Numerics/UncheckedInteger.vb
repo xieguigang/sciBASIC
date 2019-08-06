@@ -1,87 +1,63 @@
-﻿Imports System.Numerics
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.InteropServices
 
 Namespace Numerics
 
+    ''' <summary>
+    ''' > https://stackoverflow.com/questions/2403154/fastest-way-to-do-an-unchecked-integer-addition-in-vb-net
+    ''' </summary>
+    <StructLayout(LayoutKind.Explicit)>
     Public Structure UncheckedInteger
 
-        Dim Value As BigInteger
+        <FieldOffset(0)>
+        Private longValue As Long
+        <FieldOffset(0)>
+        Private intValueLo As Integer
+        <FieldOffset(4)>
+        Private intValueHi As Integer
 
-        Sub New(i%)
-            Value = New BigInteger(i)
-        End Sub
+        ''' <summary>
+        ''' The integer value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Value As Integer
+            Get
+                Return intValueLo
+            End Get
+            Set(value As Integer)
+                longValue = value
+            End Set
+        End Property
 
-        Sub New(l&)
-            Value = New BigInteger(l)
-        End Sub
-
-        Sub New(s As Short)
-            Value = New BigInteger(s)
+        Private Sub New(newLongValue As Long)
+            longValue = newLongValue
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Value.ToString
+            Return Value
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +(unchecked As UncheckedInteger, i%) As UncheckedInteger
-            Return New UncheckedInteger((unchecked.Value + i).uncheckedInteger)
+        Public Overloads Shared Widening Operator CType(value As Integer) As UncheckedInteger
+            Return New UncheckedInteger(CLng(value))
         End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +(i%, unchecked As UncheckedInteger) As UncheckedInteger
-            Return New UncheckedInteger((unchecked.Value + i).uncheckedInteger)
+        Public Overloads Shared Widening Operator CType(value As Long) As UncheckedInteger
+            Return New UncheckedInteger(value)
         End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator -(unchecked As UncheckedInteger, i%) As UncheckedInteger
-            Return New UncheckedInteger((unchecked.Value - i).uncheckedInteger)
+        Public Overloads Shared Widening Operator CType(value As UncheckedInteger) As Long
+            Return value.longValue
         End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator -(i%, unchecked As UncheckedInteger) As UncheckedInteger
-            Return New UncheckedInteger((i - unchecked.Value).uncheckedInteger)
+        Public Overloads Shared Widening Operator CType(value As UncheckedInteger) As Integer
+            Return value.intValueLo
         End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator *(unchecked As UncheckedInteger, i%) As UncheckedInteger
-            Return New UncheckedInteger((unchecked.Value * i).uncheckedInteger)
+        Public Overloads Shared Operator *(x As UncheckedInteger, y As Integer) As UncheckedInteger
+            Return New UncheckedInteger(x.longValue * y)
         End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator *(i%, unchecked As UncheckedInteger) As UncheckedInteger
-            Return New UncheckedInteger((i * unchecked.Value).uncheckedInteger)
+        Public Overloads Shared Operator Xor(x As UncheckedInteger, y As Integer) As UncheckedInteger
+            Return New UncheckedInteger(x.longValue Xor y)
         End Operator
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator /(unchecked As UncheckedInteger, i%) As UncheckedInteger
-            Return New UncheckedInteger((unchecked.Value / i).uncheckedInteger)
-        End Operator
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator /(i%, unchecked As UncheckedInteger) As UncheckedInteger
-            Return New UncheckedInteger((i / unchecked.Value).uncheckedInteger)
-        End Operator
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator ^(unchecked As UncheckedInteger, i%) As UncheckedInteger
-            Return New UncheckedInteger(BigInteger.Pow(unchecked.Value, i).uncheckedInteger)
-        End Operator
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator ^(i%, unchecked As UncheckedInteger) As UncheckedInteger
-            Return New UncheckedInteger(BigInteger.Pow(i, unchecked.Value).uncheckedInteger)
-        End Operator
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(unchecked As UncheckedInteger) As Integer
-            Return unchecked.Value.uncheckedInteger
-        End Operator
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(unchecked As UncheckedInteger) As Long
-            Return unchecked.Value.uncheckedLong
-        End Operator
-
     End Structure
 End Namespace
