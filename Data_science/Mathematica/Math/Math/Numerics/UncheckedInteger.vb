@@ -61,6 +61,10 @@ Namespace Numerics
             Return value.intValueLo
         End Operator
 
+        Public Overloads Shared Operator +(a As UncheckedInteger, b As Integer) As UncheckedInteger
+            Return New UncheckedInteger(a.longValue + b)
+        End Operator
+
         Public Overloads Shared Operator *(x As UncheckedInteger, y As Integer) As UncheckedInteger
             Return New UncheckedInteger(x.longValue * y)
         End Operator
