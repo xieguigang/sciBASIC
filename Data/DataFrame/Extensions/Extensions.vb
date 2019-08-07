@@ -82,7 +82,7 @@ Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 Public Module Extensions
 
     Sub New()
-        Call __initStreamIO_pointer()
+        Call initStreamIOHandlers()
     End Sub
 
     <Extension>
