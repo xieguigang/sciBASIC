@@ -225,6 +225,10 @@ Namespace Numerics
             Return CType(half1 + CSng(half2), Half)
         End Operator
 
+        Public Shared Operator +(half As Half, value As Single) As Single
+            Return CSng(half) + value
+        End Operator
+
         ''' <summary>
         ''' Subtracts two specified System.Half values.
         ''' </summary>
@@ -233,6 +237,10 @@ Namespace Numerics
         ''' <returns>The System.Half result of subtracting half1 and half2.</returns>        
         Public Shared Operator -(half1 As Half, half2 As Half) As Half
             Return CType(half1 - CSng(half2), Half)
+        End Operator
+
+        Public Shared Operator -(half As Half, value As Single) As Single
+            Return CSng(half) - value
         End Operator
 
         ''' <summary>
@@ -245,6 +253,10 @@ Namespace Numerics
             Return CType(half1 * CSng(half2), Half)
         End Operator
 
+        Public Shared Operator *(half As Half, value As Single) As Single
+            Return CSng(half) * value
+        End Operator
+
         ''' <summary>
         ''' Divides two specified System.Half values.
         ''' </summary>
@@ -253,6 +265,10 @@ Namespace Numerics
         ''' <returns>The System.Half result of half1 by half2.</returns>
         Public Shared Operator /(half1 As Half, half2 As Half) As Half
             Return CType(half1 / CSng(half2), Half)
+        End Operator
+
+        Public Shared Operator /(half As Half, value As Single) As Single
+            Return CSng(half) / value
         End Operator
 
         ''' <summary>

@@ -96,16 +96,15 @@ Namespace LinearAlgebra
         End Operator
 
         Public Overloads Shared Operator ^(v As SparseVector, p As Double) As SparseVector
-            ' 0 ^ p = 0
-            Return New SparseVector(v.buffer.Select(Function(x) x ^ p), v.index, v.dimension)
+            Return New SparseVector(From x As Double In v Select x ^ p)
         End Operator
 
         Public Overloads Shared Operator ^(x As SparseVector, y As Vector) As SparseVector
             If x.Dim <> y.Dim Then
                 Throw New InvalidConstraintException()
+            Else
+                Return New SparseVector(From i As Integer In x.Sequence Select x(i) ^ y(i))
             End If
-
-
         End Operator
     End Class
 End Namespace
