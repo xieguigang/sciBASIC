@@ -1,4 +1,8 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Vectorization
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Linq.Which
 
 Namespace LinearAlgebra
 
@@ -27,6 +31,65 @@ Namespace LinearAlgebra
                 Return dimension
             End Get
         End Property
+
+#Region "Index properties"
+        Default Public Overrides Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of Double)
+            Get
+                Return New Vector(Of Double)(IsTrue(booleans).Select(Function(index) Me(index)))
+            End Get
+            Set(value As Vector(Of Double))
+                For Each index As SeqValue(Of Integer) In IsTrue(booleans).SeqIterator
+                    Me(index.value) = value(index)
+                Next
+            End Set
+        End Property
+
+        Default Public Overrides Property Item(index As Integer) As Double
+            Get
+                Dim i As Integer = Me.index.IndexOf(index)
+
+                If i = -1 Then
+                    Return 0
+                Else
+                    Return buffer(i)
+                End If
+            End Get
+            Set
+                Dim i As Integer = Me.index.IndexOf(index)
+
+                If Value = 0.0 Then
+                    If i = -1 Then
+                        ' 将原来的零值设置为零值，则无变化
+                        ' do nothing
+                    Else
+                        ' 将非零值设置为零
+                        Me.index.Remove(index)
+                        Me.buffer(i) = 0
+                    End If
+                End If
+            End Set
+        End Property
+
+        Default Public Overloads Property Item(range As IEnumerable(Of Integer)) As Vector
+            Get
+                Return New SparseVector(range.Select(Function(index) Me(index)))
+            End Get
+            Set
+                For Each index As SeqValue(Of Integer) In range.SeqIterator
+                    Me(index.value) = Value(index)
+                Next
+            End Set
+        End Property
+
+        Default Public Overloads Property Item(range As IntRange) As SparseVector
+            Get
+                Return Me(range.ToArray)
+            End Get
+            Set
+                Me(range.ToArray) = Value
+            End Set
+        End Property
+#End Region
 
         ''' <summary>
         ''' 当元素的绝对值小于这个值之后就会被当作为零

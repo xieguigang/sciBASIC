@@ -59,8 +59,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
 Imports numpy = Microsoft.VisualBasic.Language.Python
+Imports sys = System.Math
 
 Namespace LinearAlgebra
 
