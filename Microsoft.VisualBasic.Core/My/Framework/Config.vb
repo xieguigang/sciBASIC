@@ -1,63 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::e4116dfe0b06870e2dcf53a489a4fb5e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Config.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Config
-    ' 
-    '         Properties: DefaultFile, level, mute
-    ' 
-    '         Function: Load, Save, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Config
+' 
+'         Properties: DefaultFile, level, mute
+' 
+'         Function: Load, Save, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ApplicationServices.FrameworkInternal
+Namespace My.FrameworkInternal
 
     Public Class Config
 
         Public Property level As DebuggerLevels = DebuggerLevels.On
         Public Property mute As Boolean = False
 
-        Public Shared ReadOnly Property DefaultFile As String =
-            App.LocalData & "/debugger-config.json"
+        Public Shared ReadOnly Property DefaultFile As String
+            Get
+                Return App.LocalData & "/debugger-config.json"
+            End Get
+        End Property
 
         Public Shared Function Load() As Config
             Try
-                Dim cfg As Config =
-                    IO.File.ReadAllText(DefaultFile).LoadJSON(Of Config)
+                Dim cfg As Config = IO.File.ReadAllText(DefaultFile).LoadJSON(Of Config)
 
                 If cfg Is Nothing Then
                     Return New Config().Save()
