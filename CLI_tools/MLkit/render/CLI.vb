@@ -60,7 +60,16 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
     <ExportAPI("/network")>
     <Description("Rendering network data model as png/svg image.")>
-    <Usage("/network /model <network_tables.directory> [/size <default=5000,3000> /node.size <fieldName=30,300> /fd <arguments.ini> /out <image.png/svg>]")>
+    <Usage("/network /model <network_tables.directory> [/size <default=5000,3000> /node.size <fieldName=30,300> /fd <arguments.ini> /style <styles.css> /out <image.png/svg>]")>
+    <Argument("/model", False, CLITypes.File, PipelineTypes.std_in,
+              Description:="A directory path which contains the network table and node attribute table in it.")>
+    <Argument("/out", True, CLITypes.File, PipelineTypes.std_out,
+              Extensions:="*.png, *.svg",
+              Description:="By default the network image render result is saved in bitmap png file, if you want to save it as svg file, 
+              then you should add a environment variable config ``/@set graphic_driver=svg`` in the commandline input.")>
+    <Argument("/style", True, CLITypes.File,
+              Extensions:="*.css",
+              Description:="A css style file for your network, this will required your network model have the supported attributes for css rendering, like class, id, etc.")>
     Public Function VisualizeNetwork(args As CommandLine) As Integer
         Dim in$ = args("/model")
         Dim size$ = args("/size") Or "5000,3000"

@@ -81,7 +81,8 @@ Namespace Drawing2D
     Public Delegate Sub IPlot(ByRef g As IGraphics, grct As GraphicsRegion)
 
     ''' <summary>
-    ''' Data plots graphics engine common abstract.
+    ''' Data plots graphics engine common abstract. 
+    ''' (在命令行中使用``graphic_driver=svg``来切换默认的图形引擎为SVG矢量图作图引擎)
     ''' </summary>
     Public Module g
 
