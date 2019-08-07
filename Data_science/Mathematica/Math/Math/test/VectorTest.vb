@@ -70,7 +70,7 @@ Module VectorTest
 
         SparseVector.Precision = 10
 
-        Dim vector As Vector = Vector.rand(1000, -1000, 5).AsList + Repeats(0.0, 50)
+        Dim vector As Vector = Vector.rand(20, -20, 20).AsList + Repeats(0.0, 50)
         Dim spVector As New SparseVector(vector)
 
         Call Console.WriteLine($"memory of the normal vector: {HeapSizeOf.MeasureSize(vector)} bytes")

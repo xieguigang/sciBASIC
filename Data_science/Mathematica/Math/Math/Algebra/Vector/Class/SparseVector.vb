@@ -99,10 +99,26 @@ Namespace LinearAlgebra
 #End Region
 
         ''' <summary>
-        ''' 当元素的绝对值小于这个值之后就会被当作为零，可以根据情况来设置这个公用属性来控制稀疏向量的计算精度
+        ''' All of the element its ABS value less than this precision threshold will be treated as ZERO value
+        ''' So the larger of this threshold value, the lower precision precision of all of the math algorithm
+        ''' that related to this <see cref="SparseVector"/>.
+        ''' 
+        ''' (当元素的绝对值小于这个值之后就会被当作为零，可以根据情况来设置这个公用属性来控制稀疏向量的计算精度)
         ''' </summary>
         ''' <returns></returns>
         Public Shared Property Precision As Double = 0.00001
+
+        Const PrecisionEnvironmentConfigName$ = "/sparse_vector.zero_precision"
+
+        Shared Sub New()
+            Dim precision$ = App.GetVariable(PrecisionEnvironmentConfigName)
+
+            If Not precision.StringEmpty Then
+                SparseVector.Precision = precision.ParseDouble
+
+                Call $"The precision controls config of the sparse vector was set to {precision}".__INFO_ECHO
+            End If
+        End Sub
 
         ''' <summary>
         ''' 
