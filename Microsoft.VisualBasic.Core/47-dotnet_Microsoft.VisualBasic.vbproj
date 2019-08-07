@@ -979,6 +979,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
+    <Compile Include="My\Framework\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
@@ -1296,7 +1297,7 @@
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
-    <Compile Include="ApplicationServices\Debugger\Config.vb" />
+    <Compile Include="My\Framework\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
     <Compile Include="Extensions\IO\Path\Includes.vb" />
     <Compile Include="Extensions\IO\Extensions\Extensions.vb" />

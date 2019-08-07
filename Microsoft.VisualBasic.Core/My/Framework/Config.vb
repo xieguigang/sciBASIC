@@ -44,7 +44,7 @@
 
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ApplicationServices.Debugging
+Namespace ApplicationServices.FrameworkInternal
 
     Public Class Config
 
