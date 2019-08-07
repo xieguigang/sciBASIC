@@ -61,10 +61,13 @@ Namespace My.FrameworkInternal
         ''' <returns></returns>
         Public Property environment As Dictionary(Of String, String)
 
-        Public ReadOnly Property updates As Date
+        Public Property updates As Date
             Get
                 Return Now
             End Get
+            Set(value As Date)
+                ' readonly do nothing
+            End Set
         End Property
 
         Public Shared ReadOnly Property DefaultFile As String
