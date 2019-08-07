@@ -1267,7 +1267,7 @@
     <Compile Include="ComponentModel\Settings\DataModels\ModelBase.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
-    <Compile Include="My\IOHandler.vb" />
+    <Compile Include="My\Framework\IOHandler.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
