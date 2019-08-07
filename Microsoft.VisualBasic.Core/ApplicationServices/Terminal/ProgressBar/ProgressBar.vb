@@ -1,65 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::3562e8340d57b44a6cb3447221203925, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure ColorTheme
-    ' 
-    '         Properties: BackgroundColor, IsEmpty, MessageDetailColor, ProgressBarColor, ProgressMsgColor
-    ' 
-    '         Function: [Default], DefaultTheme
-    ' 
-    '     Class ProgressBar
-    ' 
-    '         Properties: ElapsedMilliseconds, Enable
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Sub: [Step], consoleWindowResize, (+2 Overloads) Dispose, SetProgress, SetToEchoLine
-    '              tick
-    ' 
-    '     Class ProgressProvider
-    ' 
-    '         Properties: Current, Target
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: [Step], (+2 Overloads) ETA, StepProgress, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure ColorTheme
+' 
+'         Properties: BackgroundColor, IsEmpty, MessageDetailColor, ProgressBarColor, ProgressMsgColor
+' 
+'         Function: [Default], DefaultTheme
+' 
+'     Class ProgressBar
+' 
+'         Properties: ElapsedMilliseconds, Enable
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Sub: [Step], consoleWindowResize, (+2 Overloads) Dispose, SetProgress, SetToEchoLine
+'              tick
+' 
+'     Class ProgressProvider
+' 
+'         Properties: Current, Target
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: [Step], (+2 Overloads) ETA, StepProgress, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Terminal.ProgressBar
@@ -124,7 +125,7 @@ Namespace Terminal.ProgressBar
         ''' </remarks>
         Public Shared Function DefaultTheme() As [Default](Of ColorTheme)
             Return New [Default](Of ColorTheme) With {
-                .Value = [Default](),
+                .value = [Default](),
                 .assert = Function(t)
                               Return DirectCast(t, ColorTheme).IsEmpty
                           End Function
@@ -150,6 +151,8 @@ Namespace Terminal.ProgressBar
     ''' <remarks>
     ''' http://www.cnblogs.com/masonlu/p/4668232.html
     ''' </remarks>
+    ''' 
+    <FrameworkConfig(ProgressBar.TerminalProgressBarEnvironmentConfigName)>
     Public Class ProgressBar : Inherits AbstractBar
         Implements IDisposable
 
@@ -174,8 +177,10 @@ Namespace Terminal.ProgressBar
             End Set
         End Property
 
+        Friend Const TerminalProgressBarEnvironmentConfigName$ = "progress_bar"
+
         Shared Sub New()
-            disabled = App.GetVariable("progress_bar").TextEquals(NameOf(disabled))
+            disabled = App.GetVariable(TerminalProgressBarEnvironmentConfigName).TextEquals(NameOf(disabled))
         End Sub
 
         ''' <summary>
