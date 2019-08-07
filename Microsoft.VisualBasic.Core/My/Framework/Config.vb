@@ -42,7 +42,9 @@
 
 #End Region
 
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace My.FrameworkInternal
@@ -52,6 +54,13 @@ Namespace My.FrameworkInternal
         Public Property level As DebuggerLevels = DebuggerLevels.On
         Public Property mute As Boolean = False
 
+        ''' <summary>
+        ''' 整个框架的环境配置项目，请注意，通过命令行进行配置是优先于这个配置文件的配置值的
+        ''' 可以在命令行中使用``--config-framework``命令来配置默认数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property environment As Dictionary(Of String, String)
+
         Public Shared ReadOnly Property DefaultFile As String
             Get
                 Return App.LocalData & "/debugger-config.json"
@@ -59,16 +68,20 @@ Namespace My.FrameworkInternal
         End Property
 
         Public Shared Function Load() As Config
+            If Not DefaultFile.FileExists Then
+                Return saveDefault()
+            End If
+
             Try
                 Dim cfg As Config = IO.File.ReadAllText(DefaultFile).LoadJSON(Of Config)
 
                 If cfg Is Nothing Then
-                    Return New Config().Save()
+                    Return saveDefault()
                 Else
                     Return cfg
                 End If
             Catch ex As Exception When Not DefaultFile.FileExists
-                Return New Config().Save()
+                Return saveDefault()
             Catch ex As Exception
                 Call App.LogException(ex)
 
@@ -76,6 +89,38 @@ Namespace My.FrameworkInternal
                 ' 这个也无能为力了， 只能够放弃读取， 直接使用默认的调试器参数
                 Return New Config
             End Try
+        End Function
+
+        Private Shared Function saveDefault() As Config
+            Dim config As New Config With {
+                .environment = New Dictionary(Of String, String)
+            }
+            ' scan all assembly and then load config name?
+            ' only load Microsoft.VisualBasic
+            Dim modules = App.HOME _
+                .EnumerateFiles("*.dll") _
+                .Where(Function(file)
+                           Return file.BaseName.StartsWith("Microsoft.VisualBasic")
+                       End Function) _
+                .ToArray
+            Dim assembly As Assembly
+            Dim configNames As FrameworkConfigAttribute()
+
+            For Each file As String In modules
+                assembly = Assembly.LoadFile(file)
+                configNames = assembly.GetTypes _
+                    .Select(Function(type)
+                                Return type.GetCustomAttributes(Of FrameworkConfigAttribute)
+                            End Function) _
+                    .IteratesALL _
+                    .ToArray
+
+                For Each configName As FrameworkConfigAttribute In configNames
+                    config.environment(configName.Name) = ""
+                Next
+            Next
+
+            Return config.Save
         End Function
 
         Private Function Save() As Config
