@@ -149,7 +149,7 @@ Namespace LinearAlgebra
             Dim j As VBInteger = -1
 
             For i As Integer = 0 To dimension - 1
-                If (j = index.IndexOf(i)) > 0 Then
+                If (j = index.IndexOf(i)) > -1 Then
                     Yield buffer(j)
                 Else
                     Yield 0.0
