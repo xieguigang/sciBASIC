@@ -50,7 +50,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ApplicationServices
+Namespace My.FrameworkInternal
 
     ''' <summary>
     ''' Collection IO extensions

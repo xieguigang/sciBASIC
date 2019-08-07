@@ -1,4 +1,4 @@
-﻿Namespace ApplicationServices.FrameworkInternal
+﻿Namespace My.FrameworkInternal
 
     ''' <summary>
     ''' The sciBASIC.NET framework config module
