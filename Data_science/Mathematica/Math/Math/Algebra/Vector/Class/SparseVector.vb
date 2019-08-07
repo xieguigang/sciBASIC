@@ -11,12 +11,19 @@ Namespace LinearAlgebra
     ''' </summary>
     ''' <remarks>
     ''' 在这个向量中存在大量的零，主要适用于节省计算内存
+    ''' 因为有<see cref="index"/>索引的存在，所以假若零数值比较少的话，
+    ''' 使用这个稀疏向量来存储数据反而会导致内存被过度占用
     ''' </remarks>
     Public Class SparseVector : Inherits Vector
 
         ''' <summary>
         ''' 非零值的索引号
         ''' </summary>
+        ''' <remarks>
+        ''' 为了保持访问性能，<see cref="buffer"/>数组并不会频繁的更改其长度
+        ''' 所以在设置某个元素为零的时候，是通过将这个索引对应的元素设置为-1进行标记删除的
+        ''' -1表示空缺下来的元素
+        ''' </remarks>
         ReadOnly index As List(Of Integer)
         ReadOnly dimension%
 
@@ -92,7 +99,7 @@ Namespace LinearAlgebra
 #End Region
 
         ''' <summary>
-        ''' 当元素的绝对值小于这个值之后就会被当作为零
+        ''' 当元素的绝对值小于这个值之后就会被当作为零，可以根据情况来设置这个公用属性来控制稀疏向量的计算精度
         ''' </summary>
         ''' <returns></returns>
         Public Shared Property Precision As Double = 0.00001
@@ -143,7 +150,7 @@ Namespace LinearAlgebra
 
             For i As Integer = 0 To dimension - 1
                 If (j = index.IndexOf(i)) > 0 Then
-                    Yield buffer(index(j))
+                    Yield buffer(j)
                 Else
                     Yield 0.0
                 End If
