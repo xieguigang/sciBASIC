@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Which
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 
 Namespace LinearAlgebra
 
@@ -14,6 +15,8 @@ Namespace LinearAlgebra
     ''' 因为有<see cref="index"/>索引的存在，所以假若零数值比较少的话，
     ''' 使用这个稀疏向量来存储数据反而会导致内存被过度占用
     ''' </remarks>
+    ''' 
+    <FrameworkConfig(SparseVector.PrecisionEnvironmentConfigName)>
     Public Class SparseVector : Inherits Vector
 
         ''' <summary>
@@ -108,7 +111,7 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Public Shared Property Precision As Double = 0.00001
 
-        Const PrecisionEnvironmentConfigName$ = "/sparse_vector.zero_precision"
+        Public Const PrecisionEnvironmentConfigName$ = "/sparse_vector.zero_precision"
 
         Shared Sub New()
             Dim precision$ = App.GetVariable(PrecisionEnvironmentConfigName)
