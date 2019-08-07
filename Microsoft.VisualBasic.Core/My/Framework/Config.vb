@@ -61,9 +61,15 @@ Namespace My.FrameworkInternal
         ''' <returns></returns>
         Public Property environment As Dictionary(Of String, String)
 
+        Public ReadOnly Property updates As Date
+            Get
+                Return Now
+            End Get
+        End Property
+
         Public Shared ReadOnly Property DefaultFile As String
             Get
-                Return App.LocalData & "/debugger-config.json"
+                Return App.LocalData & "/runtime-framework-config.json"
             End Get
         End Property
 
@@ -124,7 +130,9 @@ Namespace My.FrameworkInternal
         End Function
 
         Private Function Save() As Config
-            Call Me.GetJson.SaveTo(DefaultFile)
+            Call Me _
+                .GetJson(indent:=True) _
+                .SaveTo(DefaultFile)
             Return Me
         End Function
 
