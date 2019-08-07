@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b191b9ac322c3bf2a7b7b816ba148a0, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\BinaryWriter.vb"
+﻿#Region "Microsoft.VisualBasic::0e60c2b7f79d56e51d824cabf0c6c462, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\BinaryWriter.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module BinaryWriter
     ' 
-    '         Function: __serialize, GetReadProperty, (+2 Overloads) Serialization
+    '         Function: (+2 Overloads) Serialization, serializeInternal
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,41 +42,51 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace Serialization.BinaryDumping
 
     Public Module BinaryWriter
 
-        <Extension> Public Function Serialization(Of T)(obj As T) As Byte()
-            Dim type As Type = GetType(T)
-            Return Serialization(obj, type).ToArray
+        ReadOnly utf8 As Encoding = Encodings.UTF8WithoutBOM.CodePage
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Serialization(Of T)(obj As T) As Byte()
+            Return Serialization(obj, GetType(T)).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Serialization(obj As Object, type As Type) As List(Of Byte)
-            Dim visited As New List(Of Object)
-            Dim readProps As PropertyInfo() = type.GetReadProperty
+            ' 为了解决对象之间的循环引用的问题
+            Return serializeInternal(obj, type, New Index(Of Object))
+        End Function
+
+        Private Function serializeInternal(obj As Object, type As Type, ByRef visited As Index(Of Object)) As List(Of Byte)
+            Dim readProps As Dictionary(Of String, PropertyInfo) = DataFramework.Schema(type, PropertyAccess.Readable,, nonIndex:=True)
             Dim buffer As New List(Of Byte)
+            Dim value As Object
 
-            For Each prop As PropertyInfo In readProps
+            For Each prop As KeyValuePair(Of String, PropertyInfo) In readProps
+                type = prop.Value.PropertyType
+                value = prop.Value.GetValue(obj, Nothing)
 
+                If DataFramework.IsPrimitive(type) Then
+                    ' 基础类型,直接写入数据
+                    buffer += Caster.GetBytes(type)(value)
+                ElseIf type.IsArray Then
+
+                Else
+                    ' is a complex object 
+                    buffer += serializeInternal(value, type, visited + value)
+                End If
             Next
 
             Return buffer
-        End Function
-
-        <Extension>
-        Public Function GetReadProperty(type As Type) As PropertyInfo()
-            Dim LQuery = (From p As PropertyInfo
-                          In type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
-                          Where p.CanRead AndAlso
-                              p.GetIndexParameters.IsNullOrEmpty
-                          Select p).ToArray
-            Return LQuery
-        End Function
-
-        Private Function __serialize(obj As Object, type As Type, ByRef visited As List(Of Object)) As List(Of Byte)
-            Dim readProps As PropertyInfo() = type.GetReadProperty
-            Throw New NotImplementedException
         End Function
     End Module
 End Namespace

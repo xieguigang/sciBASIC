@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f53ea4cb803ce18a2357508aef6f9545, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
+﻿#Region "Microsoft.VisualBasic::fdb49616c25f19b56dc9a8beb0832b17, Data_science\Darwinism\NonlinearGrid\NonlinearGrid\Program.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     ' Module Program
     ' 
-    '     Function: DumpAsNetwork, ExportFactorImpact, Formula, Main, trainGA
-    '               ValidationROC, ValidationSummary
+    '     Function: DumpAsNetwork, ExportFactorImpact, Formula, loadNameMaps, Main
+    '               trainGA, ValidationROC, ValidationSummary
     ' 
     '     Sub: RunFitProcess
     ' 
@@ -315,9 +315,9 @@ Module Program
                              Pcompute As ParallelComputeFitness(Of Genome))
 
         Dim cor As Vector = trainingSet.DataSamples.AsEnumerable.Correlation
-        Dim max As Vector = trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
+        Dim max As Vector = Nothing  ' trainingSet.NormalizeMatrix.matrix.Select(Function(r) 1 / (r.max * 1000)).AsVector
         Call "Create a base chromosome".__DEBUG_ECHO
-        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, max))
+        Dim chromesome As GridSystem = If(seed, Loader.EmptyGridSystem(trainingSet.width, cor, power:=max))
         Call "Initialize populations".__DEBUG_ECHO
         Call $"value truncate at ABS limits {truncate}".__DEBUG_ECHO
         Dim parallel As [Variant](Of ParallelComputeFitness(Of Genome), Boolean)

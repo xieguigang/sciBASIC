@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ddfdc41b2bd4d9104a2cf01f6175aff, CLI_tools\MLkit\render\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::48689e07fe821dc31ee264d550bce51b, CLI_tools\MLkit\render\CLI.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 <CLI> Module CLI
 
@@ -83,6 +84,8 @@ Imports Microsoft.VisualBasic.Imaging.Driver
                              End Function
         End If
 
+        Call fdArgv.GetJson(indent:=True).__DEBUG_ECHO
+
         Dim image As GraphicsData = graph _
             .doRandomLayout _
             .doForceLayout(fdArgv, showProgress:=True) _
@@ -101,4 +104,3 @@ Imports Microsoft.VisualBasic.Imaging.Driver
         Return image.Save(out).CLICode
     End Function
 End Module
-

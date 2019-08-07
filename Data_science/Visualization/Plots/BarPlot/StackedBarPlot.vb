@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::deeabc12eeffde06a5b0d2fe1dc4b4a1, Data_science\Visualization\Plots\BarPlot\StackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::080b782f18d02db5bd343f6da57d7e31, Data_science\Visualization\Plots\BarPlot\StackedBarPlot.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3d0e052f4e84e8aa814eb904c306f85, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Environment.vb"
+﻿#Region "Microsoft.VisualBasic::89c6183ae8d6b4839757ae9a037000cb, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Environment.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,6 @@
 
     ' Summaries:
 
-    ' Structure TrainingSet
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
-    ' 
     ' Class Environment
     ' 
     '     Properties: Cacheable, sampleDist

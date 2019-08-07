@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d08a87ebc22bc46412d23db125271d88, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
+﻿#Region "Microsoft.VisualBasic::bf600269353a14971db21abcdc7b302b, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
 
     ' Author:
     ' 
@@ -79,16 +79,23 @@ Public Module Visualize
         End With
     End Function
 
+    ''' <summary>
+    ''' 只计算指数部分
+    ''' </summary>
+    ''' <param name="grid"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' impact影响系数只是用来描述指标对目标函数的值的改变的影响程度
+    ''' 当impact为正实数的时候, 目标指标会对目标函数产生实际影响
+    ''' 当impact为零的时候,指数项计算结果等于1,目标指标对目标函数的结果值产生有限的影响
+    ''' 当impact小于零的时候,指数项计算结果趋向于零,目标指标对目标函数的结果值无影响
+    ''' </remarks>
     <Extension>
     Public Iterator Function NodeImpacts(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
         For i As Integer = 0 To grid.correlations.Length - 1
             Dim factor As NumericVector = grid.correlations(i)
             Dim c As Double = grid.const.B(i)
             Dim impact As Double = c + factor.vector.Sum
-
-            If grid.direction(i) = 0R Then
-                impact = 0
-            End If
 
             Yield New NamedValue(Of Double) With {
                .Name = factor.name,
@@ -97,6 +104,14 @@ Public Module Visualize
         Next
     End Function
 
+    ''' <summary>
+    ''' 相关性则是计算 a * E ^ P 整个表达式
+    ''' </summary>
+    ''' <param name="grid"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 含义与相关性系数相似,正实数表示正相关,负实数表示负相关,零表示不相关
+    ''' </remarks>
     <Extension>
     Public Iterator Function NodeCorrelation(grid As GridMatrix) As IEnumerable(Of NamedValue(Of Double))
         Dim impacts = grid.NodeImpacts.ToArray

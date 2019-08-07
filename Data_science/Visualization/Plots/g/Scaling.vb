@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dedbf3049161c9fce40dd8961047d73d, Data_science\Visualization\Plots\g\Scaling.vb"
+﻿#Region "Microsoft.VisualBasic::7d0cca9551590b512f4cc62f1a9801a8, Data_science\Visualization\Plots\g\Scaling.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Histogram
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq

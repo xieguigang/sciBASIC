@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::591ceb818c08c791a727b01cf58bf1c0, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
+﻿#Region "Microsoft.VisualBasic::b865d3a8170f20eef8e76ec7bfe86017, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '         Properties: initialSize, parallel, Random, Size
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 

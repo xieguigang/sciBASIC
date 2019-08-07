@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b30abc77680cb9b03a1d97e1db20865c, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::1ac8e0b02fcb33404236bb7513e0b43f, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 
@@ -91,7 +91,7 @@ Namespace Emit.Delegates
                 Dim vector As Array = Array.CreateInstance([property].Type, data.Length)
 
                 For i As Integer = 0 To data.Length - 1
-                    Call vector.SetValue([property].__getValue(data(i)), i)
+                    Call vector.SetValue([property].handleGetValue(data(i)), i)
                 Next
 
                 Return vector
@@ -108,13 +108,13 @@ Namespace Emit.Delegates
 
                 If value Is Nothing Then
                     For Each x In data
-                        Call [property].__setValue(x, Nothing)
+                        Call [property].handleSetValue(x, Nothing)
                     Next
                 ElseIf array Is Nothing Then  ' 不是一个集合
                     Dim v As Object = value
 
                     For Each x As T In data
-                        Call [property].__setValue(x, v)
+                        Call [property].handleSetValue(x, v)
                     Next
                 Else
                     Dim vector = array.As(Of Object).ToArray
@@ -123,7 +123,7 @@ Namespace Emit.Delegates
                         Throw New InvalidExpressionException(DimNotAgree$)
                     End If
                     For i As Integer = 0 To data.Length - 1
-                        Call [property].__setValue(data(i), vector(i))
+                        Call [property].handleSetValue(data(i), vector(i))
                     Next
                 End If
             End Set

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f480709d70a6e517457954ef02b6176, Microsoft.VisualBasic.Core\Net\Tcp\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::f3b85bfba0bba4f2a084306e1c5a6693, Microsoft.VisualBasic.Core\Net\Tcp\TcpServicesSocket.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, ToString
     ' 
     '         Sub: AcceptCallback, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest, ReadCallback
-    '              (+2 Overloads) Send, SendCallback, WaitForStart
+    '              (+2 Overloads) Send, SendCallback, startSocket, WaitForStart
     ' 
     ' 
     ' /********************************************************************************/

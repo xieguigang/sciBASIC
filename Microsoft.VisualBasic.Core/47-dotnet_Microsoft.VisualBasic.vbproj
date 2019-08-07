@@ -1016,6 +1016,7 @@
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LCS.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
+    <Compile Include="ComponentModel\DataSource\TypeCaster.vb" />
     <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\DataSource\Property\GenericProperty.vb" />
     <Compile Include="ComponentModel\File\XmlDataModel.vb" />

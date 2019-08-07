@@ -1,41 +1,41 @@
-﻿#Region "Microsoft.VisualBasic::772d8c5faac1dc1e604744013c1f994c, CLI_tools\MLkit\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::ea4b1b523082c25071bbb2405d2fa9dc, CLI_tools\MLkit\Chart\CLI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module CLI
-' 
-'     Function: KMeansCluster, ROC, Scatter
-' 
-' /********************************************************************************/
+    ' Module CLI
+    ' 
+    '     Function: BarPlotCLI, KMeansCluster, ROC, Scatter
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -43,12 +43,39 @@ Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 <CLI> Module CLI
+
+    <ExportAPI("/barplot")>
+    <Usage("/barplot /in <data.csv> [/name <default=Name> /value <default=Value> /size <default=2000,1700> /out <plot.png>]")>
+    Public Function BarPlotCLI(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim name$ = args("/name") Or "Name"
+        Dim value$ = args("/value") Or "Value"
+        Dim size$ = args("/size") Or "2000,1700"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.barplot.png"
+        Dim data As NamedValue(Of Double)() = EntityObject _
+            .LoadDataSet([in], uidMap:=name) _
+            .Select(Function(d)
+                        Return New NamedValue(Of Double) With {
+                            .Name = d.ID,
+                            .Value = d(value).ParseDouble
+                        }
+                    End Function) _
+            .ToArray
+        Dim barData As BarDataGroup = data.SimpleSerials
+        Dim image = BarPlotAPI.Plot(barData, size.SizeParser)
+
+        Return image.Save(out).CLICode
+    End Function
 
     <ExportAPI("/Scatter")>
     <Usage("/Scatter /in <data.csv> /x <fieldX> /y <fieldY> [/label.X <labelX> /label.Y <labelY> /color <default=black> /out <out.png>]")>

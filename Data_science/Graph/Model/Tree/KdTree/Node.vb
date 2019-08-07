@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8de1ea5e9ea82151de4d444959c18cb9, Data_science\Mathematica\Math\Math\HashMaps\Unchecked.vb"
+﻿#Region "Microsoft.VisualBasic::632bc8cf627486778c8aa40b8d0d0ec0, Data_science\Graph\Model\Tree\KdTree\Node.vb"
 
     ' Author:
     ' 
@@ -31,14 +31,32 @@
 
     ' Summaries:
 
-    ' Module Unchecked
+    '     Class Node
     ' 
+    '         Properties: dimension, left, obj, parent, right
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Module Unchecked
+Namespace KdTree
 
-End Module
+    Public Class Node : Inherits Vertex
+
+        Public Property obj As Object
+        Public Property left As Node
+        Public Property right As Node
+        Public Property parent As Node
+        Public Property dimension As Integer
+
+        Sub New(obj As Object, dimension%, parent As Node)
+            Me.obj = obj
+            Me.dimension = dimension
+            Me.parent = parent
+        End Sub
+
+    End Class
+End Namespace

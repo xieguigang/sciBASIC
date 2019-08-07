@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c766c5068dd4150ee6c6e9042c65aade, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::92de9c7e41e484a88df1aae9c89b9765, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\CLI.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     ' Module CLI
     ' 
-    '     Function: Association, cbind, rbind, rbindGroup, Removes
-    '               Subtract, Takes, Transpose, Union, Unique
+    '     Function: Association, cbind, NameValues, rbind, rbindGroup
+    '               Removes, Subtract, Takes, Transpose, Union
+    '               Unique
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730476030ef3d48241a60eb0ee6dccda, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::0c624245468fbb691c7835ea7ba2d80d, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Public Class Evaluation
         Return result
     End Function
 End Class
-

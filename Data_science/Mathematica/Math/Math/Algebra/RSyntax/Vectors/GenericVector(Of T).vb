@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2705a35fc10cf97197c62b029e26ca9, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::96ebf5a3dbb33acb0c3f9b656137cf24, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
 
     ' Author:
     ' 
@@ -65,10 +65,10 @@ Namespace SyntaxAPI.Vectors
         ''' 向量维数，就是向量的长度（元素的个数）
         ''' </summary>
         ''' <remarks></remarks>
-        Public ReadOnly Property [Dim] As Integer
+        Public Overridable ReadOnly Property [Dim] As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Count
+                Return buffer.Length
             End Get
         End Property
 

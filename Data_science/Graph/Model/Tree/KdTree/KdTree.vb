@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69b044c0778a5054c8c853a583cba52d, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\TrainingSet.vb"
+﻿#Region "Microsoft.VisualBasic::ad89000b9f382eec97cff3a64a305bc5, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
 
     ' Author:
     ' 
@@ -31,35 +31,44 @@
 
     ' Summaries:
 
-    ' Class TrainingSet
+    '     Class KdTree
     ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: ToString
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: buildTree
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Namespace KdTree
 
-Public Class TrainingSet
+    Public Class KdTree
 
-    Public X As Vector
-    Public Y As Double
-    Public targetID As String
+        Dim dimensions As Integer()
+        Dim points As Object()
+        Dim metric As Object
 
-    Sub New(sample As Sample)
-        Me.X = sample.status.vector
-        Me.Y = sample.target(Scan0)
-        Me.targetID = sample.ID
-    End Sub
+        Sub New(points As Object(), metric As Object, dimensions As Integer())
+            Me.points = points
+            Me.metric = metric
+            Me.dimensions = dimensions
+        End Sub
 
-    Friend Sub New()
-    End Sub
+        Private Function buildTree(points As Object(), depth As Integer, parent As Node) As Node
+            Dim [dim] = depth Mod dimensions.Length
+            Dim median As Double
+            Dim node As Node
 
-    Public Overrides Function ToString() As String
-        Return targetID
-    End Function
+            If points.Length = 0 Then
+                Return Nothing
+            ElseIf points.Length = 1 Then
+                Return New Node(points(Scan0), [dim], parent)
+            End If
 
-End Class
+            'points.Sort(Function(a, b)
+            '                Return a(dimensions([dim])) - b(dimensions([dim]))
+            '            End Function)
+        End Function
+    End Class
+End Namespace
