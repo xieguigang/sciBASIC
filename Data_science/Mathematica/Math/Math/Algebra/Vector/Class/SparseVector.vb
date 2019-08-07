@@ -111,7 +111,7 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Public Shared Property Precision As Double = 0.00001
 
-        Public Const PrecisionEnvironmentConfigName$ = "/sparse_vector.zero_precision"
+        Public Const PrecisionEnvironmentConfigName$ = "sparse_vector.zero_precision"
 
         Shared Sub New()
             Dim precision$ = App.GetVariable(PrecisionEnvironmentConfigName)

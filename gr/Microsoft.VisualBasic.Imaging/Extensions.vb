@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     <Extension>
     Public Function AsSVG(img As GraphicsData, Optional comment$ = Nothing) As SVGData

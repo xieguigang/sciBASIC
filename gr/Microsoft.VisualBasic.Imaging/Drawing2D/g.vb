@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::8b4eb29d2205ad3d8c238ba4abee0d4b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Module g
-    ' 
-    '         Properties: ActiveDriver, DriverExtensionName
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
-    '                   MeasureWidthOrHeight
-    ' 
-    '         Sub: (+2 Overloads) DropdownShadows, FillBackground
-    '         Class InternalCanvas
-    ' 
-    '             Properties: bg, padding, size
-    ' 
-    '             Function: InvokePlot
-    '             Operators: (+2 Overloads) +, <=, >=
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Sub
+' 
+' 
+'     Module g
+' 
+'         Properties: ActiveDriver, DriverExtensionName
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
+'                   MeasureWidthOrHeight
+' 
+'         Sub: (+2 Overloads) DropdownShadows, FillBackground
+'         Class InternalCanvas
+' 
+'             Properties: bg, padding, size
+' 
+'             Function: InvokePlot
+'             Operators: (+2 Overloads) +, <=, >=
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 
 Namespace Drawing2D
 
@@ -84,6 +85,8 @@ Namespace Drawing2D
     ''' Data plots graphics engine common abstract. 
     ''' (在命令行中使用``graphic_driver=svg``来切换默认的图形引擎为SVG矢量图作图引擎)
     ''' </summary>
+    ''' 
+    <FrameworkConfig(GraphicDriverEnvironmentConfigName)>
     Public Module g
 
         ''' <summary>
@@ -105,6 +108,8 @@ Namespace Drawing2D
         Public Const SmallPadding$ = "padding: 30px 30px 30px 30px;"
         Public Const TinyPadding$ = "padding: 5px 5px 5px 5px;"
 
+        Friend Const GraphicDriverEnvironmentConfigName$ = "graphic_driver"
+
         ''' <summary>
         ''' 在这个模块的构造函数之中，程序会自动根据命令行所设置的环境参数来设置默认的图形引擎
         ''' 
@@ -113,7 +118,7 @@ Namespace Drawing2D
         ''' ```
         ''' </summary>
         Sub New()
-            Dim type$ = App.GetVariable("graphic_driver")
+            Dim type$ = App.GetVariable(GraphicDriverEnvironmentConfigName)
 
             If type.TextEquals("svg") Then
                 g.__defaultDriver = Drivers.SVG
@@ -178,8 +183,8 @@ Namespace Drawing2D
             End If
         End Function
 
-        ReadOnly defaultSize As [Default](Of  Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
-        ReadOnly defaultPaddingValue As [Default](Of  Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
+        ReadOnly defaultSize As [Default](Of Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
+        ReadOnly defaultPaddingValue As [Default](Of Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
 
         ''' <summary>
         ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100).
@@ -210,9 +215,9 @@ Namespace Drawing2D
 
                 Call svg.Clear(bg.TranslateColor)
                 Call plotAPI(svg, New GraphicsRegion With {
-                       .Size = size,
-                       .Padding = padding
-                  })
+                    .Size = size,
+                    .Padding = padding
+                })
 
                 image = New SVGData(svg, size)
             Else
@@ -235,8 +240,8 @@ Namespace Drawing2D
                     End With
 
                     Call plotAPI(g, New GraphicsRegion With {
-                         .Size = size,
-                         .Padding = padding
+                        .Size = size,
+                        .Padding = padding
                     })
 
                     image = New ImageData(g.ImageResource, size)
