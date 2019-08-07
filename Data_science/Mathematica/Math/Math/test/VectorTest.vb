@@ -65,8 +65,27 @@ Module VectorTest
         Pause()
     End Sub
 
+
+    Sub SparseVectorTest()
+        Dim vector As Vector = Vector.rand(0.01, -0.01, 50000)
+        Dim spVector As New SparseVector(vector)
+
+        Call Console.WriteLine($"memory of the normal vector: {HeapSizeOf.MeasureSize(vector)} bytes")
+        Call Console.WriteLine($"memory of the compact vector: {HeapSizeOf.MeasureSize(spVector)} bytes")
+
+
+        Dim avg1 = vector.Average
+        Dim avg2 = spVector.Average
+
+        Call Console.WriteLine($"average should be equals: {avg1} = {avg2} ? ({SparseVector.Equals(avg1, avg2)})")
+
+
+        Pause()
+    End Sub
+
     Sub Main()
 
+        Call SparseVectorTest()
         Call memoryTest()
 
         Dim aa As Vector = {0, 0, 0, 0}

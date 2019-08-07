@@ -134,6 +134,10 @@ Namespace LinearAlgebra
             Me.buffer = buffer
         End Sub
 
+        Public Overloads Shared Function Equals(a#, b#) As Boolean
+            Return Math.Abs(a - b) <= Precision
+        End Function
+
         Public Overrides Iterator Function GetEnumerator() As IEnumerator(Of Double)
             Dim j As VBInteger = -1
 
@@ -148,6 +152,10 @@ Namespace LinearAlgebra
 
         Public Overloads Shared Operator *(v As SparseVector, multipl As Double) As SparseVector
             Return New SparseVector(From x As Double In v Select x * multipl)
+        End Operator
+
+        Public Overloads Shared Operator /(v As SparseVector, div As Double) As SparseVector
+            Return New SparseVector(From x As Double In v Select x / div)
         End Operator
 
         Public Overloads Shared Operator -(v As SparseVector, minus As Double) As SparseVector
