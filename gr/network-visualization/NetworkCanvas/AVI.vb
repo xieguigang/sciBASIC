@@ -76,7 +76,7 @@ Public Module AVI
             }
         End If
 
-        Dim g As Graphics
+        Dim g As Graphics = Nothing
         Dim region As New Rectangle(New Point, canvasSize)
         Dim engine As IForceDirected
 

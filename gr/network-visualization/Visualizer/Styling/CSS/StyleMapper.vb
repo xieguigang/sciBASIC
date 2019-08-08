@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ebbb491e2699c21b53e495cc2f8061, gr\network-visualization\Visualizer\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::341a5a61b041e90b31f9831e07433468, gr\network-visualization\Visualizer\Styling\StyleMapper.vb"
 
 ' Author:
 ' 
@@ -31,36 +31,49 @@
 
 ' Summaries:
 
-' Module CanvasDrawer
+'     Structure StyleMapper
 ' 
-'     Function: DrawImage
+'         Function: (+2 Overloads) __createSelector, (+2 Overloads) FromJSON
+' 
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+' 
+'     Structure StyleCreator
+' 
+'         Function: CompileSelector
+' 
+' 
+' 
+' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
-Imports Microsoft.VisualBasic.Data.visualize.Network.Styling.CSS
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
 
-Public Module CanvasDrawer
+Namespace Styling.CSS
 
-    <Extension>
-    Public Function DrawImage(net As NetworkGraph, styling As StyleMapper,
-                              Optional canvasSize$ = "1024,1024",
-                              Optional padding$ = g.DefaultPadding,
-                              Optional background$ = "white") As GraphicsData
+    ''' <summary>
+    ''' Network object visualize styling object model, the network render css file parser
+    ''' </summary>
+    Public Structure StyleMapper
 
-        Dim styled As NetworkGraph = net.WritePropertyValue(styling)
-        Dim rendered As GraphicsData = NetworkVisualizer.DrawImage(
-            net:=styled,
-            canvasSize:=canvasSize
-        )
+        Dim nodeStyles As StyleCreator()
+        Dim edgeStyles As StyleCreator()
 
-        Return rendered
-    End Function
+        ''' <summary>
+        ''' node label styling
+        ''' </summary>
+        Dim labelStyles As StyleCreator()
 
-End Module
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function FromCSS(css As CSSFile) As StyleMapper
+            Return css.ParseCSSStyles
+        End Function
+    End Structure
+End Namespace

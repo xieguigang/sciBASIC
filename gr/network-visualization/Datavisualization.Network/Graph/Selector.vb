@@ -57,6 +57,10 @@ Namespace Graph
     ''' </summary>
     Public Module Selector
 
+        ''' <summary>
+        ''' An class object that contains <see cref="GraphData"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
         Public Interface IGraphValueContainer(Of T As GraphData)
             Property data As T
         End Interface
@@ -98,7 +102,9 @@ Namespace Graph
             End If
         End Function
 
-        <Extension> Public Function SelectEdgeValue(property$, Optional ByRef type As Type = Nothing) As Func(Of Edge, Object)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SelectEdgeValue(property$, Optional ByRef type As Type = Nothing) As Func(Of Edge, Object)
             Return [property].GenericSelector(Of EdgeData, Edge)(type)
         End Function
     End Module

@@ -42,7 +42,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 
-Friend Class labelModel
+Friend Class LayoutLabel
     Public label As Label
     Public anchor As Anchor
     Public style As Font

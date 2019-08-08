@@ -1,9 +1,11 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Which
 Imports Microsoft.VisualBasic.My.FrameworkInternal
+Imports stdNum = System.Math
 
 Namespace LinearAlgebra
 
@@ -42,6 +44,16 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        Protected ReadOnly Iterator Property Values As IEnumerable(Of Double)
+            Get
+                For i As Integer = 0 To index.Count - 1
+                    If index(i) <> -1 Then
+                        Yield buffer(i)
+                    End If
+                Next
+            End Get
+        End Property
+
 #Region "Index properties"
         Default Public Overrides Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of Double)
             Get
@@ -49,11 +61,16 @@ Namespace LinearAlgebra
             End Get
             Set(value As Vector(Of Double))
                 For Each index As SeqValue(Of Integer) In IsTrue(booleans).SeqIterator
-                    Me(index.value) = value(index)
+                    Call SetValue(index.value, value(index))
                 Next
             End Set
         End Property
 
+        ''' <summary>
+        ''' Get/Set value by index access
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
         Default Public Overrides Property Item(index As Integer) As Double
             Get
                 Dim i As Integer = Me.index.IndexOf(index)
@@ -65,18 +82,7 @@ Namespace LinearAlgebra
                 End If
             End Get
             Set
-                Dim i As Integer = Me.index.IndexOf(index)
-
-                If Value = 0.0 Then
-                    If i = -1 Then
-                        ' 将原来的零值设置为零值，则无变化
-                        ' do nothing
-                    Else
-                        ' 将非零值设置为零
-                        Me.index.Remove(index)
-                        Me.buffer(i) = 0
-                    End If
-                End If
+                Call SetValue(index, Value)
             End Set
         End Property
 
@@ -86,7 +92,7 @@ Namespace LinearAlgebra
             End Get
             Set
                 For Each index As SeqValue(Of Integer) In range.SeqIterator
-                    Me(index.value) = Value(index)
+                    Call SetValue(index.value, Value(index))
                 Next
             End Set
         End Property
@@ -160,8 +166,57 @@ Namespace LinearAlgebra
             Me.buffer = buffer
         End Sub
 
+        Public Sub SetValue(index%, value#)
+            Dim i As Integer = Me.index.IndexOf(index)
+
+            If value = 0.0 OrElse Math.Abs(value) < Precision Then
+                If i = -1 Then
+                    ' 将原来的零值设置为零值，则无变化
+                    ' do nothing
+                Else
+                    ' 将非零值设置为零
+                    Me.index(i) = -1
+                    Me.buffer(i) = Double.NaN
+                End If
+            Else
+                ' value不为零的时候,可能会拓展buffer和index
+                If i = -1 Then
+                    ' 在原来的列表中不存在
+                    ' 则先填充-1的位置
+                    ' 没有-1的位置的时候才进行buffer的拓展
+                    For i = 0 To Me.index.Count - 1
+                        If Me.index(i) = -1 Then
+                            Me.buffer(i) = value
+                            Me.index(i) = index
+
+                            Return
+                        End If
+                    Next
+
+                    ' 需要拓展buffer
+                    ReDim Preserve Me.buffer(buffer.Length * 2)
+
+                    Me.index.Add(index)
+                    Me.buffer(Me.index.Count - 1) = value
+                Else
+                    ' 直接替换值
+                    Me.buffer(i) = value
+                End If
+            End If
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function Min() As Double
+            Return stdNum.Min(0.0, Values.Min)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function Max() As Double
+            Return stdNum.Max(0.0, Values.Max)
+        End Function
+
         Public Overloads Shared Function Equals(a#, b#) As Boolean
-            Return Math.Abs(a - b) <= Precision
+            Return stdNum.Abs(a - b) <= Precision
         End Function
 
         Public Overrides Iterator Function GetEnumerator() As IEnumerator(Of Double)

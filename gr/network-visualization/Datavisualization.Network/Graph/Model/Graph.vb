@@ -473,7 +473,7 @@ Namespace Graph
                     .degree = U.degree,
                     .ID = U.ID,
                     .label = U.label,
-                    .Pinned = U.Pinned
+                    .pinned = U.pinned
                 }
                 vertices.Add(U)
             End If

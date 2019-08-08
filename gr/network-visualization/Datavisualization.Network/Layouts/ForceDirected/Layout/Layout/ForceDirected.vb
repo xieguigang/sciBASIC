@@ -179,14 +179,14 @@ Namespace Layouts
                     Dim distance As Single = d.Magnitude() + 0.1F
                     Dim direction As AbstractVector = d.Normalize()
 
-                    If n1.Pinned AndAlso n2.Pinned Then
+                    If n1.pinned AndAlso n2.pinned Then
                         point1.ApplyForce(direction * 0F)
                         point2.ApplyForce(direction * 0F)
-                    ElseIf n1.Pinned Then
+                    ElseIf n1.pinned Then
                         point1.ApplyForce(direction * 0F)
                         'point2.ApplyForce((direction * Repulsion) / (distance * distance * -1.0f));
                         point2.ApplyForce((direction * repulsion) / (distance * -1.0F))
-                    ElseIf n2.Pinned Then
+                    ElseIf n2.pinned Then
                         'point1.ApplyForce((direction * Repulsion) / (distance * distance));
                         point1.ApplyForce((direction * repulsion) / (distance))
                         point2.ApplyForce(direction * 0F)
@@ -210,13 +210,13 @@ Namespace Layouts
                 Dim displacement As Single = spring.length - d.Magnitude()
                 Dim direction As AbstractVector = d.Normalize()
 
-                If spring.point1.node.Pinned AndAlso spring.point2.node.Pinned Then
+                If spring.point1.node.pinned AndAlso spring.point2.node.pinned Then
                     spring.point1.ApplyForce(direction * 0F)
                     spring.point2.ApplyForce(direction * 0F)
-                ElseIf spring.point1.node.Pinned Then
+                ElseIf spring.point1.node.pinned Then
                     spring.point1.ApplyForce(direction * 0F)
                     spring.point2.ApplyForce(direction * (spring.K * displacement))
-                ElseIf spring.point2.node.Pinned Then
+                ElseIf spring.point2.node.pinned Then
                     spring.point1.ApplyForce(direction * (spring.K * displacement * -1.0F))
                     spring.point2.ApplyForce(direction * 0F)
                 Else
@@ -231,7 +231,7 @@ Namespace Layouts
         Protected Sub attractToCentre()
             For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
-                If Not point.node.Pinned Then
+                If Not point.node.pinned Then
                     Dim direction As AbstractVector = point.position * -1.0F
                     'point.ApplyForce(direction * ((float)Math.Sqrt((double)(Repulsion / 100.0f))));
 

@@ -62,6 +62,12 @@ Namespace HTML.CSS.Parser
     ''' </remarks>
     Public Module CssParser
 
+        ''' <summary>
+        ''' 创建元素选择器表达式
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function BuildSelector(name$, type As CSSSelectorTypes) As String
             Select Case type
@@ -93,7 +99,7 @@ Namespace HTML.CSS.Parser
         ''' <returns></returns>
         Public Function GetTagWithCSS(CSS$, Optional selectorFilter$ = Nothing) As CSSFile
             Dim tagWithCSSList As New List(Of Selector)
-            Dim IndivisualTag As List(Of String) = IndivisualTags(CSS)
+            Dim IndivisualTag As List(Of String) = IndivisualTags(CSS.SolveStream)
             Dim filter As Assert(Of String)
 
             If selectorFilter.StringEmpty Then

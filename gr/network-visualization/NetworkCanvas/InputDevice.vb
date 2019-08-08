@@ -64,7 +64,7 @@ Public Class InputDevice : Implements IDisposable
                     Canvas.fdgRenderer.ScreenToGraph(
                     New Point(e.Location.X, e.Location.Y))
 
-            dragNode.Pinned = True
+            dragNode.pinned = True
             Canvas.fdgPhysics.GetPoint(dragNode).position = vec
         Else
             dragNode = __getNode(e.Location)
@@ -100,7 +100,7 @@ Public Class InputDevice : Implements IDisposable
     Protected Overridable Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs) Handles Canvas.MouseUp
         drag = False
         If dragNode IsNot Nothing Then
-            dragNode.Pinned = False
+            dragNode.pinned = False
             dragNode = Nothing
         End If
     End Sub
