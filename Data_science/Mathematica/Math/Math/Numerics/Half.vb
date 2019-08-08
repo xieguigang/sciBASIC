@@ -26,10 +26,10 @@ Namespace Numerics
         Implements IConvertible
         Implements IComparable(Of Half)
         Implements IEquatable(Of Half)
+
         ''' <summary>
         ''' Internal representation of the half-precision floating-point number.
         ''' </summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)>
         Friend Value As UShort
 
 #Region "Constants"

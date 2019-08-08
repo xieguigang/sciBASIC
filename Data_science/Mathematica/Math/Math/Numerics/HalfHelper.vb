@@ -40,8 +40,8 @@ Namespace Numerics
                 ' Shift mantissa                
                 m <<= 1
             End While
-            ' m = m And CUInt(Not &H800000)
-            m = m And CType(Not &H800000, UncheckedInteger).UncheckUInt32
+            m = m And CUInt(Not &H800000)
+            ' m = m And CType(Not &H800000, UncheckedInteger).UncheckUInt32
             ' Clear leading 1 bit
             e += &H38800000
             ' Adjust bias ((127-14)<<23)

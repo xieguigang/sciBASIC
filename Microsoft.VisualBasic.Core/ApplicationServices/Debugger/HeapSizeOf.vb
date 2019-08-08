@@ -121,6 +121,15 @@ Namespace ApplicationServices.Debugging
                     ' returns the actual byte size of current string
                     ' string in VisualBasic.NET is in unicode encoding
                     Return StringByteSize(obj)
+                ElseIf type.IsArray Then
+                    With New HeapSizeOf
+                        Call .visitor.DoVisitArray(
+                            array:=obj,
+                            visit:=AddressOf .VisitObject
+                        )
+
+                        Return .sizeOf
+                    End With
                 Else
                     With New HeapSizeOf
                         Call .visitor.DoVisitObjectFields(
