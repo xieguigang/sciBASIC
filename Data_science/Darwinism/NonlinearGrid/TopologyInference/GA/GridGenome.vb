@@ -12,7 +12,7 @@ End Interface
 Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
     Implements IGridFitness
 
-    Protected Friend ReadOnly chromosome As T
+    Public ReadOnly Property chromosome As T
 
     ''' <summary>
     ''' Number of system variables.

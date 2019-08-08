@@ -43,11 +43,23 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+
+Public Interface IGrid(Of V As Vector, IC As ICorrelation(Of V))
+
+    Property AC As Double
+    Property A As V
+    Property C As IC()
+
+End Interface
+
+Public Interface ICorrelation(Of V As Vector)
+    Property B As V
+    Property BC As Double
+End Interface
 
 ''' <summary>
 ''' The Nonlinear Grid Dynamics System
@@ -55,15 +67,15 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <remarks>
 ''' 理论上可以拟合任意一个系统
 ''' </remarks>
-Public Class GridSystem : Implements IDynamicsComponent(Of GridSystem)
+Public Class GridSystem : Implements IDynamicsComponent(Of GridSystem), IGrid(Of Vector, Correlation)
 
     ''' <summary>
     ''' 线性方程的常数项
     ''' </summary>
     ''' <returns></returns>
-    Public Property AC As Double
-    Public Property A As Vector
-    Public Property C As Correlation()
+    Public Property AC As Double Implements IGrid(Of Vector, Correlation).AC
+    Public Property A As Vector Implements IGrid(Of Vector, Correlation).A
+    Public Property C As Correlation() Implements IGrid(Of Vector, Correlation).C
 
     Public ReadOnly Property Width As Integer Implements IDynamicsComponent(Of GridSystem).Width
         Get

@@ -3,14 +3,14 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace BigData
 
-    Public Class SparseCorrelation : Implements IDynamicsComponent(Of SparseCorrelation)
+    Public Class SparseCorrelation : Implements IDynamicsComponent(Of SparseCorrelation), ICorrelation(Of SparseVector)
 
         ''' <summary>
         ''' B is a vector that related with X
         ''' </summary>
         ''' <returns></returns>
-        Public Property B As SparseVector
-        Public Property BC As Double
+        Public Property B As SparseVector Implements ICorrelation(Of SparseVector).B
+        Public Property BC As Double Implements ICorrelation(Of SparseVector).BC
 
         Public ReadOnly Property Width As Integer Implements IDynamicsComponent(Of SparseCorrelation).Width
             Get

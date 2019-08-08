@@ -7,14 +7,15 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace BigData
 
     Public Class SparseGridSystem : Implements IDynamicsComponent(Of SparseGridSystem)
+        Implements IGrid(Of SparseVector, SparseCorrelation)
 
         ''' <summary>
         ''' 线性方程的常数项
         ''' </summary>
         ''' <returns></returns>
-        Public Property AC As Double
-        Public Property A As SparseVector
-        Public Property C As SparseCorrelation()
+        Public Property AC As Double Implements IGrid(Of SparseVector, SparseCorrelation).AC
+        Public Property A As SparseVector Implements IGrid(Of SparseVector, SparseCorrelation).A
+        Public Property C As SparseCorrelation() Implements IGrid(Of SparseVector, SparseCorrelation).C
 
         Public ReadOnly Property Width As Integer Implements IDynamicsComponent(Of SparseGridSystem).Width
             Get

@@ -336,7 +336,7 @@ Module Program
         Call "Load driver".__DEBUG_ECHO
 
         Dim takeBestSnapshot = Sub(best As Genome, error#)
-                                   Call best _
+                                   Call best.chromosome _
                                        .CreateSnapshot(
                                             dist:=trainingSet.NormalizeMatrix,
                                             names:=factorNames,
@@ -352,7 +352,7 @@ Module Program
 
         Call engine.AttachReporter(Sub(i, e, g)
                                        Call EnvironmentDriver(Of Genome).CreateReport(i, e, g).ToString.__DEBUG_ECHO
-                                       Call g.Best _
+                                       Call g.Best.chromosome _
                                              .CreateSnapshot(trainingSet.NormalizeMatrix, factorNames, e) _
                                              .GetXml _
                                              .SaveTo(outFile)

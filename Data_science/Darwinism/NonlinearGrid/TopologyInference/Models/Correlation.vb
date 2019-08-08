@@ -48,14 +48,14 @@ Imports Microsoft.VisualBasic.Serialization
 ''' <summary>
 ''' A linear correlation system
 ''' </summary>
-Public Class Correlation : Implements ICloneable(Of Correlation)
+Public Class Correlation : Implements ICloneable(Of Correlation), ICorrelation(Of Vector)
 
     ''' <summary>
     ''' B is a vector that related with X
     ''' </summary>
     ''' <returns></returns>
-    Public Property B As Vector
-    Public Property BC As Double
+    Public Property B As Vector Implements ICorrelation(Of Vector).B
+    Public Property BC As Double Implements ICorrelation(Of Vector).BC
 
     ' ReadOnly sigmoid As New BipolarSigmoid
 
