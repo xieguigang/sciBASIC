@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29021.104
+# Visual Studio 15
+VisualStudioVersion = 15.0.27906.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GATopology", "TopologyInference\GATopology.vbproj", "{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}"
 EndProject
@@ -77,6 +77,9 @@ Global
 		mysqli_X64_release|Any CPU = mysqli_X64_release|Any CPU
 		mysqli_X64_release|x64 = mysqli_X64_release|x64
 		mysqli_X64_release|x86 = mysqli_X64_release|x86
+		node-debug|Any CPU = node-debug|Any CPU
+		node-debug|x64 = node-debug|x64
+		node-debug|x86 = node-debug|x86
 		ProteoWizard.d|Any CPU = ProteoWizard.d|Any CPU
 		ProteoWizard.d|x64 = ProteoWizard.d|x64
 		ProteoWizard.d|x86 = ProteoWizard.d|x86
@@ -175,6 +178,12 @@ Global
 		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.mysqli_X64_release|x64.Build.0 = Release|Any CPU
 		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.mysqli_X64_release|x86.ActiveCfg = Release|Any CPU
 		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.mysqli_X64_release|x86.Build.0 = Release|Any CPU
+		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.node-debug|x64.ActiveCfg = node-debug|x64
+		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.node-debug|x64.Build.0 = node-debug|x64
+		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.node-debug|x86.ActiveCfg = node-debug|Any CPU
+		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.node-debug|x86.Build.0 = node-debug|Any CPU
 		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.ProteoWizard.d|Any CPU.ActiveCfg = Release|Any CPU
 		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.ProteoWizard.d|Any CPU.Build.0 = Release|Any CPU
 		{0BB4E012-AD1A-47FC-BAC6-FF480299A50C}.ProteoWizard.d|x64.ActiveCfg = Release|Any CPU
@@ -295,6 +304,12 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x64.Build.0 = mysqli_X64_release|x64
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x86.ActiveCfg = mysqli_X64_release|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x86.Build.0 = mysqli_X64_release|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|x64.ActiveCfg = node-debug|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|x64.Build.0 = node-debug|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|x86.ActiveCfg = node-debug|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.node-debug|x86.Build.0 = node-debug|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|Any CPU.ActiveCfg = ProteoWizard.d|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|Any CPU.Build.0 = ProteoWizard.d|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|x64.ActiveCfg = ProteoWizard.d|x64
@@ -415,6 +430,12 @@ Global
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mysqli_X64_release|x64.Build.0 = Biostack|x64
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mysqli_X64_release|x86.ActiveCfg = Biostack|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.mysqli_X64_release|x86.Build.0 = Biostack|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|x64.ActiveCfg = node-debug|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|x64.Build.0 = node-debug|x64
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|x86.ActiveCfg = node-debug|x86
+		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.node-debug|x86.Build.0 = node-debug|x86
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -535,6 +556,12 @@ Global
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mysqli_X64_release|x64.Build.0 = Biodeep_UNIX_x64|x64
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mysqli_X64_release|x86.ActiveCfg = Biodeep_UNIX_x64|x86
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.mysqli_X64_release|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|x64.ActiveCfg = node-debug|x64
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|x64.Build.0 = node-debug|x64
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|x86.ActiveCfg = node-debug|x86
+		{E3367B88-5D0C-495A-8273-331656D4B5AA}.node-debug|x86.Build.0 = node-debug|x86
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{E3367B88-5D0C-495A-8273-331656D4B5AA}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -655,6 +682,12 @@ Global
 		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.mysqli_X64_release|x64.Build.0 = Biodeep_UNIX_x64|x64
 		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.mysqli_X64_release|x86.ActiveCfg = Biodeep_UNIX_x64|x86
 		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.mysqli_X64_release|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.node-debug|x64.ActiveCfg = node-debug|x64
+		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.node-debug|x64.Build.0 = node-debug|x64
+		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.node-debug|x86.ActiveCfg = node-debug|x86
+		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.node-debug|x86.Build.0 = node-debug|x86
 		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{1B42809B-603F-4CEA-A0DB-91276582B9CA}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -775,6 +808,12 @@ Global
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mysqli_X64_release|x64.Build.0 = Biodeep|x64
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mysqli_X64_release|x86.ActiveCfg = Biodeep|x86
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.mysqli_X64_release|x86.Build.0 = Biodeep|x86
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.node-debug|x64.ActiveCfg = node-debug|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.node-debug|x64.Build.0 = node-debug|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.node-debug|x86.ActiveCfg = node-debug|x86
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.node-debug|x86.Build.0 = node-debug|x86
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -895,6 +934,12 @@ Global
 		{1F9B3E34-9470-4E57-86EA-350D5179C720}.mysqli_X64_release|x64.Build.0 = Release|Any CPU
 		{1F9B3E34-9470-4E57-86EA-350D5179C720}.mysqli_X64_release|x86.ActiveCfg = Release|Any CPU
 		{1F9B3E34-9470-4E57-86EA-350D5179C720}.mysqli_X64_release|x86.Build.0 = Release|Any CPU
+		{1F9B3E34-9470-4E57-86EA-350D5179C720}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{1F9B3E34-9470-4E57-86EA-350D5179C720}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{1F9B3E34-9470-4E57-86EA-350D5179C720}.node-debug|x64.ActiveCfg = node-debug|x64
+		{1F9B3E34-9470-4E57-86EA-350D5179C720}.node-debug|x64.Build.0 = node-debug|x64
+		{1F9B3E34-9470-4E57-86EA-350D5179C720}.node-debug|x86.ActiveCfg = node-debug|Any CPU
+		{1F9B3E34-9470-4E57-86EA-350D5179C720}.node-debug|x86.Build.0 = node-debug|Any CPU
 		{1F9B3E34-9470-4E57-86EA-350D5179C720}.ProteoWizard.d|Any CPU.ActiveCfg = Release|Any CPU
 		{1F9B3E34-9470-4E57-86EA-350D5179C720}.ProteoWizard.d|Any CPU.Build.0 = Release|Any CPU
 		{1F9B3E34-9470-4E57-86EA-350D5179C720}.ProteoWizard.d|x64.ActiveCfg = Release|Any CPU
@@ -1015,6 +1060,12 @@ Global
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.mysqli_X64_release|x64.Build.0 = Publish|x64
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.mysqli_X64_release|x86.ActiveCfg = Publish|Any CPU
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.mysqli_X64_release|x86.Build.0 = Publish|Any CPU
+		{3C79AE03-A766-4B61-BDC4-824D78481B53}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{3C79AE03-A766-4B61-BDC4-824D78481B53}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{3C79AE03-A766-4B61-BDC4-824D78481B53}.node-debug|x64.ActiveCfg = node-debug|x64
+		{3C79AE03-A766-4B61-BDC4-824D78481B53}.node-debug|x64.Build.0 = node-debug|x64
+		{3C79AE03-A766-4B61-BDC4-824D78481B53}.node-debug|x86.ActiveCfg = node-debug|Any CPU
+		{3C79AE03-A766-4B61-BDC4-824D78481B53}.node-debug|x86.Build.0 = node-debug|Any CPU
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{3C79AE03-A766-4B61-BDC4-824D78481B53}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -1135,6 +1186,12 @@ Global
 		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.mysqli_X64_release|x64.Build.0 = Biodeep|x64
 		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.mysqli_X64_release|x86.ActiveCfg = Biodeep|x86
 		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.mysqli_X64_release|x86.Build.0 = Biodeep|x86
+		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.node-debug|x64.ActiveCfg = node-debug|x64
+		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.node-debug|x64.Build.0 = node-debug|x64
+		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.node-debug|x86.ActiveCfg = node-debug|x86
+		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.node-debug|x86.Build.0 = node-debug|x86
 		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{487D7C92-D05A-4908-BF81-E6BABA0BF592}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -1255,6 +1312,12 @@ Global
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mysqli_X64_release|x64.Build.0 = Publish|x64
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mysqli_X64_release|x86.ActiveCfg = Publish|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.mysqli_X64_release|x86.Build.0 = Publish|Any CPU
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.node-debug|x64.ActiveCfg = node-debug|x64
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.node-debug|x64.Build.0 = node-debug|x64
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.node-debug|x86.ActiveCfg = node-debug|Any CPU
+		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.node-debug|x86.Build.0 = node-debug|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{CCBF36AB-506D-48A2-9150-A3762D4120EC}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -1375,6 +1438,12 @@ Global
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mysqli_X64_release|x64.Build.0 = Publish|x64
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mysqli_X64_release|x86.ActiveCfg = Publish|x86
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.mysqli_X64_release|x86.Build.0 = Publish|x86
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.node-debug|x64.ActiveCfg = node-debug|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.node-debug|x64.Build.0 = node-debug|x64
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.node-debug|x86.ActiveCfg = node-debug|x86
+		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.node-debug|x86.Build.0 = node-debug|x86
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{203BC68F-A0CD-443A-AB62-4AF4110F752F}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -1495,6 +1564,12 @@ Global
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mysqli_X64_release|x64.Build.0 = Publish|x64
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mysqli_X64_release|x86.ActiveCfg = Publish|x86
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.mysqli_X64_release|x86.Build.0 = Publish|x86
+		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.node-debug|x64.ActiveCfg = node-debug|x64
+		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.node-debug|x64.Build.0 = node-debug|x64
+		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.node-debug|x86.ActiveCfg = node-debug|x86
+		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.node-debug|x86.Build.0 = node-debug|x86
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{3291389C-EA87-4B33-A9A5-65A2D60BA3E2}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -1615,6 +1690,12 @@ Global
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mysqli_X64_release|x64.Build.0 = Biodeep_UNIX_x64|x64
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mysqli_X64_release|x86.ActiveCfg = Biodeep_UNIX_x64|x86
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.mysqli_X64_release|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{076315EE-B598-40DC-9280-C71CDF9B6A48}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{076315EE-B598-40DC-9280-C71CDF9B6A48}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{076315EE-B598-40DC-9280-C71CDF9B6A48}.node-debug|x64.ActiveCfg = node-debug|x64
+		{076315EE-B598-40DC-9280-C71CDF9B6A48}.node-debug|x64.Build.0 = node-debug|x64
+		{076315EE-B598-40DC-9280-C71CDF9B6A48}.node-debug|x86.ActiveCfg = node-debug|x86
+		{076315EE-B598-40DC-9280-C71CDF9B6A48}.node-debug|x86.Build.0 = node-debug|x86
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{076315EE-B598-40DC-9280-C71CDF9B6A48}.ProteoWizard.d|x64.ActiveCfg = Publish|x64
@@ -1735,6 +1816,12 @@ Global
 		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|x64.Build.0 = Biodeep_UNIX_x64|x64
 		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|x86.ActiveCfg = Biodeep_UNIX_x64|x86
 		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.mysqli_X64_release|x86.Build.0 = Biodeep_UNIX_x64|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.node-debug|Any CPU.ActiveCfg = node-debug|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.node-debug|Any CPU.Build.0 = node-debug|Any CPU
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.node-debug|x64.ActiveCfg = node-debug|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.node-debug|x64.Build.0 = node-debug|x64
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.node-debug|x86.ActiveCfg = node-debug|x86
+		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.node-debug|x86.Build.0 = node-debug|x86
 		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|Any CPU.ActiveCfg = Publish|Any CPU
 		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|Any CPU.Build.0 = Publish|Any CPU
 		{FC125B0D-1942-496F-B502-9C0EB80E35B6}.ProteoWizard.d|x64.ActiveCfg = Publish|x64

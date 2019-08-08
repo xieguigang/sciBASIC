@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-Public Class Environment : Implements Fitness(Of Genome)
+Public Class Environment(Of T As IDynamicsComponent(Of T)) : Implements Fitness(Of GridGenome(Of T))
 
     Dim matrix As TrainingSet()
     Dim fitness As EvaluateFitness
@@ -57,7 +57,7 @@ Public Class Environment : Implements Fitness(Of Genome)
 
     Public ReadOnly Property sampleDist As NormalizeMatrix
 
-    Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Genome).Cacheable
+    Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of GridGenome(Of T)).Cacheable
         Get
             Return True
         End Get
@@ -103,7 +103,7 @@ Public Class Environment : Implements Fitness(Of Genome)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Calculate(chromosome As Genome, parallel As Boolean) As Double Implements Fitness(Of Genome).Calculate
+    Public Function Calculate(chromosome As GridGenome(Of T), parallel As Boolean) As Double Implements Fitness(Of GridGenome(Of T)).Calculate
         Dim a As Double = fitness(chromosome, matrix, parallel)
 
         If validates.IsNullOrEmpty Then

@@ -47,6 +47,8 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 ''' <summary>
@@ -55,9 +57,17 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 ''' <remarks>
 ''' 在系统之中的各个部件之间的突变以及杂交事件应该都是相互独立的
 ''' </remarks>
-Public Class Genome : Inherits GridGenome(Of GridSystem) : Implements Chromosome(Of Genome)
+Public Class Genome : Inherits GridGenome(Of GridSystem)
+    Implements Chromosome(Of Genome)
+    Implements IDynamicsComponent(Of Genome)
 
     Public Overrides Property MutationRate As Double Implements Chromosome(Of Genome).MutationRate
+
+    Protected Overrides ReadOnly Property IDynamicsComponent_Width As Integer Implements IDynamicsComponent(Of Genome).Width
+        Get
+            Return width
+        End Get
+    End Property
 
     Sub New(chr As GridSystem, mutationRate As Double, truncate As Double, rangePositive As Boolean)
         Call MyBase.New(chr, mutationRate, truncate, rangePositive)
@@ -191,7 +201,19 @@ Public Class Genome : Inherits GridGenome(Of GridSystem) : Implements Chromosome
         Return clone
     End Function
 
+    Public Overrides Function Clone() As IGridFitness 
+        Return New Genome(chromosome, MutationRate, truncate, rangePositive)
+    End Function
+
     Public Overrides Function ToString() As String
         Return chromosome.ToString
+    End Function
+
+    Private Function IDynamicsComponent_Evaluate(X As Vector) As Double Implements IDynamicsComponent(Of Genome).Evaluate
+        Return Evaluate(X)
+    End Function
+
+    Private Function ICloneable_Clone() As Genome Implements ICloneable(Of Genome).Clone
+        Return Clone()
     End Function
 End Class

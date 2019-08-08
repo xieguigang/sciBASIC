@@ -330,7 +330,7 @@ Module Program
 
         Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate, truncate, allPositive).InitialPopulation(popSize, parallel)
         Call "Initialize environment".__DEBUG_ECHO
-        Dim fitness As Fitness(Of Genome) = New Environment(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
+        Dim fitness As Fitness(Of Genome) = New Environment(Of Genome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
         Call "Create algorithm engine".__DEBUG_ECHO
         Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
         Call "Load driver".__DEBUG_ECHO

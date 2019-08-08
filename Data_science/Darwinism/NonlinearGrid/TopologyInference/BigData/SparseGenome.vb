@@ -143,6 +143,10 @@ Namespace BigData
             Return clone
         End Function
 
+        Public Overrides Function Clone() As IGridFitness
+            Return New SparseGenome(chromosome, MutationRate, truncate, rangePositive)
+        End Function
+
         Public Overrides Function ToString() As String
             Return chromosome.ToString
         End Function

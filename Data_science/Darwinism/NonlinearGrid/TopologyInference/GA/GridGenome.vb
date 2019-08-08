@@ -1,9 +1,16 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
+Public Interface IGridFitness : Inherits IDynamicsComponent(Of IGridFitness)
+
+    Function CalculateError(status As Vector, target As Double) As Double
+End Interface
+
 Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
+    Implements IGridFitness
 
     Protected Friend ReadOnly chromosome As T
 
@@ -22,6 +29,12 @@ Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
     ''' </summary>
     Public Overridable Property MutationRate As Double
 
+    Protected Overridable ReadOnly Property IDynamicsComponent_Width As Integer Implements IDynamicsComponent(Of IGridFitness).Width
+        Get
+            Return width
+        End Get
+    End Property
+
     Public Const CrossOverRate As Double = 30
 
     Sub New(chr As T, mutationRate As Double, truncate As Double, rangePositive As Boolean)
@@ -38,11 +51,11 @@ Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
     ''' <param name="X"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Evaluate(X As Vector) As Double
+    Public Overridable Function Evaluate(X As Vector) As Double Implements IGridFitness.Evaluate
         Return chromosome.Evaluate(X)
     End Function
 
-    Public Function CalculateError(status As Vector, target As Double) As Double
+    Public Function CalculateError(status As Vector, target As Double) As Double Implements IGridFitness.CalculateError
         Dim predicts = Evaluate(status)
 
         If rangePositive AndAlso predicts < 0 Then
@@ -69,4 +82,6 @@ Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
 
         Return x
     End Function
+
+    Public MustOverride Function Clone() As IGridFitness Implements ICloneable(Of IGridFitness).Clone
 End Class
