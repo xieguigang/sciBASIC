@@ -177,9 +177,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigData\SparseGenome.vb" />
     <Compile Include="BigData\SparseSystem.vb" />
     <Compile Include="Debugger\Debugger.vb" />
     <Compile Include="Debugger\Visualize.vb" />
+    <Compile Include="GA\GridGenome.vb" />
     <Compile Include="GA\TrainingSet.vb" />
     <Compile Include="GA\FitnessMethods.vb" />
     <Compile Include="GA\Environment.vb" />

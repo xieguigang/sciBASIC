@@ -41,8 +41,13 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' The Nonlinear Grid Dynamics System
@@ -50,7 +55,7 @@ Imports Microsoft.VisualBasic.Serialization
 ''' <remarks>
 ''' 理论上可以拟合任意一个系统
 ''' </remarks>
-Public Class GridSystem : Implements ICloneable(Of GridSystem)
+Public Class GridSystem : Implements IDynamicsComponent(Of GridSystem)
 
     ''' <summary>
     ''' 线性方程的常数项
@@ -59,6 +64,12 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
     Public Property AC As Double
     Public Property A As Vector
     Public Property C As Correlation()
+
+    Public ReadOnly Property Width As Integer Implements IDynamicsComponent(Of GridSystem).Width
+        Get
+            Return A.Dim
+        End Get
+    End Property
 
     ''' <summary>
     ''' Evaluate the system dynamics
@@ -69,7 +80,7 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
     ''' </summary>
     ''' <param name="X"></param>
     ''' <returns></returns>
-    Public Function Evaluate(X As Vector) As Double
+    Public Function Evaluate(X As Vector) As Double Implements IDynamicsComponent(Of GridSystem).Evaluate
         Dim C As Vector = Me.C.Select(Function(ci) ci.Evaluate(X)).AsVector
         ' 20190722 当X中存在负数的时候,假设对应的C相关因子为小数负数,则会出现NaN计算结果值
         Dim F As Vector = Math.E ^ C
@@ -89,7 +100,24 @@ Public Class GridSystem : Implements ICloneable(Of GridSystem)
         }
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return ""
+        Return ToString(Me)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Shared Function ToString(chromosome As GridSystem) As String
+        Return chromosome.A.Length _
+            .SeqIterator _
+            .Select(Function(i)
+                        Dim sign = chromosome.A(i)
+                        Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
+                        Dim S = $"({chromosome.AC} + {sign} * {c})"
+
+                        Return S
+                    End Function) _
+            .ToArray _
+            .GetJson _
+            .MD5
     End Function
 End Class
