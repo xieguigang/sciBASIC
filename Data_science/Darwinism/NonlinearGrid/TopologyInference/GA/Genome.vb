@@ -61,6 +61,8 @@ Public Class Genome : Inherits GridGenome(Of GridSystem) : Implements Chromosome
 
     Sub New(chr As GridSystem, mutationRate As Double, truncate As Double, rangePositive As Boolean)
         Call MyBase.New(chr, mutationRate, truncate, rangePositive)
+
+        Me.MutationRate = mutationRate
     End Sub
 
     Public Iterator Function Crossover(another As Genome) As IEnumerable(Of Genome) Implements Chromosome(Of Genome).Crossover
@@ -123,7 +125,7 @@ Public Class Genome : Inherits GridGenome(Of GridSystem) : Implements Chromosome
         Yield New Genome(b, MutationRate, truncate, rangePositive)
     End Function
 
-    Public Function Mutate1() As Genome Implements Chromosome(Of Genome).Mutate
+    Public Function Mutate() As Genome Implements Chromosome(Of Genome).Mutate
         Dim clone As New Genome(Me.chromosome.Clone, MutationRate, truncate, rangePositive)
         Dim chromosome = clone.chromosome
         ' dim(A) is equals to dim(C) and is equals to dim(X)
@@ -187,5 +189,9 @@ Public Class Genome : Inherits GridGenome(Of GridSystem) : Implements Chromosome
         End If
 
         Return clone
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return chromosome.ToString
     End Function
 End Class

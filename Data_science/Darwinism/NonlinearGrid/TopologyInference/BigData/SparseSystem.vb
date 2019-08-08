@@ -1,5 +1,8 @@
-﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
+﻿Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BigData
 
@@ -37,6 +40,21 @@ Namespace BigData
                     .Select(Function(p) p.Clone) _
                     .ToArray
             }
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return A.Length _
+                .SeqIterator _
+                .Select(Function(i)
+                            Dim sign = A(i)
+                            Dim c = Me.C(i).B.Sum + Me.C(i).BC
+                            Dim S = $"({AC} + {sign} * {c})"
+
+                            Return S
+                        End Function) _
+                .ToArray _
+                .GetJson _
+                .MD5
         End Function
     End Class
 End Namespace
