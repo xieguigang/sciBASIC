@@ -13,6 +13,12 @@ Namespace BigData
         Public Property A As SparseVector
         Public Property C As SparseCorrelation()
 
+        Public ReadOnly Property Width As Integer Implements IDynamicsComponent(Of SparseGridSystem).Width
+            Get
+                Return A.Length
+            End Get
+        End Property
+
         Public Function Evaluate(X As Vector) As Double Implements IDynamicsComponent(Of SparseGridSystem).Evaluate
             Dim C As Vector = Me.C.Select(Function(ci) ci.Evaluate(X)).AsVector
             ' 20190722 当X中存在负数的时候,假设对应的C相关因子为小数负数,则会出现NaN计算结果值

@@ -12,6 +12,12 @@ Namespace BigData
         Public Property B As SparseVector
         Public Property BC As Double
 
+        Public ReadOnly Property Width As Integer Implements IDynamicsComponent(Of SparseCorrelation).Width
+            Get
+                Return B.Length
+            End Get
+        End Property
+
         Public Function Evaluate(X As Vector) As Double Implements IDynamicsComponent(Of SparseCorrelation).Evaluate
             Dim c As SparseVector = BC + B * X
             Return c.Sum
