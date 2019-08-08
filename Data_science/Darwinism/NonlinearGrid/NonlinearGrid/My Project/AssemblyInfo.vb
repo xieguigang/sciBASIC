@@ -11,9 +11,9 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("Nonlinear Grid Dynamics System Host")>
 <Assembly: AssemblyDescription("Nonlinear Grid Dynamics System Host")>
 <Assembly: AssemblyCompany("sciBASIC.NET")>
-<Assembly: AssemblyProduct("sciBASIC.NET")>
+<Assembly: AssemblyProduct("MLKit")>
 <Assembly: AssemblyCopyright("Copyright © sciBASIC.NET 2019")>
-<Assembly: AssemblyTrademark("sciBASIC.NET")>
+<Assembly: AssemblyTrademark("sciBASIC#")>
 
 <Assembly: ComVisible(False)>
 
