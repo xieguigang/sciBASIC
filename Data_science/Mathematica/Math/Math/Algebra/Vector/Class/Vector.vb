@@ -466,8 +466,9 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(a As Double, v1 As Vector) As Vector
-            '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            ' 向量数加算符重载
+            ' 获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1

@@ -215,6 +215,18 @@ Namespace LinearAlgebra
             Return stdNum.Max(0.0, Values.Max)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 忽略掉所有的零值
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function Sum() As Double
+            Return buffer.Sum
+        End Function
+
         Public Overloads Shared Function Equals(a#, b#) As Boolean
             Return stdNum.Abs(a - b) <= Precision
         End Function
@@ -231,26 +243,46 @@ Namespace LinearAlgebra
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator *(v As SparseVector, multipl As Double) As SparseVector
             Return New SparseVector(From x As Double In v Select x * multipl)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator *(v As SparseVector, multipl As Vector) As SparseVector
+            If v.Dim <> multipl.Dim Then
+                Throw New InvalidConstraintException
+            Else
+                Return New SparseVector(From i As Integer In v.Sequence Select v(i) ^ multipl(i))
+            End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator /(v As SparseVector, div As Double) As SparseVector
             Return New SparseVector(From x As Double In v Select x / div)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator -(v As SparseVector, minus As Double) As SparseVector
             Return New SparseVector(From x As Double In v Select x - minus)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator +(v As SparseVector, add As Double) As SparseVector
             Return New SparseVector(From x As Double In v Select x + add)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator +(add As Double, v As SparseVector) As SparseVector
+            Return v + add
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator ^(v As SparseVector, p As Double) As SparseVector
             Return New SparseVector(From x As Double In v Select x ^ p)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator ^(x As SparseVector, y As Vector) As SparseVector
             If x.Dim <> y.Dim Then
                 Throw New InvalidConstraintException()

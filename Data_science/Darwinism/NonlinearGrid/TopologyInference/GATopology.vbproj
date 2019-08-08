@@ -177,13 +177,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigData\SparseSystem.vb" />
     <Compile Include="Debugger\Debugger.vb" />
     <Compile Include="Debugger\Visualize.vb" />
     <Compile Include="GA\TrainingSet.vb" />
     <Compile Include="GA\FitnessMethods.vb" />
     <Compile Include="GA\Environment.vb" />
     <Compile Include="GA\Genome.vb" />
+    <Compile Include="BigData\SparseCorrelation.vb" />
     <Compile Include="Models\Correlation.vb" />
+    <Compile Include="Models\IDynamicsComponent.vb" />
     <Compile Include="Models\System.vb" />
     <Compile Include="Loader.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -278,9 +281,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LargeVolume\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
