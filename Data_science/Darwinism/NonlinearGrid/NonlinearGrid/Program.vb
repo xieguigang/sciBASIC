@@ -328,8 +328,6 @@ Module Program
         If bigdataMode Then
             Dim chromesome As SparseGridSystem
 
-            SparseVector.Precision = 0.5
-
             If seed Is Nothing Then
                 chromesome = Loader.EmptyGridSystem(trainingSet.width, cor, bigData:=True)
             Else
