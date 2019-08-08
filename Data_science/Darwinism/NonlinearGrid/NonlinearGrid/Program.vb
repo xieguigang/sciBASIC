@@ -328,12 +328,15 @@ Module Program
         If bigdataMode Then
             Dim chromesome As SparseGridSystem
 
+            SparseVector.Precision = 0.5
+
             If seed Is Nothing Then
                 chromesome = Loader.EmptyGridSystem(trainingSet.width, cor, bigData:=True)
             Else
                 chromesome = seed.CreateBigSystem
             End If
 
+            Call "Grid dynamics system running in big data mode!".__INFO_ECHO
             Call "Initialize populations".__DEBUG_ECHO
             Call $"value truncate at ABS limits {truncate}".__DEBUG_ECHO
             Dim parallel As [Variant](Of ParallelComputeFitness(Of SparseGenome), Boolean)
@@ -346,7 +349,7 @@ Module Program
 
             Dim population As Population(Of SparseGenome) = New SparseGenome(chromesome, mutationRate, truncate, allPositive).InitialPopulation(popSize, parallel)
             Call "Initialize environment".__DEBUG_ECHO
-            Dim fitness As Fitness(Of SparseGenome) = New Environment(Of SparseGenome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
+            Dim fitness As Fitness(Of SparseGenome) = New Environment(Of SparseGridSystem, SparseGenome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
             Call "Create algorithm engine".__DEBUG_ECHO
             Dim ga As New GeneticAlgorithm(Of SparseGenome)(population, fitness, Strategies.Naive)
             Call "Load driver".__DEBUG_ECHO
@@ -397,7 +400,7 @@ Module Program
 
             Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate, truncate, allPositive).InitialPopulation(popSize, parallel)
             Call "Initialize environment".__DEBUG_ECHO
-            Dim fitness As Fitness(Of Genome) = New Environment(Of Genome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
+            Dim fitness As Fitness(Of Genome) = New Environment(Of GridSystem, Genome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
             Call "Create algorithm engine".__DEBUG_ECHO
             Dim ga As New GeneticAlgorithm(Of Genome)(population, fitness, Strategies.Naive)
             Call "Load driver".__DEBUG_ECHO

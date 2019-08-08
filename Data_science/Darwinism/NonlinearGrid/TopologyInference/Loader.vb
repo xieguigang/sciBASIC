@@ -200,7 +200,7 @@ Public Module Loader
     Friend Sub Truncate(vec As SparseVector, limits As Double)
         Dim ref = vec.Array
 
-        For i As Integer = 0 To vec.Length - 1
+        For i As Integer = 0 To ref.Length - 1
             If Math.Abs(ref(i)) > limits Then
                 ref(i) = Math.Sign(ref(i)) * randf.seeds.NextDouble * (limits)
             End If
