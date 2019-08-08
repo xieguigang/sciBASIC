@@ -2,14 +2,23 @@
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace BigData
 
     Public Class SparseGenome : Inherits GridGenome(Of SparseGridSystem)
         Implements Chromosome(Of SparseGenome)
+        Implements IDynamicsComponent(Of Genome)
 
         Public Overrides Property MutationRate As Double Implements Chromosome(Of SparseGenome).MutationRate
+
+        Protected Overrides ReadOnly Property IDynamicsComponent_Width As Integer Implements IDynamicsComponent(Of Genome).Width
+            Get
+                Return width
+            End Get
+        End Property
 
         Public Sub New(chr As SparseGridSystem, mutationRate As Double, truncate As Double, rangePositive As Boolean)
             Call MyBase.New(chr, mutationRate, truncate, rangePositive)
@@ -149,6 +158,14 @@ Namespace BigData
 
         Public Overrides Function ToString() As String
             Return chromosome.ToString
+        End Function
+
+        Private Function IDynamicsComponent_Evaluate(X As Vector) As Double Implements IDynamicsComponent(Of Genome).Evaluate
+            Return Evaluate(X)
+        End Function
+
+        Private Function ICloneable_Clone() As Genome Implements ICloneable(Of Genome).Clone
+            Return Clone()
         End Function
     End Class
 End Namespace
