@@ -263,7 +263,7 @@ Public Class Genome : Implements Chromosome(Of Genome)
             .Select(Function(i)
                         Dim sign = chromosome.A(i)
                         Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
-                        Dim S = $"{chromosome.delay} ({chromosome.AC} + {sign} * {c}) * {chromosome.Amplify}"
+                        Dim S = $"({chromosome.AC} + {sign} * {c})"
 
                         Return S
                     End Function) _

@@ -80,9 +80,7 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A),
-            .Amplify = [const].Amplify,
-            .delay = [const].Delay
+            .AC = If([const] Is Nothing, 0, [const].A)
         }
     End Function
 
@@ -95,6 +93,4 @@ End Class
 Public Class Constants
     Public Property A As Double
     Public Property B As NumericVector
-    Public Property Amplify As Double
-    Public Property Delay As Double
 End Class
