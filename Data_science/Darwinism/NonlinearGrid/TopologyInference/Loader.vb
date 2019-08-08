@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::2d8073ea652e281808058ac34b1373e8, Data_science\Darwinism\NonlinearGrid\TopologyInference\Loader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Loader
-    ' 
-    '     Function: Correlation, CreateSnapshot, EmptyGridSystem
-    ' 
-    '     Sub: Truncate
-    ' 
-    ' /********************************************************************************/
+' Module Loader
+' 
+'     Function: Correlation, CreateSnapshot, EmptyGridSystem
+' 
+'     Sub: Truncate
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.BigData
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -79,10 +80,41 @@ Public Module Loader
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing, Optional power As Vector = Nothing) As GridSystem
-        Return New GridSystem With {            ' .Vol = 100000,        ' .K = 10,
-            .A = cor Or New Vector(0.01, width).AsDefault,
-            .C = width.SeqIterator _
+    Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing, Optional power As Vector = Nothing, Optional bigData As Boolean = False) As [Variant](Of GridSystem, SparseGridSystem)
+        Dim A As Vector = cor Or New Vector(0.01, width).AsDefault
+
+        If bigData Then
+            Dim correlationMatrix = width _
+                .SeqIterator _
+                .Select(Function(null)
+                            ' 全部使用负数初始化,可以让整个指数为负数
+                            ' 从而避免一开始就出现无穷大的结果???
+                            '
+                            ' 但是如果样本之中的X向量中存在一个非常小的数,则会反而被无限放大??
+                            ' 为了避免出现 0 ^ -c = Inf的情况出现
+                            ' 这个C向量应该全部都是零初始化，这样子系统初始状态为 Sum(X)
+                            Dim powerFactor As Vector
+
+                            If power Is Nothing Then
+                                powerFactor = Vector.rand(0, 10, width)
+                            Else
+                                powerFactor = New Vector(power)
+                            End If
+
+                            Return New SparseCorrelation With {
+                                .B = New SparseVector(powerFactor),
+                                .BC = 0.005
+                            }
+                        End Function) _
+                .ToArray
+
+            Return New SparseGridSystem With {
+                .A = New SparseVector(A),
+                .C = correlationMatrix
+            }
+        Else
+            Dim correlationMatrix = width _
+                .SeqIterator _
                 .Select(Function(null)
                             ' 全部使用负数初始化,可以让整个指数为负数
                             ' 从而避免一开始就出现无穷大的结果???
@@ -104,7 +136,12 @@ Public Module Loader
                             }
                         End Function) _
                 .ToArray
-        }
+
+            Return New GridSystem With {
+                .A = A,
+                .C = correlationMatrix
+            }
+        End If
     End Function
 
     ''' <summary>

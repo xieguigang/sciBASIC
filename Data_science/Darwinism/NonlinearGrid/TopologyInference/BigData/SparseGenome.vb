@@ -10,11 +10,11 @@ Namespace BigData
 
     Public Class SparseGenome : Inherits GridGenome(Of SparseGridSystem)
         Implements Chromosome(Of SparseGenome)
-        Implements IDynamicsComponent(Of Genome)
+        Implements IDynamicsComponent(Of SparseGenome)
 
         Public Overrides Property MutationRate As Double Implements Chromosome(Of SparseGenome).MutationRate
 
-        Protected Overrides ReadOnly Property IDynamicsComponent_Width As Integer Implements IDynamicsComponent(Of Genome).Width
+        Protected Overrides ReadOnly Property IDynamicsComponent_Width As Integer Implements IDynamicsComponent(Of SparseGenome).Width
             Get
                 Return width
             End Get
@@ -160,11 +160,11 @@ Namespace BigData
             Return chromosome.ToString
         End Function
 
-        Private Function IDynamicsComponent_Evaluate(X As Vector) As Double Implements IDynamicsComponent(Of Genome).Evaluate
+        Private Function IDynamicsComponent_Evaluate(X As Vector) As Double Implements IDynamicsComponent(Of SparseGenome).Evaluate
             Return Evaluate(X)
         End Function
 
-        Private Function ICloneable_Clone() As Genome Implements ICloneable(Of Genome).Clone
+        Private Function ICloneable_Clone() As SparseGenome Implements ICloneable(Of SparseGenome).Clone
             Return Clone()
         End Function
     End Class
