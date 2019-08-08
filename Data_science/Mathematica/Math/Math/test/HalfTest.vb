@@ -8,12 +8,12 @@ Module HalfTest
 
         Console.WriteLine(one)
 
-        Dim p100 As Half() = Replicate(CType(-100.31!, Half), 50000).ToArray
+        Dim p100 As Half() = Replicate(CType(-100.31!, Half), 5).ToArray
 
         ' Console.WriteLine(p100)
 
 
-        Dim dbl As Double() = Replicate(9999.009999, 50000).ToArray
+        Dim dbl As Double() = Replicate(9999.009999, 5).ToArray
 
 
 
