@@ -70,6 +70,12 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 ''' </summary>
 Public Module VectorExtensions
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub Sort(Of T)(a As T(), compares As Comparison(Of T))
+        Call Array.Sort(a, compares)
+    End Sub
+
     ''' <summary>
     ''' 使用<paramref name="template"/>产生一个<paramref name="n"/>长度元素的目标序列
     ''' </summary>
