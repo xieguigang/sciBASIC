@@ -44,8 +44,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports r = System.Text.RegularExpressions.Regex
-Imports System.Text.RegularExpressions
-
 
 Namespace My.JavaScript
 

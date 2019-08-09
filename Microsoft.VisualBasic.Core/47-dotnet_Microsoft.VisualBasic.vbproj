@@ -981,6 +981,7 @@
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
     <Compile Include="My\Framework\FrameworkConfig.vb" />
+    <Compile Include="My\Framework\DoConfiguration.vb" />
     <Compile Include="My\Framework\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
     <Compile Include="ApplicationServices\ServerModule.vb" />
