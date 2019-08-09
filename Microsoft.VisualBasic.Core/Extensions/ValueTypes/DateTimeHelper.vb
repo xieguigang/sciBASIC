@@ -46,7 +46,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.C
-Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ValueTypes
 

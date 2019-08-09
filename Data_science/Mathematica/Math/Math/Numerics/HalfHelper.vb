@@ -165,7 +165,7 @@ Namespace Numerics
             ' Dim value = CType(New Pointer(Of Single)([single]), Pointer(Of UInteger)).Target
             Dim bytes = BitConverter.GetBytes([single])
             Dim value = BitConverter.ToUInt32(bytes, Scan0)
-            Dim result = CUShort(BaseTable((value >> 23) And &H1FF) + ((value And &H7FFFFF) >> ShiftTable(value >> 23)))
+            Dim result As UShort = CUShort(BaseTable((value >> 23) And &H1FF) + ((value And &H7FFFFF) >> ShiftTable(value >> 23)))
             Return Half.ToHalf(result)
         End Function
 

@@ -86,6 +86,7 @@ Public Module Loader
         If bigData Then
             Dim correlationMatrix = width _
                 .SeqIterator _
+                .AsParallel _
                 .Select(Function(null)
                             ' 全部使用负数初始化,可以让整个指数为负数
                             ' 从而避免一开始就出现无穷大的结果???
@@ -101,10 +102,16 @@ Public Module Loader
                                 powerFactor = New Vector(power)
                             End If
 
-                            Return New SparseCorrelation With {
+                            Dim powerC As New SparseCorrelation With {
                                 .B = New HalfVector(powerFactor),
                                 .BC = 0.005
                             }
+
+                            Return (null, powerC)
+                        End Function) _
+                .OrderBy(Function(c) c.Item1) _
+                .Select(Function(c)
+                            Return c.Item2
                         End Function) _
                 .ToArray
 
