@@ -25,6 +25,12 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        Public ReadOnly Property peek As T
+            Get
+                Return content(Scan0)
+            End Get
+        End Property
+
         Sub New(scoreFunction As Func(Of T, Double))
             Me.scoreFunction = scoreFunction
         End Sub
@@ -52,12 +58,9 @@ Namespace ComponentModel.Collection
             Return result
         End Function
 
-        Public Function peek() As T
-            Return content(Scan0)
-        End Function
-
         Public Sub remove(node As T)
             Dim len = content.Count
+            Dim [end] As T
 
             ' To remove a value, we must search through the array to find
             ' it.
@@ -65,7 +68,7 @@ Namespace ComponentModel.Collection
                 If content(i) Is node Then
                     ' When it is found, the process seen in 'pop' is repeated
                     ' to fill up the hole.
-                    Dim [end] = content.Pop
+                    [end] = content.Pop
 
                     If i <> len - 1 Then
                         content(i) = [end]
@@ -91,8 +94,8 @@ Namespace ComponentModel.Collection
             ' When at 0, an element can not go up any further.
             Do While n > 0
                 ' Compute the parent element's index, and fetch it.
-                Dim parentN% = Math.Floor((n + 1) / 2) - 1,
-            parent = content(parentN)
+                Dim parentN% = Math.Floor((n + 1) / 2) - 1
+                Dim parent = content(parentN)
 
                 ' Swap the elements if the parent is greater.
                 If scoreFunction(element) < scoreFunction(parent) Then
@@ -109,10 +112,11 @@ Namespace ComponentModel.Collection
 
         Private Sub sinkDown(n As Integer)
             ' Look up the target element and its score.
-            Dim length = content.Count,
-           element = content(n),
-           elemScore = scoreFunction(element)
+            Dim length = content.Count
+            Dim element = content(n)
+            Dim elemScore = scoreFunction(element)
             Dim child1Score As Double
+            Dim child1 As T
 
             Do While True
                 ' Compute the indices of the child elements.
@@ -124,8 +128,9 @@ Namespace ComponentModel.Collection
                 ' If the first child exists (is inside the array)...
                 If (child1N < length) Then
                     ' Look it up And compute its score.
-                    Dim child1 = content(child1N)
+                    child1 = content(child1N)
                     child1Score = scoreFunction(child1)
+
                     ' If the score Is less than our element's, we need to swap.
                     If child1Score < elemScore Then
                         swap = child1N
@@ -134,8 +139,9 @@ Namespace ComponentModel.Collection
 
                 ' Do the same checks for the other child.
                 If child2N < length Then
-                    Dim child2 = content(child2N),
-              child2Score = scoreFunction(child2)
+                    Dim child2 = content(child2N)
+                    Dim child2Score = scoreFunction(child2)
+
                     If (child2Score < If(swap Is Nothing, elemScore, child1Score)) Then
                         swap = child2N
                     End If
