@@ -206,16 +206,18 @@ Namespace Darwinism.GAF.Helper
         ''' <param name="v1#"></param>
         ''' <param name="v2#"></param>
         <Extension>
-        Public Sub Crossover(random As Random, ByRef v1 As SparseVector, ByRef v2 As SparseVector)
+        Public Sub Crossover(random As Random, ByRef v1 As HalfVector, ByRef v2 As HalfVector)
             ' 在这里减掉1是为了防止两个变量被全部替换掉
             Dim index As Integer = random.Next(v1.Length - 1)
             Dim tmp As Double
+            Dim a1 = v1.Array
+            Dim a2 = v2.Array
 
             ' one point crossover
             For i As Integer = index To v1.Length - 1
-                tmp = v1(i)
-                v1(i) = v2(i)
-                v2(i) = tmp
+                tmp = a1(i)
+                a1(i) = a2(i)
+                a2(i) = tmp
             Next
         End Sub
 

@@ -102,14 +102,14 @@ Public Module Loader
                             End If
 
                             Return New SparseCorrelation With {
-                                .B = New SparseVector(powerFactor),
+                                .B = New HalfVector(powerFactor),
                                 .BC = 0.005
                             }
                         End Function) _
                 .ToArray
 
             Return New SparseGridSystem With {
-                .A = New SparseVector(A),
+                .A = New HalfVector(A),
                 .C = correlationMatrix
             }
         Else
@@ -152,10 +152,10 @@ Public Module Loader
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateSnapshot(Of V As Vector, IC As ICorrelation(Of V))(genome As IGrid(Of V, IC), dist As NormalizeMatrix, Optional names$() = Nothing, Optional error# = -1) As GridMatrix
+    Public Function CreateSnapshot(Of V, IC As ICorrelation(Of V))(genome As IGrid(Of V, IC), dist As NormalizeMatrix, Optional names$() = Nothing, Optional error# = -1) As GridMatrix
         Return New GridMatrix With {
             .[error] = [error],
-            .direction = genome.A.ToArray,
+            .direction = genome.A.DoCall(AddressOf ToArray),
             .correlations = genome _
                 .C _
                 .Select(Function(c, i)
@@ -167,7 +167,7 @@ Public Module Loader
 
                             Return New NumericVector With {
                                 .name = factorName,
-                                .vector = c.B.ToArray
+                                .vector = c.B.DoCall(AddressOf ToArray)
                             }
                         End Function) _
                 .ToArray,
@@ -183,6 +183,16 @@ Public Module Loader
             },
             .samples = dist
         }
+    End Function
+
+    Private Function ToArray(Of V)(vec As V) As Double()
+        If TypeOf vec Is Vector Then
+            Return DirectCast(CObj(vec), Vector).ToArray
+        ElseIf TypeOf vec Is HalfVector Then
+            Return DirectCast(CObj(vec), HalfVector).AsVector.ToArray
+        Else
+            Throw New NotImplementedException(vec.GetType.FullName)
+        End If
     End Function
 
     <Extension>
