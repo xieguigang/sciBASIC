@@ -89,11 +89,11 @@ Public Class GridMatrix : Inherits XmlDataModel
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CreateBigSystem() As SparseGridSystem
         Return New SparseGridSystem With {
-            .A = New SparseVector(direction.vector),
+            .A = New HalfVector(direction.vector),
             .C = correlations _
                 .Select(Function(r, i)
                             Return New SparseCorrelation With {
-                                .B = New SparseVector(r.vector),
+                                .B = New HalfVector(r.vector),
                                 .BC = If([const] Is Nothing, 0, [const].B(i))
                             }
                         End Function) _
