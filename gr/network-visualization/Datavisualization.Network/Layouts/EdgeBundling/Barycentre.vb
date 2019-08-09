@@ -18,7 +18,7 @@ Namespace Layouts.EdgeBundling
         ''' <param name="g">请注意，在这个网络图中的节点应该是在完成了布局之后的，具有了各自的布局位置之后的节点</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DoEdgeLayout(g As NetworkGraph) As NetworkGraph
+        Public Function DoBarycentreEdgeLayout(g As NetworkGraph) As NetworkGraph
             ' 遍历每一个节点
             ' 得到与该节点连接的所有的边
             For Each node As Node In g.vertex
