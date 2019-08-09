@@ -1,6 +1,6 @@
 pub mod gamma{
 
-    const g : f64 = 7.0;
+    const g : i32 = 7;
     const g_ln: f64 = 607.0 / 128.0;
 
     const p_ln : [f64; 15] = [
@@ -21,6 +21,18 @@ pub mod gamma{
                 0.0000036899182659531625
     ];
 
+    const p :[f64; 9] = [
+            0.99999999999980993,
+            676.5203681218851,
+            -1259.1392167224028,
+            771.32342877765313,
+            -176.61502916214059,
+            12.507343278686905,
+            -0.13857109526572012,
+            0.0000099843695780195716,
+            0.00000015056327351493116
+    ];
+
     pub extern fn lngamma(z: f64) -> f64 {
         if z < 0.0 {
             return 0.0;
@@ -33,8 +45,28 @@ pub mod gamma{
          }
 
          let t: f64 = z + g_ln + 0.5;
-         let lngm = 0.5 * (2.0 * std::f64::const::PI).ln() + (z+ 0.5) * t.ln() - t + x.ln() - z.ln();
+         let lngm = 0.5 * (2.0 * std::f64::consts::PI).ln() + (z+ 0.5) * t.ln() - t + x.ln() - z.ln();
 
         return lngm;
+    }
+
+    pub extern fn gamma(z: f64) -> f64 {
+        if z < 0.5 {
+            return std::f64::consts::PI / ((z * std::f64::consts::PI).sin() *gamma(1.0 - z));
+        } else if z > 100.0 {
+            return lngamma(z).exp();
+        } else {
+            let x : f64 = p[0 as usize];
+
+            z = z -1.0;
+
+             for i in 1..(g+1) {
+                 x = x + (p[i  as usize]/(z+ i as f64));
+             }
+
+             let t = z + (g as f64) + 0.5;
+
+             return (2.0 * std::f64::consts::PI).sqrt() * t.powf(z + 0.5) * (-t).exp() * x;
+        }
     }
 } 
