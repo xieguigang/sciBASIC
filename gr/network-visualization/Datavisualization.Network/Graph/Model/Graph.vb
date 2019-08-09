@@ -146,6 +146,9 @@ Namespace Graph
             _adjacencySet = New Dictionary(Of String, AdjacencySet)
         End Sub
 
+        ''' <summary>
+        ''' Empties the Graph
+        ''' </summary>
         Public Sub Clear()
             Call vertices.Clear()
             Call edges.Clear()

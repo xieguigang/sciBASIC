@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graph
@@ -87,5 +88,10 @@ Namespace Graph
 
             Return [set]
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Like(vlab As String, aset As AdjacencySet) As Boolean
+            Return aset.adjacentNodes.ContainsKey(vlab)
+        End Operator
     End Class
 End Namespace

@@ -122,6 +122,15 @@ Namespace Graph
             Return label.GetHashCode()
         End Function
 
+        ''' <summary>
+        ''' Indicates if the node is adjacent to the node specified by id
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
+        Public Function adjacentTo(node As Node) As Boolean
+            Return node.label Like adjacencies
+        End Function
+
         Public Overrides Function ToString() As String
             If Not data Is Nothing AndAlso Not data.label.StringEmpty Then
                 Return $"{label} ({data.label})"
@@ -176,7 +185,7 @@ Namespace Graph
                 .label = label,
                 .degree = degree,
                 .pinned = pinned,
-                .adjacencies = adjacencies.clone,
+                .adjacencies = adjacencies.Clone,
                 .data = New NodeData With {
                     .color = data.color,
                     .label = data.label,

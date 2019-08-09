@@ -139,9 +139,10 @@ Namespace Graph
 
         Public Sub New(id As String, source As Node, target As Node, Optional data As EdgeData = Nothing)
             Me.ID = id
+            Me.data = If(data, New EdgeData())
+
             U = source
             V = target
-            Me.data = If(data, New EdgeData())
             isDirected = False
         End Sub
 
