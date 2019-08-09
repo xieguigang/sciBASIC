@@ -219,6 +219,10 @@ Namespace LinearAlgebra
             Call MyBase.New(data)
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence
+        ''' </summary>
+        ''' <param name="shorts"></param>
         Sub New(shorts As IEnumerable(Of Single))
             Call Me.New(shorts.Select(Function(x) CDbl(x)))
         End Sub
@@ -236,6 +240,10 @@ Namespace LinearAlgebra
             Me.New(VBMath.seq(from, [to], by))
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence
+        ''' </summary>
+        ''' <param name="integers"></param>
         Sub New(integers As IEnumerable(Of Integer))
             Me.New(integers.Select(Function(n) CDbl(n)))
         End Sub
@@ -252,6 +260,11 @@ Namespace LinearAlgebra
                 buffer(i) = init
             Next
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsSparse() As SparseVector
+            Return New SparseVector(Me)
+        End Function
 
 #Region "Operators"
         ''' <summary>

@@ -1,5 +1,7 @@
-﻿Imports Microsoft.VisualBasic.Math.Numerics
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.Numerics
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace LinearAlgebra
 
@@ -20,6 +22,12 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        Public ReadOnly Property Mean As Double
+            Get
+                Return Sum / [Dim]
+            End Get
+        End Property
+
         Sub New(data As IEnumerable(Of Half))
             Call MyBase.New(data)
         End Sub
@@ -32,42 +40,61 @@ Namespace LinearAlgebra
             Call MyBase.New(CType(value, Half).Replicate(n))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsVector() As Vector
+            Return New Vector(buffer.Select(Function(x) CSng(x)))
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return buffer.Select(Function(n) CSng(n).ToString).GetJson
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(v As HalfVector, add As Double) As HalfVector
             Return New HalfVector(From x As Half In v Select x + CSng(add))
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(v As HalfVector, add As Single) As HalfVector
             Return New HalfVector(From x As Half In v Select x + add)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(v As HalfVector, add As Double) As HalfVector
             Return New HalfVector(From x As Half In v Select x - CSng(add))
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(v As HalfVector, add As Single) As HalfVector
             Return New HalfVector(From x As Half In v Select x - add)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(v As HalfVector, add As Double) As HalfVector
             Return New HalfVector(From x As Half In v Select x * CSng(add))
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(v As HalfVector, add As Single) As HalfVector
             Return New HalfVector(From x As Half In v Select x * add)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(v As HalfVector, add As Double) As HalfVector
             Return New HalfVector(From x As Half In v Select x / CSng(add))
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(v As HalfVector, add As Single) As HalfVector
             Return New HalfVector(From x As Half In v Select x / add)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator ^(v As HalfVector, add As Double) As HalfVector
             Return New HalfVector(From x As Half In v Select x ^ CSng(add))
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator ^(v As HalfVector, add As Single) As HalfVector
             Return New HalfVector(From x As Half In v Select x ^ add)
         End Operator
