@@ -69,4 +69,11 @@ pub mod gamma{
              return (2.0 * std::f64::consts::PI).sqrt() * t.powf(z + 0.5) * (-t).exp() * x;
         }
     }
+
+    pub extern fn lgamma(x: f64) -> f64 {
+        let logterm = (x * (1.0 + x) * (2.0 + x)).ln();
+        let xp3 = 3.0 + x;
+
+        return  -2.081061 - x + 0.0833333 / xp3 - logterm + (2.5 + x) * xp3.ln();
+    }
 } 
