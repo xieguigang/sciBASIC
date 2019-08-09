@@ -486,6 +486,7 @@
   <ItemGroup>
     <Compile Include="Analysis\CorrelationGraph.vb" />
     <Compile Include="Graph\GraphTree.vb" />
+    <Compile Include="Graph\Model\AdjacencySet.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
     <Compile Include="Layouts\Cola\descent.vb" />
     <Compile Include="Layouts\Cola\Layout\Group.vb" />
