@@ -243,6 +243,10 @@ Namespace Numerics
             Return CSng(half) - value
         End Operator
 
+        Public Shared Operator ^(half As Half, power As Single) As Single
+            Return CSng(half) ^ power
+        End Operator
+
         ''' <summary>
         ''' Multiplies two specified System.Half values.
         ''' </summary>

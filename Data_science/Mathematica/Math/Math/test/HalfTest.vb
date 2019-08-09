@@ -15,7 +15,8 @@ Module HalfTest
 
         Dim dbl As Double() = Replicate(9999.009999, 5).ToArray
 
-
+        Console.WriteLine(Half.MaxValue)
+        Console.WriteLine(Half.MinValue)
 
         Console.WriteLine(HeapSizeOf.MeasureSize(one))
         Console.WriteLine(HeapSizeOf.MeasureSize(p100))
