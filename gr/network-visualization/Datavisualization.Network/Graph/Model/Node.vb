@@ -115,6 +115,7 @@ Namespace Graph
         End Sub
 
         Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
+        Public Property adjacencies As AdjacencySet
         Public Property pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer
@@ -175,6 +176,7 @@ Namespace Graph
                 .label = label,
                 .degree = degree,
                 .pinned = pinned,
+                .adjacencies = adjacencies.clone,
                 .data = New NodeData With {
                     .color = data.color,
                     .label = data.label,

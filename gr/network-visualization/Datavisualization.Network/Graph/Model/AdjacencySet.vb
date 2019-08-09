@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graph
 
@@ -28,7 +29,7 @@ Namespace Graph
     ''' <summary>
     ''' 在这个集合中，所有的<see cref="Edge.U"/>都是一样的
     ''' </summary>
-    Public Class AdjacencySet
+    Public Class AdjacencySet : Implements ICloneable(Of AdjacencySet)
 
         ''' <summary>
         ''' ``{V => edges}``
@@ -75,6 +76,16 @@ Namespace Graph
 
         Public Overrides Function ToString() As String
             Return $"Node {U} have {adjacentNodes.Count} adjacent nodes: {adjacentNodes.Keys.GetJson}"
+        End Function
+
+        Public Function Clone() As AdjacencySet Implements ICloneable(Of AdjacencySet).Clone
+            Dim [set] As New AdjacencySet With {.U = U}
+
+            For Each nodeV In adjacentNodes
+                Call [set].adjacentNodes.Add(nodeV.Key, nodeV.Value)
+            Next
+
+            Return [set]
         End Function
     End Class
 End Namespace

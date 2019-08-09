@@ -200,40 +200,43 @@ Namespace Graph
             Next
         End Sub
 
-        Public Sub CreateNodes(iNameList As List(Of String))
-            For listTrav As Integer = 0 To iNameList.Count - 1
-                CreateNode(iNameList(listTrav))
+        Public Sub CreateNodes(nameList As List(Of String))
+            For listTrav As Integer = 0 To nameList.Count - 1
+                CreateNode(nameList(listTrav))
             Next
         End Sub
 
-        Public Sub CreateEdges(iDataList As List(Of (aId$, bId$, data As EdgeData)))
-            For listTrav As Integer = 0 To iDataList.Count - 1
-                If Not _nodeSet.ContainsKey(iDataList(listTrav).aId) Then
-                    Return
-                End If
-                If Not _nodeSet.ContainsKey(iDataList(listTrav).bId) Then
-                    Return
-                End If
+        Public Sub CreateEdges(dataList As IEnumerable(Of (aId$, bId$, data As EdgeData)))
+            Dim u, v As Node
 
-                Dim node1 As Node = _nodeSet(iDataList(listTrav).aId)
-                Dim node2 As Node = _nodeSet(iDataList(listTrav).bId)
+            For Each listTrav In dataList
+                If Not _nodeSet.ContainsKey(listTrav.aId) Then
+                    Continue For
+                ElseIf Not _nodeSet.ContainsKey(listTrav.bId) Then
+                    Continue For
+                Else
+                    u = _nodeSet(listTrav.aId)
+                    v = _nodeSet(listTrav.bId)
 
-                CreateEdge(node1, node2, iDataList(listTrav).data)
+                    createEdgeInternal(u, v, listTrav.data)
+                End If
             Next
         End Sub
 
-        Public Sub CreateEdges(iDataList As List(Of KeyValuePair(Of String, String)))
-            For listTrav As Integer = 0 To iDataList.Count - 1
-                If Not _nodeSet.ContainsKey(iDataList(listTrav).Key) Then
-                    Return
-                End If
-                If Not _nodeSet.ContainsKey(iDataList(listTrav).Value) Then
-                    Return
-                End If
-                Dim node1 As Node = _nodeSet(iDataList(listTrav).Key)
-                Dim node2 As Node = _nodeSet(iDataList(listTrav).Value)
+        Public Sub CreateEdges(linkList As IEnumerable(Of KeyValuePair(Of String, String)))
+            Dim u, v As Node
 
-                CreateEdge(node1, node2)
+            For Each listTrav As KeyValuePair(Of String, String) In linkList
+                If Not _nodeSet.ContainsKey(listTrav.Key) Then
+                    Continue For
+                ElseIf Not _nodeSet.ContainsKey(listTrav.Value) Then
+                    Continue For
+                Else
+                    u = _nodeSet(listTrav.Key)
+                    v = _nodeSet(listTrav.Value)
+
+                    createEdgeInternal(u, v, Nothing)
+                End If
             Next
         End Sub
 
@@ -262,22 +265,26 @@ Namespace Graph
             Return tNewNode
         End Function
 
-        ''' <summary>
-        ''' 使用两个节点对象创建一条边连接之后，将所创建的边连接对象添加进入当前的图模型之中，最后将边对象返回给用户
-        ''' </summary>
-        ''' <param name="iSource"></param>
-        ''' <param name="iTarget"></param>
-        ''' <param name="iData"></param>
-        ''' <returns></returns>
-        Public Overloads Function CreateEdge(iSource As Node, iTarget As Node, Optional iData As EdgeData = Nothing) As Edge
-            If iSource Is Nothing OrElse iTarget Is Nothing Then
-                Return Nothing
-            End If
-
-            Dim tNewEdge As New Edge(_nextEdgeId.ToString(), iSource, iTarget, iData)
+        Private Function createEdgeInternal(u As Node, v As Node, data As EdgeData) As Edge
+            Dim tNewEdge As New Edge(_nextEdgeId.ToString(), u, v, data)
             _nextEdgeId += 1
             AddEdge(tNewEdge)
             Return tNewEdge
+        End Function
+
+        ''' <summary>
+        ''' 使用两个节点对象创建一条边连接之后，将所创建的边连接对象添加进入当前的图模型之中，最后将边对象返回给用户
+        ''' </summary>
+        ''' <param name="u"></param>
+        ''' <param name="v"></param>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Public Overloads Function CreateEdge(u As Node, v As Node, Optional data As EdgeData = Nothing) As Edge
+            If u Is Nothing OrElse v Is Nothing Then
+                Return Nothing
+            Else
+                Return createEdgeInternal(u, v, data)
+            End If
         End Function
 
         ''' <summary>
@@ -298,7 +305,7 @@ Namespace Graph
             Dim u As Node = _nodeSet(source)
             Dim v As Node = _nodeSet(target)
 
-            Return CreateEdge(u, v, data)
+            Return createEdgeInternal(u, v, data)
         End Function
 
         Public Function GetEdges(u As Node, v As Node) As IEnumerable(Of Edge)
@@ -488,6 +495,11 @@ Namespace Graph
             Next
 
             Dim copy As New NetworkGraph(vertices.Values, edges)
+
+            For Each node In copy.vertex
+
+            Next
+
             Return copy
         End Function
 
