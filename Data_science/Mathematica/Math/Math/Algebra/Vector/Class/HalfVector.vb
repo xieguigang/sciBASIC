@@ -32,6 +32,10 @@ Namespace LinearAlgebra
             Call MyBase.New(data)
         End Sub
 
+        Sub New(values As IEnumerable(Of Double))
+            Call MyBase.New(From x As Double In values Select CType(CSng(x), Half))
+        End Sub
+
         Sub New(values As IEnumerable(Of Single))
             Call MyBase.New(From x As Single In values Select CType(x, Half))
         End Sub

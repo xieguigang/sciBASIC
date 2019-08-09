@@ -699,10 +699,10 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' Get current time <see cref="Date"/> in unix time stamp format.
+    ''' Get current time <see cref="Date"/> in ``xxxxx.xxxx`` unix time stamp format.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UnixTimeStamp As Long
+    Public ReadOnly Property UnixTimeStamp As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return DateTimeHelper.UnixTimeStamp(Now)
@@ -713,18 +713,21 @@ Public Module App
     ''' The time tag of the application started.(应用程序的启动的时间)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StartTime As Long = UnixTimeStamp
+    Public ReadOnly Property StartTime As Double = App.UnixTimeStamp
 
     ''' <summary>
     ''' The distance of time that this application running from start and to current time.
     ''' (当前距离应用程序启动所逝去的时间)
     ''' </summary>
     ''' <returns></returns>
-    '''
+    ''' <remarks>
+    ''' 通过<see cref="App.UnixTimeStamp"/>以及<see cref="StartTime"/>得到的时间都是带小数的秒数
+    ''' 所以在这里计算出当前时间点与启动时间点之间的差值之后，还需要乘以1000才可以得到毫秒数
+    ''' </remarks>
     <ExportAPI("Elapsed.Milliseconds")>
     Public Function ElapsedMilliseconds() As Long
-        Dim nowLng As Long = App.UnixTimeStamp
-        Dim d As Long = nowLng - StartTime
+        Dim nowLng As Double = App.UnixTimeStamp
+        Dim d As Long = (nowLng - StartTime) * 1000
         Return d
     End Function
 

@@ -160,7 +160,7 @@ Namespace ValueTypes
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function UnixTimeStamp(time As DateTime) As Long
+        Public Function UnixTimeStamp(time As DateTime) As Double
             Static ZERO As New DateTime(1970, 1, 1, 0, 0, 0)
             Return (time.ToUniversalTime - ZERO).TotalSeconds
         End Function
