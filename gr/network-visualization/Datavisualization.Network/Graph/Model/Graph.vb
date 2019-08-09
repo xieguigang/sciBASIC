@@ -94,8 +94,85 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graph
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' 所有的<see cref="Edge.U"/>和<see cref="Edge.V"/>都是一样的
+    ''' </remarks>
+    Public Class EdgeSet : Inherits List(Of Edge)
+
+        Sub New()
+            Call MyBase.New
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Dim first As Edge = Me.First
+
+            If Count = 1 Then
+                Return $"[{first.U.label}, {first.V.label}]"
+            Else
+                Return $"[{first.U.label}, {first.V.label}] have {Count} duplicated connections."
+            End If
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' 在这个集合中，所有的<see cref="Edge.U"/>都是一样的
+    ''' </summary>
+    Public Class AdjacencySet
+
+        ''' <summary>
+        ''' ``{V => edges}``
+        ''' </summary>
+        ReadOnly adjacentNodes As New Dictionary(Of String, EdgeSet)
+
+        Public Property U As String
+
+        Public ReadOnly Property Count As Integer
+            Get
+                Return adjacentNodes.Count
+            End Get
+        End Property
+
+        Public Sub Add(edge As Edge)
+            If Not adjacentNodes.ContainsKey(edge.V.label) Then
+                adjacentNodes.Add(edge.V.label, New EdgeSet)
+            End If
+
+            adjacentNodes(edge.V.label).Add(edge)
+        End Sub
+
+        Public Sub Remove(V As Node)
+            If adjacentNodes.ContainsKey(V.label) Then
+                Call adjacentNodes.Remove(V.label)
+            End If
+        End Sub
+
+        Public Iterator Function EnumerateAllEdges() As IEnumerable(Of Edge)
+            For Each nodeV As EdgeSet In adjacentNodes.Values
+                For Each edge As Edge In nodeV
+                    Yield edge
+                Next
+            Next
+        End Function
+
+        Public Function EnumerateAllEdges(V As Node) As IEnumerable(Of Edge)
+            If Not adjacentNodes.ContainsKey(V.label) Then
+                Return {}
+            Else
+                Return adjacentNodes.TryGetValue(V.label).AsEnumerable
+            End If
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"Node {U} have {adjacentNodes.Count} adjacent nodes: {adjacentNodes.Keys.GetJson}"
+        End Function
+    End Class
 
     ''' <summary>
     ''' The network graph object model, corresponding network csv table data model is <see cref="FileStream.NetworkTables"/> 
@@ -127,7 +204,7 @@ Namespace Graph
         ''' <see cref="Node.Label"/>为键名
         ''' </summary>
         Dim _nodeSet As Dictionary(Of String, Node)
-        Dim _adjacencySet As Dictionary(Of String, Dictionary(Of String, List(Of Edge)))
+        Dim _adjacencySet As Dictionary(Of String, AdjacencySet)
 
         Dim _nextNodeId As Integer = 0
         Dim _nextEdgeId As Integer = 0
@@ -142,8 +219,8 @@ Namespace Graph
             Call MyBase.New(nodes, edges)
 
             _nodeSet = New Dictionary(Of String, Node)()
-            _eventListeners = New List(Of IGraphEventListener)()
-            _adjacencySet = New Dictionary(Of String, Dictionary(Of String, List(Of Edge)))()
+            _eventListeners = New List(Of IGraphEventListener)
+            _adjacencySet = New Dictionary(Of String, AdjacencySet)
         End Sub
 
         Public Sub Clear()
@@ -185,16 +262,10 @@ Namespace Graph
             End If
 
             If Not (_adjacencySet.ContainsKey(iEdge.U.label)) Then
-                _adjacencySet(iEdge.U.label) = New Dictionary(Of String, List(Of Edge))()
-            End If
-            If Not (_adjacencySet(iEdge.U.label).ContainsKey(iEdge.V.label)) Then
-                _adjacencySet(iEdge.U.label)(iEdge.V.label) = New List(Of Edge)()
+                _adjacencySet(iEdge.U.label) = New AdjacencySet With {.U = iEdge.U.label}
             End If
 
-            If Not _adjacencySet(iEdge.U.label)(iEdge.V.label).Contains(iEdge) Then
-                _adjacencySet(iEdge.U.label)(iEdge.V.label).Add(iEdge)
-            End If
-
+            Call _adjacencySet(iEdge.U.label).Add(iEdge)
             Call notify()
 
             Return iEdge
@@ -289,54 +360,40 @@ Namespace Graph
         ''' <summary>
         ''' 这个会自动添加新创建的边对象，因为这个函数的含义是在图之中创建一条新的边连接
         ''' </summary>
-        ''' <param name="iSource"></param>
-        ''' <param name="iTarget"></param>
-        ''' <param name="iData"></param>
+        ''' <param name="source"></param>
+        ''' <param name="target"></param>
+        ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Overloads Function CreateEdge(iSource As String, iTarget As String, Optional iData As EdgeData = Nothing) As Edge
-            If Not _nodeSet.ContainsKey(iSource) Then
+        Public Overloads Function CreateEdge(source As String, target As String, Optional data As EdgeData = Nothing) As Edge
+            If Not _nodeSet.ContainsKey(source) Then
                 Return Nothing
             End If
-            If Not _nodeSet.ContainsKey(iTarget) Then
+            If Not _nodeSet.ContainsKey(target) Then
                 Return Nothing
             End If
-            Dim node1 As Node = _nodeSet(iSource)
-            Dim node2 As Node = _nodeSet(iTarget)
-            Return CreateEdge(node1, node2, iData)
+
+            Dim u As Node = _nodeSet(source)
+            Dim v As Node = _nodeSet(target)
+
+            Return CreateEdge(u, v, data)
         End Function
 
-        Public Function GetEdges(iNode1 As Node, iNode2 As Node) As List(Of Edge)
-            If iNode1 Is Nothing OrElse iNode2 Is Nothing Then
+        Public Function GetEdges(u As Node, v As Node) As IEnumerable(Of Edge)
+            If u Is Nothing OrElse v Is Nothing Then
                 Return Nothing
+            ElseIf Not _adjacencySet.ContainsKey(u.label) Then
+                Return Nothing
+            Else
+                Return _adjacencySet(u.label).EnumerateAllEdges(v)
             End If
-            If _adjacencySet.ContainsKey(iNode1.label) AndAlso _adjacencySet(iNode1.label).ContainsKey(iNode2.label) Then
-                Return _adjacencySet(iNode1.label)(iNode2.label)
-            End If
-            Return Nothing
         End Function
 
-        Public Function GetEdges(iNode As Node) As List(Of Edge)
-            Dim retEdgeList As New List(Of Edge)()
-
-            If _adjacencySet.ContainsKey(iNode.label) Then
-                For Each keyPair As KeyValuePair(Of String, List(Of Edge)) In _adjacencySet(iNode.label)
-                    For Each e As Edge In keyPair.Value
-                        retEdgeList.Add(e)
-                    Next
-                Next
+        Public Function GetEdges(iNode As Node) As IEnumerable(Of Edge)
+            If Not _adjacencySet.ContainsKey(iNode.label) Then
+                Return {}
+            Else
+                Return _adjacencySet(iNode.label).EnumerateAllEdges
             End If
-
-            For Each keyValuePair As KeyValuePair(Of String, Dictionary(Of String, List(Of Edge))) In _adjacencySet
-                If keyValuePair.Key <> iNode.label Then
-                    For Each keyPair As KeyValuePair(Of String, List(Of Edge)) In _adjacencySet(keyValuePair.Key)
-                        For Each e As Edge In keyPair.Value
-                            retEdgeList.Add(e)
-                        Next
-
-                    Next
-                End If
-            Next
-            Return retEdgeList
         End Function
 
         Public Sub RemoveNode(node As Node)
@@ -368,25 +425,14 @@ Namespace Graph
         ''' </summary>
         ''' <param name="edge"></param>
         Public Sub RemoveEdge(edge As Edge)
-            Dim tEdges As List(Of Edge)
+            Dim u_adjacencySet As AdjacencySet = _adjacencySet(edge.U.label)
 
             Call edges.Remove(edge.ID)
+            Call u_adjacencySet.Remove(edge.V)
 
-            For Each x As KeyValuePair(Of String, Dictionary(Of String, List(Of Edge))) In _adjacencySet
-                For Each y As KeyValuePair(Of String, List(Of Edge)) In x.Value
-                    tEdges = y.Value
-
-                    If (tEdges - edge) = 0 Then
-                        _adjacencySet(x.Key).Remove(y.Key)
-                        Exit For
-                    End If
-                Next
-
-                If x.Value.Count = 0 Then
-                    _adjacencySet.Remove(x.Key)
-                    Exit For
-                End If
-            Next
+            If u_adjacencySet.Count = 0 Then
+                Call _adjacencySet.Remove(edge.U.label)
+            End If
 
             Call notify()
         End Sub
@@ -413,19 +459,23 @@ Namespace Graph
             Return retEdge
         End Function
 
-        Public Sub Merge(iMergeGraph As NetworkGraph)
-            For Each n As Node In iMergeGraph.vertex
-                Dim mergeNode As New Node(_nextNodeId.ToString(), n.data)
+        Public Sub Merge(another As NetworkGraph)
+            Dim mergeNode As Node
+            Dim fromNode, toNode As Node
+
+            For Each n As Node In another.vertex
+                mergeNode = New Node(_nextNodeId.ToString(), n.data)
                 AddNode(mergeNode)
                 _nextNodeId += 1
                 mergeNode.data.origID = n.label
             Next
 
-            For Each e As Edge In iMergeGraph.graphEdges
-                Dim fromNode As Node = vertex.FirstOrDefault(Function(n) e.U.label = n.data.origID)
-                Dim toNode As Node = vertex.FirstOrDefault(Function(n) e.V.label = n.data.origID)
+            For Each e As Edge In another.graphEdges
+                fromNode = vertex.FirstOrDefault(Function(n) e.U.label = n.data.origID)
+                toNode = vertex.FirstOrDefault(Function(n) e.V.label = n.data.origID)
 
-                Dim tNewEdge As Edge = AddEdge(New Edge(_nextEdgeId.ToString(), fromNode, toNode, e.data))
+                Call AddEdge(New Edge(_nextEdgeId.ToString(), fromNode, toNode, e.data))
+
                 _nextEdgeId += 1
             Next
         End Sub
@@ -450,9 +500,9 @@ Namespace Graph
             _eventListeners.Add(iListener)
         End Sub
 
-        Private Sub notify()
+        Private Sub notify(<CallerMemberName> Optional event$ = Nothing)
             For Each listener As IGraphEventListener In _eventListeners
-                listener.GraphChanged()
+                Call listener.GraphChanged(Me, [event])
             Next
         End Sub
 
