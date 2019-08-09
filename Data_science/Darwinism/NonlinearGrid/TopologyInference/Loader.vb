@@ -206,4 +206,15 @@ Public Module Loader
             End If
         Next
     End Sub
+
+    <Extension>
+    Friend Sub Truncate(vec As HalfVector, limits As Double)
+        Dim ref = vec.Array
+
+        For i As Integer = 0 To ref.Length - 1
+            If Math.Abs(CSng(ref(i))) > limits Then
+                ref(i) = Math.Sign(ref(i)) * randf.seeds.NextDouble * (limits)
+            End If
+        Next
+    End Sub
 End Module

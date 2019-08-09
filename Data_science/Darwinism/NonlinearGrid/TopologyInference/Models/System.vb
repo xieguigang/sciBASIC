@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Interface IGrid(Of V As Vector, IC As ICorrelation(Of V))
+Public Interface IGrid(Of V, IC As ICorrelation(Of V))
 
     Property AC As Double
     Property A As V
@@ -56,7 +56,7 @@ Public Interface IGrid(Of V As Vector, IC As ICorrelation(Of V))
 
 End Interface
 
-Public Interface ICorrelation(Of V As Vector)
+Public Interface ICorrelation(Of V)
     Property B As V
     Property BC As Double
 End Interface

@@ -177,6 +177,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigData\NamespaceDoc.vb" />
     <Compile Include="BigData\SparseGenome.vb" />
     <Compile Include="BigData\SparseSystem.vb" />
     <Compile Include="Debugger\Debugger.vb" />

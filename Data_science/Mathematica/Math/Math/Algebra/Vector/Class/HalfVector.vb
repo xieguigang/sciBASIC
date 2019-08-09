@@ -84,6 +84,15 @@ Namespace LinearAlgebra
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator *(v As HalfVector, multiple As Vector) As Vector
+            If v.Dim <> multiple.Dim Then
+                Throw New InvalidConstraintException
+            Else
+                Return New Vector(From i As Integer In v.Sequence Select CSng(v(i)) * multiple(i))
+            End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(v As HalfVector, add As Double) As HalfVector
             Return New HalfVector(From x As Half In v Select x / CSng(add))
         End Operator

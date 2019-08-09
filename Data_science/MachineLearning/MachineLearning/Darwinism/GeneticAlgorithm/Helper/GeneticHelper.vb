@@ -132,6 +132,27 @@ Namespace Darwinism.GAF.Helper
                 v(index) += mutationValue
             End If
         End Sub
+
+        <Extension>
+        Public Sub Mutate(ByRef v As HalfVector, random As Random, Optional index% = -1000, Optional rate# = 0.1)
+            Dim delta# = (v.Max - v.Min) * rate
+            Dim mutationValue!
+
+            ' 20190709 如果v向量全部都是零或者相等数值的话
+            ' 将无法产生突变
+            ' 在这里测试下，添加一个小数来完成突变
+            If delta = 0R Then
+                delta = 0.0000001
+            End If
+
+            mutationValue = (random.NextDouble * delta) * If(random.NextDouble >= 0.5, 1, -1)
+
+            If index < 0 Then
+                v(random.Next(v.Length)) += mutationValue
+            Else
+                v(index) += mutationValue
+            End If
+        End Sub
 #End Region
 
         ''' <summary>
