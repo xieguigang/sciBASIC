@@ -59,8 +59,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
 Imports numpy = Microsoft.VisualBasic.Language.Python
+Imports sys = System.Math
 
 Namespace LinearAlgebra
 
@@ -219,6 +219,10 @@ Namespace LinearAlgebra
             Call MyBase.New(data)
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence
+        ''' </summary>
+        ''' <param name="shorts"></param>
         Sub New(shorts As IEnumerable(Of Single))
             Call Me.New(shorts.Select(Function(x) CDbl(x)))
         End Sub
@@ -236,6 +240,10 @@ Namespace LinearAlgebra
             Me.New(VBMath.seq(from, [to], by))
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence
+        ''' </summary>
+        ''' <param name="integers"></param>
         Sub New(integers As IEnumerable(Of Integer))
             Me.New(integers.Select(Function(n) CDbl(n)))
         End Sub
@@ -252,6 +260,11 @@ Namespace LinearAlgebra
                 buffer(i) = init
             Next
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsSparse() As SparseVector
+            Return New SparseVector(Me)
+        End Function
 
 #Region "Operators"
         ''' <summary>
@@ -466,8 +479,9 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(a As Double, v1 As Vector) As Vector
-            '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            ' 向量数加算符重载
+            ' 获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1

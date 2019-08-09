@@ -83,7 +83,7 @@ Namespace Driver.CSS
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Function __fields(type As Type) As String()
+        Private Function ParseFieldNames(type As Type) As String()
             Return type _
                 .Schema(PropertyAccess.ReadWrite, nonIndex:=True) _
                 .Values _
@@ -94,11 +94,11 @@ Namespace Driver.CSS
         End Function
 
         ReadOnly types As New Dictionary(Of Types, String()) From {
-            {CSS.Types.Brush, GetType(Fill).__fields},
-            {CSS.Types.Font, GetType(CSSFont).__fields},
-            {CSS.Types.Padding, GetType(Padding).__fields},
-            {CSS.Types.Size, GetType(CSSsize).__fields},
-            {CSS.Types.Stroke, GetType(Stroke).__fields}
+            {CSS.Types.Brush, GetType(Fill).ParseFieldNames},
+            {CSS.Types.Font, GetType(CSSFont).ParseFieldNames},
+            {CSS.Types.Padding, GetType(Padding).ParseFieldNames},
+            {CSS.Types.Size, GetType(CSSsize).ParseFieldNames},
+            {CSS.Types.Stroke, GetType(Stroke).ParseFieldNames}
         }
 
         Const Indent$ = vbTab

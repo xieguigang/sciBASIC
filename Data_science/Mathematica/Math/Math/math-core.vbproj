@@ -87,6 +87,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
@@ -564,18 +565,22 @@
     <Compile Include="Algebra\Matrix\NumpyExtensions.vb" />
     <Compile Include="Algebra\PCA.vb" />
     <Compile Include="Algebra\SVD.vb" />
+    <Compile Include="Algebra\Vector\Class\HalfVector.vb" />
     <Compile Include="Algebra\Vector\Class\SparseVector.vb" />
     <Compile Include="Algebra\Vector\Class\Linq.vb" />
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
-    <Compile Include="BigDecimal.vb" />
-    <Compile Include="Crc32.vb" />
+    <Compile Include="Numerics\BigDecimal.vb" />
+    <Compile Include="HashMaps\Crc32.vb" />
     <Compile Include="Distributions\BinBox\BinMaps.vb" />
     <Compile Include="Distributions\BinBox\DataBinBox.vb" />
     <Compile Include="Distributions\BinBox\CutBins.vb" />
     <Compile Include="Distributions\pnorm.vb" />
     <Compile Include="Distributions\Sample.vb" />
     <Compile Include="Distributions\Gaussian.vb" />
+    <Compile Include="Numerics\UncheckedInteger.vb" />
+    <Compile Include="Numerics\Half.vb" />
+    <Compile Include="Numerics\HalfHelper.vb" />
     <Compile Include="Quantile\DataQuartile.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
@@ -589,10 +594,9 @@
     <Compile Include="Spline\BezierExtensions.vb" />
     <Compile Include="Spline\PolynomialNewton.vb" />
     <Compile Include="Spline\Extensions.vb" />
-    <Compile Include="UncheckInteger.vb" />
+    <Compile Include="Numerics\UncheckIntegerHelpers.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />
-    <Compile Include="HashMaps\Unchecked.vb" />
     <Compile Include="Algebra\Vector\Extensions.vb" />
     <Compile Include="Algebra\Matrix.NET\Extensions.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />

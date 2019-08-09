@@ -486,6 +486,7 @@
   <ItemGroup>
     <Compile Include="Analysis\CorrelationGraph.vb" />
     <Compile Include="Graph\GraphTree.vb" />
+    <Compile Include="Graph\Model\AdjacencySet.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
     <Compile Include="Layouts\Cola\descent.vb" />
     <Compile Include="Layouts\Cola\Layout\Group.vb" />
@@ -527,6 +528,8 @@
     <Compile Include="Layouts\Cola\PowerGraph\Module.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\LinkSet.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\PowerEdge.vb" />
+    <Compile Include="Layouts\EdgeBundling\Extensions.vb" />
+    <Compile Include="Layouts\EdgeBundling\Barycentre.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected3D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected2D.vb" />
     <Compile Include="Layouts\Parameters.vb" />
@@ -609,9 +612,9 @@
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>GraphTheory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math-Core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+      <Name>Math-Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>

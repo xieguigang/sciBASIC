@@ -64,11 +64,24 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
+Imports Microsoft.VisualBasic.My.JavaScript.Linq
 
 ''' <summary>
 ''' Extension methods for the .NET object sequence
 ''' </summary>
 Public Module VectorExtensions
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Sort(Of T)(ByRef a As T(), compares As Comparison(Of T), Optional modification As Boolean = True) As T()
+        If modification Then
+            Call Array.Sort(a, compares)
+        Else
+            Return a.AsEnumerable.Sort(compares).ToArray
+        End If
+
+        Return a
+    End Function
 
     ''' <summary>
     ''' 使用<paramref name="template"/>产生一个<paramref name="n"/>长度元素的目标序列

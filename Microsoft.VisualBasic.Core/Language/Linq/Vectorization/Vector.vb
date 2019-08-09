@@ -199,7 +199,7 @@ Namespace Language.Vectorization
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Default Public Overloads Property Item(index%) As T
+        Default Public Overridable Overloads Property Item(index%) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(index)

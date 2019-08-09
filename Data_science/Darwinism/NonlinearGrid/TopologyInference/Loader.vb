@@ -1,53 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::2d8073ea652e281808058ac34b1373e8, Data_science\Darwinism\NonlinearGrid\TopologyInference\Loader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Loader
-    ' 
-    '     Function: Correlation, CreateSnapshot, EmptyGridSystem
-    ' 
-    '     Sub: Truncate
-    ' 
-    ' /********************************************************************************/
+' Module Loader
+' 
+'     Function: Correlation, CreateSnapshot, EmptyGridSystem
+' 
+'     Sub: Truncate
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.BigData
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports Microsoft.VisualBasic.Math.Correlations
-Imports Microsoft.VisualBasic.Language
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Module Loader
@@ -79,10 +80,48 @@ Public Module Loader
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing, Optional power As Vector = Nothing) As GridSystem
-        Return New GridSystem With {            ' .Vol = 100000,        ' .K = 10,
-            .A = cor Or New Vector(0.01, width).AsDefault,
-            .C = width.SeqIterator _
+    Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing, Optional power As Vector = Nothing, Optional bigData As Boolean = False) As [Variant](Of GridSystem, SparseGridSystem)
+        Dim A As Vector = cor Or New Vector(0.01, width).AsDefault
+
+        If bigData Then
+            Dim correlationMatrix = width _
+                .SeqIterator _
+                .AsParallel _
+                .Select(Function(null)
+                            ' 全部使用负数初始化,可以让整个指数为负数
+                            ' 从而避免一开始就出现无穷大的结果???
+                            '
+                            ' 但是如果样本之中的X向量中存在一个非常小的数,则会反而被无限放大??
+                            ' 为了避免出现 0 ^ -c = Inf的情况出现
+                            ' 这个C向量应该全部都是零初始化，这样子系统初始状态为 Sum(X)
+                            Dim powerFactor As Vector
+
+                            If power Is Nothing Then
+                                powerFactor = Vector.rand(0, 10, width)
+                            Else
+                                powerFactor = New Vector(power)
+                            End If
+
+                            Dim powerC As New SparseCorrelation With {
+                                .B = New HalfVector(powerFactor),
+                                .BC = 0.005
+                            }
+
+                            Return (null, powerC)
+                        End Function) _
+                .OrderBy(Function(c) c.Item1) _
+                .Select(Function(c)
+                            Return c.Item2
+                        End Function) _
+                .ToArray
+
+            Return New SparseGridSystem With {
+                .A = New HalfVector(A),
+                .C = correlationMatrix
+            }
+        Else
+            Dim correlationMatrix = width _
+                .SeqIterator _
                 .Select(Function(null)
                             ' 全部使用负数初始化,可以让整个指数为负数
                             ' 从而避免一开始就出现无穷大的结果???
@@ -103,10 +142,13 @@ Public Module Loader
                                 .BC = 0.005
                             }
                         End Function) _
-                .ToArray,
-            .Amplify = 1, ' 在最开始增幅应该是一,意味着没有改变
-            .delay = 1
-        }
+                .ToArray
+
+            Return New GridSystem With {
+                .A = A,
+                .C = correlationMatrix
+            }
+        End If
     End Function
 
     ''' <summary>
@@ -117,11 +159,11 @@ Public Module Loader
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateSnapshot(genome As Genome, dist As NormalizeMatrix, Optional names$() = Nothing, Optional error# = -1) As GridMatrix
+    Public Function CreateSnapshot(Of V, IC As ICorrelation(Of V))(genome As IGrid(Of V, IC), dist As NormalizeMatrix, Optional names$() = Nothing, Optional error# = -1) As GridMatrix
         Return New GridMatrix With {
             .[error] = [error],
-            .direction = genome.chromosome.A.ToArray,
-            .correlations = genome.chromosome _
+            .direction = genome.A.DoCall(AddressOf ToArray),
+            .correlations = genome _
                 .C _
                 .Select(Function(c, i)
                             Dim factorName$ = names.ElementAtOrDefault(i)
@@ -132,24 +174,32 @@ Public Module Loader
 
                             Return New NumericVector With {
                                 .name = factorName,
-                                .vector = c.B.ToArray
+                                .vector = c.B.DoCall(AddressOf ToArray)
                             }
                         End Function) _
                 .ToArray,
             .[const] = New Constants With {
-                .A = genome.chromosome.AC,
+                .A = genome.AC,
                 .B = New NumericVector With {
                     .name = "correlations_const",
-                    .vector = genome.chromosome _
+                    .vector = genome _
                         .C _
                         .Select(Function(ci) ci.BC) _
                         .ToArray
-                },
-                .Amplify = genome.chromosome.Amplify,
-                .Delay = genome.chromosome.delay
+                }
             },
             .samples = dist
         }
+    End Function
+
+    Private Function ToArray(Of V)(vec As V) As Double()
+        If TypeOf vec Is Vector Then
+            Return DirectCast(CObj(vec), Vector).ToArray
+        ElseIf TypeOf vec Is HalfVector Then
+            Return DirectCast(CObj(vec), HalfVector).AsVector.ToArray
+        Else
+            Throw New NotImplementedException(vec.GetType.FullName)
+        End If
     End Function
 
     <Extension>
@@ -158,6 +208,28 @@ Public Module Loader
 
         For i As Integer = 0 To vec.Length - 1
             If Math.Abs(ref(i)) > limits Then
+                ref(i) = Math.Sign(ref(i)) * randf.seeds.NextDouble * (limits)
+            End If
+        Next
+    End Sub
+
+    <Extension>
+    Friend Sub Truncate(vec As SparseVector, limits As Double)
+        Dim ref = vec.Array
+
+        For i As Integer = 0 To ref.Length - 1
+            If Math.Abs(ref(i)) > limits Then
+                ref(i) = Math.Sign(ref(i)) * randf.seeds.NextDouble * (limits)
+            End If
+        Next
+    End Sub
+
+    <Extension>
+    Friend Sub Truncate(vec As HalfVector, limits As Double)
+        Dim ref = vec.Array
+
+        For i As Integer = 0 To ref.Length - 1
+            If Math.Abs(CSng(ref(i))) > limits Then
                 ref(i) = Math.Sign(ref(i)) * randf.seeds.NextDouble * (limits)
             End If
         Next

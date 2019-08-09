@@ -137,9 +137,6 @@ Namespace Darwinism.GAF
             Me.population = population
             Me.seeds = seeds Or randfSeeds
             Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize, toString:=toString)
-
-            Call "Do first sort of the population with their fitness values.".__DEBUG_ECHO
-            Me.population.SortPopulationByFitness(chromosomesComparator)
             Me.popStrategy = replacementStrategy.GetStrategy(Of Chr)
 
             If population.parallel Then

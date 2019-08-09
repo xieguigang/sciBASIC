@@ -61,9 +61,6 @@ Namespace ComponentModel.Collection
         Dim lessThan As Func(Of T, T, Boolean)
 
         ''' <summary>
-        ''' ������캯���Ĳ�����һ���Ƚϵı��ʽ�������Ƚ���������֮������ȶȹ�ϵ
-        ''' ������������߼���ϵ��
-        ''' 
         ''' ```
         ''' priority = a &lt; b
         ''' ```
@@ -81,12 +78,8 @@ Namespace ComponentModel.Collection
             Next
         End Sub
 
-        '*
-        '     * @method top
-        '     * @return the top element (the min element as defined by lessThan)
-        '     
         ''' <summary>
-        ''' �൱��Stack��Peek����
+        ''' the top element (the min element as defined by lessThan)
         ''' </summary>
         ''' <returns></returns>
         Public Function top() As T

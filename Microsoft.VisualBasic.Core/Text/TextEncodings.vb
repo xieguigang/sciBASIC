@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::9609db91e7dcf90e1fe5a0b6e6717d36, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Enum Encodings
-    ' 
-    '         GB2312, Unicode, UTF16, UTF32, UTF7
-    '         UTF8, UTF8WithoutBOM
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Module TextEncodings
-    ' 
-    '         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, codePageTable, GetEncodings
-    '                   ParseEncodingsName, TransEncoding
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Enum Encodings
+' 
+'         GB2312, Unicode, UTF16, UTF32, UTF7
+'         UTF8, UTF8WithoutBOM
+' 
+'  
+' 
+' 
+' 
+'     Module TextEncodings
+' 
+'         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, codePageTable, GetEncodings
+'                   ParseEncodingsName, TransEncoding
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports defaultEncoding = Microsoft.VisualBasic.Language.Default.Default(Of System.Text.Encoding)
 
 Namespace Text
@@ -96,6 +97,8 @@ Namespace Text
     ''' <summary>
     ''' 表示字符编码。若要浏览此类型的.NET Framework 源代码，请参阅 Reference Source。
     ''' </summary>
+    ''' 
+    <FrameworkConfig(TextEncodingEnvironmentConfigName)>
     Public Module TextEncodings
 
         Public ReadOnly Property UTF8WithoutBOM As New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False)
@@ -156,6 +159,8 @@ Namespace Text
             }
         End Function
 
+        Friend Const TextEncodingEnvironmentConfigName$ = "default_encoding"
+
         ''' <summary>
         ''' 构造函数会自动的从命令行配置之中设置默认的编码格式
         ''' </summary>
@@ -175,7 +180,7 @@ Namespace Text
         ''' </remarks>
         Sub New()
             ' setting default codepage from App commandline options for current App Process session.
-            Dim codepage$ = App.GetVariable("default_encoding")
+            Dim codepage$ = App.GetVariable(TextEncodingEnvironmentConfigName)
 
             ' If no settings from the commandline, using default ANSI encoding
             If codepage.StringEmpty Then

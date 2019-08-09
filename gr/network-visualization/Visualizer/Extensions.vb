@@ -43,7 +43,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language.Default
 
-Module Extensions
+<HideModuleName> Module Extensions
 
     <Extension>
     Public Function NodeBrushAssert(node As Node) As Assert(Of Object)

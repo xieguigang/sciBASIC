@@ -136,10 +136,6 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DataFrame.Extensions\DataFramework.Extensions.vbproj">
-      <Project>{344bf0cf-107f-45d2-9074-9865d8f86506}</Project>
-      <Name>DataFramework.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>

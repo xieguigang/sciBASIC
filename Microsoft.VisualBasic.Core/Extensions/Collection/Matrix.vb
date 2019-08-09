@@ -158,9 +158,15 @@ Public Module MatrixExtensions
         Return newMatrix
     End Function
 
+    ''' <summary>
+    ''' Measure the dimension size of the rectangle array.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="rect"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function SizeOf(Of T)(rect As T()()) As Size
+    Public Function DimensionSizeOf(Of T)(rect As T()()) As Size
         Return New Size With {
             .Width = rect(Scan0).Length,
             .Height = rect.Length

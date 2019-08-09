@@ -979,6 +979,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
+    <Compile Include="My\Framework\FrameworkConfig.vb" />
+    <Compile Include="My\Framework\DoConfiguration.vb" />
+    <Compile Include="My\Framework\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
@@ -1144,6 +1148,7 @@
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
+    <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
     <Compile Include="Serialization\ICloneable.vb" />
     <Compile Include="Text\Xml\Models\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
@@ -1265,7 +1270,7 @@
     <Compile Include="ComponentModel\Settings\DataModels\ModelBase.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
-    <Compile Include="ApplicationServices\IOHandler.vb" />
+    <Compile Include="My\Framework\IOHandler.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
@@ -1295,7 +1300,7 @@
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
-    <Compile Include="ApplicationServices\Debugger\Config.vb" />
+    <Compile Include="My\Framework\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
     <Compile Include="Extensions\IO\Path\Includes.vb" />
     <Compile Include="Extensions\IO\Extensions\Extensions.vb" />
@@ -1531,7 +1536,7 @@
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\EventLog.vb" />
-    <Compile Include="ApplicationServices\Debugger\NETDebugger.vb" />
+    <Compile Include="ApplicationServices\Debugger\HeapSizeOf.vb" />
     <Compile Include="Net\Abstract.vb" />
     <Compile Include="Net\MIME\MIME.vb" />
     <Compile Include="Net\MIME\ContentType.vb" />

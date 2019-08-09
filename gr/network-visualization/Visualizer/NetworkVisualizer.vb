@@ -288,7 +288,7 @@ Public Module NetworkVisualizer
         ' otherwise all of the nodes in target network graph will be draw onto the canvas.
         Dim connectedNodes = net.connectedNodes.AsDefault
         Dim drawPoints = net.vertex.ToArray Or connectedNodes.When(hideDisconnectedNode)
-        Dim labels As New List(Of labelModel)
+        Dim labels As New List(Of LayoutLabel)
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -355,7 +355,7 @@ Public Module NetworkVisualizer
                                               baseFont As Font,
                                               scalePos As Dictionary(Of Node, PointF),
                                               throwEx As Boolean,
-                                              displayId As Boolean) As IEnumerable(Of labelModel)
+                                              displayId As Boolean) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As Rectangle
@@ -418,7 +418,7 @@ Public Module NetworkVisualizer
                     label.height = .Height
                 End With
 
-                Yield New labelModel With {
+                Yield New LayoutLabel With {
                     .label = label,
                     .anchor = New Anchor(rect),
                     .style = font,
@@ -526,7 +526,7 @@ Public Module NetworkVisualizer
     ''' 
     <Extension>
     Private Sub drawLabels(g As IGraphics,
-                           labels As List(Of labelModel),
+                           labels As List(Of LayoutLabel),
                            frameSize As Size,
                            labelColorAsNodeColor As Boolean)
         Dim br As Brush

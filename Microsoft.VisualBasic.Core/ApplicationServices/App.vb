@@ -473,15 +473,15 @@ Public Module App
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
 
-    Dim __joinedVariables As New Dictionary(Of NamedValue(Of String))
+    Dim m_joinedVariables As New Dictionary(Of NamedValue(Of String))
 
     ''' <summary>
     ''' 添加参数到应用程序的环境变量之中
     ''' </summary>
-    ''' <param name="name$"></param>
+    ''' <param name="name">如果给定的当前这个参数名称存在于当前框架环境中，则会更新原来的值</param>
     ''' <param name="value$"></param>
     Public Sub JoinVariable(name$, value$)
-        __joinedVariables(name) =
+        m_joinedVariables(name) =
             New NamedValue(Of String) With {
                 .Name = name,
                 .Value = value
@@ -494,7 +494,7 @@ Public Module App
     ''' <param name="vars"></param>
     Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
         For Each v As NamedValue(Of String) In vars
-            __joinedVariables(v.Name) = v
+            m_joinedVariables(v.Name) = v
         Next
     End Sub
 
@@ -520,10 +520,10 @@ Public Module App
     ''' </param>
     ''' <returns>当没有查找到相对应的环境变量的时候会返回空值</returns>
     Public Function GetVariable(<CallerMemberName> Optional name$ = Nothing) As String
-        If __joinedVariables.ContainsKey(name) Then
-            Return __joinedVariables(name).Value
+        If m_joinedVariables.ContainsKey(name) Then
+            Return m_joinedVariables(name).Value
         Else
-            For Each v As NamedValue(Of String) In __joinedVariables.Values
+            For Each v As NamedValue(Of String) In m_joinedVariables.Values
                 If v.Name.TextEquals(name) Then
                     Return v.Value
                 End If
@@ -540,7 +540,7 @@ Public Module App
     Public Function GetAppVariables() As NamedValue(Of String)()
         Dim type As Type = GetType(App)
         Dim pros = type.Schema(PropertyAccess.Readable, BindingFlags.Public Or BindingFlags.Static)
-        Dim out As New List(Of NamedValue(Of String))(__joinedVariables.Values)
+        Dim out As New List(Of NamedValue(Of String))(m_joinedVariables.Values)
         Dim value$
         Dim o
 
@@ -699,10 +699,10 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' Get current time <see cref="Date"/> in unix time stamp format.
+    ''' Get current time <see cref="Date"/> in ``xxxxx.xxxx`` unix time stamp format.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property UnixTimeStamp As Long
+    Public ReadOnly Property UnixTimeStamp As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return DateTimeHelper.UnixTimeStamp(Now)
@@ -713,18 +713,21 @@ Public Module App
     ''' The time tag of the application started.(应用程序的启动的时间)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StartTime As Long = UnixTimeStamp
+    Public ReadOnly Property StartTime As Double = App.UnixTimeStamp
 
     ''' <summary>
     ''' The distance of time that this application running from start and to current time.
     ''' (当前距离应用程序启动所逝去的时间)
     ''' </summary>
     ''' <returns></returns>
-    '''
+    ''' <remarks>
+    ''' 通过<see cref="App.UnixTimeStamp"/>以及<see cref="StartTime"/>得到的时间都是带小数的秒数
+    ''' 所以在这里计算出当前时间点与启动时间点之间的差值之后，还需要乘以1000才可以得到毫秒数
+    ''' </remarks>
     <ExportAPI("Elapsed.Milliseconds")>
     Public Function ElapsedMilliseconds() As Long
-        Dim nowLng As Long = App.UnixTimeStamp
-        Dim d As Long = nowLng - StartTime
+        Dim nowLng As Double = App.UnixTimeStamp
+        Dim d As Long = (nowLng - StartTime) * 1000
         Return d
     End Function
 
