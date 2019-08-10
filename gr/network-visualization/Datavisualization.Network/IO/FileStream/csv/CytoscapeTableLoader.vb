@@ -25,6 +25,33 @@ Namespace FileStream.Cytoscape
             Return CytoscapeExportAsGraph(edges, nodes)
         End Function
 
+        Public Function CytoscapeExportAsTable(edgesTable As String, nodesTable As String) As NetworkTables
+            Dim edges As NetworkEdge() = edgesTable.LoadCsv(Of Edges) _
+                .Select(Function(edge)
+                            Dim interaction = edge.GetConnectNodes
+
+                            Return New NetworkEdge With {
+                                .fromNode = interaction(Scan0),
+                                .toNode = interaction(1),
+                                .interaction = edge.interaction,
+                                .value = edge.EdgeBetweenness,
+                                .Properties = edge.data
+                            }
+                        End Function) _
+                .ToArray
+            Dim nodes As Node() = nodesTable.LoadCsv(Of Nodes) _
+                .Select(Function(node)
+                            Return New Node With {
+                                .ID = node.name,
+                                .NodeType = "node",
+                                .Properties = node.ToTable
+                            }
+                        End Function) _
+                .ToArray
+
+            Return New NetworkTables(edges, nodes)
+        End Function
+
         <Extension>
         Public Function CytoscapeNetworkFromEdgeTable(edgesData As IEnumerable(Of Edges)) As NetworkGraph
             Dim edges = edgesData.ToArray

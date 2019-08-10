@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::ed522b9afa92eedd806891ab202319f9, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Edges
-    ' 
-    '         Properties: Data, EdgeBetweenness, interaction, name, SUID
-    ' 
-    '         Function: GetConnectNodes, GetNodes, ToString
-    ' 
-    '     Class Nodes
-    ' 
-    '         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, data
-    '                     Degree, Eccentricity, IsSingleNode, name, NeighborhoodConnectivity
-    '                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
-    '                     SharedName, Stress, SUID, TopologicalCoefficient
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Edges
+' 
+'         Properties: Data, EdgeBetweenness, interaction, name, SUID
+' 
+'         Function: GetConnectNodes, GetNodes, ToString
+' 
+'     Class Nodes
+' 
+'         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, data
+'                     Degree, Eccentricity, IsSingleNode, name, NeighborhoodConnectivity
+'                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
+'                     SharedName, Stress, SUID, TopologicalCoefficient
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,19 +63,19 @@ Namespace FileStream.Cytoscape
     Public Class Edges
 
         Public Property SUID As String
-        Public Property EdgeBetweenness As String
+        Public Property EdgeBetweenness As Double
         Public Property interaction As String
         Public Property name As String
         ''' <summary>
         ''' Dynamics extended data
         ''' </summary>
         ''' <returns></returns>
-        Public Property Data As Dictionary(Of String, String)
+        Public Property data As Dictionary(Of String, String)
 
-        Public Iterator Function GetNodes(nodeHash As Dictionary(Of Graph.Node)) As IEnumerable(Of Graph.Node)
+        Public Iterator Function GetNodes(nodeTable As Dictionary(Of Graph.Node)) As IEnumerable(Of Graph.Node)
             With GetConnectNodes()
-                Yield nodeHash(.First)
-                Yield nodeHash(.Last)
+                Yield nodeTable(.First)
+                Yield nodeTable(.Last)
             End With
         End Function
 
@@ -113,11 +113,20 @@ Namespace FileStream.Cytoscape
         Public Property SharedName As String
         Public Property Stress As String
         Public Property TopologicalCoefficient As String
+
         ''' <summary>
         ''' Dynamics extended data
         ''' </summary>
         ''' <returns></returns>
         Public Property data As Dictionary(Of String, String)
+
+        Public Function ToTable() As Dictionary(Of String, String)
+            Dim table As New Dictionary(Of String, String)(data)
+
+
+
+            Return table
+        End Function
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

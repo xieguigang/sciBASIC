@@ -130,13 +130,17 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="DIR"></param>
         ''' <returns></returns>
-        Public Overloads Shared Function Load(DIR As String) As NetworkTables
+        Public Overloads Shared Function Load(DIR$, Optional cytoscapeFormat As Boolean = False) As NetworkTables
             Dim tables = SearchNetworkTable(directory:=DIR)
 
-            Return New NetworkTables With {
-                .edges = tables.edges.LoadCsv(Of NetworkEdge),
-                .nodes = tables.nodes.LoadCsv(Of Node)
-            }
+            If cytoscapeFormat Then
+                Return Cytoscape.CytoscapeExportAsTable(tables.edges, tables.nodes)
+            Else
+                Return New NetworkTables With {
+                    .edges = tables.edges.LoadCsv(Of NetworkEdge),
+                    .nodes = tables.nodes.LoadCsv(Of Node)
+                }
+            End If
         End Function
     End Class
 End Namespace
