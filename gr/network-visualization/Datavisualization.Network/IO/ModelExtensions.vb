@@ -49,9 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
@@ -291,65 +289,6 @@ Namespace FileStream
 
             Dim graph As New NetworkGraph(nodes, edges)
             Return graph
-        End Function
-
-        ''' <summary>
-        ''' Load cytoscape exports as network graph model.
-        ''' </summary>
-        ''' <param name="edgesDf">``edges.csv``</param>
-        ''' <param name="nodesDf">``nodes.csv``</param>
-        ''' <returns></returns>
-        Public Function CytoscapeExportAsGraph(edgesDf As String, nodesDf As String) As NetworkGraph
-            Dim edges As Edges() = edgesDf.LoadCsv(Of Edges)
-            Dim nodes As Nodes() = nodesDf.LoadCsv(Of Nodes)
-            Return CytoscapeExportAsGraph(edges, nodes)
-        End Function
-
-        <Extension>
-        Public Function CytoscapeNetworkFromEdgeTable(edgesData As IEnumerable(Of Edges)) As NetworkGraph
-            Dim edges = edgesData.ToArray
-            Dim nodes = edges _
-                .Select(Function(x) x.GetConnectNodes) _
-                .IteratesALL _
-                .Distinct _
-                .Select(Function(id) New Nodes With {
-                    .name = id
-                }).ToArray
-            Dim graph As NetworkGraph = CytoscapeExportAsGraph(edges, nodes)
-            Return graph
-        End Function
-
-        Public Function CytoscapeExportAsGraph(edges As Edges(), nodes As Nodes()) As NetworkGraph
-            Dim colors As Color() = AllDotNetPrefixColors
-            Dim randColor As Func(Of Color) =
-                Function() Color.FromArgb(
-                    baseColor:=colors(RandomSingle() * (colors.Length - 1)),
-                    alpha:=225)
-
-            Dim gNodes As List(Of Graph.Node) =
- _
-                LinqAPI.MakeList(Of Graph.Node) <= From n As Nodes
-                                                   In nodes
-                                                   Let r = If(n.Degree <= 4, 4, n.Degree) * 5
-                                                   Let nd As NodeData = New NodeData With {
-                                                       .radius = r,
-                                                       .color = New SolidBrush(randColor())
-                                                   }
-                                                   Select New Graph.Node(n.name, nd)
-
-            Dim nodesTable As New Dictionary(Of Graph.Node)(gNodes)
-            Dim gEdges As List(Of Graph.Edge) =
- _
-                LinqAPI.MakeList(Of Edge) <= From edge As Edges
-                                             In edges
-                                             Let geNodes As Graph.Node() =
-                                                 edge.GetNodes(nodesTable).ToArray
-                                             Select New Edge(
-                                                 edge.SUID,
-                                                 geNodes(0),
-                                                 geNodes(1),
-                                                 New EdgeData)
-            Return New NetworkGraph(gNodes, gEdges)
         End Function
 
         ''' <summary>
