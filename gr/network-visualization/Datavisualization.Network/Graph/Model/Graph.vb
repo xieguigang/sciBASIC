@@ -139,11 +139,26 @@ Namespace Graph
         End Sub
 
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
-            Call MyBase.New(nodes, edges)
+            Call MyBase.New({}, {})
 
             _nodeSet = New Dictionary(Of String, Node)()
             _eventListeners = New List(Of IGraphEventListener)
             _adjacencySet = New Dictionary(Of String, AdjacencySet)
+
+            For Each node As Node In nodes
+                Call AddNode(node)
+            Next
+
+            For Each edge As Edge In edges
+                Call AddEdge(edge)
+            Next
+
+            For Each node As Node In vertex
+                If node.adjacencies Is Nothing Then
+                    _adjacencySet.Add(node.label, New AdjacencySet)
+                    node.adjacencies = _adjacencySet(node.label)
+                End If
+            Next
         End Sub
 
         ''' <summary>
@@ -182,19 +197,20 @@ Namespace Graph
             Return vertex.Where(Function(n) n.ID = id).FirstOrDefault
         End Function
 
-        Public Overloads Function AddEdge(iEdge As Edge) As Edge
-            If Not edges.ContainsKey(iEdge.ID) Then
-                Call edges.Add(iEdge.ID, iEdge)
+        Public Overloads Function AddEdge(edge As Edge) As Edge
+            If Not edges.ContainsKey(edge.ID) Then
+                Call edges.Add(edge.ID, edge)
             End If
 
-            If Not (_adjacencySet.ContainsKey(iEdge.U.label)) Then
-                _adjacencySet(iEdge.U.label) = New AdjacencySet With {.U = iEdge.U.label}
+            If Not (_adjacencySet.ContainsKey(edge.U.label)) Then
+                _adjacencySet(edge.U.label) = New AdjacencySet With {.U = edge.U.label}
+                edge.U.adjacencies = _adjacencySet(edge.U.label)
             End If
 
-            Call _adjacencySet(iEdge.U.label).Add(iEdge)
+            Call _adjacencySet(edge.U.label).Add(edge)
             Call notify()
 
-            Return iEdge
+            Return edge
         End Function
 
         Public Sub CreateNodes(iDataList As List(Of NodeData))

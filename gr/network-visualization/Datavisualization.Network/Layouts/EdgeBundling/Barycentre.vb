@@ -28,6 +28,10 @@ Namespace Layouts.EdgeBundling
                     .ToArray
                 Dim centras As New List(Of PointF)
 
+                If links.IsNullOrEmpty Then
+                    Continue For
+                End If
+
                 ' 然后计算出每一条边的质心
                 For Each link As Edge In links
                     centras += link.Barycentre
