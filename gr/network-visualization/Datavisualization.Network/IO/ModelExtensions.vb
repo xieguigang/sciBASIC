@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13c98d30d937c6f38f699fa43d16e8b2, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0fe30e3f14b0183b66bd17235ab85a81, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module GraphAPI
     ' 
-    '         Function: (+2 Overloads) CreateGraph, (+2 Overloads) CytoscapeExportAsGraph, CytoscapeNetworkFromEdgeTable, OrderByDegrees, RemovesByDegree
-    '                   RemovesByDegreeQuantile, RemovesByKeyValue, ScaleRadius, Tabular, UsingDegreeAsRadius
+    '         Function: (+2 Overloads) CreateGraph, OrderByDegrees, RemovesByDegree, RemovesByDegreeQuantile, RemovesByKeyValue
+    '                   ScaleRadius, Tabular, UsingDegreeAsRadius
     ' 
     '         Sub: AddEdges
     ' 

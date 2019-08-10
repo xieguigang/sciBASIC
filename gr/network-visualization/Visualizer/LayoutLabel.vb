@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0944519eafd5c749816f818f0245e01, gr\network-visualization\Visualizer\labelModel.vb"
+﻿#Region "Microsoft.VisualBasic::c90f3b518528b13db6ae69c53cb38fa6, gr\network-visualization\Visualizer\LayoutLabel.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Class labelModel
+    ' Class LayoutLabel
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96ebf5a3dbb33acb0c3f9b656137cf24, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::4cbdf06f5c684c742e3d84000cbcaf79, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
 
     ' Author:
     ' 

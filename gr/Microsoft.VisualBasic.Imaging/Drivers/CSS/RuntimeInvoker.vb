@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da657d575f48c1de6684880bc0cea92b, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::6c76f69f945508f55b2deda8e0a83b23, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module RuntimeInvoker
     ' 
-    '         Function: __fields, CSSTemplate, LoadDriver, (+2 Overloads) RunPlot, ScanValue
+    '         Function: CSSTemplate, LoadDriver, ParseFieldNames, (+2 Overloads) RunPlot, ScanValue
     ' 
     '         Sub: AppendFields
     ' 
