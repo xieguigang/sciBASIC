@@ -113,7 +113,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                     .ToDictionary(Function(n) n.ID,
                                   Function(n)
                                       Return If(n!dash = "dash", DashStyle.DashDot, DashStyle.Solid)
-                                  End Function)
+                                  End Function),
+                doEdgeBundling:=True
             )
 
         Return image.Save(out).CLICode
