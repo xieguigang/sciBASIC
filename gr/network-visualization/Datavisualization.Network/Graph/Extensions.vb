@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Graph
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' Get all of the connected nodes ID from the edges data
