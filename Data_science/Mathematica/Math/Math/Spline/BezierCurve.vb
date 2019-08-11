@@ -90,7 +90,7 @@ Namespace Interpolation
         Public Property Iterations As Integer
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, iteration%)
+        Sub New(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, Optional iteration% = 3)
             Call ReCalculate(ctrl1, ctrl2, ctrl3, iteration)
         End Sub
 

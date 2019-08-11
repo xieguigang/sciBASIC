@@ -80,7 +80,7 @@ Namespace Interpolation
  _
                     From win
                     In slideWindows.AsParallel
-                    Let value = __interpolation(
+                    Let value = doInterpolation(
                         win.Items, iteration)
                     Select x = New SeqValue(Of Double()) With {
                         .i = win.Index,
@@ -92,7 +92,7 @@ Namespace Interpolation
  _
                     From win As SlideWindow(Of Double)
                     In slideWindows
-                    Let value = __interpolation(
+                    Let value = doInterpolation(
                         win.Items, iteration)
                     Select x = New SeqValue(Of Double()) With {
                         .i = win.Index,
@@ -116,7 +116,7 @@ Namespace Interpolation
         ''' <param name="iteration"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function __interpolation(X#(), iteration%) As Double()
+        Private Function doInterpolation(X#(), iteration%) As Double()
             Dim data As Double() = New Double(2) {}
 
             data(0) = X(Scan0)

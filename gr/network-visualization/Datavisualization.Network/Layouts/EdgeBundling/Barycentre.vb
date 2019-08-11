@@ -90,7 +90,9 @@ Namespace Layouts.EdgeBundling
                             (link.data.controlsPoint.AsList + New FDGVector3(centra)).Average
                         }
                     Else
-                        link.data.controlsPoint = {New FDGVector3(centra)}
+                        link.data.controlsPoint = {
+                            New FDGVector3(centra)
+                        }
                     End If
                 Next
             Next
