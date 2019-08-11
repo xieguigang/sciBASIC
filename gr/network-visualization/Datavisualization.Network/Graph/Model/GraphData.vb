@@ -186,6 +186,7 @@ Namespace Graph
         ''' <returns></returns>
         Public Property length As Single
         Public Property weight As Double
+        Public Property controlsPoint As FDGVector3()
 
         Public Sub New()
             MyBase.New()
