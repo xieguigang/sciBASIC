@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48689e07fe821dc31ee264d550bce51b, CLI_tools\MLkit\render\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::dc2a41fd1070080dd9d66440fd87e4bd, CLI_tools\MLkit\render\CLI.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
 Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -60,7 +61,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
     <ExportAPI("/network")>
     <Description("Rendering network data model as png/svg image.")>
-    <Usage("/network /model <network_tables.directory> [/size <default=5000,3000> /node.size <fieldName=30,300> /fd <arguments.ini> /style <styles.css> /out <image.png/svg>]")>
+    <Usage("/network /model <network_tables.directory> [/size <default=5000,3000> /node.size <fieldName=30,300> /fd <arguments.ini> /style <styles.css> /cytoscape /out <image.png/svg>]")>
     <Argument("/model", False, CLITypes.File, PipelineTypes.std_in,
               Description:="A directory path which contains the network table and node attribute table in it.")>
     <Argument("/out", True, CLITypes.File, PipelineTypes.std_out,
@@ -70,12 +71,16 @@ Imports Microsoft.VisualBasic.Serialization.JSON
     <Argument("/style", True, CLITypes.File,
               Extensions:="*.css",
               Description:="A css style file for your network, this will required your network model have the supported attributes for css rendering, like class, id, etc.")>
+    <Argument("/cytoscape", True, CLITypes.Boolean,
+              AcceptTypes:={GetType(Boolean)},
+              Description:="Input table is in format of the cytoscape output csv tables?")>
     Public Function VisualizeNetwork(args As CommandLine) As Integer
         Dim in$ = args("/model")
         Dim size$ = args("/size") Or "5000,3000"
+        Dim isCytoscape As Boolean = args("/cytoscape")
         Dim out$ = args("/out") Or $"{[in].TrimDIR}/image.png"
         Dim fdArgv As ForceDirectedArgs = Parameters.Load(args("/fd"), ForceDirectedArgs.DefaultNew)
-        Dim model = NetworkTables.Load(DIR:=[in]).AnalysisDegrees
+        Dim model = NetworkTables.Load(DIR:=[in], cytoscapeFormat:=isCytoscape).AnalysisDegrees
         Dim graph As NetworkGraph = model.CreateGraph(nodeColor:=Function(n) n!color.GetBrush)
         Dim nodeSizeMapper As Func(Of Graph.Node, Single) = NodeStyles.NodeDegreeSize(graph.vertex, "30,300")
 
@@ -98,6 +103,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
         Dim image As GraphicsData = graph _
             .doRandomLayout _
             .doForceLayout(fdArgv, showProgress:=True) _
+            .DoBarycentreEdgeLayout _
             .DrawImage(
                 canvasSize:=size,
                 nodeRadius:=nodeSizeMapper,
@@ -107,7 +113,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
                     .ToDictionary(Function(n) n.ID,
                                   Function(n)
                                       Return If(n!dash = "dash", DashStyle.DashDot, DashStyle.Solid)
-                                  End Function)
+                                  End Function),
+                doEdgeBundling:=True
             )
 
         Return image.Save(out).CLICode

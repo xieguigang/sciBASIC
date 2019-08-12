@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f0a45ead835aa53842a98132971d378, Data_science\Mathematica\Math\Math\uncheckInteger.vb"
+﻿#Region "Microsoft.VisualBasic::a962fbe21e07df9f2aea4908fab4d346, Data_science\Mathematica\Math\Math\Numerics\UncheckIntegerHelpers.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,10 @@
 
     ' Summaries:
 
-    ' Module UncheckIntegerExtensions
+    '     Module UncheckIntegerExtensions
     ' 
-    '     Function: unchecked, uncheckedInteger, uncheckedLong, uncheckedULong
+    '         Function: unchecked, uncheckedInteger, uncheckedLong, uncheckedULong
     ' 
-    ' Structure UncheckedInteger
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    '     Function: ToString
-    '     Operators: (+2 Overloads) -, (+2 Overloads) *, (+2 Overloads) /, (+2 Overloads) ^, (+2 Overloads) +
     ' 
     ' /********************************************************************************/
 

@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::9609db91e7dcf90e1fe5a0b6e6717d36, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::8e7f1a4a2c4046acad3f34789d3583b4, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Enum Encodings
-' 
-'         GB2312, Unicode, UTF16, UTF32, UTF7
-'         UTF8, UTF8WithoutBOM
-' 
-'  
-' 
-' 
-' 
-'     Module TextEncodings
-' 
-'         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, codePageTable, GetEncodings
-'                   ParseEncodingsName, TransEncoding
-' 
-' 
-' /********************************************************************************/
+    '     Enum Encodings
+    ' 
+    '         GB2312, Unicode, UTF16, UTF32, UTF7
+    '         UTF8, UTF8WithoutBOM
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Module TextEncodings
+    ' 
+    '         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, codePageTable, GetEncodings
+    '                   ParseEncodingsName, TransEncoding
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

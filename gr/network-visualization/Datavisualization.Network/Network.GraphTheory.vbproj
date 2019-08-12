@@ -487,6 +487,7 @@
     <Compile Include="Analysis\CorrelationGraph.vb" />
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Graph\Model\AdjacencySet.vb" />
+    <Compile Include="IO\FileStream\csv\CytoscapeTableLoader.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
     <Compile Include="Layouts\Cola\descent.vb" />
     <Compile Include="Layouts\Cola\Layout\Group.vb" />
@@ -532,6 +533,7 @@
     <Compile Include="Layouts\EdgeBundling\Barycentre.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected3D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected2D.vb" />
+    <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVectorExtensions.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\forceNetwork.vb" />

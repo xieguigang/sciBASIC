@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94e30bc7355c17ff77226a317b3876c1, Microsoft.VisualBasic.Core\ApplicationServices\IOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::4eca099d62522f9c3be910f7f77f99f3, Microsoft.VisualBasic.Core\My\Framework\IOHandler.vb"
 
     ' Author:
     ' 

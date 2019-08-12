@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c47a3eb8410c791a4fb5c0be1e82290, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::800757f510d52a34371c8ab14012b511, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Graph
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' Get all of the connected nodes ID from the edges data

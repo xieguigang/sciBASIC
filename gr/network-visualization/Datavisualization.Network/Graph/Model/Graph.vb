@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::d86b97a759704a734af9e1f70703664a, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::808105be5df77e41e59a5f8ee7550b39, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class NetworkGraph
-' 
-'         Properties: connectedNodes
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: (+2 Overloads) AddEdge, AddNode, Clone, ComputeIfNotExists, Copy
-'                   (+2 Overloads) CreateEdge, (+2 Overloads) CreateNode, GetEdge, (+2 Overloads) GetEdges, GetElementByID
-'                   GetNode, ToString
-' 
-'         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
-'              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
-'              RemoveNode
-' 
-' 
-' /********************************************************************************/
+    '     Class NetworkGraph
+    ' 
+    '         Properties: connectedNodes
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) AddEdge, AddNode, Clone, ComputeIfNotExists, Copy
+    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetEdge, (+2 Overloads) GetEdges
+    '                   GetElementByID, GetNode, ToString
+    ' 
+    '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
+    '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
+    '              RemoveNode
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -139,11 +139,26 @@ Namespace Graph
         End Sub
 
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
-            Call MyBase.New(nodes, edges)
+            Call MyBase.New({}, {})
 
             _nodeSet = New Dictionary(Of String, Node)()
             _eventListeners = New List(Of IGraphEventListener)
             _adjacencySet = New Dictionary(Of String, AdjacencySet)
+
+            For Each node As Node In nodes
+                Call AddNode(node)
+            Next
+
+            For Each edge As Edge In edges
+                Call AddEdge(edge)
+            Next
+
+            For Each node As Node In vertex
+                If node.adjacencies Is Nothing Then
+                    _adjacencySet.Add(node.label, New AdjacencySet)
+                    node.adjacencies = _adjacencySet(node.label)
+                End If
+            Next
         End Sub
 
         ''' <summary>
@@ -182,19 +197,20 @@ Namespace Graph
             Return vertex.Where(Function(n) n.ID = id).FirstOrDefault
         End Function
 
-        Public Overloads Function AddEdge(iEdge As Edge) As Edge
-            If Not edges.ContainsKey(iEdge.ID) Then
-                Call edges.Add(iEdge.ID, iEdge)
+        Public Overloads Function AddEdge(edge As Edge) As Edge
+            If Not edges.ContainsKey(edge.ID) Then
+                Call edges.Add(edge.ID, edge)
             End If
 
-            If Not (_adjacencySet.ContainsKey(iEdge.U.label)) Then
-                _adjacencySet(iEdge.U.label) = New AdjacencySet With {.U = iEdge.U.label}
+            If Not (_adjacencySet.ContainsKey(edge.U.label)) Then
+                _adjacencySet(edge.U.label) = New AdjacencySet With {.U = edge.U.label}
+                edge.U.adjacencies = _adjacencySet(edge.U.label)
             End If
 
-            Call _adjacencySet(iEdge.U.label).Add(iEdge)
+            Call _adjacencySet(edge.U.label).Add(edge)
             Call notify()
 
-            Return iEdge
+            Return edge
         End Function
 
         Public Sub CreateNodes(iDataList As List(Of NodeData))
