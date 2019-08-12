@@ -55,7 +55,7 @@ Public Class TrainingSet
         Me.targetID = sample.ID
     End Sub
 
-    Friend Sub New()
+    Public Sub New()
     End Sub
 
     Public Overrides Function ToString() As String

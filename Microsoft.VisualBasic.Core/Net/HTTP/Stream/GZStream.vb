@@ -51,7 +51,7 @@ Namespace Net.Http
     ''' 请注意，这个模块是处理http请求或者响应之中的gzip压缩的数据，
     ''' 对于zip压缩的数据需要使用<see cref="ZipStreamExtensions"/>模块之中的帮助函数来完成
     ''' </summary>
-    Public Module GZipStream
+    Public Module GZipStreamHandler
 
         ''' <summary>
         ''' 如果得到的一个gzip压缩的数据块头部没有magic number的话，则使用这个方法手动的添加标记后再做解压缩
@@ -99,12 +99,19 @@ Namespace Net.Http
         ''' <returns></returns>
         <Extension>
         Public Function GZipStream(stream As Stream) As MemoryStream
-            Dim ms As New MemoryStream
+            Dim ms As New MemoryStream()
 
-            Using gz As New Compression.GZipStream(ms, CompressionMode.Compress)
+            Using gz As New GZipStream(ms, CompressionMode.Compress)
+                Call stream.Seek(Scan0, SeekOrigin.Begin)
                 Call stream.CopyTo(gz)
-                Return ms
             End Using
+
+            ' we create the data array here once the GZIP stream has been disposed
+            Dim data = ms.ToArray()
+            ms.Dispose()
+            ms = New MemoryStream(data)
+
+            Return ms
         End Function
 
         ''' <summary>
