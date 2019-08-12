@@ -263,7 +263,8 @@ Namespace ApplicationServices.Zip
         <Extension>
         Private Sub AppendZip(zipFile As ZipArchive, files As IEnumerable(Of String), fileOverwrite As Overwrite, compression As CompressionLevel)
             For Each path As String In files
-                Dim fileInZip = (From f In zipFile.Entries Where f.Name = IO.Path.GetFileName(path)).FirstOrDefault()
+                Dim pathFileName = IO.Path.GetFileName(path)
+                Dim fileInZip = (From f In zipFile.Entries Where f.Name = pathFileName).FirstOrDefault()
 
                 Select Case fileOverwrite
                     Case Overwrite.Always
@@ -274,7 +275,7 @@ Namespace ApplicationServices.Zip
                         End If
 
                         'Adds the file to the archive
-                        zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
+                        zipFile.CreateEntryFromFile(path, pathFileName, compression)
 
                     Case Overwrite.IfNewer
 

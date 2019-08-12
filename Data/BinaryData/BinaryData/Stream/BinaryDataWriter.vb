@@ -621,4 +621,8 @@ Public Class BinaryDataWriter
         Buffer.BlockCopy(Decimal.GetBits(value), 0, bytes, 0, Marshal.SizeOf(GetType(Decimal)))
         Return bytes
     End Function
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
+    End Sub
 End Class
