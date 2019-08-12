@@ -6,6 +6,7 @@ Module HalfTest
 
     Sub Main()
 
+        Call MathTest()
         Call memoryTest()
 
         Dim one As Half = 1.01!
@@ -30,20 +31,43 @@ Module HalfTest
         Pause()
     End Sub
 
+    Sub MathTest()
+        Dim raw As Double() = 3.0.Replicate(10).AsList + 0.000000000001.Replicate(5000000)
+        Dim t1, t2, t3 As Long
+
+        Dim vec As New Vector(raw)
+        Dim half As New HalfVector(raw)
+        Dim start = App.ElapsedMilliseconds
+
+        Dim result = (Math.E ^ (-1 * (vec + 2))).Sum
+        t1 = App.ElapsedMilliseconds - start
+
+        start = App.ElapsedMilliseconds
+        Dim resultHalf = (Math.E ^ (-1 * (half + 2))).Sum
+        t2 = App.ElapsedMilliseconds - start
+
+
+        Call Console.WriteLine($"result1={result}, {t1}ms")
+        Call Console.WriteLine($"result2={resultHalf}, {t2}ms")
+    End Sub
+
     Sub memoryTest()
 
         Dim raw As Double() = 200.0.Replicate(10).AsList + 0.000000000001.Replicate(5000000)
         Dim start = App.ElapsedMilliseconds
         Dim t1, t2, t3 As Long
 
-
+        start = App.ElapsedMilliseconds
         Dim vector As New Vector(raw)
 
         t1 = App.ElapsedMilliseconds - start
 
+        start = App.ElapsedMilliseconds
         Dim sparse As New SparseVector(raw)
 
         t2 = App.ElapsedMilliseconds - start
+
+        start = App.ElapsedMilliseconds
         Dim halfs As New HalfVector(raw)
 
         t3 = App.ElapsedMilliseconds - start
