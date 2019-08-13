@@ -56,6 +56,12 @@ Namespace Parser
 
         Public Overloads Property value As Object
 
+        Public ReadOnly Property BSONValue As BSONValue
+            Get
+                Return BSONValue.FromValue(value)
+            End Get
+        End Property
+
         Public Sub New()
         End Sub
 

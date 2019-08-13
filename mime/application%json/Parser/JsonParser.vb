@@ -364,10 +364,10 @@ eh:
                     value &= chr
                     index += 1
                 Else
-                    Return New JsonValue(CDec(value))
+                    Return New JsonValue(CDbl(value))
                 End If
             End While
-            Return New JsonValue(CDec(value))
+            Return New JsonValue(CDbl(value))
         End Function
 
         ''' <summary>

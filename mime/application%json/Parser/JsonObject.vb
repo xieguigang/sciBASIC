@@ -87,7 +87,7 @@ Namespace Parser
             Call array.Add(key, element)
         End Sub
 
-        Public Sub Add(key$, value$)
+        Public Sub Add(key$, value As Object)
             Call array.Add(key, New JsonValue(value))
         End Sub
 

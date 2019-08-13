@@ -213,6 +213,31 @@ Public Class BSONValue
         _int64 = v
     End Sub
 
+    Public Shared Function FromValue(obj As Object) As BSONValue
+        If obj Is Nothing Then
+            Return New BSONValue
+        End If
+
+        Select Case obj.GetType
+            Case GetType(Int32)
+                Return New BSONValue(CType(obj, Int32))
+            Case GetType(Int64)
+                Return New BSONValue(CType(obj, Int64))
+            Case GetType(Byte())
+                Return New BSONValue(DirectCast(obj, Byte()))
+            Case GetType(DateTime)
+                Return New BSONValue(CType(obj, DateTime))
+            Case GetType(String)
+                Return New BSONValue(CType(obj, String))
+            Case GetType(Boolean)
+                Return New BSONValue(CType(obj, Boolean))
+            Case GetType(Double)
+                Return New BSONValue(CType(obj, Double))
+            Case Else
+                Throw New InvalidCastException(obj.GetType.FullName)
+        End Select
+    End Function
+
     Public Shared Operator =(a As BSONValue, b As Object) As Boolean
         Return System.[Object].ReferenceEquals(a, b)
     End Operator
