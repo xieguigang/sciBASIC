@@ -1,48 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::7607e531f0daa2eb23768dffd39c30a6, mime\application%json\Parser\JsonValue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class JsonValue
-    ' 
-    '         Properties: value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: BuildJsonString, GetStripString, Literal, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class JsonValue
+' 
+'         Properties: value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: BuildJsonString, GetStripString, Literal, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Parser
@@ -93,7 +94,13 @@ Namespace Parser
         End Function
 
         Public Overrides Function BuildJsonString() As String
-            Return Scripting.ToString(value, "null")
+            If value Is Nothing Then
+                Return "null"
+            ElseIf value.GetType Is BSONValue Then
+                Return DirectCast(value, BSONValue).ToString
+            Else
+                Return Scripting.ToString(value, "null")
+            End If
         End Function
 
         Public Overrides Function ToString() As String

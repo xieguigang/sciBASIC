@@ -15,8 +15,16 @@ Module bsontest
         where("USA") = New JsonValue("America")
         obj("bytes") = New JsonValue(New Byte(128) {})
 
-        Using file As Stream = "./test.bson".Open
+        Dim bsonPath = "./test.bson"
+
+        Using file As Stream = bsonPath.Open
             Call BSON.WriteBuffer(obj, buffer:=file)
         End Using
+
+        Dim load = BSON.Load(bsonPath.ReadBinary)
+
+        Dim json = load.BuildJsonString
+
+        Pause()
     End Sub
 End Module

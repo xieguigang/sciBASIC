@@ -1,5 +1,6 @@
 ﻿
 Imports System.Text
+Imports Microsoft.VisualBasic.Net.Http
 
 Public Class BSONValue
 
@@ -212,6 +213,29 @@ Public Class BSONValue
         valueType = ValueType.Int64
         _int64 = v
     End Sub
+
+    Public Overrides Function ToString() As String
+        Select Case valueType
+            Case ValueType.Binary
+                Return $"""{binaryValue.ToBase64String}"""
+            Case ValueType.Boolean
+                Return boolValue.ToString.ToLower
+            Case ValueType.Double
+                Return doubleValue
+            Case ValueType.Int32
+                Return int32Value
+            Case ValueType.Int64
+                Return int64Value
+            Case ValueType.None
+                Return "null"
+            Case ValueType.String
+                Return $"""{stringValue}"""
+            Case ValueType.UTCDateTime
+                Return $"""{dateTimeValue.ToString}"""
+            Case Else
+                Throw New Exception(valueType.Description)
+        End Select
+    End Function
 
     Public Shared Function FromValue(obj As Object) As BSONValue
         If obj Is Nothing Then
