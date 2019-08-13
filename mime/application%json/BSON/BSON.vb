@@ -89,18 +89,16 @@ Public Class BSON
             Return New JsonValue(New BSONValue(mBinaryReader.ReadInt64()))
         End If
 
-
         Throw New Exception(String.Format("Don't know elementType={0}", elementType))
     End Function
 
     Private Function decodeDocument() As JsonObject
         Dim length As Integer = mBinaryReader.ReadInt32() - 4
-
         Dim obj As New JsonObject()
-
         Dim i As Integer = CInt(mBinaryReader.BaseStream.Position)
+
         While mBinaryReader.BaseStream.Position < i + length - 1
-            Dim name As String
+            Dim name As String = Nothing
             Dim value As JsonElement = decodeElement(name)
 
             obj.Add(name, value)

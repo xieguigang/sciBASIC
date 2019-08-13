@@ -56,15 +56,9 @@ Namespace Parser
     Public Class JsonObject : Inherits JsonModel
         Implements IEnumerable(Of NamedValue(Of JsonElement))
 
-        Dim array As New Dictionary(Of String, JsonElement)
+        ReadOnly array As New Dictionary(Of String, JsonElement)
 
-        Public Sub Add(key As String, element As JsonElement)
-            Call array.Add(key, element)
-        End Sub
-
-        Public Sub Add(key$, value$)
-            Call array.Add(key, New JsonValue(value))
-        End Sub
+#Region "Indexer"
 
         Default Public Overloads Property Item(key As String) As JsonElement
             Get
@@ -87,6 +81,15 @@ Namespace Parser
                 Me(key.Value) = value
             End Set
         End Property
+#End Region
+
+        Public Sub Add(key As String, element As JsonElement)
+            Call array.Add(key, element)
+        End Sub
+
+        Public Sub Add(key$, value$)
+            Call array.Add(key, New JsonValue(value))
+        End Sub
 
         Public Function Remove(key As String) As Boolean
             Return array.Remove(key)
