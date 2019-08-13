@@ -1,4 +1,5 @@
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.MIME.application.json.Parser
 
@@ -13,18 +14,15 @@ Public Class BSON
         Return bson.decodeDocument()
     End Function
 
-    Public Shared Function Dump(obj As JsonObject) As Byte()
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Sub WriteBuffer(obj As JsonObject, buffer As Stream)
+        Call New BSON().encodeDocument(buffer, obj)
+    End Sub
 
-        Dim bson As New BSON()
-        Dim ms As New MemoryStream()
-
-        bson.encodeDocument(ms, obj)
-
-        Dim buf As Byte() = New Byte(ms.Position - 1) {}
-        ms.Seek(0, SeekOrigin.Begin)
-        ms.Read(buf, 0, buf.Length)
-
-        Return buf
+    Public Shared Function GetBuffer(obj As JsonObject) As MemoryStream
+        Dim ms As New MemoryStream
+        WriteBuffer(obj, buffer:=ms)
+        Return ms
     End Function
 
     Private Sub New(Optional buf As Byte() = Nothing)
