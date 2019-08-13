@@ -1,12 +1,13 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.json.Parser
 
 Public Class BSON
+
     Private mMemoryStream As MemoryStream
     Private mBinaryReader As BinaryReader
-    Private mBinaryWriter As BinaryWriter
 
     Public Shared Function Load(buf As Byte()) As JsonObject
         Dim bson As New BSON(buf)
@@ -29,9 +30,6 @@ Public Class BSON
         If buf IsNot Nothing Then
             mMemoryStream = New MemoryStream(buf)
             mBinaryReader = New BinaryReader(mMemoryStream)
-        Else
-            mMemoryStream = New MemoryStream()
-            mBinaryWriter = New BinaryWriter(mMemoryStream)
         End If
     End Sub
 
@@ -115,13 +113,12 @@ Public Class BSON
 
     Private Function decodeArray() As JsonArray
         Dim obj As JsonObject = decodeDocument()
-
-        Dim i As Integer = 0
+        Dim i As VBInteger = 0
         Dim array As New JsonArray()
-        While obj.ContainsKey(Convert.ToString(i))
-            array.Add(obj(Convert.ToString(i)))
+        Dim key As Value(Of String) = ""
 
-            i += 1
+        While obj.ContainsKey(key = Convert.ToString(++i))
+            Call array.Add(obj(key))
         End While
 
         Return array
@@ -135,8 +132,8 @@ Public Class BSON
     End Function
 
     Private Function decodeCString() As String
-
         Dim ms = New MemoryStream()
+
         While True
             Dim buf As Byte = CByte(mBinaryReader.ReadByte())
             If buf = 0 Then
