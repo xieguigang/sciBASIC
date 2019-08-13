@@ -155,7 +155,7 @@ Public Class BSON
                 encodeCString(ms, name)
                 encodeArray(ms, TryCast(v, JsonArray))
             Case GetType(JsonValue)
-                Dim value As BSONValue = DirectCast(v, JsonValue).value
+                Dim value As BSONValue = DirectCast(v, JsonValue).BSONValue
 
                 Select Case value.valueType
                     Case ValueType.[Double]
@@ -197,7 +197,7 @@ Public Class BSON
         End Select
     End Sub
 
-    Private Sub encodeDocument(ms As MemoryStream, obj As JsonObject)
+    Private Sub encodeDocument(ms As Stream, obj As JsonObject)
 
         Dim dms As New MemoryStream()
         For Each str As String In obj.Keys

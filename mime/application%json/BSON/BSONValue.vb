@@ -233,6 +233,8 @@ Public Class BSONValue
                 Return New BSONValue(CType(obj, Boolean))
             Case GetType(Double)
                 Return New BSONValue(CType(obj, Double))
+            Case GetType(BSONValue)
+                Return obj
             Case Else
                 Throw New InvalidCastException(obj.GetType.FullName)
         End Select
