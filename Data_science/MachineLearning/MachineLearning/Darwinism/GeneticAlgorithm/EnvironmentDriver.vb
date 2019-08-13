@@ -134,8 +134,9 @@ Namespace Darwinism.GAF
                             ' do not add the local best result when reset the GA system
                             ' so add base is set to false
                             Dim newPop As Population(Of Chr) = core.Best.InitialPopulation(
-                                populationSize:=core.population.initialSize,
-                                parallel:=True,
+                                population:=New Population(Of Chr)(core.populationCreator(), core.population.Pcompute) With {
+                                    .capacitySize = core.population.capacitySize
+                                },
                                 addBase:=False
                             )
                             Dim newCore As New GeneticAlgorithm(Of Chr)(

@@ -70,7 +70,6 @@ Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
     ''' 约束变异所产生的值的上限
     ''' </summary>
     Protected ReadOnly truncate As Double
-    Protected ReadOnly rangePositive As Boolean
 
     ''' <summary>
     ''' 突变程度
@@ -85,12 +84,11 @@ Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
 
     Public Const CrossOverRate As Double = 30
 
-    Sub New(chr As T, mutationRate As Double, truncate As Double, rangePositive As Boolean)
+    Sub New(chr As T, mutationRate As Double, truncate As Double)
         Me.chromosome = chr
         Me.width = chr.Width
         Me.MutationRate = mutationRate
         Me.truncate = truncate
-        Me.rangePositive = rangePositive
     End Sub
 
     ''' <summary>
@@ -106,9 +104,7 @@ Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
     Public Function CalculateError(status As Vector, target As Double) As Double Implements IGridFitness.CalculateError
         Dim predicts = Evaluate(status)
 
-        If rangePositive AndAlso predicts < 0 Then
-            Return target
-        ElseIf predicts.IsNaNImaginary Then
+        If predicts.IsNaNImaginary Then
             Return Double.MaxValue
         Else
             Return Math.Abs(predicts - target)

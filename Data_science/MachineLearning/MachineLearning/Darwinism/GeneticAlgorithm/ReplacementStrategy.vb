@@ -120,7 +120,7 @@ Namespace Darwinism.GAF.ReplacementStrategy
         ''' <returns></returns>
         Public Function newPopulation(newPop As Population(Of Chr), GA As GeneticAlgorithm(Of Chr)) As Population(Of Chr) Implements IStrategy(Of Chr).newPopulation
             Call newPop.SortPopulationByFitness(GA.chromosomesComparator) ' 通过fitness排序来进行择优
-            Call newPop.Trim(newPop.initialSize)                          ' 剪裁掉后面的对象，达到淘汰的效果
+            Call newPop.Trim(newPop.capacitySize)                         ' 剪裁掉后面的对象，达到淘汰的效果
 
             Return newPop
         End Function
@@ -151,11 +151,13 @@ Namespace Darwinism.GAF.ReplacementStrategy
             Dim x, y As Chr
 
             ' 通过fitness排序来进行择优
+            ' 只选择最好的前10个染色体
+            ' 然后剩余的成员通过这些被保留下来的染色体间的交叉来生成
             Call newPop.SortPopulationByFitness(GA.chromosomesComparator)
-            Call newPop.Trim(newPop.initialSize * 0.1)
+            Call newPop.Trim(newPop.capacitySize * 0.1)
 
             ' 对剩下的精英个体进行杂交,补充种群的成员
-            Do While newPop.Size < newPop.initialSize
+            Do While newPop.Size < newPop.capacitySize
                 x = newPop.Random(ranf)
                 y = newPop.Random(ranf)
 

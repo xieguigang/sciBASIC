@@ -43,7 +43,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Parser
 
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     ''' <summary>
     ''' Parse json string

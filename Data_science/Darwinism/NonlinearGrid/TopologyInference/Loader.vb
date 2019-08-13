@@ -81,7 +81,7 @@ Public Module Loader
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function EmptyGridSystem(width As Integer, Optional cor As Vector = Nothing, Optional power As Vector = Nothing, Optional bigData As Boolean = False) As [Variant](Of GridSystem, SparseGridSystem)
-        Dim A As Vector = cor Or New Vector(0.01, width).AsDefault
+        Dim A As Vector = cor Or New Vector(1, width).AsDefault
 
         If bigData Then
             Dim correlationMatrix = width _
@@ -97,7 +97,7 @@ Public Module Loader
                             Dim powerFactor As Vector
 
                             If power Is Nothing Then
-                                powerFactor = Vector.rand(0, 10, width)
+                                powerFactor = Vector.rand(-1, 0, width)
                             Else
                                 powerFactor = New Vector(power)
                             End If
@@ -132,7 +132,7 @@ Public Module Loader
                             Dim powerFactor As Vector
 
                             If power Is Nothing Then
-                                powerFactor = Vector.rand(0, 10, width)
+                                powerFactor = Vector.rand(-1, 0, width)
                             Else
                                 powerFactor = New Vector(power)
                             End If

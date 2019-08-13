@@ -163,7 +163,12 @@ Namespace Darwinism
             ' linked list that has our population inside
 
             Dim bestFit# = Integer.MaxValue
-            Dim fitnessFunction As Func(Of Individual, Boolean, Double) = AddressOf New FitnessPool(Of Individual)(target, capacity:=PopulationSize * 100).Fitness
+            Dim fitnessFunction As Func(Of Individual, Boolean, Double) = AddressOf New FitnessPool(Of Individual)(
+                cacl:=target,
+                capacity:=PopulationSize * 100,
+                toString:=Function(id) id.ToString
+            ).Fitness
+
             Dim i As VBInteger = Scan0
 
             If randomGenerator Is Nothing Then
@@ -187,7 +192,7 @@ Namespace Darwinism
  _
                         From subPop As Individual()
                         In subPopulates.AsParallel
-                        Select subPop.__subPopulationEvolute(
+                        Select subPop.subPopulationEvolute(
                             bestFit:=bestFit,
                             CR:=CR,
                             F:=F,
@@ -195,7 +200,8 @@ Namespace Darwinism
                             iteratePrints:=iteratePrints,
                             iterates:=i,
                             N:=N,
-                            randomGenerator:=randomGenerator)
+                            randomGenerator:=randomGenerator
+                        )
 
                     bestFit = LQuery.Min(Function(x) x.Tag)
                     population = LQuery _
@@ -215,7 +221,7 @@ Namespace Darwinism
 
                 Do While (++i < maxIterations)
                     Dim iter As DoubleTagged(Of Individual()) =
-                        population.__subPopulationEvolute(
+                        population.subPopulationEvolute(
                         F:=F,
                         bestFit:=bestFit,
                         CR:=CR,
@@ -264,7 +270,7 @@ Namespace Darwinism
         ''' <param name="fitnessFunction"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function __subPopulationEvolute(Of Individual As IIndividual)(
+        Private Function subPopulationEvolute(Of Individual As IIndividual)(
                                                    population As Individual(),
                                                    F#, N%, CR#,
                                                    bestFit#,

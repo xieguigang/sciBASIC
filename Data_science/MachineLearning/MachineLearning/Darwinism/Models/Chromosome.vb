@@ -109,6 +109,7 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <returns></returns>
         Property MutationRate As Double
+        ReadOnly Property UniqueHashKey As String
 
         ''' <summary>
         ''' In genetic algorithms, crossover is a genetic operator used to vary the programming 

@@ -84,7 +84,7 @@ Namespace NeuralNetwork.Accelerator
         <Extension>
         Public Sub RunGAAccelerator(network As Network, trainingSet As Sample(), Optional populationSize% = 1000, Optional iterations% = 10000)
             Dim synapses = network.GetSynapseGroups
-            Dim population As Population(Of WeightVector) = New WeightVector(synapses).InitialPopulation(populationSize)
+            Dim population As Population(Of WeightVector) = New WeightVector(synapses).InitialPopulation(New Population(Of WeightVector)(New PopulationList(Of WeightVector), parallel:=True) With {.capacitySize = populationSize})
             Dim fitness As Fitness(Of WeightVector) = New Fitness(network, synapses, trainingSet)
             Dim ga As New GeneticAlgorithm(Of WeightVector)(population, fitness)
             Dim engine As New EnvironmentDriver(Of WeightVector)(ga, Sub(null, nullErr)
@@ -118,6 +118,11 @@ Namespace NeuralNetwork.Accelerator
         Shared ReadOnly random As New Random
         ReadOnly keyCache As New Md5HashProvider
         Public Property MutationRate As Double Implements Chromosome(Of WeightVector).MutationRate
+        Public ReadOnly Property UniqueHashKey As String Implements Chromosome(Of WeightVector).UniqueHashKey
+            Get
+                Return ToString()
+            End Get
+        End Property
 
         Sub New(Optional synapses As NamedCollection(Of Synapse)() = Nothing)
             If Not synapses Is Nothing Then

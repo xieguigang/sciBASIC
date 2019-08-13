@@ -448,6 +448,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Darwinism\GeneticAlgorithm\Population\Delegates.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Population\Collection.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\ReplacementStrategy.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\EnvironmentDriver.vb" />
     <Compile Include="DataSet\NamespaceDoc.vb" />
@@ -458,7 +460,7 @@
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\MemoryDump.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb" />
-    <Compile Include="Darwinism\GeneticAlgorithm\Population.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Population\Population.vb" />
     <Compile Include="Darwinism\Models\Chromosome.vb" />
     <Compile Include="Darwinism\Models\FitnessPool.vb" />
     <Compile Include="Extensions.vb" />

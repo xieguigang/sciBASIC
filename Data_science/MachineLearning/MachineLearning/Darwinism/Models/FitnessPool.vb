@@ -58,17 +58,13 @@ Namespace Darwinism.Models
     ''' <typeparam name="Individual"></typeparam>
     Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
-        Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
-
-        Public ReadOnly Property evaluateFitness As Fitness(Of Individual)
-
         ''' <summary>
         ''' Get unique id of each genome
         ''' </summary>
         Protected Friend indivToString As Func(Of Individual, String)
         Protected Friend maxCapacity%
+        Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
 
-        Friend Shared ReadOnly objToString As New [Default](Of Func(Of Individual, String))(AddressOf Scripting.ToString)
         Friend Shared ReadOnly defaultCacheSize As [Default](Of Integer) = 10000
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
@@ -77,15 +73,17 @@ Namespace Darwinism.Models
             End Get
         End Property
 
+        Public ReadOnly Property evaluateFitness As Fitness(Of Individual)
+
         ''' <summary>
         ''' 因为这个缓存对象是默认通过``ToString``方法来生成键名的，所以假设<paramref name="toString"/>参数是空值的话，则必须要重写
         ''' 目标<typeparamref name="Individual"/>的``ToString``方法
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
         ''' <param name="toString">Obj to dictionary key</param>
-        Sub New(cacl As Fitness(Of Individual), capacity%, Optional toString As Func(Of Individual, String) = Nothing)
+        Sub New(cacl As Fitness(Of Individual), capacity%, toString As Func(Of Individual, String))
             evaluateFitness = cacl
-            indivToString = toString Or objToString
+            indivToString = toString
             maxCapacity = capacity Or defaultCacheSize
 
             If capacity <= 0 AndAlso cacl.Cacheable Then

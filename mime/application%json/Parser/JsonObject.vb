@@ -111,9 +111,9 @@ Namespace Parser
         Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of JsonElement)) Implements IEnumerable(Of NamedValue(Of JsonElement)).GetEnumerator
             For Each kp As KeyValuePair(Of String, JsonElement) In array
                 Yield New NamedValue(Of JsonElement) With {
-                .Name = kp.Key,
-                .Value = kp.Value
-            }
+                    .Name = kp.Key,
+                    .Value = kp.Value
+                }
             Next
         End Function
 

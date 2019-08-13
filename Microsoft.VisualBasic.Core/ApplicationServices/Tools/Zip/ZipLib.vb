@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::d1c59b3d414151d828ccee637dc6b49d, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\ZipLib.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ZipLib
-    ' 
-    '         Function: IsADirectoryEntry, IsSourceFolderZip
-    ' 
-    '         Sub: AddToArchive, AppendZip, DirectoryArchive, FileArchive
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ZipLib
+' 
+'         Function: IsADirectoryEntry, IsSourceFolderZip
+' 
+'         Sub: AddToArchive, AppendZip, DirectoryArchive, FileArchive
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -195,9 +196,10 @@ Namespace ApplicationServices.Zip
 
             'Identifies the mode we will be using - the default is Create
             Dim mode As ZipArchiveMode = ZipArchiveMode.Create
-
             'Determines if the zip file even exists
             Dim archiveExists As Boolean = IO.File.Exists(archiveFullName)
+
+            Call archiveFullName.ParentPath.MkDIR
 
             'Figures out what to do based upon our specified overwrite method
             Select Case action
@@ -258,6 +260,15 @@ Namespace ApplicationServices.Zip
                     Call zipFile.AppendZip(files, fileOverwrite, compression)
                 End If
             End Using
+        End Sub
+
+        <Extension>
+        Public Sub DeleteItems(zip As ZipArchive, itemNames As Index(Of String))
+            For Each file As ZipArchiveEntry In zip.Entries.ToArray
+                If file.Name Like itemNames Then
+                    Call file.Delete()
+                End If
+            Next
         End Sub
 
         <Extension>

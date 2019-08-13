@@ -82,6 +82,7 @@ Namespace Darwinism.GAF
 
         Friend ReadOnly chromosomesComparator As FitnessPool(Of Chr)
         Friend ReadOnly seeds As IRandomSeeds
+        Friend ReadOnly populationCreator As PopulationCollectionCreator(Of Chr)
 
         ''' <summary>
         ''' 因为在迭代的过程中，旧的种群会被新的种群所替代
@@ -113,6 +114,7 @@ Namespace Darwinism.GAF
         Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
 
         Shared ReadOnly randfSeeds As New [Default](Of IRandomSeeds)(Function() randf.seeds)
+        Shared ReadOnly createList As New [Default](Of PopulationCollectionCreator(Of Chr))(Function() New PopulationList(Of Chr))
 
         ''' <summary>
         ''' 
@@ -125,19 +127,23 @@ Namespace Darwinism.GAF
         ''' <param name="cacheSize">
         ''' -1 means no cache
         ''' </param>
-        ''' <param name="replacementStrategy">
-        ''' Strategy for new population replace the old population.
+        ''' <param name="replacementStrategy">Strategy for new population replace the old population.
         ''' </param>
+        ''' <param name="createPopulation">By default is create with <see cref="PopulationList(Of Chr)"/></param>
+        ''' <remarks>
+        ''' 
+        ''' </remarks>
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr),
                        Optional replacementStrategy As Strategies = Strategies.Naive,
                        Optional seeds As IRandomSeeds = Nothing,
                        Optional cacheSize% = 10000,
-                       Optional toString As Func(Of Chr, String) = Nothing)
+                       Optional createPopulation As PopulationCollectionCreator(Of Chr) = Nothing)
 
             Me.population = population
             Me.seeds = seeds Or randfSeeds
-            Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize, toString:=toString)
+            Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize, toString:=Function(c) c.UniqueHashKey)
             Me.popStrategy = replacementStrategy.GetStrategy(Of Chr)
+            Me.populationCreator = createPopulation Or createList
 
             If population.parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
@@ -158,9 +164,9 @@ Namespace Darwinism.GAF
         Public Sub Evolve()
             Dim i% = 0
             Dim parentPopulationSize As Integer = population.Size
-            Dim newPopulation As New Population(Of Chr)(population.Pcompute) With {
+            Dim newPopulation As New Population(Of Chr)(populationCreator(), population.Pcompute) With {
                 .parallel = population.parallel,
-                .initialSize = population.initialSize
+                .capacitySize = population.capacitySize
             }
 
             Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)
