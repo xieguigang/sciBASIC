@@ -14,6 +14,7 @@ Module bsontest
         where("Korea") = New JsonValue("Asia")
         where("USA") = New JsonValue("America")
         obj("bytes") = New JsonValue(New Byte(128) {})
+        obj("yes?") = New JsonValue(True)
 
         Dim bsonPath = "./test.bson"
 
