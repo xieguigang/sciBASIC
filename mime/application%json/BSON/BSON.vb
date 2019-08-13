@@ -37,19 +37,19 @@ Public Class BSON
         End If
     End Sub
 
-    Private Function decodeElement(ByRef name As String) As BSONValue
+    Private Function decodeElement(ByRef name As String) As JsonElement
         Dim elementType As Byte = mBinaryReader.ReadByte()
 
         If elementType = &H1 Then
             ' Double
             name = decodeCString()
 
-            Return New BSONValue(mBinaryReader.ReadDouble())
+            Return New JsonValue(New BSONValue(mBinaryReader.ReadDouble()))
         ElseIf elementType = &H2 Then
             ' String
             name = decodeCString()
 
-            Return New BSONValue(decodeString())
+            Return New JsonValue(New BSONValue(decodeString()))
         ElseIf elementType = &H3 Then
             ' Document
             name = decodeCString()
@@ -67,30 +67,30 @@ Public Class BSON
             Dim binaryType As Byte = mBinaryReader.ReadByte()
 
 
-            Return New BSONValue(mBinaryReader.ReadBytes(length))
+            Return New JsonValue(New BSONValue(mBinaryReader.ReadBytes(length)))
         ElseIf elementType = &H8 Then
             ' Boolean
             name = decodeCString()
 
-            Return New BSONValue(mBinaryReader.ReadBoolean())
+            Return New JsonValue(New BSONValue(mBinaryReader.ReadBoolean()))
         ElseIf elementType = &H9 Then
             ' DateTime
             name = decodeCString()
             Dim time As Int64 = mBinaryReader.ReadInt64()
-            Return New BSONValue(New DateTime(1970, 1, 1, 0, 0, 0,
-                DateTimeKind.Utc) + New TimeSpan(time * 10000))
+            Return New JsonValue(New BSONValue(New DateTime(1970, 1, 1, 0, 0, 0,
+                DateTimeKind.Utc) + New TimeSpan(time * 10000)))
         ElseIf elementType = &HA Then
             ' None
             name = decodeCString()
-            Return New BSONValue()
+            Return New JsonValue(New BSONValue())
         ElseIf elementType = &H10 Then
             ' Int32
             name = decodeCString()
-            Return New BSONValue(mBinaryReader.ReadInt32())
+            Return New JsonValue(New BSONValue(mBinaryReader.ReadInt32()))
         ElseIf elementType = &H12 Then
             ' Int64
             name = decodeCString()
-            Return New BSONValue(mBinaryReader.ReadInt64())
+            Return New JsonValue(New BSONValue(mBinaryReader.ReadInt64()))
         End If
 
 
@@ -105,7 +105,7 @@ Public Class BSON
         Dim i As Integer = CInt(mBinaryReader.BaseStream.Position)
         While mBinaryReader.BaseStream.Position < i + length - 1
             Dim name As String
-            Dim value As BSONValue = decodeElement(name)
+            Dim value As JsonElement = decodeElement(name)
 
             obj.Add(name, value)
         End While
@@ -151,60 +151,57 @@ Public Class BSON
     End Function
 
 
-    Private Sub encodeElement(ms As MemoryStream, name As String, v As BSONValue)
-        Select Case v.valueType
-            Case ValueType.[Double]
-                ms.WriteByte(&H1)
-                encodeCString(ms, name)
-                encodeDouble(ms, v.doubleValue)
-                Return
-            Case ValueType.[String]
-                ms.WriteByte(&H2)
-                encodeCString(ms, name)
-                encodeString(ms, v.stringValue)
-                Return
-            Case ValueType.[Object]
+    Private Sub encodeElement(ms As MemoryStream, name As String, v As JsonElement)
+        Select Case v.GetType
+            Case GetType(JsonObject)
                 ms.WriteByte(&H3)
                 encodeCString(ms, name)
                 encodeDocument(ms, TryCast(v, JsonObject))
-                Return
-            Case ValueType.Array
+            Case GetType(JsonArray)
                 ms.WriteByte(&H4)
                 encodeCString(ms, name)
                 encodeArray(ms, TryCast(v, JsonArray))
-                Return
-            Case ValueType.Binary
-                ms.WriteByte(&H5)
-                encodeCString(ms, name)
-                encodeBinary(ms, v.binaryValue)
-                Return
-            Case ValueType.[Boolean]
-                ms.WriteByte(&H8)
-                encodeCString(ms, name)
-                encodeBool(ms, v.boolValue)
-                Return
-            Case ValueType.UTCDateTime
-                ms.WriteByte(&H9)
-                encodeCString(ms, name)
-                encodeUTCDateTime(ms, v.dateTimeValue)
-                Return
-            Case ValueType.None
-                ms.WriteByte(&HA)
-                encodeCString(ms, name)
-                Return
-            Case ValueType.Int32
-                ms.WriteByte(&H10)
-                encodeCString(ms, name)
-                encodeInt32(ms, v.int32Value)
-                Return
-            Case ValueType.Int64
-                ms.WriteByte(&H12)
-                encodeCString(ms, name)
-                encodeInt64(ms, v.int64Value)
-                Return
+            Case GetType(JsonValue)
+                Dim value As BSONValue = DirectCast(v, JsonValue).value
+
+                Select Case value.valueType
+                    Case ValueType.[Double]
+                        ms.WriteByte(&H1)
+                        encodeCString(ms, name)
+                        encodeDouble(ms, value.doubleValue)
+                    Case ValueType.[String]
+                        ms.WriteByte(&H2)
+                        encodeCString(ms, name)
+                        encodeString(ms, value.stringValue)
+                    Case ValueType.Binary
+                        ms.WriteByte(&H5)
+                        encodeCString(ms, name)
+                        encodeBinary(ms, value.binaryValue)
+                    Case ValueType.[Boolean]
+                        ms.WriteByte(&H8)
+                        encodeCString(ms, name)
+                        encodeBool(ms, value.boolValue)
+                    Case ValueType.UTCDateTime
+                        ms.WriteByte(&H9)
+                        encodeCString(ms, name)
+                        encodeUTCDateTime(ms, value.dateTimeValue)
+                    Case ValueType.None
+                        ms.WriteByte(&HA)
+                        encodeCString(ms, name)
+                    Case ValueType.Int32
+                        ms.WriteByte(&H10)
+                        encodeCString(ms, name)
+                        encodeInt32(ms, value.int32Value)
+                    Case ValueType.Int64
+                        ms.WriteByte(&H12)
+                        encodeCString(ms, name)
+                        encodeInt64(ms, value.int64Value)
+                    Case Else
+                        Throw New InvalidCastException
+                End Select
+            Case Else
+                Throw New NotImplementedException
         End Select
-
-
     End Sub
 
     Private Sub encodeDocument(ms As MemoryStream, obj As JsonObject)
