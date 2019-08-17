@@ -109,8 +109,8 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
         ''' 当这个函数遇到完全没有重叠的序列片段的时候，是会直接将这个不重叠的片段接到SCS的最末尾的
         ''' </remarks>
         <Extension>
-        Public Function ShortestCommonSuperString(Seqs As List(Of String)) As String
-            Dim l As Integer = Seqs.Count
+        Public Function ShortestCommonSuperString(seqs As List(Of String)) As String
+            Dim l As Integer = seqs.Count
 
             Do While l > 1
                 Dim currMax As Integer = Integer.MinValue
@@ -119,8 +119,8 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
 
                 For j As Integer = 0 To l - 1
                     For k As Integer = j + 1 To l - 1
-                        Dim str As String = Seqs(j)
-                        Dim b As String = Seqs(k)
+                        Dim str As String = seqs(j)
+                        Dim b As String = seqs(k)
 
                         If str.Contains(b) Then
                             If b.Length > currMax Then
@@ -139,6 +139,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
                         Else
                             ' find max common prefix and suffix
                             Dim maxPrefixMatch = MaxPrefixLength(str, b)
+
                             If maxPrefixMatch > currMax Then
                                 finalStr = str + b.Substring(maxPrefixMatch)
                                 currMax = maxPrefixMatch
@@ -147,6 +148,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
                             End If
 
                             Dim maxSuffixMatch = MaxPrefixLength(b, str)
+
                             If maxSuffixMatch > currMax Then
                                 finalStr = b + str.Substring(maxSuffixMatch)
                                 currMax = maxSuffixMatch
@@ -158,11 +160,11 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
                 Next
 
                 l -= 1
-                Seqs(p) = finalStr
-                Seqs(q) = Seqs(l)
+                seqs(p) = finalStr
+                seqs(q) = seqs(l)
             Loop
 
-            Return Seqs.First
+            Return seqs.First
         End Function
 
         Private Function MaxPrefixLength(a As String, b As String) As Integer

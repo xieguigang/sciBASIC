@@ -59,11 +59,11 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
         ''' <param name="b"></param>
         ''' <returns></returns>
         Public Function MaxLengthSubString(a As String, b As String) As String
-            Return MaxSet(a.ToArray, b.ToArray, AddressOf __equals)
+            Return MaxSet(a.ToArray, b.ToArray, AddressOf charEquals)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function __equals(a As Char, b As Char) As Boolean
+        Private Function charEquals(a As Char, b As Char) As Boolean
             Return a = b
         End Function
 
@@ -91,27 +91,27 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
 
             Dim lst As New List(Of T)
 
-            __LCS(p, a, a.Length, b.Length, lst)
+            doLCSInternal(p, a, a.Length, b.Length, lst)
 
             Call lst.Reverse()
 
             Return lst.ToArray
         End Function
 
-        Private Sub __LCS(Of T)(p()() As Char, a() As T, i As Integer, j As Integer, ByRef lst As List(Of T))
+        Private Sub doLCSInternal(Of T)(p()() As Char, a() As T, i As Integer, j As Integer, ByRef lst As List(Of T))
             If i = 0 OrElse j = 0 Then
                 Return
             End If
 
             If p(i)(j) = "-"c Then
-                __LCS(p, a, i - 1, j - 1, lst)
+                doLCSInternal(p, a, i - 1, j - 1, lst)
                 lst += a(i - 1)
 
             ElseIf p(i)(j) = "<"c Then
-                __LCS(p, a, i - 1, j, lst)
+                doLCSInternal(p, a, i - 1, j, lst)
 
             ElseIf p(i)(j) = ">"c Then
-                __LCS(p, a, i, j - 1, lst)
+                doLCSInternal(p, a, i, j - 1, lst)
             End If
         End Sub
     End Module

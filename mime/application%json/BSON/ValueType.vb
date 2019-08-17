@@ -1,12 +1,16 @@
-﻿Public Enum ValueType
-    [Double]
-    [String]
-    Array
-    Binary
-    [Boolean]
-    UTCDateTime
-    None
-    Int32
-    Int64
-    [Object]
-End Enum
+﻿Namespace BSON
+
+    Public Enum ValueType As Byte
+        [Double] = &H1
+        [String] = &H2
+        Document = &H3
+        Array = &H4
+        Binary = &H5
+        [Boolean] = &H8
+        UTCDateTime = &H9
+        None = &HA
+        Int32 = &H10
+        Int64 = &H12
+        [Object] = Document
+    End Enum
+End Namespace

@@ -43,13 +43,14 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-Namespace Parser
+Namespace Javascript
 
     ''' <summary>
-    ''' Primitive value.
+    ''' The primitive value type in javascript.
+    ''' 
     ''' (请注意，假若是字符串的话，值是未经过处理的原始字符串，可能会含有转义字符，
     ''' 则这个时候还需要使用<see cref="GetStripString"/>得到最终的字符串)
     ''' </summary>

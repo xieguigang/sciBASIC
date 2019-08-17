@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Parser
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Module bsontest
 

@@ -2018,6 +2018,17 @@ Namespace Math
             End With
         End Function
 
+        Public Function RMS(a#(), b#()) As Double
+            Dim sum#
+            Dim n% = a.Length
+
+            For i As Integer = 0 To n - 1
+                sum += (a(i) - b(i)) ^ 2
+            Next
+
+            Return Math.Sqrt(sum)
+        End Function
+
         ''' <summary>
         ''' ``相对标准偏差（RSD）= 标准偏差（SD）/ 计算结果的算术平均值（X）* 100%``
         ''' </summary>
