@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 
 Namespace Drawing2D
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         <Extension>
         Public Sub ShapeGlow(ByRef g As IGraphics, path As GraphicsPath, glowColor As Color, Optional glowSize! = 10)
