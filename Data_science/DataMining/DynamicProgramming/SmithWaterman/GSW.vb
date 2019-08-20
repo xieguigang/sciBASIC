@@ -135,6 +135,51 @@ Namespace SmithWaterman
 #End Region
 
         ''' <summary>
+        ''' Get the maximum value in the score matrix.
+        ''' </summary>
+        Public ReadOnly Property MaxScore() As Double
+            Get
+                Dim max As Double = 0
+
+                ' skip the first row and column
+                For i As Integer = 1 To queryLength
+                    For j As Integer = 1 To subjectLength
+                        If score(i)(j) > max Then
+                            max = score(i)(j)
+                        End If
+                    Next
+                Next
+
+                Return max
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Get the alignment score between the two input strings.
+        ''' </summary>
+        Public ReadOnly Property AlignmentScore() As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return MaxScore / NORM_FACTOR
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Return a set of Matches idenfied in Dynamic programming matrix. 
+        ''' A match is a pair of subsequences whose score is higher than the 
+        ''' preset scoreThreshold
+        ''' 
+        ''' </summary>
+        Public ReadOnly Property Matches(Optional scoreThreshold As Double = 19.9) As Match()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return GetMatches(scoreThreshold) _
+                    .OrderByDescending(Function(m) m.Score) _
+                    .ToArray
+            End Get
+        End Property
+
+        ''' <summary>
         ''' <paramref name="similarity"/>这个函数返回来的分数越高说明二者越相似
         ''' </summary>
         ''' <param name="query"></param>
@@ -151,7 +196,7 @@ Namespace SmithWaterman
             Me.similarity = similarity
             Me.ToChar = asChar
 
-            Call __buildMatrix()
+            Call buildMatrix()
         End Sub
 
         ''' <summary>
@@ -175,7 +220,7 @@ Namespace SmithWaterman
         ''' part handling the first row and column has to be
         ''' modified.
         ''' </summary>
-        Private Sub __buildMatrix()
+        Private Sub buildMatrix()
             If INDEL_SCORE >= 0 Then
                 Throw New Exception("Indel score must be negative")
             End If
@@ -227,36 +272,6 @@ Namespace SmithWaterman
                 Next
             Next
         End Sub
-
-        ''' <summary>
-        ''' Get the maximum value in the score matrix.
-        ''' </summary>
-        Public ReadOnly Property MaxScore() As Double
-            Get
-                Dim max As Double = 0
-
-                ' skip the first row and column
-                For i As Integer = 1 To queryLength
-                    For j As Integer = 1 To subjectLength
-                        If score(i)(j) > max Then
-                            max = score(i)(j)
-                        End If
-                    Next
-                Next
-
-                Return max
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Get the alignment score between the two input strings.
-        ''' </summary>
-        Public ReadOnly Property AlignmentScore() As Double
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return MaxScore / NORM_FACTOR
-            End Get
-        End Property
 
         ''' <summary>
         ''' given the bottom right corner point trace back  the top left conrner.
@@ -333,11 +348,11 @@ Namespace SmithWaterman
         Public Function GetTraceback() As Coordinate()
             Dim path As New List(Of Coordinate)
             Call path.Add(New Coordinate(queryLength, subjectLength))
-            Call __getTrackback(path, queryLength, subjectLength)
+            Call getTrackback(path, queryLength, subjectLength)
             Return path.ToArray
         End Function
 
-        Private Sub __getTrackback(ByRef path As List(Of Coordinate), i As Integer, j As Integer)
+        Private Sub getTrackback(ByRef path As List(Of Coordinate), i As Integer, j As Integer)
             If i = 0 OrElse j = 0 Then
                 Call path.Add(New Coordinate(i, j))
                 Return
@@ -365,24 +380,9 @@ Namespace SmithWaterman
             If s = 0 Then
                 Return
             Else
-                Call __getTrackback(path, i, j)
+                Call getTrackback(path, i, j)
             End If
         End Sub
-
-        ''' <summary>
-        ''' Return a set of Matches idenfied in Dynamic programming matrix. 
-        ''' A match is a pair of subsequences whose score is higher than the 
-        ''' preset scoreThreshold
-        ''' 
-        ''' </summary>
-        Public ReadOnly Property Matches(Optional scoreThreshold As Double = 19.9) As Match()
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return GetMatches(scoreThreshold) _
-                    .OrderByDescending(Function(m) m.Score) _
-                    .ToArray
-            End Get
-        End Property
 
         ''' <summary>
         ''' 返回局部最优匹配的查找结果，请注意，匹配的位置都是``从下标1开始的``！
