@@ -878,14 +878,17 @@ Public Module StringHelpers
     ''' <remarks></remarks>
     <ExportAPI("Tokens.Count", Info:="Count the string value numbers.")>
     <Extension> Public Function TokenCount(tokens As IEnumerable(Of String), Optional ignoreCase As Boolean = False) As Dictionary(Of String, Integer)
-        If Not ignoreCase Then ' 大小写敏感
+        If Not ignoreCase Then
+            ' 大小写敏感
             With From s As String
                  In tokens
                  Select s
                  Group s By s Into Count
 
                 Return .ToDictionary(Function(x) x.s,
-                                     Function(x) x.Count)
+                                     Function(x)
+                                         Return x.Count
+                                     End Function)
             End With
         Else
             Return tokens.TokenCountIgnoreCase

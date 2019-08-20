@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Linq
 Namespace Javascript
 
     ''' <summary>
-    ''' Dictionary/Array in javascript
+    ''' Dictionary/Array equivalent in javascript
     ''' </summary>
     Public Class JsonObject : Inherits JsonModel
         Implements IEnumerable(Of NamedValue(Of JsonElement))
@@ -101,6 +101,15 @@ Namespace Javascript
 
         Public Function ContainsElement(element As JsonElement) As Boolean
             Return array.ContainsValue(element)
+        End Function
+
+        ''' <summary>
+        ''' 反序列化为目标类型的对象实例
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
+        Public Function CreateObject(Of T As Class)() As T
+            Return Me.createObject(schema:=GetType(T))
         End Function
 
         Public Overrides Function ToString() As String
