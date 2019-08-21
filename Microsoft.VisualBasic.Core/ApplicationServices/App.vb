@@ -683,6 +683,14 @@ Public Module App
     End Sub
 
     ''' <summary>
+    ''' Pause and then exit the application.
+    ''' </summary>
+    Public Sub [Stop]()
+        Call App.Pause()
+        Call App.Exit()
+    End Sub
+
+    ''' <summary>
     ''' 使用<see cref="ProductSharedDIR"/>的位置会变化的，则使用本函数则会使用获取当前的模块的文件夹，即使其不是exe程序而是一个dll文件
     ''' </summary>
     ''' <param name="type"></param>

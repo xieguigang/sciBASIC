@@ -49,6 +49,8 @@ Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
+    Public Delegate Sub DuplicatedKeyHandler(Of K, V)(keyNode As BinaryTree(Of K, V), newValue As V)
+
     ''' <summary>
     ''' The AVL binary tree operator.
     ''' </summary>
@@ -80,24 +82,31 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K, value As V, Optional valueReplace As Boolean = True)
-            _root = Add(key, value, _root, valueReplace)
+            _root = Add(key, value, _root, Sub(node, newValue)
+                                               If valueReplace Then
+                                                   node.Value = newValue
+                                               End If
+                                           End Sub)
         End Sub
 
-        Public Function Add(key As K, value As V, tree As BinaryTree(Of K, V), valueReplace As Boolean) As BinaryTree(Of K, V)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Add(key As K, value As V, handleDuplicated As DuplicatedKeyHandler(Of K, V))
+            _root = Add(key, value, _root, handleDuplicated)
+        End Sub
+
+        Private Function Add(key As K, value As V, tree As BinaryTree(Of K, V), handleDuplicatedKey As DuplicatedKeyHandler(Of K, V)) As BinaryTree(Of K, V)
             If tree Is Nothing Then
                 ' 追加新的叶子节点
                 tree = New BinaryTree(Of K, V)(key, value, Nothing, views)
                 stack.Add(tree)
             Else
                 Select Case compares(key, tree.Key)
-                    Case < 0 : Call appendLeft(tree, key, value, valueReplace)
-                    Case > 0 : Call appendRight(tree, key, value, valueReplace)
+                    Case < 0 : Call appendLeft(tree, key, value, handleDuplicatedKey)
+                    Case > 0 : Call appendRight(tree, key, value, handleDuplicatedKey)
                     Case = 0
 
                         ' 将value追加到附加值中（也可对应重复元素）
-                        If valueReplace Then
-                            tree.Value = value
-                        End If
+                        Call handleDuplicatedKey(tree, value)
 
                         ' 2018.3.6
                         ' 如果是需要使用二叉树进行聚类操作，那么等于零的值可能都是同一个簇之中的
@@ -115,8 +124,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Return tree
         End Function
 
-        Private Sub appendRight(ByRef tree As BinaryTree(Of K, V), key As K, value As V, replace As Boolean)
-            tree.Right = Add(key, value, tree.Right, replace)
+        Private Sub appendRight(ByRef tree As BinaryTree(Of K, V), key As K, value As V, handleDuplicatedKey As DuplicatedKeyHandler(Of K, V))
+            tree.Right = Add(key, value, tree.Right, handleDuplicatedKey)
 
             If tree.Right.height - tree.Left.height = 2 Then
                 If compares(key, tree.Right.Key) > 0 Then
@@ -127,8 +136,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End If
         End Sub
 
-        Private Sub appendLeft(ByRef tree As BinaryTree(Of K, V), key As K, value As V, replace As Boolean)
-            tree.Left = Add(key, value, tree.Left, replace)
+        Private Sub appendLeft(ByRef tree As BinaryTree(Of K, V), key As K, value As V, handleDuplicatedKey As DuplicatedKeyHandler(Of K, V))
+            tree.Left = Add(key, value, tree.Left, handleDuplicatedKey)
 
             If tree.Left.height - tree.Right.height = 2 Then
                 If compares(key, tree.Left.Key) < 0 Then
