@@ -199,8 +199,8 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In value.SafeQuery
-                Yield x
+            For Each obj As T In value.SafeQuery
+                Yield obj
             Next
         End Function
 
@@ -210,6 +210,14 @@ Namespace ComponentModel.DataSourceModel
 
         Public Shared Widening Operator CType(tuple As (name$, value As T())) As NamedCollection(Of T)
             Return New NamedCollection(Of T)(tuple.name, tuple.value)
+        End Operator
+
+        Public Shared Operator =(list As NamedCollection(Of T), count As Integer) As Boolean
+            Return list.Count = count
+        End Operator
+
+        Public Shared Operator <>(list As NamedCollection(Of T), count As Integer) As Boolean
+            Return Not list = count
         End Operator
     End Structure
 End Namespace

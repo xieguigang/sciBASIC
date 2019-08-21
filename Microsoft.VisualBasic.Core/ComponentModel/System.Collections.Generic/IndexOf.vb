@@ -340,5 +340,21 @@ Namespace ComponentModel.Collection
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        ''' <summary>
+        ''' The element numbers in current index object is equals to given count number value?
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator =(index As Index(Of T), count%) As Boolean
+            Return index.Count = count
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator <>(index As Index(Of T), count%) As Boolean
+            Return Not index = count
+        End Operator
     End Class
 End Namespace

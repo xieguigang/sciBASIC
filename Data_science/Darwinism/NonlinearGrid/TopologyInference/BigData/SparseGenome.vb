@@ -66,8 +66,14 @@ Namespace BigData
             End Get
         End Property
 
-        Public Sub New(chr As SparseGridSystem, mutationRate As Double, truncate As Double, rangePositive As Boolean)
-            Call MyBase.New(chr, mutationRate, truncate, rangePositive)
+        Public ReadOnly Property UniqueHashKey As String Implements Chromosome(Of SparseGenome).UniqueHashKey
+            Get
+                Return chromosome.ToString
+            End Get
+        End Property
+
+        Public Sub New(chr As SparseGridSystem, mutationRate As Double, truncate As Double)
+            Call MyBase.New(chr, mutationRate, truncate)
 
             Me.MutationRate = mutationRate
         End Sub
@@ -128,12 +134,12 @@ Namespace BigData
                 'End If
             End SyncLock
 
-            Yield New SparseGenome(a, MutationRate, truncate, rangePositive)
-            Yield New SparseGenome(b, MutationRate, truncate, rangePositive)
+            Yield New SparseGenome(a, MutationRate, truncate)
+            Yield New SparseGenome(b, MutationRate, truncate)
         End Function
 
         Public Function Mutate() As SparseGenome Implements Chromosome(Of SparseGenome).Mutate
-            Dim clone As New SparseGenome(Me.chromosome.Clone, MutationRate, truncate, rangePositive)
+            Dim clone As New SparseGenome(Me.chromosome.Clone, MutationRate, truncate)
             Dim chromosome = clone.chromosome
             ' dim(A) is equals to dim(C) and is equals to dim(X)
             Dim i As Integer
@@ -199,7 +205,7 @@ Namespace BigData
         End Function
 
         Public Overrides Function Clone() As IGridFitness
-            Return New SparseGenome(chromosome, MutationRate, truncate, rangePositive)
+            Return New SparseGenome(chromosome, MutationRate, truncate)
         End Function
 
         Public Overrides Function ToString() As String

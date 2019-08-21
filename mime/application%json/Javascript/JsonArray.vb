@@ -47,7 +47,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Parser
+Namespace Javascript
 
     Public Class JsonArray : Inherits JsonModel
         Implements IEnumerable(Of JsonElement)

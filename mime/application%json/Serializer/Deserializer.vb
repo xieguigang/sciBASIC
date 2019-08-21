@@ -42,11 +42,17 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.MIME.application.json.Parser
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module Deserializer
 
+    ''' <summary>
+    ''' 进行反序列化
+    ''' </summary>
+    ''' <param name="json"></param>
+    ''' <param name="schema"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreateObject(json As JsonElement, schema As Type) As Object
         If TypeOf json Is JsonArray Then
@@ -79,8 +85,14 @@ Public Module Deserializer
         Return array
     End Function
 
+    ''' <summary>
+    ''' 反序列化为目标类型的对象实例
+    ''' </summary>
+    ''' <param name="json"></param>
+    ''' <param name="schema"></param>
+    ''' <returns></returns>
     <Extension>
-    Private Function createObject(json As JsonObject, schema As Type) As Object
+    Friend Function createObject(json As JsonObject, schema As Type) As Object
         Dim obj As Object = Activator.CreateInstance(schema)
         Dim isTable As Boolean = schema.IsInheritsFrom(GetType(DictionaryBase))
         Dim writers = schema.Schema(PropertyAccess.Writeable, PublicProperty, nonIndex:=True)

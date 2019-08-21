@@ -251,7 +251,7 @@ Module Program
     End Function
 
     <ExportAPI("/training")>
-    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /rate <default=0.1> /validateSet <validateSet.Xml> /range.positive /truncate <default=1000> /parallel <processor_plugin> /bigdata /out <output_model.Xml>]")>
+    <Usage("/training /in <trainingSet.Xml> [/model <model.XML> /popSize <default=5000> /rate <default=0.1> /validateSet <validateSet.Xml> /truncate <default=1000> /parallel <processor_plugin> /bigdata /out <output_model.Xml>]")>
     <Description("Training a grid system use GA method.")>
     <Argument("/range.positive", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
@@ -294,7 +294,6 @@ Module Program
         Dim validateSet = args("/validateSet").LoadXml(Of DataSet)(throwEx:=False)
         Dim rate As Double = args("/rate") Or 0.1
         Dim truncate As Double = args("/truncate") Or 1000.0
-        Dim allPositive As Boolean = args("/range.positive")
 
         Call $"Mutation rate = {rate}".__DEBUG_ECHO
         Call $"Population size = {popSize}".__DEBUG_ECHO
@@ -305,7 +304,6 @@ Module Program
                 factorNames:=trainingSet.NormalizeMatrix.names,
                 mutationRate:=rate,
                 truncate:=truncate,
-                allPositive:=allPositive,
                 Pcompute:=Pcompute,
                 bigdataMode:=bigDataMode
         )
@@ -317,7 +315,6 @@ Module Program
     Public Sub RunFitProcess(trainingSet As DataSet, validateSet As DataSet, outFile$, seed As GridMatrix, popSize%, factorNames$(),
                              mutationRate As Double,
                              truncate As Double,
-                             allPositive As Boolean,
                              bigdataMode As Boolean,
                              Pcompute As ParallelComputeFitness(Of Genome))
 
@@ -345,7 +342,7 @@ Module Program
                 parallel = True
             End If
 
-            Dim population As Population(Of SparseGenome) = New SparseGenome(chromesome, mutationRate, truncate, allPositive).InitialPopulation(popSize, parallel)
+            Dim population As Population(Of SparseGenome) = New SparseGenome(chromesome, mutationRate, truncate).InitialPopulation(New Population(Of SparseGenome)(New PopulationList(Of SparseGenome), parallel) With {.capacitySize = popSize})
             Call "Initialize environment".__DEBUG_ECHO
             Dim fitness As Fitness(Of SparseGenome) = New Environment(Of SparseGridSystem, SparseGenome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
             Call "Create algorithm engine".__DEBUG_ECHO
@@ -396,7 +393,7 @@ Module Program
                 parallel = Pcompute
             End If
 
-            Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate, truncate, allPositive).InitialPopulation(popSize, parallel)
+            Dim population As Population(Of Genome) = New Genome(chromesome, mutationRate, truncate).InitialPopulation(New Population(Of Genome)(New PopulationList(Of Genome), parallel) With {.capacitySize = popSize})
             Call "Initialize environment".__DEBUG_ECHO
             Dim fitness As Fitness(Of Genome) = New Environment(Of GridSystem, Genome)(trainingSet, FitnessMethods.LabelGroupAverage, validateSet)
             Call "Create algorithm engine".__DEBUG_ECHO

@@ -90,6 +90,18 @@ Namespace netCDF.Components
         Public Overrides Function ToString() As String
             Return $"{name}(size={size})"
         End Function
+
+        Public Shared ReadOnly Property [Double] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Double).FullName, .size = 8}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property [Integer] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Integer).FullName, .size = 4}
+            End Get
+        End Property
     End Structure
 
     Public Class DimensionList

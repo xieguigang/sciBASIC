@@ -69,8 +69,14 @@ Public Class Genome : Inherits GridGenome(Of GridSystem)
         End Get
     End Property
 
-    Sub New(chr As GridSystem, mutationRate As Double, truncate As Double, rangePositive As Boolean)
-        Call MyBase.New(chr, mutationRate, truncate, rangePositive)
+    Public ReadOnly Property UniqueHashKey As String Implements Chromosome(Of Genome).UniqueHashKey
+        Get
+            Return chromosome.ToString
+        End Get
+    End Property
+
+    Sub New(chr As GridSystem, mutationRate As Double, truncate As Double)
+        Call MyBase.New(chr, mutationRate, truncate)
 
         Me.MutationRate = mutationRate
     End Sub
@@ -131,12 +137,12 @@ Public Class Genome : Inherits GridGenome(Of GridSystem)
             'End If
         End SyncLock
 
-        Yield New Genome(a, MutationRate, truncate, rangePositive)
-        Yield New Genome(b, MutationRate, truncate, rangePositive)
+        Yield New Genome(a, MutationRate, truncate)
+        Yield New Genome(b, MutationRate, truncate)
     End Function
 
     Public Function Mutate() As Genome Implements Chromosome(Of Genome).Mutate
-        Dim clone As New Genome(Me.chromosome.Clone, MutationRate, truncate, rangePositive)
+        Dim clone As New Genome(Me.chromosome.Clone, MutationRate, truncate)
         Dim chromosome = clone.chromosome
         ' dim(A) is equals to dim(C) and is equals to dim(X)
         Dim i As Integer
@@ -201,8 +207,8 @@ Public Class Genome : Inherits GridGenome(Of GridSystem)
         Return clone
     End Function
 
-    Public Overrides Function Clone() As IGridFitness 
-        Return New Genome(chromosome, MutationRate, truncate, rangePositive)
+    Public Overrides Function Clone() As IGridFitness
+        Return New Genome(chromosome, MutationRate, truncate)
     End Function
 
     Public Overrides Function ToString() As String

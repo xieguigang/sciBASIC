@@ -45,6 +45,9 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Network
 
+    ''' <summary>
+    ''' Graph network api module extensions
+    ''' </summary>
     <HideModuleName> Public Module Extensions
 
         ''' <summary>
@@ -66,10 +69,17 @@ Namespace Network
                               Next
                           End Sub
 
-            Call removes(inputs, Function(e) e.V)  ' 如果是target(output)就removes掉
-            Call removes(output, Function(e) e.U)  ' 如果是source(inputs)就removes掉
+            ' 对于一个网络端点而言
+            ' 对于输入端,则该节点在网络中找不到任何一个指向该输入端的链接
+            ' 所以, 如果是target(output)就removes掉, 列表中剩余的节点就都是输入端了
+            Call removes(inputs, Function(e) e.V)
 
-            Return (inputs, output)
+            ' 对于一个网络端点而言
+            ' 对于输出端,则该节点在网络中找不到任何一个从该节点指出的链接
+            ' 所以, 如果是source(inputs)就removes掉, 列表中的剩余节点就都是输出端了
+            Call removes(output, Function(e) e.U)  ' 
+
+            Return (inputs.ToArray, output.ToArray)
         End Function
 
         ''' <summary>

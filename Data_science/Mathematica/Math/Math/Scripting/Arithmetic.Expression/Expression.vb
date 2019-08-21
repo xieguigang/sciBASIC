@@ -156,9 +156,10 @@ Namespace Scripting
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub SetVariable(name$, value#)
+        Public Function SetVariable(name$, value#) As Expression
             Call Variables.Set(name, value)
-        End Sub
+            Return Me
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AddConstant(Name As String, expr As String)

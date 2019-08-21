@@ -260,11 +260,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BSON\BSON.vb" />
+    <Compile Include="BSON\BSONValue.vb" />
+    <Compile Include="BSON\Decoder.vb" />
+    <Compile Include="BSON\Encoder.vb" />
+    <Compile Include="BSON\ValueType.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="Parser\JsonValue.vb" />
-    <Compile Include="Parser\JsonObject.vb" />
-    <Compile Include="Parser\JsonArray.vb" />
-    <Compile Include="Parser\JsonElement.vb" />
+    <Compile Include="Javascript\JsonModel.vb" />
+    <Compile Include="Javascript\NamespaceDoc.vb" />
+    <Compile Include="Javascript\JsonValue.vb" />
+    <Compile Include="Javascript\JsonObject.vb" />
+    <Compile Include="Javascript\JsonArray.vb" />
+    <Compile Include="Javascript\JsonElement.vb" />
     <Compile Include="Parser\JsonParser.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

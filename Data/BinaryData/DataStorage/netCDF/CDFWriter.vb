@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::9d82991e018e6e87fe937b34094bfabe, Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class CDFWriter
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CalcOffsets, Dimensions, getVariableHeaderBuffer, GlobalAttributes
-    ' 
-    '         Sub: (+2 Overloads) AddVariable, (+2 Overloads) Dispose, Save, writeAttributes
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class CDFWriter
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CalcOffsets, Dimensions, getVariableHeaderBuffer, GlobalAttributes
+' 
+'         Sub: (+2 Overloads) AddVariable, (+2 Overloads) Dispose, Save, writeAttributes
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -216,12 +216,22 @@ Namespace netCDF
             Call output.Write(CByte(1))
         End Sub
 
-        Public Function GlobalAttributes(attrs As attribute()) As CDFWriter
+        ''' <summary>
+        ''' 在这里向文件中添加一些额外的标记信息, 用来解释数据集
+        ''' </summary>
+        ''' <param name="attrs"></param>
+        ''' <returns></returns>
+        Public Function GlobalAttributes(ParamArray attrs As attribute()) As CDFWriter
             globalAttrs = attrs
             Return Me
         End Function
 
-        Public Function Dimensions([dim] As Dimension()) As CDFWriter
+        ''' <summary>
+        ''' 在这里定义在数据集中所使用到的基础数据类型信息
+        ''' </summary>
+        ''' <param name="[dim]"></param>
+        ''' <returns></returns>
+        Public Function Dimensions(ParamArray [dim] As Dimension()) As CDFWriter
             dimensionList = [dim] _
                 .SeqIterator _
                 .ToDictionary(Function(d) d.value.name,
@@ -408,18 +418,27 @@ Namespace netCDF
         ''' 这个列表必须要是<see cref="CDFWriter.Dimensions(Dimension())"/>之中的
         ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub AddVariable(name$, data As CDFData, dims$(), Optional attrs As attribute() = Nothing)
+        Public Sub AddVariable(name$, data As CDFData, dims As [Variant](Of String(), String), Optional attrs As attribute() = Nothing)
             variables += New variable With {
                 .name = name,
-                .Type = data.cdfDataType,
+                .type = data.cdfDataType,
                 .size = data.Length * sizeof(.type),
                 .value = data,
                 .attributes = attrs,
-                .Dimensions = dims _
-                    .Select(Function(d) dimensionList(d).i) _
-                    .ToArray
+                .dimensions = getDimensionList(dims)
             }
         End Sub
+
+        Private Function getDimensionList(dims As [Variant](Of String(), String)) As Integer()
+            If dims Like GetType(String) Then
+                dims = {dims.TryCast(Of String)}
+            End If
+
+            Return dims _
+                .TryCast(Of String()) _
+                .Select(Function(d) dimensionList(d).i) _
+                .ToArray
+        End Function
 
         ''' <summary>
         ''' 如果<paramref name="dims"/>是不存在的，则会自动添加
@@ -446,14 +465,14 @@ Namespace netCDF
                 Call dimNames.Add(d.name)
             Next
 
-            Call AddVariable(name, data, dimNames, attrs)
+            Call AddVariable(name, data, dimNames.ToArray, attrs)
         End Sub
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
 
         ' IDisposable
-        Protected  Sub Dispose(disposing As Boolean)
+        Protected Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).

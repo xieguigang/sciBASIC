@@ -69,48 +69,48 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
 
-    ''' <summary>
-    ''' 遗传算法的主要限速步骤是在fitness的计算之上
-    ''' </summary>
-    ''' <typeparam name="chr"></typeparam>
-    ''' <param name="source"></param>
-    ''' <returns></returns>
-    Public Delegate Function ParallelComputeFitness(Of chr As {Class, Chromosome(Of chr)})(comparator As FitnessPool(Of chr), source As IEnumerable(Of chr)) As IEnumerable(Of NamedValue(Of Double))
+    Public MustInherit Class IPopulation(Of Chr As {Class, Chromosome(Of Chr)})
 
-    Public Class Population(Of Chr As {Class, Chromosome(Of Chr)})
+        Protected chromosomes As PopulationCollection(Of Chr)
+
+        ''' <summary>
+        ''' 种群的容量上限大小
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable Property capacitySize As Integer
+
+        ''' <summary>
+        ''' Add chromosome
+        ''' </summary>
+        ''' <param name="chromosome"></param>
+        Public MustOverride Sub Add(chromosome As Chr)
+
+    End Class
+
+    Public Class Population(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits IPopulation(Of Chr)
         Implements IEnumerable(Of Chr)
-
-        Const DEFAULT_NUMBER_OF_CHROMOSOMES As Integer = 32
-
-        Dim chromosomes As New List(Of Chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
 
         ''' <summary>
         ''' 主要是通过这个比较耗时的计算部分实现并行化来
         ''' 加速整个计算过程
         ''' </summary>
-        Friend ReadOnly Pcompute As ParallelComputeFitness(Of Chr)
+        Protected Friend ReadOnly Pcompute As ParallelComputeFitness(Of Chr)
 
         ''' <summary>
         ''' 是否使用并行模式在排序之前来计算出fitness
         ''' </summary>
         ''' <returns></returns>
         Public Property parallel As Boolean = True
-        ''' <summary>
-        ''' 种群的大小
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property initialSize As Integer
 
         ''' <summary>
         ''' The number of chromosome elements in current population.
         ''' (请注意,这个属性的值是随着<see cref="Add"/>方法的调用而变化的,
-        ''' 如果只需要获取得到种群的固定大小,可以使用<see cref="initialSize"/>
+        ''' 如果只需要获取得到种群的固定大小,可以使用<see cref="capacitySize"/>
         ''' 属性)
         ''' </summary>
         ''' <returns></returns>
@@ -151,7 +151,7 @@ Namespace Darwinism.GAF
         ''' 如果<paramref name="parallel"/>参数不是空的，则会启用这个参数的并行计算
         ''' </summary>
         ''' <param name="parallel"></param>
-        Public Sub New(Optional parallel As [Variant](Of ParallelComputeFitness(Of Chr), Boolean) = Nothing)
+        Public Sub New(collection As PopulationCollection(Of Chr), Optional parallel As [Variant](Of ParallelComputeFitness(Of Chr), Boolean) = Nothing)
             If Not parallel Is Nothing Then
                 If parallel Like GetType(Boolean) Then
                     Dim flag As Boolean = parallel
@@ -171,10 +171,13 @@ Namespace Darwinism.GAF
                            End Function
                 Call "Parallel computing use internal GA_PLinq api by default, as the parallel parameter is not specific...".__DEBUG_ECHO
             End If
+
+            Me.chromosomes = collection
         End Sub
 
-        Friend Sub New(parallel As ParallelComputeFitness(Of Chr))
-            Pcompute = parallel
+        Friend Sub New(collection As PopulationCollection(Of Chr), Pcompute As ParallelComputeFitness(Of Chr))
+            Me.Pcompute = Pcompute
+            Me.chromosomes = collection
         End Sub
 
         ''' <summary>
@@ -193,18 +196,14 @@ Namespace Darwinism.GAF
                                       .Value
                               End Function)
 
-            chromosomes = chromosomes _
-                .OrderBy(Function(c)
-                             Return fitness(comparator.indivToString(c))
-                         End Function) _
-                .AsList
+            chromosomes.OrderBy(Function(key) fitness(key))
         End Sub
 
         ''' <summary>
         ''' Add chromosome
         ''' </summary>
         ''' <param name="chromosome"></param>
-        Public Sub Add(chromosome As Chr)
+        Public Overrides Sub Add(chromosome As Chr)
             Call chromosomes.Add(chromosome)
         End Sub
 
@@ -213,9 +212,15 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Private Shared Function GA_PLinq(comparator As FitnessPool(Of Chr), source As IEnumerable(Of Chr), parallelFlag As Boolean) As IEnumerable(Of NamedValue(Of Double))
+        Private Shared Function GA_PLinq(comparator As FitnessPool(Of Chr), source As PopulationCollection(Of Chr), parallelFlag As Boolean) As IEnumerable(Of NamedValue(Of Double))
+            Dim population = Iterator Function() As IEnumerable(Of Chr)
+                                 For i As Integer = 0 To source.Count - 1
+                                     Yield source(i)
+                                 Next
+                             End Function
+
             Return From c As Chr
-                   In source.Populate(parallel:=parallelFlag)
+                   In population().Populate(parallel:=parallelFlag)
                    Let fit As Double = comparator.Fitness(c, parallel:=Not parallelFlag)
                    Let key As String = comparator.indivToString(c)
                    Select New NamedValue(Of Double) With {
@@ -230,16 +235,16 @@ Namespace Darwinism.GAF
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Trim(len As Integer)
-            chromosomes = chromosomes.SubList(0, len)
+            Call chromosomes.Trim(capacitySize:=len)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"A population with capacity {initialSize}, current size {Size}. //{GetType(Chr).FullName}"
+            Return $"A population with capacity {capacitySize}, current size {Size}. //{GetType(Chr).FullName}"
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Chr) Implements IEnumerable(Of Chr).GetEnumerator
-            For Each chr As Chr In chromosomes
-                Yield chr
+            For i As Integer = 0 To chromosomes.Count - 1
+                Yield chromosomes(i)
             Next
         End Function
 

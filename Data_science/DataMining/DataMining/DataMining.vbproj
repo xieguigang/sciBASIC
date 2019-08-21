@@ -133,7 +133,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>./bin</OutputPath>
+    <OutputPath>..\..\..\CLI_tools\MLkit\Apps\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -519,6 +519,10 @@
     <Compile Include="AprioriRules\Helper\Encoding.vb" />
     <Compile Include="ComponentModel\Class.vb" />
     <Compile Include="ComponentModel\Discretizer\NormalRangeDiscretizer.vb" />
+    <Compile Include="ComponentModel\Evaluation\RegressionClassify.vb" />
+    <Compile Include="ComponentModel\Evaluation\ROC.vb" />
+    <Compile Include="ComponentModel\Evaluation\Validate.vb" />
+    <Compile Include="ComponentModel\Evaluation\NamespaceDoc.vb" />
     <Compile Include="ComponentModel\IntegerEntity.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
     <Compile Include="Clustering\DBSCAN\DatasetItemBase.vb" />
@@ -562,7 +566,7 @@
     <Compile Include="AprioriRules\ExportAPI.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Abundance.vb" />
-    <Compile Include="Validation.vb" />
+    <Compile Include="ComponentModel\Evaluation\Validation.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="ValueMapping.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
