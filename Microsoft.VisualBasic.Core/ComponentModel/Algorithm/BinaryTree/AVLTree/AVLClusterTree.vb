@@ -6,6 +6,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
     Public Class ClusterKey(Of K)
 
         ReadOnly members As New List(Of K)
+        ReadOnly views As Func(Of K, String)
 
         Public ReadOnly Property NumberOfKey As Integer
             Get
@@ -19,13 +20,25 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Get
         End Property
 
-        Sub New([single] As K)
+        Sub New([single] As K, views As Func(Of K, String))
+            Me.views = views
+
+            ' Add a initial single member object
             Call members.Add([single])
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(newMember As K)
             Call members.Add(newMember)
         End Sub
+
+        Public Overrides Function ToString() As String
+            If members.Count = 1 Then
+                Return views(members(Scan0))
+            Else
+                Return views(members(Scan0)) & $", and with {members.Count} cluster members.."
+            End If
+        End Function
 
         ''' <summary>
         ''' 在这里应该是多个key比较一个query
@@ -75,7 +88,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K)
-            Call avltree.Add(New ClusterKey(Of K)(key), key)
+            Call avltree.Add(New ClusterKey(Of K)(key, views), key)
         End Sub
     End Class
 End Namespace
