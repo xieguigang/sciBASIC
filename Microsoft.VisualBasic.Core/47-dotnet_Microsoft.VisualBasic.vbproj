@@ -1008,7 +1008,7 @@
     <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
-    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\RBNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\RBTree.vb" />
@@ -1016,7 +1016,7 @@
     <Compile Include="ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
-    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLSupports.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LCS.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
