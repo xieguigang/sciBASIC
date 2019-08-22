@@ -158,6 +158,11 @@ Namespace Language
             End If
         End Function
 
+        ''' <summary>
+        ''' Value equals of <see cref="Value"/>
+        ''' </summary>
+        ''' <param name="other"></param>
+        ''' <returns></returns>
         Public Overloads Function Equals(other As T) As Boolean
             Return Value.Equals(other)
         End Function
