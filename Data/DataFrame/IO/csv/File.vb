@@ -283,6 +283,13 @@ B21,B22,B23,...
             Return df
         End Function
 
+        Public Function Project(fieldNames As IEnumerable(Of String)) As File
+            Dim columns = fieldNames.Select(Function(name) Me(name)).ToArray
+            Dim newTable = columns.JoinColumns
+
+            Return newTable
+        End Function
+
         Public ReadOnly Property EstimatedFileSize As Double
             Get
                 Dim LQuery = (From row As RowObject

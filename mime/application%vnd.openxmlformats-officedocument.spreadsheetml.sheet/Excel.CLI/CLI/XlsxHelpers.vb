@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::e96b12a019cc88b81fe2be833b4415ef, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\XlsxHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: Extract, newEmpty, Print, PushTable
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: Extract, newEmpty, Print, PushTable
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,7 +52,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Office.Excel
 Imports Microsoft.VisualBasic.Text
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
-Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 Partial Module CLI
 
@@ -132,21 +131,42 @@ Partial Module CLI
     End Function
 
     <ExportAPI("/Print")>
-    <Usage("/Print /in <table.csv/xlsx> [/sheet <sheetName> /out <device/txt>]")>
+    <Usage("/Print /in <table.csv/xlsx> [/fields <fieldNames> /sheet <sheetName> /out <device/txt>]")>
     <Description("Print the csv/xlsx file content onto the console screen or text file in table layout.")>
+    <Argument("/sheet", True, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The sheet name of table in xlsx file for display, this option only works when target file format is a xlsx file.")>
+    <Argument("/fields", True, CLITypes.String,
+              AcceptTypes:={GetType(String())},
+              Description:="A list of selected field names for display, seperated with comma symbol. By default, is display all of the fields data.")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              Extensions:="*.csv, *.xlsx, *.txt, *.tsv",
+              Description:="Standard input pipeline device only works for csv/tsv file. Target table file for display on the console.")>
     Public Function Print(args As CommandLine) As Integer
         Dim table As (header As String(), rows As String()())
         Dim csv As csv
 
         With args <= "/in"
-            If .ExtensionSuffix.TextEquals("csv") Then
+            Select Case .ExtensionSuffix _
+                        .ToLower
 #Disable Warning
-                csv = csv.Load(.ByRef)
+                Case "csv"
+                    csv = csv.Load(.ByRef)
+                Case "txt", "tsv"
+                    csv = csv.LoadTsv(.ByRef)
 #Enable Warning
-            Else
-                csv = MIME.Office.Excel.File.Open(.ByRef).GetTable(sheetName:=args("/sheet") Or "Sheet1")
-            End If
+                Case "xlsx"
+                    csv = MIME.Office.Excel.File.Open(.ByRef).GetTable(sheetName:=args("/sheet") Or "Sheet1")
+                Case Else
+                    Throw New NotSupportedException("Unknown file type: " & .FileName)
+            End Select
         End With
+
+        Dim fields$() = args("/fields").Split(",")
+
+        If Not fields.IsNullOrEmpty Then
+            csv = csv.Project(fields)
+        End If
 
         With csv _
             .Select(Function(r) r.ToArray) _
