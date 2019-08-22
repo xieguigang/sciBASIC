@@ -67,7 +67,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
     End Class
 
-    Public Class AVLClusterTree(Of K)
+    Public Class AVLClusterTree(Of K) : Implements IEnumerable(Of ClusterKey(Of K))
 
         ReadOnly avltree As AVLTree(Of ClusterKey(Of K), K)
         ReadOnly views As Func(Of K, String)
@@ -88,7 +88,21 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K)
-            Call avltree.Add(New ClusterKey(Of K)(key, views), key)
+            Call avltree.Add(New ClusterKey(Of K)(key, views), key, Sub(node, null) node.Key.Add(key))
         End Sub
+
+        Public Sub Clear()
+            Call avltree.Clear()
+        End Sub
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of ClusterKey(Of K)) Implements IEnumerable(Of ClusterKey(Of K)).GetEnumerator
+            For Each cluster In avltree.root.PopulateNodes
+                Yield cluster.Key
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 End Namespace

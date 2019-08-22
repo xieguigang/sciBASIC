@@ -85,6 +85,10 @@ Public Class GridSystem : Implements IDynamicsComponent(Of GridSystem), IGrid(Of
     Public Property A As Vector Implements IGrid(Of Vector, Correlation).A
     Public Property C As Correlation() Implements IGrid(Of Vector, Correlation).C
 
+    ''' <summary>
+    ''' Get dimension value from vector <see cref="A"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Width As Integer Implements IDynamicsComponent(Of GridSystem).Width
         Get
             Return A.Dim

@@ -418,13 +418,13 @@ Namespace netCDF
         ''' 这个列表必须要是<see cref="CDFWriter.Dimensions(Dimension())"/>之中的
         ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub AddVariable(name$, data As CDFData, dims As [Variant](Of String(), String), Optional attrs As attribute() = Nothing)
+        Public Sub AddVariable(name$, data As CDFData, dims As [Variant](Of String(), String), Optional attrs As [Variant](Of attribute, attribute()) = Nothing)
             variables += New variable With {
                 .name = name,
                 .type = data.cdfDataType,
                 .size = data.Length * sizeof(.type),
                 .value = data,
-                .attributes = attrs,
+                .attributes = attrs.TryCastArray,
                 .dimensions = getDimensionList(dims)
             }
         End Sub

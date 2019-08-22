@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::01198c864d5ef6fdbfe010732ae48a36, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class netCDFReader
-    ' 
-    '         Properties: dimensions, globalAttributes, recordDimension, variables, version
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
-    '                   ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose, Print
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class netCDFReader
+' 
+'         Properties: dimensions, globalAttributes, recordDimension, variables, version
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
+'                   ToString
+' 
+'         Sub: (+2 Overloads) Dispose, Print
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -135,7 +135,7 @@ Namespace netCDF
         End Property
 
         ''' <summary>
-        ''' Returns the value of an attribute
+        ''' Returns the value of an global attribute
         ''' </summary>
         ''' <param name="attributeName">attributeName</param>
         ''' <returns>Value of the attributeName Or undefined</returns>
@@ -145,7 +145,17 @@ Namespace netCDF
                     If .IsNothing Then
                         Return Nothing
                     Else
-                        Return .value
+                        Select Case .type
+                            Case CDFDataTypes.BYTE : Return Byte.Parse(.value)
+                            Case CDFDataTypes.CHAR : Return .value
+                            Case CDFDataTypes.DOUBLE : Return Double.Parse(.value)
+                            Case CDFDataTypes.FLOAT : Return Single.Parse(.value)
+                            Case CDFDataTypes.INT : Return Integer.Parse(.value)
+                            Case CDFDataTypes.SHORT : Return Short.Parse(.value)
+
+                            Case Else
+                                Throw New NotSupportedException
+                        End Select
                     End If
                 End With
             End Get
@@ -242,6 +252,10 @@ Namespace netCDF
             Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
 
             Return getDataVariable(variable)
+        End Function
+
+        Public Function getDataVariableEntry(variableName As String) As variable
+            Return variableTable.TryGetValue(variableName)
         End Function
 
         ''' <summary>

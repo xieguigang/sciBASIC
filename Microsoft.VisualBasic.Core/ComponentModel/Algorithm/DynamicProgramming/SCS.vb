@@ -109,7 +109,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
         ''' 当这个函数遇到完全没有重叠的序列片段的时候，是会直接将这个不重叠的片段接到SCS的最末尾的
         ''' </remarks>
         <Extension>
-        Public Function ShortestCommonSuperString(seqs As List(Of String)) As String
+        Public Function ShortestCommonSuperString(seqs As Generic.List(Of String)) As String
             Dim l As Integer = seqs.Count
 
             Do While l > 1
@@ -141,7 +141,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
                             Dim maxPrefixMatch = MaxPrefixLength(str, b)
 
                             If maxPrefixMatch > currMax Then
-                                finalStr = str + b.Substring(maxPrefixMatch)
+                                finalStr = str & b.Substring(maxPrefixMatch)
                                 currMax = maxPrefixMatch
                                 p = j
                                 q = k
@@ -150,7 +150,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
                             Dim maxSuffixMatch = MaxPrefixLength(b, str)
 
                             If maxSuffixMatch > currMax Then
-                                finalStr = b + str.Substring(maxSuffixMatch)
+                                finalStr = b & str.Substring(maxSuffixMatch)
                                 currMax = maxSuffixMatch
                                 p = j
                                 q = k
