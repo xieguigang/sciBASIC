@@ -94,13 +94,13 @@ Namespace KMeans
                                   Optional size$ = "1600,1600",
                                   Optional padding$ = g.DefaultUltraLargePadding,
                                   Optional bg$ = "white",
-                                  Optional schema$ = Designer.Clusters,
+                                  Optional schema$ = DesignerTerms.ClusterCategory10,
                                   Optional pointSize! = 10) As GraphicsData
 
             Dim clusters = clusterData.ClusterGroups
             Dim clusterColors = Designer.GetColors(schema)
             Dim serials As New List(Of SerialData)
-            Dim labX$ = catagory.X.Name, labY$ = catagory.Y.Name
+            Dim labX$ = catagory.X.name, labY$ = catagory.Y.name
 
             For Each cluster In clusters.SeqIterator
                 Dim color As Color = clusterColors(cluster)
@@ -109,8 +109,8 @@ Namespace KMeans
                 For Each member As EntityClusterModel In (+cluster).Value
                     points += New PointData With {
                         .pt = New PointF With {
-                            .X = member(catagory.X.Value).Average,
-                            .Y = member(catagory.Y.Value).Average
+                            .X = member(catagory.X.value).Average,
+                            .Y = member(catagory.Y.value).Average
                         }
                     }
                 Next
@@ -139,9 +139,9 @@ Namespace KMeans
         ''' <param name="catagory">
         ''' How to read the data and construct the <see cref="Serial3D"/> model group
         ''' </param>
-        ''' <param name="size$"></param>
-        ''' <param name="bg$"></param>
-        ''' <param name="padding$"></param>
+        ''' <param name="size"></param>
+        ''' <param name="bg"></param>
+        ''' <param name="padding"></param>
         ''' <param name="clusterN">Expected kmeans cluster resulted number, default is 6 cluster</param>
         ''' <returns></returns>
         <Extension>
@@ -152,7 +152,7 @@ Namespace KMeans
                                   Optional bg$ = "white",
                                   Optional padding$ = g.DefaultPadding,
                                   Optional clusterN% = 10,
-                                  Optional schema$ = Designer.Clusters,
+                                  Optional schema$ = DesignerTerms.ClusterCategory10,
                                   Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                                   Optional pointSize! = 20,
                                   Optional boxStroke$ = Stroke.StrongHighlightStroke,
@@ -206,7 +206,7 @@ Namespace KMeans
                                   Optional size$ = "1200,1000",
                                   Optional bg$ = "white",
                                   Optional padding$ = g.DefaultPadding,
-                                  Optional schema$ = Designer.Clusters,
+                                  Optional schema$ = DesignerTerms.ClusterCategory10,
                                   Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                                   Optional pointSize! = 20,
                                   Optional boxStroke$ = Stroke.StrongHighlightStroke,
@@ -231,7 +231,7 @@ Namespace KMeans
                 For Each member As EntityClusterModel In (+cluster).Value
                     With keys _
                         .Select(Function(cat)
-                                    Return member(catagory(cat).Value).Average
+                                    Return member(catagory(cat).value).Average
                                 End Function) _
                         .ToArray
 

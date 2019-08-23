@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FuzzyCMeans
 
-    Public Class Entity : Inherits ClusterEntity
+    Public Class FuzzyCMeansEntity : Inherits ClusterEntity
 
         ''' <summary>
         ''' ``Key``键名和数组的下标一样是从0开始的
