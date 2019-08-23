@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Math.DataFrame
 
 Namespace Heatmap
 
+    <HideModuleName>
     Public Module PlotExtensions
 
         ''' <summary>
