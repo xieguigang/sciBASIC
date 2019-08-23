@@ -83,9 +83,10 @@ Namespace Darwinism.GAF
         ''' 创建一个新的环境压力驱动程序,用来驱动模型的进化学习
         ''' </summary>
         ''' <param name="ga"></param>
-        Sub New(ga As GeneticAlgorithm(Of Chr), takeBestSnapshot As Action(Of Chr, Double))
+        Sub New(ga As GeneticAlgorithm(Of Chr), takeBestSnapshot As Action(Of Chr, Double), Optional iterations% = 500000)
             Me.core = ga
             Me.takeBestSnapshot = takeBestSnapshot
+            Me.Iterations = iterations
         End Sub
 
         Public Overrides Sub Train(Optional parallel As Boolean = False)
@@ -112,6 +113,8 @@ Namespace Darwinism.GAF
                 With core.GetFitness(core.Best)
                     If Not reporter Is Nothing Then
                         Call reporter(i, .ByRef, core)
+                    Else
+                        Call takeBestSnapshot(core.Best, .ByRef)
                     End If
 
                     ' NaN的结果值与阈值相比较也是小于零的

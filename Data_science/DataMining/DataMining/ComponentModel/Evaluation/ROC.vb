@@ -10,7 +10,7 @@ Namespace ComponentModel.Evaluation
     ''' <summary>
     ''' The ROC math module
     ''' </summary>
-    Module ROC
+    Public Module ROC
 
         ''' <summary>
         ''' 使用梯形面积法计算AUC的结果值
