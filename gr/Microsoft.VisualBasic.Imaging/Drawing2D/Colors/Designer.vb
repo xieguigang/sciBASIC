@@ -132,7 +132,7 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' <see cref="Designer.GetColors(String)"/> schema name for color profile: <see cref="ClusterColour"/>.
         ''' </summary>
-        Public Const Clusters$ = NameOf(Clusters)
+        Friend Const Clusters$ = NameOf(Clusters)
 
         ''' <summary>
         ''' From TSF launcher on Android

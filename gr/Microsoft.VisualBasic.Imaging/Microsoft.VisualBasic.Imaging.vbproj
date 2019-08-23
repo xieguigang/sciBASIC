@@ -417,6 +417,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Drawing2D\Colors\Expression.vb" />
+    <Compile Include="Drawing2D\Colors\DesignerTerms.vb" />
     <Compile Include="Drawing2D\Math2D\Math2DHelper.vb" />
     <Compile Include="Drawing2D\Math2D\ConcaveHull\BallConcave.vb" />
     <Compile Include="Drawing2D\Math2D\ConcaveHull\DelaunayMesh2d.vb" />

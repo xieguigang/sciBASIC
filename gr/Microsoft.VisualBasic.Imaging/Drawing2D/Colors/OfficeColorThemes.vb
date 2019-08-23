@@ -105,7 +105,7 @@ Namespace Drawing2D.Colors
             Paper = Theme.LoadFromXml(My.Resources.Default_Paper)
             Slipstream = Theme.LoadFromXml(My.Resources.Default_Slipstream)
 
-            Call __loadAllThemes()
+            Call InternalLoadAllThemes()
         End Sub
 
         ''' <summary>
@@ -114,7 +114,7 @@ Namespace Drawing2D.Colors
         ''' <returns></returns>
         Public ReadOnly Property Themes As New Dictionary(Of Theme)
 
-        Private Sub __loadAllThemes()
+        Private Sub InternalLoadAllThemes()
             Dim resMgr As Type = GetType(My.Resources.Resources)
             Dim datas As IEnumerable(Of PropertyInfo) =
                 DataFramework _
