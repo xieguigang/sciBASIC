@@ -9,6 +9,31 @@ Namespace Heatmap
     Public Module DataScaler
 
         ''' <summary>
+        ''' 主要是通过这个方法将样本值转换为索引编号，即将值映射到颜色数组中的索引，即可以使用颜色来表示相对应的样本数值
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="scaleMethod"></param>
+        ''' <param name="levels%"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function DoDataScale(data As IEnumerable(Of DataSet), scaleMethod As DrawElements, levels#) As Dictionary(Of String, DataSet)
+            Select Case scaleMethod
+                Case DrawElements.Cols
+                    Return data _
+                        .ScaleByCol(levels) _
+                        .ToDictionary(Function(x) x.ID)
+                Case DrawElements.Rows
+                    Return data _
+                        .ScaleByRow(levels) _
+                        .ToDictionary(Function(x) x.ID)
+                Case Else
+                    Return data _
+                        .ScaleByALL(levels) _
+                        .ToDictionary(Function(x) x.ID)
+            End Select
+        End Function
+
+        ''' <summary>
         ''' 返回来的都是0-1之间的数，乘以颜色数组长度之后即可庸作为颜色的index
         ''' </summary>
         ''' <param name="data"></param>

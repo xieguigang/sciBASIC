@@ -376,7 +376,6 @@ Namespace Heatmap
                         End If
                     End If
 
-                    Dim levels As New Dictionary(Of String, DataSet)
                     Dim scaleData As DataSet()
 
                     If logScale > 0 Then
@@ -397,35 +396,16 @@ Namespace Heatmap
                         scaleData = array
                     End If
 
-                    Select Case scaleMethod
-                        Case DrawElements.Cols
-                            levels = scaleData _
-                                .ScaleByCol(colors.Length - 1) _
-                                .ToDictionary(Function(x) x.ID)
-                        Case DrawElements.Rows
-                            levels = scaleData _
-                                .ScaleByRow(colors.Length - 1) _
-                                .ToDictionary(Function(x) x.ID)
-
-                        Case Else
-                            levels = scaleData _
-                                .ScaleByALL(colors.Length - 1) _
-                                .ToDictionary(Function(x) x.ID)
-
-                    End Select
-
                     Dim args As New PlotArguments With {
                         .colors = colors,
                         .left = left,
-                        .levels = levels,
+                        .levels = scaleData.DoDataScale(scaleMethod, colors.Length - 1),
                         .top = top,
                         .ColOrders = colKeys,
                         .RowOrders = rowKeys,
                         .matrixPlotRegion = matrixPlotRegion
                     }
-#If DEBUG Then
-                    ' Call levels.GetJson().Warning
-#End If
+
                     ' 绘制heatmap之中的矩阵内容
                     Call plot(g, rect, args)
 
