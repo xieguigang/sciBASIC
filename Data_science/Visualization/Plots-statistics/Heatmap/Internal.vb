@@ -91,6 +91,7 @@ Namespace Heatmap
         <Extension>
         Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels#) As IEnumerable(Of DataSet)
             Dim levelRange As DoubleRange = {0R, levels}
+
             Return data _
                 .Select(Function(x)
                             Dim range As DoubleRange = x.Properties.Values.Range
@@ -106,7 +107,9 @@ Namespace Heatmap
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) range.ScaleMapping(x(key), levelRange))
+                                                  Function(key)
+                                                      Return range.ScaleMapping(x(key), levelRange)
+                                                  End Function)
                             End If
 
                             Return New DataSet With {
@@ -125,9 +128,13 @@ Namespace Heatmap
         Public Function ScaleByCol(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
             Dim list = data.ToArray
             Dim keys = list.PropertyNames
-            Dim ranges = keys.ToDictionary(
-                Function(key) key,
-                Function(key) list.Select(Function(x) x(key)).Range)
+            Dim ranges As Dictionary(Of String, DoubleRange) = keys _
+                .ToDictionary(Function(key) key,
+                              Function(key)
+                                  Return list _
+                                    .Select(Function(x) x(key)) _
+                                    .Range
+                              End Function)
             Dim levelRange As DoubleRange = {0R, levels}
 
             Return list _
@@ -136,7 +143,9 @@ Namespace Heatmap
                                 .ID = x.ID,
                                 .Properties = keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) ranges(key).ScaleMapping(x(key), levelRange))
+                                                  Function(key)
+                                                      Return ranges(key).ScaleMapping(x(key), levelRange)
+                                                  End Function)
                             }
                         End Function)
         End Function

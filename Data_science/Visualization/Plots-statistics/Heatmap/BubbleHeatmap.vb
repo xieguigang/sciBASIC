@@ -1,7 +1,13 @@
-﻿Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Data.csv.IO
+﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Namespace Heatmap
 
@@ -16,9 +22,30 @@ Namespace Heatmap
                              Optional size$ = "300,2700",
                              Optional bg$ = "white",
                              Optional margin$ = g.DefaultLargerPadding,
-                             Optional colors$ = "",
-                             Optional minRadius! = 1) As GraphicsData
+                             Optional colors$ = DesignerTerms.GoogleMaterialPalette,
+                             Optional minRadius! = 1,
+                             Optional scaleMethod As DrawElements = DrawElements.Rows) As GraphicsData
 
+            Dim dataMatrix = data.ToArray
+            Dim columnNames$() = dataMatrix.PropertyNames
+            Dim nrows = dataMatrix.Length
+            Dim ncols = dataMatrix(Scan0).Properties.Count
+            Dim valueRanges As DoubleRange()
+
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim plotRegion As Rectangle = region.PlotRegion
+                    ' 应该是正方形的
+                    Dim maxRadius = stdNum.Min(plotRegion.Width / ncols, plotRegion.Height / nrows)
+
+                End Sub
+
+            Return g.GraphicsPlots(
+                size:=size.SizeParser,
+                padding:=margin,
+                bg:=bg,
+                plotAPI:=plotInternal
+            )
         End Function
     End Module
 End Namespace

@@ -81,8 +81,8 @@ Namespace Heatmap
         ''' <param name="customColors">
         ''' 可以使用这一组颜色来手动自定义heatmap的颜色，也可以使用<paramref name="mapName"/>来获取内置的颜色谱
         ''' </param>
-        ''' <param name="mapLevels%"></param>
-        ''' <param name="mapName$">
+        ''' <param name="mapLevels"></param>
+        ''' <param name="mapName">
         ''' The color map name, using for the <see cref="Designer"/>
         ''' 
         ''' There are many different color schemes that can be used to illustrate the heatmap, with perceptual advantages 

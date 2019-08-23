@@ -56,4 +56,5 @@ Namespace Heatmap
     End Enum
 
     Friend Delegate Sub HowtoDoPlot(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
+
 End Namespace
