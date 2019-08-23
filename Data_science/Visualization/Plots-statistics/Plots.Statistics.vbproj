@@ -261,6 +261,7 @@
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
     <Compile Include="Heatmap\BubbleHeatmap.vb" />
+    <Compile Include="Heatmap\Models.vb" />
     <Compile Include="ROCPlot.vb" />
     <Compile Include="PCA\ScreePlot.vb" />
     <Compile Include="PCA\PC3.vb" />

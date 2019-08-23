@@ -213,7 +213,7 @@ Namespace Heatmap
                     ' Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
                 End Sub
 
-            Return __plotInterval(
+            Return doPlot(
                 plotInternal, array,
                 rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, drawClass, dlayout,
                 reverseClrSeq, customColors.GetBrushes, mapLevels, mapName,
@@ -223,7 +223,8 @@ Namespace Heatmap
                 mainTitle, titleFont,
                 legendWidth, legendHasUnmapped, legendSize.SizeParser,
                 tick:=tick,
-                legendLayout:=legendLayout)
+                legendLayout:=legendLayout
+            )
         End Function
     End Module
 End Namespace

@@ -223,7 +223,7 @@ Namespace Heatmap
                 .Height = gSize.Height / 20
             }
 
-            Return Internal.__plotInterval(
+            Return Internal.doPlot(
                 plotInternal, data.ToArray,
                 rowLabelFont, rowLabelFont, logScale,
                 scaleMethod:=DrawElements.None, drawLabels:=DrawElements.Both, drawDendrograms:=DrawElements.None, drawClass:=(rowDendrogramClass, Nothing), dendrogramLayout:=(rowDendrogramHeight, 0),

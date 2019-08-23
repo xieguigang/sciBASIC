@@ -75,55 +75,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Heatmap
 
-    Public Class PlotArguments
-
-        Public left!
-        ''' <summary>
-        ''' 绘制矩阵之中的方格在xy上面的步进值
-        ''' </summary>
-        Public ReadOnly Property dStep As SizeF
-            Get
-                Return New SizeF With {
-                    .Width = matrixPlotRegion.Width / ColOrders.Length,
-                    .Height = matrixPlotRegion.Height / RowOrders.Length
-                }
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' 矩阵区域的大小和位置
-        ''' </summary>
-        Public matrixPlotRegion As Rectangle
-        Public levels As Dictionary(Of String, DataSet)
-        Public top!
-        Public colors As SolidBrush()
-        Public RowOrders$()
-        Public ColOrders$()
-
-    End Class
-
-    ''' <summary>
-    ''' Draw a specific heatmap element
-    ''' </summary>
-    Public Enum DrawElements As Byte
-        ''' <summary>
-        ''' Draw nothing
-        ''' </summary>
-        None = 0
-        ''' <summary>
-        ''' Only draw the heatmap element on matrix row
-        ''' </summary>
-        Rows = 2
-        ''' <summary>
-        ''' Only draw the heatmap element on the column
-        ''' </summary>
-        Cols = 4
-        ''' <summary>
-        ''' Draw both row and column heatmap elements
-        ''' </summary>
-        Both = 8
-    End Enum
-
     ''' <summary>
     ''' heatmap plot internal
     ''' </summary>
@@ -304,35 +255,35 @@ Namespace Heatmap
         ''' + 如果是<see cref="DrawElements.None"/>或者<see cref="DrawElements.Both"/>则是表示按照整体数据
         ''' </param>
         <Extension>
-        Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
-                                       array As DataSet(),
-                                       rowLabelfont As Font, colLabelFont As Font,
-                                       logScale#,
-                                       scaleMethod As DrawElements,
-                                       drawLabels As DrawElements,
-                                       drawDendrograms As DrawElements,
-                                       drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)),
-                                       dendrogramLayout As (A%, B%),
-                                       reverseClrSeq As Boolean,
-                                       Optional colors As SolidBrush() = Nothing,
-                                       Optional mapLevels% = 100,
-                                       Optional mapName$ = ColorMap.PatternJet,
-                                       Optional size As Size = Nothing,
-                                       Optional padding As Padding = Nothing,
-                                       Optional bg$ = "white",
-                                       Optional legendTitle$ = "Heatmap Color Legend",
-                                       Optional legendFont As Font = Nothing,
-                                       Optional legendLabelFont As Font = Nothing,
-                                       Optional min# = -1,
-                                       Optional max# = 1,
-                                       Optional mainTitle$ = "heatmap",
-                                       Optional titleFont As Font = Nothing,
-                                       Optional legendWidth! = -1,
-                                       Optional legendHasUnmapped As Boolean = True,
-                                       Optional legendSize As Size = Nothing,
-                                       Optional rowXOffset% = 0,
-                                       Optional tick# = -1,
-                                       Optional legendLayout As Layouts = Layouts.Horizon) As GraphicsData
+        Friend Function doPlot(plot As HowtoDoPlot,
+                               array As DataSet(),
+                               rowLabelfont As Font, colLabelFont As Font,
+                               logScale#,
+                               scaleMethod As DrawElements,
+                               drawLabels As DrawElements,
+                               drawDendrograms As DrawElements,
+                               drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)),
+                               dendrogramLayout As (A%, B%),
+                               reverseClrSeq As Boolean,
+                               Optional colors As SolidBrush() = Nothing,
+                               Optional mapLevels% = 100,
+                               Optional mapName$ = ColorMap.PatternJet,
+                               Optional size As Size = Nothing,
+                               Optional padding As Padding = Nothing,
+                               Optional bg$ = "white",
+                               Optional legendTitle$ = "Heatmap Color Legend",
+                               Optional legendFont As Font = Nothing,
+                               Optional legendLabelFont As Font = Nothing,
+                               Optional min# = -1,
+                               Optional max# = 1,
+                               Optional mainTitle$ = "heatmap",
+                               Optional titleFont As Font = Nothing,
+                               Optional legendWidth! = -1,
+                               Optional legendHasUnmapped As Boolean = True,
+                               Optional legendSize As Size = Nothing,
+                               Optional rowXOffset% = 0,
+                               Optional tick# = -1,
+                               Optional legendLayout As Layouts = Layouts.Horizon) As GraphicsData
 
             Dim keys$() = array.PropertyNames
             Dim angle! = -45
