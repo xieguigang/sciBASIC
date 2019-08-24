@@ -1,4 +1,6 @@
-﻿Namespace NlpVec
+﻿Imports System.IO
+
+Namespace NlpVec
 
     ''' <summary>
     ''' User: fangy
@@ -70,25 +72,25 @@
                 Throw New ArgumentException("模型路径可以为null或空。")
             End If
 
-            Dim dis As DataInputStream = Nothing
+            Dim dis As BinaryReader = Nothing
             Dim wordCount As Integer, layerSizeLoaded = 0
             Dim wordMapLoaded As IDictionary(Of String, Single()) = New Dictionary(Of String, Single())()
 
             Try
-                dis = New DataInputStream(New BufferedInputStream(New FileStream(path, FileMode.Open, FileAccess.Read)))
-                wordCount = dis.readInt()
-                layerSizeLoaded = dis.readInt()
+                dis = New BinaryReader(path.Open)
+                wordCount = dis.ReadInt32
+                layerSizeLoaded = dis.ReadInt32
                 Dim vector As Single
                 Dim key As String
                 Dim value As Single()
 
                 For i = 0 To wordCount - 1
-                    key = dis.readUTF()
+                    key = dis.ReadString
                     value = New Single(layerSizeLoaded - 1) {}
                     Dim len As Double = 0
 
                     For j = 0 To layerSizeLoaded - 1
-                        vector = dis.readFloat()
+                        vector = dis.ReadSingle
                         len += vector * vector
                         value(j) = vector
                     Next
@@ -125,19 +127,19 @@
         ''' <summary>
         ''' 保存词向量模型 </summary>
         ''' <param name="file"> 模型存放路径 </param>
-        Public Sub saveModel(file As File)
-            Dim dataOutputStream As DataOutputStream = Nothing
+        Public Sub saveModel(file As FileStream)
+            Dim dataOutputStream As BinaryWriter = Nothing
 
             Try
-                dataOutputStream = New DataOutputStream(New BufferedOutputStream(New FileStream(file, FileMode.Create, FileAccess.Write)))
-                dataOutputStream.writeInt(wordMap_Renamed.Count)
-                dataOutputStream.writeInt(vectorSize_Renamed)
+                dataOutputStream = New BinaryWriter(file)
+                dataOutputStream.Write(wordMap_Renamed.Count)
+                dataOutputStream.Write(vectorSize_Renamed)
 
                 For Each element In wordMap_Renamed.SetOfKeyValuePairs()
-                    dataOutputStream.writeUTF(element.Key)
+                    dataOutputStream.Write(element.Key)
 
                     For Each d In element.Value
-                        dataOutputStream.writeFloat(d)
+                        dataOutputStream.Write(d)
                     Next
                 Next
 

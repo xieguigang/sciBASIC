@@ -38,8 +38,8 @@ Namespace NlpVec
         Private numOfThread As Integer ' 线程个数
 
         ' 单词或短语计数器
-        Private wordCounter As Counter(Of String) = New Counter(Of String)()
-        Private tempCorpus As FileStream = Nothing
+        Private wordCounter As New Counter(Of String)()
+        Private tempCorpus As String
         Private tempCorpusWriter As StreamWriter
 
         Public Class Factory
@@ -165,7 +165,7 @@ Namespace NlpVec
                         End If
                     End If
 
-                    tempCorpus = App.GetAppSysTempFile(".txt", App.PID, "tempCorpus").Open
+                    tempCorpus = App.GetAppSysTempFile(".txt", App.PID, "tempCorpus")
                     tempCorpusWriter = New StreamWriter(tempCorpus)
                 End If
 
@@ -187,7 +187,7 @@ Namespace NlpVec
         Private Sub buildVocabulary()
             neuronMap = New Dictionary(Of String, WordNeuron)()
 
-            For Each wordText As String In wordCounter.Keys
+            For Each wordText As String In wordCounter.keySet
                 Dim freq = wordCounter.get(wordText)
 
                 If freq < freqThresold Then
@@ -265,9 +265,8 @@ Namespace NlpVec
             Finally
                 LineIterator.closeQuietly(li)
 
-                If Not tempCorpus.Delete() Then
-                    logger.severe("unable to delete temp file in " & tempCorpus.absolutePath)
-                    '                System.err.println("临时文件未被正确删除，位于"+tempCorpus.getAbsolutePath());
+                If Not tempCorpus.DeleteFile Then
+                    logger.severe("unable to delete temp file in " & tempCorpus.GetFullPath)
                 End If
 
                 tempCorpus = Nothing
@@ -500,7 +499,7 @@ Namespace NlpVec
                 Next
             End Sub
 
-            Public Overrides Sub run()
+            Public Sub run()
                 Dim hasCorpusToBeTrained = True
 
                 Try
@@ -520,7 +519,7 @@ Namespace NlpVec
                         End If
                     End While
 
-                Catch ie As InterruptedException
+                Catch ie As Exception
                     Console.WriteLine(ie.ToString())
                     Console.Write(ie.StackTrace)
                 End Try
@@ -530,23 +529,23 @@ Namespace NlpVec
         ''' <summary>
         ''' 保存训练得到的模型 </summary>
         ''' <param name="file"> 模型存放路径 </param>
-        Public Sub saveModel(file As File)
-            Dim dataOutputStream As DataOutputStream = Nothing
+        Public Sub saveModel(file As FileStream)
+            Dim dataOutputStream As BinaryWriter = Nothing
 
             Try
-                dataOutputStream = New DataOutputStream(New BufferedOutputStream(New FileStream(file, FileMode.Create, FileAccess.Write)))
-                dataOutputStream.writeInt(neuronMap.Count)
-                dataOutputStream.writeInt(vectorSize)
+                dataOutputStream = New BinaryWriter(file)
+                dataOutputStream.Write(neuronMap.Count)
+                dataOutputStream.Write(vectorSize)
 
                 For Each element In neuronMap.SetOfKeyValuePairs()
-                    dataOutputStream.writeUTF(element.Key)
+                    dataOutputStream.Write(element.Key)
 
                     For Each d In element.Value.vector
-                        dataOutputStream.writeFloat(CType(d, Double?).Value)
+                        dataOutputStream.Write(CType(d, Double?).Value)
                     Next
                 Next
 
-                logger.info("saving model successfully in " & file.absolutePath)
+                logger.info("saving model successfully in " & file.Name)
             Catch e As IOException
                 Console.WriteLine(e.ToString())
                 Console.Write(e.StackTrace)
@@ -555,7 +554,7 @@ Namespace NlpVec
                 Try
 
                     If dataOutputStream IsNot Nothing Then
-                        dataOutputStream.close()
+                        dataOutputStream.Close()
                     End If
 
                 Catch ioe As IOException
