@@ -24,7 +24,7 @@ Namespace org.nlp.util
         ''' 分割一段文本，得到一列记号 </summary>
         ''' <param name="text"> 文本 </param>
         ''' <param name="delim"> 分割符 </param>
-        Public Sub New(ByVal text As String, ByVal delim As String)
+        Public Sub New(text As String, delim As String)
             tokens = Arrays.asList(text.Split(delim, True))
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
             tokenIter = tokens.GetEnumerator()
@@ -57,7 +57,7 @@ Namespace org.nlp.util
         ''' <summary>
         ''' 向原有记号序列的末尾添加一个记号 </summary>
         ''' <param name="token"> 待添加的记号 </param>
-        Public Overridable Sub add(ByVal token As String)
+        Public Overridable Sub add(token As String)
             If ReferenceEquals(token, Nothing) Then
                 Return
             End If
@@ -69,7 +69,7 @@ Namespace org.nlp.util
         ''' 以分割符连接记号并输出 </summary>
         ''' <param name="delim"> 分割符 </param>
         ''' <returns> 记号由分割符连接的字符串 </returns>
-        Public Overridable Function ToString(ByVal delim As String) As String
+        Public Overridable Function ToString(delim As String) As String
             Dim sb As StringBuilder = New StringBuilder()
 
             If tokens.Count < 1 Then

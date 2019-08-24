@@ -61,27 +61,27 @@ Namespace org.nlp.vec
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
             Friend numOfThread_Renamed As Integer = 1
 
-            Public Overridable Function setVectorSize(ByVal size As Integer) As Factory
+            Public Overridable Function setVectorSize(size As Integer) As Factory
                 vectorSize_Renamed = size
                 Return Me
             End Function
 
-            Public Overridable Function setWindow(ByVal size As Integer) As Factory
+            Public Overridable Function setWindow(size As Integer) As Factory
                 windowSize = size
                 Return Me
             End Function
 
-            Public Overridable Function setFreqThresold(ByVal thresold As Integer) As Factory
+            Public Overridable Function setFreqThresold(thresold As Integer) As Factory
                 freqThresold_Renamed = thresold
                 Return Me
             End Function
 
-            Public Overridable Function setMethod(ByVal method As Method) As Factory
+            Public Overridable Function setMethod(method As Method) As Factory
                 trainMethod = method
                 Return Me
             End Function
 
-            Public Overridable Function setSample(ByVal rate As Double) As Factory
+            Public Overridable Function setSample(rate As Double) As Factory
                 sample_Renamed = rate
                 Return Me
             End Function
@@ -91,17 +91,17 @@ Namespace org.nlp.vec
             '            return this;
             '        }
 
-            Public Overridable Function setAlpha(ByVal alpha As Double) As Factory
+            Public Overridable Function setAlpha(alpha As Double) As Factory
                 alpha_Renamed = alpha
                 Return Me
             End Function
 
-            Public Overridable Function setAlphaThresold(ByVal alpha As Double) As Factory
+            Public Overridable Function setAlphaThresold(alpha As Double) As Factory
                 alphaThreshold = alpha
                 Return Me
             End Function
 
-            Public Overridable Function setNumOfThread(ByVal numOfThread As Integer) As Factory
+            Public Overridable Function setNumOfThread(numOfThread As Integer) As Factory
                 numOfThread_Renamed = numOfThread
                 Return Me
             End Function
@@ -111,7 +111,7 @@ Namespace org.nlp.vec
             End Function
         End Class
 
-        Private Sub New(ByVal factory As Factory)
+        Private Sub New(factory As Factory)
             vectorSize = factory.vectorSize_Renamed
             windowSize = factory.windowSize
             freqThresold = factory.freqThresold_Renamed
@@ -142,7 +142,7 @@ Namespace org.nlp.vec
         ''' 读取一段文本，统计词频和相邻词语出现的频率，
         ''' 文本将输出到一个临时文件中，以方便之后的训练 </summary>
         ''' <param name="tokenizer"> 标记 </param>
-        Public Overridable Sub readTokens(ByVal tokenizer As Tokenizer)
+        Public Overridable Sub readTokens(tokenizer As Tokenizer)
             If tokenizer Is Nothing OrElse tokenizer.size() < 1 Then
                 Return
             End If
@@ -282,7 +282,7 @@ Namespace org.nlp.vec
             End Try
         End Sub
 
-        Private Sub skipGram(ByVal index As Integer, ByVal sentence As IList(Of WordNeuron), ByVal b As Integer, ByVal alpha As Double)
+        Private Sub skipGram(index As Integer, sentence As IList(Of WordNeuron), b As Integer, alpha As Double)
             Dim word = sentence(index)
             Dim a As Integer, c = 0
 
@@ -344,7 +344,7 @@ Namespace org.nlp.vec
             '        }
         End Sub
 
-        Private Sub cbowGram(ByVal index As Integer, ByVal sentence As IList(Of WordNeuron), ByVal b As Integer, ByVal alpha As Double)
+        Private Sub cbowGram(index As Integer, sentence As IList(Of WordNeuron), b As Integer, alpha As Double)
             Dim word = sentence(index)
             Dim a As Integer, c = 0
             Dim neu1e = New Double(vectorSize - 1) {} '误差项
@@ -443,13 +443,13 @@ Namespace org.nlp.vec
             Friend trainingWordCount As Integer
             Friend tempAlpha As Double
 
-            Public Sub New(ByVal outerInstance As Word2Vec, ByVal corpus As LinkedList(Of String))
+            Public Sub New(outerInstance As Word2Vec, corpus As LinkedList(Of String))
                 Me.outerInstance = outerInstance
                 corpusToBeTrained = corpus
                 trainingWordCount = 0
             End Sub
 
-            Public Sub New(ByVal outerInstance As Word2Vec, ByVal corpusQueue As BlockingQueue(Of LinkedList(Of String)))
+            Public Sub New(outerInstance As Word2Vec, corpusQueue As BlockingQueue(Of LinkedList(Of String)))
                 Me.outerInstance = outerInstance
                 Me.corpusQueue = corpusQueue
             End Sub
@@ -538,7 +538,7 @@ Namespace org.nlp.vec
         ''' <summary>
         ''' 保存训练得到的模型 </summary>
         ''' <param name="file"> 模型存放路径 </param>
-        Public Overridable Sub saveModel(ByVal file As File)
+        Public Overridable Sub saveModel(file As File)
             Dim dataOutputStream As DataOutputStream = Nothing
 
             Try

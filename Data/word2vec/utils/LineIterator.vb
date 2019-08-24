@@ -28,7 +28,7 @@ Namespace org.nlp.util
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
         'ORIGINAL LINE: public LineIterator(final Reader reader) throws IllegalArgumentException
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        Public Sub New(ByVal reader As Reader)
+        Public Sub New(reader As Reader)
             If reader Is Nothing Then
                 Throw New ArgumentException("输入流不可为null")
             End If
@@ -79,7 +79,7 @@ Namespace org.nlp.util
         ''' 验证字符串，这里的实现是直接返回true </summary>
         ''' <param name="line">  待验证的字符串行 </param>
         ''' <returns> 符合条件的字符串返回 {@code true}，否则返回{@code false} </returns>
-        Protected Friend Overridable Function isValidLine(ByVal line As String) As Boolean
+        Protected Friend Overridable Function isValidLine(line As String) As Boolean
             Return True
         End Function
 
@@ -140,7 +140,7 @@ Namespace org.nlp.util
         ''' 关闭迭代器中的输入流，检查是否为null，忽略异常
         ''' </summary>
         ''' <param name="iterator">  将要被关闭的迭代器 </param>
-        Public Shared Sub closeQuietly(ByVal iterator As LineIterator)
+        Public Shared Sub closeQuietly(iterator As LineIterator)
             If iterator IsNot Nothing Then
                 iterator.close()
             End If

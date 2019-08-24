@@ -18,7 +18,7 @@ Namespace org.nlp.vec
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private pathNeurons_Renamed As IList(Of HuffmanNode)
 
-        Public Sub New(ByVal name As String, ByVal freq As Integer, ByVal vectorSize As Integer)
+        Public Sub New(name As String, freq As Integer, vectorSize As Integer)
             MyBase.New(freq, vectorSize)
             name_Renamed = name
             Dim random As Random = New Random()
@@ -32,7 +32,7 @@ Namespace org.nlp.vec
             Get
                 Return name_Renamed
             End Get
-            Set(ByVal value As String)
+            Set(value As String)
                 name_Renamed = value
             End Set
         End Property

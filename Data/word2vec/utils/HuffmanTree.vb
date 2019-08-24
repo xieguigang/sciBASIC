@@ -10,7 +10,7 @@ Namespace org.nlp.util
 
         '    private TreeSet<HuffmanNode> tree = new TreeSet<HuffmanNode>();
 
-        Public Shared Sub make(Of T1 As HuffmanNode)(ByVal nodes As ICollection(Of T1))
+        Public Shared Sub make(Of T1 As HuffmanNode)(nodes As ICollection(Of T1))
             Dim tree As SortedSet(Of HuffmanNode) = New SortedSet(Of HuffmanNode)(nodes)
 
             While tree.Count > 1
@@ -21,7 +21,7 @@ Namespace org.nlp.util
             End While
         End Sub
 
-        Public Shared Function getPath(ByVal leafNode As HuffmanNode) As IList(Of HuffmanNode)
+        Public Shared Function getPath(leafNode As HuffmanNode) As IList(Of HuffmanNode)
             Dim nodes As IList(Of HuffmanNode) = New List(Of HuffmanNode)()
             Dim hn = leafNode
 

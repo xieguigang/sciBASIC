@@ -12,7 +12,7 @@ Friend Module StringHelperClass
     '	method call or calculated value to ensure that 'start' is obtained just once.
     '----------------------------------------------------------------------------------
     <Extension()>
-    Friend Function SubstringSpecial(ByVal self As String, ByVal start As Integer, ByVal [end] As Integer) As String
+    Friend Function SubstringSpecial(self As String, start As Integer, [end] As Integer) As String
         Return self.Substring(start, [end] - start)
     End Function
 
@@ -20,7 +20,7 @@ Friend Module StringHelperClass
     '	This method is used to replace calls to the 2-arg Java String.startsWith method.
     '------------------------------------------------------------------------------------
     <Extension()>
-    Friend Function StartsWith(ByVal self As String, ByVal prefix As String, ByVal toffset As Integer) As Boolean
+    Friend Function StartsWith(self As String, prefix As String, toffset As Integer) As Boolean
         Return self.IndexOf(prefix, toffset, StringComparison.Ordinal) = toffset
     End Function
 
@@ -28,7 +28,7 @@ Friend Module StringHelperClass
     '	This method is used to replace most calls to the Java String.split method.
     '------------------------------------------------------------------------------
     <Extension()>
-    Friend Function Split(ByVal self As String, ByVal regexDelimiter As String, ByVal trimTrailingEmptyStrings As Boolean) As String()
+    Friend Function Split(self As String, regexDelimiter As String, trimTrailingEmptyStrings As Boolean) As String()
         Dim splitArray = RegularExpressions.Regex.Split(self, regexDelimiter)
 
         If trimTrailingEmptyStrings Then
@@ -49,19 +49,19 @@ Friend Module StringHelperClass
     '-----------------------------------------------------------------------------
     '	These methods are used to replace calls to some Java String constructors.
     '-----------------------------------------------------------------------------
-    Friend Function NewString(ByVal bytes As SByte()) As String
+    Friend Function NewString(bytes As SByte()) As String
         Return NewString(bytes, 0, bytes.Length)
     End Function
 
-    Friend Function NewString(ByVal bytes As SByte(), ByVal index As Integer, ByVal count As Integer) As String
+    Friend Function NewString(bytes As SByte(), index As Integer, count As Integer) As String
         Return Encoding.UTF8.GetString(CType(CObj(bytes), Byte()), index, count)
     End Function
 
-    Friend Function NewString(ByVal bytes As SByte(), ByVal encoding As String) As String
+    Friend Function NewString(bytes As SByte(), encoding As String) As String
         Return NewString(bytes, 0, bytes.Length, encoding)
     End Function
 
-    Friend Function NewString(ByVal bytes As SByte(), ByVal index As Integer, ByVal count As Integer, ByVal encoding As String) As String
+    Friend Function NewString(bytes As SByte(), index As Integer, count As Integer, encoding As String) As String
         Return Text.Encoding.GetEncoding(encoding).GetString(CType(CObj(bytes), Byte()), index, count)
     End Function
 
@@ -69,21 +69,21 @@ Friend Module StringHelperClass
     '	These methods are used to replace calls to the Java String.getBytes methods.
     '--------------------------------------------------------------------------------
     <Extension()>
-    Friend Function GetBytes(ByVal self As String) As SByte()
+    Friend Function GetBytes(self As String) As SByte()
         Return GetSBytesForEncoding(Encoding.UTF8, self)
     End Function
 
     <Extension()>
-    Friend Function GetBytes(ByVal self As String, ByVal encoding As Encoding) As SByte()
+    Friend Function GetBytes(self As String, encoding As Encoding) As SByte()
         Return GetSBytesForEncoding(encoding, self)
     End Function
 
     <Extension()>
-    Friend Function GetBytes(ByVal self As String, ByVal encoding As String) As SByte()
+    Friend Function GetBytes(self As String, encoding As String) As SByte()
         Return GetSBytesForEncoding(Text.Encoding.GetEncoding(encoding), self)
     End Function
 
-    Private Function GetSBytesForEncoding(ByVal encoding As Encoding, ByVal s As String) As SByte()
+    Private Function GetSBytesForEncoding(encoding As Encoding, s As String) As SByte()
         Dim sbytes = New SByte(encoding.GetByteCount(s) - 1) {}
         encoding.GetBytes(s, 0, s.Length, CType(CObj(sbytes), Byte()), 0)
         Return sbytes

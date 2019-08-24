@@ -23,7 +23,7 @@ Namespace org.nlp.vec
             Get
                 Return wordMap_Renamed
             End Get
-            Set(ByVal value As IDictionary(Of String, Single()))
+            Set(value As IDictionary(Of String, Single()))
                 wordMap_Renamed = value
             End Set
         End Property
@@ -36,7 +36,7 @@ Namespace org.nlp.vec
             Get
                 Return topNSize_Renamed
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 topNSize_Renamed = value
             End Set
         End Property
@@ -45,7 +45,7 @@ Namespace org.nlp.vec
             Get
                 Return vectorSize_Renamed
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 vectorSize_Renamed = value
             End Set
         End Property
@@ -55,7 +55,7 @@ Namespace org.nlp.vec
         ''' 私有构造函数 </summary>
         ''' <param name="wordMap"> 词向量哈希表 </param>
         ''' <param name="vectorSize"> 词向量长度 </param>
-        Public Sub New(ByVal wordMap As IDictionary(Of String, Single()), ByVal vectorSize As Integer)
+        Public Sub New(wordMap As IDictionary(Of String, Single()), vectorSize As Integer)
             If wordMap Is Nothing OrElse wordMap.Count = 0 Then
                 Throw New ArgumentException("word2vec的词向量为空，请先训练模型。")
             End If
@@ -73,7 +73,7 @@ Namespace org.nlp.vec
         ''' 使用Word2Vec保存的模型加载词向量模型 </summary>
         ''' <param name="path"> 模型文件路径 </param>
         ''' <returns> 词向量模型 </returns>
-        Public Shared Function loadFromFile(ByVal path As String) As VectorModel
+        Public Shared Function loadFromFile(path As String) As VectorModel
             If ReferenceEquals(path, Nothing) OrElse path.Length = 0 Then
                 Throw New ArgumentException("模型路径可以为null或空。")
             End If
@@ -133,7 +133,7 @@ Namespace org.nlp.vec
         ''' <summary>
         ''' 保存词向量模型 </summary>
         ''' <param name="file"> 模型存放路径 </param>
-        Public Overridable Sub saveModel(ByVal file As File)
+        Public Overridable Sub saveModel(file As File)
             Dim dataOutputStream As DataOutputStream = Nothing
 
             Try
@@ -171,7 +171,7 @@ Namespace org.nlp.vec
         ''' 获取与词word最相近topNSize个词 </summary>
         ''' <param name="queryWord"> 词 </param>
         ''' <returns> 相近词集，若模型不包含词word，则返回空集 </returns>
-        Public Overridable Function similar(ByVal queryWord As String) As ISet(Of WordScore)
+        Public Overridable Function similar(queryWord As String) As ISet(Of WordScore)
             Dim center = wordMap_Renamed.GetValueOrNull(queryWord)
 
             If center Is Nothing Then
@@ -205,7 +205,7 @@ Namespace org.nlp.vec
             Return result
         End Function
 
-        Public Overridable Function similar(ByVal center As Single()) As ISet(Of WordScore)
+        Public Overridable Function similar(center As Single()) As ISet(Of WordScore)
             If center Is Nothing OrElse center.Length <> vectorSize_Renamed Then
                 Return Collections.emptySet()
             End If
@@ -244,7 +244,7 @@ Namespace org.nlp.vec
         ''' <param name="word1"> 词 </param>
         ''' <param name="word2"> 词 </param>
         ''' <returns> 与结果最相近的前topNSize个词 </returns>
-        Public Overridable Function analogy(ByVal word0 As String, ByVal word1 As String, ByVal word2 As String) As SortedSet(Of WordScore)
+        Public Overridable Function analogy(word0 As String, word1 As String, word2 As String) As SortedSet(Of WordScore)
             Dim wv0 = wordMap_Renamed.GetValueOrNull(word0)
             Dim wv1 = wordMap_Renamed.GetValueOrNull(word1)
             Dim wv2 = wordMap_Renamed.GetValueOrNull(word2)
@@ -292,7 +292,7 @@ Namespace org.nlp.vec
             Return result
         End Function
 
-        Public Overridable Function getWordVector(ByVal word As String) As Single()
+        Public Overridable Function getWordVector(word As String) As Single()
             Return wordMap_Renamed.GetValueOrNull(word)
         End Function
 
@@ -303,7 +303,7 @@ Namespace org.nlp.vec
             Public name As String
             Public score As Single
 
-            Public Sub New(ByVal outerInstance As VectorModel, ByVal name As String, ByVal score As Single)
+            Public Sub New(outerInstance As VectorModel, name As String, score As Single)
                 Me.outerInstance = outerInstance
                 Me.name = name
                 Me.score = score
@@ -313,7 +313,7 @@ Namespace org.nlp.vec
                 Return name & vbTab & score
             End Function
 
-            Public Overridable Function CompareTo(ByVal o As WordScore) As Integer Implements IComparable(Of WordScore).CompareTo
+            Public Overridable Function CompareTo(o As WordScore) As Integer Implements IComparable(Of WordScore).CompareTo
                 If score < o.score Then
                     Return 1
                 Else

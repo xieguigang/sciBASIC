@@ -11,6 +11,6 @@ Namespace org.nlp.util
         WriteOnly Property code As Integer
         Property frequency As Integer
         Property parent As HuffmanNode
-        Function merge(ByVal sibling As HuffmanNode) As HuffmanNode
+        Function merge(sibling As HuffmanNode) As HuffmanNode
     End Interface
 End Namespace

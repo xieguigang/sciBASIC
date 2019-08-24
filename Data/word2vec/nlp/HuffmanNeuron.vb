@@ -16,13 +16,13 @@ Namespace org.nlp.vec
         Protected Friend vector As Double()
 
         Public Overridable WriteOnly Property code As Integer Implements HuffmanNode.code
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 code_Renamed = value
             End Set
         End Property
 
         Public Overridable Property frequency As Integer Implements HuffmanNode.frequency
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 frequency_Renamed = value
             End Set
             Get
@@ -31,7 +31,7 @@ Namespace org.nlp.vec
         End Property
 
         Public Overridable Property parent As HuffmanNode Implements HuffmanNode.parent
-            Set(ByVal value As HuffmanNode)
+            Set(value As HuffmanNode)
                 parentNeuron = value
             End Set
             Get
@@ -39,7 +39,7 @@ Namespace org.nlp.vec
             End Get
         End Property
 
-        Public Overridable Function merge(ByVal right As HuffmanNode) As HuffmanNode Implements HuffmanNode.merge
+        Public Overridable Function merge(right As HuffmanNode) As HuffmanNode Implements HuffmanNode.merge
             Dim parent As HuffmanNode = New HuffmanNeuron(frequency_Renamed + right.frequency, vector.Length)
             parentNeuron = parent
             code_Renamed = 0
@@ -48,7 +48,7 @@ Namespace org.nlp.vec
             Return parent
         End Function
 
-        Public Overrides Function compareTo(ByVal hn As HuffmanNode) As Integer
+        Public Overrides Function compareTo(hn As HuffmanNode) As Integer
             If frequency_Renamed > hn.frequency Then
                 Return 1
             Else
@@ -56,7 +56,7 @@ Namespace org.nlp.vec
             End If
         End Function
 
-        Public Sub New(ByVal freq As Integer, ByVal vectorSize As Integer)
+        Public Sub New(freq As Integer, vectorSize As Integer)
             frequency_Renamed = freq
             vector = New Double(vectorSize - 1) {}
             parentNeuron = Nothing

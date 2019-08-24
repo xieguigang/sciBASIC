@@ -16,7 +16,7 @@ Namespace org.nlp.util
             hm = New Dictionary(Of tT, CountInteger)()
         End Sub
 
-        Public Sub New(ByVal initialCapacity As Integer)
+        Public Sub New(initialCapacity As Integer)
             hm = New Dictionary(Of tT, CountInteger)(initialCapacity)
         End Sub
 
@@ -24,12 +24,12 @@ Namespace org.nlp.util
             Private ReadOnly outerInstance As Counter(Of tT)
             Friend count As Integer
 
-            Public Sub New(ByVal outerInstance As Counter(Of tT), ByVal initCount As Integer)
+            Public Sub New(outerInstance As Counter(Of tT), initCount As Integer)
                 Me.outerInstance = outerInstance
                 count = initCount
             End Sub
 
-            Public Overridable Sub [set](ByVal num As Integer)
+            Public Overridable Sub [set](num As Integer)
                 count = num
             End Sub
 
@@ -46,7 +46,7 @@ Namespace org.nlp.util
         ''' 增加一个元素，并增加其计数 </summary>
         ''' <param name="t"> 元素 </param>
         ''' <param name="n"> 计数 </param>
-        Public Overridable Sub add(ByVal t As tT, ByVal n As Integer)
+        Public Overridable Sub add(t As tT, n As Integer)
             Dim newCount As CountInteger = New CountInteger(Me, n)
             Dim oldCount As CountInteger = CSharpImpl.__Assign(hm(t), newCount)
 
@@ -58,7 +58,7 @@ Namespace org.nlp.util
         ''' <summary>
         ''' 增加一个元素，计数默认增加1 </summary>
         ''' <param name="t"> 元素 </param>
-        Public Overridable Sub add(ByVal t As tT)
+        Public Overridable Sub add(t As tT)
             add(t, 1)
         End Sub
 
@@ -66,7 +66,7 @@ Namespace org.nlp.util
         ''' 获得某个元素的计数 </summary>
         ''' <param name="t"> 待查询的元素 </param>
         ''' <returns> 数目 </returns>
-        Public Overridable Function [get](ByVal t As tT) As Integer
+        Public Overridable Function [get](t As tT) As Integer
             Dim count = hm.GetValueOrNull(t)
 
             If count Is Nothing Then
@@ -86,7 +86,7 @@ Namespace org.nlp.util
         ''' <summary>
         ''' 删除一个元素 </summary>
         ''' <param name="t"> 元素 </param>
-        Public Overridable Sub remove(ByVal t As tT)
+        Public Overridable Sub remove(t As tT)
             hm.Remove(t)
         End Sub
 
@@ -116,7 +116,7 @@ Namespace org.nlp.util
             Return sb.ToString()
         End Function
 
-        Public Shared Sub Main(ByVal args As String())
+        Public Shared Sub Main(args As String())
             Dim strKeys = New String() {"1", "2", "3", "1", "2", "1", "3", "3", "3", "1", "2"}
             Dim counter As Counter(Of String) = New Counter(Of String)()
 

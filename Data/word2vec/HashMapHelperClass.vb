@@ -9,7 +9,7 @@ Imports System.Runtime.CompilerServices
 
 Friend Module HashMapHelperClass
     <Extension()>
-    Friend Function SetOfKeyValuePairs(Of TKey, TValue)(ByVal dictionary As IDictionary(Of TKey, TValue)) As HashSet(Of KeyValuePair(Of TKey, TValue))
+    Friend Function SetOfKeyValuePairs(Of TKey, TValue)(dictionary As IDictionary(Of TKey, TValue)) As HashSet(Of KeyValuePair(Of TKey, TValue))
         Dim entries As HashSet(Of KeyValuePair(Of TKey, TValue)) = New HashSet(Of KeyValuePair(Of TKey, TValue))()
 
         For Each keyValuePair In dictionary
@@ -20,7 +20,7 @@ Friend Module HashMapHelperClass
     End Function
 
     <Extension()>
-    Friend Function GetValueOrNull(Of TKey, TValue)(ByVal dictionary As IDictionary(Of TKey, TValue), ByVal key As TKey) As TValue
+    Friend Function GetValueOrNull(Of TKey, TValue)(dictionary As IDictionary(Of TKey, TValue), key As TKey) As TValue
         Dim ret As TValue
         dictionary.TryGetValue(key, ret)
         Return ret
