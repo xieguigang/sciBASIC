@@ -72,7 +72,6 @@
     <Compile Include="HashMapHelperClass.vb" />
     <Compile Include="utils\HuffmanNode.vb" />
     <Compile Include="utils\HuffmanTree.vb" />
-    <Compile Include="utils\LineIterator.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
