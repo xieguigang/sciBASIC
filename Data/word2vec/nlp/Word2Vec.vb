@@ -141,7 +141,7 @@ Namespace org.nlp.vec
         ''' <summary>
         ''' 读取一段文本，统计词频和相邻词语出现的频率，
         ''' 文本将输出到一个临时文件中，以方便之后的训练 </summary>
-        ''' <paramname="tokenizer"> 标记 </param>
+        ''' <param name="tokenizer"> 标记 </param>
         Public Overridable Sub readTokens(ByVal tokenizer As Tokenizer)
             If tokenizer Is Nothing OrElse tokenizer.size() < 1 Then
                 Return
@@ -537,7 +537,7 @@ Namespace org.nlp.vec
 
         ''' <summary>
         ''' 保存训练得到的模型 </summary>
-        ''' <paramname="file"> 模型存放路径 </param>
+        ''' <param name="file"> 模型存放路径 </param>
         Public Overridable Sub saveModel(ByVal file As File)
             Dim dataOutputStream As DataOutputStream = Nothing
 

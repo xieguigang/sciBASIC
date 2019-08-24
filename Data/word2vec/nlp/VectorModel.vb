@@ -53,8 +53,8 @@ Namespace org.nlp.vec
 
         ''' <summary>
         ''' 私有构造函数 </summary>
-        ''' <paramname="wordMap"> 词向量哈希表 </param>
-        ''' <paramname="vectorSize"> 词向量长度 </param>
+        ''' <param name="wordMap"> 词向量哈希表 </param>
+        ''' <param name="vectorSize"> 词向量长度 </param>
         Public Sub New(ByVal wordMap As IDictionary(Of String, Single()), ByVal vectorSize As Integer)
             If wordMap Is Nothing OrElse wordMap.Count = 0 Then
                 Throw New ArgumentException("word2vec的词向量为空，请先训练模型。")
@@ -71,7 +71,7 @@ Namespace org.nlp.vec
 
         ''' <summary>
         ''' 使用Word2Vec保存的模型加载词向量模型 </summary>
-        ''' <paramname="path"> 模型文件路径 </param>
+        ''' <param name="path"> 模型文件路径 </param>
         ''' <returns> 词向量模型 </returns>
         Public Shared Function loadFromFile(ByVal path As String) As VectorModel
             If ReferenceEquals(path, Nothing) OrElse path.Length = 0 Then
@@ -132,7 +132,7 @@ Namespace org.nlp.vec
 
         ''' <summary>
         ''' 保存词向量模型 </summary>
-        ''' <paramname="file"> 模型存放路径 </param>
+        ''' <param name="file"> 模型存放路径 </param>
         Public Overridable Sub saveModel(ByVal file As File)
             Dim dataOutputStream As DataOutputStream = Nothing
 
@@ -169,7 +169,7 @@ Namespace org.nlp.vec
 
         ''' <summary>
         ''' 获取与词word最相近topNSize个词 </summary>
-        ''' <paramname="queryWord"> 词 </param>
+        ''' <param name="queryWord"> 词 </param>
         ''' <returns> 相近词集，若模型不包含词word，则返回空集 </returns>
         Public Overridable Function similar(ByVal queryWord As String) As ISet(Of WordScore)
             Dim center = wordMap_Renamed.GetValueOrNull(queryWord)
@@ -240,9 +240,9 @@ Namespace org.nlp.vec
         ''' <summary>
         ''' 词迁移，即word1 - word0 + word2 的结果，若三个词中有一个不在模型中，
         ''' 也就是没有词向量，则返回空集 </summary>
-        ''' <paramname="word0"> 词 </param>
-        ''' <paramname="word1"> 词 </param>
-        ''' <paramname="word2"> 词 </param>
+        ''' <param name="word0"> 词 </param>
+        ''' <param name="word1"> 词 </param>
+        ''' <param name="word2"> 词 </param>
         ''' <returns> 与结果最相近的前topNSize个词 </returns>
         Public Overridable Function analogy(ByVal word0 As String, ByVal word1 As String, ByVal word2 As String) As SortedSet(Of WordScore)
             Dim wv0 = wordMap_Renamed.GetValueOrNull(word0)

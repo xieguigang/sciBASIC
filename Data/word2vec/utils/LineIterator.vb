@@ -23,7 +23,7 @@ Namespace org.nlp.util
         ''' <summary>
         ''' 构造函数
         ''' </summary>
-        ''' <paramname="reader"> 将要读取的输入流，不能为null </param>
+        ''' <param name="reader"> 将要读取的输入流，不能为null </param>
         ''' <exceptioncref="IllegalArgumentException"> 当reader为null时抛出 </exception>
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
         'ORIGINAL LINE: public LineIterator(final Reader reader) throws IllegalArgumentException
@@ -77,7 +77,7 @@ Namespace org.nlp.util
 
         ''' <summary>
         ''' 验证字符串，这里的实现是直接返回true </summary>
-        ''' <paramname="line">  待验证的字符串行 </param>
+        ''' <param name="line">  待验证的字符串行 </param>
         ''' <returns> 符合条件的字符串返回 {@code true}，否则返回{@code false} </returns>
         Protected Friend Overridable Function isValidLine(ByVal line As String) As Boolean
             Return True
@@ -139,7 +139,7 @@ Namespace org.nlp.util
         ''' <summary>
         ''' 关闭迭代器中的输入流，检查是否为null，忽略异常
         ''' </summary>
-        ''' <paramname="iterator">  将要被关闭的迭代器 </param>
+        ''' <param name="iterator">  将要被关闭的迭代器 </param>
         Public Shared Sub closeQuietly(ByVal iterator As LineIterator)
             If iterator IsNot Nothing Then
                 iterator.close()

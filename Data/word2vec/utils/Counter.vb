@@ -44,8 +44,8 @@ Namespace org.nlp.util
 
         ''' <summary>
         ''' 增加一个元素，并增加其计数 </summary>
-        ''' <paramname="t"> 元素 </param>
-        ''' <paramname="n"> 计数 </param>
+        ''' <param name="t"> 元素 </param>
+        ''' <param name="n"> 计数 </param>
         Public Overridable Sub add(ByVal t As tT, ByVal n As Integer)
             Dim newCount As CountInteger = New CountInteger(Me, n)
             Dim oldCount As CountInteger = CSharpImpl.__Assign(hm(t), newCount)
@@ -57,14 +57,14 @@ Namespace org.nlp.util
 
         ''' <summary>
         ''' 增加一个元素，计数默认增加1 </summary>
-        ''' <paramname="t"> 元素 </param>
+        ''' <param name="t"> 元素 </param>
         Public Overridable Sub add(ByVal t As tT)
             add(t, 1)
         End Sub
 
         ''' <summary>
         ''' 获得某个元素的计数 </summary>
-        ''' <paramname="t"> 待查询的元素 </param>
+        ''' <param name="t"> 待查询的元素 </param>
         ''' <returns> 数目 </returns>
         Public Overridable Function [get](ByVal t As tT) As Integer
             Dim count = hm.GetValueOrNull(t)
@@ -85,7 +85,7 @@ Namespace org.nlp.util
 
         ''' <summary>
         ''' 删除一个元素 </summary>
-        ''' <paramname="t"> 元素 </param>
+        ''' <param name="t"> 元素 </param>
         Public Overridable Sub remove(ByVal t As tT)
             hm.Remove(t)
         End Sub
