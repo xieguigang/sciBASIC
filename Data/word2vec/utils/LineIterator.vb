@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Generic
+Imports System.IO
 
 Namespace org.nlp.util
 
@@ -24,10 +25,6 @@ Namespace org.nlp.util
         ''' 构造函数
         ''' </summary>
         ''' <param name="reader"> 将要读取的输入流，不能为null </param>
-        ''' <exceptioncref="IllegalArgumentException"> 当reader为null时抛出 </exception>
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public LineIterator(final Reader reader) throws IllegalArgumentException
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
         Public Sub New(reader As Reader)
             If reader Is Nothing Then
                 Throw New ArgumentException("输入流不可为null")
@@ -46,8 +43,7 @@ Namespace org.nlp.util
         ''' close()将会被调用，以关闭输入流，并抛出<code>IllegalStateException</code>。
         ''' </summary>
         ''' <returns> 若还有行可供读入，则返回{@code true}，否则返回{@code false} </returns>
-        ''' <exceptioncref="IllegalStateException"> 当有IO异常产生时 </exception>
-        Public Overridable Function hasNext() As Boolean
+        Public Function hasNext() As Boolean
             If Not ReferenceEquals(cachedLine, Nothing) Then
                 Return True
             ElseIf finished Then
@@ -70,7 +66,7 @@ Namespace org.nlp.util
 
                 Catch ioe As IOException
                     close()
-                    Throw New InvalidOperationException(ioe)
+                    Throw
                 End Try
             End If
         End Function
@@ -79,7 +75,7 @@ Namespace org.nlp.util
         ''' 验证字符串，这里的实现是直接返回true </summary>
         ''' <param name="line">  待验证的字符串行 </param>
         ''' <returns> 符合条件的字符串返回 {@code true}，否则返回{@code false} </returns>
-        Protected Friend Overridable Function isValidLine(line As String) As Boolean
+        Protected Friend Function isValidLine(line As String) As Boolean
             Return True
         End Function
 
@@ -87,8 +83,7 @@ Namespace org.nlp.util
         ''' 从 <code>Reader</code> 中读取一行.
         ''' </summary>
         ''' <returns> 输入流中的下一行 </returns>
-        ''' <exceptioncref="NoSuchElementException"> 没有行可读入时抛出 </exception>
-        Public Overridable Function [next]() As String
+        Public Function [next]() As String
             Return nextLine()
         End Function
 
@@ -96,10 +91,9 @@ Namespace org.nlp.util
         ''' 从 <code>Reader</code> 中读取一行
         ''' </summary>
         ''' <returns> 从输入流中读取的一行 </returns>
-        ''' <exceptioncref="NoSuchElementException"> 如果没有行可读入 </exception>
-        Public Overridable Function nextLine() As String
+        Public Function nextLine() As String
             If Not hasNext() Then
-                Throw New NoSuchElementException("No more lines")
+                Throw New KeyNotFoundException("No more lines")
             End If
 
             Dim currentLine = cachedLine
@@ -114,12 +108,12 @@ Namespace org.nlp.util
         ''' <code>Reader</code>将保持打开的状态。这一方法可以
         ''' 安全地多次调用。
         ''' </summary>
-        Public Overridable Sub close()
+        Public Sub close()
             finished = True
 
             Try
                 bufferedReader.Close()
-            Catch e As IOException
+            Catch e As Exception
                 Console.WriteLine(e.ToString())
                 Console.Write(e.StackTrace)
             End Try
@@ -130,8 +124,7 @@ Namespace org.nlp.util
         ''' <summary>
         ''' 不支持的操作
         ''' </summary>
-        ''' <exceptioncref="UnsupportedOperationException"> 每次调用都会抛出 </exception>
-        Public Overridable Sub remove()
+        Public Sub remove()
             Throw New NotSupportedException("Remove unsupported on LineIterator")
         End Sub
 

@@ -8,7 +8,6 @@ Namespace org.nlp.util
     ''' 计数器
     ''' 最初代码来自Ansj的tree-split包中的love.cq.util;
     ''' @author fangy </summary>
-    ''' @param <T> 键类型 </param>
     Public Class Counter(Of tT)
         Private hm As Dictionary(Of tT, CountInteger) = Nothing
 
@@ -29,11 +28,11 @@ Namespace org.nlp.util
                 count = initCount
             End Sub
 
-            Public Overridable Sub [set](num As Integer)
+            Public Sub [set](num As Integer)
                 count = num
             End Sub
 
-            Public Overridable Function value() As Integer
+            Public Function value() As Integer
                 Return count
             End Function
 
@@ -46,7 +45,7 @@ Namespace org.nlp.util
         ''' 增加一个元素，并增加其计数 </summary>
         ''' <param name="t"> 元素 </param>
         ''' <param name="n"> 计数 </param>
-        Public Overridable Sub add(t As tT, n As Integer)
+        Public Sub add(t As tT, n As Integer)
             Dim newCount As CountInteger = New CountInteger(Me, n)
             Dim oldCount As CountInteger = CSharpImpl.__Assign(hm(t), newCount)
 
@@ -58,7 +57,7 @@ Namespace org.nlp.util
         ''' <summary>
         ''' 增加一个元素，计数默认增加1 </summary>
         ''' <param name="t"> 元素 </param>
-        Public Overridable Sub add(t As tT)
+        Public Sub add(t As tT)
             add(t, 1)
         End Sub
 
@@ -66,7 +65,7 @@ Namespace org.nlp.util
         ''' 获得某个元素的计数 </summary>
         ''' <param name="t"> 待查询的元素 </param>
         ''' <returns> 数目 </returns>
-        Public Overridable Function [get](t As tT) As Integer
+        Public Function [get](t As tT) As Integer
             Dim count = hm.GetValueOrNull(t)
 
             If count Is Nothing Then
@@ -79,21 +78,21 @@ Namespace org.nlp.util
         ''' <summary>
         ''' 获取哈希表中键的个数 </summary>
         ''' <returns> 键的数量 </returns>
-        Public Overridable Function size() As Integer
+        Public Function size() As Integer
             Return hm.Count
         End Function
 
         ''' <summary>
         ''' 删除一个元素 </summary>
         ''' <param name="t"> 元素 </param>
-        Public Overridable Sub remove(t As tT)
+        Public Sub remove(t As tT)
             hm.Remove(t)
         End Sub
 
         ''' <summary>
         ''' 输出已构建好的哈希计数表 </summary>
         ''' <returns> 哈希表 </returns>
-        Public Overridable Function keySet() As ISet(Of tT)
+        Public Function keySet() As ISet(Of tT)
             Return hm.Keys
         End Function
 

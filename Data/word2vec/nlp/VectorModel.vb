@@ -1,8 +1,4 @@
-﻿Imports java.util
-Imports System
-Imports System.Collections.Generic
-
-Namespace org.nlp.vec
+﻿Namespace org.nlp.vec
 
     ''' <summary>
     ''' User: fangy
@@ -19,7 +15,7 @@ Namespace org.nlp.vec
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private topNSize_Renamed As Integer = 40
 
-        Public Overridable Property wordMap As IDictionary(Of String, Single())
+        Public Property wordMap As IDictionary(Of String, Single())
             Get
                 Return wordMap_Renamed
             End Get
@@ -32,7 +28,7 @@ Namespace org.nlp.vec
         ''' <summary>
         ''' 获取最相似词的数量 </summary>
         ''' <returns> 最相似词的数量 </returns>
-        Public Overridable Property topNSize As Integer
+        Public Property topNSize As Integer
             Get
                 Return topNSize_Renamed
             End Get
@@ -41,7 +37,7 @@ Namespace org.nlp.vec
             End Set
         End Property
 
-        Public Overridable Property vectorSize As Integer
+        Public Property vectorSize As Integer
             Get
                 Return vectorSize_Renamed
             End Get
@@ -133,7 +129,7 @@ Namespace org.nlp.vec
         ''' <summary>
         ''' 保存词向量模型 </summary>
         ''' <param name="file"> 模型存放路径 </param>
-        Public Overridable Sub saveModel(file As File)
+        Public Sub saveModel(file As File)
             Dim dataOutputStream As DataOutputStream = Nothing
 
             Try
@@ -149,7 +145,7 @@ Namespace org.nlp.vec
                     Next
                 Next
 
-            Catch e As IOException
+            Catch e As Exception
                 Console.WriteLine(e.ToString())
                 Console.Write(e.StackTrace)
             Finally
@@ -160,7 +156,7 @@ Namespace org.nlp.vec
                         dataOutputStream.close()
                     End If
 
-                Catch ioe As IOException
+                Catch ioe As Exception
                     Console.WriteLine(ioe.ToString())
                     Console.Write(ioe.StackTrace)
                 End Try
@@ -171,7 +167,7 @@ Namespace org.nlp.vec
         ''' 获取与词word最相近topNSize个词 </summary>
         ''' <param name="queryWord"> 词 </param>
         ''' <returns> 相近词集，若模型不包含词word，则返回空集 </returns>
-        Public Overridable Function similar(queryWord As String) As ISet(Of WordScore)
+        Public Function similar(queryWord As String) As ISet(Of WordScore)
             Dim center = wordMap_Renamed.GetValueOrNull(queryWord)
 
             If center Is Nothing Then
@@ -205,7 +201,7 @@ Namespace org.nlp.vec
             Return result
         End Function
 
-        Public Overridable Function similar(center As Single()) As ISet(Of WordScore)
+        Public Function similar(center As Single()) As ISet(Of WordScore)
             If center Is Nothing OrElse center.Length <> vectorSize_Renamed Then
                 Return Collections.emptySet()
             End If
@@ -244,7 +240,7 @@ Namespace org.nlp.vec
         ''' <param name="word1"> 词 </param>
         ''' <param name="word2"> 词 </param>
         ''' <returns> 与结果最相近的前topNSize个词 </returns>
-        Public Overridable Function analogy(word0 As String, word1 As String, word2 As String) As SortedSet(Of WordScore)
+        Public Function analogy(word0 As String, word1 As String, word2 As String) As SortedSet(Of WordScore)
             Dim wv0 = wordMap_Renamed.GetValueOrNull(word0)
             Dim wv1 = wordMap_Renamed.GetValueOrNull(word1)
             Dim wv2 = wordMap_Renamed.GetValueOrNull(word2)
@@ -292,7 +288,7 @@ Namespace org.nlp.vec
             Return result
         End Function
 
-        Public Overridable Function getWordVector(word As String) As Single()
+        Public Function getWordVector(word As String) As Single()
             Return wordMap_Renamed.GetValueOrNull(word)
         End Function
 
@@ -313,7 +309,7 @@ Namespace org.nlp.vec
                 Return name & vbTab & score
             End Function
 
-            Public Overridable Function CompareTo(o As WordScore) As Integer Implements IComparable(Of WordScore).CompareTo
+            Public Function CompareTo(o As WordScore) As Integer Implements IComparable(Of WordScore).CompareTo
                 If score < o.score Then
                     Return 1
                 Else

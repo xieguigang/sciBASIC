@@ -5,6 +5,8 @@
 '	This class is used to convert some aspects of the Java String class.
 '-------------------------------------------------------------------------------------------
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports System.Text.RegularExpressions
 
 Friend Module StringHelperClass
     '----------------------------------------------------------------------------------
@@ -29,7 +31,7 @@ Friend Module StringHelperClass
     '------------------------------------------------------------------------------
     <Extension()>
     Friend Function Split(self As String, regexDelimiter As String, trimTrailingEmptyStrings As Boolean) As String()
-        Dim splitArray = RegularExpressions.Regex.Split(self, regexDelimiter)
+        Dim splitArray = Regex.Split(self, regexDelimiter)
 
         If trimTrailingEmptyStrings Then
             If splitArray.Length > 1 Then

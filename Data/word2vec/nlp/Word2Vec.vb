@@ -1,8 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports org.nlp.util
-
-Namespace org.nlp.vec
+﻿Namespace org.nlp.vec
 
 
     ''' <summary>
@@ -10,7 +6,7 @@ Namespace org.nlp.vec
     ''' Word2Vec 算法实现
     ''' </summary>
     Public Class Word2Vec
-        Private logger As Logger = Logger.getLogger("Word2Vec")
+        Private logger As Logger = logger.getLogger("Word2Vec")
         Private windowSize As Integer '文字窗口大小
         Private vectorSize As Integer '词向量的元素个数
 
@@ -53,7 +49,7 @@ Namespace org.nlp.vec
             Friend trainMethod As Method = Method.Skip_Gram
 
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
-            Friend sample_Renamed As Double = 1e-3
+            Friend sample_Renamed As Double = 0.001
             '        private int negativeSample = 0;
 
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
@@ -61,27 +57,27 @@ Namespace org.nlp.vec
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
             Friend numOfThread_Renamed As Integer = 1
 
-            Public Overridable Function setVectorSize(size As Integer) As Factory
+            Public Function setVectorSize(size As Integer) As Factory
                 vectorSize_Renamed = size
                 Return Me
             End Function
 
-            Public Overridable Function setWindow(size As Integer) As Factory
+            Public Function setWindow(size As Integer) As Factory
                 windowSize = size
                 Return Me
             End Function
 
-            Public Overridable Function setFreqThresold(thresold As Integer) As Factory
+            Public Function setFreqThresold(thresold As Integer) As Factory
                 freqThresold_Renamed = thresold
                 Return Me
             End Function
 
-            Public Overridable Function setMethod(method As Method) As Factory
+            Public Function setMethod(method As Method) As Factory
                 trainMethod = method
                 Return Me
             End Function
 
-            Public Overridable Function setSample(rate As Double) As Factory
+            Public Function setSample(rate As Double) As Factory
                 sample_Renamed = rate
                 Return Me
             End Function
@@ -91,22 +87,22 @@ Namespace org.nlp.vec
             '            return this;
             '        }
 
-            Public Overridable Function setAlpha(alpha As Double) As Factory
+            Public Function setAlpha(alpha As Double) As Factory
                 alpha_Renamed = alpha
                 Return Me
             End Function
 
-            Public Overridable Function setAlphaThresold(alpha As Double) As Factory
+            Public Function setAlphaThresold(alpha As Double) As Factory
                 alphaThreshold = alpha
                 Return Me
             End Function
 
-            Public Overridable Function setNumOfThread(numOfThread As Integer) As Factory
+            Public Function setNumOfThread(numOfThread As Integer) As Factory
                 numOfThread_Renamed = numOfThread
                 Return Me
             End Function
 
-            Public Overridable Function build() As Word2Vec
+            Public Function build() As Word2Vec
                 Return New Word2Vec(Me)
             End Function
         End Class
@@ -142,7 +138,7 @@ Namespace org.nlp.vec
         ''' 读取一段文本，统计词频和相邻词语出现的频率，
         ''' 文本将输出到一个临时文件中，以方便之后的训练 </summary>
         ''' <param name="tokenizer"> 标记 </param>
-        Public Overridable Sub readTokens(tokenizer As Tokenizer)
+        Public Sub readTokens(tokenizer As Tokenizer)
             If tokenizer Is Nothing OrElse tokenizer.size() < 1 Then
                 Return
             End If
@@ -210,7 +206,7 @@ Namespace org.nlp.vec
 
         End Sub
 
-        Public Overridable Sub training()
+        Public Sub training()
             If tempCorpus Is Nothing Then
                 Throw New NullReferenceException("训练语料为空，如果之前调用了training()，" & "请调用readLine(String sentence)重新输入语料")
             End If
@@ -454,7 +450,7 @@ Namespace org.nlp.vec
                 Me.corpusQueue = corpusQueue
             End Sub
 
-            Friend Overridable Sub computeAlpha()
+            Friend Sub computeAlpha()
                 SyncLock outerInstance.alphaLock
                     outerInstance.currentWordCount += trainingWordCount
                     outerInstance.alpha = outerInstance.initialAlpha * (1 - outerInstance.currentWordCount / (outerInstance.totalWordCount + 1))
@@ -468,7 +464,7 @@ Namespace org.nlp.vec
                 End SyncLock
             End Sub
 
-            Friend Overridable Sub training()
+            Friend Sub training()
                 '            long nextRandom = 5;
                 For Each line In corpusToBeTrained
                     Dim sentence As IList(Of WordNeuron) = New List(Of WordNeuron)()
@@ -538,7 +534,7 @@ Namespace org.nlp.vec
         ''' <summary>
         ''' 保存训练得到的模型 </summary>
         ''' <param name="file"> 模型存放路径 </param>
-        Public Overridable Sub saveModel(file As File)
+        Public Sub saveModel(file As File)
             Dim dataOutputStream As DataOutputStream = Nothing
 
             Try
@@ -573,7 +569,7 @@ Namespace org.nlp.vec
             End Try
         End Sub
 
-        Public Overridable Function outputVector() As VectorModel
+        Public Function outputVector() As VectorModel
             Dim wordMapConverted As IDictionary(Of String, Single()) = New Dictionary(Of String, Single())()
             Dim wordKey As String
             Dim vector As Single()

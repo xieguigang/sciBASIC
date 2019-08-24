@@ -1,10 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports HuffmanNode = org.nlp.util.HuffmanNode
+﻿Imports HuffmanNode = org.nlp.util.HuffmanNode
 Imports HuffmanTree = org.nlp.util.HuffmanTree
 
 Namespace org.nlp.vec
-
 
     ''' <summary>
     ''' Created by fangy on 13-12-17.
@@ -13,9 +10,7 @@ Namespace org.nlp.vec
     Public Class WordNeuron
         Inherits HuffmanNeuron
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private name_Renamed As String
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private pathNeurons_Renamed As IList(Of HuffmanNode)
 
         Public Sub New(name As String, freq As Integer, vectorSize As Integer)
@@ -28,7 +23,7 @@ Namespace org.nlp.vec
             Next
         End Sub
 
-        Public Overridable Property name As String
+        Public Property name As String
             Get
                 Return name_Renamed
             End Get
@@ -37,7 +32,7 @@ Namespace org.nlp.vec
             End Set
         End Property
 
-        Public Overridable ReadOnly Property pathNeurons As IList(Of HuffmanNode)
+        Public ReadOnly Property pathNeurons As IList(Of HuffmanNode)
             Get
 
                 If pathNeurons_Renamed IsNot Nothing Then
