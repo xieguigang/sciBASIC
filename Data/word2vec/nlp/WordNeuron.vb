@@ -1,7 +1,6 @@
-﻿Imports HuffmanNode = org.nlp.util.HuffmanNode
-Imports HuffmanTree = org.nlp.util.HuffmanTree
+﻿Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
 
-Namespace org.nlp.vec
+Namespace NlpVec
 
     ''' <summary>
     ''' Created by fangy on 13-12-17.

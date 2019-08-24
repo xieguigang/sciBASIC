@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Generic
 
-Namespace org.nlp.util
+Namespace utils
 
     ''' <summary>
     ''' Created by fangy on 13-12-17.

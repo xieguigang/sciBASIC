@@ -1,4 +1,4 @@
-﻿Namespace org.nlp.vec
+﻿Namespace NlpVec
 
     ''' <summary>
     ''' User: fangy

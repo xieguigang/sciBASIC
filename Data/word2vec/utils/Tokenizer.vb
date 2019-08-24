@@ -1,6 +1,6 @@
 ﻿Imports System.Text
 
-Namespace org.nlp.util
+Namespace utils
 
     ''' <summary>
     ''' Created by fangy on 13-12-13.

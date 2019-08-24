@@ -2,7 +2,7 @@
 Imports System.Collections.Generic
 Imports System.Text
 
-Namespace org.nlp.util
+Namespace utils
 
     ''' <summary>
     ''' 计数器
@@ -47,7 +47,10 @@ Namespace org.nlp.util
         ''' <param name="n"> 计数 </param>
         Public Sub add(t As tT, n As Integer)
             Dim newCount As CountInteger = New CountInteger(Me, n)
-            Dim oldCount As CountInteger = CSharpImpl.__Assign(hm(t), newCount)
+            Dim oldCount As CountInteger
+
+            hm(t) = newCount
+            oldCount = newCount
 
             If oldCount IsNot Nothing Then
                 newCount.set(oldCount.value() + n)
@@ -100,7 +103,7 @@ Namespace org.nlp.util
         ''' 将计数器转换为字符串 </summary>
         ''' <returns> 字符串 </returns>
         Public Overrides Function ToString() As String
-            Dim iterator As IEnumerator(Of KeyValuePair(Of tT, CountInteger)) = SetOfKeyValuePairs(Of tT, Global.org.nlp.util.Counter(Of tT).CountInteger)(hm).GetEnumerator()
+            Dim iterator As IEnumerator(Of KeyValuePair(Of tT, CountInteger)) = SetOfKeyValuePairs(Of tT, Counter(Of tT).CountInteger)(hm).GetEnumerator()
             Dim sb As StringBuilder = New StringBuilder()
             Dim [next] As KeyValuePair(Of tT, CountInteger) = Nothing
 
@@ -130,13 +133,5 @@ Namespace org.nlp.util
             Console.WriteLine(counter.get("9"))
             '        System.out.println(Long.MAX_VALUE);
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Namespace
