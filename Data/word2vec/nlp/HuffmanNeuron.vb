@@ -8,10 +8,8 @@ Namespace org.nlp.vec
     Public Class HuffmanNeuron
         Implements HuffmanNode
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Protected Friend frequency_Renamed As Integer = 0
         Protected Friend parentNeuron As HuffmanNode
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Protected Friend code_Renamed As Integer = 0
         Protected Friend vector As Double()
 

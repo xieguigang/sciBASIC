@@ -41,20 +41,20 @@
 
         Public Class Factory
 
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
+
             Friend vectorSize_Renamed As Integer = 200
             Friend windowSize As Integer = 5
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
+
             Friend freqThresold_Renamed As Integer = 5
             Friend trainMethod As Method = Method.Skip_Gram
 
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
+
             Friend sample_Renamed As Double = 0.001
             '        private int negativeSample = 0;
 
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
+
             Friend alpha_Renamed As Double = 0.025, alphaThreshold As Double = 0.0001
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
+
             Friend numOfThread_Renamed As Integer = 1
 
             Public Function setVectorSize(size As Integer) As Factory

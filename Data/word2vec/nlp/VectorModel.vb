@@ -7,12 +7,8 @@
     ''' </summary>
     Public Class VectorModel
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private wordMap_Renamed As IDictionary(Of String, Single()) = New Dictionary(Of String, Single())()
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private vectorSize_Renamed As Integer = 200 '特征数
-
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private topNSize_Renamed As Integer = 40
 
         Public Property wordMap As IDictionary(Of String, Single())

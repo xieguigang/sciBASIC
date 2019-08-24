@@ -1,5 +1,4 @@
-﻿Imports System.Collections.Generic
-Imports System.Text
+﻿Imports System.Text
 
 Namespace org.nlp.util
 
@@ -16,7 +15,6 @@ Namespace org.nlp.util
 
         Public Sub New()
             tokens = New LinkedList(Of String)()
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
             tokenIter = tokens.GetEnumerator()
         End Sub
 
@@ -26,7 +24,6 @@ Namespace org.nlp.util
         ''' <param name="delim"> 分割符 </param>
         Public Sub New(text As String, delim As String)
             tokens = Arrays.asList(text.Split(delim, True))
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
             tokenIter = tokens.GetEnumerator()
         End Sub
 
@@ -41,7 +38,6 @@ Namespace org.nlp.util
         ''' 遍历记号时，查询是否还有记号未遍历 </summary>
         ''' <returns> 若还有记号未遍历，则返回true，否则返回false。 </returns>
         Public Function hasMoreTokens() As Boolean
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
             Return tokenIter.hasNext()
         End Function
 
@@ -49,8 +45,6 @@ Namespace org.nlp.util
         ''' 遍历记号时获得下一个之前未遍历的记号 </summary>
         ''' <returns> 记号 </returns>
         Public Function nextToken() As String
-
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
             Return tokenIter.[next]()
         End Function
 
@@ -79,9 +73,8 @@ Namespace org.nlp.util
             If tokens.Count < 1 Then
                 Return sb.ToString()
             End If
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
+
             Dim tempTokenIter As IEnumerator(Of String) = tokens.GetEnumerator()
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
             sb.Append(tempTokenIter.[next]())
 
             While tempTokenIter.MoveNext()
