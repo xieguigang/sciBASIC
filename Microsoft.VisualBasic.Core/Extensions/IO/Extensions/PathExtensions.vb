@@ -171,7 +171,10 @@ Public Module PathExtensions
     ''' Make directory
     ''' </summary>
     ''' <param name="DIR"></param>
-    <Extension> Public Sub MkDIR(DIR$, Optional throwEx As Boolean = True)
+    ''' <remarks>
+    ''' returns a boolean indicates that directory create success?
+    ''' </remarks>
+    <Extension> Public Function MkDIR(DIR$, Optional throwEx As Boolean = True) As Boolean
         If DIR.StringEmpty OrElse DIR = "./" OrElse DIR = ".\" Then
             ' 2017-12-25
             ' 当前文件夹
@@ -183,6 +186,7 @@ Public Module PathExtensions
 
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
+            Return True
         Catch ex As Exception
             ex = New Exception("DIR value is: " & DIR, ex)
 
@@ -192,7 +196,9 @@ Public Module PathExtensions
                 Call App.LogException(ex)
             End If
         End Try
-    End Sub
+
+        Return False
+    End Function
 
     <Extension>
     Public Function PathCombine(path As String, addTag As String) As String

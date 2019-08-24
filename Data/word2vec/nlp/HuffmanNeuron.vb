@@ -46,7 +46,7 @@ Namespace NlpVec
             Return parent
         End Function
 
-        Public Overrides Function compareTo(hn As HuffmanNode) As Integer
+        Public Function compareTo(hn As HuffmanNode) As Integer Implements IComparable(Of HuffmanNode).CompareTo
             If frequency_Renamed > hn.frequency Then
                 Return 1
             Else

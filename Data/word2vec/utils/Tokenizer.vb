@@ -23,7 +23,7 @@ Namespace utils
         ''' <param name="text"> 文本 </param>
         ''' <param name="delim"> 分割符 </param>
         Public Sub New(text As String, delim As String)
-            tokens = Arrays.asList(text.Split(delim, True))
+            tokens = text.Split(delim, True).AsList
             tokenIter = tokens.GetEnumerator()
         End Sub
 
@@ -52,7 +52,7 @@ Namespace utils
         ''' 向原有记号序列的末尾添加一个记号 </summary>
         ''' <param name="token"> 待添加的记号 </param>
         Public Sub add(token As String)
-            If ReferenceEquals(token, Nothing) Then
+            If token Is Nothing Then
                 Return
             End If
 
@@ -68,20 +68,11 @@ Namespace utils
         ''' <param name="delim"> 分割符 </param>
         ''' <returns> 记号由分割符连接的字符串 </returns>
         Public Overloads Function ToString(delim As String) As String
-            Dim sb As StringBuilder = New StringBuilder()
-
             If tokens.Count < 1 Then
-                Return sb.ToString()
+                Return ""
+            Else
+                Return tokens.JoinBy(delim)
             End If
-
-            Dim tempTokenIter As IEnumerator(Of String) = tokens.GetEnumerator()
-            sb.Append(tempTokenIter.[next]())
-
-            While tempTokenIter.MoveNext()
-                sb.Append(delim).Append(tempTokenIter.Current)
-            End While
-
-            Return sb.ToString()
         End Function
     End Class
 End Namespace

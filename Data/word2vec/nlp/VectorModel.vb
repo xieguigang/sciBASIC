@@ -102,7 +102,7 @@
                     wordMapLoaded(key) = value
                 Next
 
-            Catch ioe As IOException
+            Catch ioe As Exception
                 Console.WriteLine(ioe.ToString())
                 Console.Write(ioe.StackTrace)
             Finally
@@ -113,7 +113,7 @@
                         dis.close()
                     End If
 
-                Catch ioe As IOException
+                Catch ioe As Exception
                     Console.WriteLine(ioe.ToString())
                     Console.Write(ioe.StackTrace)
                 End Try
@@ -167,7 +167,7 @@
             Dim center = wordMap_Renamed.GetValueOrNull(queryWord)
 
             If center Is Nothing Then
-                Return Collections.emptySet()
+                Return New [Set](Of WordScore)
             End If
 
             Dim resultSize = If(wordMap_Renamed.Count < topNSize_Renamed, wordMap_Renamed.Count, topNSize_Renamed + 1)
@@ -199,7 +199,7 @@
 
         Public Function similar(center As Single()) As ISet(Of WordScore)
             If center Is Nothing OrElse center.Length <> vectorSize_Renamed Then
-                Return Collections.emptySet()
+                Return [Set](Of WordScore)()
             End If
 
             Dim resultSize = If(wordMap_Renamed.Count < topNSize_Renamed, wordMap_Renamed.Count, topNSize_Renamed)

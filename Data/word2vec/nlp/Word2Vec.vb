@@ -1,4 +1,7 @@
-﻿Namespace NlpVec
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
+
+Namespace NlpVec
 
 
     ''' <summary>
@@ -36,7 +39,7 @@
 
         ' 单词或短语计数器
         Private wordCounter As Counter(Of String) = New Counter(Of String)()
-        Private tempCorpus As File = Nothing
+        Private tempCorpus As FileStream = Nothing
         Private tempCorpusWriter As StreamWriter
 
         Public Class Factory
@@ -152,36 +155,29 @@
             Try
 
                 If tempCorpus Is Nothing Then
-                    Dim tempDir As File = New File("temp")
+                    Dim tempDir As String = App.GetTempFile
 
-                    If Not tempDir.exists() AndAlso Not tempDir.directory Then
-                        Dim tempCreated As Boolean = tempDir.mkdir()
+                    If Not tempDir.DirectoryExists Then
+                        Dim tempCreated As Boolean = tempDir.MkDIR
 
                         If Not tempCreated Then
-                            logger.severe("unable to create temp file in " & tempDir.absolutePath)
-                            '                        System.out.println("临时文件夹创建失败，位于" + tempDir.getAbsolutePath());
+                            logger.severe("unable to create temp file in " & tempDir.GetDirectoryFullPath)
                         End If
                     End If
 
-                    tempCorpus = File.createTempFile("tempCorpus", ".txt", tempDir)
-                    '                tempCorpus = File.createTempFile("tempCorpus", ".txt");
-                    If tempCorpus.exists() Then
-                        logger.info("create temp file successfully in" & tempCorpus.absolutePath)
-                        '                    System.out.println("临时文件创建成功，位于" + tempCorpus.getAbsolutePath());
-                    End If
-
+                    tempCorpus = App.GetAppSysTempFile(".txt", App.PID, "tempCorpus").Open
                     tempCorpusWriter = New StreamWriter(tempCorpus)
                 End If
 
                 tempCorpusWriter.Write(tokenizer.ToString(" "))
-                tempCorpusWriter.newLine()
-            Catch e As IOException
+                tempCorpusWriter.WriteLine()
+            Catch e As Exception
                 Console.WriteLine(e.ToString())
                 Console.Write(e.StackTrace)
 
                 Try
                     tempCorpusWriter.Close()
-                Catch e1 As IOException
+                Catch e1 As Exception
                     Console.WriteLine(e1.ToString())
                     Console.Write(e1.StackTrace)
                 End Try
@@ -260,16 +256,16 @@
             Catch e As IOException
                 Console.WriteLine(e.ToString())
                 Console.Write(e.StackTrace)
-            Catch e As InterruptedException
+            Catch e As Exception
                 Console.WriteLine(e.ToString())
                 Console.Write(e.StackTrace)
-            Catch e As ExecutionException
+            Catch e As Exception
                 Console.WriteLine(e.ToString())
                 Console.Write(e.StackTrace)
             Finally
                 LineIterator.closeQuietly(li)
 
-                If Not tempCorpus.delete() Then
+                If Not tempCorpus.Delete() Then
                     logger.severe("unable to delete temp file in " & tempCorpus.absolutePath)
                     '                System.err.println("临时文件未被正确删除，位于"+tempCorpus.getAbsolutePath());
                 End If
