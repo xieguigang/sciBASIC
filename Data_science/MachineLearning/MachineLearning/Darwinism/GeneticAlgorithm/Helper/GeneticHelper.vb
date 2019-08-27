@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::dd49afa862c1395d07d09a402ba5ab91, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GeneticHelper
-    ' 
-    '         Function: InitialPopulation
-    ' 
-    '         Sub: ByteMutate, (+2 Overloads) Crossover, (+3 Overloads) Mutate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GeneticHelper
+' 
+'         Function: InitialPopulation
+' 
+'         Sub: ByteMutate, (+2 Overloads) Crossover, (+3 Overloads) Mutate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.ValueTypes
@@ -227,8 +228,15 @@ Namespace Darwinism.GAF.Helper
         ''' in real life it could be more complex.
         ''' </summary>
         <Extension>
-        Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, popSize%, Optional parallel As Boolean = True, Optional addBase As Boolean = True) As Population(Of T)
-            Return base.InitialPopulation(New Population(Of T)(New PopulationList(Of T), parallel) With {.capacitySize = popSize}, addBase)
+        Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, popSize%,
+                                                                             Optional parallel As Boolean = True,
+                                                                             Optional addBase As Boolean = True,
+                                                                             Optional parallelInitialize As Boolean = True) As Population(Of T)
+            Return base.InitialPopulation(
+                population:=New Population(Of T)(New PopulationList(Of T), parallel) With {.capacitySize = popSize},
+                addBase:=addBase,
+                parallelInitialize:=parallelInitialize
+            )
         End Function
 
         ''' <summary>
@@ -238,7 +246,9 @@ Namespace Darwinism.GAF.Helper
         ''' (如果<paramref name="population"/>对象的构造函数所传递的fitness计算函数是False，则整个GA的计算过程为串行计算过程)
         ''' </summary>
         <Extension>
-        Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, population As IPopulation(Of T), Optional addBase As Boolean = True) As Population(Of T)
+        Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, population As IPopulation(Of T),
+                                                                             Optional addBase As Boolean = True,
+                                                                             Optional parallelInitialize As Boolean = True) As Population(Of T)
             Dim time As Double = App.ElapsedMilliseconds
             Dim populationSize% = population.capacitySize
 
@@ -255,7 +265,9 @@ Namespace Darwinism.GAF.Helper
             ' Each member of initial population
             ' is mutated clone of base chromosome
             Dim mutations As IEnumerable(Of T) = From i As Integer
-                                                 In populationSize.SeqRandom.AsParallel
+                                                 In populationSize _
+                                                     .SeqRandom _
+                                                     .Populate(parallelInitialize)
                                                  Select base.Mutate
             ' 使用并行化, 在处理大型的数据集的时候可以在这里比较明显的提升计算性能
             For Each chr As T In mutations

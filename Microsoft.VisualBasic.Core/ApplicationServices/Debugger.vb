@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::04369fce4edad7572df6e2634f9e59eb, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module VBDebugger
-    ' 
-    '     Function: die, LinqProc
-    '     Delegate Sub
-    ' 
-    '         Properties: ForceSTDError, Mute, UsingxConsole
-    ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, this
-    '                   Warning
-    ' 
-    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
-    '              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module VBDebugger
+' 
+'     Function: die, LinqProc
+'     Delegate Sub
+' 
+'         Properties: ForceSTDError, Mute, UsingxConsole
+' 
+'         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, this
+'                   Warning
+' 
+'         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
+'              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,7 +80,7 @@ Public Module VBDebugger
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandle
         Return New ExceptionHandle With {
-            .Message = message,
+            .message = message,
             .failure = failure Or defaultAssert
         }
     End Function
@@ -372,19 +372,8 @@ Public Module VBDebugger
     End Sub
 
     <Extension> Public Sub __DEBUG_ECHO(Of T)(value As T, <CallerMemberName> Optional memberName As String = "")
-        Call (Scripting.InputHandler.ToString(value) & "              @" & memberName).__DEBUG_ECHO
+        Call ($"<{memberName}> {Scripting.InputHandler.ToString(value)}").__DEBUG_ECHO
     End Sub
-
-    ''' <summary>
-    ''' Returns the current function name.
-    ''' </summary>
-    ''' <param name="caller">
-    ''' The caller function name, do not assign any value to this parameter! Just leave it blank.
-    ''' </param>
-    ''' <returns></returns>
-    Public Function this(<CallerMemberName> Optional caller As String = "") As String
-        Return caller
-    End Function
 
     <Extension> Public Sub Echo(Of T)(array As IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "")
         Call String.Join(", ", array.Select(Function(obj) Scripting.ToString(obj)).ToArray).__DEBUG_ECHO

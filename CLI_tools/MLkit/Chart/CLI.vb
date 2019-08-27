@@ -134,9 +134,15 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
     Public Function ROC(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ROC.png"
-        Dim data = DataSet.LoadDataSet([in]).CreateSerial
+        Dim data = DataSet.LoadDataSet([in]).ToArray
 
-        Return ROCPlot.Plot(data, showReference:=True) _
+        If data.Length = 0 Then
+            Throw New EntryPointNotFoundException($"The input data file '{[in].GetFullPath}' is not found on your file system!")
+        End If
+
+        Dim curveSerial As SerialData = data.CreateSerial
+
+        Return ROCPlot.Plot(curveSerial, showReference:=True) _
             .Save(out) _
             .CLICode
     End Function

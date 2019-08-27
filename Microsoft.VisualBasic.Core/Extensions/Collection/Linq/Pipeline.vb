@@ -73,5 +73,10 @@ Namespace Linq
         Public Sub DoCall(Of T)(input As T, apply As Action(Of T))
             Call apply(input)
         End Sub
+
+        <Extension>
+        Public Function PipeOf(Of T, Rest)(input As T, task As Action(Of T, Rest)) As Action(Of Rest)
+            Return Sub(a) task(input, a)
+        End Function
     End Module
 End Namespace

@@ -114,7 +114,7 @@ Namespace Darwinism.GAF
                     If Not reporter Is Nothing Then
                         Call reporter(i, .ByRef, core)
                     Else
-                        Call takeBestSnapshot(core.Best, .ByRef)
+                        Call .DoCall(core.Best.PipeOf(takeBestSnapshot))
                     End If
 
                     ' NaN的结果值与阈值相比较也是小于零的
@@ -128,31 +128,7 @@ Namespace Darwinism.GAF
                         Dim firstError# = errors.First
 
                         If Math.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
-                            ' 因为已经很长时间没有变化误差了
-                            ' 所以最佳的个体肯定已经陷入了局部最优
-                            Dim bestSeed As Chr = core.Best
-                            Dim seed As Chr = bestSeed _
-                                .Mutate _
-                                .With(Sub(c) c.MutationRate = core.Best.MutationRate)
-                            ' do not add the local best result when reset the GA system
-                            ' so add base is set to false
-                            Dim newPop As Population(Of Chr) = core.Best.InitialPopulation(
-                                population:=New Population(Of Chr)(core.populationCreator(), core.population.Pcompute) With {
-                                    .capacitySize = core.population.capacitySize
-                                },
-                                addBase:=False
-                            )
-                            Dim newCore As New GeneticAlgorithm(Of Chr)(
-                                population:=newPop,
-                                fitnessFunc:=core.GetRawFitnessModel,
-                                replacementStrategy:=core.popStrategy.type,
-                                seeds:=core.seeds
-                            )
-
-                            core = newCore
-
-                            Call "GA module do RE-seeding as local optimal solution was found...".Warning
-                            Call takeBestSnapshot(bestSeed, .ByRef)
+                            Call .DoCall(AddressOf reset)
 
                             ' 如果在这里不替换一下的话
                             ' 会导致频繁出现重置的现象
@@ -166,6 +142,34 @@ Namespace Darwinism.GAF
             Next
 
             Call "Exit GA training loop due to the reason of reach iteration Upbound...".__DEBUG_ECHO
+        End Sub
+
+        Private Sub reset(fitness As Double)
+            ' 因为已经很长时间没有变化误差了
+            ' 所以最佳的个体肯定已经陷入了局部最优
+            Dim bestSeed As Chr = core.Best
+            Dim seed As Chr = bestSeed _
+                .Mutate _
+                .With(Sub(c) c.MutationRate = core.Best.MutationRate)
+            ' do not add the local best result when reset the GA system
+            ' so add base is set to false
+            Dim newPop As Population(Of Chr) = core.Best.InitialPopulation(
+                population:=New Population(Of Chr)(core.populationCreator(), core.population.Pcompute) With {
+                    .capacitySize = core.population.capacitySize
+                },
+                addBase:=False
+            )
+            Dim newCore As New GeneticAlgorithm(Of Chr)(
+                population:=newPop,
+                fitnessFunc:=core.GetRawFitnessModel,
+                replacementStrategy:=core.popStrategy.type,
+                seeds:=core.seeds
+            )
+
+            core = newCore
+
+            Call "GA module do RE-seeding as local optimal solution was found...".Warning
+            Call takeBestSnapshot(bestSeed, fitness)
         End Sub
 
         ''' <summary>

@@ -114,7 +114,7 @@ Namespace Math
         ''' 不同的代码重复使用这个种子，这样子可以尽量的模拟出真正的随机行为
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property seeds As New Random()
+        Public ReadOnly Property seeds As New Random(Now.Millisecond * Now.Second + 1)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RandomSingle() As Double
