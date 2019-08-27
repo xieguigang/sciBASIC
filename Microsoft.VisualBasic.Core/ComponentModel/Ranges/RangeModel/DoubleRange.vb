@@ -279,15 +279,14 @@ Namespace ComponentModel.Ranges.Model
             If Length = 0 Then
                 Return {}
             Else
-                Dim delta# = Length / n
-                Dim out As New List(Of Double)
-
-                For x As Double = Min To Max Step delta
-                    out += x
-                Next
-
-                Return out
+                Return Enumerate(Length / n).ToArray
             End If
+        End Function
+
+        Public Iterator Function Enumerate(resolution#) As IEnumerable(Of Double)
+            For x As Double = Min To Max Step resolution
+                Yield x
+            Next
         End Function
 
         ''' <summary>
