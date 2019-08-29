@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1f0424c9e349866c8d09d0b932d890a, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
+﻿#Region "Microsoft.VisualBasic::ece85b48cb0e81335a439253bf440635, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: CreateReport
     ' 
-    '         Sub: Terminate, Train
+    '         Sub: reset, Terminate, Train
     ' 
     '     Structure outPrint
     ' 

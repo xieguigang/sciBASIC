@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e26d396282da51f3f22626ac0818a91, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
+﻿#Region "Microsoft.VisualBasic::6a175482ce4e5718fbac45d5c2542b07, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '         Function: GetAccentColors
     ' 
-    '         Sub: __loadAllThemes
+    '         Sub: InternalLoadAllThemes
     ' 
     '     Class Theme
     ' 

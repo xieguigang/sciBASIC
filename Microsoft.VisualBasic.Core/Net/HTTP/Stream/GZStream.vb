@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec105b39efee699fc535c65d9f0f9b44, Microsoft.VisualBasic.Core\Net\HTTP\Stream\GZStream.vb"
+﻿#Region "Microsoft.VisualBasic::8cdfb3a798e95ad68f02410f067b810c, Microsoft.VisualBasic.Core\Net\HTTP\Stream\GZStream.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Module GZipStream
+    '     Module GZipStreamHandler
     ' 
     '         Function: AddGzipMagic, GZipAsBase64, GZipStream, UnGzipBase64, UnGzipStream
     ' 

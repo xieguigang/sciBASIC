@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4704838d4c3268f9e6edc6b4bfa1f379, Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
+﻿#Region "Microsoft.VisualBasic::84ebe917805a662f87a5ed3016710b8b, Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
 
     ' Author:
     ' 

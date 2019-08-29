@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::484633d99c04c0d2b4972c91dd480373, Data_science\Mathematica\Math\Math\Numerics\HalfHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a431a5efd7f81c7354f3f2f0fb331334, Data_science\Mathematica\Math\Math\Numerics\HalfHelper.vb"
 
     ' Author:
     ' 
@@ -245,4 +245,3 @@ Namespace Numerics
         End Function
     End Class
 End Namespace
-

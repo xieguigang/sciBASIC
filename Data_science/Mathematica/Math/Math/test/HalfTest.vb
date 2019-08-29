@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::471745bc5875447b341dec2cde7af288, Data_science\Mathematica\Math\Math\test\HalfTest.vb"
+﻿#Region "Microsoft.VisualBasic::488dfb38965d6d598471aea5b47118d4, Data_science\Mathematica\Math\Math\Test\HalfTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module HalfTest
     ' 
-    '     Sub: Main, memoryTest
+    '     Sub: Main, MathTest, memoryTest
     ' 
     ' /********************************************************************************/
 
@@ -121,4 +121,3 @@ Module HalfTest
         Pause()
     End Sub
 End Module
-

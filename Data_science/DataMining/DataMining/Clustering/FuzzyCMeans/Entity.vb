@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c886113e741a26d955e8d7562fed54bc, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::5dfd4a93630853186c09260e549e2f2c, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Entity.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class Entity
+    '     Class FuzzyCMeansEntity
     ' 
     '         Properties: MarkClusterCenter, Memberships, ProbablyMembership
     ' 

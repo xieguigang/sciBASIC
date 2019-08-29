@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bea2fcf0b202bead47ed1911bd38274, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\HalfVector.vb"
+﻿#Region "Microsoft.VisualBasic::c75cdf78a632b6f3b9f8e5fbdae80586, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\HalfVector.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     '         Function: AsVector, ToString
-    '         Operators: (+2 Overloads) -, (+3 Overloads) *, (+2 Overloads) /, (+2 Overloads) ^, (+2 Overloads) +
+    '         Operators: (+2 Overloads) -, (+4 Overloads) *, (+2 Overloads) /, (+3 Overloads) ^, (+3 Overloads) +
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d36972eb0db76a21d3c01728f21b71d, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
+﻿#Region "Microsoft.VisualBasic::397f4575f6d432a951f7a422e85c23ee, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Module LongestCommonSubsequenceExtension
     ' 
-    '         Function: __equals, MaxLengthSubString, MaxSet
+    '         Function: charEquals, MaxLengthSubString, MaxSet
     ' 
-    '         Sub: __LCS
+    '         Sub: doLCSInternal
     ' 
     ' 
     ' /********************************************************************************/

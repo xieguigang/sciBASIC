@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99182a5af91e1e16afeddacac8e0b8e, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection.vb"
+﻿#Region "Microsoft.VisualBasic::6ecaea55568818c5640d9ca38d5ac3b0, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,7 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     '         Function: GetEnumerator, GetValues, IEnumerable_GetEnumerator, ToString
+    '         Operators: <>, =
     ' 
     ' 
     ' /********************************************************************************/

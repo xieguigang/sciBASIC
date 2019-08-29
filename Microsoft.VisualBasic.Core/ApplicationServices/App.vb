@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55ada024e60aa0a327e8b150bbf2f188, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::0ef8bf344a7af30b53867732f3d6f4e5, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@
     '                 LogErrDIR, NanoTime, NextTempName, OutFile, PID
     '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
     '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunningInGitBash
-    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdOut
-    '                 SysTemp, UnixTimeStamp, UserHOME, Version
+    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
+    '                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
@@ -52,9 +52,9 @@
     '               (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal, SelfFolk
     '               SelfFolks, Shell, tempCode, TemporaryEnvironment, TraceBugs
     ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
-    '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
-    '          SetBufferSize, StartGC, StopGC
+    '     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
+    '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
+    '          RunAsAdmin, SetBufferSize, StartGC, StopGC
     ' 
     ' /********************************************************************************/
 
@@ -178,6 +178,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property StdOut As [Default](Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
+    Public ReadOnly Property StdInput As [Default](Of TextReader) = New StreamReader(Console.OpenStandardInput)
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -1030,6 +1031,13 @@ Public Module App
 
 #Region "CLI interpreter"
 
+    ''' <summary>
+    ''' 当前的应用程序是否退出运行了? 当调用<see cref="App.Exit(Integer)"/>方法的时候, 除了会终止程序的运行
+    ''' 还会讲这个属性设置为False
+    ''' 
+    ''' 在应用程序框架中, 有一些组件的线程会需要依赖于这个属性值来自动停止运行
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Running As Boolean = True
 
     ''' <summary>

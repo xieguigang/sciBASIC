@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f4aa26b27402a5c7dc82a34c9cac269, gr\network-visualization\Datavisualization.Network\Graph\Model\GraphData.vb"
+﻿#Region "Microsoft.VisualBasic::cd78ccb3910e477e895c49ae78ee3afe, gr\network-visualization\Datavisualization.Network\Graph\Model\GraphData.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '     Class EdgeData
     ' 
-    '         Properties: length, weight
+    '         Properties: controlsPoint, length, weight
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: Clone, ToString

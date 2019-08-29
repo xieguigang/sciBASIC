@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ecd7b473e0dc43dfa7dec39c98e5467, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::746397a3e498941b6c5ecaa188fa1fb3, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\STDIO.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module STDIO
     ' 
-    '         Function: __testEquals, MsgBox, scanf, ZeroFill
+    '         Function: charTestEquals, MsgBox, scanf, ZeroFill
     ' 
     '         Sub: cat, fprintf, print, printf
     '         Delegate Function
@@ -217,20 +217,20 @@ Namespace Terminal
             End If
 
             If style = MsgBoxStyle.AbortRetryIgnore Then
-                If __testEquals(input, "A"c) Then
+                If charTestEquals(input, "A"c) Then
                     Return MsgBoxResult.Abort
-                ElseIf __testEquals(input, "R"c) Then
+                ElseIf charTestEquals(input, "R"c) Then
                     Return MsgBoxResult.Retry
-                ElseIf __testEquals(input, "I"c) Then
+                ElseIf charTestEquals(input, "I"c) Then
                     Return MsgBoxResult.Ignore
                 Else
                     Return MsgBoxResult.Retry
                 End If
             ElseIf style = MsgBoxStyle.OkCancel Then
 
-                If __testEquals(input, "O"c) Then
+                If charTestEquals(input, "O"c) Then
                     Return MsgBoxResult.Ok
-                ElseIf __testEquals(input, "C"c) Then
+                ElseIf charTestEquals(input, "C"c) Then
                     Return MsgBoxResult.Cancel
                 Else
                     Return MsgBoxResult.Ok
@@ -239,29 +239,29 @@ Namespace Terminal
                 Return MsgBoxResult.Ok
             ElseIf style = MsgBoxStyle.RetryCancel Then
 
-                If __testEquals(input, "R"c) Then
+                If charTestEquals(input, "R"c) Then
                     Return MsgBoxResult.Retry
-                ElseIf __testEquals(input, "C"c) Then
+                ElseIf charTestEquals(input, "C"c) Then
                     Return MsgBoxResult.Cancel
                 Else
                     Return MsgBoxResult.Retry
                 End If
             ElseIf style = MsgBoxStyle.YesNo Then
 
-                If __testEquals(input, "Y"c) Then
+                If charTestEquals(input, "Y"c) Then
                     Return MsgBoxResult.Yes
-                ElseIf __testEquals(input, "N"c) Then
+                ElseIf charTestEquals(input, "N"c) Then
                     Return MsgBoxResult.No
                 Else
                     Return MsgBoxResult.Yes
                 End If
             ElseIf style = MsgBoxStyle.YesNoCancel Then
 
-                If __testEquals(input, "Y"c) Then
+                If charTestEquals(input, "Y"c) Then
                     Return MsgBoxResult.Yes
-                ElseIf __testEquals(input, "N"c) Then
+                ElseIf charTestEquals(input, "N"c) Then
                     Return MsgBoxResult.No
-                ElseIf __testEquals(input, "C"c) Then
+                ElseIf charTestEquals(input, "C"c) Then
                     Return MsgBoxResult.Cancel
                 Else
                     Return MsgBoxResult.Yes
@@ -277,11 +277,12 @@ Namespace Terminal
         ''' <param name="input"></param>
         ''' <param name="compare">大写的</param>
         ''' <returns></returns>
-        Private Function __testEquals(input As String, compare As Char) As Boolean
+        Private Function charTestEquals(input As String, compare As Char) As Boolean
             If String.IsNullOrEmpty(input) Then
                 Return False
+            Else
+                Return Asc(input.First) = Asc(compare)
             End If
-            Return Asc(input.First) = Asc(compare)
         End Function
 
         Public Delegate Function TryParseDelegate(Of T)(str$, ByRef val As T) As Boolean
@@ -303,6 +304,7 @@ Namespace Terminal
         Public Function Read(Of T)(msg$, parser As TryParseDelegate(Of T), Optional _default$ = Nothing) As T
             Dim line As String
             Dim value As T
+
             Do
                 Call Console.Write(msg)
 
@@ -318,6 +320,7 @@ Namespace Terminal
                     line = _default?.ToString()
                 End If
             Loop While Not parser(line, value)
+
             Return value
         End Function
 

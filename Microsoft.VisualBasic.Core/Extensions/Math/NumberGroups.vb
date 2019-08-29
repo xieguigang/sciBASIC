@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::216ff4ffa99cd78ad8f9ef7b6d573ef7, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::9e98a35ee7e87dbe82f6b620db3ac30c, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module NumberGroups
     ' 
-    '         Function: BinarySearch, (+2 Overloads) GroupBy, GroupByImpl, GroupByParallel, Groups
+    '         Function: BinarySearch, (+3 Overloads) GroupBy, GroupByImpl, GroupByParallel, Groups
     '                   Match, Min
     '         Interface IVector
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31fb2b3b70bf371ddd138f5e6a43ad1e, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::42d190cc774f3c50ad784ff63693d92a, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 
@@ -121,6 +121,13 @@ Namespace Quantile
             Call Insert(CDbl(v))
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <remarks>
+        ''' 对这个函数的调用无法被并行化
+        ''' </remarks>
         Public Sub Insert(v#)
             Dim idx As Integer = 0
 
@@ -140,9 +147,7 @@ Namespace Quantile
             Call sample.Insert(idx, New X(v, 1, delta))
 
             If sample.Count > compact_size Then
-                ' printList()
-                compress()
-                ' printList()
+                Call compress()
             End If
 
             Me.count += 1

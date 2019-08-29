@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::561dfd7eb47a47f19ba3dd587023f843, Data_science\Darwinism\NonlinearGrid\TopologyInference\Models\IDynamicsComponent.vb"
+﻿#Region "Microsoft.VisualBasic::1ad5c79fc2409de496e89442662aa040, Data_science\Darwinism\NonlinearGrid\TopologyInference\Models\IDynamicsComponent.vb"
 
     ' Author:
     ' 
@@ -59,4 +59,3 @@ Public Interface IDynamicsComponent(Of T) : Inherits ICloneable(Of T)
     ''' <returns></returns>
     Function Evaluate(X As Vector) As Double
 End Interface
-

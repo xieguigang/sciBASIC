@@ -1084,12 +1084,12 @@
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
     <Compile Include="CommandLine\InteropService\CLIAbstractor.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\API.vb" />
-    <Compile Include="CommandLine\InteropService\SharedORM\Perl.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Languages\Perl.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\CLI.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\CodeGenerator.vb" />
-    <Compile Include="CommandLine\InteropService\SharedORM\R.vb" />
-    <Compile Include="CommandLine\InteropService\SharedORM\PHP.vb" />
-    <Compile Include="CommandLine\InteropService\SharedORM\VisualBasic.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Languages\R.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Languages\PHP.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb" />
     <Compile Include="CommandLine\Parsers\CLIParser.vb" />
     <Compile Include="CommandLine\Parsers\DictionaryParser.vb" />
     <Compile Include="CommandLine\CLIMapper.vb" />

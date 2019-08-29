@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56c1303353bf92962a678f09ea89d09b, Data_science\Graph\Network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6fe47497e0a9083e05b52887c58f2115, Data_science\Graph\Network\Extensions.vb"
 
     ' Author:
     ' 

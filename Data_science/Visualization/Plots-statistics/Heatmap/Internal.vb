@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::664673f920a5dbc254fa55d45255b1bb, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::f519c06318b32e7cce22604c3a81f71b, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -31,20 +31,9 @@
 
     ' Summaries:
 
-    '     Class PlotArguments
-    ' 
-    '         Properties: dStep
-    ' 
-    '     Enum DrawElements
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     '     Module Internal
     ' 
-    '         Function: __plotInterval, Log, ScaleByALL, ScaleByCol, ScaleByRow
+    '         Function: doPlot, Log
     ' 
     '         Sub: DrawClass
     ' 
