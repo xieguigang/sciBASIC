@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9bbf143809a61a22430ab7e49829de3, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\GridGenome.vb"
+﻿#Region "Microsoft.VisualBasic::ad3b9ce967827857d02d92e7d53bee5a, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\GridGenome.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Public MustInherit Class GridGenome(Of T As IDynamicsComponent(Of T))
 
     Public MustOverride Function Clone() As IGridFitness Implements ICloneable(Of IGridFitness).Clone
 End Class
-

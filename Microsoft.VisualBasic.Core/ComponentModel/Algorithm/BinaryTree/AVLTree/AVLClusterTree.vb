@@ -1,7 +1,76 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::eb6950d0324c575c9e727f0a29e12344, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum ComparisonDirectionPrefers
+    ' 
+    '         Left, Right
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class ClusterKey
+    ' 
+    '         Properties: NumberOfKey
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: DoComparison, ToString
+    ' 
+    '         Sub: Add
+    ' 
+    '     Class AVLClusterTree
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: doCompares, GetEnumerator, IEnumerable_GetEnumerator
+    ' 
+    '         Sub: Add, Clear
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.Algorithm.BinaryTree
+
+    Public Enum ComparisonDirectionPrefers
+        Left
+        Right
+    End Enum
 
     Public Class ClusterKey(Of K)
 
@@ -45,23 +114,36 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' </summary>
         ''' <param name="compares"></param>
         ''' <returns></returns>
-        Public Shared Function DoComparison(compares As Comparison(Of K)) As Func(Of ClusterKey(Of K), K, Integer)
+        Public Shared Function DoComparison(compares As Comparison(Of K), prefer As ComparisonDirectionPrefers) As Func(Of ClusterKey(Of K), K, Integer)
             Return Function(cluster, key) As Integer
                        Dim compareVal As Value(Of Integer) = -100
-                       Dim values As New List(Of Integer)
+                       Dim left As Boolean = False
+                       Dim right As Boolean
 
                        For Each index As K In cluster.members
                            If (compareVal = compares(index, key)) = 0 Then
                                Return 0
                            Else
-                               values += compareVal
+                               If compareVal.Equals(1) Then
+                                   right = True
+                               Else
+                                   left = True
+                               End If
                            End If
                        Next
 
-                       If values.Where(Function(x) x = 1).Count > values.Count / 2 Then
-                           Return 1
+                       If prefer = ComparisonDirectionPrefers.Left Then
+                           If left Then
+                               Return -1
+                           Else
+                               Return 1
+                           End If
                        Else
-                           Return -1
+                           If right Then
+                               Return 1
+                           Else
+                               Return -1
+                           End If
                        End If
                    End Function
         End Function
@@ -72,13 +154,16 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ReadOnly avltree As AVLTree(Of ClusterKey(Of K), K)
         ReadOnly views As Func(Of K, String)
 
-        Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
+        Sub New(compares As Comparison(Of K),
+                Optional views As Func(Of K, String) = Nothing,
+                Optional prefer As ComparisonDirectionPrefers = ComparisonDirectionPrefers.Left)
+
             Me.views = views
-            Me.avltree = New AVLTree(Of ClusterKey(Of K), K)(doCompares(compares), Function(c) c.ToString)
+            Me.avltree = New AVLTree(Of ClusterKey(Of K), K)(doCompares(compares, prefer), Function(c) c.ToString)
         End Sub
 
-        Private Shared Function doCompares(compares As Comparison(Of K)) As Comparison(Of ClusterKey(Of K))
-            Dim unsymmetricalCompares = ClusterKey(Of K).DoComparison(compares)
+        Private Shared Function doCompares(compares As Comparison(Of K), prefer As ComparisonDirectionPrefers) As Comparison(Of ClusterKey(Of K))
+            Dim unsymmetricalCompares = ClusterKey(Of K).DoComparison(compares, prefer)
 
             ' 在AVL数据模块中，比较代码中，待插入的key都是放在左边，即X参数部分 
             Return Function(x, y)

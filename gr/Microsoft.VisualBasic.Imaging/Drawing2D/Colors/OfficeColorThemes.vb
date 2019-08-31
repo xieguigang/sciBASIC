@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e26d396282da51f3f22626ac0818a91, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
+﻿#Region "Microsoft.VisualBasic::6a175482ce4e5718fbac45d5c2542b07, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '         Function: GetAccentColors
     ' 
-    '         Sub: __loadAllThemes
+    '         Sub: InternalLoadAllThemes
     ' 
     '     Class Theme
     ' 
@@ -105,7 +105,7 @@ Namespace Drawing2D.Colors
             Paper = Theme.LoadFromXml(My.Resources.Default_Paper)
             Slipstream = Theme.LoadFromXml(My.Resources.Default_Slipstream)
 
-            Call __loadAllThemes()
+            Call InternalLoadAllThemes()
         End Sub
 
         ''' <summary>
@@ -114,7 +114,7 @@ Namespace Drawing2D.Colors
         ''' <returns></returns>
         Public ReadOnly Property Themes As New Dictionary(Of Theme)
 
-        Private Sub __loadAllThemes()
+        Private Sub InternalLoadAllThemes()
             Dim resMgr As Type = GetType(My.Resources.Resources)
             Dim datas As IEnumerable(Of PropertyInfo) =
                 DataFramework _

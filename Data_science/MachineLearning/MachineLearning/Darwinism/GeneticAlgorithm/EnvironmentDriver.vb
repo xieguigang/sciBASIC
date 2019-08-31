@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1f0424c9e349866c8d09d0b932d890a, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
+﻿#Region "Microsoft.VisualBasic::ece85b48cb0e81335a439253bf440635, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: CreateReport
     ' 
-    '         Sub: Terminate, Train
+    '         Sub: reset, Terminate, Train
     ' 
     '     Structure outPrint
     ' 
@@ -83,9 +83,10 @@ Namespace Darwinism.GAF
         ''' 创建一个新的环境压力驱动程序,用来驱动模型的进化学习
         ''' </summary>
         ''' <param name="ga"></param>
-        Sub New(ga As GeneticAlgorithm(Of Chr), takeBestSnapshot As Action(Of Chr, Double))
+        Sub New(ga As GeneticAlgorithm(Of Chr), takeBestSnapshot As Action(Of Chr, Double), Optional iterations% = 500000)
             Me.core = ga
             Me.takeBestSnapshot = takeBestSnapshot
+            Me.Iterations = iterations
         End Sub
 
         Public Overrides Sub Train(Optional parallel As Boolean = False)
@@ -112,6 +113,8 @@ Namespace Darwinism.GAF
                 With core.GetFitness(core.Best)
                     If Not reporter Is Nothing Then
                         Call reporter(i, .ByRef, core)
+                    Else
+                        Call .DoCall(core.Best.PipeOf(takeBestSnapshot))
                     End If
 
                     ' NaN的结果值与阈值相比较也是小于零的
@@ -125,31 +128,7 @@ Namespace Darwinism.GAF
                         Dim firstError# = errors.First
 
                         If Math.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
-                            ' 因为已经很长时间没有变化误差了
-                            ' 所以最佳的个体肯定已经陷入了局部最优
-                            Dim bestSeed As Chr = core.Best
-                            Dim seed As Chr = bestSeed _
-                                .Mutate _
-                                .With(Sub(c) c.MutationRate = core.Best.MutationRate)
-                            ' do not add the local best result when reset the GA system
-                            ' so add base is set to false
-                            Dim newPop As Population(Of Chr) = core.Best.InitialPopulation(
-                                population:=New Population(Of Chr)(core.populationCreator(), core.population.Pcompute) With {
-                                    .capacitySize = core.population.capacitySize
-                                },
-                                addBase:=False
-                            )
-                            Dim newCore As New GeneticAlgorithm(Of Chr)(
-                                population:=newPop,
-                                fitnessFunc:=core.GetRawFitnessModel,
-                                replacementStrategy:=core.popStrategy.type,
-                                seeds:=core.seeds
-                            )
-
-                            core = newCore
-
-                            Call "GA module do RE-seeding as local optimal solution was found...".Warning
-                            Call takeBestSnapshot(bestSeed, .ByRef)
+                            Call .DoCall(AddressOf reset)
 
                             ' 如果在这里不替换一下的话
                             ' 会导致频繁出现重置的现象
@@ -163,6 +142,34 @@ Namespace Darwinism.GAF
             Next
 
             Call "Exit GA training loop due to the reason of reach iteration Upbound...".__DEBUG_ECHO
+        End Sub
+
+        Private Sub reset(fitness As Double)
+            ' 因为已经很长时间没有变化误差了
+            ' 所以最佳的个体肯定已经陷入了局部最优
+            Dim bestSeed As Chr = core.Best
+            Dim seed As Chr = bestSeed _
+                .Mutate _
+                .With(Sub(c) c.MutationRate = core.Best.MutationRate)
+            ' do not add the local best result when reset the GA system
+            ' so add base is set to false
+            Dim newPop As Population(Of Chr) = core.Best.InitialPopulation(
+                population:=New Population(Of Chr)(core.populationCreator(), core.population.Pcompute) With {
+                    .capacitySize = core.population.capacitySize
+                },
+                addBase:=False
+            )
+            Dim newCore As New GeneticAlgorithm(Of Chr)(
+                population:=newPop,
+                fitnessFunc:=core.GetRawFitnessModel,
+                replacementStrategy:=core.popStrategy.type,
+                seeds:=core.seeds
+            )
+
+            core = newCore
+
+            Call "GA module do RE-seeding as local optimal solution was found...".Warning
+            Call takeBestSnapshot(bestSeed, fitness)
         End Sub
 
         ''' <summary>

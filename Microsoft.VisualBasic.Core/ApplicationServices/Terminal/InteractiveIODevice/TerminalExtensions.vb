@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10a854194c79e6e0a93f21577272dedb, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1dc754b47a61180b1bdf10c4c1438493, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '             Properties: ConsoleHandleInvalid, CurrentSize
     ' 
-    '             Sub: __detects
+    '             Sub: doEvents
     ' 
     ' 
     ' 
@@ -52,25 +52,28 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Terminal
 
+    ''' <summary>
+    ''' 这个终端事件会依赖于<see cref="App.Running"/>属性值来自动退出的
+    ''' </summary>
     Public Module TerminalEvents
 
         Public Delegate Sub ResizeEventHandle(size As Size, oldSize As Size)
 
-        Dim __resizeHandles As New List(Of ResizeEventHandle)
-        Dim _old As Size
-        Dim _eventThread As Thread
+        Dim resizeHandles As New List(Of ResizeEventHandle)
+        Dim oldSize As Size
+        Dim eventThread As Thread
 
         Public ReadOnly Property CurrentSize As Size
             Get
-                Return _old
+                Return oldSize
             End Get
         End Property
 
-        Private Sub __detects()
+        Private Sub doEvents()
             Do While App.Running
-                If Console.WindowHeight <> _old.Height Then
+                If Console.WindowHeight <> oldSize.Height Then
                     RaiseEvent Resize()
-                ElseIf Console.WindowWidth <> _old.Width Then
+                ElseIf Console.WindowWidth <> oldSize.Width Then
                     RaiseEvent Resize()
                 End If
 
@@ -85,15 +88,15 @@ Namespace Terminal
         ''' </summary>
         Public Custom Event Resize As ResizeEventHandle
             AddHandler(value As ResizeEventHandle)
-                If __resizeHandles.IndexOf(value) = -1 Then
-                    __resizeHandles += value
+                If resizeHandles.IndexOf(value) = -1 Then
+                    resizeHandles += value
                 End If
 
-                If _eventThread Is Nothing Then
+                If eventThread Is Nothing Then
                     Try
-                        _old = New Size(Console.WindowWidth, Console.WindowHeight)
-                        _eventThread = New Thread(AddressOf __detects)
-                        _eventThread.Start()
+                        oldSize = New Size(Console.WindowWidth, Console.WindowHeight)
+                        eventThread = New Thread(AddressOf doEvents)
+                        eventThread.Start()
                     Catch ex As Exception  ' 可能是WindowsForm应用，则在这里就忽略掉这个错误了
                         Call App.LogException(ex)
                         _ConsoleHandleInvalid = True
@@ -101,23 +104,23 @@ Namespace Terminal
                 End If
             End AddHandler
             RemoveHandler(value As ResizeEventHandle)
-                If __resizeHandles.IndexOf(value) > -1 Then
-                    __resizeHandles.Remove(value)
+                If resizeHandles.IndexOf(value) > -1 Then
+                    resizeHandles.Remove(value)
                 End If
 
-                If __resizeHandles.Count = 0 Then
-                    _eventThread.Abort()
-                    _eventThread = Nothing
+                If resizeHandles.Count = 0 Then
+                    eventThread.Abort()
+                    eventThread = Nothing
                 End If
             End RemoveHandler
             RaiseEvent()
                 Dim [new] As New Size(Console.WindowWidth, Console.WindowHeight)
 
-                For Each h As ResizeEventHandle In __resizeHandles
-                    Call h([new], _old)
+                For Each h As ResizeEventHandle In resizeHandles
+                    Call h([new], oldSize)
                 Next
 
-                _old = [new]
+                oldSize = [new]
             End RaiseEvent
         End Event
     End Module

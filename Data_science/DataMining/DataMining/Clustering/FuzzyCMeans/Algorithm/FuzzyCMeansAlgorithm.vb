@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd8966cba01faf90bb0500bcd7e24127, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::c858800f39ca78bb591d5d9b73c814a6, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
 
     ' Author:
     ' 
@@ -40,9 +40,7 @@
 
 #End Region
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -90,21 +88,21 @@ Namespace FuzzyCMeans
         ''' <param name="trace"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function FuzzyCMeans(data As IEnumerable(Of Entity),
+        Public Function FuzzyCMeans(data As IEnumerable(Of FuzzyCMeansEntity),
                                     numberOfClusters%,
                                     Optional fuzzificationParameter# = 2,
                                     Optional maxIterates% = Short.MaxValue,
                                     Optional threshold# = 0.001,
-                                    Optional ByRef trace As Dictionary(Of Integer, List(Of Entity)) = Nothing) As List(Of Entity)
+                                    Optional ByRef trace As Dictionary(Of Integer, List(Of FuzzyCMeansEntity)) = Nothing) As List(Of FuzzyCMeansEntity)
 
-            Dim coordinates As New List(Of Entity)(data)
+            Dim coordinates As New List(Of FuzzyCMeansEntity)(data)
             ' Dim random As New Random()
             '  Dim bgrColor As Byte() = New Byte(2) {}
-            Dim clusterCenters As List(Of Entity) = AlgorithmsUtils.MakeInitialSeeds(coordinates, numberOfClusters)
-            Dim clusters As Dictionary(Of Entity, Entity)
-            Dim membershipMatrix As Dictionary(Of Entity, List(Of Double)) = Nothing
+            Dim clusterCenters As List(Of FuzzyCMeansEntity) = AlgorithmsUtils.MakeInitialSeeds(coordinates, numberOfClusters)
+            Dim clusters As Dictionary(Of FuzzyCMeansEntity, FuzzyCMeansEntity)
+            Dim membershipMatrix As Dictionary(Of FuzzyCMeansEntity, List(Of Double)) = Nothing
             Dim iteration As VBInteger = 0
-            Dim ptClone As New Value(Of Entity)
+            Dim ptClone As New Value(Of FuzzyCMeansEntity)
             '  Dim clusterColors As New Dictionary(Of Entity, Color)()
 
             'For Each clusterCenter As Entity In clusterCenters
@@ -140,8 +138,8 @@ Namespace FuzzyCMeans
                 '    Next
                 'Next
 
-                For Each pair As KeyValuePair(Of Entity, List(Of Double)) In membershipMatrix
-                    For Each annotation As Entity In coordinates
+                For Each pair As KeyValuePair(Of FuzzyCMeansEntity, List(Of Double)) In membershipMatrix
+                    For Each annotation As FuzzyCMeansEntity In coordinates
 
                         If VectorEqualityComparer.VectorEqualsToAnother(annotation.entityVector, pair.Key.entityVector) Then
                             Dim tooltip As New Dictionary(Of Integer, Double)
@@ -156,15 +154,15 @@ Namespace FuzzyCMeans
                     Next
                 Next
 
-                Dim oldClusterCenters As List(Of Entity) = clusterCenters
+                Dim oldClusterCenters As List(Of FuzzyCMeansEntity) = clusterCenters
 
                 clusterCenters = RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters, membershipMatrix, fuzzificationParameter)
                 If Not trace Is Nothing Then
                     Call trace.Add(iteration, clusterCenters)
                 End If
 
-                Dim distancesToClusterCenters As Dictionary(Of Entity, List(Of Double)) = coordinates.DistanceToClusterCenters(clusterCenters)
-                Dim newMembershipMatrix As Dictionary(Of Entity, List(Of Double)) = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
+                Dim distancesToClusterCenters As Dictionary(Of FuzzyCMeansEntity, List(Of Double)) = coordinates.DistanceToClusterCenters(clusterCenters)
+                Dim newMembershipMatrix As Dictionary(Of FuzzyCMeansEntity, List(Of Double)) = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
 
                 Dim differences As List(Of List(Of Double)) = newMembershipMatrix.Values.DifferenceMatrix(membershipMatrix.Values.AsList())
                 Dim maxElement As Double = GetMaxElement(differences)
@@ -183,10 +181,10 @@ Namespace FuzzyCMeans
                 '    clusterColors.Add(clusterCenters(i), colorValues(i))
                 'Next
 
-                For Each oldClusterCenter As Entity In oldClusterCenters
+                For Each oldClusterCenter As FuzzyCMeansEntity In oldClusterCenters
                     Dim isClusterCenterDataPoint As Boolean = False
 
-                    For Each coordinate As Entity In coordinates
+                    For Each coordinate As FuzzyCMeansEntity In coordinates
 
                         If VectorEqualityComparer.VectorEqualsToAnother(oldClusterCenter.entityVector, coordinate.entityVector) Then
 #If DEBUG Then
@@ -198,7 +196,7 @@ Namespace FuzzyCMeans
                     Next
 
                     If Not isClusterCenterDataPoint Then
-                        For Each annotation As Entity In coordinates
+                        For Each annotation As FuzzyCMeansEntity In coordinates
 
                             If VectorEqualityComparer.VectorEqualsToAnother(annotation.entityVector, oldClusterCenter.entityVector) Then
 #If DEBUG Then
@@ -212,10 +210,10 @@ Namespace FuzzyCMeans
                 Next
 
                 For i As Integer = 0 To clusterCenters.Count - 1
-                    Dim clusterCenter As Entity = clusterCenters(i)
+                    Dim clusterCenter As FuzzyCMeansEntity = clusterCenters(i)
                     Dim isExists As Boolean = False
 
-                    For Each annotation As Entity In coordinates
+                    For Each annotation As FuzzyCMeansEntity In coordinates
 
                         If VectorEqualityComparer.VectorEqualsToAnother(annotation.entityVector, clusterCenter.entityVector) Then
                             '  MarkClusterCenter(annotation, colorValues(i))
@@ -227,7 +225,7 @@ Namespace FuzzyCMeans
                     If Not isExists Then
 
                         '  Call MarkClusterCenter(ptClone, colorValues(i))
-                        coordinates += ptClone = New Entity With {
+                        coordinates += ptClone = New FuzzyCMeansEntity With {
                             .entityVector = clusterCenter.entityVector.Clone,
                             .uid = clusterCenter.uid
                         }

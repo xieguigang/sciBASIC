@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04369fce4edad7572df6e2634f9e59eb, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::cfb8cd1431080ad241198793af439fbf, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,7 @@
     ' 
     '         Properties: ForceSTDError, Mute, UsingxConsole
     ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, this
-    '                   Warning
+    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
     ' 
     '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
     '              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
@@ -80,7 +79,7 @@ Public Module VBDebugger
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandle
         Return New ExceptionHandle With {
-            .Message = message,
+            .message = message,
             .failure = failure Or defaultAssert
         }
     End Function
@@ -372,19 +371,8 @@ Public Module VBDebugger
     End Sub
 
     <Extension> Public Sub __DEBUG_ECHO(Of T)(value As T, <CallerMemberName> Optional memberName As String = "")
-        Call (Scripting.InputHandler.ToString(value) & "              @" & memberName).__DEBUG_ECHO
+        Call ($"<{memberName}> {Scripting.InputHandler.ToString(value)}").__DEBUG_ECHO
     End Sub
-
-    ''' <summary>
-    ''' Returns the current function name.
-    ''' </summary>
-    ''' <param name="caller">
-    ''' The caller function name, do not assign any value to this parameter! Just leave it blank.
-    ''' </param>
-    ''' <returns></returns>
-    Public Function this(<CallerMemberName> Optional caller As String = "") As String
-        Return caller
-    End Function
 
     <Extension> Public Sub Echo(Of T)(array As IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "")
         Call String.Join(", ", array.Select(Function(obj) Scripting.ToString(obj)).ToArray).__DEBUG_ECHO

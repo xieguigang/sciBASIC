@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::279ccec4836decd3842544a2f77b87b3, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::52ccec87cb0909c1612e385fec6b6cbb, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Sub: Clear, Delete
     ' 
-    '         Operators: -, (+2 Overloads) +, (+2 Overloads) Like
+    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/

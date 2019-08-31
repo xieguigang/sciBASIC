@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbe3cfada55bd63dedf291a021628382, Data_science\Darwinism\NonlinearGrid\TopologyInference\BigData\SparseGenome.vb"
+﻿#Region "Microsoft.VisualBasic::42b154809c495600fceef39c68f22231, Data_science\Darwinism\NonlinearGrid\TopologyInference\BigData\SparseGenome.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class SparseGenome
     ' 
-    '         Properties: IDynamicsComponent_Width, MutationRate
+    '         Properties: IDynamicsComponent_Width, MutationRate, UniqueHashKey
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Clone, Crossover, ICloneable_Clone, IDynamicsComponent_Evaluate, Mutate

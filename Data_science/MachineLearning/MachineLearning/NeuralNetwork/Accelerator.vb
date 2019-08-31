@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4db87a919533a1c3b68aed8ec067ba05, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Accelerator.vb"
+﻿#Region "Microsoft.VisualBasic::39a67722cfbb3ffc5eae905d699f0a0f, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Accelerator.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Class WeightVector
     ' 
-    '         Properties: MutationRate
+    '         Properties: MutationRate, UniqueHashKey
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Clone, Crossover, Mutate, ToString

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::885b534e686115628f8e05338c1696a1, Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::7440d14f47a8777009cf2758a7c0b126, Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
 
     ' Author:
     ' 
@@ -81,8 +81,8 @@ Namespace Heatmap
         ''' <param name="customColors">
         ''' 可以使用这一组颜色来手动自定义heatmap的颜色，也可以使用<paramref name="mapName"/>来获取内置的颜色谱
         ''' </param>
-        ''' <param name="mapLevels%"></param>
-        ''' <param name="mapName$">
+        ''' <param name="mapLevels"></param>
+        ''' <param name="mapName">
         ''' The color map name, using for the <see cref="Designer"/>
         ''' 
         ''' There are many different color schemes that can be used to illustrate the heatmap, with perceptual advantages 
@@ -213,7 +213,7 @@ Namespace Heatmap
                     ' Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
                 End Sub
 
-            Return __plotInterval(
+            Return doPlot(
                 plotInternal, array,
                 rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject, logTransform, drawScaleMethod, drawLabels, drawDendrograms, drawClass, dlayout,
                 reverseClrSeq, customColors.GetBrushes, mapLevels, mapName,
@@ -223,7 +223,8 @@ Namespace Heatmap
                 mainTitle, titleFont,
                 legendWidth, legendHasUnmapped, legendSize.SizeParser,
                 tick:=tick,
-                legendLayout:=legendLayout)
+                legendLayout:=legendLayout
+            )
         End Function
     End Module
 End Namespace

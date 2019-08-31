@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
-Namespace Academic
+Namespace Bing.Academic
 
     ''' <summary>
     ''' Bing Academic web API for VisualBasic

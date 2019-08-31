@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7bb0045e097fca0946112c710604fab, Data_science\Mathematica\Math\Math\Numerics\Half.vb"
+﻿#Region "Microsoft.VisualBasic::5c31d7ab31182bb60e11d100d26a680b, Data_science\Mathematica\Math\Math\Numerics\Half.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     '                   IConvertible_ToUInt64, IsInfinity, IsNaN, IsNegativeInfinity, IsPositiveInfinity
     '                   Max, Min, Multiply, Negate, (+4 Overloads) Parse
     '                   Sign, Subtract, (+2 Overloads) ToHalf, (+4 Overloads) ToString, (+2 Overloads) TryParse
-    '         Operators: (+3 Overloads) -, (+3 Overloads) *, (+2 Overloads) /, ^, (+4 Overloads) +
+    '         Operators: (+3 Overloads) -, (+3 Overloads) *, (+2 Overloads) /, (+2 Overloads) ^, (+4 Overloads) +
     '                    <, <=, <>, =, >
     '                    >=
     ' 
@@ -1107,4 +1107,3 @@ Namespace Numerics
 #End Region
     End Structure
 End Namespace
-

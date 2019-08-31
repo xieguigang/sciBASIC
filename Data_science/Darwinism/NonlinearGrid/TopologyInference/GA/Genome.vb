@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a567d256a4c130f7a5e142f6667ad820, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Genome.vb"
+﻿#Region "Microsoft.VisualBasic::0aa48f5ede755a1ff8ab9081d3dfb206, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Genome.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class Genome
     ' 
-    '     Properties: IDynamicsComponent_Width, MutationRate
+    '     Properties: IDynamicsComponent_Width, MutationRate, UniqueHashKey
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: Clone, Crossover, ICloneable_Clone, IDynamicsComponent_Evaluate, Mutate

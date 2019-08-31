@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3316b60d2b6fca48289500673c3e55e7, Microsoft.VisualBasic.Core\CommandLine\GitBashEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::2d1efa6a209cd7ffaec8999c2a3e45f3, Microsoft.VisualBasic.Core\CommandLine\GitBashEnvironment.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,9 @@
 
     '     Module GitBashEnvironment
     ' 
-    '         Function: fixWindowsNetworkDirectory, GetCLIArgs, isRunningOnGitBash
+    '         Properties: isRunningOnGitBash
+    ' 
+    '         Function: fixWindowsNetworkDirectory, GetCLIArgs
     ' 
     ' 
     ' /********************************************************************************/
@@ -72,9 +74,15 @@ Namespace CommandLine
             Return cli
         End Function
 
-        Friend Function isRunningOnGitBash() As Boolean
-            Return Environment.GetCommandLineArgs.Any(Function(a) InStr(a, gitBash) > 0)
-        End Function
+        ''' <summary>
+        ''' Is current application running in gitbash environment on windows?
+        ''' </summary>
+        ''' <returns></returns>
+        Friend ReadOnly Property isRunningOnGitBash() As Boolean
+            Get
+                Return Environment.GetCommandLineArgs.Any(Function(a) InStr(a, gitBash) > 0)
+            End Get
+        End Property
 
         ''' <summary>
         ''' (\\)192.168.1.239\blablabla

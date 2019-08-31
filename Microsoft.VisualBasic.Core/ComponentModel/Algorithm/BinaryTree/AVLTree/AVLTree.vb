@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81eec77cd0117693bed3fa2054025986, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree.vb"
+﻿#Region "Microsoft.VisualBasic::ae2cef48d9685292786c693e33d68e7c, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb"
 
     ' Author:
     ' 
@@ -31,14 +31,18 @@
 
     ' Summaries:
 
+    '     Delegate Sub
+    ' 
+    ' 
     '     Class AVLTree
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: Add, Find, Remove
     ' 
-    '         Sub: Add, appendLeft, appendRight, Remove, removeCurrent
+    '         Sub: (+2 Overloads) Add, appendLeft, appendRight, Remove, removeCurrent
     '              removeLeft, removeRight
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

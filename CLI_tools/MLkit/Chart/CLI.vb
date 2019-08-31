@@ -1,41 +1,41 @@
-﻿#Region "Microsoft.VisualBasic::ea4b1b523082c25071bbb2405d2fa9dc, CLI_tools\MLkit\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::ac64aeb9e7501941c2c93388796f03a4, CLI_tools\MLkit\Chart\CLI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module CLI
-' 
-'     Function: BarPlotCLI, KMeansCluster, ROC, Scatter
-' 
-' /********************************************************************************/
+    ' Module CLI
+    ' 
+    '     Function: BarPlotCLI, KMeansCluster, RegressionROC, ROC, Scatter
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -134,9 +134,15 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
     Public Function ROC(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ROC.png"
-        Dim data = DataSet.LoadDataSet([in]).CreateSerial
+        Dim data = DataSet.LoadDataSet([in]).ToArray
 
-        Return ROCPlot.Plot(data, showReference:=True) _
+        If data.Length = 0 Then
+            Throw New EntryPointNotFoundException($"The input data file '{[in].GetFullPath}' is not found on your file system!")
+        End If
+
+        Dim curveSerial As SerialData = data.CreateSerial
+
+        Return ROCPlot.Plot(curveSerial, showReference:=True) _
             .Save(out) _
             .CLICode
     End Function

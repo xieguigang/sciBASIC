@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffe3c76b2706ef78a83bb46534112e17, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4091dd747b2b333e672287cd8d132f88, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultExtensions.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module DefaultExtensions
     ' 
-    '         Function: BaseName, NormalizePathString, Replace, Split, ToLower
-    '                   TrimSuffix
+    '         Function: BaseName, FileExists, NormalizePathString, Replace, Split
+    '                   ToLower, TrimSuffix
     ' 
     ' 
     ' /********************************************************************************/
@@ -52,6 +52,17 @@ Namespace Language.Default
         <Extension>
         Public Function ToLower(str As [Default](Of String)) As String
             Return Strings.LCase(str.value)
+        End Function
+
+        <Extension>
+        Public Function FileExists(str As DefaultString, Optional zeroLenAsNonExists As Boolean = True) As Boolean
+            If Not str.DefaultValue.FileExists Then
+                Return False
+            ElseIf zeroLenAsNonExists AndAlso str.DefaultValue.FileLength <= 0 Then
+                Return False
+            Else
+                Return True
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

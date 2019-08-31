@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b865d3a8170f20eef8e76ec7bfe86017, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
+﻿#Region "Microsoft.VisualBasic::f1846cc450189cf2706e21e635700ca2, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Population.vb"
 
     ' Author:
     ' 
@@ -31,19 +31,19 @@
 
     ' Summaries:
 
-    '     Delegate Function
+    '     Class IPopulation
     ' 
+    '         Properties: capacitySize
     ' 
     '     Class Population
     ' 
-    '         Properties: initialSize, parallel, Random, Size
+    '         Properties: parallel, Random, Size
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: Add, SortPopulationByFitness, Trim
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

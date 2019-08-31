@@ -1,42 +1,42 @@
-﻿#Region "Microsoft.VisualBasic::b6b93f3b7cfbd61a165c21e2bcce8385, gr\network-visualization\test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::aeafa186de157f45d231ac42113d73bc, gr\network-visualization\test\FormCanvas.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class FormCanvas
-' 
-'     Sub: AutoRotateToolStripMenuItem_Click, DToolStripMenuItem_Click, Form1_Load, FormCanvas_Closed, RefreshParametersToolStripMenuItem_Click
-'          SaveAsSVGToolStripMenuItem_Click, ShowLabelsToolStripMenuItem_Click, TrackBar1_Scroll
-' 
-' /********************************************************************************/
+    ' Class FormCanvas
+    ' 
+    '     Sub: AutoRotateToolStripMenuItem_Click, DToolStripMenuItem_Click, Form1_Load, FormCanvas_Closed, RefreshParametersToolStripMenuItem_Click
+    '          SaveAsSVGToolStripMenuItem_Click, ShowLabelsToolStripMenuItem_Click, TrackBar1_Scroll
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

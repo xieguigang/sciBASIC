@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7515326ec5bfdcdfc846c8cfb61b20e7, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
+﻿#Region "Microsoft.VisualBasic::a2a049a0b52db5293a737b38a98754a6, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: __similarity, GetDPMAT, GetMatches, GetTraceback, traceback
     ' 
-    '         Sub: __buildMatrix, __getTrackback
+    '         Sub: buildMatrix, getTrackback
     ' 
     ' 
     ' /********************************************************************************/

@@ -232,7 +232,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\..\smartnucl_integrative\biodeepDB\METLINApp\App\</OutputPath>
+    <OutputPath>bin\app\</OutputPath>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
     <Optimize>false</Optimize>

@@ -1,68 +1,70 @@
-﻿#Region "Microsoft.VisualBasic::35fd9172bcefca1892823fea823c6600, Data\BinaryData\DataStorage\netCDF\Components\Components.vb"
+﻿#Region "Microsoft.VisualBasic::8e5696f3beb157e7024e29c700c5f887, Data\BinaryData\DataStorage\netCDF\Components\Components.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Structure Dimension
-' 
-'         Function: ToString
-' 
-'     Class DimensionList
-' 
-'         Properties: dimensions, HaveRecordDimension, recordId, recordName
-' 
-'         Function: ToString
-' 
-'     Class recordDimension
-' 
-'         Properties: id, length, name, recordStep
-' 
-'         Function: ToString
-' 
-'     Class attribute
-' 
-'         Properties: name, type, value
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ToString
-' 
-'     Class variable
-' 
-'         Properties: attributes, dimensions, name, offset, record
-'                     size, type, value
-' 
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    '     Structure Dimension
+    ' 
+    '         Properties: [Double], [Integer], Text
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class DimensionList
+    ' 
+    '         Properties: dimensions, HaveRecordDimension, recordId, recordName
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class recordDimension
+    ' 
+    '         Properties: id, length, name, recordStep
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class attribute
+    ' 
+    '         Properties: name, type, value
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class variable
+    ' 
+    '         Properties: attributes, dimensions, name, offset, record
+    '                     size, type, value
+    ' 
+    '         Function: FindAttribute, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

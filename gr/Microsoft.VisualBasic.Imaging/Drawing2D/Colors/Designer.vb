@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa706f76a1323507446c9ebb7e65de29, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::295e093ffb0389f7e0ecb0a3094e6320, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -132,7 +132,7 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' <see cref="Designer.GetColors(String)"/> schema name for color profile: <see cref="ClusterColour"/>.
         ''' </summary>
-        Public Const Clusters$ = NameOf(Clusters)
+        Friend Const Clusters$ = NameOf(Clusters)
 
         ''' <summary>
         ''' From TSF launcher on Android
