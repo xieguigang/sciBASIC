@@ -79,7 +79,7 @@ Namespace ComponentModel.Discretion
         End Sub
 
         Private Iterator Function createBins() As IEnumerable(Of DoubleRange)
-            Dim lower As VBDouble = min
+            Dim lower As f64 = min
 
             Do While lower < max
                 Yield New DoubleRange(lower, lower = lower + delta)

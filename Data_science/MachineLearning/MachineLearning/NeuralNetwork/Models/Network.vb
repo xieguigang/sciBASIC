@@ -138,7 +138,7 @@ Namespace NeuralNetwork
                        Optional weightInit As Func(Of Double) = Nothing)
 
             Dim activations As LayerActives = active Or LayerActives.GetDefaultConfig
-            Dim guid As VBInteger = 100
+            Dim guid As i32 = 100
 
             weightInit = weightInit Or Helpers.randomWeight
 

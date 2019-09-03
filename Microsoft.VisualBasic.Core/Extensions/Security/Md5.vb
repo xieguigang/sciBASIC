@@ -304,7 +304,7 @@ Namespace SecurityString
         Public Function Fletcher32(bytes As Byte(), offset%, length%) As Integer
             Dim s1 As Integer = &HFFFF
             Dim s2 As Integer = &HFFFF
-            Dim i As VBInteger = offset
+            Dim i As i32 = offset
             Dim len As Integer = offset + (length And (Not 1))
 
             Do While i < len

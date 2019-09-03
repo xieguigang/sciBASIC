@@ -102,7 +102,7 @@ Namespace HDF5.struct
         ''' <summary>
         ''' track iteration; LOOK this seems fishy - why not an iterator ??
         ''' </summary>
-        Dim currentEntry As VBInteger
+        Dim currentEntry As i32
 
         ''' <summary>
         ''' The ASCII character string “TREE” is used to indicate the beginning of a B-tree node. 

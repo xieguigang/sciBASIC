@@ -67,8 +67,8 @@ Namespace Plot3D
 
         <Extension>
         Public Function Plot3D(data As IEnumerable(Of FractionData), camera As Camera, Optional valueLabel As ValueLabels = ValueLabels.Percentage) As GraphicsData
-            Dim start As New VBDouble
-            Dim sweep As New VBDouble
+            Dim start As New f64
+            Dim sweep As New f64
             Dim alpha!
             Dim pt As PointF
             Dim centra As Point3D = camera.screen.GetCenter

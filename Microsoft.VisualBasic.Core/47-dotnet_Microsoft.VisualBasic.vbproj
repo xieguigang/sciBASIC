@@ -1278,8 +1278,8 @@
     <Compile Include="Language\Language\UnixBash\ShellSyntax.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\tree.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\rm.vb" />
-    <Compile Include="Language\Value\Numeric\VBInteger.vb" />
-    <Compile Include="Language\Value\Numeric\VBDouble.vb" />
+    <Compile Include="Language\Value\Numeric\i32.vb" />
+    <Compile Include="Language\Value\Numeric\f64.vb" />
     <Compile Include="Language\Value\var.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\Actor%28Of T, V%29.vb" />
     <Compile Include="Scripting\Expressions\ArrayIndex.vb" />

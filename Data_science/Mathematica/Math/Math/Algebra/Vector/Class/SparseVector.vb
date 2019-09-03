@@ -282,7 +282,7 @@ Namespace LinearAlgebra
         End Function
 
         Public Overrides Iterator Function GetEnumerator() As IEnumerator(Of Double)
-            Dim j As VBInteger = -1
+            Dim j As i32 = -1
 
             For i As Integer = 0 To dimension - 1
                 If (j = index.IndexOf(i)) > -1 Then

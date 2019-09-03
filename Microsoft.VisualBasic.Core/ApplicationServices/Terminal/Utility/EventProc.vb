@@ -74,7 +74,7 @@ Namespace Terminal.Utility
         Dim delta As Integer
         Dim tag As String
         Dim out As StreamWriter
-        Dim current As VBInteger = 0
+        Dim current As i32 = 0
 
         ''' <summary>
         ''' 

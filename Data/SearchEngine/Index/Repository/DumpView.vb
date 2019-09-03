@@ -48,7 +48,7 @@ Public Module TrieDump
     ReadOnly DataPadLength As Integer = Long.MinValue.ToString.Length
 
     Public Sub ShowCharacters()
-        Dim i As VBInteger = 1
+        Dim i As i32 = 1
 
         For c As Integer = Asc(" "c) To Asc("~"c)
             Call Console.WriteLine($" {Chr(c)} {++i}")

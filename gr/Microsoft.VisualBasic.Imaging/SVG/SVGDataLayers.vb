@@ -74,7 +74,7 @@ Namespace SVG
         ''' <summary>
         ''' Generates the <see cref="CSSLayer"/> index order value.
         ''' </summary>
-        Friend zlayer As VBInteger = 0
+        Friend zlayer As i32 = 0
 
         Default Public ReadOnly Property GetLayer(zindex As Integer) As g
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

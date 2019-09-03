@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::cc6ee9d1b10af059b8ab40f09ad8839c, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module StringHelpers
-    ' 
-    '     Properties: EmptyString, NonStrictCompares, StrictCompares
-    ' 
-    '     Function: __json, AllEquals, AsciiBytes, (+4 Overloads) ByteString, CharAtOrDefault
-    '               CharString, (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny
-    '               First, FormatString, FormatZero, GetBetween, GetEMails
-    '               GetStackValue, GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
-    '               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
-    '               Located, Lookup, (+2 Overloads) Match, Matches, MatchPattern
-    '               (+2 Overloads) MaxLengthString, NotEmpty, PadEnd, Parts, RepeatString
-    '               ReplaceChars, (+2 Overloads) Reverse, RNull, SaveTo, (+2 Overloads) Split
-    '               SplitBy, StringEmpty, StringHashCode, StringReplace, StringSplit
-    '               StripBlank, Strips, TextEquals, TextLast, TokenCount
-    '               TokenCountIgnoreCase, TrimNewLine, TrimNull, WildcardsLocated
-    ' 
-    '     Sub: Parts, RemoveLast
-    ' 
-    ' /********************************************************************************/
+' Module StringHelpers
+' 
+'     Properties: EmptyString, NonStrictCompares, StrictCompares
+' 
+'     Function: __json, AllEquals, AsciiBytes, (+4 Overloads) ByteString, CharAtOrDefault
+'               CharString, (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny
+'               First, FormatString, FormatZero, GetBetween, GetEMails
+'               GetStackValue, GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
+'               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
+'               Located, Lookup, (+2 Overloads) Match, Matches, MatchPattern
+'               (+2 Overloads) MaxLengthString, NotEmpty, PadEnd, Parts, RepeatString
+'               ReplaceChars, (+2 Overloads) Reverse, RNull, SaveTo, (+2 Overloads) Split
+'               SplitBy, StringEmpty, StringHashCode, StringReplace, StringSplit
+'               StripBlank, Strips, TextEquals, TextLast, TokenCount
+'               TokenCountIgnoreCase, TrimNewLine, TrimNull, WildcardsLocated
+' 
+'     Sub: Parts, RemoveLast
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -731,39 +732,26 @@ Public Module StringHelpers
     '''
     <ExportAPI("Intersection")>
     <Extension> Public Function Intersection(source As IEnumerable(Of IEnumerable(Of String))) As String()
-        Dim union As New List(Of String)
+        Dim stringMatrix = source.Select(Function(seq) seq.ToArray).ToArray
+        ' 获取并集，接下来需要从并集之中去除在两个集合之中都不存在的
+        Dim union As List(Of String) = stringMatrix.IteratesALL.Distinct.ToList
 
-        source = (From line As IEnumerable(Of String)
-                  In source
-                  Select (From s As String
-                          In line
-                          Select s
-                          Distinct
-                          Order By s Ascending).ToArray).ToArray
-
-        For Each line As String() In source
-            union += line
-        Next
-
-        union = (From s As String
-                 In union
-                 Select s
-                 Distinct
-                 Order By s Ascending).AsList  '获取并集，接下来需要从并集之中去除在两个集合之中都不存在的
-
-        For Each Line As IEnumerable(Of String) In source
-            For Each row In source       '遍历每一个集合
+        For Each line As Index(Of String) In stringMatrix.Select(Function(seq) seq.Indexing)
+            For Each row In source
+                ' 遍历每一个集合
                 Dim LQuery As IEnumerable(Of String) = From s As String
                                                        In row
-                                                       Where Array.IndexOf(Line, s) = -1
+                                                       Where line(s) = -1
                                                        Select s
+                ' 假若line之中存在不存在的元素，则从并集之中移除
                 For Each s As String In LQuery
-                    Call union.Remove(s) '假若line之中存在不存在的元素，则从并集之中移除
+                    Call union.Remove(s)
                 Next
             Next
         Next
 
-        Return union.ToArray  ' 剩下的元素都是在所有的序列之中都存在的，既交集元素
+        ' 剩下的元素都是在所有的序列之中都存在的，既交集元素
+        Return union.ToArray
     End Function
 
     ''' <summary>
@@ -1014,21 +1002,22 @@ Public Module StringHelpers
     ''' 这个函数适合将一个很大的数组进行分割
     ''' </summary>
     ''' <param name="source"></param>
-    ''' <param name="assertionDelimiter">分隔符断言，判断当前的对象是不是分隔符</param>
+    ''' <param name="delimiterPredicate">分隔符断言，判断当前的对象是不是分隔符</param>
     ''' <param name="includes"></param>
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Split(source As IEnumerable(Of String),
-                                   assertionDelimiter As Assert(Of String),
+                                   delimiterPredicate As Assert(Of String),
                                    Optional includes As Boolean = True) As IEnumerable(Of String())
 
         Dim list As New List(Of String)
-        Dim first As Boolean = True  ' first line
+        ' first line
+        Dim isFirst As Boolean = True
 
         For Each line As String In source
-            If True = assertionDelimiter(line) Then
-                If first Then
-                    first = False
+            If True = delimiterPredicate(line) Then
+                If isFirst Then
+                    isFirst = False
                 Else
                     Yield list.ToArray
 
@@ -1042,7 +1031,7 @@ Public Module StringHelpers
                 Call list.Add(line)
             End If
 
-            first = False
+            isFirst = False
         Next
 
         If list.Count > 0 Then
@@ -1062,19 +1051,12 @@ Public Module StringHelpers
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("Located", Info:="String compares using String.Equals")>
-    <Extension> Public Function Located(collection As IEnumerable(Of String),
-                                        text As String,
+    <Extension> Public Function Located(collection As IEnumerable(Of String), text$,
                                         Optional caseSensitive As Boolean = True,
                                         Optional fuzzy As Boolean = False) As Integer
 
-        Dim method As StringComparison =
-            If(caseSensitive,
-            StringComparison.Ordinal,
-            StringComparison.OrdinalIgnoreCase)
-        Dim method2 As CompareMethod =
-            If(caseSensitive,
-            CompareMethod.Binary,
-            CompareMethod.Text)
+        Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or StringComparison.Ordinal.When(caseSensitive)
+        Dim method2 As CompareMethod = CompareMethod.Text Or CompareMethod.Binary.When(caseSensitive)
 
         For Each str As SeqValue(Of String) In collection.SeqIterator
             If String.Equals(str.value, text, method) Then
@@ -1266,6 +1248,7 @@ Public Module StringHelpers
         ' 可能会导致匹配到第一个字符串而无法正确的匹配上最后一个token，所以在这里使用
         ' InstrRev来避免这个问题
         Dim val% = InStrRev(s, token)
+
         Return lastIndex = val
     End Function
 End Module

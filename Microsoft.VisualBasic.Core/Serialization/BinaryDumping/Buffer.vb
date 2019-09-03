@@ -121,7 +121,7 @@ Namespace Serialization.BinaryDumping
         Public Iterator Function GetBuffer(Of T)(raw As Byte(), getObj As IGetObject(Of T)) As IEnumerable(Of T)
             Dim length As Byte() = New Byte(RawStream.INT64 - 1) {}
             Dim l As Long
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
             Dim temp As Byte()
             Dim x As T
 

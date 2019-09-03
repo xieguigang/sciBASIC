@@ -58,7 +58,7 @@ Namespace Scripting
     ''' R language like string factor
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Factor(Of T As IComparable(Of T)) : Inherits VBDouble
+    Public Class Factor(Of T As IComparable(Of T)) : Inherits f64
         Implements Value(Of T).IValueOf
 
         Public Property FactorValue As T Implements Value(Of T).IValueOf.Value

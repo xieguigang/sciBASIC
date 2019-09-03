@@ -137,7 +137,7 @@ Namespace Math
             End If
 
             Dim chunkBuf As Integer() = New Integer(array.Length - 1) {}
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
 
             For Each x As Double In array
                 Dim lv As Integer = Fix(Level * (x - MinValue) / d)

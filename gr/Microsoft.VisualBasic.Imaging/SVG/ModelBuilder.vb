@@ -213,7 +213,7 @@ Namespace SVG
                     Call gdiPath.VerticalTo(parameters(0), relative:=True)
 
                 Case "C"c
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     Call gdiPath.CurveTo(
                         parameters(++i),
@@ -224,7 +224,7 @@ Namespace SVG
                         parameters(++i)
                     )
                 Case "c"c
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     Call gdiPath.CurveTo(
                         parameters(++i),
@@ -248,7 +248,7 @@ Namespace SVG
                     Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4), relative:=True)
 
                 Case "A"c
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     Call gdiPath.EllipticalArc(
                         parameters(++i),
@@ -260,7 +260,7 @@ Namespace SVG
                         parameters(++i)
                     )
                 Case "a"c
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     Call gdiPath.EllipticalArc(
                         parameters(++i),
