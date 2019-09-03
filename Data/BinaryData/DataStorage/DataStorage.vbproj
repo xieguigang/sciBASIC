@@ -323,6 +323,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASN.1\StreamReader.vb" />
     <Compile Include="HDF5\dataset\ChunkedDatasetV3.vb" />
     <Compile Include="HDF5\dataset\CompactDataset.vb" />
     <Compile Include="HDF5\dataset\ContiguousDataset.vb" />
@@ -441,5 +442,6 @@
       <Name>BinaryData</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
