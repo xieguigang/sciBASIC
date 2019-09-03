@@ -55,7 +55,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
 
-Namespace Academic
+Namespace Bing.Academic
 
     Public Module Extensions
 

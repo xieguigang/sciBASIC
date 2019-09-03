@@ -58,7 +58,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace Academic
+Namespace Bing.Academic
 
     ''' <summary>
     ''' 文献的一些摘要信息

@@ -8,8 +8,8 @@
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
-    <RootNamespace>Microsoft.VisualBasic.Webservices.Bing</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.Webservices.Bing</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Data.KnowledgeBase.Web</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Web.KnowledgeBase</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -34,7 +34,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -56,7 +56,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -67,7 +67,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -81,7 +81,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -92,7 +92,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -103,21 +103,21 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -125,7 +125,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -137,7 +137,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\.vs\installer\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -150,7 +150,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -162,7 +162,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -174,7 +174,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -186,7 +186,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -198,7 +198,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\GCModeller%28UNIX-Release_X64%29\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -208,7 +208,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -218,7 +218,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\GCModeller%28UNIX-Release_X64%29\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -228,7 +228,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -238,7 +238,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -248,7 +248,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Biodeep\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -258,7 +258,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -268,7 +268,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -278,7 +278,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Webservices.Bing.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Web.KnowledgeBase.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -314,15 +314,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Academic\Academic.vb" />
-    <Compile Include="Academic\ArticleProfile.vb" />
-    <Compile Include="Academic\Extensions.vb" />
-    <Compile Include="Academic\ProfileResult.vb" />
-    <Compile Include="BingImage.vb" />
-    <Compile Include="Translation\WordTranslation.vb" />
-    <Compile Include="Translation\Translation.vb" />
-    <Compile Include="WebResult.vb" />
-    <Compile Include="SearchEngine.vb" />
+    <Compile Include="DOI\Response.vb" />
+    <Compile Include="MicrosoftBing\Academic\Academic.vb" />
+    <Compile Include="MicrosoftBing\Academic\ArticleProfile.vb" />
+    <Compile Include="MicrosoftBing\Academic\Extensions.vb" />
+    <Compile Include="MicrosoftBing\Academic\ProfileResult.vb" />
+    <Compile Include="MicrosoftBing\BingImage.vb" />
+    <Compile Include="MicrosoftBing\Translation\WordTranslation.vb" />
+    <Compile Include="MicrosoftBing\Translation\Translation.vb" />
+    <Compile Include="MicrosoftBing\WebResult.vb" />
+    <Compile Include="MicrosoftBing\SearchEngine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -365,6 +366,7 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

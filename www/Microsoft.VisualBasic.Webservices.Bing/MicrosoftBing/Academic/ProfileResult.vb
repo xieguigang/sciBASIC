@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
-Namespace Academic
+Namespace Bing.Academic
 
     ''' <summary>
     ''' Example as:
@@ -95,7 +95,7 @@ Namespace Academic
                 .GetBetween(">", "<")
             Dim authors = r.Match(html, "<div class=""aca_desc b_snippet"">.+?</div>", RegexICSng) _
                 .Value _
-                .Matches(HtmlLink) _
+                .Matches(htmlLink) _
                 .Select(AddressOf GetTarget) _
                 .ToArray
             Dim abstract$ = r.Match(html, "<span title="".+?"">", RegexICSng) _
@@ -143,7 +143,7 @@ Namespace Academic
                     doi = !DOI.Value.GetBetween("<div>", "</div>")
                     areas = !Keywords _
                         .Value _
-                        .Matches(HtmlLink) _
+                        .Matches(htmlLink) _
                         .Select(AddressOf GetTarget) _
                         .ToArray
 
@@ -160,7 +160,7 @@ Namespace Academic
             Dim source = Strings _
                 .Split(html, "<div class=""aca_source"">") _
                 .Last _
-                .Matches(HtmlLink, RegexICSng) _
+                .Matches(htmlLink, RegexICSng) _
                 .Where(Function(a)
                            Return InStr(a, "</span>", CompareMethod.Text) > 0
                        End Function) _
@@ -185,16 +185,16 @@ Namespace Academic
                                Return l.href <> "javascript:void(0);"
                            End Function) _
                     .ToArray,
-                .DOI = doi,
+                .doi = doi,
                 .issue = issue,
                 .journal = journal,
                 .pages = pageSpan,
                 .volume = volumn,
-                .PubDate = pubDate,
+                .pubDate = pubDate,
                 .source = source.Where(Function(l) l.href <> "javascript:void(0);").ToArray,
-                .keywords = areas.Where(Function(l) l.href <> "javascript:void(0);").ToArray,
+                .Keywords = areas.Where(Function(l) l.href <> "javascript:void(0);").ToArray,
                 .cites = count,
-                .URL = url
+                .url = url
             }
         End Function
     End Module

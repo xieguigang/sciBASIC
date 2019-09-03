@@ -356,5 +356,22 @@ Namespace ComponentModel.Collection
         Public Shared Operator <>(index As Index(Of T), count%) As Boolean
             Return Not index = count
         End Operator
+
+        Public Shared Operator IsTrue(index As Index(Of T)) As Boolean
+            If index Is Nothing Then
+                Return False
+            ElseIf index.Count = 0 Then
+                Return False
+            ElseIf index.Count = 1 AndAlso Len(CObj(index.Objects(Scan0))) = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator IsFalse(index As Index(Of T)) As Boolean
+            Return Not op_True(index)
+        End Operator
     End Class
 End Namespace

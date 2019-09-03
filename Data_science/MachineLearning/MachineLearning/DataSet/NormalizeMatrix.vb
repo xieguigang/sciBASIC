@@ -69,6 +69,26 @@ Namespace StoreProcedure
         ''' <returns></returns>
         Public Property names As String()
 
+        Public Function DoNormalize(name$, value#, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double
+            Dim i As Integer = Array.IndexOf(names, name)
+            Dim result = doNormalInternal(i, value, method)
+
+            Return result
+        End Function
+
+        Private Function doNormalInternal(i%, x#, method As Normalizer.Methods) As Double
+            Select Case method
+                Case Normalizer.Methods.NormalScaler
+                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                Case Normalizer.Methods.RelativeScaler
+                    Return Normalizer.RelativeNormalize(matrix(i), x)
+                Case Normalizer.Methods.RangeDiscretizer
+                    Return Normalizer.RangeDiscretizer(matrix(i), x)
+                Case Else
+                    Return Normalizer.ScalerNormalize(matrix(i), x)
+            End Select
+        End Function
+
         ''' <summary>
         ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
         ''' </summary>
@@ -79,16 +99,7 @@ Namespace StoreProcedure
             Return sample.status _
                 .vector _
                 .Select(Function(x, i)
-                            Select Case method
-                                Case Normalizer.Methods.NormalScaler
-                                    Return Normalizer.ScalerNormalize(matrix(i), x)
-                                Case Normalizer.Methods.RelativeScaler
-                                    Return Normalizer.RelativeNormalize(matrix(i), x)
-                                Case Normalizer.Methods.RangeDiscretizer
-                                    Return Normalizer.RangeDiscretizer(matrix(i), x)
-                                Case Else
-                                    Return Normalizer.ScalerNormalize(matrix(i), x)
-                            End Select
+                            Return doNormalInternal(i, x, method)
                         End Function) _
                 .ToArray
         End Function
