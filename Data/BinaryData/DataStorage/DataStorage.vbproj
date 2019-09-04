@@ -441,5 +441,8 @@
       <Name>BinaryData</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ASN.1\README.md" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
