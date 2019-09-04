@@ -1072,6 +1072,7 @@
     <Compile Include="Language\Value\CharStream.vb" />
     <Compile Include="Language\Value\Variant.vb" />
     <Compile Include="My\File.vb" />
+    <Compile Include="Net\HTTP\wget.vb" />
     <Compile Include="Net\HTTP\Stream\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
     <Compile Include="Net\HTTP\DataURI.vb" />
@@ -1552,7 +1553,7 @@
     <Compile Include="Net\Protocol\Reflection\ProtocolHandler.vb" />
     <Compile Include="Net\Protocol\RequestStream.vb" />
     <Compile Include="Net\Tcp\Persistent\Protocols\POST.vb" />
-    <Compile Include="Net\wGetTools.vb" />
+    <Compile Include="Net\HTTP\wgetTask.vb" />
     <Compile Include="Net\Tcp\StateObject.vb" />
     <Compile Include="Net\Tcp\IPTools\IPEndPoint.vb" />
     <Compile Include="Net\Tcp\IPTools\LAN.vb" />
