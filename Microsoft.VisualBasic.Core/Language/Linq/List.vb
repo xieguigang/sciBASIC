@@ -178,7 +178,7 @@ Namespace Language
         ''' </summary>
         ''' <param name="index"></param>
         ''' <returns></returns>
-        Default Public Overloads Property Item(index As VBInteger) As T
+        Default Public Overloads Property Item(index As i32) As T
             Get
                 Return Item(index.Value)
             End Get

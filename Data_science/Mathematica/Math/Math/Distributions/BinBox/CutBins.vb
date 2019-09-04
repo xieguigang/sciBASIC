@@ -82,7 +82,7 @@ Namespace Distributions.BinBox
             Dim len% = v.Length
             Dim min# = eval(v.First)
             Dim max# = eval(v.Last)
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
             Dim lowerbound# = min
             Dim upbound#
             Dim list As New List(Of T)

@@ -81,7 +81,7 @@ Namespace BSON
 
         Private Function decodeArray() As JsonArray
             Dim obj As JsonObject = decodeDocument()
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
             Dim array As New JsonArray()
             Dim key As Value(Of String) = ""
 

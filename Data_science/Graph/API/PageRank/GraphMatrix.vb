@@ -88,7 +88,7 @@ Namespace Analysis.PageRank
         ''' </summary>
         ''' <returns></returns>
         Public Function GetEdgeCount() As Dictionary(Of String, Integer)
-            Dim counts As New Dictionary(Of String, (Edge As VertexEdge, C As VBInteger))
+            Dim counts As New Dictionary(Of String, (Edge As VertexEdge, C As i32))
             Dim uid$
 
             For Each edge As VertexEdge In edges

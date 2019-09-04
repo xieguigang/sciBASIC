@@ -56,7 +56,7 @@ Namespace Parallel.MMFProtocol.Pipeline
 
         Sub New(raw As Byte())
             Dim nameLen As Byte() = New Byte(INT32 - 1) {}
-            Dim p As VBInteger = Scan0
+            Dim p As i32 = Scan0
             Call Array.ConstrainedCopy(raw, p + INT32, nameLen, Scan0, INT32)
 
             Dim len As Integer = BitConverter.ToInt32(nameLen, Scan0)
@@ -72,7 +72,7 @@ Namespace Parallel.MMFProtocol.Pipeline
             Dim nameBuf As Byte() = UTF8WithoutBOM.GetBytes(Name)
             Dim buffer As Byte() = New Byte(INT32 + nameBuf.Length + byteData.Length - 1) {}
             Dim nameLen As Byte() = BitConverter.GetBytes(nameBuf.Length)
-            Dim p As VBInteger = Scan0
+            Dim p As i32 = Scan0
 
             Call Array.ConstrainedCopy(nameLen, Scan0, buffer, p + nameLen.Length, nameLen.Length)
             Call Array.ConstrainedCopy(nameBuf, Scan0, buffer, p + nameBuf.Length, nameBuf.Length)

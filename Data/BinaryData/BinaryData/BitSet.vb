@@ -232,7 +232,7 @@ Public Class BitSet
     End Sub
 
     Private Sub InitializeFrom(bits As ICollection(Of Boolean))
-        Dim index As VBInteger = 0
+        Dim index As i32 = 0
 
         Me._length = bits.Count
         Me.bits = New UInt32(RequiredSize(Me._length) - 1) {}

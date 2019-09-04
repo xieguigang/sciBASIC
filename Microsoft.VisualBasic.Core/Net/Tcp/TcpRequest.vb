@@ -127,7 +127,7 @@ Namespace Net.Tcp
         End Sub
 
         Sub New(remoteDevice As IPEndPoint, Optional exceptionHandler As ExceptionHandler = Nothing)
-            Call Me.New(remoteDevice.IPAddress, remoteDevice.Port, exceptionHandler)
+            Call Me.New(remoteDevice.ipAddress, remoteDevice.port, exceptionHandler)
         End Sub
 
         Shared ReadOnly defaultHandler As New [Default](Of ExceptionHandler)(AddressOf VBDebugger.PrintException)

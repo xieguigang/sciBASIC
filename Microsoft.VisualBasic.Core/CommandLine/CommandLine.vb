@@ -763,7 +763,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function OpenHandle(name$, Optional default$ = "", Optional encoding As Encodings = Encodings.UTF8) As VBInteger
+        Public Function OpenHandle(name$, Optional default$ = "", Optional encoding As Encodings = Encodings.UTF8) As i32
             Return My.File.OpenHandle(Me(name) Or [default].AsDefault, encoding)
         End Function
 #End Region

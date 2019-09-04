@@ -151,7 +151,7 @@ Namespace Darwinism
                 toString:=Function(id) id.ToString
             ).Fitness
 
-            Dim i As VBInteger = Scan0
+            Dim i As i32 = Scan0
             Dim random As Random = (seed Or randfSeed)()
             Dim population As Individual() = [new] _
                 .GetPopulation(PopulationSize, seed) _

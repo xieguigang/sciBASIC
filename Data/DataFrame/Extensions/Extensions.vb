@@ -556,11 +556,14 @@ Public Module Extensions
             Throw New Exception("Probably invalid path value: " & path, ex)
         End Try
 
+        Dim objSeq As Object() = source _
+            .Select(Function(o) DirectCast(o, Object)) _
+            .ToArray
+
         Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
         Call EchoLine($"Save data to file:///{path}")
-        Call EchoLine($"[CSV.Reflector] Reflector have {source.Count} lines of data to write.")
+        Call EchoLine($"[CSV.Reflector] Reflector have {objSeq.Length} lines of data to write.")
 
-        Dim objSeq = source.Select(Function(o) DirectCast(o, Object))
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source:=objSeq,
             type:=GetType(T),

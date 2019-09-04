@@ -66,7 +66,7 @@ Namespace Drawing3D.Math3D
         End Structure
 
         Sub New(surface As IEnumerable(Of Surface))
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
             Dim x As New List(Of Double)
             Dim y As New List(Of Double)
             Dim z As New List(Of Double)

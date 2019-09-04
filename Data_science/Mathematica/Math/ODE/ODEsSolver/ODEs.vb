@@ -271,10 +271,10 @@ Public MustInherit Class ODEs
 
             fields = type _
                 .DeclaredFields _
-                .Where(Function(f) (Not f.FieldType.Equals(GetType(var))) AndAlso f.FieldType.Equals(GetType(VBDouble)))
+                .Where(Function(f) (Not f.FieldType.Equals(GetType(var))) AndAlso f.FieldType.Equals(GetType(f64)))
 
             For Each v As FieldInfo In fields
-                Call out.Add(v.Name, DirectCast(v.GetValue(Me), VBDouble).Value)
+                Call out.Add(v.Name, DirectCast(v.GetValue(Me), f64).Value)
             Next
 
             Return out

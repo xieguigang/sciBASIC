@@ -105,7 +105,7 @@ Namespace KMeans
 
             For Each part As IGrouping(Of String, Partition) In g
                 If part.Count > 1 Then
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     For Each [sub] As Partition In part
                         Call out.Add(part.Key & $"-{__chars(++i)}", [sub].members)
