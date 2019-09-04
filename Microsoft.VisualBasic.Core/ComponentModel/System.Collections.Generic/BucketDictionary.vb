@@ -184,6 +184,7 @@ Namespace ComponentModel.Collection
         End Function
     End Class
 
+    <HideModuleName>
     Public Module BucketDictionaryExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
