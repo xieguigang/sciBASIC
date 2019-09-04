@@ -64,7 +64,7 @@ Namespace Net
         ''' <returns></returns>
         <Browsable(True)>
         <Description("Guid value of this portal information on the server registry.")>
-        <XmlAttribute> Public Property uid As String
+        <XmlAttribute> Public Property guid As String
 
         ''' <summary>
         ''' IPAddress of the services instance.
@@ -72,7 +72,7 @@ Namespace Net
         ''' <returns></returns>
         <Browsable(True)>
         <Description("IPAddress of the services instance.")>
-        <XmlAttribute> Public Property IPAddress As String
+        <XmlAttribute> Public Property ipAddress As String
 
         ''' <summary>
         ''' Data port of the services instance.
@@ -80,7 +80,7 @@ Namespace Net
         ''' <returns></returns>
         <Browsable(True)>
         <Description("Data port of the services instance.")>
-        <XmlAttribute> Public Property Port As Integer
+        <XmlAttribute> Public Property port As Integer
 #End Region
 
         ''' <summary>
@@ -96,8 +96,8 @@ Namespace Net
         ''' <param name="IPAddress">IPAddress string using for create object using method <see cref="System.Net.IPAddress.Parse(String)"/></param>
         ''' <param name="Port"><see cref="System.Net.IPEndPoint.Port"/></param>
         Sub New(IPAddress As String, Port As Integer)
-            Me.Port = Port
-            Me.IPAddress = IPAddress
+            Me.port = Port
+            Me.ipAddress = IPAddress
         End Sub
 
         ''' <summary>
@@ -106,14 +106,14 @@ Namespace Net
         ''' <param name="str">Required format string: ``IPAddress:Port``</param>
         ''' <remarks></remarks>
         Sub New(str As String)
-            Dim Tokens As String() = str.Split(":"c)
+            Dim tokens As String() = str.Split(":"c)
 
-            If Tokens.IsNullOrEmpty OrElse Tokens.Length < 2 Then
+            If tokens.IsNullOrEmpty OrElse tokens.Length < 2 Then
                 Throw New DataException(str & " is not a valid IPEndPoint string value!")
             End If
 
-            IPAddress = Tokens.First
-            Port = CInt(Val(Tokens(1)))
+            ipAddress = tokens.First
+            port = CInt(Val(tokens(1)))
         End Sub
 
         Sub New(ipEnd As System.Net.IPEndPoint)
@@ -125,7 +125,7 @@ Namespace Net
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"http://{IPAddress}:{Port}/"
+            Return $"http://{ipAddress}:{port}/"
         End Function
 
         ''' <summary>
@@ -133,11 +133,11 @@ Namespace Net
         ''' </summary>
         ''' <returns></returns>
         Public Function GetIPEndPoint() As System.Net.IPEndPoint
-            Return New System.Net.IPEndPoint(System.Net.IPAddress.Parse(ipString:=IPAddress), Port)
+            Return New System.Net.IPEndPoint(System.Net.IPAddress.Parse(ipString:=ipAddress), port)
         End Function
 
         Public Function GetValue() As String
-            Return IPAddress & ":" & Port.ToString
+            Return ipAddress & ":" & port.ToString
         End Function
 
         ''' <summary>
@@ -147,12 +147,18 @@ Namespace Net
         <SoapIgnore> Public ReadOnly Property IsValid As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Port > 0 AndAlso System.Net.IPAddress.TryParse(IPAddress, Nothing)
+                Return port > 0 AndAlso System.Net.IPAddress.TryParse(ipAddress, Nothing)
             End Get
         End Property
 
         Public Shared Narrowing Operator CType(ep As IPEndPoint) As System.Net.IPEndPoint
             Return ep.GetIPEndPoint
         End Operator
+
+        Public Const RegexIPAddress As String = "\d{1,3}(\.\d{1,3}){3}"
+
+        Public Shared Function IsIpv4Address(addr As String) As Boolean
+            Return addr.IsPattern(RegexIPAddress)
+        End Function
     End Class
 End Namespace
