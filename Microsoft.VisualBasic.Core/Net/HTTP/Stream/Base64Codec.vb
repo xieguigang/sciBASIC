@@ -59,6 +59,12 @@ Namespace Net.Http
 
 #Region "text"
 
+        ''' <summary>
+        ''' 将普通文本进行base64编码
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Base64String(text$, Optional encoding As Encoding = Nothing) As String
