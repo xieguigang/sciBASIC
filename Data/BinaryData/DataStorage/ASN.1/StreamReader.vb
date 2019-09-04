@@ -11,6 +11,13 @@ Namespace ASN1
 
             Return str
         End Function
+
+        Public Const hexDigits = "0123456789ABCDEF"
+        Public Const b64Safe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+
+        Public Function hexByte(b As Byte) As String
+            Return hexDigits((b >> 4) And &HF) & hexDigits(b And &HF)
+        End Function
     End Module
 
     Public Class StreamReader
@@ -18,7 +25,7 @@ Namespace ASN1
         Dim enc As Byte()
         Dim pos As i32
 
-        Public ReadOnly Property [get](Optional pos As Integer = -1)
+        Public ReadOnly Property [get](Optional pos As Integer = -1) As Byte
             Get
                 If pos < 0 Then
                     pos = ++pos
@@ -42,5 +49,23 @@ Namespace ASN1
                 Me.enc = enc.TryCast(Of Byte()).ToArray
             End If
         End Sub
+
+        Public Function hexDump(start, [end], raw) As String
+            Dim s = ""
+
+            For i As Integer = start To [end] - 1
+                s &= hexByte(Me.get(i))
+                If raw <> True Then
+                    Select Case i And &HF
+                        Case &H7 : s &= "  "
+                        Case &HF : s &= "\n"
+                        Case Else
+                            s += " "
+                    End Select
+                End If
+            Next
+
+            Return s
+        End Function
     End Class
 End Namespace

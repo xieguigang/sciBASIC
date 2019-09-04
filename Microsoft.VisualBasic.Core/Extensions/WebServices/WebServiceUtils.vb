@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -737,11 +738,11 @@ RE0:
         End Try
     End Function
 
-    Public Const IPAddress As String = "http://ipaddress.com/"
+    Const IPAddress As String = "http://ipaddress.com/"
     ''' <summary>
     ''' Microsoft DNS Server
     ''' </summary>
-    Public Const MicrosoftDNS As String = "4.2.2.1"
+    Const MicrosoftDNS As String = "4.2.2.1"
 
     ''' <summary>
     ''' 获取我的公网IP地址，假若没有连接互联网的话则会返回局域网IP地址
@@ -758,7 +759,7 @@ RE0:
 
         If hasInternet Then
             ' IPAddress on Internet
-            Return __getMyIPAddress()
+            Return getIPAddressInternal()
         Else
             ' IPAddress in LAN
             Return TcpRequest.LocalIPAddress
@@ -767,10 +768,16 @@ RE0:
 
     Public Const RegexIPAddress As String = "\d{1,3}(\.\d{1,3}){3}"
 
-    Private Function __getMyIPAddress() As String
-        Dim page As String = IPAddress.GET
-        Dim ipResult As String = Regex.Match(page, $"IP[:] {RegexIPAddress}<br><img", RegexOptions.IgnoreCase).Value
-        ipResult = Regex.Match(ipResult, RegexIPAddress).Value
+    ''' <summary>
+    ''' Request an external server and then returns the ip address from the server side.
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function getIPAddressInternal() As String
+        Dim ipResult$ = IPAddress.GET
+
+        ipResult = r.Match(ipResult, $"IP[:] {RegexIPAddress}<br>", RegexOptions.IgnoreCase).Value
+        ipResult = r.Match(ipResult, RegexIPAddress).Value
+
         Return ipResult
     End Function
 End Module
