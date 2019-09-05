@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AD4BCB63-E1C7-4243-A032-78A4FA0DBEBF}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.PCAPlotTest</StartupObject>
+    <StartupObject>Testing.VolinPlotTest</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -119,6 +119,7 @@
     <Compile Include="BarPlotTest.vb" />
     <Compile Include="heatmapPlot.vb" />
     <Compile Include="ColorLegendTest.vb" />
+    <Compile Include="VolinPlotTest.vb" />
     <Compile Include="ROCplotTest.vb" />
     <Compile Include="Module3.vb" />
     <Compile Include="DensityPlotTest.vb" />

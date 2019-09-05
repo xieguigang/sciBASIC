@@ -31,7 +31,44 @@ Public Module VolinPlot
     ''' <param name="bg"></param>
     ''' <param name="colorset"></param>
     ''' <returns></returns>
-    Public Function Plot(dataset As [Variant](Of IEnumerable(Of NamedCollection(Of Double)), IEnumerable(Of DataSet)),
+    Public Function Plot(dataset As IEnumerable(Of DataSet),
+                         Optional size$ = "3100,2700",
+                         Optional margin$ = g.DefaultPadding,
+                         Optional bg$ = "white",
+                         Optional colorset$ = DesignerTerms.TSFShellColors,
+                         Optional Ylabel$ = "y axis",
+                         Optional yLabelFontCSS$ = CSSFont.PlotSubTitle,
+                         Optional ytickFontCSS$ = CSSFont.PlotSmallTitle) As GraphicsData
+        With dataset.ToArray
+            Return .PropertyNames _
+                   .Select(Function(label)
+                               Return New NamedCollection(Of Double)(label, .Vector(label))
+                           End Function) _
+                   .DoCall(Function(data)
+                               Return VolinPlot.Plot(
+                                   dataset:=data,
+                                   size:=size,
+                                   margin:=margin,
+                                   bg:=bg,
+                                   colorset:=colorset,
+                                   Ylabel:=Ylabel,
+                                   yLabelFontCSS:=yLabelFontCSS,
+                                   ytickFontCSS:=ytickFontCSS
+                               )
+                           End Function)
+        End With
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="dataset">数据集中的样本数据可以不必等长</param>
+    ''' <param name="size"></param>
+    ''' <param name="margin"></param>
+    ''' <param name="bg"></param>
+    ''' <param name="colorset"></param>
+    ''' <returns></returns>
+    Public Function Plot(dataset As IEnumerable(Of NamedCollection(Of Double)),
                          Optional size$ = "3100,2700",
                          Optional margin$ = g.DefaultPadding,
                          Optional bg$ = "white",
@@ -41,22 +78,7 @@ Public Module VolinPlot
                          Optional ytickFontCSS$ = CSSFont.PlotSmallTitle) As GraphicsData
 
         ' 进行数据分布统计计算
-        Dim matrix As NamedCollection(Of Double)()
-
-        If dataset Like GetType(IEnumerable(Of DataSet)) Then
-            With dataset.TryCast(Of IEnumerable(Of DataSet)).ToArray
-                matrix = .PropertyNames _
-                         .Select(Function(label)
-                                     Return New NamedCollection(Of Double)(label, .Vector(label))
-                                 End Function) _
-                         .ToArray
-            End With
-        Else
-            matrix = dataset _
-                .TryCast(Of IEnumerable(Of NamedCollection(Of Double))) _
-                .ToArray
-        End If
-
+        Dim matrix As NamedCollection(Of Double)() = dataset.ToArray
         'Dim quantiles = matrix _
         '    .Select(Function(data)
         '                Return New NamedValue(Of QuantileEstimationGK) With {
