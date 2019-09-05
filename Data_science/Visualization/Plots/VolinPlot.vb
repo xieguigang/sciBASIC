@@ -153,7 +153,7 @@ Public Module VolinPlot
                     ' 绘制X坐标轴分组标签
                     Call g.DrawString(group.name, CSSFont.TryParse(yLabelFontCSS), Brushes.Black, New PointF With {.X = X, .Y = plotRegion.Bottom + 10})
 
-                    X += groupInterval
+                    X += semiWidth + groupInterval + semiWidth
                 Next
             End Sub
 
