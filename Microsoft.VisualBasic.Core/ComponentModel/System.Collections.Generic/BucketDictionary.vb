@@ -147,7 +147,7 @@ Namespace ComponentModel.Collection
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"Tuple of [{GetType(K).Name}, {GetType(V).Name}] with {buckets.Count} buckets."
+            Return $"Tuple of [{GetType(K).Name}, {GetType(V).Name}] with {Count} records in {buckets.Count} buckets."
         End Function
 
         Public Function ContainsKey(key As K) As Boolean Implements IReadOnlyDictionary(Of K, V).ContainsKey
@@ -206,7 +206,7 @@ Namespace ComponentModel.Collection
                 Dim key As K = getKey(x)
                 Dim value As V = getValue(x)
 
-                Call bucket.Add(key, value)
+                bucket(key) = value
 
                 If bucket.Count >= size Then
                     table.buckets.Add(bucket)
