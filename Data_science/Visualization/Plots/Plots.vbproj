@@ -337,6 +337,7 @@
     <Compile Include="BarPlot\Histogram\DataModel.vb" />
     <Compile Include="g\Axis\TimeRange.vb" />
     <Compile Include="g\Canvas.vb" />
+    <Compile Include="VolinPlot.vb" />
     <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="BarPlot\Data\csv.vb" />
     <Compile Include="Fractions\TreeMap.vb" />
