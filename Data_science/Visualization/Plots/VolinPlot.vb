@@ -12,8 +12,10 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' ## 小提琴图
@@ -80,7 +82,19 @@ Public Module VolinPlot
                          Optional ytickFontCSS$ = CSSFont.PlotSmallTitle) As GraphicsData
 
         ' 进行数据分布统计计算
-        Dim matrix As NamedCollection(Of Double)() = dataset.ToArray
+        Dim matrix As NamedCollection(Of Double)() = dataset _
+            .Select(Function(d)
+                        Dim quartile = d.Quartile
+                        Dim normals = d.AsVector _
+                            .Outlier(quartile) _
+                            .normal
+
+                        Return New NamedCollection(Of Double) With {
+                            .name = d.name,
+                            .value = normals
+                        }
+                    End Function) _
+            .ToArray
         'Dim quantiles = matrix _
         '    .Select(Function(data)
         '                Return New NamedValue(Of QuantileEstimationGK) With {
@@ -125,6 +139,7 @@ Public Module VolinPlot
                     Dim line_r As New List(Of PointF)
                     Dim q0 = group.Min
                     Dim dy = (group.Max - group.Min) / 100
+                    Dim outliers As New List(Of PointF)
 
                     For p As Integer = 10 To 100 Step 10
                         Dim q1 = q0 + dy
@@ -135,6 +150,8 @@ Public Module VolinPlot
                         line_r += New PointF With {.X = density, .Y = lower - p * dy}
                         q0 = q1
                     Next
+
+                    Call $"{group.name} = {New Double() {group.Min, group.Max}.GetJson}".__DEBUG_ECHO
 
                     ' 进行宽度伸缩映射
                     Dim maxDensity As DoubleRange = line_l.X
