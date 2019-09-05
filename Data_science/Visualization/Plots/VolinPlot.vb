@@ -13,12 +13,11 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
-''' 小提琴图
+''' ## 小提琴图
 ''' 
 ''' + 高度为数据的分布位置
 ''' + 宽度为对应的百分位上的数据点的数量
 ''' + 长度为最小值与最大值之间的差值
-''' 
 ''' </summary>
 Public Module VolinPlot
 
