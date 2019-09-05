@@ -208,7 +208,7 @@ Namespace Graphic.Axis
                 Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=XtickFormat)
             End If
             If ylayout <> YAxisLayoutStyles.None Then
-                Call g.DrawY(pen, ylabel, region,
+                Call g.DrawY(pen, ylabel,
                              scaler, scaler.X(0), scaler.AxisTicks.Y,
                              ylayout, offset,
                              labelFontStyle,
@@ -240,7 +240,7 @@ Namespace Graphic.Axis
                     Call g.DrawLine(gridPen, left, right)
                 Next
 
-                Call g.DrawY(pen, label, region,
+                Call g.DrawY(pen, label,
                              scaler, scaler.X(0), scaler.AxisTicks.Y,
                              YAxisLayoutStyles.Left,
                              offset,
@@ -273,7 +273,6 @@ Namespace Graphic.Axis
         ''' </param>
         <Extension> Public Sub DrawY(ByRef g As IGraphics,
                                      pen As Pen, label$,
-                                     canvas As GraphicsRegion,
                                      scaler As YScaler,
                                      X0#, yTicks As Vector,
                                      layout As YAxisLayoutStyles, offset As Point,
@@ -306,7 +305,7 @@ Namespace Graphic.Axis
 
             Dim maxYTickSize!
 
-            If Not yTicks.IsNullorEmpty Then
+            If Not yTicks.IsNullOrEmpty Then
                 For Each tick As Double In yTicks
                     Dim y! = scaler.TranslateY(tick) + offset.Y
                     Dim axisY As New PointF(ZERO.X, y)
