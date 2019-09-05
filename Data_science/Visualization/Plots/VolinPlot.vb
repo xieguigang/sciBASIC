@@ -11,6 +11,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -145,6 +146,9 @@ Public Module VolinPlot
                         line_l(i) = New PointF With {.X = X - densityWidth, .Y = line_l(i).Y}
                         line_r(i) = New PointF With {.X = X + densityWidth, .Y = line_r(i).Y}
                     Next
+
+                    line_l = line_l.BSpline
+                    line_r = line_r.BSpline
 
                     ' 需要插值么？
                     ' 生成多边形
