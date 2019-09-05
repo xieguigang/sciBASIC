@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -30,7 +31,7 @@ Public Module VolinPlot
     ''' <param name="bg"></param>
     ''' <param name="colorset"></param>
     ''' <returns></returns>
-    Public Function Plot(dataset As IEnumerable(Of NamedCollection(Of Double)),
+    Public Function Plot(dataset As [Variant](Of IEnumerable(Of NamedCollection(Of Double)), IEnumerable(Of DataSet)),
                          Optional size$ = "3100,2700",
                          Optional margin$ = g.DefaultPadding,
                          Optional bg$ = "white",
@@ -40,7 +41,22 @@ Public Module VolinPlot
                          Optional ytickFontCSS$ = CSSFont.PlotSmallTitle) As GraphicsData
 
         ' 进行数据分布统计计算
-        Dim matrix = dataset.ToArray
+        Dim matrix As NamedCollection(Of Double)()
+
+        If dataset Like GetType(IEnumerable(Of DataSet)) Then
+            With dataset.TryCast(Of IEnumerable(Of DataSet)).ToArray
+                matrix = .PropertyNames _
+                         .Select(Function(label)
+                                     Return New NamedCollection(Of Double)(label, .Vector(label))
+                                 End Function) _
+                         .ToArray
+            End With
+        Else
+            matrix = dataset _
+                .TryCast(Of IEnumerable(Of NamedCollection(Of Double))) _
+                .ToArray
+        End If
+
         'Dim quantiles = matrix _
         '    .Select(Function(data)
         '                Return New NamedValue(Of QuantileEstimationGK) With {
