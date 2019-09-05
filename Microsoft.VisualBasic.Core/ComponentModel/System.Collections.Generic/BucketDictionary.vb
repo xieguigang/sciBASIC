@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::3833795011a6ed46058df56330aca07e, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class BucketDictionary
-    ' 
-    '         Properties: Count, Keys, Values
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: ContainsKey, GetEnumerator, IEnumerable_GetEnumerator, ToString, TryGetValue
-    ' 
-    '     Module BucketDictionaryExtensions
-    ' 
-    '         Function: (+3 Overloads) CreateBuckets
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class BucketDictionary
+' 
+'         Properties: Count, Keys, Values
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: ContainsKey, GetEnumerator, IEnumerable_GetEnumerator, ToString, TryGetValue
+' 
+'     Module BucketDictionaryExtensions
+' 
+'         Function: (+3 Overloads) CreateBuckets
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Collection
 
@@ -187,17 +188,38 @@ Namespace ComponentModel.Collection
     <HideModuleName>
     Public Module BucketDictionaryExtensions
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="K"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="getKey"></param>
+        ''' <param name="size%"></param>
+        ''' <param name="overridesDuplicates">
+        ''' 当数据中存在重复的键名的时候，是将前面已有的数据覆盖掉还是抛出键名重复的错误？默认是不进行重写覆盖，而是键重复抛出错误。
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function CreateBuckets(Of T, K)(source As IEnumerable(Of T), getKey As Func(Of T, K), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, T)
-            Return source.CreateBuckets(getKey, Function(o) o, size:=size)
+        Public Function CreateBuckets(Of T, K)(source As IEnumerable(Of T),
+                                               getKey As Func(Of T, K),
+                                               Optional size% = Short.MaxValue * 10,
+                                               Optional overridesDuplicates As Boolean = False) As BucketDictionary(Of K, T)
+            Return source.CreateBuckets(
+                getKey:=getKey,
+                getValue:=Function(o) o,
+                size:=size,
+                overridesDuplicates:=overridesDuplicates
+            )
         End Function
 
         <Extension>
         Public Function CreateBuckets(Of T, K, V)(source As IEnumerable(Of T),
                                                   getKey As Func(Of T, K),
                                                   getValue As Func(Of T, V),
-                                                  Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
+                                                  Optional size% = Short.MaxValue * 10,
+                                                  Optional overridesDuplicates As Boolean = False) As BucketDictionary(Of K, V)
 
             Dim table As New BucketDictionary(Of K, V)(size)
             Dim bucket As New Dictionary(Of K, V)
@@ -206,7 +228,13 @@ Namespace ComponentModel.Collection
                 Dim key As K = getKey(x)
                 Dim value As V = getValue(x)
 
-                bucket(key) = value
+                If overridesDuplicates Then
+                    bucket(key) = value
+                ElseIf bucket.ContainsKey(key) Then
+                    Throw New DuplicateNameException(key.GetJson)
+                Else
+                    Call bucket.Add(key, value)
+                End If
 
                 If bucket.Count >= size Then
                     table.buckets.Add(bucket)
