@@ -71,7 +71,7 @@ Public Module VolinPlot
     ''' <returns></returns>
     Public Function Plot(dataset As IEnumerable(Of NamedCollection(Of Double)),
                          Optional size$ = "3100,2700",
-                         Optional margin$ = g.DefaultUltraLargePadding,
+                         Optional margin$ = Canvas.Resolution2K.PaddingWithTopTitleAndBottomLegend,
                          Optional bg$ = "white",
                          Optional colorset$ = DesignerTerms.TSFShellColors,
                          Optional Ylabel$ = "y axis",
@@ -102,7 +102,7 @@ Public Module VolinPlot
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim plotRegion As Rectangle = region.PlotRegion
                 Dim Y = d3js.scale.linear.domain(yticks).range(integers:={plotRegion.Top, plotRegion.Bottom})
-                Dim yScale As New YScaler(True) With {
+                Dim yScale As New YScaler(False) With {
                     .region = plotRegion,
                     .Y = Y
                 }
@@ -117,21 +117,21 @@ Public Module VolinPlot
 
                 For Each group As NamedCollection(Of Double) In matrix
                     ' Dim q = quantiles(group)
-                    Dim upper = Y(group.Max)
-                    Dim lower = Y(group.Min)
+                    Dim upper = plotRegion.Bottom - Y(group.Max)
+                    Dim lower = plotRegion.Bottom - Y(group.Min)
                     ' 计算数据分布的密度之后，进行左右对称的线条的生成
                     Dim line_l As New List(Of PointF)
                     Dim line_r As New List(Of PointF)
                     Dim q0 = group.Min
-                    Dim dy = (upper - lower) / 100
+                    Dim dy = (group.Max - group.Min) / 100
 
-                    For p As Integer = 1 To 100
+                    For p As Integer = 10 To 100 Step 10
                         Dim q1 = q0 + dy
                         Dim range As DoubleRange = {q0, q1}
                         Dim density = group.Count(AddressOf range.IsInside)
 
-                        line_l += New PointF With {.X = density, .Y = lower + p * dy}
-                        line_r += New PointF With {.X = density, .Y = lower + p * dy}
+                        line_l += New PointF With {.X = density, .Y = lower - p * dy}
+                        line_r += New PointF With {.X = density, .Y = lower - p * dy}
                         q0 = q1
                     Next
 
