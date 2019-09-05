@@ -36,13 +36,13 @@ Public Module VolinPlot
     ''' <param name="colorset"></param>
     ''' <returns></returns>
     Public Function Plot(dataset As IEnumerable(Of DataSet),
-                         Optional size$ = "3100,2700",
-                         Optional margin$ = g.DefaultPadding,
+                         Optional size$ = Canvas.Resolution2K.Size,
+                         Optional margin$ = Canvas.Resolution2K.PaddingWithTopTitle,
                          Optional bg$ = "white",
                          Optional colorset$ = DesignerTerms.TSFShellColors,
                          Optional Ylabel$ = "y axis",
-                         Optional yLabelFontCSS$ = CSSFont.PlotSubTitle,
-                         Optional ytickFontCSS$ = CSSFont.PlotSmallTitle) As GraphicsData
+                         Optional yLabelFontCSS$ = Canvas.Resolution2K.PlotSmallTitle,
+                         Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal) As GraphicsData
         With dataset.ToArray
             Return .PropertyNames _
                    .Select(Function(label)
@@ -73,36 +73,15 @@ Public Module VolinPlot
     ''' <param name="colorset"></param>
     ''' <returns></returns>
     Public Function Plot(dataset As IEnumerable(Of NamedCollection(Of Double)),
-                         Optional size$ = "3100,2700",
-                         Optional margin$ = Canvas.Resolution2K.PaddingWithTopTitleAndBottomLegend,
+                         Optional size$ = Canvas.Resolution2K.Size,
+                         Optional margin$ = Canvas.Resolution2K.PaddingWithTopTitle,
                          Optional bg$ = "white",
                          Optional colorset$ = DesignerTerms.TSFShellColors,
                          Optional Ylabel$ = "y axis",
-                         Optional yLabelFontCSS$ = CSSFont.PlotSubTitle,
-                         Optional ytickFontCSS$ = CSSFont.PlotSmallTitle) As GraphicsData
+                         Optional yLabelFontCSS$ = Canvas.Resolution2K.PlotSmallTitle,
+                         Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal) As GraphicsData
 
-        ' 进行数据分布统计计算
-        Dim matrix As NamedCollection(Of Double)() = dataset _
-            .Select(Function(d)
-                        Dim quartile = d.Quartile
-                        Dim normals = d.AsVector _
-                            .Outlier(quartile) _
-                            .normal
-
-                        Return New NamedCollection(Of Double) With {
-                            .name = d.name,
-                            .value = normals
-                        }
-                    End Function) _
-            .ToArray
-        'Dim quantiles = matrix _
-        '    .Select(Function(data)
-        '                Return New NamedValue(Of QuantileEstimationGK) With {
-        '                    .Name = data.name,
-        '                    .Value = data.GKQuantile
-        '                }
-        '            End Function) _
-        '    .ToArray
+        Dim matrix As NamedCollection(Of Double)() = dataset.ToArray
 
         ' 用来构建Y坐标轴的总体数据
         Dim alldata = matrix _
@@ -112,6 +91,9 @@ Public Module VolinPlot
         Dim yticks = alldata.Range.CreateAxisTicks
         Dim yTickFont As Font = CSSFont.TryParse(ytickFontCSS)
         Dim colors = Designer.GetColors(colorset, matrix.Length)
+        Dim labelSize As SizeF
+        Dim labelFont As Font = CSSFont.TryParse(yLabelFontCSS)
+        Dim labelPos As PointF
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -124,25 +106,29 @@ Public Module VolinPlot
 
                 Call Axis.DrawY(g, Pens.Black, Ylabel, yScale, 0, yticks, YAxisLayoutStyles.Left, Nothing, yLabelFontCSS, yTickFont, htmlLabel:=False)
 
-                Dim maxWidth = plotRegion.Width / (matrix.Length + 1)
+                Dim groupInterval = plotRegion.Width * 0.1
+                Dim maxWidth = (plotRegion.Width - groupInterval) / matrix.Length
+
+                groupInterval = groupInterval / matrix.Length
+
                 Dim semiWidth = maxWidth / 2
-                Dim groupInterval = (plotRegion.Width / matrix.Length - maxWidth) / matrix.Length
                 Dim X As Single = plotRegion.Left + groupInterval + semiWidth
                 Dim index As i32 = Scan0
 
                 For Each group As NamedCollection(Of Double) In matrix
                     ' Dim q = quantiles(group)
-                    Dim upper = plotRegion.Bottom - Y(group.Max)
-                    Dim lower = plotRegion.Bottom - Y(group.Min)
+                    Dim upper = yScale.TranslateY(group.Max)
+                    Dim lower = yScale.TranslateY(group.Min)
                     ' 计算数据分布的密度之后，进行左右对称的线条的生成
                     Dim line_l As New List(Of PointF)
                     Dim line_r As New List(Of PointF)
                     Dim q0 = group.Min
-                    Dim dy = (group.Max - group.Min) / 100
+                    Dim dstep = (group.Max - group.Min) / 10
+                    Dim dy = Math.Abs(upper - lower) / 10
                     Dim outliers As New List(Of PointF)
 
-                    For p As Integer = 10 To 100 Step 10
-                        Dim q1 = q0 + dy
+                    For p As Integer = 1 To 10
+                        Dim q1 = q0 + dstep
                         Dim range As DoubleRange = {q0, q1}
                         Dim density = group.Count(AddressOf range.IsInside)
 
@@ -164,8 +150,8 @@ Public Module VolinPlot
                         line_r(i) = New PointF With {.X = X + densityWidth, .Y = line_r(i).Y}
                     Next
 
-                    line_l = line_l.BSpline
-                    line_r = line_r.BSpline
+                    line_l = line_l.BSpline(degree:=2)
+                    line_r = line_r.BSpline(degree:=2)
 
                     ' 需要插值么？
                     ' 生成多边形
@@ -183,8 +169,14 @@ Public Module VolinPlot
                     Call g.DrawPolygon(Pens.LightGray, polygon)
                     Call g.FillPolygon(New SolidBrush(colors(++index)), polygon)
 
+                    labelSize = g.MeasureString(group.name, labelFont)
+                    labelPos = New PointF With {
+                        .X = X - labelSize.Width / 2,
+                        .Y = plotRegion.Bottom + 10
+                    }
+
                     ' 绘制X坐标轴分组标签
-                    Call g.DrawString(group.name, CSSFont.TryParse(yLabelFontCSS), Brushes.Black, New PointF With {.X = X, .Y = plotRegion.Bottom + 10})
+                    Call g.DrawString(group.name, labelFont, Brushes.Black, labelPos)
 
                     X += semiWidth + groupInterval + semiWidth
                 Next
