@@ -210,7 +210,7 @@ Namespace CommandLine.ManView
                 Call sb.AppendLine(" // ASSEMBLY:  " & Assembly.LoadFile(VBCore.ExecutablePath).GetName.ToString)
                 Call sb.AppendLine(" // COPYRIGHT: " & VBCore.Info.AssemblyCopyright)
                 Call sb.AppendLine(" // GUID:      " & VBCore.Info.Guid)
-                Call sb.AppendLine(" // BUILT:     " & VBCore.Info.BuiltTime)
+                Call sb.AppendLine(" // BUILT:     " & VBCore.Info.BuiltTime.ToString)
                 Call sb.AppendLine(" // ")
 
                 Call sb.AppendLine()
