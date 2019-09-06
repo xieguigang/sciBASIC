@@ -171,6 +171,11 @@ Namespace Language.Default
             Return False = CType(str, Boolean)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Not(str As DefaultString) As Boolean
+            Return Not CType(str, Boolean)
+        End Operator
+
         ''' <summary>
         ''' If <paramref name="value"/> is empty then returns <paramref name="default"/>, 
         ''' else returns <paramref name="value"/> itself.

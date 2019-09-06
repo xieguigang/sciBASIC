@@ -1044,6 +1044,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
     <Compile Include="CommandLine\GitBashEnvironment.vb" />
+    <Compile Include="CommandLine\Interpreters\ExecuteImpl.vb" />
     <Compile Include="CommandLine\Stream.vb" />
     <Compile Include="CommandLine\InteropService\InCompatible.vb" />
     <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />
