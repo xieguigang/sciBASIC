@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a596d68f21ddfe88f4f2dacfb45376f7, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::d216526a496bf2fc312ec925d21209a9, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Shell
     ' 
-    '         Properties: History, Quite
+    '         Properties: dev, History, ps1, Quite, shell
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: Run
@@ -43,36 +43,57 @@
 
 #End Region
 
+Imports System.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace Terminal
 
+    ''' <summary>
+    ''' Shell model for console.
+    ''' </summary>
     Public Class Shell
 
-        ReadOnly __ps1 As PS1
-        ReadOnly __shell As Action(Of String)
+        Public ReadOnly Property ps1 As PS1
+        Public ReadOnly Property shell As Action(Of String)
+        Public ReadOnly Property dev As TextReader
 
+        ''' <summary>
+        ''' Command text for exit the shell loop 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Quite As String = ":q"
         Public Property History As String = ":h"
 
-        Sub New(ps1 As PS1, exec As Action(Of String))
-            __ps1 = ps1
-            __shell = exec
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="ps1">The commandline prompt prefix headers.</param>
+        ''' <param name="exec">How to execute the command line input.</param>
+        Sub New(ps1 As PS1, exec As Action(Of String), Optional dev As TextReader = Nothing)
+            Me.ps1 = ps1
+            Me.shell = exec
+            Me.dev = dev Or App.StdInput
         End Sub
 
+        ''' <summary>
+        ''' 执行一个配置好的命令行模型, 代码会被一直阻塞在这里
+        ''' </summary>
         Public Sub Run()
-            Dim cli As String
+            Dim cli As Value(Of String) = ""
 
             Do While True
-                Call Console.Write(__ps1.ToString)
+                Call Console.Write(ps1.ToString)
 
-                cli = Console.ReadLine
-
-                If String.Equals(cli, Quite) Then
-                    Exit Do
+                If (cli = Console.ReadLine).Trim.StringEmpty Then
+                    Continue Do
                 End If
 
-                Call __shell(cli)
+                If cli.Value.TextEquals(Quite) Then
+                    Exit Do
+                Else
+                    Call _shell(cli)
+                End If
             Loop
         End Sub
     End Class

@@ -150,29 +150,38 @@ Public Module ListExtensions
         Dim list2 As New List(Of T)
         Dim internalGet_geneObj =
             Function(id As String)
-                Dim query = From x
+                ' 假若是对基因组进行排序，可能getkey函数只获取得到的是编号，而customOrder之中还会包含有全称，所以用InStr判断一下？
+                Dim query = From element As T
                             In ls.AsParallel
-                            Let key As String = getKey(x)
-                            Where key.TextEquals(id) OrElse
-                                InStr(key, id, CompareMethod.Text) > 0 ' 假若是对基因组进行排序，可能getkey函数只获取得到的是编号，而customOrder之中还会包含有全称，所以用InStr判断一下？
-                            Select x '
+                            Let key As String = getKey(element)
+                            Where key.TextEquals(id) OrElse InStr(key, id, CompareMethod.Text) > 0
+                            Select element
+
                 Return query.FirstOrDefault
             End Function
 
         For Each ID As String In customOrder
             Dim selectedItem As T = internalGet_geneObj(ID)
 
-            If Not selectedItem Is Nothing Then ' 由于是倒序的，故而将对象移动到最后一个元素即可
+            ' 由于是倒序的，故而将对象移动到最后一个元素即可
+            If Not selectedItem Is Nothing Then
                 Call list2.Add(selectedItem)
                 Call ls.Remove(selectedItem)
             End If
         Next
 
-        Call list2.AddRange(ls) ' 添加剩余的没有在customOrder之中找到的数据
+        ' 添加剩余的没有在customOrder之中找到的数据
+        Call list2.AddRange(ls)
 
         Return list2
     End Function
 
+    ''' <summary>
+    ''' 从一个对象集合中创建索引
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Indexing(Of T)(source As IEnumerable(Of T)) As Index(Of T)

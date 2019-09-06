@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e718daea6d5774f043586d1b874deb07, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ec02303acfd6b78c776af94da7d3591a, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -82,7 +82,7 @@ Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 Public Module Extensions
 
     Sub New()
-        Call __initStreamIO_pointer()
+        Call initStreamIOHandlers()
     End Sub
 
     <Extension>
@@ -556,11 +556,14 @@ Public Module Extensions
             Throw New Exception("Probably invalid path value: " & path, ex)
         End Try
 
+        Dim objSeq As Object() = source _
+            .Select(Function(o) DirectCast(o, Object)) _
+            .ToArray
+
         Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
         Call EchoLine($"Save data to file:///{path}")
-        Call EchoLine($"[CSV.Reflector] Reflector have {source.Count} lines of data to write.")
+        Call EchoLine($"[CSV.Reflector] Reflector have {objSeq.Length} lines of data to write.")
 
-        Dim objSeq = source.Select(Function(o) DirectCast(o, Object))
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source:=objSeq,
             type:=GetType(T),

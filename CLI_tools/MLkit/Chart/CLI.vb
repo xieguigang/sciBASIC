@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea4b1b523082c25071bbb2405d2fa9dc, CLI_tools\MLkit\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::ac64aeb9e7501941c2c93388796f03a4, CLI_tools\MLkit\Chart\CLI.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module CLI
     ' 
-    '     Function: BarPlotCLI, KMeansCluster, ROC, Scatter
+    '     Function: BarPlotCLI, KMeansCluster, RegressionROC, ROC, Scatter
     ' 
     ' /********************************************************************************/
 
@@ -44,13 +44,18 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 <CLI> Module CLI
 
@@ -129,9 +134,51 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
     Public Function ROC(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ROC.png"
-        Dim data = DataSet.LoadDataSet([in]).CreateSerial
+        Dim data = DataSet.LoadDataSet([in]).ToArray
 
-        Return ROCPlot.Plot(data, showReference:=True) _
+        If data.Length = 0 Then
+            Throw New EntryPointNotFoundException($"The input data file '{[in].GetFullPath}' is not found on your file system!")
+        End If
+
+        Dim curveSerial As SerialData = data.CreateSerial
+
+        Return ROCPlot.Plot(curveSerial, showReference:=True) _
+            .Save(out) _
+            .CLICode
+    End Function
+
+    <ExportAPI("/ROC.regression")>
+    <Usage("/ROC.regression /in <validate.test.csv> [/out <ROC.png>]")>
+    <Description("Draw ROC chart plot of the regression classifier output result.")>
+    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+              AcceptTypes:={GetType(RegressionClassify)},
+              Extensions:="*.csv",
+              Description:="")>
+    Public Function RegressionROC(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ROC.png"
+        Dim data = [in].LoadCsv(Of RegressionClassify) _
+            .Select(Function(p)
+                        Return New Validate With {
+                            .actuals = {p.actual},
+                            .predicts = {p.predicts}
+                        }
+                    End Function) _
+            .ToArray
+        Dim actuals = data _
+            .Select(Function(p) p.actuals(Scan0)) _
+            .ToArray
+        Dim points As New Sequence With {
+            .n = 100,
+            .range = New DoubleRange(actuals)
+        }
+        Dim validation As NamedCollection(Of Validation) = Validate.ROC(data, threshold:=points).First
+        Dim serials As SerialData = validation.CreateSerial _
+            .With(Sub(sr)
+                      sr.title = Validate.AUC(data).First.Value
+                  End Sub)
+
+        Return ROCPlot.Plot(serials, showReference:=True) _
             .Save(out) _
             .CLICode
     End Function

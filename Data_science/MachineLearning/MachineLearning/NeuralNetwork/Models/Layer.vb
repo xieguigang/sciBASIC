@@ -87,7 +87,7 @@ Namespace NeuralNetwork
             Me.Neurons = neurons
         End Sub
 
-        Sub New(size%, active As IActivationFunction, weight As Func(Of Double), Optional input As Layer = Nothing, Optional guid As VBInteger = Nothing)
+        Sub New(size%, active As IActivationFunction, weight As Func(Of Double), Optional input As Layer = Nothing, Optional guid As i32 = Nothing)
             Neurons = New Neuron(size - 1) {}
 
             If input Is Nothing Then

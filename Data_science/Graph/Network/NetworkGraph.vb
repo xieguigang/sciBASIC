@@ -56,7 +56,7 @@ Namespace Network
         ''' <param name="nodes"></param>
         ''' <param name="edges"></param>
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
-            Dim index As VBInteger = Scan0
+            Dim index As i32 = Scan0
 
             For Each node As Node In nodes
                 ' because the edge object have a reference to current node

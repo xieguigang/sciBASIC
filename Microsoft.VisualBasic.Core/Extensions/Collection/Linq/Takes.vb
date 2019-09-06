@@ -73,7 +73,7 @@ Namespace Linq
         ''' <returns></returns>
         <Extension>
         Public Iterator Function Takes(Of T)(source As IEnumerable(Of T), flags As Boolean()) As IEnumerable(Of T)
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
 
             For Each obj As T In source
                 If flags(++i) Then

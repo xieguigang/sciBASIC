@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b2b47964896cb36d8a71fb44377986e, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::60c0f50741ba4fb1373c344874776400, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,9 @@
     '         Constructor: (+4 Overloads) Sub New
     ' 
     '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
-    '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
-    '                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
-    '                   Trim
+    '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Project
+    '                   Remove, Save, (+2 Overloads) ToArray, TokenCounts, ToString
+    '                   Transpose, Trim
     ' 
     '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
     ' 
@@ -281,6 +281,13 @@ B21,B22,B23,...
                 .ToArray
             Dim df As File = columns.JoinColumns
             Return df
+        End Function
+
+        Public Function Project(fieldNames As IEnumerable(Of String)) As File
+            Dim columns = fieldNames.Select(Function(name) Me(name)).ToArray
+            Dim newTable = columns.JoinColumns
+
+            Return newTable
         End Function
 
         Public ReadOnly Property EstimatedFileSize As Double

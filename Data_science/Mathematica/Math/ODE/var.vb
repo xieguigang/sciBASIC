@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Language
 ''' <summary>
 ''' Y variable in the ODE
 ''' </summary>
-Public Class var : Inherits VBDouble
+Public Class var : Inherits f64
     Implements Ivar
     Implements ICloneable
     Implements IAddress(Of Integer)

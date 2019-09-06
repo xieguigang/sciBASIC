@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5454f2d3e543162035ddfb17af315a80, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\FitnessMethods.vb"
+﻿#Region "Microsoft.VisualBasic::00a35121dda5fb455c6b13984fd941d6, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\FitnessMethods.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@ Public Enum FitnessMethods
     R2
 End Enum
 
-Public Delegate Function EvaluateFitness(target As Genome, trainingSet As TrainingSet(), parallel As Boolean) As Double
+Public Delegate Function EvaluateFitness(target As IGridFitness, trainingSet As TrainingSet(), parallel As Boolean) As Double
 
 <HideModuleName>
 <Extension>
@@ -83,7 +83,7 @@ Public Module FitnessMethodExtensions
     End Function
 
     <Extension>
-    Public Function NaiveAverage(target As Genome, trainingSet As TrainingSet(), parallel As Boolean) As Double
+    Public Function NaiveAverage(target As IGridFitness, trainingSet As TrainingSet(), parallel As Boolean) As Double
         Return trainingSet _
             .AsParallel _
             .Select(Function(sample)
@@ -95,7 +95,7 @@ Public Module FitnessMethodExtensions
     End Function
 
     <Extension>
-    Public Function LabelGroupAverage(target As Genome, trainingSet As TrainingSet(), parallel As Boolean) As Double
+    Public Function LabelGroupAverage(target As IGridFitness, trainingSet As TrainingSet(), parallel As Boolean) As Double
         ' 理论上是应该使用MAX err来作为fitness的
         ' 但是在最开始的时候,因为整个系统的大部分样本的计算结果误差都是Inf
         ' 所以使用MAX来作为fitness的话,会因为结果都是Inf而导致前期没有办法收敛
@@ -129,8 +129,8 @@ Public Module FitnessMethodExtensions
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function R2(target As Genome, trainingSet As TrainingSet(), parallel As Boolean) As Double
-        Return target.chromosome.R2(trainingSet, parallel)
+    Public Function R2(target As IGridFitness, trainingSet As TrainingSet(), parallel As Boolean) As Double
+        Return target.R2(trainingSet, parallel)
     End Function
 
     ''' <summary>
@@ -142,7 +142,7 @@ Public Module FitnessMethodExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function R2(target As GridSystem, trainingSet As TrainingSet(), parallel As Boolean) As Double
+    Public Function R2(Of T As IDynamicsComponent(Of T))(target As T, trainingSet As TrainingSet(), parallel As Boolean) As Double
         Dim R2Group = Iterator Function() As IEnumerable(Of Double)
                           For Each type As IGrouping(Of String, TrainingSet) In trainingSet.GroupBy(Function(d) d.targetID)
                               Dim sampleArray = type.ToArray

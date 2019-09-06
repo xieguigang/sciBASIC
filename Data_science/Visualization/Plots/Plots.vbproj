@@ -184,7 +184,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>bin\app\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -337,6 +337,7 @@
     <Compile Include="BarPlot\Histogram\DataModel.vb" />
     <Compile Include="g\Axis\TimeRange.vb" />
     <Compile Include="g\Canvas.vb" />
+    <Compile Include="VolinPlot.vb" />
     <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="BarPlot\Data\csv.vb" />
     <Compile Include="Fractions\TreeMap.vb" />

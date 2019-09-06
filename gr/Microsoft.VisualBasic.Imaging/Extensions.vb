@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::422192766447956499018257821163cb, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3ff3a6ba29d153d2d58e058f80a0eef4, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     <Extension>
     Public Function AsSVG(img As GraphicsData, Optional comment$ = Nothing) As SVGData

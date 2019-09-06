@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce0844cb03e6bfb79fe9df10d617c741, Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
+﻿#Region "Microsoft.VisualBasic::ee79a70c5370ab971af0f4a425e047f6, Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
 
     ' Author:
     ' 
@@ -90,7 +90,7 @@ Namespace Interpolation
         Public Property Iterations As Integer
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, iteration%)
+        Sub New(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, Optional iteration% = 3)
             Call ReCalculate(ctrl1, ctrl2, ctrl3, iteration)
         End Sub
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb97af06418e5ed82978b2b8fa10a0bb, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::4b0cc407478c2e748e588cf8efb02159, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace StoreProcedure
@@ -68,6 +69,26 @@ Namespace StoreProcedure
         ''' <returns></returns>
         Public Property names As String()
 
+        Public Function DoNormalize(name$, value#, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double
+            Dim i As Integer = Array.IndexOf(names, name)
+            Dim result = doNormalInternal(i, value, method)
+
+            Return result
+        End Function
+
+        Private Function doNormalInternal(i%, x#, method As Normalizer.Methods) As Double
+            Select Case method
+                Case Normalizer.Methods.NormalScaler
+                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                Case Normalizer.Methods.RelativeScaler
+                    Return Normalizer.RelativeNormalize(matrix(i), x)
+                Case Normalizer.Methods.RangeDiscretizer
+                    Return Normalizer.RangeDiscretizer(matrix(i), x)
+                Case Else
+                    Return Normalizer.ScalerNormalize(matrix(i), x)
+            End Select
+        End Function
+
         ''' <summary>
         ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
         ''' </summary>
@@ -78,16 +99,7 @@ Namespace StoreProcedure
             Return sample.status _
                 .vector _
                 .Select(Function(x, i)
-                            Select Case method
-                                Case Normalizer.Methods.NormalScaler
-                                    Return Normalizer.ScalerNormalize(matrix(i), x)
-                                Case Normalizer.Methods.RelativeScaler
-                                    Return Normalizer.RelativeNormalize(matrix(i), x)
-                                Case Normalizer.Methods.RangeDiscretizer
-                                    Return Normalizer.RangeDiscretizer(matrix(i), x)
-                                Case Else
-                                    Return Normalizer.ScalerNormalize(matrix(i), x)
-                            End Select
+                            Return doNormalInternal(i, x, method)
                         End Function) _
                 .ToArray
         End Function
@@ -103,18 +115,21 @@ Namespace StoreProcedure
         Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample), names As IEnumerable(Of String)) As NormalizeMatrix
             With samples.ToArray
                 Dim len% = .First.status.Length
-                Dim index%
-                Dim matrix As New List(Of SampleDistribution)
-                Dim averages As New List(Of Double)
-                Dim [property] As Double()
+                Dim matrix As SampleDistribution() = (len - 1).SeqIterator _
+                    .AsParallel _
+                    .Select(Function(index)
+                                ' 遍历每一列的数据,将每一列的数据都执行归一化
+                                Dim [property] = .Select(Function(sample)
+                                                             Return sample.status(index)
+                                                         End Function) _
+                                                 .ToArray
+                                Dim dist As New SampleDistribution([property])
 
-                For i As Integer = 0 To len - 1
-                    ' 遍历每一列的数据,将每一列的数据都执行归一化
-                    index = i
-                    [property] = .Select(Function(sample) sample.status(index)).ToArray
-                    matrix += New SampleDistribution([property])
-                    averages.Add([property].Average)
-                Next
+                                Return (i:=index, Data:=dist)
+                            End Function) _
+                    .OrderBy(Function(data) data.i) _
+                    .Select(Function(r) r.Data) _
+                    .ToArray
 
                 Return New NormalizeMatrix With {
                     .matrix = matrix,

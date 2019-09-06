@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8d4799b43838005b236f5b600dab97f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5f832955dc356fa4e8249eb2bf7c2fd9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 
 Namespace Drawing2D
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         <Extension>
         Public Sub ShapeGlow(ByRef g As IGraphics, path As GraphicsPath, glowColor As Color, Optional glowSize! = 10)

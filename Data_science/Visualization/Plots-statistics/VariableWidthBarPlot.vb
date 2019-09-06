@@ -82,7 +82,7 @@ Public Module VariableWidthBarPlot
         Dim X As Vector = list.Select(Function(b) b.Data.width).AsVector
         Dim Y As Vector = list.Select(Function(b) b.Data.height).AsVector.CreateAxisTicks
         Dim sumX# = X.Sum
-        Dim p As VBInteger = Scan0
+        Dim p As i32 = Scan0
         Dim axisPen As Pen = Stroke.TryParse(axisPenCSS).GDIObject
         Dim tickPen As Pen = Stroke.TryParse(ticksPenCSS).GDIObject
         Dim XLabelFont As Font = CSSFont.TryParse(XLabelFontCSS).GDIObject

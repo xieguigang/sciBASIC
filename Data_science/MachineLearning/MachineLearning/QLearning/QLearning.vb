@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67bb961de269ca975642792bbcf9fa14, Data_science\MachineLearning\MachineLearning\QLearning\QLearning.vb"
+﻿#Region "Microsoft.VisualBasic::2b238416517d55a92734965c6fa232a7, Data_science\MachineLearning\MachineLearning\QLearning\QLearning.vb"
 
     ' Author:
     ' 
@@ -58,33 +58,6 @@ Namespace QLearning
         Protected ReadOnly _stat As QState(Of T)
 
         Public ReadOnly Property Q As QTable(Of T)
-
-        Sub New(state As QState(Of T), provider As Func(Of Integer, QTable(Of T)))
-            _stat = state
-            Q = provider(ActionRange)
-        End Sub
-
-        Protected MustOverride Sub __init()
-
-        ''' <summary>
-        ''' The size of the <see cref="QTable"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public MustOverride ReadOnly Property ActionRange As Integer
-
-        Public MustOverride ReadOnly Property GoalReached As Boolean
-
-        ''' <summary>
-        ''' Takes a action for the agent.
-        ''' </summary>
-        ''' <param name="i">Iteration counts.</param>
-        Protected MustOverride Sub __run(i As Integer)
-        ''' <summary>
-        ''' If the <see cref="GoalReached"/> then reset and continute learning.
-        ''' </summary>
-        ''' <param name="i">机器学习的当前的迭代次数</param>
-        Protected MustOverride Sub __reset(i As Integer)
-
         ''' <summary>
         ''' 目标达成所得到的奖励
         ''' </summary>
@@ -95,14 +68,39 @@ Namespace QLearning
         ''' </summary>
         ''' <returns></returns>
         Public Property GoalPenalty As Integer = -100
+        ''' <summary>
+        ''' The size of the <see cref="QTable"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public MustOverride ReadOnly Property ActionRange As Integer
+
+        Public MustOverride ReadOnly Property GoalReached As Boolean
+
+        Sub New(state As QState(Of T), provider As Func(Of Integer, QTable(Of T)))
+            _stat = state
+            Q = provider(ActionRange)
+        End Sub
+
+        Protected MustOverride Sub initialize()
+
+        ''' <summary>
+        ''' Takes a action for the agent.
+        ''' </summary>
+        ''' <param name="i">Iteration counts.</param>
+        Protected MustOverride Sub run(i As Integer)
+        ''' <summary>
+        ''' If the <see cref="GoalReached"/> then reset and continute learning.
+        ''' </summary>
+        ''' <param name="i">机器学习的当前的迭代次数</param>
+        Protected MustOverride Sub reset(i As Integer)
 
         Public Sub RunLearningLoop(n As Integer)
-            For count As Integer = 0 To n
-                Call __reset(count)
+            For iteration As Integer = 0 To n
+                Call reset(iteration)
 
                 ' CHECK IF WON, THEN RESET
                 Do While Not GoalReached
-                    Call __run(count)
+                    Call run(iteration)
 
                     If Not GoalReached Then
                         ' 目标还没有达成，则罚分

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6f371b5ef3cea111c7ee005d0afc189, Data_science\Mathematica\Math\Math\Scripting\Helpers\MemoryCollection.vb"
+﻿#Region "Microsoft.VisualBasic::0987190c3530e01023282264331eb64b, Data_science\Mathematica\Math\Math\Scripting\Helpers\MemoryCollection.vb"
 
     ' Author:
     ' 

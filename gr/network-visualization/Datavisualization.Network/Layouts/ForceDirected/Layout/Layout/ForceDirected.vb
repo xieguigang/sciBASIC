@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4ce0164dfe2fc46538d4eff58278621, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Layout\ForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::99e5cdb2521d6f3bfac5d6729a71ad9d, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Layout\ForceDirected.vb"
 
     ' Author:
     ' 
@@ -127,8 +127,8 @@ Namespace Layouts
             If Not (edgeSprings.ContainsKey(iEdge.ID)) Then
                 Dim length As Single = iEdge.data.length
                 Dim existingSpring As Spring = Nothing
+                Dim fromEdges As IEnumerable(Of Edge) = graph.GetEdges(iEdge.U, iEdge.V)
 
-                Dim fromEdges As List(Of Edge) = graph.GetEdges(iEdge.U, iEdge.V)
                 If fromEdges IsNot Nothing Then
                     For Each e As Edge In fromEdges
                         If existingSpring Is Nothing AndAlso edgeSprings.ContainsKey(e.ID) Then
@@ -138,11 +138,13 @@ Namespace Layouts
 
                     Next
                 End If
+
                 If existingSpring IsNot Nothing Then
                     Return New Spring(existingSpring.point1, existingSpring.point2, 0F, 0F)
                 End If
 
-                Dim toEdges As List(Of Edge) = graph.GetEdges(iEdge.V, iEdge.U)
+                Dim toEdges As IEnumerable(Of Edge) = graph.GetEdges(iEdge.V, iEdge.U)
+
                 If toEdges IsNot Nothing Then
                     For Each e As Edge In toEdges
                         If existingSpring Is Nothing AndAlso edgeSprings.ContainsKey(e.ID) Then
@@ -158,6 +160,7 @@ Namespace Layouts
 
                 edgeSprings(iEdge.ID) = New Spring(GetPoint(iEdge.U), GetPoint(iEdge.V), length, stiffness)
             End If
+
             Return edgeSprings(iEdge.ID)
         End Function
 
@@ -179,14 +182,14 @@ Namespace Layouts
                     Dim distance As Single = d.Magnitude() + 0.1F
                     Dim direction As AbstractVector = d.Normalize()
 
-                    If n1.Pinned AndAlso n2.Pinned Then
+                    If n1.pinned AndAlso n2.pinned Then
                         point1.ApplyForce(direction * 0F)
                         point2.ApplyForce(direction * 0F)
-                    ElseIf n1.Pinned Then
+                    ElseIf n1.pinned Then
                         point1.ApplyForce(direction * 0F)
                         'point2.ApplyForce((direction * Repulsion) / (distance * distance * -1.0f));
                         point2.ApplyForce((direction * repulsion) / (distance * -1.0F))
-                    ElseIf n2.Pinned Then
+                    ElseIf n2.pinned Then
                         'point1.ApplyForce((direction * Repulsion) / (distance * distance));
                         point1.ApplyForce((direction * repulsion) / (distance))
                         point2.ApplyForce(direction * 0F)
@@ -210,13 +213,13 @@ Namespace Layouts
                 Dim displacement As Single = spring.length - d.Magnitude()
                 Dim direction As AbstractVector = d.Normalize()
 
-                If spring.point1.node.Pinned AndAlso spring.point2.node.Pinned Then
+                If spring.point1.node.pinned AndAlso spring.point2.node.pinned Then
                     spring.point1.ApplyForce(direction * 0F)
                     spring.point2.ApplyForce(direction * 0F)
-                ElseIf spring.point1.node.Pinned Then
+                ElseIf spring.point1.node.pinned Then
                     spring.point1.ApplyForce(direction * 0F)
                     spring.point2.ApplyForce(direction * (spring.K * displacement))
-                ElseIf spring.point2.node.Pinned Then
+                ElseIf spring.point2.node.pinned Then
                     spring.point1.ApplyForce(direction * (spring.K * displacement * -1.0F))
                     spring.point2.ApplyForce(direction * 0F)
                 Else
@@ -231,7 +234,7 @@ Namespace Layouts
         Protected Sub attractToCentre()
             For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
-                If Not point.node.Pinned Then
+                If Not point.node.pinned Then
                     Dim direction As AbstractVector = point.position * -1.0F
                     'point.ApplyForce(direction * ((float)Math.Sqrt((double)(Repulsion / 100.0f))));
 

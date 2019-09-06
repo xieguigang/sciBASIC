@@ -164,7 +164,7 @@ Namespace Net.Protocols
             Call MyBase.New(rawStream)
 
             Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
-            Dim p As VBInteger = Scan0
+            Dim p As i32 = Scan0
 
             Call Array.ConstrainedCopy(rawStream, ++p, bitChunk, Scan0, INT64)
             Me.ProtocolCategory = BitConverter.ToInt64(bitChunk, Scan0)
@@ -312,8 +312,8 @@ Namespace Net.Protocols
             Dim Protocol As Byte() = BitConverter.GetBytes(Me.Protocol)
             Dim BufferLength As Byte() = BitConverter.GetBytes(Me.BufferLength)
             Dim bufs As Byte() = New Byte(TotalBytes - 1) {}
-            Dim p As VBInteger = Scan0
-            Dim l As New VBInteger
+            Dim p As i32 = Scan0
+            Dim l As New i32
 
             Call Array.ConstrainedCopy(ProtocolCategory, Scan0, bufs, p << (l = ProtocolCategory.Length), l)
             Call Array.ConstrainedCopy(___offset, Scan0, bufs, ++p, 1)

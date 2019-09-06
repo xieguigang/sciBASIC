@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3f1f8070940db3654e575ff0effe1be, mime\application%json\JSONtest\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3df71a28b8cdee7d29d829209ce92fbb, mime\application%json\JSONtest\Module1.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.MIME.JSON.Extensions
-Imports Microsoft.VisualBasic.MIME.JSON.ExtendedDictionary
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class TestDynamicsObject : Inherits Dictionary(Of String, NamedValue(Of Integer()))
@@ -57,7 +56,7 @@ End Class
 Module Module1
 
     Sub Main()
-        Dim aaa = ParseJsonStr("[{a:[1,2,3,4,5,6,7,[{xxoo:[""233333""]}]], b: ""xxxxxooooo""}]")
+        Dim aaa = ParseJson("[{a:[1,2,3,4,5,6,7,[{xxoo:[""233333""]}]], b: ""xxxxxooooo""}]")
 
         Dim t As New TestDynamicsObject With {
             .Tarray = {1, 2, 3, 4, 5, 6, 7, 8},
@@ -74,8 +73,8 @@ Module Module1
 
         Call t.GetJson(True).SaveTo("./test_out.json")
         Call json.SaveTo("./test_out2.json")
-        Call t2.Tarray.GetJson.__DEBUG_ECHO
-        Call t2.Tarray2.GetJson.__DEBUG_ECHO
+        Call t2.Tarray.GetJson(maskReadonly:=True).__DEBUG_ECHO
+        Call t2.Tarray2.GetJson(maskReadonly:=True).__DEBUG_ECHO
 
         Pause()
     End Sub

@@ -1,3 +1,56 @@
+﻿#Region "Microsoft.VisualBasic::5c31d7ab31182bb60e11d100d26a680b, Data_science\Mathematica\Math\Math\Numerics\Half.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure Half
+    ' 
+    '         Constructor: (+7 Overloads) Sub New
+    '         Function: Abs, Add, (+2 Overloads) CompareTo, Divide, (+2 Overloads) Equals
+    '                   GetBits, GetBytes, GetHashCode, GetTypeCode, IConvertible_GetTypeCode
+    '                   IConvertible_ToBoolean, IConvertible_ToByte, IConvertible_ToChar, IConvertible_ToDateTime, IConvertible_ToDecimal
+    '                   IConvertible_ToDouble, IConvertible_ToInt16, IConvertible_ToInt32, IConvertible_ToInt64, IConvertible_ToSByte
+    '                   IConvertible_ToSingle, IConvertible_ToString, IConvertible_ToType, IConvertible_ToUInt16, IConvertible_ToUInt32
+    '                   IConvertible_ToUInt64, IsInfinity, IsNaN, IsNegativeInfinity, IsPositiveInfinity
+    '                   Max, Min, Multiply, Negate, (+4 Overloads) Parse
+    '                   Sign, Subtract, (+2 Overloads) ToHalf, (+4 Overloads) ToString, (+2 Overloads) TryParse
+    '         Operators: (+3 Overloads) -, (+3 Overloads) *, (+2 Overloads) /, (+2 Overloads) ^, (+4 Overloads) +
+    '                    <, <=, <>, =, >
+    '                    >=
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Globalization
 
 Namespace Numerics
@@ -26,10 +79,10 @@ Namespace Numerics
         Implements IConvertible
         Implements IComparable(Of Half)
         Implements IEquatable(Of Half)
+
         ''' <summary>
         ''' Internal representation of the half-precision floating-point number.
         ''' </summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)>
         Friend Value As UShort
 
 #Region "Constants"
@@ -225,6 +278,14 @@ Namespace Numerics
             Return CType(half1 + CSng(half2), Half)
         End Operator
 
+        Public Shared Operator +(half As Half, value As Single) As Single
+            Return CSng(half) + value
+        End Operator
+
+        Public Shared Operator +(half As Half, value As Double) As Double
+            Return CSng(half) + value
+        End Operator
+
         ''' <summary>
         ''' Subtracts two specified System.Half values.
         ''' </summary>
@@ -233,6 +294,18 @@ Namespace Numerics
         ''' <returns>The System.Half result of subtracting half1 and half2.</returns>        
         Public Shared Operator -(half1 As Half, half2 As Half) As Half
             Return CType(half1 - CSng(half2), Half)
+        End Operator
+
+        Public Shared Operator -(half As Half, value As Single) As Single
+            Return CSng(half) - value
+        End Operator
+
+        Public Shared Operator ^(half As Half, power As Single) As Single
+            Return CSng(half) ^ power
+        End Operator
+
+        Public Shared Operator ^(half As Half, power As Double) As Single
+            Return CSng(half) ^ power
         End Operator
 
         ''' <summary>
@@ -245,6 +318,14 @@ Namespace Numerics
             Return CType(half1 * CSng(half2), Half)
         End Operator
 
+        Public Shared Operator *(half As Half, value As Single) As Single
+            Return CSng(half) * value
+        End Operator
+
+        Public Shared Operator *(half As Half, value As Double) As Double
+            Return CSng(half) * value
+        End Operator
+
         ''' <summary>
         ''' Divides two specified System.Half values.
         ''' </summary>
@@ -253,6 +334,10 @@ Namespace Numerics
         ''' <returns>The System.Half result of half1 by half2.</returns>
         Public Shared Operator /(half1 As Half, half2 As Half) As Half
             Return CType(half1 / CSng(half2), Half)
+        End Operator
+
+        Public Shared Operator /(half As Half, value As Single) As Single
+            Return CSng(half) / value
         End Operator
 
         ''' <summary>

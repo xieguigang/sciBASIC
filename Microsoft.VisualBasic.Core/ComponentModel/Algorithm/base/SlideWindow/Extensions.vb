@@ -98,7 +98,7 @@ Namespace ComponentModel.Algorithm.base
                 offset = 1
             End If
 
-            Dim p As VBInteger = 0
+            Dim p As i32 = 0
 
             n = n - winSize - 1
 
@@ -133,7 +133,7 @@ Namespace ComponentModel.Algorithm.base
             End If
         End Function
 
-        Private Iterator Function __extendTails(Of T)(tempList As List(Of T), winSize%, left%, p As VBInteger) As IEnumerable(Of SlideWindow(Of T))
+        Private Iterator Function __extendTails(Of T)(tempList As List(Of T), winSize%, left%, p As i32) As IEnumerable(Of SlideWindow(Of T))
             Dim array As T() = tempList.ToArray
 
             For i As Integer = 0 To winSize - 1
@@ -175,7 +175,7 @@ Namespace ComponentModel.Algorithm.base
         <Extension>
         Public Function [Select](Of T, TOut)(windows As IEnumerable(Of SlideWindow(Of T)), projection As Func(Of T, T, T, T, T, T, TOut)) As IEnumerable(Of TOut)
             Return windows.Select(selector:=Function(win)
-                                                Dim i As VBInteger = Scan0
+                                                Dim i As i32 = Scan0
                                                 Return projection(win(++i), win(++i), win(++i), win(++i), win(++i), win(++i))
                                             End Function)
         End Function

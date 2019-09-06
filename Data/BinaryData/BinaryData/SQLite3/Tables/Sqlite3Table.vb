@@ -87,7 +87,7 @@ Namespace ManagedSqlite.Core.Tables
                 .ToArray
 
             Dim rowData As Object()
-            Dim index As VBInteger = Scan0
+            Dim index As i32 = Scan0
             Dim row As Sqlite3Row
 
             For Each cell As BTreeCellData In cells

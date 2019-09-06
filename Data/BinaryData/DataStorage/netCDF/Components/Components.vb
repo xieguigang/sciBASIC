@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35fd9172bcefca1892823fea823c6600, Data\BinaryData\DataStorage\netCDF\Components\Components.vb"
+﻿#Region "Microsoft.VisualBasic::8e5696f3beb157e7024e29c700c5f887, Data\BinaryData\DataStorage\netCDF\Components\Components.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     '     Structure Dimension
     ' 
+    '         Properties: [Double], [Integer], Text
+    ' 
     '         Function: ToString
     ' 
     '     Class DimensionList
@@ -59,13 +61,14 @@
     '         Properties: attributes, dimensions, name, offset, record
     '                     size, type, value
     ' 
-    '         Function: ToString
+    '         Function: FindAttribute, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 
 Namespace netCDF.Components
@@ -90,6 +93,24 @@ Namespace netCDF.Components
         Public Overrides Function ToString() As String
             Return $"{name}(size={size})"
         End Function
+
+        Public Shared ReadOnly Property [Double] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Double).FullName, .size = 8}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property [Integer] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Integer).FullName, .size = 4}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property Text(fixedChars As Integer) As Dimension
+            Get
+                Return New Dimension With {.name = GetType(String).FullName, .size = fixedChars}
+            End Get
+        End Property
     End Structure
 
     Public Class DimensionList
@@ -157,7 +178,8 @@ Namespace netCDF.Components
         ''' <returns></returns>
         <XmlAttribute> Public Property type As CDFDataTypes
         ''' <summary>
-        ''' A number or string with the value of the attribute
+        ''' A number or string with the value of the attribute.
+        ''' (如果是bytes数组, 则应该编码为base64字符串之后赋值到这个属性, 并且类型应该设置为<see cref="CDFDataTypes.CHAR"/>, 因为在属性这里不接受数组类型)
         ''' </summary>
         ''' <returns></returns>
         <XmlText>
@@ -220,6 +242,11 @@ Namespace netCDF.Components
         <XmlAttribute> Public Property record As Boolean
 
         Public Property value As CDFData
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FindAttribute(name As String) As attribute
+            Return attributes.FirstOrDefault(Function(a) a.name = name)
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"Dim {name}[offset={offset}] As {type.Description}"

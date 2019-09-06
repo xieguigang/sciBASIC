@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7c572f83f40da06c45c020d8887ce72, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::48069802075045023d88e43d4f764ee5, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     '                     Range, SumMagnitude, Unit, Zero
     ' 
     '         Constructor: (+8 Overloads) Sub New
-    '         Function: Abs, CumSum, DotProduct, Ones, Order
-    '                   Product, (+2 Overloads) rand, ScaleToRange, slice, SumMagnitudes
-    '                   (+2 Overloads) ToString
+    '         Function: Abs, AsSparse, CumSum, DotProduct, Ones
+    '                   Order, Product, (+2 Overloads) rand, ScaleToRange, slice
+    '                   SumMagnitudes, (+2 Overloads) ToString
     '         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
     '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
@@ -59,8 +59,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
 Imports numpy = Microsoft.VisualBasic.Language.Python
+Imports sys = System.Math
 
 Namespace LinearAlgebra
 
@@ -219,6 +219,10 @@ Namespace LinearAlgebra
             Call MyBase.New(data)
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence
+        ''' </summary>
+        ''' <param name="shorts"></param>
         Sub New(shorts As IEnumerable(Of Single))
             Call Me.New(shorts.Select(Function(x) CDbl(x)))
         End Sub
@@ -236,6 +240,10 @@ Namespace LinearAlgebra
             Me.New(VBMath.seq(from, [to], by))
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence
+        ''' </summary>
+        ''' <param name="integers"></param>
         Sub New(integers As IEnumerable(Of Integer))
             Me.New(integers.Select(Function(n) CDbl(n)))
         End Sub
@@ -252,6 +260,11 @@ Namespace LinearAlgebra
                 buffer(i) = init
             Next
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsSparse() As SparseVector
+            Return New SparseVector(Me)
+        End Function
 
 #Region "Operators"
         ''' <summary>
@@ -466,8 +479,9 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(a As Double, v1 As Vector) As Vector
-            '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            ' 向量数加算符重载
+            ' 获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
@@ -625,7 +639,7 @@ Namespace LinearAlgebra
         ''' <param name="n"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator ^(v As Vector, n As Integer) As Vector
+        Public Overloads Shared Operator ^(v As Vector, n As Double) As Vector
             Return New Vector(From d As Double In v Select d ^ n)
         End Operator
 

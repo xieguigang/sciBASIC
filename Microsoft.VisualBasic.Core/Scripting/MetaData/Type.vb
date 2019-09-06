@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4704838d4c3268f9e6edc6b4bfa1f379, Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
+﻿#Region "Microsoft.VisualBasic::84ebe917805a662f87a5ed3016710b8b, Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
 
     ' Author:
     ' 
@@ -101,22 +101,27 @@ Namespace Scripting.MetaData
         End Function
 
         ''' <summary>
-        ''' Loads the assembly file which contains this type. If the <param name="DIR"></param> is not a valid directory location, 
+        ''' Loads the assembly file which contains this type. If the <param name="directory"></param> is not a valid directory location, 
         ''' then using the location <see cref="App.HOME"/> as default.
         ''' </summary>
         ''' <returns></returns>
-        Public Function LoadAssembly(Optional DIR As DefaultString = Nothing) As Assembly
-            Dim path As String = $"{DIR Or App.HOME}/{Me.assm}"
+        Public Function LoadAssembly(Optional directory As DefaultString = Nothing) As Assembly
+            Dim path As String = $"{directory Or App.HOME}/{Me.assm}"
             Dim assm As Assembly = Assembly.LoadFile(path)
+
             Return assm
         End Function
 
         ''' <summary>
         ''' Get mapping type information.
         ''' </summary>
+        ''' <param name="knownFirst">
+        ''' 如果这个参数为真的话, 则会尝试直接从当前的应用程序域中查找类信息, 反之则会加载目标程序集进行类型信息查找
+        ''' </param>
         ''' <returns></returns>
         Public Overloads Function [GetType](Optional knownFirst As Boolean = False) As Type
             Dim type As Type
+            Dim assm As Assembly
 
             If knownFirst Then
                 type = Scripting.GetType(fullIdentity)
@@ -126,8 +131,9 @@ Namespace Scripting.MetaData
                 End If
             End If
 
-            Dim assm As Assembly = LoadAssembly()
+            assm = LoadAssembly()
             type = assm.GetType(Me.fullIdentity)
+
             Return type
         End Function
 

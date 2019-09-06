@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::236e26fa514031145c6e91dcd119e08b, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::96de3680f1c003d276cb4347540c5482, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
     ' Author:
     ' 
@@ -272,11 +272,11 @@ Namespace ComponentModel.Collection
         ''' <summary>
         ''' 假若目标元素不存在于本字典之中，则会返回False
         ''' </summary>
-        ''' <param name="x"></param>
+        ''' <param name="vec"></param>
         ''' <returns></returns>
-        Public Overloads Function Remove(x As V) As Boolean
-            If Me.ContainsKey(x.Key) Then
-                Return Me.Remove(x.Key)
+        Public Overloads Function Remove(vec As V) As Boolean
+            If Me.ContainsKey(vec.Key) Then
+                Return Me.Remove(vec.Key)
             Else
                 Return False
             End If

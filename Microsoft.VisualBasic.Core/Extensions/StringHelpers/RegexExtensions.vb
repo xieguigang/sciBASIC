@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa49e490c8c60fa3ba033227e6dda9df, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ee859640b797034c8e1716e154eef6fb, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: (+2 Overloads) EachValue, EndsWith, IsPattern, Locates, PythonRawRegexp
-    '               (+2 Overloads) ToArray
+    '               StartsWith, (+2 Overloads) ToArray
     '     Structure [NameOf]
     ' 
     ' 
@@ -54,6 +54,25 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 
 Public Module RegexExtensions
+
+    ''' <summary>
+    ''' Determines whether the beginning of this string instance matches the specified
+    ''' string.
+    ''' </summary>
+    ''' <param name="str">The string to compare.</param>
+    ''' <param name="pattern"></param>
+    ''' <param name="opt"></param>
+    ''' <returns>true if value matches the beginning of this string; otherwise, false.</returns>
+    <Extension>
+    Public Function StartsWith(str$, pattern$, opt As RegexOptions) As Boolean
+        Dim match$ = str.Match(pattern, opt)
+
+        If match.StringEmpty Then
+            Return False
+        Else
+            Return str.StartsWith(match)
+        End If
+    End Function
 
     ''' <summary>
     ''' Determines whether the end of this string instance matches the specified string pattern.

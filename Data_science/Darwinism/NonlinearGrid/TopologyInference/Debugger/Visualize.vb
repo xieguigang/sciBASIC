@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf600269353a14971db21abcdc7b302b, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
+﻿#Region "Microsoft.VisualBasic::419763bba350e77af1828367c0093ca0, Data_science\Darwinism\NonlinearGrid\TopologyInference\Debugger\Visualize.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -199,7 +199,7 @@ Public Module Visualize
                         {"title", nameTitles.TryGetValue(factor.name, [default]:=factor.name)}
                     }
                 },
-                .Label = factor.name,
+                .label = factor.name,
                 .ID = 0
             }
 

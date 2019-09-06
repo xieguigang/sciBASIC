@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed522b9afa92eedd806891ab202319f9, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
+﻿#Region "Microsoft.VisualBasic::92783d3f5cbb2f17c68c6dad857dba57, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Edges
     ' 
-    '         Properties: Data, EdgeBetweenness, interaction, name, SUID
+    '         Properties: data, EdgeBetweenness, interaction, name, SUID
     ' 
     '         Function: GetConnectNodes, GetNodes, ToString
     ' 
@@ -44,7 +44,7 @@
     '                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
     '                     SharedName, Stress, SUID, TopologicalCoefficient
     ' 
-    '         Function: ToString
+    '         Function: ToString, ToTable
     ' 
     ' 
     ' /********************************************************************************/
@@ -63,19 +63,19 @@ Namespace FileStream.Cytoscape
     Public Class Edges
 
         Public Property SUID As String
-        Public Property EdgeBetweenness As String
+        Public Property EdgeBetweenness As Double
         Public Property interaction As String
         Public Property name As String
         ''' <summary>
         ''' Dynamics extended data
         ''' </summary>
         ''' <returns></returns>
-        Public Property Data As Dictionary(Of String, String)
+        Public Property data As Dictionary(Of String, String)
 
-        Public Iterator Function GetNodes(nodeHash As Dictionary(Of Graph.Node)) As IEnumerable(Of Graph.Node)
+        Public Iterator Function GetNodes(nodeTable As Dictionary(Of Graph.Node)) As IEnumerable(Of Graph.Node)
             With GetConnectNodes()
-                Yield nodeHash(.First)
-                Yield nodeHash(.Last)
+                Yield nodeTable(.First)
+                Yield nodeTable(.Last)
             End With
         End Function
 
@@ -113,11 +113,20 @@ Namespace FileStream.Cytoscape
         Public Property SharedName As String
         Public Property Stress As String
         Public Property TopologicalCoefficient As String
+
         ''' <summary>
         ''' Dynamics extended data
         ''' </summary>
         ''' <returns></returns>
         Public Property data As Dictionary(Of String, String)
+
+        Public Function ToTable() As Dictionary(Of String, String)
+            Dim table As New Dictionary(Of String, String)(data)
+
+
+
+            Return table
+        End Function
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

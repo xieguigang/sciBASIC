@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74921d59970d5509938a05105c9dc3a0, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::c9be4719b477f994b4bed40ae0fb3930, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\Expression.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Compile, Evaluate, Evaluation, GetValue
+    '         Function: Compile, Evaluate, Evaluation, GetValue, SetVariable
     ' 
-    '         Sub: AddConstant, (+2 Overloads) SetVariable
+    '         Sub: AddConstant, SetVariable
     ' 
     ' 
     ' /********************************************************************************/
@@ -156,9 +156,10 @@ Namespace Scripting
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub SetVariable(name$, value#)
+        Public Function SetVariable(name$, value#) As Expression
             Call Variables.Set(name, value)
-        End Sub
+            Return Me
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AddConstant(Name As String, expr As String)

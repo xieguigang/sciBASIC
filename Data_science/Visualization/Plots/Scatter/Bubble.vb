@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4af62fff13e8d855c7c505d1c36bb059, Data_science\Visualization\Plots\Scatter\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::dde108c87d962915922131178978a3aa, Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
     ' Author:
     ' 
@@ -45,10 +45,12 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Bubble
@@ -57,7 +59,7 @@ Public Module Bubble
         Return Math.Log(R + 1) + 1
     End Function
 
-    ReadOnly usingLogRadius As New [Default](Of  Func(Of Double, Double))(AddressOf logRadius)
+    ReadOnly usingLogRadius As New [Default](Of Func(Of Double, Double))(AddressOf logRadius)
 
     ''' <summary>
     ''' <see cref="PointData.value"/>是Bubble的半径大小
@@ -96,18 +98,49 @@ Public Module Bubble
 
                 If xAxis.StringEmpty Then
                     ' 任意一个位空值就会使用普通的axis数据计算方法
-                    mapper = New Mapper(rangeData) ' 这个并不是以y值来表示数量上的关系的，point是随机位置，所以在这里使用相对scalling
+                    ' 这个并不是以y值来表示数量上的关系的，point是随机位置，所以在这里使用相对scalling
+                    mapper = New Mapper(rangeData)
                 Else
-                    Dim yaxisData As New AxisProvider(rangeData.yrange.GetAxisValues)
-                    mapper = New Mapper(x:=xAxis, y:=yaxisData, range:=rangeData)
+                    mapper = rangeData.yrange _
+                        .GetAxisValues _
+                        .DoCall(Function(axisdata) New AxisProvider(axisdata)) _
+                        .DoCall(Function(ya)
+                                    Return New Mapper(x:=xAxis, y:=ya, range:=rangeData)
+                                End Function)
                 End If
 
                 Dim scale As Func(Of Double, Double) = New Func(Of Double, Double)(Function(r) r) Or usingLogRadius.When(usingLogScaleRadius)
+                Dim x, y As d3js.scale.LinearScale
+                Dim xTicks = array.Select(Function(sr) sr.Select(Function(p) CDbl(p.pt.X))).IteratesALL.CreateAxisTicks
+                Dim yTicks = array.Select(Function(sr) sr.Select(Function(p) CDbl(p.pt.Y))).IteratesALL.CreateAxisTicks
+                Dim canvas = g
+                Dim labels As New List(Of Label)
+                Dim anchors As New List(Of Anchor)
+                Dim labelSize As SizeF
+                Dim plotrect As Rectangle = grect.PlotRegion
 
-                'Call g.DrawAxis(size, margin, mapper, True,
-                '                xlabel:=xlabel,
-                '                ylabel:=ylabel,
-                '                labelFontStyle:=axisLabelFontCSS)
+                With grect.PlotRegion
+                    x = d3js.scale.linear.domain(xTicks).range(integers:={ .Left, .Right})
+                    y = d3js.scale.linear.domain(yTicks).range(integers:={ .Top, .Bottom})
+                End With
+
+                Dim scaler As New DataScaler With {
+                    .AxisTicks = (xTicks, yTicks),
+                    .region = grect.PlotRegion,
+                    .X = x,
+                    .Y = y
+                }
+
+                Call g.DrawAxis(
+                    region:=grect,
+                    scaler:=scaler,
+                    showGrid:=True,
+                    xlabel:=xlabel,
+                    ylabel:=ylabel,
+                    labelFont:=axisLabelFontCSS,
+                    htmlLabel:=False
+                )
+
                 Dim bubblePen As Pen = Nothing
 
                 If Not bubbleBorder Is Nothing Then
@@ -148,14 +181,48 @@ Public Module Bubble
                                 Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
                             End If
                         Else
-                            Dim pen As Pen = Stroke.TryParse(pt.stroke).GDIObject
-                            Call g.DrawCircle(pt.pt, r, pen, fill:=False)
+                            Call Stroke.TryParse(pt.stroke) _
+                                .GDIObject _
+                                .DoCall(Sub(pen)
+                                            Call canvas.DrawCircle(pt.pt, r, pen, fill:=False)
+                                        End Sub)
+
                         End If
 
                         If Not pt.Tag.StringEmpty Then
-                            Call g.DrawString(pt.Tag, tagLabelFont, Brushes.Black, New PointF(rect.Right, rect.Top))
+                            labelSize = g.MeasureString(pt.Tag, tagLabelFont)
+                            labels += New Label With {
+                                .text = pt.Tag,
+                                .X = rect.Right,
+                                .Y = rect.Top,
+                                .width = labelSize.Width,
+                                .height = labelSize.Height
+                            }
+                            anchors += New Anchor With {
+                                .r = r,
+                                .x = rect.Right - r,
+                                .y = rect.Top + r
+                            }
                         End If
                     Next
+                Next
+
+                Call d3js.labeler(30, 1) _
+                    .Width(plotrect.Width) _
+                    .Height(plotrect.Height) _
+                    .Anchors(anchors) _
+                    .Labels(labels) _
+                    .Start(showProgress:=False, nsweeps:=2000)
+
+                Dim anchor As Anchor
+                Dim label As Label
+
+                For Each index As SeqValue(Of Label) In labels.SeqIterator
+                    label = index
+                    anchor = anchors(index)
+
+                    ' Call g.DrawLine(Pens.Gray, anchor, label.GetTextAnchor(anchor))
+                    Call g.DrawString(label.text, tagLabelFont, Brushes.Black, label)
                 Next
 
                 If legend Then
@@ -163,17 +230,17 @@ Public Module Bubble
                     Dim topLeft As New Point(size.Width * 0.8, margin.Top)
                     Dim legends = LinqAPI.Exec(Of Legend) <=
  _
-                        From x As SerialData
+                        From serial As SerialData
                         In array
                         Let color As String = If(
                             strokeColorAsMainColor,
-                            Stroke.TryParse(x.pts.First.stroke).fill,
-                            x.color.RGBExpression)
+                            Stroke.TryParse(serial.pts(serial.pts.Length \ 2).stroke).fill,
+                            serial.color.RGBExpression)
                         Select New Legend With {
                             .color = color,
                             .fontstyle = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 20),
                             .style = LegendStyles.Circle,
-                            .title = x.title
+                            .title = serial.title
                         }
 
                     Call g.DrawLegends(topLeft, legends,,, legendBorder)

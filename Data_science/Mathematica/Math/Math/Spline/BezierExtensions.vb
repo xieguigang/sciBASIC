@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af95f2df98c2e07fe8c2805e2aeec1ce, Data_science\Mathematica\Math\Math\Spline\BezierExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c397db5dec68966b92f48a7d91620b01, Data_science\Mathematica\Math\Math\Spline\BezierExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module BezierExtensions
     ' 
-    '         Function: __interpolation, BezierSmoothInterpolation
+    '         Function: BezierSmoothInterpolation, doInterpolation
     ' 
     ' 
     ' /********************************************************************************/
@@ -80,7 +80,7 @@ Namespace Interpolation
  _
                     From win
                     In slideWindows.AsParallel
-                    Let value = __interpolation(
+                    Let value = doInterpolation(
                         win.Items, iteration)
                     Select x = New SeqValue(Of Double()) With {
                         .i = win.Index,
@@ -92,7 +92,7 @@ Namespace Interpolation
  _
                     From win As SlideWindow(Of Double)
                     In slideWindows
-                    Let value = __interpolation(
+                    Let value = doInterpolation(
                         win.Items, iteration)
                     Select x = New SeqValue(Of Double()) With {
                         .i = win.Index,
@@ -116,7 +116,7 @@ Namespace Interpolation
         ''' <param name="iteration"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function __interpolation(X#(), iteration%) As Double()
+        Private Function doInterpolation(X#(), iteration%) As Double()
             Dim data As Double() = New Double(2) {}
 
             data(0) = X(Scan0)

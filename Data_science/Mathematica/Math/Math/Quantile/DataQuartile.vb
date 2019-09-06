@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b37c5f81fa687df8f9702e894d7df27, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
+﻿#Region "Microsoft.VisualBasic::153149128baef53fe067482aa2e9ec5c, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: IQR, Q1, Q2, Q3, range
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Outlier
+    '         Function: Outlier, ToString
     ' 
     '     Enum QuartileLevels
     ' 
@@ -74,6 +74,10 @@ Namespace Quantile
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Outlier(samples As IEnumerable(Of Double)) As (normal As Double(), outlier As Double())
             Return samples.AsVector.Outlier(Me)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{range.ToString} -> |{Q1}, {Q2}, {Q3}|"
         End Function
     End Structure
 

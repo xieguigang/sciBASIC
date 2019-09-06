@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bccb557ff5d6c485bc64f83ac971271, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::c83799ac3a5cee349c13826a6bc637c6, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -40,14 +40,11 @@
 
 #End Region
 
-Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.csv.Extensions
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports ______NETWORK__ =

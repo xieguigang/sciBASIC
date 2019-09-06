@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9739a2dfdefc02b9fe20ca81f03b878d, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::0ea13648757d596ce2efe0336862a71f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\Shell.vb"
 
     ' Author:
     ' 
@@ -108,8 +108,8 @@ Namespace Terminal.STDIO__
             Dim Tokens = Regex.Split(CommandLine, Global.Microsoft.VisualBasic.CommandLine.SPLIT_REGX_EXPRESSION)
             Dim EXE As String = Tokens.First
             Dim Arguments As String = Mid$(CommandLine, Len(EXE) + 1)
-            Dim Process As System.Diagnostics.Process = New Process
-            Dim pInfo As System.Diagnostics.ProcessStartInfo = New ProcessStartInfo(EXE, Arguments)
+            Dim Process As New Process
+            Dim pInfo As New ProcessStartInfo(EXE, Arguments)
 
             Process.StartInfo = pInfo
             Process.StartInfo.WindowStyle = WindowStyle

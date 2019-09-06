@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fd849e167c838d2f3e11307978b4171, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::0569ae726059e254a14afc26807b45c0, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
@@ -60,6 +61,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -88,7 +90,7 @@ Public Module NetworkVisualizer
     <Extension>
     Public Function GetDisplayText(n As Node) As String
         If n.data Is Nothing OrElse (n.data.origID.StringEmpty AndAlso n.data.label.StringEmpty) Then
-            Return n.Label
+            Return n.label
         ElseIf n.data.label.StringEmpty Then
             Return n.data.origID
         Else
@@ -193,7 +195,8 @@ Public Module NetworkVisualizer
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
-                              Optional hullPolygonGroups$ = Nothing) As GraphicsData
+                              Optional hullPolygonGroups$ = Nothing,
+                              Optional doEdgeBundling As Boolean = False) As GraphicsData
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As Size = canvasSize.SizeParser
@@ -229,6 +232,7 @@ Public Module NetworkVisualizer
         ' 进行矢量放大
         Dim scale As SizeF = scalePos.Values.AutoScaler(frameSize, margin)
         Dim scalePoints = scalePos.Values.Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
+        Dim edgeBundling As New Dictionary(Of Edge, PointF())
 
         With scalePos.Keys.AsList
             For i As Integer = 0 To .Count - 1
@@ -237,6 +241,40 @@ Public Module NetworkVisualizer
 
             nodePoints = scalePos
         End With
+
+        If doEdgeBundling Then
+            edgeBundling = net.graphEdges _
+                .ToDictionary(Function(e) e,
+                              Function(e)
+                                  Return e.data.controlsPoint _
+                                      .Select(Function(v)
+                                                  Return New PointF With {
+                                                      .X = v.x,
+                                                      .Y = v.y
+                                                  }.OffSet2D(offset)
+                                              End Function) _
+                                      .ToArray
+                              End Function)
+
+            With edgeBundling.Keys.ToArray
+                Dim tempList As New List(Of PointF)
+                Dim i As Integer
+
+                scalePoints = .Select(Function(e) edgeBundling(e)) _
+                              .IteratesALL _
+                              .Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
+
+                For Each edge As Edge In .ByRef
+                    For Each null In edgeBundling(edge)
+                        tempList += scalePoints(i)
+                        i += 1
+                    Next
+
+                    edgeBundling(edge) = tempList
+                    tempList *= 0
+                Next
+            End With
+        End If
 
         Call "Initialize gdi objects...".__INFO_ECHO
 
@@ -288,13 +326,13 @@ Public Module NetworkVisualizer
         ' otherwise all of the nodes in target network graph will be draw onto the canvas.
         Dim connectedNodes = net.connectedNodes.AsDefault
         Dim drawPoints = net.vertex.ToArray Or connectedNodes.When(hideDisconnectedNode)
-        Dim labels As New List(Of labelModel)
+        Dim labels As New List(Of LayoutLabel)
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Call "Render network edges...".__INFO_ECHO
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
-                Call g.drawEdges(net, minLinkWidthValue, edgeDashTypes, scalePos, throwEx)
+                Call g.drawEdges(net, minLinkWidthValue, edgeDashTypes, scalePos, edgeBundling, throwEx)
 
                 Call "Render network nodes...".__INFO_ECHO
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
@@ -355,7 +393,7 @@ Public Module NetworkVisualizer
                                               baseFont As Font,
                                               scalePos As Dictionary(Of Node, PointF),
                                               throwEx As Boolean,
-                                              displayId As Boolean) As IEnumerable(Of labelModel)
+                                              displayId As Boolean) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As Rectangle
@@ -418,7 +456,7 @@ Public Module NetworkVisualizer
                     label.height = .Height
                 End With
 
-                Yield New labelModel With {
+                Yield New LayoutLabel With {
                     .label = label,
                     .anchor = New Anchor(rect),
                     .style = font,
@@ -474,6 +512,7 @@ Public Module NetworkVisualizer
                           minLinkWidthValue As [Default](Of Single),
                           edgeDashTypes As Dictionary(Of String, DashStyle),
                           scalePos As Dictionary(Of Node, PointF),
+                          edgeBundling As Dictionary(Of Edge, PointF()),
                           throwEx As Boolean)
         Dim cl As Color
 
@@ -504,7 +543,16 @@ Public Module NetworkVisualizer
             Dim a = scalePos(n), b = scalePos(otherNode)
 
             Try
-                Call g.DrawLine(lineColor, a, b)
+                If edgeBundling.ContainsKey(edge) Then
+                    Dim curve As New BezierCurve(a, edgeBundling(edge).Centre, b)
+
+                    For Each line In curve.BezierPoints.SlideWindows(2)
+                        Call g.DrawLine(lineColor, line(0), line(1))
+                    Next
+                Else
+                    ' 直接画一条直线
+                    Call g.DrawLine(lineColor, a, b)
+                End If
             Catch ex As Exception
                 Dim line As New Dictionary(Of String, String) From {
                     {NameOf(a), $"[{a.X}, {a.Y}]"},
@@ -526,7 +574,7 @@ Public Module NetworkVisualizer
     ''' 
     <Extension>
     Private Sub drawLabels(g As IGraphics,
-                           labels As List(Of labelModel),
+                           labels As List(Of LayoutLabel),
                            frameSize As Size,
                            labelColorAsNodeColor As Boolean)
         Dim br As Brush

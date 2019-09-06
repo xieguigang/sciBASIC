@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f553a75e1013a377c589b05ccb818213, Data_science\Graph\Model\Abstract\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::6278e28520da16ce420de8bb1ce786db, Data_science\Graph\Model\Abstract\Vertex.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class Vertex
     ' 
-    '     Properties: ID, Label
+    '     Properties: ID, label
     ' 
     '     Function: ToString
     ' 
@@ -61,7 +61,7 @@ Public Class Vertex : Implements INamedValue
     ''' The unique id of this node
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute> Public Property Label As String Implements IKeyedEntity(Of String).Key
+    <XmlAttribute> Public Property label As String Implements IKeyedEntity(Of String).Key
     ''' <summary>
     ''' Array index.(使用数字表示的唯一标识符)
     ''' </summary>
@@ -73,6 +73,6 @@ Public Class Vertex : Implements INamedValue
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"({ID}) {Label}"
+        Return $"({ID}) {label}"
     End Function
 End Class

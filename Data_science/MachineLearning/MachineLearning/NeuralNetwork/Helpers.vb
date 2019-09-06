@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf2b1fb33400785a6bf0c7dca7345fb3, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::18759144a98e0db65ee178ff99ab81eb, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Helpers.vb"
 
     ' Author:
     ' 
@@ -51,12 +51,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
-Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Math
 
 Namespace NeuralNetwork

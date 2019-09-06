@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3edf9795bf80c1c3e0e55c8929b7021, Data_science\Visualization\test\BarPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::dcce95c3d7a5ca4f45a16597d7ab3484, Data_science\Visualization\test\BarPlotTest.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Imaging
 

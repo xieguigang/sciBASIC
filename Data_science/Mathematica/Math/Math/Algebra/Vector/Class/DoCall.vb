@@ -150,7 +150,7 @@ Namespace LinearAlgebra
 
             Dim value As Object
             Dim type As Type
-            Dim i As VBInteger
+            Dim i As i32
 
             Public ReadOnly Property Length As Integer
 

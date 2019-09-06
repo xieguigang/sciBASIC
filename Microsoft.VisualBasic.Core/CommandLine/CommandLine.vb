@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::701651c437185ea1c4b37eee558bf437, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::1cea93132554887274c551d9515ec4ea, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -214,9 +214,9 @@ Namespace CommandLine
             Get
                 Dim LQuery As NamedValue(Of String) =
                     arguments _
-                        .Where(Function(x)
-                                   Return String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase) OrElse
-                                          String.Equals(x.Name.Trim("\", "/", "-"), paramName, StringComparison.OrdinalIgnoreCase)
+                        .Where(Function(a)
+                                   Return String.Equals(a.Name, paramName, StringComparison.OrdinalIgnoreCase) OrElse
+                                          String.Equals(a.Name.Trim("\", "/", "-"), paramName, StringComparison.OrdinalIgnoreCase)
                                End Function) _
                         .FirstOrDefault
                 ' 是值类型，不会出现空引用的情况
@@ -241,14 +241,14 @@ Namespace CommandLine
                     ' 对于Windows文件路径而言， 不推荐转义
                     ' 因为Windows的文件路径分隔符为\，很容易引起误解，例如C:\tsv会被误转义为C:<TAB>sv而导致错误
                     ' 所以在这里关闭escape参数选项
-                    value = value.Interpolate(__envir, escape:=False)
+                    value = value.Interpolate(environment, escape:=False)
                 End If
 
                 Return New DefaultString(value)
             End Get
         End Property
 
-        ReadOnly __envir As Func(Of String, String) = AddressOf App.GetVariable
+        ReadOnly environment As Func(Of String, String) = AddressOf App.GetVariable
 
         Public Property SingleValue As String
 
@@ -763,7 +763,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function OpenHandle(name$, Optional default$ = "", Optional encoding As Encodings = Encodings.UTF8) As VBInteger
+        Public Function OpenHandle(name$, Optional default$ = "", Optional encoding As Encodings = Encodings.UTF8) As i32
             Return My.File.OpenHandle(Me(name) Or [default].AsDefault, encoding)
         End Function
 #End Region

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35147e4ef5eebdda84d0e0611a618835, Microsoft.VisualBasic.Core\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::e6800dc05fefd717e2afe54586d6c10b, Microsoft.VisualBasic.Core\Language\API.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,8 @@
     ' 
     '         Function: (+2 Overloads) [As], [ByRef], (+2 Overloads) [Default], (+2 Overloads) [When], AsDefault
     '                   AsNumeric, AsString, AsVector, Empty, IsNothing
-    '                   Let, list, Self, TypeDef, TypeInfo
+    '                   Let, list, Self, (+2 Overloads) TryCastArray, TypeDef
+    '                   TypeInfo
     ' 
     ' 
     ' /********************************************************************************/
@@ -208,6 +209,24 @@ Namespace Language
             Return x Is Nothing
         End Function
 #End Region
+
+        <Extension>
+        Public Function TryCastArray(Of T)(var As [Variant](Of T, T())) As T()
+            If var Like GetType(T) Then
+                Return {var.TryCast(Of T)}
+            Else
+                Return var.TryCast(Of T())
+            End If
+        End Function
+
+        <Extension>
+        Public Function TryCastArray(Of T)(var As [Variant](Of T(), T)) As T()
+            If var Like GetType(T) Then
+                Return {var.TryCast(Of T)}
+            Else
+                Return var.TryCast(Of T())
+            End If
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

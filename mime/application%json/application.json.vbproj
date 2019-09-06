@@ -238,6 +238,36 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Biodeep\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.json.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Biodeep\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.json.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Biodeep\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.json.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -260,11 +290,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BSON\BSON.vb" />
+    <Compile Include="BSON\BSONValue.vb" />
+    <Compile Include="BSON\Decoder.vb" />
+    <Compile Include="BSON\Encoder.vb" />
+    <Compile Include="BSON\ValueType.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="Parser\JsonValue.vb" />
-    <Compile Include="Parser\JsonObject.vb" />
-    <Compile Include="Parser\JsonArray.vb" />
-    <Compile Include="Parser\JsonElement.vb" />
+    <Compile Include="Javascript\JsonModel.vb" />
+    <Compile Include="Javascript\NamespaceDoc.vb" />
+    <Compile Include="Javascript\JsonValue.vb" />
+    <Compile Include="Javascript\JsonObject.vb" />
+    <Compile Include="Javascript\JsonArray.vb" />
+    <Compile Include="Javascript\JsonElement.vb" />
     <Compile Include="Parser\JsonParser.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

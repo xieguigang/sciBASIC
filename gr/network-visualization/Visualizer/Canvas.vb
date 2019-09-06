@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ebbb491e2699c21b53e495cc2f8061, gr\network-visualization\Visualizer\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::2460124c32e3d134d60871879fea42c8, gr\network-visualization\Visualizer\Canvas.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
+Imports Microsoft.VisualBasic.Data.visualize.Network.Styling.CSS
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 
@@ -53,6 +54,13 @@ Public Module CanvasDrawer
                               Optional padding$ = g.DefaultPadding,
                               Optional background$ = "white") As GraphicsData
 
+        Dim styled As NetworkGraph = net.WritePropertyValue(styling)
+        Dim rendered As GraphicsData = NetworkVisualizer.DrawImage(
+            net:=styled,
+            canvasSize:=canvasSize
+        )
+
+        Return rendered
     End Function
 
 End Module

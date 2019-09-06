@@ -140,7 +140,7 @@ Namespace Distributions
                 .ToArray
             Dim min As Integer = CInt(array.Min(Function(x) x.Tag)) - 1
             Dim max As Integer = CInt(array.Max(Function(x) x.Tag)) + 1
-            Dim l As VBInteger = min, low As Integer = min
+            Dim l As i32 = min, low As Integer = min
             Dim out As New Dictionary(Of Integer, DoubleTagged(Of Integer))
 
             Do While ++l < max

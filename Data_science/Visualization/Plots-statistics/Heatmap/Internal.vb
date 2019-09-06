@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::664673f920a5dbc254fa55d45255b1bb, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::f519c06318b32e7cce22604c3a81f71b, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -31,20 +31,9 @@
 
     ' Summaries:
 
-    '     Class PlotArguments
-    ' 
-    '         Properties: dStep
-    ' 
-    '     Enum DrawElements
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     '     Module Internal
     ' 
-    '         Function: __plotInterval, Log, ScaleByALL, ScaleByCol, ScaleByRow
+    '         Function: doPlot, Log
     ' 
     '         Sub: DrawClass
     ' 
@@ -75,55 +64,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Heatmap
 
-    Public Class PlotArguments
-
-        Public left!
-        ''' <summary>
-        ''' 绘制矩阵之中的方格在xy上面的步进值
-        ''' </summary>
-        Public ReadOnly Property dStep As SizeF
-            Get
-                Return New SizeF With {
-                    .Width = matrixPlotRegion.Width / ColOrders.Length,
-                    .Height = matrixPlotRegion.Height / RowOrders.Length
-                }
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' 矩阵区域的大小和位置
-        ''' </summary>
-        Public matrixPlotRegion As Rectangle
-        Public levels As Dictionary(Of String, DataSet)
-        Public top!
-        Public colors As SolidBrush()
-        Public RowOrders$()
-        Public ColOrders$()
-
-    End Class
-
-    ''' <summary>
-    ''' Draw a specific heatmap element
-    ''' </summary>
-    Public Enum DrawElements As Byte
-        ''' <summary>
-        ''' Draw nothing
-        ''' </summary>
-        None = 0
-        ''' <summary>
-        ''' Only draw the heatmap element on matrix row
-        ''' </summary>
-        Rows = 2
-        ''' <summary>
-        ''' Only draw the heatmap element on the column
-        ''' </summary>
-        Cols = 4
-        ''' <summary>
-        ''' Draw both row and column heatmap elements
-        ''' </summary>
-        Both = 8
-    End Enum
-
     ''' <summary>
     ''' heatmap plot internal
     ''' </summary>
@@ -131,89 +71,6 @@ Namespace Heatmap
 
         ' 假若只有一个数据分组，那么在进行聚类树的构建的时候就会出错
         ' 对于只有一个数据分组的时候，假若是采用的rowscale的方式，那么所有的数值所对应的颜色都是一样的，因为每一行都只有一个数，且该数值为该行的最大值，即自己除以自己总是为1的，所以所有行的样色都会一样
-
-        ''' <summary>
-        ''' 返回来的都是0-1之间的数，乘以颜色数组长度之后即可庸作为颜色的index
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function ScaleByRow(data As IEnumerable(Of DataSet), levels#) As IEnumerable(Of DataSet)
-            Dim levelRange As DoubleRange = {0R, levels}
-            Return data _
-                .Select(Function(x)
-                            Dim range As DoubleRange = x.Properties.Values.Range
-                            Dim values As Dictionary(Of String, Double)
-
-                            If range.Length = 0 Then
-                                values = x.Properties _
-                                    .Keys _
-                                    .ToDictionary(Function(key) key,
-                                                  Function(key) levels)
-                            Else
-                                values = x _
-                                    .Properties _
-                                    .Keys _
-                                    .ToDictionary(Function(key) key,
-                                                  Function(key) range.ScaleMapping(x(key), levelRange))
-                            End If
-
-                            Return New DataSet With {
-                                .ID = x.ID,
-                                .Properties = values
-                            }
-                        End Function)
-        End Function
-
-        ''' <summary>
-        ''' 返回来的都是0-1之间的数，乘以颜色数组长度之后即可庸作为颜色的index
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function ScaleByCol(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
-            Dim list = data.ToArray
-            Dim keys = list.PropertyNames
-            Dim ranges = keys.ToDictionary(
-                Function(key) key,
-                Function(key) list.Select(Function(x) x(key)).Range)
-            Dim levelRange As DoubleRange = {0R, levels}
-
-            Return list _
-                .Select(Function(x)
-                            Return New DataSet With {
-                                .ID = x.ID,
-                                .Properties = keys _
-                                    .ToDictionary(Function(key) key,
-                                                  Function(key) ranges(key).ScaleMapping(x(key), levelRange))
-                            }
-                        End Function)
-        End Function
-
-        <Extension>
-        Public Function ScaleByALL(data As IEnumerable(Of DataSet), levels%) As IEnumerable(Of DataSet)
-            Dim list = data.ToArray
-            Dim keys = list.PropertyNames
-            Dim range As DoubleRange = list _
-                .Select(Function(x) x.Properties.Values) _
-                .IteratesALL _
-                .Range
-            Dim levelRange As DoubleRange = {0R, levels}
-
-            Return data _
-                .Select(Function(x)
-                            Return New DataSet With {
-                                .ID = x.ID,
-                                .Properties = x _
-                                    .Properties _
-                                    .Keys _
-                                    .ToDictionary(Function(key) key,
-                                                  Function(key)
-                                                      Return range.ScaleMapping(x(key), levelRange)
-                                                  End Function)
-                           }
-                        End Function)
-        End Function
 
         ''' <summary>
         ''' 因为只是想要缩小距离，并不是真正的数学上的log计算
@@ -304,35 +161,35 @@ Namespace Heatmap
         ''' + 如果是<see cref="DrawElements.None"/>或者<see cref="DrawElements.Both"/>则是表示按照整体数据
         ''' </param>
         <Extension>
-        Friend Function __plotInterval(plot As Action(Of IGraphics, GraphicsRegion, PlotArguments),
-                                       array As DataSet(),
-                                       rowLabelfont As Font, colLabelFont As Font,
-                                       logScale#,
-                                       scaleMethod As DrawElements,
-                                       drawLabels As DrawElements,
-                                       drawDendrograms As DrawElements,
-                                       drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)),
-                                       dendrogramLayout As (A%, B%),
-                                       reverseClrSeq As Boolean,
-                                       Optional colors As SolidBrush() = Nothing,
-                                       Optional mapLevels% = 100,
-                                       Optional mapName$ = ColorMap.PatternJet,
-                                       Optional size As Size = Nothing,
-                                       Optional padding As Padding = Nothing,
-                                       Optional bg$ = "white",
-                                       Optional legendTitle$ = "Heatmap Color Legend",
-                                       Optional legendFont As Font = Nothing,
-                                       Optional legendLabelFont As Font = Nothing,
-                                       Optional min# = -1,
-                                       Optional max# = 1,
-                                       Optional mainTitle$ = "heatmap",
-                                       Optional titleFont As Font = Nothing,
-                                       Optional legendWidth! = -1,
-                                       Optional legendHasUnmapped As Boolean = True,
-                                       Optional legendSize As Size = Nothing,
-                                       Optional rowXOffset% = 0,
-                                       Optional tick# = -1,
-                                       Optional legendLayout As Layouts = Layouts.Horizon) As GraphicsData
+        Friend Function doPlot(plot As HowtoDoPlot,
+                               array As DataSet(),
+                               rowLabelfont As Font, colLabelFont As Font,
+                               logScale#,
+                               scaleMethod As DrawElements,
+                               drawLabels As DrawElements,
+                               drawDendrograms As DrawElements,
+                               drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)),
+                               dendrogramLayout As (A%, B%),
+                               reverseClrSeq As Boolean,
+                               Optional colors As SolidBrush() = Nothing,
+                               Optional mapLevels% = 100,
+                               Optional mapName$ = ColorMap.PatternJet,
+                               Optional size As Size = Nothing,
+                               Optional padding As Padding = Nothing,
+                               Optional bg$ = "white",
+                               Optional legendTitle$ = "Heatmap Color Legend",
+                               Optional legendFont As Font = Nothing,
+                               Optional legendLabelFont As Font = Nothing,
+                               Optional min# = -1,
+                               Optional max# = 1,
+                               Optional mainTitle$ = "heatmap",
+                               Optional titleFont As Font = Nothing,
+                               Optional legendWidth! = -1,
+                               Optional legendHasUnmapped As Boolean = True,
+                               Optional legendSize As Size = Nothing,
+                               Optional rowXOffset% = 0,
+                               Optional tick# = -1,
+                               Optional legendLayout As Layouts = Layouts.Horizon) As GraphicsData
 
             Dim keys$() = array.PropertyNames
             Dim angle! = -45
@@ -508,7 +365,6 @@ Namespace Heatmap
                         End If
                     End If
 
-                    Dim levels As New Dictionary(Of String, DataSet)
                     Dim scaleData As DataSet()
 
                     If logScale > 0 Then
@@ -529,35 +385,16 @@ Namespace Heatmap
                         scaleData = array
                     End If
 
-                    Select Case scaleMethod
-                        Case DrawElements.Cols
-                            levels = scaleData _
-                                .ScaleByCol(colors.Length - 1) _
-                                .ToDictionary(Function(x) x.ID)
-                        Case DrawElements.Rows
-                            levels = scaleData _
-                                .ScaleByRow(colors.Length - 1) _
-                                .ToDictionary(Function(x) x.ID)
-
-                        Case Else
-                            levels = scaleData _
-                                .ScaleByALL(colors.Length - 1) _
-                                .ToDictionary(Function(x) x.ID)
-
-                    End Select
-
                     Dim args As New PlotArguments With {
                         .colors = colors,
                         .left = left,
-                        .levels = levels,
+                        .levels = scaleData.DoDataScale(scaleMethod, colors.Length - 1),
                         .top = top,
                         .ColOrders = colKeys,
                         .RowOrders = rowKeys,
                         .matrixPlotRegion = matrixPlotRegion
                     }
-#If DEBUG Then
-                    ' Call levels.GetJson().Warning
-#End If
+
                     ' 绘制heatmap之中的矩阵内容
                     Call plot(g, rect, args)
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30a099d1490b4b86e4a02b1e6d2f963d, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::53a619c4039ce93bc2f690996f1f92f1, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: (+2 Overloads) After, Append, Coalesce, (+3 Overloads) Delete, (+2 Overloads) Fill
     '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
-    '               Midv, RepeatCalls, Replicate, (+2 Overloads) Sort, Split
+    '               Midv, RepeatCalls, Replicate, (+3 Overloads) Sort, Split
     '               VectorShadows
     ' 
     '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
@@ -64,11 +64,24 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
+Imports Microsoft.VisualBasic.My.JavaScript.Linq
 
 ''' <summary>
 ''' Extension methods for the .NET object sequence
 ''' </summary>
 Public Module VectorExtensions
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Sort(Of T)(ByRef a As T(), compares As Comparison(Of T), Optional modification As Boolean = True) As T()
+        If modification Then
+            Call Array.Sort(a, compares)
+        Else
+            Return a.AsEnumerable.Sort(compares).ToArray
+        End If
+
+        Return a
+    End Function
 
     ''' <summary>
     ''' 使用<paramref name="template"/>产生一个<paramref name="n"/>长度元素的目标序列
@@ -224,7 +237,7 @@ Public Module VectorExtensions
     <Extension>
     Public Function Fill(Of T)(ByRef vector As T(),
                                data As IEnumerable(Of T),
-                               start As VBInteger,
+                               start As i32,
                                Optional reverse As Boolean = False) As T()
         If start < 0 Then
             start = vector.Length + start.Value

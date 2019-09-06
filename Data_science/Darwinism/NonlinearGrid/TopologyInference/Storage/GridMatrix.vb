@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b55d93a32664c4d60521f303fd95bd9d, Data_science\Darwinism\NonlinearGrid\TopologyInference\Storage\GridMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::2c65d53c6979f8832035bda71f37b9ab, Data_science\Darwinism\NonlinearGrid\TopologyInference\Storage\GridMatrix.vb"
 
     ' Author:
     ' 
@@ -35,11 +35,11 @@
     ' 
     '     Properties: [const], [error], correlations, direction, samples
     ' 
-    '     Function: CreateSystem, ToString
+    '     Function: CreateBigSystem, CreateSystem, ToString
     ' 
     ' Class Constants
     ' 
-    '     Properties: A, Amplify, B, Delay
+    '     Properties: A, B
     ' 
     ' /********************************************************************************/
 
@@ -50,7 +50,9 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology.BigData
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class GridMatrix : Inherits XmlDataModel
@@ -80,9 +82,23 @@ Public Class GridMatrix : Inherits XmlDataModel
                             }
                         End Function) _
                 .ToArray,
-            .AC = If([const] Is Nothing, 0, [const].A),
-            .Amplify = [const].Amplify,
-            .delay = [const].Delay
+            .AC = If([const] Is Nothing, 0, [const].A)
+        }
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function CreateBigSystem() As SparseGridSystem
+        Return New SparseGridSystem With {
+            .A = New HalfVector(direction.vector),
+            .C = correlations _
+                .Select(Function(r, i)
+                            Return New SparseCorrelation With {
+                                .B = New HalfVector(r.vector),
+                                .BC = If([const] Is Nothing, 0, [const].B(i))
+                            }
+                        End Function) _
+                .ToArray,
+            .AC = If([const] Is Nothing, 0, [const].A)
         }
     End Function
 
@@ -95,6 +111,4 @@ End Class
 Public Class Constants
     Public Property A As Double
     Public Property B As NumericVector
-    Public Property Amplify As Double
-    Public Property Delay As Double
 End Class

@@ -357,7 +357,7 @@ Namespace Drawing3D
         ''' <returns></returns>
         Private Function IsPointInPoly(poly As IList(Of Point3D), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
-            Dim i As VBInteger = -1
+            Dim i As i32 = -1
             Dim l As Integer = poly.Count
             Dim j As Integer = l - 1
 
@@ -377,7 +377,7 @@ Namespace Drawing3D
 
         Private Function IsPointInPoly(poly As Point3D(), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
-            Dim i As VBInteger = -1
+            Dim i As i32 = -1
             Dim l As Integer = poly.Length
             Dim j As Integer = l - 1
 

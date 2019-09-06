@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2366c0de61964dc1bfeda16061131ec, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::920cd74a3bae164c3e7b95870cbaa19f, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -158,6 +158,11 @@ Namespace Language
             End If
         End Function
 
+        ''' <summary>
+        ''' Value equals of <see cref="Value"/>
+        ''' </summary>
+        ''' <param name="other"></param>
+        ''' <returns></returns>
         Public Overloads Function Equals(other As T) As Boolean
             Return Value.Equals(other)
         End Function
