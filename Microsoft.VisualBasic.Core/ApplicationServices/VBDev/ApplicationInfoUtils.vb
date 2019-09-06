@@ -79,10 +79,20 @@ Namespace ApplicationServices.Development
         ''' ```
         '''
         ''' Once you Do this, Visual Studio will automatically increment the last two values In the version.  
+        ''' 
+        ''' 2. The creation date can be found at runtime using the following algorithm:
+        '''
+        ''' ```vbnet
+        ''' Dim version = Assembly.GetExecutingAssembly().GetName().Version
+        ''' Dim creationDate = New DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.MinorRevision * 2)
+        ''' ```
         ''' </remarks>
         <Extension>
         Public Function CalculateCompileTime(assm As Assembly) As Date
+            Dim version As Version = assm.GetName.Version
+            Dim builtTime = New DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.MinorRevision * 2)
 
+            Return builtTime
         End Function
 
         <Extension>
