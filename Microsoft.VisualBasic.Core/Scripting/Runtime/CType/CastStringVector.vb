@@ -139,6 +139,8 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsDouble(source As IEnumerable(Of String)) As Double()
             Return source.AsType(Of Double).ToArray

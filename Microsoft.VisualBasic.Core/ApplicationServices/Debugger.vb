@@ -258,7 +258,7 @@ Public Module VBDebugger
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub WriteLine(msg$, color As ConsoleColor)
-        My.Log4VB.WriteLine(msg, color)
+        My.Log4VB.Println(msg, color)
     End Sub
 
     ''' <summary>

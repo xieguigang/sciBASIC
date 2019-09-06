@@ -48,13 +48,32 @@ Namespace Drawing2D.Colors
     Public Module DesignerTerms
 
 #Region "Color name terms"
+        ''' <summary>
+        ''' 20种Android MD设计中使用的颜色
+        ''' </summary>
         Public Const GoogleMaterialPalette$ = "material"
+        ''' <summary>
+        ''' 16种Windows的命令行配色
+        ''' </summary>
         Public Const ConsoleColors$ = "console.colors"
+        ''' <summary>
+        ''' 19中分类颜色
+        ''' </summary>
         Public Const TSFShellColors$ = "TSF"
+        ''' <summary>
+        ''' 总共7种彩虹色
+        ''' </summary>
         Public Const Rainbow$ = "rainbow"
         Public Const AllDotnetColors$ = "dotnet.colors"
         Public Const sciBASICChartColors$ = "scibasic.chart()"
+        ''' <summary>
+        ''' 31种分类颜色
+        ''' </summary>
         Public Const sciBASICCategory31$ = "scibasic.category31()"
+
+        ''' <summary>
+        ''' 总共10种分类颜色
+        ''' </summary>
         Public Const ClusterCategory10$ = Designer.Clusters
 #End Region
 

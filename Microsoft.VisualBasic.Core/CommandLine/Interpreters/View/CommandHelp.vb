@@ -97,7 +97,7 @@ Namespace CommandLine.ManView
                         End If
                     End With
 
-                    Call Console.WriteLine("   " & msg)
+                    Call My.Log4VB.Println("   " & msg, ConsoleColor.DarkBlue, ConsoleColor.DarkMagenta)
                 End With
             Next
         End Sub
