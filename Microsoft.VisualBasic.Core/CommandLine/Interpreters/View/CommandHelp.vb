@@ -54,8 +54,8 @@ Namespace CommandLine.ManView
         Public Function PrintCommandHelp(app As Interpreter, commandName$) As Integer
             Dim name As New Value(Of String)
 
-            If app.__API_table.ContainsKey(name = commandName.ToLower) Then
-                Call app.__API_table(name).PrintHelp
+            If app.apiTable.ContainsKey(name = commandName.ToLower) Then
+                Call app.apiTable(name).PrintHelp
             Else
                 Dim list$() = app.ListingRelated(commandName)
 
@@ -91,7 +91,7 @@ Namespace CommandLine.ManView
 
                     msg$ = .ByRef & New String(" "c, maxLength - .Length + 3)
 
-                    With app.__API_table(.ToLower).Info
+                    With app.apiTable(.ToLower).Info
                         If Not .StringEmpty Then
                             msg$ &= Mid(.ByRef, 1, 60) & "..."
                         End If

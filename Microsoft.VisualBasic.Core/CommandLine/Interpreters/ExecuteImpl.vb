@@ -87,7 +87,7 @@ Namespace CommandLine
         Friend Function ListingRelatedCommands(cli_app As Interpreter, query$) As String()
             Dim key As New LevenshteinString(query.ToLower)
             Dim LQuery = From x As String
-                         In cli_app.__API_table.Keys.AsParallel
+                         In cli_app.apiTable.Keys.AsParallel
                          Let compare = key Like x
                          Where Not compare Is Nothing AndAlso
                              compare.Score > 0.3
@@ -99,7 +99,7 @@ Namespace CommandLine
                 .Select(Function(x) x.x) _
                 .AsList
 
-            levenshteins += cli_app.__API_table _
+            levenshteins += cli_app.apiTable _
                 .Keys _
                 .Where(Function(s)
                            Return InStr(s, query, CompareMethod.Text) > 0 OrElse
@@ -109,7 +109,7 @@ Namespace CommandLine
             Return levenshteins _
                 .Distinct _
                 .Select(Function(name)
-                            Return cli_app.__API_table(name).Name
+                            Return cli_app.apiTable(name).Name
                         End Function) _
                 .ToArray
         End Function
