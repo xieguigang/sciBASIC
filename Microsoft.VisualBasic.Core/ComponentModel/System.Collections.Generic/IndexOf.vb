@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52ccec87cb0909c1612e385fec6b6cbb, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::c7181e3a1cca2f1c14aae77b3062892d, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,8 @@
     ' 
     '         Sub: Clear, Delete
     ' 
-    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Like
+    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
+    '                    (+2 Overloads) IsTrue, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/

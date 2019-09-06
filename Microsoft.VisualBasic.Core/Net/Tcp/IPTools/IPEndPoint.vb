@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e47a19b6cb16f9d2375a56a2da21154, Microsoft.VisualBasic.Core\Net\Tcp\IPTools\IPEndPoint.vb"
+﻿#Region "Microsoft.VisualBasic::16482648860f9085932d1e0e5a83e67b, Microsoft.VisualBasic.Core\Net\Tcp\IPTools\IPEndPoint.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Class IPEndPoint
     ' 
-    '         Properties: IPAddress, IsValid, Port, uid
+    '         Properties: guid, ipAddress, IsValid, port
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: GetIPEndPoint, GetValue, ToString
+    '         Function: GetIPEndPoint, GetValue, IsIpv4Address, ToString
     ' 
     ' 
     ' /********************************************************************************/

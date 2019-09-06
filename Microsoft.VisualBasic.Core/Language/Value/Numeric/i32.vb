@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8ecacf552b36759cf81b824b85b5923, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBInteger.vb"
+﻿#Region "Microsoft.VisualBasic::27781645e84d4b74793b2849d11820d4, Microsoft.VisualBasic.Core\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class VBInteger
+    '     Class i32
     ' 
     '         Properties: Hex, Oct
     ' 

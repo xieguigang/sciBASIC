@@ -1,70 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::a8251d66048cbc47fdba172bdaeb7f54, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::5195ecc2349d77440a701e938d09fbdf, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module xConsole
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: CheckNewVersion, ClearInput, ClosestConsoleColor, ConvertHexStringToByteArray, getColor
-'                   GetConsoleWindow, (+2 Overloads) Implode, ParseLine, Print, ReadKeys
-'                   ReadLine, RetrieveLinkerTimestamp, SetWindowPos
-' 
-'         Sub: __checkUpdates, CheckforUpdates, ClearInput, (+2 Overloads) CoolWrite, CoolWriteLine
-'              Credits, ListFonts, RestoreColors, SetFont, SetIcon
-'              SetWindowPos, Wait, Write, (+3 Overloads) WriteLine
-'         Class CoolWriteSettings
-' 
-'             Properties: CoolWriting, CoolWritingDelay, CWRDDelay
-' 
-'             Constructor: (+1 Overloads) Sub New
-' 
-'         Class Comparer
-' 
-'             Constructor: (+3 Overloads) Sub New
-'             Function: Find
-' 
-'         Class Spinner
-' 
-'             Constructor: (+2 Overloads) Sub New
-' 
-'             Function: Turn
-' 
-'             Sub: Break, Run, RunTask
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Module xConsole
+    ' 
+    '         Function: ClearInput, ClosestConsoleColor, ConvertHexStringToByteArray, getColor, GetConsoleWindow
+    '                   (+2 Overloads) Implode, ParseLine, Print, ReadKeys, ReadLine
+    '                   SetWindowPos
+    ' 
+    '         Sub: ClearInput, (+2 Overloads) CoolWrite, CoolWriteLine, Credits, ListFonts
+    '              RestoreColors, SetFont, SetIcon, SetWindowPos, Wait
+    '              Write, (+3 Overloads) WriteLine
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
