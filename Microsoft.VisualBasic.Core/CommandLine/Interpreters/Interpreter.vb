@@ -53,6 +53,10 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+#If DEBUG Then
+#Else
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+#End If
 Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
