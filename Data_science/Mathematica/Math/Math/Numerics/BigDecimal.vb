@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcc4acf962c3fa6229e66545e598e462, Data_science\Mathematica\Math\Math\BigDecimal.vb"
+﻿#Region "Microsoft.VisualBasic::f4767c5cfa345de9985a70253fced24a, Data_science\Mathematica\Math\Math\Numerics\BigDecimal.vb"
 
     ' Author:
     ' 
@@ -31,28 +31,30 @@
 
     ' Summaries:
 
-    ' Structure BigDecimal
+    '     Structure BigDecimal
     ' 
-    '     Properties: IntegralLength, IsEven, IsOne, IsPowerOfTwo, IsZero
-    '                 MantissaLength, Sign
+    '         Properties: IntegralLength, IsEven, IsOne, IsPowerOfTwo, IsZero
+    '                     MantissaLength, Sign
     ' 
-    '     Constructor: (+15 Overloads) Sub New
+    '         Constructor: (+15 Overloads) Sub New
     ' 
-    '     Function: CompareTo, Div, Phi, Pi, Pow
-    '               Pow10, (+2 Overloads) PowN10, PythagorasConst, Sqrt, Tau
-    '               ToByteArray, (+2 Overloads) ToString
+    '         Function: CompareTo, Div, Phi, Pi, Pow
+    '                   Pow10, (+2 Overloads) PowN10, PythagorasConst, Sqrt, Tau
+    '                   ToByteArray, (+2 Overloads) ToString
     ' 
-    '     Sub: Parse
+    '         Sub: Parse
     ' 
-    '     Operators: -, *, /, ^, +
-    '                <, <=, <>, =, >
-    '                >=, (+2 Overloads) Mod
+    '         Operators: -, *, /, ^, +
+    '                    <, <=, <>, =, >
+    '                    >=, (+2 Overloads) Mod
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Numerics
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 
 Namespace Numerics
 
@@ -62,7 +64,10 @@ Namespace Numerics
     ''' <remarks>
     ''' http://tizzyt-archive.blogspot.com/2015/03/quick-and-dirty-net-bigdecimal.html
     ''' </remarks>
+    ''' 
+    <FrameworkConfig(BigDecimal.BigDecimalPrecisionEnvironmentConfigName)>
     Public Structure BigDecimal
+
         Private ILen, MLen As Integer
         Private value As BigInteger
 
@@ -135,8 +140,10 @@ Namespace Numerics
 
         Private Shared ReadOnly defaultPrecision As Integer = 1000
 
+        Friend Const BigDecimalPrecisionEnvironmentConfigName$ = "big_decimal.precision"
+
         Shared Sub New()
-            defaultPrecision = App.GetVariable("big_decimal.precision").ParseInteger
+            defaultPrecision = App.GetVariable(BigDecimalPrecisionEnvironmentConfigName).ParseInteger
         End Sub
 
 #Region "Unsigned Integer Constructors"

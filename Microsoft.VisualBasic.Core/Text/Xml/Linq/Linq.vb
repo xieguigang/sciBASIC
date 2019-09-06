@@ -237,10 +237,17 @@ Namespace Text.Xml.Linq
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$,
                                                                 Optional typeName$ = Nothing,
                                                                 Optional xmlns$ = Nothing,
-                                                                Optional selector As Func(Of XElement, Boolean) = Nothing) As IEnumerable(Of T)
+                                                                Optional selector As Func(Of XElement, Boolean) = Nothing,
+                                                                Optional preprocess As Func(Of String, String) = Nothing) As IEnumerable(Of T)
             With GetType(T).GetTypeName([default]:=typeName)
                 Return .UltraLargeXmlNodesIterator(path, selector) _
-                    .Select(Function(node) node.ToString) _
+                    .Select(Function(node)
+                                If Not preprocess Is Nothing Then
+                                    Return preprocess(node.ToString)
+                                Else
+                                    Return node.ToString
+                                End If
+                            End Function) _
                     .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef)
             End With
         End Function
@@ -291,7 +298,8 @@ Namespace Text.Xml.Linq
                 .ValidationFlags = XmlSchemaValidationFlags.None,
                 .CheckCharacters = False,
                 .ConformanceLevel = ConformanceLevel.Document,
-                .ValidationType = ValidationType.None
+                .ValidationType = ValidationType.None,
+                .DtdProcessing = DtdProcessing.Ignore
             }
 
             Using reader As XmlReader = XmlReader.Create(documentText, settings)

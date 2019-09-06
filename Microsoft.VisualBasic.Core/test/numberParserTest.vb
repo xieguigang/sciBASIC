@@ -53,7 +53,7 @@ Module numberParserTest
 
         Call Console.WriteLine(xx.ToString("G17"))
 
-        Dim x As VBDouble = Double.MaxValue
+        Dim x As f64 = Double.MaxValue
         Dim hex = x.Hex
 
         Call Console.WriteLine(hex)

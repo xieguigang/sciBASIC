@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d40999bb194fba65a645c5d5d83c4c6, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::cab6b911f7ff1e7bad10b633b7db1f62, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: __source, __target, data, ID, isDirected
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
+    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
     '         Operators: <>, =
     ' 
     ' 
@@ -84,12 +84,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Graph
 
     Public Class Edge : Inherits GraphTheory.Network.Edge(Of Node)
         Implements IInteraction
         Implements IGraphValueContainer(Of EdgeData)
+        Implements ICloneable(Of Edge)
 
         Dim uniqueID As String = Nothing
 
@@ -117,7 +119,7 @@ Namespace Graph
         Private Property __source As String Implements IInteraction.source
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return U.Label
+                Return U.label
             End Get
             Set(value As String)
                 Throw New NotImplementedException()
@@ -127,7 +129,7 @@ Namespace Graph
         Private Property __target As String Implements IInteraction.target
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return V.Label
+                Return V.label
             End Get
             Set(value As String)
                 Throw New NotImplementedException()
@@ -137,9 +139,10 @@ Namespace Graph
 
         Public Sub New(id As String, source As Node, target As Node, Optional data As EdgeData = Nothing)
             Me.ID = id
+            Me.data = If(data, New EdgeData())
+
             U = source
             V = target
-            Me.data = If(data, New EdgeData())
             isDirected = False
         End Sub
 
@@ -201,6 +204,22 @@ Namespace Graph
         Public Iterator Function Iterate2Nodes() As IEnumerable(Of Node)
             Yield U
             Yield V
+        End Function
+
+        Public Function Clone() As Edge Implements ICloneable(Of Edge).Clone
+            Return New Edge With {
+                .ID = ID,
+                .isDirected = isDirected,
+                .U = U,
+                .V = V,
+                .weight = weight,
+                .data = New EdgeData With {
+                    .label = data.label,
+                    .length = data.length,
+                    .weight = data.weight,
+                    .Properties = New Dictionary(Of String, String)(data.Properties)
+                }
+            }
         End Function
     End Class
 End Namespace

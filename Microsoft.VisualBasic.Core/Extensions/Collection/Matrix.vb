@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44bec93731efa49cd5c9e88b17824d27, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::2ceabba60966867b6989805e5fac6abd, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     ' Module MatrixExtensions
     ' 
-    '     Function: DATA, GetCol, GetRow, GetSize, MAT
-    '               (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol, SetRow
-    '               SizeOf, ToFloatMatrix, ToMatrix, ToVectorList
+    '     Function: DATA, DimensionSizeOf, GetCol, GetRow, GetSize
+    '               MAT, (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol
+    '               SetRow, ToFloatMatrix, ToMatrix, ToVectorList
     ' 
     ' /********************************************************************************/
 
@@ -158,9 +158,15 @@ Public Module MatrixExtensions
         Return newMatrix
     End Function
 
+    ''' <summary>
+    ''' Measure the dimension size of the rectangle array.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="rect"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function SizeOf(Of T)(rect As T()()) As Size
+    Public Function DimensionSizeOf(Of T)(rect As T()()) As Size
         Return New Size With {
             .Width = rect(Scan0).Length,
             .Height = rect.Length

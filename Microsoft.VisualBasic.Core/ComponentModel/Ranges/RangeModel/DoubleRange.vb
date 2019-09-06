@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8cc465def7099c7702cb05d320c8746, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::9988a01fe3a072b391b86080ef2b2388, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Length, Max, Min
     ' 
     '         Constructor: (+7 Overloads) Sub New
-    '         Function: Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
+    '         Function: (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
     '                   ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =, (+2 Overloads) Like
     ' 
@@ -279,15 +279,14 @@ Namespace ComponentModel.Ranges.Model
             If Length = 0 Then
                 Return {}
             Else
-                Dim delta# = Length / n
-                Dim out As New List(Of Double)
-
-                For x As Double = Min To Max Step delta
-                    out += x
-                Next
-
-                Return out
+                Return Enumerate(Length / n).ToArray
             End If
+        End Function
+
+        Public Iterator Function Enumerate(resolution#) As IEnumerable(Of Double)
+            For x As Double = Min To Max Step resolution
+                Yield x
+            Next
         End Function
 
         ''' <summary>

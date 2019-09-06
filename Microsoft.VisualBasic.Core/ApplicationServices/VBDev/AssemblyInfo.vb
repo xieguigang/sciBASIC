@@ -39,6 +39,11 @@
 
         Public Property AssemblyVersion As String
         Public Property AssemblyFileVersion As String
+        ''' <summary>
+        ''' The compile date and time of the assembly file.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property BuiltTime As Date
 
         Public Const ProjectFile As String = "My Project\AssemblyInfo.vb"
 

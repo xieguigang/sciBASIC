@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::094911135c6824fc45785e7a13f4cdfa, gr\network-visualization\Visualizer\Styling\Expression\SizeExpression.vb"
+﻿#Region "Microsoft.VisualBasic::60ddeaadfd4b9a545c087a3af0200aeb, gr\network-visualization\Visualizer\Styling\Expression\SizeExpression.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Styling.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Styling

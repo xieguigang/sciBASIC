@@ -166,7 +166,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>..\CLI_tools\MLkit\Apps\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -333,7 +333,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\smartnucl_integrative\biodeepDB\METLINApp\App\</OutputPath>
+    <OutputPath>bin\app\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -385,9 +385,9 @@
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>Full</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -935,6 +935,42 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\test\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\test\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\test\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
@@ -979,6 +1015,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
+    <Compile Include="My\Framework\FrameworkConfig.vb" />
+    <Compile Include="My\Framework\DoConfiguration.vb" />
+    <Compile Include="My\Framework\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
@@ -1004,7 +1045,7 @@
     <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
-    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\RBNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\RBTree.vb" />
@@ -1012,7 +1053,7 @@
     <Compile Include="ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
-    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLSupports.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LCS.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
@@ -1067,6 +1108,7 @@
     <Compile Include="Language\Value\CharStream.vb" />
     <Compile Include="Language\Value\Variant.vb" />
     <Compile Include="My\File.vb" />
+    <Compile Include="Net\HTTP\wget.vb" />
     <Compile Include="Net\HTTP\Stream\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
     <Compile Include="Net\HTTP\DataURI.vb" />
@@ -1079,12 +1121,12 @@
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
     <Compile Include="CommandLine\InteropService\CLIAbstractor.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\API.vb" />
-    <Compile Include="CommandLine\InteropService\SharedORM\Perl.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Languages\Perl.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\CLI.vb" />
     <Compile Include="CommandLine\InteropService\SharedORM\CodeGenerator.vb" />
-    <Compile Include="CommandLine\InteropService\SharedORM\R.vb" />
-    <Compile Include="CommandLine\InteropService\SharedORM\PHP.vb" />
-    <Compile Include="CommandLine\InteropService\SharedORM\VisualBasic.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Languages\R.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Languages\PHP.vb" />
+    <Compile Include="CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb" />
     <Compile Include="CommandLine\Parsers\CLIParser.vb" />
     <Compile Include="CommandLine\Parsers\DictionaryParser.vb" />
     <Compile Include="CommandLine\CLIMapper.vb" />
@@ -1144,6 +1186,7 @@
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
+    <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
     <Compile Include="Serialization\ICloneable.vb" />
     <Compile Include="Text\Xml\Models\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
@@ -1265,15 +1308,15 @@
     <Compile Include="ComponentModel\Settings\DataModels\ModelBase.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
-    <Compile Include="ApplicationServices\IOHandler.vb" />
+    <Compile Include="My\Framework\IOHandler.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="Language\Language\UnixBash\ShellSyntax.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\tree.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\rm.vb" />
-    <Compile Include="Language\Value\Numeric\VBInteger.vb" />
-    <Compile Include="Language\Value\Numeric\VBDouble.vb" />
+    <Compile Include="Language\Value\Numeric\i32.vb" />
+    <Compile Include="Language\Value\Numeric\f64.vb" />
     <Compile Include="Language\Value\var.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\Actor%28Of T, V%29.vb" />
     <Compile Include="Scripting\Expressions\ArrayIndex.vb" />
@@ -1295,7 +1338,7 @@
     <Compile Include="ComponentModel\RelayCommand.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Helpers.vb" />
     <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
-    <Compile Include="ApplicationServices\Debugger\Config.vb" />
+    <Compile Include="My\Framework\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
     <Compile Include="Extensions\IO\Path\Includes.vb" />
     <Compile Include="Extensions\IO\Extensions\Extensions.vb" />
@@ -1531,7 +1574,7 @@
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\EventLog.vb" />
-    <Compile Include="ApplicationServices\Debugger\NETDebugger.vb" />
+    <Compile Include="ApplicationServices\Debugger\HeapSizeOf.vb" />
     <Compile Include="Net\Abstract.vb" />
     <Compile Include="Net\MIME\MIME.vb" />
     <Compile Include="Net\MIME\ContentType.vb" />
@@ -1546,7 +1589,7 @@
     <Compile Include="Net\Protocol\Reflection\ProtocolHandler.vb" />
     <Compile Include="Net\Protocol\RequestStream.vb" />
     <Compile Include="Net\Tcp\Persistent\Protocols\POST.vb" />
-    <Compile Include="Net\wGetTools.vb" />
+    <Compile Include="Net\HTTP\wgetTask.vb" />
     <Compile Include="Net\Tcp\StateObject.vb" />
     <Compile Include="Net\Tcp\IPTools\IPEndPoint.vb" />
     <Compile Include="Net\Tcp\IPTools\LAN.vb" />

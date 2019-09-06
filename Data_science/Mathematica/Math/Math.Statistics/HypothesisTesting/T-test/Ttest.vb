@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fca50aa7a275fa3a27cc7440f38879e, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
+﻿#Region "Microsoft.VisualBasic::8119cd6c4ad57113d4dea14d06dce8fd, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module t
     ' 
-    '         Function: __welch2df, __welch2t, Pvalue, (+2 Overloads) Tcdf, (+2 Overloads) Test
+    '         Function: Pvalue, (+2 Overloads) Tcdf, (+2 Overloads) Test, welch2df, welch2t
     ' 
     ' 
     ' /********************************************************************************/
@@ -101,34 +101,47 @@ Namespace Hypothesis
             Dim va#() = a.ToArray, vb = b.ToArray
             Dim left As New BasicProductMoments(a)
             Dim right As New BasicProductMoments(b)
-            Dim v# = If(varequal,
-                left.SampleSize + right.SampleSize - 2,
-                __welch2df(va.Variance, vb.Variance, left.SampleSize, right.SampleSize))
+            Dim v#
+
+            If varEqual Then
+                v = left.SampleSize + right.SampleSize - 2
+            Else
+                v = welch2df(va.Variance, vb.Variance, left.SampleSize, right.SampleSize)
+            End If
+
             Dim commonVariance# = ((left.SampleSize - 1) * va.Variance + (right.SampleSize - 1) * vb.Variance) / v
+            Dim testVal#
+            Dim stdErr# = Math.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize))
+
+            If varEqual Then
+                testVal = ((left.Mean - right.Mean) - mu) / stdErr
+            Else
+                testVal = welch2t(left.Mean, right.Mean, va.Variance, vb.Variance, left.SampleSize, right.SampleSize)
+            End If
+
+            Dim pvalue# = t.Pvalue(testVal, v, alternative)
 
             Return New TwoSampleResult With {
                 .alpha = alpha,
                 .DegreeFreedom = v,
                 .Mean = left.Mean - right.Mean,
-                .StdErr = Math.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize)),
-                .TestValue = If(varEqual,
-                    (.Mean - mu) / .StdErr,
-                    __welch2t(left.Mean, right.Mean, va.Variance, vb.Variance, left.SampleSize, right.SampleSize)),
-                .Pvalue = Pvalue(.TestValue, v, alternative),
+                .StdErr = stdErr,
+                .TestValue = testVal,
+                .Pvalue = pvalue,
                 .Alternative = alternative,
                 .MeanX = left.Mean,
                 .MeanY = right.Mean
             }
         End Function
 
-        Private Function __welch2t(m1#, m2#, s1#, s2#, N1#, N2#) As Double
+        Private Function welch2t(m1#, m2#, s1#, s2#, N1#, N2#) As Double
             Dim a = m1 - m2
             Dim b = Math.Sqrt((s1 ^ 2) / N1 + (s2 ^ 2) / N2)
             Dim t = a / b
             Return t
         End Function
 
-        Private Function __welch2df(s1#, s2#, N1#, N2#) As Double
+        Private Function welch2df(s1#, s2#, N1#, N2#) As Double
             Dim v1 = N1 - 1
             Dim v2 = N2 - 1
             Dim a = (s1 ^ 2 / N1 + s2 ^ 2 / N2) ^ 2

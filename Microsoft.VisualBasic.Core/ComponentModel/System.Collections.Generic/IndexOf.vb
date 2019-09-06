@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::279ccec4836decd3842544a2f77b87b3, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::52ccec87cb0909c1612e385fec6b6cbb, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Sub: Clear, Delete
     ' 
-    '         Operators: -, (+2 Overloads) +, (+2 Overloads) Like
+    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -340,5 +340,38 @@ Namespace ComponentModel.Collection
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        ''' <summary>
+        ''' The element numbers in current index object is equals to given count number value?
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator =(index As Index(Of T), count%) As Boolean
+            Return index.Count = count
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator <>(index As Index(Of T), count%) As Boolean
+            Return Not index = count
+        End Operator
+
+        Public Shared Operator IsTrue(index As Index(Of T)) As Boolean
+            If index Is Nothing Then
+                Return False
+            ElseIf index.Count = 0 Then
+                Return False
+            ElseIf index.Count = 1 AndAlso Len(CObj(index.Objects(Scan0))) = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator IsFalse(index As Index(Of T)) As Boolean
+            Return Not op_True(index)
+        End Operator
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27bb47af904856479df933bd2fa06a6c, Data\BinaryData\DataStorage\netCDF\Components\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::cf078ce49184c18d483be1d2f1a80f62, Data\BinaryData\DataStorage\netCDF\Components\CDFData.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -228,6 +229,11 @@ Namespace netCDF.Components
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data As Double()) As CDFData
             Return New CDFData With {.numerics = data}
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(data As Vector(Of Double)) As CDFData
+            Return New CDFData With {.numerics = data.Array}
         End Operator
 
         Public Shared Widening Operator CType(data As (values As Object(), type As CDFDataTypes)) As CDFData

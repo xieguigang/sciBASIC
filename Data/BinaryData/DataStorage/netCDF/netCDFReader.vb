@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01198c864d5ef6fdbfe010732ae48a36, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::bf60f5a32d97a477f4d03edc972b7def, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,8 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
-    '                   ToString
+    '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, getDataVariableEntry
+    '                   Open, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose, Print
     ' 
@@ -135,7 +135,7 @@ Namespace netCDF
         End Property
 
         ''' <summary>
-        ''' Returns the value of an attribute
+        ''' Returns the value of an global attribute
         ''' </summary>
         ''' <param name="attributeName">attributeName</param>
         ''' <returns>Value of the attributeName Or undefined</returns>
@@ -145,7 +145,17 @@ Namespace netCDF
                     If .IsNothing Then
                         Return Nothing
                     Else
-                        Return .value
+                        Select Case .type
+                            Case CDFDataTypes.BYTE : Return Byte.Parse(.value)
+                            Case CDFDataTypes.CHAR : Return .value
+                            Case CDFDataTypes.DOUBLE : Return Double.Parse(.value)
+                            Case CDFDataTypes.FLOAT : Return Single.Parse(.value)
+                            Case CDFDataTypes.INT : Return Integer.Parse(.value)
+                            Case CDFDataTypes.SHORT : Return Short.Parse(.value)
+
+                            Case Else
+                                Throw New NotSupportedException
+                        End Select
                     End If
                 End With
             End Get
@@ -242,6 +252,10 @@ Namespace netCDF
             Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
 
             Return getDataVariable(variable)
+        End Function
+
+        Public Function getDataVariableEntry(variableName As String) As variable
+            Return variableTable.TryGetValue(variableName)
         End Function
 
         ''' <summary>

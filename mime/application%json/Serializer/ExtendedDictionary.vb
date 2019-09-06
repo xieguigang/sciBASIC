@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6a0a30eeaf8d5d78faa573656fbf437, mime\application%json\Serializer\ExtendedDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::3e45985ff4c6788d6572a0c80a3450b5, mime\application%json\Serializer\ExtendedDictionary.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.MIME.application.json.Parser
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module ExtendedDictionary

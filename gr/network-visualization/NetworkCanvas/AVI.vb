@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae020fdfbaee6e688fcefad00350969e, gr\network-visualization\NetworkCanvas\AVI.vb"
+﻿#Region "Microsoft.VisualBasic::7394f11904d66528596709fa99dadfa8, gr\network-visualization\NetworkCanvas\AVI.vb"
 
     ' Author:
     ' 
@@ -76,7 +76,7 @@ Public Module AVI
             }
         End If
 
-        Dim g As Graphics
+        Dim g As Graphics = Nothing
         Dim region As New Rectangle(New Point, canvasSize)
         Dim engine As IForceDirected
 

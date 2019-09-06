@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a525089530604eb2b0647ab829289f61, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranking.vb"
+﻿#Region "Microsoft.VisualBasic::a4d7e0eff926a6a46c5ed05c2935484d, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranking.vb"
 
     ' Author:
     ' 
@@ -86,6 +86,14 @@ Namespace Math.Correlations
             FractionalRanking = 1 + 2.5 + 2.5 + 4
         End Enum
 
+        ''' <summary>
+        ''' 函数返回与输入的序列中的元素相同顺序的排序的得分
+        ''' </summary>
+        ''' <typeparam name="C"></typeparam>
+        ''' <param name="list"></param>
+        ''' <param name="strategy"></param>
+        ''' <param name="desc"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Ranking(Of C As IComparable)(list As IEnumerable(Of C), Optional strategy As Strategies = Strategies.OrdinalRanking, Optional desc As Boolean = False) As Double()
@@ -137,8 +145,13 @@ Namespace Math.Correlations
                 .Keys _
                 .GroupBy(Function(x) x.value) _
                 .ToDictionary(Function(x) x.First.value,
-                              Function(g) g.Count)
-            Dim previous As C = asc.Last.value ' 使用Nothing的时候，对于数字而言，会是0，则会和0冲突，使用最大的值则完全可以避免这个问题了
+                              Function(g)
+                                  Return g.Count
+                              End Function)
+
+            ' 使用Nothing的时候，对于数字而言，会是0，则会和0冲突，
+            ' 使用最大的值则完全可以避免这个问题了
+            Dim previous As C = asc.Last.value
 
             For i As Integer = 0 To asc.Length - 1
                 ' obj -> original_i -> rank
@@ -324,7 +337,9 @@ Namespace Math.Correlations
             Dim equals = array.GroupBy(Function(x) x.value)
 
             For Each g As IGrouping(Of C, SeqValue(Of C)) In equals
-                Dim avgRanks# = Aggregate i In g Into Average(ranks(i))
+                Dim avgRanks# = Aggregate i
+                                In g
+                                Into Average(ranks(i))
 
                 For Each i As SeqValue(Of C) In g
                     ranks(i.i) = avgRanks

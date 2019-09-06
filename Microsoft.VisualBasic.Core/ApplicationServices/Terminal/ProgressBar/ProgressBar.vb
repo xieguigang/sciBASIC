@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3562e8340d57b44a6cb3447221203925, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::70e68318cf1bdf1b9675d9786ea4858e, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Terminal.ProgressBar
@@ -124,7 +125,7 @@ Namespace Terminal.ProgressBar
         ''' </remarks>
         Public Shared Function DefaultTheme() As [Default](Of ColorTheme)
             Return New [Default](Of ColorTheme) With {
-                .Value = [Default](),
+                .value = [Default](),
                 .assert = Function(t)
                               Return DirectCast(t, ColorTheme).IsEmpty
                           End Function
@@ -150,6 +151,8 @@ Namespace Terminal.ProgressBar
     ''' <remarks>
     ''' http://www.cnblogs.com/masonlu/p/4668232.html
     ''' </remarks>
+    ''' 
+    <FrameworkConfig(ProgressBar.TerminalProgressBarEnvironmentConfigName)>
     Public Class ProgressBar : Inherits AbstractBar
         Implements IDisposable
 
@@ -174,8 +177,10 @@ Namespace Terminal.ProgressBar
             End Set
         End Property
 
+        Friend Const TerminalProgressBarEnvironmentConfigName$ = "progress_bar"
+
         Shared Sub New()
-            disabled = App.GetVariable("progress_bar").TextEquals(NameOf(disabled))
+            disabled = App.GetVariable(TerminalProgressBarEnvironmentConfigName).TextEquals(NameOf(disabled))
         End Sub
 
         ''' <summary>

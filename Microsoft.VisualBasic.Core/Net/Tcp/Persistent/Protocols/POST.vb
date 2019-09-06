@@ -77,7 +77,7 @@ Namespace Net.Tcp.Persistent.Application.Protocols
 
         Sub New(rawStream As Byte())
             Dim pTemp As Byte() = New Byte(INT64 - 1) {}
-            Dim p As VBInteger = 0
+            Dim p As i32 = 0
 
             Call Array.ConstrainedCopy(rawStream, p + INT64, pTemp, Scan0, pTemp.Length)
             FROM = BitConverter.ToInt64(pTemp, Scan0)
@@ -95,7 +95,7 @@ Namespace Net.Tcp.Persistent.Application.Protocols
         Public Overrides Function Serialize() As Byte()
             Dim RequestStream As Byte() = Message.Serialize
             Dim ChunkBuffer As Byte() = New Byte(INT64 + INT64 + RequestStream.Length - 1) {}
-            Dim p As VBInteger = 0
+            Dim p As i32 = 0
 
             Call Array.ConstrainedCopy(BitConverter.GetBytes(FROM), Scan0, ChunkBuffer, p + INT64, INT64)
             Call Array.ConstrainedCopy(BitConverter.GetBytes(USER_ID), Scan0, ChunkBuffer, p + INT64, INT64)

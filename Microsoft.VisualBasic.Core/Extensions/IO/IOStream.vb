@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c8ada758c08c77859df0312c0e4ba02, Microsoft.VisualBasic.Core\Extensions\IO\IOStream.vb"
+﻿#Region "Microsoft.VisualBasic::35513d1acd839863747dd88607d9ea23, Microsoft.VisualBasic.Core\Extensions\IO\IOStream.vb"
 
     ' Author:
     ' 
@@ -46,8 +46,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.ApplicationServices.IOHandler
+Imports Microsoft.VisualBasic.My.FrameworkInternal
+Imports Microsoft.VisualBasic.My.FrameworkInternal.IOHandler
 Imports Microsoft.VisualBasic.Text
 
 Namespace FileIO
@@ -81,6 +81,8 @@ Namespace FileIO
 
     End Class
 
+    <HideModuleName>
+    <Extension>
     Public Module IOStreamExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

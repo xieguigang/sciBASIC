@@ -3,6 +3,8 @@ include!("statistics/statistics.rs");
 include!("statistics/fishers_exact/fishers.rs");
 include!("trigonometric.rs");
 include!("randf.rs");
+include!("gamma.rs");
+include!("beta.rs");
 
 /// #[link(name = "sciKernel", vers = "1.01", author = "xieguigang")];
 /// #[crate_type = "dylib"];

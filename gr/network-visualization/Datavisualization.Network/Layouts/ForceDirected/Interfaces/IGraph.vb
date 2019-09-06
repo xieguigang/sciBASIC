@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0393b9937c2de03d7d5ee9319343bc2, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
+﻿#Region "Microsoft.VisualBasic::87e17f1fbefd82f85f73f467c5e2a83d, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
 
     ' Author:
     ' 
@@ -77,13 +77,12 @@
 'An Interface for the Graph.
 '
 '
-
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Language
 
 Namespace Layouts.Interfaces
 
     Public Interface IGraphEventListener
-        Sub GraphChanged()
+
+        Sub GraphChanged(sender As NetworkGraph, eventName As String)
     End Interface
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4adf6181538e1c636c485e114870e1a5, gr\network-visualization\Visualizer\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::37de7dabd4e40a364201fb96e9ba8201, gr\network-visualization\Visualizer\Extensions.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language.Default
 
-Module Extensions
+<HideModuleName> Module Extensions
 
     <Extension>
     Public Function NodeBrushAssert(node As Node) As Assert(Of Object)

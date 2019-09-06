@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a35d5949fb85f500ec92a190463a44f1, mime\application%json\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5a0864cdd69d66b588bc97880ede2da9, mime\application%json\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,9 +41,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.application.json.Parser
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     ''' <summary>
     ''' Parse json string

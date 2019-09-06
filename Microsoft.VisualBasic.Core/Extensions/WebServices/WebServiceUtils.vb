@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::4d5d5bef8e9a9b6e863af14d8d486dff, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module WebServiceUtils
-    ' 
-    '     Properties: DefaultUA, Protocols, Proxy
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
-    '               (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress, GetProxy
-    '               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, IsURLPattern
-    '               (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
-    '               UrlDecode, UrlEncode, UrlPathEncode
-    ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    ' 
-    ' /********************************************************************************/
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
+'               (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress, GetProxy
+'               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, IsURLPattern
+'               (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
+'               UrlDecode, UrlEncode, UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,8 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
+Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -477,7 +479,7 @@ Public Module WebServiceUtils
                                      Optional contentEncoding As Encodings = Encodings.UTF8) As String
 
         Static emptyBody As New [Default](Of NameValueCollection) With {
-            .Value = New NameValueCollection,
+            .value = New NameValueCollection,
             .assert = Function(c)
                           Return c Is Nothing OrElse DirectCast(c, NameValueCollection).Count = 0
                       End Function
@@ -737,11 +739,11 @@ RE0:
         End Try
     End Function
 
-    Public Const IPAddress As String = "http://ipaddress.com/"
+    Const IPAddress As String = "http://ipaddress.com/"
     ''' <summary>
     ''' Microsoft DNS Server
     ''' </summary>
-    Public Const MicrosoftDNS As String = "4.2.2.1"
+    Const MicrosoftDNS As String = "4.2.2.1"
 
     ''' <summary>
     ''' 获取我的公网IP地址，假若没有连接互联网的话则会返回局域网IP地址
@@ -758,19 +760,23 @@ RE0:
 
         If hasInternet Then
             ' IPAddress on Internet
-            Return __getMyIPAddress()
+            Return getIPAddressInternal()
         Else
             ' IPAddress in LAN
             Return TcpRequest.LocalIPAddress
         End If
     End Function
 
-    Public Const RegexIPAddress As String = "\d{1,3}(\.\d{1,3}){3}"
+    ''' <summary>
+    ''' Request an external server and then returns the ip address from the server side.
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function getIPAddressInternal() As String
+        Dim ipResult$ = IPAddress.GET
 
-    Private Function __getMyIPAddress() As String
-        Dim page As String = IPAddress.GET
-        Dim ipResult As String = Regex.Match(page, $"IP[:] {RegexIPAddress}<br><img", RegexOptions.IgnoreCase).Value
-        ipResult = Regex.Match(ipResult, RegexIPAddress).Value
+        ipResult = r.Match(ipResult, $"IP[:] {IPEndPoint.RegexIPAddress}<br>", RegexOptions.IgnoreCase).Value
+        ipResult = r.Match(ipResult, IPEndPoint.RegexIPAddress).Value
+
         Return ipResult
     End Function
 End Module

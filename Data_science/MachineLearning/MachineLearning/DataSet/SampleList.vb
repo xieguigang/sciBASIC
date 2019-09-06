@@ -71,7 +71,7 @@ Namespace StoreProcedure
         End Function
 
         Public Iterator Function [Select](Of T)(project As Func(Of Sample, Integer, T)) As IEnumerable(Of T)
-            Dim i As VBInteger = Scan0
+            Dim i As i32 = Scan0
 
             For Each item As Sample In items
                 Yield project(item, ++i)

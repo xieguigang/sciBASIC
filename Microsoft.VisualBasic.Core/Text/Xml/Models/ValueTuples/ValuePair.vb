@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::797fff98dcd673f44f853ce792bece13, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\ValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::31a753351be9474b091cf5e0bb7c3d03, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\ValuePair.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Text.Xml.Models
 
@@ -108,6 +109,13 @@ Namespace Text.Xml.Models
             Return New KeyValuePair With {
                 .Key = obj.First,
                 .Value = obj.ElementAtOrDefault(1)
+            }
+        End Operator
+
+        Public Overloads Shared Widening Operator CType(nameValue As NamedValue(Of String)) As KeyValuePair
+            Return New KeyValuePair With {
+                .Key = nameValue.Name,
+                .Value = nameValue.Value
             }
         End Operator
 

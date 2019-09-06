@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9609db91e7dcf90e1fe5a0b6e6717d36, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::8e7f1a4a2c4046acad3f34789d3583b4, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports defaultEncoding = Microsoft.VisualBasic.Language.Default.Default(Of System.Text.Encoding)
 
 Namespace Text
@@ -96,6 +97,8 @@ Namespace Text
     ''' <summary>
     ''' 表示字符编码。若要浏览此类型的.NET Framework 源代码，请参阅 Reference Source。
     ''' </summary>
+    ''' 
+    <FrameworkConfig(TextEncodingEnvironmentConfigName)>
     Public Module TextEncodings
 
         Public ReadOnly Property UTF8WithoutBOM As New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False)
@@ -156,6 +159,8 @@ Namespace Text
             }
         End Function
 
+        Friend Const TextEncodingEnvironmentConfigName$ = "default_encoding"
+
         ''' <summary>
         ''' 构造函数会自动的从命令行配置之中设置默认的编码格式
         ''' </summary>
@@ -175,7 +180,7 @@ Namespace Text
         ''' </remarks>
         Sub New()
             ' setting default codepage from App commandline options for current App Process session.
-            Dim codepage$ = App.GetVariable("default_encoding")
+            Dim codepage$ = App.GetVariable(TextEncodingEnvironmentConfigName)
 
             ' If no settings from the commandline, using default ANSI encoding
             If codepage.StringEmpty Then

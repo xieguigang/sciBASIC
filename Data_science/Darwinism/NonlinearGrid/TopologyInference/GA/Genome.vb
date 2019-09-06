@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7b0a9556deb09cec79c25c03762dc25, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Genome.vb"
+﻿#Region "Microsoft.VisualBasic::0aa48f5ede755a1ff8ab9081d3dfb206, Data_science\Darwinism\NonlinearGrid\TopologyInference\GA\Genome.vb"
 
     ' Author:
     ' 
@@ -33,23 +33,22 @@
 
     ' Class Genome
     ' 
-    '     Properties: MutationRate
+    '     Properties: IDynamicsComponent_Width, MutationRate, UniqueHashKey
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: CalculateError, Crossover, Evaluate, Mutate, (+2 Overloads) ToString
-    '               valueMutate
+    '     Function: Clone, Crossover, ICloneable_Clone, IDynamicsComponent_Evaluate, Mutate
+    '               ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.NonlinearGridTopology
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Serialization
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 ''' <summary>
@@ -58,56 +57,29 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 ''' <remarks>
 ''' 在系统之中的各个部件之间的突变以及杂交事件应该都是相互独立的
 ''' </remarks>
-Public Class Genome : Implements Chromosome(Of Genome)
+Public Class Genome : Inherits GridGenome(Of GridSystem)
+    Implements Chromosome(Of Genome)
+    Implements IDynamicsComponent(Of Genome)
 
-    Friend ReadOnly chromosome As GridSystem
+    Public Overrides Property MutationRate As Double Implements Chromosome(Of Genome).MutationRate
 
-    ''' <summary>
-    ''' Number of system variables.
-    ''' </summary>
-    ReadOnly width As Integer
-    ''' <summary>
-    ''' 约束变异所产生的值的上限
-    ''' </summary>
-    ReadOnly truncate As Double
-    ReadOnly rangePositive As Boolean
+    Protected Overrides ReadOnly Property IDynamicsComponent_Width As Integer Implements IDynamicsComponent(Of Genome).Width
+        Get
+            Return width
+        End Get
+    End Property
 
-    ''' <summary>
-    ''' 突变程度
-    ''' </summary>
-    Public Property MutationRate As Double Implements Chromosome(Of Genome).MutationRate
+    Public ReadOnly Property UniqueHashKey As String Implements Chromosome(Of Genome).UniqueHashKey
+        Get
+            Return chromosome.ToString
+        End Get
+    End Property
 
-    Const CrossOverRate As Double = 30
+    Sub New(chr As GridSystem, mutationRate As Double, truncate As Double)
+        Call MyBase.New(chr, mutationRate, truncate)
 
-    Sub New(chr As GridSystem, mutationRate As Double, truncate As Double, rangePositive As Boolean)
-        Me.chromosome = chr
-        Me.width = chr.A.Dim
         Me.MutationRate = mutationRate
-        Me.truncate = truncate
-        Me.rangePositive = rangePositive
     End Sub
-
-    ''' <summary>
-    ''' <see cref="GridSystem.Evaluate(Vector)"/>
-    ''' </summary>
-    ''' <param name="X"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Evaluate(X As Vector) As Double
-        Return chromosome.Evaluate(X)
-    End Function
-
-    Public Function CalculateError(status As Vector, target As Double) As Double
-        Dim predicts = chromosome.Evaluate(status)
-
-        If rangePositive AndAlso predicts < 0 Then
-            Return target
-        ElseIf predicts.IsNaNImaginary Then
-            Return Double.MaxValue
-        Else
-            Return Math.Abs(predicts - target)
-        End If
-    End Function
 
     Public Iterator Function Crossover(another As Genome) As IEnumerable(Of Genome) Implements Chromosome(Of Genome).Crossover
         Dim a = Me.chromosome.Clone
@@ -165,28 +137,12 @@ Public Class Genome : Implements Chromosome(Of Genome)
             'End If
         End SyncLock
 
-        Yield New Genome(a, MutationRate, truncate, rangePositive)
-        Yield New Genome(b, MutationRate, truncate, rangePositive)
-    End Function
-
-    Private Function valueMutate(x As Double) As Double
-        If x = 0R Then
-            Return 1
-        ElseIf FlipCoin() Then
-            x += randf.randf(0, x * MutationRate)
-        Else
-            x -= randf.randf(0, x * MutationRate)
-        End If
-
-        If Math.Abs(x) > truncate Then
-            x = Math.Sign(x) * randf.seeds.NextDouble * truncate
-        End If
-
-        Return x
+        Yield New Genome(a, MutationRate, truncate)
+        Yield New Genome(b, MutationRate, truncate)
     End Function
 
     Public Function Mutate() As Genome Implements Chromosome(Of Genome).Mutate
-        Dim clone As New Genome(Me.chromosome.Clone, MutationRate, truncate, rangePositive)
+        Dim clone As New Genome(Me.chromosome.Clone, MutationRate, truncate)
         Dim chromosome = clone.chromosome
         ' dim(A) is equals to dim(C) and is equals to dim(X)
         Dim i As Integer
@@ -251,24 +207,19 @@ Public Class Genome : Implements Chromosome(Of Genome)
         Return clone
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overrides Function ToString() As String
-        Return ToString(chromosome)
+    Public Overrides Function Clone() As IGridFitness
+        Return New Genome(chromosome, MutationRate, truncate)
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overloads Shared Function ToString(chromosome As GridSystem) As String
-        Return chromosome.A.Length _
-            .SeqIterator _
-            .Select(Function(i)
-                        Dim sign = chromosome.A(i)
-                        Dim c = chromosome.C(i).B.Sum + chromosome.C(i).BC
-                        Dim S = $"{chromosome.delay} ({chromosome.AC} + {sign} * {c}) * {chromosome.Amplify}"
+    Public Overrides Function ToString() As String
+        Return chromosome.ToString
+    End Function
 
-                        Return S
-                    End Function) _
-            .ToArray _
-            .GetJson _
-            .MD5
+    Private Function IDynamicsComponent_Evaluate(X As Vector) As Double Implements IDynamicsComponent(Of Genome).Evaluate
+        Return Evaluate(X)
+    End Function
+
+    Private Function ICloneable_Clone() As Genome Implements ICloneable(Of Genome).Clone
+        Return Clone()
     End Function
 End Class

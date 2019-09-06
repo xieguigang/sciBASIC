@@ -108,7 +108,13 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsEnumerable(Of T)(enums As Enumeration(Of T)) As IEnumerable(Of T)
-            Return New Enumerator(Of T) With {.Enumeration = enums}
+            If enums Is Nothing Then
+                Return {}
+            Else
+                Return New Enumerator(Of T) With {
+                    .Enumeration = enums
+                }
+            End If
         End Function
     End Module
 End Namespace

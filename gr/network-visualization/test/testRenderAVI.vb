@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::013f6df58ee7ae3e4beb7251f0ef2b94, gr\network-visualization\test\testRenderAVI.vb"
+﻿#Region "Microsoft.VisualBasic::436e350d28df34252acfd60c17cd3ef1, gr\network-visualization\test\testRenderAVI.vb"
 
     ' Author:
     ' 
@@ -39,16 +39,13 @@
 
 #End Region
 
-Imports System.Drawing
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Data.visualize.Network.Canvas
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 
 Module testRenderAVI
 
     Sub Main()
-        Dim graph = CytoscapeExportAsGraph(
+        Dim graph = CytoscapeTableLoader.CytoscapeExportAsGraph(
             App.HOME & "\Resources\xcb-main-Edges.csv",
             App.HOME & "\Resources\xcb-main-Nodes.csv")
 

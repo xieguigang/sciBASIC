@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19bfdec5cef80f52096f361a1993ed21, Microsoft.VisualBasic.Core\My\JavaScript\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::36958daa809fe0d15066d99e66fa1d7d, Microsoft.VisualBasic.Core\My\JavaScript\JavaScriptObject.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,24 @@
     ' 
     '         Properties: Accessor
     ' 
+    '     Class Descriptor
+    ' 
+    '         Properties: configurable, enumerable, value, writable
+    ' 
+    '     Enum MemberAccessorResult
+    ' 
+    '         ClassMemberProperty, ExtensionProperty, Undefined
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     '     Class JavaScriptObject
     ' 
+    '         Properties: this
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    '         Function: GetDescription, GetEnumerator, GetMemberValue, IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,6 +62,7 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Language
 
 Namespace My.JavaScript
 
@@ -55,9 +70,42 @@ Namespace My.JavaScript
         Default Property Accessor(name As String) As Object
     End Interface
 
-    Public Class JavaScriptObject : Implements IEnumerable(Of String), IJavaScriptObjectAccessor
+    Public Class Descriptor
 
-        Dim members As New Dictionary(Of String, BindProperty(Of DataFrameColumnAttribute))
+        Public Property value As Object
+        Public Property writable As Boolean
+        Public Property enumerable As Boolean
+        Public Property configurable As Boolean
+
+    End Class
+
+    Public Enum MemberAccessorResult
+        ''' <summary>
+        ''' Member is not exists in current javascript object
+        ''' </summary>
+        Undefined
+        ''' <summary>
+        ''' IS a member property in this javascript object
+        ''' </summary>
+        ClassMemberProperty
+        ''' <summary>
+        ''' Is an extension property object this javascript object
+        ''' </summary>
+        ExtensionProperty
+    End Enum
+
+    ''' <summary>
+    ''' javascript object
+    ''' </summary>
+    Public Class JavaScriptObject : Implements IEnumerable(Of String), IEnumerable(Of NamedValue(Of Object)), IJavaScriptObjectAccessor
+
+        Dim members As New Dictionary(Of String, [Variant](Of BindProperty(Of DataFrameColumnAttribute), Object))
+
+        ''' <summary>
+        ''' This javascript object instance
+        ''' </summary>
+        ''' <returns></returns>
+        Protected ReadOnly Property this As JavaScriptObject = Me
 
         ''' <summary>
         ''' 只针对Public的属性或者字段有效
@@ -66,19 +114,20 @@ Namespace My.JavaScript
         ''' <returns></returns>
         Default Public Property Accessor(memberName As String) As Object Implements IJavaScriptObjectAccessor.Accessor
             Get
-                If members.ContainsKey(memberName) Then
-                    Return members(memberName).GetValue(Me)
-                Else
-                    ' Returns undefined in javascript
-                    Return Nothing
-                End If
+                Return GetMemberValue(memberName, Nothing)
             End Get
             Set(value As Object)
                 If members.ContainsKey(memberName) Then
-                    members(memberName).SetValue(Me, value)
+                    If members(memberName) Is Nothing Then
+                        members(memberName) = value
+                    ElseIf members(memberName) Like GetType(BindProperty(Of DataFrameColumnAttribute)) Then
+                        members(memberName).TryCast(Of BindProperty(Of DataFrameColumnAttribute)).SetValue(Me, value)
+                    Else
+                        members(memberName) = value
+                    End If
                 Else
-                    ' 添加一个新的member？
-                    Throw New NotImplementedException
+                    ' 添加一个新的member
+                    members(memberName) = value
                 End If
             End Set
         End Property
@@ -99,6 +148,43 @@ Namespace My.JavaScript
             Next
         End Sub
 
+        Public Function GetMemberValue(memberName As String, ByRef access As MemberAccessorResult) As Object
+            If members.ContainsKey(memberName) Then
+                Dim value = members(memberName)
+
+                If value Is Nothing Then
+                    access = MemberAccessorResult.Undefined
+                    Return Nothing
+                ElseIf value Like GetType(BindProperty(Of DataFrameColumnAttribute)) Then
+                    access = MemberAccessorResult.ClassMemberProperty
+                    Return value.TryCast(Of BindProperty(Of DataFrameColumnAttribute)).GetValue(Me)
+                Else
+                    access = MemberAccessorResult.ExtensionProperty
+                    Return value.TryCast(Of Object)
+                End If
+            Else
+                ' Returns undefined in javascript
+                access = MemberAccessorResult.Undefined
+            End If
+
+            Return Nothing
+        End Function
+
+        Public Shared Function GetDescription(jsObj As JavaScriptObject) As Dictionary(Of String, Descriptor)
+            Dim desc As New Dictionary(Of String, Descriptor)
+
+            For Each p As String In jsObj
+                desc(p) = New Descriptor With {
+                    .value = jsObj(p),
+                    .configurable = True,
+                    .enumerable = True,
+                    .writable = True
+                }
+            Next
+
+            Return desc
+        End Function
+
         Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
             For Each key As String In members.Keys
                 Yield key
@@ -107,6 +193,24 @@ Namespace My.JavaScript
 
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
+            Yield IEnumerable_GetEnumerator1()
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator1() As IEnumerator(Of NamedValue(Of Object)) Implements IEnumerable(Of NamedValue(Of Object)).GetEnumerator
+            Dim access As MemberAccessorResult = MemberAccessorResult.Undefined
+            Dim value As Object
+            Dim pop As NamedValue(Of Object)
+
+            For Each key As String In members.Keys
+                value = GetMemberValue(key, access)
+                pop = New NamedValue(Of Object) With {
+                    .Name = key,
+                    .Value = value,
+                    .Description = access.Description
+                }
+
+                Yield pop
+            Next
         End Function
     End Class
 End Namespace

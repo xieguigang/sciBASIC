@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a78043e2ca4b07b5ae17fe82b1266711, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::4bca11f5a23f2f8c8e9759335752c762, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     '                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
     '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, (+2 Overloads) Log2
     '                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
-    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, (+8 Overloads) Round
+    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, (+2 Overloads) RMS, (+8 Overloads) Round
     '                   RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin
     '                   Sinh, Sqrt, (+5 Overloads) Sum, Tan, Tanh
     '                   (+2 Overloads) Truncate, WeighedAverage
@@ -2016,6 +2016,17 @@ Namespace Math
             With (From n In data Select n ^ 2).ToArray
                 Return sys.Sqrt(.Sum / .Length)
             End With
+        End Function
+
+        Public Function RMS(a#(), b#()) As Double
+            Dim sum#
+            Dim n% = a.Length
+
+            For i As Integer = 0 To n - 1
+                sum += (a(i) - b(i)) ^ 2
+            Next
+
+            Return Math.Sqrt(sum)
         End Function
 
         ''' <summary>

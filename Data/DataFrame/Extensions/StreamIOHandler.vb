@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaa42b0c45481e410d43d11f4e33f159, Data\DataFrame\Extensions\StreamIOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::15f519eaa1b124424f010f7d990dae6f, Data\DataFrame\Extensions\StreamIOHandler.vb"
 
     ' Author:
     ' 
@@ -35,23 +35,23 @@
     ' 
     '     Function: ISaveCsv, ISaveDataFrame, ISaveDataSet, ISaveEntitySet
     ' 
-    '     Sub: __initStreamIO_pointer
+    '     Sub: initStreamIOHandlers
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 
 Module StreamIOHandler
 
     ''' <summary>
     ''' 初始化函数指针，为``>>``语法提供csv流的支持
     ''' </summary>
-    Friend Sub __initStreamIO_pointer()
+    Friend Sub initStreamIOHandlers()
         Call IOHandler.RegisterHandle(AddressOf ISaveDataFrame, GetType(IEnumerable))
         Call IOHandler.RegisterHandle(AddressOf ISaveCsv, GetType(File))
         Call IOHandler.RegisterHandle(AddressOf ISaveCsv, GetType(DataFrame))

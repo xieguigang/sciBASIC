@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4011d6c26576d18c6f2ec8add1f1a202, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\AlgorithmsUtils.vb"
+﻿#Region "Microsoft.VisualBasic::f2e161881e1ee77de6df4661bbffd29f, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\AlgorithmsUtils.vb"
 
     ' Author:
     ' 
@@ -104,13 +104,13 @@ Namespace FuzzyCMeans
         End Function
 
         <Extension>
-        Public Function DistanceToClusterCenters(ls As List(Of Entity), clusterCenters As List(Of Entity)) As Dictionary(Of Entity, List(Of Double))
-            Dim map As New Dictionary(Of Entity, List(Of Double))()
+        Public Function DistanceToClusterCenters(ls As List(Of FuzzyCMeansEntity), clusterCenters As List(Of FuzzyCMeansEntity)) As Dictionary(Of FuzzyCMeansEntity, List(Of Double))
+            Dim map As New Dictionary(Of FuzzyCMeansEntity, List(Of Double))()
 
-            For Each x As Entity In ls
+            For Each x As FuzzyCMeansEntity In ls
                 Dim distancesToCenters As New List(Of Double)()
 
-                For Each c As Entity In clusterCenters
+                For Each c As FuzzyCMeansEntity In clusterCenters
                     Dim distance As Double
 
                     For i As Integer = 0 To x.Length - 1
@@ -149,10 +149,10 @@ Namespace FuzzyCMeans
             Return coordinates
         End Function
 
-        Public Function MakeInitialSeeds(coordinates As List(Of Entity), numberOfClusters As Integer) As List(Of Entity)
+        Public Function MakeInitialSeeds(coordinates As List(Of FuzzyCMeansEntity), numberOfClusters As Integer) As List(Of FuzzyCMeansEntity)
             Dim random As New Random()
-            Dim coordinatesCopy As List(Of Entity) = coordinates.AsList()
-            Dim initialClusterCenters As New List(Of Entity)()
+            Dim coordinatesCopy As List(Of FuzzyCMeansEntity) = coordinates.AsList()
+            Dim initialClusterCenters As New List(Of FuzzyCMeansEntity)()
             For i As Integer = 0 To numberOfClusters - 1
                 Dim clusterCenterPointNumber As Integer = random.[Next](0, coordinatesCopy.Count)
                 initialClusterCenters.Add(coordinatesCopy(clusterCenterPointNumber))

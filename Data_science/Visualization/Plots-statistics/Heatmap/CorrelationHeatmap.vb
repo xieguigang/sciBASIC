@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bd2e7fba3bc843283428062fc51cc6c, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::fcaaed37fca4f1c97d66dfc574835250, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationHeatmap.vb"
 
     ' Author:
     ' 
@@ -223,7 +223,7 @@ Namespace Heatmap
                 .Height = gSize.Height / 20
             }
 
-            Return Internal.__plotInterval(
+            Return Internal.doPlot(
                 plotInternal, data.ToArray,
                 rowLabelFont, rowLabelFont, logScale,
                 scaleMethod:=DrawElements.None, drawLabels:=DrawElements.Both, drawDendrograms:=DrawElements.None, drawClass:=(rowDendrogramClass, Nothing), dendrogramLayout:=(rowDendrogramHeight, 0),

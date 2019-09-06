@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83bba7ef77be0d3f45c78abbffeda50c, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
+﻿#Region "Microsoft.VisualBasic::17866a252f94bd85f412ba9d0aacab2c, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -56,7 +56,11 @@ Public Module ROCPlot
     <Extension>
     Public Function CreateSerial(test As IEnumerable(Of Validation)) As SerialData
         Dim points As New List(Of PointData)
-        Dim testData As Validation() = test.ToArray
+        Dim testData As Validation() = test _
+            .Where(Function(p)
+                       Return Not p.Specificity.IsNaNImaginary AndAlso Not p.Sensibility.IsNaNImaginary
+                   End Function) _
+            .ToArray
         Dim AUC As Double = Validation.AUC(testData)
 
         points += New PointData(0, 0)
@@ -103,6 +107,18 @@ Public Module ROCPlot
             .CreateSerial
     End Function
 
+    ''' <summary>
+    ''' 这个函数所绘制出来的ROC曲线的AUC的值应该是在调用这个函数之前就完成计算,保存于 <see cref="SerialData.title"/> 之中了的
+    ''' </summary>
+    ''' <param name="roc"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="margin$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="lineWidth!"></param>
+    ''' <param name="fillAUC"></param>
+    ''' <param name="AUCfillColor$"></param>
+    ''' <param name="showReference"></param>
+    ''' <returns></returns>
     Public Function Plot(roc As SerialData,
                          Optional size$ = "2300,2100",
                          Optional margin$ = g.DefaultUltraLargePadding,
@@ -123,6 +139,7 @@ Public Module ROCPlot
 
         roc.width = lineWidth
         roc.color = AUCfillColor.TranslateColor
+        roc.pts = roc.pts.OrderBy(Function(p) p.pt.Y).ToArray
 
         Dim input As SerialData()
 

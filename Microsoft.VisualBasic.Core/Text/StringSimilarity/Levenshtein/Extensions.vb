@@ -52,7 +52,7 @@ Namespace Text.Levenshtein
 
         <Extension> Public Sub GetMatches(Of T)(edits As DistResult, ref As T(), hyp As T(), ByRef refOUT As T(), ByRef hypOUT As T())
             Dim len As Integer = edits.DistEdits.Count("m"c)
-            Dim idx As VBInteger = Scan0
+            Dim idx As i32 = Scan0
             Dim iiiii As Integer = 0
 
             refOUT = New T(len - 1) {}

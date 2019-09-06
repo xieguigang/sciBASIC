@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07bb13fb4b1929e273c991396589819c, Microsoft.VisualBasic.Core\My\JavaScript\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::97023c68e29fa926f4c9890af85a7c30, Microsoft.VisualBasic.Core\My\JavaScript\Linq.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports r = System.Text.RegularExpressions.Regex
-Imports System.Text.RegularExpressions
-
 
 Namespace My.JavaScript
 

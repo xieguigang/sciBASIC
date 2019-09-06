@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c7af351fe5cb4c652ae9b5759401e9b, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Network.vb"
+﻿#Region "Microsoft.VisualBasic::f06dfadfbf8ed8ba948724e8394115c0, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Network.vb"
 
     ' Author:
     ' 
@@ -130,13 +130,17 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="DIR"></param>
         ''' <returns></returns>
-        Public Overloads Shared Function Load(DIR As String) As NetworkTables
+        Public Overloads Shared Function Load(DIR$, Optional cytoscapeFormat As Boolean = False) As NetworkTables
             Dim tables = SearchNetworkTable(directory:=DIR)
 
-            Return New NetworkTables With {
-                .edges = tables.edges.LoadCsv(Of NetworkEdge),
-                .nodes = tables.nodes.LoadCsv(Of Node)
-            }
+            If cytoscapeFormat Then
+                Return Cytoscape.CytoscapeExportAsTable(tables.edges, tables.nodes)
+            Else
+                Return New NetworkTables With {
+                    .edges = tables.edges.LoadCsv(Of NetworkEdge),
+                    .nodes = tables.nodes.LoadCsv(Of Node)
+                }
+            End If
         End Function
     End Class
 End Namespace

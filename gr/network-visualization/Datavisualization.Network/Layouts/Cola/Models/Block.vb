@@ -60,7 +60,7 @@ Namespace Layouts.Cola
         Public ReadOnly Property cost As Double
             Get
                 Dim sum = 0
-                Dim i As VBInteger = vars.Count
+                Dim i As i32 = vars.Count
 
                 For Each v As Variable In vars.ReverseIterator
                     Dim d = v.position - v.desiredPosition
@@ -190,7 +190,7 @@ Namespace Layouts.Cola
         ''' <returns></returns>
         Public Function isActiveDirectedPathBetween(u As Variable, v As Variable) As Boolean
             If (u Is v) Then Return True
-            Dim i As VBInteger = u.cOut.Length
+            Dim i As i32 = u.cOut.Length
 
             While --i
                 Dim C = u.cOut(i)

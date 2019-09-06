@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2321c4bfd9b582b8e1392039335ce8aa, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::d6f151fca4df58bc36151064ea48392f, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace Language.Vectorization
         ''' Gets the element counts in this vector collection
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Length As Integer
+        Public Overridable ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.Length
@@ -199,7 +199,7 @@ Namespace Language.Vectorization
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Default Public Overloads Property Item(index%) As T
+        Default Public Overridable Overloads Property Item(index%) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(index)
@@ -343,9 +343,9 @@ Namespace Language.Vectorization
             Return $"{buffer.Length} @ {GetType(T).FullName}"
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x In buffer
-                Yield x
+        Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each element As T In buffer
+                Yield element
             Next
         End Function
 

@@ -191,8 +191,8 @@ Namespace Language
         ''' <param name="rnd"></param>
         ''' <param name="max"></param>
         ''' <returns></returns>
-        <Extension> Public Function NextInteger(rnd As Random, max As Integer) As VBInteger
-            Return New VBInteger(rnd.Next(max))
+        <Extension> Public Function NextInteger(rnd As Random, max As Integer) As i32
+            Return New i32(rnd.Next(max))
         End Function
 
         Public Function ToUInt32(value As Single) As UInteger

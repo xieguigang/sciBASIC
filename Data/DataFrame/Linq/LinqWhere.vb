@@ -356,7 +356,7 @@ Namespace IO.Linq
         End Function
 
         Private Shared Function __getOperator(expr As String, ByRef opr As String) As Integer
-            Dim p As New VBInteger
+            Dim p As New i32
 
             If (p = InStr(expr, "<")) > 0 Then
                 opr = "<"

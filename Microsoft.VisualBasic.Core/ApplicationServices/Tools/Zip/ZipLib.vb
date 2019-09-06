@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1c59b3d414151d828ccee637dc6b49d, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::9786fc773c8c2e947aeb3f58b211a294, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\ZipLib.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: IsADirectoryEntry, IsSourceFolderZip
     ' 
-    '         Sub: AddToArchive, AppendZip, DirectoryArchive, FileArchive
+    '         Sub: AddToArchive, AppendZip, DeleteItems, DirectoryArchive, FileArchive
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +47,7 @@ Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -195,9 +196,10 @@ Namespace ApplicationServices.Zip
 
             'Identifies the mode we will be using - the default is Create
             Dim mode As ZipArchiveMode = ZipArchiveMode.Create
-
             'Determines if the zip file even exists
             Dim archiveExists As Boolean = IO.File.Exists(archiveFullName)
+
+            Call archiveFullName.ParentPath.MkDIR
 
             'Figures out what to do based upon our specified overwrite method
             Select Case action
@@ -261,9 +263,19 @@ Namespace ApplicationServices.Zip
         End Sub
 
         <Extension>
+        Public Sub DeleteItems(zip As ZipArchive, itemNames As Index(Of String))
+            For Each file As ZipArchiveEntry In zip.Entries.ToArray
+                If file.Name Like itemNames Then
+                    Call file.Delete()
+                End If
+            Next
+        End Sub
+
+        <Extension>
         Private Sub AppendZip(zipFile As ZipArchive, files As IEnumerable(Of String), fileOverwrite As Overwrite, compression As CompressionLevel)
             For Each path As String In files
-                Dim fileInZip = (From f In zipFile.Entries Where f.Name = IO.Path.GetFileName(path)).FirstOrDefault()
+                Dim pathFileName = IO.Path.GetFileName(path)
+                Dim fileInZip = (From f In zipFile.Entries Where f.Name = pathFileName).FirstOrDefault()
 
                 Select Case fileOverwrite
                     Case Overwrite.Always
@@ -274,7 +286,7 @@ Namespace ApplicationServices.Zip
                         End If
 
                         'Adds the file to the archive
-                        zipFile.CreateEntryFromFile(path, IO.Path.GetFileName(path), compression)
+                        zipFile.CreateEntryFromFile(path, pathFileName, compression)
 
                     Case Overwrite.IfNewer
 

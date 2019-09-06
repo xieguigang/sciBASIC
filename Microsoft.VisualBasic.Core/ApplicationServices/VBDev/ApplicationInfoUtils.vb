@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::2123247c2dbf0e64ee9e4932a216e17b, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ApplicationInfoUtils
-    ' 
-    '         Function: CurrentExe, FromAssembly, FromTypeModule, GetCompanyName, GetCopyRightsDetail
-    '                   GetGuid, GetProductDescription, GetProductName, GetProductTitle, GetProductVersion
-    '                   VBCore
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ApplicationInfoUtils
+' 
+'         Function: CurrentExe, FromAssembly, FromTypeModule, GetCompanyName, GetCopyRightsDetail
+'                   GetGuid, GetProductDescription, GetProductName, GetProductTitle, GetProductVersion
+'                   VBCore
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Development
 
@@ -56,6 +57,45 @@ Namespace ApplicationServices.Development
     ''' </remarks>
     Public Module ApplicationInfoUtils
 
+        ''' <summary>
+        ''' 计算出模块文件的编译时间
+        ''' </summary>
+        ''' <param name="assm"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' ### Get Compile date and time in application 
+        ''' 
+        ''' > https://social.msdn.microsoft.com/forums/en-US/172201e0-c47b-40a8-a5d7-0a052cb42532/get-compile-date-and-time-in-application
+        ''' 
+        ''' Set up your Build and MinorRevision numbers to auto-increment, pull out the date created for 
+        ''' by using the Version numbers from the version on the class. 
+        ''' 
+        ''' 1. Open ``AssemblyInfo.vb``.  You'll find it under the Properties folder in your solution.  
+        ''' Find the two lines that say "AssemblyVersion" and "AssemblyFileVersion" in them.  
+        ''' Change them to:
+        '''
+        ''' ```vbnet
+        ''' &lt;assembly AssemblyVersion("1.0.*")>
+        ''' &lt;assembly AssemblyFileVersion("1.0.*")>
+        ''' ```
+        '''
+        ''' Once you Do this, Visual Studio will automatically increment the last two values In the version.  
+        ''' 
+        ''' 2. The creation date can be found at runtime using the following algorithm:
+        '''
+        ''' ```vbnet
+        ''' Dim version = Assembly.GetExecutingAssembly().GetName().Version
+        ''' Dim creationDate = New DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.MinorRevision * 2)
+        ''' ```
+        ''' </remarks>
+        <Extension>
+        Public Function CalculateCompileTime(assm As Assembly) As Date
+            Dim version As Version = assm.GetName.Version
+            Dim builtTime = New DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.MinorRevision * 2)
+
+            Return builtTime
+        End Function
+
         <Extension>
         Public Function FromAssembly(assm As Assembly) As AssemblyInfo
             Return New AssemblyInfo With {
@@ -66,8 +106,23 @@ Namespace ApplicationServices.Development
                 .AssemblyTitle = GetProductTitle(assm),
                 .AssemblyDescription = GetProductDescription(assm),
                 .Guid = GetGuid(assm),
-                .AssemblyVersion = assm.GetVersion().ToString
+                .AssemblyVersion = assm.tryGetVersion.ToString,
+                .BuiltTime = assm.CalculateCompileTime
             }
+        End Function
+
+        <Extension>
+        Private Function tryGetVersion(assm As Assembly) As Version
+            Try
+                Return assm.FullName _
+                    .Match("Version[=]\s*\S+,") _
+                    .Trim(",") _
+                    .GetTagValue("="c) _
+                    .Value _
+                    .DoCall(Function(ver) Version.Parse(ver))
+            Catch ex As Exception
+                Return New Version
+            End Try
         End Function
 
         ''' <summary>

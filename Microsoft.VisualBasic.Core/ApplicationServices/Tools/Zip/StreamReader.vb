@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7764170bb2462a44609972063c01f91, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\StreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::0efa97547e395b217c0807504d57441f, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\StreamReader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ZipStreamReader
     ' 
-    '         Function: LoadZipArchive
+    '         Function: GetZipSubStream, LoadZipArchive
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,6 +42,7 @@
 
 Imports System.IO
 Imports System.IO.Compression
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -50,6 +51,12 @@ Namespace ApplicationServices.Zip
 
     <HideModuleName> Public Module ZipStreamReader
 
+        ''' <summary>
+        ''' 将zip文件中的所有数据包一次性的返回给上层调用代码
+        ''' </summary>
+        ''' <param name="zipFile"></param>
+        ''' <param name="takes"></param>
+        ''' <returns></returns>
         Public Iterator Function LoadZipArchive(zipFile As String, Optional takes As IEnumerable(Of String) = Nothing) As IEnumerable(Of NamedValue(Of MemoryStream))
             Dim takeIndex As Index(Of String) = takes.SafeQuery.ToArray
             Dim entries As IEnumerable(Of ZipArchiveEntry)
@@ -86,6 +93,18 @@ Namespace ApplicationServices.Zip
                     End Using
                 Next
             End Using
+        End Function
+
+        ''' <summary>
+        ''' 如果这个函数返回的是空值，说明zip压缩文件中没有该目标
+        ''' </summary>
+        ''' <param name="zipFile$"></param>
+        ''' <param name="name$"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetZipSubStream(zipFile$, name$) As MemoryStream
+            Return LoadZipArchive(zipFile, {name}).FirstOrDefault
         End Function
     End Module
 End Namespace

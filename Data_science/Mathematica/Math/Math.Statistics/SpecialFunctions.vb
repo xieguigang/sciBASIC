@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f84544dc00631ef43f32740467e1f44a, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::90c42ef52d6461da668c61f7e37a41a5, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Function: BetaFunction, Binomial, Choose, Correlation, Covariance
     '               EvaluatePolynomial, Factorial, gamma, gammaln, incbcf
     '               incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal, MutualProbability
-    '               pseries, RegularizedIncompleteBetaFunction, StirlingsFormula
+    '               pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
     ' 
     ' /********************************************************************************/
 
@@ -212,7 +212,7 @@ Public Module SpecialFunctions
             t *= Math.Pow(x, a)
             t /= a
             t *= w
-            t *= gamma(a + b) / (gamma(a) * gamma(b))
+            t *= safeDiv(gamma(a + b), gamma(a) * gamma(b))
             If flag Then
                 If t <= MACHEP Then
                     t = 1.0 - MACHEP
@@ -408,6 +408,22 @@ Public Module SpecialFunctions
         Return ans
     End Function
 
+    Private Function safeDiv(x#, y#) As Double
+        If y.IsNaNImaginary Then
+            If Not x.IsNaNImaginary Then
+                Return 0
+            Else
+                Return Math.Sign(x) / Math.Sign(y)
+            End If
+        Else
+            If x.IsNaNImaginary Then
+                Return x
+            Else
+                Return x / y
+            End If
+        End If
+    End Function
+
     ''' <summary>
     ''' Power series for incomplete beta integral.
     ''' Use when b*x is small and x not too close to 1.  
@@ -438,17 +454,22 @@ Public Module SpecialFunctions
         s += ai
 
         u = a * Math.Log(x)
+
         If (a + b) < MAXGAM AndAlso Math.Abs(u) < MAXLOG Then
-            t = gamma(a + b) / (gamma(a) * gamma(b))
+            n = gamma(a + b)
+            v = gamma(a) * gamma(b)
+            t = safeDiv(n, v)
             s = s * t * Math.Pow(x, a)
         Else
             t = gammaln(a + b) - gammaln(a) - gammaln(b) + u + Math.Log(s)
+
             If t < MINLOG Then
                 s = 0.0
             Else
                 s = Math.Exp(t)
             End If
         End If
+
         Return s
     End Function
 

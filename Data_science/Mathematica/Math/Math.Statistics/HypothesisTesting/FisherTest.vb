@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a6942a0a257c07645b5853d284ac30b, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::a698404d5fa0d80ee7643ff572007763, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.Numerics
 
 ''' <summary>
 ''' ### Fisher's exact test

@@ -241,7 +241,7 @@ Namespace AprioriRules.Impl
 
         Public Function GetClosedItemSets(allFrequentItems As Dictionary(Of String, TransactionTokensItem)) As Dictionary(Of String, Dictionary(Of String, Double))
             Dim closedItemSets As New Dictionary(Of String, Dictionary(Of String, Double))()
-            Dim i As VBInteger = 0
+            Dim i As i32 = 0
 
             For Each item In allFrequentItems
                 Dim parents = item.Key.GetItemParents(++i, allFrequentItems)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45d782ae175d587a152a19d88a206ff7, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::7fcd2b47d1a839220c30c326d2bb5bc1, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
 Namespace ApplicationServices.Debugging
@@ -76,7 +77,7 @@ Namespace ApplicationServices.Debugging
         ''' </summary>
         ''' <param name="args"></param>
         Private Sub __logShell(args As CLI)
-            Dim CLI As String = App.ExecutablePath & " " & args.CLICommandArgvs
+            Dim CLI As String = App.ExecutablePath & " " & args.cliCommandArgvs
             Dim log As String = $"{PS1.Fedora12.ToString} {CLI}"
             Dim logFile As String = App.LogErrDIR.ParentPath & "/.shells.log"
 
@@ -176,7 +177,9 @@ Namespace ApplicationServices.Debugging
         ''' <param name="args">--echo on/off/all/warn/error --err &lt;path.log></param>
         <Extension> Public Sub InitDebuggerEnvir(args As CLI, <CallerMemberName> Optional caller$ = Nothing)
             If Not String.Equals(caller, "Main") Then
-                Return  ' 这个调用不是从Main出发的，则不设置环境了，因为这个环境可能在其他的代码上面设置过了
+                ' 这个调用不是从Main出发的，则不设置环境了
+                ' 因为这个环境可能在其他的代码上面设置过了
+                Return
             Else
                 Try
                     Call __logShell(args)
@@ -197,7 +200,8 @@ Namespace ApplicationServices.Debugging
 
             Dim config As Config = Config.Load
 
-            If String.IsNullOrEmpty(opt) Then ' 默认的on参数
+            If String.IsNullOrEmpty(opt) Then
+                ' 默认的on参数
                 VBDebugger.m_level = config.level
             Else
                 Select Case opt.ToLower
@@ -213,7 +217,7 @@ Namespace ApplicationServices.Debugging
                         VBDebugger.m_level = DebuggerLevels.Error
                     Case Else
                         VBDebugger.m_level = DebuggerLevels.On
-                        Call Console.WriteLine($"[INFO] The debugger argument value --echo:={opt} is invalid, using default settings.")
+                        Call $"The debugger argument value --echo:={opt} is invalid, using default settings.".Warning
                 End Select
             End If
 
@@ -225,35 +229,7 @@ Namespace ApplicationServices.Debugging
                 VBDebugger.Mute = config.mute
             End If
 
-            Dim envir As Dictionary(Of String, String) = args.EnvironmentVariables
-            Dim disableLoadOptions As Boolean = args.GetBoolean("--load_options.disable")
-
-            ' --load_options.disable 开关将会禁止所有的环境项目的设置
-            ' 但是环境变量任然会进行加载设置
-
-            If Not disableLoadOptions AndAlso Not envir.IsNullOrEmpty Then
-                If envir.ContainsKey("Proxy") Then
-                    WebServiceUtils.Proxy = envir("Proxy")
-                    Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__INFO_ECHO
-                End If
-                If envir.ContainsKey("setwd") Then
-                    App.CurrentDirectory = envir("setwd")
-                    Call $"[Config] current_work_directory={App.CurrentDirectory}".__INFO_ECHO
-                End If
-                If envir.ContainsKey("buffer_size") Then
-                    Call App.SetBufferSize(envir!buffer_size)
-                End If
-            End If
-
-            ' /@var=name "value"
-            For Each var As NamedValue(Of String) In args.ParameterList
-                With var
-                    If InStr(.Name, "/@var=", CompareMethod.Text) = 1 Then
-                        Dim name$ = .Name.GetTagValue("=").Value
-                        Call App.JoinVariable(name, .Value)
-                    End If
-                End With
-            Next
+            Call config.ConfigFrameworkRuntime(args)
         End Sub
     End Module
 End Namespace
