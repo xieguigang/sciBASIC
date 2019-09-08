@@ -146,7 +146,9 @@ Namespace CommandLine.ManView
 
                                     If .TokenType = CLITypes.Boolean Then
                                         ' 逻辑值类型的只能够是可选类型
-                                        s = "(optional) (boolean)"
+                                        ' 逻辑开关不计算在内
+                                        ' s = "(optional) (boolean)"
+                                        s = ""
                                         bool = True
                                     Else
 
