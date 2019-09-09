@@ -52,6 +52,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
@@ -153,10 +154,14 @@ Namespace ApplicationServices.Terminal
 
         Private Sub EndSpan(byNewLine As Boolean)
             Dim text As String = textBuf.CharString
-            Dim style As ConsoleFontStyle = currentStyle
+            Dim style As ConsoleFontStyle = currentStyle.Clone
 
             If text.StartsWith("((http(s)?)|(ftp))[:]//", RegexICSng) Then
                 style = theme.Url
+            End If
+
+            If styleStack.Peek.Equals(theme.CodeBlock) Then
+                style.BackgroundColor = theme.CodeBlock.BackgroundColor
             End If
 
             spans += New Span With {
@@ -258,6 +263,8 @@ Namespace ApplicationServices.Terminal
     End Class
 
     Public Class ConsoleFontStyle
+        Implements IEquatable(Of ConsoleFontStyle)
+        Implements ICloneable(Of ConsoleFontStyle)
 
         Public Property ForeColor As ConsoleColor = ConsoleColor.White
         Public Property BackgroundColor As ConsoleColor = ConsoleColor.Black
@@ -275,6 +282,21 @@ Namespace ApplicationServices.Terminal
                 .style = Me,
                 .text = text
             }
+        End Function
+
+        Public Function Clone() As ConsoleFontStyle Implements ICloneable(Of ConsoleFontStyle).Clone
+            Return New ConsoleFontStyle With {
+                .BackgroundColor = BackgroundColor,
+                .ForeColor = ForeColor
+            }
+        End Function
+
+        Public Overloads Function Equals(other As ConsoleFontStyle) As Boolean Implements IEquatable(Of ConsoleFontStyle).Equals
+            If other Is Nothing Then
+                Return False
+            Else
+                Return BackgroundColor = other.BackgroundColor AndAlso ForeColor = other.ForeColor
+            End If
         End Function
 
         Public Shared Widening Operator CType(colors As (fore As ConsoleColor, back As ConsoleColor)) As ConsoleFontStyle
