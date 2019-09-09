@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2047894333de18074bc2425ea5d699dc, Microsoft.VisualBasic.Core\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::5210ca600366a201431189d4c7463c8c, Microsoft.VisualBasic.Core\My\Log4VB.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: getColor, Print
     ' 
-    '         Sub: WriteLine
+    '         Sub: Print, Println
     ' 
     ' 
     ' /********************************************************************************/
@@ -103,7 +103,7 @@ Namespace My
                             Console.ForegroundColor = cl
                             Call Console.Write("]")
 
-                            Call WriteLine(msg, msgColor)
+                            Call Println(msg, msgColor)
                         End If
                     End If
                 End Sub)
@@ -123,7 +123,41 @@ Namespace My
         ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
         ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
         <Extension>
-        Public Sub WriteLine(msg$, color As ConsoleColor)
+        Public Sub Print(msg$, Optional color As ConsoleColor = ConsoleColor.White, Optional background As ConsoleColor = -1)
+            If Mute Then
+                Return
+            End If
+
+            If ForceSTDError Then
+                Console.Error.Write(msg)
+            Else
+                Dim cl As ConsoleColor = Console.ForegroundColor
+                Dim bg As ConsoleColor = Console.BackgroundColor
+
+                If background >= 0 Then
+                    Console.BackgroundColor = background
+                End If
+
+                Console.ForegroundColor = color
+                Console.Write(msg)
+                Console.ForegroundColor = cl
+                Console.BackgroundColor = bg
+            End If
+
+#If DEBUG Then
+            Call Debug.Write(msg) 
+#End If
+        End Sub
+
+        ''' <summary>
+        ''' 输出的终端消息带有指定的终端颜色色彩，当<see cref="UsingxConsole"/>为True的时候，
+        ''' <paramref name="msg"/>参数之中的文本字符串兼容<see cref="xConsole"/>语法，
+        ''' 而<paramref name="color"/>将会被<see cref="xConsole"/>覆盖而不会起作用
+        ''' </summary>
+        ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
+        ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
+        <Extension>
+        Public Sub Println(msg$, Optional color As ConsoleColor = ConsoleColor.White, Optional background As ConsoleColor = -1)
             If Mute Then
                 Return
             End If
@@ -136,15 +170,21 @@ Namespace My
                 Else
                     ' 使用传统的输出输出方法
                     Dim cl As ConsoleColor = Console.ForegroundColor
+                    Dim bg As ConsoleColor = Console.BackgroundColor
+
+                    If background >= 0 Then
+                        Console.BackgroundColor = background
+                    End If
 
                     Console.ForegroundColor = color
                     Console.WriteLine(msg)
                     Console.ForegroundColor = cl
+                    Console.BackgroundColor = bg
                 End If
             End If
 
 #If DEBUG Then
-            Call Debug.WriteLine(msg)
+            Call Debug.WriteLine(msg) 
 #End If
         End Sub
     End Module

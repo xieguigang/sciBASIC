@@ -1015,6 +1015,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
+    <Compile Include="ApplicationServices\Terminal\MarkdownRender.vb" />
+    <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
+    <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
+    <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
     <Compile Include="My\Framework\FrameworkConfig.vb" />
@@ -1040,6 +1044,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
     <Compile Include="CommandLine\GitBashEnvironment.vb" />
+    <Compile Include="CommandLine\Interpreters\ExecuteImpl.vb" />
     <Compile Include="CommandLine\Stream.vb" />
     <Compile Include="CommandLine\InteropService\InCompatible.vb" />
     <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />

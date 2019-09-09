@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54107145f56d52a0fbdf477c8a045fd0, www\Microsoft.VisualBasic.Webservices.Bing\Academic\Academic.vb"
+﻿#Region "Microsoft.VisualBasic::062d268198a4d9fce05a60cb5d6416ca, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\Academic.vb"
 
     ' Author:
     ' 

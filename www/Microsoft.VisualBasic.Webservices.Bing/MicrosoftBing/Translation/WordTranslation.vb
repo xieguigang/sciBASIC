@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff59edeffaca059d1d279df0d2890c18, www\Microsoft.VisualBasic.Webservices.Bing\Translation\WordTranslation.vb"
+﻿#Region "Microsoft.VisualBasic::e8ed6bcfa05daee7e9649676c5500245, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Translation\WordTranslation.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Class WordTranslation
+    '     Class WordTranslation
     ' 
-    '     Properties: Pronunciation, Translations, Word
+    '         Properties: Pronunciation, Translations, Word
     ' 
-    '     Function: ToString
+    '         Function: ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

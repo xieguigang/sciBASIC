@@ -1,47 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::2123247c2dbf0e64ee9e4932a216e17b, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
+﻿#Region "Microsoft.VisualBasic::5e071016dbd75bb9fd6a352e061c08a3, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module ApplicationInfoUtils
-' 
-'         Function: CurrentExe, FromAssembly, FromTypeModule, GetCompanyName, GetCopyRightsDetail
-'                   GetGuid, GetProductDescription, GetProductName, GetProductTitle, GetProductVersion
-'                   VBCore
-' 
-' 
-' /********************************************************************************/
+    '     Module ApplicationInfoUtils
+    ' 
+    '         Function: CalculateCompileTime, CurrentExe, FromAssembly, FromTypeModule, GetCompanyName
+    '                   GetCopyRightsDetail, GetGuid, GetProductDescription, GetProductName, GetProductTitle
+    '                   GetProductVersion, RetrieveLinkerTimestamp, tryGetVersion, VBCore
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
@@ -58,7 +59,41 @@ Namespace ApplicationServices.Development
     Public Module ApplicationInfoUtils
 
         ''' <summary>
-        ''' 计算出模块文件的编译时间
+        ''' Linker Timestamp
+        ''' </summary>
+        ''' 
+        <Extension>
+        Public Function RetrieveLinkerTimestamp(assembly As Assembly) As DateTime
+            ' from stackoverflow
+            Dim filePath As String = assembly.Location
+
+            Const c_PeHeaderOffset As Integer = 60
+            Const c_LinkerTimestampOffset As Integer = 8
+
+            Dim b As Byte() = New Byte(2047) {}
+            Dim s As Stream = Nothing
+
+            Try
+                s = New FileStream(filePath, FileMode.Open, FileAccess.Read)
+                s.Read(b, 0, 2048)
+            Finally
+                If s IsNot Nothing Then
+                    s.Close()
+                End If
+            End Try
+
+            Dim i As Integer = BitConverter.ToInt32(b, c_PeHeaderOffset)
+            Dim secondsSince1970 As Integer = BitConverter.ToInt32(b, i + c_LinkerTimestampOffset)
+            Dim dt As New DateTime(1970, 1, 1, 0, 0, 0)
+
+            dt = dt.AddSeconds(secondsSince1970)
+            dt = dt.AddHours(TimeZone.CurrentTimeZone.GetUtcOffset(dt).Hours)
+
+            Return dt
+        End Function
+
+        ''' <summary>
+        ''' 计算出模块文件的编译时间.(在编译项目之前应该手动修改vbproj文件中的``Deterministic``配置项的值为False来允许自动递增版本号的特性)
         ''' </summary>
         ''' <param name="assm"></param>
         ''' <returns></returns>
@@ -91,7 +126,9 @@ Namespace ApplicationServices.Development
         <Extension>
         Public Function CalculateCompileTime(assm As Assembly) As Date
             Dim version As Version = assm.GetName.Version
-            Dim builtTime = New DateTime(2000, 1, 1).AddDays(version.Build).AddSeconds(version.MinorRevision * 2)
+            Dim builtTime = New DateTime(2000, 1, 1) _
+                .AddDays(version.Build) _
+                .AddSeconds(version.MinorRevision * 2)
 
             Return builtTime
         End Function

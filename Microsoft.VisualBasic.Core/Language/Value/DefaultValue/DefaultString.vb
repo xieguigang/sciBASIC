@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ca5c1f9db52baab7c86e4e7f6602e0c, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::d98a076bb727a0d7586af915108b5fd5, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Function: assertIsNothing, Base64Decode, LoadJson, LoadXml, ReadAllLines
     '                   ToString
-    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+8 Overloads) Or
+    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not, (+8 Overloads) Or
     ' 
     ' 
     ' /********************************************************************************/
@@ -169,6 +169,11 @@ Namespace Language.Default
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator IsFalse(str As DefaultString) As Boolean
             Return False = CType(str, Boolean)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Not(str As DefaultString) As Boolean
+            Return Not CType(str, Boolean)
         End Operator
 
         ''' <summary>

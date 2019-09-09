@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2db9d059b988a989c511dd19f14d240a, www\Microsoft.VisualBasic.Webservices.Bing\Translation\Translation.vb"
+﻿#Region "Microsoft.VisualBasic::162654c1fbddd9dccee8e16ceb95edf0, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Translation\Translation.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module Translation
+    '     Module Translation
     ' 
-    '     Function: GetTranslation, GetWords, parseResult, webGet
+    '         Function: GetTranslation, GetWords, parseResult, webGet
+    ' 
     ' 
     ' /********************************************************************************/
 

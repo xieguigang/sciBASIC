@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4eac5906847f21ac201442cc6405b015, Data_science\Visualization\test\VolinPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::08920a87692c09624918fe290bdd11a1, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb"
 
     ' Author:
     ' 
@@ -31,25 +31,38 @@
 
     ' Summaries:
 
-    ' Module VolinPlotTest
+    '     Class CoolWriteSettings
     ' 
-    '     Sub: Main
+    '         Properties: CoolWriting, CoolWritingDelay, CWRDDelay
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Data.csv.IO
+Namespace Terminal.xConsole
 
-Module VolinPlotTest
+    Public NotInheritable Class CoolWriteSettings
 
-    Sub Main()
-        Dim data As IEnumerable(Of DataSet) = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.csv").ToArray
+        ''' <summary>
+        ''' Gradual typing the output into console
+        ''' </summary>
+        Public Shared Property CoolWriting As Boolean = False
 
+        ''' <summary>
+        ''' Write speed
+        ''' </summary>
+        Public Shared Property CoolWritingDelay As Integer = 8
 
-        Call VolinPlot.Plot(dataset:=data).Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.png")
-        Call Pause()
-    End Sub
-End Module
+        ''' <summary>
+        ''' Set the delay when write a new line or dots. (Default = 200).
+        ''' </summary>
+        Public Shared Property CWRDDelay As Integer = 280
 
+        Private Sub New()
+        End Sub
+    End Class
+
+End Namespace
