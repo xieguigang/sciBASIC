@@ -85,9 +85,7 @@ Namespace Terminal.Utility
         Sub New(n As Integer, <CallerMemberName> Optional tag As String = "", Optional out As StreamWriter = Nothing)
             Me.Capacity = n
             Me.tag = tag
-            Me.out = If(out Is Nothing,
-                New StreamWriter(Console.OpenStandardOutput),
-                out)
+            Me.out = out Or App.StdOut
 
             If String.IsNullOrEmpty(Me.tag) Then
                 Me.tag = vbTab
