@@ -134,7 +134,7 @@ Namespace ApplicationServices.Terminal
             If styleStack.Count = 0 Then
                 Call theme.Global.SetConfig(Me)
             Else
-                Call styleStack.Peek.SetConfig(Nothing)
+                Call styleStack.Peek.SetConfig(Me)
             End If
         End Sub
 
@@ -152,9 +152,16 @@ Namespace ApplicationServices.Terminal
         End Sub
 
         Private Sub EndSpan(byNewLine As Boolean)
+            Dim text As String = textBuf.CharString
+            Dim style As ConsoleFontStyle = currentStyle
+
+            If text.StartsWith("((http(s)?)|(ftp))[:]//", RegexICSng) Then
+                style = theme.Url
+            End If
+
             spans += New Span With {
-                .style = currentStyle,
-                .text = textBuf.CharString,
+                .style = style,
+                .text = text,
                 .IsEndByNewLine = byNewLine
             }
             textBuf *= 0
@@ -193,7 +200,9 @@ Namespace ApplicationServices.Terminal
                         textBuf += " "c
                         textBuf += " "c
                     Else
+                        EndSpan(False)
                         textBuf += c
+                        EndSpan(False)
                     End If
                 Case Else
                     lastNewLine = False
@@ -201,9 +210,11 @@ Namespace ApplicationServices.Terminal
                     If bufferIs("``") Then
                         If inlineCodespan Then
                             ' 结束栈
+                            EndSpan(False)
                             inlineCodespan = False
                             restoreStyle()
                         Else
+                            EndSpan(False)
                             inlineCodespan = True
                             theme.InlineCodeSpan.SetConfig(Me)
                         End If
@@ -212,9 +223,11 @@ Namespace ApplicationServices.Terminal
                         textBuf += c
                     ElseIf bufferIs("**") Then
                         If boldSpan Then
+                            EndSpan(False)
                             boldSpan = False
                             restoreStyle()
                         Else
+                            EndSpan(False)
                             boldSpan = True
                             theme.Bold.SetConfig(Me)
                         End If
