@@ -139,15 +139,23 @@ Namespace ApplicationServices.Terminal
         End Sub
 
         Private Sub PrintSpans()
+            Dim isNewLine As Boolean = True
+
             For Each span As Span In spans
-                Call span.Print()
+                If isNewLine Then
+                    Console.CursorLeft = indent
+                End If
+
+                span.Print()
+                isNewLine = span.IsEndByNewLine
             Next
         End Sub
 
-        Private Sub EndSpan()
+        Private Sub EndSpan(byNewLine As Boolean)
             spans += New Span With {
                 .style = currentStyle,
-                .text = textBuf.CharString
+                .text = textBuf.CharString,
+                .IsEndByNewLine = byNewLine
             }
             textBuf *= 0
         End Sub
@@ -164,7 +172,7 @@ Namespace ApplicationServices.Terminal
                     lastNewLine = True
                     blockquote = False
                     textBuf += ASCII.LF
-                    EndSpan()
+                    EndSpan(True)
                     restoreStyle()
                 Case ">"c
                     If lastNewLine AndAlso controlBuf = 0 Then
@@ -268,6 +276,7 @@ Namespace ApplicationServices.Terminal
 
         Public Property text As String
         Public Property style As ConsoleFontStyle
+        Public Property IsEndByNewLine As Boolean
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Print()
