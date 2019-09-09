@@ -80,18 +80,21 @@ Namespace ApplicationServices.Terminal
 
         Dim theme As MarkdownTheme
         Dim markdown As CharPtr
+        Dim indent As Integer
 
         Private Sub New(theme As MarkdownTheme)
             Me.theme = theme
         End Sub
 
-        Public Sub DoPrint(markdown As String)
+        Public Sub DoPrint(markdown$, indent%)
             Me.markdown = markdown.LineTokens.JoinBy(ASCII.LF)
-            Me.theme.Global.SetConfig(styleStack)
-            Me.DoPrint()
+            Me.indent = indent
+            Me.theme.Global.SetConfig(Me)
+            Me.DoParseSpans()
+            Me.PrintSpans()
         End Sub
 
-        Private Sub DoPrint()
+        Private Sub DoParseSpans()
             Do While Not markdown.EndRead
                 Call WalkChar(++markdown)
             Loop
@@ -101,22 +104,27 @@ Namespace ApplicationServices.Terminal
         Dim inlineCodespan As Boolean = False
         Dim blockquote As Boolean = False
         Dim lastNewLine As Boolean
-        Dim buf As New List(Of Char)
-        Dim styleStack As New Stack(Of ConsoleFontStyle)
+        Dim controlBuf As New List(Of Char)
+        Dim textBuf As New List(Of Char)
+
+        Friend styleStack As New Stack(Of ConsoleFontStyle)
+        Friend currentStyle As ConsoleFontStyle
+
+        Dim spans As New List(Of Span)
 
         Private Function bufferIs(term As String) As Boolean
-            If buf <> term.Length Then
+            If controlBuf <> term.Length Then
                 Return False
             Else
-                Return buf.SequenceEqual(term)
+                Return controlBuf.SequenceEqual(term)
             End If
         End Function
 
         Private Function bufferAllIs(c As Char) As Boolean
-            If buf = 0 Then
+            If controlBuf = 0 Then
                 Return False
             Else
-                Return buf.All(Function(b) b = c)
+                Return controlBuf.All(Function(b) b = c)
             End If
         End Function
 
@@ -124,44 +132,60 @@ Namespace ApplicationServices.Terminal
             styleStack.Pop()
 
             If styleStack.Count = 0 Then
-                Call theme.Global.SetConfig(styleStack)
+                Call theme.Global.SetConfig(Me)
             Else
-                styleStack.Peek.SetConfig(Nothing)
+                Call styleStack.Peek.SetConfig(Nothing)
             End If
+        End Sub
+
+        Private Sub PrintSpans()
+            For Each span As Span In spans
+                Call span.Print()
+            Next
+        End Sub
+
+        Private Sub EndSpan()
+            spans += New Span With {
+                .style = currentStyle,
+                .text = textBuf.CharString
+            }
+            textBuf *= 0
         End Sub
 
         Private Sub WalkChar(c As Char)
             Select Case c
                 Case "`"c
-                    buf += c
+                    controlBuf += c
                     lastNewLine = False
                 Case "*"c
-                    buf += c
+                    controlBuf += c
                     lastNewLine = False
                 Case ASCII.LF
-                    Call Console.WriteLine()
                     lastNewLine = True
                     blockquote = False
+                    textBuf += ASCII.LF
+                    EndSpan()
                     restoreStyle()
                 Case ">"c
-                    If lastNewLine AndAlso buf = 0 Then
-                        buf += c
+                    If lastNewLine AndAlso controlBuf = 0 Then
+                        controlBuf += c
                     ElseIf lastNewLine AndAlso bufferIs(">") Then
                         ' 空白的blockquote行
                     Else
-                        Console.Write(c)
+                        textBuf += c
                     End If
                     lastNewLine = False
                 Case " "c
                     lastNewLine = False
 
-                    If buf = 1 AndAlso buf(Scan0) = ">"c Then
+                    If controlBuf = 1 AndAlso controlBuf(Scan0) = ">"c Then
                         blockquote = True
-                        buf *= 0
-                        theme.BlockQuote.SetConfig(styleStack)
-                        Call Console.Write("  ")
+                        controlBuf *= 0
+                        theme.BlockQuote.SetConfig(Me)
+                        textBuf += " "c
+                        textBuf += " "c
                     Else
-                        Call My.Log4VB.Print(c, Console.BackgroundColor, Console.BackgroundColor)
+                        textBuf += c
                     End If
                 Case Else
                     lastNewLine = False
@@ -173,33 +197,31 @@ Namespace ApplicationServices.Terminal
                             restoreStyle()
                         Else
                             inlineCodespan = True
-                            theme.InlineCodeSpan.SetConfig(styleStack)
+                            theme.InlineCodeSpan.SetConfig(Me)
                         End If
 
-                        buf *= 0
-
-                        Call Console.Write(c)
+                        controlBuf *= 0
+                        textBuf += c
                     ElseIf bufferIs("**") Then
                         If boldSpan Then
                             boldSpan = False
                             restoreStyle()
                         Else
                             boldSpan = True
-                            theme.Bold.SetConfig(styleStack)
+                            theme.Bold.SetConfig(Me)
                         End If
 
-                        buf *= 0
-
-                        Call Console.Write(c)
+                        controlBuf *= 0
+                        textBuf += c
                     Else
-                        Call Console.Write(c)
+                        textBuf += c
                     End If
             End Select
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Sub Print(markdown As String, Optional theme As MarkdownTheme = Nothing)
-            Call New MarkdownRender(theme Or defaultTheme).DoPrint(markdown)
+        Public Shared Sub Print(markdown As String, Optional theme As MarkdownTheme = Nothing, Optional indent% = 0)
+            Call New MarkdownRender(theme Or defaultTheme).DoPrint(markdown, indent)
         End Sub
     End Class
 
@@ -219,14 +241,20 @@ Namespace ApplicationServices.Terminal
         Public Property ForeColor As ConsoleColor = ConsoleColor.White
         Public Property BackgroundColor As ConsoleColor = ConsoleColor.Black
 
-        Public Sub SetConfig(stack As Stack(Of ConsoleFontStyle))
+        Public Sub SetConfig(render As MarkdownRender)
             Console.ForegroundColor = ForeColor
             Console.BackgroundColor = BackgroundColor
 
-            If Not stack Is Nothing Then
-                Call stack.Push(Me)
-            End If
+            render.currentStyle = Me
+            render.styleStack.Push(Me)
         End Sub
+
+        Public Function CreateSpan(text As String) As Span
+            Return New Span With {
+                .style = Me,
+                .text = text
+            }
+        End Function
 
         Public Shared Widening Operator CType(colors As (fore As ConsoleColor, back As ConsoleColor)) As ConsoleFontStyle
             Return New ConsoleFontStyle With {
@@ -234,5 +262,16 @@ Namespace ApplicationServices.Terminal
                 .BackgroundColor = colors.back
             }
         End Operator
+    End Class
+
+    Public Class Span
+
+        Public Property text As String
+        Public Property style As ConsoleFontStyle
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Print()
+            Call My.Log4VB.Print(Me)
+        End Sub
     End Class
 End Namespace
