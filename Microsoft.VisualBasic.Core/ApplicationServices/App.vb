@@ -174,7 +174,7 @@ Public Module App
     Public ReadOnly Property StdErr As New StreamWriter(Console.OpenStandardError)
 
     ''' <summary>
-    ''' <see cref="Console.OpenStandardOutput()"/> as default text output device.
+    ''' <see cref="Console.OpenStandardOutput()"/> as default text output device. [<see cref="StreamWriter"/>]
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property StdOut As [Default](Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter

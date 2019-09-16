@@ -1333,11 +1333,11 @@
     <Compile Include="My\InnerQueue.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb" />
     <Compile Include="ApplicationServices\Terminal\PrintAsTable.vb" />
-    <Compile Include="ApplicationServices\Terminal\ProgressBar\AbstractBar.vb" />
-    <Compile Include="ApplicationServices\Terminal\ProgressBar\AnimatedBar.vb" />
-    <Compile Include="ApplicationServices\Terminal\ProgressBar\ProgressBar.vb" />
-    <Compile Include="ApplicationServices\Terminal\ProgressBar\Program.vb" />
-    <Compile Include="ApplicationServices\Terminal\ProgressBar\SwayBar.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\ProgressBar\AbstractBar.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\ProgressBar\AnimatedBar.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\ProgressBar\Program.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\ProgressBar\SwayBar.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\EventProc.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb" />
     <Compile Include="ComponentModel\RelayCommand.vb" />
