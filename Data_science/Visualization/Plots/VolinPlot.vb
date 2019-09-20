@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::b7d9f95d37c33f555e7dcd5ce2173ed2, Data_science\Visualization\Plots\VolinPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module VolinPlot
-    ' 
-    '     Function: (+2 Overloads) Plot
-    ' 
-    ' /********************************************************************************/
+' Module VolinPlot
+' 
+'     Function: (+2 Overloads) Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -82,7 +83,9 @@ Public Module VolinPlot
                          Optional colorset$ = DesignerTerms.TSFShellColors,
                          Optional Ylabel$ = "y axis",
                          Optional yLabelFontCSS$ = Canvas.Resolution2K.PlotSmallTitle,
-                         Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal) As GraphicsData
+                         Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal,
+                         Optional removesOutliers As Boolean = True,
+                         Optional yTickFormat$ = "F2") As GraphicsData
         With dataset.ToArray
             Return .PropertyNames _
                    .Select(Function(label)
@@ -97,7 +100,9 @@ Public Module VolinPlot
                                    colorset:=colorset,
                                    Ylabel:=Ylabel,
                                    yLabelFontCSS:=yLabelFontCSS,
-                                   ytickFontCSS:=ytickFontCSS
+                                   ytickFontCSS:=ytickFontCSS,
+                                   removesOutliers:=removesOutliers,
+                                   yTickFormat:=yTickFormat
                                )
                            End Function)
         End With
@@ -120,9 +125,24 @@ Public Module VolinPlot
                          Optional Ylabel$ = "y axis",
                          Optional yLabelFontCSS$ = Canvas.Resolution2K.PlotSmallTitle,
                          Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal,
-                         Optional splineDegree% = 2) As GraphicsData
+                         Optional splineDegree% = 2,
+                         Optional removesOutliers As Boolean = True,
+                         Optional yTickFormat$ = "F2") As GraphicsData
 
         Dim matrix As NamedCollection(Of Double)() = dataset.ToArray
+
+        If removesOutliers Then
+            For i As Integer = 0 To matrix.Length - 1
+                Dim quar = matrix(i).Quartile
+                Dim normals = quar.Outlier(matrix(i)).normal
+
+                matrix(i) = New NamedCollection(Of Double) With {
+                    .name = matrix(i).name,
+                    .description = matrix(i).description,
+                    .value = normals
+                }
+            Next
+        End If
 
         ' 用来构建Y坐标轴的总体数据
         Dim alldata = matrix _
@@ -145,7 +165,10 @@ Public Module VolinPlot
                     .Y = Y
                 }
 
-                Call Axis.DrawY(g, Pens.Black, Ylabel, yScale, 0, yticks, YAxisLayoutStyles.Left, Nothing, yLabelFontCSS, yTickFont, htmlLabel:=False)
+                Call Axis.DrawY(g, Pens.Black, Ylabel, yScale, 0, yticks, YAxisLayoutStyles.Left, Nothing, yLabelFontCSS, yTickFont,
+                                htmlLabel:=False,
+                                tickFormat:=yTickFormat
+                )
 
                 Dim groupInterval = plotRegion.Width * 0.1
                 Dim maxWidth = (plotRegion.Width - groupInterval) / matrix.Length
