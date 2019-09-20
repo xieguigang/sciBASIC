@@ -260,6 +260,8 @@ Call BarPlot.Plot(
 
 ![](./Data_science/Mathematica/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
 
+![](./Data_science/Visualization/data/sample_groups.VolinPlot.png)
+
 ###### beta-PDF
 
 ```vbnet
