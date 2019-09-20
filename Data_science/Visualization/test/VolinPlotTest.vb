@@ -48,7 +48,7 @@ Module VolinPlotTest
         Dim data As IEnumerable(Of DataSet) = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.csv").ToArray
 
 
-        Call VolinPlot.Plot(dataset:=data).Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.png")
+        Call VolinPlot.Plot(dataset:=data, size:="2100,2500").Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.png")
         Call Pause()
     End Sub
 End Module

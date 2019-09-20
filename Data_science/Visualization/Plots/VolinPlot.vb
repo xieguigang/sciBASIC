@@ -53,7 +53,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
-Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -120,7 +119,8 @@ Public Module VolinPlot
                          Optional colorset$ = DesignerTerms.TSFShellColors,
                          Optional Ylabel$ = "y axis",
                          Optional yLabelFontCSS$ = Canvas.Resolution2K.PlotSmallTitle,
-                         Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal) As GraphicsData
+                         Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal,
+                         Optional splineDegree% = 2) As GraphicsData
 
         Dim matrix As NamedCollection(Of Double)() = dataset.ToArray
 
@@ -191,8 +191,8 @@ Public Module VolinPlot
                         line_r(i) = New PointF With {.X = X + densityWidth, .Y = line_r(i).Y}
                     Next
 
-                    line_l = line_l.BSpline(degree:=2)
-                    line_r = line_r.BSpline(degree:=2)
+                    line_l = line_l.BSpline(degree:=splineDegree)
+                    line_r = line_r.BSpline(degree:=splineDegree)
 
                     ' 需要插值么？
                     ' 生成多边形
