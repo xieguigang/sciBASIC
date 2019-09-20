@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -85,7 +86,11 @@ Public Module VolinPlot
                          Optional yLabelFontCSS$ = Canvas.Resolution2K.PlotSmallTitle,
                          Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal,
                          Optional removesOutliers As Boolean = True,
-                         Optional yTickFormat$ = "F2") As GraphicsData
+                         Optional yTickFormat$ = "F2",
+                         Optional stroke$ = Stroke.AxisStroke,
+                         Optional title$ = "Volin Plot",
+                         Optional titleFontCSS$ = Canvas.Resolution2K.PlotTitle) As GraphicsData
+
         With dataset.ToArray
             Return .PropertyNames _
                    .Select(Function(label)
@@ -102,7 +107,10 @@ Public Module VolinPlot
                                    yLabelFontCSS:=yLabelFontCSS,
                                    ytickFontCSS:=ytickFontCSS,
                                    removesOutliers:=removesOutliers,
-                                   yTickFormat:=yTickFormat
+                                   yTickFormat:=yTickFormat,
+                                   strokeCSS:=stroke,
+                                   title:=title,
+                                   titleFontCSS:=titleFontCSS
                                )
                            End Function)
         End With
@@ -127,7 +135,10 @@ Public Module VolinPlot
                          Optional ytickFontCSS$ = Canvas.Resolution2K.PlotLabelNormal,
                          Optional splineDegree% = 2,
                          Optional removesOutliers As Boolean = True,
-                         Optional yTickFormat$ = "F2") As GraphicsData
+                         Optional yTickFormat$ = "F2",
+                         Optional strokeCSS$ = Stroke.AxisStroke,
+                         Optional title$ = "Volin Plot",
+                         Optional titleFontCSS$ = Canvas.Resolution2K.PlotTitle) As GraphicsData
 
         Dim matrix As NamedCollection(Of Double)() = dataset.ToArray
 
@@ -155,6 +166,8 @@ Public Module VolinPlot
         Dim labelSize As SizeF
         Dim labelFont As Font = CSSFont.TryParse(yLabelFontCSS)
         Dim labelPos As PointF
+        Dim polygonStroke As Pen = Stroke.TryParse(strokeCSS)
+        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -178,6 +191,13 @@ Public Module VolinPlot
                 Dim semiWidth = maxWidth / 2
                 Dim X As Single = plotRegion.Left + groupInterval + semiWidth
                 Dim index As i32 = Scan0
+
+                labelSize = g.MeasureString(title, titleFont)
+                labelPos = New PointF With {
+                    .X = plotRegion.Left + (plotRegion.Width - labelSize.Width) / 2,
+                    .Y = plotRegion.Y - labelSize.Height
+                }
+                g.DrawString(title, titleFont, Brushes.Black, labelPos)
 
                 For Each group As NamedCollection(Of Double) In matrix
                     ' Dim q = quantiles(group)
@@ -230,7 +250,7 @@ Public Module VolinPlot
                     ' 最后 右下 -> 左下会自动封闭
 
                     ' 绘制当前的这个多边形
-                    Call g.DrawPolygon(Pens.LightGray, polygon)
+                    Call g.DrawPolygon(polygonStroke, polygon)
                     Call g.FillPolygon(New SolidBrush(colors(++index)), polygon)
 
                     labelSize = g.MeasureString(group.name, labelFont)
@@ -240,7 +260,13 @@ Public Module VolinPlot
                     }
 
                     ' 绘制X坐标轴分组标签
-                    Call g.DrawString(group.name, labelFont, Brushes.Black, labelPos)
+                    Call New GraphicsText(DirectCast(g, GDICanvas).Graphics).DrawString(
+                        s:=group.name,
+                        font:=labelFont,
+                        brush:=Brushes.Black,
+                        point:=labelPos,
+                        angle:=45
+                    )
 
                     X += semiWidth + groupInterval + semiWidth
                 Next
