@@ -256,7 +256,7 @@ Public Module VolinPlot
                     labelSize = g.MeasureString(group.name, labelFont)
                     labelPos = New PointF With {
                         .X = X - labelSize.Width / 2,
-                        .Y = plotRegion.Bottom + 10
+                        .Y = plotRegion.Bottom + labelSize.Width * Math.Sin(Math.PI / 4)
                     }
 
                     ' 绘制X坐标轴分组标签
@@ -265,7 +265,7 @@ Public Module VolinPlot
                         font:=labelFont,
                         brush:=Brushes.Black,
                         point:=labelPos,
-                        angle:=45
+                        angle:=-45
                     )
 
                     X += semiWidth + groupInterval + semiWidth

@@ -1042,17 +1042,12 @@ Namespace Math
         Public Function Acos(d As Double) As Double
             Return sys.Acos(d)
         End Function
-        '
-        ' Summary:
-        '     Returns the cosine of the specified angle.
-        '
-        ' Parameters:
-        '   d:
-        '     An angle, measured in radians.
-        '
-        ' Returns:
-        '     The cosine of d. If d is equal to System.Double.NaN, System.Double.NegativeInfinity,
-        '     or System.Double.PositiveInfinity, this method returns System.Double.NaN.
+
+        ''' <summary>
+        ''' Returns the cosine of the specified angle.
+        ''' </summary>
+        ''' <param name="d">An angle, measured in radians.</param>
+        ''' <returns></returns>
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Cos(d As Double) As Double
