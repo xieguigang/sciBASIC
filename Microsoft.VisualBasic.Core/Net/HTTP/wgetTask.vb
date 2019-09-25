@@ -185,13 +185,13 @@ Namespace Net.Http
         Dim busy As Integer
 
         Public Overrides Function ToString() As String
-            If busy = 4 Then
+            If busy = 5 Then
                 busy = 1
             Else
                 busy += 1
             End If
 
-            Return $"> '{saveFile.FileName}'{New String("."c, busy)}     {currentSize} [{(100 * _currentSize / _totalSize).ToString("F2")}%, {downloadSpeed.ToString("F2")} KB/sec]"
+            Return $"> '{saveFile.FileName}'{New String("."c, busy)}    {StringFormats.Lanudry(currentSize)} [{(100 * _currentSize / _totalSize).ToString("F2")}%, {StringFormats.Lanudry(downloadSpeed)}/sec]"
         End Function
 
 #Region "IDisposable Support"

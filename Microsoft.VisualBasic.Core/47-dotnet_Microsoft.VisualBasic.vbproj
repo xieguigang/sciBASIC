@@ -1021,6 +1021,7 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
+    <Compile Include="Extensions\StringHelpers\StringFormats.vb" />
     <Compile Include="My\Framework\FrameworkConfig.vb" />
     <Compile Include="My\Framework\DoConfiguration.vb" />
     <Compile Include="My\Framework\NamespaceDoc.vb" />
