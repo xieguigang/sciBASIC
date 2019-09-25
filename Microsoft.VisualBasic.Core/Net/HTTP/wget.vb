@@ -89,14 +89,16 @@ Namespace Net.Http
         ''' </summary>
         ''' <param name="req"></param>
         ''' <param name="resp"></param>
-        Private Sub ReportRequest(req As WebRequest, resp As WebResponse) Handles task.ReportRequest
+        Private Sub ReportRequest(req As WebRequest, resp As WebResponse, remote$) Handles task.ReportRequest
             Dim domain As New DomainName(task.url)
 
             Call Console.WriteLine()
 
             Call ClearLine() : Console.WriteLine($"--{Now.ToString}--  {task.url}")
             Call ClearLine() : Console.WriteLine($"     => '{task.saveFile.FileName}'")
-            Call ClearLine() : Console.WriteLine($"Resolving {domain} ({domain})... {resp.ResponseUri.Host}")
+            Call ClearLine() : Console.WriteLine()
+            Call ClearLine() : Console.WriteLine($"Resolving {resp.ResponseUri.Host} ({domain})... {remote}")
+            Call ClearLine() : Console.WriteLine($"==> METHOD ... {req.Method}/{req.RequestUri.Scheme} {DirectCast(req, HttpWebRequest).ProtocolVersion}")
             Call ClearLine() : Console.WriteLine($"==> SIZE {task.saveFile.FileName} ... {resp.ContentLength}")
             Call ClearLine() : Console.WriteLine($"==> CONTENT-TYPE ... {resp.ContentType}")
             Call ClearLine() : Console.WriteLine($"Length: {resp.ContentLength} ({StringFormats.Lanudry(resp.ContentLength)})")
