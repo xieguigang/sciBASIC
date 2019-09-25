@@ -127,7 +127,7 @@ Namespace Net.Http
             ' Ask for the response
             Dim resp As WebResponse = req.GetResponse
 
-            _totalSize = req.ContentLength
+            _totalSize = resp.ContentLength
             _speedSamples = New List(Of Double)
             _currentSize = 0
 
