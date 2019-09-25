@@ -55,6 +55,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace Quantile
 
+    ''' <summary>
+    ''' A data quartile model based on a given sample data input
+    ''' </summary>
     Public Structure DataQuartile
 
         Public ReadOnly Property Q1 As Double
@@ -63,12 +66,19 @@ Namespace Quantile
         Public ReadOnly Property IQR As Double
         Public ReadOnly Property range As DoubleRange
 
-        Public Sub New(Q1#, Q2#, Q3#, IQR#, range As DoubleRange)
+        ''' <summary>
+        ''' The raw sample data input for create current quartile model
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ModelSamples As (normal As Double(), outlier As Double())
+
+        Friend Sub New(Q1#, Q2#, Q3#, IQR#, raw#())
             Me.Q1 = Q1
             Me.Q2 = Q2
             Me.Q3 = Q3
             Me.IQR = IQR
-            Me.range = range
+            Me.range = raw
+            Me.ModelSamples = Me.Outlier(raw)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
