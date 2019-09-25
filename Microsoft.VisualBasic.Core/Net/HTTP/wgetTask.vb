@@ -82,7 +82,7 @@ Namespace Net.Http
                 If _speedSamples.Count = 0 Then
                     Return 0
                 Else
-                    Return _speedSamples.Average
+                    Return _speedSamples.Average / 1000
                 End If
             End Get
         End Property
