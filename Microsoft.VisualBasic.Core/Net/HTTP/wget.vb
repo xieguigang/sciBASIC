@@ -73,21 +73,34 @@ Namespace Net.Http
 
         Private Sub DownloadProcess(wget As wgetTask, percentage As Double) Handles task.DownloadProcess
             Console.CursorTop = cursorTop
-            Console.CursorLeft = 1
-            Console.Write(New String(" "c, Console.BufferWidth))
-            Console.CursorLeft = 1
+            ClearLine()
             Console.WriteLine(wget.ToString)
         End Sub
 
+        Private Sub ClearLine()
+            Console.CursorLeft = 1
+            Console.Write(New String(" "c, Console.BufferWidth - 1))
+            Console.CursorLeft = 1
+            Console.CursorTop -= 1
+        End Sub
+
+        ''' <summary>
+        ''' Do task summary
+        ''' </summary>
+        ''' <param name="req"></param>
+        ''' <param name="resp"></param>
         Private Sub ReportRequest(req As WebRequest, resp As WebResponse) Handles task.ReportRequest
             Dim domain As New DomainName(task.url)
 
-            Call Console.WriteLine($"--{Now.ToString}--  {task.url}")
-            Call Console.WriteLine($"     => '{task.saveFile.FileName}'")
-            Call Console.WriteLine($"Resolving {domain} ({domain})... {resp.ResponseUri.Host}")
-            Call Console.WriteLine($"==> SIZE {task.saveFile.FileName} ... {resp.ContentLength}")
-            Call Console.WriteLine($"==> CONTENT-TYPE ... {resp.ContentType}")
-            Call Console.WriteLine($"Length: {resp.ContentLength} ()")
+            Call Console.WriteLine()
+
+            Call ClearLine() : Console.WriteLine($"--{Now.ToString}--  {task.url}")
+            Call ClearLine() : Console.WriteLine($"     => '{task.saveFile.FileName}'")
+            Call ClearLine() : Console.WriteLine($"Resolving {domain} ({domain})... {resp.ResponseUri.Host}")
+            Call ClearLine() : Console.WriteLine($"==> SIZE {task.saveFile.FileName} ... {resp.ContentLength}")
+            Call ClearLine() : Console.WriteLine($"==> CONTENT-TYPE ... {resp.ContentType}")
+            Call ClearLine() : Console.WriteLine($"Length: {resp.ContentLength} ()")
+
             Call Console.WriteLine()
 
             cursorTop = Console.CursorTop
