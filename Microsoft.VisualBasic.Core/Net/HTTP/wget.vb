@@ -79,15 +79,15 @@ Namespace Net.Http
             Console.WriteLine(wget.ToString)
         End Sub
 
-        Private Sub ReportRequest(req As WebRequest) Handles task.ReportRequest
+        Private Sub ReportRequest(req As WebRequest, resp As WebResponse) Handles task.ReportRequest
             Dim domain As New DomainName(task.url)
 
             Call Console.WriteLine($"--{Now.ToString}--  {task.url}")
             Call Console.WriteLine($"     => '{task.saveFile.FileName}'")
-            Call Console.WriteLine($"Resolving {domain} ({domain})... {req.RequestUri.Host}")
-            Call Console.WriteLine($"==> SIZE {task.saveFile.FileName} ... {req.ContentLength}")
-            Call Console.WriteLine($"==> CONTENT-TYPE ... {req.ContentType}")
-            Call Console.WriteLine($"Length: {req.ContentLength} ()")
+            Call Console.WriteLine($"Resolving {domain} ({domain})... {resp.ResponseUri.Host}")
+            Call Console.WriteLine($"==> SIZE {task.saveFile.FileName} ... {resp.ContentLength}")
+            Call Console.WriteLine($"==> CONTENT-TYPE ... {resp.ContentType}")
+            Call Console.WriteLine($"Length: {resp.ContentLength} ()")
             Call Console.WriteLine()
 
             cursorTop = Console.CursorTop

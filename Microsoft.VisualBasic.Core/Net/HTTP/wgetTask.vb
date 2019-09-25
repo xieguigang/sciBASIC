@@ -88,7 +88,7 @@ Namespace Net.Http
         End Property
 
         Public Event DownloadProcess(wget As wgetTask, percentage#)
-        Public Event ReportRequest(req As WebRequest)
+        Public Event ReportRequest(req As WebRequest, resp As WebResponse)
 
         ''' <summary>
         ''' Client status
@@ -131,7 +131,7 @@ Namespace Net.Http
             _speedSamples = New List(Of Double)
             _currentSize = 0
 
-            RaiseEvent ReportRequest(req)
+            RaiseEvent ReportRequest(req, resp)
             RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
 
             If totalSize = -1 Then
@@ -152,11 +152,11 @@ Namespace Net.Http
             Dim buffer(8192) As Byte
             Dim downloadedsize As Long = 0
             Dim downloadedTime As Long = 0
-            Dim dlSpeed As Long = 0
 
             Do While currentSize < totalSize
                 ' Read the buffer from the response the WebRequest gave you
                 Dim read As Integer = resp.GetResponseStream.Read(buffer, 0, 8192)
+                Dim dlSpeed As Long = 0
 
                 ' Write to filestream that you declared at the beginning of the DoWork sub
                 Call fs.Write(buffer, 0, read)
@@ -166,7 +166,7 @@ Namespace Net.Http
                 downloadedsize += read
                 downloadedTime += 1
 
-                If downloadedTime = 1000 Then
+                If downloadedTime = 10 Then
                     ' Then, if downloadedTime reaches 1000 then it will call this part
                     ' Calculate the download speed by dividing the downloadedSize 
                     ' by the total formatted seconds of the downloadedTime
@@ -176,14 +176,22 @@ Namespace Net.Http
                     downloadedsize = 0
 
                     Call _speedSamples.Add(dlSpeed)
-
-                    RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
                 End If
+
+                RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
             Loop
         End Sub
 
+        Dim busy As Integer
+
         Public Overrides Function ToString() As String
-            Return $"> '{saveFile.FileName}'    {currentSize} [{(100 * _currentSize / _totalSize).ToString("F2")}%, {downloadSpeed}KB/sec]"
+            If busy = 4 Then
+                busy = 1
+            Else
+                busy += 1
+            End If
+
+            Return $"> '{saveFile.FileName}'{New String("."c, busy)}     {currentSize} [{(100 * _currentSize / _totalSize).ToString("F2")}%, {downloadSpeed.ToString("F2")} KB/sec]"
         End Function
 
 #Region "IDisposable Support"
