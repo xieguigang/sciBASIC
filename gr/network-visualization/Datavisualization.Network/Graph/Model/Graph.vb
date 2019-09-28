@@ -285,7 +285,9 @@ Namespace Graph
         End Function
 
         Private Function createEdgeInternal(u As Node, v As Node, data As EdgeData) As Edge
-            Dim tNewEdge As New Edge(_nextEdgeId.ToString(), u, v, data)
+            Dim tNewEdge As New Edge(_nextEdgeId.ToString(), u, v, data) With {
+                .weight = data.weight
+            }
             _nextEdgeId += 1
             AddEdge(tNewEdge)
             Return tNewEdge
