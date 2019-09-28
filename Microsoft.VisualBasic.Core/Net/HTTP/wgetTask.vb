@@ -110,13 +110,32 @@ Namespace Net.Http
             Me.saveFile = saveFile
         End Sub
 
-        Public Sub StartTask()
-            If isDownloading Then Return
+        Public Function StartTask(Optional doRetry As Boolean = True) As Boolean
+            Dim retry As Integer = If(doRetry, 0, 5)
+            Dim result As Boolean = True
 
-            Call switchStat()
-            Call doTaskInternal()
-            Call switchStat()
-        End Sub
+            If isDownloading Then
+                Return False
+            Else
+                Call switchStat()
+            End If
+RE:
+            Try
+                Call doTaskInternal()
+            Catch ex As Exception
+                If retry < 3 Then
+                    retry += 1
+                    GoTo RE
+                Else
+                    ' exit download
+                    result = False
+                End If
+            Finally
+                Call switchStat()
+            End Try
+
+            Return result
+        End Function
 
         Private Sub switchStat()
             _isDownloading = Not isDownloading
