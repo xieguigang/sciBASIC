@@ -55,7 +55,8 @@ Namespace FileIO
     ''' <see cref="Encoding"/>会和<see cref="Encodings"/>产生冲突，
     ''' 使用这个单独的拓展模块，但是位于不同的命名空间来解决这个问题。
     ''' </remarks>
-    Public Module Extensions
+    ''' 
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' Write all object into a text file by using its <see cref="Object.ToString"/> method.

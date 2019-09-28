@@ -164,6 +164,10 @@ Public Module IOExtensions
             End If
         End With
 
+        If path.FileName.Length > 200 Then
+            Throw New PathTooLongException(path)
+        End If
+
         If doClear Then
             ' 在这里调用FlushStream函数的话会导致一个循环引用的问题
             ClearFileBytes(path)
