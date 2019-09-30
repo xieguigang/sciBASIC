@@ -144,7 +144,8 @@ Namespace ApplicationServices.Development
                 .AssemblyDescription = GetProductDescription(assm),
                 .Guid = GetGuid(assm),
                 .AssemblyVersion = assm.tryGetVersion.ToString,
-                .BuiltTime = assm.CalculateCompileTime
+                .BuiltTime = assm.CalculateCompileTime,
+                .AssemblyFullName = assm.GetName.ToString
             }
         End Function
 

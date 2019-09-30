@@ -263,7 +263,7 @@ Namespace IO
         ''' <remarks></remarks>
         Public Function Takes(Cols As Integer(), Optional retNullable As Boolean = True) As String()
             Dim Items As String() = New String(Cols.Count - 1) {}
-            For i As Integer = 0 To Cols.Count - 1
+            For i As Integer = 0 To Cols.Length - 1
                 If retNullable Then
                     Items(i) = Me.Column(Cols(i))
                 Else

@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::d9eb7f3e9c445dcf4d61cee06ac718a4, Data\DataFrame\Mappings.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MappingsHelper
-    ' 
-    '     Function: CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames, TagFieldName
-    ' 
-    ' /********************************************************************************/
+' Class MappingsHelper
+' 
+'     Function: CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames, TagFieldName
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,23 @@ Imports Field = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.S
 ''' 在写csv的时候生成列域名的映射的一些快捷函数
 ''' </summary>
 Public Class MappingsHelper
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="types"></param>
+    ''' <returns>这个匹配函数是安全的函数, 如果一个结果都没有被匹配上,则这个函数会返回<see cref="System.Void"/>类型</returns>
+    Public Shared Function [Typeof](file$, ParamArray types As Type()) As Type
+        Dim headers As RowObject = Tokenizer.CharsParser(file.ReadFirstLine)
+        Dim match As Type = StreamIO.TypeOf(headers, types)
+
+        If match Is Nothing Then
+            Return GetType(System.Void)
+        Else
+            Return match
+        End If
+    End Function
 
     ''' <summary>
     ''' 这个函数只适用于只需要解析一个或者少数属性的列名称，假若需要解析的列数量很多，则出于性能方面的考虑不推荐使用这个函数来进行
