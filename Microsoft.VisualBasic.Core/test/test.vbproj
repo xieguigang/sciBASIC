@@ -92,6 +92,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="markdownDisplayTest.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="math_test.vb" />
     <Compile Include="htmlParserTest.vb" />
