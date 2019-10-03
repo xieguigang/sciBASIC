@@ -92,6 +92,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             stack.Clear()
         End Sub
 
+        ''' <summary>
+        ''' 这个函数是直接返回stack list对象中的元素值
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAllNodes() As IEnumerable(Of BinaryTree(Of K, V))
             Return stack.AsEnumerable

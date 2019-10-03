@@ -1,4 +1,48 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::93f43a5a57b153b6a25a7e7d4ea72ad6, Microsoft.VisualBasic.Core\CommandLine\Interpreters\ExecuteImpl.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module ExecuteImpl
+    ' 
+    '         Function: CreateCLIPipelineFile, ListingRelatedCommands
+    ' 
+    '         Sub: HandleProgramManual, HandleShellHistory, PrintVariables
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.ManView
@@ -43,7 +87,7 @@ Namespace CommandLine
         Friend Function ListingRelatedCommands(cli_app As Interpreter, query$) As String()
             Dim key As New LevenshteinString(query.ToLower)
             Dim LQuery = From x As String
-                         In cli_app.__API_table.Keys.AsParallel
+                         In cli_app.apiTable.Keys.AsParallel
                          Let compare = key Like x
                          Where Not compare Is Nothing AndAlso
                              compare.Score > 0.3
@@ -55,7 +99,7 @@ Namespace CommandLine
                 .Select(Function(x) x.x) _
                 .AsList
 
-            levenshteins += cli_app.__API_table _
+            levenshteins += cli_app.apiTable _
                 .Keys _
                 .Where(Function(s)
                            Return InStr(s, query, CompareMethod.Text) > 0 OrElse
@@ -65,7 +109,7 @@ Namespace CommandLine
             Return levenshteins _
                 .Distinct _
                 .Select(Function(name)
-                            Return cli_app.__API_table(name).Name
+                            Return cli_app.apiTable(name).Name
                         End Function) _
                 .ToArray
         End Function

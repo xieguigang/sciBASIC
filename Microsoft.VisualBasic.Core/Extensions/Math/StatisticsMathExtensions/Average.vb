@@ -48,22 +48,29 @@ Imports System.Runtime.CompilerServices
 
 Namespace Math.Statistics
 
-    Public Class Average
+    Public Class Average : Inherits SampleObservation
 
         Public Sum#, N%
 
         Public ReadOnly Property Average As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Sum / N
+                If N = 0 Then
+                    Return 0
+                Else
+                    Return Sum / N
+                End If
             End Get
         End Property
 
         Sub New()
+            Call Me.New({})
         End Sub
 
         Sub New(data As IEnumerable(Of Double))
-            With data.ToArray
+            Call MyBase.New(data)
+
+            With getRaw.ToArray
                 Sum = .Sum
                 N = .Length
             End With
@@ -74,13 +81,21 @@ Namespace Math.Statistics
         End Function
 
         Public Shared Operator +(avg As Average, x#) As Average
-            avg.Sum += x
-            avg.N += 1
+            Call avg.Add(x)
             Return avg
         End Operator
 
         Public Shared Widening Operator CType(avg As Double) As Average
             Return New Average() + avg
         End Operator
+
+        Protected Overrides Sub addObservation(observation As Double)
+            Sum += observation
+            N += 1
+        End Sub
+
+        Protected Overrides Function getEigenvalue() As Double
+            Return Average
+        End Function
     End Class
 End Namespace

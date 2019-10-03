@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::71f0c7da75da7357f9320bfae023350a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GraphicsText
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ConvertSize, GetRotatePoint
-    ' 
-    '         Sub: (+2 Overloads) DrawString, DrawStringInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GraphicsText
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ConvertSize, GetRotatePoint
+' 
+'         Sub: (+2 Overloads) DrawString, DrawStringInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Drawing2D.Text
 
@@ -55,7 +56,8 @@ Namespace Drawing2D.Text
     ''' <remarks>http://www.xuebuyuan.com/1613072.html</remarks>
     Public Class GraphicsText
 
-        Dim g As Graphics
+        ReadOnly g As Graphics
+        ReadOnly defaultFormat As New [Default](Of StringFormat)(Function() New StringFormat, isLazy:=False)
 
         Public Sub New(g As Graphics)
             Me.g = g
@@ -97,12 +99,8 @@ Namespace Drawing2D.Text
         ''' <param name="format">布局方式</param>
         ''' <param name="angle">角度</param>
         Public Sub DrawString(s$, font As Font, brush As Brush, point As PointF, angle!, Optional format As StringFormat = Nothing)
-            If format Is Nothing Then
-                format = New StringFormat
-            End If
-
             SyncLock g
-                Call DrawStringInternal(s, font, brush, point, format, angle)
+                Call DrawStringInternal(s, font, brush, point, format Or defaultFormat, angle)
             End SyncLock
         End Sub
 
@@ -162,8 +160,7 @@ Namespace Drawing2D.Text
                 End If
             Next
 
-            Dim result As New SizeF(right - left, bottom - top)
-            Return result
+            Return New SizeF(right - left, bottom - top)
         End Function
 
         Private Function GetRotatePoint(size As SizeF, layoutRectangle As RectangleF, format As StringFormat) As PointF
@@ -172,29 +169,21 @@ Namespace Drawing2D.Text
             Select Case format.Alignment
                 Case StringAlignment.Near
                     x = layoutRectangle.Left + size.Width / 2.0F
-
                 Case StringAlignment.Center
                     x = (layoutRectangle.Left + layoutRectangle.Right) / 2.0F
-
                 Case StringAlignment.Far
                     x = layoutRectangle.Right - size.Width / 2.0F
-
                 Case Else
-
             End Select
 
             Select Case format.LineAlignment
                 Case StringAlignment.Near
                     y = layoutRectangle.Top + size.Height / 2.0F
-
                 Case StringAlignment.Center
                     y = (layoutRectangle.Top + layoutRectangle.Bottom) / 2.0F
-
                 Case StringAlignment.Far
                     y = layoutRectangle.Bottom - size.Height / 2.0F
-
                 Case Else
-
             End Select
 
             Return New PointF(x, y)

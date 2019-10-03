@@ -226,7 +226,7 @@ Namespace BarPlot
                 Dim dx! = sz.Width * Math.Cos(angle)
                 Dim dy! = sz.Width * Math.Sin(angle)
 
-                Call g.DrawString(+key, font, Brushes.Black, left - dx, bottom, angle)
+                Call g.DrawString(key, font, Brushes.Black, left - dx, bottom, angle)
             Next
 
             If showLegend Then

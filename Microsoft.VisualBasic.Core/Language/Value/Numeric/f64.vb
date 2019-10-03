@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::261c52e3b65221fb2fe8e065d9c6d7e1, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBDouble.vb"
+﻿#Region "Microsoft.VisualBasic::85adef4378964ac99939700574f2504d, Microsoft.VisualBasic.Core\Language\Value\Numeric\f64.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class VBDouble
+    '     Class f64
     ' 
     '         Properties: Hex
     ' 

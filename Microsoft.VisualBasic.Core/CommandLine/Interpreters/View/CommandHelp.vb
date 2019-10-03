@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d15e03f189cfb4385a3670b0c012f3f, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\CommandHelp.vb"
+﻿#Region "Microsoft.VisualBasic::14574b8822db88dd0c7be339f9911d81, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\CommandHelp.vb"
 
     ' Author:
     ' 
@@ -54,8 +54,8 @@ Namespace CommandLine.ManView
         Public Function PrintCommandHelp(app As Interpreter, commandName$) As Integer
             Dim name As New Value(Of String)
 
-            If app.__API_table.ContainsKey(name = commandName.ToLower) Then
-                Call app.__API_table(name).PrintHelp
+            If app.apiTable.ContainsKey(name = commandName.ToLower) Then
+                Call app.apiTable(name).PrintHelp
             Else
                 Dim list$() = app.ListingRelated(commandName)
 
@@ -91,13 +91,13 @@ Namespace CommandLine.ManView
 
                     msg$ = .ByRef & New String(" "c, maxLength - .Length + 3)
 
-                    With app.__API_table(.ToLower).Info
+                    With app.apiTable(.ToLower).Info
                         If Not .StringEmpty Then
                             msg$ &= Mid(.ByRef, 1, 60) & "..."
                         End If
                     End With
 
-                    Call Console.WriteLine("   " & msg)
+                    Call My.Log4VB.Println("   " & msg, ConsoleColor.DarkBlue, ConsoleColor.DarkMagenta)
                 End With
             Next
         End Sub

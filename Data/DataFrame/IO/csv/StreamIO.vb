@@ -71,8 +71,9 @@ Namespace IO
         ''' </summary>
         ''' <param name="header"></param>
         ''' <param name="types">A candidate type list</param>
-        ''' <returns></returns>
-        ''' 
+        ''' <returns>
+        ''' 一个也都没有匹配上, 则这个函数会返回空值
+        ''' </returns>
         <Extension>
         Public Function [TypeOf](header As RowObject, ParamArray types As Type()) As Type
             Dim scores As New List(Of (Type, Integer))
@@ -94,9 +95,14 @@ Namespace IO
                        In scores
                        Select type = score.Item1, Value = score.Item2
                        Order By Value Descending
-            Dim target As Type = desc.FirstOrDefault?.type
+            Dim topFirst = desc.FirstOrDefault
 
-            Return target
+            If topFirst.Value <= 0 Then
+                ' 零分表示一个属性都没有匹配上
+                Return Nothing
+            Else
+                Return topFirst.type
+            End If
         End Function
 
         Const NullLocationRef$ = "Sorry, the ``path`` reference to a null location!"

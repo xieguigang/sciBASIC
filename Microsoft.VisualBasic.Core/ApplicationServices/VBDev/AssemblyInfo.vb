@@ -39,6 +39,8 @@
 
         Public Property AssemblyVersion As String
         Public Property AssemblyFileVersion As String
+        Public Property AssemblyFullName As String
+
         ''' <summary>
         ''' The compile date and time of the assembly file.
         ''' </summary>

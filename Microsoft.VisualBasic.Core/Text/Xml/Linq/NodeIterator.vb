@@ -72,7 +72,7 @@ Namespace Text.Xml.Linq
         ''' </summary>
         ''' <param name="path$"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function IterateArrayNodes(path$, tag$) As IEnumerable(Of String)
+        <Extension> Public Iterator Function IterateArrayNodes(path$, tag$, Optional filter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of String)
             Dim buffer As New List(Of String)
             Dim start$ = "<" & tag
             Dim ends$ = $"</{tag}>"
@@ -80,6 +80,7 @@ Namespace Text.Xml.Linq
             Dim tagOpen As Boolean = False
             Dim lefts$
             Dim i%
+            Dim xmlText$
 
             For Each line As String In path.IterateAllLines
                 If tagOpen Then
@@ -96,10 +97,16 @@ Namespace Text.Xml.Linq
                             buffer += ends
                             tagOpen = False
 
-                            Yield buffer.JoinBy(vbLf)
-
+                            xmlText = buffer.JoinBy(vbLf)
                             buffer *= 0
                             buffer += lefts
+
+                            If Not filter Is Nothing AndAlso filter(xmlText) Then
+                                ' skip
+                            Else
+                                ' populate data
+                                Yield xmlText
+                            End If
 
                             ' 这里要跳出来，否则后面buffer += line处任然会添加这个结束标签行的
                             Continue For

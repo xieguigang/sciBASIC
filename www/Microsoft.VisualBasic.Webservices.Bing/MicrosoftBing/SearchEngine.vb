@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f80020a96ca988b053887d7f509bf8b0, www\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
+﻿#Region "Microsoft.VisualBasic::1c83ad273705007da9b42c7ba682e646, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\SearchEngine.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module SearchEngineProvider
+    '     Module SearchEngineProvider
     ' 
-    '     Function: __getNextPageLink, DownloadResult, GetAllResults, Search, URLProvider
+    '         Function: __getNextPageLink, DownloadResult, GetAllResults, Search, URLProvider
+    ' 
     ' 
     ' /********************************************************************************/
 

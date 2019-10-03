@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78cb3d1f2bbe3da72b8228f7ae07ba81, www\Microsoft.VisualBasic.Webservices.Bing\BingImage.vb"
+﻿#Region "Microsoft.VisualBasic::76d0a71e57718de2e6780450229c00f9, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\BingImage.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Module BingImage
+    '     Module BingImage
     ' 
-    '     Function: GetUseBingImage
+    '         Function: GetUseBingImage
     ' 
-    '     Sub: SetUseBingImage
+    '         Sub: SetUseBingImage
+    ' 
     ' 
     ' /********************************************************************************/
 

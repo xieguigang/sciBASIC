@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace Excel
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' Load data frame from the excel file.
@@ -91,7 +91,7 @@ Namespace Excel
                                     Optional sheetName As String = "Sheet1",
                                     Optional uidMaps As String = Nothing) As DataSet()
             Dim df As DataFrame = file.ReadXlsx(sheetName)
-            Call df.__updateMaps(uidMaps)
+            Call df.doUpdateMaps(uidMaps)
             Return df.AsDataSource(Of DataSet)(False)
         End Function
 
@@ -107,7 +107,7 @@ Namespace Excel
                                       Optional sheetName As String = "Sheet1",
                                       Optional uidMaps As String = Nothing) As EntityObject()
             Dim df As DataFrame = file.ReadXlsx(sheetName)
-            Call df.__updateMaps(uidMaps)
+            Call df.doUpdateMaps(uidMaps)
             Return df.AsDataSource(Of EntityObject)(False)
         End Function
 
@@ -118,7 +118,7 @@ Namespace Excel
         ''' <param name="mapName"></param>
         ''' 
         <Extension>
-        Private Sub __updateMaps(ByRef df As DataFrame, mapName$)
+        Private Sub doUpdateMaps(ByRef df As DataFrame, mapName$)
             If String.IsNullOrEmpty(mapName) Then
                 mapName = df.HeadTitles(Scan0)
             End If

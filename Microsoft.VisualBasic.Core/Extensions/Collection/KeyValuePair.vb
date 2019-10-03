@@ -67,6 +67,18 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToLower(Of T)(table As Dictionary(Of String, T)) As Dictionary(Of String, T)
+        Return table.ToDictionary(Function(k) k.Key.ToLower, Function(k) k.Value)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToUpper(Of T)(table As Dictionary(Of String, T)) As Dictionary(Of String, T)
+        Return table.ToDictionary(Function(k) k.Key.ToUpper, Function(k) k.Value)
+    End Function
+
     ''' <summary>
     ''' 这个拓展函数主要是针对值得构建比较耗时的操作，主要应用于数据缓存场景
     ''' </summary>

@@ -75,8 +75,8 @@ Namespace d3js.Layout
         ''' </summary>
         Dim w As Double = 1, h As Double = 1
 
-        Dim acc As Double = 0
-        Dim rej As Double = 0
+        Dim acc As Integer = 0
+        Dim rej As Integer = 0
 
         Friend maxMove As Double = 5
         Friend maxAngle As Double = 0.5
