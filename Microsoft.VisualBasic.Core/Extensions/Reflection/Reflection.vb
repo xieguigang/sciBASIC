@@ -522,7 +522,24 @@ NULL:       If Not strict Then
         Dim memInfos As MemberInfo() = type.GetMember(name:=s)
 
         If memInfos.IsNullOrEmpty Then
-            Return s
+            ' 当枚举类型为OR组合的时候，得到的是一个数字
+            If s.IsPattern("\d+") Then
+                Dim flag As Long = CLng(s)
+                Dim flags As New List(Of [Enum])
+                Dim flagValue As Long
+
+                For Each member In type.GetFields.Where(Function(field) field.FieldType Is type)
+                    flagValue = CLng(member.GetValue(Nothing))
+
+                    If flag And flagValue = flagValue Then
+                        flags += CType(member.GetValue(Nothing), [Enum])
+                    End If
+                Next
+
+                Return flags.Select(AddressOf Description).JoinBy("|")
+            Else
+                Return s
+            End If
         End If
 
         Return memInfos _
