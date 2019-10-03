@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::308f84f37b5f91bed95321b3962e4c31, www\Microsoft.VisualBasic.Webservices.Bing\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::a13d90c82220608e2c644ced97636caf, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\WebResult.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,16 @@
 
     ' Summaries:
 
-    ' Class WebResult
+    '     Class WebResult
     ' 
-    '     Function: TryParse
+    '         Function: TryParse
     ' 
-    ' Class SearchResult
+    '     Class SearchResult
     ' 
-    '     Properties: [Next], CurrentPage, HaveNext, Results, Title
+    '         Properties: [Next], CurrentPage, HaveNext, Results, Title
     ' 
-    '     Function: NextPage, ToString
+    '         Function: NextPage, ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

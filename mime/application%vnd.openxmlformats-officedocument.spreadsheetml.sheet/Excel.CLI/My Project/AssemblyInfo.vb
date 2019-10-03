@@ -10,9 +10,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("Excel CLI tool")>
 <Assembly: AssemblyDescription("Excel CLI tool")>
-<Assembly: AssemblyCompany("Microsoft")>
-<Assembly: AssemblyProduct("Excel.CLI")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2017")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
+<Assembly: AssemblyProduct("sciBASIC.NET")>
+<Assembly: AssemblyCopyright("Copyright © sciBASIC.NET 2019")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f32829cd8ec40319d48da8c0ab0411dd, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ManualBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::fe1d04091f554682726c58ac65cabf51, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ManualBuilder.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
@@ -80,7 +79,8 @@ Namespace CommandLine.ManView
 
             ' print API name and description
             Call Console.WriteLine()
-            Call Console.WriteLine($"   '{api.Name}' - {infoLines.FirstOrDefault}")
+            Call Console.Write("   ")
+            Call My.Log4VB.Println($"'{api.Name}' - {infoLines.FirstOrDefault}", ConsoleColor.Yellow, ConsoleColor.DarkBlue)
 
             If infoLines.Length > 1 Then
                 blank = New String(
@@ -102,18 +102,18 @@ Namespace CommandLine.ManView
                 Call Console.WriteLine($"Usage:")
                 Call Console.WriteLine()
 
-                Console.ForegroundColor = ConsoleColor.Cyan
+                Dim AppPath$
+
+                If App.Platform = PlatformID.Unix OrElse App.Platform = PlatformID.MacOSX Then
+                    AppPath = App.ExecutablePath.TrimSuffix
+                Else
+                    AppPath = App.ExecutablePath
+                End If
 
                 Call Console.Write("  ")
-                Call Console.Write(
-                    If(App.Platform = PlatformID.Unix OrElse
-                    App.Platform = PlatformID.MacOSX,
-                    App.ExecutablePath.TrimSuffix,
-                    App.ExecutablePath) & " ")
-
-                Console.ForegroundColor = ConsoleColor.Green
-                Call Console.WriteLine(api.Usage)
-                Console.ForegroundColor = .ByRef
+                Call My.Log4VB.Print(AppPath, ConsoleColor.DarkCyan)
+                Call Console.Write(" ")
+                Call My.Log4VB.Println(api.Usage, ConsoleColor.Green)
 
             End With
 
@@ -146,7 +146,9 @@ Namespace CommandLine.ManView
 
                                     If .TokenType = CLITypes.Boolean Then
                                         ' 逻辑值类型的只能够是可选类型
-                                        s = "(optional) (boolean)"
+                                        ' 逻辑开关不计算在内
+                                        ' s = "(optional) (boolean)"
+                                        s = ""
                                         bool = True
                                     Else
 
@@ -197,8 +199,7 @@ Namespace CommandLine.ManView
                 Dim skipOptionalLine As Boolean = False
 
                 ' 必须的参数放在前面，可选的参数都是在后面的位置
-                For Each param As Argument In api.Arguments.Select(Function(x) x.Value)
-
+                For Each param As Argument In api.Arguments.Select(Function(a) a.Value)
                     If param.TokenType = CLITypes.Boolean AndAlso Not boolSeperator Then
                         boolSeperator = True
 
@@ -283,6 +284,11 @@ Namespace CommandLine.ManView
                 Next
 
                 If std_in OrElse std_out OrElse bool Then
+                    Call Console.WriteLine()
+                    Call Console.WriteLine()
+                    Call Console.WriteLine()
+                    Call Console.WriteLine("  [Annotations]")
+                    Call Console.WriteLine("  " & New String("-"c, 52))
                     Call Console.WriteLine()
                 End If
 

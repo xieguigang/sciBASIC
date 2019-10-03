@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::dcfc8f9f59421f3383f29e83fa30780e, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::c6c2b3e5d881c8a129a2f3fe5f61c166, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Interpreter
-' 
-'         Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
-'                     ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
-'                     Type
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: __executeEmpty, __getsAllCommands, apiInvoke, Contains, CreateEmptyCLIObject
-'                   (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
-'                   GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
-'                   (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
-' 
-'         Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
-' 
-' 
-' /********************************************************************************/
+    '     Class Interpreter
+    ' 
+    '         Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
+    '                     ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
+    '                     Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __executeEmpty, __getsAllCommands, apiInvoke, Contains, CreateEmptyCLIObject
+    '                   (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
+    '                   GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
+    '                   (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
+    ' 
+    '         Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -86,8 +86,8 @@ Namespace CommandLine
         ''' <summary>
         ''' 在添加之前请确保键名是小写的字符串
         ''' </summary>
-        Protected Friend __API_table As New Dictionary(Of String, APIEntryPoint)
-        Protected __rootNamespace$
+        Protected Friend apiTable As New Dictionary(Of String, APIEntryPoint)
+        Protected rootNamespace$
 
 #Region "Optional delegates"
 
@@ -116,11 +116,11 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToDictionary() As Dictionary(Of String, APIEntryPoint)
-            Return __API_table
+            Return apiTable
         End Function
 
         Public Overrides Function ToString() As String
-            Return "CLI://" & __rootNamespace
+            Return "CLI://" & rootNamespace
         End Function
 
         ''' <summary>
@@ -178,8 +178,8 @@ Namespace CommandLine
         Private Function apiInvoke(commandName$, argvs As Object(), help_argvs$()) As Integer
             Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
 
-            If __API_table.ContainsKey(commandName) Then _
-                Return __API_table(commandName).Execute(argvs)
+            If apiTable.ContainsKey(commandName) Then _
+                Return apiTable(commandName).Execute(argvs)
 
             If "??vars".TextEquals(commandName) Then
                 Call ExecuteImpl.PrintVariables()
@@ -303,8 +303,8 @@ Namespace CommandLine
         Public Sub AddCommand(Command As APIEntryPoint)
             Dim key$ = Command.Name.ToLower
 
-            If Not __API_table.ContainsKey(key) Then
-                Call __API_table.Add(key, Command)
+            If Not apiTable.ContainsKey(key) Then
+                Call apiTable.Add(key, Command)
             End If
         End Sub
 
@@ -337,7 +337,7 @@ Namespace CommandLine
         Public ReadOnly Property ListCommandInfo As EntryPoints.APIEntryPoint()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __API_table.Values.ToArray
+                Return apiTable.Values.ToArray
             End Get
         End Property
 
@@ -353,14 +353,14 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Sub New(type As Type, <CallerMemberName> Optional caller As String = Nothing)
             For Each cInfo As APIEntryPoint In __getsAllCommands(type, False)
-                If __API_table.ContainsKey(cInfo.Name.ToLower) Then
+                If apiTable.ContainsKey(cInfo.Name.ToLower) Then
                     Throw New Exception(cInfo.Name & " is duplicated with other command!")
                 Else
-                    Call __API_table.Add(cInfo.Name.ToLower, cInfo)
+                    Call apiTable.Add(cInfo.Name.ToLower, cInfo)
                 End If
             Next
 
-            Me.__rootNamespace = type.Namespace
+            Me.rootNamespace = type.Namespace
             Me._Stack = caller
             Me._Type = type
             Me._Info = type.NamespaceEntry(True)
@@ -554,8 +554,8 @@ Namespace CommandLine
 #Region "Implements System.Collections.Generic.IReadOnlyDictionary(Of String, CommandInfo)"
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)) Implements IEnumerable(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).GetEnumerator
-            For Each key As String In Me.__API_table.Keys
-                Yield New KeyValuePair(Of String, EntryPoints.APIEntryPoint)(key, Me.__API_table(key))
+            For Each key As String In Me.apiTable.Keys
+                Yield New KeyValuePair(Of String, EntryPoints.APIEntryPoint)(key, Me.apiTable(key))
             Next
         End Function
 
@@ -564,7 +564,7 @@ Namespace CommandLine
         End Function
 
         Public Sub Add(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Add
-            Call __API_table.Add(item.Key, item.Value)
+            Call apiTable.Add(item.Key, item.Value)
         End Sub
 
         ''' <summary>
@@ -572,15 +572,15 @@ Namespace CommandLine
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Clear
-            Call __API_table.Clear()
+            Call apiTable.Clear()
         End Sub
 
         Public Function Contains(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) As Boolean Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Contains
-            Return __API_table.Contains(item)
+            Return apiTable.Contains(item)
         End Function
 
         Public Sub CopyTo(array() As KeyValuePair(Of String, EntryPoints.APIEntryPoint), arrayIndex As Integer) Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).CopyTo
-            Call __API_table.ToArray.CopyTo(array, arrayIndex)
+            Call apiTable.ToArray.CopyTo(array, arrayIndex)
         End Sub
 
         ''' <summary>
@@ -591,7 +591,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Count
             Get
-                Return Me.__API_table.Count
+                Return Me.apiTable.Count
             End Get
         End Property
 
@@ -602,11 +602,11 @@ Namespace CommandLine
         End Property
 
         Public Function Remove(item As KeyValuePair(Of String, EntryPoints.APIEntryPoint)) As Boolean Implements ICollection(Of KeyValuePair(Of String, EntryPoints.APIEntryPoint)).Remove
-            Return __API_table.Remove(item.Key)
+            Return apiTable.Remove(item.Key)
         End Function
 
         Public Sub Add(key As String, value As EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Add
-            Call __API_table.Add(key, value)
+            Call apiTable.Add(key, value)
         End Sub
 
         ''' <summary>
@@ -616,7 +616,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function ExistsCommand(CommandName As String) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).ContainsKey
-            Return Me.__API_table.ContainsKey(CommandName.ToLower)
+            Return Me.apiTable.ContainsKey(CommandName.ToLower)
         End Function
 
         ''' <summary>
@@ -626,7 +626,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Default Public Overloads Property Item(key As String) As EntryPoints.APIEntryPoint Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Item
             Get
-                Return Me.__API_table(key)
+                Return Me.apiTable(key)
             End Get
             Set(value As EntryPoints.APIEntryPoint)
                 'DO NOTHING
@@ -639,7 +639,7 @@ Namespace CommandLine
             If commands.Length = 0 Then
                 Return Nothing
             Else
-                Return __API_table(commands.First.ToLower)
+                Return apiTable(commands.First.ToLower)
             End If
         End Function
 
@@ -663,16 +663,16 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public ReadOnly Property APINameList As ICollection(Of String) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Keys
             Get
-                Return Me.__API_table.Keys
+                Return Me.apiTable.Keys
             End Get
         End Property
 
         Public Function Remove(CommandName As String) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Remove
-            Return __API_table.Remove(CommandName)
+            Return apiTable.Remove(CommandName)
         End Function
 
         Public Function TryGetValue(key As String, ByRef value As EntryPoints.APIEntryPoint) As Boolean Implements IDictionary(Of String, EntryPoints.APIEntryPoint).TryGetValue
-            Return Me.__API_table.TryGetValue(key, value)
+            Return Me.apiTable.TryGetValue(key, value)
         End Function
 
         ''' <summary>
@@ -681,7 +681,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public ReadOnly Property APIList As ICollection(Of EntryPoints.APIEntryPoint) Implements IDictionary(Of String, EntryPoints.APIEntryPoint).Values
             Get
-                Return Me.__API_table.Values
+                Return Me.apiTable.Values
             End Get
         End Property
 #End Region

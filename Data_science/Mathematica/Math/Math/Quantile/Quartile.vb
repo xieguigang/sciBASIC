@@ -82,7 +82,7 @@ Namespace Quantile
             Dim q3 = vector.ElementAtOrDefault(Math.Truncate(q(2)), vector.Last)
             Dim IQR = q3 - q1
 
-            Return New DataQuartile(q1, q2, q3, IQR, New DoubleRange(vector))
+            Return New DataQuartile(q1, q2, q3, IQR, vector)
         End Function
 
         ''' <summary>

@@ -46,7 +46,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Linq
 
-    Public Module PipelineExtensions
+    <HideModuleName> Public Module PipelineExtensions
 
         ''' <summary>
         ''' Delegate pipeline function

@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::14f6eba37cce671311b46ab764a7a2ab, Data\DataFrame\IO\Generic\EntityObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class EntityObject
-    ' 
-    '         Properties: ID
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: ContainsIDField, Copy, CreateFilter, GetIDList, GetPropertyNames
-    '                   (+4 Overloads) LoadDataSet, readHeaders, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class EntityObject
+' 
+'         Properties: ID
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: ContainsIDField, Copy, CreateFilter, GetIDList, GetPropertyNames
+'                   (+4 Overloads) LoadDataSet, readHeaders, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,28 @@ Namespace IO
         <Column("ID")>
         Public Overridable Property ID As String Implements INamedValue.Key
 
+        ''' <summary>
+        ''' 这个属性构建出与javascript之中的对象的属性读取类似的效果
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Default Public Overrides Property ItemValue(name As String) As String
+            Get
+                If name = NameOf(ID) Then
+                    Return ID
+                Else
+                    Return MyBase.ItemValue(name)
+                End If
+            End Get
+            Set(value As String)
+                If name = NameOf(ID) Then
+                    ID = value
+                Else
+                    MyBase.ItemValue(name) = value
+                End If
+            End Set
+        End Property
+
         Sub New()
         End Sub
 
@@ -85,8 +107,8 @@ Namespace IO
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(x As EntityObject)
-            Call Me.New(x.ID, New Dictionary(Of String, String)(x.Properties))
+        Sub New(obj As EntityObject)
+            Call Me.New(obj.ID, New Dictionary(Of String, String)(obj.Properties))
         End Sub
 
         ''' <summary>

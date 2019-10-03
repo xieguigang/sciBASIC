@@ -84,7 +84,7 @@ Module StreamIOHandler
         path = FileIO.FileSystem.GetFileInfo(path).FullName
 
         Call EchoLine($"[CSV.Reflector::{type.FullName}]" & vbCrLf & $"Save data to file:///{path}")
-        Call Reflector.__save(source, type, False, Nothing).SaveDataFrame(path, encoding:=encoding)
+        Call Reflector.doSave(source, type, False, Nothing).SaveDataFrame(path, encoding:=encoding)
         Call EchoLine("CSV saved!")
 
         Return True
