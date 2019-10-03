@@ -1538,9 +1538,9 @@
     <Compile Include="Text\StringSimilarity\Levenshtein\Extensions.vb" />
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
     <Compile Include="Text\TextEncodings.vb" />
-    <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
+    <Compile Include="Net\HTTP\HTTP_RFC.vb" />
     <Compile Include="Net\HTTP\Stream\Base64Codec.vb" />
-    <Compile Include="Extensions\WebServices\NetResponse.vb" />
+    <Compile Include="Net\Protocol\NetResponse.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
