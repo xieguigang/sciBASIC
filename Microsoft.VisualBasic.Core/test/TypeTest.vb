@@ -44,10 +44,29 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+Public Enum FlagCombos
+
+    A = 2
+    B = 4
+    C = 8
+
+End Enum
+
 Module TypeTest
 
-    Sub Main()
+    Sub descriptionTest()
 
+        Call Console.WriteLine(FlagCombos.A.Description)
+        Call Console.WriteLine(FlagCombos.B.Description)
+        Call Console.WriteLine(FlagCombos.C.Description)
+
+        Call Console.WriteLine((FlagCombos.A Or FlagCombos.B Or FlagCombos.C).Description)
+
+        Pause()
+    End Sub
+
+    Sub Main()
+        Call descriptionTest()
         Call patternMatch()
 
 
