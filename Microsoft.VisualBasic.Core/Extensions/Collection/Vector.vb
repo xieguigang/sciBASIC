@@ -69,15 +69,27 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 ''' <summary>
 ''' Extension methods for the .NET object sequence
 ''' </summary>
+''' 
+<HideModuleName>
 Public Module VectorExtensions
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="compares"></param>
+    ''' <param name="modification">是否修改原始输入的<paramref name="a"/>序列? 否则会创建一个新的数组序列返回</param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Sort(Of T)(ByRef a As T(), compares As Comparison(Of T), Optional modification As Boolean = True) As T()
         If modification Then
             Call Array.Sort(a, compares)
         Else
-            Return a.AsEnumerable.Sort(compares).ToArray
+            Return a.AsEnumerable _
+                .Sort(compares) _
+                .ToArray
         End If
 
         Return a
@@ -113,12 +125,13 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Dynamics add a element into the target array.
+    ''' Dynamics add a element into the target array.(注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
-    <Extension> Public Sub Add(Of T)(ByRef vector As T(), value As T)
+    <Extension>
+    Public Sub Add(Of T)(ByRef vector As T(), value As T)
         If vector.IsNullOrEmpty Then
             vector = {value}
         Else

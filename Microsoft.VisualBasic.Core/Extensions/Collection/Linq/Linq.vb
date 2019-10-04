@@ -60,6 +60,7 @@ Namespace Linq
     ''' </summary>
     <Package("LINQ", Category:=APICategories.UtilityTools)>
     <Extension>
+    <HideModuleName>
     Public Module Extensions
 
         ''' <summary>

@@ -1084,7 +1084,7 @@
     <Compile Include="Extensions\Collection\Linq\Pipeline.vb" />
     <Compile Include="Extensions\Collection\Linq\Takes.vb" />
     <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
-    <Compile Include="Extensions\Collection\BucketExtensions.vb" />
+    <Compile Include="Extensions\Collection\BucketOperators.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />

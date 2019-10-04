@@ -43,6 +43,7 @@ Imports System.Linq.Expressions
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
+<HideModuleName>
 Public Module MethodsExtension
 
     ''' <summary>
