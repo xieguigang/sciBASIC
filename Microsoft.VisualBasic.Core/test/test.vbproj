@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8CDE6B49-9B2B-4A0E-8954-5A46E9AECB88}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.markdownDisplayTest</StartupObject>
+    <StartupObject>test.TypeTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -92,11 +92,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="markdownDisplayTest.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="math_test.vb" />
     <Compile Include="htmlParserTest.vb" />
     <Compile Include="LinqExpressiontest.vb" />
-    <Compile Include="markdownDisplayTest.vb" />
     <Compile Include="wgetTest.vb" />
     <Compile Include="numberParserTest.vb" />
     <Compile Include="TypeTest.vb" />
