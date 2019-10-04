@@ -191,12 +191,12 @@ Namespace IO
                 In RowNumbers.Sequence.AsParallel
                 Let line As RowObject = _innerTable(i)  ' 已经去掉了首行标题行了的
                 Select row = New DynamicObjectLoader With {
-                    .LineNumber = i,
+                    .lineNumber = i,
                     .RowData = line,
                     .Schema = Me.SchemaOridinal,
-                    ._innerDataFrame = Me
+                    .dataFrame = Me
                 }
-                Order By row.LineNumber Ascending
+                Order By row.lineNumber Ascending
 
             Return LQuery
         End Function
@@ -577,7 +577,7 @@ Namespace IO
                                                  In Me._innerTable.SeqIterator
                                                  Let line As RowObject = i.value
                                                  Let loader = New DynamicObjectLoader With {
-                                                     .LineNumber = i.i,
+                                                     .lineNumber = i.i,
                                                      .RowData = line,
                                                      .Schema = schema
                                                  }

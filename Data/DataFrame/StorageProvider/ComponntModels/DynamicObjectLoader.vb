@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::4c98d5b78e53cf950b5de8a670cfe083, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DynamicObjectLoader
-    ' 
-    '         Properties: Attribute, Count, DataRecordItem, FieldCount, Item
-    '                     Keys, LineNumber, RowData, Schema, Values
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: [TryCast], __tryGetValue, ContainsKey, CreateSchema, GetBoolean
-    '                   GetByte, GetBytes, GetChar, GetChars, GetData
-    '                   GetDataTypeName, GetDateTime, GetDecimal, GetDouble, GetDynamicMemberNames
-    '                   GetEnumerator, GetEnumerator1, GetFieldType, GetFloat, GetGuid
-    '                   GetInt16, GetInt32, GetInt64, GetKey, GetName
-    '                   (+2 Overloads) GetOrdinal, GetString, GetValue, (+2 Overloads) GetValues, IDataRecord_GetValue
-    '                   IsDBNull, Read, SetAttributeValue, ToString, TryGetMember
-    '                   TryGetValue, TrySetMember
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DynamicObjectLoader
+' 
+'         Properties: Attribute, Count, DataRecordItem, FieldCount, Item
+'                     Keys, LineNumber, RowData, Schema, Values
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: [TryCast], __tryGetValue, ContainsKey, CreateSchema, GetBoolean
+'                   GetByte, GetBytes, GetChar, GetChars, GetData
+'                   GetDataTypeName, GetDateTime, GetDecimal, GetDouble, GetDynamicMemberNames
+'                   GetEnumerator, GetEnumerator1, GetFieldType, GetFloat, GetGuid
+'                   GetInt16, GetInt32, GetInt64, GetKey, GetName
+'                   (+2 Overloads) GetOrdinal, GetString, GetValue, (+2 Overloads) GetValues, IDataRecord_GetValue
+'                   IsDBNull, Read, SetAttributeValue, ToString, TryGetMember
+'                   TryGetValue, TrySetMember
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Dynamic
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -72,7 +73,7 @@ Namespace StorageProvider.ComponentModels
         Implements IReadOnlyDictionary(Of String, String)
 #End If
         ''' <summary>
-        ''' The row value of the specific row number <see cref="LineNumber"/>
+        ''' The row value of the specific row number <see cref="lineNumber"/>
         ''' </summary>
         ''' <returns></returns>
         Public Property RowData As RowObject
@@ -85,9 +86,9 @@ Namespace StorageProvider.ComponentModels
         ''' Row line index number in the csv data file.
         ''' </summary>
         ''' <returns></returns>
-        Public Property LineNumber As Long
+        Public Property lineNumber As Long
 
-        Protected Friend _innerDataFrame As DataFrame
+        Protected Friend dataFrame As DataFrame
 
         Public Sub New()
         End Sub
@@ -130,6 +131,8 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="idx"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Read(idx As IEnumerable(Of Integer)) As String()
             Return idx.Select(Function(x) RowData.Column(x)).ToArray
         End Function
@@ -147,7 +150,7 @@ Namespace StorageProvider.ComponentModels
             Else
                 Call Schema.Add(Name, Schema.Values.Max + 1)
                 Call RowData.Add(Value)
-                Call _innerDataFrame.AddAttribute(Name)
+                Call dataFrame.AddAttribute(Name)
             End If
 
             Return True
@@ -171,6 +174,8 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="Column"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinal(Column As IEnumerable(Of String)) As Integer()
             Return Column.Select(Function(x) GetOrdinal(x)).ToArray
         End Function
@@ -180,6 +185,8 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="Ordinal"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValue(Ordinal As Integer) As String
             Return RowData.Column(Ordinal)
         End Function
@@ -189,19 +196,10 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="ords"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValues(ords As Integer()) As String()
             Return ords.Select(Function(n) RowData.Column(n)).ToArray
-        End Function
-
-        ''' <summary>
-        ''' Creates the ordinal schema
-        ''' </summary>
-        ''' <param name="columns"></param>
-        ''' <returns></returns>
-        Public Shared Function CreateSchema(columns As String()) As Dictionary(Of String, Integer)
-            Return columns.SeqIterator _
-                .ToDictionary(Function(field) +field,
-                              Function(index) index.i)
         End Function
 
         Public Overrides Function ToString() As String
@@ -218,26 +216,32 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function [TryCast](Of T As Class)() As T
-            Dim Properties As PropertyInfo() =
-                (From pInfo As PropertyInfo
-                 In GetType(T).GetProperties(BindingFlags.Public)
-                 Where Scripting.IsPrimitive(pInfo.PropertyType)
-                 Select pInfo).ToArray
-            Dim o As T = Activator.CreateInstance(Of T)()
+            Dim properties As PropertyInfo() = ParseSchema(Of T).ToArray
+            Dim obj As T = Activator.CreateInstance(Of T)()
+            Dim strVal As String
+            Dim objVal As Object
 
-            For Each [Property] As PropertyInfo In Properties
+            For Each prop As PropertyInfo In properties
+                strVal = ""
+                Call internalTryGetByrefValue(prop.Name, strVal)
 
-                Dim value As String = ""
-                Call __tryGetValue([Property].Name, value)
-
-                Dim obj_Value As Object = Scripting.CTypeDynamic(value, [Property].PropertyType)
-                Call [Property].SetValue(o, obj_Value, Nothing)
+                objVal = Scripting.CTypeDynamic(strVal, prop.PropertyType)
+                Call prop.SetValue(obj, objVal, Nothing)
             Next
 
-            Return o
+            Return obj
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function ParseSchema(Of T)() As IEnumerable(Of PropertyInfo)
+            Return From prop As PropertyInfo
+                   In GetType(T).GetProperties(BindingFlags.Public)
+                   Where Scripting.IsPrimitive(prop.PropertyType)
+                   Select prop
         End Function
 
 #Region ""
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetDynamicMemberNames() As IEnumerable(Of String)
             Return Schema.Keys
         End Function
@@ -261,10 +265,10 @@ Namespace StorageProvider.ComponentModels
         ''' false, the run-time binder of the language determines the behavior. (In most
         ''' cases, a run-time exception is thrown.)
         ''' </returns>
-        Public Overrides Function TryGetMember(binder As Dynamic.GetMemberBinder, ByRef result As Object) As Boolean
+        Public Overrides Function TryGetMember(binder As GetMemberBinder, ByRef result As Object) As Boolean
             Dim colName As String = binder.Name
             Dim value As String = ""
-            Call __tryGetValue(colName, value)
+            Call internalTryGetByrefValue(colName, value)
             result = DirectCast(value, Object)
             Return True
         End Function
@@ -290,7 +294,7 @@ Namespace StorageProvider.ComponentModels
         ''' false, the run-time binder of the language determines the behavior. (In most
         ''' cases, a language-specific run-time exception is thrown.)
         ''' </returns>
-        Public Overrides Function TrySetMember(binder As Dynamic.SetMemberBinder, value As Object) As Boolean
+        Public Overrides Function TrySetMember(binder As SetMemberBinder, value As Object) As Boolean
             Attribute(binder.Name) = If(value Is Nothing, "", value.ToString)
             Return True
         End Function
@@ -312,7 +316,7 @@ Namespace StorageProvider.ComponentModels
             Return LQuery
         End Function
 
-        Private Function __tryGetValue(key As String, ByRef value As String) As Boolean
+        Private Function internalTryGetByrefValue(key As String, ByRef value As String) As Boolean
             key = GetKey(key)
 
             If String.IsNullOrEmpty(key) Then
@@ -359,7 +363,7 @@ Namespace StorageProvider.ComponentModels
         End Property
 
         Public Function TryGetValue(key As String, ByRef value As String) As Boolean Implements IReadOnlyDictionary(Of String, String).TryGetValue
-            Return __tryGetValue(key, value)
+            Return internalTryGetByrefValue(key, value)
         End Function
 
         Public ReadOnly Property Values As IEnumerable(Of String) Implements IReadOnlyDictionary(Of String, String).Values
