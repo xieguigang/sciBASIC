@@ -65,6 +65,8 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' <summary>
 ''' KeyValue pair data related extensions API.
 ''' </summary>
+''' 
+<HideModuleName>
 Public Module KeyValuePairExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
