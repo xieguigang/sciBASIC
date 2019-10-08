@@ -225,7 +225,7 @@ Namespace Math
                                                                    equals As GenericLambda(Of Double).IEquals,
                                                                    Optional chunkSize% = 20000) As IEnumerable(Of NamedCollection(Of T))
             Dim partitions = source _
-                .SplitIterator(parTokens:=chunkSize) _
+                .SplitIterator(partitionSize:=chunkSize) _
                 .AsParallel _
                 .Select(Function(part)
                             Return part.AsList.GroupByImpl(evaluate, equals)

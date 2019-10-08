@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Linq
 
+    <HideModuleName>
     Public Module IteratorExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

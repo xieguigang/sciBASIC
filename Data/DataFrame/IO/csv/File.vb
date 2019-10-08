@@ -283,6 +283,11 @@ B21,B22,B23,...
             Return df
         End Function
 
+        ''' <summary>
+        ''' 按照列进行投影操作, 这个函数仅适用于小型数据
+        ''' </summary>
+        ''' <param name="fieldNames"></param>
+        ''' <returns></returns>
         Public Function Project(fieldNames As IEnumerable(Of String)) As File
             Dim columns = fieldNames.Select(Function(name) Me(name)).ToArray
             Dim newTable = columns.JoinColumns

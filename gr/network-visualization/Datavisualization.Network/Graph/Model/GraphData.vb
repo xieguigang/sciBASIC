@@ -123,6 +123,10 @@ Namespace Graph
         End Property
 
         Public Property radius As Single
+        ''' <summary>
+        ''' Mass weight
+        ''' </summary>
+        ''' <returns></returns>
         Public Property mass As Single
         Public Property initialPostion As AbstractVector
         Public Property origID As String

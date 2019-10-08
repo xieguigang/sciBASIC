@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 
+<HideModuleName>
 Public Module IsNullOrEmptyExtensions
 
     <Extension>

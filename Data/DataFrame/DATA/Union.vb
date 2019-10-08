@@ -47,6 +47,10 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace DATA
 
+    ''' <summary>
+    ''' An abstract union operation data model
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public NotInheritable Class CbindProvider(Of T)
 
         Shared ReadOnly schema As Dictionary(Of String, PropertyInfo) = DataFramework.Schema(Of T)(PropertyAccess.Readable, True, True)

@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::92de9c7e41e484a88df1aae9c89b9765, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: Association, cbind, NameValues, rbind, rbindGroup
-    '               Removes, Subtract, Takes, Transpose, Union
-    '               Unique
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: Association, cbind, NameValues, rbind, rbindGroup
+'               Removes, Subtract, Takes, Transpose, Union
+'               Unique
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
     <ExportAPI("/name.values")>
     <Usage("/name.values /in <table.csv> /name <fieldName> /value <fieldName> [/describ <descriptionInfo.fieldName, default=Description> /out <values.csv>]")>
+    <Description("Subset of the input table file by columns, produce a <name,value,description> dataset.")>
     Public Function NameValues(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim name$ = args <= "/name"
@@ -86,6 +87,21 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
             .ToArray
 
         Return maps.SaveTo(out).CLICode
+    End Function
+
+    <ExportAPI("/subset")>
+    <Description("Subset of the table file by a given specific column labels")>
+    <Usage("/subset /in <table.csv> /columns <column.list> [/out <subset.csv>]")>
+    Public Function SubsetByColumns(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim columns$() = Tokenizer.CharsParser(args <= "/columns")
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.projects={columns.JoinBy(",").NormalizePathString(False)}.csv"
+
+        Using output As StreamWriter = out.OpenWriter
+            Call DATA.ProjectLargeDataFrame([in], columns, output)
+        End Using
+
+        Return 0
     End Function
 
     ''' <summary>

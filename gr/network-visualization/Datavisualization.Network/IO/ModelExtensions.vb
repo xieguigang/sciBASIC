@@ -101,7 +101,9 @@ Namespace FileStream
             Dim edges As New List(Of NetworkEdge)
 
             For Each n As Graph.Node In g.vertex
-                Dim data As New Dictionary(Of String, String)
+                Dim data As New Dictionary(Of String, String) From {
+                    {"weight", n.data.mass}
+                }
 
                 If Not n.data.initialPostion Is Nothing Then
                     ' skip coordination information when no layout data.

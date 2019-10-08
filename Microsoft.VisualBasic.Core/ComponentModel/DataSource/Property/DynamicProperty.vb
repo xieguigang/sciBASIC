@@ -88,7 +88,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Default Public Overloads Property ItemValue(name$) As T
+        Default Public Overridable Overloads Property ItemValue(name$) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If Properties.ContainsKey(name) Then
