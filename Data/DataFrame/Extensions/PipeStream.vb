@@ -55,6 +55,11 @@ Public Module PipeStream
         Return EntityObject.CreateFilter(filter)
     End Function
 
+    ''' <summary>
+    ''' 将一个任意的<see cref="RowObject"/>集合转换为一个csv表格文件模型对象
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DataFrame(data As IEnumerable(Of RowObject)) As Table
