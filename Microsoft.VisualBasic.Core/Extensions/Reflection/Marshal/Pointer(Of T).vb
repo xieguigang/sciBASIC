@@ -68,10 +68,13 @@ Namespace Emit.Marshal
         ''' <see cref="Position"/> -> its current value
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 当前的位置是指相对于当前的位置offset为0的位置就是当前的位置
+        ''' </remarks>
         Public Property Current As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value(Scan0)  ' 当前的位置是指相对于当前的位置offset为0的位置就是当前的位置
+                Return Value(Scan0)
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Protected Friend Set(value As T)
@@ -214,6 +217,14 @@ Namespace Emit.Marshal
 
         Public Overrides Function ToString() As String
             Return $"*{GetType(T).Name}: ({index}) {Current}"
+        End Function
+
+        ''' <summary>
+        ''' 获取当前指针位置后面的所有元素
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetLeftsAll() As T()
+            Return buffer.Skip(index).ToArray
         End Function
 
         '''' <summary>
