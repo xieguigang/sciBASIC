@@ -728,7 +728,7 @@ B21,B22,B23,...
         ''' <summary>
         ''' 对目标文本内容字符串进行解析，得到csv文件对象数据模型
         ''' </summary>
-        ''' <param name="content$"></param>
+        ''' <param name="content">这个参数是文本内容，而非是文件路径</param>
         ''' <param name="trimBlanks"></param>
         ''' <returns></returns>
         ''' 

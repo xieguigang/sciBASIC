@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Linq
 
+    <HideModuleName>
     Public Module VectorAssertExtensions
 
         ''' <summary>

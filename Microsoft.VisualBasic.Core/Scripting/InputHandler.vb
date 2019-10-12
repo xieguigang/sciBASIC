@@ -145,7 +145,7 @@ Namespace Scripting
                     errCaster.Add(expression & "|" & target.FullName)
                 End If
 
-                ex = New Exception($"{expression} ==> {target.FullName}", ex)
+                ex = New Exception($"{expression} => {target.FullName}", ex)
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
                 Return Nothing
             End Try
