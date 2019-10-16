@@ -62,6 +62,7 @@ Namespace Net.Http
         ReadOnly fs As FileStream
 
         Dim _speedSamples As List(Of Double)
+        Dim _isUnknownContentSize As Boolean = False
 
         ''' <summary>
         ''' Size that has been downloaded
@@ -110,7 +111,7 @@ Namespace Net.Http
             Me.saveFile = saveFile
         End Sub
 
-        Public Function StartTask(Optional doRetry As Boolean = True) As Boolean
+        Public Function StartTask(Optional doRetry As Boolean = True, Optional bufferSize% = 1024) As Boolean
             Dim retry As Integer = If(doRetry, 0, 5)
             Dim result As Boolean = True
 
@@ -121,8 +122,10 @@ Namespace Net.Http
             End If
 RE:
             Try
-                Call doTaskInternal()
-            Catch ex As Exception
+                Call doTaskInternal(bufferSize)
+            Catch ex As Exception When Not TypeOf ex Is NotImplementedException
+                Call ex.PrintException
+
                 If retry < 3 Then
                     retry += 1
                     GoTo RE
@@ -143,7 +146,7 @@ RE:
 
         Dim _startTime&
 
-        Private Sub doTaskInternal()
+        Private Sub doTaskInternal(bufferSize As Integer)
             ' Make a request for the url of the file to be downloaded
             Dim req As WebRequest = WebRequest.Create(url)
             Dim remote$ = "NA"
@@ -163,35 +166,33 @@ RE:
             _speedSamples = New List(Of Double)
             _currentSize = 0
             _startTime = App.ElapsedMilliseconds
+            _isUnknownContentSize = totalSize < 0
 
             RaiseEvent ReportRequest(req, resp, remote)
             RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
 
             If totalSize = -1 Then
-                Call taskWithNoContentLength(resp)
+                ' task with no Content-Length
+                Call doDownloadTask(resp, bufferSize, Function(read) read = 0)
             Else
-                Call taskWithContentLength(resp)
+                Call doDownloadTask(resp, bufferSize, Function() currentSize < totalSize)
             End If
 
             resp.Close()
         End Sub
 
-        Private Sub taskWithNoContentLength(resp As WebResponse)
-            Throw New NotImplementedException
-        End Sub
-
-        Private Sub taskWithContentLength(resp As WebResponse)
+        Private Sub doDownloadTask(resp As WebResponse, bufferSize%, exitJob As Func(Of Integer, Boolean))
             ' Make a buffer
-            Dim buffer(8192) As Byte
-            Dim read As Integer
+            Dim buffer(bufferSize - 1) As Byte
+            Dim read As Integer = Integer.MaxValue
             Dim interval As Double
 
-            Do While currentSize < totalSize
+            Do While Not exitJob(read)
                 ' Read the buffer from the response the WebRequest gave you
-                read = resp.GetResponseStream.Read(buffer, 0, 8192)
+                read = resp.GetResponseStream.Read(buffer, Scan0, buffer.Length)
                 ' Write to filestream that you declared at the beginning 
                 ' of the DoWork sub
-                fs.Write(buffer, 0, read)
+                fs.Write(buffer, Scan0, read)
 
                 _currentSize += read
                 interval = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).TotalSeconds
@@ -214,7 +215,18 @@ RE:
                 busy += 1
             End If
 
-            Return $"> '{saveFile.FileName}'{New String("."c, busy)}  {StringFormats.Lanudry(currentSize)} [{(100 * _currentSize / _totalSize).ToString("F2")}%, {StringFormats.Lanudry(downloadSpeed)}/sec], elapsed {TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).FormatTime}"
+            Dim progress$
+
+            If _isUnknownContentSize Then
+                progress = $"<unknown>%, {StringFormats.Lanudry(downloadSpeed)}/sec"
+            Else
+                progress = $"{(100 * _currentSize / _totalSize).ToString("F2")}%, {StringFormats.Lanudry(downloadSpeed)}/sec"
+            End If
+
+            Dim elapsed$ = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).FormatTime
+            Dim busyStr As New String("."c, busy)
+
+            Return $"> '{saveFile.FileName}'{busyStr}  {StringFormats.Lanudry(currentSize)} [{progress}], elapsed {elapsed}"
         End Function
 
 #Region "IDisposable Support"

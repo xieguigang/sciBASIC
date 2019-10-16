@@ -51,7 +51,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace d3js.Layout
 
@@ -153,8 +153,8 @@ Namespace d3js.Layout
                     y11 = lab(i).Y - lab(i).height + 2.0
                     x12 = lab(i).X + lab(i).width
                     y12 = lab(i).Y + 2.0
-                    x_overlap = Math.Max(0, sys.Min(x12, x22) - Math.Max(x11, x21))
-                    y_overlap = Math.Max(0, sys.Min(y12, y22) - Math.Max(y11, y21))
+                    x_overlap = Math.Max(0, stdNum.Min(x12, x22) - Math.Max(x11, x21))
+                    y_overlap = Math.Max(0, stdNum.Min(y12, y22) - Math.Max(y11, y21))
                     overlap_area = x_overlap * y_overlap
                     ener += (overlap_area * w_lab2)
                 End If
@@ -165,8 +165,8 @@ Namespace d3js.Layout
                 x12 = anc(i).x + anc(i).r
                 y12 = anc(i).y + anc(i).r
 
-                x_overlap = Math.Max(0, sys.Min(x12, x22) - Math.Max(x11, x21))
-                y_overlap = Math.Max(0, sys.Min(y12, y22) - Math.Max(y11, y21))
+                x_overlap = Math.Max(0, stdNum.Min(x12, x22) - Math.Max(x11, x21))
+                y_overlap = Math.Max(0, stdNum.Min(y12, y22) - Math.Max(y11, y21))
 
                 overlap_area = x_overlap * y_overlap
                 ener += (overlap_area * w_lab_anc)
