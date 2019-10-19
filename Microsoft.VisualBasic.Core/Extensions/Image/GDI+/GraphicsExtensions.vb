@@ -332,7 +332,10 @@ Namespace Imaging
         ''' 则使用这个函数则没有这个问题，在图片加载之后会立即释放掉文件句柄)
         ''' </summary>
         ''' <param name="path"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 当参数<paramref name="throwEx"/>为false时候，函数返回空值的话，说明图片文件错误
+        ''' 例如文件未下载完成或者发生了二进制移码
+        ''' </returns>
         <ExportAPI("LoadImage"), Extension>
         Public Function LoadImage(path$,
                                   Optional base64 As Boolean = False,
