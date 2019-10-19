@@ -139,6 +139,11 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 通过<see cref="TV.label"/>作为主键进行查询目标节点是否存在于当前的图对象之中
+    ''' </summary>
+    ''' <param name="name"><see cref="TV.label"/></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ExistVertex(name$) As Boolean
         Return vertices.ContainsKey(name)
