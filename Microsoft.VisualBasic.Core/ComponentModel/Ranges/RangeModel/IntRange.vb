@@ -64,17 +64,17 @@ Namespace ComponentModel.Ranges.Model
         ''' <summary>
         ''' Minimum value
         ''' </summary>
-        Public Property Min() As Integer Implements IRanges(Of Integer).Min
+        Public Property Min As Integer Implements IRanges(Of Integer).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
-        Public Property Max() As Integer Implements IRanges(Of Integer).Max
+        Public Property Max As Integer Implements IRanges(Of Integer).Max
 
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
-        Public ReadOnly Property Length() As Integer
+        Public ReadOnly Property Length As Integer
             Get
                 Return Max - Min
             End Get

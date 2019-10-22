@@ -121,6 +121,10 @@ Namespace FileStream
                     Next
                 End If
 
+                If Not data.ContainsKey("name") Then
+                    data.Add("name", n.data.label)
+                End If
+
                 nodes += New Node With {
                     .ID = n.Label,
                     .NodeType = n.data(names.REFLECTION_ID_MAPPING_NODETYPE),
