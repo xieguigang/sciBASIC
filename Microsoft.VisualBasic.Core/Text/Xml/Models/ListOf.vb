@@ -43,7 +43,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
+Imports System.Web.Script.Serialization
+Imports System.Xml
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Text.Xml.Models
@@ -89,6 +93,31 @@ Namespace Text.Xml.Models
     End Class
 
     Public Class XmlList(Of T) : Inherits ListOf(Of T)
+        Implements XmlDataModel.IXmlType
+
+        ''' <summary>
+        ''' ReadOnly, Data model type tracking use Xml Comment.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' JSON存储的时候,这个属性会被自动忽略掉
+        ''' </remarks>
+        <DataMember>
+        <IgnoreDataMember>
+        <ScriptIgnore>
+        <SoapIgnore>
+        <XmlAnyElement>
+        Public Property TypeComment As XmlComment Implements XmlDataModel.IXmlType.TypeComment
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return XmlDataModel.CreateTypeReferenceComment(GetType(T))
+            End Get
+            Set(value As XmlComment)
+                ' Do Nothing
+                ' 2018-6-5 this xml comment node cause bug 
+                ' when using xml deserialization
+            End Set
+        End Property
 
         <XmlElement("item")> Public Property items As T()
 

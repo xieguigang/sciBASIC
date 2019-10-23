@@ -117,6 +117,10 @@ Namespace ComponentModel
             Return New XmlDocument().CreateComment(GetTypeReferenceComment(Me.GetType))
         End Function
 
+        Public Shared Function CreateTypeReferenceComment(type As Type) As XmlComment
+            Return New XmlDocument().CreateComment(GetTypeReferenceComment(type))
+        End Function
+
         Public Shared Sub SaveTypeComment(model As IXmlType)
             model.TypeComment = New XmlDocument().CreateComment(GetTypeReferenceComment(model.GetType))
         End Sub
