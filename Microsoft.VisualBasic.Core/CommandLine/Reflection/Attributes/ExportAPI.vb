@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::fb69fc76f81f00cb04dcaaab9410eb37, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LastUpdatedAttribute
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Class ExportAPIAttribute
-    ' 
-    '         Properties: Example, Info, Name, Type, Usage
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GenerateHtmlDoc, printView, PrintView, printViewHTML, ToString
-    ' 
-    '     Interface IExportAPI
-    ' 
-    '         Properties: Example, Info, Name, Usage
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LastUpdatedAttribute
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: ToString
+' 
+'     Class ExportAPIAttribute
+' 
+'         Properties: Example, Info, Name, Type, Usage
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GenerateHtmlDoc, printView, PrintView, printViewHTML, ToString
+' 
+'     Interface IExportAPI
+' 
+'         Properties: Example, Info, Name, Usage
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -103,14 +103,14 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Info As String Implements IExportAPI.Info
+        <Obsolete> Public Property Info As String Implements IExportAPI.Info
         ''' <summary>
         ''' The usage of this command.(这个命令的用法，本属性仅仅是一个助记符，当用户没有编写任何的使用方法信息的时候才会使用本属性的值)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Usage As String Implements IExportAPI.Usage
+        <Obsolete> Public Property Usage As String Implements IExportAPI.Usage
         ''' <summary>
         ''' A example that to useing this command.
         ''' (对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值，
@@ -119,7 +119,7 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Example As String Implements IExportAPI.Example
+        <Obsolete> Public Property Example As String Implements IExportAPI.Example
 
         ''' <summary>
         ''' You are going to define a available export api for you application to another language or scripting program environment.
