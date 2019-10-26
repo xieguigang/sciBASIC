@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::7fffce487e1390b4d89c80f247130cc2, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\Token.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Token
-    ' 
-    '         Properties: Arguments, Closure, IsClosure, IsFunction, IsNumeric
-    '                     IsObject, name, Text, Type, UNDEFINED
-    '                     Value
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetValue, ToString
-    ' 
-    '     Class Statement
-    ' 
-    '         Properties: tokens, Trace
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class Main
-    ' 
-    '         Properties: program
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Token
+' 
+'         Properties: Arguments, Closure, IsClosure, IsFunction, IsNumeric
+'                     IsObject, name, Text, Type, UNDEFINED
+'                     Value
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetValue, ToString
+' 
+'     Class Statement
+' 
+'         Properties: tokens, Trace
+' 
+'         Function: ToString
+' 
+'     Class Main
+' 
+'         Properties: program
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,7 +68,7 @@ Namespace Scripting.TokenIcer
     ''' <remarks>
     ''' A Token object holds the token and token value.
     ''' </remarks>
-    Public Class Token(Of Tokens As IComparable) : Implements Value(Of String).IValueOf
+    <Obsolete> Public Class Token(Of Tokens As IComparable) : Implements Value(Of String).IValueOf
 
         ''' <summary>
         ''' Token type
@@ -217,5 +217,79 @@ Namespace Scripting.TokenIcer
     ''' <typeparam name="T"></typeparam>
     Public Class Main(Of T As IComparable)
         Public Property program As Statement(Of T)()
+    End Class
+
+    ''' <summary>
+    ''' 目标Token对象在原始代码文本之中的定位位置
+    ''' </summary>
+    Public Class CodeSpan
+
+        ''' <summary>
+        ''' 源代码中的起始位置 
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property start As Integer
+        ''' <summary>
+        ''' 源代码中的结束位置
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property stops As Integer
+        ''' <summary>
+        ''' 在代码文本的行号
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property line As Integer
+
+    End Class
+
+    ''' <summary>
+    ''' a Token object class, This defines the Token object
+    ''' </summary>
+    ''' <typeparam name="Tokens">应该是枚举类型</typeparam>
+    ''' <remarks>
+    ''' A Token object holds the token and token value.
+    ''' </remarks>
+    Public MustInherit Class CodeToken(Of Tokens As IComparable) : Implements Value(Of String).IValueOf
+
+        ''' <summary>
+        ''' Token type
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute("name")>
+        Public Property name As Tokens
+        Public Property span As CodeSpan
+
+        ''' <summary>
+        ''' The text that makes up the token.
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property text As String Implements Value(Of String).IValueOf.Value
+
+        ''' <summary>
+        ''' Returns a Boolean value indicating whether an expression can be evaluated as
+        ''' a number.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property isNumeric As Boolean
+            Get
+                Return Information.IsNumeric(text)
+            End Get
+        End Property
+
+        Public Sub New(name As Tokens, value$)
+            Me.name = name
+            Me.text = value
+        End Sub
+
+        Sub New(name As Tokens)
+            Me.name = name
+        End Sub
+
+        Sub New()
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{name}] {text}"
+        End Function
     End Class
 End Namespace

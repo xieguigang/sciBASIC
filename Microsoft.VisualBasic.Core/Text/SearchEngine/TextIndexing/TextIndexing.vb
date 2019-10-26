@@ -74,7 +74,7 @@ Namespace Text.Search
         ''' <param name="max"></param>
         Sub New(text As String, min As Integer, max As Integer)
             If min = max Then
-                cache = __cache(text, max)
+                cache = doCache(text, max)
             Else
                 cache = LinqAPI.Exec(Of TextSegment) _
  _
@@ -83,7 +83,7 @@ Namespace Text.Search
                               .Sequence _
                               .AsParallel
                           Let len As Integer = min + d
-                          Select __cache(text, len)
+                          Select doCache(text, len)
             End If
 
             _text = text
@@ -100,7 +100,7 @@ Namespace Text.Search
             Return Mid(_text, 1, 120) & "..."
         End Function
 
-        Private Shared Function __cache(text As String, len As Integer) As TextSegment()
+        Private Shared Function doCache(text As String, len As Integer) As TextSegment()
             Dim out As New List(Of TextSegment)
 
             For i As Integer = 1 To text.Length - len
