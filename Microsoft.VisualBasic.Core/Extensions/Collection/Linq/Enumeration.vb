@@ -98,6 +98,13 @@ Namespace Linq
             End Function
         End Class
 
+        <Extension>
+        Public Iterator Function AsEnumerable(enums As Array) As IEnumerable(Of Object)
+            For Each element As Object In enums
+                Yield element
+            Next
+        End Function
+
         ''' <summary>
         ''' Returns the input typed as <see cref="IEnumerable(Of T)"/>.
         ''' </summary>
