@@ -54,21 +54,21 @@ Namespace Drawing2D.Colors
 
 Color name terms that you could used for data charting plot:
 
-`material`               Includes 20 typical colors that used in Google Android material design.
-`console.colors`         Includes 16 colors from Windows command terminal.
-`TSF`                    Includes 19 colors that defines in the TSFShell launcher on Android.
-`rainbow`                Includes 7 rainbow colors.
-`dotnet.colors`          All of the named colors in .NET framework.
-`scibasic.chart()`       Chartting colors in sciBASIC.NET framework.
-`scibasic.category31()`  Includes 31 colors that used for category data.
-`Clusters`               Includes 10 colors that used for category data.
+   `material`               Includes 20 typical colors that used in Google Android material design.
+   `console.colors`         Includes 16 colors from Windows command terminal.
+   `TSF`                    Includes 19 colors that defines in the TSFShell launcher on Android.
+   `rainbow`                Includes 7 rainbow colors.
+   `dotnet.colors`          All of the named colors in .NET framework.
+   `scibasic.chart()`       Chartting colors in sciBASIC.NET framework.
+   `scibasic.category31()`  Includes 31 colors that used for category data.
+   `Clusters`               Includes 10 colors that used for category data.
 
 All of the color name terms that in d3.js library is also available at here:
 
-`d3.scale.category10()`
-`d3.scale.category20()`
-`d3.scale.category20b()`
-`d3.scale.category20c()`
+   `d3.scale.category10()`
+   `d3.scale.category20()`
+   `d3.scale.category20b()`
+   `d3.scale.category20c()`
 
 Color schema name terms that comes from the ColorBrewer system:
 
@@ -116,12 +116,12 @@ You also can choose color patterns that used for gradient data visualization:
 
 Also includes some color schema that used in Microsoft Office:
 
-`Office2016`   The default color schema that used in Office2016
-`Office2010`   The default color schema that used in Office2010
-`Slipstream`
-`Marquee`
-`Aspect`
-`Paper`
+   `Office2016`   The default color schema that used in Office2016
+   `Office2010`   The default color schema that used in Office2010
+   `Slipstream`
+   `Marquee`
+   `Aspect`
+   `Paper`
 
 "
 
