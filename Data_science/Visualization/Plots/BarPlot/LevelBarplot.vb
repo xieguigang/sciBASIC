@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -37,10 +38,13 @@ Namespace BarPlot
                              Optional labelFontCSS$ = CSSFont.Win7Large,
                              Optional chartBoxStroke$ = Stroke.ScatterLineStroke,
                              Optional maxLabelLength% = 48,
-                             Optional levelColorSchema$ = ColorMap.PatternJet) As GraphicsData
+                             Optional levelColorSchema$ = ColorMap.PatternJet,
+                             Optional tickFormat$ = "F1",
+                             Optional tickFontCSS$ = CSSFont.Win7LargerNormal) As GraphicsData
 
             Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
             Dim labelFont As Font = CSSFont.TryParse(labelFontCSS)
+            Dim tickFont As Font = CSSFont.TryParse(tickFontCSS)
             Dim trim = trimLabel(maxLabelLength)
             Dim maxLengthLabel$ = data.Keys _
                 .Select(trim) _
@@ -51,6 +55,7 @@ Namespace BarPlot
                 .ToArray
             Dim colorIndex As DoubleRange = {0, colors.Length - 1}
             Dim indexScaler As DoubleRange = data.Select(Function(i) i.Value).ToArray
+            Dim pen As Pen = Stroke.TryParse(chartBoxStroke).GDIObject
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -74,7 +79,7 @@ Namespace BarPlot
                     }
 
                     Call g.DrawString(title, titleFont, Brushes.Black, pos)
-                    Call g.DrawRectangle(Stroke.TryParse(chartBoxStroke).GDIObject, chartBox)
+                    Call g.DrawRectangle(pen, chartBox)
 
                     Dim ticks = {0, indexScaler.Max}.CreateAxisTicks
                     Dim widthScaler = d3js _
@@ -85,6 +90,7 @@ Namespace BarPlot
                     Dim width As Integer
                     Dim dy As Integer = chartBox.Height / (data.Length + 1)
                     Dim dyInterval = (chartBox.Height / data.Length - dy) / (data.Length)
+                    Dim x As Integer
                     Dim y As Integer = chartBox.Top
                     Dim bar As Rectangle
                     Dim levelIndex As Integer
@@ -113,6 +119,24 @@ Namespace BarPlot
 
                         y += dy
                     Next
+
+                    y = chartBox.Bottom + 5
+                    pen.DashStyle = DashStyle.Solid
+
+                    ' 绘制标尺
+                    For Each tick As Double In ticks
+                        label = tick.ToString(tickFormat)
+                        x = widthScaler(tick)
+                        pos = New PointF With {
+                            .X = x - g.MeasureString(label, tickFont).Width / 2,
+                            .Y = y + 15
+                        }
+
+                        Call g.DrawString(label, tickFont, Brushes.Black, pos)
+                        Call g.DrawLine(pen, New PointF(x, y), New Point(x, y + 15))
+                    Next
+
+                    Call g.DrawLine(pen, New PointF(widthScaler(0), y), New PointF(widthScaler(ticks.Max), y))
                 End Sub
 
             Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
