@@ -67,6 +67,8 @@ Public Module PrimitiveParser
 
     ''' <summary>
     ''' 用于匹配任意实数的正则表达式
+    ''' 
+    ''' (这个正则表达式有一个bug，会匹配上一个单独的字母E)
     ''' </summary>
     ''' <remarks>
     ''' 这个表达式并不用于<see cref="IsNumeric"/>, 但是其他的模块的代码可能会需要这个通用的表达式来做一些判断
@@ -85,6 +87,11 @@ Public Module PrimitiveParser
         Dim dotCheck As Boolean = False
         Dim c As Char = num(Scan0)
         Dim offset As Integer = 0
+
+        ' 修复正则匹配的bug
+        If num = "e" OrElse num = "E" Then
+            Return False
+        End If
 
         If c = "-"c OrElse c = "+"c Then
             ' check for number sign symbol

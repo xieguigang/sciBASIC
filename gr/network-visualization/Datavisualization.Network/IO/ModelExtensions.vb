@@ -121,6 +121,13 @@ Namespace FileStream
                     Next
                 End If
 
+                ' 20191022
+                ' name 会和cytoscape之中的name属性产生冲突
+                ' 所以在这里修改为label
+                If Not data.ContainsKey("label") Then
+                    data.Add("label", n.data.label)
+                End If
+
                 nodes += New Node With {
                     .ID = n.Label,
                     .NodeType = n.data(names.REFLECTION_ID_MAPPING_NODETYPE),

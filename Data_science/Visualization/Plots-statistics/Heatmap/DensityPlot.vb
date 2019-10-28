@@ -128,7 +128,8 @@ Namespace Heatmap
                 .DensityMatrix(
                     pointVector,
                     schema:=colors,
-                    r:=ptSize)
+                    r:=ptSize
+                )
             Dim scatterPadding As Padding = padding
             Dim xAxis = xrange.CreateAxisTicks.AxisExpression
             Dim yAxis = yrange.CreateAxisTicks.AxisExpression

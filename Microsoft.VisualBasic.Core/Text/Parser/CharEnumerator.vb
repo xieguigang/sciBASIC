@@ -80,6 +80,11 @@ Namespace Text.Parser
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Not(chars As CharPtr) As Boolean
+            Return Not chars.EndRead
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(str As String) As CharPtr
             Return New CharPtr(str)
         End Operator

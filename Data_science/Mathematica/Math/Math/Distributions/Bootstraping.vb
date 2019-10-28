@@ -187,7 +187,9 @@ Namespace Distributions
             Return CutBins.FixedWidthBins(Of Double)(
                 v:=data.OrderBy(Function(x) x).ToArray,
                 width:=[step],
-                eval:=Function(x) x
+                eval:=Function(x) x,
+                min:=data.Min,
+                max:=data.Max
             )
         End Function
     End Module

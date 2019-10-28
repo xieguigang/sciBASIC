@@ -148,7 +148,7 @@ RE:
 
         Private Sub doTaskInternal(bufferSize As Integer)
             ' Make a request for the url of the file to be downloaded
-            Dim req As WebRequest = WebRequest.Create(url)
+            Dim req As WebRequest = HttpGet.BuildWebRequest(url, Nothing, Nothing, UserAgent.GoogleChrome)
             Dim remote$ = "NA"
 
             If TypeOf req Is HttpWebRequest Then
@@ -175,7 +175,7 @@ RE:
                 ' task with no Content-Length
                 Call doDownloadTask(resp, bufferSize, Function(read) read = 0)
             Else
-                Call doDownloadTask(resp, bufferSize, Function() currentSize < totalSize)
+                Call doDownloadTask(resp, bufferSize, Function() currentSize >= totalSize)
             End If
 
             resp.Close()

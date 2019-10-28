@@ -257,7 +257,8 @@ Namespace CommandLine.ManView
                     End If
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    blank = New String(" "c, helpOffset - l + 2)
+                    l = helpOffset - l + 2
+                    blank = If(l > 0, New String(" "c, l), "  ")
                     infoLines$ = param.Description _
                         .LineTokens _
                         .Select(Function(str) str.Trim(" "c, ASCII.TAB)) _

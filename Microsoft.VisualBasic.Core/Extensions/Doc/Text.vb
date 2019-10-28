@@ -214,6 +214,10 @@ Public Module TextDoc
     ''' </param>
     ''' <returns></returns>
     <Extension> Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
+        If path.FileLength <= 0 Then
+            Return ""
+        End If
+
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
             Using reader As New StreamReader(file, encoding Or DefaultEncoding)
                 Dim first$ = reader.ReadLine
