@@ -98,8 +98,16 @@ Namespace Linq
             End Function
         End Class
 
+        ''' <summary>
+        ''' 将一个<see cref="Array"/>对象转换为一个<see cref="Object"/>对象的枚举序列
+        ''' </summary>
+        ''' <param name="enums"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 使用这个拓展函数的原因是<see cref="Array"/>对象不能够产生对象的枚举序列用于Linq拓展函数
+        ''' </remarks>
         <Extension>
-        Public Iterator Function AsEnumerable(enums As Array) As IEnumerable(Of Object)
+        Public Iterator Function AsObjectEnumerator(enums As Array) As IEnumerable(Of Object)
             For Each element As Object In enums
                 Yield element
             Next
