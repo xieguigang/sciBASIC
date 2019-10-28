@@ -95,7 +95,7 @@ Namespace BarPlot
                         .range(integers:={0, chartBox.Width})
                     Dim width As Integer
                     Dim dy As Integer = chartBox.Height / (data.Length + 1)
-                    Dim dyInterval = (chartBox.Height / data.Length - dy) / (data.Length)
+                    Dim dyInterval = (chartBox.Height / data.Length) / (data.Length)
                     Dim x As Integer
                     Dim y As Integer = chartBox.Top
                     Dim bar As Rectangle
