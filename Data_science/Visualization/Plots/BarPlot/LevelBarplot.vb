@@ -40,19 +40,23 @@ Namespace BarPlot
                              Optional chartBoxStroke$ = Stroke.ScatterLineStroke,
                              Optional maxLabelLength% = 48,
                              Optional levelColorSchema$ = ColorMap.PatternJet,
+                             Optional colorLevels% = 30,
                              Optional tickFormat$ = "F1",
                              Optional tickFontCSS$ = CSSFont.Win7LargerNormal,
-                             Optional legendTitle$ = "Value Levels") As GraphicsData
+                             Optional legendTitle$ = "Value Levels",
+                             Optional valueTitle$ = "Value Levels",
+                             Optional valueTitleFontCSS$ = CSSFont.Win7LargerBold) As GraphicsData
 
             Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
             Dim labelFont As Font = CSSFont.TryParse(labelFontCSS)
             Dim tickFont As Font = CSSFont.TryParse(tickFontCSS)
+            Dim valueTitleFont As Font = CSSFont.TryParse(valueTitleFontCSS)
             Dim trim = trimLabel(maxLabelLength)
             Dim maxLengthLabel$ = data.Keys _
                 .Select(trim) _
                 .MaxLengthString
             Dim colors As SolidBrush() = Designer _
-                .GetColors(levelColorSchema, 100) _
+                .GetColors(levelColorSchema, colorLevels) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
             Dim colorIndex As DoubleRange = {0, colors.Length - 1}
@@ -77,7 +81,7 @@ Namespace BarPlot
 
                     pos = New PointF With {
                         .X = plotRegion.Left + (plotRegion.Width - titleSize.Width) / 2,
-                        .Y = plotRegion.Top - titleSize.Height - stdNum.Min(10, titleSize.Height / 3)
+                        .Y = plotRegion.Top - titleSize.Height - stdNum.Min(10, titleSize.Height / 2)
                     }
 
                     Call g.DrawString(title, titleFont, Brushes.Black, pos)
@@ -153,6 +157,13 @@ Namespace BarPlot
                     }
 
                     Call g.ColorMapLegend(legendLayout, colors, ticks, labelFont, legendTitle, tickFont, pen, "gray")
+
+                    ' 绘制底部的小标题
+                    titleSize = g.MeasureString(valueTitle, valueTitleFont)
+                    x = chartBox.Left + (chartBox.Width - titleSize.Width) / 2
+                    y = chartBox.Bottom + (region.Padding.Bottom - titleSize.Height) / 2
+
+                    Call g.DrawString(valueTitle, valueTitleFont, Brushes.Black, New PointF(x, y))
                 End Sub
 
             Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
