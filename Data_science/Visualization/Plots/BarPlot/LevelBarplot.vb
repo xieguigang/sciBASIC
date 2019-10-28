@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Legends
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -40,7 +41,8 @@ Namespace BarPlot
                              Optional maxLabelLength% = 48,
                              Optional levelColorSchema$ = ColorMap.PatternJet,
                              Optional tickFormat$ = "F1",
-                             Optional tickFontCSS$ = CSSFont.Win7LargerNormal) As GraphicsData
+                             Optional tickFontCSS$ = CSSFont.Win7LargerNormal,
+                             Optional legendTitle$ = "Value Levels") As GraphicsData
 
             Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
             Dim labelFont As Font = CSSFont.TryParse(labelFontCSS)
@@ -49,7 +51,7 @@ Namespace BarPlot
             Dim maxLengthLabel$ = data.Keys _
                 .Select(trim) _
                 .MaxLengthString
-            Dim colors As Brush() = Designer _
+            Dim colors As SolidBrush() = Designer _
                 .GetColors(levelColorSchema, 100) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
@@ -141,6 +143,16 @@ Namespace BarPlot
                         pt1:=New PointF(chartBox.Left + widthScaler(0), y),
                         pt2:=New PointF(chartBox.Left + widthScaler(ticks.Max), y)
                     )
+
+                    ' 绘制颜色标尺
+                    Dim legendLayout As New Rectangle With {
+                        .X = chartBox.Right + 20,
+                        .Y = chartBox.Top + (chartBox.Height - 200) / 2,
+                        .Width = region.Padding.Right * (2 / 3),
+                        .Height = chartBox.Height / 2
+                    }
+
+                    Call g.ColorMapLegend(legendLayout, colors, ticks, labelFont, legendTitle, tickFont, pen, "gray")
                 End Sub
 
             Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)

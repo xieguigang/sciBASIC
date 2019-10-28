@@ -77,8 +77,11 @@ Namespace Drawing2D.Colors
                                        Optional titleFont As Font = Nothing,
                                        Optional labelFont As Font = Nothing,
                                        Optional legendWidth! = -1) As GraphicsData
-            Dim br As SolidBrush() =
-                designer.Select(Function(c) New SolidBrush(c)).ToArray
+
+            Dim br As SolidBrush() = designer _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray
+
             Return br.ColorMapLegend(
                 title,
                 min, max,
@@ -86,7 +89,8 @@ Namespace Drawing2D.Colors
                 haveUnmapped,
                 lsize, padding,
                 titleFont, labelFont,
-                legendWidth)
+                legendWidth
+            )
         End Function
 
         Public Const DefaultPadding$ = "padding:50px 50px 100px 50px;"
