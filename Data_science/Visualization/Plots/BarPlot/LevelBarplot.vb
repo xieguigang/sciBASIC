@@ -1,11 +1,15 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Namespace BarPlot
 
@@ -14,26 +18,39 @@ Namespace BarPlot
     ''' </summary>
     Public Module LevelBarplot
 
+        Private Function trimLabel(maxLen As Integer) As Func(Of String, String)
+            Return Function(lb) As String
+                       If lb.Length > maxLen Then
+                           Return Mid(lb, 1, maxLen) & "..."
+                       Else
+                           Return lb
+                       End If
+                   End Function
+        End Function
+
         Public Function Plot(data As NamedValue(Of Double)(),
-                             Optional size$ = "2000,1600",
+                             Optional size$ = "2700,2100",
                              Optional margin$ = Resolution2K.PaddingWithRightLegend,
                              Optional bg$ = "white",
                              Optional title$ = "BarPlot",
                              Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
                              Optional labelFontCSS$ = CSSFont.Win7Large,
-                             Optional chartBoxStroke$ = Stroke.ScatterLineStroke) As GraphicsData
+                             Optional chartBoxStroke$ = Stroke.ScatterLineStroke,
+                             Optional maxLabelLength% = 48,
+                             Optional levelColorSchema$ = ColorMap.PatternJet) As GraphicsData
 
             Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
             Dim labelFont As Font = CSSFont.TryParse(labelFontCSS)
+            Dim trim = trimLabel(maxLabelLength)
             Dim maxLengthLabel$ = data.Keys _
-                .Select(Function(lb)
-                            If lb.Length > 48 Then
-                                Return Mid(lb, 1, 48) & "..."
-                            Else
-                                Return lb
-                            End If
-                        End Function) _
+                .Select(trim) _
                 .MaxLengthString
+            Dim colors As Brush() = Designer _
+                .GetColors(levelColorSchema, 100) _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray
+            Dim colorIndex As DoubleRange = {0, colors.Length - 1}
+            Dim indexScaler As DoubleRange = data.Select(Function(i) i.Value).ToArray
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -49,15 +66,53 @@ Namespace BarPlot
 
                     ' draw main title
                     Dim titleSize As SizeF = g.MeasureString(title, titleFont)
+                    Dim label As String
 
                     pos = New PointF With {
                         .X = plotRegion.Left + (plotRegion.Width - titleSize.Width) / 2,
-                        .Y = plotRegion.Top - 20
+                        .Y = plotRegion.Top - titleSize.Height - stdNum.Min(10, titleSize.Height / 3)
                     }
 
                     Call g.DrawString(title, titleFont, Brushes.Black, pos)
                     Call g.DrawRectangle(Stroke.TryParse(chartBoxStroke).GDIObject, chartBox)
 
+                    Dim ticks = {0, indexScaler.Max}.CreateAxisTicks
+                    Dim widthScaler = d3js _
+                        .scale _
+                        .linear _
+                        .domain(ticks) _
+                        .range(integers:={0, chartBox.Width})
+                    Dim width As Integer
+                    Dim dy As Integer = chartBox.Height / (data.Length + 1)
+                    Dim dyInterval = (chartBox.Height / data.Length - dy) / (data.Length)
+                    Dim y As Integer = chartBox.Top
+                    Dim bar As Rectangle
+                    Dim levelIndex As Integer
+
+                    For Each item As NamedValue(Of Double) In data
+                        label = trim(item.Name)
+                        width = widthScaler(item.Value)
+                        levelIndex = indexScaler.ScaleMapping(item.Value, colorIndex)
+                        y += dyInterval
+                        bar = New Rectangle With {
+                            .X = chartBox.Left,
+                            .Y = y,
+                            .Width = width,
+                            .Height = dy
+                        }
+
+                        ' label是右对齐的
+                        titleSize = g.MeasureString(label, labelFont)
+                        pos = New PointF With {
+                            .X = chartBox.Left - 5 - titleSize.Width,
+                            .Y = y + (dy - titleSize.Height) / 2
+                        }
+
+                        Call g.DrawString(label, labelFont, Brushes.Black, pos)
+                        Call g.FillRectangle(colors(levelIndex), bar)
+
+                        y += dy
+                    Next
                 End Sub
 
             Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
