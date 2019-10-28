@@ -294,7 +294,7 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' <see cref="ColorMap"/> pattern names
         ''' </summary>
-        ReadOnly __allColorMapNames$() = {
+        ReadOnly allColorMapNames$() = {
             ColorMap.PatternAutumn,
             ColorMap.PatternCool,
             ColorMap.PatternGray,
@@ -388,13 +388,13 @@ Namespace Drawing2D.Colors
                     .ToArray
             Else
                 With New DesignerExpression(exp)
-                    Return .Modify(Designer.GetColorsInternal(.Term))
+                    Return .Modify(Designer.getColorsInternal(.Term))
                 End With
             End If
         End Function
 
-        Private Function GetColorsInternal(term$) As Color()
-            If Array.IndexOf(__allColorMapNames, term.ToLower) > -1 Then
+        Private Function getColorsInternal(term$) As Color()
+            If Array.IndexOf(allColorMapNames, term.ToLower) > -1 Then
                 Return New ColorMap(20, 255).ColorSequence(term)
             End If
 
