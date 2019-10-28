@@ -66,6 +66,11 @@ Namespace Driver
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Driver As Drivers
+
+        ''' <summary>
+        ''' The image size
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Size As Size
 
         Public ReadOnly Property Width As Integer
