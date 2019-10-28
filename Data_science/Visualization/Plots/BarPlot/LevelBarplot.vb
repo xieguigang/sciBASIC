@@ -156,7 +156,7 @@ Namespace BarPlot
                         .Height = chartBox.Height / 2
                     }
 
-                    Call g.ColorMapLegend(legendLayout, colors, ticks, labelFont, legendTitle, tickFont, pen, "gray")
+                    Call g.ColorMapLegend(legendLayout, colors, ticks, valueTitleFont, legendTitle, tickFont, pen, "gray")
 
                     ' 绘制底部的小标题
                     titleSize = g.MeasureString(valueTitle, valueTitleFont)
