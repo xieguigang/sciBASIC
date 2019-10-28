@@ -126,7 +126,7 @@ Namespace BarPlot
                     ' 绘制标尺
                     For Each tick As Double In ticks
                         label = tick.ToString(tickFormat)
-                        x = widthScaler(tick)
+                        x = chartBox.Left + widthScaler(tick)
                         pos = New PointF With {
                             .X = x - g.MeasureString(label, tickFont).Width / 2,
                             .Y = y + 15
@@ -136,7 +136,11 @@ Namespace BarPlot
                         Call g.DrawLine(pen, New PointF(x, y), New Point(x, y + 15))
                     Next
 
-                    Call g.DrawLine(pen, New PointF(widthScaler(0), y), New PointF(widthScaler(ticks.Max), y))
+                    Call g.DrawLine(
+                        pen:=pen,
+                        pt1:=New PointF(chartBox.Left + widthScaler(0), y),
+                        pt2:=New PointF(chartBox.Left + widthScaler(ticks.Max), y)
+                    )
                 End Sub
 
             Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
