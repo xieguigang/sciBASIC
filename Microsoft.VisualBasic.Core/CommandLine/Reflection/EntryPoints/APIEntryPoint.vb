@@ -187,6 +187,14 @@ Namespace CommandLine.Reflection.EntryPoints
                 End If
             End If
 
+            Dim note As NoteAttribute = EntryPoint.GetCustomAttribute(Of NoteAttribute)
+
+            If Not note Is Nothing Then
+                Call sb.AppendLine()
+                Call sb.AppendLine("Author Comment About This Command:")
+                Call sb.AppendLine(note.noteText)
+            End If
+
             Return sb.ToString
         End Function
 
