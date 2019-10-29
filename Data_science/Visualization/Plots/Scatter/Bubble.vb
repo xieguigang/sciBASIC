@@ -85,7 +85,8 @@ Public Module Bubble
                          Optional ylabel$ = "",
                          Optional axisLabelFontCSS$ = CSSFont.Win7LargeBold,
                          Optional tagFontCSS$ = CSSFont.Win10Normal,
-                         Optional strokeColorAsMainColor As Boolean = False) As GraphicsData
+                         Optional strokeColorAsMainColor As Boolean = False,
+                         Optional positiveRangeY As Boolean = False) As GraphicsData
 
         Dim margin As Padding = padding
         Dim tagLabelFont As Font = CSSFont.TryParse(tagFontCSS).GDIObject
@@ -118,6 +119,10 @@ Public Module Bubble
                 Dim anchors As New List(Of Anchor)
                 Dim labelSize As SizeF
                 Dim plotrect As Rectangle = grect.PlotRegion
+
+                If positiveRangeY Then
+                    yTicks = yTicks.Where(Function(t) t >= 0).ToArray
+                End If
 
                 With grect.PlotRegion
                     x = d3js.scale.linear.domain(xTicks).range(integers:={ .Left, .Right})

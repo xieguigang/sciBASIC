@@ -270,7 +270,17 @@ Public Module RegexExtensions
         ' 2018-6-1 因为空字符串肯定无法匹配上目标模式
         ' 所以match函数总回返回空字符串
         ' 由于s参数本身就是空字符串，所以会造成空字符串可以被任意模式完全匹配的bug
-        Return Not s.StringEmpty AndAlso Regex.Match(s, pattern, opt).Value = s
+        If s.StringEmpty Then
+            Return False
+        End If
+
+        Dim match$ = Regex.Match(s, pattern, opt).Value
+
+        If match = s Then
+            Return True
+        Else
+            Return False
+        End If
     End Function
 
     ''' <summary>
