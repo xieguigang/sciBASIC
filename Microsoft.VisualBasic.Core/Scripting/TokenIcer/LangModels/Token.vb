@@ -240,6 +240,10 @@ Namespace Scripting.TokenIcer
         ''' <returns></returns>
         <XmlAttribute> Public Property line As Integer
 
+        Public Overrides Function ToString() As String
+            Return $"[{start}, {[stops]}] at line {line}"
+        End Function
+
     End Class
 
     ''' <summary>
