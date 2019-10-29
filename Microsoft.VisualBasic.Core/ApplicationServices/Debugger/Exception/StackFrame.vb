@@ -104,6 +104,9 @@ Namespace ApplicationServices.Debugging.Diagnostics
         Public Property [Module] As String
         Public Property Method As String
 
+        Sub New()
+        End Sub
+
         Sub New(s As String)
             Dim t = s.Split("."c).AsList
 
