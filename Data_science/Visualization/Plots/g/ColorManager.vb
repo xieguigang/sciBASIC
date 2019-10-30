@@ -54,19 +54,28 @@ Namespace Graphic
 
         Dim valueRange As DoubleRange
         Dim indexRange As DoubleRange
+        Dim logarithm%
 
-        Public Sub New(data As IEnumerable(Of NamedValue(Of Double)), colorSchema$, level%)
+        Public Sub New(data As IEnumerable(Of NamedValue(Of Double)), colorSchema$, level%, Optional logarithm% = 0)
             MyBase.New(colorSchema)
 
             With data.ToArray
-                valueRange = .Select(Function(item) item.Value).ToArray
-                colors = Designer.CubicSpline(colors, n:=level)
+                valueRange = .Select(Function(item)
+                                         If logarithm > 0 Then
+                                             Return Math.Log(item.Value, logarithm)
+                                         Else
+                                             Return item.Value
+                                         End If
+                                     End Function) _
+                             .ToArray
                 indexRange = {0, .Length - 1}
+                colors = Designer.CubicSpline(colors, n:=level)
             End With
         End Sub
 
         Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
-            Dim index As Integer = valueRange.ScaleMapping(item.Value, indexRange)
+            Dim termValue# = If(logarithm > 0, Math.Log(item.Value, logarithm), item.Value)
+            Dim index As Integer = valueRange.ScaleMapping(termValue, indexRange)
             Dim color As Color = colors(index)
 
             Return color
