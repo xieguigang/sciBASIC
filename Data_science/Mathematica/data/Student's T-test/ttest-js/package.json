@@ -20,7 +20,7 @@
     "distributions": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.2.2",
+    "eslint": "^6.6.0",
     "tap": "^6.3.0"
   },
   "license": "MIT"
