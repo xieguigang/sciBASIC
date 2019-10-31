@@ -60,6 +60,8 @@ Namespace Terminal
 
         ''' <summary>
         ''' Command text for exit the shell loop 
+        ''' 
+        ''' (默认的退出文本为vim的 ``:q`` 命令)
         ''' </summary>
         ''' <returns></returns>
         Public Property Quite As String = ":q"
