@@ -117,6 +117,26 @@ Namespace CommandLine.ManView
 
             End With
 
+            Dim outputMarks = api.EntryPoint _
+                .GetCustomAttributes(True) _
+                .Where(Function(a) a.GetType Is GetType(OutputAttribute)) _
+                .Select(Function(out) DirectCast(out, OutputAttribute)) _
+                .ToArray
+
+            If Not outputMarks.IsNullOrEmpty Then
+                Call Console.WriteLine()
+                Call Console.WriteLine("  This command produce these data files:")
+                Call Console.WriteLine("  ====================================================")
+                Call Console.WriteLine()
+
+                Call outputMarks _
+                    .Select(Function(o)
+                                Dim desc = o.extension.GetMIMEDescrib
+                                Return {desc.FileExt, desc.MIMEType, desc.Name, o.result.FullName}
+                            End Function) _
+                    .PrintTable(App.StdOut)
+            End If
+
             If Not api.Arguments.IsNullOrEmpty Then
                 Call Console.WriteLine()
                 Call Console.WriteLine("  Command with arguments:")

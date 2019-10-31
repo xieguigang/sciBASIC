@@ -207,7 +207,7 @@ Namespace StorageProvider.ComponentModels
         End Sub
 
         Public Function FillData(row As RowObject, obj As Object) As Object
-            obj = __tryFill(row, obj)
+            obj = doColumnFill(row, obj)
 
             If HaveMetaAttribute Then
                 Dim values = From field As KeyValuePair(Of String, Integer)
@@ -286,8 +286,8 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="row"></param>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Function __tryFill(row As RowObject, obj As Object) As Object
-            Dim column As StorageProvider = Nothing
+        Private Function doColumnFill(row As RowObject, obj As Object) As Object
+            Dim column As StorageProvider
             Dim value$
             Dim propValue As Object
 

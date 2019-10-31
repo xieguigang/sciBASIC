@@ -573,6 +573,7 @@
     <Compile Include="Algebra\Vector\Class\Linq.vb" />
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
+    <Compile Include="Distributions\Abundance.vb" />
     <Compile Include="Numerics\BigDecimal.vb" />
     <Compile Include="HashMaps\Crc32.vb" />
     <Compile Include="Distributions\BinBox\BinMaps.vb" />

@@ -53,7 +53,6 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text
 
 Namespace IO
 
@@ -171,83 +170,6 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' 获取数据集之中的被映射为ID列的值列表
-        ''' </summary>
-        ''' <param name="path$"></param>
-        ''' <param name="uidMap$"></param>
-        ''' <param name="tsv"></param>
-        ''' <param name="ignoreMapErrors"></param>
-        ''' <returns></returns>
-        Public Shared Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
-            Dim table As File = If(tsv, File.LoadTsv(path), File.Load(path))
-            Dim getIDsDefault = Function()
-                                    Return table.Columns _
-                                        .First _
-                                        .Skip(1) _
-                                        .ToArray
-                                End Function
-
-            If uidMap.StringEmpty Then
-                ' 第一列的数据就是所需要的编号数据
-                Return getIDsDefault()
-            Else
-                With table.Headers.IndexOf(uidMap)
-                    If .ByRef = -1 AndAlso ignoreMapErrors Then
-                        Return getIDsDefault()
-                    Else
-                        ' 当不忽略错误的时候，不存在的uidMap其index位置会出现越界的错误直接在这里报错
-                        Return table.Columns(.ByRef) _
-                            .Skip(1) _
-                            .ToArray
-                    End If
-                End With
-            End If
-        End Function
-
-        ''' <summary>
-        ''' 使用这个函数来判断目标文件之中是否存在ID列
-        ''' （ID列可能不在第一列）
-        ''' </summary>
-        ''' <param name="path$"></param>
-        ''' <param name="tsv"></param>
-        ''' <param name="encoding"></param>
-        ''' <param name="FirstColumn">
-        ''' 函数总是会从这一个参数返回第一列的标题，如果不存在ID列的话可以用这一列来作为ID（可能会出现意想不到的错误）
-        ''' </param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function ContainsIDField(path$,
-                                               Optional tsv As Boolean = False,
-                                               Optional encoding As Encoding = Nothing,
-                                               Optional ByRef firstColumn$ = Nothing) As Boolean
-            Return readHeaders(
-                    path,
-                    tsv,
-                    encoding,
-                    firstColumn
-                ).Any(Function(s) s = NameOf(EntityObject.ID))
-        End Function
-
-        Private Shared Function readHeaders(path$, tsv As Boolean, encoding As Encoding, ByRef firstColumn$) As String()
-            Dim headers$()
-
-            ' 从文件的第一行数据之中得到列标题列表
-            ' 即表头字符串集合
-            If Not tsv Then
-                headers = New RowObject(path.ReadFirstLine(encoding)).ToArray
-            Else
-                headers = path _
-                    .ReadFirstLine(encoding) _
-                    .Split(ASCII.TAB)
-            End If
-
-            firstColumn = headers(Scan0)
-
-            Return headers
-        End Function
-
-        ''' <summary>
         ''' 如果文件头之中存在ID列,则返回除了ID列以外的名称集合
         ''' 如果文件头之中不存在ID列的话,则返回跳过第一列的名称的集合
         ''' </summary>
@@ -286,18 +208,8 @@ Namespace IO
                 Call $"{path} is missing on your file system!".Warning
 #End If
                 Return {}
-            End If
-
-            If uidMap.StringEmpty Then
-                If ContainsIDField(path, tsv, encoding, uidMap) Then
-                    uidMap = NameOf(EntityObject.ID)
-                Else
-                    ' 使用第一列作为ID
-                    ' 因为再函数之中已经通过ByRef返回来了，所以do nothing
-                End If
             Else
-                ' 使用用户自定义的列作为ID
-                ' 在这里do nothing
+                uidMap = FileFormat.SolveDataSetIDMapping(path, uidMap, tsv, encoding)
             End If
 
             With New NameMapping(fieldNameMaps)

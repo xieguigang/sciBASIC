@@ -76,7 +76,7 @@ Namespace IO
         ''' </returns>
         <Extension>
         Public Function [TypeOf](header As RowObject, ParamArray types As Type()) As Type
-            Dim scores As New List(Of (Type, Integer))
+            Dim scores As New List(Of (Type, Integer, Integer))
             Dim headers As New Index(Of String)(header)
 
             For Each schema In types.Select(AddressOf SchemaProvider.CreateObjectInternal)
@@ -88,12 +88,12 @@ Namespace IO
                               Where headers.IndexOf(p) > -1
                               Into Sum(1)
 
-                scores += (schema.DeclaringType, matches)
+                scores += (schema.DeclaringType, matches, allNames.Length)
             Next
 
-            Dim desc = From score As (type As Type, score%)
+            Dim desc = From score As (type As Type, score%, allNames%)
                        In scores
-                       Select type = score.Item1, Value = score.Item2
+                       Select type = score.Item1, Value = score.Item2 / score.Item3
                        Order By Value Descending
             Dim topFirst = desc.FirstOrDefault
 

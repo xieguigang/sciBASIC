@@ -60,6 +60,14 @@ Namespace IO
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
 
+        ''' <summary>
+        ''' 当前的这条数据记录在整个数据集之中的唯一标记符
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 20191031
+        ''' 重写这个属性会造成<see cref="FileFormat.SolveDataSetIDMapping(String, String, Boolean?, Encoding)"/>失效
+        ''' </remarks>
         Public Overridable Property ID As String Implements INamedValue.Key
 
         Protected Overrides ReadOnly Property MyHashCode As Integer
@@ -169,23 +177,30 @@ Namespace IO
             Return EntityObject.LoadDataSet(path, uidMap, fieldNameMaps, tsv, encoding).AsDataSet
         End Function
 
+        ''' <summary>
+        ''' 这个函数可以处理csv以及tsv数据格式
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="path$"></param>
+        ''' <param name="uidMap$"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Shared Function LoadDataSet(Of T As DataSet)(path$,
                                                             Optional uidMap$ = Nothing,
-                                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
+                                                            Optional encoding As Encoding = Nothing,
+                                                            Optional isTsv As Boolean = False) As IEnumerable(Of T)
 
-            Dim mapFrom$ = uidMap Or New [Default](Of String) With {
-                .lazy = New Func(Of String)(Function() __getID(path)).AsLazy
-            }
-            Return path.LoadCsv(Of T)(
-                explicit:=False,
-                maps:={{mapFrom, NameOf(DataSet.ID)}},
-                encoding:=encoding
-            )
-        End Function
+            Dim mapFrom$ = FileFormat.SolveDataSetIDMapping(path, uidMap, isTsv, encoding)
 
-        Private Shared Function __getID(path$) As String
-            Dim first As New RowObject(path.ReadFirstLine)
-            Return first.First
+            If isTsv Then
+                Return path.LoadTsv(Of T)(encoding, {{mapFrom, NameOf(DataSet.ID)}})
+            Else
+                Return path.LoadCsv(Of T)(
+                    explicit:=False,
+                    maps:={{mapFrom, NameOf(DataSet.ID)}},
+                    encoding:=encoding
+                )
+            End If
         End Function
     End Class
 End Namespace

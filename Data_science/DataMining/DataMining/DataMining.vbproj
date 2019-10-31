@@ -567,7 +567,6 @@
     <Compile Include="AprioriRules\Algorithm\Implementation\Apriori.vb" />
     <Compile Include="AprioriRules\ExportAPI.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
-    <Compile Include="Abundance.vb" />
     <Compile Include="ComponentModel\Evaluation\Validation.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="ValueMapping.vb" />
