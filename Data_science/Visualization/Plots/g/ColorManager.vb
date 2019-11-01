@@ -32,7 +32,7 @@ Namespace Graphic
             Call MyBase.New(colorSchema)
 
             Me.category = category
-            Me.categoryIndex = category.Values.Indexing
+            Me.categoryIndex = category.Values.Distinct.Indexing
 
             If colors.Length < categoryIndex.Count Then
                 colors = Designer.CubicSpline(colors, n:=categoryIndex.Count)
@@ -41,7 +41,7 @@ Namespace Graphic
 
         Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
             Dim category As String = Me.category(item.Name)
-            Dim i As Integer = categoryIndex(category)
+            Dim i As Integer = categoryIndex.IndexOf(x:=category)
 
             Return colors(i)
         End Function
