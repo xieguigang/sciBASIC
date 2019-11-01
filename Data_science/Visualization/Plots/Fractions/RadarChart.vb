@@ -363,9 +363,9 @@ Namespace Fractions
                         If label.Length > textWrap Then
                             Dim tokens = label.StringSplit("\s+")
                             Dim lines As New List(Of String)
-                            Dim current = ""
+                            Dim current = tokens(Scan0)
 
-                            For Each t In tokens
+                            For Each t As String In tokens.Skip(1)
                                 If (current & t).Length >= textWrap Then
                                     lines += current
                                     current = t
@@ -387,27 +387,27 @@ Namespace Fractions
 
                             Case QuadrantRegions.RightTop
                                 ' 右上角
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.YTop
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25 / 2, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.LeftTop
                                 ' 左上角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.XLeft
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height / 2)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, -labelSize.Height * 1.25 / 2)
 
                             Case QuadrantRegions.LeftBottom
                                 ' 左下角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, 0)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, 0)
 
                             Case QuadrantRegions.YBottom
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, 0)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25 / 2, 0)
 
                             Case QuadrantRegions.XRight
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height / 2)
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height * 1.25 / 2)
 
                             Case Else
                                 ' 右下角
