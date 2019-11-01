@@ -177,7 +177,7 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    ''' 从一个对象集合中创建索引
+    ''' 从一个对象集合中创建索引，请注意，传递进入这个函数的参数应该是经过去重操作之后的数据
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>

@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::7f9d5d527ea3547923ae6112ebf3b20c, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface ISchema
-    ' 
-    '         Properties: SchemaOridinal
-    ' 
-    '         Function: GetOrdinal
-    ' 
-    '     Class RowBuilder
-    ' 
-    '         Properties: ColumnIndex, Columns, Defaults, HaveMetaAttribute, IndexedFields
-    '                     MissingFields, NonIndexed, SchemaProvider
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __tryFill, (+2 Overloads) FillData, ToString
-    ' 
-    '         Sub: IndexOf, SolveReadOnlyMetaConflicts
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface ISchema
+' 
+'         Properties: SchemaOridinal
+' 
+'         Function: GetOrdinal
+' 
+'     Class RowBuilder
+' 
+'         Properties: ColumnIndex, Columns, Defaults, HaveMetaAttribute, IndexedFields
+'                     MissingFields, NonIndexed, SchemaProvider
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __tryFill, (+2 Overloads) FillData, ToString
+' 
+'         Sub: IndexOf, SolveReadOnlyMetaConflicts
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -206,14 +206,15 @@ Namespace StorageProvider.ComponentModels
             End If
         End Sub
 
-        Public Function FillData(row As RowObject, obj As Object) As Object
+        Public Function FillData(row As RowObject, obj As Object, metaBlank$) As Object
             obj = doColumnFill(row, obj)
 
             If HaveMetaAttribute Then
                 Dim values = From field As KeyValuePair(Of String, Integer)
                              In NonIndexed
                              Let s = row(field.Value)
-                             Let value = SchemaProvider.MetaAttributes.LoadMethod(s)
+                             Let str = If(s Is Nothing OrElse s.Length = 0, metaBlank, s)
+                             Let value = SchemaProvider.MetaAttributes.LoadMethod(str)
                              Select name = field.Key, value
 
                 Dim meta As IDictionary = SchemaProvider.MetaAttributes.CreateDictionary
