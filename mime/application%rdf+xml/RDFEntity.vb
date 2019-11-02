@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 ''' 在rdf之中被描述的对象实体
 ''' </summary>
 ''' 
-<XmlType(RDF.RDF_PREFIX & "Description")>
+<XmlType("Description", [Namespace]:=RDF.XmlnsNamespace)>
 Public MustInherit Class RDFEntity : Inherits RDFProperty
     Implements INamedValue, IReadOnlyId
 
@@ -71,13 +71,13 @@ Public MustInherit Class RDFEntity : Inherits RDFProperty
     ''' rdf:ID
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "ID")> Public Property RDFId As String
+    <XmlAttribute("ID", [Namespace]:=RDF.XmlnsNamespace)> Public Property RDFId As String
 
     ''' <summary>
     ''' [资源] 是可拥有 URI 的任何事物
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "about")> Public Property about As String Implements INamedValue.Key, IReadOnlyId.Identity
+    <XmlAttribute("about", [Namespace]:=RDF.XmlnsNamespace)> Public Property about As String Implements INamedValue.Key, IReadOnlyId.Identity
     ''' <summary>
     ''' [属性]   是拥有名称的资源
     ''' [属性值] 是某个属性的值，(请注意一个属性值可以是另外一个<see cref="Resource"/>）
@@ -120,12 +120,12 @@ Public MustInherit Class EntityProperty
     ''' rdf:datatype
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "datatype")> Public Property dataType As String
+    <XmlAttribute("datatype", [Namespace]:=RDF.XmlnsNamespace)> Public Property dataType As String
     ''' <summary>
     ''' rdf:resource
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "resource")> Public Property resource As String
+    <XmlAttribute("resource", [Namespace]:=RDF.XmlnsNamespace)> Public Property resource As String
     <XmlText> Public Property value As String
 
     Sub New()
