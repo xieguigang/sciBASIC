@@ -53,7 +53,10 @@ Imports Microsoft.VisualBasic.MIME.application.rdf_xml.DocumentStream
 ''' </summary>
 Public Class RDF
 
-    Public Const Namespace$ = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    ''' <summary>
+    ''' rdf:XXX
+    ''' </summary>
+    Public Const XmlnsNamespace$ = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 
     Public Const RDF_PREFIX As String = "rdf-"
 
