@@ -85,10 +85,9 @@ Public Module DataTypes
         Return __types(type)
     End Function
 
-    ReadOnly __types As Dictionary(Of Type, String) =
-        New Dictionary(Of Type, String) From {
-            {GetType(String), dtString},
-            {GetType(Integer), dtInteger},
-            {GetType(Double), dtDouble}
+    ReadOnly __types As New Dictionary(Of Type, String) From {
+        {GetType(String), dtString},
+        {GetType(Integer), dtInteger},
+        {GetType(Double), dtDouble}
     }
 End Module

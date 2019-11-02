@@ -85,7 +85,7 @@ Public MustInherit Class RDFEntity : Inherits RDFProperty
     ''' </summary>
     ''' <returns></returns>
     <XmlIgnore>
-    Public Property Properties As Dictionary(Of String, RDFEntity)
+    Public Overloads Property Properties As Dictionary(Of String, RDFEntity)
 
     Public Overrides Function ToString() As String
         Return RDFId & "  // " & about
@@ -99,21 +99,6 @@ End Class
 ''' <summary>
 ''' 
 ''' </summary>
-''' <remarks>
-''' 2016.5.29
-''' 
-''' 请注意，在这里的对<see cref="DynamicPropertyBase(Of Object)"/>类型的继承是为了解决simpleContent的BUG的:
-''' 
-''' System.Exception: 
-''' SMRUCC.genomics.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.GraphAttribute 
-''' ---> System.InvalidOperationException: There was an error reflecting type 'SMRUCC.genomics.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.GraphAttribute'. 
-''' ---> System.InvalidOperationException: There was an error reflecting property 'RDF'. 
-''' ---> System.InvalidOperationException: There was an error reflecting type 'SMRUCC.genomics.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.DocumentElements.NetworkMetadata'. 
-''' ---> System.InvalidOperationException: Cannot serialize object of type '<see cref="RDFEntity"/>'. 
-''' 
-''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended by adding XmlAttribute elements. 
-''' Please consider changing XmlText member of the base class to string array.
-''' </remarks>
 Public MustInherit Class EntityProperty
 
     ''' <summary>
@@ -126,7 +111,19 @@ Public MustInherit Class EntityProperty
     ''' </summary>
     ''' <returns></returns>
     <XmlAttribute("resource", [Namespace]:=RDF.XmlnsNamespace)> Public Property resource As String
-    <XmlText> Public Property value As String
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' ###### 20191102
+    ''' 
+    ''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended by adding <see cref="XmlAttributeAttribute"/> elements. 
+    ''' Please consider changing <see cref="XmlTextAttribute"/> member of the base class to string array.
+    ''' </remarks>
+    <XmlText>
+    Public Property value As String()
 
     Sub New()
     End Sub
