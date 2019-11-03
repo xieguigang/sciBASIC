@@ -155,7 +155,7 @@ Public Module NetworkVisualizer
 
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
-    Public Delegate Sub DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, location As PointF)
+    Public Delegate Sub DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF)
 
     ''' <summary>
     ''' Rendering png or svg image from a given network graph model.
@@ -455,7 +455,7 @@ Public Module NetworkVisualizer
                     Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
                 End If
             Else
-                Call drawNodeShape(n.label, g, br, r, pt)
+                Call drawNodeShape(n.label, g, br, r, center)
             End If
 
             ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
