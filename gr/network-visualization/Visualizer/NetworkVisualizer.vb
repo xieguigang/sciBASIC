@@ -254,6 +254,11 @@ Public Module NetworkVisualizer
 
         If doEdgeBundling Then
             edgeBundling = net.graphEdges _
+                .Where(Function(e)
+                           ' 空集合会在下面的分割for循环中产生移位bug
+                           ' 跳过
+                           Return Not e.data.controlsPoint.IsNullOrEmpty
+                       End Function) _
                 .ToDictionary(Function(e) e,
                               Function(e)
                                   Return e.data.controlsPoint _
@@ -580,17 +585,25 @@ Public Module NetworkVisualizer
             }
 
             Try
-                If edgeBundling.ContainsKey(edge) Then
+                Dim pt1, pt2 As PointF
+
+                If edgeBundling.ContainsKey(edge) AndAlso edgeBundling(edge).Length > 0 Then
                     For Each line In edgeBundling(edge).SlideWindows(2)
                         If edgeShadowDistance <> 0 Then
-                            Call g.DrawLine(edgeShadowColor, pt1:=line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance), pt2:=line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance))
+                            pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+                            pt2 = line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+
+                            Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
                         End If
 
                         Call g.DrawLine(lineColor, line(0), line(1))
                     Next
                 Else
                     If edgeShadowDistance <> 0 Then
-                        Call g.DrawLine(edgeShadowColor, pt1:=a.OffSet2D(edgeShadowDistance, edgeShadowDistance), pt2:=b.OffSet2D(edgeShadowDistance, edgeShadowDistance))
+                        pt1 = a.OffSet2D(edgeShadowDistance, edgeShadowDistance)
+                        pt2 = b.OffSet2D(edgeShadowDistance, edgeShadowDistance)
+
+                        Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
                     End If
 
                     ' 直接画一条直线
