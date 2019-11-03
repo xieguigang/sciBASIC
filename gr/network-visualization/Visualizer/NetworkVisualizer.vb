@@ -155,6 +155,8 @@ Public Module NetworkVisualizer
 
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
+    Public Delegate Sub DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, location As PointF)
+
     ''' <summary>
     ''' Rendering png or svg image from a given network graph model.
     ''' (假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析)
@@ -169,6 +171,10 @@ Public Module NetworkVisualizer
     ''' <param name="nodeRadius">By default all of the node have the same radius size</param>
     ''' <param name="labelFontBase">
     ''' 这个参数会提供字体的一些基础样式,字体的大小会从节点的属性中计算出来
+    ''' </param>
+    ''' <param name="doEdgeBundling">
+    ''' 如果<see cref="EdgeData.controlsPoint"/>不是空的话，会按照这个定义的点集合绘制边
+    ''' 否则会直接在两个节点之间绘制一条直线作为边连接
     ''' </param>
     ''' <returns></returns>
     ''' <remarks>
@@ -192,6 +198,7 @@ Public Module NetworkVisualizer
                               Optional labelFontBase$ = CSSFont.Win7Normal,
                               Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
                               Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
+                              Optional drawNodeShape As DrawNodeShape = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
@@ -294,7 +301,9 @@ Public Module NetworkVisualizer
             edgeDashTypes = New Dictionary(Of String, DashStyle)
         End If
         If getNodeLabel Is Nothing Then
-            getNodeLabel = Function(node) node.GetDisplayText
+            getNodeLabel = Function(node)
+                               Return node.GetDisplayText
+                           End Function
         End If
 
         defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
@@ -355,7 +364,8 @@ Public Module NetworkVisualizer
                     baseFont:=baseFont,
                     scalePos:=scalePos,
                     throwEx:=throwEx,
-                    displayId:=displayId
+                    displayId:=displayId,
+                    drawNodeShape:=drawNodeShape
                 )
 
                 If displayId AndAlso labels = 0 Then
@@ -401,7 +411,8 @@ Public Module NetworkVisualizer
                                               baseFont As Font,
                                               scalePos As Dictionary(Of Node, PointF),
                                               throwEx As Boolean,
-                                              displayId As Boolean) As IEnumerable(Of LayoutLabel)
+                                              displayId As Boolean,
+                                              drawNodeShape As DrawNodeShape) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As Rectangle
@@ -425,22 +436,26 @@ Public Module NetworkVisualizer
 
             rect = New Rectangle(pt, New Size(r, r))
 
-            ' 绘制节点，目前还是圆形
-            If TypeOf g Is Graphics2D Then
-                Try
-                    Call g.FillPie(br, rect, 0, 360)
-                    Call g.DrawEllipse(stroke, rect)
-                Catch ex As Exception
-                    If throwEx Then
-                        Throw New Exception(rect.GetJson, ex)
-                    Else
-                        Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
-                    End If
+            If drawNodeShape Is Nothing Then
+                ' 绘制节点，目前还是圆形
+                If TypeOf g Is Graphics2D Then
+                    Try
+                        Call g.FillPie(br, rect, 0, 360)
+                        Call g.DrawEllipse(stroke, rect)
+                    Catch ex As Exception
+                        If throwEx Then
+                            Throw New Exception(rect.GetJson, ex)
+                        Else
+                            Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
+                        End If
 
-                    invalidRegion = True
-                End Try
+                        invalidRegion = True
+                    End Try
+                Else
+                    Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
+                End If
             Else
-                Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
+                Call drawNodeShape(n.label, g, br, r, pt)
             End If
 
             ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
