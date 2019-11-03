@@ -552,9 +552,7 @@ Public Module NetworkVisualizer
 
             Try
                 If edgeBundling.ContainsKey(edge) Then
-                    Dim curve As New BezierCurve(a, edgeBundling(edge).Centre, b)
-
-                    For Each line In curve.BezierPoints.SlideWindows(2)
+                    For Each line In edgeBundling(edge).SlideWindows(2)
                         Call g.DrawLine(lineColor, line(0), line(1))
                     Next
                 Else
