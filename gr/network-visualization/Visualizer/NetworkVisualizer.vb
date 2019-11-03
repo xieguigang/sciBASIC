@@ -561,12 +561,6 @@ Public Module NetworkVisualizer
 
             cl = defaultEdgeColor
 
-            If edge.data.weight < 0.5 Then
-                cl = Color.LightGray
-            ElseIf edge.data.weight < 0.75 Then
-                cl = Color.Blue
-            End If
-
             Dim w! = CSng(5 * edge.data.weight * 2) Or minLinkWidthValue
             Dim lineColor As New Pen(cl, w)
 

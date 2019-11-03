@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -39,11 +40,16 @@ Namespace Graphic
             End If
         End Sub
 
-        Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
-            Dim category As String = Me.category(item.Name)
+        Public Overloads Function GetColor(termName As String) As Color
+            Dim category As String = Me.category(termName)
             Dim i As Integer = categoryIndex.IndexOf(x:=category)
 
             Return colors(i)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
+            Return GetColor(termName:=item.Name)
         End Function
     End Class
 
