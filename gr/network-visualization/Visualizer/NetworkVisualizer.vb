@@ -196,7 +196,9 @@ Public Module NetworkVisualizer
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups$ = Nothing,
-                              Optional doEdgeBundling As Boolean = False) As GraphicsData
+                              Optional doEdgeBundling As Boolean = False,
+                              Optional labelerIterations% = 1500,
+                              Optional showLabelerProgress As Boolean = True) As GraphicsData
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As Size = canvasSize.SizeParser
@@ -361,7 +363,13 @@ Public Module NetworkVisualizer
                 End If
 
                 If displayId AndAlso labels > 0 Then
-                    Call g.drawLabels(labels, frameSize, labelColorAsNodeColor)
+                    Call g.drawLabels(
+                        labels:=labels,
+                        frameSize:=frameSize,
+                        labelColorAsNodeColor:=labelColorAsNodeColor,
+                        iteration:=labelerIterations,
+                        showLabelerProgress:=showLabelerProgress
+                    )
                 End If
             End Sub
 
@@ -576,17 +584,20 @@ Public Module NetworkVisualizer
     Private Sub drawLabels(g As IGraphics,
                            labels As List(Of LayoutLabel),
                            frameSize As Size,
-                           labelColorAsNodeColor As Boolean)
+                           labelColorAsNodeColor As Boolean,
+                           iteration%,
+                           showLabelerProgress As Boolean)
         Dim br As Brush
         Dim rect As Rectangle
         Dim lx, ly As Single
 
+        Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
         Call d3js _
             .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
             .Anchors(labels.Select(Function(x) x.anchor)) _
             .Labels(labels.Select(Function(x) x.label)) _
             .Size(frameSize) _
-            .Start(nsweeps:=2000, showProgress:=False)
+            .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
 
         For Each label In labels
             With label
