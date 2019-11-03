@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Image drawing of a network model
@@ -312,7 +312,7 @@ Public Module NetworkVisualizer
         End If
 
         If nodeRadius Is Nothing Then
-            Dim min = sys.Min(frameSize.Width, frameSize.Height) / 25
+            Dim min = stdNum.Min(frameSize.Width, frameSize.Height) / 25
             nodeRadiusMapper = Function() min
         ElseIf nodeRadius Like GetType(Single) Then
             Dim radius As Single = nodeRadius

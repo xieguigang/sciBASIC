@@ -396,7 +396,9 @@ Namespace Graph
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetNode(label As String) As Node
             Return vertex _
-                .Where(Function(n) n.label = label OrElse n.data.label = label) _
+                .Where(Function(n)
+                           Return n.label = label OrElse n.data.label = label
+                       End Function) _
                 .FirstOrDefault
         End Function
 
