@@ -181,6 +181,10 @@ Public Module NetworkVisualizer
     ''' <param name="displayId">
     ''' 是否现在节点的标签文本
     ''' </param>
+    ''' <param name="edgeDashTypes">
+    ''' 1. ``interaction_type`` property value in <see cref="Edge.data"/>, or
+    ''' 2. <see cref="Edge.ID"/> value
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 一些内置的样式支持:
@@ -202,7 +206,7 @@ Public Module NetworkVisualizer
                               Optional fontSize As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
                               Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
-                              Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
+                              Optional edgeDashTypes As [Variant](Of Dictionary(Of String, DashStyle), DashStyle) = Nothing,
                               Optional edgeShadowDistance As Single = 0,
                               Optional drawNodeShape As DrawNodeShape = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
@@ -316,7 +320,14 @@ Public Module NetworkVisualizer
 
         If edgeDashTypes Is Nothing Then
             edgeDashTypes = New Dictionary(Of String, DashStyle)
+        ElseIf edgeDashTypes Like GetType(DashStyle) Then
+            edgeDashTypes = net.graphEdges _
+                .ToDictionary(Function(e) e.ID,
+                              Function(null)
+                                  Return edgeDashTypes.VB
+                              End Function)
         End If
+
         If getNodeLabel Is Nothing AndAlso displayId Then
             getNodeLabel = Function(node)
                                Return node.GetDisplayText
