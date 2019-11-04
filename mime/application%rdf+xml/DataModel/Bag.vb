@@ -50,16 +50,16 @@ Imports System.Xml.Serialization
 ''' + ``&lt;rdf:Seq>`` 元素用于描述一个规定为有序的值的列表（比如一个字母顺序的排序）。
 ''' + ``&lt;rdf:Alt>`` 元素用于一个可替换的值的列表（用户仅可选择这些值的其中之一）。
 ''' </summary>
-<XmlType(NameOf(Array), [Namespace]:=RDF.Namespace)>
+<XmlType(NameOf(Array), [Namespace]:=RDF.XmlnsNamespace)>
 Public Class Array
 
     <XmlNamespaceDeclarations()>
     Public xmlns As XmlSerializerNamespaces
 
     Sub New()
-        xmlns.Add("rdf", RDF.Namespace)
+        xmlns.Add("rdf", RDF.XmlnsNamespace)
     End Sub
 
-    <XmlElement("li", [Namespace]:=RDF.Namespace)>
+    <XmlElement("li", [Namespace]:=RDF.XmlnsNamespace)>
     Public Property list As String()
 End Class

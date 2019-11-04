@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::0569ae726059e254a14afc26807b45c0, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NetworkVisualizer
-    ' 
-    '     Properties: BackgroundColor, DefaultEdgeColor
-    ' 
-    '     Function: (+2 Overloads) AutoScaler, CentralOffsets, DirectMapRadius, DrawImage, drawVertexNodes
-    '               GetBounds, GetDisplayText, scales
-    ' 
-    '     Sub: drawEdges, drawhullPolygon, drawLabels
-    ' 
-    ' /********************************************************************************/
+' Module NetworkVisualizer
+' 
+'     Properties: BackgroundColor, DefaultEdgeColor
+' 
+'     Function: (+2 Overloads) AutoScaler, CentralOffsets, DirectMapRadius, DrawImage, drawVertexNodes
+'               GetBounds, GetDisplayText, scales
+' 
+'     Sub: drawEdges, drawhullPolygon, drawLabels
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Image drawing of a network model
@@ -80,7 +80,6 @@ Public Module NetworkVisualizer
     ''' </summary>
     ''' <returns></returns>
     Public Property BackgroundColor As Color = Color.FromArgb(219, 243, 255)
-    Public Property DefaultEdgeColor As Color = Color.LightGray
 
     ''' <summary>
     ''' 优先显示： <see cref="NodeData.label"/> -> <see cref="NodeData.origID"/> -> <see cref="Node.ID"/>
@@ -155,6 +154,8 @@ Public Module NetworkVisualizer
 
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
+    Public Delegate Sub DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF)
+
     ''' <summary>
     ''' Rendering png or svg image from a given network graph model.
     ''' (假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析)
@@ -169,6 +170,10 @@ Public Module NetworkVisualizer
     ''' <param name="nodeRadius">By default all of the node have the same radius size</param>
     ''' <param name="labelFontBase">
     ''' 这个参数会提供字体的一些基础样式,字体的大小会从节点的属性中计算出来
+    ''' </param>
+    ''' <param name="doEdgeBundling">
+    ''' 如果<see cref="EdgeData.controlsPoint"/>不是空的话，会按照这个定义的点集合绘制边
+    ''' 否则会直接在两个节点之间绘制一条直线作为边连接
     ''' </param>
     ''' <returns></returns>
     ''' <remarks>
@@ -192,11 +197,16 @@ Public Module NetworkVisualizer
                               Optional labelFontBase$ = CSSFont.Win7Normal,
                               Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
                               Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
+                              Optional edgeShadowDistance As Single = 0,
+                              Optional drawNodeShape As DrawNodeShape = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups$ = Nothing,
-                              Optional doEdgeBundling As Boolean = False) As GraphicsData
+                              Optional doEdgeBundling As Boolean = False,
+                              Optional labelerIterations% = 1500,
+                              Optional showLabelerProgress As Boolean = True,
+                              Optional defaultEdgeColor$ = NameOf(Color.LightGray)) As GraphicsData
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As Size = canvasSize.SizeParser
@@ -244,6 +254,11 @@ Public Module NetworkVisualizer
 
         If doEdgeBundling Then
             edgeBundling = net.graphEdges _
+                .Where(Function(e)
+                           ' 空集合会在下面的分割for循环中产生移位bug
+                           ' 跳过
+                           Return Not e.data.controlsPoint.IsNullOrEmpty
+                       End Function) _
                 .ToDictionary(Function(e) e,
                               Function(e)
                                   Return e.data.controlsPoint _
@@ -266,6 +281,10 @@ Public Module NetworkVisualizer
 
                 For Each edge As Edge In .ByRef
                     For Each null In edgeBundling(edge)
+                        ' 20191103
+                        ' 在这里因为每一个edge的边连接点的数量是不一样的
+                        ' 所以在这里使用for loop加上递增序列来
+                        ' 正确的获取得到每一条边所对应的边连接节点
                         tempList += scalePoints(i)
                         i += 1
                     Next
@@ -292,7 +311,9 @@ Public Module NetworkVisualizer
             edgeDashTypes = New Dictionary(Of String, DashStyle)
         End If
         If getNodeLabel Is Nothing Then
-            getNodeLabel = Function(node) node.GetDisplayText
+            getNodeLabel = Function(node)
+                               Return node.GetDisplayText
+                           End Function
         End If
 
         defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
@@ -312,7 +333,7 @@ Public Module NetworkVisualizer
         End If
 
         If nodeRadius Is Nothing Then
-            Dim min = sys.Min(frameSize.Width, frameSize.Height) / 25
+            Dim min = stdNum.Min(frameSize.Width, frameSize.Height) / 25
             nodeRadiusMapper = Function() min
         ElseIf nodeRadius Like GetType(Single) Then
             Dim radius As Single = nodeRadius
@@ -332,7 +353,16 @@ Public Module NetworkVisualizer
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Call "Render network edges...".__INFO_ECHO
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
-                Call g.drawEdges(net, minLinkWidthValue, edgeDashTypes, scalePos, edgeBundling, throwEx)
+                Call g.drawEdges(
+                    net,
+                    minLinkWidthValue,
+                    edgeDashTypes,
+                    scalePos,
+                    edgeBundling,
+                    throwEx,
+                    edgeShadowDistance:=edgeShadowDistance,
+                    defaultEdgeColor:=defaultEdgeColor.TranslateColor
+                )
 
                 Call "Render network nodes...".__INFO_ECHO
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
@@ -353,7 +383,8 @@ Public Module NetworkVisualizer
                     baseFont:=baseFont,
                     scalePos:=scalePos,
                     throwEx:=throwEx,
-                    displayId:=displayId
+                    displayId:=displayId,
+                    drawNodeShape:=drawNodeShape
                 )
 
                 If displayId AndAlso labels = 0 Then
@@ -361,7 +392,13 @@ Public Module NetworkVisualizer
                 End If
 
                 If displayId AndAlso labels > 0 Then
-                    Call g.drawLabels(labels, frameSize, labelColorAsNodeColor)
+                    Call g.drawLabels(
+                        labels:=labels,
+                        frameSize:=frameSize,
+                        labelColorAsNodeColor:=labelColorAsNodeColor,
+                        iteration:=labelerIterations,
+                        showLabelerProgress:=showLabelerProgress
+                    )
                 End If
             End Sub
 
@@ -393,7 +430,8 @@ Public Module NetworkVisualizer
                                               baseFont As Font,
                                               scalePos As Dictionary(Of Node, PointF),
                                               throwEx As Boolean,
-                                              displayId As Boolean) As IEnumerable(Of LayoutLabel)
+                                              displayId As Boolean,
+                                              drawNodeShape As DrawNodeShape) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As Rectangle
@@ -417,22 +455,26 @@ Public Module NetworkVisualizer
 
             rect = New Rectangle(pt, New Size(r, r))
 
-            ' 绘制节点，目前还是圆形
-            If TypeOf g Is Graphics2D Then
-                Try
-                    Call g.FillPie(br, rect, 0, 360)
-                    Call g.DrawEllipse(stroke, rect)
-                Catch ex As Exception
-                    If throwEx Then
-                        Throw New Exception(rect.GetJson, ex)
-                    Else
-                        Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
-                    End If
+            If drawNodeShape Is Nothing Then
+                ' 绘制节点，目前还是圆形
+                If TypeOf g Is Graphics2D Then
+                    Try
+                        Call g.FillPie(br, rect, 0, 360)
+                        Call g.DrawEllipse(stroke, rect)
+                    Catch ex As Exception
+                        If throwEx Then
+                            Throw New Exception(rect.GetJson, ex)
+                        Else
+                            Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
+                        End If
 
-                    invalidRegion = True
-                End Try
+                        invalidRegion = True
+                    End Try
+                Else
+                    Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
+                End If
             Else
-                Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
+                Call drawNodeShape(n.label, g, br, r, center)
             End If
 
             ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
@@ -513,20 +555,16 @@ Public Module NetworkVisualizer
                           edgeDashTypes As Dictionary(Of String, DashStyle),
                           scalePos As Dictionary(Of Node, PointF),
                           edgeBundling As Dictionary(Of Edge, PointF()),
-                          throwEx As Boolean)
+                          throwEx As Boolean,
+                          edgeShadowDistance As Single,
+                          defaultEdgeColor As Color)
         Dim cl As Color
 
         For Each edge As Edge In net.graphEdges
             Dim n As Node = edge.U
             Dim otherNode As Node = edge.V
 
-            cl = DefaultEdgeColor
-
-            If edge.data.weight < 0.5 Then
-                cl = Color.LightGray
-            ElseIf edge.data.weight < 0.75 Then
-                cl = Color.Blue
-            End If
+            cl = defaultEdgeColor
 
             Dim w! = CSng(5 * edge.data.weight * 2) Or minLinkWidthValue
             Dim lineColor As New Pen(cl, w)
@@ -541,15 +579,33 @@ Public Module NetworkVisualizer
 
             ' 在这里绘制的是节点之间相连接的边
             Dim a = scalePos(n), b = scalePos(otherNode)
+            Dim edgeShadowColor As New Pen(Brushes.Gray) With {
+                .Width = lineColor.Width,
+                .DashStyle = lineColor.DashStyle
+            }
 
             Try
-                If edgeBundling.ContainsKey(edge) Then
-                    Dim curve As New BezierCurve(a, edgeBundling(edge).Centre, b)
+                Dim pt1, pt2 As PointF
 
-                    For Each line In curve.BezierPoints.SlideWindows(2)
+                If edgeBundling.ContainsKey(edge) AndAlso edgeBundling(edge).Length > 0 Then
+                    For Each line In edgeBundling(edge).SlideWindows(2)
+                        If edgeShadowDistance <> 0 Then
+                            pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+                            pt2 = line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+
+                            Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
+                        End If
+
                         Call g.DrawLine(lineColor, line(0), line(1))
                     Next
                 Else
+                    If edgeShadowDistance <> 0 Then
+                        pt1 = a.OffSet2D(edgeShadowDistance, edgeShadowDistance)
+                        pt2 = b.OffSet2D(edgeShadowDistance, edgeShadowDistance)
+
+                        Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
+                    End If
+
                     ' 直接画一条直线
                     Call g.DrawLine(lineColor, a, b)
                 End If
@@ -576,17 +632,20 @@ Public Module NetworkVisualizer
     Private Sub drawLabels(g As IGraphics,
                            labels As List(Of LayoutLabel),
                            frameSize As Size,
-                           labelColorAsNodeColor As Boolean)
+                           labelColorAsNodeColor As Boolean,
+                           iteration%,
+                           showLabelerProgress As Boolean)
         Dim br As Brush
         Dim rect As Rectangle
         Dim lx, ly As Single
 
+        Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
         Call d3js _
             .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
             .Anchors(labels.Select(Function(x) x.anchor)) _
             .Labels(labels.Select(Function(x) x.label)) _
             .Size(frameSize) _
-            .Start(nsweeps:=2000, showProgress:=False)
+            .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
 
         For Each label In labels
             With label

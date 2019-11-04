@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::3b99a773d915d49ba5a52fade6bf34a5, Data_science\Visualization\Plots\Fractions\RadarChart.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module RadarChart
-    ' 
-    '         Function: Plot, PlotSingleLayer
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module RadarChart
+' 
+'         Function: Plot, PlotSingleLayer
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text
 Imports sys = System.Math
 
 Namespace Fractions
@@ -99,7 +100,8 @@ Namespace Fractions
                                         Optional pointRadius! = 30,
                                         Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
                                         Optional axisStrokeStyle$ = Stroke.WhiteLineStroke,
-                                        Optional spline As Boolean = True) As GraphicsData
+                                        Optional spline As Boolean = True,
+                                        Optional textWrap As Integer = 16) As GraphicsData
             Return {
                 New NamedValue(Of FractionData())("", serials.ToArray)
             }.Plot(size:=size,
@@ -114,7 +116,8 @@ Namespace Fractions
                    labelTextColor:=labelTextColor,
                    pointRadius:=pointRadius,
                    shapeBorderWidth:=shapeBorderWidth,
-                   spline:=spline
+                   spline:=spline,
+                   textWrap:=textWrap
               )
         End Function
 
@@ -153,7 +156,8 @@ Namespace Fractions
                              Optional pointRadius! = 30,
                              Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
                              Optional axisStrokeStyle$ = Stroke.WhiteLineStroke,
-                             Optional spline As Boolean = True) As GraphicsData
+                             Optional spline As Boolean = True,
+                             Optional textWrap As Integer = 16) As GraphicsData
 
             Dim serialColors As Color() = Designer.GetColors(serialColorSchema) _
                                                   .Select(Function(c) c.Alpha(colorAlpha)) _
@@ -355,33 +359,55 @@ Namespace Fractions
 
                         ' 绘制坐标轴标签
                         label = directions(i)
+
+                        If label.Length > textWrap Then
+                            Dim tokens = label.StringSplit("\s+")
+                            Dim lines As New List(Of String)
+                            Dim current = tokens(Scan0)
+
+                            For Each t As String In tokens.Skip(1)
+                                If (current & t).Length >= textWrap Then
+                                    lines += current
+                                    current = t
+                                Else
+                                    current = current & " " & t
+                                End If
+                            Next
+
+                            If current.Length > 0 Then
+                                lines += current
+                            End If
+
+                            label = lines.JoinBy(ASCII.LF)
+                        End If
+
                         labelSize = g.MeasureString(label, labelFont)
 
                         Select Case center.QuadrantRegion(maxAxis)
 
                             Case QuadrantRegions.RightTop
                                 ' 右上角
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.YTop
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25 / 2, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.LeftTop
                                 ' 左上角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.XLeft
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height / 2)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, -labelSize.Height * 1.25 / 2)
 
                             Case QuadrantRegions.LeftBottom
                                 ' 左下角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, 0)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, 0)
 
                             Case QuadrantRegions.YBottom
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, 0)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25 / 2, 0)
 
                             Case QuadrantRegions.XRight
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height / 2)
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height * 1.25 / 2)
 
                             Case Else
                                 ' 右下角

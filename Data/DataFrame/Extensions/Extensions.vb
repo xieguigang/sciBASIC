@@ -483,6 +483,7 @@ Public Module Extensions
                                                        Optional fast As Boolean = False,
                                                        Optional maps As NameMapping = Nothing,
                                                        Optional mute As Boolean = False,
+                                                       Optional metaBlank As String = "",
                                                        Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of T)
         Dim buffer As List(Of T)
         Dim fs$, ms&
@@ -495,6 +496,7 @@ Public Module Extensions
                 fast:=fast,
                 maps:=maps,
                 mute:=mute,
+                metaBlank:=metaBlank,
                 skipWhile:=skipWhile
             ).AsList
             ms = .ElapsedMilliseconds

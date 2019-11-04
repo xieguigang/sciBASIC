@@ -128,6 +128,11 @@ Namespace Graph
         ''' </summary>
         ''' <returns></returns>
         Public Property mass As Single
+
+        ''' <summary>
+        ''' For 2d layout <see cref="FDGVector2"/> / 3d layout <see cref="FDGVector3"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Property initialPostion As AbstractVector
         Public Property origID As String
         Public Property force As Point

@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 ''' 在rdf之中被描述的对象实体
 ''' </summary>
 ''' 
-<XmlType(RDF.RDF_PREFIX & "Description")>
+<XmlType("Description", [Namespace]:=RDF.XmlnsNamespace)>
 Public MustInherit Class RDFEntity : Inherits RDFProperty
     Implements INamedValue, IReadOnlyId
 
@@ -71,13 +71,13 @@ Public MustInherit Class RDFEntity : Inherits RDFProperty
     ''' rdf:ID
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "ID")> Public Property RDFId As String
+    <XmlAttribute("ID", [Namespace]:=RDF.XmlnsNamespace)> Public Property RDFId As String
 
     ''' <summary>
     ''' [资源] 是可拥有 URI 的任何事物
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "about")> Public Property about As String Implements INamedValue.Key, IReadOnlyId.Identity
+    <XmlAttribute("about", [Namespace]:=RDF.XmlnsNamespace)> Public Property about As String Implements INamedValue.Key, IReadOnlyId.Identity
     ''' <summary>
     ''' [属性]   是拥有名称的资源
     ''' [属性值] 是某个属性的值，(请注意一个属性值可以是另外一个<see cref="Resource"/>）
@@ -85,7 +85,7 @@ Public MustInherit Class RDFEntity : Inherits RDFProperty
     ''' </summary>
     ''' <returns></returns>
     <XmlIgnore>
-    Public Property Properties As Dictionary(Of String, RDFEntity)
+    Public Overloads Property Properties As Dictionary(Of String, RDFEntity)
 
     Public Overrides Function ToString() As String
         Return RDFId & "  // " & about
@@ -99,34 +99,31 @@ End Class
 ''' <summary>
 ''' 
 ''' </summary>
-''' <remarks>
-''' 2016.5.29
-''' 
-''' 请注意，在这里的对<see cref="DynamicPropertyBase(Of Object)"/>类型的继承是为了解决simpleContent的BUG的:
-''' 
-''' System.Exception: 
-''' SMRUCC.genomics.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.GraphAttribute 
-''' ---> System.InvalidOperationException: There was an error reflecting type 'SMRUCC.genomics.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.GraphAttribute'. 
-''' ---> System.InvalidOperationException: There was an error reflecting property 'RDF'. 
-''' ---> System.InvalidOperationException: There was an error reflecting type 'SMRUCC.genomics.AnalysisTools.DataVisualization.Interaction.Cytoscape.DocumentFormat.CytoscapeGraphView.DocumentElements.NetworkMetadata'. 
-''' ---> System.InvalidOperationException: Cannot serialize object of type '<see cref="RDFEntity"/>'. 
-''' 
-''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended by adding XmlAttribute elements. 
-''' Please consider changing XmlText member of the base class to string array.
-''' </remarks>
 Public MustInherit Class EntityProperty
 
     ''' <summary>
     ''' rdf:datatype
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "datatype")> Public Property dataType As String
+    <XmlAttribute("datatype", [Namespace]:=RDF.XmlnsNamespace)> Public Property dataType As String
     ''' <summary>
     ''' rdf:resource
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute(RDF.RDF_PREFIX & "resource")> Public Property resource As String
-    <XmlText> Public Property value As String
+    <XmlAttribute("resource", [Namespace]:=RDF.XmlnsNamespace)> Public Property resource As String
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' ###### 20191102
+    ''' 
+    ''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended by adding <see cref="XmlAttributeAttribute"/> elements. 
+    ''' Please consider changing <see cref="XmlTextAttribute"/> member of the base class to string array.
+    ''' </remarks>
+    <XmlText>
+    Public Property value As String()
 
     Sub New()
     End Sub
