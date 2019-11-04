@@ -148,7 +148,11 @@ Namespace Drawing2D.Shapes
                 border.fill = border.fill Or black.When(border.fill.StringEmpty)
 
                 Call g.DrawCircle(
-                    rect.Centre, radius, border.GDIObject, fill:=False)
+                    centra:=rect.Centre,
+                    r:=radius,
+                    color:=border.GDIObject,
+                    fill:=False
+                )
             End If
         End Sub
     End Class

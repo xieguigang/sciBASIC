@@ -124,7 +124,7 @@ Namespace Graph
         End Property
 
         ''' <summary>
-        ''' <see cref="Node.Label"/>为键名
+        ''' 应用于按照节点的<see cref="Node.Label"/>为键名进行节点对象的快速查找
         ''' </summary>
         Dim _nodeSet As Dictionary(Of String, Node)
         Dim _adjacencySet As Dictionary(Of String, AdjacencySet)
@@ -329,6 +329,24 @@ Namespace Graph
             Return createEdgeInternal(u, v, data)
         End Function
 
+        Public Overloads Function GetConnectedVertex(label As String) As Node()
+            Dim node As Node = GetNode(label)
+            Dim edges = GetEdges(node).ToArray
+            Dim connectedNodes As Node() = edges _
+                .Select(Function(e) {e.U, e.V}) _
+                .IteratesALL _
+                .Where(Function(n) Not n Is node) _
+                .ToArray
+
+            Return connectedNodes
+        End Function
+
+        ''' <summary>
+        ''' 获取目标两个节点之间的所有的重复的边连接
+        ''' </summary>
+        ''' <param name="u"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
         Public Function GetEdges(u As Node, v As Node) As IEnumerable(Of Edge)
             If u Is Nothing OrElse v Is Nothing Then
                 Return Nothing
@@ -339,6 +357,11 @@ Namespace Graph
             End If
         End Function
 
+        ''' <summary>
+        ''' 获取得到与目标节点所有相连接的节点
+        ''' </summary>
+        ''' <param name="iNode"></param>
+        ''' <returns></returns>
         Public Function GetEdges(iNode As Node) As IEnumerable(Of Edge)
             If Not _adjacencySet.ContainsKey(iNode.label) Then
                 Return {}
@@ -394,12 +417,16 @@ Namespace Graph
         ''' <param name="label"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetNode(label As String) As Node
-            Return vertex _
-                .Where(Function(n)
-                           Return n.label = label OrElse n.data.label = label
-                       End Function) _
-                .FirstOrDefault
+        Public Function GetNode(label As String, Optional dataLabel As Boolean = False) As Node
+            If Not dataLabel AndAlso _nodeSet.ContainsKey(label) Then
+                Return _nodeSet(label)
+            Else
+                Return vertex _
+                    .Where(Function(n)
+                               Return n.data.label = label
+                           End Function) _
+                    .FirstOrDefault
+            End If
         End Function
 
         ''' <summary>

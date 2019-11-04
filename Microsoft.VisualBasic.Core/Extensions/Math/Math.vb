@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math
 
@@ -73,11 +73,11 @@ Namespace Math
         ''' Represents the ratio of the circumference of a circle to its diameter, specified
         ''' by the constant, π.
         ''' </summary>
-        Public Const PI# = sys.PI
+        Public Const PI# = stdNum.PI
         ''' <summary>
         ''' Represents the natural logarithmic base, specified by the constant, e.
         ''' </summary>
-        Public Const E# = sys.E
+        Public Const E# = stdNum.E
 
 #Region "Imports System.Math"
 
@@ -442,7 +442,7 @@ Namespace Math
         '     The number containing the product of the specified numbers.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function BigMul(a As Integer, b As Integer) As Long
-            Return sys.BigMul(a, b)
+            Return stdNum.BigMul(a, b)
         End Function
         '
         ' Summary:
@@ -611,7 +611,7 @@ Namespace Math
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Log(a#, newBase#) As Double
-            Return sys.Log(a, newBase)
+            Return stdNum.Log(a, newBase)
         End Function
 
         ''' <summary>
@@ -810,7 +810,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Tanh(value As Double) As Double
-            Return sys.Tanh(value)
+            Return stdNum.Tanh(value)
         End Function
         '
         ' Summary:
@@ -827,7 +827,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sinh(value As Double) As Double
-            Return sys.Sinh(value)
+            Return stdNum.Sinh(value)
         End Function
         '
         ' Summary:
@@ -843,7 +843,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Tan(a As Double) As Double
-            Return sys.Tan(a)
+            Return stdNum.Tan(a)
         End Function
         '
         ' Summary:
@@ -859,7 +859,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sin(a As Double) As Double
-            Return sys.Sin(a)
+            Return stdNum.Sin(a)
         End Function
         '
         ' Summary:
@@ -877,7 +877,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Floor(d As Double) As Double
-            Return sys.Floor(d)
+            Return stdNum.Floor(d)
         End Function
 
 
@@ -894,7 +894,7 @@ Namespace Math
         '     integral value of type System.Math.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Floor(d As Decimal) As Decimal
-            Return sys.Floor(d)
+            Return stdNum.Floor(d)
         End Function
 
         '
@@ -912,7 +912,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(a As Double) As Double
-            Return sys.Round(a)
+            Return stdNum.Round(a)
         End Function
 
         ''' <summary>
@@ -927,7 +927,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Cosh(value As Double) As Double
-            Return sys.Cosh(value)
+            Return stdNum.Cosh(value)
         End Function
         '
         ' Summary:
@@ -946,7 +946,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Ceiling(a As Double) As Double
-            Return sys.Ceiling(a)
+            Return stdNum.Ceiling(a)
         End Function
         '
         ' Summary:
@@ -962,7 +962,7 @@ Namespace Math
         '     method returns a System.Decimal instead of an integral type.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Ceiling(d As Decimal) As Decimal
-            Return sys.Ceiling(d)
+            Return stdNum.Ceiling(d)
         End Function
         '
         ' Summary:
@@ -988,7 +988,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Atan2(y As Double, x As Double) As Double
-            Return sys.Atan2(y, x)
+            Return stdNum.Atan2(y, x)
         End Function
         '
         ' Summary:
@@ -1006,7 +1006,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Atan(d As Double) As Double
-            Return sys.Atan(d)
+            Return stdNum.Atan(d)
         End Function
         '
         ' Summary:
@@ -1023,7 +1023,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Asin(d As Double) As Double
-            Return sys.Asin(d)
+            Return stdNum.Asin(d)
         End Function
         '
         ' Summary:
@@ -1040,7 +1040,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Acos(d As Double) As Double
-            Return sys.Acos(d)
+            Return stdNum.Acos(d)
         End Function
 
         ''' <summary>
@@ -1051,7 +1051,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Cos(d As Double) As Double
-            Return sys.Cos(d)
+            Return stdNum.Cos(d)
         End Function
         '
         ' Summary:
@@ -1076,7 +1076,7 @@ Namespace Math
         '     b is zero.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DivRem(a As Integer, b As Integer, ByRef result As Integer) As Integer
-            Return sys.DivRem(a, b, result)
+            Return stdNum.DivRem(a, b, result)
         End Function
 
         ''' <summary>
@@ -1090,7 +1090,7 @@ Namespace Math
         '''   
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(value As Double, digits As Integer) As Double
-            Return sys.Round(value, digits)
+            Return stdNum.Round(value, digits)
         End Function
         '
         ' Summary:
@@ -1120,7 +1120,7 @@ Namespace Math
         '     mode is not a valid value of System.MidpointRounding.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(value As Double, digits As Integer, mode As MidpointRounding) As Double
-            Return sys.Round(value, digits, mode)
+            Return stdNum.Round(value, digits, mode)
         End Function
         '
         ' Summary:
@@ -1188,7 +1188,7 @@ Namespace Math
         '     or -0 if x is negative.If y = 0, System.Double.NaN is returned.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IEEERemainder(x As Double, y As Double) As Double
-            Return sys.IEEERemainder(x, y)
+            Return stdNum.IEEERemainder(x, y)
         End Function
 
         ''' <summary>
@@ -1212,7 +1212,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Exp(d As Double) As Double
-            Return sys.Exp(d)
+            Return stdNum.Exp(d)
         End Function
         '
         ' Summary:
@@ -1229,7 +1229,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Log10(d As Double) As Double
-            Return sys.Log10(d)
+            Return stdNum.Log10(d)
         End Function
         '
         ' Summary:
@@ -1252,7 +1252,7 @@ Namespace Math
         '     mode is not a valid value of System.MidpointRounding.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(value As Double, mode As MidpointRounding) As Double
-            Return sys.Round(value, mode)
+            Return stdNum.Round(value, mode)
         End Function
         '
         ' Summary:
@@ -1269,7 +1269,7 @@ Namespace Math
         <SecuritySafeCritical>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Log(d As Double) As Double
-            Return sys.Log(d)
+            Return stdNum.Log(d)
         End Function
 
         ''' <summary>
@@ -1286,7 +1286,7 @@ Namespace Math
         ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Truncate(d As Double) As Double
-            Return sys.Truncate(d)
+            Return stdNum.Truncate(d)
         End Function
         '
         ' Summary:
@@ -1301,7 +1301,7 @@ Namespace Math
         '     digits have been discarded.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Truncate(d As Decimal) As Decimal
-            Return sys.Truncate(d)
+            Return stdNum.Truncate(d)
         End Function
         '
         ' Summary:
@@ -1333,7 +1333,7 @@ Namespace Math
         '     The result is outside the range of a System.Decimal.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(d As Decimal, decimals As Integer, mode As MidpointRounding) As Decimal
-            Return sys.Round(d, decimals, mode)
+            Return stdNum.Round(d, decimals, mode)
         End Function
         '
         ' Summary:
@@ -1359,7 +1359,7 @@ Namespace Math
         '     The result is outside the range of a System.Decimal.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(d As Decimal, mode As MidpointRounding) As Decimal
-            Return sys.Round(d, mode)
+            Return stdNum.Round(d, mode)
         End Function
         '
         ' Summary:
@@ -1384,7 +1384,7 @@ Namespace Math
         '     The result is outside the range of a System.Decimal.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(d As Decimal, decimals As Integer) As Decimal
-            Return sys.Round(d, decimals)
+            Return stdNum.Round(d, decimals)
         End Function
         '
         ' Summary:
@@ -1405,7 +1405,7 @@ Namespace Math
         '     The result is outside the range of a System.Decimal.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Round(d As Decimal) As Decimal
-            Return sys.Round(d)
+            Return stdNum.Round(d)
         End Function
 
         ''' <summary>
@@ -1418,7 +1418,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)> <SecuritySafeCritical>
         Public Function Sqrt(d As Double) As Double
-            Return sys.Sqrt(d)
+            Return stdNum.Sqrt(d)
         End Function
         '
         ' Summary:
@@ -1443,7 +1443,7 @@ Namespace Math
         '     b is zero.
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DivRem(a As Long, b As Long, ByRef result As Long) As Long
-            Return sys.DivRem(a, b, result)
+            Return stdNum.DivRem(a, b, result)
         End Function
 #End Region
 
@@ -1455,7 +1455,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Log2(x#) As Double
-            Return sys.Log(x, newBase:=2)
+            Return stdNum.Log(x, newBase:=2)
         End Function
 
         <Extension>
@@ -1574,7 +1574,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LogN(x As Double, N As Double) As Double
-            Return sys.Log(x) / sys.Log(N)
+            Return stdNum.Log(x) / stdNum.Log(N)
         End Function
 
         ''' <summary>
@@ -1586,7 +1586,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(a As Integer, b As Integer, c As Integer) As Integer
-            Return sys.Max(a, sys.Max(b, c))
+            Return stdNum.Max(a, stdNum.Max(b, c))
         End Function
 
         ''' <summary>
@@ -1599,12 +1599,12 @@ Namespace Math
         Public Function Hypot(a As Double, b As Double) As Double
             Dim r As Double
 
-            If sys.Abs(a) > sys.Abs(b) Then
+            If stdNum.Abs(a) > stdNum.Abs(b) Then
                 r = b / a
-                r = sys.Abs(a) * sys.Sqrt(1 + r * r)
+                r = stdNum.Abs(a) * stdNum.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = sys.Abs(b) * sys.Sqrt(1 + r * r)
+                r = stdNum.Abs(b) * stdNum.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If
@@ -1877,7 +1877,7 @@ Namespace Math
             Dim data#() = values.ToArray
             Dim avg# = data.Average
             Dim sumValue# = Aggregate n As Double In data Into Sum((n - avg) ^ 2)
-            Return sys.Sqrt(sumValue / data.Length)
+            Return stdNum.Sqrt(sumValue / data.Length)
         End Function
 
         ''' <summary>
@@ -1923,13 +1923,13 @@ Namespace Math
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
-            Return sys.Sqrt((From n In vector Select n ^ 2).Sum)
+            Return stdNum.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
-            Return sys.Sqrt((From n In Vector Select n ^ 2).Sum)
+            Return stdNum.Sqrt((From n In Vector Select n ^ 2).Sum)
         End Function
 
         <ExportAPI("Euclidean", Info:="Euclidean Distance")>
@@ -1937,7 +1937,7 @@ Namespace Math
             If a.Count <> b.Count Then
                 Return -1
             Else
-                Return sys.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
             End If
         End Function
 
@@ -1958,7 +1958,7 @@ Namespace Math
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return sys.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
+                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
             End If
         End Function
 
@@ -1973,7 +1973,7 @@ Namespace Math
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return sys.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
             End If
         End Function
 
@@ -2009,7 +2009,7 @@ Namespace Math
         <ExportAPI("RMS", Info:="Root mean square")>
         <Extension> Public Function RMS(data As IEnumerable(Of Double)) As Double
             With (From n In data Select n ^ 2).ToArray
-                Return sys.Sqrt(.Sum / .Length)
+                Return stdNum.Sqrt(.Sum / .Length)
             End With
         End Function
 
@@ -2040,7 +2040,7 @@ Namespace Math
         ''' 
         <ExportAPI("Poisson.PDF", Info:="Returns the PDF value at x for the specified Poisson distribution.")>
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
-            Dim result As Double = sys.Exp(-lambda)
+            Dim result As Double = stdNum.Exp(-lambda)
             Dim k As Integer = x
 
             While k >= 1

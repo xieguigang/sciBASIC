@@ -146,7 +146,7 @@ Namespace Fractions
 
                             Call circle.AddEllipse(.X, .Y, CSng(r * 2), CSng(r * 2))
                             Call circle.CloseAllFigures()
-                            Call g.DropdownShadows(polygon:=circle)
+                            Call Shadow.DropdownShadows(g, polygon:=circle)
                         End With
 
                         ' 填充浅灰色底层
@@ -159,7 +159,8 @@ Namespace Fractions
                                            CSng(sweep))
 
                             alpha = (+start) - (+sweep / 2)
-                            pt = (r / 1.5, alpha).ToCartesianPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                            ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                            pt = (r / 1.5, alpha).ToCartesianPoint()
                             pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                             label = x.GetValueLabel(valueLabel)
                             labelSize = g.MeasureString(label, valueLabelFont)

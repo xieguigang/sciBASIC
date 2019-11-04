@@ -148,7 +148,7 @@ Namespace netCDF
 
                 ' Read attribute
                 Dim size = buffer.ReadUInt32()
-                Dim val = TypeExtensions.readType(buffer, type, size)
+                Dim val = Utils.readType(buffer, type, size)
 
                 ' Apply padding
                 Call Utils.padding(buffer)

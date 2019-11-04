@@ -126,6 +126,10 @@ Namespace Terminal.ProgressBar
         ''' prints the progress bar acorrding to pointers and current direction
         ''' </summary>
         Public Overrides Sub [Step]()
+            Call [Step](message:="")
+        End Sub
+
+        Public Overloads Sub [Step](message As String)
             If currdir = direction.right Then
                 PlacePointer(counter, pointer.Length)
                 counter += 1
@@ -142,7 +146,13 @@ Namespace Terminal.ProgressBar
                 End If
             End If
 
-            Call Console.Write(bar & vbCr)
+            message = bar & message
+
+            If message.Length > Console.WindowWidth Then
+                message = Mid(message, 1, Console.WindowWidth - 15) & "..."
+            End If
+
+            Call Console.Write(message & vbCr)
         End Sub
     End Class
 End Namespace

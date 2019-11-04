@@ -100,9 +100,33 @@ Namespace netCDF.Components
             End Get
         End Property
 
+        Public Shared ReadOnly Property [Long] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Long).FullName, .size = 8}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property Float As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Single).FullName, .size = 4}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property [Short] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Short).FullName, .size = 2}
+            End Get
+        End Property
+
         Public Shared ReadOnly Property [Integer] As Dimension
             Get
                 Return New Dimension With {.name = GetType(Integer).FullName, .size = 4}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property [Byte] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Byte).FullName, .size = 1}
             End Get
         End Property
 

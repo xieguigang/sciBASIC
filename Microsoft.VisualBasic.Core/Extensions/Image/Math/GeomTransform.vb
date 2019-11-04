@@ -136,6 +136,33 @@ Namespace Imaging.Math2D
             Return New Point(size.Width / 2, size.Height / 2)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function OffSet2D(rect As Rectangle, offset As Point) As Rectangle
+            Return New Rectangle With {
+                .Location = rect.Location.OffSet2D(offset),
+                .Size = rect.Size
+            }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function OffSet2D(rect As Rectangle, offset As PointF) As Rectangle
+            Return New Rectangle With {
+                .Location = rect.Location.OffSet2D(offset),
+                .Size = rect.Size
+            }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function OffSet2D(rect As Rectangle, offsetX!, offsetY!) As Rectangle
+            Return New Rectangle With {
+                .Location = rect.Location.OffSet2D(offsetX, offsetY),
+                .Size = rect.Size
+            }
+        End Function
+
         ''' <summary>
         ''' 返回位移的新的点位置值
         ''' </summary>
@@ -410,6 +437,15 @@ Namespace Imaging.Math2D
         <Extension> Public Function Scale(rect As Rectangle, factor As SizeF) As Rectangle
             With rect
                 With New RectangleF(.Location.PointF, .Size.SizeF).Scale(factor)
+                    Return New Rectangle(.Location.ToPoint, .Size.ToSize)
+                End With
+            End With
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function Scale(rect As Rectangle, factorX!, factorY!) As Rectangle
+            With rect
+                With New RectangleF(.Location.PointF, .Size.SizeF).Scale(New SizeF(factorX, factorY))
                     Return New Rectangle(.Location.ToPoint, .Size.ToSize)
                 End With
             End With

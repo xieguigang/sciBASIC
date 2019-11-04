@@ -175,6 +175,9 @@ Public Module NetworkVisualizer
     ''' 如果<see cref="EdgeData.controlsPoint"/>不是空的话，会按照这个定义的点集合绘制边
     ''' 否则会直接在两个节点之间绘制一条直线作为边连接
     ''' </param>
+    ''' <param name="displayId">
+    ''' 是否现在节点的标签文本
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 一些内置的样式支持:
@@ -310,7 +313,7 @@ Public Module NetworkVisualizer
         If edgeDashTypes Is Nothing Then
             edgeDashTypes = New Dictionary(Of String, DashStyle)
         End If
-        If getNodeLabel Is Nothing Then
+        If getNodeLabel Is Nothing AndAlso displayId Then
             getNodeLabel = Function(node)
                                Return node.GetDisplayText
                            End Function
@@ -383,7 +386,7 @@ Public Module NetworkVisualizer
                     baseFont:=baseFont,
                     scalePos:=scalePos,
                     throwEx:=throwEx,
-                    displayId:=displayId,
+                    getDisplayLabel:=getNodeLabel,
                     drawNodeShape:=drawNodeShape
                 )
 
@@ -430,7 +433,7 @@ Public Module NetworkVisualizer
                                               baseFont As Font,
                                               scalePos As Dictionary(Of Node, PointF),
                                               throwEx As Boolean,
-                                              displayId As Boolean,
+                                              getDisplayLabel As Func(Of Node, String),
                                               drawNodeShape As DrawNodeShape) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
@@ -479,7 +482,9 @@ Public Module NetworkVisualizer
 
             ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
             ' 则生成一个label绘制的数据模型
-            If (Not invalidRegion) AndAlso displayId Then
+            Dim displayID As String = getDisplayLabel(n)
+
+            If (Not invalidRegion) AndAlso Not displayID.StringEmpty Then
                 Dim fontSize! = fontSizeValue(n)
                 Dim font As New Font(
                     baseFont.Name,
@@ -490,7 +495,7 @@ Public Module NetworkVisualizer
                     baseFont.GdiVerticalFont
                 )
                 Dim label As New Label With {
-                    .text = n.GetDisplayText
+                    .text = displayID
                 }
 
                 With g.MeasureString(label.text, font)

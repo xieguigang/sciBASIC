@@ -3909,49 +3909,27 @@ Namespace Imaging
         Public Overrides Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
             Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of an ellipse defined by a bounding rectangle specified by
-        '     a pair of coordinates, a width, and a height.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of an ellipse defined by a bounding rectangle specified by
+        ''' a pair of coordinates, a width, and a height.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="width">Width of the bounding rectangle that defines the ellipse.</param>
+        ''' <param name="height">Height of the bounding rectangle that defines the ellipse.</param>
         Public Overrides Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
             Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   path:
-        '     System.Drawing.Drawing2D.GraphicsPath that represents the path to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-path is null.
+
+        ''' <summary>
+        ''' Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="path">System.Drawing.Drawing2D.GraphicsPath that represents the path to fill.</param>
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
             Call Graphics.FillPath(brush, path)
         End Sub
