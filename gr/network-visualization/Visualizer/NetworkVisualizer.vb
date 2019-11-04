@@ -145,9 +145,12 @@ Public Module NetworkVisualizer
     <Extension>
     Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As Size, padding As Padding) As SizeF
         With shape.GetBounds
+            Dim width = frameSize.Width - padding.Horizontal
+            Dim height = frameSize.Height - padding.Vertical
+
             Return New SizeF(
-                frameSize.Width / (.Width + padding.Horizontal),
-                frameSize.Height / (.Height + padding.Vertical)
+                width:=width / .Width,
+                height:=height / .Height
             )
         End With
     End Function
@@ -214,7 +217,7 @@ Public Module NetworkVisualizer
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As Size = canvasSize.SizeParser
         Dim margin As Padding = CSS.Padding.TryParse(
-            padding, New Padding With {
+            padding, [default]:=New Padding With {
                 .Bottom = 100,
                 .Left = 100,
                 .Right = 100,
@@ -235,12 +238,13 @@ Public Module NetworkVisualizer
         Dim offset As Point = scalePos _
             .CentralOffsets(frameSize) _
             .ToPoint
+        Dim paddingOffset As New PointF(margin.Left, margin.Top)
 
         ' 进行位置偏移
         ' 将网络图形移动到画布的中央区域
         scalePos = scalePos.ToDictionary(Function(node) node.Key,
                                          Function(point)
-                                             Return point.Value.OffSet2D(offset)
+                                             Return point.Value.OffSet2D(offset).OffSet2D(paddingOffset)
                                          End Function)
         ' 进行矢量放大
         Dim scale As SizeF = scalePos.Values.AutoScaler(frameSize, margin)
@@ -269,7 +273,7 @@ Public Module NetworkVisualizer
                                                   Return New PointF With {
                                                       .X = v.x,
                                                       .Y = v.y
-                                                  }.OffSet2D(offset)
+                                                  }.OffSet2D(offset).OffSet2D(paddingOffset)
                                               End Function) _
                                       .ToArray
                               End Function)
