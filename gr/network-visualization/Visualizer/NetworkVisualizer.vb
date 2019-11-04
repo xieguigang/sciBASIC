@@ -181,6 +181,9 @@ Public Module NetworkVisualizer
     ''' <param name="displayId">
     ''' 是否现在节点的标签文本
     ''' </param>
+    ''' <param name="labelerIterations">
+    ''' 0表示不进行
+    ''' </param>
     ''' <param name="edgeDashTypes">
     ''' 1. ``interaction_type`` property value in <see cref="Edge.data"/>, or
     ''' 2. <see cref="Edge.ID"/> value
@@ -242,13 +245,12 @@ Public Module NetworkVisualizer
         Dim offset As Point = scalePos _
             .CentralOffsets(frameSize) _
             .ToPoint
-        Dim paddingOffset As New PointF(margin.Left, margin.Top)
 
         ' 进行位置偏移
         ' 将网络图形移动到画布的中央区域
         scalePos = scalePos.ToDictionary(Function(node) node.Key,
                                          Function(point)
-                                             Return point.Value.OffSet2D(offset).OffSet2D(paddingOffset)
+                                             Return point.Value.OffSet2D(offset)
                                          End Function)
         ' 进行矢量放大
         Dim scale As SizeF = scalePos.Values.AutoScaler(frameSize, margin)
@@ -277,7 +279,7 @@ Public Module NetworkVisualizer
                                                   Return New PointF With {
                                                       .X = v.x,
                                                       .Y = v.y
-                                                  }.OffSet2D(offset).OffSet2D(paddingOffset)
+                                                  }.OffSet2D(offset)
                                               End Function) _
                                       .ToArray
                               End Function)

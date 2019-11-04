@@ -261,7 +261,7 @@ Namespace Drawing2D
         ''' </param>
         <Extension>
         Public Sub FillBackground(ByRef g As Graphics, bg$, rect As Rectangle)
-            Dim bgColor As Color = bg.ToColor(onFailure:=Nothing)
+            Dim bgColor As Color = bg.TranslateColor(throwEx:=False)
 
             If Not bgColor.IsEmpty Then
                 Call g.FillRectangle(New SolidBrush(bgColor), rect)
