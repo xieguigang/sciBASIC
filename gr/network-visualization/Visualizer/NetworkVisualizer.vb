@@ -158,6 +158,7 @@ Public Module NetworkVisualizer
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
     Public Delegate Sub DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF)
+    Public Delegate Function GetLabelPosition(node As Node, label$, center As PointF, labelSize As SizeF) As PointF
 
     ''' <summary>
     ''' Rendering png or svg image from a given network graph model.
@@ -213,6 +214,7 @@ Public Module NetworkVisualizer
                               Optional edgeShadowDistance As Single = 0,
                               Optional drawNodeShape As DrawNodeShape = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
+                              Optional getLabelPosition As GetLabelPosition = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups$ = Nothing,
@@ -404,7 +406,8 @@ Public Module NetworkVisualizer
                     scalePos:=scalePos,
                     throwEx:=throwEx,
                     getDisplayLabel:=getNodeLabel,
-                    drawNodeShape:=drawNodeShape
+                    drawNodeShape:=drawNodeShape,
+                    getLabelPosition:=getLabelPosition
                 )
 
                 If displayId AndAlso labels = 0 Then
@@ -451,7 +454,8 @@ Public Module NetworkVisualizer
                                               scalePos As Dictionary(Of Node, PointF),
                                               throwEx As Boolean,
                                               getDisplayLabel As Func(Of Node, String),
-                                              drawNodeShape As DrawNodeShape) As IEnumerable(Of LayoutLabel)
+                                              drawNodeShape As DrawNodeShape,
+                                              getLabelPosition As GetLabelPosition) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As Rectangle
@@ -511,6 +515,7 @@ Public Module NetworkVisualizer
                     baseFont.GdiCharSet,
                     baseFont.GdiVerticalFont
                 )
+                ' 节点的标签文本的位置默认在正中
                 Dim label As New Label With {
                     .text = displayID
                 }
@@ -518,6 +523,16 @@ Public Module NetworkVisualizer
                 With g.MeasureString(label.text, font)
                     label.width = .Width
                     label.height = .Height
+
+                    If getLabelPosition Is Nothing Then
+                        label.X = center.X - .Width / 2
+                        label.Y = center.Y - .Height / 2
+                    Else
+                        With .DoCall(Function(lsz) getLabelPosition(n, label.text, center, lsz))
+                            label.X = .X
+                            label.Y = .Y
+                        End With
+                    End If
                 End With
 
                 Yield New LayoutLabel With {
@@ -661,13 +676,16 @@ Public Module NetworkVisualizer
         Dim rect As Rectangle
         Dim lx, ly As Single
 
-        Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
-        Call d3js _
-            .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
-            .Anchors(labels.Select(Function(x) x.anchor)) _
-            .Labels(labels.Select(Function(x) x.label)) _
-            .Size(frameSize) _
-            .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
+        ' 小于等于零的时候表示不进行布局计算
+        If iteration > 0 Then
+            Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
+            Call d3js _
+                .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
+                .Anchors(labels.Select(Function(x) x.anchor)) _
+                .Labels(labels.Select(Function(x) x.label)) _
+                .Size(frameSize) _
+                .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
+        End If
 
         For Each label In labels
             With label
