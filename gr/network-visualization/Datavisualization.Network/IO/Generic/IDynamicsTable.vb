@@ -41,7 +41,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
 Namespace FileStream.Generic
 
@@ -54,7 +53,7 @@ Namespace FileStream.Generic
         ''' The dynamics property table of this network component
         ''' </summary>
         ''' <returns></returns>
-        <Meta(GetType(String))> Public Overrides Property Properties As Dictionary(Of String, String)
+        Public Overrides Property Properties As Dictionary(Of String, String)
             Get
                 Return MyBase.Properties
             End Get
