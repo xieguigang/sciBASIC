@@ -122,7 +122,12 @@ Namespace Graph
             End Get
         End Property
 
+        ''' <summary>
+        ''' 这个主要是为了兼容圆形或者矩形之类的大小信息
+        ''' </summary>
+        ''' <returns></returns>
         Public Property size As Double()
+
         ''' <summary>
         ''' Mass weight
         ''' </summary>
