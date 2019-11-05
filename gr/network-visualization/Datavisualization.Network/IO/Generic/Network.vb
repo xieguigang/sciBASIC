@@ -63,7 +63,7 @@ Namespace FileStream.Generic
     ''' <typeparam name="T_Node"></typeparam>
     ''' <typeparam name="T_Edge"></typeparam>
     ''' <remarks></remarks>
-    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge) : Inherits UnixBash.FileSystem.File
+    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge)
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
 
         Public Property nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Key
@@ -144,7 +144,7 @@ Namespace FileStream.Generic
  _
                 () <= From x As T_Edge
                       In edges
-                      Where Not x.SelfLoop
+                      Where Not x.selfLoop
                       Select x
 
             edges = LQuery

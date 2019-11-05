@@ -537,7 +537,6 @@
     <Compile Include="Layouts\forceNetwork.vb" />
     <Compile Include="Analysis\Extensions.vb" />
     <Compile Include="Analysis\Statistics.vb" />
-    <Compile Include="IO\FileStream\csv\vbnet.vb" />
     <Compile Include="IO\FileStream\csv\Network.vb" />
     <Compile Include="IO\Generic\IDynamicsTable.vb" />
     <Compile Include="IO\ModelExtensions.vb" />

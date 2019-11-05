@@ -60,11 +60,6 @@ Public Module NetworkAPI
         Return New NetworkGraph(Of Graph.Node, Graph.Edge)(network.vertex, network.graphEdges).EndPoints
     End Function
 
-    <ExportAPI("Read.Network")>
-    Public Function ReadnetWork(file As String) As FileStream.NetworkEdge()
-        Return file.LoadCsv(Of FileStream.NetworkEdge)(False).ToArray
-    End Function
-
     <ExportAPI("Get.NetworkEdges")>
     Public Function GetNHetworkEdges(Network As ______NETWORK__) As FileStream.NetworkEdge()
         Return Network.edges
@@ -73,16 +68,6 @@ Public Module NetworkAPI
     <ExportAPI("Get.NetworkNodes")>
     Public Function GetNetworkNodes(Network As ______NETWORK__) As FileStream.Node()
         Return Network.nodes
-    End Function
-
-    <ExportAPI("Save")>
-    Public Function SaveNetwork(network As ______NETWORK__, <Parameter("DIR.Export")> EXPORT As String) As Boolean
-        Return network.Save(EXPORT, Encodings.UTF8)
-    End Function
-
-    <ExportAPI("Write.Network")>
-    Public Function WriteNetwork(Network As FileStream.NetworkEdge(), <Parameter("Path.Save")> SaveTo As String) As Boolean
-        Return Network.SaveTo(SaveTo, False)
     End Function
 
     ''' <summary>
