@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::0fe30e3f14b0183b66bd17235ab85a81, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GraphAPI
-    ' 
-    '         Function: (+2 Overloads) CreateGraph, OrderByDegrees, RemovesByDegree, RemovesByDegreeQuantile, RemovesByKeyValue
-    '                   ScaleRadius, Tabular, UsingDegreeAsRadius
-    ' 
-    '         Sub: AddEdges
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GraphAPI
+' 
+'         Function: (+2 Overloads) CreateGraph, OrderByDegrees, RemovesByDegree, RemovesByDegreeQuantile, RemovesByKeyValue
+'                   ScaleRadius, Tabular, UsingDegreeAsRadius
+' 
+'         Sub: AddEdges
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -82,8 +82,8 @@ Namespace FileStream
                 End If
 
                 net += New NetworkEdge With {
-                    .FromNode = from,
-                    .ToNode = [to]
+                    .fromNode = from,
+                    .toNode = [to]
                 }
             Next
         End Sub
@@ -129,7 +129,7 @@ Namespace FileStream
                 End If
 
                 nodes += New Node With {
-                    .ID = n.Label,
+                    .ID = n.label,
                     .NodeType = n.data(names.REFLECTION_ID_MAPPING_NODETYPE),
                     .Properties = data
                 }
@@ -137,9 +137,9 @@ Namespace FileStream
 
             For Each l As Edge In g.graphEdges
                 edges += New NetworkEdge With {
-                    .FromNode = l.U.Label,
-                    .ToNode = l.V.Label,
-                    .Interaction = l.data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
+                    .fromNode = l.U.label,
+                    .toNode = l.V.label,
+                    .interaction = l.data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
                     .value = l.weight,
                     .Properties = New Dictionary(Of String, String) From {
                         {NameOf(EdgeData.label), l.data.label}
@@ -182,12 +182,9 @@ Namespace FileStream
         <Extension>
         Public Function ScaleRadius(ByRef graph As NetworkGraph, range As DoubleRange) As NetworkGraph
             Dim nodes = graph.vertex.ToArray
-            Dim r#() = nodes _
-                .Select(Function(x) CDbl(x.data.radius)) _
-                .RangeTransform(range)
 
             For i As Integer = 0 To nodes.Length - 1
-                nodes(i).data.radius = r#(i)
+                nodes(i).data.size = nodes(i).data.size.RangeTransform(range)
             Next
 
             Return graph
@@ -257,7 +254,7 @@ Namespace FileStream
                 Let r As Single = getRadius(node:=n)
                 Let data As NodeData = New NodeData With {
                     .color = c,
-                    .radius = r,
+                    .size = {r},
                     .Properties = New Dictionary(Of String, String) From {
                         {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType},
                         {names.REFLECTION_ID_MAPPING_DEGREE, n(names.REFLECTION_ID_MAPPING_DEGREE)},
@@ -312,8 +309,8 @@ Namespace FileStream
                 Call g.ComputeNodeDegrees
             End If
 
-            For Each node In g.vertex
-                node.data.radius = Val(node.data!degree)
+            For Each node As Graph.Node In g.vertex
+                node.data.size = {Val(node.data!degree)}
             Next
 
             Return g
@@ -396,7 +393,7 @@ Namespace FileStream
 
                 ' 如果边之中的任意一个节点被包含在index里面，
                 ' 即有小于cutoff值的节点， 则不会被添加
-                If index(edge.FromNode) > -1 OrElse index(edge.ToNode) > -1 Then
+                If index(edge.fromNode) > -1 OrElse index(edge.toNode) > -1 Then
                 Else
                     edges += edge
                 End If
