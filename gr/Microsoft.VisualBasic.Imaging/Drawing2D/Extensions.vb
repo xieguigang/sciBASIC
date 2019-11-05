@@ -188,6 +188,19 @@ Namespace Drawing2D
         ''' <param name="shape">矢量图形的点集合</param>
         ''' <param name="scale#"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Enlarge(shape As IEnumerable(Of PointF), scale As SizeF) As PointF()
+            Return Enlarge(shape, (scale.Width, scale.Height))
+        End Function
+
+        ''' <summary>
+        ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
+        ''' </summary>
+        ''' <param name="shape">矢量图形的点集合</param>
+        ''' <param name="scale#"></param>
+        ''' <returns></returns>
         <Extension> Public Function Enlarge(shape As IEnumerable(Of PointF), scale As (width#, height#)) As PointF()
             Dim shapeVector = shape.ToArray
             Dim center = shapeVector.Centre

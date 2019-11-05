@@ -145,9 +145,12 @@ Public Module NetworkVisualizer
     <Extension>
     Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As Size, padding As Padding) As SizeF
         With shape.GetBounds
+            Dim width = frameSize.Width - padding.Horizontal
+            Dim height = frameSize.Height - padding.Vertical
+
             Return New SizeF(
-                frameSize.Width / (.Width + padding.Horizontal),
-                frameSize.Height / (.Height + padding.Vertical)
+                width:=width / .Width,
+                height:=height / .Height
             )
         End With
     End Function
@@ -155,6 +158,7 @@ Public Module NetworkVisualizer
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
     Public Delegate Sub DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF)
+    Public Delegate Function GetLabelPosition(node As Node, label$, center As PointF, labelSize As SizeF) As PointF
 
     ''' <summary>
     ''' Rendering png or svg image from a given network graph model.
@@ -174,6 +178,16 @@ Public Module NetworkVisualizer
     ''' <param name="doEdgeBundling">
     ''' 如果<see cref="EdgeData.controlsPoint"/>不是空的话，会按照这个定义的点集合绘制边
     ''' 否则会直接在两个节点之间绘制一条直线作为边连接
+    ''' </param>
+    ''' <param name="displayId">
+    ''' 是否现在节点的标签文本
+    ''' </param>
+    ''' <param name="labelerIterations">
+    ''' 0表示不进行
+    ''' </param>
+    ''' <param name="edgeDashTypes">
+    ''' 1. ``interaction_type`` property value in <see cref="Edge.data"/>, or
+    ''' 2. <see cref="Edge.ID"/> value
     ''' </param>
     ''' <returns></returns>
     ''' <remarks>
@@ -196,10 +210,11 @@ Public Module NetworkVisualizer
                               Optional fontSize As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
                               Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
-                              Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
+                              Optional edgeDashTypes As [Variant](Of Dictionary(Of String, DashStyle), DashStyle) = Nothing,
                               Optional edgeShadowDistance As Single = 0,
                               Optional drawNodeShape As DrawNodeShape = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
+                              Optional getLabelPosition As GetLabelPosition = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups$ = Nothing,
@@ -211,7 +226,7 @@ Public Module NetworkVisualizer
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As Size = canvasSize.SizeParser
         Dim margin As Padding = CSS.Padding.TryParse(
-            padding, New Padding With {
+            padding, [default]:=New Padding With {
                 .Bottom = 100,
                 .Left = 100,
                 .Right = 100,
@@ -309,8 +324,15 @@ Public Module NetworkVisualizer
 
         If edgeDashTypes Is Nothing Then
             edgeDashTypes = New Dictionary(Of String, DashStyle)
+        ElseIf edgeDashTypes Like GetType(DashStyle) Then
+            edgeDashTypes = net.graphEdges _
+                .ToDictionary(Function(e) e.ID,
+                              Function(null)
+                                  Return edgeDashTypes.VB
+                              End Function)
         End If
-        If getNodeLabel Is Nothing Then
+
+        If getNodeLabel Is Nothing AndAlso displayId Then
             getNodeLabel = Function(node)
                                Return node.GetDisplayText
                            End Function
@@ -383,8 +405,9 @@ Public Module NetworkVisualizer
                     baseFont:=baseFont,
                     scalePos:=scalePos,
                     throwEx:=throwEx,
-                    displayId:=displayId,
-                    drawNodeShape:=drawNodeShape
+                    getDisplayLabel:=getNodeLabel,
+                    drawNodeShape:=drawNodeShape,
+                    getLabelPosition:=getLabelPosition
                 )
 
                 If displayId AndAlso labels = 0 Then
@@ -430,8 +453,9 @@ Public Module NetworkVisualizer
                                               baseFont As Font,
                                               scalePos As Dictionary(Of Node, PointF),
                                               throwEx As Boolean,
-                                              displayId As Boolean,
-                                              drawNodeShape As DrawNodeShape) As IEnumerable(Of LayoutLabel)
+                                              getDisplayLabel As Func(Of Node, String),
+                                              drawNodeShape As DrawNodeShape,
+                                              getLabelPosition As GetLabelPosition) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As Rectangle
@@ -479,7 +503,9 @@ Public Module NetworkVisualizer
 
             ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
             ' 则生成一个label绘制的数据模型
-            If (Not invalidRegion) AndAlso displayId Then
+            Dim displayID As String = getDisplayLabel(n)
+
+            If (Not invalidRegion) AndAlso Not displayID.StringEmpty Then
                 Dim fontSize! = fontSizeValue(n)
                 Dim font As New Font(
                     baseFont.Name,
@@ -489,13 +515,24 @@ Public Module NetworkVisualizer
                     baseFont.GdiCharSet,
                     baseFont.GdiVerticalFont
                 )
+                ' 节点的标签文本的位置默认在正中
                 Dim label As New Label With {
-                    .text = n.GetDisplayText
+                    .text = displayID
                 }
 
                 With g.MeasureString(label.text, font)
                     label.width = .Width
                     label.height = .Height
+
+                    If getLabelPosition Is Nothing Then
+                        label.X = center.X - .Width / 2
+                        label.Y = center.Y - .Height / 2
+                    Else
+                        With .DoCall(Function(lsz) getLabelPosition(n, label.text, center, lsz))
+                            label.X = .X
+                            label.Y = .Y
+                        End With
+                    End If
                 End With
 
                 Yield New LayoutLabel With {
@@ -639,13 +676,16 @@ Public Module NetworkVisualizer
         Dim rect As Rectangle
         Dim lx, ly As Single
 
-        Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
-        Call d3js _
-            .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
-            .Anchors(labels.Select(Function(x) x.anchor)) _
-            .Labels(labels.Select(Function(x) x.label)) _
-            .Size(frameSize) _
-            .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
+        ' 小于等于零的时候表示不进行布局计算
+        If iteration > 0 Then
+            Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
+            Call d3js _
+                .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
+                .Anchors(labels.Select(Function(x) x.anchor)) _
+                .Labels(labels.Select(Function(x) x.label)) _
+                .Size(frameSize) _
+                .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
+        End If
 
         For Each label In labels
             With label
