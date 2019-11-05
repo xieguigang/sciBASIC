@@ -51,6 +51,8 @@ Namespace Layouts.Orthogonal
         ''' algorithm) we need to calculate the size of a grid cell. We assume the grid cell
         ''' to be a square of side length c which Is calculated as this function.
         ''' </remarks>
+        ''' 
+        <Extension>
         Public Function GridCellSize(nodes As IEnumerable(Of Node)) As Double
             Dim nodeVector = nodes.ToArray
             Dim w = nodeVector.Select(Function(n) n.data.size(0)).ToArray

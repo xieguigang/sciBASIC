@@ -75,6 +75,17 @@ Public Class Grid
     ''' <summary>
     ''' 返回数据点在网格之中的``X,Y``方格的顶点编号
     ''' </summary>
+    ''' <returns></returns>
+    Public Function Index(x#, y#) As Point
+        Dim xi = Me.X.FirstGreaterThan(x)
+        Dim yi = Me.Y.FirstGreaterThan(y)
+
+        Return New Point(xi, yi)
+    End Function
+
+    ''' <summary>
+    ''' 返回数据点在网格之中的``X,Y``方格的顶点编号
+    ''' </summary>
     ''' <param name="p"></param>
     ''' <returns></returns>
     Public Function Index(p As PointF) As Point
