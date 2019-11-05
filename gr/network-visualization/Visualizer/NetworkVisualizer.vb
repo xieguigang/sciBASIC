@@ -201,7 +201,7 @@ Public Module NetworkVisualizer
                               Optional canvasSize$ = "1024,1024",
                               Optional padding$ = g.DefaultPadding,
                               Optional background$ = "white",
-                              Optional defaultColor As Color = Nothing,
+                              Optional defaultColor$ = "skyblue",
                               Optional displayId As Boolean = True,
                               Optional labelColorAsNodeColor As Boolean = False,
                               Optional nodeStroke$ = WhiteStroke,
@@ -221,7 +221,9 @@ Public Module NetworkVisualizer
                               Optional doEdgeBundling As Boolean = False,
                               Optional labelerIterations% = 1500,
                               Optional showLabelerProgress As Boolean = True,
-                              Optional defaultEdgeColor$ = NameOf(Color.LightGray)) As GraphicsData
+                              Optional defaultEdgeColor$ = NameOf(Color.LightGray),
+                              Optional defaultLabelColor$ = "black",
+                              Optional labelTextStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;") As GraphicsData
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As Size = canvasSize.SizeParser
@@ -338,7 +340,7 @@ Public Module NetworkVisualizer
                            End Function
         End If
 
-        defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
+        defaultColor = If(defaultColor.StringEmpty, "skyblue", defaultColor)
 
         ' 在这里不可以使用 <=，否则会导致等于最小值的时候出现无限循环的bug
         Dim minLinkWidthValue = minLinkWidth.AsDefault(Function(width) CInt(width) < minLinkWidth)
@@ -400,7 +402,7 @@ Public Module NetworkVisualizer
                     drawPoints:=drawPoints,
                     radiusValue:=nodeRadiusMapper,
                     fontSizeValue:=fontSizeMapper,
-                    defaultColor:=defaultColor,
+                    defaultColor:=defaultColor.TranslateColor,
                     stroke:=stroke,
                     baseFont:=baseFont,
                     scalePos:=scalePos,
@@ -420,7 +422,9 @@ Public Module NetworkVisualizer
                         frameSize:=frameSize,
                         labelColorAsNodeColor:=labelColorAsNodeColor,
                         iteration:=labelerIterations,
-                        showLabelerProgress:=showLabelerProgress
+                        showLabelerProgress:=showLabelerProgress,
+                        defaultLabelColorValue:=defaultLabelColor,
+                        labelTextStrokeCSS:=labelTextStroke
                     )
                 End If
             End Sub
@@ -671,10 +675,14 @@ Public Module NetworkVisualizer
                            frameSize As Size,
                            labelColorAsNodeColor As Boolean,
                            iteration%,
-                           showLabelerProgress As Boolean)
+                           showLabelerProgress As Boolean,
+                           defaultLabelColorValue$,
+                           labelTextStrokeCSS$)
         Dim br As Brush
         Dim rect As Rectangle
         Dim lx, ly As Single
+        Dim defaultLabelColor As New SolidBrush(defaultLabelColorValue.TranslateColor)
+        Dim labelTextStroke As Pen = Stroke.TryParse(labelTextStrokeCSS)
 
         ' 小于等于零的时候表示不进行布局计算
         If iteration > 0 Then
@@ -690,7 +698,7 @@ Public Module NetworkVisualizer
         For Each label In labels
             With label
                 If Not labelColorAsNodeColor Then
-                    br = Brushes.Black
+                    br = defaultLabelColor
                 Else
                     br = .color
                     br = New SolidBrush(DirectCast(br, SolidBrush).Color.Darken(0.005))
@@ -718,16 +726,18 @@ Public Module NetworkVisualizer
                 Dim path As GraphicsPath = Imaging.GetStringPath(
                     .label.text,
                     g.DpiX,
-                    rect.ToFloat,
+                    rect.OffSet2D(.style.Size / 5, 0).ToFloat,
                     .style,
                     StringFormat.GenericTypographic
                 )
 
                 Call g.DrawString(.label.text, .style, br, lx, ly)
 
-                ' 绘制轮廓（描边）
-                ' Call g.FillPath(br, path)
-                ' Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.005), 4), path)
+                If Not labelTextStroke Is Nothing Then
+                    ' 绘制轮廓（描边）
+                    ' Call g.FillPath(br, path)
+                    Call g.DrawPath(labelTextStroke, path)
+                End If
             End With
         Next
     End Sub
