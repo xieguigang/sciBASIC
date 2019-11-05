@@ -189,7 +189,7 @@ Namespace ComponentModel
                 $"{indentBlank} model:     " & fullName & vbCrLf &
                 $"{indentBlank} assembly:  " & assembly & vbCrLf &
                 $"{indentBlank} md5:       " & md5 & vbCrLf &
-                $"{indentBlank} timestamp: " & update.ToLongDateString & vbCrLf &
+                $"{indentBlank} timestamp: " & update.ToString & vbCrLf &
                 "  "
 
             Return traceInfo
