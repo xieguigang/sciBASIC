@@ -484,7 +484,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analysis\CorrelationGraph.vb" />
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Graph\Model\AdjacencySet.vb" />
     <Compile Include="IO\FileStream\csv\CytoscapeTableLoader.vb" />
