@@ -486,7 +486,6 @@
   <ItemGroup>
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Graph\Model\AdjacencySet.vb" />
-    <Compile Include="IO\FileStream\csv\CytoscapeTableLoader.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
     <Compile Include="Layouts\Cola\descent.vb" />
     <Compile Include="Layouts\Cola\Layout\Group.vb" />
@@ -539,7 +538,6 @@
     <Compile Include="Analysis\Extensions.vb" />
     <Compile Include="Analysis\Statistics.vb" />
     <Compile Include="IO\FileStream\csv\vbnet.vb" />
-    <Compile Include="IO\FileStream\csv\Cytoscape.vb" />
     <Compile Include="IO\FileStream\csv\Network.vb" />
     <Compile Include="IO\Generic\IDynamicsTable.vb" />
     <Compile Include="IO\ModelExtensions.vb" />

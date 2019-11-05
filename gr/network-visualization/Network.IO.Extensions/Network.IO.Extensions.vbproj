@@ -64,6 +64,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cytoscape\Cytoscape.vb" />
+    <Compile Include="Cytoscape\CytoscapeTableLoader.vb" />
     <Compile Include="IO.vb" />
     <Compile Include="CorrelationGraph.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
