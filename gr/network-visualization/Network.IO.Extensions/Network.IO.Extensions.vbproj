@@ -74,11 +74,10 @@
     <Compile Include="IO\FileStream\csv\Network.vb" />
     <Compile Include="IO\FileStream\csv\Node.vb" />
     <Compile Include="IO\FileStream\Json\json.vb" />
-    <Compile Include="IO\Generic\IDynamicsTable.vb" />
-    <Compile Include="IO\Generic\NameOf.vb" />
     <Compile Include="IO\Generic\Network.vb" />
     <Compile Include="IO\ModelExtensions.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Analysis.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
