@@ -10,7 +10,7 @@ Module OrthogonalTest
     Sub Main()
         Dim g As New NetworkGraph
 
-        For Each label As String In {"A", "B", "C", "D", "E"}
+        For Each label As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"}
             Call g.AddNode(New node With {.label = label, .data = New NodeData With {.initialPostion = New FDGVector2, .size = {5, 5}}})
         Next
 
@@ -20,6 +20,13 @@ Module OrthogonalTest
         Call g.AddEdge("D", "E")
         Call g.AddEdge("C", "E")
         Call g.AddEdge("A", "E")
+        Call g.AddEdge("A", "I")
+        Call g.AddEdge("A", "J")
+        Call g.AddEdge("J", "K")
+        Call g.AddEdge("K", "H")
+        Call g.AddEdge("F", "G")
+        Call g.AddEdge("B", "F")
+        Call g.AddEdge("G", "K")
 
         Call Orthogonal.Algorithm.DoLayout(g, New Size(10, 10), 10)
 

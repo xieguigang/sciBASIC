@@ -240,17 +240,19 @@ Namespace Layouts.Orthogonal
         Public Function PutRandomNodes(network As NetworkGraph) As Grid
             Dim x As Integer() = size.Width.SeqRandom
             Dim y As Integer() = size.Height.SeqRandom
-            Dim i As i32 = Scan0
-            Dim j As i32 = Scan0
             Dim cell As GridCell
 
             g = network
 
-            For Each node As Node In network.vertex
-                cell = gridCells(y(++j))(x(++i))
+            For Each i As Integer In x
+                For Each j As Integer In y
+                    For Each node As Node In network.vertex
+                        cell = gridCells(j)(i)
 
-                Call cell.PutNode(node)
-                Call nodes.Add(node.label, cell)
+                        Call cell.PutNode(node)
+                        Call nodes.Add(node.label, cell)
+                    Next
+                Next
             Next
 
             Return Me
