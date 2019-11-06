@@ -1,6 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports GridIndex = Microsoft.VisualBasic.Data.GraphTheory.Grid
@@ -241,18 +243,27 @@ Namespace Layouts.Orthogonal
             Dim x As Integer() = size.Width.SeqRandom
             Dim y As Integer() = size.Height.SeqRandom
             Dim cell As GridCell
+            Dim V As New Pointer(Of Node)(network.vertex)
+            Dim break As Boolean = False
 
             g = network
 
             For Each i As Integer In x
                 For Each j As Integer In y
-                    For Each node As Node In network.vertex
-                        cell = gridCells(j)(i)
+                    cell = gridCells(j)(i)
 
-                        Call cell.PutNode(node)
-                        Call nodes.Add(node.label, cell)
-                    Next
+                    If Not V.EndRead Then
+                        Call cell.PutNode(++V)
+                        Call nodes.Add(cell.node.label, cell)
+                    Else
+                        break = True
+                        Exit For
+                    End If
                 Next
+
+                If break Then
+                    Exit For
+                End If
             Next
 
             Return Me
