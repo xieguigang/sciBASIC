@@ -49,8 +49,8 @@ Namespace Layouts.Orthogonal
             Dim V As Node() = graph.vertex.ToArray
             Dim compactionDir = True
             Dim iterationCount = 90 * V.Length
-            Dim T = 2 * V.Length
-            Dim k = (0.2 / T) ^ (1 / iterationCount)
+            Dim T As Double = 2 * V.Length
+            Dim k As Double = (0.2 / T) ^ (1 / iterationCount)
             Dim cellSize As Double = V.GridCellSize
             Dim grid As New Grid(gridSize, cellSize)
             Dim workspace As New Workspace With {
