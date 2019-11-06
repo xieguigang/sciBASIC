@@ -68,6 +68,8 @@ Namespace Layouts.Orthogonal
 
             Call grid.PutRandomNodes(graph)
 
+            Call grid.FindIndex(51.55, 41.25)
+
             For i As Integer = 0 To iterationCount \ 2
                 For j As Integer = 0 To V.Length - 1
                     ' To perform local optimization, every node is moved to a location that minimizes

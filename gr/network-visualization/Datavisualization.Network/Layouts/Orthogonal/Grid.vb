@@ -113,6 +113,26 @@ Namespace Layouts.Orthogonal
             Next
         End Sub
 
+        Public Sub SwapNode(a As Point, b As Point)
+            Dim x As GridCell = Me(a)
+            Dim y As GridCell = Me(b)
+
+            If x.node Is Nothing Then
+                Call MoveNode(b, a)
+            ElseIf y.node Is Nothing Then
+                Call MoveNode(a, b)
+            Else
+                Dim vi = x.node
+                Dim vj = y.node
+
+                nodes(vi.label) = y
+                y.PutNode(vi)
+
+                nodes(vj.label) = x
+                x.PutNode(vj)
+            End If
+        End Sub
+
         Public Sub MoveNode(from As Point, [to] As Point)
             Dim fromCell As GridCell = Me(from)
             Dim toCell As GridCell = Me([to])
@@ -177,27 +197,6 @@ Namespace Layouts.Orthogonal
             nodes(node.label) = toCell
             toCell.PutNode(node)
             fromCell.RemoveNode()
-
-            If toCell.node Is Nothing AndAlso fromCell.node Is Nothing Then
-                Throw New NoNullAllowedException
-            End If
-        End Sub
-
-        Public Sub SwapNode(a As Point, b As Point)
-            Dim x As GridCell = Me(a)
-            Dim y As GridCell = Me(b)
-
-            If x.node Is Nothing Then
-                Call MoveNode(b, a)
-            ElseIf y.node Is Nothing Then
-                Call MoveNode(a, b)
-            Else
-                Dim vi = x.node
-                Dim vj = y.node
-
-                Call moveNode(x, y, vi)
-                Call moveNode(y, x, vj)
-            End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
