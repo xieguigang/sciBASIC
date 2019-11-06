@@ -181,12 +181,17 @@ Namespace Layouts.Orthogonal
             Dim index As Point = gridIndex.Index(x, y)
             Dim ix, iy As Integer
 
-            If index.X >= size.Width Then
+            If x <= 0 Then
+                ix = 0
+            ElseIf index.X >= size.Width Then
                 ix = size.Width - 1
             Else
                 ix = index.X
             End If
-            If index.Y >= size.Height Then
+
+            If y <= 0 Then
+                iy = 0
+            ElseIf index.Y >= size.Height Then
                 iy = size.Height - 1
             Else
                 iy = index.Y
