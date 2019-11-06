@@ -18,10 +18,10 @@ Public Module IO
     ''' <remarks></remarks>
     ''' 
     <Extension>
-    Public Function Save(Of T_Node As Node, T_Edge As NetworkEdge)(network As Network(Of T_Node, T_Edge), outDIR$, encoding As Encoding) As Boolean
+    Public Function Save(Of T_Node As Node, T_Edge As NetworkEdge)(network As Network(Of T_Node, T_Edge), outDIR$, Optional encoding As Encoding = Nothing) As Boolean
         With outDIR Or App.CurrentDirectory.AsDefault
-            Call network.nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding)
-            Call network.edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding)
+            Call network.nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding Or UTF8)
+            Call network.edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding Or UTF8)
         End With
 
         Return True

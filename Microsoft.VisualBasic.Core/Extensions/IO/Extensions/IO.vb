@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Text
 <Package("IO")>
 Public Module IOExtensions
 
-    ReadOnly UTF8 As [Default](Of Encoding) = Encoding.UTF8
+    Public ReadOnly UTF8 As [Default](Of Encoding) = Encoding.UTF8
 
     ''' <summary>
     ''' Open text writer interface from a given <see cref="Stream"/> <paramref name="s"/>. 
