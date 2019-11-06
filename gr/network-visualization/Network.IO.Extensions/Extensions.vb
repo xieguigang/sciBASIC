@@ -2,9 +2,38 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 <HideModuleName>
 Public Module Extensions
+
+    <Extension>
+    Public Function SearchIndex(net As NetworkTables, from As Boolean) As Dictionary(Of String, Index(Of String))
+        Dim getKey = Function(e As NetworkEdge)
+                         If from Then
+                             Return e.fromNode
+                         Else
+                             Return e.toNode
+                         End If
+                     End Function
+        Dim getValue = Function(e As NetworkEdge)
+                           If from Then
+                               Return e.toNode
+                           Else
+                               Return e.fromNode
+                           End If
+                       End Function
+        Dim index = net.edges _
+                .Select(Function(edge)
+                            Return (key:=getKey(edge), Value:=getValue(edge))
+                        End Function) _
+                .GroupBy(Function(t) t.key) _
+                .ToDictionary(Function(k) k.Key,
+                              Function(g)
+                                  Return New Index(Of String)(g.Select(Function(o) o.Value).Distinct)
+                              End Function)
+        Return index
+    End Function
 
     ''' <summary>
     ''' 移除的重复的边
@@ -42,7 +71,7 @@ Public Module Extensions
  _
                 From x As T
                 In edges
-                Where Not x.SelfLoop
+                Where Not x.selfLoop
                 Select x
 
         Return LQuery
