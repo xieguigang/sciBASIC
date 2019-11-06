@@ -138,7 +138,7 @@ Namespace Layouts.Orthogonal
             Dim totalLenAfter As Double
             Dim gain As Double
 
-            For Each nearby As GridCell In workspace.grid.GetAdjacentCells(origin.index)
+            For Each nearby As GridCell In workspace.grid.GetAdjacentCells(origin.index).Shuffles
                 If nearby.node Is Nothing Then
                     ' 附近的单元格是没有节点的，直接放置进去?
                     Call workspace.grid.MoveNode(origin.index, nearby.index)
