@@ -109,6 +109,7 @@ Namespace Layouts.Orthogonal
                                 }
                             End Function) _
                     .ToArray
+                y += cellSize
             Next
         End Sub
 
@@ -127,14 +128,37 @@ Namespace Layouts.Orthogonal
         ''' <param name="index"></param>
         ''' <returns></returns>
         Public Iterator Function GetAdjacentCells(index As Point) As IEnumerable(Of GridCell)
-            Yield gridCells(index.X - 1)(index.Y - 1)  ' 左上
-            Yield gridCells(index.X)(index.Y - 1)      ' 上
-            Yield gridCells(index.X + 1)(index.Y - 1)  ' 右上
-            Yield gridCells(index.X + 1)(index.Y)      ' 右
-            Yield gridCells(index.X + 1)(index.Y + 1)  ' 右下
-            Yield gridCells(index.X)(index.Y + 1)      ' 下
-            Yield gridCells(index.X - 1)(index.Y + 1)  ' 左下
-            Yield gridCells(index.X - 1)(index.Y)      ' 左
+            If index.Y > 0 Then
+                If index.X > 0 Then
+                    Yield gridCells(index.Y - 1)(index.X - 1) ' 左上
+                End If
+
+                Yield gridCells(index.Y - 1)(index.X)     ' 上
+
+                If index.X < size.Width Then
+                    Yield gridCells(index.Y - 1)(index.X + 1) ' 右上
+                End If
+            End If
+
+            If index.X < size.Width Then
+                Yield gridCells(index.Y)(index.X + 1)     ' 右
+            End If
+
+            If index.Y < size.Height Then
+                If index.X < size.Width Then
+                    Yield gridCells(index.Y + 1)(index.X + 1) ' 右下
+                End If
+
+                Yield gridCells(index.Y + 1)(index.X)     ' 下
+
+                If index.X > 0 Then
+                    Yield gridCells(index.Y + 1)(index.X - 1) ' 左下
+                End If
+            End If
+
+            If index.X > 0 Then
+                Yield gridCells(index.Y)(index.X - 1)     ' 左
+            End If
         End Function
 
         ''' <summary>
@@ -224,7 +248,7 @@ Namespace Layouts.Orthogonal
             g = network
 
             For Each node As Node In network.vertex
-                cell = gridCells(x(++i))(y(++j))
+                cell = gridCells(y(++j))(x(++i))
 
                 Call cell.PutNode(node)
                 Call nodes.Add(node.label, cell)
