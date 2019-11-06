@@ -95,7 +95,7 @@
     <Compile Include="IO\FileStream\csv\Network.vb" />
     <Compile Include="IO\FileStream\csv\Node.vb" />
     <Compile Include="IO\FileStream\Json\json.vb" />
-    <Compile Include="IO\Generic\Network.vb" />
+    <Compile Include="IO\Network.vb" />
     <Compile Include="IO\ModelExtensions.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Analysis.vb" />
@@ -114,7 +114,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="vbnet.vb" />
+    <Compile Include="IO\vbnet.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
