@@ -73,6 +73,19 @@ Namespace CommandLine
     Public Module CLITools
 
         ''' <summary>
+        ''' 在命令行之中使用逗号作为分隔符分隔多个文件
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
+        Public Function GetFileList(input As String) As IEnumerable(Of String)
+            If input.FileExists Then
+                Return {input}
+            Else
+                Return input.Split(","c)
+            End If
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="assem"></param>

@@ -169,8 +169,11 @@ Namespace FileStream
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function CreateGraph(net As NetworkTables, Optional nodeColor As Func(Of Node, Brush) = Nothing) As NetworkGraph
-            Return CreateGraph(Of Node, NetworkEdge)(net, nodeColor)
+        <Extension> Public Function CreateGraph(net As NetworkTables,
+                                                Optional nodeColor As Func(Of Node, Brush) = Nothing,
+                                                Optional defaultNodeSize$ = "20,20") As NetworkGraph
+
+            Return CreateGraph(Of Node, NetworkEdge)(net, nodeColor, defaultNodeSize:=defaultNodeSize)
         End Function
 
         ''' <summary>
@@ -227,21 +230,24 @@ Namespace FileStream
         Public Function CreateGraph(Of TNode As Node, TEdge As NetworkEdge)(net As Network(Of TNode, TEdge),
                                                                             Optional nodeColor As Func(Of Node, Brush) = Nothing,
                                                                             Optional defaultBrush$ = "black",
-                                                                            Optional defaultRadius! = 20) As NetworkGraph
-
-            Dim getRadius = Function(node As Node) As Single
+                                                                            Optional defaultNodeSize$ = "20,20") As NetworkGraph
+            Dim defaultNodeSizeVals As Double() = defaultNodeSize _
+                .Split(","c) _
+                .Select(AddressOf Val) _
+                .ToArray
+            Dim getRadius = Function(node As Node) As Double()
                                 Dim s$ = node(names.REFLECTION_ID_MAPPING_DEGREE)
 
                                 If s.StringEmpty Then
-                                    Return defaultRadius
+                                    Return defaultNodeSizeVals
                                 Else
-                                    Return Val(s)
+                                    Return {Val(s)}
                                 End If
                             End Function
             Dim defaultColor As Brush = New SolidBrush(defaultBrush.TranslateColor)
 
             If Not net.nodes.All(Function(node) node.Properties.ContainsKey(names.REFLECTION_ID_MAPPING_DEGREE)) Then
-                Call $"Not all of the nodes contains degree value, nodes' radius will use default value: {defaultRadius}".Warning
+                Call $"Not all of the nodes contains degree value, nodes' radius will use default value: {defaultNodeSize}".Warning
             End If
 
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
@@ -251,10 +257,10 @@ Namespace FileStream
                 Let id = n.ID
                 Let pos As AbstractVector = New FDGVector2(Val(n("x")), Val(n("y")))
                 Let c As Brush = If(nodeColor Is Nothing, defaultColor, nodeColor(n))
-                Let r As Single = getRadius(node:=n)
+                Let r As Double() = getRadius(node:=n)
                 Let data As NodeData = New NodeData With {
                     .color = c,
-                    .size = {r},
+                    .size = r,
                     .Properties = New Dictionary(Of String, String) From {
                         {names.REFLECTION_ID_MAPPING_NODETYPE, n.NodeType},
                         {names.REFLECTION_ID_MAPPING_DEGREE, n(names.REFLECTION_ID_MAPPING_DEGREE)},

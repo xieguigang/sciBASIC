@@ -5,6 +5,9 @@ Imports stdNum = System.Math
 
 Namespace Layouts.Orthogonal
 
+    ''' <summary>
+    ''' The algorithm math helper module
+    ''' </summary>
     <HideModuleName>
     Public Module Math
 
