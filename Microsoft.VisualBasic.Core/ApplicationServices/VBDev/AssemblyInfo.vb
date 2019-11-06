@@ -1,4 +1,6 @@
-﻿Namespace ApplicationServices.Development
+﻿Imports System.Xml.Serialization
+
+Namespace ApplicationServices.Development
 
     ''' <summary>
     ''' ``My Project\AssemblyInfo.vb``
@@ -39,6 +41,8 @@
 
         Public Property AssemblyVersion As String
         Public Property AssemblyFileVersion As String
+
+        <XmlAttribute>
         Public Property AssemblyFullName As String
 
         ''' <summary>
@@ -49,9 +53,11 @@
 
         Public Const ProjectFile As String = "My Project\AssemblyInfo.vb"
 
+        Sub New()
+        End Sub
+
         Public Overrides Function ToString() As String
             Return AssemblyTitle
         End Function
-
     End Class
 End Namespace

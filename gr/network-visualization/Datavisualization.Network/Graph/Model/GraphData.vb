@@ -122,7 +122,12 @@ Namespace Graph
             End Get
         End Property
 
-        Public Property radius As Single
+        ''' <summary>
+        ''' 这个主要是为了兼容圆形或者矩形之类的大小信息
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property size As Double()
+
         ''' <summary>
         ''' Mass weight
         ''' </summary>
@@ -174,7 +179,7 @@ Namespace Graph
             Me.neighbours = copy.neighbours.SafeQuery.ToArray
             Me.origID = copy.origID
             Me.Properties = New Dictionary(Of String, String)(copy.Properties)
-            Me.radius = copy.radius
+            Me.size = copy.size.ToArray
             Me.weights = copy.weights.SafeQuery.ToArray
         End Sub
 
@@ -183,7 +188,7 @@ Namespace Graph
         End Function
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return initialPostion.ToString
         End Function
     End Class
 

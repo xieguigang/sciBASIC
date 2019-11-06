@@ -56,6 +56,11 @@ Public Class Grid
     Public ReadOnly Property layout As RectangleF
     Public ReadOnly Property steps As SizeF
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="size">实际的物理大小，而非网格之中的单元格数量</param>
+    ''' <param name="steps"></param>
     Sub New(size As Size, steps As SizeF)
         Call Me.New(New Rectangle(New Point, size), steps)
     End Sub
@@ -71,6 +76,35 @@ Public Class Grid
         Me.steps = steps
         Me.layout = layout
     End Sub
+
+    ''' <summary>
+    ''' 返回数据点在网格之中的``X,Y``方格的顶点编号
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function Index(x#, y#) As Point
+        Dim xi%
+        Dim yi%
+
+        If x > Me.X.Max Then
+            xi = Me.X.Count
+        Else
+            xi = Me.X.FirstGreaterThan(x)
+        End If
+
+        If y > Me.Y.Max Then
+            yi = Me.Y.Count
+        Else
+            yi = Me.Y.FirstGreaterThan(y)
+        End If
+
+        ' x = 8
+        ' xi-1  xi   xi + 1
+        ' 5     10   15
+        '    x
+        ' index of x is xi -1
+
+        Return New Point(xi - 1, yi - 1)
+    End Function
 
     ''' <summary>
     ''' 返回数据点在网格之中的``X,Y``方格的顶点编号

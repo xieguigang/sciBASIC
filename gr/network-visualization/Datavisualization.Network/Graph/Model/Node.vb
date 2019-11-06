@@ -194,7 +194,7 @@ Namespace Graph
                     .mass = data.mass,
                     .neighbours = data.neighbours,
                     .origID = data.origID,
-                    .radius = data.radius,
+                    .size = data.size.ToArray,
                     .weights = data.weights,
                     .Properties = New Dictionary(Of String, String)(data.Properties)
                 }

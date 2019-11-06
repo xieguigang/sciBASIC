@@ -484,10 +484,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analysis\CorrelationGraph.vb" />
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Graph\Model\AdjacencySet.vb" />
-    <Compile Include="IO\FileStream\csv\CytoscapeTableLoader.vb" />
+    <Compile Include="Graph\Model\NameOf.vb" />
+    <Compile Include="IDynamicsTable.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
     <Compile Include="Layouts\Cola\descent.vb" />
     <Compile Include="Layouts\Cola\Layout\Group.vb" />
@@ -497,7 +497,6 @@
     <Compile Include="Layouts\Cola\Models\Accessor\RectAccessors.vb" />
     <Compile Include="Layouts\Cola\Models\DirectedEdge.vb" />
     <Compile Include="Graph\Selector.vb" />
-    <Compile Include="IO\FileStream\Json\json.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\Cola\Extensions.vb" />
     <Compile Include="Layouts\Cola\Geom\geom.vb" />
@@ -534,16 +533,16 @@
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected3D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected2D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVectorExtensions.vb" />
+    <Compile Include="Layouts\Orthogonal\Workspace.vb" />
+    <Compile Include="Layouts\Orthogonal\Math.vb" />
+    <Compile Include="Layouts\Orthogonal\Compaction.vb" />
+    <Compile Include="Layouts\Orthogonal\Grid.vb" />
+    <Compile Include="Layouts\Orthogonal\Algorithm.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\forceNetwork.vb" />
     <Compile Include="Analysis\Extensions.vb" />
     <Compile Include="Analysis\Statistics.vb" />
-    <Compile Include="IO\FileStream\csv\vbnet.vb" />
-    <Compile Include="IO\FileStream\csv\Cytoscape.vb" />
-    <Compile Include="IO\FileStream\csv\Network.vb" />
-    <Compile Include="IO\Generic\IDynamicsTable.vb" />
-    <Compile Include="IO\ModelExtensions.vb" />
     <Compile Include="Graph\Extensions.vb" />
     <Compile Include="Graph\Model\Edge.vb" />
     <Compile Include="Graph\Model\Graph.vb" />
@@ -560,10 +559,6 @@
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Point.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Spring.vb" />
-    <Compile Include="IO\Generic\NameOf.vb" />
-    <Compile Include="IO\FileStream\csv\Edge.vb" />
-    <Compile Include="IO\Generic\Network.vb" />
-    <Compile Include="IO\FileStream\csv\Node.vb" />
     <Compile Include="Graph\Abstract.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="NetworkAPI.vb" />
@@ -606,10 +601,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Data_science\Graph\GraphTheory.vbproj">
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>GraphTheory</Name>

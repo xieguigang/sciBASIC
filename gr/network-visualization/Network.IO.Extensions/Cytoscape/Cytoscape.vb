@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::92783d3f5cbb2f17c68c6dad857dba57, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Edges
-    ' 
-    '         Properties: data, EdgeBetweenness, interaction, name, SUID
-    ' 
-    '         Function: GetConnectNodes, GetNodes, ToString
-    ' 
-    '     Class Nodes
-    ' 
-    '         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, data
-    '                     Degree, Eccentricity, IsSingleNode, name, NeighborhoodConnectivity
-    '                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
-    '                     SharedName, Stress, SUID, TopologicalCoefficient
-    ' 
-    '         Function: ToString, ToTable
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Edges
+' 
+'         Properties: data, EdgeBetweenness, interaction, name, SUID
+' 
+'         Function: GetConnectNodes, GetNodes, ToString
+' 
+'     Class Nodes
+' 
+'         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, data
+'                     Degree, Eccentricity, IsSingleNode, name, NeighborhoodConnectivity
+'                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
+'                     SharedName, Stress, SUID, TopologicalCoefficient
+' 
+'         Function: ToString, ToTable
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Data.Linq.Mapping
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -109,7 +109,7 @@ Namespace FileStream.Cytoscape
         Public Property PartnerOfMultiEdgedNodePairs As String
         Public Property Radiality As String
         Public Property SelfLoops As String
-        <Column("shared name")>
+        <Column(Name:="shared name")>
         Public Property SharedName As String
         Public Property Stress As String
         Public Property TopologicalCoefficient As String

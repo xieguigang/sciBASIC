@@ -148,9 +148,18 @@ Namespace HTML.CSS
             Return st
         End Function
 
+        ''' <summary>
+        ''' 在进行隐式转换的时候，空值的话转换函数会返回空值
+        ''' </summary>
+        ''' <param name="stroke"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(stroke As Stroke) As Pen
-            Return stroke.GDIObject
+            If stroke Is Nothing Then
+                Return Nothing
+            Else
+                Return stroke.GDIObject
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

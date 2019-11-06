@@ -131,7 +131,7 @@ Namespace FileStream.Cytoscape
                                                    In nodes
                                                    Let r = If(n.Degree <= 4, 4, n.Degree) * 5
                                                    Let nd As NodeData = New NodeData With {
-                                                       .radius = r,
+                                                       .size = {r},
                                                        .color = New SolidBrush(randColor())
                                                    }
                                                    Select New Graph.Node(n.name, nd)

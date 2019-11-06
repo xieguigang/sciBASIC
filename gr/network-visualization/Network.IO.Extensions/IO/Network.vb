@@ -53,7 +53,6 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Language
 
 Namespace FileStream.Generic
@@ -64,9 +63,8 @@ Namespace FileStream.Generic
     ''' <typeparam name="T_Node"></typeparam>
     ''' <typeparam name="T_Edge"></typeparam>
     ''' <remarks></remarks>
-    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge) : Inherits UnixBash.FileSystem.File
+    Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge)
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
-        Implements ISaveHandle
 
         Public Property nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Key
             Get
@@ -146,37 +144,11 @@ Namespace FileStream.Generic
  _
                 () <= From x As T_Edge
                       In edges
-                      Where Not x.SelfLoop
+                      Where Not x.selfLoop
                       Select x
 
             edges = LQuery
         End Sub
-
-        ''' <summary>
-        '''
-        ''' </summary>
-        ''' <param name="outDIR">The data directory for the data export, if the value of this directory is null then the data
-        ''' will be exported at the current work directory.
-        ''' (进行数据导出的文件夹，假若为空则会保存数据至当前的工作文件夹之中)</param>
-        ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Overrides Function Save(outDIR$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-            With outDIR Or App.CurrentDirectory.AsDefault
-                Call nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding)
-                Call edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding)
-            End With
-
-            Return True
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Load(directory As String) As Network(Of T_Node, T_Edge)
-            Return New Network(Of T_Node, T_Edge) With {
-                .edges = $"{directory}/network-edges.csv".LoadCsv(Of T_Edge),
-                .nodes = $"{directory}/nodes.csv".LoadCsv(Of T_Node)
-            }
-        End Function
 
         Public Shared Operator +(net As Network(Of T_Node, T_Edge), x As T_Node) As Network(Of T_Node, T_Edge)
             Call net.__nodes.Add(x)

@@ -103,7 +103,7 @@ Public Class Renderer3D : Inherits Renderer
     End Sub
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
-        Dim r As Single = If(dynamicsRadius, n.Data.radius, radiushash(n))
+        Dim r As Single = If(dynamicsRadius, n.data.size(0), radiushash(n))
 
         If r < 0.6 OrElse Single.IsNaN(r) OrElse r > 500 Then
             Return
