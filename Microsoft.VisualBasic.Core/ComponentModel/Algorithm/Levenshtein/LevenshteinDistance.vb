@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Text.Levenshtein
 
@@ -82,11 +82,11 @@ Vladimir I",
         ''' <param name="hypotheses"></param>
         ''' <param name="cost"></param>
         ''' <returns></returns>
-        Private Function __createTable(reference As Integer(), hypotheses As Integer(), cost As Double) As Double(,)
-            Return CreateTable(Of Integer)(reference, hypotheses, DynamicProgramming.Cost(Of Integer).DefaultCost(cost), AddressOf __int32Equals)
+        Private Function createMatrix(reference As Integer(), hypotheses As Integer(), cost As Double) As Double(,)
+            Return CreateTable(Of Integer)(reference, hypotheses, DynamicProgramming.Cost(Of Integer).DefaultCost(cost), AddressOf i32Equals)
         End Function
 
-        Private Function __int32Equals(a As Integer, b As Integer) As Boolean
+        Private Function i32Equals(a As Integer, b As Integer) As Boolean
             Return a = b
         End Function
 
@@ -124,10 +124,10 @@ Vladimir I",
                         '  if the letters are same
                         distTable(i, j) = distTable(i - 1, j - 1)
                     Else ' if not add 1 to its neighborhoods and assign minumun of its neighborhoods
-                        Dim n As Double = sys.Min(
+                        Dim n As Double = stdNum.Min(
                             distTable(i - 1, j - 1) + cost.substitute(reference(i - 1), hypotheses(j - 1)),
                             distTable(i - 1, j) + cost.delete(reference(i - 1)))
-                        distTable(i, j) = sys.Min(n, distTable(i, j - 1) + cost.insert(hypotheses(j - 1)))
+                        distTable(i, j) = stdNum.Min(n, distTable(i, j - 1) + cost.insert(hypotheses(j - 1)))
                     End If
                 Next
             Next
@@ -177,7 +177,7 @@ Vladimir I",
                 .Hypotheses = sHyp,
                 .Reference = sRef
             }
-            Return __computeRoute(sHyp, result, i, j, distTable)
+            Return computeRouteImpl(sHyp, result, i, j, distTable)
         End Function
 
         <ExportAPI("ToHTML", Info:="View distance evolve route of the Levenshtein Edit Distance calculation.")>
@@ -204,16 +204,16 @@ Vladimir I",
             If hypotheses Is Nothing Then hypotheses = ""
             If reference Is Nothing Then reference = New Integer() {}
 
-            Dim distTable#(,) = __createTable(reference,
+            Dim distTable#(,) = createMatrix(reference,
                                               hypotheses.Select(Function(ch) Asc(ch)).ToArray,
                                               cost)
-            Dim i As Integer = reference.Length,
-                j As Integer = hypotheses.Length
+            Dim i As Integer = reference.Length
+            Dim j As Integer = hypotheses.Length
             Dim result As New DistResult With {
                 .Hypotheses = hypotheses,
                 .Reference = Nothing
             }
-            Return __computeRoute(hypotheses, result, i, j, distTable)
+            Return computeRouteImpl(hypotheses, result, i, j, distTable)
         End Function
 
         Const a As Integer = Asc("a"c)
@@ -258,7 +258,7 @@ Vladimir I",
         ''' <param name="j"></param>
         ''' <param name="distTable"></param>
         ''' <returns></returns>
-        Private Function __computeRoute(hypotheses$,
+        Private Function computeRouteImpl(hypotheses$,
                                         result As DistResult,
                                         i%, j%,
                                         distTable#(,)) As DistResult
@@ -355,18 +355,17 @@ Vladimir I",
             If hypotheses Is Nothing Then hypotheses = ""
             If reference Is Nothing Then reference = ""
 
-            Dim distTable As Double(,) = __createTable(
-                reference.Select(Function(ch) AscW(ch)).ToArray,
-                hypotheses.Select(Function(ch) AscW(ch)).ToArray,
-                cost)
-            Dim i As Integer = reference.Length,
-                j As Integer = hypotheses.Length
+            Dim vectorRef = reference.Select(Function(ch) AscW(ch)).ToArray
+            Dim vectorHypo = hypotheses.Select(Function(ch) AscW(ch)).ToArray
+            Dim distTable As Double(,) = createMatrix(vectorRef, vectorHypo, cost)
+            Dim i As Integer = reference.Length
+            Dim j As Integer = hypotheses.Length
             Dim result As New DistResult With {
                 .Hypotheses = hypotheses,
                 .Reference = reference
             }
 
-            Return __computeRoute(hypotheses, result, i, j, distTable)
+            Return computeRouteImpl(hypotheses, result, i, j, distTable)
         End Function
     End Module
 End Namespace
