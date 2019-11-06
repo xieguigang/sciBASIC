@@ -31,7 +31,15 @@ Namespace Layouts.Orthogonal
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"[{index.X},{index.Y}] x:={location.X}, y:={location.Y}; {node.label}"
+            Dim nodeLabel$
+
+            If node Is Nothing Then
+                nodeLabel = "<none>"
+            Else
+                nodeLabel = node.label
+            End If
+
+            Return $"[{index.X},{index.Y}] x:={location.X}, y:={location.Y}; {nodeLabel}"
         End Function
 
     End Class
@@ -57,7 +65,7 @@ Namespace Layouts.Orthogonal
         Default Public ReadOnly Property GetCell(index As Point) As GridCell
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return gridCells(index.X)(index.Y)
+                Return gridCells(index.Y)(index.X)
             End Get
         End Property
 

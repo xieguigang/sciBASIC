@@ -148,7 +148,7 @@ Namespace Layouts.Orthogonal
 
         <Extension>
         Private Function neighboursMedianX(g As NetworkGraph, v As Node) As Double
-            Dim edges = g.GetEdges(v)
+            Dim edges = g.GetEdges(v).ToArray
             Dim x = edges _
                 .Select(Function(e)
                             If e.U Is v Then
@@ -156,8 +156,9 @@ Namespace Layouts.Orthogonal
                             Else
                                 Return e.U.data.initialPostion.x
                             End If
-                        End Function)
-            Dim median = x.Median
+                        End Function) _
+                .ToArray
+            Dim median As Double = x.Median
 
             Return median
         End Function

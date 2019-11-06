@@ -218,12 +218,23 @@ Namespace Graph
                 Call edges.Add(edge.ID, edge)
             End If
 
-            If Not (_adjacencySet.ContainsKey(edge.U.label)) Then
+            ' 20191106
+            ' 添加edge的时候需要将u和v都添加一次
+            ' 否则_adjacencySet之中将只会出现U节点的数据
+            ' V节点可能不存在
+            ' 数据不完整
+
+            If Not _adjacencySet.ContainsKey(edge.U.label) Then
                 _adjacencySet(edge.U.label) = New AdjacencySet With {.U = edge.U.label}
                 edge.U.adjacencies = _adjacencySet(edge.U.label)
             End If
+            If Not _adjacencySet.ContainsKey(edge.V.label) Then
+                _adjacencySet(edge.V.label) = New AdjacencySet With {.U = edge.V.label}
+                edge.V.adjacencies = _adjacencySet(edge.V.label)
+            End If
 
             Call _adjacencySet(edge.U.label).Add(edge)
+            Call _adjacencySet(edge.V.label).Add(edge)
             Call notify()
 
             Return edge
