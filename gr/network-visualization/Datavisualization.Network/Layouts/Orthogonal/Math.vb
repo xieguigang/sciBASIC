@@ -6,7 +6,7 @@ Imports stdNum = System.Math
 Namespace Layouts.Orthogonal
 
     <HideModuleName>
-    Public Module Extensions
+    Public Module Math
 
         Public Function distance(vi As Node, vj As Node, c#, delta#) As Double
             Dim xic = vi.data.initialPostion.x + 1 / 2 * vi.data.size(0)

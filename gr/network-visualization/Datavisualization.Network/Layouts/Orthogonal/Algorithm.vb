@@ -7,33 +7,6 @@ Imports stdNum = System.Math
 
 Namespace Layouts.Orthogonal
 
-    Friend Class Workspace
-
-        Public g As NetworkGraph
-        Public grid As Grid
-        Public V As Node()
-        ''' <summary>
-        ''' c
-        ''' </summary>
-        Public cellSize As Double
-        Public delta As Double
-
-        Public width As Dictionary(Of String, Double)
-        Public height As Dictionary(Of String, Double)
-
-        Public ReadOnly Property totalEdgeLength As Double
-            Get
-                Dim len As Double
-
-                For Each edge As Edge In g.graphEdges
-                    len += distance(edge.U, edge.V, cellSize, delta)
-                Next
-
-                Return len
-            End Get
-        End Property
-    End Class
-
     Public Module Algorithm
 
         ''' <summary>
@@ -46,7 +19,9 @@ Namespace Layouts.Orthogonal
         ''' </param>
         <Extension>
         Public Sub DoLayout(graph As NetworkGraph, gridSize As Size, Optional delta# = 1)
-            Dim V As Node() = graph.vertex.ToArray
+            ' 只针对非孤立的网络节点来进行布局的计算
+            ' 孤立节点会在for循环中的swap步骤进行被动布局
+            Dim V As Node() = graph.GetConnectedVertex.ToArray
             Dim compactionDir = True
             Dim iterationCount = 90 * V.Length
             ' T的作用是用来计算交换的范围
