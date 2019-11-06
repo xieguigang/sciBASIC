@@ -75,10 +75,9 @@ Public Class InputDevice : Implements IDisposable
 
     Protected Overridable Function __getNode(p As Point) As Node
         For Each node As Node In Canvas.Graph.vertex
-            Dim r As Single = node.data.radius
+            Dim r As Single = node.data.size(0)
             Dim v As FDGVector2 = TryCast(Canvas.fdgPhysics.GetPoint(node).position, FDGVector2)
-            Dim npt As Point =
-                Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)
+            Dim npt As Point = Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)
             Dim pt As New Point(CInt(npt.X - r / 2), CInt(npt.Y - r / 2))
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 

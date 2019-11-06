@@ -218,6 +218,10 @@
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
       <Name>Network.GraphTheory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Network.IO.Extensions\Network.IO.Extensions.vbproj">
+      <Project>{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}</Project>
+      <Name>Network.IO.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetworkCanvas\NetworkCanvas.vbproj">
       <Project>{ef70bed6-8795-4523-a260-c1abed9405aa}</Project>
       <Name>NetworkCanvas</Name>

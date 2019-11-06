@@ -435,7 +435,7 @@ Public Module NetworkVisualizer
 
     Public Function DirectMapRadius(Optional scale# = 1) As Func(Of Node, Single)
         Return Function(n)
-                   Dim r As Single = n.data.radius
+                   Dim r As Single = n.data.size(0)
 
                    ' 当网络之中没有任何边的时候，r的值会是NAN
                    If r = 0# OrElse r.IsNaNImaginary Then
