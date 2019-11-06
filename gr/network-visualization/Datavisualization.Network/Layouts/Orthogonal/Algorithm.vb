@@ -62,6 +62,8 @@ Namespace Layouts.Orthogonal
                 .height = V.ToDictionary(Function(n) n.label, Function(n) n.height(cellSize, delta))
             }
 
+            Call grid.PutRandomNodes(graph)
+
             For i As Integer = 0 To iterationCount \ 2
                 For j As Integer = 0 To V.Length - 1
                     ' To perform local optimization, every node is moved to a location that minimizes

@@ -11,7 +11,7 @@ Module OrthogonalTest
         Dim g As New NetworkGraph
 
         For Each label As String In {"A", "B", "C", "D", "E"}
-            Call g.AddNode(New node With {.label = label, .data = New NodeData})
+            Call g.AddNode(New node With {.label = label, .data = New NodeData With {.initialPostion = New FDGVector2, .size = {5, 5}}})
         Next
 
         Call g.AddEdge("A", "B")
