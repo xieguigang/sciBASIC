@@ -16,16 +16,36 @@ Namespace Layouts.Orthogonal
         ''' c
         ''' </summary>
         Public cellSize As Double
+        Public delta As Double
 
         Public width As Dictionary(Of String, Double)
         Public height As Dictionary(Of String, Double)
 
+        Public ReadOnly Property totalEdgeLength As Double
+            Get
+                Dim len As Double
+
+                For Each edge As Edge In g.graphEdges
+                    len += distance(edge.U, edge.V, cellSize, delta)
+                Next
+
+                Return len
+            End Get
+        End Property
     End Class
 
     Public Module Algorithm
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="graph"></param>
+        ''' <param name="gridSize"></param>
+        ''' <param name="delta">
+        ''' some minimum distance between node has to be ensured
+        ''' </param>
         <Extension>
-        Public Sub DoLayout(graph As NetworkGraph, gridSize As Size, Optional delta# = 0)
+        Public Sub DoLayout(graph As NetworkGraph, gridSize As Size, Optional delta# = 1)
             Dim V As Node() = graph.vertex.ToArray
             Dim compactionDir = True
             Dim iterationCount = 90 * V.Length
@@ -53,10 +73,10 @@ Namespace Layouts.Orthogonal
 
                     ' if vj has not changed it’s place from the previous iteration then
                     If Not gridCell.node Is V(j) Then
-                        Call grid.MoveNode(V(j).label, gridCell)
+                        Call grid.SwapNode(grid.FindCell(V(j).label).index, gridCell.index)
                     Else
                         ' Try to swap vj with nodes nearby;
-
+                        Call workspace.SwapNearbyNode(origin:=gridCell)
                     End If
                 Next
 
@@ -81,8 +101,11 @@ Namespace Layouts.Orthogonal
                     Dim gridCell As GridCell = grid(cell)
 
                     ' if vj has not changed it’s place from the previous iteration then
-                    If gridCell.node Is V(j) Then
+                    If Not gridCell.node Is V(j) Then
+                        Call grid.SwapNode(grid.FindCell(V(j).label).index, gridCell.index)
+                    Else
                         ' Try to swap vj with nodes nearby;
+                        Call workspace.SwapNearbyNode(origin:=gridCell)
                     End If
                 Next
 
@@ -92,6 +115,32 @@ Namespace Layouts.Orthogonal
                 End If
 
                 T = T * k
+            Next
+        End Sub
+
+        <Extension>
+        Private Sub SwapNearbyNode(workspace As Workspace, origin As GridCell)
+            Dim totalLenBefore As Double = workspace.totalEdgeLength
+            Dim totalLenAfter As Double
+            Dim gain As Double
+
+            For Each nearby As GridCell In workspace.grid.GetAdjacentCells(origin.index)
+                If nearby.node Is Nothing Then
+                    ' 附近的单元格是没有节点的，直接放置进去?
+                    Call workspace.grid.MoveNode(origin.index, nearby.index)
+                Else
+                    Call workspace.grid.SwapNode(origin.index, nearby.index)
+                End If
+
+                totalLenAfter = workspace.totalEdgeLength
+                gain = totalLenAfter - totalLenBefore
+
+                If gain > 0 Then
+                    Exit For
+                Else
+                    ' restore
+                    Call workspace.grid.SwapNode(origin.index, nearby.index)
+                End If
             Next
         End Sub
 

@@ -10,7 +10,7 @@ Namespace Layouts.Orthogonal
     Public Module Compaction
 
         <Extension>
-        Friend Sub compact(workspace As Workspace, compactionDir As Boolean, gamma#)
+        Friend Sub compact(workspace As Workspace, compactionDir As Boolean, gamma#, expand As Boolean)
 
         End Sub
     End Module

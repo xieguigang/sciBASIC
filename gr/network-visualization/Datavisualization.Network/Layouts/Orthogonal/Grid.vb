@@ -14,8 +14,15 @@ Namespace Layouts.Orthogonal
 
         Public ReadOnly Property node As Node
 
+        ''' <summary>
+        ''' 将目标指定的节点<paramref name="node"/>对象放置在当前的单元格内，然后更新坐标位置为当前的单元格的位置
+        ''' </summary>
+        ''' <param name="node"></param>
         Public Sub PutNode(node As Node)
             Me._node = node
+
+            node.data.initialPostion.x = location.X
+            node.data.initialPostion.y = location.Y
         End Sub
 
         Public Sub RemoveNode()
@@ -83,6 +90,23 @@ Namespace Layouts.Orthogonal
 
             Call moveNode(fromCell, toCell, node)
         End Sub
+
+        ''' <summary>
+        ''' Otherwise, we try to swap it with the nodes nearby. We do this
+        ''' by checking the nodes residing in adjacent grid cells To vj.
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Public Iterator Function GetAdjacentCells(index As Point) As IEnumerable(Of GridCell)
+            Yield gridCells(index.X - 1)(index.Y - 1)  ' 左上
+            Yield gridCells(index.X)(index.Y - 1)      ' 上
+            Yield gridCells(index.X + 1)(index.Y - 1)  ' 右上
+            Yield gridCells(index.X + 1)(index.Y)      ' 右
+            Yield gridCells(index.X + 1)(index.Y + 1)  ' 右下
+            Yield gridCells(index.X)(index.Y + 1)      ' 下
+            Yield gridCells(index.X - 1)(index.Y + 1)  ' 左下
+            Yield gridCells(index.X - 1)(index.Y)      ' 左
+        End Function
 
         ''' <summary>
         ''' 将<paramref name="targetNode"/>所代表的节点对象移动到目标<paramref name="to"/>单元格

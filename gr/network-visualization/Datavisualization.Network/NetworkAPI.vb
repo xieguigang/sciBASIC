@@ -41,14 +41,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports ______NETWORK__ =
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.Network(Of
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node,
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge)
 
 <Package("DataVisualization.Network", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkAPI
@@ -58,67 +52,4 @@ Public Module NetworkAPI
         Return New NetworkGraph(Of Graph.Node, Graph.Edge)(network.vertex, network.graphEdges).EndPoints
     End Function
 
-    <ExportAPI("Get.NetworkEdges")>
-    Public Function GetNHetworkEdges(Network As ______NETWORK__) As FileStream.NetworkEdge()
-        Return Network.edges
-    End Function
-
-    <ExportAPI("Get.NetworkNodes")>
-    Public Function GetNetworkNodes(Network As ______NETWORK__) As FileStream.Node()
-        Return Network.nodes
-    End Function
-
-    ''' <summary>
-    ''' 这个查找函数是忽略掉了方向了的
-    ''' </summary>
-    ''' <param name="source"></param>
-    ''' <param name="node"></param>
-    ''' <returns></returns>
-    <Extension, ExportAPI("GetConnections")>
-    Public Function GetConnections(source As IEnumerable(Of FileStream.NetworkEdge), node As String) As FileStream.NetworkEdge()
-        Dim LQuery = LinqAPI.Exec(Of FileStream.NetworkEdge) <=
- _
-            From x As FileStream.NetworkEdge
-            In source.AsParallel
-            Where Not String.IsNullOrEmpty(x.GetConnectedNode(node))
-            Select x
-
-        Return LQuery
-    End Function
-
-    ''' <summary>
-    ''' 查找To关系的节点边
-    ''' </summary>
-    ''' <param name="source"></param>
-    ''' <param name="from"></param>
-    ''' <returns></returns>
-    ''' 
-    <ExportAPI("Get.Connects.Next")>
-    <Extension>
-    Public Function GetNextConnects(source As IEnumerable(Of FileStream.NetworkEdge), from As String) As FileStream.NetworkEdge()
-        Dim LQuery = LinqAPI.Exec(Of FileStream.NetworkEdge) <=
- _
-            From x As FileStream.NetworkEdge
-            In source.AsParallel
-            Where from.TextEquals(x.FromNode)
-            Select x
-
-        Return LQuery
-    End Function
-
-    ''' <summary>
-    ''' Removes all of the selfloop and duplicated edges
-    ''' </summary>
-    ''' <param name="network"></param>
-    ''' <param name="doNothing"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function Trim(network As FileStream.NetworkTables, Optional doNothing As Boolean = False) As FileStream.NetworkTables
-        If Not doNothing Then
-            Call network.RemoveSelfLoop()
-            Call network.RemoveDuplicated()
-        End If
-
-        Return network
-    End Function
 End Module

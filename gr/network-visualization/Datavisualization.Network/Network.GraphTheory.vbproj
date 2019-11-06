@@ -495,7 +495,6 @@
     <Compile Include="Layouts\Cola\Models\Accessor\RectAccessors.vb" />
     <Compile Include="Layouts\Cola\Models\DirectedEdge.vb" />
     <Compile Include="Graph\Selector.vb" />
-    <Compile Include="IO\FileStream\Json\json.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\Cola\Extensions.vb" />
     <Compile Include="Layouts\Cola\Geom\geom.vb" />
@@ -541,9 +540,6 @@
     <Compile Include="Layouts\forceNetwork.vb" />
     <Compile Include="Analysis\Extensions.vb" />
     <Compile Include="Analysis\Statistics.vb" />
-    <Compile Include="IO\FileStream\csv\Network.vb" />
-    <Compile Include="IO\Generic\IDynamicsTable.vb" />
-    <Compile Include="IO\ModelExtensions.vb" />
     <Compile Include="Graph\Extensions.vb" />
     <Compile Include="Graph\Model\Edge.vb" />
     <Compile Include="Graph\Model\Graph.vb" />
@@ -560,10 +556,6 @@
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Point.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Spring.vb" />
-    <Compile Include="IO\Generic\NameOf.vb" />
-    <Compile Include="IO\FileStream\csv\Edge.vb" />
-    <Compile Include="IO\Generic\Network.vb" />
-    <Compile Include="IO\FileStream\csv\Node.vb" />
     <Compile Include="Graph\Abstract.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="NetworkAPI.vb" />
