@@ -157,17 +157,17 @@ Namespace Layouts.Orthogonal
 
                 Yield gridCells(index.Y - 1)(index.X)     ' 上
 
-                If index.X < size.Width Then
+                If index.X < size.Width - 1 Then
                     Yield gridCells(index.Y - 1)(index.X + 1) ' 右上
                 End If
             End If
 
-            If index.X < size.Width Then
+            If index.X < size.Width - 1 Then
                 Yield gridCells(index.Y)(index.X + 1)     ' 右
             End If
 
-            If index.Y < size.Height Then
-                If index.X < size.Width Then
+            If index.Y < size.Height - 1 Then
+                If index.X < size.Width - 1 Then
                     Yield gridCells(index.Y + 1)(index.X + 1) ' 右下
                 End If
 
