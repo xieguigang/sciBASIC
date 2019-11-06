@@ -99,9 +99,9 @@ Imports Microsoft.VisualBasic.Linq
 Namespace Graph
 
     ''' <summary>
-    ''' The network graph object model, corresponding network csv table data model is <see cref="FileStream.NetworkTables"/> 
+    ''' The network graph object model
     ''' </summary>
-    Public Class NetworkGraph : Inherits GraphTheory.Network.NetworkGraph(Of Node, Edge)
+    Public Class NetworkGraph : Inherits NetworkGraph(Of Node, Edge)
         Implements ICloneable
 
         ''' <summary>
