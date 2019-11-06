@@ -287,28 +287,30 @@ Public Module NetworkVisualizer
                                       .ToArray
                               End Function)
 
-            With edgeBundling.Keys.ToArray
-                Dim tempList As New List(Of PointF)
-                Dim i As Integer
+            If edgeBundling.Count > 0 Then
+                With edgeBundling.Keys.ToArray
+                    Dim tempList As New List(Of PointF)
+                    Dim i As Integer
 
-                scalePoints = .Select(Function(e) edgeBundling(e)) _
-                              .IteratesALL _
-                              .Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
+                    scalePoints = .Select(Function(e) edgeBundling(e)) _
+                                  .IteratesALL _
+                                  .Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
 
-                For Each edge As Edge In .ByRef
-                    For Each null In edgeBundling(edge)
-                        ' 20191103
-                        ' 在这里因为每一个edge的边连接点的数量是不一样的
-                        ' 所以在这里使用for loop加上递增序列来
-                        ' 正确的获取得到每一条边所对应的边连接节点
-                        tempList += scalePoints(i)
-                        i += 1
+                    For Each edge As Edge In .ByRef
+                        For Each null In edgeBundling(edge)
+                            ' 20191103
+                            ' 在这里因为每一个edge的边连接点的数量是不一样的
+                            ' 所以在这里使用for loop加上递增序列来
+                            ' 正确的获取得到每一条边所对应的边连接节点
+                            tempList += scalePoints(i)
+                            i += 1
+                        Next
+
+                        edgeBundling(edge) = tempList
+                        tempList *= 0
                     Next
-
-                    edgeBundling(edge) = tempList
-                    tempList *= 0
-                Next
-            End With
+                End With
+            End If
         End If
 
         Call "Initialize gdi objects...".__INFO_ECHO
