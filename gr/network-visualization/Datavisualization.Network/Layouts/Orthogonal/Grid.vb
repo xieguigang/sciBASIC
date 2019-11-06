@@ -11,7 +11,16 @@ Namespace Layouts.Orthogonal
 
         Public Property index As Point
         Public Property location As PointF
-        Public Property node As Node
+
+        Public ReadOnly Property node As Node
+
+        Public Sub PutNode(node As Node)
+            Me._node = node
+        End Sub
+
+        Public Sub RemoveNode()
+            Me._node = Nothing
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
@@ -24,6 +33,8 @@ Namespace Layouts.Orthogonal
 
         Dim gridCells As GridCell()()
         Dim gridIndex As GridIndex
+        Dim nodes As New Dictionary(Of String, GridCell)
+        Dim g As NetworkGraph
 
         Public ReadOnly Property size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -65,9 +76,61 @@ Namespace Layouts.Orthogonal
             Next
         End Sub
 
+        Public Sub MoveNode(from As Point, [to] As Point)
+            Dim fromCell As GridCell = Me(from)
+            Dim toCell As GridCell = Me([to])
+            Dim node As Node = fromCell.node
+
+            Call moveNode(fromCell, toCell, node)
+        End Sub
+
+        ''' <summary>
+        ''' 将<paramref name="targetNode"/>所代表的节点对象移动到目标<paramref name="to"/>单元格
+        ''' </summary>
+        ''' <param name="targetNode$"></param>
+        ''' <param name="[to]"></param>
+        Public Sub MoveNode(targetNode$, [to] As GridCell)
+            Dim node As Node = g.GetNode(targetNode)
+            Dim fromCell As GridCell = nodes(node.label)
+
+            Call moveNode(fromCell, [to], node)
+        End Sub
+
+        Private Sub moveNode(fromCell As GridCell, toCell As GridCell, node As Node)
+            nodes(node.label) = toCell
+            toCell.PutNode(node)
+            fromCell.RemoveNode()
+        End Sub
+
+        Public Sub SwapNode(a As Point, b As Point)
+            Dim x As GridCell = Me(a)
+            Dim y As GridCell = Me(b)
+
+            If x.node Is Nothing Then
+                Call MoveNode(b, a)
+            ElseIf y.node Is Nothing Then
+                Call MoveNode(a, b)
+            Else
+                Dim vi = x.node
+                Dim vj = y.node
+
+                Call moveNode(x, y, vi)
+                Call moveNode(y, x, vj)
+            End If
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindIndex(x#, y#) As Point
             Return gridIndex.Index(x, y)
+        End Function
+
+        ''' <summary>
+        ''' Get node by label and the associated grid cell.
+        ''' </summary>
+        ''' <param name="node"><see cref="Node.label"/></param>
+        ''' <returns></returns>
+        Public Function FindCell(node As String) As GridCell
+            Return nodes(node)
         End Function
 
         ''' <summary>
@@ -80,9 +143,15 @@ Namespace Layouts.Orthogonal
             Dim y As Integer() = size.Height.SeqRandom
             Dim i As i32 = Scan0
             Dim j As i32 = Scan0
+            Dim cell As GridCell
+
+            g = network
 
             For Each node As Node In network.vertex
-                gridCells(x(++i))(y(++j)).node = node
+                cell = gridCells(x(++i))(y(++j))
+
+                Call cell.PutNode(node)
+                Call nodes.Add(node.label, cell)
             Next
 
             Return Me

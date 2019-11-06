@@ -535,6 +535,7 @@
     <Compile Include="Layouts\Orthogonal\Extensions.vb" />
     <Compile Include="Layouts\Orthogonal\Compaction.vb" />
     <Compile Include="Layouts\Orthogonal\Grid.vb" />
+    <Compile Include="Layouts\Orthogonal\Algorithm.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\forceNetwork.vb" />
