@@ -188,7 +188,7 @@ Namespace Graph
         End Function
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return initialPostion.ToString
         End Function
     End Class
 
