@@ -82,8 +82,20 @@ Public Class Grid
     ''' </summary>
     ''' <returns></returns>
     Public Function Index(x#, y#) As Point
-        Dim xi = Me.X.FirstGreaterThan(x)
-        Dim yi = Me.Y.FirstGreaterThan(y)
+        Dim xi%
+        Dim yi%
+
+        If x > Me.X.Max Then
+            xi = Me.X.Count
+        Else
+            xi = Me.X.FirstGreaterThan(x)
+        End If
+
+        If y > Me.Y.Max Then
+            yi = Me.Y.Count
+        Else
+            yi = Me.Y.FirstGreaterThan(y)
+        End If
 
         ' x = 8
         ' xi-1  xi   xi + 1

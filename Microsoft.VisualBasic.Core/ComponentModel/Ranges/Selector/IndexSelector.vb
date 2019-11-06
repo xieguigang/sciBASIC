@@ -123,6 +123,26 @@ Namespace ComponentModel.Ranges
             End Get
         End Property
 
+        Public ReadOnly Property Max As T
+            Get
+                If Desc Then
+                    Return source.First
+                Else
+                    Return source.Last
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property Min As T
+            Get
+                If Desc Then
+                    Return source.Last
+                Else
+                    Return source.First
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of T).Count
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
