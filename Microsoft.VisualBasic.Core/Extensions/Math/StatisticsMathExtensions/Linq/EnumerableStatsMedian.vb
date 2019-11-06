@@ -176,8 +176,7 @@ Namespace Math.Statistics.Linq
         '     source contains no elements.
         <Extension>
         Public Function Median(source As IEnumerable(Of Single)) As Single
-            Dim sortedList = From number In source Order By number Select number
-
+            Dim sortedList = (From number In source Order By number Select number).ToArray
             Dim count As Integer = sortedList.Count()
             Dim itemIndex As Integer = count \ 2
 

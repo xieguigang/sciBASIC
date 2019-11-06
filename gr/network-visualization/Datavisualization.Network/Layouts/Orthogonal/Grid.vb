@@ -43,12 +43,16 @@ Namespace Layouts.Orthogonal
         Dim nodes As New Dictionary(Of String, GridCell)
         Dim g As NetworkGraph
 
+        ''' <summary>
+        ''' 单元格的数量，单位为个
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property size As Size
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New Size(gridCells.Length, gridCells(0).Length)
-            End Get
-        End Property
+        ''' <summary>
+        ''' 网格的实际物理大小，单位为像素
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property actualSize As Size
 
         Default Public ReadOnly Property GetCell(index As Point) As GridCell
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -64,20 +68,26 @@ Namespace Layouts.Orthogonal
         ''' <param name="cellSize"><see cref="GridCellSize"/></param>
         Sub New(size As Size, cellSize#)
             Dim y As Double = 0
+            Dim index As Integer
+
+            Me.size = size
+            Me.actualSize = New Size With {
+                .Width = size.Width * cellSize,
+                .Height = size.Height * cellSize
+            }
 
             gridCells = New GridCell(size.Width - 1)() {}
-            gridIndex = New GridIndex(size, New SizeF(cellSize, cellSize))
+            gridIndex = New GridIndex(actualSize, New SizeF(cellSize, cellSize))
 
             For i As Integer = 0 To gridCells.Length - 1
+                index = i
                 gridCells(i) = size.Width _
                     .Sequence() _
                     .Select(Function(ix)
-#Disable Warning
                                 Return New GridCell With {
-                                    .index = New Point With {.X = ix, .Y = i},
+                                    .index = New Point With {.X = ix, .Y = index},
                                     .location = New PointF With {.X = ix * cellSize, .Y = y}
                                 }
-#Enable Warning
                             End Function) _
                     .ToArray
             Next

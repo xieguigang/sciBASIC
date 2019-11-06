@@ -56,6 +56,11 @@ Public Class Grid
     Public ReadOnly Property layout As RectangleF
     Public ReadOnly Property steps As SizeF
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="size">实际的物理大小，而非网格之中的单元格数量</param>
+    ''' <param name="steps"></param>
     Sub New(size As Size, steps As SizeF)
         Call Me.New(New Rectangle(New Point, size), steps)
     End Sub
