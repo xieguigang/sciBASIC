@@ -49,6 +49,10 @@ Namespace Layouts.Orthogonal
             Dim V As Node() = graph.vertex.ToArray
             Dim compactionDir = True
             Dim iterationCount = 90 * V.Length
+            ' T的作用是用来计算交换的范围
+            ' 随着迭代的进行T将会越来越小
+            ' 交换的范围从开始的非常大到最终的非常小
+            ' 从而使网络的布局变化从变化剧烈到稳定
             Dim T As Double = 2 * V.Length
             Dim k As Double = (0.2 / T) ^ (1 / iterationCount)
             Dim cellSize As Double = V.GridCellSize
@@ -72,10 +76,11 @@ Namespace Layouts.Orthogonal
                     Dim y = graph.neighboursMedianY(V(j)) + randf.randf(-T, T)
                     Dim cell As Point = grid.FindIndex(x, y)
                     Dim gridCell As GridCell = grid(cell)
+                    Dim currentCell As GridCell = grid.FindCell(V(j).label)
 
                     ' if vj has not changed it’s place from the previous iteration then
-                    If Not gridCell.node Is V(j) Then
-                        Call grid.SwapNode(grid.FindCell(V(j).label).index, gridCell.index)
+                    If Not gridCell Is currentCell AndAlso Not gridCell.node Is V(j) Then
+                        Call grid.SwapNode(currentCell.index, gridCell.index)
                     Else
                         ' Try to swap vj with nodes nearby;
                         Call workspace.SwapNearbyNode(origin:=gridCell)
@@ -101,10 +106,11 @@ Namespace Layouts.Orthogonal
                     Dim y = graph.neighboursMedianY(V(j)) + randf.randf(-T * hj, T * hj)
                     Dim cell As Point = grid.FindIndex(x, y)
                     Dim gridCell As GridCell = grid(cell)
+                    Dim currentCell As GridCell = grid.FindCell(V(j).label)
 
                     ' if vj has not changed it’s place from the previous iteration then
-                    If Not gridCell.node Is V(j) Then
-                        Call grid.SwapNode(grid.FindCell(V(j).label).index, gridCell.index)
+                    If Not gridCell Is currentCell AndAlso Not gridCell.node Is V(j) Then
+                        Call grid.SwapNode(currentCell.index, gridCell.index)
                     Else
                         ' Try to swap vj with nodes nearby;
                         Call workspace.SwapNearbyNode(origin:=gridCell)

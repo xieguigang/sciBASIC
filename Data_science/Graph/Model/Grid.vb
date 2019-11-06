@@ -85,7 +85,13 @@ Public Class Grid
         Dim xi = Me.X.FirstGreaterThan(x)
         Dim yi = Me.Y.FirstGreaterThan(y)
 
-        Return New Point(xi, yi)
+        ' x = 8
+        ' xi-1  xi   xi + 1
+        ' 5     10   15
+        '    x
+        ' index of x is xi -1
+
+        Return New Point(xi - 1, yi - 1)
     End Function
 
     ''' <summary>

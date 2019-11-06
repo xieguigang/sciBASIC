@@ -21,7 +21,7 @@ Module OrthogonalTest
         Call g.AddEdge("C", "E")
         Call g.AddEdge("A", "E")
 
-        Call Orthogonal.Algorithm.DoLayout(g, New Size(100, 100), 10)
+        Call Orthogonal.Algorithm.DoLayout(g, New Size(10, 10), 10)
 
         Dim result = g.Tabular()
 

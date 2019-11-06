@@ -69,6 +69,17 @@ Namespace Layouts.Orthogonal
             End Get
         End Property
 
+        Public ReadOnly Property GetAllNodeFilledCells As GridCell()
+            Get
+                Return gridCells _
+                    .IteratesALL _
+                    .Where(Function(cell)
+                               Return Not cell.node Is Nothing
+                           End Function) _
+                    .ToArray
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -142,6 +153,10 @@ Namespace Layouts.Orthogonal
             nodes(node.label) = toCell
             toCell.PutNode(node)
             fromCell.RemoveNode()
+
+            If toCell.node Is Nothing AndAlso fromCell.node Is Nothing Then
+                Throw New NoNullAllowedException
+            End If
         End Sub
 
         Public Sub SwapNode(a As Point, b As Point)
@@ -163,7 +178,21 @@ Namespace Layouts.Orthogonal
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindIndex(x#, y#) As Point
-            Return gridIndex.Index(x, y)
+            Dim index As Point = gridIndex.Index(x, y)
+            Dim ix, iy As Integer
+
+            If index.X >= size.Width Then
+                ix = size.Width - 1
+            Else
+                ix = index.X
+            End If
+            If index.Y >= size.Height Then
+                iy = size.Height - 1
+            Else
+                iy = index.Y
+            End If
+
+            Return New Point(ix, iy)
         End Function
 
         ''' <summary>
