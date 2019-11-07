@@ -60,7 +60,7 @@ Namespace FileStream
         Public Shared Function Load(vbnet$) As NetworkTables
             Dim tmp = App.GetAppSysTempFile(, sessionID:=App.PID)
             Call UnZip.ImprovedExtractToDirectory(vbnet, tmp, Overwrite.Always)
-            Return IO.Load(tmp)
+            Return NetworkFileIO.Load(tmp)
         End Function
 
         ''' <summary>

@@ -314,6 +314,10 @@
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
       <Name>Network.GraphTheory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\gr\network-visualization\Network.IO.Extensions\Network.IO.Extensions.vbproj">
+      <Project>{78cb32e6-2904-41e7-acca-f1e2757bfa8e}</Project>
+      <Name>Network.IO.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\gr\physics\physics.vbproj">
       <Project>{3291389c-ea87-4b33-a9a5-65a2d60ba3e2}</Project>
       <Name>physics</Name>

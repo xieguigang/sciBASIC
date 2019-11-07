@@ -96,8 +96,7 @@ Namespace CommandLine.Parsers
 
             For Each var$ In t
                 Dim value = var.GetTagValue("="c)
-                out(value.Name) =
-                    value.Value.GetString("'")
+                out(value.Name) = value.Value.GetString("'")
             Next
 
             Return out
