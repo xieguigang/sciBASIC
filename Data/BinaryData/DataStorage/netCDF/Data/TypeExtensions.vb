@@ -65,6 +65,7 @@ Namespace netCDF
                 Case GetType(Short) : Return CDFDataTypes.SHORT
                 Case GetType(String) : Return CDFDataTypes.CHAR
                 Case GetType(Byte) : Return CDFDataTypes.BYTE
+                Case GetType(Long) : Return CDFDataTypes.LONG
                 Case Else
                     Return CDFDataTypes.undefined
             End Select
@@ -99,7 +100,7 @@ Namespace netCDF
                     Return 4
                 Case CDFDataTypes.FLOAT
                     Return 4
-                Case CDFDataTypes.DOUBLE
+                Case CDFDataTypes.DOUBLE, CDFDataTypes.LONG
                     Return 8
                 Case Else
                     ' istanbul ignore next 

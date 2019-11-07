@@ -87,5 +87,8 @@ Namespace netCDF
         ''' IEEE double precision floats
         ''' </summary>
         <Description("double")> [DOUBLE] = 6
+
+        ' 下面是拓展类型
+        <Description("long")> [LONG] = 7
     End Enum
 End Namespace
