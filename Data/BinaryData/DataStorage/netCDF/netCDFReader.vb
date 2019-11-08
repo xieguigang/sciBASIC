@@ -152,6 +152,7 @@ Namespace netCDF
                             Case CDFDataTypes.FLOAT : Return Single.Parse(.value)
                             Case CDFDataTypes.INT : Return Integer.Parse(.value)
                             Case CDFDataTypes.SHORT : Return Short.Parse(.value)
+                            Case CDFDataTypes.LONG : Return Long.Parse(.value)
 
                             Case Else
                                 Throw New NotSupportedException

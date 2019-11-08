@@ -44,7 +44,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 
 Namespace netCDF
@@ -165,6 +164,8 @@ Namespace netCDF
                     Return readNumber(size, AddressOf buffer.ReadSingle)
                 Case CDFDataTypes.DOUBLE
                     Return readNumber(size, AddressOf buffer.ReadDouble)
+                Case CDFDataTypes.LONG
+                    Return readNumber(size, AddressOf buffer.ReadInt64)
 
                 Case Else
                     ' istanbul ignore next
