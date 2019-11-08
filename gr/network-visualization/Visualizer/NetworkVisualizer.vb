@@ -513,8 +513,8 @@ Public Module NetworkVisualizer
             .Height = maxSize.Height
         }
         Dim topLeft As New PointF With {
-            .X = g.Size.Width - maxSize.Width - 20 - maxSize.Height * 1.5,
-            .Y = 100
+            .X = g.Size.Width - maxSize.Width - maxSize.Height * 2.5,
+            .Y = legendShapeSize.Width
         }
 
         For Each label In labels
@@ -523,7 +523,7 @@ Public Module NetworkVisualizer
 
             topLeft = New PointF With {
                 .X = topLeft.X,
-                .Y = topLeft.Y + maxSize.Height * 1.125
+                .Y = topLeft.Y + maxSize.Height * 1.25
             }
         Next
     End Sub
