@@ -248,6 +248,12 @@ Public Module NetworkVisualizer
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
+
+                If Not hullPolygonGroups.IsEmpty Then
+                    Call "Render hull polygon layer...".__DEBUG_ECHO
+                    Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos)
+                End If
+
                 Call "Render network edges...".__INFO_ECHO
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
                 Call g.drawEdges(
@@ -261,14 +267,10 @@ Public Module NetworkVisualizer
                     defaultEdgeColor:=defaultEdgeColor.TranslateColor
                 )
 
-                Call "Render network nodes...".__INFO_ECHO
+                Call "Render network elements...".__INFO_ECHO
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
                 ' 最后通过退火算法计算出合适的节点标签文本的位置之后，再使用一个循环绘制出
                 ' 所有的节点的标签文本
-
-                If Not hullPolygonGroups.IsEmpty Then
-                    Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos)
-                End If
 
                 ' 在这里进行节点的绘制
                 labels += g.drawVertexNodes(
@@ -343,20 +345,19 @@ Public Module NetworkVisualizer
         For Each n As Node In drawPoints
             Dim r# = radiusValue(n)
             Dim center As PointF = scalePos(n.label)
+            Dim invalidRegion As Boolean = False
 
             With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
                 br = n.data.color Or .ByRef
             End With
 
-            With center
-                pt = New Point(.X - r / 2, .Y - r / 2)
-            End With
-
-            Dim invalidRegion As Boolean = False
-
-            rect = New Rectangle(pt, New Size(r, r))
-
             If drawNodeShape Is Nothing Then
+                With center
+                    pt = New Point(.X - r / 2, .Y - r / 2)
+                End With
+
+                rect = New Rectangle(pt, New Size(r, r))
+
                 ' 绘制节点，目前还是圆形
                 If TypeOf g Is Graphics2D Then
                     Try
@@ -470,7 +471,7 @@ Public Module NetworkVisualizer
                     .Enlarge(1.25)
                 Dim color As Color = colors.Next
 
-                Call g.DrawHullPolygon(positions, color, alpha:=200)
+                Call g.DrawHullPolygon(positions, color, alpha:=50)
             End If
         Next
     End Sub
