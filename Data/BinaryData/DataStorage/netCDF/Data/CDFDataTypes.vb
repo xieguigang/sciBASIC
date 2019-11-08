@@ -89,6 +89,10 @@ Namespace netCDF
         <Description("double")> [DOUBLE] = 6
 
         ' 下面是拓展类型
-        <Description("long")> [LONG] = 7
+
+        ''' <summary>
+        ''' #define NC_INT64   10
+        ''' </summary>
+        <Description("long")> [LONG] = 10
     End Enum
 End Namespace

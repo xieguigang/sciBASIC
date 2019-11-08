@@ -119,6 +119,29 @@ Namespace netCDF.Components
             End Get
         End Property
 
+        Public ReadOnly Property genericValue As Object
+            Get
+                Select Case cdfDataType
+                    Case CDFDataTypes.BYTE
+                        Return byteStream.Base64RawBytes
+                    Case CDFDataTypes.CHAR
+                        Return chars
+                    Case CDFDataTypes.DOUBLE
+                        Return numerics
+                    Case CDFDataTypes.FLOAT
+                        Return tiny_num
+                    Case CDFDataTypes.INT
+                        Return integers
+                    Case CDFDataTypes.LONG
+                        Return longs
+                    Case CDFDataTypes.SHORT
+                        Return tiny_int
+                    Case Else
+                        Return Nothing
+                End Select
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Dim stringify$
 

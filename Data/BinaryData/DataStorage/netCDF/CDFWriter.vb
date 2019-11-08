@@ -398,6 +398,9 @@ Namespace netCDF
                     Case CDFDataTypes.SHORT
                         Call output.Write(1)
                         Call output.Write(Short.Parse(attr.value))
+                    Case CDFDataTypes.LONG
+                        Call output.Write(1)
+                        Call output.Write(Long.Parse(attr.value))
                     Case Else
                         Throw New NotImplementedException(attr.type.Description)
                 End Select

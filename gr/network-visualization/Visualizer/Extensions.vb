@@ -53,4 +53,20 @@ Imports Microsoft.VisualBasic.Language.Default
                           node.Data.Color Is Nothing
                End Function
     End Function
+
+    ''' <summary>
+    ''' 优先显示： <see cref="NodeData.label"/> -> <see cref="NodeData.origID"/> -> <see cref="Node.ID"/>
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetDisplayText(n As Node) As String
+        If n.data Is Nothing OrElse (n.data.origID.StringEmpty AndAlso n.data.label.StringEmpty) Then
+            Return n.label
+        ElseIf n.data.label.StringEmpty Then
+            Return n.data.origID
+        Else
+            Return n.data.label
+        End If
+    End Function
 End Module

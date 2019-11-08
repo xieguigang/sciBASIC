@@ -1021,6 +1021,7 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
+    <Compile Include="Extensions\Collection\CategoryOperations.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
     <Compile Include="Extensions\StringHelpers\StringFormats.vb" />

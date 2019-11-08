@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
@@ -64,7 +65,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
@@ -80,80 +80,6 @@ Public Module NetworkVisualizer
     ''' <returns></returns>
     Public Property BackgroundColor As Color = Color.FromArgb(219, 243, 255)
 
-    ''' <summary>
-    ''' 优先显示： <see cref="NodeData.label"/> -> <see cref="NodeData.origID"/> -> <see cref="Node.ID"/>
-    ''' </summary>
-    ''' <param name="n"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function GetDisplayText(n As Node) As String
-        If n.data Is Nothing OrElse (n.data.origID.StringEmpty AndAlso n.data.label.StringEmpty) Then
-            Return n.label
-        ElseIf n.data.label.StringEmpty Then
-            Return n.data.origID
-        Else
-            Return n.data.label
-        End If
-    End Function
-
-    ''' <summary>
-    ''' 这里是计算出网络几点偏移到图像的中心所需要的偏移量
-    ''' </summary>
-    ''' <param name="nodes"></param>
-    ''' <param name="size"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As Size) As PointF
-        Return nodes.Values.CentralOffset(size)
-    End Function
-
-    <Extension>
-    Private Function scales(nodes As IEnumerable(Of Node), scale As SizeF) As Dictionary(Of Node, Point)
-        Dim table As New Dictionary(Of Node, Point)
-
-        For Each n As Node In nodes
-            With n.data.initialPostion.Point2D
-                Call table.Add(n, New Point(.X * scale.Width, .Y * scale.Height))
-            End With
-        Next
-
-        Return table
-    End Function
-
-    <Extension>
-    Public Function GetBounds(graph As NetworkGraph) As RectangleF
-        Dim points As Point() = graph _
-            .vertex _
-            .scales(scale:=New SizeF(1, 1)) _
-            .Values _
-            .ToArray
-        Dim rect = points.GetBounds
-        Return rect
-    End Function
-
-    <Extension>
-    Public Function AutoScaler(graph As NetworkGraph, frameSize As Size, padding As Padding) As SizeF
-        With graph.GetBounds
-            Return New SizeF(
-                frameSize.Width / (.Width + padding.Horizontal),
-                frameSize.Height / (.Height + padding.Vertical)
-            )
-        End With
-    End Function
-
-    <Extension>
-    Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As Size, padding As Padding) As SizeF
-        With shape.GetBounds
-            Dim width = frameSize.Width - padding.Horizontal
-            Dim height = frameSize.Height - padding.Vertical
-
-            Return New SizeF(
-                width:=width / .Width,
-                height:=height / .Height
-            )
-        End With
-    End Function
-
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
     Public Delegate Sub DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF)
@@ -168,8 +94,16 @@ Public Module NetworkVisualizer
     ''' <param name="padding">上下左右的边距分别为多少？</param>
     ''' <param name="background">背景色或者背景图片的文件路径</param>
     ''' <param name="defaultColor"></param>
-    ''' <param name="nodePoints">如果还需要获取得到节点的绘图位置的话，则可以使用这个可选参数来获取返回</param>
-    ''' <param name="hullPolygonGroups">需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组</param>
+    ''' <param name="hullPolygonGroups">
+    ''' ```
+    ''' [<see cref="NodeData.Properties"/> Name => expression]
+    ''' ```
+    ''' 
+    ''' + expression = max/min largest or smallest group
+    ''' + expression = 'a,b,c,d,e' node category to draw hull polygon 
+    ''' 
+    ''' (需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组)
+    ''' </param>
     ''' <param name="nodeRadius">By default all of the node have the same radius size</param>
     ''' <param name="labelFontBase">
     ''' 这个参数会提供字体的一些基础样式,字体的大小会从节点的属性中计算出来
@@ -187,6 +121,9 @@ Public Module NetworkVisualizer
     ''' <param name="edgeDashTypes">
     ''' 1. ``interaction_type`` property value in <see cref="Edge.data"/>, or
     ''' 2. <see cref="Edge.ID"/> value
+    ''' </param>
+    ''' <param name="labelTextStroke">
+    ''' 当这个参数为空字符串的时候，将不进行描边
     ''' </param>
     ''' <returns></returns>
     ''' <remarks>
@@ -208,15 +145,15 @@ Public Module NetworkVisualizer
                               Optional nodeRadius As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional fontSize As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
-                              Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
                               Optional edgeDashTypes As [Variant](Of Dictionary(Of String, DashStyle), DashStyle) = Nothing,
                               Optional edgeShadowDistance As Single = 0,
                               Optional drawNodeShape As DrawNodeShape = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional getLabelPosition As GetLabelPosition = Nothing,
+                              Optional getLabelColor As Func(Of Node, Color) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
-                              Optional hullPolygonGroups$ = Nothing,
+                              Optional hullPolygonGroups As NamedValue(Of String) = Nothing,
                               Optional doEdgeBundling As Boolean = False,
                               Optional labelerIterations% = 1500,
                               Optional showLabelerProgress As Boolean = True,
@@ -225,7 +162,7 @@ Public Module NetworkVisualizer
                               Optional labelTextStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;") As GraphicsData
 
         ' 所绘制的图像输出的尺寸大小
-        Dim frameSize As Size = canvasSize.SizeParser
+        Dim frameSize As SizeF = PrinterDimension.SizeOf(canvasSize)
         Dim margin As Padding = CSS.Padding.TryParse(
             padding, [default]:=New Padding With {
                 .Bottom = 100,
@@ -239,78 +176,11 @@ Public Module NetworkVisualizer
         ' 3. 执行绘图操作
 
         ' 获取得到当前的这个网络对象相对于图像的中心点的位移值
-        Dim scalePos As Dictionary(Of Node, PointF) = net _
-            .vertex _
-            .ToDictionary(Function(n) n,
-                          Function(node)
-                              Return node.data.initialPostion.Point2D.PointF
-                          End Function)
-        Dim offset As Point = scalePos _
-            .CentralOffsets(frameSize) _
-            .ToPoint
-
-        ' 进行位置偏移
-        ' 将网络图形移动到画布的中央区域
-        scalePos = scalePos.ToDictionary(Function(node) node.Key,
-                                         Function(point)
-                                             Return point.Value.OffSet2D(offset)
-                                         End Function)
-        ' 进行矢量放大
-        Dim scale As SizeF = scalePos.Values.AutoScaler(frameSize, margin)
-        Dim scalePoints = scalePos.Values.Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
+        Dim scalePos As Dictionary(Of String, PointF) = CanvasScaler.CalculateNodePositions(net, frameSize, margin)
         Dim edgeBundling As New Dictionary(Of Edge, PointF())
 
-        With scalePos.Keys.AsList
-            For i As Integer = 0 To .Count - 1
-                scalePos(.Item(i)) = scalePoints(i)
-            Next
-
-            nodePoints = scalePos
-        End With
-
         If doEdgeBundling Then
-            edgeBundling = net.graphEdges _
-                .Where(Function(e)
-                           ' 空集合会在下面的分割for循环中产生移位bug
-                           ' 跳过
-                           Return Not e.data.controlsPoint.IsNullOrEmpty
-                       End Function) _
-                .ToDictionary(Function(e) e,
-                              Function(e)
-                                  Return e.data.controlsPoint _
-                                      .Select(Function(v)
-                                                  Return New PointF With {
-                                                      .X = v.x,
-                                                      .Y = v.y
-                                                  }.OffSet2D(offset)
-                                              End Function) _
-                                      .ToArray
-                              End Function)
-
-            If edgeBundling.Count > 0 Then
-                With edgeBundling.Keys.ToArray
-                    Dim tempList As New List(Of PointF)
-                    Dim i As Integer
-
-                    scalePoints = .Select(Function(e) edgeBundling(e)) _
-                                  .IteratesALL _
-                                  .Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
-
-                    For Each edge As Edge In .ByRef
-                        For Each null In edgeBundling(edge)
-                            ' 20191103
-                            ' 在这里因为每一个edge的边连接点的数量是不一样的
-                            ' 所以在这里使用for loop加上递增序列来
-                            ' 正确的获取得到每一条边所对应的边连接节点
-                            tempList += scalePoints(i)
-                            i += 1
-                        Next
-
-                        edgeBundling(edge) = tempList
-                        tempList *= 0
-                    Next
-                End With
-            End If
+            edgeBundling = CanvasScaler.CalculateEdgeBends(net, frameSize, margin)
         End If
 
         Call "Initialize gdi objects...".__INFO_ECHO
@@ -394,7 +264,7 @@ Public Module NetworkVisualizer
                 ' 最后通过退火算法计算出合适的节点标签文本的位置之后，再使用一个循环绘制出
                 ' 所有的节点的标签文本
 
-                If Not hullPolygonGroups.StringEmpty Then
+                If Not hullPolygonGroups.IsEmpty Then
                     Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos)
                 End If
 
@@ -420,19 +290,20 @@ Public Module NetworkVisualizer
                 If displayId AndAlso labels > 0 Then
                     Call g.drawLabels(
                         labels:=labels,
-                        frameSize:=frameSize,
+                        frameSize:=frameSize.ToSize,
                         labelColorAsNodeColor:=labelColorAsNodeColor,
                         iteration:=labelerIterations,
                         showLabelerProgress:=showLabelerProgress,
                         defaultLabelColorValue:=defaultLabelColor,
-                        labelTextStrokeCSS:=labelTextStroke
+                        labelTextStrokeCSS:=labelTextStroke,
+                        getLabelColor:=getLabelColor
                     )
                 End If
             End Sub
 
         Call "Start Render...".__INFO_ECHO
 
-        Return g.GraphicsPlots(frameSize, margin, background, plotInternal)
+        Return g.GraphicsPlots(frameSize.ToSize, margin, background, plotInternal)
     End Function
 
     Public Function DirectMapRadius(Optional scale# = 1) As Func(Of Node, Single)
@@ -456,7 +327,7 @@ Public Module NetworkVisualizer
                                               defaultColor As Color,
                                               stroke As Pen,
                                               baseFont As Font,
-                                              scalePos As Dictionary(Of Node, PointF),
+                                              scalePos As Dictionary(Of String, PointF),
                                               throwEx As Boolean,
                                               getDisplayLabel As Func(Of Node, String),
                                               drawNodeShape As DrawNodeShape,
@@ -469,12 +340,11 @@ Public Module NetworkVisualizer
 
         For Each n As Node In drawPoints
             Dim r# = radiusValue(n)
+            Dim center As PointF = scalePos(n.label)
 
             With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
                 br = n.data.color Or .ByRef
             End With
-
-            Dim center As PointF = scalePos(n)
 
             With center
                 pt = New Point(.X - r / 2, .Y - r / 2)
@@ -544,26 +414,41 @@ Public Module NetworkVisualizer
                     .label = label,
                     .anchor = New Anchor(rect),
                     .style = font,
-                    .color = br
+                    .color = br,
+                    .node = n
                 }
             End If
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <param name="drawPoints"></param>
+    ''' <param name="hullPolygonGroups">
+    ''' [<see cref="NodeData.Properties"/> Name => expression]
+    ''' 
+    ''' expression = max/min largest or smallest group
+    ''' expression = 'a,b,c,d,e' node category to draw hull polygon 
+    ''' </param>
+    ''' <param name="scalePos"></param>
     <Extension>
-    Private Sub drawhullPolygon(g As IGraphics, drawPoints As Node(), hullPolygonGroups$, scalePos As Dictionary(Of Node, PointF))
+    Private Sub drawhullPolygon(g As IGraphics, drawPoints As Node(), hullPolygonGroups As NamedValue(Of String), scalePos As Dictionary(Of String, PointF))
         Dim hullPolygon As Index(Of String)
         Dim groups = drawPoints _
-            .GroupBy(Function(n) n.data.Properties!nodeType) _
+            .GroupBy(Function(n)
+                         Return n.data(hullPolygonGroups.Name)
+                     End Function) _
             .ToArray
 
-        If hullPolygonGroups.TextEquals("max") Then
+        If hullPolygonGroups.Value.TextEquals("max") Then
             hullPolygon = {
                 groups.OrderByDescending(Function(node) node.Count) _
                       .First _
                       .Key
             }
-        ElseIf hullPolygonGroups.TextEquals("min") Then
+        ElseIf hullPolygonGroups.Value.TextEquals("min") Then
             hullPolygon = {
                 groups.Where(Function(group) group.Count > 2) _
                       .OrderBy(Function(node) node.Count) _
@@ -571,15 +456,15 @@ Public Module NetworkVisualizer
                       .Key
             }
         Else
-            hullPolygon = hullPolygonGroups.Split(","c)
+            hullPolygon = hullPolygonGroups.Value.Split(","c)
         End If
 
         For Each group In groups
             If group.Count > 2 AndAlso group.Key Like hullPolygon Then
                 Dim positions = group _
-                    .Select(Function(p) scalePos(p)) _
+                    .Select(Function(p) scalePos(p.label)) _
                     .JarvisMatch _
-                    .Enlarge(1.25)
+                    .Enlarge(1.125)
                 Dim color As Color = group _
                     .Select(Function(p)
                                 Return DirectCast(p.data.color, SolidBrush).Color
@@ -595,7 +480,7 @@ Public Module NetworkVisualizer
     Private Sub drawEdges(g As IGraphics, net As NetworkGraph,
                           minLinkWidthValue As [Default](Of Single),
                           edgeDashTypes As Dictionary(Of String, DashStyle),
-                          scalePos As Dictionary(Of Node, PointF),
+                          scalePos As Dictionary(Of String, PointF),
                           edgeBundling As Dictionary(Of Edge, PointF()),
                           throwEx As Boolean,
                           edgeShadowDistance As Single,
@@ -620,36 +505,36 @@ Public Module NetworkVisualizer
             End With
 
             ' 在这里绘制的是节点之间相连接的边
-            Dim a = scalePos(n), b = scalePos(otherNode)
+            Dim a = scalePos(n.label)
+            Dim b = scalePos(otherNode.label)
             Dim edgeShadowColor As New Pen(Brushes.Gray) With {
                 .Width = lineColor.Width,
                 .DashStyle = lineColor.DashStyle
             }
+            Dim draw = Sub(line As PointF())
+                           Dim pt1, pt2 As PointF
 
+                           If edgeShadowDistance <> 0 Then
+                               pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+                               pt2 = line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+
+                               Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
+                           End If
+
+                           ' 直接画一条直线
+                           Call g.DrawLine(lineColor, line(0), line(1))
+                       End Sub
             Try
-                Dim pt1, pt2 As PointF
-
                 If edgeBundling.ContainsKey(edge) AndAlso edgeBundling(edge).Length > 0 Then
-                    For Each line In edgeBundling(edge).SlideWindows(2)
-                        If edgeShadowDistance <> 0 Then
-                            pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
-                            pt2 = line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance)
-
-                            Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
-                        End If
-
-                        Call g.DrawLine(lineColor, line(0), line(1))
-                    Next
-                Else
-                    If edgeShadowDistance <> 0 Then
-                        pt1 = a.OffSet2D(edgeShadowDistance, edgeShadowDistance)
-                        pt2 = b.OffSet2D(edgeShadowDistance, edgeShadowDistance)
-
-                        Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
+                    If edgeBundling(edge).Length = 1 Then
+                        Call draw({a, b})
+                    Else
+                        For Each line In edgeBundling(edge).SlideWindows(2)
+                            Call draw(line.ToArray)
+                        Next
                     End If
-
-                    ' 直接画一条直线
-                    Call g.DrawLine(lineColor, a, b)
+                Else
+                    Call draw({a, b})
                 End If
             Catch ex As Exception
                 Dim line As New Dictionary(Of String, String) From {
@@ -678,12 +563,14 @@ Public Module NetworkVisualizer
                            iteration%,
                            showLabelerProgress As Boolean,
                            defaultLabelColorValue$,
-                           labelTextStrokeCSS$)
+                           labelTextStrokeCSS$,
+                           getLabelColor As Func(Of Node, Color))
         Dim br As Brush
         Dim rect As Rectangle
         Dim lx, ly As Single
         Dim defaultLabelColor As New SolidBrush(defaultLabelColorValue.TranslateColor)
         Dim labelTextStroke As Pen = Stroke.TryParse(labelTextStrokeCSS)
+        Dim color As Color
 
         ' 小于等于零的时候表示不进行布局计算
         If iteration > 0 Then
@@ -696,10 +583,16 @@ Public Module NetworkVisualizer
                 .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
         End If
 
-        For Each label In labels
+        For Each label As LayoutLabel In labels
             With label
                 If Not labelColorAsNodeColor Then
-                    br = defaultLabelColor
+                    color = getLabelColor(label.node)
+
+                    If color.IsEmpty Then
+                        br = defaultLabelColor
+                    Else
+                        br = New SolidBrush(color)
+                    End If
                 Else
                     br = .color
                     br = New SolidBrush(DirectCast(br, SolidBrush).Color.Darken(0.005))
