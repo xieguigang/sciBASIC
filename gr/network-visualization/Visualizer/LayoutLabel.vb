@@ -49,4 +49,5 @@ Friend Class LayoutLabel
     Public style As Font
     Public color As Brush
     Public node As Node
+    Public shapeRectangle As RectangleF
 End Class

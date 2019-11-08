@@ -84,8 +84,8 @@ Public Module NetworkVisualizer
 
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
-    Public Delegate Sub DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF)
-    Public Delegate Function GetLabelPosition(node As Node, label$, center As PointF, labelSize As SizeF) As PointF
+    Public Delegate Function DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF) As RectangleF
+    Public Delegate Function GetLabelPosition(node As Node, label$, shapeLayout As RectangleF, labelSize As SizeF) As PointF
 
     ''' <summary>
     ''' Rendering png or svg image from a given network graph model.
@@ -303,6 +303,8 @@ Public Module NetworkVisualizer
                         getLabelColor:=getLabelColor
                     )
                 End If
+
+                Call "Network canvas rendering job done!".__DEBUG_ECHO
             End Sub
 
         Call "Start Render...".__INFO_ECHO
@@ -338,7 +340,7 @@ Public Module NetworkVisualizer
                                               getLabelPosition As GetLabelPosition) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
-        Dim rect As Rectangle
+        Dim rect As RectangleF
 
         Call "Rendering nodes...".__DEBUG_ECHO
 
@@ -356,7 +358,7 @@ Public Module NetworkVisualizer
                     pt = New Point(.X - r / 2, .Y - r / 2)
                 End With
 
-                rect = New Rectangle(pt, New Size(r, r))
+                rect = New RectangleF(pt, New Size(r, r))
 
                 ' 绘制节点，目前还是圆形
                 If TypeOf g Is Graphics2D Then
@@ -376,7 +378,7 @@ Public Module NetworkVisualizer
                     Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
                 End If
             Else
-                Call drawNodeShape(n.label, g, br, r, center)
+                rect = drawNodeShape(n.label, g, br, r, center)
             End If
 
             ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
@@ -406,7 +408,7 @@ Public Module NetworkVisualizer
                         label.X = center.X - .Width / 2
                         label.Y = center.Y - .Height / 2
                     Else
-                        With .DoCall(Function(lsz) getLabelPosition(n, label.text, center, lsz))
+                        With .DoCall(Function(lsz) getLabelPosition(n, label.text, rect, lsz))
                             label.X = .X
                             label.Y = .Y
                         End With
@@ -418,7 +420,8 @@ Public Module NetworkVisualizer
                     .anchor = New Anchor(rect),
                     .style = font,
                     .color = br,
-                    .node = n
+                    .node = n,
+                    .shapeRectangle = rect
                 }
             End If
         Next
@@ -445,6 +448,10 @@ Public Module NetworkVisualizer
                      End Function) _
             .ToArray
         Dim colors As LoopArray(Of Color) = Designer.GetColors(hullPolygonGroups.Description Or "material".AsDefault)
+
+        If hullPolygonGroups.Value.StringEmpty Then
+            Return
+        End If
 
         If hullPolygonGroups.Value.TextEquals("max") Then
             hullPolygon = {

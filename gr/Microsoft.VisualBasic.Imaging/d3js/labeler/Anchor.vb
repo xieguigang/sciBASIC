@@ -85,6 +85,12 @@ Namespace d3js.Layout
             y = circle.Top + r
         End Sub
 
+        Sub New(circle As RectangleF)
+            r = sys.Min(circle.Width, circle.Height) / 2
+            x = circle.Left + r
+            y = circle.Top + r
+        End Sub
+
         Public Shared Widening Operator CType(anchor As Anchor) As Point
             With anchor
                 Return New Point(.x, .y)
