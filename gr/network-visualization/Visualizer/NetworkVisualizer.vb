@@ -103,7 +103,7 @@ Public Module NetworkVisualizer
     ''' <param name="size"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As Size) As PointF
+    Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As SizeF) As PointF
         Return nodes.Values.CentralOffset(size)
     End Function
 
@@ -142,7 +142,7 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As Size, padding As Padding) As SizeF
+    Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As SizeF, padding As Padding) As SizeF
         With shape.GetBounds
             Dim width = frameSize.Width - padding.Horizontal
             Dim height = frameSize.Height - padding.Vertical
@@ -188,6 +188,9 @@ Public Module NetworkVisualizer
     ''' 1. ``interaction_type`` property value in <see cref="Edge.data"/>, or
     ''' 2. <see cref="Edge.ID"/> value
     ''' </param>
+    ''' <param name="labelTextStroke">
+    ''' 当这个参数为空字符串的时候，将不进行描边
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 一些内置的样式支持:
@@ -214,6 +217,7 @@ Public Module NetworkVisualizer
                               Optional drawNodeShape As DrawNodeShape = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional getLabelPosition As GetLabelPosition = Nothing,
+                              Optional getLabelColor As Func(Of Node, Color) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups$ = Nothing,
@@ -225,7 +229,7 @@ Public Module NetworkVisualizer
                               Optional labelTextStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;") As GraphicsData
 
         ' 所绘制的图像输出的尺寸大小
-        Dim frameSize As Size = canvasSize.SizeParser
+        Dim frameSize As SizeF = PrinterDimension.SizeOf(canvasSize)
         Dim margin As Padding = CSS.Padding.TryParse(
             padding, [default]:=New Padding With {
                 .Bottom = 100,
@@ -420,19 +424,20 @@ Public Module NetworkVisualizer
                 If displayId AndAlso labels > 0 Then
                     Call g.drawLabels(
                         labels:=labels,
-                        frameSize:=frameSize,
+                        frameSize:=frameSize.ToSize,
                         labelColorAsNodeColor:=labelColorAsNodeColor,
                         iteration:=labelerIterations,
                         showLabelerProgress:=showLabelerProgress,
                         defaultLabelColorValue:=defaultLabelColor,
-                        labelTextStrokeCSS:=labelTextStroke
+                        labelTextStrokeCSS:=labelTextStroke,
+                        getLabelColor:=getLabelColor
                     )
                 End If
             End Sub
 
         Call "Start Render...".__INFO_ECHO
 
-        Return g.GraphicsPlots(frameSize, margin, background, plotInternal)
+        Return g.GraphicsPlots(frameSize.ToSize, margin, background, plotInternal)
     End Function
 
     Public Function DirectMapRadius(Optional scale# = 1) As Func(Of Node, Single)
@@ -544,7 +549,8 @@ Public Module NetworkVisualizer
                     .label = label,
                     .anchor = New Anchor(rect),
                     .style = font,
-                    .color = br
+                    .color = br,
+                    .node = n
                 }
             End If
         Next
@@ -678,12 +684,14 @@ Public Module NetworkVisualizer
                            iteration%,
                            showLabelerProgress As Boolean,
                            defaultLabelColorValue$,
-                           labelTextStrokeCSS$)
+                           labelTextStrokeCSS$,
+                           getLabelColor As Func(Of Node, Color))
         Dim br As Brush
         Dim rect As Rectangle
         Dim lx, ly As Single
         Dim defaultLabelColor As New SolidBrush(defaultLabelColorValue.TranslateColor)
         Dim labelTextStroke As Pen = Stroke.TryParse(labelTextStrokeCSS)
+        Dim color As Color
 
         ' 小于等于零的时候表示不进行布局计算
         If iteration > 0 Then
@@ -696,10 +704,16 @@ Public Module NetworkVisualizer
                 .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
         End If
 
-        For Each label In labels
+        For Each label As LayoutLabel In labels
             With label
                 If Not labelColorAsNodeColor Then
-                    br = defaultLabelColor
+                    color = getLabelColor(label.node)
+
+                    If color.IsEmpty Then
+                        br = defaultLabelColor
+                    Else
+                        br = New SolidBrush(color)
+                    End If
                 Else
                     br = .color
                     br = New SolidBrush(DirectCast(br, SolidBrush).Color.Darken(0.005))

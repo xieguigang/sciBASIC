@@ -410,6 +410,7 @@
     <Compile Include="d3js\scale\linear.vb" />
     <Compile Include="d3js\scale\Extensions.vb" />
     <Compile Include="d3js\scale\ordinal.vb" />
+    <Compile Include="Drawing2D\PrinterDimension.vb" />
     <Compile Include="Drawing2D\Shadow.vb" />
     <Compile Include="Drawing2D\Colors\ColorPalette.Designer.vb">
       <DependentUpon>ColorPalette.vb</DependentUpon>
