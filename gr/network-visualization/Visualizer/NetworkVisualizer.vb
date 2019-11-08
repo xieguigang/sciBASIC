@@ -64,7 +64,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
@@ -79,80 +78,6 @@ Public Module NetworkVisualizer
     ''' </summary>
     ''' <returns></returns>
     Public Property BackgroundColor As Color = Color.FromArgb(219, 243, 255)
-
-    ''' <summary>
-    ''' 优先显示： <see cref="NodeData.label"/> -> <see cref="NodeData.origID"/> -> <see cref="Node.ID"/>
-    ''' </summary>
-    ''' <param name="n"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function GetDisplayText(n As Node) As String
-        If n.data Is Nothing OrElse (n.data.origID.StringEmpty AndAlso n.data.label.StringEmpty) Then
-            Return n.label
-        ElseIf n.data.label.StringEmpty Then
-            Return n.data.origID
-        Else
-            Return n.data.label
-        End If
-    End Function
-
-    ''' <summary>
-    ''' 这里是计算出网络几点偏移到图像的中心所需要的偏移量
-    ''' </summary>
-    ''' <param name="nodes"></param>
-    ''' <param name="size"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As SizeF) As PointF
-        Return nodes.Values.CentralOffset(size)
-    End Function
-
-    <Extension>
-    Private Function scales(nodes As IEnumerable(Of Node), scale As SizeF) As Dictionary(Of Node, Point)
-        Dim table As New Dictionary(Of Node, Point)
-
-        For Each n As Node In nodes
-            With n.data.initialPostion.Point2D
-                Call table.Add(n, New Point(.X * scale.Width, .Y * scale.Height))
-            End With
-        Next
-
-        Return table
-    End Function
-
-    <Extension>
-    Public Function GetBounds(graph As NetworkGraph) As RectangleF
-        Dim points As Point() = graph _
-            .vertex _
-            .scales(scale:=New SizeF(1, 1)) _
-            .Values _
-            .ToArray
-        Dim rect = points.GetBounds
-        Return rect
-    End Function
-
-    <Extension>
-    Public Function AutoScaler(graph As NetworkGraph, frameSize As Size, padding As Padding) As SizeF
-        With graph.GetBounds
-            Return New SizeF(
-                frameSize.Width / (.Width + padding.Horizontal),
-                frameSize.Height / (.Height + padding.Vertical)
-            )
-        End With
-    End Function
-
-    <Extension>
-    Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As SizeF, padding As Padding) As SizeF
-        With shape.GetBounds
-            Dim width = frameSize.Width - padding.Horizontal
-            Dim height = frameSize.Height - padding.Vertical
-
-            Return New SizeF(
-                width:=width / .Width,
-                height:=height / .Height
-            )
-        End With
-    End Function
 
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
