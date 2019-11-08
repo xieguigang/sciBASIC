@@ -51,10 +51,12 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -441,6 +443,7 @@ Public Module NetworkVisualizer
                          Return n.data(hullPolygonGroups.Name)
                      End Function) _
             .ToArray
+        Dim colors As LoopArray(Of Color) = Designer.GetColors(hullPolygonGroups.Description Or "material".AsDefault)
 
         If hullPolygonGroups.Value.TextEquals("max") Then
             hullPolygon = {
@@ -464,14 +467,10 @@ Public Module NetworkVisualizer
                 Dim positions = group _
                     .Select(Function(p) scalePos(p.label)) _
                     .JarvisMatch _
-                    .Enlarge(1.125)
-                Dim color As Color = group _
-                    .Select(Function(p)
-                                Return DirectCast(p.data.color, SolidBrush).Color
-                            End Function) _
-                    .Average
+                    .Enlarge(1.25)
+                Dim color As Color = colors.Next
 
-                Call g.DrawHullPolygon(positions, color)
+                Call g.DrawHullPolygon(positions, color, alpha:=200)
             End If
         Next
     End Sub

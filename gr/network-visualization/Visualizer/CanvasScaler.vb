@@ -71,7 +71,7 @@ Public Module CanvasScaler
                     ' 在这里因为每一个edge的边连接点的数量是不一样的
                     ' 所以在这里使用for loop加上递增序列来
                     ' 正确的获取得到每一条边所对应的边连接节点
-                    pointList += edgeBundlingShape(i)
+                    pointList += edgeBundlingShape(i).OffSet2D(centraOffset)
                     i += 1
                 Next
 

@@ -51,6 +51,15 @@ Namespace Drawing2D.Math2D
 
     Public Module HullPolygonDraw
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="polygon"></param>
+        ''' <param name="color"></param>
+        ''' <param name="strokeWidth!"></param>
+        ''' <param name="alpha"><see cref="Color.A"/></param>
+        ''' <param name="shadow"></param>
         <Extension>
         Public Sub DrawHullPolygon(g As IGraphics,
                                    polygon As IEnumerable(Of PointF),
