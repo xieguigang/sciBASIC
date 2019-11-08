@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
@@ -93,7 +94,16 @@ Public Module NetworkVisualizer
     ''' <param name="padding">上下左右的边距分别为多少？</param>
     ''' <param name="background">背景色或者背景图片的文件路径</param>
     ''' <param name="defaultColor"></param>
-    ''' <param name="hullPolygonGroups">需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组</param>
+    ''' <param name="hullPolygonGroups">
+    ''' ```
+    ''' [<see cref="NodeData.Properties"/> Name => expression]
+    ''' ```
+    ''' 
+    ''' + expression = max/min largest or smallest group
+    ''' + expression = 'a,b,c,d,e' node category to draw hull polygon 
+    ''' 
+    ''' (需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组)
+    ''' </param>
     ''' <param name="nodeRadius">By default all of the node have the same radius size</param>
     ''' <param name="labelFontBase">
     ''' 这个参数会提供字体的一些基础样式,字体的大小会从节点的属性中计算出来
@@ -143,7 +153,7 @@ Public Module NetworkVisualizer
                               Optional getLabelColor As Func(Of Node, Color) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
-                              Optional hullPolygonGroups$ = Nothing,
+                              Optional hullPolygonGroups As NamedValue(Of String) = Nothing,
                               Optional doEdgeBundling As Boolean = False,
                               Optional labelerIterations% = 1500,
                               Optional showLabelerProgress As Boolean = True,
@@ -254,7 +264,7 @@ Public Module NetworkVisualizer
                 ' 最后通过退火算法计算出合适的节点标签文本的位置之后，再使用一个循环绘制出
                 ' 所有的节点的标签文本
 
-                If Not hullPolygonGroups.StringEmpty Then
+                If Not hullPolygonGroups.IsEmpty Then
                     Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos)
                 End If
 
@@ -411,20 +421,34 @@ Public Module NetworkVisualizer
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <param name="drawPoints"></param>
+    ''' <param name="hullPolygonGroups">
+    ''' [<see cref="NodeData.Properties"/> Name => expression]
+    ''' 
+    ''' expression = max/min largest or smallest group
+    ''' expression = 'a,b,c,d,e' node category to draw hull polygon 
+    ''' </param>
+    ''' <param name="scalePos"></param>
     <Extension>
-    Private Sub drawhullPolygon(g As IGraphics, drawPoints As Node(), hullPolygonGroups$, scalePos As Dictionary(Of String, PointF))
+    Private Sub drawhullPolygon(g As IGraphics, drawPoints As Node(), hullPolygonGroups As NamedValue(Of String), scalePos As Dictionary(Of String, PointF))
         Dim hullPolygon As Index(Of String)
         Dim groups = drawPoints _
-            .GroupBy(Function(n) n.data.Properties!nodeType) _
+            .GroupBy(Function(n)
+                         Return n.data(hullPolygonGroups.Name)
+                     End Function) _
             .ToArray
 
-        If hullPolygonGroups.TextEquals("max") Then
+        If hullPolygonGroups.Value.TextEquals("max") Then
             hullPolygon = {
                 groups.OrderByDescending(Function(node) node.Count) _
                       .First _
                       .Key
             }
-        ElseIf hullPolygonGroups.TextEquals("min") Then
+        ElseIf hullPolygonGroups.Value.TextEquals("min") Then
             hullPolygon = {
                 groups.Where(Function(group) group.Count > 2) _
                       .OrderBy(Function(node) node.Count) _
@@ -432,7 +456,7 @@ Public Module NetworkVisualizer
                       .Key
             }
         Else
-            hullPolygon = hullPolygonGroups.Split(","c)
+            hullPolygon = hullPolygonGroups.Value.Split(","c)
         End If
 
         For Each group In groups
