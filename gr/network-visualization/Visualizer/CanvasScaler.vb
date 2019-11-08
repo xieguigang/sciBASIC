@@ -1,25 +1,13 @@
 ﻿Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
 
 ''' <summary>
 ''' 进行网络模型之中的节点的位置缩放以及中心化平移操作的帮助模块
@@ -59,11 +47,11 @@ Public Module CanvasScaler
             .ToArray
         Dim scale = (CDbl(scaleFactor.Width), CDbl(scaleFactor.Height))
 
-        edgeBundlingShape = edgeBundlingShape.Enlarge(scale)
-
         If edgeBundlingShape.Length > 0 Then
             Dim pointList As New List(Of PointF)
             Dim i As Integer
+
+            edgeBundlingShape = edgeBundlingShape.Enlarge(scale)
 
             For Each edge As Edge In edges
                 For Each null In edge.data.controlsPoint

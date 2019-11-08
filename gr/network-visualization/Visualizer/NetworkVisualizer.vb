@@ -465,6 +465,9 @@ Public Module NetworkVisualizer
 
         For Each group In groups
             If group.Count > 2 AndAlso group.Key Like hullPolygon Then
+
+                Call $"[ConvexHull] render for {group.Key}".__DEBUG_ECHO
+
                 Dim positions = group _
                     .Select(Function(p) scalePos(p.label)) _
                     .JarvisMatch _
