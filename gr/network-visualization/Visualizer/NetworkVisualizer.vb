@@ -464,7 +464,7 @@ Public Module NetworkVisualizer
                 Dim positions = group _
                     .Select(Function(p) scalePos(p.label)) _
                     .JarvisMatch _
-                    .Enlarge(1.25)
+                    .Enlarge(1.125)
                 Dim color As Color = group _
                     .Select(Function(p)
                                 Return DirectCast(p.data.color, SolidBrush).Color
