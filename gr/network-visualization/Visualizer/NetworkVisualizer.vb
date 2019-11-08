@@ -161,7 +161,9 @@ Public Module NetworkVisualizer
                               Optional showLabelerProgress As Boolean = True,
                               Optional defaultEdgeColor$ = NameOf(Color.LightGray),
                               Optional defaultLabelColor$ = "black",
-                              Optional labelTextStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;") As GraphicsData
+                              Optional labelTextStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;",
+                              Optional showConvexHullLegend As Boolean = True,
+                              Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge) As GraphicsData
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As SizeF = PrinterDimension.SizeOf(canvasSize)
@@ -253,7 +255,7 @@ Public Module NetworkVisualizer
 
                 If Not hullPolygonGroups.IsEmpty Then
                     Call "Render hull polygon layer...".__DEBUG_ECHO
-                    Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos)
+                    Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos, showConvexHullLegend, convexHullLabelFontCSS$)
                 End If
 
                 Call "Render network edges...".__INFO_ECHO
@@ -442,7 +444,13 @@ Public Module NetworkVisualizer
     ''' </param>
     ''' <param name="scalePos"></param>
     <Extension>
-    Private Sub drawhullPolygon(g As IGraphics, drawPoints As Node(), hullPolygonGroups As NamedValue(Of String), scalePos As Dictionary(Of String, PointF))
+    Private Sub drawhullPolygon(g As IGraphics,
+                                drawPoints As Node(),
+                                hullPolygonGroups As NamedValue(Of String),
+                                scalePos As Dictionary(Of String, PointF),
+                                showConvexHullLegend As Boolean,
+                                convexHullLabelFontCSS$)
+
         Dim hullPolygon As Index(Of String)
         Dim groups = drawPoints _
             .GroupBy(Function(n)
@@ -450,18 +458,22 @@ Public Module NetworkVisualizer
                      End Function) _
             .ToArray
         Dim colors As LoopArray(Of Color) = Designer.GetColors(hullPolygonGroups.Description Or "material".AsDefault)
+        Dim convexHullLabelFont As Font = CSSFont.TryParse(convexHullLabelFontCSS$)
+        Dim singleGroupKey As String = Nothing
 
         If hullPolygonGroups.Value.StringEmpty Then
             Return
         End If
 
         If hullPolygonGroups.Value.TextEquals("max") Then
+            singleGroupKey = $"max({hullPolygonGroups.Name})"
             hullPolygon = {
                 groups.OrderByDescending(Function(node) node.Count) _
                       .First _
                       .Key
             }
         ElseIf hullPolygonGroups.Value.TextEquals("min") Then
+            singleGroupKey = $"min({hullPolygonGroups.Name})"
             hullPolygon = {
                 groups.Where(Function(group) group.Count > 2) _
                       .OrderBy(Function(node) node.Count) _
@@ -471,6 +483,8 @@ Public Module NetworkVisualizer
         Else
             hullPolygon = hullPolygonGroups.Value.Split(","c)
         End If
+
+        Dim labels As New List(Of (String, Color))
 
         For Each group In groups
             If group.Count > 2 AndAlso group.Key Like hullPolygon Then
@@ -484,7 +498,33 @@ Public Module NetworkVisualizer
                 Dim color As Color = colors.Next
 
                 Call g.DrawHullPolygon(positions, color, alpha:=50)
+                Call labels.Add((group.Key, color))
             End If
+        Next
+
+        If Not singleGroupKey.StringEmpty Then
+            labels = New List(Of (String, Color)) From {(singleGroupKey, labels.Last.Item2)}
+        End If
+
+        Dim maxLabel = labels.Select(Function(lb) lb.Item1).MaxLengthString
+        Dim maxSize As SizeF = g.MeasureString(maxLabel, convexHullLabelFont)
+        Dim legendShapeSize As New SizeF With {
+            .Width = maxSize.Height * 1.5,
+            .Height = maxSize.Height
+        }
+        Dim topLeft As New PointF With {
+            .X = g.Size.Width - maxSize.Width - 20 - maxSize.Height * 1.5,
+            .Y = 100
+        }
+
+        For Each label In labels
+            Call g.FillRectangle(New SolidBrush(label.Item2), New RectangleF(topLeft, legendShapeSize))
+            Call g.DrawString(label.Item1, convexHullLabelFont, Brushes.Black, New PointF(topLeft.X + legendShapeSize.Width + 20, topLeft.Y))
+
+            topLeft = New PointF With {
+                .X = topLeft.X,
+                .Y = topLeft.Y + maxSize.Height * 1.125
+            }
         Next
     End Sub
 
