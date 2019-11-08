@@ -173,6 +173,8 @@ Public Module NetworkVisualizer
                 .Top = 100
             })
 
+        Call $"Canvas size expression '{canvasSize}' = [{frameSize.Width}, {frameSize.Height}]".__DEBUG_ECHO
+
         ' 1. 先将网络图形对象置于输出的图像的中心位置
         ' 2. 进行矢量图放大
         ' 3. 执行绘图操作

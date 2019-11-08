@@ -27,6 +27,7 @@ Namespace Drawing2D
         ''' 1. [w,h]: 100,200
         ''' 2. term_names: A4 
         ''' 3. times(size/term_names): 5(A4) = 5*297,5*210 = 1485,1050
+        ''' 4. portal(times(size))
         ''' </param>
         ''' <returns></returns>
         Public Shared Function SizeOf(expr As String) As SizeF
@@ -41,6 +42,15 @@ Namespace Drawing2D
                 Return expr _
                     .DoCall(AddressOf SizeOfPrinterPapers) _
                     .SizeParser
+            ElseIf expr.IsPattern("portal\(.+\)") Then
+                Dim size As SizeF = expr _
+                    .GetStackValue("(", ")") _
+                    .DoCall(AddressOf SizeOf)
+
+                Return New SizeF With {
+                    .Height = size.Width,
+                    .Width = size.Height
+                }
             Else
                 Dim times As Double = expr.Split("("c).First.ParseDouble
                 Dim size As SizeF = expr.GetStackValue("(", ")").DoCall(AddressOf SizeOf)
