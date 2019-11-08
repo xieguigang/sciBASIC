@@ -115,10 +115,11 @@ Namespace ApplicationServices.Terminal
                               Select p,
                                   s = p.GetValue(x)) _
                           .ToDictionary(Function(o) o.p.Identity,
-                                        Function(o) Scripting.ToString(o.s))
+                                        Function(o)
+                                            Return Scripting.ToString(o.s)
+                                        End Function)
 
-            Dim table As List(Of String()) =
-                contents _
+            Dim table As List(Of String()) = contents _
                 .Select(Function(line)
                             Return titles.Select(Function(name) line(name)).ToArray
                         End Function) _
@@ -134,7 +135,7 @@ Namespace ApplicationServices.Terminal
         ''' <summary>
         ''' 与函数<see cref="Print"/>所不同的是，这个函数还会添加边框
         ''' </summary>
-        ''' <param name="source"></param>
+        ''' <param name="source">Each element is a row in table matrix</param>
         ''' <param name="dev"></param>
         ''' <param name="sep"></param>
         <Extension>
