@@ -93,7 +93,6 @@ Public Module NetworkVisualizer
     ''' <param name="padding">上下左右的边距分别为多少？</param>
     ''' <param name="background">背景色或者背景图片的文件路径</param>
     ''' <param name="defaultColor"></param>
-    ''' <param name="nodePoints">如果还需要获取得到节点的绘图位置的话，则可以使用这个可选参数来获取返回</param>
     ''' <param name="hullPolygonGroups">需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组</param>
     ''' <param name="nodeRadius">By default all of the node have the same radius size</param>
     ''' <param name="labelFontBase">
@@ -136,7 +135,6 @@ Public Module NetworkVisualizer
                               Optional nodeRadius As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional fontSize As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
-                              Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
                               Optional edgeDashTypes As [Variant](Of Dictionary(Of String, DashStyle), DashStyle) = Nothing,
                               Optional edgeShadowDistance As Single = 0,
                               Optional drawNodeShape As DrawNodeShape = Nothing,
@@ -168,78 +166,11 @@ Public Module NetworkVisualizer
         ' 3. 执行绘图操作
 
         ' 获取得到当前的这个网络对象相对于图像的中心点的位移值
-        Dim scalePos As Dictionary(Of Node, PointF) = net _
-            .vertex _
-            .ToDictionary(Function(n) n,
-                          Function(node)
-                              Return node.data.initialPostion.Point2D.PointF
-                          End Function)
-        Dim offset As Point = scalePos _
-            .CentralOffsets(frameSize) _
-            .ToPoint
-
-        ' 进行位置偏移
-        ' 将网络图形移动到画布的中央区域
-        scalePos = scalePos.ToDictionary(Function(node) node.Key,
-                                         Function(point)
-                                             Return point.Value.OffSet2D(offset)
-                                         End Function)
-        ' 进行矢量放大
-        Dim scale As SizeF = scalePos.Values.AutoScaler(frameSize, margin)
-        Dim scalePoints = scalePos.Values.Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
+        Dim scalePos As Dictionary(Of String, PointF) = CanvasScaler.CalculateNodePositions(net, frameSize, margin)
         Dim edgeBundling As New Dictionary(Of Edge, PointF())
 
-        With scalePos.Keys.AsList
-            For i As Integer = 0 To .Count - 1
-                scalePos(.Item(i)) = scalePoints(i)
-            Next
-
-            nodePoints = scalePos
-        End With
-
         If doEdgeBundling Then
-            edgeBundling = net.graphEdges _
-                .Where(Function(e)
-                           ' 空集合会在下面的分割for循环中产生移位bug
-                           ' 跳过
-                           Return Not e.data.controlsPoint.IsNullOrEmpty
-                       End Function) _
-                .ToDictionary(Function(e) e,
-                              Function(e)
-                                  Return e.data.controlsPoint _
-                                      .Select(Function(v)
-                                                  Return New PointF With {
-                                                      .X = v.x,
-                                                      .Y = v.y
-                                                  }.OffSet2D(offset)
-                                              End Function) _
-                                      .ToArray
-                              End Function)
-
-            If edgeBundling.Count > 0 Then
-                With edgeBundling.Keys.ToArray
-                    Dim tempList As New List(Of PointF)
-                    Dim i As Integer
-
-                    scalePoints = .Select(Function(e) edgeBundling(e)) _
-                                  .IteratesALL _
-                                  .Enlarge((CDbl(scale.Width), CDbl(scale.Height)))
-
-                    For Each edge As Edge In .ByRef
-                        For Each null In edgeBundling(edge)
-                            ' 20191103
-                            ' 在这里因为每一个edge的边连接点的数量是不一样的
-                            ' 所以在这里使用for loop加上递增序列来
-                            ' 正确的获取得到每一条边所对应的边连接节点
-                            tempList += scalePoints(i)
-                            i += 1
-                        Next
-
-                        edgeBundling(edge) = tempList
-                        tempList *= 0
-                    Next
-                End With
-            End If
+            edgeBundling = CanvasScaler.CalculateEdgeBends(net, frameSize, margin)
         End If
 
         Call "Initialize gdi objects...".__INFO_ECHO
@@ -386,7 +317,7 @@ Public Module NetworkVisualizer
                                               defaultColor As Color,
                                               stroke As Pen,
                                               baseFont As Font,
-                                              scalePos As Dictionary(Of Node, PointF),
+                                              scalePos As Dictionary(Of String, PointF),
                                               throwEx As Boolean,
                                               getDisplayLabel As Func(Of Node, String),
                                               drawNodeShape As DrawNodeShape,
@@ -399,12 +330,11 @@ Public Module NetworkVisualizer
 
         For Each n As Node In drawPoints
             Dim r# = radiusValue(n)
+            Dim center As PointF = scalePos(n.label)
 
             With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
                 br = n.data.color Or .ByRef
             End With
-
-            Dim center As PointF = scalePos(n)
 
             With center
                 pt = New Point(.X - r / 2, .Y - r / 2)
@@ -482,7 +412,7 @@ Public Module NetworkVisualizer
     End Function
 
     <Extension>
-    Private Sub drawhullPolygon(g As IGraphics, drawPoints As Node(), hullPolygonGroups$, scalePos As Dictionary(Of Node, PointF))
+    Private Sub drawhullPolygon(g As IGraphics, drawPoints As Node(), hullPolygonGroups$, scalePos As Dictionary(Of String, PointF))
         Dim hullPolygon As Index(Of String)
         Dim groups = drawPoints _
             .GroupBy(Function(n) n.data.Properties!nodeType) _
@@ -508,7 +438,7 @@ Public Module NetworkVisualizer
         For Each group In groups
             If group.Count > 2 AndAlso group.Key Like hullPolygon Then
                 Dim positions = group _
-                    .Select(Function(p) scalePos(p)) _
+                    .Select(Function(p) scalePos(p.label)) _
                     .JarvisMatch _
                     .Enlarge(1.25)
                 Dim color As Color = group _
@@ -526,7 +456,7 @@ Public Module NetworkVisualizer
     Private Sub drawEdges(g As IGraphics, net As NetworkGraph,
                           minLinkWidthValue As [Default](Of Single),
                           edgeDashTypes As Dictionary(Of String, DashStyle),
-                          scalePos As Dictionary(Of Node, PointF),
+                          scalePos As Dictionary(Of String, PointF),
                           edgeBundling As Dictionary(Of Edge, PointF()),
                           throwEx As Boolean,
                           edgeShadowDistance As Single,
@@ -551,7 +481,8 @@ Public Module NetworkVisualizer
             End With
 
             ' 在这里绘制的是节点之间相连接的边
-            Dim a = scalePos(n), b = scalePos(otherNode)
+            Dim a = scalePos(n.label)
+            Dim b = scalePos(otherNode.label)
             Dim edgeShadowColor As New Pen(Brushes.Gray) With {
                 .Width = lineColor.Width,
                 .DashStyle = lineColor.DashStyle
