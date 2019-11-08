@@ -511,31 +511,30 @@ Public Module NetworkVisualizer
                 .Width = lineColor.Width,
                 .DashStyle = lineColor.DashStyle
             }
+            Dim draw = Sub(line As PointF())
+                           Dim pt1, pt2 As PointF
 
+                           If edgeShadowDistance <> 0 Then
+                               pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+                               pt2 = line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+
+                               Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
+                           End If
+
+                           ' 直接画一条直线
+                           Call g.DrawLine(lineColor, line(0), line(1))
+                       End Sub
             Try
-                Dim pt1, pt2 As PointF
-
                 If edgeBundling.ContainsKey(edge) AndAlso edgeBundling(edge).Length > 0 Then
-                    For Each line In edgeBundling(edge).SlideWindows(2)
-                        If edgeShadowDistance <> 0 Then
-                            pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
-                            pt2 = line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance)
-
-                            Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
-                        End If
-
-                        Call g.DrawLine(lineColor, line(0), line(1))
-                    Next
-                Else
-                    If edgeShadowDistance <> 0 Then
-                        pt1 = a.OffSet2D(edgeShadowDistance, edgeShadowDistance)
-                        pt2 = b.OffSet2D(edgeShadowDistance, edgeShadowDistance)
-
-                        Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
+                    If edgeBundling(edge).Length = 1 Then
+                        Call draw({a, b})
+                    Else
+                        For Each line In edgeBundling(edge).SlideWindows(2)
+                            Call draw(line.ToArray)
+                        Next
                     End If
-
-                    ' 直接画一条直线
-                    Call g.DrawLine(lineColor, a, b)
+                Else
+                    Call draw({a, b})
                 End If
             Catch ex As Exception
                 Dim line As New Dictionary(Of String, String) From {
