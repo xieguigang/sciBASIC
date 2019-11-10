@@ -163,6 +163,7 @@ Public Module NetworkVisualizer
                               Optional hullPolygonGroups As NamedValue(Of String) = Nothing,
                               Optional labelerIterations% = 1500,
                               Optional labelWordWrapWidth% = -1,
+                              Optional isLabelPinned As Func(Of Node, Boolean) = Nothing,
                               Optional showLabelerProgress As Boolean = True,
                               Optional defaultEdgeColor$ = NameOf(Color.LightGray),
                               Optional defaultLabelColor$ = "black",
@@ -300,7 +301,8 @@ Public Module NetworkVisualizer
                     getDisplayLabel:=getNodeLabel,
                     drawNodeShape:=drawNodeShape,
                     getLabelPosition:=getLabelPosition,
-                    labelWordWrapWidth:=labelWordWrapWidth
+                    labelWordWrapWidth:=labelWordWrapWidth,
+                    isLabelPinned:=isLabelPinned
                 )
 
                 If displayId AndAlso labels = 0 Then
@@ -354,12 +356,18 @@ Public Module NetworkVisualizer
                                               getDisplayLabel As Func(Of Node, String),
                                               drawNodeShape As DrawNodeShape,
                                               getLabelPosition As GetLabelPosition,
-                                              labelWordWrapWidth As Integer) As IEnumerable(Of LayoutLabel)
+                                              labelWordWrapWidth As Integer,
+                                              isLabelPinned As Func(Of Node, Boolean)) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As RectangleF
 
         Call "Rendering nodes...".__DEBUG_ECHO
+
+        If isLabelPinned Is Nothing Then
+            ' all of the label is unpinned by default 
+            isLabelPinned = Function(n) False
+        End If
 
         For Each n As Node In drawPoints
             Dim r# = radiusValue(n)
@@ -414,7 +422,8 @@ Public Module NetworkVisualizer
                 )
                 ' 节点的标签文本的位置默认在正中
                 Dim label As New Label With {
-                    .text = displayID
+                    .text = displayID,
+                    .pinned = isLabelPinned(n)
                 }
 
                 If labelWordWrapWidth > 0 Then
