@@ -380,8 +380,10 @@ Namespace Drawing2D.Colors
         ''' (假若这里所输入的是一组颜色值，则必须是htmlcolor或者颜色名称，RGB表达式将不会被允许)
         ''' </param>
         ''' <returns></returns>
-        Public Function GetColors(exp$) As Color()
-            If exp.IsColorNameList Then
+        Public Function GetColors(exp As String) As Color()
+            If exp.StringEmpty Then
+                Return {}
+            ElseIf exp.IsColorNameList Then
                 Return Designer _
                     .SplitColorList(exp) _
                     .Select(AddressOf TranslateColor) _
