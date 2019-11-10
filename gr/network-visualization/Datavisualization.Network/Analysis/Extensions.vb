@@ -60,7 +60,7 @@ Namespace Analysis
         ''' <param name="edge"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function isTupleEdge(Of Node As INamedValue, IEdge As {Class, IInteraction})(g As GraphIndex(Of Node, Edge), edge As IEdge) As Boolean
+        Public Function isTupleEdge(Of Node As INamedValue, IEdge As {Class, IInteraction})(edge As IEdge, g As GraphIndex(Of Node, IEdge)) As Boolean
             Dim uset = g.GetEdges(edge.source).ToArray
             Dim vset = g.GetEdges(edge.target).ToArray
 

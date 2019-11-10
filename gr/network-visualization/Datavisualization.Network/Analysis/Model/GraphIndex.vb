@@ -44,6 +44,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Analysis.Model
 
@@ -69,6 +70,14 @@ Namespace Analysis.Model
             Return Me
         End Function
 
+        Public Function edges(edgeSet As IEnumerable(Of Edge)) As GraphIndex(Of Node, Edge)
+            For Each edge As Edge In edgeSet.SafeQuery
+                Call AddEdge(edge)
+            Next
+
+            Return Me
+        End Function
+
         Public Sub Delete(node As Node)
             If _nodeSet.ContainsKey(node.Key) Then
                 Call _nodeSet.Remove(node.Key)
@@ -90,7 +99,8 @@ Namespace Analysis.Model
         End Sub
 
         Public Sub Clear()
-
+            Call _nodeSet.Clear()
+            Call _adjacencySet.Clear()
         End Sub
 
         Public Function CreateNodeAdjacencySet(node As INamedValue) As AdjacencySet(Of Edge)
