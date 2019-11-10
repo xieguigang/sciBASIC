@@ -312,6 +312,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data_science\DataMining\DataMining\DataMining.vbproj">
+      <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
+      <Name>DataMining</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Data_science\Graph\GraphTheory.vbproj">
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>GraphTheory</Name>

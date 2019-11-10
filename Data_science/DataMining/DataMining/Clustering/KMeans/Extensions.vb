@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::d3c086de764e7d82649f94920ed0c961, Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: Kmeans, ToKMeansModels, ValueGroups
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: Kmeans, ToKMeansModels, ValueGroups
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -48,6 +49,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace KMeans
 
+    <HideModuleName>
     Public Module Extensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -91,10 +93,11 @@ Namespace KMeans
         ''' <param name="source"></param>
         ''' <param name="expected"></param>
         ''' <returns></returns>
-        <Extension> Public Function Kmeans(source As IEnumerable(Of EntityClusterModel),
-                                           expected%,
-                                           Optional debug As Boolean = True,
-                                           Optional parallel As Boolean = True) As List(Of EntityClusterModel)
+        <Extension>
+        Public Function Kmeans(source As IEnumerable(Of EntityClusterModel),
+                               expected%,
+                               Optional debug As Boolean = True,
+                               Optional parallel As Boolean = True) As List(Of EntityClusterModel)
 
             Dim maps As String() = source _
                 .First _
@@ -121,6 +124,45 @@ Namespace KMeans
             Next
 
             Return result
+        End Function
+
+        <Extension>
+        Public Function Kmeans(points As IEnumerable(Of PointF),
+                               Optional expected% = 3,
+                               Optional debug As Boolean = True,
+                               Optional parallel As Boolean = True) As NamedCollection(Of PointF)()
+
+            Dim source As EntityClusterModel() = points _
+                .Select(Function(pt, i)
+                            Return New EntityClusterModel With {
+                                .ID = i,
+                                .Cluster = 0,
+                                .Properties = New Dictionary(Of String, Double) From {
+                                    {"x", CDbl(pt.X)},
+                                    {"y", CDbl(pt.Y)}
+                                }
+                            }
+                        End Function) _
+                .ToArray
+            Dim result = source.Kmeans(expected, debug, parallel)
+            Dim resultPoints As NamedCollection(Of PointF)() = result _
+                .GroupBy(Function(e) e.Cluster) _
+                .Select(Function(e)
+                            Return New NamedCollection(Of PointF) With {
+                                .name = e.Key,
+                                .value = e _
+                                    .Select(Function(p)
+                                                Return New PointF With {
+                                                    .X = p!x,
+                                                    .Y = p!y
+                                                }
+                                            End Function) _
+                                    .ToArray
+                            }
+                        End Function) _
+                .ToArray
+
+            Return resultPoints
         End Function
     End Module
 End Namespace

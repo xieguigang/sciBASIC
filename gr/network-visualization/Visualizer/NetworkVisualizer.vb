@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::cb94467b1b5644a217277c416f28dff9, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NetworkVisualizer
-    ' 
-    '     Properties: BackgroundColor
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    '         Function: DirectMapRadius, DrawImage, drawVertexNodes
-    ' 
-    '         Sub: drawEdges, drawhullPolygon, drawLabels
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module NetworkVisualizer
+' 
+'     Properties: BackgroundColor
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+'         Function: DirectMapRadius, DrawImage, drawVertexNodes
+' 
+'         Sub: drawEdges, drawhullPolygon, drawLabels
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -530,8 +531,12 @@ Public Module NetworkVisualizer
                     .JarvisMatch _
                     .Enlarge(convexHullScale!)
                 Dim color As Color = colors.Next
+                Dim largest As NamedCollection(Of PointF) = positions _
+                    .Kmeans _
+                    .OrderByDescending(Function(c) c.Length) _
+                    .First
 
-                Call g.DrawHullPolygon(positions, color, alpha:=50)
+                Call g.DrawHullPolygon(largest, color, alpha:=50)
                 Call labels.Add((group.Key, color))
             End If
         Next

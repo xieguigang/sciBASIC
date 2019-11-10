@@ -52,7 +52,7 @@ Namespace Drawing2D.Math2D
     Public Module HullPolygonDraw
 
         ''' <summary>
-        ''' 
+        ''' 这个函数仅仅是作图函数，如果图形中有些离群点会导致图形面积过大的话，可以在调用这个函数之前做kmeans聚类过滤掉这些离群点
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="polygon"></param>
