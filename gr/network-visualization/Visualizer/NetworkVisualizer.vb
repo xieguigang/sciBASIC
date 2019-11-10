@@ -711,12 +711,12 @@ Public Module NetworkVisualizer
                     StringFormat.GenericTypographic
                 )
 
-                Call g.DrawString(.label.text, .style, br, lx, ly)
-
                 If Not labelTextStroke Is Nothing Then
                     ' 绘制轮廓（描边）
-                    ' Call g.FillPath(br, path)
+                    Call g.DrawString(.label.text, .style, br, lx, ly)
                     Call g.DrawPath(labelTextStroke, path)
+                Else
+                    Call WordWrap.DrawTextCentraAlign(g, .label, New PointF(lx, ly), br, .style)
                 End If
             End With
         Next

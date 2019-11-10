@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
@@ -6,6 +7,43 @@ Imports Microsoft.VisualBasic.Text
 Namespace Drawing2D.Text
 
     Public Module WordWrap
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="wrappedText">
+        ''' Label text that re-layout by <see cref="WordWrap.DoWordWrap(String, Integer, String)"/>.
+        ''' </param>
+        ''' <param name="location"></param>
+        ''' <param name="brush"></param>
+        ''' <param name="font"></param>
+        <Extension>
+        Public Sub DrawTextCentraAlign(g As IGraphics, wrappedText$, location As PointF, brush As Brush, font As Font)
+            Dim lines = wrappedText.LineTokens
+
+            If lines.Length = 1 Then
+                Call g.DrawString(wrappedText, font, brush, location)
+            Else
+                Dim max As SizeF = lines _
+                    .Select(Function(l)
+                                Return g.MeasureString(l, font)
+                            End Function) _
+                    .OrderByDescending(Function(w) w.Width) _
+                    .First
+                Dim size As SizeF
+                Dim y As Single = location.Y - max.Height
+                Dim x As Single = location.X
+
+                For Each line As String In lines
+                    size = g.MeasureString(line, font)
+                    x = location.X + (max.Width - size.Width) / 2
+                    y = y + size.Height
+
+                    Call g.DrawString(line, font, brush, New PointF(x, y))
+                Next
+            End If
+        End Sub
 
         <Extension>
         Public Function DoWordWrap(str$, width%, Optional splitChars$ = " -" & ASCII.TAB) As String

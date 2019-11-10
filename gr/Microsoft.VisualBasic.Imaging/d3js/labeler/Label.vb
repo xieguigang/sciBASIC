@@ -146,5 +146,10 @@ Namespace d3js.Layout
                 .Y = label.Y
             }
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(label As Label) As String
+            Return label.text
+        End Operator
     End Class
 End Namespace
