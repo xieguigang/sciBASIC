@@ -50,6 +50,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
@@ -224,7 +225,7 @@ Namespace d3js.Layout
 
         Private Sub MonteCarlo(currT#, action As Action(Of Integer))
             ' select a random label which is not pinned
-            Dim i = Math.Floor(Rnd() * lab.Length)
+            Dim i As Integer = unpinnedLabels(Math.Floor(Rnd() * unpinnedLabels.Length))
 
             ' save old coordinates
             Dim x_old = lab(i).X
@@ -316,6 +317,16 @@ Namespace d3js.Layout
                     lab(i).Y = anc(i).y
                 End If
             Next
+
+            unpinnedLabels = lab.SeqIterator _
+                .Where(Function(l) Not l.value.pinned) _
+                .Select(Function(lb) lb.i) _
+                .ToArray
+
+            If unpinnedLabels.Length = 0 Then
+                Call "No unpinned label to be re-layout!".Warning
+                Return Me
+            End If
 
             If showProgress Then
                 Dim tickProvider As New ProgressProvider(nsweeps)
