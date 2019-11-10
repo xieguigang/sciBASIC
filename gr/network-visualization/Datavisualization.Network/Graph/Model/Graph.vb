@@ -370,7 +370,7 @@ Namespace Graph
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetEdges(iNode As Node) As IEnumerable(Of Edge)
-            Return _index.GetEdges(iNode)
+            Return _index.GetEdges(iNode.label)
         End Function
 
         Public Sub RemoveNode(node As Node)

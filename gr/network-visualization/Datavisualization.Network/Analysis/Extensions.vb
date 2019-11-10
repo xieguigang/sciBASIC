@@ -41,7 +41,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 
 Namespace Analysis
 
@@ -57,9 +60,9 @@ Namespace Analysis
         ''' <param name="edge"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function isTupleEdge(g As NetworkGraph, edge As Edge) As Boolean
-            Dim uset = g.GetEdges(edge.U).ToArray
-            Dim vset = g.GetEdges(edge.V).ToArray
+        Public Function isTupleEdge(Of Node As INamedValue, IEdge As {Class, IInteraction})(g As GraphIndex(Of Node, Edge), edge As IEdge) As Boolean
+            Dim uset = g.GetEdges(edge.source).ToArray
+            Dim vset = g.GetEdges(edge.target).ToArray
 
             If uset.Length = 1 AndAlso vset.Length = 1 AndAlso uset(Scan0) Is vset(Scan0) AndAlso uset(Scan0) Is edge Then
                 Return True

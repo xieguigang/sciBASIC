@@ -75,11 +75,11 @@ Namespace Analysis.Model
         ''' </summary>
         ''' <param name="iNode"></param>
         ''' <returns></returns>
-        Public Function GetEdges(iNode As Node) As IEnumerable(Of Edge)
-            If Not _adjacencySet.ContainsKey(iNode.Key) Then
+        Public Function GetEdges(iNode As String) As IEnumerable(Of Edge)
+            If Not _adjacencySet.ContainsKey(iNode) Then
                 Return {}
             Else
-                Return _adjacencySet(iNode.Key).EnumerateAllEdges
+                Return _adjacencySet(iNode).EnumerateAllEdges
             End If
         End Function
 
