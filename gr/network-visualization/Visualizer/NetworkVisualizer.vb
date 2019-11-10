@@ -163,7 +163,7 @@ Public Module NetworkVisualizer
                               Optional hullPolygonGroups As NamedValue(Of String) = Nothing,
                               Optional labelerIterations% = 1500,
                               Optional labelWordWrapWidth% = -1,
-                              Optional isLabelPinned As Func(Of Node, Boolean) = Nothing,
+                              Optional isLabelPinned As Func(Of Node, String, Boolean) = Nothing,
                               Optional showLabelerProgress As Boolean = True,
                               Optional defaultEdgeColor$ = NameOf(Color.LightGray),
                               Optional defaultLabelColor$ = "black",
@@ -357,7 +357,7 @@ Public Module NetworkVisualizer
                                               drawNodeShape As DrawNodeShape,
                                               getLabelPosition As GetLabelPosition,
                                               labelWordWrapWidth As Integer,
-                                              isLabelPinned As Func(Of Node, Boolean)) As IEnumerable(Of LayoutLabel)
+                                              isLabelPinned As Func(Of Node, String, Boolean)) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As RectangleF
@@ -366,7 +366,7 @@ Public Module NetworkVisualizer
 
         If isLabelPinned Is Nothing Then
             ' all of the label is unpinned by default 
-            isLabelPinned = Function(n) False
+            isLabelPinned = Function(n, l) False
         End If
 
         For Each n As Node In drawPoints
@@ -423,7 +423,7 @@ Public Module NetworkVisualizer
                 ' 节点的标签文本的位置默认在正中
                 Dim label As New Label With {
                     .text = displayID,
-                    .pinned = isLabelPinned(n)
+                    .pinned = isLabelPinned(n, displayID)
                 }
 
                 If labelWordWrapWidth > 0 Then
