@@ -163,13 +163,16 @@ Public Module NetworkVisualizer
                               Optional defaultLabelColor$ = "black",
                               Optional labelTextStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;",
                               Optional showConvexHullLegend As Boolean = True,
+                              Optional drawEdgeBends As Boolean = True,
                               Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge,
                               Optional convexHullScale! = 1.125) As GraphicsData
 
         Call GetType(NetworkVisualizer).Assembly _
             .FromAssembly _
             .DoCall(Sub(assm)
-                        CLITools.AppSummary(assm, "Network graph visualizer api from sciBASIC.NET framework.", "", App.StdOut)
+                        CLITools.AppSummary(assm, "Welcome to use network graph visualizer api from sciBASIC.NET framework.", "", App.StdOut)
+
+                        Call Console.WriteLine()
                     End Sub)
 
         ' 所绘制的图像输出的尺寸大小
@@ -270,7 +273,8 @@ Public Module NetworkVisualizer
                     scalePos,
                     throwEx,
                     edgeShadowDistance:=edgeShadowDistance,
-                    defaultEdgeColor:=defaultEdgeColor.TranslateColor
+                    defaultEdgeColor:=defaultEdgeColor.TranslateColor,
+                    drawEdgeBends:=drawEdgeBends
                 )
 
                 Call "Render network elements...".__INFO_ECHO
@@ -540,7 +544,8 @@ Public Module NetworkVisualizer
                           scalePos As Dictionary(Of String, PointF),
                           throwEx As Boolean,
                           edgeShadowDistance As Single,
-                          defaultEdgeColor As Color)
+                          defaultEdgeColor As Color,
+                          drawEdgeBends As Boolean)
         Dim cl As Color
 
         For Each edge As Edge In net.graphEdges
@@ -588,7 +593,7 @@ Public Module NetworkVisualizer
                            End Function) _
                     .ToArray
 
-                If Not bends.IsNullOrEmpty Then
+                If drawEdgeBends AndAlso Not bends.IsNullOrEmpty Then
                     If bends.Length <> edge.data.bends.Length Then
                         Call $"{edge.ID} removes {edge.data.bends.Length - bends.Length} bends points.".__DEBUG_ECHO
                     End If
