@@ -80,7 +80,14 @@ Namespace Layouts.EdgeBundling
             }.GetJson
         End Function
 
-        Friend Shared Function parseHandles(strRepresentation As String) As IEnumerable(Of Handle)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="strRepresentation">
+        ''' String join of <see cref="getSerializableString()"/> between handles with delimiter ``|``.
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function ParseHandles(strRepresentation As String) As IEnumerable(Of Handle)
             If strRepresentation.StringEmpty Then
                 Return {}
             Else
