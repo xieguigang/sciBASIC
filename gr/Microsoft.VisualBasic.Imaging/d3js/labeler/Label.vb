@@ -57,10 +57,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property X As Double
             Get
-                Return Rectangle.X
+                Return rectangle.X
             End Get
             Set(value As Double)
-                _Rectangle = New RectangleF(value, Y, width, height)
+                _rectangle = New RectangleF(value, Y, width, height)
             End Set
         End Property
 
@@ -70,10 +70,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property Y As Double
             Get
-                Return Rectangle.Y
+                Return rectangle.Y
             End Get
             Set(value As Double)
-                _Rectangle = New RectangleF(X, value, width, height)
+                _rectangle = New RectangleF(X, value, width, height)
             End Set
         End Property
 
@@ -83,10 +83,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property width As Double
             Get
-                Return Rectangle.Width
+                Return rectangle.Width
             End Get
             Set(value As Double)
-                _Rectangle = New RectangleF(X, Y, value, height)
+                _rectangle = New RectangleF(X, Y, value, height)
             End Set
         End Property
 
@@ -96,10 +96,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property height As Double
             Get
-                Return Rectangle.Height
+                Return rectangle.Height
             End Get
             Set(value As Double)
-                _Rectangle = New RectangleF(X, Y, width, value)
+                _rectangle = New RectangleF(X, Y, width, value)
             End Set
         End Property
 
@@ -108,12 +108,18 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <returns></returns>
         Public Property text As String
+        ''' <summary>
+        ''' 在计算位置的时候，这个标签将不会被随机模拟事件选中
+        ''' 即这个标签当这个属性为true的时候不会发生任何变化
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property pinned As Boolean
 
         ''' <summary>
         ''' 当前的这个文本标签对象所处的位置以及所占据的大小等数据
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Rectangle As RectangleF
+        Public ReadOnly Property rectangle As RectangleF
 
         Public ReadOnly Property location As PointF
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -127,7 +133,7 @@ Namespace d3js.Layout
 
         Sub New(label$, pos As PointF, size As SizeF)
             Me.text = label
-            Me.Rectangle = New RectangleF(pos, size)
+            Me.rectangle = New RectangleF(pos, size)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

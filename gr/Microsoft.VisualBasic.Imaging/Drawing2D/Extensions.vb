@@ -93,7 +93,7 @@ Namespace Drawing2D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetTextAnchor(label As Label, anchor As PointF) As Point
-            Return label.Rectangle.GetTextAnchor(anchor)
+            Return label.rectangle.GetTextAnchor(anchor)
         End Function
 
         ''' <summary>

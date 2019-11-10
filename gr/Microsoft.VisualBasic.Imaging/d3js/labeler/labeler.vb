@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::b1de64e3cf2daba29748683d5e84c4d0, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class Labeler
-    ' 
-    '         Function: Anchors, coolingSchedule, CoolingSchedule, defaultEnergyGet, energy
-    '                   EnergyFunction, GetEnumerator, Height, IEnumerable_GetEnumerator, intersect
-    '                   Labels, Size, Start, Width
-    ' 
-    '         Sub: mclMove, mclRotate, MonteCarlo
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Class Labeler
+' 
+'         Function: Anchors, coolingSchedule, CoolingSchedule, defaultEnergyGet, energy
+'                   EnergyFunction, GetEnumerator, Height, IEnumerable_GetEnumerator, intersect
+'                   Labels, Size, Start, Width
+' 
+'         Sub: mclMove, mclRotate, MonteCarlo
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
 Namespace d3js.Layout
@@ -69,6 +70,7 @@ Namespace d3js.Layout
 
         Dim lab As Label()
         Dim anc As Anchor()
+        Dim unpinnedLabels As Integer()
 
         ''' <summary>
         ''' box width/height
@@ -106,8 +108,10 @@ Namespace d3js.Layout
             Dim m = lab.Length,
                 ener# = 0,
                 dx = lab(index).X - anc(index).x,
-                dy = anc(index).y - lab(index).Y,
-                dist = Math.Sqrt(dx * dx + dy * dy),  ' 标签与anchor锚点之间的距离
+                dy = anc(index).y - lab(index).Y
+
+            ' 标签与anchor锚点之间的距离
+            Dim dist = Math.Sqrt(dx * dx + dy * dy),
                 overlap = True,
                 amount = 0
 
@@ -219,7 +223,7 @@ Namespace d3js.Layout
         End Sub
 
         Private Sub MonteCarlo(currT#, action As Action(Of Integer))
-            ' select a random label
+            ' select a random label which is not pinned
             Dim i = Math.Floor(Rnd() * lab.Length)
 
             ' save old coordinates
@@ -294,17 +298,23 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>
-        Public Function Start(Optional nsweeps% = 2000, Optional T# = 1, Optional initialT# = 1, Optional rotate# = 0.5, Optional showProgress As Boolean = True) As Labeler
+        Public Function Start(Optional nsweeps% = 2000,
+                              Optional T# = 1,
+                              Optional initialT# = 1,
+                              Optional rotate# = 0.5,
+                              Optional showProgress As Boolean = True) As Labeler
+
             Dim moves As Action(Of Integer) = AddressOf mclMove
             Dim rotat As Action(Of Integer) = AddressOf mclRotate
-            Dim rand As New Random
             Dim progress As ProgressBar = Nothing
             Dim tick As Action(Of Double)
 
             ' 在计算之前需要将label的坐标赋值为anchor的值，否则会无法正常的生成label的最终位置
             For i As Integer = 0 To lab.Length - 1
-                lab(i).X = anc(i).x
-                lab(i).Y = anc(i).y
+                If lab(i).X = 0.0 AndAlso lab(i).Y = 0.0 Then
+                    lab(i).X = anc(i).x
+                    lab(i).Y = anc(i).y
+                End If
             Next
 
             If showProgress Then
@@ -323,7 +333,7 @@ Namespace d3js.Layout
 
             For i As Integer = 0 To nsweeps
                 For j As Integer = 0 To lab.Length
-                    If (rand.NextDouble < rotate) Then
+                    If (randf.seeds.NextDouble < rotate) Then
                         Call MonteCarlo(T, moves)
                     Else
                         Call MonteCarlo(T, rotat)
