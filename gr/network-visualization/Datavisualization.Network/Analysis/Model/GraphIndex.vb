@@ -58,8 +58,8 @@ Namespace Analysis.Model
         ''' <summary>
         ''' 应用于按照节点的<see cref="Graph.Node.Label"/>为键名进行节点对象的快速查找
         ''' </summary>
-        Dim _nodeSet As Dictionary(Of String, Node)
-        Dim _adjacencySet As Dictionary(Of String, AdjacencySet(Of Edge))
+        Dim _nodeSet As New Dictionary(Of String, Node)
+        Dim _adjacencySet As New Dictionary(Of String, AdjacencySet(Of Edge))
 
         Default Public Property NodeAccess(label As String) As Node
             Get
