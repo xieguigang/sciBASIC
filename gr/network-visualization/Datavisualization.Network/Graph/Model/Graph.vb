@@ -92,6 +92,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -128,7 +129,7 @@ Namespace Graph
         ''' 应用于按照节点的<see cref="Node.Label"/>为键名进行节点对象的快速查找
         ''' </summary>
         Dim _nodeSet As Dictionary(Of String, Node)
-        Dim _adjacencySet As Dictionary(Of String, AdjacencySet)
+        Dim _adjacencySet As Dictionary(Of String, AdjacencySet(Of Edge))
 
         Dim _nextNodeId As Integer = 0
         Dim _nextEdgeId As Integer = 0
@@ -144,7 +145,7 @@ Namespace Graph
 
             _nodeSet = New Dictionary(Of String, Node)()
             _eventListeners = New List(Of IGraphEventListener)
-            _adjacencySet = New Dictionary(Of String, AdjacencySet)
+            _adjacencySet = New Dictionary(Of String, AdjacencySet(Of Edge))
 
             For Each node As Node In nodes
                 Call AddNode(node)
@@ -156,7 +157,7 @@ Namespace Graph
 
             For Each node As Node In vertex
                 If node.adjacencies Is Nothing Then
-                    _adjacencySet.Add(node.label, New AdjacencySet)
+                    _adjacencySet.Add(node.label, New AdjacencySet(Of Edge))
                     node.adjacencies = _adjacencySet(node.label)
                 End If
             Next
@@ -225,11 +226,11 @@ Namespace Graph
             ' 数据不完整
 
             If Not _adjacencySet.ContainsKey(edge.U.label) Then
-                _adjacencySet(edge.U.label) = New AdjacencySet With {.U = edge.U.label}
+                _adjacencySet(edge.U.label) = New AdjacencySet(Of Edge) With {.U = edge.U.label}
                 edge.U.adjacencies = _adjacencySet(edge.U.label)
             End If
             If Not _adjacencySet.ContainsKey(edge.V.label) Then
-                _adjacencySet(edge.V.label) = New AdjacencySet With {.U = edge.V.label}
+                _adjacencySet(edge.V.label) = New AdjacencySet(Of Edge) With {.U = edge.V.label}
                 edge.V.adjacencies = _adjacencySet(edge.V.label)
             End If
 
@@ -426,7 +427,7 @@ Namespace Graph
         ''' </summary>
         ''' <param name="edge"></param>
         Public Sub RemoveEdge(edge As Edge)
-            Dim u_adjacencySet As AdjacencySet = _adjacencySet(edge.U.label)
+            Dim u_adjacencySet As AdjacencySet(Of Edge) = _adjacencySet(edge.U.label)
 
             Call edges.Remove(edge.ID)
             Call u_adjacencySet.Remove(edge.V)

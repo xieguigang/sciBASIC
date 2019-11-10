@@ -486,8 +486,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\Model\EdgeSet.vb" />
+    <Compile Include="Analysis\Model\GraphIndex.vb" />
     <Compile Include="Graph\GraphTree.vb" />
-    <Compile Include="Graph\Model\AdjacencySet.vb" />
+    <Compile Include="Analysis\Model\AdjacencySet.vb" />
     <Compile Include="Graph\Model\NameOf.vb" />
     <Compile Include="IDynamicsTable.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />

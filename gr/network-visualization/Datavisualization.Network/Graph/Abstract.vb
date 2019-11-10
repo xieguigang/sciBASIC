@@ -65,7 +65,16 @@ Namespace Graph.Abstract
     End Interface
 
     Public Interface IInteraction
+
+        ''' <summary>
+        ''' U
+        ''' </summary>
+        ''' <returns></returns>
         Property source As String
+        ''' <summary>
+        ''' V
+        ''' </summary>
+        ''' <returns></returns>
         Property target As String
     End Interface
 
