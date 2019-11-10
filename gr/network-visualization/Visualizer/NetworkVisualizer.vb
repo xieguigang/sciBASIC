@@ -63,7 +63,6 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
-Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -531,12 +530,12 @@ Public Module NetworkVisualizer
                     .JarvisMatch _
                     .Enlarge(convexHullScale!)
                 Dim color As Color = colors.Next
-                Dim largest As NamedCollection(Of PointF) = positions _
-                    .Kmeans _
-                    .OrderByDescending(Function(c) c.Length) _
-                    .First
+                'Dim largest As NamedCollection(Of PointF) = positions _
+                '    .Kmeans _
+                '    .OrderByDescending(Function(c) c.Length) _
+                '    .First
 
-                Call g.DrawHullPolygon(largest, color, alpha:=50)
+                Call g.DrawHullPolygon(positions, color, alpha:=50)
                 Call labels.Add((group.Key, color))
             End If
         Next
