@@ -48,6 +48,11 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Analysis.Model
 
+    ''' <summary>
+    ''' The network graph element index
+    ''' </summary>
+    ''' <typeparam name="Node">The network node element</typeparam>
+    ''' <typeparam name="Edge">The network edge element</typeparam>
     Public Class GraphIndex(Of Node As INamedValue, Edge As IInteraction)
 
         ''' <summary>
