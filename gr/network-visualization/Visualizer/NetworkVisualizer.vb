@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -126,6 +127,9 @@ Public Module NetworkVisualizer
     ''' <param name="labelTextStroke">
     ''' 当这个参数为空字符串的时候，将不进行描边
     ''' </param>
+    ''' <param name="labelWordWrapWidth">
+    ''' 小于等于零表示不进行自动textwrap
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 一些内置的样式支持:
@@ -158,6 +162,7 @@ Public Module NetworkVisualizer
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups As NamedValue(Of String) = Nothing,
                               Optional labelerIterations% = 1500,
+                              Optional labelWordWrapWidth% = -1,
                               Optional showLabelerProgress As Boolean = True,
                               Optional defaultEdgeColor$ = NameOf(Color.LightGray),
                               Optional defaultLabelColor$ = "black",
@@ -294,7 +299,8 @@ Public Module NetworkVisualizer
                     throwEx:=throwEx,
                     getDisplayLabel:=getNodeLabel,
                     drawNodeShape:=drawNodeShape,
-                    getLabelPosition:=getLabelPosition
+                    getLabelPosition:=getLabelPosition,
+                    labelWordWrapWidth:=labelWordWrapWidth
                 )
 
                 If displayId AndAlso labels = 0 Then
@@ -347,7 +353,8 @@ Public Module NetworkVisualizer
                                               throwEx As Boolean,
                                               getDisplayLabel As Func(Of Node, String),
                                               drawNodeShape As DrawNodeShape,
-                                              getLabelPosition As GetLabelPosition) As IEnumerable(Of LayoutLabel)
+                                              getLabelPosition As GetLabelPosition,
+                                              labelWordWrapWidth As Integer) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As RectangleF
@@ -409,6 +416,10 @@ Public Module NetworkVisualizer
                 Dim label As New Label With {
                     .text = displayID
                 }
+
+                If labelWordWrapWidth > 0 Then
+                    label.text = WordWrap.DoWordWrap(label.text, labelWordWrapWidth)
+                End If
 
                 With g.MeasureString(label.text, font)
                     label.width = .Width
