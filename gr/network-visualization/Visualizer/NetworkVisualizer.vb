@@ -47,6 +47,8 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Development
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -111,10 +113,6 @@ Public Module NetworkVisualizer
     ''' <param name="labelFontBase">
     ''' 这个参数会提供字体的一些基础样式,字体的大小会从节点的属性中计算出来
     ''' </param>
-    ''' <param name="doEdgeBundling">
-    ''' 如果<see cref="EdgeData.bends"/>不是空的话，会按照这个定义的点集合绘制边
-    ''' 否则会直接在两个节点之间绘制一条直线作为边连接
-    ''' </param>
     ''' <param name="displayId">
     ''' 是否现在节点的标签文本
     ''' </param>
@@ -133,6 +131,8 @@ Public Module NetworkVisualizer
     ''' 一些内置的样式支持:
     ''' 
     ''' + 节点的颜色或者纹理: <see cref="NodeData.color"/>
+    ''' + 如果<see cref="EdgeData.bends"/>不是空的话，会按照这个定义的点集合绘制边
+    '''   否则会直接在两个节点之间绘制一条直线作为边连接
     ''' </remarks>
     <ExportAPI("Draw.Image")>
     <Extension>
@@ -165,6 +165,12 @@ Public Module NetworkVisualizer
                               Optional showConvexHullLegend As Boolean = True,
                               Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge,
                               Optional convexHullScale! = 1.125) As GraphicsData
+
+        Call GetType(NetworkVisualizer).Assembly _
+            .FromAssembly _
+            .DoCall(Sub(assm)
+                        CLITools.AppSummary(assm, "Network graph visualizer api from sciBASIC.NET framework.", "", App.StdOut)
+                    End Sub)
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As SizeF = PrinterDimension.SizeOf(canvasSize)
@@ -503,26 +509,28 @@ Public Module NetworkVisualizer
             labels = New List(Of (String, Color)) From {(singleGroupKey, labels.Last.Item2)}
         End If
 
-        Dim maxLabel = labels.Select(Function(lb) lb.Item1).MaxLengthString
-        Dim maxSize As SizeF = g.MeasureString(maxLabel, convexHullLabelFont)
-        Dim legendShapeSize As New SizeF With {
-            .Width = maxSize.Height * 1.5,
-            .Height = maxSize.Height
-        }
-        Dim topLeft As New PointF With {
-            .X = g.Size.Width - maxSize.Width - maxSize.Height * 2.5,
-            .Y = legendShapeSize.Width
-        }
-
-        For Each label In labels
-            Call g.FillRectangle(New SolidBrush(label.Item2), New RectangleF(topLeft, legendShapeSize))
-            Call g.DrawString(label.Item1, convexHullLabelFont, Brushes.Black, New PointF(topLeft.X + legendShapeSize.Width + 20, topLeft.Y))
-
-            topLeft = New PointF With {
-                .X = topLeft.X,
-                .Y = topLeft.Y + maxSize.Height * 1.25
+        If showConvexHullLegend Then
+            Dim maxLabel = labels.Select(Function(lb) lb.Item1).MaxLengthString
+            Dim maxSize As SizeF = g.MeasureString(maxLabel, convexHullLabelFont)
+            Dim legendShapeSize As New SizeF With {
+                .Width = maxSize.Height * 1.5,
+                .Height = maxSize.Height
             }
-        Next
+            Dim topLeft As New PointF With {
+                .X = g.Size.Width - maxSize.Width - maxSize.Height * 2.5,
+                .Y = legendShapeSize.Width
+            }
+
+            For Each label In labels
+                Call g.FillRectangle(New SolidBrush(label.Item2), New RectangleF(topLeft, legendShapeSize))
+                Call g.DrawString(label.Item1, convexHullLabelFont, Brushes.Black, New PointF(topLeft.X + legendShapeSize.Width + 20, topLeft.Y))
+
+                topLeft = New PointF With {
+                    .X = topLeft.X,
+                    .Y = topLeft.Y + maxSize.Height * 1.25
+                }
+            Next
+        End If
     End Sub
 
     <Extension>
@@ -581,6 +589,10 @@ Public Module NetworkVisualizer
                     .ToArray
 
                 If Not bends.IsNullOrEmpty Then
+                    If bends.Length <> edge.data.bends.Length Then
+                        Call $"{edge.ID} removes {edge.data.bends.Length - bends.Length} bends points.".__DEBUG_ECHO
+                    End If
+
                     If bends.Length = 1 Then
                         Call draw({a, b})
                     Else

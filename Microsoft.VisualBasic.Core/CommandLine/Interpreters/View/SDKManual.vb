@@ -214,11 +214,13 @@ Namespace CommandLine.ManView
                 Call write.WriteLine(" " & line$)
             Next
 
-            Call write.WriteLine()
-            Call write.WriteLine()
-            Call write.WriteLine("SYNOPSIS")
-            Call write.WriteLine(SYNOPSIS)
-            Call write.WriteLine()
+            If Not SYNOPSIS.StringEmpty Then
+                Call write.WriteLine()
+                Call write.WriteLine()
+                Call write.WriteLine("SYNOPSIS")
+                Call write.WriteLine(SYNOPSIS)
+                Call write.WriteLine()
+            End If
 
             Call write.Flush()
         End Sub
