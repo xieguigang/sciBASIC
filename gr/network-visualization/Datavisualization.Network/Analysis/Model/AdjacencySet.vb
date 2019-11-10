@@ -90,9 +90,9 @@ Namespace Analysis.Model
             adjacentNodes(edge.target).Add(edge)
         End Sub
 
-        Public Sub Remove(V As INamedValue)
-            If adjacentNodes.ContainsKey(V.Key) Then
-                Call adjacentNodes.Remove(V.Key)
+        Public Sub Remove(V As String)
+            If adjacentNodes.ContainsKey(V) Then
+                Call adjacentNodes.Remove(V)
             End If
         End Sub
 
