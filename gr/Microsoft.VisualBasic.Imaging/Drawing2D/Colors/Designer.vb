@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::295e093ffb0389f7e0ecb0a3094e6320, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c3a994edf414f8585ae72a2496165200, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
-    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, internalFills
+    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
     '                   IsColorNameList, rangeConstraint, SplitColorList
     ' 
     ' 

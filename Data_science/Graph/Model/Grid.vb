@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b35535af12689de324279adcac79bf66, Data_science\Graph\Model\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::ed4d947013c87f78d07459225a824ef4, Data_science\Graph\Model\Grid.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Properties: layout, steps
     ' 
     '     Constructor: (+3 Overloads) Sub New
-    '     Function: Index, ToString
+    '     Function: (+2 Overloads) Index, ToString
     ' 
     ' /********************************************************************************/
 

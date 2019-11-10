@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81bfce9f8839d2b593d575f83b06afde, Microsoft.VisualBasic.Core\test\wgetTest.vb"
+﻿#Region "Microsoft.VisualBasic::a180b46a9f813533d200877a64df6b52, Microsoft.VisualBasic.Core\test\wgetTest.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Module wgetTest
         Call wget.Run()
     End Sub
 End Module
-

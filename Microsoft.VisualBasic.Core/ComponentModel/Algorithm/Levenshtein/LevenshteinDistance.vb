@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b934dbc1d0d334500ccbc8997fed1dc, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::b6d0782260ba6c301e1a8969edc40cac, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,11 @@
 
     '     Module LevenshteinDistance
     ' 
-    '         Function: __createTable, __int32Equals, (+2 Overloads) ComputeDistance, CreateTable, GetVisulization
+    '         Function: (+2 Overloads) ComputeDistance, createMatrix, CreateTable, GetVisulization, i32Equals
     '                   SaveMatch
     '         Delegate Function
     ' 
-    '             Function: __computeRoute, (+2 Overloads) ComputeDistance, Similarity
+    '             Function: (+2 Overloads) ComputeDistance, computeRouteImpl, Similarity
     ' 
     ' 
     ' 

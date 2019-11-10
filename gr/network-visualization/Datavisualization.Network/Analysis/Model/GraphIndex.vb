@@ -1,4 +1,48 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+﻿#Region "Microsoft.VisualBasic::ba8577ce4c1fad0deff1afd074831208, gr\network-visualization\Datavisualization.Network\Analysis\Model\GraphIndex.vb"
+
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+' /********************************************************************************/
+
+' Summaries:
+
+'     Class GraphIndex
+' 
+'         Function: AddEdge, CreateNodeAdjacencySet, (+2 Overloads) GetEdges, nodes
+' 
+'         Sub: Clear, Delete, RemoveEdge
+' 
+' 
+' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 
 Namespace Analysis.Model
@@ -73,13 +117,13 @@ Namespace Analysis.Model
         ''' <summary>
         ''' 获取得到与目标节点所有相连接的节点
         ''' </summary>
-        ''' <param name="iNode"></param>
+        ''' <param name="nodeKey"></param>
         ''' <returns></returns>
-        Public Function GetEdges(iNode As String) As IEnumerable(Of Edge)
-            If Not _adjacencySet.ContainsKey(iNode) Then
+        Public Function GetEdges(nodeKey As String) As IEnumerable(Of Edge)
+            If Not _adjacencySet.ContainsKey(nodeKey) Then
                 Return {}
             Else
-                Return _adjacencySet(iNode).EnumerateAllEdges
+                Return _adjacencySet(nodeKey).EnumerateAllEdges
             End If
         End Function
 

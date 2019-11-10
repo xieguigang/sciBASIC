@@ -1,47 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::03ff858003686cc92d3eab5acd654e71, Microsoft.VisualBasic.Core\Extensions\Image\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::057fc5da2dcf25d977dd52a55e858a9a, Microsoft.VisualBasic.Core\Extensions\Image\TiffWriter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class TiffWriter
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: __bitmaps, __getPageNumber, ConvertToBitonal, ExistingFileSave, GetCodec
-'                   GetEnumerator, IEnumerable_GetEnumerator, MultipageTiffSave, SaveMultipage, SaveToExistingFile
-' 
-'         Sub: __saveImageExistingMultiplePage, __saveImageExistingSinglePage, __saveMultipage, __saveToExistingFile, Add
-' 
-' 
-' /********************************************************************************/
+    '     Class TiffWriter
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ConvertToBitonal, ExistingFileSave, GetCodec, GetEnumerator, getPageNumber
+    '                   IEnumerable_GetEnumerator, layers2Bitmaps, MultipageTiffSave, SaveMultipage, SaveToExistingFile
+    ' 
+    '         Sub: __saveImageExistingMultiplePage, __saveImageExistingSinglePage, Add, doSaveToExistingFile, saveMultipage
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

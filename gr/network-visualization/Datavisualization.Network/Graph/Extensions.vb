@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af26c58681cfb51507de66deafe04b4a, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8def9547b7408056fa1a1a9efdf719b0, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: GetNeighbours, NodesID, RemoveDuplicated, RemoveSelfLoop
+    '         Function: GetNeighbours, NodesID
     ' 
     '         Sub: ApplyAnalysis
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6af94cfea22ccf423dbfe4fe5db5d5ac, Microsoft.VisualBasic.Core\My\Framework\Config.vb"
+﻿#Region "Microsoft.VisualBasic::ec9bbaee6431787cf17776fb8f0c20c4, Microsoft.VisualBasic.Core\My\Framework\Config.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,8 @@
     '         Properties: DefaultFile, environment, level, mute, updates
     ' 
     '         Function: Load, Save, saveDefault, ToString
+    ' 
+    '         Sub: fetchConfig
     ' 
     ' 
     ' /********************************************************************************/

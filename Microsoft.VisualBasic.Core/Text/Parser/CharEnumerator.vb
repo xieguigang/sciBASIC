@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9419b8655e218d4b7f1b8f381fa51413, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::29dc38b29e66e73683051b92cbab9ae6, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
+    '         Operators: (+2 Overloads) Not
     ' 
     ' 
     ' /********************************************************************************/

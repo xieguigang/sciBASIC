@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::339bfc453b1b44bc03dd595cb9887a9e, gr\network-visualization\Datavisualization.Network\Analysis\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::33560051ec70821d061904a7046974d3, gr\network-visualization\Datavisualization.Network\Analysis\Extensions.vb"
 
 ' Author:
 ' 
@@ -33,7 +33,7 @@
 
 '     Module Extensions
 ' 
-'         Function: SearchIndex
+'         Function: isTupleEdge
 ' 
 ' 
 ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec414b409ccfae2670da0d33969d8b8b, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::0d97c15df631518b75bb0b2755879fe0, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 

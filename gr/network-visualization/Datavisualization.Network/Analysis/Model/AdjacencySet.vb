@@ -1,53 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::e002114d43edf8ea99d7789fe250420e, gr\network-visualization\Datavisualization.Network\Graph\Model\AdjacencySet.vb"
+﻿#Region "Microsoft.VisualBasic::fcd6225111b5a4385993f61c5971ba37, gr\network-visualization\Datavisualization.Network\Analysis\Model\AdjacencySet.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class EdgeSet
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-'     Class AdjacencySet
-' 
-'         Properties: Count, U
-' 
-'         Function: Clone, (+2 Overloads) EnumerateAllEdges, ToString
-' 
-'         Sub: Add, Remove
-' 
-'         Operators: (+2 Overloads) Like
-' 
-' 
-' /********************************************************************************/
+    '     Class AdjacencySet
+    ' 
+    '         Properties: Count, U
+    ' 
+    '         Function: Clone, (+2 Overloads) EnumerateAllEdges, ToString
+    ' 
+    '         Sub: Add, Remove
+    ' 
+    '         Operators: (+2 Overloads) Like
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

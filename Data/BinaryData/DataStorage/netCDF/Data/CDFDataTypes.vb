@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99e80578576883b7c90fca68402a788, Data\BinaryData\DataStorage\netCDF\Data\CDFDataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::1211d995bfd30734e4c4363698df9c86, Data\BinaryData\DataStorage\netCDF\Data\CDFDataTypes.vb"
 
     ' Author:
     ' 

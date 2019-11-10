@@ -1,44 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::43664211ae70ec59bbe2e5656e712c1b, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b7f9ff7ad532ea03ef96794d7470b0e8, Data\DataFrame\IO\Generic\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Extensions
-' 
-'         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
-'                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
-'                   Transpose, Values, (+2 Overloads) Vector
-' 
-' 
-' /********************************************************************************/
+    '     Module Extensions
+    ' 
+    '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
+    '                   EuclideanDistance, GroupBy, NamedMatrix, NamedValues, Project
+    '                   (+2 Overloads) PropertyNames, Transpose, Values, (+2 Overloads) Vector
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

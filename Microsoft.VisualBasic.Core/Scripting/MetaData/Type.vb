@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ebe917805a662f87a5ed3016710b8b, Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
+﻿#Region "Microsoft.VisualBasic::e5ae64f845b53aa6957e99cc714b1792, Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class TypeInfo
     ' 
-    '         Properties: assm, fullIdentity, isSystemKnownType
+    '         Properties: assembly, fullName, isSystemKnownType
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

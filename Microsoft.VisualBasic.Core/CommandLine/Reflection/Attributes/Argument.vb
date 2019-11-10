@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75f8ae1bb23daaa167294cbe5d4d92fc, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Argument.vb"
+﻿#Region "Microsoft.VisualBasic::64214d9aa13eb893c9ab261d3880468b, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Argument.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,12 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
+    ' 
+    '     Class OutputAttribute
+    ' 
+    '         Properties: extension, result
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
