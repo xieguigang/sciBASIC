@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -111,7 +112,7 @@ Public Module NetworkVisualizer
     ''' 这个参数会提供字体的一些基础样式,字体的大小会从节点的属性中计算出来
     ''' </param>
     ''' <param name="doEdgeBundling">
-    ''' 如果<see cref="EdgeData.controlsPoint"/>不是空的话，会按照这个定义的点集合绘制边
+    ''' 如果<see cref="EdgeData.bends"/>不是空的话，会按照这个定义的点集合绘制边
     ''' 否则会直接在两个节点之间绘制一条直线作为边连接
     ''' </param>
     ''' <param name="displayId">
@@ -156,7 +157,6 @@ Public Module NetworkVisualizer
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
                               Optional hullPolygonGroups As NamedValue(Of String) = Nothing,
-                              Optional doEdgeBundling As Boolean = False,
                               Optional labelerIterations% = 1500,
                               Optional showLabelerProgress As Boolean = True,
                               Optional defaultEdgeColor$ = NameOf(Color.LightGray),
@@ -185,11 +185,6 @@ Public Module NetworkVisualizer
 
         ' 获取得到当前的这个网络对象相对于图像的中心点的位移值
         Dim scalePos As Dictionary(Of String, PointF) = CanvasScaler.CalculateNodePositions(net, frameSize, margin)
-        Dim edgeBundling As New Dictionary(Of Edge, PointF())
-
-        If doEdgeBundling Then
-            edgeBundling = CanvasScaler.CalculateEdgeBends(net, frameSize, margin)
-        End If
 
         Call "Initialize gdi objects...".__INFO_ECHO
 
@@ -267,7 +262,6 @@ Public Module NetworkVisualizer
                     minLinkWidthValue,
                     edgeDashTypes,
                     scalePos,
-                    edgeBundling,
                     throwEx,
                     edgeShadowDistance:=edgeShadowDistance,
                     defaultEdgeColor:=defaultEdgeColor.TranslateColor
@@ -536,7 +530,6 @@ Public Module NetworkVisualizer
                           minLinkWidthValue As [Default](Of Single),
                           edgeDashTypes As Dictionary(Of String, DashStyle),
                           scalePos As Dictionary(Of String, PointF),
-                          edgeBundling As Dictionary(Of Edge, PointF()),
                           throwEx As Boolean,
                           edgeShadowDistance As Single,
                           defaultEdgeColor As Color)
@@ -580,12 +573,22 @@ Public Module NetworkVisualizer
                            Call g.DrawLine(lineColor, line(0), line(1))
                        End Sub
             Try
-                If edgeBundling.ContainsKey(edge) AndAlso edgeBundling(edge).Length > 0 Then
-                    If edgeBundling(edge).Length = 1 Then
+                Dim bends = edge.data.bends _
+                    .SafeQuery _
+                    .Where(Function(bend)
+                               Return Not bend.isDirectPoint
+                           End Function) _
+                    .ToArray
+
+                If Not bends.IsNullOrEmpty Then
+                    If bends.Length = 1 Then
                         Call draw({a, b})
                     Else
-                        For Each line In edgeBundling(edge).SlideWindows(2)
-                            Call draw(line.ToArray)
+                        For Each line As SlideWindow(Of Handle) In bends.SlideWindows(2)
+                            Dim pta = line(Scan0).convert(a.X, a.Y, b.X, b.Y)
+                            Dim ptb = line(1).convert(a.X, a.Y, b.X, b.Y)
+
+                            Call {pta, ptb}.DoCall(draw)
                         Next
                     End If
                 Else

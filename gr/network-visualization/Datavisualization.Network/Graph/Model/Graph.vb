@@ -201,7 +201,7 @@ Namespace Graph
         Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As NetworkGraph(Of Node, Edge)
             Call New EdgeData With {
                 .weight = weight,
-                .controlsPoint = {},
+                .bends = {},
                 .label = $"{u}->{v}"
             }.DoCall(Function(data)
                          ' 在利用这个函数创建edge的时候，

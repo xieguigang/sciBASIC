@@ -33,6 +33,14 @@ Namespace Layouts.EdgeBundling
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(location As PointF)
+            x = location.X
+            y = location.Y
+        End Sub
+
         ''' <summary>
         ''' Rotate And scale the vector to the handle position
         ''' </summary>

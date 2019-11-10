@@ -24,54 +24,54 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 ''' </remarks>
 Public Module CanvasScaler
 
-    <Extension>
-    Public Function CalculateEdgeBends(net As NetworkGraph, frameSize As SizeF, padding As Padding) As Dictionary(Of Edge, PointF())
-        Dim edgeBundling As New Dictionary(Of Edge, PointF())
-        Dim scaleFactor As SizeF = Nothing
-        Dim centraOffset As PointF = Nothing
+    '<Extension>
+    'Public Function CalculateEdgeBends(net As NetworkGraph, frameSize As SizeF, padding As Padding) As Dictionary(Of Edge, PointF())
+    '    Dim edgeBundling As New Dictionary(Of Edge, PointF())
+    '    Dim scaleFactor As SizeF = Nothing
+    '    Dim centraOffset As PointF = Nothing
 
-        Call net.CalculateNodePositions(frameSize, padding, scaleFactor, centraOffset)
-        Call $"Scale factor of polygon shape: [{scaleFactor.Width}, {scaleFactor.Height}]".__DEBUG_ECHO
-        Call $"centraOffset of polygon shape: [{centraOffset.X}, {centraOffset.Y}]".__DEBUG_ECHO
+    '    Call net.CalculateNodePositions(frameSize, padding, scaleFactor, centraOffset)
+    '    Call $"Scale factor of polygon shape: [{scaleFactor.Width}, {scaleFactor.Height}]".__DEBUG_ECHO
+    '    Call $"centraOffset of polygon shape: [{centraOffset.X}, {centraOffset.Y}]".__DEBUG_ECHO
 
-        ' 1. 先做缩放
-        Dim edges As Edge() = net.graphEdges _
-            .Where(Function(e)
-                       ' 空集合会在下面的分割for循环中产生移位bug
-                       ' 跳过
-                       Return Not e.data.controlsPoint.IsNullOrEmpty
-                   End Function) _
-            .ToArray
-        Dim edgeBundlingShape As PointF() = edges _
-            .Select(Function(e) e.data.controlsPoint) _
-            .IteratesALL _
-            .Select(Function(v) New PointF With {.X = v.x, .Y = v.y}) _
-            .ToArray
-        Dim scale = (CDbl(scaleFactor.Width), CDbl(scaleFactor.Height))
+    '    ' 1. 先做缩放
+    '    Dim edges As Edge() = net.graphEdges _
+    '        .Where(Function(e)
+    '                   ' 空集合会在下面的分割for循环中产生移位bug
+    '                   ' 跳过
+    '                   Return Not e.data.bends.IsNullOrEmpty
+    '               End Function) _
+    '        .ToArray
+    '    Dim edgeBundlingShape As PointF() = edges _
+    '        .Select(Function(e) e.data.bends) _
+    '        .IteratesALL _
+    '        .Select(Function(v) New PointF With {.X = v.x, .Y = v.y}) _
+    '        .ToArray
+    '    Dim scale = (CDbl(scaleFactor.Width), CDbl(scaleFactor.Height))
 
-        If edgeBundlingShape.Length > 0 Then
-            Dim pointList As New List(Of PointF)
-            Dim i As Integer
+    '    If edgeBundlingShape.Length > 0 Then
+    '        Dim pointList As New List(Of PointF)
+    '        Dim i As Integer
 
-            edgeBundlingShape = edgeBundlingShape.Enlarge(scale)
+    '        edgeBundlingShape = edgeBundlingShape.Enlarge(scale)
 
-            For Each edge As Edge In edges
-                For Each null In edge.data.controlsPoint
-                    ' 20191103
-                    ' 在这里因为每一个edge的边连接点的数量是不一样的
-                    ' 所以在这里使用for loop加上递增序列来
-                    ' 正确的获取得到每一条边所对应的边连接节点
-                    pointList += edgeBundlingShape(i).OffSet2D(centraOffset)
-                    i += 1
-                Next
+    '        For Each edge As Edge In edges
+    '            For Each null In edge.data.bends
+    '                ' 20191103
+    '                ' 在这里因为每一个edge的边连接点的数量是不一样的
+    '                ' 所以在这里使用for loop加上递增序列来
+    '                ' 正确的获取得到每一条边所对应的边连接节点
+    '                pointList += edgeBundlingShape(i).OffSet2D(centraOffset)
+    '                i += 1
+    '            Next
 
-                edgeBundling(edge) = pointList
-                pointList *= 0
-            Next
-        End If
+    '            edgeBundling(edge) = pointList
+    '            pointList *= 0
+    '        Next
+    '    End If
 
-        Return edgeBundling
-    End Function
+    '    Return edgeBundling
+    'End Function
 
     ''' <summary>
     ''' <see cref="Node.label"/>
