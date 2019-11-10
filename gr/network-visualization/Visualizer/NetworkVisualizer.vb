@@ -163,7 +163,8 @@ Public Module NetworkVisualizer
                               Optional defaultLabelColor$ = "black",
                               Optional labelTextStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;",
                               Optional showConvexHullLegend As Boolean = True,
-                              Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge) As GraphicsData
+                              Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge,
+                              Optional convexHullScale! = 1.125) As GraphicsData
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As SizeF = PrinterDimension.SizeOf(canvasSize)
@@ -176,6 +177,7 @@ Public Module NetworkVisualizer
             })
 
         Call $"Canvas size expression '{canvasSize}' = [{frameSize.Width}, {frameSize.Height}]".__DEBUG_ECHO
+        Call $"Canvas padding [{margin.Top}, {margin.Right}, {margin.Bottom}, {margin.Left}]".__DEBUG_ECHO
 
         ' 1. 先将网络图形对象置于输出的图像的中心位置
         ' 2. 进行矢量图放大
@@ -255,7 +257,7 @@ Public Module NetworkVisualizer
 
                 If Not hullPolygonGroups.IsEmpty Then
                     Call "Render hull polygon layer...".__DEBUG_ECHO
-                    Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos, showConvexHullLegend, convexHullLabelFontCSS$)
+                    Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos, showConvexHullLegend, convexHullLabelFontCSS$, convexHullScale!)
                 End If
 
                 Call "Render network edges...".__INFO_ECHO
@@ -449,7 +451,8 @@ Public Module NetworkVisualizer
                                 hullPolygonGroups As NamedValue(Of String),
                                 scalePos As Dictionary(Of String, PointF),
                                 showConvexHullLegend As Boolean,
-                                convexHullLabelFontCSS$)
+                                convexHullLabelFontCSS$,
+                                convexHullScale!)
 
         Dim hullPolygon As Index(Of String)
         Dim groups = drawPoints _
@@ -494,7 +497,7 @@ Public Module NetworkVisualizer
                 Dim positions = group _
                     .Select(Function(p) scalePos(p.label)) _
                     .JarvisMatch _
-                    .Enlarge(1.25)
+                    .Enlarge(convexHullScale!)
                 Dim color As Color = colors.Next
 
                 Call g.DrawHullPolygon(positions, color, alpha:=50)

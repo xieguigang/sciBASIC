@@ -31,6 +31,8 @@ Public Module CanvasScaler
         Dim centraOffset As PointF = Nothing
 
         Call net.CalculateNodePositions(frameSize, padding, scaleFactor, centraOffset)
+        Call $"Scale factor of polygon shape: [{scaleFactor.Width}, {scaleFactor.Height}]".__DEBUG_ECHO
+        Call $"centraOffset of polygon shape: [{centraOffset.X}, {centraOffset.Y}]".__DEBUG_ECHO
 
         ' 1. 先做缩放
         Dim edges As Edge() = net.graphEdges _

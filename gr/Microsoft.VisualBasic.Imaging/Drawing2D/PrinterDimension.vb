@@ -20,6 +20,25 @@ Namespace Drawing2D
         Public Const B4 As String = "260,185"
         Public Const B5 As String = "185,130"
 
+        Public Enum Orientations
+            Square
+            Portal
+            Landscape
+        End Enum
+
+        Public Function GetOrientation(size As String) As Orientations
+            Dim sz = SizeOf(size)
+            Dim ratio As Double = sz.Width / sz.Height
+
+            If ratio < 0.9 Then
+                Return Orientations.Portal
+            ElseIf ratio >= 0.9 AndAlso ratio <= 1.1 Then
+                Return Orientations.Square
+            Else
+                Return Orientations.Landscape
+            End If
+        End Function
+
         ''' <summary>
         ''' The size expression parser
         ''' </summary>
