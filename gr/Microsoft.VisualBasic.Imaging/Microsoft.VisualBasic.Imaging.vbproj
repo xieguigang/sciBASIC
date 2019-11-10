@@ -450,6 +450,7 @@
     <Compile Include="Drawing2D\Text\GraphicsText.vb" />
     <Compile Include="Drawing2D\Text\FontMetrics.vb" />
     <Compile Include="Drawing2D\Text\HTMLRender.vb" />
+    <Compile Include="Drawing2D\Text\WordWrap.vb" />
     <Compile Include="Drawing2D\Text\Text.vb" />
     <Compile Include="Drawing2D\Shapes\Circle.vb" />
     <Compile Include="Drawing2D\Shapes\Box.vb" />
