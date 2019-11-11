@@ -157,7 +157,9 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="layout">legend的大小和位置</param>
-        ''' 
+        ''' <param name="unmapColor">
+        ''' 当这个参数为空值的时候，将不会绘制未映射颜色示例
+        ''' </param>
         <Extension>
         Public Sub ColorMapLegend(ByRef g As IGraphics, layout As Rectangle,
                                   designer As SolidBrush(),
