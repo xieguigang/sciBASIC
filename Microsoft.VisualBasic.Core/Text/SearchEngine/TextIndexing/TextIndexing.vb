@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca3d0e340bd2f56ece58e491d6b679e9, Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextIndexing.vb"
+﻿#Region "Microsoft.VisualBasic::be3802916c68edfc974b51d8ac60f8ee, Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextIndexing.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: cache
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __cache, __indexing, __workParts, (+2 Overloads) Found, (+2 Overloads) FuzzyIndex
+    '         Function: __indexing, __workParts, doCache, (+2 Overloads) Found, (+2 Overloads) FuzzyIndex
     '                   IsMatch, ToString
     ' 
     ' 

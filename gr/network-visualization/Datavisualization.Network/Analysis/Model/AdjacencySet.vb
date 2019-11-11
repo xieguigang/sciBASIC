@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e002114d43edf8ea99d7789fe250420e, gr\network-visualization\Datavisualization.Network\Graph\Model\AdjacencySet.vb"
+﻿#Region "Microsoft.VisualBasic::fcd6225111b5a4385993f61c5971ba37, gr\network-visualization\Datavisualization.Network\Analysis\Model\AdjacencySet.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,6 @@
 
     ' Summaries:
 
-    '     Class EdgeSet
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
     '     Class AdjacencySet
     ' 
     '         Properties: Count, U
@@ -52,46 +47,25 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Graph
+Namespace Analysis.Model
 
     ''' <summary>
-    ''' 两个节点对象之间的重复的边链接的集合
+    ''' 在这个集合中，所有的<see cref="IInteraction.source"/>都是一样的
     ''' </summary>
-    ''' <remarks>
-    ''' 所有的<see cref="Edge.U"/>和<see cref="Edge.V"/>都是一样的
-    ''' </remarks>
-    Public Class EdgeSet : Inherits List(Of Edge)
-
-        Sub New()
-            Call MyBase.New
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Dim first As Edge = Me.First
-
-            If Count = 1 Then
-                Return $"[{first.U.label}, {first.V.label}]"
-            Else
-                Return $"[{first.U.label}, {first.V.label}] have {Count} duplicated connections."
-            End If
-        End Function
-    End Class
-
-    ''' <summary>
-    ''' 在这个集合中，所有的<see cref="Edge.U"/>都是一样的
-    ''' </summary>
-    Public Class AdjacencySet : Implements ICloneable(Of AdjacencySet)
+    Public Class AdjacencySet(Of Edge As IInteraction) : Implements ICloneable(Of AdjacencySet(Of Edge))
 
         ''' <summary>
         ''' ``{V => edges}``
         ''' </summary>
-        ReadOnly adjacentNodes As New Dictionary(Of String, EdgeSet)
+        ReadOnly adjacentNodes As New Dictionary(Of String, EdgeSet(Of Edge))
 
         ''' <summary>
-        ''' 当前的这个节点的<see cref="Node.label"/>
+        ''' 当前的这个节点的<see cref="INamedValue.Key"/>
         ''' 在这里<see cref="adjacentNodes"/>所有的边对象都是与这个label所代表的节点相连接的
         ''' </summary>
         ''' <returns></returns>
@@ -104,21 +78,21 @@ Namespace Graph
         End Property
 
         Public Sub Add(edge As Edge)
-            If Not adjacentNodes.ContainsKey(edge.V.label) Then
-                adjacentNodes.Add(edge.V.label, New EdgeSet)
+            If Not adjacentNodes.ContainsKey(edge.target) Then
+                adjacentNodes.Add(edge.target, New EdgeSet(Of Edge))
             End If
 
-            adjacentNodes(edge.V.label).Add(edge)
+            adjacentNodes(edge.target).Add(edge)
         End Sub
 
-        Public Sub Remove(V As Node)
-            If adjacentNodes.ContainsKey(V.label) Then
-                Call adjacentNodes.Remove(V.label)
+        Public Sub Remove(V As String)
+            If adjacentNodes.ContainsKey(V) Then
+                Call adjacentNodes.Remove(V)
             End If
         End Sub
 
         Public Iterator Function EnumerateAllEdges() As IEnumerable(Of Edge)
-            For Each nodeV As EdgeSet In adjacentNodes.Values
+            For Each nodeV As EdgeSet(Of Edge) In adjacentNodes.Values
                 For Each edge As Edge In nodeV
                     Yield edge
                 Next
@@ -130,11 +104,11 @@ Namespace Graph
         ''' </summary>
         ''' <param name="V"></param>
         ''' <returns></returns>
-        Public Function EnumerateAllEdges(V As Node) As IEnumerable(Of Edge)
-            If Not adjacentNodes.ContainsKey(V.label) Then
+        Public Function EnumerateAllEdges(V As INamedValue) As IEnumerable(Of Edge)
+            If Not adjacentNodes.ContainsKey(V.Key) Then
                 Return {}
             Else
-                Return adjacentNodes.TryGetValue(V.label).AsEnumerable
+                Return adjacentNodes.TryGetValue(V.Key).AsEnumerable
             End If
         End Function
 
@@ -142,8 +116,8 @@ Namespace Graph
             Return $"Node {U} have {adjacentNodes.Count} adjacent nodes: {adjacentNodes.Keys.GetJson}"
         End Function
 
-        Public Function Clone() As AdjacencySet Implements ICloneable(Of AdjacencySet).Clone
-            Dim [set] As New AdjacencySet With {.U = U}
+        Public Function Clone() As AdjacencySet(Of Edge) Implements ICloneable(Of AdjacencySet(Of Edge)).Clone
+            Dim [set] As New AdjacencySet(Of Edge) With {.U = U}
 
             For Each nodeV In adjacentNodes
                 Call [set].adjacentNodes.Add(nodeV.Key, nodeV.Value)
@@ -153,7 +127,7 @@ Namespace Graph
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Like(vlab As String, aset As AdjacencySet) As Boolean
+        Public Shared Operator Like(vlab As String, aset As AdjacencySet(Of Edge)) As Boolean
             Return aset.adjacentNodes.ContainsKey(vlab)
         End Operator
     End Class

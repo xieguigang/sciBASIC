@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::194870d454153b4e2c6e2490c39ae3b1, mime\application%rdf+xml\DataModel\Description.vb"
+﻿#Region "Microsoft.VisualBasic::83fa4e065fa8ece89ea9e53dd0c3a259, mime\application%rdf+xml\DataModel\Description.vb"
 
     ' Author:
     ' 

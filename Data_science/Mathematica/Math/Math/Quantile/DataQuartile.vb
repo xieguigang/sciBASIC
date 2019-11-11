@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::153149128baef53fe067482aa2e9ec5c, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
+﻿#Region "Microsoft.VisualBasic::4cdbe1afff3dcb3eadb4fda08d1a5256, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Structure DataQuartile
     ' 
-    '         Properties: IQR, Q1, Q2, Q3, range
+    '         Properties: IQR, ModelSamples, Q1, Q2, Q3
+    '                     range
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Outlier, ToString

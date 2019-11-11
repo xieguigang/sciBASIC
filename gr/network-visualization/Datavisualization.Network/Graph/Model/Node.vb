@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a1e8b49f64aacb3f8009a65dbe69c00, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::75df366d8b90f0d13c341dd01c9cfe3f, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -84,6 +84,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace Graph
@@ -115,7 +116,7 @@ Namespace Graph
         End Sub
 
         Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
-        Public Property adjacencies As AdjacencySet
+        Public Property adjacencies As AdjacencySet(Of Edge)
         Public Property pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer

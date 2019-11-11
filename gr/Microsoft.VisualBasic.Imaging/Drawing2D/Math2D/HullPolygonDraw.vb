@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5610a008c9d66e8beaf13a61c847e6aa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\HullPolygonDraw.vb"
+﻿#Region "Microsoft.VisualBasic::73e7c4d7047183957d73162212c84a72, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\HullPolygonDraw.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,15 @@ Namespace Drawing2D.Math2D
 
     Public Module HullPolygonDraw
 
+        ''' <summary>
+        ''' 这个函数仅仅是作图函数，如果图形中有些离群点会导致图形面积过大的话，可以在调用这个函数之前做kmeans聚类过滤掉这些离群点
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="polygon"></param>
+        ''' <param name="color"></param>
+        ''' <param name="strokeWidth!"></param>
+        ''' <param name="alpha"><see cref="Color.A"/></param>
+        ''' <param name="shadow"></param>
         <Extension>
         Public Sub DrawHullPolygon(g As IGraphics,
                                    polygon As IEnumerable(Of PointF),

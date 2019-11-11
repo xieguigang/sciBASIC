@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::544fe7558f296a7712c3be56353697e7, gr\network-visualization\Datavisualization.Network\Graph\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::eac42735cfcd87e4e9fb59fb6fd1e6cc, gr\network-visualization\Datavisualization.Network\Graph\Abstract.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,16 @@ Namespace Graph.Abstract
     End Interface
 
     Public Interface IInteraction
+
+        ''' <summary>
+        ''' U
+        ''' </summary>
+        ''' <returns></returns>
         Property source As String
+        ''' <summary>
+        ''' V
+        ''' </summary>
+        ''' <returns></returns>
         Property target As String
     End Interface
 

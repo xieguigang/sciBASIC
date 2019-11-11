@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4eac5906847f21ac201442cc6405b015, Data_science\Visualization\test\VolinPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::33ed9a718acba2da95b49bea18bfe713, Data_science\Visualization\test\VolinPlotTest.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Module VolinPlotTest
         Call Pause()
     End Sub
 End Module
-

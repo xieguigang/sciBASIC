@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d216526a496bf2fc312ec925d21209a9, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::383b8feb02f6318617da073544d3b724, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 

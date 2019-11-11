@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7b436c771093b7b7a81693cc12a2873, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::a9a353e16399c616b39510459080acd1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
     '                   MeasureWidthOrHeight
     ' 
-    '         Sub: (+2 Overloads) DropdownShadows, FillBackground
+    '         Sub: FillBackground
     '         Class InternalCanvas
     ' 
     '             Properties: bg, padding, size

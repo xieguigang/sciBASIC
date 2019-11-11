@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8645547bb2f4c4929082432fcc1d974, Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ed2d49d82abd0d5150b5ee4cbe721a49, Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module TypeExtensions
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: num2str, readNumber, readType, sizeof, str2num
+    '         Function: GetCDFTypeCode, num2str, sizeof, str2num
     ' 
     ' 
     ' /********************************************************************************/

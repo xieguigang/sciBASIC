@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::295e093ffb0389f7e0ecb0a3094e6320, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c3a994edf414f8585ae72a2496165200, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
-    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, internalFills
+    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
     '                   IsColorNameList, rangeConstraint, SplitColorList
     ' 
     ' 
@@ -380,8 +380,10 @@ Namespace Drawing2D.Colors
         ''' (假若这里所输入的是一组颜色值，则必须是htmlcolor或者颜色名称，RGB表达式将不会被允许)
         ''' </param>
         ''' <returns></returns>
-        Public Function GetColors(exp$) As Color()
-            If exp.IsColorNameList Then
+        Public Function GetColors(exp As String) As Color()
+            If exp.StringEmpty Then
+                Return {}
+            ElseIf exp.IsColorNameList Then
                 Return Designer _
                     .SplitColorList(exp) _
                     .Select(AddressOf TranslateColor) _

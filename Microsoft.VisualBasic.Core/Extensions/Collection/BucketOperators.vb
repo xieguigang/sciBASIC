@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2874cf966dde9b3b6b71e903cf32a2d, Microsoft.VisualBasic.Core\Extensions\Collection\BucketExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::051df9d9d951aea29e194e13c8232320, Microsoft.VisualBasic.Core\Extensions\Collection\BucketOperators.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Module BucketExtensions
+    ' Module BucketOperators
     ' 
     '     Function: (+4 Overloads) Join, Split, SplitIterator
     ' 

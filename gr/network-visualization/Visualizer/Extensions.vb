@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37de7dabd4e40a364201fb96e9ba8201, gr\network-visualization\Visualizer\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::66f826a4ce8cca0ba110bcf469583003, gr\network-visualization\Visualizer\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: NodeBrushAssert
+    '     Function: GetDisplayText, NodeBrushAssert
     ' 
     ' /********************************************************************************/
 

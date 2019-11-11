@@ -1,48 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::55f3da96fffe8a00d17e5d9be8f57454, gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::15730fcbe7f5fac052f9f8b7fe73228b, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class NetworkEdge
-' 
-'         Properties: fromNode, interaction, Key, SelfLoop, toNode
-'                     value
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: Contains, Equals, GetConnectedNode, GetDirectedGuid, GetNode
-'                   GetNullDirectedGuid, IsEqual, Nodes, ToString
-'         Operators: -, +
-' 
-' 
-' /********************************************************************************/
+    '     Class NetworkEdge
+    ' 
+    '         Properties: fromNode, interaction, Key, selfLoop, toNode
+    '                     value
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Contains, Equals, GetConnectedNode, GetDirectedGuid, GetNode
+    '                   GetNullDirectedGuid, IsEqual, Nodes, ToString
+    '         Operators: -, +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

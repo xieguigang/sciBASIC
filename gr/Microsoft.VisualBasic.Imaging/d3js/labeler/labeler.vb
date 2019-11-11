@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1de64e3cf2daba29748683d5e84c4d0, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
+﻿#Region "Microsoft.VisualBasic::fb9a88dc120310998bf975fdc675ccdb, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,9 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
 Namespace d3js.Layout
@@ -69,6 +71,7 @@ Namespace d3js.Layout
 
         Dim lab As Label()
         Dim anc As Anchor()
+        Dim unpinnedLabels As Integer()
 
         ''' <summary>
         ''' box width/height
@@ -106,8 +109,10 @@ Namespace d3js.Layout
             Dim m = lab.Length,
                 ener# = 0,
                 dx = lab(index).X - anc(index).x,
-                dy = anc(index).y - lab(index).Y,
-                dist = Math.Sqrt(dx * dx + dy * dy),  ' 标签与anchor锚点之间的距离
+                dy = anc(index).y - lab(index).Y
+
+            ' 标签与anchor锚点之间的距离
+            Dim dist = Math.Sqrt(dx * dx + dy * dy),
                 overlap = True,
                 amount = 0
 
@@ -219,8 +224,8 @@ Namespace d3js.Layout
         End Sub
 
         Private Sub MonteCarlo(currT#, action As Action(Of Integer))
-            ' select a random label
-            Dim i = Math.Floor(Rnd() * lab.Length)
+            ' select a random label which is not pinned
+            Dim i As Integer = unpinnedLabels(Math.Floor(Rnd() * unpinnedLabels.Length))
 
             ' save old coordinates
             Dim x_old = lab(i).X
@@ -294,18 +299,34 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>
-        Public Function Start(Optional nsweeps% = 2000, Optional T# = 1, Optional initialT# = 1, Optional rotate# = 0.5, Optional showProgress As Boolean = True) As Labeler
+        Public Function Start(Optional nsweeps% = 2000,
+                              Optional T# = 1,
+                              Optional initialT# = 1,
+                              Optional rotate# = 0.5,
+                              Optional showProgress As Boolean = True) As Labeler
+
             Dim moves As Action(Of Integer) = AddressOf mclMove
             Dim rotat As Action(Of Integer) = AddressOf mclRotate
-            Dim rand As New Random
             Dim progress As ProgressBar = Nothing
             Dim tick As Action(Of Double)
 
             ' 在计算之前需要将label的坐标赋值为anchor的值，否则会无法正常的生成label的最终位置
             For i As Integer = 0 To lab.Length - 1
-                lab(i).X = anc(i).x
-                lab(i).Y = anc(i).y
+                If lab(i).X = 0.0 AndAlso lab(i).Y = 0.0 Then
+                    lab(i).X = anc(i).x
+                    lab(i).Y = anc(i).y
+                End If
             Next
+
+            unpinnedLabels = lab.SeqIterator _
+                .Where(Function(l) Not l.value.pinned) _
+                .Select(Function(lb) lb.i) _
+                .ToArray
+
+            If unpinnedLabels.Length = 0 Then
+                Call "No unpinned label to be re-layout!".Warning
+                Return Me
+            End If
 
             If showProgress Then
                 Dim tickProvider As New ProgressProvider(nsweeps)
@@ -323,7 +344,7 @@ Namespace d3js.Layout
 
             For i As Integer = 0 To nsweeps
                 For j As Integer = 0 To lab.Length
-                    If (rand.NextDouble < rotate) Then
+                    If (randf.seeds.NextDouble < rotate) Then
                         Call MonteCarlo(T, moves)
                     Else
                         Call MonteCarlo(T, rotat)

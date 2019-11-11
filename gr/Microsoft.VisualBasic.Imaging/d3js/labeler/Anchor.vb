@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45ac9a33c947aee64ce856d2139c6b56, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::5f7d10ea64ee7d292e54719874929f8e, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: r, x, y
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
@@ -80,6 +80,12 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="circle">假设anchor是一个圆，画圆的时候是依据矩形框来建模的</param>
         Sub New(circle As Rectangle)
+            r = sys.Min(circle.Width, circle.Height) / 2
+            x = circle.Left + r
+            y = circle.Top + r
+        End Sub
+
+        Sub New(circle As RectangleF)
             r = sys.Min(circle.Width, circle.Height) / 2
             x = circle.Left + r
             y = circle.Top + r

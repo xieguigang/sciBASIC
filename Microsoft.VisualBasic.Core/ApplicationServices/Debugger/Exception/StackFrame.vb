@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a64a2f3951ad63fc29ea88edc624c9da, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::3c448b90b2b792689b5be21774ae4637, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '         Properties: [Module], [Namespace], Method
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 

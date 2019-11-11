@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b19287518133d3ab8115906f482149b9, Data_science\DataMining\DataMining\Abundance.vb"
+﻿#Region "Microsoft.VisualBasic::5627d797e358395d6809a740869d3048, Data_science\Mathematica\Math\Math\Distributions\Abundance.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,14 @@
 
     ' Summaries:
 
-    ' Module Abundance
+    '     Module Abundance
     ' 
-    '     Function: RelativeAbundances
+    '         Function: RelativeAbundances
     ' 
-    ' Interface ISample
+    '     Interface ISample
     ' 
-    '     Properties: Samples
+    '         Properties: Samples
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9490f2816c0da8b6b17f1427ef4dfc0e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::b991a0b5114b02ada7ce3d93dfd50342, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
     ' Author:
     ' 

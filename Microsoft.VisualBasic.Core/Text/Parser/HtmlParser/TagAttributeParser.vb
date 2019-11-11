@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77ba6865a0d027987d269c889094aaa4, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
+﻿#Region "Microsoft.VisualBasic::182a146ac882c4d58c0f95e982e1b4ce, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TagAttributeParser
     ' 
-    '         Function: [class], classList, GetAttrValue, GetImageLinks, href
+    '         Function: [class], attr, classList, GetImageLinks, href
     '                   img, (+2 Overloads) src, TagAttributes
     ' 
     ' 

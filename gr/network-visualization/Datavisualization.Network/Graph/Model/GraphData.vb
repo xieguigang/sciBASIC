@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd78ccb3910e477e895c49ae78ee3afe, gr\network-visualization\Datavisualization.Network\Graph\Model\GraphData.vb"
+﻿#Region "Microsoft.VisualBasic::503d6da1924451e6543cc26a6b47c927, gr\network-visualization\Datavisualization.Network\Graph\Model\GraphData.vb"
 
     ' Author:
     ' 
@@ -34,14 +34,14 @@
     '     Class NodeData
     ' 
     '         Properties: color, force, initialPostion, mass, neighborhoods
-    '                     neighbours, origID, radius, weights
+    '                     neighbours, origID, size, weights
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: Clone, ToString
     ' 
     '     Class EdgeData
     ' 
-    '         Properties: controlsPoint, length, weight
+    '         Properties: bends, length, weight
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: Clone, ToString
@@ -100,6 +100,7 @@ Imports System.Drawing
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -200,7 +201,7 @@ Namespace Graph
         ''' <returns></returns>
         Public Property length As Single
         Public Property weight As Double
-        Public Property controlsPoint As FDGVector3()
+        Public Property bends As Handle()
 
         Public Sub New()
             MyBase.New()

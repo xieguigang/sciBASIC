@@ -1,4 +1,55 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::62d02f70a21058a17226c4f455e81bc6, gr\Microsoft.VisualBasic.Imaging\Drawing2D\PrinterDimension.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class PrinterDimension
+    ' 
+    ' 
+    '         Enum Orientations
+    ' 
+    '             Landscape, Portal, Square
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: GetOrientation, SizeOf, SizeOfPrinterPapers
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -20,6 +71,25 @@ Namespace Drawing2D
         Public Const B4 As String = "260,185"
         Public Const B5 As String = "185,130"
 
+        Public Enum Orientations
+            Square
+            Portal
+            Landscape
+        End Enum
+
+        Public Function GetOrientation(size As String) As Orientations
+            Dim sz = SizeOf(size)
+            Dim ratio As Double = sz.Width / sz.Height
+
+            If ratio < 0.9 Then
+                Return Orientations.Portal
+            ElseIf ratio >= 0.9 AndAlso ratio <= 1.1 Then
+                Return Orientations.Square
+            Else
+                Return Orientations.Landscape
+            End If
+        End Function
+
         ''' <summary>
         ''' The size expression parser
         ''' </summary>
@@ -27,6 +97,7 @@ Namespace Drawing2D
         ''' 1. [w,h]: 100,200
         ''' 2. term_names: A4 
         ''' 3. times(size/term_names): 5(A4) = 5*297,5*210 = 1485,1050
+        ''' 4. portal(times(size))
         ''' </param>
         ''' <returns></returns>
         Public Shared Function SizeOf(expr As String) As SizeF
@@ -41,6 +112,15 @@ Namespace Drawing2D
                 Return expr _
                     .DoCall(AddressOf SizeOfPrinterPapers) _
                     .SizeParser
+            ElseIf expr.IsPattern("portal\(.+\)") Then
+                Dim size As SizeF = expr _
+                    .GetStackValue("(", ")") _
+                    .DoCall(AddressOf SizeOf)
+
+                Return New SizeF With {
+                    .Height = size.Width,
+                    .Width = size.Height
+                }
             Else
                 Dim times As Double = expr.Split("("c).First.ParseDouble
                 Dim size As SizeF = expr.GetStackValue("(", ")").DoCall(AddressOf SizeOf)

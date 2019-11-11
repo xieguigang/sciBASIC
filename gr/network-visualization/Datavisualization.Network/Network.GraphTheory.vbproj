@@ -486,8 +486,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\Model\EdgeSet.vb" />
+    <Compile Include="Analysis\Model\GraphIndex.vb" />
     <Compile Include="Graph\GraphTree.vb" />
-    <Compile Include="Graph\Model\AdjacencySet.vb" />
+    <Compile Include="Analysis\Model\AdjacencySet.vb" />
     <Compile Include="Graph\Model\NameOf.vb" />
     <Compile Include="IDynamicsTable.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
@@ -532,6 +534,7 @@
     <Compile Include="Layouts\Cola\PowerGraph\PowerEdge.vb" />
     <Compile Include="Layouts\EdgeBundling\Extensions.vb" />
     <Compile Include="Layouts\EdgeBundling\Barycentre.vb" />
+    <Compile Include="Layouts\EdgeBundling\Handle.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected3D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected2D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVectorExtensions.vb" />

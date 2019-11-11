@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f832955dc356fa4e8249eb2bf7c2fd9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::400af2bfdf8ae4f9192f82cfd6b63373, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+4 Overloads) Enlarge, (+4 Overloads) GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+    '         Function: (+5 Overloads) Enlarge, (+4 Overloads) GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
     ' 
     '         Sub: ShapeGlow
     '         Enum MoveTypes
@@ -93,7 +93,7 @@ Namespace Drawing2D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetTextAnchor(label As Label, anchor As PointF) As Point
-            Return label.Rectangle.GetTextAnchor(anchor)
+            Return label.rectangle.GetTextAnchor(anchor)
         End Function
 
         ''' <summary>

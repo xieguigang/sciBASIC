@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c026d261e64952d9a7ef92a273c04ed, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::4c34fe7ef695119d13070eda59ef9163, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,14 @@
 
     ' Module KeyValuePairExtensions
     ' 
-    '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
-    '               AsNamedVector, AsTable, ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData
-    '               (+2 Overloads) EnumerateTuples, EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault
-    '               GroupByKey, HaveData, IGrouping, IterateNameCollections, IterateNameValues
-    '               IteratesAll, Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues
-    '               (+3 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects
-    '               SetOfKeyValuePairs, (+2 Overloads) Subset, tableInternal, Takes, (+3 Overloads) ToDictionary
-    '               Tsv, Tuple, (+2 Overloads) Values, XMLModel
+    '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
+    '               ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser
+    '               FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey, HaveData
+    '               IterateNameCollections, IterateNameValues, IteratesAll, Join, KeyItem
+    '               (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet
+    '               ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs, (+2 Overloads) Subset, tableInternal
+    '               Takes, (+3 Overloads) ToDictionary, ToLower, ToUpper, Tsv
+    '               Tuple, (+2 Overloads) Values, XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 
