@@ -497,6 +497,7 @@
     <Compile Include="Drivers\Exif\JpegMetadata.vb" />
     <Compile Include="Drivers\Exif\JpegMetadataAdapter.vb" />
     <Compile Include="Drivers\Exif\JpegMetadataSaveResult.vb" />
+    <Compile Include="Drivers\Models\PSData.vb" />
     <Compile Include="Drivers\Models\SVGData.vb" />
     <Compile Include="Drivers\Models\ImageData.vb" />
     <Compile Include="Drivers\Models\GraphicsData.vb" />
@@ -519,6 +520,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PostScript\GraphicsPS.vb" />
     <Compile Include="SVG\CSS\Marker.vb" />
     <Compile Include="SVG\CSS\Filter.vb" />
     <Compile Include="SVG\CSS\Gradients.vb" />
@@ -657,6 +659,7 @@
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

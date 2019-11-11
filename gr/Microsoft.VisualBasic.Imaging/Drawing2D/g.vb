@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::a9a353e16399c616b39510459080acd1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Module g
-    ' 
-    '         Properties: ActiveDriver, DriverExtensionName
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
-    '                   MeasureWidthOrHeight
-    ' 
-    '         Sub: FillBackground
-    '         Class InternalCanvas
-    ' 
-    '             Properties: bg, padding, size
-    ' 
-    '             Function: InvokePlot
-    '             Operators: (+2 Overloads) +, <=, >=
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Sub
+' 
+' 
+'     Module g
+' 
+'         Properties: ActiveDriver, DriverExtensionName
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
+'                   MeasureWidthOrHeight
+' 
+'         Sub: FillBackground
+'         Class InternalCanvas
+' 
+'             Properties: bg, padding, size
+' 
+'             Function: InvokePlot
+'             Operators: (+2 Overloads) +, <=, >=
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,7 @@ Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.PostScript
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -123,6 +124,8 @@ Namespace Drawing2D
                 g.__defaultDriver = Drivers.SVG
             ElseIf type.TextEquals("gdi") Then
                 g.__defaultDriver = Drivers.GDI
+            ElseIf type.TextEquals("ps") Then
+                g.__defaultDriver = Drivers.PS
             Else
                 g.__defaultDriver = Drivers.Default
             End If
@@ -145,7 +148,13 @@ Namespace Drawing2D
         ''' <returns></returns>
         Public ReadOnly Property DriverExtensionName As String
             Get
-                Return "png" Or "svg".When(ActiveDriver = Drivers.SVG)
+                Select Case ActiveDriver
+                    Case Drivers.SVG : Return "svg"
+                    Case Drivers.GDI : Return "png"
+                    Case Drivers.PS : Return "ps"
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
             End Get
         End Property
 
@@ -219,6 +228,10 @@ Namespace Drawing2D
                 })
 
                 image = New SVGData(svg, size)
+            ElseIf g.__getDriver(developerValue:=driver) = Drivers.PS Then
+                Dim ps As New GraphicsPS(size)
+
+                Throw New NotImplementedException
             Else
                 ' using gdi+ graphics driver
                 ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
