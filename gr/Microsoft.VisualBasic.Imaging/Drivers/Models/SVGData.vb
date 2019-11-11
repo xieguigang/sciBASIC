@@ -84,6 +84,7 @@ Namespace Driver
         End Property
 
         Public Property XmlComment As String
+        Public Property title As String
 
         Const InvalidSuffix$ = "The SVG image file save path: {0} not ending with *.svg file extension suffix!"
 
@@ -99,14 +100,14 @@ Namespace Driver
 
             With Size
                 Dim sz$ = $"{ .Width},{ .Height}"
-                Return engine.WriteSVG(path, sz, XmlComment)
+                Return engine.WriteSVG(path, sz, XmlComment, title:=title)
             End With
         End Function
 
         Public Overrides Function Save(out As Stream) As Boolean
             With Size
                 Dim sz$ = $"{ .Width},{ .Height}"
-                Return engine.WriteSVG(out, size:=sz, comments:=XmlComment)
+                Return engine.WriteSVG(out, size:=sz, comments:=XmlComment, title:=title)
             End With
         End Function
 

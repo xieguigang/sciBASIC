@@ -82,8 +82,8 @@ Namespace SVG
         <Extension> Public Function WriteSVG(g As GraphicsSVG, path$,
                                              Optional size$ = "1440,900",
                                              Optional comments$ = Nothing,
-                                             Optional desc$ = Nothing) As Boolean
-
+                                             Optional desc$ = Nothing,
+                                             Optional title$ = Nothing) As Boolean
             ' 2019-04-18
             '
             ' 如果目标文件没有被事先清空的话
@@ -98,7 +98,8 @@ Namespace SVG
                     out:=file,
                     size:=size,
                     comments:=comments,
-                    desc:=desc
+                    desc:=desc,
+                    title:=title
                 )
                 Return True
             End Using
@@ -107,9 +108,10 @@ Namespace SVG
         <Extension> Public Function WriteSVG(g As GraphicsSVG, out As Stream,
                                              Optional size$ = "1440,900",
                                              Optional comments$ = Nothing,
-                                             Optional desc$ = Nothing) As Boolean
+                                             Optional desc$ = Nothing,
+                                             Optional title$ = Nothing) As Boolean
             Dim sz As Size = size.SizeParser
-            Dim svg As SVGXml = g.__svgData.GetSVG(sz, comments, desc)
+            Dim svg As SVGXml = g.__svgData.GetSVG(sz, comments, desc, title)
             Dim XML$ = svg.GetSVGXml
             Dim bytes As Byte() = TextEncodings.UTF8WithoutBOM.GetBytes(XML)
 

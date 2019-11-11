@@ -87,13 +87,21 @@ Namespace BarPlot
                              Optional tickFontCSS$ = CSSFont.Win7LargerNormal,
                              Optional legendTitle$ = "Value Levels",
                              Optional valueTitle$ = "Value Levels",
-                             Optional valueTitleFontCSS$ = CSSFont.Win7LargerBold) As GraphicsData
+                             Optional valueTitleFontCSS$ = CSSFont.Win7LargerBold,
+                             Optional nolabelTrim As Boolean = False) As GraphicsData
 
             Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
             Dim labelFont As Font = CSSFont.TryParse(labelFontCSS)
             Dim tickFont As Font = CSSFont.TryParse(tickFontCSS)
             Dim valueTitleFont As Font = CSSFont.TryParse(valueTitleFontCSS)
-            Dim trim = trimLabel(maxLabelLength)
+            Dim trim As Func(Of String, String)
+
+            If nolabelTrim Then
+                trim = Function(s) s
+            Else
+                trim = trimLabel(maxLabelLength)
+            End If
+
             Dim maxLengthLabel$ = data.Keys _
                 .Select(trim) _
                 .MaxLengthString
@@ -128,6 +136,7 @@ Namespace BarPlot
 
                     Call g.DrawString(title, titleFont, Brushes.Black, pos)
                     Call g.DrawRectangle(pen, chartBox)
+                    Call g.FillRectangle(bg.GetBrush, chartBox)
 
                     Dim ticks = {0, indexScaler.Max}.CreateAxisTicks
                     Dim widthScaler = d3js _
@@ -198,7 +207,7 @@ Namespace BarPlot
                         .Height = chartBox.Height / 2
                     }
 
-                    Call g.ColorMapLegend(legendLayout, colors, ticks, valueTitleFont, legendTitle, tickFont, pen, "gray")
+                    Call g.ColorMapLegend(legendLayout, colors, ticks, valueTitleFont, legendTitle, tickFont, pen, Nothing)
 
                     ' 绘制底部的小标题
                     titleSize = g.MeasureString(valueTitle, valueTitleFont)
