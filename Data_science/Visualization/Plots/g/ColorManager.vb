@@ -134,7 +134,15 @@ Namespace Graphic
         Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
             Dim termValue# = If(logarithm > 0, Math.Log(item.Value, logarithm), item.Value)
             Dim index As Integer = valueRange.ScaleMapping(termValue, indexRange)
-            Dim color As Color = colors(index)
+            Dim color As Color
+
+            If index >= colors.Length - 1 Then
+                color = colors.Last
+            ElseIf index <= 0 Then
+                color = colors.First
+            Else
+                color = colors(index)
+            End If
 
             Return color
         End Function
