@@ -136,6 +136,7 @@ Namespace BarPlot
 
                     Call g.DrawString(title, titleFont, Brushes.Black, pos)
                     Call g.DrawRectangle(pen, chartBox)
+                    Call g.FillRectangle(bg.GetBrush, chartBox)
 
                     Dim ticks = {0, indexScaler.Max}.CreateAxisTicks
                     Dim widthScaler = d3js _
