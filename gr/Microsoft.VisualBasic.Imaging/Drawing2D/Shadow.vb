@@ -171,16 +171,22 @@ Namespace Drawing2D
             ' our Dimgray color at about 10% of the distance from the edge
             colorBlend.Positions = CType(gradientLevels, Vector).AsSingle
 
-            ' this Is where we create the shadow effect, so we will use a 
-            ' pathgradientbursh And assign our GraphicsPath that we created of a 
-            ' Rounded Rectangle
-            Using pgBrush As New PathGradientBrush(polygon) With {
-                .WrapMode = WrapMode.Clamp,
-                .InterpolationColors = colorBlend
-            }
-                ' fill the shadow with our pathgradientbrush
-                Call g.FillPath(pgBrush, polygon)
-            End Using
+            If TypeOf g Is Graphics2D Then
+                ' this Is where we create the shadow effect, so we will use a 
+                ' pathgradientbursh And assign our GraphicsPath that we created of a 
+                ' Rounded Rectangle
+                Using pgBrush As New PathGradientBrush(polygon) With {
+                    .WrapMode = WrapMode.Clamp,
+                    .InterpolationColors = colorBlend
+                }
+                    ' fill the shadow with our pathgradientbrush
+                    Call g.FillPath(pgBrush, polygon)
+                End Using
+            Else
+                ' not sure how to implements a gradient brush in svg/ps
+                ' just do a normal shape fill
+                Call g.FillPath(New SolidBrush(baseColor), polygon)
+            End If
         End Sub
     End Class
 End Namespace

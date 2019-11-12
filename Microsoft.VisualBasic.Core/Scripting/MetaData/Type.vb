@@ -118,8 +118,13 @@ Namespace Scripting.MetaData
         ''' <param name="knownFirst">
         ''' 如果这个参数为真的话, 则会尝试直接从当前的应用程序域中查找类信息, 反之则会加载目标程序集进行类型信息查找
         ''' </param>
+        ''' <param name="throwEx">
+        ''' 如果这个参数设置为False的话，则出错的时候会返回空值
+        ''' </param>
         ''' <returns></returns>
-        Public Overloads Function [GetType](Optional knownFirst As Boolean = False) As Type
+        Public Overloads Function [GetType](Optional knownFirst As Boolean = False,
+                                            Optional throwEx As Boolean = True,
+                                            Optional ByRef getException As Exception = Nothing) As Type
             Dim type As Type
             Dim assm As Assembly
 
@@ -131,8 +136,23 @@ Namespace Scripting.MetaData
                 End If
             End If
 
-            assm = LoadAssembly()
-            type = assm.GetType(Me.fullName)
+            ' 错误一般出现在loadassembly阶段
+            ' 主要是文件未找到
+            Try
+                assm = LoadAssembly()
+                type = assm.GetType(Me.fullName)
+                getException = Nothing
+            Catch ex As Exception
+                ex = New DllNotFoundException(ToString, ex)
+
+                If throwEx Then
+                    Throw ex
+                Else
+                    getException = ex
+                End If
+            Finally
+                type = Nothing
+            End Try
 
             Return type
         End Function

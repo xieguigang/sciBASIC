@@ -154,13 +154,16 @@ Namespace CommandLine
         ''' <returns></returns>
         Private Function __executeEmpty() As Integer
             If Not ExecuteEmptyCli Is Nothing Then
+#If DEBUG Then
+                Return _ExecuteEmptyCli()
+#Else
                 Try
                     Return _ExecuteEmptyCli()
                 Catch ex As Exception
                     Call App.LogException(ex)
                     Call ex.PrintException
                 End Try
-
+#End If
                 Return -100
             Else
                 ' 当用户什么也不输入的时候，打印出所有的命令名称帮助信息
