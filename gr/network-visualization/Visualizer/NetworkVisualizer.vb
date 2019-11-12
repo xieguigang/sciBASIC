@@ -183,7 +183,18 @@ Public Module NetworkVisualizer
         Call GetType(NetworkVisualizer).Assembly _
             .FromAssembly _
             .DoCall(Sub(assm)
-                        CLITools.AppSummary(assm, "Welcome to use network graph visualizer api from sciBASIC.NET framework.", "", App.StdOut)
+                        Dim driverPrompt$ = "
+ Current graphic driver is pixel based gdi+ engine, and you could change the graphics driver 
+ to vector based graphic engine via config in commandline:
+
+    tool /command [...arguments] /@set ""graphic_driver=svg/ps"""
+
+                        If g.ActiveDriver <> Drivers.GDI AndAlso g.ActiveDriver <> Drivers.Default Then
+                            driverPrompt = ""
+                        End If
+
+                        VBDebugger.WaitOutput()
+                        CLITools.AppSummary(assm, "Welcome to use network graph visualizer api from sciBASIC.NET framework.", driverPrompt, App.StdOut)
 
                         Call Console.WriteLine()
                     End Sub)
