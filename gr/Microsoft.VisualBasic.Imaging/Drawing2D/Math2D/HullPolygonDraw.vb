@@ -66,9 +66,19 @@ Namespace Drawing2D.Math2D
                                    color As Color,
                                    Optional strokeWidth! = 8.5,
                                    Optional alpha% = 95,
-                                   Optional shadow As Boolean = True)
+                                   Optional shadow As Boolean = True,
+                                   Optional convexHullCurveDegree! = 2)
 
             Dim shape As PointF() = polygon.ToArray
+
+            If convexHullCurveDegree > 1 Then
+                ' do curve interpolation
+                ' smoothing
+                shape = shape _
+                    .BSpline(degree:=convexHullCurveDegree, RESOLUTION:=30) _
+                    .ToArray
+            End If
+
             Dim alphaBrush As New SolidBrush(color.Alpha(alpha))
             Dim path = shape.buildPath(Nothing)
             Dim shadowPath = shape.buildPath(New PointF(strokeWidth / 2, strokeWidth))
