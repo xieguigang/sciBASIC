@@ -103,12 +103,12 @@ Namespace Imaging
         Sub New(size As Size, save$, Optional backgroundColor$ = NameOf(Color.Transparent))
             Dim bitmap As New Bitmap(size.Width, size.Height)
 
-            gSource = Graphics.FromImage(bitmap)
+            Me.gSource = Graphics.FromImage(bitmap)
             gSource.Clear(backgroundColor.TranslateColor)
 
-            hdc = gSource.GetHdc()
-            size = bitmap.Size
-            curMetafile = New Metafile(save, hdc)
+            Me.hdc = gSource.GetHdc()
+            Me.Size = bitmap.Size
+            Me.curMetafile = New Metafile(save, hdc)
             Graphics = Graphics.FromImage(curMetafile)
             Graphics.SmoothingMode = SmoothingMode.HighQuality
 
