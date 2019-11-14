@@ -89,10 +89,8 @@ Namespace ManagedSqlite.Core
                 type = tokens(1)
 
                 If type.ToLower = "[varchar]" Then
-                    If tokens.Length > 2 Then
-                        If tokens(2).IsPattern("\(\s*\d+\s*\)") Then
-                            type = type.GetStackValue("[", "]") & tokens(2)
-                        End If
+                    If tokens.Length > 2 AndAlso tokens(2).IsPattern("\(\s*\d+\s*\)") Then
+                        type = type.GetStackValue("[", "]") & tokens(2)
                     Else
                         type = type.GetStackValue("[", "]")
                     End If

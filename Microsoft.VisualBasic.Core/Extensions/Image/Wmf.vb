@@ -128,6 +128,11 @@ Namespace Imaging
             g = Graphics.FromImage(vectorMetafile)
             g.SmoothingMode = SmoothingMode.HighQuality
             g.PageUnit = GraphicsUnit.Pixel
+            g.CompositingQuality = CompositingQuality.HighQuality
+            g.CompositingMode = CompositingMode.SourceOver
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality
+            g.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
             g.Clear(backgroundColor.TranslateColor)
 
             wmfFile = save

@@ -88,7 +88,7 @@ Namespace Driver
         End Property
 
         ''' <summary>
-        ''' 
+        ''' This constructor of base type is only assign the size value
         ''' </summary>
         ''' <param name="img">其实这个参数在基类<see cref="GraphicsData"/>之中是无用的，只是为了统一接口而设置的</param>
         ''' <param name="size"></param>

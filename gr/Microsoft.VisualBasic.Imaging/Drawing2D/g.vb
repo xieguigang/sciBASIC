@@ -118,17 +118,18 @@ Namespace Drawing2D
         ''' ```
         ''' </summary>
         Sub New()
-            Dim type$ = App.GetVariable(GraphicDriverEnvironmentConfigName)
+            Dim type$ = Strings.LCase(App.GetVariable(GraphicDriverEnvironmentConfigName))
 
-            If type.TextEquals("svg") Then
-                g.__defaultDriver = Drivers.SVG
-            ElseIf type.TextEquals("gdi") Then
-                g.__defaultDriver = Drivers.GDI
-            ElseIf type.TextEquals("ps") Then
-                g.__defaultDriver = Drivers.PS
-            Else
-                g.__defaultDriver = Drivers.Default
-            End If
+            Select Case type
+                Case "svg" : g.__defaultDriver = Drivers.SVG
+                Case "gdi" : g.__defaultDriver = Drivers.GDI
+                Case "ps" : g.__defaultDriver = Drivers.PS
+                Case "wmf" : g.__defaultDriver = Drivers.WMF
+                Case Else
+                    g.__defaultDriver = Drivers.Default
+            End Select
+
+            Call $"The default graphics driver value is config as {g.__defaultDriver.Description}({type}).".__INFO_ECHO
         End Sub
 
         ''' <summary>
@@ -153,6 +154,7 @@ Namespace Drawing2D
                     Case Drivers.GDI, Drivers.Default
                         Return "png"
                     Case Drivers.PS : Return "ps"
+                    Case Drivers.WMF : Return "wmf"
                     Case Else
                         Throw New NotImplementedException(ActiveDriver.Description)
                 End Select
@@ -214,54 +216,57 @@ Namespace Drawing2D
                                       Optional driver As Drivers = Drivers.Default,
                                       Optional dpi$ = "100,100") As GraphicsData
 
-            Dim image As GraphicsData
+            Dim driverUsed As Drivers = g.__getDriver(developerValue:=driver)
 
             size = size Or defaultSize
             padding = padding Or defaultPaddingValue
 
-            If g.__getDriver(developerValue:=driver) = Drivers.SVG Then
-                Dim svg As New GraphicsSVG(size)
+            Dim region As New GraphicsRegion With {
+                .Size = size,
+                .Padding = padding
+            }
 
-                Call svg.Clear(bg.TranslateColor)
-                Call plotAPI(svg, New GraphicsRegion With {
-                    .Size = size,
-                    .Padding = padding
-                })
+            Select Case driverUsed
+                Case Drivers.SVG
+                    Dim svg As New GraphicsSVG(size)
 
-                image = New SVGData(svg, size)
-            ElseIf g.__getDriver(developerValue:=driver) = Drivers.PS Then
-                Dim ps As New GraphicsPS(size)
+                    Call svg.Clear(bg.TranslateColor)
+                    Call plotAPI(svg, region)
 
-                Throw New NotImplementedException
-            Else
-                ' using gdi+ graphics driver
-                ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
-                Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent, dpi:=dpi)
-                    Dim rect As New Rectangle(New Point, size)
+                    Return New SVGData(svg, size)
+                Case Drivers.PS
+                    Dim ps As New GraphicsPS(size)
 
-                    With g.Graphics
+                    Throw New NotImplementedException
+                Case Drivers.WMF
+                    Using wmf As New Wmf(size, WmfData.wmfTmp, bg)
+                        Call plotAPI(wmf, region)
+                        Return New WmfData(wmf.wmfFile, size)
+                    End Using
+                Case Else
+                    ' using gdi+ graphics driver
+                    ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
+                    Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent, dpi:=dpi)
+                        Dim rect As New Rectangle(New Point, size)
 
-                        Call .FillBackground(bg$, rect)
+                        With g.Graphics
 
-                        .CompositingQuality = CompositingQuality.HighQuality
-                        .CompositingMode = CompositingMode.SourceOver
-                        .InterpolationMode = InterpolationMode.HighQualityBicubic
-                        .PixelOffsetMode = PixelOffsetMode.HighQuality
-                        .SmoothingMode = SmoothingMode.HighQuality
-                        .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                            Call .FillBackground(bg$, rect)
 
-                    End With
+                            .CompositingQuality = CompositingQuality.HighQuality
+                            .CompositingMode = CompositingMode.SourceOver
+                            .InterpolationMode = InterpolationMode.HighQualityBicubic
+                            .PixelOffsetMode = PixelOffsetMode.HighQuality
+                            .SmoothingMode = SmoothingMode.HighQuality
+                            .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
 
-                    Call plotAPI(g, New GraphicsRegion With {
-                        .Size = size,
-                        .Padding = padding
-                    })
+                        End With
 
-                    image = New ImageData(g.ImageResource, size)
-                End Using
-            End If
+                        Call plotAPI(g, region)
 
-            Return image
+                        Return New ImageData(g.ImageResource, size)
+                    End Using
+            End Select
         End Function
 
         ''' <summary>
