@@ -67,17 +67,9 @@ Namespace Drawing2D.Math2D
                                    Optional strokeWidth! = 8.5,
                                    Optional alpha% = 95,
                                    Optional shadow As Boolean = True,
-                                   Optional convexHullCurveDegree! = 2,
-                                   Optional fillPolygon As Boolean = True,
-                                   Optional drawPolygonStroke As Boolean = True)
+                                   Optional convexHullCurveDegree! = 2)
 
             Dim shape As PointF() = polygon.ToArray
-
-            If Not shadow AndAlso Not fillPolygon AndAlso Not drawPolygonStroke Then
-                ' options for draw nothing, 
-                ' return for do nothing...
-                Return
-            End If
 
             If convexHullCurveDegree > 1 Then
                 ' do curve interpolation

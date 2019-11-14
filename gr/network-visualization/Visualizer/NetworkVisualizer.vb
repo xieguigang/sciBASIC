@@ -179,8 +179,7 @@ Public Module NetworkVisualizer
                               Optional drawEdgeBends As Boolean = True,
                               Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge,
                               Optional convexHullScale! = 1.125,
-                              Optional convexHullCurveDegree As Single = 2,
-                              Optional fillConvexHullPolygon As Boolean = True) As GraphicsData
+                              Optional convexHullCurveDegree As Single = 2) As GraphicsData
 
         Call GetType(NetworkVisualizer).Assembly _
             .FromAssembly _
@@ -294,8 +293,7 @@ Public Module NetworkVisualizer
                         showConvexHullLegend:=showConvexHullLegend,
                         convexHullLabelFontCSS:=convexHullLabelFontCSS$,
                         convexHullScale:=convexHullScale!,
-                        convexHullCurveDegree:=convexHullCurveDegree,
-                        fillPolygon:=fillConvexHullPolygon
+                        convexHullCurveDegree:=convexHullCurveDegree
                     )
                 End If
 
@@ -559,8 +557,7 @@ Public Module NetworkVisualizer
                     polygon:=positions,
                     color:=color,
                     alpha:=50,
-                    convexHullCurveDegree:=convexHullCurveDegree,
-                    fillPolygon:=fillPolygon
+                    convexHullCurveDegree:=convexHullCurveDegree
                 )
                 Call labels.Add((group.Key, color))
             End If
