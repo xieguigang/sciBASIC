@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::eadbd4efb1d726b1fd5f590f37e528e8, Microsoft.VisualBasic.Core\Extensions\Image\Wmf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Wmf
-    ' 
-    '         Properties: FilePath, Size
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: __release, Dispose, DrawCircle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Wmf
+' 
+'         Properties: FilePath, Size
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: __release, Dispose, DrawCircle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -77,16 +77,24 @@ Namespace Imaging
     Public Class Wmf : Inherits GDICanvas
         Implements IDisposable
 
-        ReadOnly curMetafile As Metafile
-        ReadOnly gSource As Graphics
+        ''' <summary>
+        ''' 矢量图的数据存储在这个元数据文件里面
+        ''' </summary>
+        ReadOnly vectorMetafile As Metafile
         ReadOnly hdc As IntPtr
+        ReadOnly bounds As Size
 
         ''' <summary>
         ''' The file path of the target wmf image file.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property FilePath As String
+        Public ReadOnly Property wmfFile As String
+
         Public Overrides ReadOnly Property Size As Size
+            Get
+                Return bounds
+            End Get
+        End Property
 
         ''' <summary>
         ''' The WMF format was designed to be executed by the Windows GDI layer in order to restore the image, but as 
@@ -102,28 +110,40 @@ Namespace Imaging
         ''' <param name="backgroundColor$"></param>
         Sub New(size As Size, save$, Optional backgroundColor$ = NameOf(Color.Transparent))
             Dim bitmap As New Bitmap(size.Width, size.Height)
+            Dim bounds As New RectangleF(0, 0, size.Width, size.Height)
 
-            gSource = Graphics.FromImage(bitmap)
-            gSource.Clear(backgroundColor.TranslateColor)
+            ' Make a Graphics object so we can use its hDC as a reference.
+            Dim gSource = Graphics.FromImage(bitmap)
+            Dim hdc As IntPtr = gSource.GetHdc()
 
-            hdc = gSource.GetHdc()
-            size = bitmap.Size
-            curMetafile = New Metafile(save, hdc)
-            Graphics = Graphics.FromImage(curMetafile)
-            Graphics.SmoothingMode = SmoothingMode.HighQuality
+            Me.hdc = hdc
+            Me.bounds = bounds.Size.ToSize
 
-            FilePath = save
+            ' Make the Metafile, using the reference hDC.
+            save.ParentPath.MkDIR
+            vectorMetafile = New Metafile(save, hdc, bounds, MetafileFrameUnit.Pixel)
+            gSource.ReleaseHdc(hdc)
+
+            ' Make a Graphics object and draw.
+            g = Graphics.FromImage(vectorMetafile)
+            g.SmoothingMode = SmoothingMode.HighQuality
+            g.PageUnit = GraphicsUnit.Pixel
+            g.Clear(backgroundColor.TranslateColor)
+
+            wmfFile = save
         End Sub
 
-        Private Sub __release()
-            Call gSource.ReleaseHdc(hdc)
+        ''' <summary>
+        ''' Close the metafile and free resources.
+        ''' </summary>
+        Private Sub releaseInternal()
             Call Graphics.Dispose()
-            Call gSource.Dispose()
+            Call vectorMetafile.Dispose()
         End Sub
 
         Public Overrides Sub Dispose()
-            Call __release()
-            MyBase.Dispose()
+            Call releaseInternal()
+            Call MyBase.Dispose()
         End Sub
 
         Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
