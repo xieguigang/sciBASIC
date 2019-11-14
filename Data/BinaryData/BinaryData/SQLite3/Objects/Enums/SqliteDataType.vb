@@ -80,7 +80,7 @@ Namespace ManagedSqlite.Core.Objects.Enums
                 Case "null"
                     Return SqliteDataType.Null
                 Case Else
-                    If type.IsPattern("varchar\(\d+\)") Then
+                    If type = "varchar" OrElse type.IsPattern("varchar\(\d+\)") Then
                         Return SqliteDataType.Text
                     Else
                         Throw New NotImplementedException(type)
