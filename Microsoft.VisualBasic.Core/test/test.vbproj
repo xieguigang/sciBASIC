@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8CDE6B49-9B2B-4A0E-8954-5A46E9AECB88}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.TypeTest</StartupObject>
+    <StartupObject>test.wmfTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -74,6 +74,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -97,6 +98,7 @@
     <Compile Include="math_test.vb" />
     <Compile Include="htmlParserTest.vb" />
     <Compile Include="LinqExpressiontest.vb" />
+    <Compile Include="wmfTest.vb" />
     <Compile Include="wgetTest.vb" />
     <Compile Include="numberParserTest.vb" />
     <Compile Include="TypeTest.vb" />
