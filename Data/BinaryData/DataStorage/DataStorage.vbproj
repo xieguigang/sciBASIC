@@ -462,6 +462,7 @@
     <Compile Include="SQLite3\Objects\Enums\SqliteEncoding.vb" />
     <Compile Include="SQLite3\Objects\Headers\BTreeHeader.vb" />
     <Compile Include="SQLite3\Objects\Headers\DatabaseHeader.vb" />
+    <Compile Include="SQLite3\Schema\SQLParser.vb" />
     <Compile Include="SQLite3\Schema\Schema.vb" />
     <Compile Include="SQLite3\Sqlite3Database.vb" />
     <Compile Include="SQLite3\Sqlite3Settings.vb" />
