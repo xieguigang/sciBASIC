@@ -308,5 +308,13 @@ Namespace Scripting.TokenIcer
         Public Overrides Function ToString() As String
             Return $"[{name}] {text}"
         End Function
+
+        Public Overloads Shared Operator =(token As CodeToken(Of Tokens), element As (Tokens, String)) As Boolean
+            Return token.name.Equals(element.Item1) AndAlso token.text = element.Item2
+        End Operator
+
+        Public Overloads Shared Operator <>(token As CodeToken(Of Tokens), element As (Tokens, String)) As Boolean
+            Return Not token = element
+        End Operator
     End Class
 End Namespace

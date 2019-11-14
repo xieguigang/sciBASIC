@@ -497,6 +497,7 @@
     <Compile Include="Drivers\Exif\JpegMetadata.vb" />
     <Compile Include="Drivers\Exif\JpegMetadataAdapter.vb" />
     <Compile Include="Drivers\Exif\JpegMetadataSaveResult.vb" />
+    <Compile Include="Drivers\Models\WmfData.vb" />
     <Compile Include="Drivers\Models\PSData.vb" />
     <Compile Include="Drivers\Models\SVGData.vb" />
     <Compile Include="Drivers\Models\ImageData.vb" />

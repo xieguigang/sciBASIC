@@ -94,18 +94,17 @@ Namespace ManagedSqlite.Core
         ''' <param name="settings">Default is <see cref="Sqlite3Settings.GetDefaultSettings"/></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function OpenFile(dbFile As String, Optional settings As Sqlite3Settings = Nothing) As Sqlite3Database
+        Public Shared Function OpenFile(dbFile$, Optional settings As Sqlite3Settings = Nothing) As Sqlite3Database
             Return New Sqlite3Database(dbFile.Open(FileMode.Open, doClear:=False), settings)
         End Function
 
         Private Sub Initialize()
-            Header = DatabaseHeader.Parse(_reader)
+            Dim expectedPages As UInteger
 
+            Header = DatabaseHeader.Parse(_reader)
             ' Database Size in pages adjustment
             ' https://www.sqlite.org/fileformat.html#in_header_database_size
-
-            Dim expectedPages As UInteger = CUInt(_reader.Length \ Header.PageSize)
-
+            expectedPages = CUInt(_reader.Length \ Header.PageSize)
             ' TODO: Warn on mismatch
             _sizeInPages = Math.Max(expectedPages, Header.DatabaseSizeInPages)
             _reader.ApplySqliteDatabaseHeader(Header)

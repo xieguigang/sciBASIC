@@ -52,12 +52,12 @@ Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 向量以及统计函数拓展
 ''' </summary>
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -177,7 +177,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Iterates(range As (From%, To%)) As IEnumerable(Of Integer)
-        Dim step% = sys.Sign(range.To - range.From)
+        Dim step% = stdNum.Sign(range.To - range.From)
 
         For i As Integer = range.From To range.To Step [step]
             Yield i
@@ -284,7 +284,7 @@ Public Module Extensions
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
         For Each x As SeqValue(Of Double) In data.SeqIterator
-            If sys.Abs(x.value - n) <= offset Then
+            If stdNum.Abs(x.value - n) <= offset Then
                 Return x.i
             End If
         Next

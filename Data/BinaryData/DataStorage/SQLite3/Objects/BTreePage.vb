@@ -75,17 +75,19 @@ Namespace ManagedSqlite.Core.Objects
             End If
 
             Dim header As BTreeHeader = BTreeHeader.Parse(reader)
+            Dim res As BTreePage
 
             ' Read cells
             Dim cellOffsets As UShort() = New UShort(header.CellCount - 1) {}
 
-            For i As UShort = 0 To header.CellCount - 1
-                cellOffsets(i) = reader.ReadUInt16()
-            Next
+            If header.CellCount > 0 Then
+                For i As UShort = 0 To header.CellCount - 1
+                    cellOffsets(i) = reader.ReadUInt16()
+                Next
 
-            Array.Sort(cellOffsets)
+                Call Array.Sort(cellOffsets)
+            End If
 
-            Dim res As BTreePage
             Select Case header.Type
                 Case BTreeType.InteriorIndexBtreePage
                     Throw New ArgumentOutOfRangeException()

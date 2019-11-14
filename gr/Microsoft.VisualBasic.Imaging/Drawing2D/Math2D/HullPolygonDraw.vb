@@ -67,9 +67,18 @@ Namespace Drawing2D.Math2D
                                    Optional strokeWidth! = 8.5,
                                    Optional alpha% = 95,
                                    Optional shadow As Boolean = True,
-                                   Optional convexHullCurveDegree! = 2)
+                                   Optional convexHullCurveDegree! = 2,
+                                   Optional fillPolygon As Boolean = True,
+                                   Optional drawPolygonStroke As Boolean = True)
 
             Dim shape As PointF() = polygon.ToArray
+
+            If Not shadow AndAlso Not fillPolygon AndAlso Not drawPolygonStroke Then
+                ' drawing no elements
+                ' return for 
+                ' do nothing
+                Return
+            End If
 
             If convexHullCurveDegree > 1 Then
                 ' do curve interpolation
@@ -80,7 +89,7 @@ Namespace Drawing2D.Math2D
             End If
 
             Dim alphaBrush As New SolidBrush(color.Alpha(alpha))
-            Dim path = shape.buildPath(Nothing)
+            Dim path As GraphicsPath = shape.buildPath(Nothing)
             Dim shadowPath = shape.buildPath(New PointF(strokeWidth / 2, strokeWidth))
             Dim stroke As New Pen(color, strokeWidth) With {
                 .DashStyle = DashStyle.Dash
@@ -89,9 +98,15 @@ Namespace Drawing2D.Math2D
                 .DashStyle = stroke.DashStyle
             }
 
-            Call g.FillPath(alphaBrush, path)
-            Call g.DrawPath(shadowStroke, shadowPath)
-            Call g.DrawPath(stroke, path)
+            If fillPolygon Then
+                Call g.FillPath(alphaBrush, path)
+            End If
+            If shadow Then
+                Call g.DrawPath(shadowStroke, shadowPath)
+            End If
+            If drawPolygonStroke Then
+                Call g.DrawPath(stroke, path)
+            End If
         End Sub
 
         <Extension>

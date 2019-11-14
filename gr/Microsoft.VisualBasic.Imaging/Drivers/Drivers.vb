@@ -70,5 +70,9 @@ Namespace Driver
         ''' <see cref="GraphicsPS"/>
         ''' </summary>
         PS
+        ''' <summary>
+        ''' Windows meta file: <see cref="Imaging.Wmf"/>
+        ''' </summary>
+        WMF
     End Enum
 End Namespace

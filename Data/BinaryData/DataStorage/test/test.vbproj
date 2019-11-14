@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1ACC2F4D-BF0D-45E6-A75F-6233AA0DDF6E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.edu.arizona.cs.hdf5.test.ParseTest</StartupObject>
+    <StartupObject>test.SQLParserTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="HDF5test.vb" />
+    <Compile Include="SQLParserTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -138,10 +139,6 @@
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataStorage.vbproj">
-      <Project>{6ff317ff-1a81-4272-a894-bfbffb202b41}</Project>
-      <Name>application.netCDF</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataStorage.vbproj">
       <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>

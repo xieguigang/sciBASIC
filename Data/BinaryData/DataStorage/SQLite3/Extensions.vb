@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::1d877fa753fd9ac7d00f202cb9d1e894, Data\BinaryData\BinaryData\SQLite3\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: (+3 Overloads) ExportTable
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: (+3 Overloads) ExportTable
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,6 +45,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ManagedSqlite
@@ -55,7 +56,7 @@ Namespace ManagedSqlite
         <Extension>
         Public Function ExportTable(table As Sqlite3Table) As IEnumerable(Of [Property](Of String))
             Return table.ExportTable(
-                activator:=Function(fields)
+                activator:=Function(fields, i)
                                Dim rowObject As New [Property](Of String)
 
                                For Each field In fields
@@ -78,7 +79,7 @@ Namespace ManagedSqlite
         ''' <returns></returns>
         <Extension>
         Public Iterator Function ExportTable(Of T)(table As Sqlite3Table,
-                                                   activator As Func(Of IEnumerable(Of NamedValue(Of Object)), T),
+                                                   activator As Func(Of IEnumerable(Of NamedValue(Of Object)), Integer, T),
                                                    Optional trimNameEscape As Boolean = False) As IEnumerable(Of T)
 
             Dim schema As SeqValue(Of NamedValue(Of String))() = table.SchemaDefinition _
@@ -95,9 +96,10 @@ Namespace ManagedSqlite
                         }
                     Next
                 End Function
+            Dim i As i32 = Scan0
 
             For Each row As Sqlite3Row In table.EnumerateRows
-                Yield activator(populateValues(row))
+                Yield activator(populateValues(row), ++i)
             Next
         End Function
 

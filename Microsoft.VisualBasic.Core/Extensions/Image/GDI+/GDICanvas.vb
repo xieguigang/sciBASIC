@@ -68,6 +68,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
+    ''' <summary>
+    ''' 这个对象是<see cref="Graphics2D"/>以及<see cref="Wmf"/>公用的基础类型
+    ''' </summary>
     Public MustInherit Class GDICanvas : Inherits IGraphics
         Implements IDisposable
 
@@ -5128,10 +5131,11 @@ Namespace Imaging
 #End Region
 
         ''' <summary>
-        ''' Releases all resources used by this <see cref="System.Drawing.Graphics"/>.
+        ''' Releases all resources used by this <see cref="Graphics"/>.
         ''' </summary>
         Public Overrides Sub Dispose() Implements IDisposable.Dispose
-            Call Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+            ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+            Call Graphics.Dispose()
         End Sub
     End Class
 End Namespace
