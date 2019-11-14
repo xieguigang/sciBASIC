@@ -69,18 +69,18 @@ Namespace ManagedSqlite.Core.Objects.Enums
 
         Public Function TryParse(type As String) As SqliteDataType
             Select Case Strings.LCase(type)
-                Case "integer", "int", "int64"
+                Case "integer", "int", "int64", "[int]"
                     Return SqliteDataType.Integer
-                Case "float", "double"
+                Case "float", "double", "[float]"
                     Return SqliteDataType.Float
-                Case "text", "blob_text"
+                Case "text", "blob_text", "[text]"
                     Return SqliteDataType.Text
-                Case "blob"
+                Case "blob", "[blob]"
                     Return SqliteDataType.Blob
                 Case "null"
                     Return SqliteDataType.Null
                 Case Else
-                    If type = "varchar" OrElse type.IsPattern("varchar\(\d+\)") Then
+                    If type = "varchar" OrElse type.IsPattern("varchar\(\d+\)") OrElse type.IsPattern("\[varchar\]\(\d+\)") Then
                         Return SqliteDataType.Text
                     Else
                         Throw New NotImplementedException(type)
