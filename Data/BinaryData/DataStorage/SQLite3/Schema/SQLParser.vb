@@ -14,6 +14,7 @@ Namespace ManagedSqlite.Core.SQLSchema
         close
         comma
         length
+        [string]
     End Enum
 
     Public Class Token : Inherits CodeToken(Of TokenTypes)
@@ -60,10 +61,20 @@ Namespace ManagedSqlite.Core.SQLSchema
             If c = """"c OrElse c = "'"c Then
                 If escape AndAlso ((c = """"c AndAlso escapeChar = """"c) OrElse (c = "'"c AndAlso escapeChar = "'"c)) Then
                     escape = False
-                    Return New Token With {
-                        .name = TokenTypes.name,
-                        .text = buffer.PopAll.CharString
-                    }
+
+                    If escapeChar = "'"c Then
+                        Return New Token With {
+                            .name = TokenTypes.string,
+                            .text = buffer.PopAll _
+                                .CharString _
+                                .GetStackValue("'", "'")
+                        }
+                    Else
+                        Return New Token With {
+                            .name = TokenTypes.name,
+                            .text = buffer.PopAll.CharString
+                        }
+                    End If
                 ElseIf buffer = 0 Then
                     escapeChar = c
                     escape = True
