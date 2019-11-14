@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::780b8694170994f382f5ef1e0d958d4a, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3Table.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Sqlite3Table
-    ' 
-    '         Properties: SchemaDefinition, Settings
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: EnumerateRows, ParseRow, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Sqlite3Table
+' 
+'         Properties: SchemaDefinition, Settings
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: EnumerateRows, ParseRow, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Helpers
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema
 Imports Microsoft.VisualBasic.Language
 
 Namespace ManagedSqlite.Core.Tables
@@ -76,8 +77,8 @@ Namespace ManagedSqlite.Core.Tables
         ''' <returns></returns>
         Public Iterator Function EnumerateRows() As IEnumerable(Of Sqlite3Row)
             Dim cells As IEnumerable(Of BTreeCellData) = BTreeTools.WalkTableBTree(rootPage)
-            Dim metaInfo As ColumnDataMeta() = SchemaDefinition.ParseSchema _
-                .columns _
+            Dim schema As Schema = SchemaDefinition.ParseSchema
+            Dim metaInfo As ColumnDataMeta() = schema.columns _
                 .Select(Function(field)
                             Dim type As SqliteDataType = DataTypeParser.TryParse(field.Value)
                             Dim name = field.Name

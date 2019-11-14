@@ -89,6 +89,10 @@ Namespace ManagedSqlite.Core.SQLSchema
                 name = block(Scan0).text.GetStackValue("""", """")
                 type = block.ElementAtOrNull(1)?.text
 
+                If name.ToUpper = "UNIQUE" AndAlso block(1).text = "(" AndAlso block.Last.text = ")" Then
+                    Continue For
+                End If
+
                 If type.ToLower = "[varchar]" Then
                     If tokens.Length > 2 AndAlso tokens(2).text.IsPattern("\(\s*\d+\s*\)") Then
                         type = type.GetStackValue("[", "]") & tokens(2).text
