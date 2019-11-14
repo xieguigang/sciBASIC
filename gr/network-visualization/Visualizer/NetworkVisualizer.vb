@@ -559,7 +559,8 @@ Public Module NetworkVisualizer
                     polygon:=positions,
                     color:=color,
                     alpha:=50,
-                    convexHullCurveDegree:=convexHullCurveDegree
+                    convexHullCurveDegree:=convexHullCurveDegree,
+                    fillPolygon:=fillPolygon
                 )
                 Call labels.Add((group.Key, color))
             End If
