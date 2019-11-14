@@ -86,7 +86,7 @@ Namespace ManagedSqlite.Core
                 End If
 
                 name = [nameOf](tokens).GetStackValue("""", """")
-                type = tokens(1)
+                type = tokens.ElementAtOrDefault(1, "text")
 
                 If type.ToLower = "[varchar]" Then
                     If tokens.Length > 2 AndAlso tokens(2).IsPattern("\(\s*\d+\s*\)") Then
@@ -94,6 +94,8 @@ Namespace ManagedSqlite.Core
                     Else
                         type = type.GetStackValue("[", "]")
                     End If
+                ElseIf type.ToLower = "not" AndAlso tokens(2).ToLower = "null" Then
+                    type = "blob"
                 End If
 
                 field = New NamedValue(Of String) With {
