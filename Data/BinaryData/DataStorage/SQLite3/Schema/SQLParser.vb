@@ -159,6 +159,11 @@ Namespace ManagedSqlite.Core.SQLSchema
                     .name = TokenTypes.length,
                     .text = text
                 }
+            ElseIf text.IsPattern("[a-z][_a-z0-9]*", RegexICSng) Then
+                Return New Token With {
+                    .name = TokenTypes.name,
+                    .text = text
+                }
             End If
 
             Throw New NotImplementedException(text)

@@ -46,7 +46,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text
 
 Namespace ManagedSqlite.Core.SQLSchema
 
@@ -72,6 +71,12 @@ Namespace ManagedSqlite.Core.SQLSchema
                                    Return text(Scan0)
                                End If
                            End Function
+
+            If Not (tokens(Scan0).isKeyword("create") AndAlso tokens(1).isKeyword("table")) Then
+                Throw New InvalidProgramException("Only 'CREATE TABLE' expression is allowed!")
+            End If
+
+            Me.tableName = tokens(2).text
 
             'For Each column As String In columns.Where(Function(s) Not s.StringEmpty)
             '    tokens = column _
