@@ -70,17 +70,33 @@ Namespace Language
             End If
         End Function
 
+        ''' <summary>
+        ''' TryCast to <typeparamref name="A"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property VA As A
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value
+                If Me Like GetType(A) Then
+                    Return Value
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 
+        ''' <summary>
+        ''' TryCast to <typeparamref name="B"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property VB As B
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value
+                If Me Like GetType(B) Then
+                    Return Value
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 
