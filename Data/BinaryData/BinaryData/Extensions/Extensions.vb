@@ -45,9 +45,8 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text
 
 Public Interface IMagicBlock
 

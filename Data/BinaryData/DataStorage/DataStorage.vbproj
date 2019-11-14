@@ -444,6 +444,31 @@
     <Compile Include="netCDF\netCDFReader.vb" />
     <Compile Include="netCDF\ToString.vb" />
     <Compile Include="netCDF\Utils.vb" />
+    <Compile Include="SQLite3\Extensions.vb" />
+    <Compile Include="SQLite3\Helpers\BTreeTools.vb" />
+    <Compile Include="SQLite3\Helpers\ReadonlyStream.vb" />
+    <Compile Include="SQLite3\Helpers\SqliteDataStream.vb" />
+    <Compile Include="SQLite3\Helpers\StreamHelper.vb" />
+    <Compile Include="SQLite3\Internal\ReaderBase.vb" />
+    <Compile Include="SQLite3\Objects\BTreeCellData.vb" />
+    <Compile Include="SQLite3\Objects\BTreeInteriorTablePage.vb" />
+    <Compile Include="SQLite3\Objects\BTreeLeafTablePage.vb" />
+    <Compile Include="SQLite3\Objects\BTreePage.vb" />
+    <Compile Include="SQLite3\Objects\ColumnDataMeta.vb" />
+    <Compile Include="SQLite3\Objects\Enums\BTreeType.vb" />
+    <Compile Include="SQLite3\Objects\Enums\FileReadVersion.vb" />
+    <Compile Include="SQLite3\Objects\Enums\FileWriteVersion.vb" />
+    <Compile Include="SQLite3\Objects\Enums\SqliteDataType.vb" />
+    <Compile Include="SQLite3\Objects\Enums\SqliteEncoding.vb" />
+    <Compile Include="SQLite3\Objects\Headers\BTreeHeader.vb" />
+    <Compile Include="SQLite3\Objects\Headers\DatabaseHeader.vb" />
+    <Compile Include="SQLite3\Schema\Schema.vb" />
+    <Compile Include="SQLite3\Sqlite3Database.vb" />
+    <Compile Include="SQLite3\Sqlite3Settings.vb" />
+    <Compile Include="SQLite3\Tables\Sqlite3MasterTable.vb" />
+    <Compile Include="SQLite3\Tables\Sqlite3Row.vb" />
+    <Compile Include="SQLite3\Tables\Sqlite3SchemaRow.vb" />
+    <Compile Include="SQLite3\Tables\Sqlite3Table.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
