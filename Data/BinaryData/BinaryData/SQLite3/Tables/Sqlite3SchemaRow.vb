@@ -63,6 +63,7 @@ Namespace ManagedSqlite.Core.Tables
         Public Function ParseSchema(Optional removeNameEscape As Boolean = False) As Schema
             Dim columns As String() = Sql _
                 .GetStackValue("(", ")") _
+                .StringReplace("UNIQUE\s*\(.+?\)", "") _
                 .StringSplit("\s*,\s*")
 
             ' 有一些字段的名称可能是包含有空格或者小数点之类的,

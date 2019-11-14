@@ -50,7 +50,13 @@
 Namespace ManagedSqlite.Core.Objects.Enums
 
     Public Enum SqliteDataType As Byte
+        ''' <summary>
+        ''' The value is a NULL value.
+        ''' </summary>
         Null = 0
+        ''' <summary>
+        ''' The value is a signed integer, stored in 1, 2, 3, 4, 6, or 8 bytes depending on the magnitude of the value.
+        ''' </summary>
         [Integer] = 1
         Float = 7
         Boolean0 = 8
@@ -63,7 +69,7 @@ Namespace ManagedSqlite.Core.Objects.Enums
 
         Public Function TryParse(type As String) As SqliteDataType
             Select Case Strings.LCase(type)
-                Case "integer", "int"
+                Case "integer", "int", "int64"
                     Return SqliteDataType.Integer
                 Case "float", "double"
                     Return SqliteDataType.Float
@@ -71,6 +77,8 @@ Namespace ManagedSqlite.Core.Objects.Enums
                     Return SqliteDataType.Text
                 Case "blob"
                     Return SqliteDataType.Blob
+                Case "null"
+                    Return SqliteDataType.Null
                 Case Else
                     If type.IsPattern("varchar\(\d+\)") Then
                         Return SqliteDataType.Text

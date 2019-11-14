@@ -95,10 +95,14 @@ Namespace ManagedSqlite.Core.Tables
                 ' The stream is started in the current cells "resident" data, 
                 ' And will overflow to any other pages as needed
                 Using dataStream As New SqliteDataStream(Me.reader, cell)
-                    rowData = ParseRow(dataStream, metaInfo)
-                    row = New Sqlite3Row(++index, Me, cell.Cell.RowId, rowData)
+                    Try
+                        rowData = ParseRow(dataStream, metaInfo)
+                        row = New Sqlite3Row(++index, Me, cell.Cell.RowId, rowData)
 
-                    Yield row
+                        Yield row
+                    Catch ex As Exception
+                        Call ex.PrintException
+                    End Try
                 End Using
             Next
         End Function

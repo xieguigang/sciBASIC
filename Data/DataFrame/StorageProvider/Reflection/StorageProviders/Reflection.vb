@@ -281,7 +281,7 @@ Namespace StorageProvider.Reflection
                         Call schemaOut.Add(key, valueType)
                     Next
                 Catch ex As Exception
-                    Dim msg = $"key:='{key}', keys:={schemaOut.Keys.GetJson}, metaKeys:={rowWriter.GetMetaTitles.GetJson}"
+                    Dim msg = $"key:='{key}', keys:={schemaOut.Keys.AsEnumerable.GetJson}, metaKeys:={rowWriter.GetMetaTitles.GetJson}"
                     ex = New Exception(msg, ex)
                     Throw ex
                 End Try

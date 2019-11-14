@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::b343077c87065c0937e0399023a225d0, Data\BinaryData\BinaryData\SQLite3\Schema\Schema.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Schema
-    ' 
-    '         Properties: columns
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ParseColumns, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Schema
+' 
+'         Properties: columns
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ParseColumns, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace ManagedSqlite.Core
 
@@ -61,6 +62,7 @@ Namespace ManagedSqlite.Core
         Private Iterator Function ParseColumns(columns As String(), removeNameEscape As Boolean) As IEnumerable(Of NamedValue(Of String))
             Dim tokens As String()
             Dim field As NamedValue(Of String)
+            Dim type As String
             Dim name As String
             Dim [nameOf] = Function(text As String())
                                If removeNameEscape Then
@@ -70,8 +72,11 @@ Namespace ManagedSqlite.Core
                                End If
                            End Function
 
-            For Each column As String In columns
-                tokens = column.TrimNewLine.StringSplit("\s+")
+            For Each column As String In columns.Where(Function(s) Not s.StringEmpty)
+                tokens = column _
+                    .TrimNewLine _
+                    .Trim(ASCII.TAB, " "c) _
+                    .StringSplit("\s+")
 
                 If tokens(Scan0) = "CONSTRAINT" AndAlso tokens.Last.IsPattern("\(.+\)") Then
                     ' 索引约束之类的表结构信息
@@ -80,10 +85,22 @@ Namespace ManagedSqlite.Core
                     Continue For
                 End If
 
-                name = [nameOf](tokens)
+                name = [nameOf](tokens).GetStackValue("""", """")
+                type = tokens(1)
+
+                If type.ToLower = "[varchar]" Then
+                    If tokens.Length > 2 Then
+                        If tokens(2).IsPattern("\(\s*\d+\s*\)") Then
+                            type = type.GetStackValue("[", "]") & tokens(2)
+                        End If
+                    Else
+                        type = type.GetStackValue("[", "]")
+                    End If
+                End If
+
                 field = New NamedValue(Of String) With {
                     .Name = name,
-                    .Value = tokens(1)
+                    .Value = type
                 }
 
                 Yield field
