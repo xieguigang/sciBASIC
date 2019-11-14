@@ -3,8 +3,21 @@
 Module SQLParserTest
 
     Sub Main()
+        Call schemaTest()
         Call stringtest()
         Call test2()
+    End Sub
+
+    Sub schemaTest()
+        Dim schema As New Schema("CREATE TABLE [DataTypeColumnsCategoricalValues](
+							[ColumnID] [int] NOT NULL,
+							[ValueString] varchar(100) COLLATE RTRIM NOT NULL,
+							[Value] NOT NULL,
+							[LastChange] [datetime] DEFAULT CURRENT_TIMESTAMP NOT NULL,
+							Unique([ColumnID], [ValueString])
+						)")
+
+        Pause()
     End Sub
 
     Sub test1()

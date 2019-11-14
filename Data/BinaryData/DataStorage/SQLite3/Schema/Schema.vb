@@ -55,17 +55,17 @@ Namespace ManagedSqlite.Core.SQLSchema
         Public Property tableName As String
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(sql$, removeNameEscape As Boolean)
+        Sub New(sql$, Optional removeNameEscape As Boolean = True)
             Me.columns = ParseColumns(sql, removeNameEscape).ToArray
         End Sub
 
         Private Iterator Function ParseColumns(sql$, removeNameEscape As Boolean) As IEnumerable(Of NamedValue(Of String))
             Dim tokens As Token() = New SQLParser(sql).GetTokens.ToArray
-            Dim [nameOf] = Function(text As String())
+            Dim [nameOf] = Function(text As Token()) As String
                                If removeNameEscape Then
-                                   Return text(Scan0).GetStackValue("[", "]")
+                                   Return text(Scan0).text.GetStackValue("[", "]")
                                Else
-                                   Return text(Scan0)
+                                   Return text(Scan0).text
                                End If
                            End Function
 
@@ -86,7 +86,7 @@ Namespace ManagedSqlite.Core.SQLSchema
                            Return Not b.Length = 1 AndAlso Not b(Scan0).name = TokenTypes.comma
                        End Function)
 
-                name = block(Scan0).text.GetStackValue("""", """")
+                name = [nameOf](block).GetStackValue("""", """")
                 type = block.ElementAtOrNull(1)?.text
 
                 If name.ToUpper = "UNIQUE" AndAlso block(1).text = "(" AndAlso block.Last.text = ")" Then
@@ -99,7 +99,7 @@ Namespace ManagedSqlite.Core.SQLSchema
                     Else
                         type = type.GetStackValue("[", "]")
                     End If
-                ElseIf type.ToLower = "not" AndAlso tokens(2).text.ToLower = "null" Then
+                ElseIf type.ToLower = "not" AndAlso tokens(3).text.ToLower = "null" Then
                     type = "blob"
                 End If
 
