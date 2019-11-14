@@ -61,9 +61,6 @@ Namespace ManagedSqlite.Core.SQLSchema
 
         Private Iterator Function ParseColumns(sql$, removeNameEscape As Boolean) As IEnumerable(Of NamedValue(Of String))
             Dim tokens As Token() = New SQLParser(sql).GetTokens.ToArray
-            Dim field As NamedValue(Of String)
-            Dim type As String
-            Dim name As String
             Dim [nameOf] = Function(text As String())
                                If removeNameEscape Then
                                    Return text(Scan0).GetStackValue("[", "]")
@@ -77,6 +74,17 @@ Namespace ManagedSqlite.Core.SQLSchema
             End If
 
             Me.tableName = tokens(2).text
+
+            tokens = tokens.Skip(3).Take(tokens.Length - 4).ToArray
+
+            Dim field As NamedValue(Of String)
+            Dim type As String
+            Dim name As String
+            Dim blocks = tokens.SplitByTopLevelDelimiter(TokenTypes.comma)
+
+            For Each block As Token() In blocks
+
+            Next
 
             'For Each column As String In columns.Where(Function(s) Not s.StringEmpty)
             '    tokens = column _
