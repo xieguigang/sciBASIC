@@ -27,7 +27,7 @@ Namespace ManagedSqlite.Core.SQLSchema
         ''' </summary>
         Dim escape As Boolean
         Dim escapeChar As Char
-        Dim buffer As List(Of Char)
+        Dim buffer As New List(Of Char)
 
         Sub New(sql As String)
             Me.sql = sql
@@ -57,16 +57,18 @@ Namespace ManagedSqlite.Core.SQLSchema
         End Function
 
         Private Function walkChar(c As Char) As Token
-            If c = """"c Then
-                If escape AndAlso escapeChar = """"c Then
+            If c = """"c OrElse c = "'"c Then
+                If escape AndAlso ((c = """"c AndAlso escapeChar = """"c) OrElse (c = "'"c AndAlso escapeChar = "'"c)) Then
                     escape = False
                     Return New Token With {
                         .name = TokenTypes.name,
                         .text = buffer.PopAll.CharString
                     }
-                Else
+                ElseIf buffer = 0 Then
                     escapeChar = """"c
                     escape = True
+                Else
+                    buffer += c
                 End If
 
                 Return Nothing
