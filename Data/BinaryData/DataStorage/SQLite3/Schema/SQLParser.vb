@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
-Namespace ManagedSqlite.Core
+Namespace ManagedSqlite.Core.SQLSchema
 
     Public Enum TokenTypes
         name

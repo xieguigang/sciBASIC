@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core
+﻿Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.SQLSchema
 
 Module SQLParserTest
 

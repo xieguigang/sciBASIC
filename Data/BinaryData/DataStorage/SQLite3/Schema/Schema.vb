@@ -48,19 +48,20 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace ManagedSqlite.Core
+Namespace ManagedSqlite.Core.SQLSchema
 
     Public Class Schema
 
         Public Property columns As NamedValue(Of String)()
+        Public Property tableName As String
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(columns$(), removeNameEscape As Boolean)
-            Me.columns = ParseColumns(columns, removeNameEscape).ToArray
+        Sub New(sql$, removeNameEscape As Boolean)
+            Me.columns = ParseColumns(sql, removeNameEscape).ToArray
         End Sub
 
-        Private Iterator Function ParseColumns(columns As String(), removeNameEscape As Boolean) As IEnumerable(Of NamedValue(Of String))
-            Dim tokens As String()
+        Private Iterator Function ParseColumns(sql$, removeNameEscape As Boolean) As IEnumerable(Of NamedValue(Of String))
+            Dim tokens As Token() = New SQLParser(sql).GetTokens.ToArray
             Dim field As NamedValue(Of String)
             Dim type As String
             Dim name As String
@@ -72,39 +73,39 @@ Namespace ManagedSqlite.Core
                                End If
                            End Function
 
-            For Each column As String In columns.Where(Function(s) Not s.StringEmpty)
-                tokens = column _
-                    .TrimNewLine _
-                    .Trim(ASCII.TAB, " "c) _
-                    .StringSplit("\s+")
+            'For Each column As String In columns.Where(Function(s) Not s.StringEmpty)
+            '    tokens = column _
+            '        .TrimNewLine _
+            '        .Trim(ASCII.TAB, " "c) _
+            '        .StringSplit("\s+")
 
-                If tokens(Scan0) = "CONSTRAINT" AndAlso tokens.Last.IsPattern("\(.+\)") Then
-                    ' 索引约束之类的表结构信息
-                    ' 则跳过这个非字段定义的表结构信息
-                    ' CONSTRAINT [pk_CdbCompound] PRIMARY KEY ([Id])
-                    Continue For
-                End If
+            '    If tokens(Scan0) = "CONSTRAINT" AndAlso tokens.Last.IsPattern("\(.+\)") Then
+            '        ' 索引约束之类的表结构信息
+            '        ' 则跳过这个非字段定义的表结构信息
+            '        ' CONSTRAINT [pk_CdbCompound] PRIMARY KEY ([Id])
+            '        Continue For
+            '    End If
 
-                name = [nameOf](tokens).GetStackValue("""", """")
-                type = tokens.ElementAtOrDefault(1, "text")
+            '    name = [nameOf](tokens).GetStackValue("""", """")
+            '    type = tokens.ElementAtOrDefault(1, "text")
 
-                If type.ToLower = "[varchar]" Then
-                    If tokens.Length > 2 AndAlso tokens(2).IsPattern("\(\s*\d+\s*\)") Then
-                        type = type.GetStackValue("[", "]") & tokens(2)
-                    Else
-                        type = type.GetStackValue("[", "]")
-                    End If
-                ElseIf type.ToLower = "not" AndAlso tokens(2).ToLower = "null" Then
-                    type = "blob"
-                End If
+            '    If type.ToLower = "[varchar]" Then
+            '        If tokens.Length > 2 AndAlso tokens(2).IsPattern("\(\s*\d+\s*\)") Then
+            '            type = type.GetStackValue("[", "]") & tokens(2)
+            '        Else
+            '            type = type.GetStackValue("[", "]")
+            '        End If
+            '    ElseIf type.ToLower = "not" AndAlso tokens(2).ToLower = "null" Then
+            '        type = "blob"
+            '    End If
 
-                field = New NamedValue(Of String) With {
-                    .Name = name,
-                    .Value = type
-                }
+            '    field = New NamedValue(Of String) With {
+            '        .Name = name,
+            '        .Value = type
+            '    }
 
-                Yield field
-            Next
+            '    Yield field
+            'Next
         End Function
 
         Public Overrides Function ToString() As String
