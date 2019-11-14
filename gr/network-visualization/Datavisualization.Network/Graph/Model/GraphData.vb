@@ -202,6 +202,7 @@ Namespace Graph
         Public Property length As Single
         Public Property weight As Double
         Public Property bends As Handle()
+        Public Property color As SolidBrush
 
         Public Sub New()
             MyBase.New()
@@ -236,7 +237,7 @@ Namespace Graph
         ''' (这个属性为显示的标题，与ID不一样，这个属性可能会出现重复值，所以不可以用这个标签来作为字典主键)
         ''' </summary>
         ''' <returns></returns>
-        Public Property label() As String
+        Public Property label As String
 
         Public Sub New()
             label = ""

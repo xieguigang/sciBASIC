@@ -178,21 +178,24 @@ Public Module NetworkVisualizer
                               Optional showConvexHullLegend As Boolean = True,
                               Optional drawEdgeBends As Boolean = True,
                               Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge,
-                              Optional convexHullScale! = 1.125) As GraphicsData
+                              Optional convexHullScale! = 1.125,
+                              Optional convexHullCurveDegree As Single = 2,
+                              Optional fillConvexHullPolygon As Boolean = True) As GraphicsData
 
         Call GetType(NetworkVisualizer).Assembly _
             .FromAssembly _
             .DoCall(Sub(assm)
                         Dim driverPrompt$ = "
-Current graphic driver is pixel based gdi+ engine, and you could change the graphics driver 
-to vector based graphic engine via config in commandline:
+ Current graphic driver is pixel based gdi+ engine, and you could change the graphics driver 
+ to vector based graphic engine via config in commandline:
 
-tool /command [...arguments] /@set ""graphic_driver=svg/ps"""
+    tool /command [...arguments] /@set ""graphic_driver=svg/ps"""
 
                         If g.ActiveDriver <> Drivers.GDI AndAlso g.ActiveDriver <> Drivers.Default Then
                             driverPrompt = ""
                         End If
 
+                        VBDebugger.WaitOutput()
                         CLITools.AppSummary(assm, "Welcome to use network graph visualizer api from sciBASIC.NET framework.", driverPrompt, App.StdOut)
 
                         Call Console.WriteLine()
@@ -284,7 +287,16 @@ tool /command [...arguments] /@set ""graphic_driver=svg/ps"""
 
                 If Not hullPolygonGroups.IsEmpty Then
                     Call "Render hull polygon layer...".__DEBUG_ECHO
-                    Call g.drawhullPolygon(drawPoints, hullPolygonGroups, scalePos, showConvexHullLegend, convexHullLabelFontCSS$, convexHullScale!)
+                    Call g.drawhullPolygon(
+                        drawPoints:=drawPoints,
+                        hullPolygonGroups:=hullPolygonGroups,
+                        scalePos:=scalePos,
+                        showConvexHullLegend:=showConvexHullLegend,
+                        convexHullLabelFontCSS:=convexHullLabelFontCSS$,
+                        convexHullScale:=convexHullScale!,
+                        convexHullCurveDegree:=convexHullCurveDegree,
+                        fillPolygon:=fillConvexHullPolygon
+                    )
                 End If
 
                 Call "Render network edges...".__INFO_ECHO
@@ -492,8 +504,10 @@ tool /command [...arguments] /@set ""graphic_driver=svg/ps"""
                                 hullPolygonGroups As NamedValue(Of String),
                                 scalePos As Dictionary(Of String, PointF),
                                 showConvexHullLegend As Boolean,
+                                fillPolygon As Boolean,
                                 convexHullLabelFontCSS$,
-                                convexHullScale!)
+                                convexHullScale!,
+                                convexHullCurveDegree!)
 
         Dim hullPolygon As Index(Of String)
         Dim groups = drawPoints _
@@ -540,12 +554,14 @@ tool /command [...arguments] /@set ""graphic_driver=svg/ps"""
                     .JarvisMatch _
                     .Enlarge(convexHullScale!)
                 Dim color As Color = colors.Next
-                'Dim largest As NamedCollection(Of PointF) = positions _
-                '    .Kmeans _
-                '    .OrderByDescending(Function(c) c.Length) _
-                '    .First
 
-                Call g.DrawHullPolygon(positions, color, alpha:=50)
+                Call g.DrawHullPolygon(
+                    polygon:=positions,
+                    color:=color,
+                    alpha:=50,
+                    convexHullCurveDegree:=convexHullCurveDegree,
+                    fillPolygon:=fillPolygon
+                )
                 Call labels.Add((group.Key, color))
             End If
         Next
@@ -587,16 +603,18 @@ tool /command [...arguments] /@set ""graphic_driver=svg/ps"""
                           edgeShadowDistance As Single,
                           defaultEdgeColor As Color,
                           drawEdgeBends As Boolean)
-        Dim cl As Color
 
         For Each edge As Edge In net.graphEdges
             Dim n As Node = edge.U
             Dim otherNode As Node = edge.V
-
-            cl = defaultEdgeColor
-
             Dim w! = CSng(5 * edge.data.weight * 2) Or minLinkWidthValue
-            Dim lineColor As New Pen(cl, w)
+            Dim lineColor As Pen
+
+            If edge.data.color Is Nothing Then
+                lineColor = New Pen(defaultEdgeColor, w)
+            Else
+                lineColor = New Pen(edge.data.color, w)
+            End If
 
             With edge.data!interaction_type
                 If Not .IsNothing AndAlso edgeDashTypes.ContainsKey(.ByRef) Then

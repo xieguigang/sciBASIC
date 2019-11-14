@@ -69,6 +69,17 @@ Imports r = System.Text.RegularExpressions.Regex
 <HideModuleName>
 Public Module KeyValuePairExtensions
 
+    <Extension>
+    Public Function TupleTable(tuple As (String(), String())) As Dictionary(Of String, String)
+        Dim table As New Dictionary(Of String, String)
+
+        For i As Integer = 0 To tuple.Item1.Length - 1
+            Call table.Add(tuple.Item1(i), tuple.Item2(i))
+        Next
+
+        Return table
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ToLower(Of T)(table As Dictionary(Of String, T)) As Dictionary(Of String, T)

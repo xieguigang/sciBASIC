@@ -150,10 +150,11 @@ Namespace Drawing2D
             Get
                 Select Case ActiveDriver
                     Case Drivers.SVG : Return "svg"
-                    Case Drivers.GDI : Return "png"
+                    Case Drivers.GDI, Drivers.Default
+                        Return "png"
                     Case Drivers.PS : Return "ps"
                     Case Else
-                        Throw New NotImplementedException
+                        Throw New NotImplementedException(ActiveDriver.Description)
                 End Select
             End Get
         End Property
