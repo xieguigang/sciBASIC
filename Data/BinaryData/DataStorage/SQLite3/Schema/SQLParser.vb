@@ -65,7 +65,7 @@ Namespace ManagedSqlite.Core.SQLSchema
                         .text = buffer.PopAll.CharString
                     }
                 ElseIf buffer = 0 Then
-                    escapeChar = """"c
+                    escapeChar = c
                     escape = True
                 Else
                     buffer += c

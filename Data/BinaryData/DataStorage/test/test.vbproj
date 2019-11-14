@@ -141,10 +141,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataStorage.vbproj">
-      <Project>{6ff317ff-1a81-4272-a894-bfbffb202b41}</Project>
-      <Name>application.netCDF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataStorage.vbproj">
       <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
       <Name>DataStorage</Name>
     </ProjectReference>

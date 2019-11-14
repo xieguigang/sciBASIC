@@ -3,6 +3,7 @@
 Module SQLParserTest
 
     Sub Main()
+        Call stringtest()
         Call test2()
     End Sub
 
@@ -24,6 +25,18 @@ Module SQLParserTest
 						[NodeName][varchar] (50) COLLATE NOCASE NOT NULL ,
 						UNIQUE ( [WorkflowID], [NodeGuid], [ScoreName])
 					)"
+
+        Dim tokens = New SQLParser(sql).GetTokens.ToArray
+
+        Pause()
+    End Sub
+
+    Sub stringtest()
+        Dim sql = "'<?xml version=""1.0"" encoding=""utf-16""?>
+                      <ArrayOfDouble xmlns:xsd=""http//www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+                          <double>0</double>
+                                  <double>0</double>
+                      </ArrayOfDouble>'"
 
         Dim tokens = New SQLParser(sql).GetTokens.ToArray
 
