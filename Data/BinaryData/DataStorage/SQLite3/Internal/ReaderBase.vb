@@ -316,6 +316,10 @@ Namespace ManagedSqlite.Core.Internal
 
                 res <<= 8
                 res += tmp
+
+                'If EOF Then
+                '    Exit For
+                'End If
             Next
 
             If ((1L << (bytes * 8 - 1)) And res) > 0 Then

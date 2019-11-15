@@ -161,8 +161,6 @@ Namespace ManagedSqlite.Core.Tables
                     ' meta.type = SqliteDataType.Text
                     meta.length = CUShort((columnInfo - 13) \ 2)
                 End If
-
-                ' metaInfos.Add(meta)
             End While
 
             Dim rowData As Object() = New Object(metaInfos.Length - 1) {}
