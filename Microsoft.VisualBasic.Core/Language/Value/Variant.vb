@@ -70,17 +70,33 @@ Namespace Language
             End If
         End Function
 
+        ''' <summary>
+        ''' TryCast to <typeparamref name="A"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property VA As A
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value
+                If Me Like GetType(A) OrElse GetUnderlyingType.IsInheritsFrom(GetType(A)) Then
+                    Return Value
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 
+        ''' <summary>
+        ''' TryCast to <typeparamref name="B"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property VB As B
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value
+                If Me Like GetType(B) OrElse GetUnderlyingType.IsInheritsFrom(GetType(B)) Then
+                    Return Value
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 
@@ -144,6 +160,12 @@ Namespace Language
             Return Not obj = b
         End Operator
 
+        ''' <summary>
+        ''' 请注意Like是直接进行比较，不会比较继承关系链的？
+        ''' </summary>
+        ''' <param name="var"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator Like(var As [Variant](Of A, B), type As Type) As Boolean
             Return var.GetUnderlyingType Is type
