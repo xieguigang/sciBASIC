@@ -141,7 +141,8 @@ Namespace CommandLine
                 Optional FolkNew As Boolean = False,
                 Optional stdRedirect$ = "",
                 Optional stdin$ = Nothing,
-                Optional debug As Boolean = True)
+                Optional debug As Boolean = True,
+                Optional isShellCommand As Boolean = False)
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
@@ -150,7 +151,7 @@ Namespace CommandLine
             ' 没有小数点，说明可能只是一个命令，而不是具体的可执行程序文件名
             If InStr(file, ".") = 0 Then
                 ' do nothing
-            Else
+            ElseIf Not isShellCommand Then
                 ' 对于具体的程序文件的调用，在这里获取其完整路径
                 Try
                     file = FileIO.FileSystem.GetFileInfo(file).FullName
@@ -171,13 +172,17 @@ Namespace CommandLine
             Call "".SaveTo(_TempRedirect)
 
             If App.IsMicrosoftPlatform Then
-                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew, stdin)
+                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew, stdin, isShellCommand)
             Else
-                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin)
+                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin, isShellCommand)
             End If
 
             If debug Then
-                Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+                If isShellCommand Then
+                    Call $"""{file}"" {argv}".__DEBUG_ECHO
+                Else
+                    Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+                End If
             End If
         End Sub
 

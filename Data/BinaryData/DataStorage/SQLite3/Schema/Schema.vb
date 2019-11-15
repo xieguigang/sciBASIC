@@ -54,8 +54,11 @@ Namespace ManagedSqlite.Core.SQLSchema
         Public Property columns As NamedValue(Of String)()
         Public Property tableName As String
 
+        Public ReadOnly Property RawSql As String
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(sql$, Optional removeNameEscape As Boolean = True)
+            Me.RawSql = sql
             Me.columns = ParseColumns(sql, removeNameEscape).ToArray
         End Sub
 
