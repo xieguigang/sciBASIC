@@ -157,6 +157,7 @@ Namespace IO.Linq
             End If
 
             Call _fileIO.WriteLine(populateLine(title))
+            Call _fileIO.Flush()
         End Sub
 
         Public Overrides Function ToString() As String
