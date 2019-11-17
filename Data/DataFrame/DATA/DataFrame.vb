@@ -94,12 +94,32 @@ Namespace DATA
             entityList = list.ToDictionary(replaceOnDuplicate:=doUnique)
         End Sub
 
+        Sub New()
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub TagFieldName(tag$, fieldName$)
             Call MappingsHelper _
                 .TagFieldName(entityList.Values, tag, fieldName) _
                 .ToArray
         End Sub
+
+        Public Function Cbind(data As EntityObject, Optional transpose As Boolean = False) As DataFrame
+            If Not transpose Then
+                Return Me + {data}
+            Else
+                Return Me + data.Properties _
+                    .Select(Function(r)
+                                Return New EntityObject With {
+                                    .ID = r.Key,
+                                    .Properties = New Dictionary(Of String, String) From {
+                                        {data.ID, r.Value}
+                                    }
+                                }
+                            End Function) _
+                    .ToArray
+            End If
+        End Function
 
         ''' <summary>
         ''' Convert row object as target .NET object
