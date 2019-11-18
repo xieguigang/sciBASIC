@@ -7,6 +7,9 @@ Imports Microsoft.VisualBasic.Scripting
 
 Namespace Outlining
 
+    ''' <summary>
+    ''' The row object builder, convert csv data row to .NET object in given <see cref="Type"/>
+    ''' </summary>
     Public Class Builder
 
         ''' <summary>
@@ -95,6 +98,11 @@ Namespace Outlining
             End If
         End Function
 
+        ''' <summary>
+        ''' Get element object builder by indent level
+        ''' </summary>
+        ''' <param name="indentLevel"></param>
+        ''' <returns></returns>
         Public Function GetBuilder(indentLevel As Integer) As Builder
             If indentLevel = 0 Then
                 Return Me
