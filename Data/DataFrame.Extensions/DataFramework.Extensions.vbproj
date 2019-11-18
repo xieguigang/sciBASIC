@@ -269,12 +269,13 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Serialize\NamespaceDoc.vb" />
     <Compile Include="Templates\TemplateHelper.vb" />
     <Compile Include="Templates\TemplateAttribute.vb" />
-    <Compile Include="Writer.vb" />
-    <Compile Include="Field.vb" />
-    <Compile Include="Extensions.vb" />
-    <Compile Include="Schema.vb" />
+    <Compile Include="Serialize\Writer.vb" />
+    <Compile Include="Serialize\Field.vb" />
+    <Compile Include="Serialize\Extensions.vb" />
+    <Compile Include="Serialize\Schema.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -319,6 +320,9 @@
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Outlining\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

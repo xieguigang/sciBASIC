@@ -1,0 +1,2 @@
+﻿Module NamespaceDoc
+End Module
