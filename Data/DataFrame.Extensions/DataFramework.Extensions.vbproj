@@ -269,6 +269,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Outlining\OutliningDataLoader.vb" />
     <Compile Include="Outlining\NamespaceDoc.vb" />
     <Compile Include="Serialize\NamespaceDoc.vb" />
     <Compile Include="Templates\TemplateHelper.vb" />
