@@ -1021,6 +1021,7 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
+    <Compile Include="Data\NamespaceDoc.vb" />
     <Compile Include="Extensions\Collection\CategoryOperations.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
@@ -1066,8 +1067,8 @@
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LCS.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
-    <Compile Include="ComponentModel\DataSource\TypeCaster.vb" />
-    <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
+    <Compile Include="Data\TypeCaster.vb" />
+    <Compile Include="Data\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\DataSource\Property\GenericProperty.vb" />
     <Compile Include="ComponentModel\File\XmlDataModel.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IntTag.vb" />
@@ -1103,10 +1104,10 @@
     <Compile Include="Extensions\Math\Information\UncheckHelpers.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Average.vb" />
     <Compile Include="Extensions\StringHelpers\StringBuilders.vb" />
-    <Compile Include="Extensions\Trinity\Extensions.vb" />
-    <Compile Include="Extensions\Trinity\Expression.vb" />
-    <Compile Include="Extensions\Trinity\Word.vb" />
-    <Compile Include="Extensions\Trinity\WordClass.vb" />
+    <Compile Include="Data\Trinity\Extensions.vb" />
+    <Compile Include="Data\Trinity\Expression.vb" />
+    <Compile Include="Data\Trinity\Word.vb" />
+    <Compile Include="Data\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="My\JavaScript\ES6\Map.vb" />
     <Compile Include="My\JavaScript\Linq.vb" />
@@ -1162,7 +1163,7 @@
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\SCS.vb" />
     <Compile Include="ComponentModel\Count.vb" />
-    <Compile Include="ComponentModel\DataSource\Abstract.vb" />
+    <Compile Include="Data\Abstract.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\QueryCache.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\NamedValueList.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\BadBehaviourResponses.vb" />
@@ -1171,7 +1172,7 @@
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb" />
     <Compile Include="ComponentModel\DriverModel.vb" />
-    <Compile Include="ComponentModel\DataSource\Tsv.vb" />
+    <Compile Include="Data\Tsv.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedCollection.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
@@ -1356,7 +1357,7 @@
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Extensions\Math\Random\RandomRange.vb" />
     <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
-    <Compile Include="Extensions\Trinity\NLP\TextTokens.vb" />
+    <Compile Include="Data\Trinity\NLP\TextTokens.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric2.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
@@ -1650,7 +1651,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\ZipLib.vb" />
-    <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
+    <Compile Include="Data\DataFramework.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\CBusyIndicator.vb" />
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />
     <Compile Include="Text\IO\TextFileEncodingDetector.vb" />
