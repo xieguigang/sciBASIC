@@ -1,5 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.Serialize.ObjectSchema
+Imports Microsoft.VisualBasic.Language
 
 Namespace Outlining
 
@@ -18,9 +20,11 @@ Namespace Outlining
         Public Iterator Function LoadOutlining(Of T As Class)(filepath As String, Optional ignoresBlankRow As Boolean = False) As IEnumerable(Of T)
             Dim file As File = File.Load(filepath)
             ' 按照列空格进行文件的等级切割
-            Dim levels As New List(Of List(Of RowObject))
             Dim indent As Integer
             Dim currentIndent As Integer = -1
+            Dim buffer As New List(Of RowObject)
+            Dim obj As T
+            Dim schema As Schema = Schema.GetSchema(Of T)
 
             For Each row As RowObject In file
                 indent = row.RowIndentLevel
@@ -35,17 +39,9 @@ Namespace Outlining
                     If currentIndent <> indent Then
                         currentIndent = indent
 
-                        If levels.Count <= indent Then
-                            levels.Add(New List(Of RowObject))
-                            levels(indent).Add(row)
-                        ElseIf currentIndent = 0 Then
-                            ' add top level row
 
-                        Else
-                            ' ignores headers
-                        End If
                     Else
-                        levels(indent).Add(row)
+                        buffer += row
                     End If
                 End If
             Next
