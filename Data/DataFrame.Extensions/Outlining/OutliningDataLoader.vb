@@ -56,7 +56,7 @@ Namespace Outlining
 
                         If currentIndent = 0 Then
                             If Not obj Is Nothing Then
-                                Yield obj
+                                Yield builder.Flush(obj)
                             End If
 
                             obj = Activator.CreateInstance(GetType(T))
@@ -76,7 +76,7 @@ Namespace Outlining
             Next
 
             If Not obj Is Nothing Then
-
+                Yield builder.Flush(obj)
             End If
         End Function
 
