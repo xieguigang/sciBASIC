@@ -55,12 +55,12 @@ Namespace Outlining
 
         Public Function Flush(parent As Object) As Object
             If Not SubTableSchema.writer Is Nothing Then
-                Dim array As Object = cache _
+                Dim array As Object = SubTableSchema.row.cache _
                     .ToArray _
-                    .DirectCast(SubTableSchema.writer.PropertyType)
+                    .DirectCast(SubTableSchema.row.Type)
 
                 Call SubTableSchema.writer.SetValue(parent, array)
-                Call cache.Clear()
+                Call SubTableSchema.row.cache.Clear()
             End If
 
             Return parent

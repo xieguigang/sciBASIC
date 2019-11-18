@@ -31,7 +31,7 @@ Namespace Outlining
         <Extension>
         Public Iterator Function LoadOutlining(Of T As Class)(filepath$,
                                                               Optional strict As Boolean = False,
-                                                              Optional ignoresBlankRow As Boolean = False,
+                                                              Optional ignoresBlankRow As Boolean = True,
                                                               Optional metaBlank$ = Nothing) As IEnumerable(Of T)
             Dim file As File = File.Load(filepath)
             ' 按照列空格进行文件的等级切割
