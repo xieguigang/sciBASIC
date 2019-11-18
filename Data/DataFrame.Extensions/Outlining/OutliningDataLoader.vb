@@ -1,21 +1,23 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Language
-Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
 
 Namespace Outlining
 
     Public Module OutliningDataLoader
+
+        <Extension>
+        Friend Function createBuilderByHeaders(type As Type, headers As IEnumerable(Of String), strict As Boolean) As RowBuilder
+            Dim schema As TableSchema = TableSchema.CreateObject(type, strict).CopyWriteDataToObject
+            Dim rowBuilder As New RowBuilder(schema)
+
+            Call rowBuilder.IndexOf(New HeaderSchema(headers))
+            Call rowBuilder.SolveReadOnlyMetaConflicts()
+
+            Return rowBuilder
+        End Function
 
         ''' <summary>
         ''' 
@@ -29,31 +31,17 @@ Namespace Outlining
         <Extension>
         Public Iterator Function LoadOutlining(Of T As Class)(filepath$,
                                                               Optional strict As Boolean = False,
-                                                              Optional ignoresBlankRow As Boolean = False) As IEnumerable(Of T)
+                                                              Optional ignoresBlankRow As Boolean = False,
+                                                              Optional metaBlank$ = Nothing) As IEnumerable(Of T)
             Dim file As File = File.Load(filepath)
             ' 按照列空格进行文件的等级切割
             Dim indent As Integer
             Dim currentIndent As Integer = -1
             Dim buffer As New List(Of RowObject)
-            Dim schema As TableSchema = TableSchema.CreateObject(GetType(T), strict).CopyWriteDataToObject
-            Dim rowBuilder As New RowBuilder(schema)
+            Dim builder As Builder
+            Dim obj As T
 
-
-
-            Call rowBuilder.IndexOf(csv)
-            Call rowBuilder.SolveReadOnlyMetaConflicts()
-
-            ' 顺序需要一一对应，所以在最后这里进行了一下排序操作
-            Dim LQuery = From item
-                         In buf.Populate(Parallel)
-                         Select item.lineNumber,
-                             item.row,
-                             data = rowBuilder.FillData(item.row, item.filledObject, metaBlank)
-                         Order By lineNumber Ascending
-
-            Return LQuery.Select(Function(x) x.data)
-
-            For Each row As RowObject In file
+            For Each row As RowObject In file.Skip(1)
                 indent = row.RowIndentLevel
 
                 If indent < 0 Then
@@ -66,7 +54,14 @@ Namespace Outlining
                     If currentIndent <> indent Then
                         currentIndent = indent
 
-
+                        If currentIndent = 0 Then
+                            obj = Activator.CreateInstance(GetType(T))
+                            obj = rowBuilder.FillData(row, obj, metaBlank)
+                        Else
+                            If currentIndent >= subTables.Count Then
+                                subTables.Add()
+                            End If
+                        End If
                     Else
                         buffer += row
                     End If
