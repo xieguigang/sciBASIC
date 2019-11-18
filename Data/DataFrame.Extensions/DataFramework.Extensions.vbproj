@@ -272,6 +272,7 @@
     <Compile Include="Outlining\OutliningDataLoader.vb" />
     <Compile Include="Outlining\NamespaceDoc.vb" />
     <Compile Include="Serialize\NamespaceDoc.vb" />
+    <Compile Include="Serialize\ObjectSchema\Class.vb" />
     <Compile Include="Templates\TemplateHelper.vb" />
     <Compile Include="Templates\TemplateAttribute.vb" />
     <Compile Include="Serialize\Writer.vb" />

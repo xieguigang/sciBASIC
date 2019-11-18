@@ -51,107 +51,103 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.TypeSchemaProv
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-''' <summary>
-''' The schema project json file.
-''' </summary>
-Public Class Schema
+Namespace Serialize.ObjectSchema
 
     ''' <summary>
-    ''' 默认的主文件的名称
+    ''' The schema project json file.
     ''' </summary>
-    Public Const DefaultName As String = NameOf(Schema) & ".json"
+    Public Class Schema
 
-    ''' <summary>
-    ''' ``{member.Name, fileName}``, ``#`` value means this filed its type is the primitive type. 
-    ''' If not, then the value goes a external file name.
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Members As NamedValue(Of String)()
-        Get
-            Return Tables _
-                .Select(Function(x)
-                            Return New NamedValue(Of String) With {
-                                .Name = x.Key,
-                                .Value = x.Value
-                            }
-                        End Function) _
-                .ToArray
-        End Get
-        Set(value As NamedValue(Of String)())
-            _Tables = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
-        End Set
-    End Property
+        ''' <summary>
+        ''' 默认的主文件的名称
+        ''' </summary>
+        Public Const DefaultName As String = NameOf(Schema) & ".json"
 
-    Public Property Type As String
+        ''' <summary>
+        ''' ``{member.Name, fileName}``, ``#`` value means this filed its type is the primitive type. 
+        ''' If not, then the value goes a external file name.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Members As NamedValue(Of String)()
+            Get
+                Return Tables _
+                    .Select(Function(x)
+                                Return New NamedValue(Of String) With {
+                                    .Name = x.Key,
+                                    .Value = x.Value
+                                }
+                            End Function) _
+                    .ToArray
+            End Get
+            Set(value As NamedValue(Of String)())
+                _Tables = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
+            End Set
+        End Property
 
-    ''' <summary>
-    ''' <see cref="Members"/> As <see cref="Dictionary"/>
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property Tables As IReadOnlyDictionary(Of String, String)
+        Public Property Type As String
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
+        ''' <summary>
+        ''' <see cref="Members"/> As <see cref="Dictionary"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Tables As IReadOnlyDictionary(Of String, String)
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function GetSchema(Of T As Class)() As Schema
-        Return GetSchema(GetType(T))
-    End Function
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
-    Public Shared Function GetSchema(type As Type) As Schema
-        Dim members As New Dictionary(Of NamedValue(Of String))
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetSchema(Of T As Class)() As Schema
+            Return GetSchema(GetType(T))
+        End Function
 
-        Call __memberStack(members, type, "$", "#")
+        Public Shared Function GetSchema(type As Type) As Schema
+            Dim members As New Dictionary(Of NamedValue(Of String))
 
-        Return New Schema With {
-            .Type = type.FullName,
-            .Members = members.Values.ToArray
-        }
-    End Function
+            Call __memberStack(members, type, "$", "#")
 
-    Private Shared Sub __memberStack(members As Dictionary(Of NamedValue(Of String)), type As Type, parent As String, path As String)
-        Dim props = type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
-        Dim pType As Type
-        Dim elType As Type
+            Return New Schema With {
+                .Type = type.FullName,
+                .Members = members.Values.ToArray
+            }
+        End Function
+
+        Private Shared Sub __memberStack(members As Dictionary(Of NamedValue(Of String)), type As Type, parent As String, path As String)
+            Dim props = type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
+            Dim pType As Type
+            Dim elType As Type
 
 #If DEBUG Then
-        Call {type.FullName, parent, path}.GetJson.__DEBUG_ECHO
+            Call {type.FullName, parent, path}.GetJson.__DEBUG_ECHO
 #End If
 
-        For Each prop As PropertyInfo In props
-            pType = prop.PropertyType
+            For Each prop As PropertyInfo In props
+                pType = prop.PropertyType
 
-            ' 假若是基本类型或者字符串，则会直接添加
-            If Primitive(pType) Then
-                members += New NamedValue(Of String) With {
-                    .Name = $"{parent}::{prop.Name}",
-                    .Value = path
-                }
-            Else
-
-                elType = pType.GetThisElement(False)
-
-                If elType Is Nothing OrElse elType.Equals(pType) Then
-                    ' 不是集合类型
-                    Call __memberStack(members, pType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
-                ElseIf Primitive(elType) Then
-                    ' 基本类型
+                ' 假若是基本类型或者字符串，则会直接添加
+                If Primitive(pType) Then
                     members += New NamedValue(Of String) With {
                         .Name = $"{parent}::{prop.Name}",
                         .Value = path
                     }
-                Else     ' 复杂类型
-                    Call __memberStack(members, elType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
-                End If
-            End If
-        Next
-    End Sub
+                Else
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function Primitive(type As Type) As Boolean
-        Return type.IsPrimitive OrElse
-            type.Equals(GetType(String)) OrElse
-            type.Equals(GetType(Date))
-    End Function
-End Class
+                    elType = pType.GetThisElement(False)
+
+                    If elType Is Nothing OrElse elType.Equals(pType) Then
+                        ' 不是集合类型
+                        Call __memberStack(members, pType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
+                    ElseIf Primitive(elType) Then
+                        ' 基本类型
+                        members += New NamedValue(Of String) With {
+                            .Name = $"{parent}::{prop.Name}",
+                            .Value = path
+                        }
+                    Else     ' 复杂类型
+                        Call __memberStack(members, elType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
+                    End If
+                End If
+            Next
+        End Sub
+    End Class
+End Namespace
