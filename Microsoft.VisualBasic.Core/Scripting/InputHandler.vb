@@ -371,6 +371,8 @@ Namespace Scripting
         ''' <param name="array"></param>
         ''' <param name="type">数组里面的元素的类型</param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function [DirectCast](array As Object(), type As Type) As Object
             Dim out = CreateInstance(type, array.Length)
             Call Copy(array, out, array.Length) ' 直接复制不能够正常工作

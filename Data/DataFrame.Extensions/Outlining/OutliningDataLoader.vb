@@ -37,9 +37,9 @@ Namespace Outlining
             ' 按照列空格进行文件的等级切割
             Dim indent As Integer
             Dim currentIndent As Integer = -1
-            Dim buffer As New List(Of RowObject)
-            Dim builder As Builder
-            Dim obj As T
+            Dim builder As New Builder(GetType(T), file.Headers, strict)
+            Dim indentBuilderCache As Builder = Nothing
+            Dim obj As T = Nothing
 
             For Each row As RowObject In file.Skip(1)
                 indent = row.RowIndentLevel
@@ -55,18 +55,29 @@ Namespace Outlining
                         currentIndent = indent
 
                         If currentIndent = 0 Then
+                            If Not obj Is Nothing Then
+                                Yield obj
+                            End If
+
                             obj = Activator.CreateInstance(GetType(T))
-                            obj = rowBuilder.FillData(row, obj, metaBlank)
+                            obj = builder.Builder.FillData(row, obj, metaBlank)
                         Else
-                            If currentIndent >= subTables.Count Then
-                                subTables.Add()
+                            ' is subtable row header
+                            indentBuilderCache = builder.GetBuilder(currentIndent)
+
+                            If indentBuilderCache.Builder Is Nothing Then
+                                Call builder.CreateBuilder(indent, row, strict)
                             End If
                         End If
                     Else
-                        buffer += row
+                        Call indentBuilderCache.CacheObject(row, metaBlank)
                     End If
                 End If
             Next
+
+            If Not obj Is Nothing Then
+
+            End If
         End Function
 
         <Extension>
