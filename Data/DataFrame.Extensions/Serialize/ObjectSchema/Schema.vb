@@ -68,11 +68,14 @@ Public Class Schema
     ''' <returns></returns>
     Public Property Members As NamedValue(Of String)()
         Get
-            Return Tables.Select(
-                Function(x) New NamedValue(Of String) With {
-                    .Name = x.Key,
-                    .Value = x.Value
-                }).ToArray
+            Return Tables _
+                .Select(Function(x)
+                            Return New NamedValue(Of String) With {
+                                .Name = x.Key,
+                                .Value = x.Value
+                            }
+                        End Function) _
+                .ToArray
         End Get
         Set(value As NamedValue(Of String)())
             _Tables = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)

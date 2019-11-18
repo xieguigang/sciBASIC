@@ -275,9 +275,9 @@
     <Compile Include="Templates\TemplateHelper.vb" />
     <Compile Include="Templates\TemplateAttribute.vb" />
     <Compile Include="Serialize\Writer.vb" />
-    <Compile Include="Serialize\Field.vb" />
+    <Compile Include="Serialize\ObjectSchema\Field.vb" />
     <Compile Include="Serialize\Extensions.vb" />
-    <Compile Include="Serialize\Schema.vb" />
+    <Compile Include="Serialize\ObjectSchema\Schema.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
