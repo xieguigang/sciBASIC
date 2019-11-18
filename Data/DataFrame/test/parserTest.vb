@@ -68,7 +68,7 @@ Module parserTest
     End Sub
 
     Sub fileLoaderTest()
-        Dim table As File = File.Load("X:\project\预实验\test20191104 中南民族大学 陈贤军\原始数据\CD\plant\N\P-R.csv")
+        Dim table As File = File.Load("D:\GCModeller\src\runtime\sciBASIC#\Data\data\outlining.csv")
 
         Pause()
     End Sub

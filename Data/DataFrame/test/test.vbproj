@@ -73,6 +73,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -93,6 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
+    <Compile Include="Outlining\Class1.vb" />
+    <Compile Include="Outlining\OutliningTest.vb" />
     <Compile Include="parserTest.vb" />
     <Compile Include="MySQLImportsTest.vb" />
     <Compile Include="Reflection.vb" />
