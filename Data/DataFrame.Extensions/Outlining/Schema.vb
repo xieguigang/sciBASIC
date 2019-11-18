@@ -86,11 +86,22 @@ Namespace Outlining
         ''' <param name="strict"></param>
         ''' <returns></returns>
         Public Function CreateBuilder(indent As Integer, headers As IEnumerable(Of String), strict As Boolean) As Builder
+            Dim builder As Builder = Me
+
             If indent = 0 Then
+                ' 不可以初始化最顶层的对象构建模块对象
                 Throw New InvalidExpressionException
+            Else
+                For i As Integer = 0 To indent - 1
+                    builder = builder.SubTableSchema
+                Next
             End If
 
+            builder.Builder = builder _
+                .Type _
+                .createBuilderByHeaders(headers, strict)
 
+            Return builder
         End Function
 
     End Class
