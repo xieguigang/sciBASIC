@@ -46,6 +46,8 @@ Module parserTest
 
     Sub Main()
 
+        Call fileLoaderTest()
+
 
         Call CharsParser(<string>A,"","","","NA"</string>).GetJson(True).__DEBUG_ECHO
 
@@ -61,6 +63,12 @@ Module parserTest
         ' Call columns .SaveTo ("D:\ddd.csv")
 
         Call columns.GetJson(True).__DEBUG_ECHO
+
+        Pause()
+    End Sub
+
+    Sub fileLoaderTest()
+        Dim table As File = File.Load("D:\GCModeller\src\runtime\sciBASIC#\Data\data\outlining.csv")
 
         Pause()
     End Sub

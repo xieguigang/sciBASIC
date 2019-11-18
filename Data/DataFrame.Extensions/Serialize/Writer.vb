@@ -42,8 +42,9 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Data.csv.Serialize.ObjectSchema
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' <see cref="Writer.Dispose"/>的时候会自动保存Csv文件的数据

@@ -269,13 +269,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Math.vb" />
+    <Compile Include="Outlining\Schema.vb" />
+    <Compile Include="Outlining\OutliningDataLoader.vb" />
+    <Compile Include="Outlining\NamespaceDoc.vb" />
+    <Compile Include="Serialize\NamespaceDoc.vb" />
+    <Compile Include="Serialize\ObjectSchema\Class.vb" />
     <Compile Include="Templates\TemplateHelper.vb" />
     <Compile Include="Templates\TemplateAttribute.vb" />
-    <Compile Include="Writer.vb" />
-    <Compile Include="Field.vb" />
-    <Compile Include="Extensions.vb" />
-    <Compile Include="Schema.vb" />
+    <Compile Include="Serialize\Writer.vb" />
+    <Compile Include="Serialize\ObjectSchema\Field.vb" />
+    <Compile Include="Serialize\Extensions.vb" />
+    <Compile Include="Serialize\ObjectSchema\Schema.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -321,6 +325,7 @@
       <Name>47_dotnet_ms-vb_data.framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
