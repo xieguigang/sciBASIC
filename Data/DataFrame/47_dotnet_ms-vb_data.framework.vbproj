@@ -587,7 +587,7 @@
     <Compile Include="IO\Generic\Extensions.vb" />
     <Compile Include="IO\Generic\DataSet.vb" />
     <Compile Include="IO\Generic\Table.vb" />
-    <Compile Include="IO\DataFrame.vb" />
+    <Compile Include="IO\DataFrame\DataFrame.vb" />
     <Compile Include="IO\Generic\EntityObject.vb" />
     <Compile Include="IO\csv\File.vb" />
     <Compile Include="DATA\HTMLWriter.vb" />
@@ -630,6 +630,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="IO\DataFrame\HeaderSchema.vb" />
     <Compile Include="StorageProvider\ComponntModels\ReflectionBridges\Field.vb" />
     <Compile Include="StorageProvider\ComponntModels\ReflectionBridges\Array.vb" />
     <Compile Include="StorageProvider\ComponntModels\ReflectionBridges\Dictionary.vb" />

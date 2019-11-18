@@ -1,7 +1,17 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.Serialize.ObjectSchema
 Imports Microsoft.VisualBasic.Language
+Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
 
 Namespace Outlining
 
@@ -17,14 +27,31 @@ Namespace Outlining
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function LoadOutlining(Of T As Class)(filepath As String, Optional ignoresBlankRow As Boolean = False) As IEnumerable(Of T)
+        Public Iterator Function LoadOutlining(Of T As Class)(filepath$,
+                                                              Optional strict As Boolean = False,
+                                                              Optional ignoresBlankRow As Boolean = False) As IEnumerable(Of T)
             Dim file As File = File.Load(filepath)
             ' 按照列空格进行文件的等级切割
             Dim indent As Integer
             Dim currentIndent As Integer = -1
             Dim buffer As New List(Of RowObject)
-            Dim obj As T
-            Dim schema As Schema = Schema.GetSchema(Of T)
+            Dim schema As TableSchema = TableSchema.CreateObject(GetType(T), strict).CopyWriteDataToObject
+            Dim rowBuilder As New RowBuilder(schema)
+
+
+
+            Call rowBuilder.IndexOf(csv)
+            Call rowBuilder.SolveReadOnlyMetaConflicts()
+
+            ' 顺序需要一一对应，所以在最后这里进行了一下排序操作
+            Dim LQuery = From item
+                         In buf.Populate(Parallel)
+                         Select item.lineNumber,
+                             item.row,
+                             data = rowBuilder.FillData(item.row, item.filledObject, metaBlank)
+                         Order By lineNumber Ascending
+
+            Return LQuery.Select(Function(x) x.data)
 
             For Each row As RowObject In file
                 indent = row.RowIndentLevel

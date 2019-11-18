@@ -104,7 +104,7 @@ Namespace Serialize.ObjectSchema
         Public Shared Function GetSchema(type As Type) As Schema
             Dim members As New Dictionary(Of NamedValue(Of String))
 
-            Call __memberStack(members, type, "$", "#")
+            Call createMemberStackInternal(members, type, "$", "#")
 
             Return New Schema With {
                 .Type = type.FullName,
@@ -112,7 +112,7 @@ Namespace Serialize.ObjectSchema
             }
         End Function
 
-        Private Shared Sub __memberStack(members As Dictionary(Of NamedValue(Of String)), type As Type, parent As String, path As String)
+        Private Shared Sub createMemberStackInternal(members As Dictionary(Of NamedValue(Of String)), type As Type, parent As String, path As String)
             Dim props = type.GetProperties(BindingFlags.Public + BindingFlags.Instance)
             Dim pType As Type
             Dim elType As Type
@@ -136,15 +136,16 @@ Namespace Serialize.ObjectSchema
 
                     If elType Is Nothing OrElse elType.Equals(pType) Then
                         ' 不是集合类型
-                        Call __memberStack(members, pType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
+                        Call createMemberStackInternal(members, pType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
                     ElseIf DataFramework.IsPrimitive(elType) Then
                         ' 基本类型
                         members += New NamedValue(Of String) With {
                             .Name = $"{parent}::{prop.Name}",
                             .Value = path
                         }
-                    Else     ' 复杂类型
-                        Call __memberStack(members, elType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
+                    Else
+                        ' 复杂类型
+                        Call createMemberStackInternal(members, elType, $"{parent}::{prop.Name}", parent.Replace("::", "/") & $"/{prop.Name}.Csv")
                     End If
                 End If
             Next
