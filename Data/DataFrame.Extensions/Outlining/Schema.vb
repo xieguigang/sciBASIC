@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 
 Namespace Outlining
@@ -20,8 +21,12 @@ Namespace Outlining
         Dim cache As New List(Of Object)
 
         Sub New(type As Type, headers As IEnumerable(Of String), strict As Boolean)
+            Dim topLevelHeaders As String() = headers _
+                .TakeWhile(Function(s) Not s.StringEmpty) _
+                .ToArray
+
             Me.Type = type
-            Me.Builder = type.createBuilderByHeaders(headers, strict)
+            Me.Builder = type.createBuilderByHeaders(topLevelHeaders, strict)
             Me.SubTableSchema = GetNextIndentLevel(type)
 
             If SubTableSchema.writer Is Nothing Then
@@ -30,7 +35,7 @@ Namespace Outlining
         End Sub
 
         Private Sub New(type As Type)
-            Me.Type = type
+            Me.Type = type.GetElementType
             ' 暂时先不初始化
             Me.Builder = Nothing
             Me.SubTableSchema = GetNextIndentLevel(type)
@@ -124,9 +129,19 @@ Namespace Outlining
             End If
 
             If builder.Builder Is Nothing Then
-                builder.Builder = builder _
-                    .Type _
-                    .createBuilderByHeaders(headers, strict)
+                builder.Builder = headers _
+                    .Skip(indent) _
+                    .TakeWhile(Function(header)
+                                   ' 如果上一层的列数目多于当前的层的数量的话
+                                   ' 当前的层的数量在Excel导出数据后会使用空格填充
+                                   ' 需要在这里删除这些空格
+                                   Return Not header.StringEmpty
+                               End Function) _
+                    .DoCall(Function(titles)
+                                Return builder _
+                                    .Type _
+                                    .createBuilderByHeaders(titles, strict)
+                            End Function)
             End If
 
             Return builder
