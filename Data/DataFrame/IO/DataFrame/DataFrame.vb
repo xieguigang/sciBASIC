@@ -65,7 +65,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 
 Namespace IO
@@ -92,9 +91,14 @@ Namespace IO
         ''' Using the first line of the csv row as the column headers in this csv file.
         ''' </summary>
         ''' <remarks></remarks>
-        Protected columnList As List(Of String)
+        Protected columnList As HeaderSchema
 
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return columnList.SchemaOridinal
+            End Get
+        End Property
 
         Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data!"
 
@@ -103,80 +107,22 @@ Namespace IO
         ''' </summary>
         ''' <param name="mapping">``{oldFieldName, newFieldName}``</param>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub ChangeMapping(mapping As Dictionary(Of String, String))
-            Dim p As i32 = 0
-            Dim oridinal = SchemaOridinal
-
-            For Each map As NamedValue(Of String) In mapping.IterateNameValues
-                ' 由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
-                If (p = columnList.IndexOf(map.Name)) = -1 Then
-                    Continue For
-                End If
-
-                columnList(p) = map.Value
-
-                If oridinal.ContainsKey(map.Value) AndAlso map.Name <> map.Value Then
-                    Dim msg = String.Format(FieldExists, map.Name, map.Value)
-                    Dim ex As New Exception(msg)
-
-                    ' 2017-11-4 假设在原来的文件之中存在一个名字叫做ID的列
-                    ' 但是在这里进行名称映射的变化的结果也是ID名字的话，
-                    ' 则在这里会出现重复键名称的错误
-                    Throw ex
-                End If
-
-                Call oridinal.Remove(map.Name)
-                Call oridinal.Add(map.Value, p)
-            Next
+            Call columnList.ChangeMapping(mapping)
         End Sub
 
-        Public Function AddAttribute(Name As String) As Integer
-            If SchemaOridinal.ContainsKey(Name) Then
-                Return SchemaOridinal(Name)
-            Else
-                Dim p As Integer = columnList.Count
-                Call columnList.Add(Name)
-                Call _SchemaOridinal.Add(Name, p)
-                Return p
-            End If
-        End Function
-
         ''' <summary>
-        ''' There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!
+        ''' 这个函数会返回目标列在schema之中的下标序列号
+        ''' 如果已经存在了，则会直接返回下标号
         ''' </summary>
-        Const DuplicatedKeys As String = "There is an duplicated key exists in your csv table, please delete the duplicated key and try load again!"
-
-        ''' <summary>
-        ''' Indexing the column headers
-        ''' </summary>
-        ''' <param name="data"></param>
+        ''' <param name="Name"></param>
         ''' <returns></returns>
-        Private Shared Function __createSchemaOridinal(data As DataFrame) As Dictionary(Of String, Integer)
-            Dim arrayCache$() = data.columnList.ToArray
-            Dim duplicates$() = arrayCache _
-                .GroupBy(Function(s) s) _
-                .Where(Function(g) g.Count > 1) _
-                .Select(Function(g) g.Key) _
-                .ToArray
-
-            If Not duplicates.IsNullOrEmpty Then
-                Dim sb As New StringBuilder(DuplicatedKeys)
-
-                Call sb.AppendLine()
-                Call sb.AppendLine("Duplicated headers: " & duplicates.GetJson)
-                Call sb.AppendLine()
-
-                Call sb.AppendLine("Here is the column header keys in you data: ")
-                Call sb.AppendLine()
-                Call sb.AppendLine("  " & arrayCache.GetJson)
-
-                Throw New DuplicateNameException(sb.ToString)
-            End If
-
-            Return arrayCache _
-                .SeqIterator _
-                .ToDictionary(Function(i) i.value,
-                              Function(i) i.i)
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AddAttribute(Name As String) As Integer
+            Return columnList.AddAttribute(Name)
         End Function
 
         ''' <summary>
@@ -219,7 +165,7 @@ Namespace IO
         ''' <returns></returns>
         Public ReadOnly Property HeadTitles As String()
             Get
-                Return columnList.ToArray
+                Return columnList.Headers
             End Get
         End Property
 
@@ -229,7 +175,7 @@ Namespace IO
         ''' <returns></returns>
         Public Overrides ReadOnly Property Headers As RowObject
             Get
-                Return New RowObject(columnList)
+                Return New RowObject(columnList.Headers)
             End Get
         End Property
 
@@ -277,7 +223,7 @@ Namespace IO
         ''' <returns></returns>
         Public Function csv() As File
             Dim file As New File
-            file += New RowObject(columnList)
+            file += New RowObject(columnList.Headers)
             file += DirectCast(_innerTable, IEnumerable(Of RowObject))
             Return file
         End Function
@@ -414,14 +360,15 @@ Namespace IO
         ''' </summary>
         ''' <param name="file"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Function CreateObject(file As File) As DataFrame
             Return createObjectInternal(file)
         End Function
 
         Private Shared Sub Initialize(table As List(Of RowObject), dataframe As DataFrame)
             dataframe._innerTable = table.Skip(1).AsList
-            dataframe.columnList = getColumnList(table)
-            dataframe._SchemaOridinal = __createSchemaOridinal(dataframe)
+            dataframe.columnList = New HeaderSchema(getColumnList(table))
         End Sub
 
         Private Shared Function createObjectInternal(file As File) As DataFrame
@@ -431,14 +378,14 @@ Namespace IO
         End Function
 
         Protected Friend Overrides Function __createTableVector() As RowObject()
-            Dim readBuffer As New List(Of RowObject)({CType(Me.columnList, RowObject)})
+            Dim readBuffer As New List(Of RowObject)({CType(Me.columnList.Headers, RowObject)})
             Call readBuffer.AddRange(_innerTable)
             Return readBuffer.ToArray
         End Function
 
         Public Overrides Function Generate() As String
             Dim sb As New StringBuilder(1024)
-            Dim head As String = New RowObject(columnList).AsLine
+            Dim head As String = New RowObject(columnList.Headers).AsLine
 
             Call sb.AppendLine(head)
 
@@ -456,7 +403,7 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function GetOrdinal(Column As String) As Integer Implements IDataRecord.GetOrdinal, ISchema.GetOrdinal
-            Return columnList.IndexOf(Column)
+            Return columnList.GetOrdinal(Column)
         End Function
 
         ''' <summary>
@@ -469,7 +416,9 @@ Namespace IO
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinalSchema(columns As String()) As Integer()
-            Return columns.Select(Function(c) columnList.IndexOf(c)).ToArray
+            Return columns _
+                .Select(AddressOf columnList.GetOrdinal) _
+                .ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -488,7 +437,7 @@ Namespace IO
             If index = -1 AndAlso caseSensitive Then
                 Return Function(r) Nothing
             ElseIf index = -1 Then
-                With Which.IsTrue(columnList.Select(Function(c) c.TextEquals(columnName)))
+                With Which.IsTrue(columnList.Headers.Select(Function(c) c.TextEquals(columnName)))
                     If .IsNullOrEmpty Then
                         Return Function(r) Nothing
                     Else
@@ -534,7 +483,7 @@ Namespace IO
         ''' <remarks></remarks>
         Public Sub CopyFrom(source As File)
             _innerTable = source._innerTable.Skip(1).AsList
-            columnList = source._innerTable.First.AsList
+            columnList = New HeaderSchema(source._innerTable.First)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -561,17 +510,13 @@ Namespace IO
             Loop
 
             Return New DataFrame With {
-                .columnList = columnList.AsList,
+                .columnList = New HeaderSchema(columnList),
                 ._innerTable = newTable
             }
         End Function
 
         Public Iterator Function GetEnumerator2() As IEnumerator(Of DynamicObjectLoader) Implements IEnumerable(Of DynamicObjectLoader).GetEnumerator
-            Dim schema As Dictionary(Of String, Integer) =
-                columnList _
-                .SeqIterator _
-                .ToDictionary(Function(x) x.value,
-                              Function(x) x.i)
+            Dim schema As Dictionary(Of String, Integer) = columnList.SchemaOridinal
 
             For Each l As DynamicObjectLoader In From i As SeqValue(Of RowObject)
                                                  In Me._innerTable.SeqIterator
@@ -601,8 +546,9 @@ Namespace IO
             Throw New NotImplementedException()
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetName(i As Integer) As String Implements IDataRecord.GetName
-            Return columnList(i)
+            Return columnList.GetName(i)
         End Function
 
         Public Function GetDataTypeName(i As Integer) As String Implements IDataRecord.GetDataTypeName
