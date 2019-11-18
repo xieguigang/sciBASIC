@@ -269,6 +269,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Outlining\NamespaceDoc.vb" />
     <Compile Include="Serialize\NamespaceDoc.vb" />
     <Compile Include="Templates\TemplateHelper.vb" />
     <Compile Include="Templates\TemplateAttribute.vb" />
@@ -321,9 +322,7 @@
       <Name>47_dotnet_ms-vb_data.framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Outlining\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
