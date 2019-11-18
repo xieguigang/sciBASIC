@@ -46,6 +46,8 @@ Module parserTest
 
     Sub Main()
 
+        Call fileLoaderTest()
+
 
         Call CharsParser(<string>A,"","","","NA"</string>).GetJson(True).__DEBUG_ECHO
 
@@ -61,6 +63,12 @@ Module parserTest
         ' Call columns .SaveTo ("D:\ddd.csv")
 
         Call columns.GetJson(True).__DEBUG_ECHO
+
+        Pause()
+    End Sub
+
+    Sub fileLoaderTest()
+        Dim table As File = File.Load("X:\project\预实验\test20191104 中南民族大学 陈贤军\原始数据\CD\plant\N\P-R.csv")
 
         Pause()
     End Sub
