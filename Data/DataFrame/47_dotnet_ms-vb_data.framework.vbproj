@@ -581,6 +581,7 @@
     <Compile Include="DATA\DataFrame.vb" />
     <Compile Include="DATA\MySQL.vb" />
     <Compile Include="DATA\RDataFrameHelpers.vb" />
+    <Compile Include="Extensions\Math.vb" />
     <Compile Include="IO\csv\FileLoader.vb" />
     <Compile Include="IO\csv\RowHelpers.vb" />
     <Compile Include="IO\Generic\Extensions.vb" />
