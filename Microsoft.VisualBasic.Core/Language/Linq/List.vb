@@ -479,6 +479,11 @@ Namespace Language
         '    Return list
         'End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(vals As T(), list As List(Of T)) As List(Of T)
+            Return New List(Of T)(vals) + list.AsEnumerable
+        End Operator
+
         ''' <summary>
         ''' 批量的从目标列表之中移除<paramref name="removes"/>集合之中的对象
         ''' </summary>
