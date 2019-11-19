@@ -158,6 +158,36 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             End Using
         End Sub
 
+        Public Shared Function CreateDocProject(xmlfile As String, Optional excludeVBSpecific As Boolean = True) As Project
+            Using fs As New FileStream(xmlfile.GetFullPath, FileMode.Open)
+                Dim streamWriter As New StreamReader(fs)
+                Dim xml$ = streamWriter.ReadToEnd.TrimAssemblyDoc()
+                Dim s As New StringReader(xml)
+
+                Using xr As XmlReader = XmlReader.Create(s)
+                    Dim xd As New XmlDocument()
+
+                    Call xd.Load(xr)
+
+                    Dim nameNode As XmlNode = xd _
+                        .DocumentElement _
+                        .SelectSingleNode("assembly/name")
+                    Dim proj As Project
+
+                    If nameNode IsNot Nothing Then
+                        xml = nameNode.InnerText
+                        proj = New Project(xml)
+
+                        Call proj.ProcessXmlDoc(xd, excludeVBSpecific)
+
+                        Return proj
+                    Else
+                        Return Nothing
+                    End If
+                End Using
+            End Using
+        End Function
+
         Public Iterator Function GetEnumerator() As IEnumerator(Of Project) Implements IEnumerable(Of Project).GetEnumerator
             For Each proj As Project In projects
                 Yield proj
