@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::72583ecbe0ad701ec1f8fbc8c7be7a1c, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ProjectSpace
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: EnsureProject, GetEnumerator, GetProject, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: ImportFromXmlDocFile, ImportFromXmlDocFolder, LoadFile
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ProjectSpace
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: EnsureProject, GetEnumerator, GetProject, IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: ImportFromXmlDocFile, ImportFromXmlDocFolder, LoadFile
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@
 
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.FileIO.FileSystem
@@ -134,8 +135,26 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub LoadFile(fi As FileInfo)
-            Using fs As New FileStream(fi.FullName, FileMode.Open)
+            Call CreateDocProject(fi, excludeVBSpecific, AddressOf EnsureProject)
+        End Sub
+
+        Public Shared Function CreateDocProject(xmlfile As [Variant](Of String, FileInfo),
+                                                Optional excludeVBSpecific As Boolean = True,
+                                                Optional projActivator As Func(Of String, Project) = Nothing) As Project
+
+            If xmlfile Like GetType(FileInfo) Then
+                xmlfile = xmlfile.TryCast(Of FileInfo).FullName
+            Else
+                xmlfile = xmlfile.TryCast(Of String).GetFullPath
+            End If
+
+            If projActivator Is Nothing Then
+                projActivator = Function(name) New Project(name)
+            End If
+
+            Using fs As New FileStream(xmlfile, FileMode.Open)
                 Dim streamWriter As New StreamReader(fs)
                 Dim xml$ = streamWriter.ReadToEnd.TrimAssemblyDoc()
                 Dim s As New StringReader(xml)
@@ -148,15 +167,21 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                     Dim nameNode As XmlNode = xd _
                         .DocumentElement _
                         .SelectSingleNode("assembly/name")
+                    Dim proj As Project
 
                     If nameNode IsNot Nothing Then
                         xml = nameNode.InnerText
-                        Call EnsureProject(xml) _
-                            .ProcessXmlDoc(xd, excludeVBSpecific)
+                        proj = projActivator(xml)
+
+                        Call proj.ProcessXmlDoc(xd, excludeVBSpecific)
+
+                        Return proj
+                    Else
+                        Return Nothing
                     End If
                 End Using
             End Using
-        End Sub
+        End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Project) Implements IEnumerable(Of Project).GetEnumerator
             For Each proj As Project In projects

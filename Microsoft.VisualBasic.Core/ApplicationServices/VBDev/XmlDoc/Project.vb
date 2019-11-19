@@ -64,7 +64,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Dim _namespaces As Dictionary(Of String, ProjectNamespace)
 
-        Public Property Name() As String
+        Public Property Name As String
 
         Public ReadOnly Property Namespaces() As IEnumerable(Of ProjectNamespace)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -95,12 +95,22 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureNamespace(namespacePath As String) As ProjectNamespace
+        Public Overloads Function [GetType](fullName As String) As ProjectType
+            Dim tokens = fullName.Split("."c)
+            Dim typeName As String = tokens.Last
+            Dim namespaceRef As String = tokens.Take(tokens.Length - 1).JoinBy(".")
+            Dim namespaceDoc As ProjectNamespace = GetNamespace(namespaceRef)
+            Dim typeDoc As ProjectType = namespaceDoc.GetType(typeName)
+
+            Return typeDoc
+        End Function
+
+        Friend Function EnsureNamespace(namespacePath As String) As ProjectNamespace
             Dim pn As ProjectNamespace = GetNamespace(namespacePath)
 
             If pn Is Nothing Then
                 pn = New ProjectNamespace(Me) With {
-                    .Path = namespacePath
+                    .fullName = namespacePath
                 }
                 _namespaces.Add(namespacePath.ToLower(), pn)
             End If
