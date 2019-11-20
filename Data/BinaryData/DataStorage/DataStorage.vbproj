@@ -63,7 +63,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_x64%29|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU' ">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\GCModeller%28Release_x64%29\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
@@ -73,7 +73,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_x64%29|x64'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64' ">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\GCModeller%28Release_x64%29\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
@@ -230,7 +230,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_x64%29|x86'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86' ">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\GCModeller%28Release_x64%29\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
