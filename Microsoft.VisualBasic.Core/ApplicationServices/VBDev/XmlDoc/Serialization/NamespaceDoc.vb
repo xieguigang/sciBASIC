@@ -69,7 +69,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                 .Select(Function(ns) ns.Types) _
                 .IteratesALL _
                 .Where(AddressOf IsNamespaceDoc) _
-                .GroupBy(Function(doc) doc.Namespace.Path) _
+                .GroupBy(Function(doc) doc.Namespace.fullName) _
                 .ToDictionary(Function(ns) ns.Key,
                               Function(nsGroup)
                                   Return nsGroup _
