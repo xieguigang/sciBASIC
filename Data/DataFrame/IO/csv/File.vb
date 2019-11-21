@@ -316,9 +316,12 @@ B21,B22,B23,...
             Call _innerTable.Add(New RowObject(row))
         End Sub
 
+        ''' <summary>
+        ''' 添加一个空白行
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine()
-            Call _innerTable.Add(New String() {" "})
+            Call _innerTable.Add(New String() {""})
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
