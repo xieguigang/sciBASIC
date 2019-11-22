@@ -45,6 +45,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
+''' <summary>
+''' 加权拟合的结果
+''' </summary>
 Public Class WeightedFit : Implements IFitted
 
     ''' <summary>

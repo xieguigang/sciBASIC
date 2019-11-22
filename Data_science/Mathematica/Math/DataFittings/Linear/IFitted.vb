@@ -44,12 +44,21 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Public Interface IFitted
 
     ''' <summary>
-    ''' 相关系数
+    ''' 相关系数 R2
     ''' </summary>
     ''' <returns></returns>
     ReadOnly Property CorrelationCoefficient As Double
+    ''' <summary>
+    ''' 线性模型的多项式
+    ''' </summary>
+    ''' <returns></returns>
     ReadOnly Property Polynomial As Polynomial
 
+    ''' <summary>
+    ''' f(x)
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
     Default ReadOnly Property GetY(x As Double) As Double
 
     ''' <summary>
