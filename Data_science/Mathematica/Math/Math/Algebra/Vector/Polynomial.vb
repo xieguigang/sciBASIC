@@ -46,6 +46,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace LinearAlgebra
 
+    ''' <summary>
+    ''' 一元多项式的数据模型
+    ''' </summary>
     Public Class Polynomial
 
         ''' <summary>
@@ -54,6 +57,11 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Public Property Factors As Double()
 
+        ''' <summary>
+        ''' f(x)
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <returns></returns>
         Default Public ReadOnly Property F(x#) As Double
             Get
                 Dim ans As Double = 0
@@ -66,6 +74,10 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        ''' <summary>
+        ''' Is linear or poly?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsLinear As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
