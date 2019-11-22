@@ -44,16 +44,31 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' get input X
+    ''' </summary>
+    ''' <param name="fit"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function X(fit As IFitted) As Vector
         Return fit.ErrorTest.Select(Function(point) point.X).AsVector
     End Function
 
+    ''' <summary>
+    ''' get input Y
+    ''' </summary>
+    ''' <param name="fit"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Y(fit As IFitted) As Vector
         Return fit.ErrorTest.Select(Function(point) point.Y).AsVector
     End Function
 
+    ''' <summary>
+    ''' get predicted Y
+    ''' </summary>
+    ''' <param name="fit"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Yfit(fit As IFitted) As Vector
         Return fit.ErrorTest.Select(Function(point) point.Yfit).AsVector
