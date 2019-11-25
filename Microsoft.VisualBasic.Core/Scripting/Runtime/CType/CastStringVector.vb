@@ -61,7 +61,7 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString(Object, String)"/>.
+        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString"/>.
         ''' </summary>
         ''' <param name="values"></param>
         ''' <returns></returns>
@@ -86,7 +86,7 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' 使用<see cref="Scripting.ToString(Object, String)"/>方法将对象集合转换为字符串序列
+        ''' 使用<see cref="Scripting.ToString"/>方法将对象集合转换为字符串序列
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="values"></param>
