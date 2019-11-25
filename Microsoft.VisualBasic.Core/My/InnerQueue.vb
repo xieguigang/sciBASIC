@@ -52,6 +52,10 @@ Namespace My
     ''' </summary>
     Module InnerQueue
 
+        ''' <summary>
+        ''' The internal task queue of the sciBASIC.NET framework
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property InnerThread As New ThreadQueue
 
         ''' <summary>
