@@ -110,6 +110,7 @@ Namespace Scripting.Runtime
         End Function
 
         ReadOnly cstrCache As New Dictionary(Of Type, INarrowingOperator(Of Object, String))
+        ReadOnly objToStringCache As New Dictionary(Of Type, Boolean)
 
         ''' <summary>
         ''' 安全的将目标对象转换为字符串值
@@ -118,7 +119,7 @@ Namespace Scripting.Runtime
         ''' <returns>
         ''' 如果目标是字节数组，则会被转换为base64字符串
         ''' </returns>
-        Public Function CStrSafe(obj As Object, Optional default$ = "") As String
+        Public Function CStrSafe(obj As Object, Optional default$ = "", Optional originToStringAsNothing As Boolean = False) As String
             If obj Is Nothing Then
                 Return String.Empty
             ElseIf Convert.IsDBNull(obj) Then
@@ -126,7 +127,7 @@ Namespace Scripting.Runtime
             Else
 
                 Try
-                    Return CStrInternal(obj, [default])
+                    Return CStrInternal(obj, [default], originToStringAsNothing)
                 Catch ex As Exception
                     Try
                         ' 调用ToString函数来返回字符串值
@@ -139,7 +140,7 @@ Namespace Scripting.Runtime
             End If
         End Function
 
-        Private Function CStrInternal(obj As Object, default$) As String
+        Private Function CStrInternal(obj As Object, default$, originToStringAsNothing As Boolean) As String
             Dim type As Type = obj.GetType
             Dim delg As INarrowingOperator(Of Object, String)
 
@@ -175,8 +176,30 @@ Namespace Scripting.Runtime
 
             Try
                 If delg Is Nothing Then
-                    ' 调用ToString函数来返回字符串值
-                    Return obj.ToString
+                    If originToStringAsNothing Then
+                        If objToStringCache.ContainsKey(type) Then
+                            Return False
+                        End If
+
+                        Dim isObjToString As Boolean = type.GetMethods() _
+                            .Where(Function(m)
+                                       Return m.Name = "ToString" AndAlso
+                                              m.GetParameters.IsNullOrEmpty AndAlso
+                                              m.GetGenericArguments.IsNullOrEmpty
+                                   End Function) _
+                            .First _
+                            .DeclaringType Is GetType(Object)
+
+                        If isObjToString Then
+                            objToStringCache.Add(type, True)
+                            Return Nothing
+                        Else
+                            Return obj.ToString
+                        End If
+                    Else
+                        ' 调用ToString函数来返回字符串值
+                        Return obj.ToString
+                    End If
                 Else
                     Return delg(obj)
                 End If

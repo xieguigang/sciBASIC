@@ -135,7 +135,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <param name="key"></param>
         ''' <param name="value"></param>
         ''' <param name="parent"></param>
-        ''' <param name="toString">Default debug view is <see cref="Scripting.ToString(Object, String)"/></param>
+        ''' <param name="toString">Default debug view is <see cref="Scripting.ToString"/></param>
         Sub New(key As K, value As V,
                 Optional parent As BinaryTree(Of K, V) = Nothing,
                 Optional toString As Func(Of K, String) = Nothing)

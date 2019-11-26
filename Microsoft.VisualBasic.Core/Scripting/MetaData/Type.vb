@@ -125,7 +125,7 @@ Namespace Scripting.MetaData
         Public Overloads Function [GetType](Optional knownFirst As Boolean = False,
                                             Optional throwEx As Boolean = True,
                                             Optional ByRef getException As Exception = Nothing) As Type
-            Dim type As Type
+            Dim type As Type = Nothing
             Dim assm As Assembly
 
             If knownFirst Then
@@ -151,7 +151,7 @@ Namespace Scripting.MetaData
                     getException = ex
                 End If
             Finally
-                type = Nothing
+
             End Try
 
             Return type

@@ -124,7 +124,7 @@ Namespace Parallel
         ''' </summary>
         Public Sub WaitQueue()
             While QSolverRunning = True
-                Thread.Sleep(10)
+                Call Thread.Sleep(10)
             End While
         End Sub
 

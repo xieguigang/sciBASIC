@@ -103,4 +103,15 @@ Public Module MethodsExtension
     Public Function Invoke(method As MethodInfo) As Object
         Return method.Invoke(Nothing, Nothing)
     End Function
+
+    ''' <summary>
+    ''' Does current <paramref name="method"/> is overrides from the base <paramref name="type"/>
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsMethodOverridesOf(method As MethodInfo, type As Type) As Boolean
+        Return Not method.DeclaringType Is type AndAlso method.DeclaringType.IsInheritsFrom(type, strict:=False)
+    End Function
 End Module
