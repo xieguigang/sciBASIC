@@ -100,9 +100,14 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Dim typeName As String = tokens.Last
             Dim namespaceRef As String = tokens.Take(tokens.Length - 1).JoinBy(".")
             Dim namespaceDoc As ProjectNamespace = GetNamespace(namespaceRef)
-            Dim typeDoc As ProjectType = namespaceDoc.GetType(typeName)
 
-            Return typeDoc
+            ' if no xml comment docs, 
+            ' then namespaceDoc object will be nothing
+            If namespaceDoc Is Nothing Then
+                Return Nothing
+            Else
+                Return namespaceDoc.GetType(typeName)
+            End If
         End Function
 
         Friend Function EnsureNamespace(namespacePath As String) As ProjectNamespace
