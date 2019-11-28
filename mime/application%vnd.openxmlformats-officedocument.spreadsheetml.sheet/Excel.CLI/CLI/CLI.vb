@@ -284,7 +284,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Dim BcolumnIndex$ = args("/column.B")
         Dim bName$ = b.BaseName
         Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA) _
-            .GroupBy(Function(n) n.ID) _
+            .GroupBy(Function(n) If(n.ID.StringEmpty, "", n.ID)) _
             .ToDictionary(Function(n) n.Key,
                           Function(g)
                               Return g.ToArray

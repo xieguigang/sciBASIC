@@ -150,7 +150,7 @@ Namespace IO.Linq
 
             Return Function(row As RowObject) As T
                        Dim obj As Object = Activator.CreateInstance(type)
-                       Dim data As Object = rowBuilder.FillData(row, obj)
+                       Dim data As Object = rowBuilder.FillData(row, obj, "")
 
                        Return DirectCast(data, T)
                    End Function
