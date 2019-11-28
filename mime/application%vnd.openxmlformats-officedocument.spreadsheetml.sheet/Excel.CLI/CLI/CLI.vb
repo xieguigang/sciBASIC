@@ -275,7 +275,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     End Function
 
     <ExportAPI("/association")>
-    <Usage("/association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /column.B <scan0> /out <out.csv>]")>
+    <Usage("/association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /column.B <scan0> /ignore.blank.index /out <out.csv>]")>
     <Description("Append part of data of table ``b`` to table ``a``")>
     Public Function Association(args As CommandLine) As Integer
         Dim a$ = args <= "/a"
@@ -283,6 +283,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Dim columnNameA$ = args("/column.A")
         Dim BcolumnIndex$ = args("/column.B")
         Dim bName$ = b.BaseName
+        Dim ignoreBlankIndex As Boolean = args("/ignore.blank.index")
         Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA) _
             .GroupBy(Function(n) If(n.ID.StringEmpty, "", n.ID)) _
             .ToDictionary(Function(n) n.Key,
@@ -298,6 +299,10 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
         ' 假设B的数据非常大的话
         For Each rowB As EntityObject In b.OpenHandle(maps:=mapsB).AsLinq(Of EntityObject)
+            If ignoreBlankIndex AndAlso rowB.ID.StringEmpty Then
+                Continue For
+            End If
+
             If aData.ContainsKey(rowB.ID) Then
                 Dim rowsA As EntityObject() = aData.Popout(rowB.ID)
 
