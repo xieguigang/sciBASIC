@@ -297,6 +297,12 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Dim associates As New List(Of EntityObject)
         Dim key$
 
+        If ignoreBlankIndex Then
+            If aData.ContainsKey("") Then
+                associates += aData.Popout("")
+            End If
+        End If
+
         ' 假设B的数据非常大的话
         For Each rowB As EntityObject In b.OpenHandle(maps:=mapsB).AsLinq(Of EntityObject)
             If ignoreBlankIndex AndAlso rowB.ID.StringEmpty Then
