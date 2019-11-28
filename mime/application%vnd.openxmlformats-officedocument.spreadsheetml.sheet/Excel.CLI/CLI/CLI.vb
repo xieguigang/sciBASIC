@@ -299,9 +299,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         ' 假设B的数据非常大的话
         For Each rowB As EntityObject In b.OpenHandle(maps:=mapsB).AsLinq(Of EntityObject)
             If aData.ContainsKey(rowB.ID) Then
-                Dim rowsA = aData(rowB.ID)
-
-                Call aData.Remove(rowB.ID)
+                Dim rowsA As EntityObject() = aData.Popout(rowB.ID)
 
                 For Each x As EntityObject In rowsA
                     For Each [property] In rowB.Properties
