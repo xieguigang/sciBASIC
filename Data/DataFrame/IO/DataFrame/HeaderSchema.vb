@@ -69,7 +69,7 @@ Namespace IO
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetOrdinal(name As String) As Integer Implements ISchema.GetOrdinal
+        Public Overridable Function GetOrdinal(name As String) As Integer Implements ISchema.GetOrdinal
             If SchemaOridinal.ContainsKey(name) Then
                 Return SchemaOridinal(name)
             Else
