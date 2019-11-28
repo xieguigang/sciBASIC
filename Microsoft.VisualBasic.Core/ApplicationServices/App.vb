@@ -1067,21 +1067,21 @@ Public Module App
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
-    <ExportAPI("RunCLI", Info:="Running the string as cli command line and the specific type define as a interpreter.")>
+    <ExportAPI("RunCLI")>
     <Extension>
     Public Function RunCLI(Interpreter As Type, args$, <CallerMemberName> Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
-    ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
+    ''' Running the string as a cli command line, Running the string as cli command line and the specific type define as a interpreter.
+    ''' (请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
     ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
-    <ExportAPI("RunCLI",
-             Info:="Running the string as cli command line and the specific type define as a interpreter.")>
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, <CallerMemberName> Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, Nothing)
     End Function
@@ -1093,8 +1093,7 @@ Public Module App
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
-    <ExportAPI("RunCLI",
-             Info:="Running the string as cli command line and the specific type define as a interpreter.")>
+    <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer

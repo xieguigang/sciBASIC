@@ -1,72 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::0bcd4df69a14dd231fe70f4e6361e9bf, Data\DataFrame\Linq\DataStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class SchemaReader
-    ' 
-    '         Properties: headers, SchemaOridinal
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetOrdinal, ToString
-    ' 
-    '     Module DataLinqStream
-    ' 
-    '         Function: AsLinq, CastObject, ForEach, OpenHandle
-    ' 
-    '     Class DataStream
-    ' 
-    '         Properties: SchemaOridinal
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
-    ' 
-    '         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
-    '         Structure __taskHelper
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: RunTask
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Class SchemaReader
+' 
+'         Properties: headers, SchemaOridinal
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetOrdinal, ToString
+' 
+'     Module DataLinqStream
+' 
+'         Function: AsLinq, CastObject, ForEach, OpenHandle
+' 
+'     Class DataStream
+' 
+'         Properties: SchemaOridinal
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
+' 
+'         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
+'         Structure __taskHelper
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Sub: RunTask
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -86,30 +87,19 @@ Namespace IO.Linq
     ''' <returns></returns>
     Public Delegate Function GetOrdinal(column As String) As Integer
 
-    Public Class SchemaReader : Implements ISchema
-
-        Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
-        Public ReadOnly Property headers As IReadOnlyCollection(Of String)
+    Public Class SchemaReader : Inherits HeaderSchema
+        Implements ISchema
 
         Sub New(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False)
             Call Me.New(RowObject.TryParse(fileName.ReadFirstLine(encoding), tsv))
         End Sub
 
         Sub New(firstLineHeaders As RowObject)
-            headers = firstLineHeaders.ToArray
-            SchemaOridinal = headers _
-                .SeqIterator _
-                .ToDictionary(Function(x) x.value.ToLower,
-                              Function(x) x.i)
+            Call MyBase.New(firstLineHeaders)
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetOrdinal(name As String) As Integer Implements ISchema.GetOrdinal
-            Return _SchemaOridinal.TryGetValue(name.ToLower, [default]:=-1)
-        End Function
-
         Public Overrides Function ToString() As String
-            Return $"[{headers.JoinBy(", ")}]"
+            Return $"[{Headers.JoinBy(", ")}]"
         End Function
     End Class
 
@@ -120,9 +110,18 @@ Namespace IO.Linq
         ''' </summary>
         ''' <param name="fileName$"></param>
         ''' <param name="encoding"></param>
+        ''' <param name="maps">
+        ''' Change filed name mapping by:
+        ''' 
+        ''' ``Csv.Field -> <see cref="PropertyInfo.Name"/>``
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function OpenHandle(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
+        Public Function OpenHandle(fileName$,
+                                   Optional encoding As Encoding = Nothing,
+                                   Optional tsv As Boolean = False,
+                                   Optional maps As Dictionary(Of String, String) = Nothing) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
+
             Dim schema As New SchemaReader(fileName, encoding, tsv)
             Dim source As IEnumerable(Of RowObject) = fileName _
                 .IterateAllLines _
@@ -130,6 +129,11 @@ Namespace IO.Linq
                 .Select(Function(line)
                             Return New RowObject(line, tsv)
                         End Function)
+
+            If Not maps.IsNullOrEmpty Then
+                Call schema.ChangeMapping(maps)
+            End If
+
             Return (schema, source)
         End Function
 
@@ -146,7 +150,7 @@ Namespace IO.Linq
 
             Return Function(row As RowObject) As T
                        Dim obj As Object = Activator.CreateInstance(type)
-                       Dim data As Object = rowBuilder.FillData(row, obj)
+                       Dim data As Object = rowBuilder.FillData(row, obj, "")
 
                        Return DirectCast(data, T)
                    End Function

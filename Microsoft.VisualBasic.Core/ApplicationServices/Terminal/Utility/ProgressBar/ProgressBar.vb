@@ -168,6 +168,11 @@ Namespace Terminal.ProgressBar
 
         Shared disabled As Boolean
 
+        ''' <summary>
+        ''' If this global value is not null, then set y value in constructor will be disabled.
+        ''' </summary>
+        Shared pinnedTop As Integer?
+
         Public Shared Property Enable As Boolean
             Get
                 Return Not disabled
@@ -198,6 +203,10 @@ Namespace Terminal.ProgressBar
 
             Me.theme = theme Or ColorTheme.DefaultTheme
             Me.y = Y
+
+            If Not pinnedTop Is Nothing Then
+                Me.y = pinnedTop
+            End If
 
             If Not disabled Then
                 AddHandler TerminalEvents.Resize, AddressOf consoleWindowResize
@@ -314,6 +323,18 @@ Namespace Terminal.ProgressBar
                 Call tick(current, details)
             End If
         End Sub
+
+        Public Shared Sub ClearPinnedTop()
+            pinnedTop = Nothing
+        End Sub
+
+        Public Shared Sub PinTop(top As Integer)
+            pinnedTop = top
+        End Sub
+
+        Public Shared Function GetCurrentConsoleTop() As Integer
+            Return Console.CursorTop
+        End Function
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls

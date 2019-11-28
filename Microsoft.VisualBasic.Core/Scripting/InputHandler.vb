@@ -117,7 +117,11 @@ Namespace Scripting
         ''' <param name="expression">The string expression to convert.</param>
         ''' <param name="target">The type to which to convert the object.</param>
         ''' <returns>An object whose type at run time is the requested target type.</returns>
-        <Extension> Public Function CTypeDynamic(expression$, target As Type) As Object
+        ''' <remarks>
+        ''' If all failure, then will try <see cref="Conversion.CTypeDynamic"/>
+        ''' </remarks>
+        <Extension>
+        Public Function CTypeDynamic(expression$, target As Type) As Object
             If expression.StringEmpty Then
                 Return Nothing
             End If

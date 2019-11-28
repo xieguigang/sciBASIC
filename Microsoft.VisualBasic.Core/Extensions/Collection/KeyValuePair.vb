@@ -69,6 +69,25 @@ Imports r = System.Text.RegularExpressions.Regex
 <HideModuleName>
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' 从目标字典中按照给定的键名称获取值然后删除给定的键名称对应的数据
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Popout(Of K, V)(table As Dictionary(Of K, V), key As K) As V
+        If table.ContainsKey(key) Then
+            Dim value As V = table(key)
+            table.Remove(key)
+            Return value
+        Else
+            Return Nothing
+        End If
+    End Function
+
     <Extension>
     Public Function TupleTable(tuple As (String(), String())) As Dictionary(Of String, String)
         Dim table As New Dictionary(Of String, String)
