@@ -116,6 +116,15 @@ Namespace Linq
             End If
         End Function
 
+        <Extension>
+        Public Function SafeQuery(Of T)(source As Enumeration(Of T)) As IEnumerable(Of T)
+            If source Is Nothing Then
+                Return {}
+            Else
+                Return source.AsEnumerable
+            End If
+        End Function
+
         Public Delegate Sub DoWith(Of T)(obj As T)
 
         ''' <summary>
