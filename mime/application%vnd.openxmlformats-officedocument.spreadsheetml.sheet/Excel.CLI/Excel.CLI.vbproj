@@ -220,7 +220,6 @@
     <Compile Include="CLI\CLI.vb" />
     <Compile Include="CLI\Normalize.vb" />
     <Compile Include="CLI\XlsxHelpers.vb" />
-    <Compile Include="test.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
