@@ -283,53 +283,46 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Dim columnNameA$ = args("/column.A")
         Dim BcolumnIndex$ = args("/column.B")
         Dim bName$ = b.BaseName
-        Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA).GroupBy(Function(n) n.ID).ToDictionary(Function(n) n.Key, Function(g) g.ToArray)
-
-        For Each row In b.OpenHandle.AsLinq(Of EntityObject)
-
-        Next
-
-        ' 假设B的数据非常大的话
-        Dim bData = EntityObject.LoadDataSet(b) _
-            .GroupBy(Function(bb) bb.ID) _
-            .ToDictionary(Function(g) g.Key,
+        Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA) _
+            .GroupBy(Function(n) n.ID) _
+            .ToDictionary(Function(n) n.Key,
                           Function(g)
-                              Dim values = g _
-                                  .Select(Function(bb) bb.Properties) _
-                                  .IteratesALL _
-                                  .GroupBy(Function(p) p.Key) _
-                                  .ToDictionary(Function(p) p.Key,
-                                                Function(v)
-                                                    Return v.Values _
-                                                        .Select(Function(s) s.Split(";"c)) _
-                                                        .IteratesALL _
-                                                        .Distinct _
-                                                        .JoinBy(";")
-                                                End Function)
-
-                              Return New EntityObject With {
-                                  .ID = g.Key,
-                                  .Properties = values
-                              }
+                              Return g.ToArray
                           End Function)
+        Dim mapsB As New Dictionary(Of String, String) From {
+            {BcolumnIndex, NameOf(EntityObject.ID)}
+        }
         Dim out$ = args("/out") Or $"{a.TrimSuffix}_AND_{bName}.csv"
         Dim associates As New List(Of EntityObject)
+        Dim key$
 
-        For Each x As EntityObject In aData
-            If bData.ContainsKey(x.ID) Then
-                Dim copy As EntityObject = x.Copy
-                Dim y = bData(x.ID)
+        ' 假设B的数据非常大的话
+        For Each rowB As EntityObject In b.OpenHandle(maps:=mapsB).AsLinq(Of EntityObject)
+            If aData.ContainsKey(rowB.ID) Then
+                Dim rowsA = aData(rowB.ID)
 
-                For Each [property] In y.Properties
-                    Dim key = bName & "." & [property].Key
-                    copy.Properties.Add(key, [property].Value)
+                Call aData.Remove(rowB.ID)
+
+                For Each x As EntityObject In rowsA
+                    For Each [property] In rowB.Properties
+                        key = bName & "." & [property].Key
+                        x.Properties.Add(key, [property].Value)
+                    Next
+
+                    associates += x
                 Next
 
-                associates += copy
-            Else
-                associates += x
+                If aData.Count = 0 Then
+                    ' 已经关联完了，不需要在遍历整个B文件的数据
+                    Exit For
+                End If
             End If
         Next
+
+        If aData.Count > 0 Then
+            ' 还有一部分的数据是没有在B中存在关联的
+            associates += aData.Values.IteratesALL
+        End If
 
         Return associates _
             .SaveDataSet(out, KeyMap:=columnNameA) _
