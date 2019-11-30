@@ -135,6 +135,11 @@ Namespace ComponentModel.DataSourceModel
             Call propertyTable.Add(propertyName, value)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetItemValue(propertyName As String) As T
+            Return ItemValue(propertyName)
+        End Function
+
         ''' <summary>
         ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified
         ''' key.
