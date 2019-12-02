@@ -212,7 +212,7 @@ Namespace Emit.Marshal
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function PeekNext() As T
-            Return Me(index + 1)
+            Return buffer(index + 1)
         End Function
 
         Public Overrides Function ToString() As String
