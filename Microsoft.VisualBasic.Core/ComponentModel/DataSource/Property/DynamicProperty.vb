@@ -135,6 +135,14 @@ Namespace ComponentModel.DataSourceModel
             Call propertyTable.Add(propertyName, value)
         End Sub
 
+        Public Sub SetValue(propertyName$, value As T)
+            If propertyTable Is Nothing Then
+                propertyTable = New Dictionary(Of String, T)
+            End If
+
+            propertyTable(propertyName) = value
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetItemValue(propertyName As String) As T
             Return ItemValue(propertyName)
