@@ -59,6 +59,7 @@ Namespace ComponentModel.DataSourceModel
     Public MustInherit Class DynamicPropertyBase(Of T)
         Implements IDynamicMeta(Of T)
         Implements IEnumerable(Of NamedValue(Of T))
+        Implements IDynamicsObject
 
         ''' <summary>
         ''' The dynamics property object with specific type of value.
@@ -148,6 +149,21 @@ Namespace ComponentModel.DataSourceModel
             Return ItemValue(propertyName)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub Add(propertyName As String, value As Object) Implements IDynamicsObject.Add
+            Call Add(propertyName, Conversion.CTypeDynamic(Of T)(value))
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub SetValue(propertyName As String, value As Object) Implements IDynamicsObject.SetValue
+            Call SetValue(propertyName, Conversion.CTypeDynamic(Of T)(value))
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function IDynamicsObject_GetItemValue(propertyName As String) As Object Implements IDynamicsObject.GetItemValue
+            Return GetItemValue(propertyName)
+        End Function
+
         ''' <summary>
         ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified
         ''' key.
@@ -163,6 +179,14 @@ Namespace ComponentModel.DataSourceModel
             Else
                 Return propertyTable.ContainsKey(name)
             End If
+        End Function
+
+        ''' <summary>
+        ''' Get all keys in <see cref="Properties"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function GetNames() As IEnumerable(Of String) Implements IDynamicsObject.GetNames
+            Return Properties.Keys
         End Function
 
         ''' <summary>
