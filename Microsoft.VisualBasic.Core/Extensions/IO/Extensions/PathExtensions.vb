@@ -675,17 +675,6 @@ Public Module PathExtensions
     End Function
 
     ''' <summary>
-    ''' <see cref="basename"/> shortcuts extension.
-    ''' </summary>
-    ''' <param name="path"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function GetBaseName(path As String) As String
-        Return BaseName(path)
-    End Function
-
-    ''' <summary>
     ''' Gets the name of the file's parent directory, returns value is a name, not path.
     ''' (获取目标文件的父文件夹的文件夹名称，是名称而非路径)
     ''' </summary>

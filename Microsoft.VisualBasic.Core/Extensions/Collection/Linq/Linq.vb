@@ -88,6 +88,12 @@ Namespace Linq
             Return New DataValue(Of T)(src)
         End Function
 
+        ''' <summary>
+        ''' DirectCast of the <paramref name="source"/> sequence into T() array.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ToArray(Of T)(source As IEnumerable(Of Object)) As T()
             If source Is Nothing Then

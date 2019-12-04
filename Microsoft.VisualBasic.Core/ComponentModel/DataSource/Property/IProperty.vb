@@ -68,6 +68,19 @@ Namespace ComponentModel.DataSourceModel
     End Interface
 
     ''' <summary>
+    ''' Apply for R# object
+    ''' </summary>
+    Public Interface IDynamicsObject
+
+        Sub Add(propertyName$, value As Object)
+        Sub SetValue(propertyName$, value As Object)
+
+        Function GetNames() As IEnumerable(Of String)
+        Function GetItemValue(propertyName As String) As Object
+
+    End Interface
+
+    ''' <summary>
     ''' Abstracts for the dynamics property.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
