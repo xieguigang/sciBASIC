@@ -57,11 +57,19 @@ Namespace Net.Http
         Dim WithEvents task As wgetTask
         Dim cursorTop%
 
+        ''' <summary>
+        ''' Create a new file download task
+        ''' </summary>
+        ''' <param name="url">The remote resource to download.</param>
+        ''' <param name="save">The file save location</param>
         Sub New(url$, save$)
             task = New wgetTask(url, save)
             cursorTop = Console.CursorTop
         End Sub
 
+        ''' <summary>
+        ''' Run the file download task
+        ''' </summary>
         Public Sub Run()
             Call task.StartTask()
 
