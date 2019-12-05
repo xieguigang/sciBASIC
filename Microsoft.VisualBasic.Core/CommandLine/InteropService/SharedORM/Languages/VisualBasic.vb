@@ -215,10 +215,16 @@ Namespace CommandLine.InteropService.SharedORM
         Private Shared Function ArgumentXmlDocs(args As Argument()) As String()
             Dim out As New List(Of String)
             Dim param$
+            Dim comments$
 
             For Each arg As Argument In args
-                param = $"''' <param name=""{VisualBasic.normAsVisualBasicName(arg.Name)}"">
-{XmlEntity.EscapingXmlEntity(arg.Description).Replace("\n", vbCrLf).LineTokens.Select(Function(l) "''' " & l).JoinBy(vbCrLf)}
+                comments = XmlEntity.EscapingXmlEntity(arg.Description) _
+                    .Replace("\n", vbCrLf) _
+                    .LineTokens _
+                    .Select(Function(l) "''' " & l) _
+                    .JoinBy(vbCrLf) _
+                    .Trim("'"c)
+                param = $"''' <param name=""{VisualBasic.normAsVisualBasicName(arg.Name)}"">{comments}
 ''' </param>"
                 out += param
             Next
