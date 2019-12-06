@@ -131,6 +131,17 @@ Namespace ApplicationServices.Terminal
 
         Dim spans As New List(Of Span)
 
+        Public Sub Reset()
+            blockquote = False
+            boldSpan = False
+            inlineCodespan = False
+            lastNewLine = False
+            controlBuf *= 0
+            textBuf *= 0
+            styleStack.Clear()
+            spans *= 0
+        End Sub
+
         Private Function bufferIs(term As String) As Boolean
             If controlBuf <> term.Length Then
                 Return False
