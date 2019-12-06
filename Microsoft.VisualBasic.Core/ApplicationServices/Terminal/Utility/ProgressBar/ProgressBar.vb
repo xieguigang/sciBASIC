@@ -186,6 +186,11 @@ Namespace Terminal.ProgressBar
 
         Shared Sub New()
             disabled = App.GetVariable(TerminalProgressBarEnvironmentConfigName).TextEquals(NameOf(disabled))
+
+            ' The progress bar is also be disable in internal pipeline mode
+            If App.GetVariable(name:=FlagInternalPipeline).ParseBoolean = True Then
+                disabled = True
+            End If
         End Sub
 
         ''' <summary>

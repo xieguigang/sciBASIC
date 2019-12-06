@@ -629,7 +629,7 @@ Public Module App
     ''' </summary>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("FlushMemory", Info:="Rabbish collection To free the junk memory.")>
+    <ExportAPI("FlushMemory")>
     Public Sub FlushMemory()
         Call GC.Collect()
         Call GC.WaitForPendingFinalizers()
@@ -671,7 +671,7 @@ Public Module App
     ''' <param name="Prompted"></param>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Pause", Info:="Pause the console program.")>
+    <ExportAPI("Pause")>
     Public Sub Pause(Optional prompted$ = "Press any key to continute...")
         Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine(prompted)

@@ -43,9 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
