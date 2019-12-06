@@ -95,6 +95,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return Nothing
         End Function
 
+        ''' <summary>
+        ''' 当目标对象没有xml注释的时候，这个函数返回的是空值
+        ''' </summary>
+        ''' <param name="fullName"></param>
+        ''' <returns></returns>
         Public Overloads Function [GetType](fullName As String) As ProjectType
             Dim tokens = fullName.Split("."c)
             Dim typeName As String = tokens.Last
