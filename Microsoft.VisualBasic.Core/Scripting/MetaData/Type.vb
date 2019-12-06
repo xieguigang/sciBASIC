@@ -1,56 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::e5ae64f845b53aa6957e99cc714b1792, Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TypeInfo
-    ' 
-    '         Properties: assembly, fullName, isSystemKnownType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: [GetType], LoadAssembly, ToString
-    ' 
-    '         Sub: doInfoParser
-    ' 
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TypeInfo
+' 
+'         Properties: assembly, fullName, isSystemKnownType
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: [GetType], LoadAssembly, ToString
+' 
+'         Sub: doInfoParser
+' 
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Scripting.MetaData
 
@@ -113,6 +115,24 @@ Namespace Scripting.MetaData
         End Function
 
         ''' <summary>
+        ''' Loads the assembly file which contains this type. 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function LoadAssembly(searchPath As String()) As Assembly
+            Dim path As Value(Of String) = ""
+            Dim assm As Assembly = Nothing
+
+            For Each directory As String In searchPath.SafeQuery.JoinIterates(App.HOME)
+                If (path = $"{directory}/{Me.assembly}").FileExists Then
+                    assm = System.Reflection.Assembly.LoadFile(path)
+                    Exit For
+                End If
+            Next
+
+            Return assm
+        End Function
+
+        ''' <summary>
         ''' Get mapping type information.
         ''' </summary>
         ''' <param name="knownFirst">
@@ -124,7 +144,8 @@ Namespace Scripting.MetaData
         ''' <returns></returns>
         Public Overloads Function [GetType](Optional knownFirst As Boolean = False,
                                             Optional throwEx As Boolean = True,
-                                            Optional ByRef getException As Exception = Nothing) As Type
+                                            Optional ByRef getException As Exception = Nothing,
+                                            Optional searchPath$() = Nothing) As Type
             Dim type As Type = Nothing
             Dim assm As Assembly
 
@@ -139,7 +160,18 @@ Namespace Scripting.MetaData
             ' 错误一般出现在loadassembly阶段
             ' 主要是文件未找到
             Try
-                assm = LoadAssembly()
+                assm = searchPath.DoCall(AddressOf LoadAssembly)
+
+                If assm Is Nothing Then
+                    getException = New DllNotFoundException(Me.assembly)
+
+                    If throwEx Then
+                        Throw getException
+                    Else
+                        Return Nothing
+                    End If
+                End If
+
                 type = assm.GetType(Me.fullName)
                 getException = Nothing
             Catch ex As Exception
