@@ -201,7 +201,9 @@ Namespace CommandLine.InteropService.SharedORM
                 deli = ", "
             End If
 
-            Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
+            Dim funcDeclare$ = $"Public Function {func}({params.JoinBy(deli)}) As Integer"
+
+            Call vb.AppendLine(funcDeclare)
             Call vb.AppendLine($"    Dim CLI As New StringBuilder(""{api.Value.Name}"")")
             ' 插入命令名称和参数值之间的一个必须的空格
             Call vb.AppendLine("    Call CLI.Append("" "")")
