@@ -716,6 +716,9 @@ Public Module NetworkVisualizer
                 .Size(frameSize) _
                 .Start(nsweeps:=iteration, showProgress:=showLabelerProgress)
         End If
+        If getLabelColor Is Nothing Then
+            getLabelColor = Function(node) Nothing
+        End If
 
         For Each label As LayoutLabel In labels
             With label
