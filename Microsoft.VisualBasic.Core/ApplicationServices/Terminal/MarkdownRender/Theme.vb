@@ -13,6 +13,7 @@ Namespace ApplicationServices.Terminal
         Public Property BlockQuote As ConsoleFontStyle
         Public Property [Global] As ConsoleFontStyle
         Public Property Bold As ConsoleFontStyle
+        Public Property Italy As ConsoleFontStyle
 
     End Class
 

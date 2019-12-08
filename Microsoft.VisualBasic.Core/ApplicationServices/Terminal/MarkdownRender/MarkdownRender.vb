@@ -90,7 +90,8 @@ Namespace ApplicationServices.Terminal
             .CodeBlock = (ConsoleColor.Red, ConsoleColor.Yellow),
             .InlineCodeSpan = (ConsoleColor.Red, ConsoleColor.Black),
             .Url = (ConsoleColor.Blue, ConsoleColor.Black),
-            .Bold = (ConsoleColor.Yellow, ConsoleColor.Black)
+            .Bold = (ConsoleColor.Black, ConsoleColor.Yellow),
+            .Italy = (ConsoleColor.Yellow, ConsoleColor.DarkGray)
         }
 
         Dim theme As MarkdownTheme
@@ -122,6 +123,7 @@ Namespace ApplicationServices.Terminal
         Dim boldSpan As Boolean = False
         Dim inlineCodespan As Boolean = False
         Dim blockquote As Boolean = False
+        Dim italySpan As Boolean = False
         Dim lastNewLine As Boolean
         Dim controlBuf As New List(Of Char)
         Dim textBuf As New List(Of Char)
@@ -136,6 +138,7 @@ Namespace ApplicationServices.Terminal
             boldSpan = False
             inlineCodespan = False
             lastNewLine = False
+            italySpan = False
             controlBuf *= 0
             textBuf *= 0
             styleStack.Clear()
