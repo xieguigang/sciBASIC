@@ -254,7 +254,7 @@ Namespace CommandLine.Reflection.EntryPoints
                 VBDebugger.Mute = False
 
                 Call App.LogException(ex, trace)
-                Call DebuggerArgs.SaveErrorLog(App.BugsFormatter(ex))
+                Call DebuggerArgs.SaveErrorLog(VBDebugger.BugsFormatter(ex))
                 Call VBDebugger.WaitOutput()
 
                 If [throw] Then

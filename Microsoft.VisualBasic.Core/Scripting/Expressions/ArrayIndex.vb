@@ -45,6 +45,9 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Scripting.Expressions
 
+    ''' <summary>
+    ''' Expression text helper for vector index
+    ''' </summary>
     Public Module ArrayIndex
 
         ''' <summary>

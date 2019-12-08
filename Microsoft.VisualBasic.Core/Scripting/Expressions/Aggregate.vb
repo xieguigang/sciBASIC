@@ -44,6 +44,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace Scripting.Expressions
 
+    ''' <summary>
+    ''' Helper module for get lambda function by scripting text
+    ''' </summary>
     Public Module Aggregate
 
         ''' <summary>

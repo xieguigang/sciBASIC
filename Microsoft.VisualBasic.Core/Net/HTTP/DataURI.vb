@@ -78,7 +78,7 @@ Namespace Net.Http
         Sub New(file$, Optional codepage$ = Nothing)
             mime = Strings.LCase(file.FileMimeType.MIMEType)
             base64 = file.ReadBinary.ToBase64String
-            codepage = codepage
+            chartSet = codepage
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -129,7 +129,9 @@ Namespace Net.Http
             Dim t = uri.Split(";"c) _
                 .Select(Function(p) p.StringSplit("[:=,]")) _
                 .ToDictionary(Function(k) k(0).ToLower,
-                              Function(value) value(1))
+                              Function(value)
+                                  Return value(1)
+                              End Function)
 
             Return New DataURI(
                 base64:=t.TryGetValue("base64"),

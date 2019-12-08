@@ -1399,7 +1399,6 @@
     <Compile Include="ApplicationServices\Parallel\Tasks\IParallelTask.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\BatchTasks.vb" />
-    <Compile Include="ApplicationServices\Parallel\Threads\CodeThread.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
