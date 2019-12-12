@@ -49,7 +49,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
@@ -164,7 +164,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
                 .Select(Function(row)
                             Dim values#() = row _
                                 .Values _
-                                .Select(Function(n) sys.Round(n, l)) _
+                                .Select(Function(n) stdNum.Round(n, l)) _
                                 .ToArray
 
                             Return New Streams.Array.Double With {
