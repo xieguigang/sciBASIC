@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Data.Trinity
@@ -59,8 +60,9 @@ Namespace Data.Trinity
             End Get
         End Property
 
-        Sub New(similarity As WordSimilarity)
-            bin = New WordSimilarityIndex(similarity)
+        Sub New(Optional similarity As WordSimilarity = Nothing)
+            Static defaultThreshold As [Default](Of WordSimilarity) = New WordSimilarity
+            bin = New WordSimilarityIndex(similarity Or defaultThreshold)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
