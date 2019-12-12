@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports sys = System.Math
 
-Namespace Text.Levenshtein
+Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
     Public Module ResultVisualize
 
@@ -59,7 +59,7 @@ Namespace Text.Levenshtein
         <Extension>
         Public Function HTMLVisualize(result As DistResult) As String
             Try
-                Return result.__visualizeHTML().FormatHTML
+                Return result.doVisualizeHTML().FormatHTML
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return _
@@ -75,7 +75,7 @@ Namespace Text.Levenshtein
         End Function
 
         <Extension>
-        Private Function __visualizeHTML(dist As DistResult) As String
+        Private Function doVisualizeHTML(dist As DistResult) As String
             Dim html As New XmlBuilder()
             Dim edits$ = dist.DistEdits
 
@@ -119,7 +119,7 @@ Namespace Text.Levenshtein
                         </p>
                     </p>
 
-            html += dist.__innerMatrix
+            html += dist.internalMatrix
 
             Return (<html>
                         <head>
@@ -132,7 +132,8 @@ Namespace Text.Levenshtein
                             .Replace("$content", html.ToString)
         End Function
 
-        <Extension> Private Function __innerMatrix(matrix As DistResult) As String
+        <Extension>
+        Private Function internalMatrix(matrix As DistResult) As String
             Dim dict As Dictionary(Of Integer, Integer())
 
             If matrix.DistTable Is Nothing Then

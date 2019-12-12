@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports stdNum = System.Math
 
-Namespace Text.Levenshtein
+Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
     ''' <summary>
     ''' Levenshtein Edit Distance Algorithm for measure string distance
@@ -174,8 +174,8 @@ Vladimir I",
             Dim sHyp As String = New String(hypotheses.Select(Function(x) asChar(x)).ToArray)
             Dim sRef As String = New String(reference.Select(Function(x) asChar(x)).ToArray)
             Dim result As New DistResult With {
-                .Hypotheses = sHyp,
-                .Reference = sRef
+                .hypotheses = sHyp,
+                .reference = sRef
             }
             Return computeRouteImpl(sHyp, result, i, j, distTable)
         End Function
@@ -210,8 +210,8 @@ Vladimir I",
             Dim i As Integer = reference.Length
             Dim j As Integer = hypotheses.Length
             Dim result As New DistResult With {
-                .Hypotheses = hypotheses,
-                .Reference = Nothing
+                .hypotheses = hypotheses,
+                .reference = Nothing
             }
             Return computeRouteImpl(hypotheses, result, i, j, distTable)
         End Function
@@ -361,8 +361,8 @@ Vladimir I",
             Dim i As Integer = reference.Length
             Dim j As Integer = hypotheses.Length
             Dim result As New DistResult With {
-                .Hypotheses = hypotheses,
-                .Reference = reference
+                .hypotheses = hypotheses,
+                .reference = reference
             }
 
             Return computeRouteImpl(hypotheses, result, i, j, distTable)

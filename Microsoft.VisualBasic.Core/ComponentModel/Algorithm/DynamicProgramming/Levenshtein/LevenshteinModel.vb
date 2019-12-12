@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports sys = System.Math
 
-Namespace Text.Levenshtein
+Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
     Public Class DistResult
 
