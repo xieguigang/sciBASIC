@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10c538a5029327a24db621be937c1762, Microsoft.VisualBasic.Core\Scripting\Expressions\Aggregate.vb"
+﻿#Region "Microsoft.VisualBasic::2117fcb69915badf86fb096611bbec9f, core\Bio.Assembly\ComponentModel\Web\WebQueryModule.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    '     Module Aggregate
+    '     Class WebQueryModule
     ' 
-    '         Function: GetAggregateFunction
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: contextPrefix
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,35 +43,36 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Scripting.Expressions
+Namespace Net.Http
 
-    ''' <summary>
-    ''' Helper module for get lambda function by scripting text
-    ''' </summary>
-    Public Module Aggregate
+    Public MustInherit Class WebQueryModule(Of Context) : Inherits WebQuery(Of Context)
+
+        Sub New(<CallerMemberName>
+                Optional cache$ = Nothing,
+                Optional interval% = -1,
+                Optional offline As Boolean = False)
+
+            Call MyBase.New(cache, interval, offline)
+
+            Me.contextGuid = AddressOf doParseGuid
+            Me.deserialization = AddressOf doParseObject
+            Me.url = AddressOf doParseUrl
+            Me.prefix = AddressOf contextPrefix
+        End Sub
+
+        Protected MustOverride Function doParseUrl(context As Context) As String
+        Protected MustOverride Function doParseObject(html As String, schema As Type) As Object
 
         ''' <summary>
-        ''' Get ``Aggregate`` function by term.
+        ''' 生成缓存所使用的一个唯一标识符的生成函数
         ''' </summary>
-        ''' <param name="name$">
-        ''' + max
-        ''' + min
-        ''' + average
-        ''' </param>
+        ''' <param name="context"></param>
         ''' <returns></returns>
-        ''' 
-        <Extension> Public Function GetAggregateFunction(name$) As Func(Of IEnumerable(Of Double), Double)
-            Select Case LCase(name)
-                Case "max"
-                    Return Function(x) x.Max
-                Case "min"
-                    Return Function(x) x.Min
-                Case "average", "avg", "mean"
-                    Return Function(x) x.Average
+        Protected MustOverride Function doParseGuid(context As Context) As String
 
-                Case Else
-                    Throw New NotImplementedException(name)
-            End Select
+        Protected Overridable Function contextPrefix(guid As String) As String
+            Return ""
         End Function
-    End Module
+
+    End Class
 End Namespace

@@ -70,6 +70,27 @@ Namespace ApplicationServices.Zip
     Public Module ZipLib
 
         ''' <summary>
+        ''' Check if the given <paramref name="zip"/> file contains any data. 
+        ''' </summary>
+        ''' <param name="zip"></param>
+        ''' <returns></returns>
+        Public Function CheckValidZipFile(zip As String) As Boolean
+            Dim result As Boolean = False
+
+            If zip.FileExists(True) Then
+                Try
+                    Using archive As ZipArchive = ZipFile.OpenRead(zip)
+                        result = archive.Entries.Count > 0
+                    End Using
+                Catch ex As Exception
+                    result = False
+                End Try
+            End If
+
+            Return result
+        End Function
+
+        ''' <summary>
         ''' 判断目标zip文件是否是直接将文件夹进行压缩的
         ''' 如果是直接将文件夹压缩的，那么肯定会在每一个entry的起始存在一个共同的文件夹名
         ''' 例如：

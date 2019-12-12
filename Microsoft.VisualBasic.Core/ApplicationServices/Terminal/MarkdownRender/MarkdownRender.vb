@@ -90,7 +90,9 @@ Namespace ApplicationServices.Terminal
             .CodeBlock = (ConsoleColor.Red, ConsoleColor.Yellow),
             .InlineCodeSpan = (ConsoleColor.Red, ConsoleColor.Black),
             .Url = (ConsoleColor.Blue, ConsoleColor.Black),
-            .Bold = (ConsoleColor.Yellow, ConsoleColor.Black)
+            .Bold = (ConsoleColor.Black, ConsoleColor.Yellow),
+            .Italy = (ConsoleColor.Yellow, ConsoleColor.DarkGray),
+            .HeaderSpan = (ConsoleColor.DarkGreen, ConsoleColor.Yellow)
         }
 
         Dim theme As MarkdownTheme
@@ -105,6 +107,7 @@ Namespace ApplicationServices.Terminal
             Me.markdown = markdown.LineTokens.JoinBy(ASCII.LF)
             Me.indent = indent
             Me.theme.Global.SetConfig(Me)
+            Me.Reset()
             Me.DoParseSpans()
             Me.PrintSpans()
         End Sub
@@ -122,7 +125,9 @@ Namespace ApplicationServices.Terminal
         Dim boldSpan As Boolean = False
         Dim inlineCodespan As Boolean = False
         Dim blockquote As Boolean = False
-        Dim lastNewLine As Boolean
+        Dim italySpan As Boolean = False
+        Dim headerSpan As Boolean = False
+        Dim lastNewLine As Boolean = True
         Dim controlBuf As New List(Of Char)
         Dim textBuf As New List(Of Char)
 
@@ -131,6 +136,24 @@ Namespace ApplicationServices.Terminal
 
         Dim spans As New List(Of Span)
 
+        Public Sub Reset()
+            blockquote = False
+            boldSpan = False
+            inlineCodespan = False
+            lastNewLine = True
+            italySpan = False
+            headerSpan = False
+            controlBuf *= 0
+            textBuf *= 0
+            styleStack.Clear()
+            spans *= 0
+        End Sub
+
+        ''' <summary>
+        ''' <see cref="controlBuf"/> is in given string pattern?
+        ''' </summary>
+        ''' <param name="term"></param>
+        ''' <returns></returns>
         Private Function bufferIs(term As String) As Boolean
             If controlBuf <> term.Length Then
                 Return False
@@ -139,6 +162,11 @@ Namespace ApplicationServices.Terminal
             End If
         End Function
 
+        ''' <summary>
+        ''' All of the character value in <see cref="controlBuf"/> is equals to given character <paramref name="c"/>
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
         Private Function bufferAllIs(c As Char) As Boolean
             If controlBuf = 0 Then
                 Return False
@@ -148,7 +176,9 @@ Namespace ApplicationServices.Terminal
         End Function
 
         Private Sub restoreStyle()
-            styleStack.Pop()
+            If styleStack.Count > 0 Then
+                Call styleStack.Pop()
+            End If
 
             If styleStack.Count = 0 Then
                 Call theme.Global.SetConfig(Me)
@@ -168,6 +198,8 @@ Namespace ApplicationServices.Terminal
                 span.Print()
                 isNewLine = span.IsEndByNewLine
             Next
+
+            Call Console.WriteLine()
         End Sub
 
         Private Sub EndSpan(byNewLine As Boolean)
@@ -178,16 +210,18 @@ Namespace ApplicationServices.Terminal
                 style = theme.Url
             End If
 
-            If styleStack.Peek.Equals(theme.CodeBlock) Then
+            If styleStack.Count > 0 AndAlso styleStack.Peek.Equals(theme.CodeBlock) Then
                 style.BackgroundColor = theme.CodeBlock.BackgroundColor
             End If
 
-            spans += New Span With {
-                .style = style,
-                .text = text,
-                .IsEndByNewLine = byNewLine
-            }
-            textBuf *= 0
+            If text.Length > 0 Then
+                spans += New Span With {
+                    .style = style,
+                    .text = text,
+                    .IsEndByNewLine = byNewLine
+                }
+                textBuf *= 0
+            End If
         End Sub
 
         Private Sub WalkChar(c As Char)
@@ -201,6 +235,7 @@ Namespace ApplicationServices.Terminal
                 Case ASCII.LF
                     lastNewLine = True
                     blockquote = False
+                    headerSpan = False
                     textBuf += ASCII.LF
                     EndSpan(True)
                     restoreStyle()
@@ -222,11 +257,25 @@ Namespace ApplicationServices.Terminal
                         theme.BlockQuote.SetConfig(Me)
                         textBuf += " "c
                         textBuf += " "c
+                    ElseIf headerSpan AndAlso bufferAllIs("#"c) Then
+                        theme.HeaderSpan.SetConfig(Me)
+                        controlBuf *= 0
                     Else
                         EndSpan(False)
                         textBuf += c
                         EndSpan(False)
                     End If
+                Case "#"c
+                    If lastNewLine AndAlso (controlBuf = 0 OrElse controlBuf.All(Function(x) x = "#"c)) Then
+                        controlBuf += c
+                        headerSpan = True
+                    ElseIf headerSpan AndAlso textBuf = 0 Then
+                        controlBuf += c
+                    Else
+                        textBuf += c
+                    End If
+
+                    lastNewLine = False
                 Case Else
                     lastNewLine = False
 

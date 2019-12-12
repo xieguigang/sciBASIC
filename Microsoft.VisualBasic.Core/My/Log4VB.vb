@@ -54,6 +54,9 @@ Namespace My
     ''' </summary>
     Public Module Log4VB
 
+        ''' <summary>
+        ''' Additional user log file drivers
+        ''' </summary>
         Friend ReadOnly logs As New List(Of LoggingDriver)
 
         ''' <summary>
@@ -66,6 +69,11 @@ Namespace My
             {MSG_TYPES.WRN, ConsoleColor.Yellow}
         }
 
+        ''' <summary>
+        ''' Translate <see cref="MSG_TYPES"/> to <see cref="ConsoleColor"/>
+        ''' </summary>
+        ''' <param name="level"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function getColor(level As Integer) As ConsoleColor

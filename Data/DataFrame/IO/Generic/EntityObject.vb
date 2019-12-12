@@ -123,7 +123,7 @@ Namespace IO
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
+            Return $"{ID}: ({Properties.Count}) {Properties.Keys.JoinBy(", ")}"
         End Function
 
         ''' <summary>

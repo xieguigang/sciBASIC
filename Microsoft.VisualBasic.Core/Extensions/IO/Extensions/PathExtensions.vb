@@ -264,7 +264,10 @@ Public Module PathExtensions
     ''' <param name="[option]"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function ListDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
+    Public Iterator Function ListDirectory(DIR$,
+                                           Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly,
+                                           Optional fullName As Boolean = True) As IEnumerable(Of String)
+
         Dim current As New DirectoryInfo(DIR)
 
         If Not current.Exists Then
@@ -273,10 +276,14 @@ Public Module PathExtensions
         End If
 
         For Each folder In current.EnumerateDirectories
-            Yield folder.FullName
+            If fullName Then
+                Yield folder.FullName
+            Else
+                Yield folder.Name
+            End If
 
             If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
-                For Each path In folder.FullName.ListDirectory([option])
+                For Each path In folder.FullName.ListDirectory([option], fullName)
                     Yield path
                 Next
             End If
