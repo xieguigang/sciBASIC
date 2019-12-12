@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -41,6 +42,44 @@ Namespace Data.Trinity
             Next
         End Function
 
+    End Class
+
+    ''' <summary>
+    ''' 使用模拟比较来建立所给定的字符串的快速模糊查找的索引对象模型
+    ''' </summary>
+    Public Class WordSimilarityIndex(Of T)
+
+        ReadOnly bin As WordSimilarityIndex
+        ReadOnly table As New Dictionary(Of String, T)
+
+        Public ReadOnly Property Count As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return table.Count
+            End Get
+        End Property
+
+        Sub New(similarity As WordSimilarity)
+            bin = New WordSimilarityIndex(similarity)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function HaveKey(term As String) As Boolean
+            Return table.ContainsKey(term)
+        End Function
+
+        Public Function AddTerm(term$, value As T) As WordSimilarityIndex(Of T)
+            Call bin.AddTerm(term)
+            Call table.Add(term, value)
+
+            Return Me
+        End Function
+
+        Public Iterator Function FindMatches(term As String) As IEnumerable(Of T)
+            For Each key As String In bin.FindMatches(term)
+                Yield table(key)
+            Next
+        End Function
     End Class
 
     Public Class WordSimilarity : Implements IEqualityComparer(Of Integer())
