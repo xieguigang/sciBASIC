@@ -57,6 +57,7 @@ Namespace Linq
         ''' <param name="apply"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension>
         Public Function DoCall(Of T, Tout)(input As T, apply As Func(Of T, Tout)) As Tout
             Return apply(input)
