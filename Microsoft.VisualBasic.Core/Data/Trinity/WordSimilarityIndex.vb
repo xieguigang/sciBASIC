@@ -36,6 +36,12 @@ Namespace Data.Trinity
                 .ToArray _
                 .DoCall(AddressOf bin.Find)
 
+            ' the given term key have no match items
+            ' in current index object
+            If node Is Nothing Then
+                Return
+            End If
+
             Yield node.Value
 
             For Each member As String In node.Members
