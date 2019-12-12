@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Data.Trinity
 
@@ -22,6 +23,24 @@ Namespace Data.Trinity
             Return ascii.Select(AddressOf ChrW).CharString
         End Function
 
+        Public Function AddTerm(term As String) As WordSimilarityIndex
+            Call bin.Add(term.Select(AddressOf AscW).ToArray, term, False)
+            Return Me
+        End Function
+
+        Public Iterator Function FindMatches(term As String) As IEnumerable(Of String)
+            Dim node As BinaryTree(Of Integer(), String) = term _
+                .Select(AddressOf AscW) _
+                .ToArray _
+                .DoCall(AddressOf bin.Find)
+
+            Yield node.Value
+
+            For Each member As String In node.Members
+                Yield member
+            Next
+        End Function
+
     End Class
 
     Public Class WordSimilarity : Implements IEqualityComparer(Of Integer())
@@ -34,7 +53,7 @@ Namespace Data.Trinity
         End Sub
 
         Public Function CompareAsciiVector(x As Integer(), y As Integer()) As Integer
-            With LevenshteinDistance.ComputeDistance(x, y, Function(a, b) a = b, Function(c) ChrW(c))
+            With LevenshteinDistance.ComputeDistance(x, y, Function(a, b) a = b, AddressOf ChrW)
                 If .IsNothing Then
                     Return -1
                 ElseIf .MatchSimilarity >= equalsThreshold Then
