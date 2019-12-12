@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Levenshtein
 
+    <HideModuleName>
     Public Module LevExtensions
 
         <Extension> Public Sub GetMatches(Of T)(edits As DistResult, ref As T(), hyp As T(), ByRef refOUT As T(), ByRef hypOUT As T())
