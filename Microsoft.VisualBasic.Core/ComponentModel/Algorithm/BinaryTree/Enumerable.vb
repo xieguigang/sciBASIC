@@ -91,6 +91,13 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End If
         End Function
 
+        ''' <summary>
+        ''' Get all value property from the childs in this given node
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="tree"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Values(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of V)

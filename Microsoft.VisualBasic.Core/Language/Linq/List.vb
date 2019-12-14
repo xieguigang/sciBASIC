@@ -286,7 +286,7 @@ Namespace Language
         ''' </summary>
         ''' <param name="x">The collection whose elements are copied to the new list.</param>
         Sub New(ParamArray x As T())
-            Call MyBase.New(x)
+            Call MyBase.New(If(x Is Nothing, {}, x))
         End Sub
 
         ''' <summary>

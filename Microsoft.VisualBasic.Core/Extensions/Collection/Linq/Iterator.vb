@@ -51,6 +51,7 @@ Namespace Linq
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function Tuples(Of T)(seq As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of (i%, val As T))
             Return seq.Select(Function(i) (i.i, i.value))
         End Function
@@ -61,6 +62,8 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <param name="offset%"></param>
         ''' <returns></returns>
+        ''' 
+        <DebuggerStepThrough>
         <Extension>
         Public Iterator Function SeqIterator(source As IEnumerable, Optional offset% = 0) As IEnumerable(Of SeqValue(Of Object))
             Dim i As Integer = offset
@@ -83,6 +86,8 @@ Namespace Linq
         ''' <returns>
         ''' ``[index, item_value]``
         ''' </returns>
+        ''' 
+        <DebuggerStepThrough>
         <Extension>
         Public Iterator Function SeqIterator(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of SeqValue(Of T))
             If Not source Is Nothing Then
@@ -97,10 +102,12 @@ Namespace Linq
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function SeqTuple(Of T1, T2)(tuple As (a As IEnumerable(Of T1), b As IEnumerable(Of T2)), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
             Return (tuple.a.ToArray, tuple.b.ToArray).SeqTuple(offset)
         End Function
 
+        <DebuggerStepThrough>
         <Extension>
         Public Iterator Function SeqTuple(Of T1, T2)(tuple As (x As T1(), y As T2()), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
             Dim value As (T1, T2)
@@ -144,24 +151,28 @@ Namespace Linq
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function ValueArray(Of T)(source As IEnumerable(Of Value(Of T).IValueOf)) As T()
             Return source.Select(Function(o) o.Value).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function Indices(Of T)(source As IEnumerable(Of SeqValue(Of T))) As Integer()
             Return source.Ordinals.ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function Ordinals(Of T)(source As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of Integer)
             Return source.Select(Function(o) o.i)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function Indices(Of T)(source As IEnumerable(Of T), assert As Func(Of T, Boolean)) As Integer()
             Return source _
                 .SeqIterator _

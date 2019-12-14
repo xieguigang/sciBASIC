@@ -26,11 +26,15 @@ Namespace ApplicationServices.Terminal
         Public Property BackgroundColor As ConsoleColor = ConsoleColor.Black
 
         Public Sub SetConfig(render As MarkdownRender)
-            Console.ForegroundColor = ForeColor
-            Console.BackgroundColor = BackgroundColor
+            Call Apply()
 
             render.currentStyle = Me
             render.styleStack.Push(Me)
+        End Sub
+
+        Public Sub Apply()
+            Console.ForegroundColor = ForeColor
+            Console.BackgroundColor = BackgroundColor
         End Sub
 
         Public Function CreateSpan(text As String) As Span

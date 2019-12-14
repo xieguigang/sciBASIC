@@ -199,6 +199,7 @@ Namespace ApplicationServices.Terminal
                 isNewLine = span.IsEndByNewLine
             Next
 
+            Call theme.Global.Apply()
             Call Console.WriteLine()
         End Sub
 
