@@ -1,73 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::fcb5999da9e68e133c1c60dd7bdea6ef, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\Token.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Token
-    ' 
-    '         Properties: Arguments, Closure, IsClosure, IsFunction, IsNumeric
-    '                     IsObject, name, Text, Type, UNDEFINED
-    '                     Value
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetValue, ToString
-    ' 
-    '     Class Statement
-    ' 
-    '         Properties: tokens, Trace
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class Main
-    ' 
-    '         Properties: program
-    ' 
-    '     Class CodeSpan
-    ' 
-    '         Properties: line, start, stops
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class CodeToken
-    ' 
-    '         Properties: isNumeric, name, span, text
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Token
+' 
+'         Properties: Arguments, Closure, IsClosure, IsFunction, IsNumeric
+'                     IsObject, name, Text, Type, UNDEFINED
+'                     Value
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetValue, ToString
+' 
+'     Class Statement
+' 
+'         Properties: tokens, Trace
+' 
+'         Function: ToString
+' 
+'     Class Main
+' 
+'         Properties: program
+' 
+'     Class CodeSpan
+' 
+'         Properties: line, start, stops
+' 
+'         Function: ToString
+' 
+'     Class CodeToken
+' 
+'         Properties: isNumeric, name, span, text
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -280,7 +281,8 @@ Namespace Scripting.TokenIcer
         ''' The text that makes up the token.
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property text As String Implements Value(Of String).IValueOf.Value
+        <XmlAttribute>
+        Public Property text As String Implements Value(Of String).IValueOf.Value
 
         ''' <summary>
         ''' Returns a Boolean value indicating whether an expression can be evaluated as
@@ -288,6 +290,7 @@ Namespace Scripting.TokenIcer
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property isNumeric As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Information.IsNumeric(text)
             End Get
@@ -305,14 +308,27 @@ Namespace Scripting.TokenIcer
         Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{name}] {text}"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator =(token As CodeToken(Of Tokens), element As (Tokens, String())) As Boolean
+            Return token.name.Equals(element.Item1) AndAlso (element.Item2.IndexOf(token.text) > -1)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator <>(token As CodeToken(Of Tokens), element As (Tokens, String())) As Boolean
+            Return Not token = element
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(token As CodeToken(Of Tokens), element As (Tokens, String)) As Boolean
             Return token.name.Equals(element.Item1) AndAlso token.text = element.Item2
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <>(token As CodeToken(Of Tokens), element As (Tokens, String)) As Boolean
             Return Not token = element
         End Operator

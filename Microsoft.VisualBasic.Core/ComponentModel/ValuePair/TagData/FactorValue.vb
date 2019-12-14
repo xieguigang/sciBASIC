@@ -53,7 +53,14 @@ Namespace ComponentModel.TagData
     Public Class FactorValue(Of T As {Structure, IComparable(Of T)}, V)
 
         Public Property factor As T
-        Public Property Value As V
+        Public Property result As V
+
+        Public Shared Widening Operator CType(value As (factor As T, result As V)) As FactorValue(Of T, V)
+            Return New FactorValue(Of T, V) With {
+                .factor = value.factor,
+                .result = value.result
+            }
+        End Operator
 
     End Class
 

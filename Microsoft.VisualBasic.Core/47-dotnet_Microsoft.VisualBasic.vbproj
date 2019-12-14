@@ -1161,6 +1161,8 @@
     <Compile Include="Language\Value\CharStream.vb" />
     <Compile Include="Language\Value\Variant.vb" />
     <Compile Include="My\File.vb" />
+    <Compile Include="Net\HTTP\Web\WebQuery.vb" />
+    <Compile Include="Net\HTTP\Web\WebQueryModule.vb" />
     <Compile Include="Net\HTTP\wget.vb" />
     <Compile Include="Net\HTTP\Stream\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
