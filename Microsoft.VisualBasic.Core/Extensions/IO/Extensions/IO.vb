@@ -158,15 +158,17 @@ Public Module IOExtensions
     Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate, Optional doClear As Boolean = False) As FileStream
         Dim access As FileShare
 
+        If path.StringEmpty Then
+            Throw New InvalidProgramException("No file path data provided!")
+        ElseIf path.FileName.Length > 200 Then
+            Throw New PathTooLongException(path)
+        End If
+
         With path.ParentPath
             If Not .DirectoryExists Then
                 Call .MkDIR()
             End If
         End With
-
-        If path.FileName.Length > 200 Then
-            Throw New PathTooLongException(path)
-        End If
 
         If doClear Then
             ' 在这里调用FlushStream函数的话会导致一个循环引用的问题
