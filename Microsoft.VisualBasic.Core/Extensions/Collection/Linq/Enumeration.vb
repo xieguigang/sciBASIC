@@ -81,6 +81,7 @@ Namespace Linq
         Function GetEnumerator() As IEnumerator
     End Interface
 
+    <HideModuleName>
     Public Module EnumerationExtensions
 
         Private Class Enumerator(Of T) : Implements IEnumerable(Of T)

@@ -1108,6 +1108,7 @@
     <Compile Include="Data\Repository\RepositoryFileSystem.vb" />
     <Compile Include="Data\Trinity\WordSimilarityIndex.vb" />
     <Compile Include="Extensions\Collection\CategoryOperations.vb" />
+    <Compile Include="Extensions\Collection\Linq\JoinExtensions.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
     <Compile Include="Extensions\StringHelpers\StringFormats.vb" />
@@ -1285,6 +1286,7 @@
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
     <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
     <Compile Include="Serialization\ICloneable.vb" />
+    <Compile Include="Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb" />
     <Compile Include="Text\Xml\Models\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />

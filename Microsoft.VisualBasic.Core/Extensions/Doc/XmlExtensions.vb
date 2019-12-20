@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::0f0a1457babe6094d042d9534c9a9e52, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module XmlExtensions
-    ' 
-    '     Properties: XmlParser
-    ' 
-    '     Function: CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, (+2 Overloads) LoadFromXml, (+2 Overloads) LoadXml
-    '               SafeLoadXml, SaveAsXml
-    ' 
-    '     Sub: WriteXML
-    ' 
-    ' /********************************************************************************/
+' Module XmlExtensions
+' 
+'     Properties: XmlParser
+' 
+'     Function: CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, (+2 Overloads) LoadFromXml, (+2 Overloads) LoadXml
+'               SafeLoadXml, SaveAsXml
+' 
+'     Sub: WriteXML
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
+Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 <Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 Public Module XmlExtensions
@@ -297,8 +298,10 @@ Public Module XmlExtensions
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function LoadFromXml(Of T)(xml$, Optional throwEx As Boolean = True) As T
-        Return LoadFromXml(xml, GetType(T), throwEx)
+    <DebuggerStepThrough>
+    <Extension>
+    Public Function LoadFromXml(Of T)(xml$, Optional throwEx As Boolean = True, Optional doNamespaceIgnorant As Boolean = False) As T
+        Return LoadFromXml(xml, GetType(T), throwEx, doNamespaceIgnorant)
     End Function
 
     ''' <summary>
@@ -310,7 +313,12 @@ Public Module XmlExtensions
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadFromXml(xml$, schema As Type, Optional throwEx As Boolean = True) As Object
+    ''' 
+    <Extension>
+    Public Function LoadFromXml(xml$, schema As Type,
+                                Optional throwEx As Boolean = True,
+                                Optional doNamespaceIgnorant As Boolean = False) As Object
+
         If xml.StringEmpty Then
             If throwEx Then
                 Throw New XmlException("Empty xml content!")
@@ -319,29 +327,37 @@ Public Module XmlExtensions
             End If
         End If
 
-        Using stream As New StringReader(s:=xml)
-            Try
-                Return New XmlSerializer(schema).Deserialize(stream)
-            Catch ex As Exception
-                Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
 
-                If Len(xml) <= 4096 * 100 Then
-                    ex = New Exception(xml, ex)
-                End If
+        Try
+            If doNamespaceIgnorant Then
+                Using xmlDoc As New StringReader(xml), reader As New NamespaceIgnorantXmlTextReader(xmlDoc)
+                    Return New XmlSerializer(schema).Deserialize(reader)
+                End Using
+            Else
+                Using stream As New StringReader(s:=xml)
+                    Return New XmlSerializer(schema).Deserialize(stream)
+                End Using
+            End If
+        Catch ex As Exception
+            Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
 
-                App.LogException(ex, curMethod)
+            If Len(xml) <= 4096 * 100 Then
+                ex = New Exception(xml, ex)
+            End If
 
-                If throwEx Then
-                    Throw ex
-                Else
-                    Return Nothing
-                End If
-            End Try
-        End Using
+            App.LogException(ex, curMethod)
+
+            If throwEx Then
+                Throw ex
+            Else
+                Return Nothing
+            End If
+        End Try
     End Function
 
     <ExportAPI("Xml.CreateObject")>
-    <Extension> Public Function CreateObjectFromXml(Xml As StringBuilder, typeInfo As Type) As Object
+    <Extension>
+    Public Function CreateObjectFromXml(Xml As StringBuilder, typeInfo As Type) As Object
         Dim doc As String = Xml.ToString
 
         Using Stream As New StringReader(doc)

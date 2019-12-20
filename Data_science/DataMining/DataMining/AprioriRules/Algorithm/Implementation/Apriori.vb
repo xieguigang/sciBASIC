@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq.JoinExtensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace AprioriRules.Impl

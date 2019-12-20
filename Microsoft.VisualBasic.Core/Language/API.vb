@@ -66,11 +66,13 @@ Namespace Language
                       End Function
         }
 
+        <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TypeDef(Of T)() As TypeSchema
             Return New TypeSchema(GetType(T))
         End Function
 
+        <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function TypeInfo(Of T)(x As T) As TypeSchema
@@ -83,6 +85,7 @@ Namespace Language
         'End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function Empty(Of T)() As [Default](Of T())
             Return {}
         End Function
@@ -107,6 +110,7 @@ Namespace Language
         ''' <param name="isNothing"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function [Default](Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As [Default](Of T)
             Return New [Default](Of T) With {
                 .Value = x,
@@ -123,10 +127,12 @@ Namespace Language
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function AsDefault(Of T)(x As T, Optional [If] As Assert(Of Object) = Nothing) As [Default](Of T)
             Return [Default](x, [If])
         End Function
 
+        <DebuggerStepThrough>
         Public Function [Default](Of  T)(value As T) As [Default](Of T)
             Return New [Default](Of T) With {
                 .value = value,
@@ -141,12 +147,15 @@ Namespace Language
         ''' <param name="[default]"></param>
         ''' <param name="expression"></param>
         ''' <returns></returns>
+        ''' 
+        <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function [When](Of T)([default] As T, expression As Boolean) As [Default](Of T)
             Return [default].AsDefault().When(expression)
         End Function
 
+        <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function [When](Of T)([default] As T, expression As Assert(Of T)) As [Default](Of T)
@@ -181,6 +190,7 @@ Namespace Language
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function Self(Of T)() As Func(Of T, T)
             Return AddressOf [ByRef]
         End Function
@@ -193,6 +203,7 @@ Namespace Language
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension> Public Function [ByRef](Of T)(x As T) As T
             Return x
         End Function
@@ -204,6 +215,7 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension>
         Public Function IsNothing(Of T As Class)(x As T) As Boolean
             Return x Is Nothing
@@ -230,32 +242,38 @@ Namespace Language
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function AsVector(strings As IEnumerable(Of String)) As StringVector
             Return New StringVector(strings)
         End Function
 
+        <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function list(ParamArray args As ArgumentReference()) As Dictionary(Of String, Object)
             Return args.ToDictionary(Function(a) a.name, Function(a) a.value)
         End Function
 
+        <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsNumeric(list As Dictionary(Of String, Object)) As Dictionary(Of String, Double)
             Return list.ToDictionary(Function(t) t.Key, Function(t) CDbl(t.Value))
         End Function
 
+        <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsString(list As Dictionary(Of String, Object)) As Dictionary(Of String, String)
             Return list.ToDictionary(Function(t) t.Key, Function(t) Scripting.ToString(t.Value))
         End Function
 
+        <DebuggerStepThrough>
         <Extension>
         Public Function [As](Of A, B, T)(list As IEnumerable(Of [Variant](Of A, B))) As IEnumerable(Of T)
             Return list.Select(Function(x) CType(x.Value, T))
         End Function
 
+        <DebuggerStepThrough>
         <Extension>
         Public Function [As](Of A, B, C, T)(list As IEnumerable(Of [Variant](Of A, B, C))) As IEnumerable(Of T)
             Return list.Select(Function(x) CType(x.Value, T))

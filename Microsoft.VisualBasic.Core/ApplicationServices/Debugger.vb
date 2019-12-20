@@ -72,6 +72,18 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 Public Module VBDebugger
 
+    Friend inDebugMode As Boolean
+
+    Public ReadOnly Property debugMode As Boolean
+        Get
+#If DEBUG Then
+            Return True
+#Else
+            Return inDebugMode
+#End If
+        End Get
+    End Property
+
     ''' <summary>
     ''' Assert that the expression value is correctly or not?
     ''' </summary>

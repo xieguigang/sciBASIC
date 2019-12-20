@@ -2006,14 +2006,15 @@ Namespace Math
         ''' </summary>
         ''' <returns></returns>
         ''' 
-        <ExportAPI("RMS", Info:="Root mean square")>
-        <Extension> Public Function RMS(data As IEnumerable(Of Double)) As Double
+        <ExportAPI("RMS")>
+        <Extension>
+        Public Function RMS(data As IEnumerable(Of Double)) As Double
             With (From n In data Select n ^ 2).ToArray
                 Return stdNum.Sqrt(.Sum / .Length)
             End With
         End Function
 
-        Public Function RMS(a#(), b#()) As Double
+        Public Function RMSE(a#(), b#()) As Double
             Dim sum#
             Dim n% = a.Length
 
@@ -2021,7 +2022,7 @@ Namespace Math
                 sum += (a(i) - b(i)) ^ 2
             Next
 
-            Return Math.Sqrt(sum)
+            Return stdNum.Sqrt(sum)
         End Function
 
         ''' <summary>
@@ -2038,7 +2039,7 @@ Namespace Math
         ''' Returns the PDF value at x for the specified Poisson distribution.
         ''' </summary>
         ''' 
-        <ExportAPI("Poisson.PDF", Info:="Returns the PDF value at x for the specified Poisson distribution.")>
+        <ExportAPI("Poisson.PDF")>
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
             Dim result As Double = stdNum.Exp(-lambda)
             Dim k As Integer = x

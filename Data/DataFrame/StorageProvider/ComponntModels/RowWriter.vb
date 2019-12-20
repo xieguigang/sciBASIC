@@ -80,12 +80,12 @@ Option Strict Off
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq.JoinExtensions
 
 Namespace StorageProvider.ComponentModels
 

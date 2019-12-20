@@ -89,12 +89,14 @@ Namespace Linq
             End Get
         End Property
 
+        <DebuggerStepThrough>
         Sub New(i%, x As T)
             Me.i = i
             value = x
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overrides Function ToString() As String
             Return Me.value.GetJson(False)
         End Function
@@ -189,6 +191,7 @@ Namespace Linq
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function CompareTo(other As Integer) As Integer Implements IComparable(Of Integer).CompareTo
             Return i.CompareTo(other)
         End Function
@@ -205,6 +208,7 @@ Namespace Linq
             Return i.CompareTo(DirectCast(obj, SeqValue(Of T)).i)
         End Function
 
+        <DebuggerStepThrough>
         Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
             i = address
         End Sub
