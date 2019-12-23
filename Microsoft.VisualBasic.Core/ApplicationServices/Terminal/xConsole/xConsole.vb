@@ -485,8 +485,7 @@ Namespace Terminal.xConsole
         ''' Set new window position
         ''' </summary>
         Public Sub SetWindowPos(x As Integer, y As Integer)
-            SetWindowPos(MyConsole, 0, x, y, 0, 0,
-                1)
+            SetWindowPos(MyConsole, 0, x, y, 0, 0, 1)
         End Sub
 #End Region
 
@@ -511,14 +510,9 @@ Namespace Terminal.xConsole
         ReadOnly NEW_LINE As String = Environment.NewLine
 
         ''' <summary>
-        ''' Check for updates every 7days. False to disable. (Default = true);
-        ''' </summary>
-        Public CheckForUpdatesEnabled As Boolean = True
-
-        ''' <summary>
         ''' Clear colors automatically at the end of each Writeline. (Default = false);
         ''' </summary>
-        Public ClearColorsAtEnd As Boolean = False
+        Public Property ClearColorsAtEnd As Boolean = False
 
 #End Region
 
