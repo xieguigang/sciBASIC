@@ -85,7 +85,7 @@ Namespace ApplicationServices.Terminal
     Public Class MarkdownRender
 
         Shared ReadOnly defaultTheme As [Default](Of MarkdownTheme) = New MarkdownTheme With {
-            .[Global] = (ConsoleColor.White, ConsoleColor.Black),
+            .[Global] = Nothing,
             .BlockQuote = (ConsoleColor.Black, ConsoleColor.Gray),
             .CodeBlock = (ConsoleColor.Red, ConsoleColor.Yellow),
             .InlineCodeSpan = (ConsoleColor.Red, ConsoleColor.Black),
@@ -99,14 +99,20 @@ Namespace ApplicationServices.Terminal
         Dim markdown As CharPtr
         Dim indent As Integer
 
+        Dim initialGlobal As ConsoleFontStyle
+
         Private Sub New(theme As MarkdownTheme)
             Me.theme = theme
+            Me.initialGlobal = New ConsoleFontStyle With {
+                .BackgroundColor = Console.BackgroundColor,
+                .ForeColor = Console.ForegroundColor
+            }
         End Sub
 
         Public Sub DoPrint(markdown$, indent%)
             Me.markdown = markdown.LineTokens.JoinBy(ASCII.LF)
             Me.indent = indent
-            Me.theme.Global.SetConfig(Me)
+            Me.applyGlobal()
             Me.Reset()
             Me.DoParseSpans()
             Me.PrintSpans()
@@ -181,9 +187,17 @@ Namespace ApplicationServices.Terminal
             End If
 
             If styleStack.Count = 0 Then
-                Call theme.Global.SetConfig(Me)
+                Call applyGlobal()
             Else
                 Call styleStack.Peek.SetConfig(Me)
+            End If
+        End Sub
+
+        Private Sub applyGlobal()
+            If theme.Global Is Nothing Then
+                Call initialGlobal.SetConfig(Me)
+            Else
+                Call theme.Global.SetConfig(Me)
             End If
         End Sub
 
@@ -199,7 +213,7 @@ Namespace ApplicationServices.Terminal
                 isNewLine = span.IsEndByNewLine
             Next
 
-            Call theme.Global.Apply()
+            Call applyGlobal()
             Call Console.WriteLine()
         End Sub
 
