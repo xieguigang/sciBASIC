@@ -110,7 +110,7 @@ Namespace ApplicationServices.Zip
         ''' The default is Overwrite.IfNewer.
         ''' </param>
         ''' 
-        <ExportAPI("Extract", Info:="Safely extracts a single file from a zip file.")>
+        <ExportAPI("Extract")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Sub ImprovedExtractToFile(<Parameter("Zip.Entry", "The zip entry we are pulling the file from")>
                                                      file As ZipArchiveEntry,
@@ -146,7 +146,7 @@ Namespace ApplicationServices.Zip
         ''' The default is IfNewer.
         ''' </param>
         ''' 
-        <ExportAPI("ExtractToDir", Info:="Unzips the specified file to the given folder in a safe manner. This plans for missing paths and existing files and handles them gracefully.")>
+        <ExportAPI("ExtractToDir")>
         Public Sub ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName$,
                                               <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName$,
                                               <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>

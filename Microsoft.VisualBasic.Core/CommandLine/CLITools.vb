@@ -245,7 +245,7 @@ Namespace CommandLine
         ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
+        <ExportAPI("TryParse")>
         <Extension>
         Public Function TryParse(args As StringList,
                                  Optional duplicatedAllows As Boolean = False,
@@ -315,7 +315,7 @@ Namespace CommandLine
         ''' Gets the commandline object for the current program.
         ''' </summary>
         ''' <returns></returns>
-        <ExportAPI("args", Info:="Gets the commandline object for the current program.")>
+        <ExportAPI("args")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Args() As CommandLine
             Return App.CommandLine
@@ -331,7 +331,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
+        <ExportAPI("TryParse")>
         Public Function TryParse(<Parameter("CLI", "The CLI arguments that inputs from the console by user.")> CLI$,
                                  <Parameter("Duplicates.Allowed")> Optional duplicateAllowed As Boolean = False) As CommandLine
 
@@ -379,9 +379,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("Join",
-                   Info:="ReGenerate the cli command line argument string text. 
-                   NOTE: If the token have a space character, then this function will be wrap that token with quot character automatically.")>
+        <ExportAPI("Join")>
         Public Function Join(tokens As IEnumerable(Of String)) As String
             If tokens Is Nothing Then
                 Return ""

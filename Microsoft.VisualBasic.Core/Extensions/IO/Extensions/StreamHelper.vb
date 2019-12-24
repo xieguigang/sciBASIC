@@ -46,7 +46,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text
 
 Public Module StreamHelper
 
@@ -57,7 +56,7 @@ Public Module StreamHelper
     ''' Create from <see cref="WebServiceUtils.GetRequestRaw(String, Boolean, String)"/>
     ''' </param>
     ''' <returns></returns>
-    <ExportAPI("Stream.Copy", Info:="Download stream data from the http response.")>
+    <ExportAPI("Stream.Copy")>
     <Extension> Public Function CopyStream(stream As Stream, Optional target As Stream = Nothing, Optional bufferSize% = 64 * 1024) As Stream
         If stream Is Nothing Then
             Return If(target, New MemoryStream)
