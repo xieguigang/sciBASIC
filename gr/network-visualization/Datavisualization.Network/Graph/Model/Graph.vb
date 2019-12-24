@@ -335,6 +335,10 @@ Namespace Graph
             Dim u As Node = _index(source)
             Dim v As Node = _index(target)
 
+            If data Is Nothing Then
+                data = New EdgeData
+            End If
+
             Return createEdgeInternal(u, v, data)
         End Function
 
