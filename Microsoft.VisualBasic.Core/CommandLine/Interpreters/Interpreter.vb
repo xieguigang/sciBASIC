@@ -225,21 +225,29 @@ Namespace CommandLine
             Else
                 ' 命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
                 If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then
+                    Dim i As Integer
+
                     App.InputFile = commandName
 
-                    Try
-                        Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
-                    Catch ex As Exception
-                        ex = New Exception("Execute file failure!", ex)
-                        ex = New Exception(argvs(Scan0).ToString, ex)
-                        Call App.LogException(ex)
-                        Call ex.PrintException
-                    End Try
+                    If CLI.IsTrue("--debug") Then
+                        i = ExecuteFile()(path:=commandName, args:=CLI)
+                    Else
+                        Try
+                            i = ExecuteFile()(path:=commandName, args:=CLI)
+                        Catch ex As Exception
+                            ex = New Exception("Execute file failure!", ex)
+                            ex = New Exception(CLI.ToString, ex)
+                            Call App.LogException(ex)
+                            Call ex.PrintException
 
-                    Return -120
+                            i = -120
+                        End Try
+                    End If
+
+                    Return i
                 ElseIf Not ExecuteNotFound Is Nothing Then
                     Try
-                        Return ExecuteNotFound()(DirectCast(argvs(Scan0), CommandLine))
+                        Return ExecuteNotFound()(CLI)
                     Catch ex As Exception
                         ex = New Exception("Execute not found failure!", ex)
                         ex = New Exception(argvs(Scan0).ToString, ex)
@@ -255,7 +263,7 @@ Namespace CommandLine
 
                         Call Console.WriteLine(BAD_COMMAND_NAME, commandName)
                         Call Console.WriteLine()
-                        Call Console.WriteLine(PS1.Fedora12.ToString & " " & DirectCast(argvs(Scan0), CommandLine).ToString)
+                        Call Console.WriteLine(PS1.Fedora12.ToString & " " & CLI.ToString)
 
                     Else
                         Call listingCommands(list, commandName)

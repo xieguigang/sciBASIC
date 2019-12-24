@@ -178,11 +178,6 @@ Vladimir I",
             Return computeRouteImpl(sHyp, result, i, j, distTable)
         End Function
 
-        <ExportAPI("ToHTML", Info:="View distance evolve route of the Levenshtein Edit Distance calculation.")>
-        Public Function GetVisulization(res As DistResult) As String
-            Return res.HTMLVisualize
-        End Function
-
         <ExportAPI("Write.Xml.DistResult")>
         Public Function SaveMatch(result As DistResult, SaveTo As String) As Boolean
             Return result.GetXml.SaveTo(SaveTo)
@@ -197,7 +192,7 @@ Vladimir I",
         ''' <param name="hypotheses"></param>
         ''' <param name="cost"></param>
         ''' <returns></returns>
-        <ExportAPI("ComputeDistance", Info:="Implement the Levenshtein Edit Distance algorithm.")>
+        <ExportAPI("ComputeDistance")>
         Public Function ComputeDistance(reference As Integer(), hypotheses As String, Optional cost As Double = 0.7) As DistResult
             If hypotheses Is Nothing Then hypotheses = ""
             If reference Is Nothing Then reference = New Integer() {}
@@ -231,7 +226,9 @@ Vladimir I",
                         Select ch = ChrW(index),
                             obj = distinct(index - a)) _
                             .ToDictionary(Function(x) x.obj,
-                                          Function(x) x.ch)
+                                          Function(x)
+                                              Return x.ch
+                                          End Function)
             Dim ref As String = New String(query.Select(Function(x) dict(x)).ToArray)
             Dim sbj As String = New String(subject.Select(Function(x) dict(x)).ToArray)
 
@@ -276,9 +273,11 @@ Vladimir I",
 
                     result.DistTable = distTable _
                         .ToVectorList _
-                        .Select(Function(vec) New Streams.Array.Double With {
-                            .Values = vec
-                        }) _
+                        .Select(Function(vec)
+                                    Return New Streams.Array.Double With {
+                                        .Values = vec
+                                    }
+                                End Function) _
                         .ToArray
                     result.DistEdits = New String(evolveRoute)
                     result.Path = css.ToArray
@@ -347,7 +346,7 @@ Vladimir I",
         ''' <param name="hypotheses"></param>
         ''' <param name="cost"></param>
         ''' <returns></returns>
-        <ExportAPI("ComputeDistance", Info:="Implement the Levenshtein Edit Distance algorithm.")>
+        <ExportAPI("ComputeDistance")>
         Public Function ComputeDistance(reference$, hypotheses$, Optional cost# = 0.7) As DistResult
 
             If hypotheses Is Nothing Then hypotheses = ""

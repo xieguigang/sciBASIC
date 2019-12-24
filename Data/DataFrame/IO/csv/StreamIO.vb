@@ -118,7 +118,8 @@ Namespace IO
         Public Function SaveDataFrame(csv As IEnumerable(Of RowObject),
                                       Optional path$ = "",
                                       Optional encoding As Encoding = Nothing,
-                                      Optional tsv As Boolean = False) As Boolean
+                                      Optional tsv As Boolean = False,
+                                      Optional silent As Boolean = False) As Boolean
 
             Dim stopwatch As Stopwatch = Stopwatch.StartNew
             Dim del$ = ","c Or ASCII.TAB.AsDefault(Function() tsv)
@@ -133,7 +134,9 @@ Namespace IO
                 Next
             End Using
 
-            Call $"Generate csv file document using time {stopwatch.ElapsedMilliseconds} ms.".__INFO_ECHO
+            If Not silent Then
+                Call $"Generate csv file document using time {stopwatch.ElapsedMilliseconds} ms.".__INFO_ECHO
+            End If
 
             Return True
         End Function

@@ -319,7 +319,11 @@ Public Module Extensions
     ''' <returns></returns>
     <ExportAPI("Write.Csv")>
     <Extension>
-    Public Function SaveTable(data As IEnumerable, path$, Optional encoding As Encoding = Nothing, Optional type As Type = Nothing) As Boolean
+    Public Function SaveTable(data As IEnumerable, path$,
+                              Optional encoding As Encoding = Nothing,
+                              Optional type As Type = Nothing,
+                              Optional silent As Boolean = False) As Boolean
+
         If type Is Nothing Then
             For Each x As Object In data
                 If Not x Is Nothing Then
@@ -334,7 +338,11 @@ Public Module Extensions
                     typeDef:=type,
                     strict:=False,
                     schemaOut:=Nothing) _
-            .SaveDataFrame(path, encoding:=encoding)
+            .SaveDataFrame(
+                path:=path,
+                encoding:=encoding,
+                silent:=silent
+             )
     End Function
 
     <ExportAPI("Write.Csv")>

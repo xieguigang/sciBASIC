@@ -82,7 +82,7 @@ Namespace Language
         ''' </summary>
         ''' <returns>true if the current System.Nullable`1 object has a value; false if the current
         ''' System.Nullable`1 object has no value.</returns>
-        Public ReadOnly Property HasValue As Boolean
+        Public Overridable ReadOnly Property HasValue As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Not Value Is Nothing

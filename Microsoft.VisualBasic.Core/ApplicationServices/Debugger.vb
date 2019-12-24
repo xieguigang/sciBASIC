@@ -72,6 +72,18 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 Public Module VBDebugger
 
+    Friend inDebugMode As Boolean
+
+    Public ReadOnly Property debugMode As Boolean
+        Get
+#If DEBUG Then
+            Return True
+#Else
+            Return inDebugMode
+#End If
+        End Get
+    End Property
+
     ''' <summary>
     ''' Assert that the expression value is correctly or not?
     ''' </summary>
@@ -170,11 +182,21 @@ Public Module VBDebugger
     ''' Output the full debug information while the project is debugging in debug mode.
     ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)
     ''' </summary>
-    ''' <param name="msg">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
+    ''' <param name="msg">
+    ''' The message fro output to the debugger console, this function will add a time 
+    ''' stamp automaticly To the leading position Of the message.
+    ''' </param>
     ''' <param name="indent"></param>
+    ''' <param name="waitOutput">
+    ''' 等待调试器输出工作线程将内部的消息队列输出完毕
+    ''' </param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
-    <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0, Optional mute As Boolean = False) As String
-        Static indents$() = {"",
+    <Extension> Public Function __DEBUG_ECHO(msg$,
+                                             Optional indent% = 0,
+                                             Optional mute As Boolean = False,
+                                             Optional waitOutput As Boolean = False) As String
+        Static indents$() = {
+            "",
             New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
             New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
             New String(" ", 9), New String(" ", 10)
@@ -189,6 +211,9 @@ Public Module VBDebugger
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
+        End If
+        If waitOutput Then
+            Call VBDebugger.WaitOutput()
         End If
 
         Return Nothing

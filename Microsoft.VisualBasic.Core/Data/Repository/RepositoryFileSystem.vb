@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.FileIO.Path
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq.JoinExtensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Data.Repository
@@ -45,6 +45,7 @@ Namespace Data.Repository
                        In matches
                        Where InStr(extType, path.ExtValue, CompareMethod.Text) > 0
                        Select path.Path
+
             Return LQuery.IteratesALL.Distinct.ToArray
         End Function
 

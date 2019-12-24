@@ -55,6 +55,8 @@ Namespace Text.Xml.Linq
         Dim file As StreamWriter
         Dim indentBlank$ = "   "
 
+        Public Const DataSetPrefix$ = "XmlDataSetOf"
+
         ''' <summary>
         ''' Create a new xml dataset writer
         ''' </summary>
@@ -70,7 +72,7 @@ Namespace Text.Xml.Linq
             '
             Me.file = file.OpenWriter(encoding.TextEncoding)
             Me.file.WriteLine(NodeIterator.XmlDeclare.Replace("utf-16", encoding.Description.ToLower))
-            Me.file.WriteLine($"<DataSetOf{GetType(T).Name} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">")
+            Me.file.WriteLine($"<{DataSetPrefix}{GetType(T).Name} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">")
             Me.file.WriteLine(indentBlank & "<!--")
             Me.file.WriteLine(XmlDataModel.GetTypeReferenceComment(GetType(T), 6))
             Me.file.WriteLine(indentBlank & "-->")
@@ -103,7 +105,7 @@ Namespace Text.Xml.Linq
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call file.WriteLine($"</DataSetOf{GetType(T).Name}>")
+                    Call file.WriteLine($"</{DataSetPrefix}{GetType(T).Name}>")
                     Call file.Flush()
                     Call file.Close()
                     Call file.Dispose()
