@@ -151,8 +151,9 @@ Namespace Imaging.BitmapImage
         ''' together adjacentBottom and oppositeTop.
         ''' 
         ''' </remarks>
-        <ExportAPI("Image.Rotate", Info:="Creates a new Image containing the same image only rotated.")>
-        <Extension> Public Function RotateImage(image As Image, angle!) As Bitmap
+        <ExportAPI("Image.Rotate")>
+        <Extension>
+        Public Function RotateImage(image As Image, angle!) As Bitmap
             If image Is Nothing Then
                 Throw New ArgumentNullException("image value is nothing!")
             End If

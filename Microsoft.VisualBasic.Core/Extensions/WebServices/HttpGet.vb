@@ -66,7 +66,7 @@ Public Module HttpGet
     ''' <param name="retry">发生错误的时候的重试的次数</param>
     ''' <returns>失败或者错误会返回空字符串</returns>
     ''' <remarks>这个工具只适合于文本数据的传输操作</remarks>
-    <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request Or a html file on the local filesystem.")>
+    <ExportAPI("Webpage.Request")>
     <Extension> Public Function [GET](url As String,
                                       <Parameter("Request.TimeOut")>
                                       Optional retry As UInt16 = 0,
