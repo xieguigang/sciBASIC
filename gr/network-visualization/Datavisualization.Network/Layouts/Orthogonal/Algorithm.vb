@@ -179,7 +179,8 @@ Namespace Layouts.Orthogonal
         <Extension>
         Private Sub SwapNearbyNode(workspace As Workspace, origin As GridCell)
             Dim totalLenBefore As Double = workspace.totalEdgeLength
-            Dim totalLenAfter As Double
+            Dim totalIntersectionsBefore As Double = workspace.totalIntersections
+            Dim totalAfter As Double
             Dim gain As Double
 
             For Each nearby As GridCell In workspace.grid.GetAdjacentCells(origin.index).Shuffles
@@ -190,8 +191,16 @@ Namespace Layouts.Orthogonal
                     Call workspace.grid.SwapNode(origin.index, nearby.index)
                 End If
 
-                totalLenAfter = workspace.totalEdgeLength
-                gain = totalLenAfter - totalLenBefore
+                totalAfter = workspace.totalIntersections
+                gain = totalAfter - totalIntersectionsBefore
+
+                ' 目的是减少相交的边连接
+                If gain < 0 Then
+                    Exit For
+                End If
+
+                totalAfter = workspace.totalEdgeLength
+                gain = totalAfter - totalLenBefore
 
                 If gain > 0 Then
                     Exit For
