@@ -59,6 +59,7 @@ Namespace FileStream.Generic
         ''' </summary>
         Public Const REFLECTION_ID_MAPPING_IDENTIFIER As String = "ID"
         Public Const REFLECTION_ID_MAPPING_NODETYPE As String = "nodeType"
+        Public Const REFLECTION_ID_MAPPING_NODECOLOR As String = "node_color"
         Public Const REFLECTION_ID_MAPPING_DEGREE$ = "degree"
         Public Const REFLECTION_ID_MAPPING_DEGREE_IN$ = REFLECTION_ID_MAPPING_DEGREE & ".in"
         Public Const REFLECTION_ID_MAPPING_DEGREE_OUT$ = REFLECTION_ID_MAPPING_DEGREE & ".out"

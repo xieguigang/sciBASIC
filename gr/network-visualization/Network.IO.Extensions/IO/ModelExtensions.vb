@@ -115,6 +115,10 @@ Namespace FileStream
                     End If
                 End If
 
+                If Not n.data.color Is Nothing AndAlso n.data.color.GetType Is GetType(SolidBrush) Then
+                    data(names.REFLECTION_ID_MAPPING_NODECOLOR) = DirectCast(n.data.color, SolidBrush).Color.ToHtmlColor
+                End If
+
                 If Not properties Is Nothing Then
                     For Each key As String In properties.Where(Function(p) n.data.HasProperty(p))
                         data(key) = n.data(key)
@@ -250,13 +254,25 @@ Namespace FileStream
                 Call $"Not all of the nodes contains degree value, nodes' radius will use default value: {defaultNodeSize}".Warning
             End If
 
+            If nodeColor Is Nothing Then
+                nodeColor = Function(n)
+                                ' check property value at first
+                                If n.HasProperty(names.REFLECTION_ID_MAPPING_NODECOLOR) Then
+                                    Return n(names.REFLECTION_ID_MAPPING_NODECOLOR).GetBrush
+                                End If
+
+                                ' if not exists then use default color
+                                Return defaultColor
+                            End Function
+            End If
+
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
  _
                 From n As Node
                 In net.nodes
                 Let id = n.ID
                 Let pos As AbstractVector = New FDGVector2(Val(n("x")), Val(n("y")))
-                Let c As Brush = If(nodeColor Is Nothing, defaultColor, nodeColor(n))
+                Let c As Brush = nodeColor(n)
                 Let r As Double() = getRadius(node:=n)
                 Let data As NodeData = New NodeData With {
                     .color = c,
