@@ -61,7 +61,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Imaging.Math2D
 
@@ -92,9 +92,9 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function IntersectionOf(line As Line, polygon As Polygon) As Intersection
+        Public Function IntersectionOf(line As Line, polygon As Polygon) As Intersections
             If polygon.Length = 0 Then
-                Return Intersection.None
+                Return Intersections.None
             End If
             If polygon.Length = 1 Then
                 Return IntersectionOf(polygon(0), line)
@@ -102,15 +102,15 @@ Namespace Imaging.Math2D
             Dim tangent As Boolean = False
             For index As Integer = 0 To polygon.Length - 1
                 Dim index2 As Integer = (index + 1) Mod polygon.Length
-                Dim intersection As Intersection = IntersectionOf(line, New Line(polygon(index), polygon(index2)))
-                If intersection = Intersection.Intersection Then
+                Dim intersection As Intersections = IntersectionOf(line, New Line(polygon(index), polygon(index2)))
+                If intersection = Intersections.Intersection Then
                     Return intersection
                 End If
-                If intersection = Intersection.Tangent Then
+                If intersection = Intersections.Tangent Then
                     tangent = True
                 End If
             Next
-            Return If(tangent, Intersection.Tangent, IntersectionOf(line.P1, polygon))
+            Return If(tangent, Intersections.Tangent, IntersectionOf(line.P1, polygon))
         End Function
 
         ''' <summary>
@@ -119,15 +119,15 @@ Namespace Imaging.Math2D
         ''' <param name="point"></param>
         ''' <param name="polygon"></param>
         ''' <returns></returns>
-        Public Function IntersectionOf(point As PointF, polygon As Polygon) As Intersection
+        Public Function IntersectionOf(point As PointF, polygon As Polygon) As Intersections
             Select Case polygon.Length
                 Case 0
-                    Return Intersection.None
+                    Return Intersections.None
                 Case 1
                     If polygon(0).X = point.X AndAlso polygon(0).Y = point.Y Then
-                        Return Intersection.Tangent
+                        Return Intersections.Tangent
                     Else
-                        Return Intersection.None
+                        Return Intersections.None
                     End If
                 Case 2
                     Return IntersectionOf(point, New Line(polygon(0), polygon(1)))
@@ -139,15 +139,15 @@ Namespace Imaging.Math2D
             Dim n As Integer = polygon.Length
             p1 = polygon(0)
             If point = p1 Then
-                Return Intersection.Tangent
+                Return Intersections.Tangent
             End If
 
             For i = 1 To n
                 Dim p2 As PointF = polygon(i Mod n)
                 If point = p2 Then
-                    Return Intersection.Tangent
+                    Return Intersections.Tangent
                 End If
-                If point.Y > sys.Min(p1.Y, p2.Y) Then
+                If point.Y > stdNum.Min(p1.Y, p2.Y) Then
                     If point.Y <= Math.Max(p1.Y, p2.Y) Then
                         If point.X <= Math.Max(p1.X, p2.X) Then
                             If p1.Y <> p2.Y Then
@@ -162,7 +162,7 @@ Namespace Imaging.Math2D
                 p1 = p2
             Next
 
-            Return If((counter Mod 2 = 1), Intersection.Containment, Intersection.None)
+            Return If((counter Mod 2 = 1), Intersections.Containment, Intersections.None)
         End Function
 
         ''' <summary>
@@ -171,24 +171,24 @@ Namespace Imaging.Math2D
         ''' <param name="point"></param>
         ''' <param name="line"></param>
         ''' <returns></returns>
-        Public Function IntersectionOf(point As PointF, line As Line) As Intersection
-            Dim bottomY As Single = sys.Min(line.Y1, line.Y2)
+        Public Function IntersectionOf(point As PointF, line As Line) As Intersections
+            Dim bottomY As Single = stdNum.Min(line.Y1, line.Y2)
             Dim topY As Single = Math.Max(line.Y1, line.Y2)
             Dim heightIsRight As Boolean = point.Y >= bottomY AndAlso point.Y <= topY
             'Vertical line, slope is divideByZero error!
             If line.X1 = line.X2 Then
                 If point.X = line.X1 AndAlso heightIsRight Then
-                    Return Intersection.Tangent
+                    Return Intersections.Tangent
                 Else
-                    Return Intersection.None
+                    Return Intersections.None
                 End If
             End If
             Dim slope As Single = (line.X2 - line.X1) / (line.Y2 - line.Y1)
             Dim onLine As Boolean = (line.Y1 - point.Y) = (slope * (line.X1 - point.X))
             If onLine AndAlso heightIsRight Then
-                Return Intersection.Tangent
+                Return Intersections.Tangent
             Else
-                Return Intersection.None
+                Return Intersections.None
             End If
         End Function
 
@@ -201,22 +201,22 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function IntersectionOf(line1 As Line, line2 As Line, Optional ByRef i As PointF = Nothing) As Intersection
+        Public Function IntersectionOf(line1 As Line, line2 As Line, Optional ByRef i As PointF = Nothing) As Intersections
             '  Fail if either line segment is zero-length.
             If line1.Length = 0R OrElse line2.Length = 0R Then
-                Return Intersection.None
+                Return Intersections.None
             End If
 
             If (line1.X1 = line2.X1 AndAlso line1.Y1 = line2.Y1) OrElse
                (line1.X1 = line2.X2 AndAlso line1.Y1 = line2.Y2) Then
 
                 i = line1.P1
-                Return Intersection.Intersection
+                Return Intersections.Intersection
             ElseIf (line1.X2 = line2.X1 AndAlso line1.Y2 = line2.Y1) OrElse
                    (line1.X2 = line2.X2 AndAlso line1.Y2 = line2.Y2) Then
 
                 i = line1.P2
-                Return Intersection.Intersection
+                Return Intersections.Intersection
             Else
 
                 Return GetLineIntersection(
@@ -245,7 +245,7 @@ Namespace Imaging.Math2D
         ''' <remarks>
         ''' https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect/565282#
         ''' </remarks>
-        Public Function GetLineIntersection(AX!, AY!, BX!, BY!, CX!, CY!, DX!, DY!, Optional ByRef i As PointF = Nothing) As Intersection
+        Public Function GetLineIntersection(AX!, AY!, BX!, BY!, CX!, CY!, DX!, DY!, Optional ByRef i As PointF = Nothing) As Intersections
             Dim s02_x As Single
             Dim s02_y As Single
             Dim s10_x As Single
@@ -266,7 +266,7 @@ Namespace Imaging.Math2D
 
             If denom = 0 Then
                 ' Collinear(平行或共线)       
-                Return Intersection.None
+                Return Intersections.None
             End If
 
             Dim denomPositive As Boolean = denom > 0
@@ -277,17 +277,17 @@ Namespace Imaging.Math2D
 
             If (s_numer < 0) = denomPositive Then
                 ' 参数是大于等亿且小于等亿的，分子分母必须同号且分子小于等于分毿        
-                Return Intersection.None
+                Return Intersections.None
             End If
 
             t_numer = s32_x * s02_y - s32_y * s02_x
 
             If (t_numer < 0) = denomPositive Then
-                Return Intersection.None
+                Return Intersections.None
             End If
 
             If ((s_numer > denom) = denomPositive) OrElse ((t_numer > denom) = denomPositive) Then
-                Return Intersection.None
+                Return Intersections.None
             End If
 
             ' Collision detected
@@ -297,7 +297,7 @@ Namespace Imaging.Math2D
                 .Y = AY + (t * s10_y)
             }
 
-            Return Intersection.Intersection
+            Return Intersections.Intersection
         End Function
 
         ''' <summary>
@@ -398,7 +398,7 @@ Namespace Imaging.Math2D
     ''' <summary>
     ''' 几何体之间的关系类型
     ''' </summary>
-    Public Enum Intersection As Byte
+    Public Enum Intersections As Byte
         None
         ''' <summary>
         ''' 正切

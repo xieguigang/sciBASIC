@@ -286,6 +286,8 @@ Namespace Layouts.Orthogonal
         ''' </summary>
         ''' <param name="node"><see cref="Node.label"/></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindCell(node As String) As GridCell
             Return nodes(node)
         End Function
