@@ -192,6 +192,24 @@ Namespace Graph
             Return vertex.Where(Function(n) n.ID = id).FirstOrDefault
         End Function
 
+        ''' <summary>
+        ''' 根据node节点的label来查找
+        ''' </summary>
+        ''' <param name="labelID"><see cref="Node.label"/></param>
+        ''' <param name="dataLabel"></param>
+        ''' <returns></returns>
+        Public Function GetElementByID(labelID$, Optional dataLabel As Boolean = False) As Node
+            If Not dataLabel AndAlso vertices.ContainsKey(labelID) Then
+                Return vertices(labelID)
+            Else
+                Return vertex _
+                    .Where(Function(n)
+                               Return n.data.label = labelID
+                           End Function) _
+                    .FirstOrDefault
+            End If
+        End Function
+
         Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As NetworkGraph(Of Node, Edge)
             Call New EdgeData With {
                 .weight = weight,
@@ -201,7 +219,7 @@ Namespace Graph
                          ' 在利用这个函数创建edge的时候，
                          ' 会将创建出来的新edge添加进入当前的这个图对象之中
                          ' 所以不需要再次调用addedge方法了
-                         Return CreateEdge(GetNode(u), GetNode(v), data)
+                         Return CreateEdge(GetElementByID(u), GetElementByID(v), data)
                      End Function)
 
             Return Me
@@ -343,12 +361,14 @@ Namespace Graph
         End Function
 
         Public Overloads Function GetConnectedVertex(label As String) As Node()
-            Dim node As Node = GetNode(label)
-            Dim edges = GetEdges(node).ToArray
+            Dim node As Node = GetElementByID(label)
+            Dim edges As Edge() = GetEdges(node).ToArray
             Dim connectedNodes As Node() = edges _
                 .Select(Function(e) {e.U, e.V}) _
                 .IteratesALL _
-                .Where(Function(n) Not n Is node) _
+                .Where(Function(n)
+                           Return Not n Is node
+                       End Function) _
                 .ToArray
 
             Return connectedNodes
@@ -407,24 +427,6 @@ Namespace Graph
             Call edges.Remove(edge.ID)
             Call notify()
         End Sub
-
-        ''' <summary>
-        ''' 根据node节点的label来查找
-        ''' </summary>
-        ''' <param name="label"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetNode(label As String, Optional dataLabel As Boolean = False) As Node
-            If Not dataLabel AndAlso vertices.ContainsKey(label) Then
-                Return vertices(label)
-            Else
-                Return vertex _
-                    .Where(Function(n)
-                               Return n.data.label = label
-                           End Function) _
-                    .FirstOrDefault
-            End If
-        End Function
 
         ''' <summary>
         ''' Find edge by label data

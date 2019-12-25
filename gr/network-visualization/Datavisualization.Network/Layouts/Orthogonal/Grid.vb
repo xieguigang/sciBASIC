@@ -245,7 +245,7 @@ Namespace Layouts.Orthogonal
         ''' <param name="targetNode$"></param>
         ''' <param name="[to]"></param>
         Public Sub MoveNode(targetNode$, [to] As GridCell)
-            Dim node As Node = g.GetNode(targetNode)
+            Dim node As Node = g.GetElementByID(targetNode)
             Dim fromCell As GridCell = nodes(node.label)
 
             Call moveNode(fromCell, [to], node)

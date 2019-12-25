@@ -109,6 +109,12 @@ Namespace Scripting.Runtime
             Return values.ToDictionary(Function(x) x.Key, Function(x) x.Value.ParseNumeric)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsNumeric(values As Dictionary(Of String, Integer)) As Dictionary(Of String, Double)
+            Return values.ToDictionary(Function(x) x.Key, Function(x) CDbl(x.Value))
+        End Function
+
         ''' <summary>
         ''' 将字典之中的值转换为<see cref="Object"/>类型
         ''' </summary>
