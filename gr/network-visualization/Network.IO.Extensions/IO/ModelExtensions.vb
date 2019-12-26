@@ -125,6 +125,15 @@ Namespace FileStream
                     Next
                 End If
 
+                For Each key As String In {
+                    names.REFLECTION_ID_MAPPING_DEGREE,
+                    names.REFLECTION_ID_MAPPING_DEGREE_IN,
+                    names.REFLECTION_ID_MAPPING_DEGREE_OUT
+                }.Where(Function(p) n.data.HasProperty(p))
+
+                    data(key) = n.data(key)
+                Next
+
                 ' 20191022
                 ' name 会和cytoscape之中的name属性产生冲突
                 ' 所以在这里修改为label
