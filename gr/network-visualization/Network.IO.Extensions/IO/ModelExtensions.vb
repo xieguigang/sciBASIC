@@ -155,7 +155,8 @@ Namespace FileStream
                     .interaction = l.data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
                     .value = l.weight,
                     .Properties = New Dictionary(Of String, String) From {
-                        {NameOf(EdgeData.label), l.data.label}
+                        {NameOf(EdgeData.label), l.data.label},
+                        {names.REFLECTION_ID_MAPPING_EDGE_GUID, l.ID}
                     }
                 }
 
@@ -310,7 +311,7 @@ Namespace FileStream
                                          In net.edges
                                          Let a = nodeTable(edge.fromNode)
                                          Let b = nodeTable(edge.toNode)
-                                         Let id = edge.GetNullDirectedGuid
+                                         Let id = edge.getEdgeGuid
                                          Let data As EdgeData = New EdgeData With {
                                              .Properties = New Dictionary(Of String, String) From {
                                                  {names.REFLECTION_ID_MAPPING_INTERACTION_TYPE, edge.interaction}
@@ -326,6 +327,15 @@ Namespace FileStream
 
             Dim graph As New NetworkGraph(nodes, edges)
             Return graph
+        End Function
+
+        <Extension>
+        Private Function getEdgeGuid(edge As NetworkEdge) As String
+            If edge.HasProperty(names.REFLECTION_ID_MAPPING_EDGE_GUID) Then
+                Return edge(names.REFLECTION_ID_MAPPING_EDGE_GUID)
+            Else
+                Return edge.GetNullDirectedGuid
+            End If
         End Function
 
         ''' <summary>
