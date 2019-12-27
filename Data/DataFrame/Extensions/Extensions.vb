@@ -560,7 +560,8 @@ Public Module Extensions
                                              Optional reorderKeys As Integer = 0,
                                              Optional layout As Dictionary(Of String, Integer) = Nothing,
                                              Optional tsv As Boolean = False,
-                                             Optional transpose As Boolean = False) As Boolean
+                                             Optional transpose As Boolean = False,
+                                             Optional silent As Boolean = False) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
@@ -571,9 +572,11 @@ Public Module Extensions
             .Select(Function(o) DirectCast(o, Object)) _
             .ToArray
 
-        Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
-        Call EchoLine($"Save data to file:///{path}")
-        Call EchoLine($"[CSV.Reflector] Reflector have {objSeq.Length} lines of data to write.")
+        If Not silent Then
+            Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
+            Call EchoLine($"Save data to file:///{path}")
+            Call EchoLine($"[CSV.Reflector] Reflector have {objSeq.Length} lines of data to write.")
+        End If
 
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source:=objSeq,
@@ -597,10 +600,11 @@ Public Module Extensions
         Dim success = csv.SaveDataFrame(
             path:=path,
             encoding:=encoding,
-            tsv:=tsv
+            tsv:=tsv,
+            silent:=silent
         )
 
-        If success Then
+        If success AndAlso Not silent Then
             Call "CSV saved!".EchoLine
         End If
 

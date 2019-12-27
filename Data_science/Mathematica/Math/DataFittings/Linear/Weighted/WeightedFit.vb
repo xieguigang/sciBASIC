@@ -102,6 +102,6 @@ Public Class WeightedFit : Implements IFitted
     Public Property ErrorTest As TestPoint() Implements IFitted.ErrorTest
 
     Public Overrides Function ToString() As String
-        Return $"{Polynomial.ToString("F4")} @ R2={CorrelationCoefficient.ToString("F4")}"
+        Return $"{Polynomial.ToString("G6")}, R2={CorrelationCoefficient.ToString("F4")}"
     End Function
 End Class

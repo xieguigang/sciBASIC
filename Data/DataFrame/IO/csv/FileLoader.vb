@@ -1,56 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::c09ed081e97b3295ce78bfb357b48464, Data\DataFrame\IO\csv\FileLoader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module FileLoader
-    ' 
-    '         Function: FastLoad, Load
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module FileLoader
+' 
+'         Function: FastLoad, Load
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace IO
@@ -135,32 +131,35 @@ Namespace IO
                 Call $"Required test for skip on field: [{skipWhile.Name}], but no such field exists in current file data...".Warning
             End If
 
-            Dim parallelLoad = Function() As IEnumerable(Of RowObject)
-                                   Dim loader = From s As SeqValue(Of String)
-                                                In buf.Skip(1).SeqIterator.AsParallel
-                                                Where test(s.value)
-                                                Select row = New RowObject(s.value), i = s.i
-                                                Order By i Ascending
-                                   Dim testForSkip = skipWhile.Value
+            Return first + buf.parallelLoad(headerIndex, test, skipWhile).AsList
+        End Function
 
-                                   If headerIndex = -1 Then
-                                       ' returns all
-                                       Return loader.Select(Function(r) r.row)
-                                   Else
-                                       Return loader _
-                                           .Where(Function(r)
-                                                      If testForSkip(r.row(headerIndex)) Then
-                                                          ' is a row not needed...
-                                                          Return False
-                                                      Else
-                                                          Return True
-                                                      End If
-                                                  End Function) _
-                                           .Select(Function(r) r.row)
-                                   End If
-                               End Function
+        <Extension>
+        Private Function parallelLoad(buf$(), headerIndex%, test As Func(Of String, Boolean), skipWhile As NamedValue(Of Func(Of String, Boolean))) As IEnumerable(Of RowObject)
+            Dim testForSkip = skipWhile.Value
+            Dim loader = From s As SeqValue(Of String)
+                         In buf.Skip(1) _
+                            .SeqIterator _
+                            .AsParallel
+                         Where test(s.value)
+                         Select row = New RowObject(s.value), i = s.i
+                         Order By i Ascending
 
-            Return first + parallelLoad().AsList
+            If headerIndex = -1 Then
+                ' returns all
+                Return loader.Select(Function(r) r.row)
+            Else
+                Return loader _
+                    .Where(Function(r)
+                               If testForSkip(r.row(headerIndex)) Then
+                                   ' is a row not needed...
+                                   Return False
+                               Else
+                                   Return True
+                               End If
+                           End Function) _
+                    .Select(Function(r) r.row)
+            End If
         End Function
     End Module
 End Namespace

@@ -53,18 +53,14 @@ Namespace Dijkstra
              Url:="http://www.codeproject.com/Articles/22647/Dijkstra-Shortest-Route-Calculation-Object-Oriente")>
     Public Module DijkstraAPI
 
-        <ExportAPI("Finder.Creates")>
-        <Extension>
-        Public Function CreatePathwayFinder(g As Graph, Optional undirected As Boolean = False) As DijkstraRouteFind
-            Return New DijkstraRouteFind(g, undirected)
-        End Function
-
         <ExportAPI("Find.Path.Shortest")>
         <Extension>
-        Public Function FindShortestPath(finder As DijkstraRouteFind, start$, ends$) As Route
+        Public Function FindShortestPath(finder As DijkstraRouter, start$, ends$) As Route
             Dim startPos As Vertex = finder.GetLocation(start)
             Dim endPos As Vertex = finder.GetLocation(ends)
-            Return finder.CalculateMinCost(startPos, endPos)
+            Dim routine As Route = finder.CalculateMinCost(startPos, endPos)
+
+            Return routine
         End Function
     End Module
 End Namespace

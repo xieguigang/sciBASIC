@@ -45,6 +45,11 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Network
 
+    ''' <summary>
+    ''' The base type of the network graph
+    ''' </summary>
+    ''' <typeparam name="Node"></typeparam>
+    ''' <typeparam name="Edge"></typeparam>
     Public Class NetworkGraph(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)}) : Inherits Graph(Of Node, Edge, NetworkGraph(Of Node, Edge))
 
         Sub New()
@@ -63,6 +68,7 @@ Namespace Network
                 ' so that the edge key will be updated automatic
                 ' after this node id have been updated
                 node.ID = ++index
+
                 ' initialize internal components
                 Call AddVertex(node)
             Next
