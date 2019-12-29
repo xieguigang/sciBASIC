@@ -463,7 +463,7 @@ Namespace Linq
         ''' </param>
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
-            If source Is Nothing Then
+            If source Is Nothing OrElse Not source.Any Then
                 Return [default]
             Else
                 Return source.FirstOrDefault
