@@ -8,8 +8,25 @@ Namespace Analysis
 
     Public Module Similarity
 
-        Public Function GraphSimilarity(x As NetworkGraph, y As NetworkGraph) As Double
+        Public Function GraphSimilarity(x As NetworkGraph, y As NetworkGraph, Optional cutoff# = 0.65) As Double
+            ' JaccardIndex (intersects / union) -> highly similar / (dis-similar + highly similar)
+            Dim similar%, dissimilar%
+            Dim top#
+            Dim cos#
 
+            For Each a As Node In x.vertex
+                For Each b As Node In y.vertex
+                    If NodeSimilarity(a, b) >= cutoff Then
+                        similar += 1
+                    Else
+                        dissimilar += 1
+                    End If
+                Next
+            Next
+
+            Dim jaccardIndex As Double = similar / (similar + dissimilar)
+
+            Return jaccardIndex
         End Function
 
         ''' <summary>
