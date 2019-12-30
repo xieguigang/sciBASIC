@@ -8,6 +8,10 @@ Namespace Analysis
 
     Public Module Similarity
 
+        Public Function GraphSimilarity(x As NetworkGraph, y As NetworkGraph) As Double
+
+        End Function
+
         ''' <summary>
         ''' Compare node similarity between two network graph
         ''' </summary>
