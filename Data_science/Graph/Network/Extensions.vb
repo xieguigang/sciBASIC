@@ -134,7 +134,12 @@ Namespace Network
             Loop
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ComputeDegreeData(Of T As {New, Network.Node}, Edge As {New, Network.Edge(Of T)})(edges As IEnumerable(Of Edge)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+            Return ComputeDegreeData(edges, Function(l) l.U.label, Function(l) l.V.label)
+        End Function
+
+        Public Function ComputeDegreeData(Of Edge)(edges As IEnumerable(Of Edge), U As Func(Of Edge, String), V As Func(Of Edge, String)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
             Dim [in] As New Dictionary(Of String, Integer)
             Dim out As New Dictionary(Of String, Integer)
             Dim count = Sub(node$, ByRef table As Dictionary(Of String, Integer))
@@ -148,8 +153,8 @@ Namespace Network
             Dim countOut = Sub(node$) Call count(node, out)
 
             For Each link As Edge In edges
-                Call countIn(link.U.Label)
-                Call countOut(link.V.Label)
+                Call countIn(U(link))
+                Call countOut(V(link))
             Next
 
             Return ([in], out)

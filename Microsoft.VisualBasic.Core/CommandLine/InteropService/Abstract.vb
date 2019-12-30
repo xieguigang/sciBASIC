@@ -85,7 +85,10 @@ Namespace CommandLine.InteropService
         Public ReadOnly Property IsAvailable As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _executableAssembly.FileExists
+                ' exe file should be exists on file system 
+                ' and it also should be non-empty for 
+                ' execute the program
+                Return _executableAssembly.FileExists(True)
             End Get
         End Property
 
