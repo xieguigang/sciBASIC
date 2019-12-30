@@ -12,8 +12,11 @@ Namespace CommandLine.Reflection
         Public ReadOnly Property Usage As String Implements IExportAPI.Usage
         Public ReadOnly Property Example As String Implements IExportAPI.Example
 
-        Sub New()
-
+        Sub New(info As IExportAPI)
+            Me.Name = info.Name
+            Me.Info = info.Info
+            Me.Usage = info.Usage
+            Me.Example = info.Example
         End Sub
 
         Public Function PrintView(HTML As Boolean) As String
