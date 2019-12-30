@@ -44,7 +44,8 @@ Namespace Analysis
                             Else
                                 Return e.U.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
                             End If
-                        End Function)
+                        End Function) _
+                .Select(AddressOf Scripting.ToString)
         End Function
 
     End Module
