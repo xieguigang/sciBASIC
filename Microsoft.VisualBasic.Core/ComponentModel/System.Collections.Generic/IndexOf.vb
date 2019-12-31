@@ -184,6 +184,14 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        ''' <summary>
+        ''' 与<see cref="Objects"/>只读属性的功能相似，只不过这个函数是Linq枚举器模式
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function EnumerateMapKeys() As IEnumerable(Of String)
+            Return maps.Keys.AsEnumerable
+        End Function
+
         Public Function GetOrdinal(items As IEnumerable(Of T)) As Integer()
             Return items.Select(Function(element) Me(element)).ToArray
         End Function

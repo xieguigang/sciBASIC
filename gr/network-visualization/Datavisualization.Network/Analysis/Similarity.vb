@@ -46,8 +46,8 @@ Namespace Analysis
             Dim atypes As Dictionary(Of String, Integer) = a.nodeGroupCounts
             Dim btypes As Dictionary(Of String, Integer) = b.nodeGroupCounts
             Dim allGroups As Index(Of String) = atypes.Keys.AsList + btypes.Keys
-            Dim av As New Vector(allGroups.Select(AddressOf atypes.TryGetValue))
-            Dim bv As New Vector(allGroups.Select(AddressOf btypes.TryGetValue))
+            Dim av As New Vector(allGroups.EnumerateMapKeys.Select(AddressOf atypes.TryGetValue))
+            Dim bv As New Vector(allGroups.EnumerateMapKeys.Select(AddressOf btypes.TryGetValue))
             Dim cos As Double = Math.SSM(av, bv)
 
             Return cos
