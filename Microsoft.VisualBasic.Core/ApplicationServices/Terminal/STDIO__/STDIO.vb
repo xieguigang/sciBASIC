@@ -90,13 +90,14 @@ Namespace Terminal
 #Region "printf"
 
         ''' <summary>
-        ''' Output the string to the console using a specific formation.(按照指定的格式将字符串输出到终端窗口之上，请注意，这个函数除了将数据流输出到标准终端之外，还会输出到调试终端)
+        ''' Output the string to the console using a specific formation.
+        ''' (按照指定的格式将字符串输出到终端窗口之上，请注意，这个函数除了将数据流
+        ''' 输出到标准终端之外，还会输出到调试终端)
         ''' </summary>
         ''' <param name="s">A string to print on the console window.(输出到终端窗口之上的字符串)</param>
         ''' <param name="args">Formation parameters.(格式化参数)</param>
         ''' <remarks></remarks>
         '''
-        <ExportAPI("printf", Info:="Output the string to the console using a specific formation.")>
         Public Sub printf(s As String, ParamArray args As Object())
             s = sprintf(s, args)
 
@@ -157,7 +158,6 @@ Namespace Terminal
         ''' <param name="sn"></param>
         ''' <param name="len"></param>
         ''' <returns></returns>
-        <ExportAPI("ZeroFill", Info:="Fill the number string with specific length of ZERO sequence to generates the fixed width string.")>
         Public Function ZeroFill(sn As String, len As Integer) As String
             If sn.Length >= len Then
                 Return sn

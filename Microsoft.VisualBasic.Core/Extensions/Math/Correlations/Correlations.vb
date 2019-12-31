@@ -73,7 +73,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports DataSet = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of System.Collections.Generic.Dictionary(Of String, Double))
-Imports sys = System.Math
+Imports stdNum = System.Math
 Imports Vector = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of Double())
 
 Namespace Math.Correlations
@@ -122,7 +122,6 @@ Namespace Math.Correlations
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        <ExportAPI("SW", Info:="Sandelin-Wasserman similarity function")>
         Public Function SW(x As Double(), y As Double()) As Double
             Dim p = From i As Integer
                     In x.Sequence
@@ -156,7 +155,6 @@ Namespace Math.Correlations
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        <ExportAPI("KLD", Info:="Kullback-Leibler divergence")>
         Public Function KLD(x As Double(), y As Double()) As Double
             Dim index As Integer() = x.Sequence.ToArray
             Dim a As Double = Aggregate i As Integer In index Into Sum(KLDi(x(i), y(i)))
@@ -171,7 +169,7 @@ Namespace Math.Correlations
                 Return 0R
             Else
                 ' KLD(P||Q) = Σ[P(i)*ln(P(i)/Q(i))]
-                Dim value As Double = Xa * sys.Log(Xa / Ya)
+                Dim value As Double = Xa * stdNum.Log(Xa / Ya)
                 Return value
             End If
         End Function
@@ -309,7 +307,7 @@ Namespace Math.Correlations
                 n2 += (s * (s - 1)) / 2
             Next
 
-            denom = sys.Sqrt((n0 - n1) * (n0 - n2))
+            denom = stdNum.Sqrt((n0 - n1) * (n0 - n2))
 
             If denom = 0 Then
                 denom += 0.000000001
@@ -346,15 +344,15 @@ Namespace Math.Correlations
             Dim n As Integer = x.Length
 
             ' fisher's z trasnformation
-            z = 0.5 * sys.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
+            z = 0.5 * stdNum.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
 
             ' student's t probability
             df = n - 2
-            t = pcc * sys.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
+            t = pcc * stdNum.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
 
             prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t))
             ' for a large n
-            prob2 = Beta.erfcc(Abs(z * sys.Sqrt(n - 1.0)) / 1.4142136)
+            prob2 = Beta.erfcc(Abs(z * stdNum.Sqrt(n - 1.0)) / 1.4142136)
 
             Return pcc
         End Function
@@ -466,11 +464,6 @@ Namespace Math.Correlations
         ''' checked!
         ''' </remarks>
         '''
-        <ExportAPI("Spearman",
-               Info:="This method should not be used in cases where the data set is truncated; 
-               that is, when the Spearman correlation coefficient is desired for the top X records 
-               (whether by pre-change rank or post-change rank, or both), the user should use the 
-               Pearson correlation coefficient formula given above.")>
         Public Function Spearman(X#(), Y#()) As Double
             If X.Length <> Y.Length Then
                 Call throwNotAgree(X, Y)

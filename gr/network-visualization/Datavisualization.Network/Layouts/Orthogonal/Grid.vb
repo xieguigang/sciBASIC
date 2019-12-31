@@ -245,7 +245,7 @@ Namespace Layouts.Orthogonal
         ''' <param name="targetNode$"></param>
         ''' <param name="[to]"></param>
         Public Sub MoveNode(targetNode$, [to] As GridCell)
-            Dim node As Node = g.GetNode(targetNode)
+            Dim node As Node = g.GetElementByID(targetNode)
             Dim fromCell As GridCell = nodes(node.label)
 
             Call moveNode(fromCell, [to], node)
@@ -286,6 +286,8 @@ Namespace Layouts.Orthogonal
         ''' </summary>
         ''' <param name="node"><see cref="Node.label"/></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindCell(node As String) As GridCell
             Return nodes(node)
         End Function

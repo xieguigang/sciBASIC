@@ -794,10 +794,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biostack\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,UNIX=True</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=0</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -1102,6 +1102,7 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
+    <Compile Include="CommandLine\Reflection\ExportApiInformation.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
     <Compile Include="Data\NamespaceDoc.vb" />
@@ -1126,11 +1127,6 @@
     <Compile Include="ApplicationServices\Tools\Zip\Options.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\NamespaceDoc.vb" />
-    <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\CodeSign.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\SupportedLanguages.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\LicenseInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
@@ -1543,7 +1539,6 @@
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
     <Compile Include="Net\Tcp\IPTools\AddressEnumerator.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\LicenseMgr.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Project.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectMember.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb" />
@@ -1703,7 +1698,6 @@
     <Compile Include="ApplicationServices\Tools\WinForm\SingleInstanceFormEntry.vb" />
     <Compile Include="ApplicationServices\Tools\Resources.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\StringResources.vb" />
-    <Compile Include="ApplicationServices\VBDev\Ngen\Ngen.vb" />
     <Compile Include="Extensions\Security\AES.vb" />
     <Compile Include="Extensions\Security\SHA.vb" />
     <Compile Include="Extensions\Security\RSACrypto.vb" />

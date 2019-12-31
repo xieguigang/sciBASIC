@@ -191,7 +191,7 @@ Public Module Visualize
                     .label = factor.name,
                     .origID = factor.name,
                     .mass = importance(factor.name),
-                    .radius = importance(factor.name),
+                    .size = {importance(factor.name)},
                     .Properties = New Dictionary(Of String, String) From {
                         {"impacts", importance(factor.name)},
                         {"color", getColor(importance(factor.name)).ToHtmlColor},

@@ -68,7 +68,7 @@ Public Class Vertex : Implements INamedValue
     ''' <returns></returns>
     <XmlAttribute> Public Property ID As Integer Implements IAddress(Of Integer).Address
 
-    Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+    Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
         ID = address
     End Sub
 

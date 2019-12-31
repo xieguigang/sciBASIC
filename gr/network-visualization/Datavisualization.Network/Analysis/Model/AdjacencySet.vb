@@ -113,7 +113,7 @@ Namespace Analysis.Model
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"Node {U} have {adjacentNodes.Count} adjacent nodes: {adjacentNodes.Keys.GetJson}"
+            Return $"Node {U} have {Count} adjacent nodes: {adjacentNodes.Keys.ToArray.GetJson}"
         End Function
 
         Public Function Clone() As AdjacencySet(Of Edge) Implements ICloneable(Of AdjacencySet(Of Edge)).Clone

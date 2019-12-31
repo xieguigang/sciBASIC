@@ -53,12 +53,14 @@ Namespace FileStream.Generic
         Public Const REFLECTION_ID_MAPPING_TO_NODE As String = "toNode"
         Public Const REFLECTION_ID_MAPPING_CONFIDENCE As String = "confidence"
         Public Const REFLECTION_ID_MAPPING_INTERACTION_TYPE As String = "interaction_type"
+        Public Const REFLECTION_ID_MAPPING_EDGE_GUID As String = "guid"
 
         ''' <summary>
         ''' <see cref="Node.label"/>
         ''' </summary>
         Public Const REFLECTION_ID_MAPPING_IDENTIFIER As String = "ID"
         Public Const REFLECTION_ID_MAPPING_NODETYPE As String = "nodeType"
+        Public Const REFLECTION_ID_MAPPING_NODECOLOR As String = "node_color"
         Public Const REFLECTION_ID_MAPPING_DEGREE$ = "degree"
         Public Const REFLECTION_ID_MAPPING_DEGREE_IN$ = REFLECTION_ID_MAPPING_DEGREE & ".in"
         Public Const REFLECTION_ID_MAPPING_DEGREE_OUT$ = REFLECTION_ID_MAPPING_DEGREE & ".out"

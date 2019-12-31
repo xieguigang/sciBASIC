@@ -331,6 +331,9 @@ Public Module StringHelpers
     ''' <param name="args">An object array that contains zero or more objects to format.</param>
     ''' <returns>A copy of format in which the format items have been replaced by the string representation
     ''' of the corresponding objects in args.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <DebuggerStepThrough>
     <Extension>
     Public Function FormatString(s$, ParamArray args As Object()) As String
         Return String.Format(s, args)

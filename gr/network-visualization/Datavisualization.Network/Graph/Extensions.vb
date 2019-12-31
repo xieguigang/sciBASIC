@@ -83,16 +83,16 @@ Namespace Graph
         ''' <summary>
         ''' 枚举出和当前的给定编号的节点所连接的节点的索引编号
         ''' </summary>
-        ''' <param name="net"></param>
+        ''' <param name="g"></param>
         ''' <param name="node"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function GetNeighbours(net As NetworkGraph, node As String) As IEnumerable(Of Integer)
-            For Each edge As Edge In net.graphEdges
+        Public Iterator Function GetNeighbours(g As NetworkGraph, node As String) As IEnumerable(Of Integer)
+            For Each edge As Edge In g.graphEdges
                 Dim connected As String = edge.GetConnectedNode(node)
 
                 If Not String.IsNullOrEmpty(connected) Then
-                    Yield net.GetNode(connected).ID
+                    Yield g.GetElementByID(connected).ID
                 End If
             Next
         End Function

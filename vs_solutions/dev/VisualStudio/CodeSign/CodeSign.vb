@@ -43,12 +43,14 @@
 Imports Microsoft.VisualBasic.SecurityString
 Imports r = System.Text.RegularExpressions.Regex
 
-Namespace ApplicationServices.Development
+Namespace CodeSign
 
     ''' <summary>
     ''' 使用AES加密进行代码的签名操作
     ''' </summary>
-    Public Module CodeSign
+    ''' 
+    <HideModuleName>
+    Public Module CodeSignHelpers
 
         Const PhpHeaderRegion$ = "#region ""PHP\\Foundation[:]{2}.*"".+?#endregion"
         Const TypeScriptHeaderRegion$ = "//#region ""Microsoft.TypeScript[:]{2}.*"".+?//#endregion"

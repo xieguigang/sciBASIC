@@ -552,6 +552,9 @@ Public Module KeyValuePairExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="table"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 如果需要调用Linq模式的方法，可以使用<see cref="IterateNameValues"/>
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function NamedValues(Of T)(table As Dictionary(Of String, T)) As NamedValue(Of T)()

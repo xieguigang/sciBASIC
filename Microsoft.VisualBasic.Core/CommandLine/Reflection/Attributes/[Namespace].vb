@@ -111,7 +111,7 @@ Namespace CommandLine.Reflection
         ''' Constant of type information for the reflection
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property TypeInfo As System.Type = GetType([Namespace])
+        Public Shared ReadOnly Property TypeInfo As Type = GetType([Namespace])
 
         Public Overrides Function ToString() As String
             If String.IsNullOrEmpty(Description) Then

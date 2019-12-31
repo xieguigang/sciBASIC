@@ -89,7 +89,8 @@ Namespace Layouts
                                       Optional Repulsion# = 4000,
                                       Optional Damping# = 0.83,
                                       Optional iterations% = 1000,
-                                      Optional showProgress As Boolean = False) As NetworkGraph
+                                      Optional showProgress As Boolean = False,
+                                      Optional clearScreen As Boolean = False) As NetworkGraph
 
             Dim physicsEngine As New ForceDirected2D(net, Stiffness, Repulsion, Damping)
             Dim tick As Action(Of Integer)
@@ -106,7 +107,7 @@ Namespace Layouts
                     .Stiffness = Stiffness
                 }.GetJson
 
-                progress = New ProgressBar("Do Force Directed Layout...", 1, CLS:=showProgress)
+                progress = New ProgressBar("Do Force Directed Layout...", 1, CLS:=clearScreen)
                 tick = Sub(i%)
                            ETA = "ETA=" & ticking _
                                .ETA(progress.ElapsedMilliseconds) _

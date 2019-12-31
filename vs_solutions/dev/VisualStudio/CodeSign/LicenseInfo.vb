@@ -44,10 +44,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace ApplicationServices.Development
+Namespace CodeSign
 
     ' Here is the example:
 

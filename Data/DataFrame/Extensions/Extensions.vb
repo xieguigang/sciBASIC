@@ -254,8 +254,6 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI(NameOf(DataFrame),
-               Info:="Convert a database table into a dynamics dataframe in VisualBasic.")>
     <Extension> Public Function DataFrame(reader As DbDataReader) As DataFrame
         Dim csv As New IO.File
         Dim fields As Integer() = reader.FieldCount.Sequence.ToArray
@@ -377,7 +375,6 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function DataFrame(data As File) As DataFrame
         Return DataFrame.CreateObject(data)
@@ -560,7 +557,8 @@ Public Module Extensions
                                              Optional reorderKeys As Integer = 0,
                                              Optional layout As Dictionary(Of String, Integer) = Nothing,
                                              Optional tsv As Boolean = False,
-                                             Optional transpose As Boolean = False) As Boolean
+                                             Optional transpose As Boolean = False,
+                                             Optional silent As Boolean = False) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
@@ -571,9 +569,11 @@ Public Module Extensions
             .Select(Function(o) DirectCast(o, Object)) _
             .ToArray
 
-        Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
-        Call EchoLine($"Save data to file:///{path}")
-        Call EchoLine($"[CSV.Reflector] Reflector have {objSeq.Length} lines of data to write.")
+        If Not silent Then
+            Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
+            Call EchoLine($"Save data to file:///{path}")
+            Call EchoLine($"[CSV.Reflector] Reflector have {objSeq.Length} lines of data to write.")
+        End If
 
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source:=objSeq,
@@ -597,10 +597,11 @@ Public Module Extensions
         Dim success = csv.SaveDataFrame(
             path:=path,
             encoding:=encoding,
-            tsv:=tsv
+            tsv:=tsv,
+            silent:=silent
         )
 
-        If success Then
+        If success AndAlso Not silent Then
             Call "CSV saved!".EchoLine
         End If
 
@@ -686,8 +687,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Write.Csv", Info:="Save the data collection vector as a csv document.")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+    <Extension>
+    Public Function SaveTo(data As IEnumerable(Of Double), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim row As IEnumerable(Of String) = From n As Double
                                             In data
                                             Select s = n.ToString
@@ -703,8 +704,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("DblVector.LoadCsv", Info:="Load the data from the csv document as a double data type vector. ")>
-    <Extension> Public Function LoadDblVector(path As String) As Double()
+    <Extension>
+    Public Function LoadDblVector(path As String) As Double()
         Dim buf As IO.File = IO.File.Load(path)
         Dim FirstRow As RowObject = buf.First
         Dim data As Double() = FirstRow.Select(AddressOf Val).ToArray

@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
 Imports VBCodePatterns = Microsoft.VisualBasic.Scripting.SymbolBuilder.VBLanguage.Patterns
 
-Namespace ApplicationServices.Development
+Namespace CodeSign
 
     ''' <summary>
     ''' 在这个模块之中对VB的代码文件进行大纲摘要的提取操作

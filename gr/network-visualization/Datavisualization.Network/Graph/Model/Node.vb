@@ -116,6 +116,11 @@ Namespace Graph
         End Sub
 
         Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
+
+        ''' <summary>
+        ''' Get all of the edge collection that connect to current node object
+        ''' </summary>
+        ''' <returns></returns>
         Public Property adjacencies As AdjacencySet(Of Edge)
         Public Property pinned As Boolean
 
