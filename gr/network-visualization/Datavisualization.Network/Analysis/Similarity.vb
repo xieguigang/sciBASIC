@@ -14,6 +14,19 @@ Namespace Analysis
             Dim top#
             Dim cos#
 
+            ' 20191231
+            ' X should always greater than Y in graph size
+            ' or vertex count - similar may be negative value
+            ' the negative value will cause union value smaller 
+            ' than similar count, result an invalid cos similar
+            ' value which is greater than 1
+            If x.size.vertex > y.size.vertex Then
+                Dim tmp = x
+
+                x = y
+                y = tmp
+            End If
+
             For Each a As Node In x.vertex
                 top = -99999
 

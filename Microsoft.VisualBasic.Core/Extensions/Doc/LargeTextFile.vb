@@ -203,7 +203,11 @@ Public Module LargeTextFile
         End Using
     End Function
 
-    <ExportAPI(".Merge", Info:="Please make sure all of the file in the target directory is text file not binary file.")>
+    ''' <summary>
+    ''' Please make sure all of the file in the target directory is text file not binary file.
+    ''' </summary>
+    ''' <param name="dir$"></param>
+    ''' <returns></returns>
     Public Function Merge(<Parameter("Dir", "The default directory parameter value is the current directory.")> Optional dir$ = "./") As String
         Dim Texts = From file As String
                     In FileIO.FileSystem.GetFiles(dir, FileIO.SearchOption.SearchAllSubDirectories, "*.*")

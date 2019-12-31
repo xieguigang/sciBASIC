@@ -206,7 +206,6 @@ Namespace ApplicationServices.Zip
         ''' Specifies what type of compression to use - defaults to Optimal
         ''' </param>
         ''' 
-        <ExportAPI("Zip.Add.Files", Info:="Allows you to add files to an archive, whether the archive already exists or not")>
         <Extension>
         Public Sub AddToArchive(<Parameter("files", "A set of file names that are to be added")> files As IEnumerable(Of String),
                                 <Parameter("Zip", "The name of the archive to you want to add your files to")> archiveFullName$,

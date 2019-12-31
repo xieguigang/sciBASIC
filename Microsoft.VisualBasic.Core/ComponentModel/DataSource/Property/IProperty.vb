@@ -77,6 +77,7 @@ Namespace ComponentModel.DataSourceModel
 
         Function GetNames() As IEnumerable(Of String)
         Function GetItemValue(propertyName As String) As Object
+        Function HasName(name As String) As Boolean
 
     End Interface
 

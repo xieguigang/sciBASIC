@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace ApplicationServices.Development
+Namespace CodeSign
 
     ''' <summary>
     ''' Source code license manager

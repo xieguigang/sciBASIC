@@ -89,6 +89,11 @@ Namespace Dijkstra
 
         End Function
 
+        ''' <summary>
+        ''' Get graph node element by label id
+        ''' </summary>
+        ''' <param name="label$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetLocation(label$) As Vertex
             Return points.Where(Function(x) x.label = label).FirstOrDefault
