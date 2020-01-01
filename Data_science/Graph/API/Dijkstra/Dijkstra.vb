@@ -46,7 +46,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Dijkstra
 
@@ -136,6 +136,7 @@ Namespace Dijkstra
             Dim shortestPaths As New Dictionary(Of Vertex, Route)()
             ' Initialise a new empty handled locations list
             Dim handledLocations As New HashList(Of Vertex)(points.Length)
+            Dim cost#
 
             ' Initialise the new routes. the constructor will set the route weight to in.max
             For Each location As Vertex In _points
@@ -154,7 +155,9 @@ Namespace Dijkstra
                 ' Search for the nearest location that isn't handled
                 For Each location As Vertex In shortestLocations
                     If Not handledLocations.Contains(location) Then
-                        ' If the cost equals int.max, there are no more possible connections to the remaining locations
+                        ' If the cost equals int.max, there are no more 
+                        ' possible connections to the remaining 
+                        ' locations
                         If shortestPaths(location).Cost = Integer.MaxValue Then
                             Return shortestPaths
                         End If
@@ -164,11 +167,15 @@ Namespace Dijkstra
                     End If
                 Next
 
-                ' Select all connections where the startposition is the location to Process
-                Dim selectedConnections = From c As VertexEdge In _links Where c.U Is locationToProcess Select c
-                Dim cost#
+                ' Select all connections where the startposition 
+                ' Is the location to Process
+                Dim selectedConnections = From c As VertexEdge
+                                          In _links
+                                          Where c.U Is locationToProcess
+                                          Select c
 
-                ' Iterate through all connections and search for a connection which is shorter
+                ' Iterate through all connections and search 
+                ' For a connection which is shorter
                 For Each conn As VertexEdge In selectedConnections
                     cost = conn.weight + shortestPaths(conn.U).Cost
 
@@ -183,7 +190,8 @@ Namespace Dijkstra
                 handledLocations.Add(locationToProcess)
             End While
 
-            shortestPaths.Remove(startPos)
+            Call shortestPaths.Remove(startPos)
+
             Return shortestPaths
         End Function
 
@@ -192,19 +200,14 @@ Namespace Dijkstra
             Return CalculateMinCost(startPos)(endPos)
         End Function
 
-        Public Function CalculateMinCost(startVertex$) As Dictionary(Of Vertex, Route)
-            Dim startPos = LinqAPI.DefaultFirst(Of Vertex) _
- _
-                () <= From node As Vertex
-                      In _points
-                      Where node.label = startVertex
-                      Select node
+        Public Function CalculateMinCost(startVertex As String) As Dictionary(Of Vertex, Route)
+            For Each node As Vertex In points
+                If node.label = startVertex Then
+                    Return node.DoCall(AddressOf CalculateMinCost)
+                End If
+            Next
 
-            If startPos Is Nothing Then
-                Return Nothing
-            Else
-                Return CalculateMinCost(startPos)
-            End If
+            Return Nothing
         End Function
     End Class
 End Namespace
