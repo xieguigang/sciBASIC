@@ -57,19 +57,12 @@ Namespace Dijkstra
     ''' <summary>
     ''' 从出发点到终点所经过的路径
     ''' </summary>
-    Public Class Route : Implements IList(Of Connection)
-        Implements IReadOnlyId
+    Public Class Route : Implements IReadOnlyId
 
         Public ReadOnly Property id As String Implements IReadOnlyId.Identity
 
         ReadOnly route As List(Of Connection)
         ReadOnly vertex As New HashList(Of Vertex)
-
-        Public Sub New(name As String)
-            _Cost = Integer.MaxValue
-            route = New List(Of Connection)()
-            id = name
-        End Sub
 
         Public ReadOnly Property Connections() As Connection()
             Get
@@ -77,70 +70,7 @@ Namespace Dijkstra
             End Get
         End Property
 
-        Public Property Cost As Double
-
-        Public Overrides Function ToString() As String
-            Return "Id:" & id & " Cost:" & Cost
-        End Function
-
-        Public Function ContainsNode(ID%) As Boolean
-            Return Not vertex(ID) Is Nothing
-        End Function
-
-        Public Sub SetValue(Connections As IEnumerable(Of Connection))
-            Call route.Clear()
-            Call route.AddRange(Connections)
-        End Sub
-
-#Region "Implements IList(Of Connection)"
-
-        Public Sub Add(item As Connection) Implements ICollection(Of Connection).Add
-            Call route.Add(item)
-        End Sub
-
-        Public Sub Clear() Implements ICollection(Of Connection).Clear
-            Call route.Clear()
-        End Sub
-
-        Public Function Contains(item As Connection) As Boolean Implements ICollection(Of Connection).Contains
-            Return route.Contains(item)
-        End Function
-
-        Public Sub CopyTo(array() As Connection, arrayIndex As Integer) Implements ICollection(Of Connection).CopyTo
-            Call route.CopyTo(array, arrayIndex)
-        End Sub
-
-        Public ReadOnly Property Count As Integer Implements ICollection(Of Connection).Count
-            Get
-                Return route.Count
-            End Get
-        End Property
-
-        Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of Connection).IsReadOnly
-            Get
-                Return False
-            End Get
-        End Property
-
-        Public Function Remove(item As Connection) As Boolean Implements ICollection(Of Connection).Remove
-            Return route.Remove(item)
-        End Function
-
-        Public Iterator Function GetEnumerator() As IEnumerator(Of Connection) Implements IEnumerable(Of Connection).GetEnumerator
-            For Each cnnItem As Connection In route
-                Yield cnnItem
-            Next
-        End Function
-
-        Public Function IndexOf(item As Connection) As Integer Implements IList(Of Connection).IndexOf
-            Return route.IndexOf(item)
-        End Function
-
-        Public Sub Insert(index As Integer, item As Connection) Implements IList(Of Connection).Insert
-            Call route.Insert(index, item)
-        End Sub
-
-        Default Public Property Item(index As Integer) As Connection Implements IList(Of Connection).Item
+        Default Public Property Item(index As Integer) As Connection
             Get
                 Return route(index)
             End Get
@@ -149,13 +79,39 @@ Namespace Dijkstra
             End Set
         End Property
 
-        Public Sub RemoveAt(index As Integer) Implements IList(Of Connection).RemoveAt
-            Call route.RemoveAt(index)
+        Public Property Cost As Double
+
+        Public ReadOnly Property Count As Integer
+            Get
+                Return route.Count
+            End Get
+        End Property
+
+        Public Sub New(name As String)
+            Cost = Integer.MaxValue
+            route = New List(Of Connection)()
+            id = name
         End Sub
 
-        Public Iterator Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
+        Public Function ContainsNode(index As Integer) As Boolean
+            Return Not vertex(index) Is Nothing
         End Function
-#End Region
+
+        Public Sub SetValue(Connections As IEnumerable(Of Connection))
+            Call route.Clear()
+            Call route.AddRange(Connections)
+        End Sub
+
+        Public Sub Add(item As Connection)
+            Call route.Add(item)
+        End Sub
+
+        Public Sub Clear()
+            Call route.Clear()
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return "Id: " & id & ", cost: " & Cost
+        End Function
     End Class
 End Namespace
