@@ -60,15 +60,15 @@ Namespace Dijkstra
     Public Class Route : Implements IList(Of Connection)
         Implements IReadOnlyId
 
-        Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
+        Public ReadOnly Property id As String Implements IReadOnlyId.Identity
 
         ReadOnly route As List(Of Connection)
         ReadOnly vertex As New HashList(Of Vertex)
 
-        Public Sub New(name$)
+        Public Sub New(name As String)
             _Cost = Integer.MaxValue
             route = New List(Of Connection)()
-            Identity = name
+            id = name
         End Sub
 
         Public ReadOnly Property Connections() As Connection()
@@ -80,7 +80,7 @@ Namespace Dijkstra
         Public Property Cost As Double
 
         Public Overrides Function ToString() As String
-            Return "Id:" & Identity & " Cost:" & Cost
+            Return "Id:" & id & " Cost:" & Cost
         End Function
 
         Public Function ContainsNode(ID%) As Boolean

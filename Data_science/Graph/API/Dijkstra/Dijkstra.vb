@@ -64,6 +64,7 @@ Namespace Dijkstra
         ''' <returns></returns>
         Public ReadOnly Property links As VertexEdge()
         Public ReadOnly Property points As Vertex()
+        Public ReadOnly Property undirectedGraph As Boolean = False
 
         ''' <summary>
         ''' Create a new Dijkstra shortest path router model
@@ -75,6 +76,7 @@ Namespace Dijkstra
                 links = g + g _
                     .Select(Function(link) link.Reverse) _
                     .AsList
+                undirectedGraph = True
             Else
                 links = g.ToArray
             End If
