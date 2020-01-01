@@ -247,7 +247,7 @@ Public Module KeyValuePairExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <DebuggerStepThrough>
     <Extension>
-    Public Function Take(Of T As INamedValue)(source As IEnumerable(Of T), pattern$) As IEnumerable(Of T)
+    Public Function Takes(Of T As INamedValue)(source As IEnumerable(Of T), pattern$) As IEnumerable(Of T)
         Return source _
             .Where(Function(i)
                        Return r.Match(i.Key, pattern, RegexICSng).Success
