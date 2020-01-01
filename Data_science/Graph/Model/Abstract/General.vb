@@ -45,9 +45,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports TV = Microsoft.VisualBasic.Data.GraphTheory.Vertex
-Imports V = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 
-Public Class VertexEdge : Inherits Edge(Of V)
+Public Class VertexEdge : Inherits Edge(Of TV)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function EdgeKey(U%, V%) As String

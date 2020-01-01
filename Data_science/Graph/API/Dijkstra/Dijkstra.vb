@@ -69,13 +69,11 @@ Namespace Dijkstra
         ''' Create a new Dijkstra shortest path router model
         ''' </summary>
         Sub New(g As Graph, Optional undirected As Boolean = False)
-            points = g.vertex
+            points = g.vertex.ToArray
 
             If undirected Then
                 links = g + g _
-                    .Select(Function(e As VertexEdge)
-                                Return e.Reverse
-                            End Function) _
+                    .Select(Function(link) link.Reverse) _
                     .AsList
             Else
                 links = g.ToArray
@@ -86,7 +84,33 @@ Namespace Dijkstra
         End Sub
 
         Public Shared Function FromNetwork(Of TNode As {New, Network.Node}, TEdge As {New, Network.Edge(Of TNode)})(g As NetworkGraph(Of TNode, TEdge), Optional undirected As Boolean = False) As DijkstraRouter
+            Dim router As New DijkstraRouter
 
+            router._points = g.vertex _
+                .Select(Function(n)
+                            Return DirectCast(n, Vertex)
+                        End Function) _
+                .ToArray
+            router._links = g.graphEdges _
+                .Select(AddressOf CreateLink(Of TNode, TEdge)) _
+                .ToArray
+
+            If undirected Then
+                router._links = router.links + router.links _
+                    .Select(Function(link) link.Reverse) _
+                    .AsList
+            End If
+
+            Return router
+        End Function
+
+        Private Shared Function CreateLink(Of TNode As {New, Network.Node}, TEdge As {New, Network.Edge(Of TNode)})(link As TEdge) As VertexEdge
+            Return New VertexEdge With {
+                .U = link.U,
+                .V = link.V,
+                .weight = link.weight,
+                .ID = link.ID
+            }
         End Function
 
         ''' <summary>

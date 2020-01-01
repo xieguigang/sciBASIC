@@ -242,12 +242,16 @@ Public Module KeyValuePairExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="pattern$"></param>
+    ''' <param name="pattern">The regular expression pattern.</param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <DebuggerStepThrough>
     <Extension>
-    Public Function [Select](Of T As INamedValue)(source As IEnumerable(Of T), pattern$) As IEnumerable(Of T)
-        Return source.Where(Function(i) r.Match(i.Key, pattern, RegexICSng).Success)
+    Public Function Take(Of T As INamedValue)(source As IEnumerable(Of T), pattern$) As IEnumerable(Of T)
+        Return source _
+            .Where(Function(i)
+                       Return r.Match(i.Key, pattern, RegexICSng).Success
+                   End Function)
     End Function
 
     ''' <summary>
