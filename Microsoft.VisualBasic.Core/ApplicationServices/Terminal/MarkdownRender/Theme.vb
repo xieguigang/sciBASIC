@@ -1,4 +1,63 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::83cb8c8cc04e810066cb1e1e4173640c, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\MarkdownRender\Theme.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class MarkdownTheme
+    ' 
+    '         Properties: [Global], BlockQuote, Bold, CodeBlock, HeaderSpan
+    '                     InlineCodeSpan, Italy, Url
+    ' 
+    '     Class ConsoleFontStyle
+    ' 
+    '         Properties: BackgroundColor, ForeColor
+    ' 
+    '         Function: Clone, CreateSpan, Equals, HtmlColorCode
+    ' 
+    '         Sub: Apply, SetConfig
+    ' 
+    '     Class Span
+    ' 
+    '         Properties: IsEndByNewLine, style, text
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: Print
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f137a33c10ca9f2e637bc46efa20fcfb, Data_science\Graph\API\Dijkstra\DijkstraAPI.vb"
+﻿#Region "Microsoft.VisualBasic::fa6af3709b8f3a77dfee3495e4fd639a, Data_science\Graph\API\Dijkstra\DijkstraAPI.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module DijkstraAPI
     ' 
-    '         Function: CreatePathwayFinder, FindShortestPath
+    '         Function: FindShortestPath
     ' 
     ' 
     ' /********************************************************************************/

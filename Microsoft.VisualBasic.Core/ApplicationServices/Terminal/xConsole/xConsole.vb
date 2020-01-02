@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5195ecc2349d77440a701e938d09fbdf, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::3a3209523da7aa302b78e1ed3a518bd5, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Module xConsole
+    ' 
+    '         Properties: ClearColorsAtEnd
     ' 
     '         Function: ClearInput, ClosestConsoleColor, ConvertHexStringToByteArray, getColor, GetConsoleWindow
     '                   (+2 Overloads) Implode, ParseLine, Print, ReadKeys, ReadLine

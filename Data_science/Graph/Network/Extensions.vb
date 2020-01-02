@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fe47497e0a9083e05b52887c58f2115, Data_science\Graph\Network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::335902c9c7690d87ac0670ba2a48ae07, Data_science\Graph\Network\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: ComputeDegreeData, EndPoints, IteratesSubNetworks
+    '         Function: (+2 Overloads) ComputeDegreeData, EndPoints, IteratesSubNetworks
     ' 
     ' 
     ' /********************************************************************************/

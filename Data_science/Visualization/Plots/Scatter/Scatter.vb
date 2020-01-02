@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6f36cffeece9917736a2233103a391f, Data_science\Visualization\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::7816b15f4e5ed03d089482f519aa7ac2, Data_science\Visualization\Plots\Scatter\Scatter.vb"
 
     ' Author:
     ' 
@@ -360,8 +360,9 @@ Public Module Scatter
 
                         Call g.DrawLegends(
                             legendPosition, legends, legendSize,,
-                            legendBorder,
-                            legendRegionBorder)
+                            shapeBorder:=legendBorder,
+                            regionBorder:=legendRegionBorder
+                        )
                     End If
                 Next
 

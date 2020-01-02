@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2add57965bd16cb92341c475c01eca1e, gr\network-visualization\Network.IO.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4b12632a44cb7d44110798b5a618b026, gr\network-visualization\Network.IO.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -173,4 +173,3 @@ Public Module Extensions
         Return network
     End Function
 End Module
-

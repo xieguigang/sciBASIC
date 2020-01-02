@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2df245cdedbad103030aa5046e8330fb, Data_science\Visualization\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::0dc1f5438651c205e1c8604da18da611, Data_science\Visualization\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -237,7 +237,13 @@ Namespace Fractions
                             }
                         Next
 
-                        Call g.DrawLegends(New Point(left, top), legends, legendUnitSize, d, legendBorder)
+                        Call g.DrawLegends(
+                            topLeft:=New Point(left, top),
+                            legends:=legends,
+                            gSize:=legendUnitSize,
+                            d:=d,
+                            shapeBorder:=legendBorder
+                        )
                     End If
                 End Sub
 

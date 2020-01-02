@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06ec40e2ebe79f96f8ab8b90ec897f42, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Effects.vb"
+﻿#Region "Microsoft.VisualBasic::d040f7ebf30bce7cea4903a7ed5c5a9f, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Effects.vb"
 
     ' Author:
     ' 

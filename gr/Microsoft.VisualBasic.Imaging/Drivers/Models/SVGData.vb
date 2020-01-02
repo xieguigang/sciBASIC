@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4696912d331b43a220afb822f7e68a45, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
+﻿#Region "Microsoft.VisualBasic::1fda95f7211ccc675f9c083102aeb10c, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class SVGData
     ' 
-    '         Properties: Driver, SVG, XmlComment
+    '         Properties: Driver, SVG, title, XmlComment
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: Render, (+2 Overloads) Save

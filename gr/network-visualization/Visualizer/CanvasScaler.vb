@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec7ad16c36df3b27f5fa9b6af6dad7e7, gr\network-visualization\Visualizer\CanvasScaler.vb"
+﻿#Region "Microsoft.VisualBasic::565d77813cbfc6743febfae0563ca6ff, gr\network-visualization\Visualizer\CanvasScaler.vb"
 
     ' Author:
     ' 
@@ -207,4 +207,3 @@ Public Module CanvasScaler
         End With
     End Function
 End Module
-

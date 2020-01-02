@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01075462c48aca3574ed9afd8b279f8a, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\SampleObservation.vb"
+﻿#Region "Microsoft.VisualBasic::d960e0fbfbdd105bb003a9ea15bc6a1a, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\SampleObservation.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Public MustInherit Class SampleObservation
         Return observation.getEigenvalue
     End Operator
 End Class
-

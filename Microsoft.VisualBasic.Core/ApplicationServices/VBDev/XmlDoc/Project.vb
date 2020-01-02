@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14685b62362d8b6d4e76108e94b7b3b5, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Project.vb"
+﻿#Region "Microsoft.VisualBasic::06f75fbdfc170bd1d0de4f2b4f06c7f0, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Project.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: EnsureNamespace, GetNamespace, ToString
+    '         Function: [GetType], EnsureNamespace, GetNamespace, ToString
     ' 
     '         Sub: processMember, processType, ProcessXmlDoc
     ' 

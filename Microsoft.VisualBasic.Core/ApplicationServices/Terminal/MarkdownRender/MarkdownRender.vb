@@ -1,66 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::7d62185c9ec4469f9bbebbf4abff8481, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::1e764ec984dcf0e82eba480da40bc8a6, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class MarkdownRender
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: bufferAllIs, bufferIs
-' 
-'         Sub: DoParseSpans, DoPrint, EndSpan, Print, PrintSpans
-'              restoreStyle, WalkChar
-' 
-'     Class MarkdownTheme
-' 
-'         Properties: [Global], BlockQuote, Bold, CodeBlock, InlineCodeSpan
-'                     Url
-' 
-'     Class ConsoleFontStyle
-' 
-'         Properties: BackgroundColor, ForeColor
-' 
-'         Function: Clone, CreateSpan, Equals
-' 
-'         Sub: SetConfig
-' 
-'     Class Span
-' 
-'         Properties: IsEndByNewLine, style, text
-' 
-'         Sub: Print
-' 
-' 
-' /********************************************************************************/
+    '     Class MarkdownRender
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: bufferAllIs, bufferIs, DefaultStyleRender
+    ' 
+    '         Sub: applyGlobal, DoParseSpans, DoPrint, EndSpan, Print
+    '              PrintSpans, Reset, restoreStyle, WalkChar
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

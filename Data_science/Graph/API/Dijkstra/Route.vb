@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc2acf1caad697d15a7328d45f07bce4, Data_science\Graph\API\Dijkstra\Route.vb"
+﻿#Region "Microsoft.VisualBasic::4a0a0257f36918963f00dee3996ee3ea, Data_science\Graph\API\Dijkstra\Route.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,13 @@
 
     '     Class Route
     ' 
-    '         Properties: Connections, Cost, Count, Identity, IsReadOnly
+    '         Properties: Connections, Cost, Count, id
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Contains, ContainsNode, GetEnumerator, GetEnumerator1, IndexOf
-    '                   Remove, ToString
+    '         Function: ContainsNode, ToString
     ' 
-    '         Sub: Add, Clear, CopyTo, Insert, RemoveAt
-    '              SetValue
+    '         Sub: Add, Clear, SetValue
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::434db169458d24f2d89ad4536406db44, Microsoft.VisualBasic.Core\Extensions\Collection\CategoryOperations.vb"
+﻿#Region "Microsoft.VisualBasic::1891b04d5a9032266b2b13b0585199f8, Microsoft.VisualBasic.Core\Extensions\Collection\CategoryOperations.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Module CategoryOperations
                           End Function)
     End Function
 End Module
-

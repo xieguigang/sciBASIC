@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df65db5b2e8fdf3b8ed05686d9fc2f6b, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\SqliteEncoding.vb"
+﻿#Region "Microsoft.VisualBasic::df65db5b2e8fdf3b8ed05686d9fc2f6b, Data\BinaryData\DataStorage\SQLite3\Objects\Enums\SqliteEncoding.vb"
 
     ' Author:
     ' 

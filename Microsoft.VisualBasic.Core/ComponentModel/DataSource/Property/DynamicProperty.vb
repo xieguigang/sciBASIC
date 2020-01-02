@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92f84c2ceb27d47add3515044ec49605, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::55d4e45d4c2aef7ecef6295879546645, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,10 @@
     ' 
     '         Properties: MyHashCode, Properties
     ' 
-    '         Function: EnumerateKeys, GetEnumerator, HasProperty, IEnumerable_GetEnumerator, ToString
+    '         Function: EnumerateKeys, GetEnumerator, GetItemValue, GetNames, HasProperty
+    '                   IDynamicsObject_GetItemValue, IEnumerable_GetEnumerator, ToString
     ' 
-    '         Sub: Add
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) SetValue
     ' 
     ' 
     ' /********************************************************************************/

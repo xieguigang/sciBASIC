@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebf53fdc46986ade261378e8c1b873a5, gr\network-visualization\Network.IO.Extensions\Analysis.vb"
+﻿#Region "Microsoft.VisualBasic::8ab76efcdd2ed32e6729e43c2f44e714, gr\network-visualization\Network.IO.Extensions\Analysis.vb"
 
     ' Author:
     ' 
@@ -141,4 +141,3 @@ Public Module AnalysisAPI
         Return degrees
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa742310460cc18ff1701b360d567bc7, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb"
+﻿#Region "Microsoft.VisualBasic::b5b3b027647d4ae24d667f7ccbde5ac4, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ProjectNamespace
     ' 
-    '         Properties: Path, Types
+    '         Properties: fullName, Types
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: [GetType], EnsureType, ToString

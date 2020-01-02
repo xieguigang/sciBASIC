@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1e22f783d01499e74ec20d2bcbc8e5d, Data\DataFrame.Extensions\Field.vb"
+﻿#Region "Microsoft.VisualBasic::1612507bf95fc2bc31178c8151f6c450, Data\DataFrame.Extensions\Serialize\ObjectSchema\Field.vb"
 
     ' Author:
     ' 
@@ -31,19 +31,12 @@
 
     ' Summaries:
 
-    ' Class Field
+    '     Class Field
     ' 
-    '     Properties: Binding, BindProperty, InnerClass, Name, Type
+    '         Properties: Binding, BindProperty, InnerClass, Name, Type
     ' 
-    '     Function: GetValue, ToString
+    '         Function: GetValue, ToString
     ' 
-    ' Class [Class]
-    ' 
-    '     Properties: Fields, Stack, Type
-    ' 
-    '     Function: GetEnumerator, GetField, (+2 Overloads) GetSchema, IEnumerable_GetEnumerator, ToString
-    ' 
-    '     Sub: Remove
     ' 
     ' /********************************************************************************/
 

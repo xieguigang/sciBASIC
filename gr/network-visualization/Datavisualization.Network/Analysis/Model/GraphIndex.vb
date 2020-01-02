@@ -1,44 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::ba8577ce4c1fad0deff1afd074831208, gr\network-visualization\Datavisualization.Network\Analysis\Model\GraphIndex.vb"
+﻿#Region "Microsoft.VisualBasic::185ce468897ba2d52952a425de5aba80, gr\network-visualization\Datavisualization.Network\Analysis\Model\GraphIndex.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class GraphIndex
-' 
-'         Function: AddEdge, CreateNodeAdjacencySet, (+2 Overloads) GetEdges, nodes
-' 
-'         Sub: Clear, Delete, RemoveEdge
-' 
-' 
-' /********************************************************************************/
+    '     Class GraphIndex
+    ' 
+    '         Function: AddEdge, CreateNodeAdjacencySet, edges, (+2 Overloads) GetEdges, nodes
+    ' 
+    '         Sub: Clear, Delete, RemoveEdge
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

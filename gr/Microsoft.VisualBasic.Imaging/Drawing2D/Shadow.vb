@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc80408b6500e0899d1258be49dcbca6, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
+﻿#Region "Microsoft.VisualBasic::ac664d02cc4db3f7da33848b615a6718, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
 
     ' Author:
     ' 
