@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f6f962adb352ccd0e7877755b9c8e5, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\FactorValue.vb"
+﻿#Region "Microsoft.VisualBasic::aceeec98dd5f03460d4ced5469ec1365, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\FactorValue.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class FactorValue
     ' 
-    '         Properties: factor, Value
+    '         Properties: factor, result
     ' 
     '     Class FactorString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a87519ca2373c17b1d5cd385e8d89f4, gr\network-visualization\Network.IO.Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::8cbc892ea18a50fd65a962f5b228642d, gr\network-visualization\Network.IO.Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Module IO
         End With
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::215525b640c608ea63aa1549f3a52762, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::d541797c5491988084df30bdfba3bea3, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -45,12 +45,12 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter
-    '               CLICode, ElapsedMilliseconds, Exit, finalizeCLI, FormatTime
-    '               GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile
-    '               GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable
-    '               (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal, SelfFolk
-    '               SelfFolks, Shell, tempCode, TemporaryEnvironment, TraceBugs
+    '     Function: __isMicrosoftPlatform, __listFiles, __sysTEMP, (+2 Overloads) Argument, CLICode
+    '               ElapsedMilliseconds, Exit, finalizeCLI, FormatTime, GenerateTemp
+    '               (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile, GetNextUniqueName
+    '               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
+    '               NullDevice, (+10 Overloads) RunCLI, RunCLIInternal, SelfFolk, SelfFolks
+    '               Shell, tempCode, TemporaryEnvironment, TraceBugs
     ' 
     '     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
     '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
@@ -1078,6 +1078,31 @@ Public Module App
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, executeEmpty, executeNotFound, Nothing)
+    End Function
+
+    ''' <summary>
+    ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
+    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
+    ''' </summary>
+    ''' <param name="args">
+    ''' The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.
+    ''' </param>
+    ''' <param name="executeNotFound">
+    ''' ```vbnet
+    ''' Public Delegate Function ExecuteNotFound(args As <see cref="CLI"/>) As <see cref="Integer"/>
+    ''' ```
+    ''' </param>
+    ''' <returns>Returns the function execute result to the operating system.</returns>
+    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <ExportAPI("RunCLI")>
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI,
+                                       executeEmpty As ExecuteEmptyCLI,
+                                       executeFile As ExecuteFile,
+                                       executeNotFound As ExecuteNotFound,
+                                       <CallerMemberName>
+                                       Optional caller$ = Nothing) As Integer
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, executeFile)
     End Function
 
     ''' <summary>

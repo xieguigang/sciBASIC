@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d7ae7110132956aa65578e918caa52f, Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::566a5359f103960306dcd8f231de2d24, Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module MethodsExtension
     ' 
-    '     Function: (+2 Overloads) AsLazy, (+2 Overloads) Invoke, (+2 Overloads) TryInvoke
+    '     Function: (+2 Overloads) AsLazy, (+2 Overloads) Invoke, IsMethodOverridesOf, (+2 Overloads) TryInvoke
     ' 
     ' /********************************************************************************/
 

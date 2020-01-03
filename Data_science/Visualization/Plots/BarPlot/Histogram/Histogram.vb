@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c176a3449e6963f3c96c283bb180af0d, Data_science\Visualization\Plots\BarPlot\Histogram\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::734fb02789ef659f1791838c629ea1a9, Data_science\Visualization\Plots\BarPlot\Histogram\Histogram.vb"
 
     ' Author:
     ' 
@@ -292,15 +292,14 @@ Namespace BarPlot.Histogram
                         End If
 
                         Call g.DrawLegends(
-                            legendPos,
-                            groups.Samples _
-                                .Select(Function(h) h.legend),
-                            ,,
-                            legendBorder)
+                            topLeft:=legendPos,
+                            legends:=groups.Samples.Select(Function(h) h.legend),
+                            regionBorder:=legendBorder
+                        )
                     End If
                 End Sub
 
-            Return GraphicsPlots(size.SizeParser, margin, bg$, plotInternal)
+            Return g.GraphicsPlots(size.SizeParser, margin, bg$, plotInternal)
         End Function
 
         ''' <summary>

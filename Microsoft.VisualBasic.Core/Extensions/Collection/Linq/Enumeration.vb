@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::207b8c7e8f905170be918a69f5f6cc7f, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumeration.vb"
+﻿#Region "Microsoft.VisualBasic::c60b4a699b02db44ae1c068ab0fb5217, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumeration.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '     Module EnumerationExtensions
     ' 
-    '         Function: AsEnumerable, AsObjectEnumerator
+    '         Function: AsEnumerable, (+2 Overloads) AsObjectEnumerator
     '         Class Enumerator
     ' 
     '             Function: GetEnumerator, IEnumerable_GetEnumerator

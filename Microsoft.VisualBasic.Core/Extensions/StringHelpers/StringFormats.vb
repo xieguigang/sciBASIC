@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da4434752d457c7384f2b5368523f1ec, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringFormats.vb"
+﻿#Region "Microsoft.VisualBasic::4cf9869cd1aaf27d3d627f9a4d4885ed, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringFormats.vb"
 
     ' Author:
     ' 
@@ -62,4 +62,3 @@ Public Module StringFormats
         Return sprintf($"%.2f %s", val, symbol)
     End Function
 End Module
-

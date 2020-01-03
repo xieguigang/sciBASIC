@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91392c0d51cdcdbf4af9c98d0ddf62fa, Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::fb9eb4e3f1b01482b2b7430f6bb2680f, Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -38,15 +38,15 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: [Select], __createSchemaOridinal, __createTableVector, AddAttribute, ColumnRows
-    '                   CreateDataSource, CreateObject, createObjectInternal, csv, EnumerateData
-    '                   Generate, GetBoolean, GetByte, GetBytes, GetChar
-    '                   GetChars, getColumnList, GetData, GetDataTypeName, GetDateTime
-    '                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
-    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
-    '                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
-    '                   GetValueLambda, GetValues, IDataRecord_GetValue, IsDBNull, Load
-    '                   LoadDataSet, Parse, Read, reviewColumnHeader, ToString
+    '         Function: [Select], __createTableVector, AddAttribute, ColumnRows, CreateDataSource
+    '                   CreateObject, createObjectInternal, csv, EnumerateData, Generate
+    '                   GetBoolean, GetByte, GetBytes, GetChar, GetChars
+    '                   getColumnList, GetData, GetDataTypeName, GetDateTime, GetDecimal
+    '                   GetDouble, GetEnumerator2, GetFieldType, GetFloat, GetGuid
+    '                   GetInt16, GetInt32, GetInt64, GetName, GetOrdinal
+    '                   GetOrdinalSchema, GetSchemaTable, GetString, GetValue, GetValueLambda
+    '                   GetValues, IDataRecord_GetValue, IsDBNull, Load, LoadDataSet
+    '                   Parse, Read, reviewColumnHeader, ToString
     ' 
     '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
     '              Reset

@@ -1,69 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::0bcd4df69a14dd231fe70f4e6361e9bf, Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::d16448e40799a8ef531d6bc681e10b9b, Data\DataFrame\Linq\DataStream.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Delegate Function
-' 
-' 
-'     Class SchemaReader
-' 
-'         Properties: headers, SchemaOridinal
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: GetOrdinal, ToString
-' 
-'     Module DataLinqStream
-' 
-'         Function: AsLinq, CastObject, ForEach, OpenHandle
-' 
-'     Class DataStream
-' 
-'         Properties: SchemaOridinal
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
-' 
-'         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
-'         Structure __taskHelper
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Sub: RunTask
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Delegate Function
+    ' 
+    ' 
+    '     Class SchemaReader
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Module DataLinqStream
+    ' 
+    '         Function: AsLinq, CastObject, ForEach, OpenHandle
+    ' 
+    '     Class DataStream
+    ' 
+    '         Properties: SchemaOridinal
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
+    ' 
+    '         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
+    '         Structure __taskHelper
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: RunTask
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -138,7 +136,7 @@ Namespace IO.Linq
         End Function
 
         <Extension>
-        Public Function CastObject(Of T As Class)(schema As SchemaReader) As Func(Of RowObject, T)
+        Public Function CastObject(Of T As Class)(schema As SchemaReader, Optional silent As Boolean = False) As Func(Of RowObject, T)
             Dim provider As SchemaProvider = SchemaProvider _
                 .CreateObject(Of T)(strict:=False) _
                 .CopyWriteDataToObject
@@ -146,7 +144,7 @@ Namespace IO.Linq
             Dim type As Type = GetType(T)
 
             Call rowBuilder.IndexOf(schema)
-            Call rowBuilder.SolveReadOnlyMetaConflicts()
+            Call rowBuilder.SolveReadOnlyMetaConflicts(silent)
 
             Return Function(row As RowObject) As T
                        Dim obj As Object = Activator.CreateInstance(type)
@@ -257,14 +255,13 @@ Namespace IO.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="invoke"></param>
-        Public Sub ForEach(Of T As Class)(invoke As Action(Of T))
-            Dim schema As SchemaProvider =
-                SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
+        Public Sub ForEach(Of T As Class)(invoke As Action(Of T), Optional silent As Boolean = False)
+            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
             Call RowBuilder.IndexOf(Me)
-            Call RowBuilder.SolveReadOnlyMetaConflicts()
+            Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
             Do While True
                 Dim buffer As String() = BufferProvider()
@@ -280,7 +277,7 @@ Namespace IO.Linq
 
                 If EndRead Then
                     Exit Do
-                Else
+                ElseIf Not silent Then
                     Call EchoLine("Process next block....")
                 End If
             Loop
@@ -295,14 +292,14 @@ Namespace IO.Linq
         ''' <remarks>
         ''' 2016.06.19  代码已经经过测试，没有数据遗漏的bug，请放心使用
         ''' </remarks>
-        Public Sub ForEachBlock(Of T As Class)(invoke As Action(Of T()), Optional blockSize As Integer = 10240 * 5)
-            Dim schema As SchemaProvider =
-                SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject ' 生成schema映射模型
+        Public Sub ForEachBlock(Of T As Class)(invoke As Action(Of T()), Optional blockSize As Integer = 10240 * 5, Optional silent As Boolean = False)
+            ' 生成schema映射模型
+            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
             Call RowBuilder.IndexOf(Me)
-            Call RowBuilder.SolveReadOnlyMetaConflicts()
+            Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
             Do While True
                 Dim chunks As IEnumerable(Of String()) =
@@ -331,7 +328,7 @@ Namespace IO.Linq
                 If EndRead Then
                     Exit Do
                 Else
-                    Call "Process next block....".__INFO_ECHO
+                    Call "Process next block....".__INFO_ECHO(silent:=silent)
                 End If
             Loop
         End Sub
@@ -368,7 +365,7 @@ Namespace IO.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Iterator Function AsLinq(Of T As Class)(Optional parallel As Boolean = False) As IEnumerable(Of T)
+        Public Iterator Function AsLinq(Of T As Class)(Optional parallel As Boolean = False, Optional silent As Boolean = False) As IEnumerable(Of T)
             Dim schema As SchemaProvider = SchemaProvider _
                 .CreateObject(Of T)(False) _
                 .CopyWriteDataToObject
@@ -376,7 +373,7 @@ Namespace IO.Linq
             Dim type As Type = GetType(T)
 
             Call RowBuilder.IndexOf(Me)
-            Call RowBuilder.SolveReadOnlyMetaConflicts()
+            Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
             Do While Not EndRead
 

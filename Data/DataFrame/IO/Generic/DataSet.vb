@@ -172,8 +172,17 @@ Namespace IO
                                            Optional uidMap$ = Nothing,
                                            Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                            Optional tsv As Boolean = False,
-                                           Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
-            Return EntityObject.LoadDataSet(path, uidMap, fieldNameMaps, tsv, encoding).AsDataSet
+                                           Optional encoding As Encoding = Nothing,
+                                           Optional silent As Boolean = False) As IEnumerable(Of DataSet)
+
+            Return EntityObject.LoadDataSet(
+                path:=path,
+                uidMap:=uidMap,
+                fieldNameMaps:=fieldNameMaps,
+                tsv:=tsv,
+                encoding:=encoding,
+                silent:=silent
+            ).AsDataSet
         End Function
 
         ''' <summary>

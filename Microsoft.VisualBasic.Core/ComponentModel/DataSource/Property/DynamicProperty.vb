@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92f84c2ceb27d47add3515044ec49605, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::55d4e45d4c2aef7ecef6295879546645, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,10 @@
     ' 
     '         Properties: MyHashCode, Properties
     ' 
-    '         Function: EnumerateKeys, GetEnumerator, HasProperty, IEnumerable_GetEnumerator, ToString
+    '         Function: EnumerateKeys, GetEnumerator, GetItemValue, GetNames, HasProperty
+    '                   IDynamicsObject_GetItemValue, IEnumerable_GetEnumerator, ToString
     ' 
-    '         Sub: Add
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) SetValue
     ' 
     ' 
     ' /********************************************************************************/
@@ -165,15 +166,14 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified
-        ''' key.
+        ''' Determines whether the Dictionary contains the specified key.
         ''' </summary>
-        ''' <param name="name$">The key to locate in the System.Collections.Generic.Dictionary`2.</param>
+        ''' <param name="name">The key to locate in the Dictionary.</param>
         ''' <returns>
-        ''' true if the System.Collections.Generic.Dictionary`2 contains an element with
-        ''' the specified key; otherwise, false.
+        ''' true if the Dictionary contains an element with the specified key; 
+        ''' otherwise, false.
         ''' </returns>
-        Public Function HasProperty(name$) As Boolean
+        Public Function HasProperty(name As String) As Boolean Implements IDynamicsObject.HasName
             If propertyTable Is Nothing Then
                 Return False
             Else

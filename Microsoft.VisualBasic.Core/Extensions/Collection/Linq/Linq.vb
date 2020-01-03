@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d437d0440fa9495dffb10e273c2b53b, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::c05f7f1e449124bf85e8a846db8f5a80, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,12 @@
 
     '     Module Extensions
     ' 
-    '         Function: DATA, Populate, SafeQuery, ToArray
+    '         Function: DATA, Populate, (+2 Overloads) SafeQuery, ToArray
     '         Delegate Sub
     ' 
-    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, IteratesALL
-    '                       (+2 Overloads) JoinIterates, LastOrDefault, MaxInd, (+2 Overloads) Read, RemoveLeft
-    '                       (+2 Overloads) Removes, Repeats, (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray
-    '                       ToVector, TryCatch
+    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, LastOrDefault
+    '                       MaxInd, (+2 Overloads) Read, RemoveLeft, (+2 Overloads) Removes, Repeats
+    '                       (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray, ToVector, TryCatch
     ' 
     ' 
     ' 

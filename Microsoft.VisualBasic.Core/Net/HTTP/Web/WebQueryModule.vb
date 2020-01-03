@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2117fcb69915badf86fb096611bbec9f, core\Bio.Assembly\ComponentModel\Web\WebQueryModule.vb"
+﻿#Region "Microsoft.VisualBasic::bf4c27b51297f30e4426ea488b5d9485, Microsoft.VisualBasic.Core\Net\HTTP\Web\WebQueryModule.vb"
 
     ' Author:
     ' 

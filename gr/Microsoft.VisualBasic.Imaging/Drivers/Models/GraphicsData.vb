@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3cad667900e2bfe17301923caed40c3, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
+﻿#Region "Microsoft.VisualBasic::de4770c0ab88d45d33427288dffca2cf, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
 
     ' Author:
     ' 

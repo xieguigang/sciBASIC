@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08ea5c7237abc19bd95da3aca099d9bb, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::d74a5a24d8a1d7da6fe7b5324892b56f, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\ResultVisualize.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ResultVisualize
     ' 
-    '         Function: __innerMatrix, __visualizeHTML, HTMLVisualize
+    '         Function: doVisualizeHTML, HTMLVisualize, internalMatrix
     ' 
     ' 
     ' /********************************************************************************/

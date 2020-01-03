@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::317c20c13e36a730f7511b4354084609, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::278e85d4445080d5d912114b3f1309f9, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -150,7 +150,8 @@ Namespace IO
                                            Optional ByRef uidMap$ = Nothing,
                                            Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                            Optional tsv As Boolean = False,
-                                           Optional encoding As Encoding = Nothing) As IEnumerable(Of EntityObject)
+                                           Optional encoding As Encoding = Nothing,
+                                           Optional silent As Boolean = False) As IEnumerable(Of EntityObject)
 
             ' 2018-09-04 在原来的代码这里，空的path字符串是返回空集合的
             ' 为了保持和原来的代码的兼容性，在这里使用LastOrDefault来防止抛出错误
@@ -159,12 +160,12 @@ Namespace IO
                 Dim dir$ = path.Trim("*"c)
 
                 For Each file As String In ls - l - r - ("*.csv" Or "*.tsv".When(tsv)) <= dir
-                    data += LoadDataSet(Of EntityObject)(file, uidMap, fieldNameMaps, tsv, encoding:=encoding)
+                    data += LoadDataSet(Of EntityObject)(file, uidMap, fieldNameMaps, tsv, encoding:=encoding, silent:=silent)
                 Next
 
                 Return data
             Else
-                Return LoadDataSet(Of EntityObject)(path, uidMap, fieldNameMaps, tsv, encoding:=encoding)
+                Return LoadDataSet(Of EntityObject)(path, uidMap, fieldNameMaps, tsv, encoding:=encoding, silent:=silent)
             End If
         End Function
 
@@ -201,7 +202,8 @@ Namespace IO
                                                                  Optional ByRef uidMap$ = Nothing,
                                                                  Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                                                  Optional tsv As Boolean = False,
-                                                                 Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
+                                                                 Optional encoding As Encoding = Nothing,
+                                                                 Optional silent As Boolean = False) As IEnumerable(Of T)
             If Not path.FileExists Then
 #If DEBUG Then
                 Call $"{path} is missing on your file system!".Warning
@@ -223,7 +225,8 @@ Namespace IO
                     Return path.LoadCsv(Of T)(
                         explicit:=False,
                         maps:= .ByRef,
-                        encoding:=encoding
+                        encoding:=encoding,
+                        mute:=silent
                     )
                 End If
             End With

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e266ef3707ea88ae89c7bfbc8d789b4, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::7b47855e89a8f5f044bdf74ac27b35cf, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
     '                   GetGuid, GetInt16, GetInt32, GetInt64, GetObject
     '                   GetOrdinal, GetString, GetValue, HavebFlag, IsNull
     '                   IsTrue, OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput
-    '                   (+2 Overloads) Remove, ToArgumentVector, ToString
+    '                   (+2 Overloads) Remove, ToArgumentVector, ToString, TrimNamePrefix
     ' 
     '         Sub: (+2 Overloads) Add, Clear, CopyTo
     ' 

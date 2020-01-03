@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b51e549edb08b91e65f7cb62bbb97f8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\RoundRect.vb"
+﻿#Region "Microsoft.VisualBasic::14ad716e38ee4b457fef04a0f10690e4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\RoundRect.vb"
 
     ' Author:
     ' 
@@ -53,6 +53,18 @@ Namespace Drawing2D.Shapes
     ''' </summary>
     Public Class RoundRect
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="topLeft"></param>
+        ''' <param name="size"></param>
+        ''' <param name="radius"></param>
+        ''' <param name="br">
+        ''' If the brush value is not nothing, then this plot function
+        ''' will use this brush value fill the background
+        ''' </param>
+        ''' <param name="border"></param>
         Public Shared Sub Draw(ByRef g As IGraphics,
                                topLeft As Point,
                                size As SizeF,

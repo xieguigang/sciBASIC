@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6553c5fe7ec483972cadffb72aadc56, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::95bfddb466406a88d6568d80f3e214a8, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Module NetworkFileIO
         End With
     End Function
 End Module
-

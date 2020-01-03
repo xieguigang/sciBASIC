@@ -186,13 +186,13 @@ Namespace StorageProvider.ComponentModels
         ''' 对于只读属性而言，由于没有写入的过程，所以在从文件加在csv数据到.NET对象的时候会被放进字典属性里面，从而会导致输出的时候出现重复的域的BUG
         ''' 故而需要在这里将字典属性之中的只读属性的名称移除掉
         ''' </summary>
-        Public Sub SolveReadOnlyMetaConflicts()
+        Public Sub SolveReadOnlyMetaConflicts(silent As Boolean)
             ' 假若存在字典属性的话，则需要进行额外的处理
             If HaveMetaAttribute Then
                 ' why two reference that have the effects????
                 Dim schema As SchemaProvider = SchemaProvider.Raw.Raw
 
-                Call "Schema has meta dictionary property...".__DEBUG_ECHO
+                Call "Schema has meta dictionary property...".__DEBUG_ECHO(mute:=silent)
 
                 For Each name In NonIndexed.Keys.ToArray
                     ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他

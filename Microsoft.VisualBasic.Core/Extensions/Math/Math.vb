@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7995a8959bcd3d358a5b82d40806ed93, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::70b67ae9caa8f20ef9567c0b803d2db3, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,10 @@
     '                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
     '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, (+2 Overloads) Log2
     '                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
-    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, (+2 Overloads) RMS, (+8 Overloads) Round
-    '                   RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin
-    '                   Sinh, Sqrt, (+5 Overloads) Sum, Tan, Tanh
-    '                   (+2 Overloads) Truncate, WeighedAverage
+    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, RMSE
+    '                   (+8 Overloads) Round, RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign
+    '                   Sin, Sinh, Sqrt, (+5 Overloads) Sum, Tan
+    '                   Tanh, (+2 Overloads) Truncate, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/

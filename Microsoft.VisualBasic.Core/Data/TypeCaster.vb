@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c129a449557dee3f9aea51c4e14c1d3, Microsoft.VisualBasic.Core\ComponentModel\DataSource\TypeCaster.vb"
+﻿#Region "Microsoft.VisualBasic::4c129a449557dee3f9aea51c4e14c1d3, Microsoft.VisualBasic.Core\Data\TypeCaster.vb"
 
     ' Author:
     ' 

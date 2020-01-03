@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::428f68cffb11bf82c69327e04c881853, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::d39ac1920d2b6f055611964ba2c8e2d8, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: GetAvaliableThread, GetStatus, ToString
     ' 
-    '         Sub: __allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
+    '         Sub: allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
     '         Structure __taskInvoke
     ' 
     '             Function: Run

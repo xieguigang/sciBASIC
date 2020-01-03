@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63b83040d6ed4a7b35ec347b0248d972, Data\DataFrame\DATA\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::9cb52eef12222618ddfc34ef63606cca, Data\DataFrame\DATA\DataFrame.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Class DataFrame
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: [As], Append, GetEnumerator, IEnumerable_GetEnumerator, Load
-    '                   SaveTable, ToString
+    '         Function: [As], Append, Cbind, GetEnumerator, IEnumerable_GetEnumerator
+    '                   Load, SaveTable, ToString
     ' 
     '         Sub: TagFieldName
     ' 

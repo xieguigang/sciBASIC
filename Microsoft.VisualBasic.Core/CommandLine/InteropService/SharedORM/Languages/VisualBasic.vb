@@ -1,47 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::a0e120cd0724c822a82a40107e2e0093, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::e4aadecd84ae19dea90f2a572f5e5cfd, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class VisualBasic
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: addXmlComments, createCliCalls, GetSourceCode, normAsVisualBasicName, optionalDefaultValue
-'                   vbParameters
-' 
-'         Sub: cliCallsInternal
-' 
-' 
-' /********************************************************************************/
+    '     Class VisualBasic
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: addXmlComments, ArgumentXmlDocs, createCliCalls, GetSourceCode, normAsVisualBasicName
+    '                   optionalDefaultValue, vbParameters
+    ' 
+    '         Sub: cliCallsInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9323d6cc7d0a0aa572c751ef79fd2eab, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\IProperty.vb"
+﻿#Region "Microsoft.VisualBasic::d34ddc7da24f4bda8b4fbb91b55616f2, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\IProperty.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,12 @@
     '         Function: GetValue
     ' 
     '         Sub: SetValue
+    ' 
+    '     Interface IDynamicsObject
+    ' 
+    '         Function: GetItemValue, GetNames, HasName
+    ' 
+    '         Sub: Add, SetValue
     ' 
     '     Interface IDynamicMeta
     ' 
@@ -77,6 +83,7 @@ Namespace ComponentModel.DataSourceModel
 
         Function GetNames() As IEnumerable(Of String)
         Function GetItemValue(propertyName As String) As Object
+        Function HasName(name As String) As Boolean
 
     End Interface
 
