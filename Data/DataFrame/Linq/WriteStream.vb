@@ -229,7 +229,7 @@ Namespace IO.Linq
         End Sub
 
         ''' <summary>
-        ''' 这个是配合<see cref="DataStream.ForEachBlock(Of T)(Action(Of T()), Integer)"/>方法使用的
+        ''' 这个是配合<see cref="DataStream.ForEachBlock"/>方法使用的
         ''' </summary>
         ''' <typeparam name="Tsrc"></typeparam>
         ''' <param name="[ctype]"></param>
@@ -242,7 +242,7 @@ Namespace IO.Linq
         End Function
 
         ''' <summary>
-        ''' 这个是配合<see cref="DataStream.ForEach(Of T)(Action(Of T))"/>方法使用的
+        ''' 这个是配合<see cref="DataStream.ForEach"/>方法使用的
         ''' </summary>
         ''' <typeparam name="Tsrc"></typeparam>
         ''' <param name="_ctype"></param>

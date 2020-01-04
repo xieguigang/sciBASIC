@@ -92,7 +92,7 @@ Namespace Layouts
     End Class
 
     ''' <summary>
-    ''' Function parameters for <see cref="forceNetwork.doForceLayout(ByRef Graph.NetworkGraph, Double, Double, Double, Integer, Boolean)"/>
+    ''' Function parameters for <see cref="forceNetwork.doForceLayout"/>
     ''' </summary>
     <ClassName(NameOf(ForceDirectedArgs))>
     Public Class ForceDirectedArgs
