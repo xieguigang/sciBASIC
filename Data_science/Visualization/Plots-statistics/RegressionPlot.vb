@@ -67,7 +67,6 @@ Public Module RegressionPlot
     ''' <summary>
     ''' Plot of the linear regression result
     ''' </summary>
-    ''' <typeparam name="Result"></typeparam>
     ''' <param name="fit"></param>
     ''' <param name="size$"></param>
     ''' <param name="bg$"></param>
@@ -92,7 +91,7 @@ Public Module RegressionPlot
     ''' <param name="showErrorBand"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Plot(Of Result As IFitted)(fit As Result,
+    Public Function Plot(fit As IFitted,
                          Optional size$ = "2100,1600",
                          Optional bg$ = "white",
                          Optional margin$ = g.DefaultPadding,
@@ -114,6 +113,7 @@ Public Module RegressionPlot
                          Optional pointLabelFontCSS$ = CSSFont.Win7LittleLarge,
                          Optional xAxisTickFormat$ = "F2",
                          Optional yAxisTickFormat$ = "F2",
+                         Optional factorFormat$ = "G4",
                          Optional showErrorBand As Boolean = True) As GraphicsData
 
         Dim xTicks#() = fit.X.AsEnumerable _
@@ -252,7 +252,7 @@ Public Module RegressionPlot
                 End If
 
                 If showLegend Then
-                    Call g.printLegend(fit, rect, linearDetailsFontCSS, legendLabelFontCSS)
+                    Call g.printLegend(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat)
                 End If
 
                 If Not title.StringEmpty Then
@@ -334,10 +334,10 @@ Public Module RegressionPlot
     End Sub
 
     <Extension>
-    Private Sub printLegend(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$)
+    Private Sub printLegend(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$)
         Dim legendLabelFont As Font = CSSFont.TryParse(linearDetailsFontCSS)
-        Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString("G2", html:=True)
-        Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F4")
+        Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString(factorFormat, html:=True)
+        Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F5")
         Dim pt As New PointF With {
             .X = rect.Left + g.MeasureString("00", legendLabelFont).Width,
             .Y = rect.Top + 20
@@ -365,8 +365,8 @@ Public Module RegressionPlot
                         Return g.MeasureString(str, legendLabelFont)
                     End Function) _
             .Width
-        Dim top = rect.Top + rect.Height / 2
-        Dim left = rect.Right - 1.125 * maxLabelSize
+        Dim top = rect.Top + rect.Height / 1.5
+        Dim left = rect.Right - 1.25 * maxLabelSize
 
         Call g.DrawLegends(
             topLeft:=New Point(left, top),

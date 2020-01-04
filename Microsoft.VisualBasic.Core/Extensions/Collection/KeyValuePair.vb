@@ -754,6 +754,8 @@ Public Module KeyValuePairExtensions
     ''' <typeparam name="T">Unique identifier provider <see cref="INamedValue.Key"/></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
+    ''' 
+    <DebuggerStepThrough>
     <Extension>
     Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T), Optional replaceOnDuplicate As Boolean = False) As Dictionary(Of T)
         If source Is Nothing Then
@@ -776,6 +778,7 @@ Public Module KeyValuePairExtensions
         End If
     End Function
 
+    <DebuggerStepThrough>
     <Extension>
     Private Function tableInternal(Of T As INamedValue)(source As IEnumerable(Of T),
                                                         ByRef currentKey$,

@@ -222,12 +222,14 @@ Public Module VBDebugger
         Return Nothing
     End Function
 
-    <Extension> Public Sub __INFO_ECHO(msg$)
+    <Extension> Public Sub __INFO_ECHO(msg$, Optional silent As Boolean = False)
         If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
-            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+            If Not silent Then
+                Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+            End If
 
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
@@ -252,8 +254,17 @@ Public Module VBDebugger
     ''' <param name="exception"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
-        Return New Exception(memberName, exception).ToString.PrintException(memberName)
+    <Extension>
+    Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Dim lines = New Exception(memberName, exception).ToString.LineTokens
+        Dim exceptions$() = Strings.Split(lines.First, "--->")
+        Dim formats = exceptions(0) & vbCrLf &
+            vbCrLf &
+            exceptions.Skip(1).JoinBy(vbCrLf) & vbCrLf &
+            vbCrLf &
+            lines.Skip(1).JoinBy(vbCrLf)
+
+        Return formats.PrintException(memberName)
     End Function
 
     ''' <summary>

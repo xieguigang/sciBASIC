@@ -70,8 +70,8 @@ Public Module DoubleLinear
         End If
 
         ' evaluate R2 for each point removes
-        Dim ref As Vector = pointVec.X
-        Dim measure As Vector = pointVec.Y
+        Dim measure As Vector = pointVec.X
+        Dim ref As Vector = pointVec.Y
         Dim R2 As Double = -9999
         Dim bestfit As IFitted
         Dim model As IFitted

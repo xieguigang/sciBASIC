@@ -275,6 +275,8 @@ Namespace Language
         ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
         ''' </summary>
         ''' <param name="source">The collection whose elements are copied to the new list.</param>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(source As IEnumerable(Of T))
             Call MyBase.New(If(source Is Nothing, {}, source.ToArray))
         End Sub
@@ -285,6 +287,8 @@ Namespace Language
         ''' to accommodate the number of elements copied.
         ''' </summary>
         ''' <param name="x">The collection whose elements are copied to the new list.</param>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(ParamArray x As T())
             Call MyBase.New(If(x Is Nothing, {}, x))
         End Sub
@@ -293,6 +297,8 @@ Namespace Language
         ''' Initializes a new instance of the Microsoft VisualBasic language <see cref="List(Of T)"/> class 
         ''' that is empty and has the default initial capacity.
         ''' </summary>
+        ''' 
+        <DebuggerStepThrough>
         Public Sub New()
             Call MyBase.New
         End Sub
@@ -302,10 +308,13 @@ Namespace Language
         ''' is empty and has the specified initial capacity.
         ''' </summary>
         ''' <param name="capacity">The number of elements that the new list can initially store.</param>
+        ''' 
+        <DebuggerStepThrough>
         Public Sub New(capacity As Integer)
             Call MyBase.New(capacity)
         End Sub
 
+        <DebuggerStepThrough>
         Public Sub New(size As Integer, fill As T)
             For i As Integer = 0 To size - 1
                 Call Add(fill)

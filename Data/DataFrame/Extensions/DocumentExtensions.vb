@@ -420,12 +420,17 @@ Public Module DocumentExtensions
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function GetLastRow(Of T As Class)(path$, Optional encoding As Encodings = Encodings.UTF8, Optional strict As Boolean = False) As T
+    Public Function GetLastRow(Of T As Class)(path$,
+                                              Optional encoding As Encodings = Encodings.UTF8,
+                                              Optional strict As Boolean = False,
+                                              Optional silent As Boolean = False) As T
+
         Dim textEncoding As Encoding = encoding.CodePage
         Dim header As RowObject = RowObject.TryParse(path.ReadFirstLine(textEncoding))
         Dim data As RowObject = RowObject.TryParse(path.GetLastLine(textEncoding))
         Dim subFrame As DataFrame = IO.DataFrame.CreateObject({header, data})
-        Dim buffer = Reflector.Convert(Of T)(subFrame, strict)
+        Dim buffer = Reflector.Convert(Of T)(subFrame, strict, silent:=silent)
+
         Return buffer.First
     End Function
 End Module

@@ -395,7 +395,8 @@ Public Module Extensions
     Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
                                                 Optional strict As Boolean = False,
                                                 Optional skipEmpty As Boolean = True,
-                                                Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+                                                Optional maps As Dictionary(Of String, String) = Nothing,
+                                                Optional silent As Boolean = False) As IEnumerable(Of T)
         Dim sheet As File_csv
 
         If skipEmpty Then
@@ -410,7 +411,7 @@ Public Module Extensions
 
         Return IO.DataFrame _
             .CreateObject(file:=sheet) _
-            .AsDataSource(Of T)(strict, maps)
+            .AsDataSource(Of T)(strict, maps, silent:=silent)
     End Function
 
     ''' <summary>
@@ -423,13 +424,14 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(df As DataFrame,
                                                             Optional explicit As Boolean = False,
-                                                            Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+                                                            Optional maps As Dictionary(Of String, String) = Nothing,
+                                                            Optional silent As Boolean = False) As IEnumerable(Of T)
         With df
             If Not maps Is Nothing Then
                 Call .ChangeMapping(maps)
             End If
 
-            Return Reflector.Convert(Of T)(.ByRef, explicit)
+            Return Reflector.Convert(Of T)(.ByRef, explicit, silent:=silent)
         End With
     End Function
 
@@ -442,9 +444,14 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(importsFile$, Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
+    <Extension> Public Function AsDataSource(Of T As Class)(importsFile$,
+                                                            Optional delimiter$ = ",",
+                                                            Optional explicit As Boolean = True,
+                                                            Optional silent As Boolean = False) As T()
+
         Dim df As DataFrame = IO.DataFrame.CreateObject([Imports](importsFile, delimiter))
-        Dim data As T() = Reflector.Convert(Of T)(df, explicit).ToArray
+        Dim data As T() = Reflector.Convert(Of T)(df, explicit, silent:=silent).ToArray
+
         Return data
     End Function
 
@@ -662,17 +669,17 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="explicit">默认导出所有的可用属性</param>
+    ''' <param name="strict">默认导出所有的可用属性</param>
     ''' <param name="metaBlank">对于字典对象之中，空缺下来的域键名的值使用什么来替代？默认使用空白字符串</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToCsvDoc(Of T)(source As IEnumerable(Of T),
-                                               Optional explicit As Boolean = False,
+                                               Optional strict As Boolean = False,
                                                Optional maps As Dictionary(Of String, String) = Nothing,
                                                Optional metaBlank$ = "",
                                                Optional reorderKeys% = 0) As File
         Return Reflector.Save(
-            source, explicit,
+            source, strict,
             maps:=maps,
             metaBlank:=metaBlank,
             reorderKeys:=reorderKeys

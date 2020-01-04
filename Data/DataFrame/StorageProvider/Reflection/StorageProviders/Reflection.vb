@@ -120,7 +120,8 @@ Namespace StorageProvider.Reflection
         Public Function LoadDataToObject(csv As DataFrame, type As Type,
                                          Optional strict As Boolean = False,
                                          Optional metaBlank As String = "",
-                                         Optional parallel As Boolean = True) As IEnumerable(Of Object)
+                                         Optional parallel As Boolean = True,
+                                         Optional silent As Boolean = False) As IEnumerable(Of Object)
 
             Dim schema As TableSchema = TableSchema.CreateObjectInternal(type, strict).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
@@ -139,7 +140,7 @@ Namespace StorageProvider.Reflection
                           row = line.value
 
             Call rowBuilder.IndexOf(csv)
-            Call rowBuilder.SolveReadOnlyMetaConflicts()
+            Call rowBuilder.SolveReadOnlyMetaConflicts(silent)
 
             ' 顺序需要一一对应，所以在最后这里进行了一下排序操作
             Dim LQuery = From item
@@ -162,8 +163,12 @@ Namespace StorageProvider.Reflection
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Convert(Of TClass As Class)(df As DataFrame, Optional strict As Boolean = True, Optional metaBlank As String = "") As IEnumerable(Of TClass)
-            Return df.LoadDataToObject(GetType(TClass), strict, metaBlank).As(Of TClass)
+        Public Function Convert(Of TClass As Class)(df As DataFrame,
+                                                    Optional strict As Boolean = True,
+                                                    Optional metaBlank$ = "",
+                                                    Optional silent As Boolean = False) As IEnumerable(Of TClass)
+
+            Return df.LoadDataToObject(GetType(TClass), strict, metaBlank, silent:=silent).As(Of TClass)
         End Function
 
         ''' <summary>
@@ -203,7 +208,7 @@ Namespace StorageProvider.Reflection
             End If
 
             Call $"Reflector load data into type {GetType(T).FullName}".__DEBUG_ECHO(mute:=mute)
-            buffer = Reflector.Convert(Of T)(reader, Explicit, metaBlank)
+            buffer = Reflector.Convert(Of T)(reader, Explicit, metaBlank, silent:=mute)
             Call "[Job Done!]".__DEBUG_ECHO(mute:=mute)
 
             Return buffer
