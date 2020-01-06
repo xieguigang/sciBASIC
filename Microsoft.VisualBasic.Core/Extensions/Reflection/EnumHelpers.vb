@@ -43,9 +43,9 @@ Public Module EnumHelpers
         Dim EnumValues As Object() =
             Scripting _
             .CastArray(Of System.Enum)(enumType.GetEnumValues) _
-            .Select(Of Object)(Function(ar)
-                                   Return DirectCast(ar, Object)
-                               End Function) _
+            .Select(Function(ar)
+                        Return DirectCast(ar, Object)
+                    End Function) _
             .ToArray
         Dim values As T() = EnumValues _
             .Select(Function([enum]) DirectCast([enum], T)) _
