@@ -54,6 +54,20 @@ Public Module DoubleLinear
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="points"></param>
+    ''' <param name="weighted"></param>
+    ''' <param name="max">
+    ''' Max number of the reference points that delete automatically by 
+    ''' the linear modelling program.
+    ''' 
+    ''' + negative value means auto
+    ''' + zero means no deletion
+    ''' + positive means the max allowed point numbers for auto deletion by the program
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Function AutoPointDeletion(points As IEnumerable(Of PointF),
                                       Optional weighted As Boolean = False,
@@ -61,11 +75,13 @@ Public Module DoubleLinear
 
         Dim pointVec As PointF() = points.ToArray
 
-        If max <= 0 Then
+        If max < 0 Then
+            ' auto
             max = pointVec.Length / 2 - 1
         End If
         If max <= 0 Then
-            ' can not delete any more points
+            ' 1. user specific no deletions
+            ' 2. or can not delete any more points
             Return pointVec.LinearRegression(weighted)
         End If
 

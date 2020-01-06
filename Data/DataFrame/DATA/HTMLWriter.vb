@@ -68,7 +68,7 @@ Namespace DATA
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional title As String = "", Optional describ As String = "") As String
-            Return source.ToCsvDoc(False).ToHTMLTable(title Or GetType(T).FullName.AsDefault, describ Or GetType(T).Description.AsDefault)
+            Return source.ToCsvDoc(False).ToHTMLTable(title:=title Or GetType(T).FullName.AsDefault, alt:=describ Or GetType(T).Description.AsDefault)
         End Function
 
         <Extension>
@@ -77,14 +77,17 @@ Namespace DATA
             Optional tableID$ = Nothing,
             Optional width$ = "",
             Optional removes$() = Nothing,
+            Optional title$ = "",
             Optional alt$ = Nothing) As String
 
             Return source.ToCsvDoc(False).ToHTMLTable(
-                className,
-                tableID,
-                width,
-                removes,
-                alt)
+                className:=className,
+                tableID:=tableID,
+                width:=width,
+                removes:=removes,
+                title:=title,
+                alt:=alt
+            )
         End Function
 
         ''' <summary>

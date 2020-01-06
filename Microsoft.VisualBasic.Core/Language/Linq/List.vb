@@ -386,10 +386,23 @@ Namespace Language
             End If
         End Operator
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="n">
+        ''' If parameter <paramref name="n"/> equals to ZERO, then just 
+        ''' <see cref="Clear()"/> the list contents and keeps the object 
+        ''' reference.
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Operator *(list As List(Of T), n%) As List(Of T)
             Select Case n
-                Case <= 0
+                Case < 0
                     Return New List(Of T)
+                Case 0
+                    Call list.Clear()
+                    Return list
                 Case 1
                     Return New List(Of T)(list)
                 Case > 1

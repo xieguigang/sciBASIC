@@ -225,7 +225,8 @@ Public Module EmitReflection
     ''' <param name="type"></param>
     ''' <param name="[nameOf]"></param>
     ''' <returns></returns>
-    <Extension> Public Function API(type As Type, [nameOf] As String, Optional strict As Boolean = False) As String
+    <Extension>
+    Public Function API(type As Type, [nameOf] As String, Optional strict As Boolean = False) As String
 #If NET_40 = 0 Then
         Dim methods = type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
         Dim mBase As MethodInfo = (From m As MethodInfo In methods
@@ -496,57 +497,6 @@ NULL:       If Not strict Then
         End If
     End Function
 
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Get.Description",
-               Info:="Get the description data from a enum type value, if the target have no <see cref=""DescriptionAttribute""></see> attribute data then function will return the string value from the ToString() function.")>
-    <Extension> Public Function Description(value As [Enum]) As String
-#Else
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function Description(value As [Enum]) As String
-#End If
-        Dim type As Type = value.GetType()
-        Dim s As String = value.ToString
-        Dim memInfos As MemberInfo() = type.GetMember(name:=s)
-
-        If memInfos.IsNullOrEmpty Then
-            ' 当枚举类型为OR组合的时候，得到的是一个数字
-            If s.IsPattern("\d+") Then
-                Dim flag As Long = CLng(s)
-                Dim flags As New List(Of [Enum])
-                Dim flagValue As Long
-
-                For Each member In type.GetFields.Where(Function(field) field.FieldType Is type)
-                    flagValue = CLng(member.GetValue(Nothing))
-
-                    If flag And flagValue = flagValue Then
-                        flags += CType(member.GetValue(Nothing), [Enum])
-                    End If
-                Next
-
-                Return flags.Select(AddressOf Description).JoinBy("|")
-            Else
-                Return s
-            End If
-        End If
-
-        Return memInfos _
-            .First _
-            .Description([default]:=s)
-    End Function
-
     ''' <summary>
     ''' 获取得到定义该类型成员之上的<see cref="DescriptionAttribute"/>值或者默认定义
     ''' </summary>
@@ -573,53 +523,6 @@ NULL:       If Not strict Then
         Else
             Return [default]
         End If
-    End Function
-
-    ''' <summary>
-    ''' Get array value from the input flaged enum <paramref name="value"/>.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    Public Function GetAllEnumFlags(Of T As Structure)(value As T) As T()
-        Dim type As Type = GetType(T)
-        Dim array As New List(Of T)
-        Dim enumValue As [Enum] = CType(CObj(value), [Enum])
-
-        For Each flag As [Enum] In Enums(Of T)().Select(Function(o) CType(CObj(o), [Enum]))
-            If enumValue.HasFlag(flag) Then
-                array += DirectCast(CObj(flag), T)
-            End If
-        Next
-
-        Return array
-    End Function
-
-    ''' <summary>
-    ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.
-    ''' (只允许枚举类型，其他的都返回空集合)
-    ''' </summary>
-    ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
-    ''' <returns></returns>
-    Public Function Enums(Of T As Structure)() As T()
-        Dim enumType As Type = GetType(T)
-
-        If Not enumType.IsInheritsFrom(GetType(System.Enum)) Then
-            Return Nothing
-        End If
-
-        Dim EnumValues As Object() =
-            Scripting _
-            .CastArray(Of System.Enum)(enumType.GetEnumValues) _
-            .Select(Of Object)(Function(ar)
-                                   Return DirectCast(ar, Object)
-                               End Function) _
-            .ToArray
-        Dim values As T() = EnumValues _
-            .Select(Of T)(Function([enum]) DirectCast([enum], T)) _
-            .ToArray
-
-        Return values
     End Function
 
     ''' <summary>
@@ -674,21 +577,24 @@ NULL:       If Not strict Then
 #If NET_40 = 0 Then
 
     ''' <summary>
-    ''' Try convert the type specific collection data type into a generic enumerable collection data type.(尝试将目标集合类型转换为通用的枚举集合类型)
+    ''' Try convert the type specific collection data type into a generic enumerable collection data type.
+    ''' (尝试将目标集合类型转换为通用的枚举集合类型)
     ''' </summary>
     ''' <param name="type">The type specific collection data type.(特定类型的集合对象类型，当然也可以是泛型类型)</param>
-    ''' <returns>If the target data type is not a collection data type then the original data type will be returns and the function displays a warning message.</returns>
+    ''' <returns>
+    ''' If the target data type is not a collection data type then the original data type 
+    ''' will be returns and the function displays a warning message.
+    ''' </returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Collection2GenericIEnumerable", Info:="Try convert the type specific collection data type into a generic enumerable collection data type.")>
+    <ExportAPI("Collection2GenericIEnumerable")>
     <Extension> Public Function Collection2GenericIEnumerable(type As Type, Optional showDebugMsg As Boolean = True) As Type
-
         If Array.IndexOf(type.GetInterfaces, GetType(IEnumerable)) = -1 Then
 EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" is not a collection type!".__DEBUG_ECHO
             Return type
         End If
 
-        Dim genericType As Type = GetType(Generic.IEnumerable(Of )) 'Type.GetType("System.Collections.Generic.IEnumerable")
+        Dim genericType As Type = GetType(IEnumerable(Of )) 'Type.GetType("System.Collections.Generic.IEnumerable")
         Dim elementType As Type = type.GetElementType
 
         If elementType Is Nothing Then
@@ -715,7 +621,7 @@ EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" i
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Delegate.GET_Invoke", Info:="Get the method reflection entry point for a anonymous lambda expression.")>
+    <ExportAPI("Delegate.GET_Invoke")>
     Public Function GetDelegateInvokeEntryPoint(obj As Object) As MethodInfo
         Dim type As Type = obj.GetType
         Dim entryPoint = LinqAPI.DefaultFirst(Of MethodInfo) _
