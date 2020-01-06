@@ -64,7 +64,7 @@ Public Module EnumHelpers
     ''' <remarks></remarks>
     <ExportAPI("Get.Description")>
     <Extension>
-    Public Function Description(value As [Enum]) As String
+    Public Function Description(value As [Enum], Optional deli$ = "|") As String
 #Else
     ''' <summary>
     ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
@@ -82,19 +82,7 @@ Public Module EnumHelpers
         If memInfos.IsNullOrEmpty Then
             ' 当枚举类型为OR组合的时候，得到的是一个数字
             If s.IsPattern("\d+") Then
-                Dim flag As Long = CLng(s)
-                Dim flags As New List(Of [Enum])
-                Dim flagValue As Long
-
-                For Each member In type.GetFields.Where(Function(field) field.FieldType Is type)
-                    flagValue = CLng(member.GetValue(Nothing))
-
-                    If flag And flagValue = flagValue Then
-                        flags += CType(member.GetValue(Nothing), [Enum])
-                    End If
-                Next
-
-                Return flags.Select(AddressOf Description).JoinBy("|")
+                Return combinationDescription(flag:=CLng(s), type:=type, deli:=deli)
             Else
                 Return s
             End If
@@ -103,5 +91,20 @@ Public Module EnumHelpers
         Return memInfos _
             .First _
             .Description([default]:=s)
+    End Function
+
+    Private Function combinationDescription(flag As Long, type As Type, deli$) As String
+        Dim flags As New List(Of [Enum])
+        Dim flagValue As Long
+
+        For Each member In type.GetFields.Where(Function(field) field.FieldType Is type)
+            flagValue = CLng(member.GetValue(Nothing))
+
+            If flag And flagValue = flagValue Then
+                flags += CType(member.GetValue(Nothing), [Enum])
+            End If
+        Next
+
+        Return flags.Select(AddressOf Description).JoinBy(deli)
     End Function
 End Module
