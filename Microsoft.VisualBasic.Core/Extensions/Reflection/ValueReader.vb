@@ -1,8 +1,43 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Public Module ValueReader
+
+    ''' <summary>
+    ''' 出错会返回空集合
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="TProperty"></typeparam>
+    ''' <param name="collection"></param>
+    ''' <param name="name">使用System.NameOf()操作符来获取</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function [Get](Of T, TProperty)(collection As ICollection(Of T), name As String, Optional trimNull As Boolean = True) As TProperty()
+        Dim properties = DataFramework.Schema(Of T)(PropertyAccess.Readable, nonIndex:=True)
+
+        If properties.IsNullOrEmpty OrElse Not properties.ContainsKey(name) Then
+            Return New TProperty() {}
+        End If
+
+        Dim [property] As PropertyInfo = properties(name)
+        Dim resultBuffer As TProperty()
+        Dim LQuery = From obj As T In collection.AsParallel
+                     Let value As Object = [property].GetValue(obj, Nothing)
+                     Let cast = If(value Is Nothing, Nothing, DirectCast(value, TProperty))
+                     Select cast
+
+        If trimNull Then
+            resultBuffer = LQuery _
+                .Where(Function(item) Not item Is Nothing) _
+                .ToArray
+        Else
+            resultBuffer = LQuery.ToArray
+        End If
+
+        Return resultBuffer
+    End Function
 
     ''' <summary>
     ''' 只对属性有效，出错会返回空值
@@ -44,5 +79,15 @@ Public Module ValueReader
         End If
         Dim cast As T = DirectCast(value, T)
         Return cast
+    End Function
+
+    <Extension>
+    Public Function GetDouble(field As FieldInfo, Optional obj As Object = Nothing) As Double
+        Return CType(field.GetValue(obj), Double)
+    End Function
+
+    <Extension>
+    Public Function GetInt(field As FieldInfo, Optional obj As Object = Nothing) As Integer
+        Return CType(field.GetValue(obj), Integer)
     End Function
 End Module
