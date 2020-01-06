@@ -323,9 +323,12 @@ Namespace Language.Vectorization
 #End Region
 
 #Region "Constructor"
+
+        <DebuggerStepThrough>
         Public Sub New()
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(capacity%)
             buffer = New T(capacity - 1) {}
         End Sub
@@ -334,15 +337,19 @@ Namespace Language.Vectorization
         ''' 构建一个新的向量对象，这个向量对象只提供基本的数据存储和访问模型，并没有提供高级的动态处理和模式解析的操作
         ''' </summary>
         ''' <param name="data"></param>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(data As IEnumerable(Of T))
             buffer = data.ToArray
         End Sub
 #End Region
 
+        <DebuggerStepThrough>
         Public Overrides Function ToString() As String
             Return $"{buffer.Length} @ {GetType(T).FullName}"
         End Function
 
+        <DebuggerStepThrough>
         Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each element As T In buffer
                 Yield element

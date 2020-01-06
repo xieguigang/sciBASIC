@@ -605,8 +605,7 @@ Public Module PathExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DirectoryExists(DIR As String) As Boolean
-        Return Not String.IsNullOrEmpty(DIR) AndAlso
-            FileIO.FileSystem.DirectoryExists(DIR)
+        Return Not String.IsNullOrEmpty(DIR) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
     End Function
 
     ''' <summary>

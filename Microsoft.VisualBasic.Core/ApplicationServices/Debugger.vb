@@ -254,8 +254,17 @@ Public Module VBDebugger
     ''' <param name="exception"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
-        Return New Exception(memberName, exception).ToString.PrintException(memberName)
+    <Extension>
+    Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Dim lines = New Exception(memberName, exception).ToString.LineTokens
+        Dim exceptions$() = Strings.Split(lines.First, "--->")
+        Dim formats = exceptions(0) & vbCrLf &
+            vbCrLf &
+            exceptions.Skip(1).JoinBy(vbCrLf) & vbCrLf &
+            vbCrLf &
+            lines.Skip(1).JoinBy(vbCrLf)
+
+        Return formats.PrintException(memberName)
     End Function
 
     ''' <summary>

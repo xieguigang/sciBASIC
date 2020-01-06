@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::96de3680f1c003d276cb4347540c5482, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HashTable
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class Dictionary
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: Find, GetValueList, Have, Remove, SafeGetValue
-    '                   (+2 Overloads) TryGetValue
-    ' 
-    '         Sub: Add, AddRange, InsertOrUpdate
-    ' 
-    '         Operators: (+2 Overloads) -, ^, +, <=, >=
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HashTable
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class Dictionary
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: Find, GetValueList, Have, Remove, SafeGetValue
+'                   (+2 Overloads) TryGetValue
+' 
+'         Sub: Add, AddRange, InsertOrUpdate
+' 
+'         Operators: (+2 Overloads) -, ^, +, <=, >=
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -137,6 +137,7 @@ Namespace ComponentModel.Collection
             End Set
         End Property
 
+        <DebuggerStepThrough>
         Sub New()
             Call MyBase.New
         End Sub
@@ -151,10 +152,13 @@ Namespace ComponentModel.Collection
         ''' The System.Collections.Generic.IDictionary`2 whose elements are copied to the
         ''' new System.Collections.Generic.SortedDictionary`2.
         ''' </param>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(source As Dictionary(Of String, V))
             Call MyBase.New(source)
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(source As IEnumerable(Of V), Optional overridesDuplicateds As Boolean = False)
             Call Me.New
 
@@ -169,6 +173,7 @@ Namespace ComponentModel.Collection
             End If
         End Sub
 
+        <DebuggerStepThrough>
         Public Function GetValueList() As List(Of V)
             Return Values.AsList
         End Function
@@ -177,10 +182,13 @@ Namespace ComponentModel.Collection
         ''' Adds an element with the specified key and value into the System.Collections.Generic.SortedDictionary`2.
         ''' </summary>
         ''' <param name="item"></param>
+        ''' 
+        <DebuggerStepThrough>
         Public Overloads Sub Add(item As V)
             Call MyBase.Add(item.Key, item)
         End Sub
 
+        <DebuggerStepThrough>
         Public Sub AddRange(source As IEnumerable(Of V))
             For Each x As V In source
                 Call MyBase.Add(x.Key, x)
@@ -222,6 +230,7 @@ Namespace ComponentModel.Collection
         ''' <param name="item"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function Have(item As V) As Boolean
             Return MyBase.ContainsKey(item.Key)
         End Function

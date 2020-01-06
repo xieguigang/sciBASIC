@@ -55,7 +55,7 @@ Namespace Outlining
             Dim rowBuilder As New RowBuilder(schema)
 
             Call rowBuilder.IndexOf(New HeaderSchema(headers))
-            Call rowBuilder.SolveReadOnlyMetaConflicts()
+            Call rowBuilder.SolveReadOnlyMetaConflicts(True)
 
             Return rowBuilder
         End Function

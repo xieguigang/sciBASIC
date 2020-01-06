@@ -339,7 +339,8 @@ Namespace StorageProvider.Reflection
                 metaBlank,
                 maps,
                 parallel,
-                reorderKeys:=reorderKeys).DataFrame
+                reorderKeys:=reorderKeys
+            ).DataFrame
         End Function
 
         ''' <summary>
