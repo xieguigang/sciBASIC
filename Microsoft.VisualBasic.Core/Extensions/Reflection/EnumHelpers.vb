@@ -15,16 +15,30 @@ Public Module EnumHelpers
     ''' <returns></returns>
     Public Function GetAllEnumFlags(Of T As Structure)(value As T) As T()
         Dim type As Type = GetType(T)
-        Dim array As New List(Of T)
         Dim enumValue As [Enum] = CType(CObj(value), [Enum])
-
-        For Each flag As [Enum] In Enums(Of T)().Select(Function(o) CType(CObj(o), [Enum]))
-            If enumValue.HasFlag(flag) Then
-                array += DirectCast(CObj(flag), T)
-            End If
-        Next
+        Dim array As T() = GetAllEnumFlags(enumValue, type) _
+            .Select(Function(e)
+                        Return DirectCast(CObj(e), T)
+                    End Function) _
+            .ToArray
 
         Return array
+    End Function
+
+    ''' <summary>
+    ''' Get array value from the input flaged enum <paramref name="enumValue"/>.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Iterator Function GetAllEnumFlags(enumValue As [Enum], type As Type) As IEnumerable(Of [Enum])
+        For Each flag As [Enum] In type _
+            .GetEnumValues _
+            .AsObjectEnumerator _
+            .Select(Function(o) CType(CObj(o), [Enum]))
+
+            If enumValue.HasFlag(flag) Then
+                Yield flag
+            End If
+        Next
     End Function
 
     ''' <summary>
@@ -77,7 +91,7 @@ Public Module EnumHelpers
         If memInfos.IsNullOrEmpty Then
             ' 当枚举类型为OR组合的时候，得到的是一个数字
             If s.IsPattern("\d+") Then
-                Return combinationDescription(flag:=CLng(s), type:=type, deli:=deli)
+                Return FlagCombinationDescription(flag:=CLng(s), type:=type, deli:=deli)
             Else
                 Return s
             End If
@@ -88,7 +102,7 @@ Public Module EnumHelpers
             .Description([default]:=s)
     End Function
 
-    Private Function combinationDescription(flag As Long, type As Type, deli$) As String
+    Public Function FlagCombinationDescription(flag As Long, type As Type, deli$) As String
         Dim flags As New List(Of [Enum])
         Dim flagValue As Long
 
