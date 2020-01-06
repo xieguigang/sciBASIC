@@ -40,18 +40,13 @@ Public Module EnumHelpers
             Return Nothing
         End If
 
-        Dim EnumValues As Object() =
-            Scripting _
-            .CastArray(Of System.Enum)(enumType.GetEnumValues) _
-            .Select(Function(ar)
-                        Return DirectCast(ar, Object)
-                    End Function) _
-            .ToArray
-        Dim values As T() = EnumValues _
+        Dim enumValues As T() = enumType _
+            .GetEnumValues _
+            .AsObjectEnumerator _
             .Select(Function([enum]) DirectCast([enum], T)) _
             .ToArray
 
-        Return values
+        Return enumValues
     End Function
 
 #If FRAMEWORD_CORE Then
