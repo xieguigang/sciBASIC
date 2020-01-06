@@ -1112,6 +1112,7 @@
     <Compile Include="Extensions\Collection\Linq\JoinExtensions.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
+    <Compile Include="Extensions\Reflection\EnumHelpers.vb" />
     <Compile Include="Extensions\StringHelpers\StringFormats.vb" />
     <Compile Include="My\Framework\FrameworkConfig.vb" />
     <Compile Include="My\Framework\DoConfiguration.vb" />
