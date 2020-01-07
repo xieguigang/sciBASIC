@@ -82,8 +82,8 @@ Public Module PrimitiveParser
     ''' Is this token value string is a number?
     ''' </summary>
     ''' <returns></returns>
-    <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
-    <Extension> Public Function IsNumeric(num As String) As Boolean
+    <Extension>
+    Public Function IsNumeric(num As String) As Boolean
         Dim dotCheck As Boolean = False
         Dim c As Char = num(Scan0)
         Dim offset As Integer = 0
