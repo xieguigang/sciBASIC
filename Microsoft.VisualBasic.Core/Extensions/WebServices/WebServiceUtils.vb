@@ -110,9 +110,8 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="dict"></param>
     ''' <returns></returns>
-    <ExportAPI("Build.Reqparm",
-               Info:="Build the request parameters for the HTTP POST")>
-    <Extension> Public Function BuildReqparm(dict As Dictionary(Of String, String)) As NameValueCollection
+    <Extension>
+    Public Function BuildReqparm(dict As Dictionary(Of String, String)) As NameValueCollection
         Dim reqparm As New NameValueCollection
 
         For Each Value As KeyValuePair(Of String, String) In dict
@@ -127,7 +126,6 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
-    <ExportAPI("Build.Reqparm", Info:="Build the request parameters for the HTTP POST")>
     <Extension>
     Public Function BuildReqparm(data As IEnumerable(Of KeyValuePair(Of String, String))) As Specialized.NameValueCollection
         Dim reqparm As New Specialized.NameValueCollection
@@ -164,7 +162,6 @@ Public Module WebServiceUtils
     ''' ###### 2016-11-21
     ''' 因为post可能会传递数组数据进来，则这个时候就会出现重复的键名，则已经不再适合字典类型了，这里改为返回<see cref="NameValueCollection"/>
     ''' </returns>
-    <ExportAPI("CreateDirectory", Info:="Create a parameter dictionary from the request parameter tokens.")>
     <Extension>
     Public Function GenerateDictionary(tokens As String(), Optional lowercase As Boolean = True) As NameValueCollection
         Dim out As New NameValueCollection
@@ -348,8 +345,14 @@ Public Module WebServiceUtils
         Return table
     End Function
 
-    <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(strUrl$, ParamArray args As String()()) As String
+    ''' <summary>
+    ''' GET http request
+    ''' </summary>
+    ''' <param name="strUrl$"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetRequest(strUrl$, ParamArray args As String()()) As String
         If args.IsNullOrEmpty Then
             Return GetRequest(strUrl)
         Else
@@ -368,8 +371,8 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="url"></param>
     ''' <returns></returns>
-    <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = Nothing) As String
+    <Extension>
+    Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = Nothing) As String
         Dim strData As String = ""
         Dim strValue As New List(Of String)
         Dim reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
@@ -409,7 +412,7 @@ Public Module WebServiceUtils
     Public Property Proxy As String
 
     ''' <summary>
-    ''' 
+    ''' GET http request
     ''' </summary>
     ''' <param name="url"></param>
     ''' <param name="https"></param>
@@ -424,10 +427,10 @@ Public Module WebServiceUtils
     ''' Otherwise it will give The server committed a protocol violation. Section=ResponseStatusLine Error.
     ''' </param>
     ''' <returns></returns>
-    <ExportAPI("GET.Raw", Info:="GET http request")>
-    <Extension> Public Function GetRequestRaw(url As String,
-                                              Optional https As Boolean = False,
-                                              Optional userAgent As String = Nothing) As Stream
+    <Extension>
+    Public Function GetRequestRaw(url As String,
+                                Optional https As Boolean = False,
+                                Optional userAgent As String = Nothing) As Stream
         Dim request As HttpWebRequest
         If https Then
             request = WebRequest.CreateDefault(New Uri(url))
@@ -445,12 +448,22 @@ Public Module WebServiceUtils
         Return s
     End Function
 
-    <ExportAPI("POST", Info:="POST http request")>
+    ''' <summary>
+    ''' POST http request
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="params"></param>
+    ''' <returns></returns>
     Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As String
         Return url.POST(params.BuildReqparm)
     End Function
 
-    <ExportAPI("POST", Info:="POST http request")>
+    ''' <summary>
+    ''' POST http request
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="params"></param>
+    ''' <returns></returns>
     Public Function PostRequest(url As String, ParamArray params As String()()) As String
         Dim post As KeyValuePair(Of String, String)()
         If params Is Nothing Then
@@ -470,13 +483,13 @@ Public Module WebServiceUtils
     ''' <param name="params"></param>
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
-    <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function POST(url$,
-                                     Optional params As NameValueCollection = Nothing,
-                                     Optional headers As Dictionary(Of String, String) = Nothing,
-                                     Optional Referer$ = "",
-                                     Optional proxy$ = Nothing,
-                                     Optional contentEncoding As Encodings = Encodings.UTF8) As String
+    <Extension>
+    Public Function POST(url$,
+                        Optional params As NameValueCollection = Nothing,
+                        Optional headers As Dictionary(Of String, String) = Nothing,
+                        Optional Referer$ = "",
+                        Optional proxy$ = Nothing,
+                        Optional contentEncoding As Encodings = Encodings.UTF8) As String
 
         Static emptyBody As New [Default](Of NameValueCollection) With {
             .value = New NameValueCollection,
@@ -573,11 +586,11 @@ Public Module WebServiceUtils
     ''' <param name="data"></param>
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
-    <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function POST(url$, data As Dictionary(Of String, String()),
-                                     Optional Referer$ = "",
-                                     Optional proxy$ = Nothing,
-                                     Optional ua As String = UserAgent.GoogleChrome) As String
+    <Extension>
+    Public Function POST(url$, data As Dictionary(Of String, String()),
+                        Optional Referer$ = "",
+                        Optional proxy$ = Nothing,
+                        Optional ua As String = UserAgent.GoogleChrome) As String
 
         Dim postString As New List(Of String)
 
@@ -655,17 +668,17 @@ Public Module WebServiceUtils
     ''' <param name="save">The file path of the file saved</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("wget", Info:="Download data from the specific URL location.")>
-    <Extension> Public Function DownloadFile(<Parameter("url")> strUrl$,
-                                             <Parameter("Path.Save", "The saved location of the downloaded file data.")>
-                                             save$,
-                                             Optional proxy$ = Nothing,
-                                             Optional ua$ = Nothing,
-                                             Optional retry% = 0,
-                                             Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
-                                             Optional refer$ = Nothing,
-                                             <CallerMemberName>
-                                             Optional trace$ = Nothing) As Boolean
+    <Extension>
+    Public Function DownloadFile(<Parameter("url")> strUrl$,
+                                <Parameter("Path.Save", "The saved location of the downloaded file data.")>
+                                save$,
+                                Optional proxy$ = Nothing,
+                                Optional ua$ = Nothing,
+                                Optional retry% = 0,
+                                Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
+                                Optional refer$ = Nothing,
+                                <CallerMemberName>
+                                Optional trace$ = Nothing) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -718,14 +731,15 @@ RE0:
     End Function
 
     ''' <summary>
-    ''' 使用GET方法下载文件
+    ''' Download file from http request and save to a specific location.
+    ''' (使用GET方法下载文件)
     ''' </summary>
     ''' <param name="url"></param>
     ''' <param name="savePath"></param>
     ''' <returns></returns>
     '''
-    <ExportAPI("GET.Download", Info:="Download file from http request and save to a specific location.")>
-    <Extension> Public Function GetDownload(url As String, savePath As String) As Boolean
+    <Extension>
+    Public Function GetDownload(url As String, savePath As String) As Boolean
         Try
             Dim responseStream As Stream = GetRequestRaw(url)
             Dim localBuffer As Stream = responseStream.CopyStream

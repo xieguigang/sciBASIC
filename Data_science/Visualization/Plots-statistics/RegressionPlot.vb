@@ -114,7 +114,8 @@ Public Module RegressionPlot
                          Optional xAxisTickFormat$ = "F2",
                          Optional yAxisTickFormat$ = "F2",
                          Optional factorFormat$ = "G4",
-                         Optional showErrorBand As Boolean = True) As GraphicsData
+                         Optional showErrorBand As Boolean = True,
+                         Optional labelerIterations% = 1000) As GraphicsData
 
         Dim xTicks#() = fit.X.AsEnumerable _
             .Range(scale:=1.125) _
@@ -247,12 +248,13 @@ Public Module RegressionPlot
                         pointSize,
                         pointLabelFont,
                         rect,
-                        labelAnchorPen
+                        labelAnchorPen,
+                        labelerIterations:=labelerIterations
                     )
                 End If
 
                 If showLegend Then
-                    Call g.printLegend(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat)
+                    Call g.printLegend(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat, Not predictedX Is Nothing)
                 End If
 
                 If Not title.StringEmpty Then
@@ -281,7 +283,8 @@ Public Module RegressionPlot
                                 pointSize!,
                                 pointLabelFont As Font,
                                 rect As RectangleF,
-                                labelAnchorPen As Pen)
+                                labelAnchorPen As Pen,
+                                labelerIterations%)
 
         Dim labels As New List(Of Label)
         Dim anchors As New List(Of PointF)
@@ -318,12 +321,12 @@ Public Module RegressionPlot
             }
         Next
 
-        Call d3js.labeler _
+        Call d3js.labeler(maxMove:=10, maxAngle:=0.6, w_len:=0.5, w_inter:=5, w_lab2:=30, w_lab_anc:=30, w_orient:=5) _
             .Labels(labels) _
             .Anchors(labels.GetLabelAnchors(pointSize)) _
             .Width(rect.Width) _
             .Height(rect.Height) _
-            .Start(showProgress:=False, nsweeps:=500)
+            .Start(showProgress:=False, nsweeps:=labelerIterations)
 
         For Each label As SeqValue(Of Label) In labels.SeqIterator
             With label.value
@@ -334,7 +337,7 @@ Public Module RegressionPlot
     End Sub
 
     <Extension>
-    Private Sub printLegend(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$)
+    Private Sub printLegend(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$, hasPredictedSamples As Boolean)
         Dim legendLabelFont As Font = CSSFont.TryParse(linearDetailsFontCSS)
         Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString(factorFormat, html:=True)
         Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F5")
@@ -357,6 +360,11 @@ Public Module RegressionPlot
             New Legend With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Standard Reference"},
             New Legend With {.color = "black", .fontstyle = legendLabelFontCSS, .style = LegendStyles.SolidLine, .title = "Linear"}
         }
+
+        If hasPredictedSamples Then
+            legends.Add(New Legend With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Samples"})
+        End If
+
         Dim border As Stroke = Stroke.ScatterLineStroke
         Dim maxLabelSize! = legends _
             .Select(Function(l) l.title) _
