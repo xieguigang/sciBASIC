@@ -80,7 +80,6 @@ Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text.Similarity
 
@@ -188,28 +187,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Returns the first not nothing object.
-    ''' </summary>
-    ''' <typeparam name="T">
-    ''' Due to the reason of value type is always not nothing, so that this generic type constrain as Class reference type.
-    ''' </typeparam>
-    ''' <param name="args"></param>
-    ''' <returns></returns>
-    Public Function NotNull(Of T As Class)(ParamArray args As T()) As T
-        If args.IsNullOrEmpty Then
-            Return Nothing
-        Else
-            For Each x In args
-                If Not x Is Nothing Then
-                    Return x
-                End If
-            Next
-        End If
-
-        Return Nothing
-    End Function
-
-    ''' <summary>
     ''' Get target string's md5 hash code
     ''' </summary>
     ''' <param name="s$"></param>
@@ -217,25 +194,6 @@ Public Module Extensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String
         Return s.GetMd5Hash
-    End Function
-
-    ''' <summary>
-    ''' Returns the first not null or empty string.
-    ''' </summary>
-    ''' <param name="args"></param>
-    ''' <returns></returns>
-    Public Function FirstNotEmpty(ParamArray args As String()) As String
-        If args.IsNullOrEmpty Then
-            Return ""
-        Else
-            For Each s As String In args
-                If Not String.IsNullOrEmpty(s) Then
-                    Return s
-                End If
-            Next
-        End If
-
-        Return ""
     End Function
 
     ''' <summary>
@@ -311,65 +269,6 @@ Public Module Extensions
         End If
     End Sub
 
-    ''' <summary>
-    ''' Safe get the specific index element from the target collection, is the index value invalid, then default value will be return.
-    ''' (假若下标越界的话会返回默认值)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="array"></param>
-    ''' <param name="index"></param>
-    ''' <param name="[default]">Default value for invalid index is nothing.</param>
-    ''' <returns></returns>
-    <Extension> Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
-        If array Is Nothing Then
-            Return [default]
-        End If
-
-        If index < 0 OrElse index >= array.Count Then
-            Return [default]
-        End If
-
-        Dim value As T = array(index)
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' This is a safely method for gets the value in a array, if the index was outside of the boundary, then the default value will be return.
-    ''' (假若下标越界的话会返回默认值)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="array"></param>
-    ''' <param name="index"></param>
-    ''' <param name="[default]">Default value for return when the array object is nothing or index outside of the boundary.</param>
-    ''' <returns></returns>
-    <Extension> Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
-        If array.IsNullOrEmpty Then
-            Return [default]
-        End If
-
-        If index < 0 OrElse index >= array.Length Then
-            Return [default]
-        End If
-
-        Dim value As T = array(index)
-        Return value
-    End Function
-
-    <Extension>
-    Public Function ElementAtOrNull(Of T)(array As T(), index As Integer) As T
-        If array Is Nothing Then
-            Return Nothing
-        ElseIf index < 0 Then
-            index = array.Length + index
-        End If
-
-        If index < 0 OrElse index >= array.Length Then
-            Return Nothing
-        Else
-            Return array(index)
-        End If
-    End Function
-
     <Extension> Public Function [Set](Of T)(ByRef array As T(), index As Integer, value As T) As T()
         If index < 0 Then
             Return array
@@ -438,113 +337,6 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension>
-    Public Function GetValueOrNull(Of K, V)(table As IDictionary(Of K, V), key As K) As V
-        Dim refOut As V = Nothing
-        Call table.TryGetValue(key, value:=refOut)
-        Return refOut
-    End Function
-
-    ''' <summary>
-    ''' 假若不存在目标键名，则返回空值，默认值为空值
-    ''' </summary>
-    ''' <typeparam name="TKey"></typeparam>
-    ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="table"></param>
-    ''' <param name="keys"></param>
-    ''' <param name="[default]"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
-                                                             keys As TKey(),
-                                                             Optional [default] As TValue = Nothing,
-                                                             Optional mute As Boolean = False,
-                                                             <CallerMemberName> Optional trace$ = Nothing) As TValue
-        ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
-        ' 直接返回默认值
-        If table Is Nothing Then
-#If DEBUG Then
-            Call PrintException("Hash_table is nothing!")
-#End If
-            Return [default]
-        ElseIf keys.IsNullOrEmpty Then
-#If DEBUG Then
-            Call PrintException("Index key is nothing!")
-#End If
-            Return [default]
-        Else
-            For Each key As TKey In keys
-                If table.ContainsKey(key) Then
-                    Return table(key)
-                End If
-            Next
-
-#If DEBUG Then
-            If Not mute Then
-                Call PrintException($"missing_index:={keys.Select(AddressOf Scripting.ToString).GetJson}!", trace)
-            End If
-#End If
-            Return [default]
-        End If
-    End Function
-
-    ''' <summary>
-    ''' 假若不存在目标键名，则返回空值，默认值为空值
-    ''' </summary>
-    ''' <typeparam name="TKey"></typeparam>
-    ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="table"></param>
-    ''' <param name="index">这个函数会自动处理空键名的情况</param>
-    ''' <param name="[default]"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
-                                                             index As TKey,
-                                                             Optional [default] As TValue = Nothing,
-                                                             Optional mute As Boolean = False,
-                                                             <CallerMemberName> Optional trace$ = Nothing) As TValue
-        ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
-        ' 直接返回默认值
-        If table Is Nothing Then
-#If DEBUG Then
-            Call PrintException("Hash_table is nothing!")
-#End If
-            Return [default]
-        ElseIf index Is Nothing Then
-#If DEBUG Then
-            Call PrintException("Index key is nothing!")
-#End If
-            Return [default]
-        ElseIf Not table.ContainsKey(index) Then
-#If DEBUG Then
-            If Not mute Then
-                Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
-            End If
-#End If
-            Return [default]
-        End If
-
-        Return table(index)
-    End Function
-
-    <Extension> Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
-        If hash Is Nothing Then
-            Return Nothing
-        End If
-
-        If Not hash.ContainsKey(Index) Then
-            Return Nothing
-        End If
-
-        Dim obj As TValue = hash(Index)
-        Dim propertyInfo As PropertyInfo = obj.GetType.GetProperty(prop)
-
-        If propertyInfo Is Nothing Then
-            Return Nothing
-        End If
-
-        Dim value As Object = propertyInfo.GetValue(obj, Nothing)
-        Return DirectCast(value, TProp)
-    End Function
-
     ''' <summary>
     ''' 
     ''' </summary>
@@ -582,8 +374,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="dat"></param>
     ''' <returns></returns>
-    <ExportAPI("Date.ToString", Info:="Format the datetime value in the format of yy/mm/dd hh:min")>
-    <Extension> Public Function DateToString(dat As Date) As String
+    <Extension>
+    Public Function DateToString(dat As Date) As String
         Dim yy = dat.Year
         Dim mm As String = dat.Month.FormatZero
         Dim dd As String = dat.Day.FormatZero
@@ -1173,8 +965,6 @@ Public Module Extensions
     ''' <param name="n"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("Double.Is.NA",
-               Info:="Is this double type of the number is an NA type infinity number. this is major comes from the devided by ZERO.")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function IsNaNImaginary(n As Double) As Boolean
 #Else
@@ -1204,9 +994,8 @@ Public Module Extensions
     ''' <param name="Subject"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("FuzzyMatch",
-               Info:="Fuzzy match two string, this is useful for the text query or searching.")>
-    <Extension> Public Function FuzzyMatching(query$, subject$, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
+    <Extension>
+    Public Function FuzzyMatching(query$, subject$, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
         If tokenbased Then
             Dim similarity# = Evaluate(query, subject,,, )
             Return similarity >= cutoff
@@ -1220,26 +1009,6 @@ Public Module Extensions
         End If
     End Function
 #End If
-
-    ''' <summary>
-    ''' 这个是一个安全的方法，假若下标越界或者目标数据源为空的话，则会返回空值
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="index"></param>
-    ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Get.Item")>
-    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#Else
-    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#End If
-        If source Is Nothing Then
-            Return Nothing
-        Else
-            Return source.ElementAtOrDefault(index)
-        End If
-    End Function
 
     ''' <summary>
     ''' 求取该数据集的标准差
@@ -1318,8 +1087,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("NullValue.Trim", Info:="Remove all of the null object in the target object collection")>
-    <Extension> Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
+    <Extension>
+    Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
 #Else
     ''' <summary>
     ''' Remove all of the null object in the target object collection
@@ -1473,7 +1242,6 @@ Public Module Extensions
     ''' <returns>A integer array of subscript index of the target generic collection.</returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Sequence.Index", Info:="Gets the subscript index of a generic collection.")>
     <Extension> Public Iterator Function Sequence(Of T)(
                                         <Parameter("source", "")> source As IEnumerable(Of T),
                                         <Parameter("index.OffSet", "")> Optional offSet% = 0) _
