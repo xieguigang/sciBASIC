@@ -30,12 +30,12 @@ library("xlsx")
 
 ## Read an Excel file
 
-The R functions read.xlsx() and read.xlsx2() can be used to read the contents of an Excel worksheet into an R data.frame.
+The R functions ``read.xlsx()`` and ``read.xlsx2()`` can be used to read the contents of an Excel worksheet into an R data.frame.
 
 The difference between these two functions is that :
 
-+ read.xlsx preserves the data type. It tries to guess the class type of the variable corresponding to each column in the worksheet. Note that, read.xlsx function is slow for large data sets (worksheet with more than 100 000 cells).
-+ read.xlsx2 is faster on big files compared to read.xlsx function.
++ ``read.xlsx`` preserves the data type. It tries to guess the class type of the variable corresponding to each column in the worksheet. Note that, ``read.xlsx`` function is slow for large data sets (worksheet with more than 100 000 cells).
++ ``read.xlsx2`` is faster on big files compared to ``read.xlsx`` function.
 
 The simplified formats of these two functions are:
 

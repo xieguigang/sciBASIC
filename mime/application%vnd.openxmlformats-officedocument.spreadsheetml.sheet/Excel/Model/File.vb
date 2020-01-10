@@ -163,6 +163,11 @@ Public Class File : Implements IFileReference
         End With
     End Sub
 
+    ''' <summary>
+    ''' Add new worksheet
+    ''' </summary>
+    ''' <param name="sheetName"></param>
+    ''' <returns></returns>
     Public Function AddSheetTable(sheetName As String) As worksheet
         With New csv().CreateWorksheet(xl.sharedStrings)
             Call addInternal(sheetName, .ByRef)
