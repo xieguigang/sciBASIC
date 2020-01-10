@@ -534,22 +534,6 @@ Public Module Extensions
         Return array
     End Function
 
-    ''' <summary>
-    ''' Parsing the dat value from the expression text, if any exception happend, a null date value will returned.
-    ''' (空字符串会返回空的日期)
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("Date.Parse")>
-    <Extension> Public Function ParseDateTime(s As String) As Date
-        If String.IsNullOrEmpty(s) Then
-            Return New Date
-        Else
-            Return DateTime.Parse(s)
-        End If
-    End Function
-
 #Region ""
 
     <Extension> Public Function InvokeSet(Of T As Class, Tvalue)(obj As T, [Property] As PropertyInfo, value As Tvalue) As T

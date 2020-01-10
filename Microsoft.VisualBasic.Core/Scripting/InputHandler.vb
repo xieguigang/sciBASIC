@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::63240d980840db66eb832f06305bfce6, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module InputHandler
-    ' 
-    '         Properties: [String], CasterString, Types
-    ' 
-    '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+2 Overloads) CTypeDynamic
-    '                   DefaultTextParser, IsPrimitive, StringParser, (+2 Overloads) ToString
-    ' 
-    '         Sub: CapabilityPromise
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module InputHandler
+' 
+'         Properties: [String], CasterString, Types
+' 
+'         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+2 Overloads) CTypeDynamic
+'                   DefaultTextParser, IsPrimitive, StringParser, (+2 Overloads) ToString
+' 
+'         Sub: CapabilityPromise
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
@@ -108,6 +109,22 @@ Namespace Scripting
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function StringParser(type As Type) As [Default](Of Func(Of String, Object))
             Return New Func(Of String, Object)(Function(s$) s.CTypeDynamic(type))
+        End Function
+
+        ''' <summary>
+        ''' Parsing the dat value from the expression text, if any exception happend, a null date value will returned.
+        ''' (空字符串会返回空的日期)
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        '''
+        <ExportAPI("Date.Parse")>
+        <Extension> Public Function ParseDateTime(s As String) As Date
+            If String.IsNullOrEmpty(s) Then
+                Return New Date
+            Else
+                Return DateTime.Parse(s)
+            End If
         End Function
 
         ''' <summary>
