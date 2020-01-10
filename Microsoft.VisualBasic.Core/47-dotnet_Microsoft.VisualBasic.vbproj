@@ -1653,7 +1653,6 @@
     <Compile Include="ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb" />
     <Compile Include="Serialization\BinaryDumping\Buffer.vb" />
     <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
-    <Compile Include="Serialization\Controls\Contrls.vb" />
     <Compile Include="Text\Splitter.vb" />
     <Compile Include="Text\IO\EncodingHelper.vb" />
     <Compile Include="Net\Protocol\Streams\ArrayAbstract.vb" />
