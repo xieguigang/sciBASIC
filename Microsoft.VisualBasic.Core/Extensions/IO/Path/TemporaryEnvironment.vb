@@ -61,7 +61,7 @@ Namespace FileIO
         ''' </summary>
         ''' <param name="newLocation"></param>
         Sub New(newLocation As String)
-            Call MyBase.New(DIR:=makeDirectoryExists(newLocation))
+            Call MyBase.New(directory:=makeDirectoryExists(newLocation))
 
             previous = App.CurrentDirectory
             App.CurrentDirectory = newLocation

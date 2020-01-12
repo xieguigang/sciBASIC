@@ -499,6 +499,7 @@ Namespace Text
             ''' </summary>
             Public Const TAB As Integer = Asc(vbTab)
 
+            Public Const Hyphen As Integer = Asc("-"c)
         End Class
     End Class
 End Namespace
