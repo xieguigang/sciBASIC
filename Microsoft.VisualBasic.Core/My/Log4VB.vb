@@ -75,6 +75,7 @@ Namespace My
         ''' <param name="level"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension>
         Private Function getColor(level As Integer) As ConsoleColor
             Return If(DebuggerTagColors.ContainsKey(level), DebuggerTagColors(level), CType(level, ConsoleColor))

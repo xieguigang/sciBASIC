@@ -225,6 +225,7 @@ Public Module PrimitiveParser
         {"ok!", True},
         {"success", True}, {"successful", True}, {"successfully", True}, {"succeeded", True},
         {"right", True},
+        {"on", True}, {"off", False},
         {"wrong", False},
         {"failure", False}, {"failures", False},
         {"exception", False},
