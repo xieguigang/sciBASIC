@@ -14,18 +14,16 @@ Namespace Language
             Dim result As New Dictionary(Of String, TOut)
             Dim key$
             Dim value As Object
-            Dim populateArguments = Iterator Function(item As Tin) As IEnumerable(Of Object)
-                                        Yield item
-
-                                        For Each val As Object In args
-                                            Yield val
-                                        Next
-                                    End Function
+            Dim arguments As Object() = New Object(args.Length) {}
             Dim method As MethodInfo = apply.Method
+            Dim obj As Object = apply.Target
+
+            Call Array.ConstrainedCopy(args, Scan0, arguments, 1, args.Length)
 
             For Each item As Tin In sequence
                 key = item.Key
-                value = method.Invoke(apply.Target, populateArguments(item).ToArray)
+                arguments(Scan0) = item
+                value = method.Invoke(obj, arguments)
                 result.Add(key, value)
             Next
 
