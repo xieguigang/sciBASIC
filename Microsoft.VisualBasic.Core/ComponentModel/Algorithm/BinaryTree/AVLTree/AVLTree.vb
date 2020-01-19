@@ -69,6 +69,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' Create an instance of the AVL binary tree.
         ''' </summary>
         ''' <param name="compares">
+        ''' ``compares(newKey, treeKey)``:
+        ''' 
         ''' Compare between two keys. This comparison function should returns: 
         ''' 
         ''' + 0, means two keys are equals.

@@ -587,7 +587,8 @@ Public Module VectorExtensions
     ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
+    <Extension>
+    Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
         Dim tmp As New List(Of T)
 
         For Each x As T In source.SafeQuery

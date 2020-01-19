@@ -301,7 +301,11 @@ Namespace ApplicationServices
         End Sub
 
         Private Sub resourceAssemblyParser()
-            Call Assembly.LoadFile(FileName).DoCall(AddressOf doLoad)
+            If FileName.FileExists Then
+                Call Assembly.LoadFile(FileName).DoCall(AddressOf doLoad)
+            Else
+                Throw New DllNotFoundException($"Missing required resources satellite assembly file: {FileName.FileName}!")
+            End If
         End Sub
 
         Private Sub doLoad(assm As Assembly)

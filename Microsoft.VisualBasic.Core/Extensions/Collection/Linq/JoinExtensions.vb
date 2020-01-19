@@ -56,6 +56,8 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' 
+        <DebuggerStepThrough>
         <Extension>
         Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
             For Each line As IEnumerable(Of T) In source
