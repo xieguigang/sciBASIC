@@ -1390,7 +1390,7 @@
     <Compile Include="Net\DomainName.vb" />
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
-    <Compile Include="Scripting\Runtime\CType\Narrowing.vb" />
+    <Compile Include="Scripting\Runtime\CType\ImplictCType.vb" />
     <Compile Include="Scripting\VisualBasic\Extensions.vb" />
     <Compile Include="Scripting\VisualBasic\KeywordProcessor.vb" />
     <Compile Include="Serialization\Abstract.vb" />

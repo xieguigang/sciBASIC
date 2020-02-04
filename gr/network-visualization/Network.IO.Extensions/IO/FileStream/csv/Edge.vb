@@ -135,35 +135,6 @@ Namespace FileStream
         End Function
 
         ''' <summary>
-        ''' 返回没有方向性的统一标识符
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function GetNullDirectedGuid(Optional ignoreTypes As Boolean = False) As String
-            Dim array$() = {
-                fromNode, toNode
-            }.OrderBy(Function(s) s) _
-             .ToArray
-
-            If ignoreTypes Then
-                Return array(0) & " + " & array(1)
-            Else
-                Return String.Format("[{0}] {1};{2}", interaction, array(0), array(1))
-            End If
-        End Function
-
-        ''' <summary>
-        ''' 带有方向的互作关系字符串
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function GetDirectedGuid(Optional ignoreTypes As Boolean = False) As String
-            If Not ignoreTypes Then
-                Return $"{fromNode} {interaction} {toNode}"
-            Else
-                Return $"{fromNode} + {toNode}"
-            End If
-        End Function
-
-        ''' <summary>
         ''' 假若存在连接则返回相对的节点，否则返回空字符串
         ''' </summary>
         ''' <param name="Node"></param>

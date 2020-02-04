@@ -109,7 +109,7 @@ Namespace Scripting.Runtime
             End If
         End Function
 
-        ReadOnly cstrCache As New Dictionary(Of Type, INarrowingOperator(Of Object, String))
+        ReadOnly cstrCache As New Dictionary(Of Type, IImplictCTypeOperator(Of Object, String))
         ReadOnly objToStringCache As New Dictionary(Of Type, Boolean)
 
         ''' <summary>
@@ -142,7 +142,7 @@ Namespace Scripting.Runtime
 
         Private Function CStrInternal(obj As Object, default$, originToStringAsNothing As Boolean) As String
             Dim type As Type = obj.GetType
-            Dim delg As INarrowingOperator(Of Object, String)
+            Dim delg As IImplictCTypeOperator(Of Object, String)
 
             If type Is GetType(Byte()) OrElse type.IsInheritsFrom(GetType(IEnumerable(Of Byte))) Then
                 With CType(obj, IEnumerable(Of Byte)).ToArray

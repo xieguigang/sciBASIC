@@ -49,23 +49,42 @@ Imports System.Runtime.CompilerServices
 
 Namespace Scripting.Runtime
 
-    Public Module NarrowingReflection
+    Public Module ImplictCType
 
         ''' <summary>
         ''' 2070 = SpecialName
         ''' </summary>
-        Const NarrowingOperator As BindingFlags = BindingFlags.Public Or BindingFlags.Static Or 2070
+        Const operatorType As BindingFlags = BindingFlags.Public Or BindingFlags.Static Or 2070
+
+        ''' <summary>
+        ''' x -> out
+        ''' </summary>
         Const op_Explicit$ = NameOf(op_Explicit)
+        ''' <summary>
+        ''' in -> x
+        ''' </summary>
+        Const op_Implicit$ = NameOf(op_Implicit)
 
-        Public Delegate Function INarrowingOperator(Of TIn, TOut)(obj As TIn) As TOut
+        Public Delegate Function IImplictCTypeOperator(Of TIn, TOut)(obj As TIn) As TOut
 
-        Public Function GetNarrowingOperator(Of TIn, TOut)() As INarrowingOperator(Of TIn, TOut)
-            Dim op As MethodInfo = CType(GetType(TIn), TypeInfo).GetOperatorMethod(Of TOut)
+        Public Function GetNarrowingOperator(Of TIn, TOut)() As IImplictCTypeOperator(Of TIn, TOut)
+            Dim op As MethodInfo = CType(GetType(TIn), TypeInfo).GetOperatorMethod(GetType(TOut), op_Explicit)
 
             If op Is Nothing Then
                 Return Nothing
             Else
-                Dim op_Explicit As INarrowingOperator(Of TIn, TOut) = op.CreateDelegate(GetType(INarrowingOperator(Of TIn, TOut)))
+                Dim op_Explicit As IImplictCTypeOperator(Of TIn, TOut) = op.CreateDelegate(GetType(IImplictCTypeOperator(Of TIn, TOut)))
+                Return op_Explicit
+            End If
+        End Function
+
+        Public Function GetWideningOperator(Of TIn, TOut)() As IImplictCTypeOperator(Of TIn, TOut)
+            Dim op As MethodInfo = CType(GetType(TOut), TypeInfo).GetOperatorMethod(GetType(TIn), op_Implicit)
+
+            If op Is Nothing Then
+                Return Nothing
+            Else
+                Dim op_Explicit As IImplictCTypeOperator(Of TIn, TOut) = op.CreateDelegate(GetType(IImplictCTypeOperator(Of TIn, TOut)))
                 Return op_Explicit
             End If
         End Function
@@ -77,26 +96,38 @@ Namespace Scripting.Runtime
         ''' type.GetMethod(op_Explicit, NarrowingOperator)
         ''' ```
         ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="type"></param>
+        ''' <param name="obj"></param>
         ''' <returns>函数找不到会返回Nothing</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Function GetOperatorMethod(Of T)(type As TypeInfo) As MethodInfo
-            Return type.DeclaredMethods _
-                       .Where(Function(m) m.Name = op_Explicit AndAlso m.ReturnType Is GetType(T)) _
-                       .FirstOrDefault
+        Private Function GetOperatorMethod(obj As TypeInfo, out As Type, name$) As MethodInfo
+            Return obj.GetMethods(operatorType) _
+                      .Where(Function(m) m.Name = name AndAlso m.ReturnType Is out) _
+                      .FirstOrDefault
         End Function
 
         <Extension>
-        Public Function GetNarrowingOperator(Of T)(type As Type) As INarrowingOperator(Of Object, T)
+        Public Function GetNarrowingOperator(Of T)(type As Type) As IImplictCTypeOperator(Of Object, T)
             ' 函数找不到会返回Nothing
-            Dim op As MethodInfo = CType(type, TypeInfo).GetOperatorMethod(Of T)
+            Dim op As MethodInfo = CType(type, TypeInfo).GetOperatorMethod(GetType(T), op_Explicit)
 
             If op Is Nothing Then
                 Return Nothing
             Else
-                Dim op_Explicit As INarrowingOperator(Of Object, T) = Function(obj) DirectCast(op.Invoke(Nothing, {obj}), T)
+                Dim op_Explicit As IImplictCTypeOperator(Of Object, T) = Function(obj) DirectCast(op.Invoke(Nothing, {obj}), T)
+                Return op_Explicit
+            End If
+        End Function
+
+        <Extension>
+        Public Function GetWideningOperator(Of T)(type As Type) As IImplictCTypeOperator(Of T, Object)
+            ' 函数找不到会返回Nothing
+            Dim op As MethodInfo = CType(type, TypeInfo).GetOperatorMethod(type, op_Implicit)
+
+            If op Is Nothing Then
+                Return Nothing
+            Else
+                Dim op_Explicit As IImplictCTypeOperator(Of T, Object) = Function(obj) op.Invoke(Nothing, New Object() {obj})
                 Return op_Explicit
             End If
         End Function

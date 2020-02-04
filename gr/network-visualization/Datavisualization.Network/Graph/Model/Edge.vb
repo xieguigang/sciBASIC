@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::cab6b911f7ff1e7bad10b633b7db1f62, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Edge
-    ' 
-    '         Properties: __source, __target, data, ID, isDirected
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Edge
+' 
+'         Properties: __source, __target, data, ID, isDirected
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -85,11 +85,13 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 
 Namespace Graph
 
     Public Class Edge : Inherits GraphTheory.Network.Edge(Of Node)
         Implements IInteraction
+        Implements INetworkEdge
         Implements IGraphValueContainer(Of EdgeData)
         Implements ICloneable(Of Edge)
 
@@ -116,7 +118,8 @@ Namespace Graph
         Public Property isDirected As Boolean
 
 #Region "Implements IInteraction"
-        Private Property __source As String Implements IInteraction.source
+
+        Private Property m_source As String Implements IInteraction.source
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return U.label
@@ -126,7 +129,7 @@ Namespace Graph
             End Set
         End Property
 
-        Private Property __target As String Implements IInteraction.target
+        Private Property m_target As String Implements IInteraction.target
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return V.label
@@ -135,6 +138,25 @@ Namespace Graph
                 Throw New NotImplementedException()
             End Set
         End Property
+
+        Private Property m_interationtype As String Implements INetworkEdge.Interaction
+            Get
+                Return data(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
+            End Get
+            Set(value As String)
+                data(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE) = value
+            End Set
+        End Property
+
+        Private Property m_weightValue As Double Implements INetworkEdge.value
+            Get
+                Return data.weight
+            End Get
+            Set(value As Double)
+                data.weight = value
+            End Set
+        End Property
+
 #End Region
 
         Public Sub New(id As String, source As Node, target As Node, Optional data As EdgeData = Nothing)
