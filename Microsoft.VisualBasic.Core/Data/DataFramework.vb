@@ -86,6 +86,9 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="flag"></param>
         ''' <param name="nonIndex"><see cref="PropertyInfo.GetIndexParameters"/> IsNullOrEmpty</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个函数不会缓存类型信息，因为参数组合条件过多
+        ''' </remarks>
         Public Function Schema(Of T)(flag As PropertyAccess,
                                      Optional nonIndex As Boolean = False,
                                      Optional primitive As Boolean = False) As Dictionary(Of String, PropertyInfo)
@@ -97,7 +100,9 @@ Namespace ComponentModel.DataSourceModel
                                    Return IsPrimitive(.ByRef(k).PropertyType)
                                End Function) _
                         .ToDictionary(Function(key) key,
-                                      Function(key) .ByRef(key))
+                                      Function(key)
+                                          Return .ByRef(key)
+                                      End Function)
                 Else
                     Return .ByRef
                 End If
@@ -139,7 +144,9 @@ Namespace ComponentModel.DataSourceModel
 
             If nonIndex Then
                 props = props _
-                    .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty)
+                    .Where(Function(p)
+                               Return p.GetIndexParameters.IsNullOrEmpty
+                           End Function)
             End If
 
             Return props.ToDictionary(Function(x) x.Name)
