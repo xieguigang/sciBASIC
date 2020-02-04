@@ -129,15 +129,10 @@ Namespace KMeans
         ''' Returns an Array Defining A Data Point Representing The Cluster Mean or Centroid
         ''' </returns>
         Public Function ClusterMean(cluster As Double(,)) As Double()
-            Dim rowCount As Integer = 0
-            Dim fieldCount As Integer = 0
-            Dim dataSum As Double(,)
-            Dim centroid As Double()
-
-            rowCount = cluster.GetUpperBound(0) + 1
-            fieldCount = cluster.GetUpperBound(1) + 1
-            dataSum = New Double(0, fieldCount - 1) {}
-            centroid = New Double(fieldCount - 1) {}
+            Dim rowCount = cluster.GetUpperBound(0) + 1
+            Dim fieldCount = cluster.GetUpperBound(1) + 1
+            Dim dataSum As Double(,) = New Double(0, fieldCount - 1) {}
+            Dim centroid As Double() = New Double(fieldCount - 1) {}
 
             '((20+30)/2), ((170+160)/2), ((80+120)/2)
             For j As Integer = 0 To fieldCount - 1

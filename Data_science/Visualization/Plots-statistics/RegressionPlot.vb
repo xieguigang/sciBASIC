@@ -134,6 +134,12 @@ Public Module RegressionPlot
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
+
+                If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty Then
+                    Call g.DrawString("Invalid curve!", CSSFont.TryParse(title), Brushes.Black, New PointF)
+                    Return
+                End If
+
                 Dim X = d3js.scale.linear.domain(xTicks).range(integers:={rect.Left, rect.Right})
                 Dim Y = d3js.scale.linear.domain(yTicks).range(integers:={rect.Top, rect.Bottom})
                 Dim scaler As New DataScaler With {
