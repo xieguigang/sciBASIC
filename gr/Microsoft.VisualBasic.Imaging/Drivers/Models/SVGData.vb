@@ -50,6 +50,9 @@ Imports Microsoft.VisualBasic.Imaging.SVG
 
 Namespace Driver
 
+    ''' <summary>
+    ''' SVG graphic data
+    ''' </summary>
     Public Class SVGData : Inherits GraphicsData
 
         Friend ReadOnly Property SVG As SVGDataLayers
