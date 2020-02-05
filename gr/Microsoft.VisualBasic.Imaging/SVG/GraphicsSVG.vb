@@ -479,8 +479,8 @@ Namespace SVG
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(polygon As polygon) As Integer
-            Return __svgData.Add(polygon)
+        Public Function Add(polygon As polygon, Optional layerComment$ = Nothing) As Integer
+            Return __svgData.Add(polygon, layerComment)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -828,9 +828,10 @@ Namespace SVG
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
             Dim polygon As New polygon(points) With {
-                .style = New Stroke(pen).CSSValue
+                .style = New Stroke(pen).CSSValue,
+                .XmlCommentValue = ""
             }
-            Call __svgData.Add(polygon)
+            Call __svgData.Add(polygon, $"DrawPolygon({polygon.style}, points({points.Length}))")
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -1000,9 +1001,9 @@ Namespace SVG
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
             Dim polygon As New polygon(points) With {
                 .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor,
-                .XmlCommentValue = $"FillPolygon({ .fill}, points({points.Length}))"
+                .XmlCommentValue = ""
             }
-            Call __svgData.Add(polygon)
+            Call __svgData.Add(polygon, $"FillPolygon({polygon.fill}, points({points.Length}))")
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)

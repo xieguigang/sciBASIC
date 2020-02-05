@@ -156,10 +156,11 @@ Namespace SVG
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(polygon As polygon) As Integer
+        Public Function Add(polygon As polygon, layerComment$) As Integer
             layers += New g With {
                 .polygon = {polygon},
-                .zIndex = ++zlayer
+                .zIndex = ++zlayer,
+                .XmlCommentValue = layerComment
             }
             Return zlayer
         End Function

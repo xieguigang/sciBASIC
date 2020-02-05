@@ -84,8 +84,12 @@ Namespace SVG.XML
 
         ''' <summary>
         ''' 对当前的文档节点/图层信息的注释
+        ''' 
+        ''' 1. 空值的时候表示使用默认注释信息
+        ''' 2. 空字符串或者空格表示没有注释信息
+        ''' 3. 其他字符串的时候则使用给定的字符串做注释
         ''' </summary>
-        Public XmlCommentValue$
+        <XmlIgnore> Public XmlCommentValue$
 
         ''' <summary>
         ''' Read Only
@@ -94,8 +98,10 @@ Namespace SVG.XML
         <XmlAnyElement("gComment")> Public Property XmlComment As XmlComment
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                If XmlCommentValue.StringEmpty Then
+                If XmlCommentValue Is Nothing Then
                     Return XmlCommentValue.CreateComment()
+                ElseIf XmlCommentValue.StringEmpty Then
+                    Return Nothing
                 Else
                     Return New XmlDocument().CreateComment(XmlCommentValue)
                 End If
