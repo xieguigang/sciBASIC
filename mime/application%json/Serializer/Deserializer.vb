@@ -94,36 +94,24 @@ Public Module Deserializer
     <Extension>
     Friend Function createObject(json As JsonObject, schema As Type) As Object
         Dim obj As Object = Activator.CreateInstance(schema)
-        Dim isTable As Boolean = schema.IsInheritsFrom(GetType(DictionaryBase))
-        Dim writers = schema.Schema(PropertyAccess.Writeable, PublicProperty, nonIndex:=True)
-        Dim writer As PropertyInfo
-        Dim addMethod As MethodInfo = schema.GetMethods _
-            .Where(Function(m)
-                       Dim params = m.GetParameters
-
-                       Return Not m.IsStatic AndAlso
-                           Not params.IsNullOrEmpty AndAlso
-                           params.Length = 2 AndAlso
-                           m.Name = "Add"
-                   End Function) _
-            .FirstOrDefault
-        Dim valueType As Type = Nothing
         Dim inputs As Object()
-
-        If isTable Then
-            valueType = schema.GetGenericArguments(1)
-        End If
+        Dim graph As ObjectSchema = ObjectSchema.GetSchema(schema)
+        Dim addMethod As MethodInfo = graph.addMethod
+        Dim writers = graph.writers
+        Dim writer As PropertyInfo
 
         For Each [property] As NamedValue(Of JsonElement) In json
             If writers.ContainsKey([property].Name) Then
                 writer = writers([property].Name)
                 writer.SetValue(obj, [property].Value.CreateObject(writer.PropertyType))
-            ElseIf isTable AndAlso Not addMethod Is Nothing Then
+            ElseIf graph.isTable AndAlso Not addMethod Is Nothing Then
                 inputs = {
                     [property].Name,
-                    [property].Value.CreateObject(valueType)
+                    [property].Value.CreateObject(graph.valueType)
                 }
                 addMethod.Invoke(obj, inputs)
+            Else
+                Throw New NotImplementedException
             End If
         Next
 
