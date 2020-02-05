@@ -89,6 +89,16 @@ Namespace SVG
         ''' </summary>
         Friend ReadOnly __svgData As SVGDataLayers
 
+        ''' <summary>
+        ''' Get the last graphic layer
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property GetLastLayer As g
+            Get
+                Return __svgData.GetLastLayer
+            End Get
+        End Property
+
         Public Sub New(size As Size)
             __svgData = New SVGDataLayers With {
                 .Size = size
@@ -269,10 +279,7 @@ Namespace SVG
         ''' <param name="color"></param>
         Public Overrides Sub Clear(color As Color)
             __svgData.bg$ = color.ToHtmlColor
-
-            ' reset
-            __svgData.layers *= 0
-            __svgData.zlayer = 0
+            __svgData.Clear()
         End Sub
 
 #Region "NotSupportedException"

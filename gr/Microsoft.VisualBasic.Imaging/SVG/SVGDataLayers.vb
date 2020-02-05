@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::84fb6ca8f13bde80212a3ec5cecc61c8, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SVGDataLayers
-    ' 
-    '         Function: (+7 Overloads) Add, ApplyFilter, GetSVG, innerDefaultHeight, innerDefaultWidth
-    '                   updateLayerIndex
-    ' 
-    '         Sub: Add, ApplyFilter
-    ' 
-    '         Operators: (+2 Overloads) +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SVGDataLayers
+' 
+'         Function: (+7 Overloads) Add, ApplyFilter, GetSVG, innerDefaultHeight, innerDefaultWidth
+'                   updateLayerIndex
+' 
+'         Sub: Add, ApplyFilter
+' 
+'         Operators: (+2 Overloads) +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,7 +62,8 @@ Namespace SVG
     ''' </summary>
     Public Class SVGDataLayers
 
-        Protected Friend layers As New HashList(Of g)
+        Protected layers As New HashList(Of g)
+
         Protected Friend bg$
         Protected Friend Size As Size
 
@@ -84,12 +85,27 @@ Namespace SVG
         End Property
 
         ''' <summary>
+        ''' Get the last graphic layer
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property GetLastLayer As g
+
+        ''' <summary>
+        ''' reset
+        ''' </summary>
+        Public Sub Clear()
+            layers *= 0
+            zlayer = 0
+            _GetLastLayer = Nothing
+        End Sub
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="zindex%">图层的编号</param>
         ''' <param name="filter$">filter的id编号</param>
         Public Sub ApplyFilter(zindex%, filter$)
-            layers(zindex).filter = $"url(#filter)"
+            layers(zindex).filter = $"url(#{filter})"
         End Sub
 
         ''' <summary>
@@ -112,83 +128,104 @@ Namespace SVG
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(text As XML.text) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .texts = {text},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(rect As rect) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .rect = {rect},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(line As line) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .lines = {line},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(circle As circle) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .circles = {circle},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(path As path) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .path = {path},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(polygon As polygon, layerComment$) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .polygon = {polygon},
                 .zIndex = ++zlayer,
                 .XmlCommentValue = layerComment
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(image As XML.Image) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .images = {image},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         Public Sub Add(data As SVGDataLayers)
+            Dim lastLayer As g = Nothing
+
             For Each layer In data.layers
                 layer.zIndex = ++zlayer
                 layers += layer
+                lastLayer = layer
             Next
+
+            If Not lastLayer Is Nothing Then
+                _GetLastLayer = lastLayer
+            End If
         End Sub
 #End Region
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function innerDefaultWidth() As [Default](Of  Integer)
+        Private Function innerDefaultWidth() As [Default](Of Integer)
             Return Size.Width.AsDefault(Function(n) CType(n, Integer) = 0)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function innerDefaultHeight() As [Default](Of  Integer)
+        Private Function innerDefaultHeight() As [Default](Of Integer)
             Return Size.Height.AsDefault(Function(n) CType(n, Integer) = 0)
         End Function
 
@@ -240,7 +277,8 @@ Namespace SVG
                 .bg = data.bg,
                 .layers = data.layers _
                               .Select(Function(l) l + offset) _
-                              .AsHashList
+                              .AsHashList,
+                ._GetLastLayer = data.GetLastLayer
             }
         End Operator
     End Class
