@@ -49,6 +49,8 @@ Namespace Serialization.JSON
     ''' <summary>
     ''' Extension helpers for deal with the anonymous type
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module AnonymousJSONExtensions
 
         <Extension>

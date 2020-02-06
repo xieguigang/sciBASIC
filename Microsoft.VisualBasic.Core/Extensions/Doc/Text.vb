@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::e5a620c86564678f819b3f227ef922bf, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module TextDoc
-    ' 
-    '     Function: ForEachChar, IsTextFile, IterateAllLines, LineIterators, LoadTextDoc
-    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
-    '               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
-    '               TsvHeaders
-    ' 
-    ' /********************************************************************************/
+' Module TextDoc
+' 
+'     Function: ForEachChar, IsTextFile, IterateAllLines, LineIterators, LoadTextDoc
+'               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
+'               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
+'               TsvHeaders
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -235,9 +235,10 @@ Public Module TextDoc
     ''' <remarks>
     ''' 不适用于大文本数据
     ''' </remarks>
-    <Extension> Public Function SolveStream(handle$, Optional encoding As Encodings = Encodings.UTF8) As String
+    <Extension>
+    Public Function SolveStream(handle$, Optional encoding As Encodings = Encodings.UTF8, Optional null$ = "null") As String
         If handle Is Nothing Then
-            Return ""
+            Return null
         ElseIf handle.IndexOf(ASCII.CR) > -1 OrElse handle.IndexOf(ASCII.LF) > -1 Then
             ' is text content, not path
             Return handle
@@ -248,7 +249,11 @@ Public Module TextDoc
                      ' 所以需要添加一个额外的判断条件
                      Return i <> ":"c AndAlso handle.IndexOf(i) > -1
                  End Function) Then
+
             ' is text content, not path
+            Return handle
+        ElseIf handle.Count(":"c) > 1 Then
+            ' json?
             Return handle
         End If
 
