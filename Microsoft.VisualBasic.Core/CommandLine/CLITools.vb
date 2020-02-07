@@ -134,7 +134,8 @@ Namespace CommandLine
         ''' <param name="includeLogicals">返回来的列表之中是否包含有逻辑开关</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function CreateParameterValues(tokens$(), includeLogicals As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
+        <Extension>
+        Public Function CreateParameterValues(tokens$(), includeLogicals As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
             Dim list As New List(Of NamedValue(Of String))
             Dim key As String
 
@@ -193,7 +194,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="args">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
-        <Extension> Public Function GetLogicalFlags(args As IEnumerable(Of String), ByRef singleValue$) As String()
+        <Extension>
+        Public Function GetLogicalFlags(args As IEnumerable(Of String), ByRef singleValue$) As String()
             Dim tokens$() = args.SafeQuery.ToArray
 
             If tokens.IsNullOrEmpty Then
@@ -282,7 +284,7 @@ Namespace CommandLine
             If tokens.Length > 1 Then
                 cli.arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
 
-                Dim Dk As String() = __checkKeyDuplicated(cli.arguments)
+                Dim Dk As String() = checkKeyDuplicated(cli.arguments)
 
                 If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key$ = String.Join(", ", Dk)
@@ -297,7 +299,7 @@ Namespace CommandLine
 
         Const KeyDuplicated As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
 
-        Private Function __checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
+        Private Function checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
             Dim LQuery = (From param As NamedValue(Of String)
                           In source
                           Select param.Name.ToLower
@@ -333,7 +335,8 @@ Namespace CommandLine
         ''' 
         <ExportAPI("TryParse")>
         Public Function TryParse(<Parameter("CLI", "The CLI arguments that inputs from the console by user.")> CLI$,
-                                 <Parameter("Duplicates.Allowed")> Optional duplicateAllowed As Boolean = False) As CommandLine
+                                 <Parameter("Duplicates.Allowed")>
+                                 Optional duplicateAllowed As Boolean = False) As CommandLine
 
             If String.IsNullOrEmpty(CLI) Then
                 Return New CommandLine
@@ -375,7 +378,10 @@ Namespace CommandLine
         ''' <summary>
         ''' ReGenerate the cli command line argument string text.(重新生成命令行字符串)
         ''' </summary>
-        ''' <param name="tokens">If the token value have a space character, then this function will be wrap that token with quot character automatically.</param>
+        ''' <param name="tokens">
+        ''' If the token value have a space character, then this function 
+        ''' will be wrap that token with quot character automatically.
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
@@ -530,7 +536,8 @@ Namespace CommandLine
             For i As Integer = 0 To tokens.Length - 1
                 Dim s As String = tokens(i)
 
-                If s.First = InnerDelimited AndAlso s.Last = InnerDelimited Then    '消除单词单元中的双引号
+                ' 消除单词单元中的双引号
+                If s.First = InnerDelimited AndAlso s.Last = InnerDelimited Then
                     tokens(i) = Mid(s, 2, Len(s) - 2)
                 End If
             Next
@@ -585,7 +592,10 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 请注意，这个是有方向性的，由于是依照参数1来进行比较的，假若args2里面的参数要多于第一个参数，但是第一个参数里面的所有参数值都可以被参数2完全比对得上的话，就认为二者是相等的
+        ''' 请注意，这个是有方向性的，由于是依照参数1来进行比较的，
+        ''' 假若args2里面的参数要多于第一个参数，但是第一个参数里
+        ''' 面的所有参数值都可以被参数2完全比对得上的话，就认为二
+        ''' 者是相等的
         ''' </summary>
         ''' <param name="args1"></param>
         ''' <param name="args2"></param>
