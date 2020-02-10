@@ -532,6 +532,7 @@ Public Module Scatter
         Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
     End Function
 
+    <Extension>
     Public Function Plot(points As IEnumerable(Of PointF),
                          Optional size As Size = Nothing,
                          Optional padding$ = g.DefaultPadding,
