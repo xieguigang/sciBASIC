@@ -1,46 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::335902c9c7690d87ac0670ba2a48ae07, Data_science\Graph\Network\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: (+2 Overloads) ComputeDegreeData, EndPoints, IteratesSubNetworks
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: (+2 Overloads) ComputeDegreeData, EndPoints, IteratesSubNetworks
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Namespace Network
@@ -57,7 +58,7 @@ Namespace Network
         ''' <returns></returns>
         <Extension>
         Public Function EndPoints(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, Edge)) As (input As Node(), output As Node())
-            Dim inputs As New List(Of Node)(network.Vertex)
+            Dim inputs As New List(Of Node)(network.vertex)
             Dim output As New List(Of Node)(inputs)
             Dim removes = Sub(ByRef list As List(Of Node), getNode As Func(Of Edge, Node))
                               For Each link As Edge In network
@@ -88,13 +89,14 @@ Namespace Network
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)}, Graph As {New, NetworkGraph(Of Node, U)})(network As NetworkGraph(Of Node, U)) As IEnumerable(Of Graph)
+        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)}, Graph As {New, NetworkGraph(Of Node, U)})(network As NetworkGraph(Of Node, U), Optional singleNodeAsGraph As Boolean = False) As IEnumerable(Of Graph)
             Dim edges As List(Of U) = network.edges.Values.AsList
             Dim popFirstEdge = Function(n As Node) As U
                                    Return edges _
                                       .Where(Function(e) e.U Is n OrElse e.V Is n) _
                                       .FirstOrDefault
                                End Function
+            Dim populatedNodes As New List(Of Node)
 
             Do While edges > 0
                 Dim subnetwork As New Graph
@@ -109,6 +111,8 @@ Namespace Network
                     subnetwork.AddVertex(edge.U)
                     subnetwork.AddVertex(edge.V)
                     subnetwork.AddEdge(edge.U, edge.V)
+                    populatedNodes.Add(edge.U)
+                    populatedNodes.Add(edge.V)
                     edges.Remove(edge)
 
                     If -1 = list.IndexOf(edge.U) Then
@@ -132,6 +136,18 @@ Namespace Network
 
                 Yield subnetwork
             Loop
+
+            If singleNodeAsGraph Then
+                Dim removedIndex As Index(Of Node) = populatedNodes.Distinct.Indexing
+                Dim [single] As New Graph
+
+                For Each v As Node In network.vertex.Where(Function(n) removedIndex(n) = -1)
+                    [single] = New Graph
+                    [single].AddVertex(v)
+
+                    Yield [single]
+                Next
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
