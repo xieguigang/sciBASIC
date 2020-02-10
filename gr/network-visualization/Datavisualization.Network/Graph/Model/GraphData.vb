@@ -180,7 +180,7 @@ Namespace Graph
             Me.neighbours = copy.neighbours.SafeQuery.ToArray
             Me.origID = copy.origID
             Me.Properties = New Dictionary(Of String, String)(copy.Properties)
-            Me.size = copy.size.ToArray
+            Me.size = If(copy.size Is Nothing, {}, copy.size.ToArray)
             Me.weights = copy.weights.SafeQuery.ToArray
         End Sub
 
