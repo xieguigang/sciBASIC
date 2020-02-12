@@ -71,6 +71,23 @@ Namespace ApplicationServices.Debugging.Diagnostics
         ''' <returns></returns>
         Public Property Line As String
 
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' make value copy
+        ''' </summary>
+        ''' <param name="clone"></param>
+        Sub New(clone As StackFrame)
+            File = clone.File
+            Line = clone.Line
+            Method = New Method With {
+                .Method = clone.Method.Method,
+                .[Module] = clone.Method.Module,
+                .[Namespace] = clone.Method.Namespace
+            }
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{Method} at {File}:line {Line}"
         End Function
