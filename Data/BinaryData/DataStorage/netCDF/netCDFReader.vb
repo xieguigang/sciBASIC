@@ -145,18 +145,7 @@ Namespace netCDF
                     If .IsNothing Then
                         Return Nothing
                     Else
-                        Select Case .type
-                            Case CDFDataTypes.BYTE : Return Byte.Parse(.value)
-                            Case CDFDataTypes.CHAR : Return .value
-                            Case CDFDataTypes.DOUBLE : Return Double.Parse(.value)
-                            Case CDFDataTypes.FLOAT : Return Single.Parse(.value)
-                            Case CDFDataTypes.INT : Return Integer.Parse(.value)
-                            Case CDFDataTypes.SHORT : Return Short.Parse(.value)
-                            Case CDFDataTypes.LONG : Return Long.Parse(.value)
-
-                            Case Else
-                                Throw New NotSupportedException
-                        End Select
+                        Return .getObjectValue
                     End If
                 End With
             End Get
