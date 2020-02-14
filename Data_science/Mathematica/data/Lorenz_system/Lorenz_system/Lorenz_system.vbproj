@@ -11,8 +11,9 @@
     <AssemblyName>Lorenz_system</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -149,6 +150,10 @@
     <ProjectReference Include="..\..\..\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Math\ODESolver.Extensions\ODESolver.Extensions.vbproj">
+      <Project>{731d9af0-0ac1-451a-8d57-d997d0c03d1d}</Project>
+      <Name>ODESolver.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>

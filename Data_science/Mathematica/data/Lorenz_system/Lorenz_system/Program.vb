@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::210c603894c2d6286800acfae1fed3d3, Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Program
-    ' 
-    '     Sub: Draw, DrawColors, Main, ODEScript
-    ' 
-    ' /********************************************************************************/
+' Module Program
+' 
+'     Sub: Draw, DrawColors, Main, ODEScript
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
@@ -82,7 +83,7 @@ Module Program
             .screen = New Size(2000, 2000),
             .ViewDistance = 50
         }
-        Dim result = ODEsOut.LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
+        Dim result = LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
         Dim vector As Point3D() = result.x _
             .Sequence _
             .Select(Function(i)
@@ -117,7 +118,7 @@ Module Program
             .screen = New Size(2000, 2000),
             .ViewDistance = 50
         }
-        Dim result = ODEsOut.LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
+        Dim result = LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
         Dim vector As Point3D() = result.x _
             .Sequence _
             .Select(Function(i)
