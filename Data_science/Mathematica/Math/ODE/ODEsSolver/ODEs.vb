@@ -208,6 +208,7 @@ Public MustInherit Class ODEs
 
             For Each var In vars ' y
                 y(var) += darrayn(var.Index)
+                var.Value = darrayn(var.Index)
             Next
         Next
 

@@ -56,10 +56,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
         Dim vector As var() = system.ToArray
         Dim df = Sub(dx#, ByRef dy As Vector)
                      For Each x As var In vector
-                         dy(x) = x.Evaluate()
+                         dy(x) = x.deSolve()
                      Next
                  End Sub
-        Dim ODEs As New GenericODEs(system.ToArray, df)
+        Dim ODEs As New GenericODEs(vector, df)
 
         With dt
             Dim result As ODEsOut = ODEs.Solve((.to - .from) / .step, .from, .to)

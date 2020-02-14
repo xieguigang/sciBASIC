@@ -134,10 +134,11 @@ Public Module ScatterExtensions
             .lineType = dash,
             .PointSize = ptSize,
             .width = width,
-            .pts = LinqAPI.Exec(Of PointData) <=
-                From x As SeqValue(Of Double)
-                In ode.X.ToArray.SeqIterator
-                Select New PointData(CSng(x.value), CSng(ode.Y.Vector(x.i)))
+            .pts = ode.GetPointsData _
+                .Select(Function(p)
+                            Return New PointData(p)
+                        End Function) _
+                .ToArray
         }
     End Function
 
