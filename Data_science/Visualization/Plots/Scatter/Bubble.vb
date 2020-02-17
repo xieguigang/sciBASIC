@@ -86,7 +86,8 @@ Public Module Bubble
                          Optional axisLabelFontCSS$ = CSSFont.Win7LargeBold,
                          Optional tagFontCSS$ = CSSFont.Win10Normal,
                          Optional strokeColorAsMainColor As Boolean = False,
-                         Optional positiveRangeY As Boolean = False) As GraphicsData
+                         Optional positiveRangeY As Boolean = False,
+                         Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarge) As GraphicsData
 
         Dim margin As Padding = padding
         Dim tagLabelFont As Font = CSSFont.TryParse(tagFontCSS).GDIObject
@@ -232,7 +233,12 @@ Public Module Bubble
 
                 If legend Then
 
-                    Dim topLeft As New Point(size.Width * 0.8, margin.Top)
+                    Dim legendLabelFont As Font = CSSFont.TryParse(legendLabelFontCSS)
+                    Dim maxSize! = array _
+                        .Select(Function(s) s.title) _
+                        .Select(Function(str) canvas.MeasureString(str, legendLabelFont).Width) _
+                        .Max
+                    Dim topLeft As New Point(grect.PlotRegion.Right - maxSize * 1.5, margin.Top + grect.PlotRegion.Height * 0.05)
                     Dim legends = LinqAPI.Exec(Of Legend) <=
  _
                         From serial As SerialData
@@ -243,7 +249,7 @@ Public Module Bubble
                             serial.color.RGBExpression)
                         Select New Legend With {
                             .color = color,
-                            .fontstyle = CSSFont.GetFontStyle(FontFace.MicrosoftYaHei, FontStyle.Regular, 20),
+                            .fontstyle = legendLabelFontCSS,
                             .style = LegendStyles.Circle,
                             .title = serial.title
                         }

@@ -263,9 +263,9 @@ Namespace Text
         End Function
 
         ''' <summary>
-        ''' 从字符串名称之中解析出编码格式的枚举值
+        ''' 从字符串名称之中解析出编码格式的枚举值(名称的大小写不敏感)
         ''' </summary>
-        ''' <param name="encoding$"></param>
+        ''' <param name="encoding">名称的大小写不敏感</param>
         ''' <param name="onFailure"></param>
         ''' <returns></returns>
         <Extension> Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings
