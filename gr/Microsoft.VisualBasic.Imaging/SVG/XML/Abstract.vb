@@ -50,7 +50,6 @@ Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports htmlNode = Microsoft.VisualBasic.MIME.Markup.HTML.XmlMeta.Node
 
 Namespace SVG.XML
@@ -116,7 +115,7 @@ Namespace SVG.XML
         End Sub
 
         Public Overrides Function ToString() As String
-            Return MyClass.GetJson
+            Return $"id={id}; # {XmlCommentValue}"
         End Function
     End Class
 End Namespace

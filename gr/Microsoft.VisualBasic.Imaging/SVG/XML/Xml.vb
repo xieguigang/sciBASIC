@@ -311,6 +311,10 @@ Namespace SVG.XML
         ''' <returns></returns>
         <XmlAttribute> Public Property x As String
 
+        Public Overrides Function ToString() As String
+            Return $"[{x}, {y}] {value}"
+        End Function
+
         Public Shared Operator +(text As text, offset As PointF) As text
             text = DirectCast(text.MemberwiseClone, text)
             text.x += offset.X

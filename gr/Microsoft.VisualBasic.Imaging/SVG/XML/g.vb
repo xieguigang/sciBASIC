@@ -89,6 +89,10 @@ Namespace SVG.XML
         <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
         <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
 
+        Public Overrides Function ToString() As String
+            Return $"{id} = '{title}'; //{XmlCommentValue}"
+        End Function
+
         Public Shared Operator +(layer As g, offset As PointF) As g
             Return New g With {
                 .circles = layer.circles.Select(Function(c) c + offset).ToArray,
