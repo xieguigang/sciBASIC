@@ -1007,7 +1007,7 @@ Namespace SVG
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
             Dim polygon As New polygon(points) With {
-                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor,
+                .fill = brush.SVGColorHelper,
                 .XmlCommentValue = ""
             }
             Call __svgData.Add(polygon, $"FillPolygon({polygon.fill}, points({points.Length}))")
