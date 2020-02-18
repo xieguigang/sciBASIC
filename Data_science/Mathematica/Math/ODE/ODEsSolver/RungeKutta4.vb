@@ -55,6 +55,10 @@ Public Class RungeKutta4
 
         y = New List(Of Double)(y0.Length - 1) {}
 
+        For i As Integer = 0 To y.Length - 1
+            y(i) = New List(Of Double)
+        Next
+
         For i As Integer = 0 To n
             Call rungeKutta(dx, darrayn, dh, darraynext)
 
