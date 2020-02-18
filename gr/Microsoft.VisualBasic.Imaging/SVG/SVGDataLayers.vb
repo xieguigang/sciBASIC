@@ -259,7 +259,7 @@ Namespace SVG
 
             If Not bg.StringEmpty Then
                 SVG.styleCSS = New XmlMeta.CSS With {
-                   .style = "svg{ fill: " & bg & "; stroke: black;}" & css.style
+                   .style = "svg{ background: " & bg & "; stroke: black;}" & css.style
                 }
             End If
 

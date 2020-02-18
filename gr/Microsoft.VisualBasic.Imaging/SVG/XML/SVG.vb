@@ -94,7 +94,12 @@ Namespace SVG.XML
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute> Public Property version As String
+        ''' <summary>
+        ''' [offsetX offset Y width height]
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property viewBox As String()
+        <XmlAttribute> Public Property preserveAspectRatio As String = "xMaxYMax"
         <XmlAttribute> Public Property overflow As String
 
         <XmlAttribute("enable-background")>
@@ -180,6 +185,7 @@ Namespace SVG.XML
         Public Function Size(sz As Size) As SVGXml
             width = sz.Width & "px"
             height = sz.Height & "px"
+            viewBox = {0, 0, sz.Width, sz.Height}
             Return Me
         End Function
 
