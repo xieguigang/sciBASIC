@@ -247,8 +247,6 @@ Namespace SVG
 
             Dim SVG As New SVGXml() With {
                 .Layers = layers,
-                .width = size.Width Or innerDefaultWidth(),
-                .height = size.Height Or innerDefaultHeight(),
                 .XmlComment = xmlComment,
                 .desc = desc,
                 .title = title
@@ -256,6 +254,8 @@ Namespace SVG
             Dim css As New XmlMeta.CSS With {
                 .style = styles.JoinBy(vbCrLf & vbCrLf)
             }
+
+            Call SVG.Size(New Size(size.Width Or innerDefaultWidth(), size.Height Or innerDefaultHeight()))
 
             If Not bg.StringEmpty Then
                 SVG.styleCSS = New XmlMeta.CSS With {
