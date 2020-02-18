@@ -76,8 +76,6 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 ''' </summary>
 Public MustInherit Class ODEs
 
-    Dim K1, K2, K3, K4 As Vector
-
     ReadOnly __vars As Dictionary(Of var)
     Protected Friend vars As var()
 
@@ -116,28 +114,6 @@ Public MustInherit Class ODEs
     End Sub
 
     ''' <summary>
-    ''' RK4 ODEs solver
-    ''' </summary>
-    ''' <param name="dxn">The x initial value.(x初值)</param>
-    ''' <param name="dyn">The y initial value.(初值y(n))</param>
-    ''' <param name="dh">Steps delta.(步长)</param>
-    ''' <param name="dynext">
-    ''' Returns the y(n+1) result from this parameter.(下一步的值y(n+1))
-    ''' </param>
-    Private Sub rungeKutta(dxn As Double,
-                           ByRef dyn As Vector,
-                           dh As Double,
-                           ByRef dynext As Vector)
-
-        Call ODEs(dxn, dyn, K1)                             ' 求解K1
-        Call ODEs(dxn + dh / 2, dyn + dh / 2 * K1, K2)      ' 求解K2
-        Call ODEs(dxn + dh / 2, dyn + dh / 2 * K2, K3)      ' 求解K3
-        Call ODEs(dxn + dh, dyn + dh * K3, K4)              ' 求解K4
-
-        dynext = dyn + (K1 + K2 + K3 + K4) * dh / 6.0  ' 求解下一步的值y(n+1)
-    End Sub
-
-    ''' <summary>
     ''' 初值
     ''' </summary>
     ''' <returns></returns>
@@ -151,7 +127,7 @@ Public MustInherit Class ODEs
     Private Function __getY0(incept As Boolean) As Double()
         Return If(incept, Me.vars, Me.y0) _
             .OrderBy(Function(o) o.Index) _
-            .Select(Function(o) o.value) _
+            .Select(Function(o) o.Value) _
             .ToArray
     End Function
 
@@ -180,37 +156,17 @@ Public MustInherit Class ODEs
     ''' <param name="b"></param>
     ''' <returns></returns>
     Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
-        Dim dh As Double = (b - a) / n  ' 步长
-        Dim dx As Double = a
         Dim y0 As Double() = __getY0(incept)
-        Dim darrayn As New Vector(y0)
-        Dim darraynext As New Vector(y0.Length) ' //下一步的值,最好初始化
-
-        K1 = New Vector(y0.Length)
-        K2 = New Vector(y0.Length)
-        K3 = New Vector(y0.Length)
-        K4 = New Vector(y0.Length)
-
-        Dim y As List(Of Double)() = New List(Of Double)(vars.Length - 1) {}
-        Dim x As New List(Of Double)
         Dim yinit As New Dictionary(Of String, Double)
+        Dim x As Double() = Nothing
+        Dim y As List(Of Double)() = Nothing
 
-        For Each var As var In vars ' 记录y0
-            yinit(var.Name) = darrayn(var.Index)
+        For Each var As var In vars
+            ' 记录y0
+            yinit(var.Name) = y0(var.Index)
         Next
 
-        For i As Integer = 0 To n
-            Call rungeKutta(dx, darrayn, dh, darraynext)
-
-            x += dx
-            dx += dh
-            darrayn = darraynext
-
-            For Each var In vars ' y
-                y(var) += darrayn(var.Index)
-                var.Value = darrayn(var.Index)
-            Next
-        Next
+        Call New RungeKutta4(Me).Solve(y0, n, a, b, x, y)
 
         Dim out = LinqAPI.MakeList(Of NamedCollection(Of Double)) <=
  _
@@ -245,10 +201,10 @@ Public MustInherit Class ODEs
     ''' <param name="dy"></param>
     Protected MustOverride Sub func(dx#, ByRef dy As Vector)
 
-    Private Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
+    Friend Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
         ' 更新设置y的值
         For Each x As var In vars
-            x.value = y(x.Index)
+            x.Value = y(x.Index)
         Next
 
         Call func(dx, dy:=k)
