@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -60,7 +61,7 @@ Namespace SVG
     ''' <summary>
     ''' 使用<see cref="g"/>图层的方式构建出一个完整的SVG模型
     ''' </summary>
-    Public Class SVGDataLayers
+    Public Class SVGDataLayers : Implements Enumeration(Of g)
 
         Protected layers As New HashList(Of g)
 
@@ -281,5 +282,15 @@ Namespace SVG
                 ._GetLastLayer = data.GetLastLayer
             }
         End Operator
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of g) Implements Enumeration(Of g).GenericEnumerator
+            For Each layer As g In layers
+                Yield layer
+            Next
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of g).GetEnumerator
+            Yield GenericEnumerator()
+        End Function
     End Class
 End Namespace
