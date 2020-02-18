@@ -73,6 +73,8 @@ Namespace SVG
         ''' </summary>
         Protected Friend filters As Dictionary(Of String, Filter)
 
+        Public ReadOnly Property styles As New List(Of String)
+
         ''' <summary>
         ''' Generates the <see cref="CSSLayer"/> index order value.
         ''' </summary>
@@ -97,6 +99,7 @@ Namespace SVG
         Public Sub Clear()
             layers *= 0
             zlayer = 0
+            _styles *= 0
             _GetLastLayer = Nothing
         End Sub
 
@@ -250,10 +253,13 @@ Namespace SVG
                 .desc = desc,
                 .title = title
             }
+            Dim css As New XmlMeta.CSS With {
+                .style = styles.JoinBy(vbCrLf & vbCrLf)
+            }
 
             If Not bg.StringEmpty Then
                 SVG.styleCSS = New XmlMeta.CSS With {
-                   .style = "svg{ background-color: " & bg & "; }"
+                   .style = "svg{ background-color: " & bg & "; }" & css.style
                 }
             End If
 
