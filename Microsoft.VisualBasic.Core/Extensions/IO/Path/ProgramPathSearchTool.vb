@@ -169,7 +169,6 @@ Namespace FileIO.Path
         ''' <returns></returns>
         ''' <remarks></remarks>
         '''
-        <ExportAPI("Search.Scripts", Info:="Search for the path of a script file with a specific extension name.")>
         Public Shared Function SearchScriptFile(dir$, keyword$, Optional withExtension$ = Nothing) As IEnumerable(Of String)
             Dim scriptFileNameRule$ = $"*{keyword}*{withExtension}"
             Dim extNameAssert As Assert(Of String)

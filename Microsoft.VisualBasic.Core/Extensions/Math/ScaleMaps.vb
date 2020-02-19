@@ -193,7 +193,6 @@ Namespace Math
         ''' <param name="center">either a logical value or a numeric vector of length equal to the number of columns of x</param>
         ''' <param name="isScale">either a logical value or a numeric vector of length equal to the number of columns of x</param>
         ''' <returns></returns>
-        <ExportAPI("Scale", Info:="function centers and/or scales the columns of a numeric matrix.")>
         Public Function Scale(<Parameter("x", "numeric matrix")> data As IEnumerable(Of Double),
                               <Parameter("center", "either a logical value or a numeric vector of length equal to the number of columns of x")>
                               Optional center As Boolean = True,

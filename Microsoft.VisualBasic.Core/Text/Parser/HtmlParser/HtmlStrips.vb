@@ -202,13 +202,13 @@ Namespace Text.Parser.HtmlParser
         End Function
 
         ''' <summary>
-        ''' 获取两个尖括号之间的内容
+        ''' Gets the string value between two wrapper character.
+        ''' (获取两个尖括号之间的内容)
         ''' </summary>
         ''' <param name="html"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
         <Extension> Public Function GetValue(html As String) As String
             Return html.GetStackValue(">", "<")
         End Function

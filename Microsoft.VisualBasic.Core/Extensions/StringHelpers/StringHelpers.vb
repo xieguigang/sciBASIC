@@ -587,7 +587,6 @@ Public Module StringHelpers
     ''' <param name="ch"></param>
     ''' <returns></returns>
     '''
-    <ExportAPI("Count", Info:="Counting the specific char in the input string value.")>
     <Extension> Public Function Count(str$, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
             Return 0
@@ -794,7 +793,6 @@ Public Module StringHelpers
     ''' <param name="pattern">The regular expression pattern to match.</param>
     ''' <param name="options"></param>
     ''' <returns></returns>
-    <ExportAPI("Regex", Info:="Searches the specified input string for the first occurrence of the specified regular expression.")>
     <Extension> Public Function Match(<Parameter("input", "The string to search for a match.")> input$,
                                       <Parameter("Pattern", "The regular expression pattern to match.")> pattern$,
                                       Optional options As RegexOptions = RegexOptions.Multiline) As String
@@ -867,7 +865,6 @@ Public Module StringHelpers
     ''' <param name="tokens"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("Tokens.Count", Info:="Count the string value numbers.")>
     <Extension> Public Function TokenCount(tokens As IEnumerable(Of String), Optional ignoreCase As Boolean = False) As Dictionary(Of String, Integer)
         If Not ignoreCase Then
             ' 大小写敏感
@@ -918,10 +915,11 @@ Public Module StringHelpers
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
-    <Extension> Public Function StringSplit(source$, pattern$,
-                                            Optional TrimTrailingEmptyStrings As Boolean = False,
-                                            Optional opt As RegexOptions = RegexICSng) As String()
+    <Extension>
+    Public Function StringSplit(source$, pattern$,
+                                Optional TrimTrailingEmptyStrings As Boolean = False,
+                                Optional opt As RegexOptions = RegexICSng) As String()
+
         If source.StringEmpty Then
             Return {}
         End If
@@ -1053,7 +1051,6 @@ Public Module StringHelpers
     ''' If fuzzy, then <see cref="InStr"/> will be used if ``String.Equals`` method have no result.
     ''' </param>
     ''' <returns></returns>
-    <ExportAPI("Located", Info:="String compares using String.Equals")>
     <Extension> Public Function Located(collection As IEnumerable(Of String), text$,
                                         Optional caseSensitive As Boolean = True,
                                         Optional fuzzy As Boolean = False) As Integer
@@ -1101,7 +1098,6 @@ Public Module StringHelpers
     ''' <param name="keyword"></param>
     ''' <param name="caseSensitive"></param>
     ''' <returns>返回第一个找到关键词的行数，没有找到则返回-1</returns>
-    <ExportAPI("Lookup", Info:="Search the string by keyword in a string collection.")>
     <Extension>
     Public Function Lookup(source As IEnumerable(Of String), keyword As String, Optional caseSensitive As Boolean = True) As Integer
         Dim method As CompareMethod = If(caseSensitive, CompareMethod.Binary, CompareMethod.Text)

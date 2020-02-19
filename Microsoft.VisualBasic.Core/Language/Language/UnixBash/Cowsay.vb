@@ -116,8 +116,6 @@ H   H EEEEE LLLLL LLLLL  OOO  ,,    W W   OOO  R   R LLLLL DDDD  !!
         ''' <param name="msg"></param>
         ''' <returns></returns>
         ''' 
-        <ExportAPI("Cowsay",
-               Info:="Show cowsay with a specific input message on your console screen. you can using /dead to change its face.")>
         Public Function RunCowsay(msg As String, Optional isDead As Boolean = False) As String
             If isDead Then
                 msg = __msgbox(msg) & DeadCow

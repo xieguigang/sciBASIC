@@ -1872,7 +1872,6 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("STD", Info:="Standard Deviation")>
         <Extension> Public Function SD(values As IEnumerable(Of Double)) As Double
             Dim data#() = values.ToArray
             Dim avg# = data.Average
@@ -1886,7 +1885,6 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("STD", Info:="Standard Deviation")>
         <Extension> Public Function SD(values As IEnumerable(Of Integer)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
@@ -1897,7 +1895,6 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("STD", Info:="Standard Deviation")>
         <Extension> Public Function SD(values As IEnumerable(Of Long)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
@@ -1908,7 +1905,6 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("STD", Info:="Standard Deviation")>
         <Extension> Public Function SD(values As IEnumerable(Of Single)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
@@ -1920,20 +1916,19 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
         <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
             Return stdNum.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
+        <Extension>
+        Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
             Return stdNum.Sqrt((From n In Vector Select n ^ 2).Sum)
         End Function
 
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Integer), b As IEnumerable(Of Integer)) As Double
+        <Extension>
+        Public Function EuclideanDistance(a As IEnumerable(Of Integer), b As IEnumerable(Of Integer)) As Double
             If a.Count <> b.Count Then
                 Return -1
             Else
@@ -1942,8 +1937,8 @@ Namespace Math
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
+        <Extension>
+        Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
             Return EuclideanDistance(a.ToArray, b.ToArray)
         End Function
 
@@ -1953,8 +1948,8 @@ Namespace Math
         ''' <param name="a">Point A</param>
         ''' <param name="b">Point B</param>
         ''' <returns></returns>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(a As Byte(), b As Byte()) As Double
+        <Extension>
+        Public Function EuclideanDistance(a As Byte(), b As Byte()) As Double
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
@@ -1968,8 +1963,8 @@ Namespace Math
         ''' <param name="a">Point A</param>
         ''' <param name="b">Point B</param>
         ''' <returns></returns>
-        <ExportAPI("Euclidean", Info:="Euclidean Distance")>
-        <Extension> Public Function EuclideanDistance(a As Double(), b As Double()) As Double
+        <Extension>
+        Public Function EuclideanDistance(a As Double(), b As Double()) As Double
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
