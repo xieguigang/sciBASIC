@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::a8d57a8517c6bb5d8128d2f7cc24a82a, Data_science\Mathematica\Math\ODESolver.Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    '     Function: __getArgs, correlationImpl, (+2 Overloads) DataFrame, LoadFromDataFrame, Pcc
-    '               SPcc
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+'     Function: __getArgs, correlationImpl, (+2 Overloads) DataFrame, LoadFromDataFrame, Pcc
+'               SPcc
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,9 +46,10 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 <HideModuleName> Public Module Extensions
 
@@ -77,13 +78,13 @@ Imports sys = System.Math
     Public Function DataFrame(df As ODEsOut, Optional xDisp As String = "X", Optional fix% = -1) As IO.File
         Dim ly = df.y.Values.ToArray
         Dim file As New IO.File
-        Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.Name))
+        Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.name))
         Dim round As Func(Of Double, String)
 
         If fix <= 0 Then
             round = Function(n) CStr(n)
         Else
-            round = Function(n) CStr(sys.Round(n, fix))
+            round = Function(n) CStr(stdNum.Round(n, fix))
         End If
 
         file += head
@@ -98,7 +99,7 @@ Imports sys = System.Math
 #End If
 
         For Each x As SeqValue(Of Double) In df.x.SeqIterator
-            file += (round(x.value) + ly.ToList(Function(n) round(n.Value(x.i))))
+            file += (round(x.value) + ly.ToList(Function(n) round(n.value(x.i))))
         Next
 
         Dim skips As Integer = ly.Length + 2
@@ -138,11 +139,11 @@ Imports sys = System.Math
                                                                    Let values As Double() = s.Skip(1).Select(AddressOf Val).ToArray
                                                                    Select New NamedCollection(Of Double) With {
                                                                        .name = name,
-                                                                       .Value = values
+                                                                       .value = values
                                                                    }
         Return New ODEsOut With {
             .params = args,
-            .X = X.Skip(1).Select(AddressOf Val).ToArray,
+            .x = X.Skip(1).Select(AddressOf Val).ToArray,
             .y = yData.ToDictionary
         }
     End Function
@@ -178,12 +179,12 @@ Imports sys = System.Math
 
         For Each var As NamedCollection(Of Double) In df
             Dim x As New DataSet With {
-                .ID = var.Name,
+                .ID = var.name,
                 .Properties = New Dictionary(Of String, Double)
             }
 
             For Each name$ In vars
-                x.Properties(name$) = correlation(var.Value, df.y(name).Value)
+                x.Properties(name$) = correlation(var.value, df.y(name).value)
             Next
 
             Yield x
