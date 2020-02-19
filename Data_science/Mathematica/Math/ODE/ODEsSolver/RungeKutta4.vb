@@ -99,6 +99,12 @@ Public Class SolverIterator
     Dim rk4 As RungeKutta4
     Dim solverEnumerator As IEnumerator(Of Integer)
 
+    Public ReadOnly Property RK4Solver As RungeKutta4
+        Get
+            Return rk4
+        End Get
+    End Property
+
     Sub New(rk4 As RungeKutta4)
         Me.rk4 = rk4
     End Sub

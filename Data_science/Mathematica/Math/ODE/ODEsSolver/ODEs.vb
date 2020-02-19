@@ -87,9 +87,37 @@ Public MustInherit Class ODEs
         End Get
     End Property
 
+    ''' <summary>
+    ''' 返回的值包括<see cref="Double"/>类型的Field或者<see cref="float"/>类型的field
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
+        Get
+            Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
+            Dim fields As IEnumerable(Of FieldInfo) =
+                type _
+                .DeclaredFields _
+                .Where(Function(f) f.FieldType.Equals(GetType(Double)))
+            Dim out As Dictionary(Of String, Double) =
+                fields.ToDictionary(
+                Function(x) x.Name,
+                Function(x) DirectCast(x.GetValue(Me), Double))
+
+            fields = type _
+                .DeclaredFields _
+                .Where(Function(f) (Not f.FieldType.Equals(GetType(var))) AndAlso f.FieldType.Equals(GetType(f64)))
+
+            For Each v As FieldInfo In fields
+                Call out.Add(v.Name, DirectCast(v.GetValue(Me), f64).Value)
+            Next
+
+            Return out
+        End Get
+    End Property
+
     Sub New()
         Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
-        Dim fields = type.DeclaredFields _
+        Dim fields As FieldInfo() = type.DeclaredFields _
             .Where(Function(x) x.FieldType.Equals(var.type)) _
             .ToArray
 
@@ -124,7 +152,7 @@ Public MustInherit Class ODEs
     ''' </summary>
     ''' <param name="incept">是否是为蒙特卡洛实验设计的？</param>
     ''' <returns></returns>
-    Private Function __getY0(incept As Boolean) As Double()
+    Public Function GetY0(Optional incept As Boolean = False) As Double()
         Return If(incept, Me.vars, Me.y0) _
             .OrderBy(Function(o) o.Index) _
             .Select(Function(o) o.Value) _
@@ -156,7 +184,7 @@ Public MustInherit Class ODEs
     ''' <param name="b"></param>
     ''' <returns></returns>
     Public Function Solve(n As Integer, a As Double, b As Double, Optional incept As Boolean = False) As ODEsOut
-        Dim y0 As Double() = __getY0(incept)
+        Dim y0 As Double() = GetY0(incept)
         Dim yinit As New Dictionary(Of String, Double)
         Dim x As Double() = Nothing
         Dim y As List(Of Double)() = Nothing
@@ -168,13 +196,17 @@ Public MustInherit Class ODEs
 
         Call New RungeKutta4(Me).Solve(y0, n, a, b).GetResult(x, y)
 
+        Return CreateOutput(Me, yinit, x, y)
+    End Function
+
+    Public Shared Function CreateOutput(system As ODEs, y0 As Dictionary(Of String, Double), x As Double(), y As List(Of Double)()) As ODEsOut
         Dim out = LinqAPI.MakeList(Of NamedCollection(Of Double)) <=
  _
             From var As var
-            In vars
+            In system.vars
             Select New NamedCollection(Of Double) With {
-                .Name = var.Name,
-                .Value = y(var)
+                .name = var.Name,
+                .value = y(var)
             }
 
         ' 强制进行内存回收，以应对在蒙特卡洛分析的时候的内存泄漏
@@ -189,8 +221,8 @@ Public MustInherit Class ODEs
         Return New ODEsOut With {
             .x = x,
             .y = out.ToDictionary,
-            .y0 = yinit,
-            .params = Parameters
+            .y0 = y0,
+            .params = system.Parameters
         }
     End Function
 
@@ -209,34 +241,6 @@ Public MustInherit Class ODEs
 
         Call func(dx, dy:=k)
     End Sub
-
-    ''' <summary>
-    ''' 返回的值包括<see cref="Double"/>类型的Field或者<see cref="float"/>类型的field
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
-        Get
-            Dim type As TypeInfo = CType(Me.GetType, TypeInfo)
-            Dim fields As IEnumerable(Of FieldInfo) =
-                type _
-                .DeclaredFields _
-                .Where(Function(f) f.FieldType.Equals(GetType(Double)))
-            Dim out As Dictionary(Of String, Double) =
-                fields.ToDictionary(
-                Function(x) x.Name,
-                Function(x) DirectCast(x.GetValue(Me), Double))
-
-            fields = type _
-                .DeclaredFields _
-                .Where(Function(f) (Not f.FieldType.Equals(GetType(var))) AndAlso f.FieldType.Equals(GetType(f64)))
-
-            For Each v As FieldInfo In fields
-                Call out.Add(v.Name, DirectCast(v.GetValue(Me), f64).Value)
-            Next
-
-            Return out
-        End Get
-    End Property
 
     ''' <summary>
     ''' Get function parameters name collection
