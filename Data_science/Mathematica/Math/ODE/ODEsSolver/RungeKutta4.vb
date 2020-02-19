@@ -6,6 +6,9 @@ Public Class RungeKutta4
     Dim K1, K2, K3, K4 As Vector
     Dim ODEs As ODEs
 
+    Dim x As List(Of Double)
+    Dim y As List(Of Double)()
+
     Sub New(system As ODEs)
         ODEs = system
     End Sub
@@ -33,13 +36,23 @@ Public Class RungeKutta4
         dynext = dyn + (K1 + K2 + K3 + K4) * dh / 6.0
     End Sub
 
+    Public Sub GetResult(ByRef x As Double(), ByRef y As List(Of Double)())
+        x = Me.x
+        y = Me.y
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="n">A larger value of this parameter, will makes your result more precise.</param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
-    Public Sub Solve(y0 As Double(), n As Integer, a As Double, b As Double, ByRef x As Double(), ByRef y As List(Of Double)())
+    Public Function Solve(y0 As Double(), n As Integer, a As Double, b As Double) As RungeKutta4
+        Call solverIteration(y0, n, a, b).ToArray
+        Return Me
+    End Function
+
+    Friend Iterator Function solverIteration(y0 As Double(), n As Integer, a As Double, b As Double) As IEnumerable(Of Integer)
         ' 步长
         Dim dh As Double = (b - a) / n
         Dim dx As Double = a
@@ -69,8 +82,43 @@ Public Class RungeKutta4
             For index As Integer = 0 To darrayn.Dim - 1
                 y(index).Add(darrayn(index))
             Next
+
+            Yield i
         Next
 
         x = xi
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return ODEs.ToString
+    End Function
+End Class
+
+Public Class SolverIterator
+
+    Dim rk4 As RungeKutta4
+    Dim solverEnumerator As IEnumerator(Of Integer)
+
+    Sub New(rk4 As RungeKutta4)
+        Me.rk4 = rk4
     End Sub
+
+    Public Function Config(y0 As Double(), n As Integer, a As Double, b As Double) As SolverIterator
+        solverEnumerator = rk4 _
+            .solverIteration(y0, n, a, b) _
+            .GetEnumerator
+
+        Return Me
+    End Function
+
+    ''' <summary>
+    ''' 这个方法接口主要是应用于模拟器计算
+    ''' </summary>
+    Public Sub Tick()
+        solverEnumerator.MoveNext()
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return rk4.ToString
+    End Function
 End Class

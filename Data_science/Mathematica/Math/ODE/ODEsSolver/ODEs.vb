@@ -166,7 +166,7 @@ Public MustInherit Class ODEs
             yinit(var.Name) = y0(var.Index)
         Next
 
-        Call New RungeKutta4(Me).Solve(y0, n, a, b, x, y)
+        Call New RungeKutta4(Me).Solve(y0, n, a, b).GetResult(x, y)
 
         Dim out = LinqAPI.MakeList(Of NamedCollection(Of Double)) <=
  _

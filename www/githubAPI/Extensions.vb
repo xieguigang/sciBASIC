@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Webservices.Github.API
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 
+<HideModuleName>
 Public Module Extensions
 
     <Extension> Public Function WhoIsNotFollowMe(username$) As IEnumerable(Of User)
