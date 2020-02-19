@@ -53,34 +53,37 @@
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-Public Delegate Sub [Function](dx As Double, ByRef dy As Vector)
+Namespace Dynamics
 
-Public Class GenericODEs : Inherits ODEs
+    Public Delegate Sub [Function](dx As Double, ByRef dy As Vector)
 
-    ''' <summary>
-    ''' df(dx As <see cref="Double"/>, ByRef dy As <see cref="Vector"/>)
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property df As [Function]
+    Public Class GenericODEs : Inherits ODEs
 
-    Sub New(ParamArray vars As var())
-        Me.vars = vars
+        ''' <summary>
+        ''' df(dx As <see cref="Double"/>, ByRef dy As <see cref="Vector"/>)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property df As [Function]
 
-        For Each x As SeqValue(Of var) In vars.SeqIterator
-            x.value.Index = x.i
-        Next
-    End Sub
+        Sub New(ParamArray vars As var())
+            Me.vars = vars
 
-    Sub New(vars As var(), df As [Function])
-        Call Me.New(vars)
-        Me.df = df
-    End Sub
+            For Each x As SeqValue(Of var) In vars.SeqIterator
+                x.value.Index = x.i
+            Next
+        End Sub
 
-    Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
-        Call _df(dx, dy)
-    End Sub
+        Sub New(vars As var(), df As [Function])
+            Call Me.New(vars)
+            Me.df = df
+        End Sub
 
-    Protected Overrides Function y0() As var()
-        Return vars
-    End Function
-End Class
+        Protected Overrides Sub func(dx As Double, ByRef dy As Vector)
+            Call _df(dx, dy)
+        End Sub
+
+        Protected Overrides Function y0() As var()
+            Return vars
+        End Function
+    End Class
+End Namespace

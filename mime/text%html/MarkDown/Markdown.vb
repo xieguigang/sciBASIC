@@ -1560,14 +1560,15 @@ Namespace MarkDown
         ''' with the escape values by accident.
         ''' </summary>
         Private Function EscapeSpecialCharsWithinTagAttributes(text As String) As String
-            Dim tokens As List(Of Token(Of TokenType)) = TokenizeHTML(text)
+            Dim tokens As IEnumerable(Of DocumentToken) = TokenizeHTML(text)
             ' now, rebuild text from the tokens
             Dim sb = New StringBuilder(text.Length)
+            Dim value As String
 
-            For Each token As Token(Of TokenType) In tokens
-                Dim value As String = token.Value
+            For Each token As DocumentToken In tokens
+                value = token.text
 
-                If token.Type = TokenType.Tag Then
+                If token.name = TokenType.Tag Then
                     value = value.Replace("\", _escapeTable("\"))
 
                     If _AutoHyperlink AndAlso value.StartsWith("<!") Then

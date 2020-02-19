@@ -373,11 +373,11 @@
     <Compile Include="ODESolvers\Gill.vb" />
     <Compile Include="Dynamics\SolverIterator.vb" />
     <Compile Include="Dynamics\RungeKutta4.vb" />
-    <Compile Include="Dynamics\StreamExtension.vb" />
+    <Compile Include="Dynamics\Data\StreamExtension.vb" />
     <Compile Include="Dynamics\RefODEs.vb" />
-    <Compile Include="Dynamics\ValueVector.vb" />
+    <Compile Include="Dynamics\Data\ValueVector.vb" />
     <Compile Include="Dynamics\GenericODEs.vb" />
-    <Compile Include="Dynamics\ODEsOut.vb" />
+    <Compile Include="Dynamics\Data\ODEsOut.vb" />
     <Compile Include="Dynamics\var.vb" />
     <Compile Include="Dynamics\ODEs.vb" />
     <Compile Include="ODESolvers\ODE.vb" />

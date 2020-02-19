@@ -49,35 +49,38 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class ValueVector : Inherits i32
+Namespace Dynamics.Data
 
-    Public Property Y As Dictionary(Of NamedCollection(Of Double))
+    Public Class ValueVector : Inherits i32
 
-    Default Public Overrides Property Index(name As Object) As Object
-        Get
-            Return Y(InputHandler.ToString(name)).Value(MyBase.Value)
-        End Get
-        Set(value As Object)
-            Y(InputHandler.ToString(name)).Value(MyBase.Value) = value
-        End Set
-    End Property
+        Public Property Y As Dictionary(Of NamedCollection(Of Double))
 
-    Sub New()
-        Call MyBase.New(0)
-    End Sub
+        Default Public Overrides Property Index(name As Object) As Object
+            Get
+                Return Y(InputHandler.ToString(name)).Value(MyBase.Value)
+            End Get
+            Set(value As Object)
+                Y(InputHandler.ToString(name)).Value(MyBase.Value) = value
+            End Set
+        End Property
 
-    Public Overrides Function ToString() As String
-        Return $"[{Value}] " & Y.Keys.ToArray.GetJson
-    End Function
+        Sub New()
+            Call MyBase.New(0)
+        End Sub
 
-    ''' <summary>
-    ''' Move pointer value
-    ''' </summary>
-    ''' <param name="v"></param>
-    ''' <param name="n%"></param>
-    ''' <returns></returns>
-    Public Overloads Shared Operator +(v As ValueVector, n%) As ValueVector
-        v.Value += n
-        Return v
-    End Operator
-End Class
+        Public Overrides Function ToString() As String
+            Return $"[{Value}] " & Y.Keys.ToArray.GetJson
+        End Function
+
+        ''' <summary>
+        ''' Move pointer value
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="n%"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator +(v As ValueVector, n%) As ValueVector
+            v.Value += n
+            Return v
+        End Operator
+    End Class
+End Namespace
