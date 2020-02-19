@@ -369,6 +369,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.vb" />
+    <Compile Include="ODESolvers\ODEOutput.vb" />
     <Compile Include="ODESolvers\Gill.vb" />
     <Compile Include="ODEsSolver\RungeKutta4.vb" />
     <Compile Include="ODEsSolver\StreamExtension.vb" />
