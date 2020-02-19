@@ -77,6 +77,13 @@ Namespace Scripting.Logical
         CloseStack
     End Enum
 
+    Public Class LogicalToken : Inherits CodeToken(Of Tokens)
+
+        Sub New(name As Tokens, text$)
+            Call MyBase.New(name, text)
+        End Sub
+    End Class
+
     Public Module TokenIcer
 
         Public ReadOnly Property Tokens As IReadOnlyDictionary(Of String, Tokens) =
@@ -155,16 +162,16 @@ Namespace Scripting.Logical
             Return False
         End Function
 
-        Public Function TryParse(s As String) As List(Of Token(Of Tokens))
+        Public Function TryParse(s As String) As List(Of LogicalToken)
             Dim str As CharEnumerator = s.GetEnumerator
-            Dim tokens As New List(Of Token(Of Tokens))
+            Dim tokens As New List(Of LogicalToken)
             Dim ch As Char
             Dim token As New List(Of Char)
             Dim type As Tokens = Logical.Tokens.UNDEFINE
             Dim exitb As Boolean = False
 
             If Not str.MoveNext() Then  ' Empty expression
-                Return New List(Of Token(Of Tokens))
+                Return New List(Of LogicalToken)
             End If
 
             Do While True
@@ -172,7 +179,7 @@ Namespace Scripting.Logical
 
                 If STACKS.IndexOf(ch) > -1 Then
                     Dim st As String = CStr(ch)
-                    tokens += New Token(Of Tokens)(TokenIcer.Tokens(st), st)
+                    tokens += New LogicalToken(TokenIcer.Tokens(st), st)
                     If Not str.MoveNext Then
                         Exit Do
                     Else
@@ -199,7 +206,7 @@ CONTINUTES:
                 Else
                     exitb = str.__parseUNDEFINE(token)
                     type = Logical.Tokens.UNDEFINE
-                    tokens += New Token(Of Tokens)(type, New String(token))
+                    tokens += New LogicalToken(type, New String(token))
                 End If
 
                 If type <> Logical.Tokens.UNDEFINE Then
@@ -209,9 +216,9 @@ CONTINUTES:
                         type = TokenIcer.Tokens(st)
 
                         If ch.IsWhiteSpace AndAlso type = Logical.Tokens.Operator Then
-                            tokens += New Token(Of Tokens)(type, st)
+                            tokens += New LogicalToken(type, st)
                         ElseIf type = Logical.Tokens.Comparer Then
-                            tokens += New Token(Of Tokens)(type, st)
+                            tokens += New LogicalToken(type, st)
                             Call token.Clear()
                             token += ch
                             GoTo CONTINUTES
@@ -228,7 +235,7 @@ UNDEFINE:               If Not ch.IsWhiteSpace Then
                         End If
 
                         type = Logical.Tokens.UNDEFINE
-                        tokens += New Token(Of Tokens)(type, New String(token))
+                        tokens += New LogicalToken(type, New String(token))
                     End If
                 End If
 
@@ -242,13 +249,13 @@ UNDEFINE:               If Not ch.IsWhiteSpace Then
             Return tokens.Removes(AddressOf IsWhiteSpace)
         End Function
 
-        <Extension> Public Function Split(source As IEnumerable(Of Token(Of Tokens))) As List(Of MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens)))
-            Dim lst As New List(Of MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens)))
-            Dim left As New List(Of Token(Of Tokens))
+        <Extension> Public Function Split(source As IEnumerable(Of LogicalToken)) As List(Of MetaExpression(Of LogicalToken(), LogicalToken))
+            Dim lst As New List(Of MetaExpression(Of LogicalToken(), LogicalToken))
+            Dim left As New List(Of LogicalToken)
 
-            For Each x As Token(Of Tokens) In source
-                If x.Type <> Logical.Tokens.UNDEFINE Then
-                    lst += New MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens)) With {
+            For Each x As LogicalToken In source
+                If x.name <> Logical.Tokens.UNDEFINE Then
+                    lst += New MetaExpression(Of LogicalToken(), LogicalToken) With {
                         .LEFT = left,
                         .Operator = x
                     }
@@ -259,15 +266,14 @@ UNDEFINE:               If Not ch.IsWhiteSpace Then
             Next
 
             If left.Count > 0 Then
-                lst += New MetaExpression(Of Token(Of Tokens)(), Token(Of Tokens))(left)
+                lst += New MetaExpression(Of LogicalToken(), LogicalToken)(left)
             End If
 
             Return lst
         End Function
 
-        <Extension> Public Function IsWhiteSpace(x As Token(Of Tokens)) As Boolean
-            Return x.Type = Logical.Tokens.WhiteSpace OrElse
-                (x.Type = Logical.Tokens.UNDEFINE AndAlso String.IsNullOrWhiteSpace(x.Text))
+        <Extension> Public Function IsWhiteSpace(x As LogicalToken) As Boolean
+            Return x.name = Logical.Tokens.WhiteSpace OrElse (x.name = Logical.Tokens.UNDEFINE AndAlso String.IsNullOrWhiteSpace(x.text))
         End Function
 
         <Extension> Public Function IsWhiteSpace(ch As Char) As Boolean

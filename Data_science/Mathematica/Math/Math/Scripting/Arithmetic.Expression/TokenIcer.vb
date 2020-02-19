@@ -208,6 +208,13 @@ Namespace Scripting
         End Function
     End Module
 
+    Public Class MetaToken : Inherits CodeToken(Of ExpressionTokens)
+
+        Sub New(name As ExpressionTokens, text$)
+            Call MyBase.New(name, text)
+        End Sub
+    End Class
+
     Public Enum ExpressionTokens
 
         ''' <summary>

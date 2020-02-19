@@ -64,9 +64,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Scripting.Logical
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Logical.FuzzyLogic
 
@@ -78,8 +76,8 @@ Namespace Logical.FuzzyLogic
 #Region "Private Properties"
 
         Dim m_text As String = [String].Empty
-        Dim m_conditions As Token(Of Tokens)()
-        Dim m_conclusion As Token(Of Tokens)()
+        Dim m_conditions As LogicalToken()
+        Dim m_conclusion As LogicalToken()
 
 #End Region
 
