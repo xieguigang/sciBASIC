@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::92272057f9ad2ee08b1361c6cf35e259, Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ScatterExtensions
-    ' 
-    '     Function: FromODE, FromODEList, FromODEs, (+2 Overloads) Plot
-    ' 
-    ' /********************************************************************************/
+' Module ScatterExtensions
+' 
+'     Function: FromODE, FromODEList, FromODEs, (+2 Overloads) Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Calculus
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module ScatterExtensions
@@ -95,7 +96,7 @@ Public Module ScatterExtensions
                 .data = LinqAPI.Exec(Of HistogramData) <=
  _
                     From i As SeqValue(Of Double)
-                    In out.value.Y.Vector.SeqIterator
+                    In out.value.Y.vector.SeqIterator
                     Let x1 As Double = left
                     Let x2 As Double = (left = left.Value + delta)
                     Where Not i.value.IsNaNImaginary
@@ -175,7 +176,7 @@ Public Module ScatterExtensions
         Return Scatter.Plot(ode.FromODEs(, ptSize, width), size, padding, bg)
     End Function
 
-    ReadOnly defaultColorSequence As [Default](Of  Color()) = ChartColors
+    ReadOnly defaultColorSequence As [Default](Of Color()) = ChartColors
 
     ''' <summary>
     ''' Convert ODEs result as scatter plot serial model.
@@ -203,7 +204,7 @@ Public Module ScatterExtensions
                        .SeqIterator _
                        .Select(Function(i)
                                    Dim x! = CSng(i.value)
-                                   Dim yx! = CSng(y.value.Value(i))
+                                   Dim yx! = CSng(y.value.value(i))
                                    Return New PointData(x!, yx!)
                                End Function)
                   Let color As Color = c(y.i)
@@ -211,7 +212,7 @@ Public Module ScatterExtensions
                        .color = color,
                        .lineType = DashStyle.Solid,
                        .PointSize = ptSize,
-                       .title = y.value.Name,
+                       .title = y.value.name,
                        .width = width,
                        .pts = pts
                    }
