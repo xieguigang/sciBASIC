@@ -59,6 +59,7 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension> Public Function AsVector(Of T As {Structure, IComparable, IComparable(Of T), IEquatable(Of T), IConvertible, IFormattable})(source As IEnumerable(Of T)) As Vector
             Return New Vector(source.Select(Function(x) CDbl(CObj(x))))
         End Function
