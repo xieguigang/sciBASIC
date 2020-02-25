@@ -146,7 +146,9 @@ Namespace IO
                 .ID = ID,
                 .Properties = labels _
                     .ToDictionary(Function(x) x,
-                                  Function(x) Me(x))
+                                  Function(x)
+                                      Return Me(x)
+                                  End Function)
             }
         End Function
 

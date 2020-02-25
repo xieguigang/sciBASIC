@@ -75,12 +75,13 @@ NULL:       If Not strict Then
     ''' <returns></returns>
     <Extension>
     Public Function Usage(m As MemberInfo) As String
-        Try
-            Dim attr As UsageAttribute = m.GetCustomAttribute(Of UsageAttribute)
-            Return attr.UsageInfo
-        Catch ex As Exception
+        Dim attr As UsageAttribute = m.GetCustomAttribute(Of UsageAttribute)
+
+        If attr Is Nothing Then
             Return Nothing
-        End Try
+        Else
+            Return attr.UsageInfo
+        End If
     End Function
 
     ''' <summary>
@@ -90,12 +91,13 @@ NULL:       If Not strict Then
     ''' <returns></returns>
     <Extension>
     Public Function ExampleInfo(m As MemberInfo) As String
-        Try
-            Dim attr As ExampleAttribute = m.GetCustomAttribute(Of ExampleAttribute)
-            Return attr.ExampleInfo
-        Catch ex As Exception
+        Dim attr As ExampleAttribute = m.GetCustomAttribute(Of ExampleAttribute)
+
+        If attr Is Nothing Then
             Return Nothing
-        End Try
+        Else
+            Return attr.ExampleInfo
+        End If
     End Function
 
     ''' <summary>
