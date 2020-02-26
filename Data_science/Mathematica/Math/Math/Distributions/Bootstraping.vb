@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Distributions
 
@@ -133,7 +133,7 @@ Namespace Distributions
             Dim array As DoubleTagged(Of Double)() = data _
                 .Select(Function(x)
                             Return New DoubleTagged(Of Double) With {
-                                .Tag = sys.Log(x, base),
+                                .Tag = stdNum.Log(x, base),
                                 .Value = x
                             }
                         End Function) _
