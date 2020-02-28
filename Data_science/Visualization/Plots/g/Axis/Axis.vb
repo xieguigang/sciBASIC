@@ -114,6 +114,7 @@ Namespace Graphic.Axis
                             Optional labelFont$ = CSSFont.Win7Large,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
+                            Optional gridColor$ = "white",
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
@@ -130,7 +131,8 @@ Namespace Graphic.Axis
                     axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel,
                     XtickFormat:=XtickFormat,
                     YtickFormat:=YtickFormat,
-                    tickFontStyle:=tickFontStyle
+                    tickFontStyle:=tickFontStyle,
+                    gridColor:=gridColor
                 )
             End With
         End Sub
@@ -174,7 +176,7 @@ Namespace Graphic.Axis
 
             Call g.FillRectangle(gridFill.GetBrush, rect)
 
-            If Not scaler.AxisTicks.X.IsNullorEmpty Then
+            If showGrid AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
                 For Each tick In scaler.AxisTicks.X
                     Dim x = scaler.X(tick) + offset.X
                     Dim top As New Point(x, rect.Top)
@@ -185,7 +187,7 @@ Namespace Graphic.Axis
                 Next
             End If
 
-            If Not scaler.AxisTicks.Y.IsNullorEmpty Then
+            If showGrid AndAlso Not scaler.AxisTicks.Y.IsNullOrEmpty Then
                 For Each tick In scaler.AxisTicks.Y
                     Dim y = scaler.TranslateY(tick) + offset.Y
                     Dim left As New Point(rect.Left, y)
@@ -205,7 +207,12 @@ Namespace Graphic.Axis
             End If
 
             If xlayout <> XAxisLayoutStyles.None Then
-                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=XtickFormat)
+                Call g.DrawX(pen, xlabel, scaler, xlayout, scaler.Y(0), offset,
+                             labelFontStyle,
+                             tickFont,
+                             htmlLabel:=htmlLabel,
+                             tickFormat:=XtickFormat
+                     )
             End If
             If ylayout <> YAxisLayoutStyles.None Then
                 Call g.DrawY(pen, ylabel,
@@ -306,17 +313,28 @@ Namespace Graphic.Axis
             Dim maxYTickSize!
 
             If Not yTicks.IsNullOrEmpty Then
+                Dim p As PointF
+
                 For Each tick As Double In yTicks
                     Dim y! = scaler.TranslateY(tick) + offset.Y
                     Dim axisY As New PointF(ZERO.X, y)
 
                     If showAxisLine Then
-                        Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                        If layout = YAxisLayoutStyles.Right Then
+                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X + delta, y))
+                        Else
+                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                        End If
                     End If
 
                     Dim labelText = (tick).ToString(tickFormat)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
-                    Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
+
+                    If layout = YAxisLayoutStyles.Right Then
+                        p = New PointF(ZERO.X + delta, y - sz.Height / 2)
+                    Else
+                        p = New PointF(ZERO.X - delta - sz.Width, y - sz.Height / 2)
+                    End If
 
                     If sz.Width > maxYTickSize Then
                         maxYTickSize = sz.Width
@@ -442,7 +460,7 @@ Namespace Graphic.Axis
         <Extension> Public Sub DrawX(ByRef g As IGraphics,
                                      pen As Pen, label$,
                                      scaler As DataScaler,
-                                     layout As XAxisLayoutStyles, offset As Point,
+                                     layout As XAxisLayoutStyles, Y0#, offset As Point,
                                      labelFont$,
                                      tickFont As Font,
                                      Optional overridesTickLine% = -1,
@@ -458,6 +476,8 @@ Namespace Graphic.Axis
                     Y += size.Height / 2 + offset.Y
                 Case XAxisLayoutStyles.Top
                     Y += 0
+                Case XAxisLayoutStyles.ZERO
+                    Y = Y0 + offset.Y
                 Case Else
                     Y += size.Height
             End Select
@@ -468,7 +488,7 @@ Namespace Graphic.Axis
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
-            If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullorEmpty Then
+            If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
                 For Each tick# In scaler.AxisTicks.X
                     Dim x As Single = scaler.X(tick) + offset.X
                     Dim axisX As New PointF(x, ZERO.Y)
