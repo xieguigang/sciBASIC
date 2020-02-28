@@ -95,6 +95,10 @@ Namespace Math
             Return Math.Abs(CInt(Math.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
 
+        Public Sub SetSeed(seed As Integer)
+            _seeds = New Random(seed)
+        End Sub
+
         ''' <summary>
         ''' 返回<paramref name="min"/>到<paramref name="max"/>区间之内的一个和实数
         ''' </summary>
