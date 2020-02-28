@@ -178,6 +178,7 @@ Namespace IO
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
             Return datasets _
                 .Select(Function(x) x([property])) _

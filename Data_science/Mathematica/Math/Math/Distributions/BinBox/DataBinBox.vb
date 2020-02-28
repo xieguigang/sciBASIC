@@ -90,6 +90,10 @@ Namespace Distributions.BinBox
             Me.eval = eval
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"[{Sample.min}, {Sample.max}] count={Count}"
+        End Function
+
         ''' <summary>
         ''' 将当前的区间内的对象序列映射为一段实数序列
         ''' </summary>

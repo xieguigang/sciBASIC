@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::734fb02789ef659f1791838c629ea1a9, Data_science\Visualization\Plots\BarPlot\Histogram\Histogram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Histogram
-    ' 
-    '         Function: HistogramPlot, (+5 Overloads) Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Histogram
+' 
+'         Function: HistogramPlot, (+5 Overloads) Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -327,33 +328,70 @@ Namespace BarPlot.Histogram
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
                                       Optional showLegend As Boolean = True) As GraphicsData
-
-            With data.ToArray.Hist([step])
-
-                Dim histLegend As New Legend With {
-                    .color = color,
-                    .fontstyle = CSSFont.Win7LargerBold,
-                    .style = LegendStyles.Rectangle,
-                    .title = serialsTitle
-                }
-
-                Dim s As HistProfile = .NewModel([step], histLegend)
-                Dim group As New HistogramGroup With {
-                    .Samples = {s},
-                    .Serials = {s.SerialData}
-                }
-
-                histData = s.data
-
-                Return group.Plot(
-                    bg:=bg, padding:=padding, size:=size,
-                    showGrid:=showGrid,
-                    showTagChartLayer:=False,
-                    xlabel:=xLabel, Ylabel:=yLabel,
-                    xAxis:=xAxis,
-                    showLegend:=showLegend
+            Return data.ToArray _
+                .Hist([step]) _
+                .HistogramPlot([step]:=[step],
+                               serialsTitle:=serialsTitle,
+                               color:=color,
+                               bg:=bg,
+                               size:=size,
+                               padding:=padding,
+                               showGrid:=showGrid,
+                               histData:=histData,
+                               xLabel:=xLabel,
+                               yLabel:=yLabel,
+                               xAxis:=xAxis,
+                               showLegend:=showLegend
                 )
-            End With
+        End Function
+
+        ''' <summary>
+        ''' 绘制频数
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="step">The step width value for create the input <paramref name="data"/> bin box.</param>
+        ''' <param name="serialsTitle$"></param>
+        ''' <param name="color$"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="size"></param>
+        ''' <param name="showGrid"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function HistogramPlot(data As IEnumerable(Of DataBinBox(Of Double)),
+                                      Optional step! = 1,
+                                      Optional serialsTitle$ = "histogram plot",
+                                      Optional color$ = "lightblue",
+                                      Optional bg$ = "white",
+                                      Optional size$ = "1600,1200",
+                                      Optional padding$ = DefaultPadding,
+                                      Optional showGrid As Boolean = True,
+                                      Optional ByRef histData As HistogramData() = Nothing,
+                                      Optional xLabel$ = "X",
+                                      Optional yLabel$ = "Y",
+                                      Optional xAxis$ = Nothing,
+                                      Optional showLegend As Boolean = True) As GraphicsData
+            Dim histLegend As New Legend With {
+                .color = color,
+                .fontstyle = CSSFont.Win7LargerBold,
+                .style = LegendStyles.Rectangle,
+                .title = serialsTitle
+            }
+            Dim s As HistProfile = data.NewModel([step], histLegend)
+            Dim group As New HistogramGroup With {
+                .Samples = {s},
+                .Serials = {s.SerialData}
+            }
+
+            histData = s.data
+
+            Return group.Plot(
+                bg:=bg, padding:=padding, size:=size,
+                showGrid:=showGrid,
+                showTagChartLayer:=False,
+                xlabel:=xLabel, Ylabel:=yLabel,
+                xAxis:=xAxis,
+                showLegend:=showLegend
+            )
         End Function
     End Module
 End Namespace

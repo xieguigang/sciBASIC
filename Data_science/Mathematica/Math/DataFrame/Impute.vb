@@ -89,7 +89,16 @@ Public Module Impute
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Private Function inferByMin(iBAQ As Vector) As Double
-        Return iBAQ.Where(Function(x) x > 0).Min
+        Dim notZero As Double() = iBAQ.Where(Function(x) x > 0).ToArray
+
+        ' 20200224 
+        ' if all of the value in source vector is zero
+        ' then no non-zero values
+        If notZero.Length = 0 Then
+            Return 0
+        Else
+            Return notZero.Min
+        End If
     End Function
 
     <Extension>
