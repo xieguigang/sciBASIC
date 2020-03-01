@@ -78,9 +78,21 @@ Namespace Emit.Delegates
         ''' 目标类型<paramref name="source"/>是否实现了制定的接口类型？
         ''' </summary>
         ''' <param name="source"></param>
+        ''' <typeparam name="interfaceType">接口类型信息</typeparam>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ImplementInterface(Of interfaceType)(source As Type) As Boolean
+            Return source.ImplementInterface(GetType(interfaceType))
+        End Function
+
+        ''' <summary>
+        ''' 目标类型<paramref name="source"/>是否实现了制定的接口类型？
+        ''' </summary>
+        ''' <param name="source"></param>
         ''' <param name="interfaceType">接口类型信息</param>
         ''' <returns></returns>
-        <Extension> Public Function ImplementInterface(source As Type, interfaceType As Type) As Boolean
+        <Extension>
+        Public Function ImplementInterface(source As Type, interfaceType As Type) As Boolean
             While source IsNot Nothing
                 Dim interfaces = source.GetInterfaces()
                 If interfaces.Any(Function(i) i Is interfaceType OrElse i.ImplementInterface(interfaceType)) Then
