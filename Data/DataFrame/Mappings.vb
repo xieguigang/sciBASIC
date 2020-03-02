@@ -62,7 +62,7 @@ Public Class MappingsHelper
         Dim match As Type = StreamIO.TypeOf(headers, types)
 
         If match Is Nothing Then
-            Return GetType(System.Void)
+            Return GetType(Void)
         Else
             Return match
         End If
@@ -95,11 +95,13 @@ Public Class MappingsHelper
     ''' <returns></returns>
     Public Shared Function PropertyNames(Of T)() As Dictionary(Of String, String)
         Dim schemaTable = SchemaProvider.CreateObjectInternal(GetType(T))
-        Dim table = schemaTable _
+        Dim table As Dictionary(Of String, String) = schemaTable _
             .ToDictionary(Function(prop)
                               Return prop.BindProperty.Name
                           End Function,
-                          Function(field) field.Name)
+                          Function(field)
+                              Return field.Name
+                          End Function)
         Return table
     End Function
 
@@ -111,10 +113,14 @@ Public Class MappingsHelper
     ''' <returns></returns>
     Public Shared Function CheckFieldConsistent(Of T As Class)(csv$) As String
         Dim headers As New RowObject(Tokenizer.CharsParser(csv.ReadFirstLine))
+        ' 因为这里是判断读文件的时候是否能够把csv文件之中的
+        ' 所有的列数据都读取完全了， 所以在这里是获取所有的
+        ' 可写属性
         Dim schema As SchemaProvider = SchemaProvider _
             .CreateObject(Of T)(strict:=False) _
-            .CopyWriteDataToObject  ' 因为这里是判断读文件的时候是否能够把csv文件之中的所有的列数据都读取完全了，所以在这里是获取所有的可写属性
+            .CopyWriteDataToObject
         Dim result$ = schema.CheckFieldConsistent(headers)
+
         Return result
     End Function
 
@@ -135,7 +141,8 @@ Public Class MappingsHelper
 
     Public Shared Iterator Function TagFieldName(data As IEnumerable(Of EntityObject), tagName As String, fieldName$) As IEnumerable(Of EntityObject)
         For Each obj As EntityObject In data
-            Dim val = obj.Properties(fieldName)
+            Dim val As String = obj.Properties(fieldName)
+
             obj.Properties.Remove(fieldName)
             obj($"{tagName}.{fieldName}") = val
 
