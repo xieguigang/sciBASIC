@@ -41,10 +41,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.SimilarityImpl
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Analysis
 
@@ -103,76 +102,14 @@ Namespace Analysis
             If Scripting.ToString(a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)) <> Scripting.ToString(b.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)) Then
                 Return 0
             Else
-                Dim atypes As Dictionary(Of String, Integer) = a.nodeGroupCounts
-                Dim btypes As Dictionary(Of String, Integer) = b.nodeGroupCounts
-                Dim allGroups As Index(Of String) = atypes.Keys.AsList + btypes.Keys
-                Dim av As New Vector(allGroups.EnumerateMapKeys.Select(AddressOf atypes.TryGetValue))
-                Dim bv As New Vector(allGroups.EnumerateMapKeys.Select(AddressOf btypes.TryGetValue))
-                Dim cos As Double = Math.SSM(av, bv)
+                Dim cos As Double = ClassConnectivity.MeasureCosValue(a, b)
 
                 If topologyCos Then
-                    Return cos * Similarity.TopologyCos(a, b)
+                    Return cos * GraphTopology.TopologyCos(a, b) * GraphTopology.VertexDistanceCos(a, b)
                 Else
                     Return cos
                 End If
             End If
-        End Function
-
-        Public Function TopologyCos(a As Node, b As Node) As Double
-            Dim aDist = a.nodeGroupDistance
-            Dim bDist = b.nodeGroupDistance
-            Dim allGroups As Index(Of String) = aDist.Keys.AsList + bDist.Keys
-            Dim av As New Vector(allGroups.EnumerateMapKeys.Select(AddressOf aDist.TryGetValue))
-            Dim bv As New Vector(allGroups.EnumerateMapKeys.Select(AddressOf bDist.TryGetValue))
-            Dim cos As Double = Math.SSM(av, bv)
-
-            Return cos
-        End Function
-
-        <Extension>
-        Private Function nodeGroupCounts(v As Node) As Dictionary(Of String, Integer)
-            Return (From type As String In v.AllNodeTypes Group By type Into Count) _
-                .ToDictionary(Function(group) group.type,
-                              Function(group)
-                                  Return group.Count
-                              End Function)
-        End Function
-
-        <Extension>
-        Private Function nodeGroupDistance(v As Node) As Dictionary(Of String, Double)
-            Return (From type As (String, Double) In v.AllNodeDistance Group By type.Item1 Into Group) _
-                 .ToDictionary(Function(group) group.Item1,
-                               Function(group)
-                                   Return group.Group.Average(Function(n) n.Item2)
-                               End Function)
-        End Function
-
-        <Extension>
-        Public Function AllNodeDistance(v As Node) As IEnumerable(Of (String, Double))
-            If v.adjacencies Is Nothing Then
-                ' 孤立节点
-                Return {}
-            End If
-
-            Dim a = v.data.initialPostion
-
-            Return v.adjacencies _
-                .EnumerateAllEdges _
-                .Select(Function(e)
-                            Dim partner As Node
-
-                            If e.U Is v Then
-                                partner = e.V
-                            Else
-                                partner = e.U
-                            End If
-
-                            Dim type$ = partner.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
-                            Dim b = partner.data.initialPostion
-                            Dim dist = (a.x - b.x) ^ 2 + (a.y - b.y) ^ 2 + (a.z - b.z) ^ 2
-
-                            Return (If(type, "n/a"), dist)
-                        End Function)
         End Function
 
         <Extension>

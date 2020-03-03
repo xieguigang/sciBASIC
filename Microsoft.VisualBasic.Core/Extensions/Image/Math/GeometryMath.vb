@@ -72,6 +72,29 @@ Namespace Imaging.Math2D
     ''' </summary>
     Public Module GeometryMath
 
+        ''' <summary>
+        ''' cos(a,b)
+        ''' </summary>
+        ''' <param name="x1#"></param>
+        ''' <param name="y1#"></param>
+        ''' <param name="z1#"></param>
+        ''' <param name="x2#"></param>
+        ''' <param name="y2#"></param>
+        ''' <param name="z2#"></param>
+        ''' <returns></returns>
+        Public Function angleBetween2Lines(x1#, y1#, z1#, x2#, y2#, z2#) As Double
+            Dim ab = x1 * x2 + y1 * y2 + z1 * z2
+            Dim a = stdNum.Sqrt(x1 ^ 2 + y1 ^ 2 + z1 ^ 2)
+            Dim b = stdNum.Sqrt(x2 ^ 2 + y2 ^ 2 + z2 ^ 2)
+
+            If ab = 0R Then
+                Return 0
+            Else
+                Dim cos = ab / (a * b)
+                Return cos
+            End If
+        End Function
+
         Public Function angleBetween2Lines(line1 As Point2D(), line2 As Point2D()) As Double
             Dim angle1 = Math.Atan2(line1(0).Y - line1(1).Y, line1(0).X - line1(1).X)
             Dim angle2 = Math.Atan2(line2(0).Y - line2(1).Y, line2(0).X - line2(1).X)

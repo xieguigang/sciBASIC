@@ -576,7 +576,9 @@
   <ItemGroup>
     <Compile Include="Analysis\Model\EdgeSet.vb" />
     <Compile Include="Analysis\Model\GraphIndex.vb" />
-    <Compile Include="Analysis\Similarity.vb" />
+    <Compile Include="Analysis\Similarity\ClassConnectivity.vb" />
+    <Compile Include="Analysis\Similarity\GraphTopology.vb" />
+    <Compile Include="Analysis\Similarity\Similarity.vb" />
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Analysis\Model\AdjacencySet.vb" />
     <Compile Include="Graph\Model\NameOf.vb" />

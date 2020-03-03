@@ -63,12 +63,12 @@ Namespace DATA
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="title"></param>
-        ''' <param name="describ"></param>
+        ''' <param name="evenRowClassName"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional title As String = "", Optional describ As String = "") As String
-            Return source.ToCsvDoc(False).ToHTMLTable(title:=title Or GetType(T).FullName.AsDefault, alt:=describ Or GetType(T).Description.AsDefault)
+        Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional title As String = "", Optional evenRowClassName$ = "even") As String
+            Return source.ToCsvDoc(False).ToHTMLTable(title:=title Or GetType(T).FullName.AsDefault, altClassName:=evenRowClassName)
         End Function
 
         <Extension>
@@ -78,7 +78,7 @@ Namespace DATA
             Optional width$ = "",
             Optional removes$() = Nothing,
             Optional title$ = "",
-            Optional alt$ = Nothing) As String
+            Optional altClassName$ = Nothing) As String
 
             Return source.ToCsvDoc(False).ToHTMLTable(
                 className:=className,
@@ -86,7 +86,7 @@ Namespace DATA
                 width:=width,
                 removes:=removes,
                 title:=title,
-                alt:=alt
+                altClassName:=altClassName
             )
         End Function
 
@@ -104,7 +104,7 @@ Namespace DATA
             Optional width$ = "",
             Optional title$ = Nothing,
             Optional removes$() = Nothing,
-            Optional alt$ = Nothing) As String
+            Optional altClassName$ = Nothing) As String
 
             Dim innerDoc As New StringBuilder("<table", 4096)
             Dim removeList As New Index(Of String)(removes)
@@ -136,11 +136,11 @@ Namespace DATA
 
             For Each row As SeqValue(Of RowObject) In table.Skip(1).SeqIterator
                 With row.value
-                    If alt.StringEmpty Then
+                    If altClassName.StringEmpty Then
                         Call .bodyRow(innerDoc, removeIndex, Nothing)
                     Else
-                        If row Mod 2 = 0 Then
-                            Call .bodyRow(innerDoc, removeIndex, alt)
+                        If (row + 1) Mod 2 = 0 Then
+                            Call .bodyRow(innerDoc, removeIndex, altClassName)
                         Else
                             Call .bodyRow(innerDoc, removeIndex, Nothing)
                         End If
@@ -170,17 +170,17 @@ Namespace DATA
             Return doc.ToString
         End Function
 
-        <Extension> Private Sub bodyRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), alt$)
+        <Extension> Private Sub bodyRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), altClassName$)
             Dim rowText$ = row _
                 .SeqIterator _
                 .Where(Function(i) removes(x:=i.i) = -1) _
                 .Select(Function(x) $"<td>{+x}</td>") _
                 .JoinBy("")
 
-            If alt.StringEmpty Then
+            If altClassName.StringEmpty Then
                 Call doc.Append("<tr>")
             Else
-                Call doc.Append($"<tr class=""{alt}"">")
+                Call doc.Append($"<tr class=""{altClassName}"">")
             End If
 
             Call doc.AppendLine(rowText)

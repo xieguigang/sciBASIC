@@ -86,7 +86,7 @@ Namespace Net.Http
             Call Me.New(image.ToBase64String, ContentTypes.MIME.Png, Nothing)
         End Sub
 
-        Public Sub New(base64$, mine$, Optional charset$ = Nothing)
+        Public Sub New(base64$, mime$, Optional charset$ = Nothing)
             Me.base64 = base64
             Me.mime = mime
             Me.chartSet = charset
@@ -107,7 +107,7 @@ Namespace Net.Http
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function SVGImage(svg As String) As DataURI
-            Return New DataURI(base64:=TextEncodings.UTF8WithoutBOM.GetBytes(svg).ToBase64String, mine:="image/svg+xml")
+            Return New DataURI(base64:=TextEncodings.UTF8WithoutBOM.GetBytes(svg).ToBase64String, mime:="image/svg+xml")
         End Function
 
         ''' <summary>
@@ -136,7 +136,7 @@ Namespace Net.Http
             Return New DataURI(
                 base64:=t.TryGetValue("base64"),
                 charset:=t.TryGetValue("charset"),
-                mine:=t.TryGetValue("data")
+                mime:=t.TryGetValue("data")
             )
         End Function
 

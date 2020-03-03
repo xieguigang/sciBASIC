@@ -49,6 +49,16 @@ Imports Microsoft.VisualBasic.Language.C
 
 Namespace ValueTypes
 
+    Public Enum TimeScales As Integer
+        Millisecond
+        Second
+        Minute
+        Hour
+        Day
+        Month
+        Year
+    End Enum
+
     Public Module DateTimeHelper
 
         ''' <summary>

@@ -166,6 +166,10 @@ Namespace Linq
             Return x.value
         End Operator
 
+        Public Shared Operator +(x As SeqValue(Of T), i As Integer) As Integer
+            Return x.i + i
+        End Operator
+
         ''' <summary>
         ''' Get value from <see cref="value"/> property.
         ''' </summary>

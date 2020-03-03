@@ -160,13 +160,12 @@ Namespace KMeans
         ''' <param name="parallel">
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
         ''' </param>
-        <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(
-                                                 source As IEnumerable(Of T),
-                                                 clusterCount%,
-                                           Optional debug As Boolean = False,
-                                           Optional stop% = -1,
-                                           Optional parallel As Boolean = True) As ClusterCollection(Of T)
-
+        <Extension>
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(source As IEnumerable(Of T),
+                                                                      clusterCount%,
+                                                                      Optional debug As Boolean = False,
+                                                                      Optional stop% = -1,
+                                                                      Optional parallel As Boolean = True) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length

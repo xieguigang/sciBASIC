@@ -128,6 +128,16 @@ Namespace Graph
             Return label.GetHashCode()
         End Function
 
+        Public Iterator Function EnumerateAdjacencies() As IEnumerable(Of Node)
+            For Each edge As Edge In adjacencies.EnumerateAllEdges
+                If edge.U Is Me Then
+                    Yield edge.V
+                Else
+                    Yield edge.U
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' Indicates if the node is adjacent to the node specified by id
         ''' </summary>

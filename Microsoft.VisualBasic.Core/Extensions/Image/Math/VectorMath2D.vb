@@ -42,7 +42,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Imaging.Math2D
 
@@ -105,7 +105,7 @@ Namespace Imaging.Math2D
         End Function
 
         Public Shared Function angleDeg(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
-            Return angle(paramVector2D1, paramVector2D2) * 180.0 / sys.PI
+            Return angle(paramVector2D1, paramVector2D2) * 180.0 / stdNum.PI
         End Function
 
         Public Shared Function innerProduct(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
@@ -114,13 +114,13 @@ Namespace Imaging.Math2D
 
         Public Shared Function isNear(paramDouble1 As Double, paramDouble2 As Double, paramDouble3 As Double, paramDouble4 As Double, paramDouble5 As Double, paramDouble6 As Double,
             paramDouble7 As Double) As Boolean
-            If sys.Min(paramDouble1, paramDouble3) > paramDouble5 + paramDouble7 Then
+            If stdNum.Min(paramDouble1, paramDouble3) > paramDouble5 + paramDouble7 Then
                 Return False
             End If
             If Math.Max(paramDouble1, paramDouble3) < paramDouble5 - paramDouble7 Then
                 Return False
             End If
-            If sys.Min(paramDouble2, paramDouble4) > paramDouble6 + paramDouble7 Then
+            If stdNum.Min(paramDouble2, paramDouble4) > paramDouble6 + paramDouble7 Then
                 Return False
             End If
             If Math.Max(paramDouble2, paramDouble4) < paramDouble6 - paramDouble7 Then
