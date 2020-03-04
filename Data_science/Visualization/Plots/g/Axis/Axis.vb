@@ -200,11 +200,11 @@ Namespace Graphic.Axis
 
             Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
 
-            If htmlLabel Then
-                Call "Axis Labeling using HTML render is enable.".__INFO_ECHO
-            Else
-                Call "Axis Labeling using HTML render was disabled!".__INFO_ECHO
-            End If
+            'If htmlLabel Then
+            '    Call "Axis Labeling using HTML render is enable.".__INFO_ECHO
+            'Else
+            '    Call "Axis Labeling using HTML render was disabled!".__INFO_ECHO
+            'End If
 
             If xlayout <> XAxisLayoutStyles.None Then
                 Call g.DrawX(pen, xlabel, scaler, xlayout, scaler.Y(0), offset,
@@ -369,7 +369,7 @@ Namespace Graphic.Axis
                         location = New PointF(5, location.Y)
                     End If
 
-                    Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
+                    ' Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
 
                     With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                         Call .DrawString(label, font, Brushes.Black, location, -90)
@@ -518,7 +518,7 @@ Namespace Graphic.Axis
                         .Y = scaler.region.Top + size.Height + tickFont.Height + d * 3
                     }
 
-                    Call $"[X:={label}] {point.ToString}".__INFO_ECHO
+                    ' Call $"[X:={label}] {point.ToString}".__INFO_ECHO
                     Call g.DrawString(label, font, Brushes.Black, point)
                 End If
             End If

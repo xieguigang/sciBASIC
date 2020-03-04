@@ -302,32 +302,34 @@ Public Module RegressionPlot
                 .Y = fit(.X)
             }
 
-            pt = scaler.Translate(pt)
-            labelSize = g.MeasureString(ptX.Name, pointLabelFont)
-            anchors += pt
+            If Not (pt.X.IsNaNImaginary OrElse pt.Y.IsNaNImaginary) Then
+                pt = scaler.Translate(pt)
+                labelSize = g.MeasureString(ptX.Name, pointLabelFont)
 
-            g.DrawCircle(
-                centra:=pt,
-                r:=pointSize,
-                color:=predictedBrush
-            )
-            g.DrawCircle(
-                centra:=pt,
-                r:=pointSize,
-                color:=predictedPointBorder,
-                fill:=False
-            )
+                g.DrawCircle(
+                    centra:=pt,
+                    r:=pointSize,
+                    color:=predictedBrush
+                )
+                g.DrawCircle(
+                    centra:=pt,
+                    r:=pointSize,
+                    color:=predictedPointBorder,
+                    fill:=False
+                )
 
-            labels += New Label With {
-                .height = labelSize.Height,
-                .width = labelSize.Width,
-                .text = ptX.Name,
-                .X = pt.X,
-                .Y = pt.Y
-            }
+                anchors += pt
+                labels += New Label With {
+                    .height = labelSize.Height,
+                    .width = labelSize.Width,
+                    .text = ptX.Name,
+                    .X = pt.X,
+                    .Y = pt.Y
+                }
+            End If
         Next
 
-        Call d3js.labeler(maxMove:=10, maxAngle:=0.6, w_len:=0.5, w_inter:=5, w_lab2:=30, w_lab_anc:=30, w_orient:=5) _
+        Call d3js.labeler(maxMove:=50, maxAngle:=0.6, w_len:=0.5, w_inter:=5, w_lab2:=30, w_lab_anc:=30, w_orient:=5) _
             .Labels(labels) _
             .Anchors(labels.GetLabelAnchors(pointSize)) _
             .Width(rect.Width) _
@@ -336,7 +338,7 @@ Public Module RegressionPlot
 
         For Each label As SeqValue(Of Label) In labels.SeqIterator
             With label.value
-                Call g.DrawLine(labelAnchorPen, .ByRef, anchors(label))
+                Call g.DrawLine(labelAnchorPen, .GetTextAnchor(anchors(label)).PointF, anchors(label))
                 Call g.DrawString(.text, pointLabelFont, Brushes.Black, .ByRef)
             End With
         Next
