@@ -1,46 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::6061edcd922cf49353bbc8440a59d2ac, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Bootstraping
-    ' 
-    '         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Bootstraping
+' 
+'         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -191,6 +192,30 @@ Namespace Distributions
                 min:=data.Min,
                 max:=data.Max
             )
+        End Function
+
+        <Extension>
+        Public Function DeltaMeans(data As IEnumerable(Of Double)) As Double
+            With data.ToArray
+                Dim hist = .Hist([step]:=New DoubleRange(.Min, .Max).Length / 5).ToArray
+                Dim maxN = Which.Max(hist.Select(Function(bin) bin.Count))
+                Dim resample As Double()
+
+                If maxN = 0 Then
+                    resample = hist(Scan0).Raw.AsList + hist(1).Raw
+                ElseIf maxN = hist.Length - 1 Then
+                    resample =
+                        hist(hist.Length - 1).Raw.AsList +
+                        hist(hist.Length - 2).Raw
+                Else
+                    resample =
+                        hist(maxN - 1).Raw.AsList +
+                        hist(maxN).Raw +
+                        hist(maxN + 1).Raw
+                End If
+
+                Return resample.Average
+            End With
         End Function
     End Module
 End Namespace
