@@ -476,12 +476,12 @@ Namespace Algebra.LinearProgramming
             If showProgress Then
                 progress = New ProgressBar("Run LPP Solution Iterations...")
 
-                With New ProgressProvider(PIVOT_ITERATION_LIMIT)
+                With New ProgressProvider(progress, PIVOT_ITERATION_LIMIT)
                     Dim ETA$, msg$
 
                     tick = Sub()
                                limiter += 1
-                               ETA = .ETA(progress.ElapsedMilliseconds).FormatTime
+                               ETA = .ETA().FormatTime
                                msg = $"Iteration {limiter}/{PIVOT_ITERATION_LIMIT}, ETA={ETA}"
                                progress.SetProgress(.StepProgress, msg)
                            End Sub

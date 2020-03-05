@@ -181,15 +181,15 @@ Namespace Plot3D
 
         Private Function __progressProvider(total%, yLen%, ysteps#, x As DoubleRange) As Action(Of Double)
             If App.IsConsoleApp Then
-                Dim tick As New ProgressProvider(total)
-                Dim msg$ = $"Populates data points...(Estimates size: {tick.Target * (yLen / ysteps)}...)"
+                Dim msg$ = $"Populates data points...(Estimates size: {total * (yLen / ysteps)}...)"
                 Dim prog As New ProgressBar(msg, 1, CLS:=True)
+                Dim tick As New ProgressProvider(prog, total)
 
                 Call tick.StepProgress()
 
                 Return Sub(xi#)
                            Dim leftTime As String = tick _
-                               .ETA(prog.ElapsedMilliseconds) _
+                               .ETA() _
                                .FormatTime
 
                            Call prog.SetProgress(

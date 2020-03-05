@@ -221,13 +221,13 @@ Namespace NeuralNetwork
 #Region "-- Training --"
         Public Overloads Sub Train(dataSets As Sample(), numEpochs As Integer, Optional parallel As Boolean = False)
             Using progress As New ProgressBar("Training ANN...")
-                Dim tick As New ProgressProvider(numEpochs)
+                Dim tick As New ProgressProvider(progress, numEpochs)
                 Dim msg$
                 Dim ETA$
 
                 For i As Integer = 0 To numEpochs - 1
                     errors = trainingImpl(dataSets, parallel, Selective)
-                    ETA = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
+                    ETA = $"ETA: {tick.ETA().FormatTime}"
                     msg = $"Iterations: [{i}/{numEpochs}], errors={errors}{vbTab}learn_rate={network.LearnRate} {ETA}"
 #If UNIX Then
                     Call msg.__INFO_ECHO

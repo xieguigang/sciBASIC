@@ -141,7 +141,7 @@ Namespace Layouts
                     Dim attractiveForce As Double = (distanceSquared - k * k) / k
 
                     ' Make edges stronger if people know each other.
-                    Dim weight As Double = edge.data.weight
+                    Dim weight As Double = edge.weight
 
                     attractiveForce *= (System.Math.Log(weight) * 0.5) + 1
 

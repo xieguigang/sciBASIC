@@ -329,10 +329,11 @@ Namespace d3js.Layout
             End If
 
             If showProgress Then
-                Dim tickProvider As New ProgressProvider(nsweeps)
+                Dim tickProvider As ProgressProvider
                 Dim p#
 
                 progress = New ProgressBar("Labels layouting...")
+                tickProvider = New ProgressProvider(progress, nsweeps)
                 tick = Sub(currT#)
                            p = tickProvider.StepProgress
                            progress.SetProgress(p, "Current temperature: " & currT.ToString("F2"))

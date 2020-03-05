@@ -200,7 +200,6 @@ Namespace Graph
         ''' </summary>
         ''' <returns></returns>
         Public Property length As Single
-        Public Property weight As Double
         Public Property bends As Handle()
         Public Property color As SolidBrush
 
@@ -217,7 +216,6 @@ Namespace Graph
         Sub New(copy As EdgeData)
             Me.label = copy.label
             Me.length = copy.length
-            Me.weight = copy.weight
             Me.Properties = New Dictionary(Of String, String)(copy.Properties)
         End Sub
 

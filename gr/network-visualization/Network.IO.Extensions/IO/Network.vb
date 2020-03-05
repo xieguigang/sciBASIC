@@ -66,6 +66,8 @@ Namespace FileStream.Generic
     Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge)
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
 
+        Public Property meta As MetaData
+
         Public Property nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Key
             Get
                 If __nodes Is Nothing Then
@@ -111,6 +113,10 @@ Namespace FileStream.Generic
         Sub New()
             __nodes = New Dictionary(Of T_Node)
             __edges = New List(Of T_Edge)
+            _meta = New MetaData With {
+                .create_time = Now.ToString,
+                .creators = {Environment.UserName}
+            }
         End Sub
 
         Dim __nodes As Dictionary(Of T_Node)
@@ -126,8 +132,7 @@ Namespace FileStream.Generic
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub RemoveDuplicated()
-            Dim LQuery As T_Edge() =
-                edges _
+            Dim LQuery As T_Edge() = edges _
                 .GroupBy(Function(ed) ed.GetNullDirectedGuid(True)) _
                 .Select(Function(g) g.First) _
                 .ToArray

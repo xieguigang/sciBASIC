@@ -212,14 +212,13 @@ Namespace Graph
 
         Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As NetworkGraph(Of Node, Edge)
             Call New EdgeData With {
-                .weight = weight,
                 .bends = {},
                 .label = $"{u}->{v}"
             }.DoCall(Function(data)
                          ' 在利用这个函数创建edge的时候，
                          ' 会将创建出来的新edge添加进入当前的这个图对象之中
                          ' 所以不需要再次调用addedge方法了
-                         Return CreateEdge(GetElementByID(u), GetElementByID(v), data)
+                         Return CreateEdge(GetElementByID(u), GetElementByID(v), weight, data)
                      End Function)
 
             Return Me
@@ -264,7 +263,7 @@ Namespace Graph
                     u = _index(listTrav.aId)
                     v = _index(listTrav.bId)
 
-                    createEdgeInternal(u, v, listTrav.data)
+                    createEdgeInternal(u, v, listTrav.data, 0)
                 End If
             Next
         End Sub
@@ -281,7 +280,7 @@ Namespace Graph
                     u = _index(listTrav.Key)
                     v = _index(listTrav.Value)
 
-                    createEdgeInternal(u, v, Nothing)
+                    createEdgeInternal(u, v, Nothing, 0)
                 End If
             Next
         End Sub
@@ -311,9 +310,9 @@ Namespace Graph
             Return tNewNode
         End Function
 
-        Private Function createEdgeInternal(u As Node, v As Node, data As EdgeData) As Edge
+        Private Function createEdgeInternal(u As Node, v As Node, data As EdgeData, weight#) As Edge
             Dim tNewEdge As New Edge(_nextEdgeId.ToString(), u, v, data) With {
-                .weight = data.weight
+                .weight = weight
             }
             _nextEdgeId += 1
             AddEdge(tNewEdge)
@@ -327,11 +326,11 @@ Namespace Graph
         ''' <param name="v"></param>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Overloads Function CreateEdge(u As Node, v As Node, Optional data As EdgeData = Nothing) As Edge
+        Public Overloads Function CreateEdge(u As Node, v As Node, Optional weight# = 0, Optional data As EdgeData = Nothing) As Edge
             If u Is Nothing OrElse v Is Nothing Then
                 Return Nothing
             Else
-                Return createEdgeInternal(u, v, data)
+                Return createEdgeInternal(u, v, data, weight)
             End If
         End Function
 
@@ -357,7 +356,7 @@ Namespace Graph
                 data = New EdgeData
             End If
 
-            Return createEdgeInternal(u, v, data)
+            Return createEdgeInternal(u, v, data, 0)
         End Function
 
         Public Overloads Function GetConnectedVertex(label As String) As Node()

@@ -88,7 +88,7 @@ Public Class Renderer : Inherits AbstractRenderer
         Dim nr As New Dictionary(Of Node, Single)
 
         For Each edge As Edge In iForceDirected.graph.graphEdges
-            Dim w As Single = CSng(5.0! * edge.data.weight)
+            Dim w As Single = CSng(5.0! * edge.weight)
             w = If(w < 3.0!, 3.0!, w)
             Call ws.Add(edge, w)
         Next

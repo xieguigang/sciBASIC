@@ -177,7 +177,7 @@ Public Module TextRank
         Next
 
         Using progress As New ProgressBar("Build Text Graph...", 1, CLS:=True)
-            Dim tick As New ProgressProvider(words.Length)
+            Dim tick As New ProgressProvider(progress, words.Length)
             Dim ETA$, msg$
 
             For x As Integer = 0 To words.Length - 1
@@ -201,7 +201,7 @@ Public Module TextRank
                     End If
                 Next
 
-                ETA = tick.ETA(progress.ElapsedMilliseconds).FormatTime
+                ETA = tick.ETA().FormatTime
                 msg = list(x) & " " & ETA
 
                 Call progress.SetProgress(tick.StepProgress, details:=msg)

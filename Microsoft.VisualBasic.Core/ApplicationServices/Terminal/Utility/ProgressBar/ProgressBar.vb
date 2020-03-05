@@ -395,27 +395,34 @@ Namespace Terminal.ProgressBar
         ''' <returns></returns>
         Public ReadOnly Property Current As Integer
 
+        ReadOnly bindProgress As ProgressBar
+
         ''' <summary>
         ''' 生成进度条的百分比值
         ''' </summary>
         ''' <param name="total"></param>
-        Sub New(total As Integer)
+        Sub New(bind As ProgressBar, total%)
             Target = total
+            bindProgress = bind
         End Sub
 
         Dim previous#
         Dim previousTime&
 
-        Public Function ETA(elapsed&, Optional avg As Boolean = True) As TimeSpan
+        Public ReadOnly Property Elapsed As TimeSpan
+            Get
+                Return TimeSpan.FromMilliseconds(bindProgress.ElapsedMilliseconds)
+            End Get
+        End Property
+
+        Public Function ETA(Optional avg As Boolean = True) As TimeSpan
             Dim out As TimeSpan
+            Dim elapsed& = bindProgress.ElapsedMilliseconds
 
             If avg Then
                 out = ETA(0R, Current / Target, elapsed)
             Else
-                out = ETA(
-                    previous,
-                    Current / Target,
-                    elapsed - previousTime)
+                out = ETA(previous, Current / Target, elapsed - previousTime)
 
                 previousTime = elapsed
                 previous = Current / Target

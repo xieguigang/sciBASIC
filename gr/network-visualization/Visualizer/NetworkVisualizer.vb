@@ -607,7 +607,7 @@ Public Module NetworkVisualizer
         For Each edge As Edge In net.graphEdges
             Dim n As Node = edge.U
             Dim otherNode As Node = edge.V
-            Dim w! = CSng(5 * edge.data.weight * 2) Or minLinkWidthValue
+            Dim w! = CSng(5 * edge.weight * 2) Or minLinkWidthValue
             Dim lineColor As Pen
 
             If edge.data.color Is Nothing Then

@@ -179,7 +179,7 @@ Public Module Extensions
     <Extension>
     Public Function FormatTime(t As TimeSpan) As String
         With t
-            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ .Milliseconds}"
+            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ ZeroFill(.Milliseconds, 3)}"
         End With
     End Function
 

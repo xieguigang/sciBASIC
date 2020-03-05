@@ -238,6 +238,7 @@
   <ItemGroup>
     <Compile Include="Cytoscape\Cytoscape.vb" />
     <Compile Include="Cytoscape\CytoscapeTableLoader.vb" />
+    <Compile Include="IO\FileStream\MetaData.vb" />
     <Compile Include="IO\ModelLoader.vb" />
     <Compile Include="NetworkFileIO.vb" />
     <Compile Include="CorrelationGraph.vb" />

@@ -104,8 +104,8 @@ Namespace Layouts.EdgeBundling
 
         <Extension>
         Public Function Barycentre(link As Edge) As PointF
-            Dim w1 = link.data.weight + 1.0E-20
-            Dim w2 = link.data.weight + 1.0E-20
+            Dim w1 = link.weight + 1.0E-20
+            Dim w2 = link.weight + 1.0E-20
 
             w1 = w1 / (w1 + w2)
             w2 = w2 / (w1 + w2)

@@ -148,14 +148,7 @@ Namespace Graph
             End Set
         End Property
 
-        Private Property m_weightValue As Double Implements INetworkEdge.value
-            Get
-                Return data.weight
-            End Get
-            Set(value As Double)
-                data.weight = value
-            End Set
-        End Property
+        Public Overrides Property weight As Double Implements INetworkEdge.value
 
 #End Region
 
@@ -238,7 +231,6 @@ Namespace Graph
                 .data = New EdgeData With {
                     .label = data.label,
                     .length = data.length,
-                    .weight = data.weight,
                     .Properties = New Dictionary(Of String, String)(data.Properties)
                 }
             }
