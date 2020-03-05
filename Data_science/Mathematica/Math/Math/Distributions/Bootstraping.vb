@@ -195,7 +195,7 @@ Namespace Distributions
         End Function
 
         <Extension>
-        Public Function DeltaMeans(data As IEnumerable(Of Double)) As Double
+        Public Function TabulateMode(data As IEnumerable(Of Double)) As Double
             With data.ToArray
                 Dim hist = .Hist([step]:=New DoubleRange(.Min, .Max).Length / 5).ToArray
                 Dim maxN = Which.Max(hist.Select(Function(bin) bin.Count))
