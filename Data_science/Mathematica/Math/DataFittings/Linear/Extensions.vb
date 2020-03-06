@@ -105,7 +105,7 @@ Public Module Extensions
         Dim fit As IFitted
 
         If weighted Then
-            fit = WeightedLinearRegression.Regress(X, Y, 1 / X ^ 2, 1)
+            fit = WeightedLinearRegression.Regress(X, Y, 1 / (X ^ 2), 1)
         Else
             fit = LeastSquares.LinearFit(X, Y)
         End If
