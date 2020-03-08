@@ -1338,7 +1338,7 @@
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
-    <Compile Include="ComponentModel\Ranges\RangeModel\IRanges.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\IRangeModel.vb" />
     <Compile Include="ComponentModel\Ranges\RangeModel\Range.vb" />
     <Compile Include="ComponentModel\Ranges\RangeModel\DoubleRange.vb" />
     <Compile Include="ComponentModel\Ranges\RangeModel\IntRange.vb" />

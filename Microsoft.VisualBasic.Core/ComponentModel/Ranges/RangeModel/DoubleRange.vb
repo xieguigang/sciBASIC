@@ -62,7 +62,7 @@ Namespace ComponentModel.Ranges.Model
     ''' <summary>
     ''' Represents a double range with minimum and maximum values
     ''' </summary>
-    Public Class DoubleRange : Implements IRanges(Of Double)
+    Public Class DoubleRange : Implements IRangeModel(Of Double)
         Implements Enumeration(Of Double)
 
         ''' <summary>
@@ -70,14 +70,14 @@ Namespace ComponentModel.Ranges.Model
         ''' </summary>
         ''' 
         <XmlAttribute("min")>
-        Public Property Min As Double Implements IRanges(Of Double).Min
+        Public Property Min As Double Implements IRangeModel(Of Double).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
         '''   
         <XmlAttribute("max")>
-        Public Property Max As Double Implements IRanges(Of Double).Max
+        Public Property Max As Double Implements IRangeModel(Of Double).Max
 
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
@@ -166,7 +166,7 @@ Namespace ComponentModel.Ranges.Model
         ''' <returns><b>True</b> if the specified value is inside this range or
         ''' <b>false</b> otherwise.</returns>
         ''' 
-        Public Function IsInside(x As Double) As Boolean Implements IRanges(Of Double).IsInside
+        Public Function IsInside(x As Double) As Boolean Implements IRangeModel(Of Double).IsInside
             Return ((x >= Min) AndAlso (x <= Max))
         End Function
 
@@ -195,11 +195,11 @@ Namespace ComponentModel.Ranges.Model
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 
-        Public Function IsInside(range As IRanges(Of Double)) As Boolean Implements IRanges(Of Double).IsInside
+        Public Function IsInside(range As IRangeModel(Of Double)) As Boolean Implements IRangeModel(Of Double).IsInside
             Return ((IsInside(range.Min)) AndAlso (IsInside(range.Max)))
         End Function
 
-        Public Function IsOverlapping(range As IRanges(Of Double)) As Boolean Implements IRanges(Of Double).IsOverlapping
+        Public Function IsOverlapping(range As IRangeModel(Of Double)) As Boolean Implements IRangeModel(Of Double).IsOverlapping
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 

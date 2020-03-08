@@ -61,7 +61,7 @@ Namespace Math.Statistics
     Public Class DataSample(Of T As {IComparable, Structure})
         Implements IEnumerable(Of T)
 
-        Protected Friend ranges As IRanges(Of T)
+        Protected Friend ranges As IRangeModel(Of T)
         Protected Friend buffer As List(Of T)
         Protected Friend means As Double
 

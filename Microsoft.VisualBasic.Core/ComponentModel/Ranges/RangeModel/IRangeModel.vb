@@ -64,7 +64,7 @@ Namespace ComponentModel.Ranges.Model
     ''' Represents a generic range with minimum and maximum values
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Interface IRanges(Of T As IComparable)
+    Public Interface IRangeModel(Of T As IComparable)
         Inherits IRange(Of T)
 
         ''' <summary>
@@ -81,7 +81,7 @@ Namespace ComponentModel.Ranges.Model
         ''' <param name="range">Range to check</param>
         ''' <returns><b>True</b> if the specified range is inside this range or
         ''' <b>false</b> otherwise.</returns>
-        Function IsInside(range As IRanges(Of T)) As Boolean
+        Function IsInside(range As IRangeModel(Of T)) As Boolean
 
         ''' <summary>
         ''' Check if the specified range overlaps with this range
@@ -89,6 +89,6 @@ Namespace ComponentModel.Ranges.Model
         ''' <param name="range">Range to check for overlapping</param>
         ''' <returns><b>True</b> if the specified range overlaps with this range or
         ''' <b>false</b> otherwise.</returns>
-        Function IsOverlapping(range As IRanges(Of T)) As Boolean
+        Function IsOverlapping(range As IRangeModel(Of T)) As Boolean
     End Interface
 End Namespace
