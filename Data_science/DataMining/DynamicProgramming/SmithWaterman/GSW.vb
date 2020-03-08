@@ -174,7 +174,7 @@ Namespace SmithWaterman
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetMatches(scoreThreshold) _
-                    .OrderByDescending(Function(m) m.Score) _
+                    .OrderByDescending(Function(m) m.score) _
                     .ToArray
             End Get
         End Property

@@ -161,7 +161,7 @@ Namespace NeedlemanWunsch
         ''' return the match score
         ''' else return mismatch score
         ''' </summary>
-        Protected Function isMatch(a As T, b As T) As Integer
+        Protected Overridable Function isMatch(a As T, b As T) As Integer
             If __equals(a, b) Then
                 Return MatchScore
             Else
