@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::f0b59fffa69b6fe8bbad9d98c9be89f5, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Workspace
-    ' 
-    '         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
-    '                     Score, Subject
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: getAligned1, getAligned2, isMatch
-    ' 
-    '         Sub: AddAligned1, AddAligned2
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Workspace
+' 
+'         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
+'                     Score, Subject
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: getAligned1, getAligned2, isMatch
+' 
+'         Sub: AddAligned1, AddAligned2
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NeedlemanWunsch
 
@@ -64,7 +65,6 @@ Namespace NeedlemanWunsch
         Dim aligned2 As New List(Of T())
 
         Protected ReadOnly __toChar As Func(Of T, Char)
-        ReadOnly __equals As IEquals(Of T)
 
         ''' <summary>
         ''' get numberOfAlignments </summary>
@@ -75,21 +75,6 @@ Namespace NeedlemanWunsch
                 Return aligned1.Count
             End Get
         End Property
-
-        ''' <summary>
-        ''' get gap open penalty </summary>
-        ''' <returns> gap open penalty </returns>
-        Public Property GapPenalty As Integer = 1
-
-        ''' <summary>
-        ''' get match score </summary>
-        ''' <returns> match score </returns>
-        Public Property MatchScore As Integer = 1
-
-        ''' <summary>
-        ''' get mismatch score </summary>
-        ''' <returns> mismatch score </returns>
-        Public Property MismatchScore As Integer = -1
 
         Public ReadOnly Property Query As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -115,6 +100,8 @@ Namespace NeedlemanWunsch
         '''    return Math.max(a, Math.max(b, c)); </summary>
         ''' <return> sequence 2 </return>
         Protected Sequence2 As T()
+
+        Protected scoreMatrix As ScoreMatrix(Of T)
 
         ''' <summary>
         ''' get aligned version of sequence 1 </summary>
@@ -151,9 +138,33 @@ Namespace NeedlemanWunsch
         ''' <returns> score </returns>
         Public Property Score As Integer
 
-        Sub New(match As IEquals(Of T), toChar As Func(Of T, Char))
-            __equals = match
+        Sub New(score As ScoreMatrix(Of T), toChar As Func(Of T, Char))
             __toChar = toChar
+            scoreMatrix = score
+        End Sub
+    End Class
+
+    Public Class ScoreMatrix(Of T)
+
+        ''' <summary>
+        ''' get gap open penalty </summary>
+        ''' <returns> gap open penalty </returns>
+        Public Property GapPenalty As Integer = 1
+
+        ''' <summary>
+        ''' get match score </summary>
+        ''' <returns> match score </returns>
+        Public Property MatchScore As Integer = 1
+
+        ''' <summary>
+        ''' get mismatch score </summary>
+        ''' <returns> mismatch score </returns>
+        Public Property MismatchScore As Integer = -1
+
+        ReadOnly __equals As IEquals(Of T)
+
+        Sub New(match As IEquals(Of T))
+            __equals = match
         End Sub
 
         ''' <summary>
@@ -161,12 +172,17 @@ Namespace NeedlemanWunsch
         ''' return the match score
         ''' else return mismatch score
         ''' </summary>
-        Protected Overridable Function isMatch(a As T, b As T) As Integer
+        Public Overridable Function getMatchScore(a As T, b As T) As Integer
             If __equals(a, b) Then
                 Return MatchScore
             Else
                 Return MismatchScore
             End If
         End Function
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
     End Class
 End Namespace
