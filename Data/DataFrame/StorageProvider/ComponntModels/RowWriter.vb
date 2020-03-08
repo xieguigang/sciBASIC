@@ -320,8 +320,8 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Private Function __meta(obj As Object) As String()
-            Dim source As Object = ' 得到实体之中的字典类型的属性值
-                MetaRow.BindProperty.GetValue(obj, Nothing)
+            ' 得到实体之中的字典类型的属性值
+            Dim source As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
 
             If source Is Nothing Then
                 Return _metaBlank.Repeats(__cachedIndex.Length)
