@@ -161,7 +161,7 @@ Namespace NeedlemanWunsch
         ''' <returns> mismatch score </returns>
         Public Property MismatchScore As Integer = -1
 
-        ReadOnly __equals As IEquals(Of T)
+        Friend ReadOnly __equals As IEquals(Of T)
 
         Sub New(match As IEquals(Of T))
             __equals = match
