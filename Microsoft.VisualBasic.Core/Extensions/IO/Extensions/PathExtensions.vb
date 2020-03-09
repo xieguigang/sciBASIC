@@ -139,7 +139,9 @@ Public Module PathExtensions
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Test if is there any given extension name is equals 
+    ''' to the extension name of the specific file 
+    ''' <paramref name="path"/>.
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="isAny">不带小数点的文件拓展名列表</param>

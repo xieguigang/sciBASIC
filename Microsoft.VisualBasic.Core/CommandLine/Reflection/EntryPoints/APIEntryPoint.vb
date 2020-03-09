@@ -235,6 +235,14 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="[throw]"></param>
         ''' <returns></returns>
         Private Function tryInvoke(callParameters As Object(), target As Object, [throw] As Boolean) As Object
+#If DEBUG Then
+            Return EntryPoint.Invoke(target, callParameters)
+#Else
+            Return handleUnexpectedErrorCalls(callParameters, target, [throw])
+#End If
+        End Function
+
+        Private Function handleUnexpectedErrorCalls(callParameters As Object(), target As Object, [throw] As Boolean) As Object
             Dim rtvl As Object
 
             Try
