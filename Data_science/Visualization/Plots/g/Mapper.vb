@@ -110,9 +110,15 @@ Namespace Graphic
                     yAxis = New Vector({0R})
                 End If
 
-                dx = xAxis.Max - xAxis.Min
+                If xAxis.Length = 0 Then
+                    dx = 0
+                    xmin = 0
+                Else
+                    dx = xAxis.Max - xAxis.Min
+                    xmin = xAxis.Min
+                End If
+
                 dy = yAxis.Max - yAxis.Min
-                xmin = xAxis.Min
                 ymin = yAxis.Min
             Else
                 dx = xrange.Max - xrange.Min

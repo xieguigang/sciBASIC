@@ -145,7 +145,8 @@ Namespace Graphic
             Else
                 Return hist _
                     .Samples _
-                    .Select(Function(s) s.data).Unlist
+                    .Select(Function(s) s.data) _
+                    .Unlist
             End If
         End Function
 

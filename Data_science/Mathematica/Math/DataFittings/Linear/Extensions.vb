@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::d1f99f814590af402f1801eeed1557fd, Data_science\Mathematica\Math\DataFittings\Linear\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    '     Function: (+2 Overloads) LinearRegression, X, Y, Yfit
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+'     Function: (+2 Overloads) LinearRegression, X, Y, Yfit
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 <HideModuleName>
 Public Module Extensions
@@ -90,7 +91,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function LinearRegression(line As PointF(), weighted As Boolean) As IFitted
+    Public Function LinearRegression(line As PointF(), weighted As Weights) As IFitted
         ' X是实验值，可能会因为标准曲线溶液配制的问题出现，
         ' 所以这个可能会需要使用异常点检测
         Dim X As Vector = line.X.AsVector
@@ -101,15 +102,25 @@ Public Module Extensions
         Return LinearRegression(X, Y, weighted)
     End Function
 
-    Public Function LinearRegression(X As Vector, Y As Vector, weighted As Boolean) As IFitted
+    Public Function DefaultWeights(X As Vector) As Vector
+        Return 1 / (X ^ 2)
+    End Function
+
+    Public Function LinearRegression(X As Vector, Y As Vector, weighted As Weights) As IFitted
         Dim fit As IFitted
 
-        If weighted Then
-            fit = WeightedLinearRegression.Regress(X, Y, 1 / (X ^ 2), 1)
+        If Not weighted Is Nothing Then
+            fit = WeightedLinearRegression.Regress(X, Y, weighted(X), 1)
         Else
             fit = LeastSquares.LinearFit(X, Y)
         End If
 
         Return fit
     End Function
+
+    <Extension>
+    Public Function CorrelationCoefficient(lm As IFitted) As Double
+        Return stdNum.Sqrt(lm.R2)
+    End Function
+
 End Module

@@ -139,6 +139,10 @@ Namespace ComponentModel.Ranges.Model
         Sub New()
         End Sub
 
+        Public Function Contains(subRange As DoubleRange) As Boolean
+            Return IsInside(subRange.Min) AndAlso IsInside(subRange.Max)
+        End Function
+
         ''' <summary>
         ''' [min=xxx, max=xxx]
         ''' </summary>

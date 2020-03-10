@@ -109,8 +109,8 @@ Namespace Linq
         ''' </remarks>
         <Extension>
         Public Iterator Function AsObjectEnumerator(enums As Array) As IEnumerable(Of Object)
-            For Each element As Object In enums
-                Yield element
+            For i As Integer = 0 To enums.Length - 1
+                Yield enums.GetValue(i)
             Next
         End Function
 
@@ -124,8 +124,8 @@ Namespace Linq
         ''' </remarks>
         <Extension>
         Public Iterator Function AsObjectEnumerator(Of T)(enums As Array) As IEnumerable(Of T)
-            For Each element As Object In enums
-                Yield DirectCast(element, T)
+            For i As Integer = 0 To enums.Length - 1
+                Yield DirectCast(enums.GetValue(i), T)
             Next
         End Function
 

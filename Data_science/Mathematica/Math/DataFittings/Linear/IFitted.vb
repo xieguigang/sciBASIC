@@ -47,7 +47,7 @@ Public Interface IFitted
     ''' 相关系数 R2
     ''' </summary>
     ''' <returns></returns>
-    ReadOnly Property CorrelationCoefficient As Double
+    ReadOnly Property R2 As Double
     ''' <summary>
     ''' 线性模型的多项式
     ''' </summary>

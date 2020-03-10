@@ -56,7 +56,7 @@ Namespace BarPlot.Data
         ''' 分组名称
         ''' </summary>
         ''' <returns></returns>
-        Public Property Tag As String Implements INamedValue.Key
+        Public Property tag As String Implements INamedValue.Key
         ''' <summary>
         ''' 当前分组下的每一个序列的数据值
         ''' </summary>
@@ -74,7 +74,7 @@ Namespace BarPlot.Data
         End Property
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"Dim {tag} = {data.GetJson}"
         End Function
     End Class
 End Namespace

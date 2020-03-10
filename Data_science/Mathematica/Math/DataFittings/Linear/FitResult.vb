@@ -128,7 +128,7 @@ Public Class FitResult : Implements IFitted
     ''' 确定系数，系数是0~1之间的数，是数理上判定拟合优度的一个量
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property R_square() As Double Implements IFitted.CorrelationCoefficient
+    Public ReadOnly Property R_square() As Double Implements IFitted.R2
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return 1 - (SSE / (SSR + SSE))

@@ -60,7 +60,7 @@ Public Class WeightedFit : Implements IFitted
     ''' RYSQ: Multiple correlation coefficient (R2，相关系数)
     ''' </summary>
     ''' <returns></returns>
-    Public Property CorrelationCoefficient As Double Implements IFitted.CorrelationCoefficient
+    Public Property CorrelationCoefficient As Double Implements IFitted.R2
 
     ''' <summary>
     ''' SDV: Standard deviation of errors

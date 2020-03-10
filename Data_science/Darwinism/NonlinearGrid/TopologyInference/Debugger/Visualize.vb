@@ -222,7 +222,6 @@ Public Module Visualize
                     ' 以及低相关度的节点链接
                     edge = New EdgeData With {
                         .label = $"{factor.name} ^ {variableNames(i)}",
-                        .weight = factor(i),
                         .Properties = New Dictionary(Of String, String) From {
                             {"correlation", factor(i)},
                             {"dash", If(factor(i) > 0, "solid", "dash")},
@@ -230,7 +229,7 @@ Public Module Visualize
                             {"color", JetColors(correlations.ScaleMapping(factor(i), {0, JetColors.Length - 1})).ToHtmlColor}
                         }
                     }
-                    g.CreateEdge(factor.name, variableNames(i), edge)
+                    g.CreateEdge(factor.name, variableNames(i), edge).weight = factor(i)
                 End If
             Next
         Next
