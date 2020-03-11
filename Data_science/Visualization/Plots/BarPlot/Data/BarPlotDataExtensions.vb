@@ -241,7 +241,7 @@ Namespace BarPlot.Data
                 Dim groupSamples = data.Samples.ToDictionary()
                 Dim groupData = groups _
                     .Select(Function(gk)
-                                Dim subsets = groupSamples.Takes(gk.Value)
+                                Dim subsets = groupSamples.Takes(gk.Value).ToArray
                                 Dim serials#() = subsets(Scan0) _
                                     .data _
                                     .Sequence _

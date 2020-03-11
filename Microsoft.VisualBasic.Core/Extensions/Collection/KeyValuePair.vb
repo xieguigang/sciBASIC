@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::a4a980885dc7ff2c1e6554b8586c2f46, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module KeyValuePairExtensions
-    ' 
-    '     Function: (+2 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
-    '               ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser
-    '               FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey, HaveData
-    '               IterateNameCollections, IterateNameValues, IteratesAll, Join, KeyItem
-    '               (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary, Popout
-    '               RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs, (+2 Overloads) Subset
-    '               tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower, ToUpper
-    '               Tsv, Tuple, TupleTable, (+2 Overloads) Values, XMLModel
-    ' 
-    '     Sub: SortByKey, SortByValue
-    ' 
-    ' /********************************************************************************/
+' Module KeyValuePairExtensions
+' 
+'     Function: (+2 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
+'               ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser
+'               FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey, HaveData
+'               IterateNameCollections, IterateNameValues, IteratesAll, Join, KeyItem
+'               (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary, Popout
+'               RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs, (+2 Overloads) Subset
+'               tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower, ToUpper
+'               Tsv, Tuple, TupleTable, (+2 Overloads) Values, XMLModel
+' 
+'     Sub: SortByKey, SortByValue
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -296,24 +296,20 @@ Public Module KeyValuePairExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="keys"></param>
-    ''' <param name="nonExitsNULL">
-    ''' 如果这个参数为真，则对于不存在的键名，则使用
+    ''' <param name="default">
+    ''' Use this as default value is key is not exists
     ''' </param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional nonExitsNULL As Boolean = True) As T()
-        If nonExitsNULL Then
-            Return keys _
-                .Select(Function(key)
-                            Return If(table.ContainsKey(key), table(key), Nothing)
-                        End Function) _
-                .ToArray
-        Else
-            Return keys _
-                .Select(Function(key) table(key)) _
-                .ToArray
-        End If
+    Public Iterator Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional [default] As T = Nothing) As IEnumerable(Of T)
+        For Each key As String In keys
+            If table.ContainsKey(key) Then
+                Yield table(key)
+            Else
+                Yield [default]
+            End If
+        Next
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
