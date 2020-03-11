@@ -711,6 +711,12 @@ B21,B22,B23,...
             Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadTsv(path$, Optional encoding As Encoding = Nothing) As File
+            Return DataImports.Imports(path, ASCII.TAB, encoding)
+        End Function
+
+
         Public Shared Function ReadHeaderRow(path$, Optional encoding As Encodings = Encodings.UTF8, Optional tsv As Boolean = False) As RowObject
             Dim firstLine$ = path.ReadFirstLine(encoding.CodePage)
 
