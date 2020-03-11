@@ -108,7 +108,7 @@ Namespace Text.Parser.HtmlParser
                 Return ""
             Else
                 Return html _
-                    .GetTagValue("=", trim:=True) _
+                    .GetTagValue("=", trim:="""'") _
                     .Value _
                     .DoCall(AddressOf parseAttrValImpl)
             End If
