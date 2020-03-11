@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::182a146ac882c4d58c0f95e982e1b4ce, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module TagAttributeParser
-    ' 
-    '         Function: [class], attr, classList, GetImageLinks, href
-    '                   img, (+2 Overloads) src, TagAttributes
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module TagAttributeParser
+' 
+'         Function: [class], attr, classList, GetImageLinks, href
+'                   img, (+2 Overloads) src, TagAttributes
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -70,13 +71,23 @@ Namespace Text.Parser.HtmlParser
                 .EachValue _
                 .Select(Function(t)
                             Dim a = t.GetTagValue("=", trim:="""'")
-                            Dim val = a.Value.GetStackValue("""", """").GetStackValue("'", "'")
+                            Dim val As String = parseAttrValImpl(a.Value)
 
                             Return New NamedValue(Of String)(a.Name, val)
                         End Function)
         End Function
 
         Const attributePattern$ = "%s\s*=\s*([""].+?[""])|(['].+?['])"
+
+        Private Function parseAttrValImpl(value As String) As String
+            If value.Length = 1 AndAlso value.First <> """"c AndAlso value.First <> "'"c Then
+                Return value
+            Else
+                Return value _
+                    .GetStackValue("""", """") _
+                    .GetStackValue("'", "'")
+            End If
+        End Function
 
         ''' <summary>
         ''' Get element attribute value
@@ -96,10 +107,10 @@ Namespace Text.Parser.HtmlParser
             If String.IsNullOrEmpty(html) Then
                 Return ""
             Else
-                Return html.GetTagValue("=", trim:=True) _
+                Return html _
+                    .GetTagValue("=", trim:=True) _
                     .Value _
-                    .GetStackValue("""", """") _
-                    .GetStackValue("'", "'")
+                    .DoCall(AddressOf parseAttrValImpl)
             End If
         End Function
 
