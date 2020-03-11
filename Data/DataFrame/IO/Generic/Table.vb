@@ -96,8 +96,13 @@ Namespace IO
         ''' <param name="tsv"></param>
         ''' <param name="ignoreMapErrors"></param>
         ''' <returns></returns>
-        Public Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
-            Dim table As File = If(tsv, File.LoadTsv(path), File.Load(path))
+        Public Function GetIDList(path$,
+                                  Optional uidMap$ = Nothing,
+                                  Optional tsv As Boolean = False,
+                                  Optional ignoreMapErrors As Boolean = False,
+                                  Optional encoding As Encodings = Encodings.UTF8) As String()
+
+            Dim table As File = If(tsv, File.LoadTsv(path, encoding), File.Load(path, encoding.CodePage))
             Dim getIDsDefault = Function()
                                     Return table.Columns _
                                         .First _

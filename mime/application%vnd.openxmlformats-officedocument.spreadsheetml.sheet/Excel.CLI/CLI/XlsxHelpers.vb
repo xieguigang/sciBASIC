@@ -153,7 +153,7 @@ Partial Module CLI
                 Case "csv"
                     csv = csv.Load(.ByRef)
                 Case "txt", "tsv"
-                    csv = csv.LoadTsv(.ByRef)
+                    csv = csv.LoadTsv(.ByRef, Encodings.UTF8)
 #Enable Warning
                 Case "xlsx"
                     csv = MIME.Office.Excel.File.Open(.ByRef).GetTable(sheetName:=args("/sheet") Or "Sheet1")
