@@ -114,13 +114,17 @@ Namespace Analysis
             If score = 0.0 Then
                 Return 0
             Else
-                Dim cos As Double = ClassConnectivity.MeasureCosValue(a, b)
+                Return CosOfNodeTuple(a, b, topologyCos) * score
+            End If
+        End Function
 
-                If topologyCos Then
-                    Return cos * GraphTopology.TopologyCos(a, b) * GraphTopology.VertexDistanceCos(a, b) * score
-                Else
-                    Return cos * score
-                End If
+        Public Function CosOfNodeTuple(a As Node, b As Node, Optional topologyCos As Boolean = True) As Double
+            Dim cos As Double = ClassConnectivity.MeasureCosValue(a, b)
+
+            If topologyCos Then
+                Return cos * GraphTopology.TopologyCos(a, b) * GraphTopology.VertexDistanceCos(a, b)
+            Else
+                Return cos
             End If
         End Function
 

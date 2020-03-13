@@ -71,6 +71,10 @@ Namespace StoreProcedure
         <XmlElement("normalization")>
         Public Property NormalizeMatrix As NormalizeMatrix
 
+        ''' <summary>
+        ''' The element names of output vector
+        ''' </summary>
+        ''' <returns></returns>
         Public Property output As String()
 
         ''' <summary>

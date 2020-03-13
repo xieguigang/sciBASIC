@@ -148,7 +148,7 @@ Public Module PathExtensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ExtensionSuffix(path$, ParamArray isAny As String()) As String
+    Public Function ExtensionSuffix(path$, ParamArray isAny As String()) As Boolean
         Return path.ExtensionSuffix.DoCall(Function(ext) isAny.Any(Function(s) s.TextEquals(ext)))
     End Function
 

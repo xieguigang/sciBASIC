@@ -46,7 +46,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 
@@ -110,7 +109,7 @@ Namespace StoreProcedure
         ''' 在这里将sample的每一个属性都按列归一化为``[0,1]``之间的结果
         ''' </summary>
         ''' <param name="samples"></param>
-        ''' <param name="names"></param>
+        ''' <param name="names">The property names, not sample id names</param>
         ''' <returns></returns>
         Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample), names As IEnumerable(Of String)) As NormalizeMatrix
             With samples.ToArray
