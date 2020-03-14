@@ -135,7 +135,14 @@ Namespace Scripting
         ''' 对用户所输入的脚本进行编译，对于内部的空格，请使用单引号``'``进行分割
         ''' </summary>
         ''' <param name="scriptText">
-        ''' 如果这个参数传递的是一个空字符串，那么这个函数将会直接返回<see cref="DoNothing"/>脚本
+        ''' The script line should be this format: 
+        ''' ```
+        ''' script_tokens1;script_tokens2;....
+        ''' ```
+        ''' if there is any space in the script line, then the space should wrapped 
+        ''' by the ``'`` character.
+        ''' 
+        ''' (如果这个参数传递的是一个空字符串，那么这个函数将会直接返回<see cref="DoNothing"/>脚本)
         ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
