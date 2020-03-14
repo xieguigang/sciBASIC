@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports r = System.Text.RegularExpressions.Regex
 Imports Token = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Scripting.TextGrepMethodToken)
 
@@ -154,12 +155,13 @@ Namespace Scripting
             ElseIf scriptText = "-" Then
                 Return DoNothing
             Else
-                Return CompileInternal(scriptText)
+                Return CLITools _
+                    .TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c) _
+                    .DoCall(AddressOf CompileFromTokens)
             End If
         End Function
 
-        Private Shared Function CompileInternal(scriptText As String) As TextGrepScriptEngine
-            Dim script$() = TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c)
+        Public Shared Function CompileFromTokens(script As String()) As TextGrepScriptEngine
             Dim builder = LinqAPI.Exec(Of Token) <=
  _
                 From sToken As String
