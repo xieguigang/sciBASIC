@@ -298,7 +298,12 @@ Namespace ComponentModel.Collection
         ''' <param name="item"></param>
         ''' <returns></returns>
         Public Shared Operator +(list As Dictionary(Of V), item As V) As Dictionary(Of V)
-            Call list.Add(item)
+            If Not list.ContainsKey(item.Key) Then
+                list.Add(item)
+            Else
+                Throw New DuplicateNameException(item.Key)
+            End If
+
             Return list
         End Operator
 

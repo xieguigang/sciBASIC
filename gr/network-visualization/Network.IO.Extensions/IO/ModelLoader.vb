@@ -68,9 +68,14 @@ Namespace FileStream
         Public Function Tabular(g As NetworkGraph, Optional properties$() = Nothing, Optional is2D As Boolean = True) As NetworkTables
             Dim nodes As New List(Of Node)
             Dim edges As New List(Of NetworkEdge)
+            Dim data As Dictionary(Of String, String)
 
             For Each n As Graph.Node In g.vertex
-                Dim data As New Dictionary(Of String, String) From {
+                If n.data Is Nothing Then
+                    n.data = New NodeData
+                End If
+
+                data = New Dictionary(Of String, String) From {
                     {"weight", n.data.mass}
                 }
 
