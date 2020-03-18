@@ -107,9 +107,7 @@ Namespace StoreProcedure
                     .ToArray
             End If
             If namesOfInput.IsNullOrEmpty Then
-                namesOfInput = items(Scan0) _
-                    .status _
-                    .vector _
+                namesOfInput = items(Scan0).vector _
                     .Select(Function(x, i) $"input_{i}") _
                     .ToArray
             End If

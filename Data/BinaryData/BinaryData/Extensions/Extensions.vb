@@ -157,4 +157,9 @@ End Interface
             Loop
         End Using
     End Function
+
+    <Extension>
+    Public Sub WriteByte(stream As Stream, sbytes As SByte())
+        Call stream.Write(sbytes.CastByte, Scan0, sbytes.Length)
+    End Sub
 End Module

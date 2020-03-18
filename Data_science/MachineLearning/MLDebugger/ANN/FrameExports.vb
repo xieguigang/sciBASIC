@@ -57,12 +57,14 @@ Public Module FrameExports
         Dim names = samples.NormalizeMatrix.names.SeqIterator.ToArray
         Dim dataset = matrix _
             .Select(Function(r)
+                        Dim vec As Double() = r.vector
+
                         Return New Excel With {
                             .ID = r.ID,
                             .Properties = names.ToDictionary(
                                 Function(name) name.value,
                                 Function(name)
-                                    Return r.status(name)
+                                    Return vec(name)
                                 End Function)
                         }
                     End Function) _

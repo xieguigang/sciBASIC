@@ -133,7 +133,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Overridable Function Execute(args As CommandLine) As Integer
             If Not args.IsNullOrEmpty Then
-                Dim i As Integer = apiInvoke(args.Name.ToLower, {args}, args.Parameters)
+                Dim i As Integer = apiInvoke(args.Name, {args}, args.Parameters)
 #If DEBUG Then
 
 #Else
@@ -184,8 +184,8 @@ Namespace CommandLine
         Private Function apiInvoke(commandName$, args As Object(), help_argvs$()) As Integer
             Dim cli As CommandLine = DirectCast(args(Scan0), CommandLine)
 
-            If apiTable.ContainsKey(commandName) Then
-                Return apiTable(commandName).Execute(args)
+            If apiTable.ContainsKey(commandName.ToLower) Then
+                Return apiTable(commandName.ToLower).Execute(args)
             End If
 
             Select Case commandName.ToLower

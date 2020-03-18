@@ -323,7 +323,7 @@ Namespace Linq
         ''' <summary>
         ''' ``0,1,2,3,...<paramref name="n"/>``
         ''' </summary>
-        ''' <param name="n"></param>
+        ''' <param name="n">the api function is already makes ``n-1`` for populate index sequence.</param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <Extension>

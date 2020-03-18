@@ -266,7 +266,7 @@ Namespace CommandLine
                 .Skip(1) _
                 .GetLogicalFlags(singleValue)
             Dim cli As New CommandLine With {
-                .Name = tokens(Scan0).ToLower,
+                .Name = tokens(Scan0),
                 .Tokens = tokens,
                 .BoolFlags = bools,
                 .cliCommandArgvs = Join(tokens)

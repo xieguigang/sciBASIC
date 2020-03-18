@@ -88,7 +88,7 @@ Namespace RandomForests
             Dim trainingSet As Entity() = matrix _
                 .PopulateNormalizedSamples(Methods.RangeDiscretizer) _
                 .Select(Function(sample)
-                            Dim evidence = sample.status _
+                            Dim evidence = sample _
                                 .vector _
                                 .AsCharacter(format:="G2") _
                                 .AsList

@@ -116,6 +116,10 @@ Namespace Terminal
             RaiseEvent()
                 Dim [new] As New Size(Console.WindowWidth, Console.WindowHeight)
 
+                If [new].Height >= Console.BufferHeight Then
+                    [new] = New Size([new].Width, Console.BufferHeight - 1)
+                End If
+
                 For Each h As ResizeEventHandle In resizeHandles
                     Call h([new], oldSize)
                 Next

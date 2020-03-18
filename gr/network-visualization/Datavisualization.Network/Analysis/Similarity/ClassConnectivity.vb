@@ -13,9 +13,20 @@ Namespace Analysis.SimilarityImpl
             Dim allGroups As Index(Of String) = atypes.Keys.AsList + btypes.Keys
             Dim av As New Vector(allGroups.EnumerateMapKeys.Select(AddressOf atypes.TryGetValue))
             Dim bv As New Vector(allGroups.EnumerateMapKeys.Select(AddressOf btypes.TryGetValue))
-            Dim cos As Double = Math.SSM(av, bv)
 
-            Return cos
+            If av.Length = 1 Then
+                ' 20200318 deal with the NaN result value.
+                If av(Scan0) = bv(Scan0) Then
+                    Return 1
+                Else
+                    Return 0
+                End If
+            ElseIf av.Length = 0 Then
+                Return 0
+            Else
+                Dim cos As Double = Math.SSM(av, bv)
+                Return cos
+            End If
         End Function
 
         <Extension>

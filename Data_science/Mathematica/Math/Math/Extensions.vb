@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::8af23d8d91137c8353743db6b2fa1a36, Data_science\Mathematica\Math\Math\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    '     Function: [Shadows], AsSample, (+4 Overloads) AsVector, DoubleRange, FDR
-    '               FirstDecrease, FirstIncrease, FlipCoin, IntRange, IsInside
-    '               Iterates, (+2 Overloads) Range, Reach, seq2, Sim
-    '               SSM, Tanimoto, X, Y
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+'     Function: [Shadows], AsSample, (+4 Overloads) AsVector, DoubleRange, FDR
+'               FirstDecrease, FirstIncrease, FlipCoin, IntRange, IsInside
+'               Iterates, (+2 Overloads) Range, Reach, seq2, Sim
+'               SSM, Tanimoto, X, Y
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -101,7 +101,11 @@ Imports stdNum = System.Math
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SSM(q As Vector, s As Vector) As Double
-        Return (q * s).Sum / Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+        If q.All(Function(a) a = 0.0R) OrElse s.All(Function(a) a = 0.0R) Then
+            Return 0
+        Else
+            Return (q * s).Sum / Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+        End If
     End Function
 
     ''' <summary>

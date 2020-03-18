@@ -131,10 +131,10 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="Type"></param>
         Public Sub WriteLine(Msg As String, [Object] As String, Optional Type As MSG_TYPES = MSG_TYPES.INF)
             Dim LogEntry As New LogEntry With {
-                .Msg = Msg,
-                .Object = [Object],
-                .Time = Now,
-                .Type = Type
+                .message = Msg,
+                .[object] = [Object],
+                .time = Now,
+                .level = Type
             }
 
             buffer.WriteLine(LogEntry.ToString)

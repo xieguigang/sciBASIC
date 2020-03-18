@@ -51,8 +51,8 @@ Public Module ROC
         Dim network = training.NeuronNetwork
         Dim result = training.TrainingSet _
             .Select(Function(sample)
-                        Dim predicts = network.Compute(sample.status.vector)
-                        Dim actuals = sample.target
+                        Dim predicts = network.Compute(sample.sample)
+                        Dim actuals = sample.classify
 
                         Return New Validate With {
                             .actuals = actuals,

@@ -73,26 +73,28 @@ Namespace Distributions
         Sub New()
         End Sub
 
-        Sub New(data As IEnumerable(Of Double))
-            Call Me.New(data.SafeQuery.ToArray)
+        Sub New(data As IEnumerable(Of Double), Optional estimateQuantile As Boolean = True)
+            Call Me.New(data.SafeQuery.ToArray, estimateQuantile)
         End Sub
 
-        Sub New(v As Double())
-            Dim q As QuantileEstimationGK = v.GKQuantile
-
+        Sub New(v As Double(), Optional estimateQuantile As Boolean = True)
             min = v.Min
             max = v.Max
             average = v.Average
             stdErr = v.StdError
             size = v.Length
 
-            quantile = {
-                q.Query(0),
-                q.Query(0.25),
-                q.Query(0.5),
-                q.Query(0.75),
-                q.Query(1)
-            }
+            If estimateQuantile Then
+                With v.GKQuantile
+                    quantile = {
+                        .Query(0),
+                        .Query(0.25),
+                        .Query(0.5),
+                        .Query(0.75),
+                        .Query(1)
+                    }
+                End With
+            End If
         End Sub
 
         ''' <summary>

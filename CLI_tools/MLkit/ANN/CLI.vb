@@ -387,7 +387,7 @@ Module CLI
         Dim debugger As New ANNDebugger(trainer.NeuronNetwork)
         Dim minError# = 999999
         Dim snapshotFile$ = inFile.TrimSuffix & ".minerr.Xml"
-        Dim circle As VBInteger = 666
+        Dim circle As i32 = 666
 
         Call Console.WriteLine(trainer.NeuronNetwork.ToString)
         Call trainer _

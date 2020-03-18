@@ -79,13 +79,15 @@ Public Module DataSetExtensions
         Dim outputs As String() = raw.output
         Dim data As Dictionary(Of String, Double)
         Dim size As Integer = raw.DataSamples.size
+        Dim vec As Double()
 
         For Each sample As Sample In raw.DataSamples.AsEnumerable
+            vec = sample.vector
             data = inputNames _
                 .SeqIterator _
                 .ToDictionary(Function(name) name.value,
                               Function(name)
-                                  Return sample.status(name)
+                                  Return vec(name)
                               End Function)
 
             ' append output result to input data

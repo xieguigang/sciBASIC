@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::83b87c01b689a6efaa05cf11f79fec85, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NormalizeMatrix
-    ' 
-    '         Properties: matrix, names
-    ' 
-    '         Function: CreateFromSamples, doNormalInternal, DoNormalize, NormalizeInput
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NormalizeMatrix
+' 
+'         Properties: matrix, names
+' 
+'         Function: CreateFromSamples, doNormalInternal, DoNormalize, NormalizeInput
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace StoreProcedure
 
@@ -61,7 +62,7 @@ Namespace StoreProcedure
         ''' </summary>
         ''' <returns></returns>
         <XmlElement("matrix")>
-        Public Property matrix As SampleDistribution()
+        Public Property matrix As XmlList(Of SampleDistribution)
         ''' <summary>
         ''' 属性名称列表,这个序列的长度是和<see cref="matrix"/>的长度一致的,并且元素的顺序一一对应的
         ''' </summary>
@@ -76,15 +77,17 @@ Namespace StoreProcedure
         End Function
 
         Private Function doNormalInternal(i%, x#, method As Normalizer.Methods) As Double
+            Dim dist As SampleDistribution = matrix(i)
+
             Select Case method
                 Case Normalizer.Methods.NormalScaler
-                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                    Return Normalizer.ScalerNormalize(dist, x)
                 Case Normalizer.Methods.RelativeScaler
-                    Return Normalizer.RelativeNormalize(matrix(i), x)
+                    Return Normalizer.RelativeNormalize(dist, x)
                 Case Normalizer.Methods.RangeDiscretizer
-                    Return Normalizer.RangeDiscretizer(matrix(i), x)
+                    Return Normalizer.RangeDiscretizer(dist, x)
                 Case Else
-                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                    Return Normalizer.ScalerNormalize(dist, x)
             End Select
         End Function
 
@@ -95,8 +98,7 @@ Namespace StoreProcedure
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function NormalizeInput(sample As Sample, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double()
-            Return sample.status _
-                .vector _
+            Return sample.vector _
                 .Select(Function(x, i)
                             Return doNormalInternal(i, x, method)
                         End Function) _
@@ -111,18 +113,22 @@ Namespace StoreProcedure
         ''' <param name="samples"></param>
         ''' <param name="names">The property names, not sample id names</param>
         ''' <returns></returns>
-        Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample), names As IEnumerable(Of String)) As NormalizeMatrix
-            With samples.ToArray
-                Dim len% = .First.status.Length
-                Dim matrix As SampleDistribution() = (len - 1).SeqIterator _
+        Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample),
+                                                 names As IEnumerable(Of String),
+                                                 Optional estimateQuantile As Boolean = True) As NormalizeMatrix
+            With samples.Select(Function(sample) sample.vector).ToArray
+                Dim len% = .First.Length
+                Dim matrix As SampleDistribution() = len _
+                    .SeqIterator _
                     .AsParallel _
                     .Select(Function(index)
                                 ' 遍历每一列的数据,将每一列的数据都执行归一化
-                                Dim [property] = .Select(Function(sample)
-                                                             Return sample.status(index)
-                                                         End Function) _
-                                                 .ToArray
-                                Dim dist As New SampleDistribution([property])
+                                Dim [property] As Double() =
+                                    .Select(Function(sample)
+                                                Return sample(index)
+                                            End Function) _
+                                    .ToArray
+                                Dim dist As New SampleDistribution([property], estimateQuantile)
 
                                 Return (i:=index, Data:=dist)
                             End Function) _
