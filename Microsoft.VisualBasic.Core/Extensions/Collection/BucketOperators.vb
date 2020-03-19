@@ -69,7 +69,9 @@ Public Module BucketOperators
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="partitionSize"></param>
+    ''' <param name="partitionSize">
+    ''' The partition size should be less than the array upbound size
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), partitionSize As Integer) As IEnumerable(Of T())

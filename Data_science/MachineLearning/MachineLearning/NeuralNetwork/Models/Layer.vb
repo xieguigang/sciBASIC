@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork
 
@@ -184,7 +185,7 @@ Namespace NeuralNetwork
                              ' 并且也存在一个1e-99的正实数的最大值
                              ' 则-10000000/1e-99会产生一个负无穷大的结果,导致出现NaN的问题
                              ' 在这里使用绝对值来解决这个bug
-                             Return Math.Abs(n.Value)
+                             Return stdNum.Abs(n.Value)
                          End Function)
 
                 For Each neuron As Neuron In allActiveNodes()

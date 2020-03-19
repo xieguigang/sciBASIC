@@ -1,56 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::f1949dc0dd55a5a4f0a9cc72039bcdbc, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\IParallelTask.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IParallelTask
-    ' 
-    '         Properties: TaskComplete, TaskRunning
-    ' 
-    '         Sub: WaitForExit
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IParallelTask
+' 
+'         Properties: TaskComplete, TaskRunning
+' 
+'         Sub: WaitForExit
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Threading
 
 Namespace Parallel.Tasks
 
     Public MustInherit Class IParallelTask
-
-        Public ReadOnly Property TaskComplete As Boolean
-            Get
-                Return _TaskComplete
-            End Get
-        End Property
 
         Public ReadOnly Property TaskRunning As Boolean
             Get
@@ -59,19 +55,33 @@ Namespace Parallel.Tasks
         End Property
 
         Protected _RunningTask As Boolean
-        Protected _TaskComplete As Boolean = False
+        Protected _signal As New ManualResetEvent(initialState:=False)
+
+        Dim isComplete As Boolean = False
+
+        Public Property TaskComplete As Boolean
+            Get
+                Return isComplete
+            End Get
+            Protected Set(value As Boolean)
+                isComplete = value
+
+                If isComplete Then
+                    _signal.Set()
+                End If
+            End Set
+        End Property
 
         ''' <summary>
         ''' 这个函数会检查<see cref="TaskComplete"/>属性来判断任务是否执行完毕
         ''' </summary>
         Public Sub WaitForExit()
-            Do While Not TaskComplete
-                Call Threading.Thread.Sleep(1)
-            Loop
-
-            Call "Job DONE!".__DEBUG_ECHO
+            If Not TaskComplete Then
+                Call _signal.Reset()
+                Call _signal.WaitOne()
+            End If
         End Sub
 
-        Protected MustOverride Sub __invokeTask()
+        Protected MustOverride Sub doInvokeTask()
     End Class
 End Namespace

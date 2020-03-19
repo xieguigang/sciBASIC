@@ -54,6 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork.Activations
 
@@ -136,12 +137,12 @@ Namespace NeuralNetwork.Activations
         ''' <remarks>The method calculates function value at point <paramref name="x"/>.</remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function [Function](x As Double) As Double
-            Return (1 / (1 + Math.Exp(-_Alpha * x)))
+            Return (1 / (1 + stdNum.Exp(-_Alpha * x)))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function doCall(x#, alpha#) As Double
-            Return (1 / (1 + Math.Exp(-alpha * x)))
+            Return (1 / (1 + stdNum.Exp(-alpha * x)))
         End Function
 
         ''' <summary>

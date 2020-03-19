@@ -44,6 +44,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports stdNum = System.Math
 
 <HideModuleName> Public Module Extensions
 
@@ -59,7 +60,7 @@ Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
     ''' </remarks>
     <Extension>
     Public Function Delta(x#, Optional d# = 1 / 10) As Double
-        Dim p10 = Fix(Math.Log10(x))
+        Dim p10 = Fix(stdNum.Log10(x))
         Dim small = (10 ^ (p10 + 1)) * d
         Return small
     End Function

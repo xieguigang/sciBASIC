@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Protocols
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Text
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork
 
@@ -244,6 +245,7 @@ Namespace NeuralNetwork
                     If App.IsMicrosoftPlatform Then
                         Call progress.SetProgress(tick.StepProgress, msg)
                     Else
+                        Call tick.StepProgress()
                         Call msg.__INFO_ECHO
                     End If
 #End If
@@ -329,7 +331,7 @@ Namespace NeuralNetwork
             Dim err# = neuronNetwork.OutputLayer _
                 .Neurons _
                 .Select(Function(n, i)
-                            Return Math.Abs(n.CalculateError(targets(i)))
+                            Return stdNum.Abs(n.CalculateError(targets(i)))
                         End Function) _
                 .Sum()
 

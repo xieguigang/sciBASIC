@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork
 
@@ -102,7 +103,7 @@ Namespace NeuralNetwork
             ElseIf Double.IsNaN(value) Then
                 value = 0
             ElseIf value > truncate OrElse value < -truncate Then
-                value = Math.Sign(value) * truncate
+                value = stdNum.Sign(value) * truncate
             End If
 
             Return value

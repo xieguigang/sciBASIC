@@ -159,7 +159,7 @@ Public Module App
     ''' 在这里使用<see cref="Console.IsErrorRedirected"/>这个来进行判断是可靠的
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property IsConsoleApp As Boolean = Not Console.IsErrorRedirected
+    Public ReadOnly Property IsConsoleApp As Boolean = (Not Console.IsErrorRedirected) OrElse (Not Console.IsOutputRedirected)
     ''' <summary>
     ''' Get the referenced dll list of current running ``*.exe`` program.
     ''' (获取得到当前的这个所运行的应用程序所引用的dll文件列表)
@@ -477,15 +477,22 @@ Public Module App
     Dim m_joinedVariables As New Dictionary(Of NamedValue(Of String))
 
     ''' <summary>
-    ''' 添加参数到应用程序的环境变量之中
+    ''' add/update the environment variable in sciBASIC.NET framework.
+    ''' 
+    ''' (添加参数到应用程序的环境变量之中)
     ''' </summary>
-    ''' <param name="name">如果给定的当前这个参数名称存在于当前框架环境中，则会更新原来的值</param>
-    ''' <param name="value$"></param>
+    ''' <param name="name">
+    ''' if target variable symbol name is exists in the framework, 
+    ''' then the config value of the variable will be updated.
+    ''' or this function will add a new variable into the 
+    ''' environment.
+    ''' 
+    ''' (如果给定的当前这个参数名称存在于当前框架环境中，则会更新原来的值)</param>
+    ''' <param name="value"></param>
     Public Sub JoinVariable(name$, value$)
-        m_joinedVariables(name) =
-            New NamedValue(Of String) With {
-                .Name = name,
-                .Value = value
+        m_joinedVariables(name) = New NamedValue(Of String) With {
+            .Name = name,
+            .Value = value
         }
     End Sub
 

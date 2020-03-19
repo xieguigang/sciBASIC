@@ -87,7 +87,8 @@ Namespace Terminal
             Do While True
                 Call Console.Write(ps1.ToString)
 
-                If (cli = Console.ReadLine).Trim.StringEmpty Then
+                If Strings.Trim((cli = Console.ReadLine)).StringEmpty Then
+                    Call _shell(cli)
                     Continue Do
                 End If
 

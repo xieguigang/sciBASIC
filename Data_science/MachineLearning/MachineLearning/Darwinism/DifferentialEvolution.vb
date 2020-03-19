@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::18c568c9dc55700311fb34858170498d, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface IIndividual
-    ' 
-    '         Function: Yield
-    ' 
-    '         Sub: Put
-    ' 
-    '     Module DifferentialEvolution
-    ' 
-    ' 
-    '         Delegate Function
-    ' 
-    '             Function: Evolution, GetPopulation, subPopulationEvolute
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface IIndividual
+' 
+'         Function: Yield
+' 
+'         Sub: Put
+' 
+'     Module DifferentialEvolution
+' 
+' 
+'         Delegate Function
+' 
+'             Function: Evolution, GetPopulation, subPopulationEvolute
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Namespace Darwinism
 
@@ -266,18 +267,18 @@ Namespace Darwinism
                 ' calculate New candidate solution
 
                 ' pick random point from population
-                Dim x = Math.Floor(random.NextDouble * (populationSize - 1))
+                Dim x = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Dim a, b, c As Integer
 
                 ' pick three different random points from population
                 Do While (a = x)
-                    a = Math.Floor(random.NextDouble * (populationSize - 1))
+                    a = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
                 Do While (b = x OrElse b = a)
-                    b = Math.Floor(random.NextDouble * (populationSize - 1))
+                    b = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
                 Do While (c = x OrElse c = a OrElse c = b)
-                    c = Math.Floor(random.NextDouble * (populationSize - 1))
+                    c = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
 
                 ' Pick a random index [0-Dimensionality]

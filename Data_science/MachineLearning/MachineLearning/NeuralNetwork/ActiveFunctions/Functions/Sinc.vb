@@ -43,6 +43,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork.Activations
 
@@ -61,7 +62,7 @@ Namespace NeuralNetwork.Activations
             If x = 0R Then
                 Return 1
             Else
-                Return Math.Sin(x) / x
+                Return stdNum.Sin(x) / x
             End If
         End Function
 
@@ -73,7 +74,7 @@ Namespace NeuralNetwork.Activations
             If x = 0R Then
                 Return 0
             Else
-                Return Math.Cos(x) / x - Math.Sin(x) / (x ^ 2)
+                Return stdNum.Cos(x) / x - stdNum.Sin(x) / (x ^ 2)
             End If
         End Function
     End Class
