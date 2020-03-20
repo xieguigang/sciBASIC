@@ -48,7 +48,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports sys = System.Math
 
-Namespace Terminal.Utility
+Namespace ApplicationServices.Terminal.Utility
 
     ''' <summary>
     ''' Generates the task progress for the console output.(处理任务进度)

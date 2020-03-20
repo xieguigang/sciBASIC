@@ -49,11 +49,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Protocols
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
-Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
@@ -234,6 +235,16 @@ Namespace NeuralNetwork
                 Dim tick As New ProgressProvider(progress, numEpochs)
                 Dim msg$
                 Dim ETA$
+                Dim break As Boolean = False
+                Dim cancelSignal As UserTaskCancelAction = Nothing
+
+                If App.IsConsoleApp Then
+                    cancelSignal = New UserTaskCancelAction(
+                        Sub()
+                            Call "User cancel of the training loop...".__DEBUG_ECHO
+                            break = True
+                        End Sub)
+                End If
 
                 For i As Integer = 0 To numEpochs - 1
                     errors = trainingImpl(dataSets, parallel, Selective)
@@ -256,7 +267,14 @@ Namespace NeuralNetwork
                     If Not reporter Is Nothing Then
                         Call reporter(i, errors, network)
                     End If
+                    If break Then
+                        Exit For
+                    End If
                 Next
+
+                If Not cancelSignal Is Nothing Then
+                    Call cancelSignal.Dispose()
+                End If
             End Using
         End Sub
 
@@ -306,6 +324,16 @@ Namespace NeuralNetwork
             Dim [error] = 1.0
             Dim numEpochs = 0
             Dim progress$
+            Dim break As Boolean = False
+            Dim cancelSignal As UserTaskCancelAction = Nothing
+
+            If App.IsConsoleApp Then
+                cancelSignal = New UserTaskCancelAction(
+                        Sub()
+                            Call "User cancel of the training loop...".__DEBUG_ECHO
+                            break = True
+                        End Sub)
+            End If
 
             While [error] > minimumError AndAlso numEpochs < Integer.MaxValue
                 [error] = trainingImpl(dataSets, parallel, True)
@@ -318,6 +346,10 @@ Namespace NeuralNetwork
                     Call reporter(numEpochs, [error], network)
                 End If
             End While
+
+            If Not cancelSignal Is Nothing Then
+                Call cancelSignal.Dispose()
+            End If
         End Sub
 
         ''' <summary>

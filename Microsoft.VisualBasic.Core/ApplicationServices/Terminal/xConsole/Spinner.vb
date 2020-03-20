@@ -47,7 +47,7 @@
 Imports System.Drawing
 Imports System.Threading
 
-Namespace Terminal.xConsole
+Namespace ApplicationServices.Terminal.xConsole
 
 #Region "SPINNER ⌛"
 

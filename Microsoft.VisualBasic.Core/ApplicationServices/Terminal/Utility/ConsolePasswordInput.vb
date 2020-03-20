@@ -92,7 +92,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Collections
 
-Namespace Terminal.Utility
+Namespace ApplicationServices.Terminal.Utility
 
     ''' <summary>
     ''' Constants used with PInvoke methods

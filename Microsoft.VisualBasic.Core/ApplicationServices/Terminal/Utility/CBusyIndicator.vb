@@ -44,7 +44,7 @@
 Imports System.Threading
 Imports Microsoft.VisualBasic.Parallel
 
-Namespace Terminal.Utility
+Namespace ApplicationServices.Terminal.Utility
 
     ''' <summary>
     ''' The console BusyIndicator

@@ -47,7 +47,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     ''' <summary>
     ''' Shell model for console.

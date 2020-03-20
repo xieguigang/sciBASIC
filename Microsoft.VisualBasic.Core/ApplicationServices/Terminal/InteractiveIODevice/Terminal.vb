@@ -54,7 +54,7 @@
 
 Imports STDIO = System.Console
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     ''' <summary>
     ''' Represents the standard input, output, and error streams for console applications. 交互式的命令行终端

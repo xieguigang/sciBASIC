@@ -55,7 +55,7 @@
 
 Imports System.Text
 
-Namespace Terminal.ProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar
 
     ''' <summary>
     ''' 像乒乓球一样左右碰撞的进度条

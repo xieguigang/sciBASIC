@@ -83,7 +83,7 @@ Imports Microsoft.VisualBasic.SecurityString
 #If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
 #End If
-Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Text.Similarity
 
 #Const FRAMEWORD_CORE = 1

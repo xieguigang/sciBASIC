@@ -50,7 +50,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     Public Class InteractiveDevice : Inherits Terminal
         Implements IDisposable

@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     Public Class HistoryStacks : Implements ISaveHandle
         Implements IFileReference

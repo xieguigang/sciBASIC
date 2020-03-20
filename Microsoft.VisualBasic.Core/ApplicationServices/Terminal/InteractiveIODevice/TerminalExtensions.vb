@@ -50,7 +50,7 @@ Imports System.Drawing
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     ''' <summary>
     ''' 这个终端事件会依赖于<see cref="App.Running"/>属性值来自动退出的

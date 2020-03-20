@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Terminal.ProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar
 
     ''' <summary>
     ''' The <see cref="ConsoleColor"/> theme for the <see cref="ProgressBar"/>

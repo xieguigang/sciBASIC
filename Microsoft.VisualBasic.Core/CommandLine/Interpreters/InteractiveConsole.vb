@@ -46,11 +46,9 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Microsoft.VisualBasic.Terminal
 
 Namespace CommandLine
 

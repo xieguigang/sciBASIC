@@ -43,7 +43,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 
-Namespace Terminal.ProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar
 
     Public Module Program
 

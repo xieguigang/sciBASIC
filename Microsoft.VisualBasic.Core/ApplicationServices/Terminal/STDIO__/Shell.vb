@@ -45,7 +45,7 @@
 Imports System.Text.RegularExpressions
 Imports System.Runtime.InteropServices
 
-Namespace Terminal.STDIO__
+Namespace ApplicationServices.Terminal.STDIO__
 
     '
     ' * Created by SharpDevelop.
