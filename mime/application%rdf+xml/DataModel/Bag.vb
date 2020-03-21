@@ -62,10 +62,23 @@ Public Class Array
     Sub New()
         xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
     End Sub
+
+    Public Overrides Function ToString() As String
+        Return $"listof {list.Count} elements: {list.Take(3).JoinBy(", ")}..."
+    End Function
 End Class
 
+<XmlType("item", [Namespace]:=RDFEntity.XmlnsNamespace)>
 Public Class li
 
     <XmlAttribute("li", [Namespace]:=RDFEntity.XmlnsNamespace)>
     Public Property resource As String
+
+    Public Overrides Function ToString() As String
+        If resource Is Nothing Then
+            Return "null"
+        Else
+            Return resource
+        End If
+    End Function
 End Class
