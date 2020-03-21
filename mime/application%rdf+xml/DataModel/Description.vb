@@ -47,7 +47,7 @@ Imports System.Xml.Serialization
 Public Class Description
 
     <XmlNamespaceDeclarations()>
-    Public xmlns As XmlSerializerNamespaces
+    Public xmlns As New XmlSerializerNamespaces
 
     Sub New()
         xmlns.Add("rdf", RDF.XmlnsNamespace)
@@ -55,4 +55,5 @@ Public Class Description
 
     <XmlAttribute("about", [Namespace]:=RDF.XmlnsNamespace)>
     Public Property about As String
+
 End Class
