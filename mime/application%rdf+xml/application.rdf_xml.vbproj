@@ -343,11 +343,6 @@
     <Compile Include="MathML\maction.vb" />
     <Compile Include="RDFEntity.vb" />
     <Compile Include="RDF.vb" />
-    <Compile Include="GenericXmlDocument.vb" />
-    <Compile Include="Serializer\CodeDOMCreator.vb" />
-    <Compile Include="Serializer\DynamicCompiler.vb" />
-    <Compile Include="Serializer\Serializer.vb" />
-    <Compile Include="Serializer\RDF.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
