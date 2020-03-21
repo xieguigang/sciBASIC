@@ -60,9 +60,14 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 ''' 在rdf之中被描述的对象实体
 ''' </summary>
 ''' 
-<XmlType("Description", [Namespace]:=RDF.XmlnsNamespace)>
+<XmlType("Description", [Namespace]:=RDFEntity.XmlnsNamespace)>
 Public MustInherit Class RDFEntity : Inherits RDFProperty
     Implements INamedValue, IReadOnlyId
+
+    ''' <summary>
+    ''' rdf:XXX
+    ''' </summary>
+    Public Const XmlnsNamespace$ = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 
     Public Property range As RDFProperty
     Public Property comment As RDFProperty
@@ -71,13 +76,13 @@ Public MustInherit Class RDFEntity : Inherits RDFProperty
     ''' rdf:ID
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("ID", [Namespace]:=RDF.XmlnsNamespace)> Public Property RDFId As String
+    <XmlAttribute("ID", [Namespace]:=RDFEntity.XmlnsNamespace)> Public Property RDFId As String
 
     ''' <summary>
     ''' [资源] 是可拥有 URI 的任何事物
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("about", [Namespace]:=RDF.XmlnsNamespace)> Public Property about As String Implements INamedValue.Key, IReadOnlyId.Identity
+    <XmlAttribute("about", [Namespace]:=RDFEntity.XmlnsNamespace)> Public Property about As String Implements INamedValue.Key, IReadOnlyId.Identity
     ''' <summary>
     ''' [属性]   是拥有名称的资源
     ''' [属性值] 是某个属性的值，(请注意一个属性值可以是另外一个<see cref="Resource"/>）
@@ -105,12 +110,12 @@ Public MustInherit Class EntityProperty
     ''' rdf:datatype
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("datatype", [Namespace]:=RDF.XmlnsNamespace)> Public Property dataType As String
+    <XmlAttribute("datatype", [Namespace]:=RDFEntity.XmlnsNamespace)> Public Property dataType As String
     ''' <summary>
     ''' rdf:resource
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("resource", [Namespace]:=RDF.XmlnsNamespace)> Public Property resource As String
+    <XmlAttribute("resource", [Namespace]:=RDFEntity.XmlnsNamespace)> Public Property resource As String
 
     ''' <summary>
     ''' 

@@ -45,33 +45,17 @@ Imports System.Xml.Serialization
 ''' <summary>
 ''' the xml file serilization model
 ''' </summary>
-Public Class RDF
-
-    ''' <summary>
-    ''' rdf:XXX
-    ''' </summary>
-    Public Const XmlnsNamespace$ = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+''' 
+<XmlType("RDF", [Namespace]:=RDFEntity.XmlnsNamespace)>
+Public MustInherit Class RDF(Of T As Description)
 
     <XmlNamespaceDeclarations()>
     Public xmlns As New XmlSerializerNamespaces
 
-    Public Property Description As Description
+    <XmlElement("Description", [Namespace]:=RDFEntity.XmlnsNamespace)>
+    Public Property Description As T
 
     Sub New()
-        xmlns.Add("rdf", RDF.XmlnsNamespace)
+        xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
     End Sub
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="Text">参数值为文件之中的字符串内容，而非文件的路径</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Shared Function LoadDocument(Text As String) As RDF
-        Throw New NotImplementedException
-    End Function
-
-    Public Shared Function LoadDocument(Of T As RDF)(path As String) As T
-        Return path.LoadXml(Of T)()
-    End Function
 End Class

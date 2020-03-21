@@ -43,17 +43,17 @@
 
 Imports System.Xml.Serialization
 
-<XmlType("Description", [Namespace]:=RDF.XmlnsNamespace)>
-Public Class Description
+<XmlType("Description", [Namespace]:=RDFEntity.XmlnsNamespace)>
+Public MustInherit Class Description
 
     <XmlNamespaceDeclarations()>
     Public xmlns As New XmlSerializerNamespaces
 
-    Sub New()
-        xmlns.Add("rdf", RDF.XmlnsNamespace)
-    End Sub
-
-    <XmlAttribute("about", [Namespace]:=RDF.XmlnsNamespace)>
+    <XmlAttribute("about", [Namespace]:=RDFEntity.XmlnsNamespace)>
     Public Property about As String
+
+    Sub New()
+        xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
+    End Sub
 
 End Class
