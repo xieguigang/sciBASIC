@@ -87,7 +87,8 @@ Public Module Bubble
                          Optional tagFontCSS$ = CSSFont.Win10Normal,
                          Optional strokeColorAsMainColor As Boolean = False,
                          Optional positiveRangeY As Boolean = False,
-                         Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarge) As GraphicsData
+                         Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarge,
+                         Optional legendAnchor As PointF = Nothing) As GraphicsData
 
         Dim margin As Padding = padding
         Dim tagLabelFont As Font = CSSFont.TryParse(tagFontCSS).GDIObject
@@ -238,7 +239,31 @@ Public Module Bubble
                         .Select(Function(s) s.title) _
                         .Select(Function(str) canvas.MeasureString(str, legendLabelFont).Width) _
                         .Max
-                    Dim topLeft As New Point(grect.PlotRegion.Right - maxSize * 1.5, margin.Top + grect.PlotRegion.Height * 0.05)
+                    Dim topLeft As Point
+
+                    If legendAnchor.IsEmpty Then
+                        topLeft = New Point With {
+                            .X = grect.PlotRegion.Right - maxSize * 1.5,
+                            .Y = margin.Top + grect.PlotRegion.Height * 0.05
+                        }
+                    Else
+                        Dim px As Double
+                        Dim py As Double
+
+                        If legendAnchor.X < 1 Then
+                            px = grect.PlotRegion.Right - grect.PlotRegion.Width * legendAnchor.X
+                        Else
+                            px = legendAnchor.X
+                        End If
+                        If legendAnchor.Y < 1 Then
+                            py = margin.Top + grect.PlotRegion.Height * legendAnchor.Y
+                        Else
+                            py = legendAnchor.Y
+                        End If
+
+                        topLeft = New Point With {.X = px, .Y = py}
+                    End If
+
                     Dim legends = LinqAPI.Exec(Of Legend) <=
  _
                         From serial As SerialData

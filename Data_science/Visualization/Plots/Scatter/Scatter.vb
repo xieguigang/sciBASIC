@@ -196,14 +196,15 @@ Public Module Scatter
                          Optional preferPositive As Boolean = False,
                          Optional interplot As Splines = Splines.None,
                          Optional densityColor As Boolean = False,
-                         Optional tickFontStyle$ = CSSFont.Win7VeryLarge,
-                         Optional labelFontStyle$ = CSSFont.Win7VeryVeryLargeNormal,
+                         Optional tickFontStyle$ = CSSFont.Win7LargeBold,
+                         Optional labelFontStyle$ = CSSFont.Win7VeryLarge,
                          Optional title$ = Nothing,
                          Optional titleFontCSS$ = CSSFont.Win7VeryVeryLarge,
                          Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                          Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                          Optional gridFill$ = "rgb(245,245,245)",
-                         Optional gridColor$ = "white") As GraphicsData
+                         Optional gridColor$ = "white",
+                         Optional legendBgFill As String = Nothing) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -367,9 +368,10 @@ Public Module Scatter
                         End If
 
                         Call g.DrawLegends(
-                            legendPosition, legends, legendSize,,
+                            legendPosition, legends, legendSize,
                             shapeBorder:=legendBorder,
-                            regionBorder:=legendRegionBorder
+                            regionBorder:=legendRegionBorder,
+                            fillBg:=legendBgFill
                         )
                     End If
                 Next
