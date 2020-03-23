@@ -50,7 +50,7 @@ Namespace Scripting
 
     Public MustInherit Class MemoryCollection(Of T) : Implements IEnumerable(Of KeyValuePair(Of String, T))
 
-        Protected ReadOnly objTable As Dictionary(Of String, T) = New Dictionary(Of String, T)
+        Protected ReadOnly objTable As New Dictionary(Of String, T)
         Protected ReadOnly __engine As Expression
 
         Dim __caches As String()

@@ -746,7 +746,6 @@
     <Compile Include="Spline\B_Spline.vb" />
     <Compile Include="Scripting\Helpers\MetaExpression.vb" />
     <Compile Include="Scripting\Helpers\MemoryCollection.vb" />
-    <Compile Include="Scripting\Helpers\Logical.vb" />
     <Compile Include="Scripting\Helpers\Variable.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\TokenIcer.vb" />
     <Compile Include="FuzzyLogic\FuzzyEngine.vb" />
