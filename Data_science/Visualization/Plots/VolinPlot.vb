@@ -291,9 +291,9 @@ Public Module VolinPlot
 
                     ' 在右上绘制数据的分布信息
                     Dim sampleDescrib As String =
-                    $"CI95%: {C95lowerBound.ToString("F2")} ~ {C95upperBound.ToString("F2")}" & vbCrLf &
-                    $"Median: {quartile.Q2.ToString("F2")}" & vbCrLf &
-                    $"Normal Range: {(quartile.Q1 - 1.5 * quartile.IQR).ToString("F2")} ~ {(quartile.Q3 + 1.5 * quartile.IQR).ToString("F2")}"
+                    $"CI95%: {C95lowerBound.ToString(yTickFormat)} ~ {C95upperBound.ToString(yTickFormat)}" & vbCrLf &
+                    $"Median: {quartile.Q2.ToString(yTickFormat)}" & vbCrLf &
+                    $"Normal Range: {(quartile.Q1 - 1.5 * quartile.IQR).ToString(yTickFormat)} ~ {(quartile.Q3 + 1.5 * quartile.IQR).ToString(yTickFormat)}"
 
                     labelSize = g.MeasureString(group.name, labelFont)
 

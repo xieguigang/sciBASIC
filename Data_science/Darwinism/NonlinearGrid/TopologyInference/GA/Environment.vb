@@ -67,7 +67,7 @@ Public Class Environment(Of T As IDynamicsComponent(Of T), S As GridGenome(Of T)
         matrix = trainingSet.PopulateNormalizedSamples(Methods.NormalScaler) _
             .Select(Function(sample)
                         Return New TrainingSet With {
-                            .X = sample.status.vector.AsVector,
+                            .X = sample.vector.AsVector,
                             .Y = sample.target(Scan0),
                             .targetID = sample.target(Scan0).ToString
                         }

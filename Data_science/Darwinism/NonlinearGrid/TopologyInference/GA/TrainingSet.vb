@@ -50,7 +50,7 @@ Public Class TrainingSet
     Public targetID As String
 
     Sub New(sample As Sample)
-        Me.X = sample.status.vector
+        Me.X = sample.vector
         Me.Y = sample.target(Scan0)
         Me.targetID = sample.ID
     End Sub

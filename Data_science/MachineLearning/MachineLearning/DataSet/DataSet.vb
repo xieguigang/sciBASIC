@@ -93,7 +93,11 @@ Namespace StoreProcedure
 
         Public ReadOnly Property width As Integer
             Get
-                Return NormalizeMatrix.matrix.size
+                If NormalizeMatrix Is Nothing Then
+                    Return DataSamples(Scan0).vector.Length
+                Else
+                    Return NormalizeMatrix.matrix.size
+                End If
             End Get
         End Property
 

@@ -370,10 +370,13 @@ Namespace Graphic.Axis
                     End If
 
                     ' Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
-
-                    With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                        Call .DrawString(label, font, Brushes.Black, location, -90)
-                    End With
+                    If TypeOf g Is Graphics2D Then
+                        With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                            Call .DrawString(label, font, Brushes.Black, location, -90)
+                        End With
+                    Else
+                        Call g.DrawString(label, font, Brushes.Black, location)
+                    End If
                 End If
             End If
         End Sub

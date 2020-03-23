@@ -62,7 +62,7 @@ Public Module Loader
                       Dim pcc As Double
 #Disable Warning
                       For i As Integer = 0 To dataArray(Scan0).status.Length - 1
-                          array = dataArray.Select(Function(r) r.status(i)).ToArray
+                          array = dataArray.Select(Function(r) r.vector(i)).ToArray
                           pcc = Correlations.GetPearson(array, target)
 
                           Yield pcc
