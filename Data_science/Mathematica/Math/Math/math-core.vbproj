@@ -675,6 +675,7 @@
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Distributions\Abundance.vb" />
+    <Compile Include="FuzzyLogic\Models\Extensions.vb" />
     <Compile Include="Numerics\BigDecimal.vb" />
     <Compile Include="HashMaps\Crc32.vb" />
     <Compile Include="Distributions\BinBox\BinMaps.vb" />
@@ -748,7 +749,6 @@
     <Compile Include="Scripting\Helpers\Logical.vb" />
     <Compile Include="Scripting\Helpers\Variable.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\TokenIcer.vb" />
-    <Compile Include="Scripting\Logical\LogicalEvaluate.vb" />
     <Compile Include="FuzzyLogic\FuzzyEngine.vb" />
     <Compile Include="FuzzyLogic\FuzzyRule.vb" />
     <Compile Include="FuzzyLogic\FuzzyRuleCollection.vb" />
@@ -756,9 +756,8 @@
     <Compile Include="FuzzyLogic\LinguisticVariableCollection.vb" />
     <Compile Include="FuzzyLogic\MembershipFunction.vb" />
     <Compile Include="FuzzyLogic\MembershipFunctionCollection.vb" />
-    <Compile Include="FuzzyLogic\Models\LDM.vb" />
+    <Compile Include="FuzzyLogic\Models\Models.vb" />
     <Compile Include="FuzzyLogic\Models\ModelAPI.vb" />
-    <Compile Include="Scripting\Logical\TokenIcer.vb" />
     <Compile Include="Algebra\LP\OptimizationType.vb" />
     <Compile Include="Algebra\Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\EigenvalueDecomposition.vb" />

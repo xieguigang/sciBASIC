@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::34831fcdf901eedf089622dbec955882, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRule.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FuzzyRule
-    ' 
-    '         Properties: Text, Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Conditions, Validate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FuzzyRule
+' 
+'         Properties: Text, Value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Conditions, Validate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,7 +64,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Math.Scripting.Logical
+Imports Microsoft.VisualBasic.Math.Logical.FuzzyLogic.Models
 
 Namespace Logical.FuzzyLogic
 
@@ -75,7 +75,7 @@ Namespace Logical.FuzzyLogic
 
 #Region "Private Properties"
 
-        Dim m_text As String = [String].Empty
+        Dim m_text As String = String.Empty
         Dim m_conditions As LogicalToken()
         Dim m_conclusion As LogicalToken()
 
@@ -156,8 +156,8 @@ Namespace Logical.FuzzyLogic
             End Get
             Set(value As String)
                 m_text = Validate(value)
-                m_conditions = TokenIcer.TryParse(Me.Conditions)
-                m_conclusion = TokenIcer.TryParse(Regex.Split(value, " THEN ", RegexOptions.IgnoreCase).Last)
+                m_conditions = Models.TryParse(Me.Conditions)
+                m_conclusion = Models.TryParse(Regex.Split(value, " THEN ", RegexOptions.IgnoreCase).Last)
             End Set
         End Property
 
