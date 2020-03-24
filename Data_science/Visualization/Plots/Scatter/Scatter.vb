@@ -181,7 +181,7 @@ Public Module Scatter
                          Optional legendRegionBorder As Stroke = Nothing,
                          Optional fill As Boolean = False,
                          Optional fillPie As Boolean = True,
-                         Optional legendFontSize! = 48,
+                         Optional legendFontCSS$ = CSSFont.PlotSubTitle,
                          Optional absoluteScaling As Boolean = True,
                          Optional XaxisAbsoluteScalling As Boolean = False,
                          Optional YaxisAbsoluteScalling As Boolean = False,
@@ -344,16 +344,12 @@ Public Module Scatter
                         () <= From s As SerialData
                               In array
                               Let sColor As String = s.color.RGBExpression
-                              Let legendFont = CSSFont.GetFontStyle(
-                                  FontFace.SegoeUI,
-                                  FontStyle.Regular,
-                                  legendFontSize)
                               Select New Legend With {
                                   .color = sColor,
-                                  .fontstyle = legendFont,
+                                  .fontstyle = legendFontCSS,
                                   .style = LegendStyles.Circle,
                                   .title = s.title
-                                  }
+                              }
                         Dim lsize As Size = legendSize.SizeParser
 
                         If legendPosition.IsEmpty Then
