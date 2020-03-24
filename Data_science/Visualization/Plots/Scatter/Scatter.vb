@@ -204,7 +204,8 @@ Public Module Scatter
                          Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                          Optional gridFill$ = "rgb(245,245,245)",
                          Optional gridColor$ = "white",
-                         Optional legendBgFill As String = Nothing) As GraphicsData
+                         Optional legendBgFill As String = Nothing,
+                         Optional legendSplit% = -1) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -337,9 +338,11 @@ Public Module Scatter
                             Call annotation.Draw(g, scaler, raw, rect)
                         Next
                     End If
+                Next
 
-                    If showLegend Then
-                        Dim legends = LinqAPI.Exec(Of Legend) _
+                If showLegend Then
+                    Dim lsize As Size = legendSize.SizeParser
+                    Dim legends As Legend() = LinqAPI.Exec(Of Legend) _
  _
                         () <= From s As SerialData
                               In array
@@ -350,27 +353,52 @@ Public Module Scatter
                                   .style = LegendStyles.Circle,
                                   .title = s.title
                               }
-                        Dim lsize As Size = legendSize.SizeParser
+                    Dim legendParts As Legend()() = Nothing
+                    Dim maxWidth!
 
-                        If legendPosition.IsEmpty Then
-                            Dim maxLen = legends.Select(Function(l) l.title).MaxLengthString
-                            Dim lFont As Font = CSSFont.TryParse(legends.First.fontstyle).GDIObject
-                            Dim maxWidth = g.MeasureString(maxLen, lFont).Width
+                    If legendPosition.IsEmpty Then
+                        Dim maxLen = legends.Select(Function(l) l.title).MaxLengthString
+                        Dim lFont As Font = CSSFont.TryParse(legends.First.fontstyle).GDIObject
+
+                        maxWidth! = g.MeasureString(maxLen, lFont).Width
+
+                        If legendSplit > 0 AndAlso legends.Length > legendSplit Then
+                            legendParts = legends.Split(legendSplit)
+                            legendPosition = New Point With {
+                                    .X = region.Width - (lsize.Width + maxWidth + 5) * (legendParts.Length - 1),
+                                    .Y = margin.Top + lFont.Height
+                                }
+                        Else
+                            legendPosition = New Point With {
+                                    .X = region.Size.Width - lsize.Width / 2 - maxWidth,
+                                    .Y = margin.Top + lFont.Height
+                                }
+                        End If
+                    End If
+
+                    If legendParts.IsNullOrEmpty Then
+                        Call g.DrawLegends(
+                                legendPosition, legends, legendSize,
+                                shapeBorder:=legendBorder,
+                                regionBorder:=legendRegionBorder,
+                                fillBg:=legendBgFill
+                            )
+                    Else
+                        For Each part As Legend() In legendParts
+                            Call g.DrawLegends(
+                                    legendPosition, part, legendSize,
+                                    shapeBorder:=legendBorder,
+                                    regionBorder:=legendRegionBorder,
+                                    fillBg:=legendBgFill
+                                )
 
                             legendPosition = New Point With {
-                                .X = region.Size.Width - lsize.Width / 2 - maxWidth,
-                                .Y = margin.Top + lFont.Height
-                            }
-                        End If
-
-                        Call g.DrawLegends(
-                            legendPosition, legends, legendSize,
-                            shapeBorder:=legendBorder,
-                            regionBorder:=legendRegionBorder,
-                            fillBg:=legendBgFill
-                        )
+                                    .X = legendPosition.X + maxWidth + lsize.Width + 5,
+                                    .Y = legendPosition.Y
+                                }
+                        Next
                     End If
-                Next
+                End If
 
                 If Not title.StringEmpty Then
                     Dim fontOfTitle As Font = CSSFont.TryParse(titleFontCSS)
