@@ -264,8 +264,8 @@ Public Module Scatter
                     Dim pen As Pen = line.GetPen
                     Dim br As New SolidBrush(line.color)
                     Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
-                    Dim d! = line.PointSize
-                    Dim r As Single = line.PointSize / 2
+                    Dim d! = line.pointSize
+                    Dim r As Single = line.pointSize / 2
                     Dim bottom! = gSize.Height - margin.Bottom
                     Dim getPointBrush = Function(pt As PointData)
                                             If pt.color.StringEmpty Then
@@ -431,7 +431,7 @@ Public Module Scatter
         Return New SerialData With {
             .color = Drawing.Color.FromArgb(alpha, color.ToColor),
             .lineType = dash,
-            .PointSize = ptSize,
+            .pointSize = ptSize,
             .title = title,
             .width = width,
             .pts = LinqAPI.Exec(Of PointData) <=
@@ -492,7 +492,7 @@ Public Module Scatter
         Else
             Dim syline As New SerialData With {
                 .color = ylineColor.ToColor,
-                .PointSize = 3,
+                .pointSize = 3,
                 .width = 3,
                 .title = $"y={yline}",
                 .pts = {
@@ -592,7 +592,7 @@ Public Module Scatter
         Return New SerialData With {
             .color = lineColor.ToColor,
             .lineType = lineType,
-            .PointSize = ptSize,
+            .pointSize = ptSize,
             .width = lineWidth,
             .pts = points.Select(
                 Function(pt) New PointData With {

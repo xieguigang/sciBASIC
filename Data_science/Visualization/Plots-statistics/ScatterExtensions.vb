@@ -133,7 +133,7 @@ Public Module ScatterExtensions
             .title = ode.ID,
             .color = color.ToColor,
             .lineType = dash,
-            .PointSize = ptSize,
+            .pointSize = ptSize,
             .width = width,
             .pts = ode.GetPointsData _
                 .Select(Function(p)
@@ -211,7 +211,7 @@ Public Module ScatterExtensions
                   Select New SerialData With {
                        .color = color,
                        .lineType = DashStyle.Solid,
-                       .PointSize = ptSize,
+                       .pointSize = ptSize,
                        .title = y.value.name,
                        .width = width,
                        .pts = pts

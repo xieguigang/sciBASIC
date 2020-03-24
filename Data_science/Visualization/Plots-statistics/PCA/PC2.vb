@@ -131,7 +131,7 @@ Namespace PCA
                     .ToArray
                 Dim s As New SerialData With {
                     .color = Color.Black,
-                    .PointSize = 5,
+                    .pointSize = 5,
                     .title = "Cluster #" & (group.i + 1),
                     .pts = points
                 }

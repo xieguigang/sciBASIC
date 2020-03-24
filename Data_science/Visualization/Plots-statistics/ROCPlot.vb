@@ -76,8 +76,8 @@ Public Module ROCPlot
         Return New SerialData With {
             .color = Color.Black,
             .lineType = DashStyle.Solid,
-            .PointSize = 5,
-            .Shape = LegendStyles.Triangle,
+            .pointSize = 5,
+            .shape = LegendStyles.Triangle,
             .pts = points _
                 .OrderBy(Function(p) p.pt.X) _
                 .ToArray,
@@ -131,10 +131,10 @@ Public Module ROCPlot
         Dim reference As New SerialData With {
             .color = AUCfillColor.TranslateColor,
             .lineType = DashStyle.Dash,
-            .PointSize = 5,
+            .pointSize = 5,
             .width = lineWidth,
             .pts = {New PointData(0, 0), New PointData(1, 1)},
-            .Shape = LegendStyles.Circle
+            .shape = LegendStyles.Circle
         }
 
         roc.width = lineWidth

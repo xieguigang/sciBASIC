@@ -244,7 +244,7 @@ Namespace Heatmap
             Return New SerialData With {
                 .color = Color.Black,
                 .pts = serialData,
-                .PointSize = r!
+                .pointSize = r!
             }
         End Function
     End Module

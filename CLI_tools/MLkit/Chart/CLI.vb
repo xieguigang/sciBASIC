@@ -132,10 +132,10 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
                         Dim serial As New SerialData With {
                             .color = colors.Next(),
                             .lineType = DashStyle.Solid,
-                            .PointSize = 10,
+                            .pointSize = 10,
                             .title = ylabel,
                             .width = 5,
-                            .Shape = LegendStyles.Triangle,
+                            .shape = LegendStyles.Triangle,
                             .pts = points _
                                 .Select(Function(p)
                                             Return New PointData With {

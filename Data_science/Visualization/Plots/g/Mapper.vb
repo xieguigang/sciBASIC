@@ -209,7 +209,7 @@ Namespace Graphic
                 Yield New SerialData With {
                     .color = s.color,
                     .lineType = s.lineType,
-                    .PointSize = s.PointSize,
+                    .pointSize = s.pointSize,
                     .pts = pts,
                     .title = s.title,
                     .width = s.width,

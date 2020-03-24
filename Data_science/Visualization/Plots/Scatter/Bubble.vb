@@ -160,7 +160,7 @@ Public Module Bubble
                                         Dim r# = scale(pt.value)
 
                                         If r = 0R Then
-                                            Return s.PointSize
+                                            Return s.pointSize
                                         Else
                                             Return r
                                         End If

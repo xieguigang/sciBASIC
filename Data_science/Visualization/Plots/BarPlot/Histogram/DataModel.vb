@@ -192,7 +192,7 @@ Namespace BarPlot.Histogram
                 .color = color,
                 .width = width,
                 .lineType = type,
-                .PointSize = ptSize,
+                .pointSize = ptSize,
                 .pts = data _
                     .Select(Function(x) x.LinePoint) _
                     .ToArray

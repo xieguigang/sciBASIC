@@ -133,7 +133,7 @@ Partial Module Scatter
                 .color = colorHelper(o.Key),
                 .pts = o.Select(Function(x) New PointData(x.Item1)).ToArray,
                 .title = o.Key,
-                .PointSize = ptSize
+                .pointSize = ptSize
             }) _
             .ToArray
         Dim leftWidth% = rect.Size.Width * 0.9

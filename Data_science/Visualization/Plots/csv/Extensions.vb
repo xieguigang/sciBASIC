@@ -68,7 +68,7 @@ Namespace csv
 
                 Return New ChartPlots.SerialData With {
                     .color = color.TranslateColor(throwEx:=False),
-                    .PointSize = ptSize,
+                    .pointSize = ptSize,
                     .title = $"Plot({fieldX}, {fieldY})",
                     .pts = points
                 }

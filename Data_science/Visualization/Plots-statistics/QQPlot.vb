@@ -141,7 +141,7 @@ Public Module QQPlot
 
         Dim qqserial As New SerialData With {
             .color = Color.Black,
-            .PointSize = pointSize,
+            .pointSize = pointSize,
             .pts = points,
             .title = "q-q"
         }

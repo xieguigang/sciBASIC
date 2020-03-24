@@ -119,8 +119,8 @@ Namespace KMeans
                     .title = (+cluster).Key,
                     .color = color,
                     .pts = points,
-                    .Shape = LegendStyles.Triangle,
-                    .PointSize = pointSize
+                    .shape = LegendStyles.Triangle,
+                    .pointSize = pointSize
                 }
             Next
 
