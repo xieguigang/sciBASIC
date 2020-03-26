@@ -73,7 +73,7 @@ Namespace Drawing3D.Device
             .angleZ = 0,
             .fov = 256,
             .screen = Size,
-            .ViewDistance = -40
+            .viewDistance = -40
         }
 
         Dim rotationWorker As New AutoRotation(Me)
@@ -98,10 +98,10 @@ Namespace Drawing3D.Device
 
         Public Property ViewDistance As Single
             Get
-                Return _camera.ViewDistance
+                Return _camera.viewDistance
             End Get
             Set
-                _camera.ViewDistance = Value
+                _camera.viewDistance = Value
             End Set
         End Property
         Public Property FOV As Double
@@ -259,7 +259,7 @@ Namespace Drawing3D.Device
 
         Private Sub GDIDevice_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
             Dim d% = Sign(e.Delta)
-            _camera.ViewDistance += d
+            _camera.viewDistance += d
             '#If DEBUG Then
             '            Call _camera.GetJson.__DEBUG_ECHO
             '#End If

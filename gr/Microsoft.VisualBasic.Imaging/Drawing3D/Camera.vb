@@ -46,17 +46,21 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D
 
     Public Class Camera
 
-        Public ViewDistance!, angleX!, angleY!, angleZ!
+        ''' <summary>
+        ''' the view distance from the user view to target object
+        ''' </summary>
+        Public viewDistance!
+        Public angleX!, angleY!, angleZ!
         Public fov! = 256.0!
         Public screen As Size
         ''' <summary>
@@ -152,12 +156,12 @@ Namespace Drawing3D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Project(pt As Point3D) As Point3D
-            Return pt.Project(screen.Width, screen.Height, fov, ViewDistance, offset)
+            Return pt.Project(screen.Width, screen.Height, fov, viewDistance, offset)
         End Function
 
         Public Iterator Function Project(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
             For Each pt As Point3D In pts
-                Yield pt.Project(screen.Width, screen.Height, fov, ViewDistance, offset)
+                Yield pt.Project(screen.Width, screen.Height, fov, viewDistance, offset)
             Next
         End Function
 

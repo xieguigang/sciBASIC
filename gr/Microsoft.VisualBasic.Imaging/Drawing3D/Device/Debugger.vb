@@ -82,7 +82,7 @@ Namespace Drawing3D.Device
 
             ' 显示camera的调试信息
             Call draw(msg:=$"Rotation vector:       x={camera.angleX}, y={camera.angleY}, z={camera.angleZ}")
-            Call draw(msg:=$"View distance:         {camera.ViewDistance}")
+            Call draw(msg:=$"View distance:         {camera.viewDistance}")
             Call draw(msg:=$"FOV:                   {camera.fov}")
             Call draw(msg:=$"Screen size:           {camera.screen.Width}px X {camera.screen.Height}px")
 

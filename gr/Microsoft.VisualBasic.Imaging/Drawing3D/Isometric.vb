@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Drawing3D
 
@@ -78,8 +78,8 @@ Namespace Drawing3D
             Me.angle = Math.PI / 6
             Me.scale = 70
             Me.transformation = {
-                ({Me.scale * sys.Cos(Me.angle), Me.scale * sys.Sin(Me.angle)}),
-                ({Me.scale * sys.Cos(Math.PI - Me.angle), Me.scale * sys.Sin(Math.PI - Me.angle)})
+                ({Me.scale * stdNum.Cos(Me.angle), Me.scale * stdNum.Sin(Me.angle)}),
+                ({Me.scale * stdNum.Cos(Math.PI - Me.angle), Me.scale * stdNum.Sin(Math.PI - Me.angle)})
             }
             Dim lightPosition As New Point3D(2, -1, 3)
             Me.lightAngle = lightPosition.Normalize()
@@ -415,17 +415,17 @@ Namespace Drawing3D
 
             For i = 0 To lengthA - 1
                 point = pointsA(i)
-                AminX = sys.Min(AminX, point.X)
-                AminY = sys.Min(AminY, point.Y)
-                AmaxX = sys.Max(AmaxX, point.X)
-                AmaxY = sys.Max(AmaxY, point.Y)
+                AminX = stdNum.Min(AminX, point.X)
+                AminY = stdNum.Min(AminY, point.Y)
+                AmaxX = stdNum.Max(AmaxX, point.X)
+                AmaxY = stdNum.Max(AmaxY, point.Y)
             Next
             For i = 0 To lengthB - 1
                 point = pointsB(i)
-                BminX = sys.Min(BminX, point.X)
-                BminY = sys.Min(BminY, point.Y)
-                BmaxX = sys.Max(BmaxX, point.X)
-                BmaxY = sys.Max(BmaxY, point.Y)
+                BminX = stdNum.Min(BminX, point.X)
+                BminY = stdNum.Min(BminY, point.Y)
+                BmaxX = stdNum.Max(BmaxX, point.X)
+                BmaxY = stdNum.Max(BmaxY, point.Y)
             Next
 
             If ((AminX <= BminX AndAlso BminX <= AmaxX) OrElse (BminX <= AminX AndAlso AminX <= BmaxX)) AndAlso ((AminY <= BminY AndAlso BminY <= AmaxY) OrElse (BminY <= AminY AndAlso AminY <= BmaxY)) Then
