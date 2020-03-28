@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df3e5617d90225b8cf58212a9dcb2fb2, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::72d4ec733dd4c54271b45616fcc40ac4, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '         Sub: Assign
     ' 
-    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Mod
+    '         Operators: -, (+3 Overloads) +, <>, =, (+2 Overloads) Mod
     ' 
     ' 
     ' /********************************************************************************/

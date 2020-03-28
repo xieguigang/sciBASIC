@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::299ecf4456202d88edad01848ac39ad2, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::8f1073b7c0fc94012b9380ef133a75e1, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
 
     ' Author:
     ' 
@@ -78,6 +78,8 @@
     ' 
     '         Properties: anchor, dy, transform, value, x
     '                     y
+    ' 
+    '         Function: ToString
     '         Operators: +
     ' 
     ' 

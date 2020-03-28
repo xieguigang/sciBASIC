@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fee3336c5fd9545d9a79fc13c324093, mime\text%html\MarkDown\DocumentHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a6396154483f34ef8cc619111bce2e9b, mime\text%html\MarkDown\DocumentHelper.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,10 @@
 
     ' Summaries:
 
+    '     Class DocumentToken
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '     Module DocumentHelper
     ' 
     ' 

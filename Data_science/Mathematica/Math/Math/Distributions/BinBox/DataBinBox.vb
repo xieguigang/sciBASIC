@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7fd650fd96777cb1865721179a84106, Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
+﻿#Region "Microsoft.VisualBasic::8f873f1b75b1d08a526bc72948f023df, Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: BinMaps, Count, Raw, Sample
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetBinMaps
+    '         Function: GetBinMaps, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4afa0e3433c6b350276ffc1dab43fc17, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IRanges.vb"
+﻿#Region "Microsoft.VisualBasic::59eb37d2a374c04c979f9f4952ad4a57, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IRangeModel.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Max, Min
     ' 
-    '     Interface IRanges
+    '     Interface IRangeModel
     ' 
     '         Function: (+2 Overloads) IsInside, IsOverlapping
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f013ae86d5b50e91d48b6a4063109bb3, Data_science\Mathematica\Math\ODE\ODEsSolver\StreamExtension.vb"
+﻿#Region "Microsoft.VisualBasic::6716b6a35c098758002a55ab97db31f1, Data_science\Mathematica\Math\ODE\Dynamics\Data\StreamExtension.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module StreamExtension
+    '     Module StreamExtension
     ' 
-    '     Function: merge, Merge, mergeParameters, mergeY0
+    '         Function: merge, Merge, mergeParameters, mergeY0
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f70a35c0d656d3f22776ed4989c26ab6, Data_science\Visualization\Plots\BarPlot\Data\BarDataSample.vb"
+﻿#Region "Microsoft.VisualBasic::809e6e6a7177f207a1a5f136d7d7c050, Data_science\Visualization\Plots\BarPlot\Data\BarDataSample.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class BarDataSample
     ' 
-    '         Properties: data, StackedSum, Tag
+    '         Properties: data, StackedSum, tag
     ' 
     '         Function: ToString
     ' 

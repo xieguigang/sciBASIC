@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad353c7944723ac70347e48519bf0bd9, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a69f315c82d12bb246184555966578cc, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,15 @@
 
     ' Summaries:
 
+    '     Enum TimeScales
+    ' 
+    '         Day, Hour, Millisecond, Minute, Month
+    '         Second, Year
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     '     Module DateTimeHelper
     ' 
     '         Properties: MonthList

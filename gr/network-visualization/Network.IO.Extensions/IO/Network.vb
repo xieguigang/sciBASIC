@@ -1,50 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::ff8dc333963d12f9c577a31f66cb4860, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
+﻿#Region "Microsoft.VisualBasic::9e0c4afd6bcc94795c3de87747396540, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Network
-' 
-'         Properties: edges, IsEmpty, nodes
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetNode, HaveNode
-' 
-'         Sub: RemoveDuplicated, RemoveSelfLoop, RemovesIsolatedNodes
-' 
-'         Operators: (+4 Overloads) -, (+2 Overloads) ^, (+4 Overloads) +, <=, >=
-' 
-' 
-' /********************************************************************************/
+    '     Class Network
+    ' 
+    '         Properties: edges, IsEmpty, meta, nodes
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetNode, HaveNode
+    ' 
+    '         Sub: RemoveDuplicated, RemoveSelfLoop, RemovesIsolatedNodes
+    ' 
+    '         Operators: (+4 Overloads) -, (+2 Overloads) ^, (+4 Overloads) +, <=, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

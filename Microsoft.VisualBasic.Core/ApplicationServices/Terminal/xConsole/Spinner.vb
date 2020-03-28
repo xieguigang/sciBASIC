@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::932c108250c6126cf3caeed914a76485, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Spinner.vb"
+﻿#Region "Microsoft.VisualBasic::c36dcec78290e972fa2362d0ba847402, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Spinner.vb"
 
     ' Author:
     ' 

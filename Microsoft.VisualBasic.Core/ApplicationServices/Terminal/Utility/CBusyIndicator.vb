@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa267559a941d77296fe1975ee1b590b, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\CBusyIndicator.vb"
+﻿#Region "Microsoft.VisualBasic::6438eb51b688ea913d00f1f902d80fb5, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\CBusyIndicator.vb"
 
     ' Author:
     ' 

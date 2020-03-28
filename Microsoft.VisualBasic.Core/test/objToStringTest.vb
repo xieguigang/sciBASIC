@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b319d1e97329d9f2fe46848f3d79496, Microsoft.VisualBasic.Core\test\objToStringTest.vb"
+﻿#Region "Microsoft.VisualBasic::59482f83f24ebc0fbbd22756c6544618, Microsoft.VisualBasic.Core\test\objToStringTest.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' 
     ' 
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -71,5 +70,3 @@ End Class
 Public Class notOverridesToString
 
 End Class
-
-

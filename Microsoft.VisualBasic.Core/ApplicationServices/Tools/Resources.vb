@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d1a98d605f6b6f695ec96ed57522370, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Resources.vb"
+﻿#Region "Microsoft.VisualBasic::cae3e94b053da91a982ad6ac35f51887, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Resources.vb"
 
     ' Author:
     ' 

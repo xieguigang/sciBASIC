@@ -1,49 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::f0b59fffa69b6fe8bbad9d98c9be89f5, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::f71e4e2f30a199253bb2ab8666196461, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Workspace
-' 
-'         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
-'                     Score, Subject
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: getAligned1, getAligned2, isMatch
-' 
-'         Sub: AddAligned1, AddAligned2
-' 
-' 
-' /********************************************************************************/
+    '     Class Workspace
+    ' 
+    '         Properties: NumberOfAlignments, Query, Score, Subject
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: getAligned1, getAligned2
+    ' 
+    '         Sub: AddAligned1, AddAligned2
+    ' 
+    '     Class ScoreMatrix
+    ' 
+    '         Properties: GapPenalty, MatchScore, MismatchScore
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: getMatchScore, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

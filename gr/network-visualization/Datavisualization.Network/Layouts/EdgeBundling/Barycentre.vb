@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eacaf66c3492a263551cde93d2c1e614, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Barycentre.vb"
+﻿#Region "Microsoft.VisualBasic::3400aebf48d132542aefa2b678fefb60, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Barycentre.vb"
 
     ' Author:
     ' 

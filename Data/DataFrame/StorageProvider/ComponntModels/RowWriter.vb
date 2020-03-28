@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa31a5c82fdf2c183c8dd352d8ec738b, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::691a77310703b8aab87c47bf628741a6, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 

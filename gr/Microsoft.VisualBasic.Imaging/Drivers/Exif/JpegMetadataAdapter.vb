@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68f6de77d0cf309fe3fec35126311d56, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
+﻿#Region "Microsoft.VisualBasic::775956e51119ba72a5f30588a8ec4556, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
 
     ' Author:
     ' 

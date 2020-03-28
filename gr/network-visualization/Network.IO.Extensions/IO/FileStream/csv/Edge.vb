@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15730fcbe7f5fac052f9f8b7fe73228b, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::544afd9b14fff86b2ef28e37e355679e, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,8 @@
     '                     value
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: Contains, Equals, GetConnectedNode, GetDirectedGuid, GetNode
-    '                   GetNullDirectedGuid, IsEqual, Nodes, ToString
+    '         Function: Contains, Equals, GetConnectedNode, GetNode, IsEqual
+    '                   Nodes, ToString
     '         Operators: -, +
     ' 
     ' 

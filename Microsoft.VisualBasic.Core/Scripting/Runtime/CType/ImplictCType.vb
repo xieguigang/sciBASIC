@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96e0d4846115dc8f43e0df5a09783e90, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Narrowing.vb"
+﻿#Region "Microsoft.VisualBasic::9681b0176aeaf675bcc991d3601dda5d, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\ImplictCType.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,12 @@
 
     ' Summaries:
 
-    '     Module NarrowingReflection
+    '     Module ImplictCType
     ' 
     ' 
     '         Delegate Function
     ' 
-    '             Function: (+2 Overloads) GetNarrowingOperator, GetOperatorMethod
+    '             Function: (+2 Overloads) GetNarrowingOperator, GetOperatorMethod, (+2 Overloads) GetWideningOperator
     ' 
     ' 
     ' 

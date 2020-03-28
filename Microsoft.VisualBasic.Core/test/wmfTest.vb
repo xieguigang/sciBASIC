@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8885befc9e7c4a0eff4a1493b5645a05, Microsoft.VisualBasic.Core\test\wmfTest.vb"
+﻿#Region "Microsoft.VisualBasic::2850e374bf69e03d66ee2c3c5db883e0, Microsoft.VisualBasic.Core\test\wmfTest.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Module wmfTest
         End Using
     End Sub
 End Module
-

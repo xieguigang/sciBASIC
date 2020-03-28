@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::a3471837b8895154ee1106f6135a2fed, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::f61fb3b53c42dcb8214bdef82e0056fa, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class IORedirect
-' 
-'         Properties: Bin, CLIArguments, ExitCode, HasExited, PID
-'                     StandardOutput
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Delegate Function
-' 
-' 
-'         Delegate Sub
-' 
-'             Function: GetError, Read, ReadLine, Run, Shell
-'                       (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
-'                       WaitOutput
-' 
-'             Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
-'                  (+2 Overloads) WriteLine
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Class IORedirect
+    ' 
+    '         Properties: Bin, CLIArguments, ExitCode, HasExited, PID
+    '                     StandardOutput
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Delegate Function
+    ' 
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Function: GetError, Read, ReadLine, Run, Shell
+    '                       (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
+    '                       WaitOutput
+    ' 
+    '             Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
+    '                  (+2 Overloads) WriteLine
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

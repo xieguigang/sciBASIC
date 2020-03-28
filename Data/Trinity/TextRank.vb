@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbb4fdcefa49769fc63844de53ee4742, Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::acde3b2d09d5019fa82a95729bc66c21, Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 

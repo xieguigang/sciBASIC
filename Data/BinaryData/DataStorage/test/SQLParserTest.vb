@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bd9d208533e2aa9baf788a2f18a7f59, Data\BinaryData\DataStorage\test\SQLParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::0e3bc80a71130854c8b7e09b112d53eb, Data\BinaryData\DataStorage\test\SQLParserTest.vb"
 
     ' Author:
     ' 
@@ -138,4 +138,3 @@ Module SQLParserTest
         Pause()
     End Sub
 End Module
-

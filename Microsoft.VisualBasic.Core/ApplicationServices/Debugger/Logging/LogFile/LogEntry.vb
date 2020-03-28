@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b140e1247998449c2e44aee59c798206, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb"
+﻿#Region "Microsoft.VisualBasic::3dbae4711a9e602a3a9daf2f1771469d, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Structure LogEntry
     ' 
-    '         Properties: [Object], [Type], Msg, Time
+    '         Properties: [object], level, message, time
     ' 
-    '         Function: FormatMessage, ToString, TrimObject
+    '         Function: FormatMessage, ToString
     ' 
     ' 
     ' /********************************************************************************/

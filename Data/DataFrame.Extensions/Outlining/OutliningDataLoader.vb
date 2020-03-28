@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddaf36d81baf8842d9cb36682cb4f43e, Data\DataFrame.Extensions\Outlining\OutliningDataLoader.vb"
+﻿#Region "Microsoft.VisualBasic::173bfb3b84059653648c9d5a76894fea, Data\DataFrame.Extensions\Outlining\OutliningDataLoader.vb"
 
     ' Author:
     ' 
@@ -134,4 +134,3 @@ Namespace Outlining
         End Function
     End Module
 End Namespace
-

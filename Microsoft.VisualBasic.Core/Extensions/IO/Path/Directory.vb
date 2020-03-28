@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63cbc4dd9aec4e57d75e98e7437fe50d, Microsoft.VisualBasic.Core\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::fd4eea6a026c054e1b97ca8c78f98bd8, Microsoft.VisualBasic.Core\Extensions\IO\Path\Directory.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Directory
     ' 
-    '         Properties: DIR
+    '         Properties: folder
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

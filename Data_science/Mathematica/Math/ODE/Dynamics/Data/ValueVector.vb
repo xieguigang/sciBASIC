@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d9644cff45eb1b50d22a12008fe5c2e, Data_science\Mathematica\Math\ODE\ODEsSolver\ValueVector.vb"
+﻿#Region "Microsoft.VisualBasic::0c7c5d6727043c557dae717be2518ceb, Data_science\Mathematica\Math\ODE\Dynamics\Data\ValueVector.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,14 @@
 
     ' Summaries:
 
-    ' Class ValueVector
+    '     Class ValueVector
     ' 
-    '     Properties: Y
+    '         Properties: Y
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
-    '     Operators: +
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    '         Operators: +
+    ' 
     ' 
     ' /********************************************************************************/
 

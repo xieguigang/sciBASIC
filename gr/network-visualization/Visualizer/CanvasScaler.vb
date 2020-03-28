@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::565d77813cbfc6743febfae0563ca6ff, gr\network-visualization\Visualizer\CanvasScaler.vb"
+﻿#Region "Microsoft.VisualBasic::24689a5f426a13cfcc5c14fafd488e64, gr\network-visualization\Visualizer\CanvasScaler.vb"
 
     ' Author:
     ' 

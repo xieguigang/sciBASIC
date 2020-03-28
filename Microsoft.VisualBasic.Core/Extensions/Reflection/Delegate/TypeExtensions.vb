@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c14fe4af8015f616f7a75846f1e2621, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::cb9407c5fe42cee35f042e7608cb841f, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TypeExtensions
     ' 
-    '         Function: CanBeAssignedFrom, ImplementInterface
+    '         Function: CanBeAssignedFrom, (+2 Overloads) ImplementInterface
     ' 
     ' 
     ' /********************************************************************************/

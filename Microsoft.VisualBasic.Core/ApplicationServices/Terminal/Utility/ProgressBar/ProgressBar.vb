@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d575b24f4a15ef1630e124332faf9d1, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::37420063ea459f8543e5d052146392c4, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@
     ' 
     '     Class ProgressProvider
     ' 
-    '         Properties: Current, Target
+    '         Properties: Current, Elapsed, Target
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: [Step], (+2 Overloads) ETA, StepProgress, ToString

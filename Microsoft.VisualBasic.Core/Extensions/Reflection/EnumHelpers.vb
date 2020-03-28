@@ -1,4 +1,45 @@
-﻿Imports System.ComponentModel
+﻿#Region "Microsoft.VisualBasic::92d7c9a9d31263597b47e5d5ef04e8aa, Microsoft.VisualBasic.Core\Extensions\Reflection\EnumHelpers.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module EnumHelpers
+    ' 
+    '     Function: (+2 Overloads) Description, Enums, FlagCombinationDescription, (+2 Overloads) GetAllEnumFlags
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -117,3 +158,4 @@ Public Module EnumHelpers
         Return flags.Select(AddressOf Description).JoinBy(deli)
     End Function
 End Module
+

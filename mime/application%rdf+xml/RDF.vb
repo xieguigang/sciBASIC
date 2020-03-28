@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6efa560946179068e820fadc6c5e0e3, mime\application%rdf+xml\RDF.vb"
+﻿#Region "Microsoft.VisualBasic::90e4ab445881618c1e1e862acc3d84d5, mime\application%rdf+xml\RDF.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     ' Class RDF
     ' 
+    '     Properties: description
+    ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) LoadDocument
     ' 
     ' /********************************************************************************/
 

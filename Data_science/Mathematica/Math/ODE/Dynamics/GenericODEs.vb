@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb2cc772f6e0763e5c4370f869759569, Data_science\Mathematica\Math\ODE\ODEsSolver\GenericODEs.vb"
+﻿#Region "Microsoft.VisualBasic::22570f6c3b216ff908314d9752803f5f, Data_science\Mathematica\Math\ODE\Dynamics\GenericODEs.vb"
 
     ' Author:
     ' 
@@ -31,18 +31,18 @@
 
     ' Summaries:
 
-    ' Delegate Sub
+    '     Delegate Sub
     ' 
     ' 
-    ' Class GenericODEs
+    '     Class GenericODEs
     ' 
-    '     Properties: df
+    '         Properties: df
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: y0
+    '         Function: y0
     ' 
-    '     Sub: func
+    '         Sub: func
     ' 
     ' 
     ' 

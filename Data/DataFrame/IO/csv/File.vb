@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b30b42a5bae982fb8601c9c548f901f4, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::58d4a7ecb0ae92dfd3a8e67b448b6631, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
     '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Project
-    '                   Remove, Save, (+2 Overloads) ToArray, TokenCounts, ToString
+    '                   Remove, (+2 Overloads) Save, (+2 Overloads) ToArray, TokenCounts, ToString
     '                   Transpose, Trim
     ' 
     '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
@@ -51,7 +51,7 @@
     ' 
     '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, GetEnumerator
     '                       GetEnumerator1, IndexOf, IsNullOrEmpty, Join, Load
-    '                       loads, LoadTsv, Normalization, Parse, ReadHeaderRow
+    '                       loads, (+2 Overloads) LoadTsv, Normalization, Parse, ReadHeaderRow
     '                       Remove, RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt

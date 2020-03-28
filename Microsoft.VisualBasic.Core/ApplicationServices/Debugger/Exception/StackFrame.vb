@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed5e4aad317a781d9036cb0f5efbd183, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::78f100f1b99e42a5939ac4e6ae253402, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: File, Line, Method
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Parser, parserImpl, ToString
     ' 
     '     Class Method

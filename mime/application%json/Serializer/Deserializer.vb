@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcd3f28920049131e7a6c1bdd7613ed9, mime\application%json\Serializer\Deserializer.vb"
+﻿#Region "Microsoft.VisualBasic::586cde0be580b13e9a98b314cebb7fa6, mime\application%json\Serializer\Deserializer.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Deserializer
     ' 
-    '     Function: createArray, createObject, CreateObject
+    '     Function: createArray, createObject, CreateObject, createVariant
     ' 
     ' /********************************************************************************/
 

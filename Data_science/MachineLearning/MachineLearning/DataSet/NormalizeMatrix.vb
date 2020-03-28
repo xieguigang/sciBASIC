@@ -1,44 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::83b87c01b689a6efaa05cf11f79fec85, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::02e00f4bcf63954910ebdfecbf8e0da8, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class NormalizeMatrix
-' 
-'         Properties: matrix, names
-' 
-'         Function: CreateFromSamples, doNormalInternal, DoNormalize, NormalizeInput
-' 
-' 
-' /********************************************************************************/
+    '     Class NormalizeMatrix
+    ' 
+    '         Properties: matrix, names
+    ' 
+    '         Function: CreateFromSamples, doNormalInternal, DoNormalize, NormalizeInput
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

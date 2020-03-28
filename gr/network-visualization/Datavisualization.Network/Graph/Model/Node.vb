@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::302d765fc6e5da820c41bb2dfc7a095c, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::d9573bd7d6718426009939bf153132eb, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: adjacencies, data, pinned
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: adjacentTo, Clone, (+2 Overloads) Equals, GetHashCode, ToString
+    '         Function: adjacentTo, Clone, EnumerateAdjacencies, (+2 Overloads) Equals, GetHashCode
+    '                   ToString
     '         Operators: <>, =
     ' 
     ' 

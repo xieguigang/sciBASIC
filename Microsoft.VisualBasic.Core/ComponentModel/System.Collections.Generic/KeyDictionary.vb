@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::96de3680f1c003d276cb4347540c5482, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::b74fbd4b77c2f45de4031bc7b37ab038, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class HashTable
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'     Class Dictionary
-' 
-'         Constructor: (+3 Overloads) Sub New
-' 
-'         Function: Find, GetValueList, Have, Remove, SafeGetValue
-'                   (+2 Overloads) TryGetValue
-' 
-'         Sub: Add, AddRange, InsertOrUpdate
-' 
-'         Operators: (+2 Overloads) -, ^, +, <=, >=
-' 
-' 
-' /********************************************************************************/
+    '     Class HashTable
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class Dictionary
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: Find, GetValueList, Have, Remove, SafeGetValue
+    '                   (+2 Overloads) TryGetValue
+    ' 
+    '         Sub: Add, AddRange, InsertOrUpdate
+    ' 
+    '         Operators: (+2 Overloads) -, ^, +, <=, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

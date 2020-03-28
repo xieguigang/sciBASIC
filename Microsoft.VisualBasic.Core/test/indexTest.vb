@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fccc835b225b5a419960223064ace7ae, Microsoft.VisualBasic.Core\test\indexTest.vb"
+﻿#Region "Microsoft.VisualBasic::be910c7052ce588d26e7084892359f54, Microsoft.VisualBasic.Core\test\indexTest.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Module indexTest
         Pause()
     End Sub
 End Module
-

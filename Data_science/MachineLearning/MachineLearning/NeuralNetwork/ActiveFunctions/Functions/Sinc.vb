@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::351890197a987f1fddbef4ba90486e43, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\Sinc.vb"
+﻿#Region "Microsoft.VisualBasic::09b762e7d9f32180af2f17d46fe6b2b7, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\Sinc.vb"
 
     ' Author:
     ' 

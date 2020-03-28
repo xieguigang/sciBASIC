@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db847d90da63fb3c437862b197cbcf79, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\DesignerTerms.vb"
+﻿#Region "Microsoft.VisualBasic::94f9fecaebfd99c81915e79b2634ee36, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\DesignerTerms.vb"
 
     ' Author:
     ' 

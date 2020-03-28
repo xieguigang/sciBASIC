@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6c3216ce47751b8d0e03cdc2968ecfa, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\HyperbolicTangent.vb"
+﻿#Region "Microsoft.VisualBasic::e55b898de49712fa94710f15e0557bbf, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\HyperbolicTangent.vb"
 
     ' Author:
     ' 

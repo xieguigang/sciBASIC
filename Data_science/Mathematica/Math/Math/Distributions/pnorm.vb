@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5653abf1be43503a2fc63f52cf0aebec, Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
+﻿#Region "Microsoft.VisualBasic::db89b514442629635975b857e10fce27, Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
 
     ' Author:
     ' 

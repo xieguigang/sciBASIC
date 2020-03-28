@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbed3c3fa7ed82de96fd7c12a1c46661, Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
+﻿#Region "Microsoft.VisualBasic::238757303dfa7b76ccb24aca3b34fb05, Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,7 @@
 
     '     Module B_Spline
     ' 
-    '         Function: (+2 Overloads) BSpline, Compute
-    ' 
-    '         Sub: OutputPoint
+    '         Function: (+2 Overloads) BSpline, Compute, OutputPoint
     ' 
     ' 
     ' /********************************************************************************/

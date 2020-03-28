@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6576a5569926b427ebe1e6bbd35401cb, Microsoft.VisualBasic.Core\Extensions\Math\ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::7e489e704091906cfdd5d5b228a37c46, Microsoft.VisualBasic.Core\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 

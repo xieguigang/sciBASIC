@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc5560b306ec2224a6a3b55fc338d9d4, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::5c6c5e5250ea09d390ae7e3bd6d28bf3, Data_science\Mathematica\Math\ODE\Dynamics\Data\ODEsOut.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,13 @@
 
     ' Summaries:
 
-    ' Class ODEsOut
+    '     Class ODEsOut
     ' 
-    '     Properties: dx, HaveNaN, params, Resolution, x
-    '                 y, y0
+    '         Properties: dx, HaveNaN, params, Resolution, x
+    '                     y, y0
     ' 
-    '     Function: GetEnumerator, GetY0, IEnumerable_GetEnumerator, Join, ToString
+    '         Function: GetEnumerator, GetY0, IEnumerable_GetEnumerator, Join, ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

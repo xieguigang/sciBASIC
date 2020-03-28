@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cbaca763259aab24b01598384794733, Microsoft.VisualBasic.Core\Scripting\Runtime\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::377f3d57b57d224a10c22e11077b8b3b, Microsoft.VisualBasic.Core\Scripting\Runtime\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Numerics
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: CreateArray, OverloadsBinaryOperator
+    '         Function: CreateArray, CreatePrimitiveType, OverloadsBinaryOperator
     ' 
     ' 
     ' /********************************************************************************/
