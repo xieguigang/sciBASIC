@@ -1,0 +1,273 @@
+<math xmlns="http://www.w3.org/1998/Math/MathML">        
+          <lambda>
+            <bvar>
+              <ci> ADHADH1Kinadh </ci>
+            </bvar>
+            <bvar>
+              <ci> ADHADH1Knad </ci>
+            </bvar>
+            <bvar>
+              <ci> ADHADH1Kiacald </ci>
+            </bvar>
+            <bvar>
+              <ci> KeqADH </ci>
+            </bvar>
+            <bvar>
+              <ci> EtOH </ci>
+            </bvar>
+            <bvar>
+              <ci> ADHADH1Kietoh </ci>
+            </bvar>
+            <bvar>
+              <ci> ADHADH1Kinad </ci>
+            </bvar>
+            <bvar>
+              <ci> NAD </ci>
+            </bvar>
+            <bvar>
+              <ci> ADHADH1Kacald </ci>
+            </bvar>
+            <bvar>
+              <ci> ADHADH1Knadh </ci>
+            </bvar>
+            <bvar>
+              <ci> ADHADH1kcat </ci>
+            </bvar>
+            <bvar>
+              <ci> NADH </ci>
+            </bvar>
+            <bvar>
+              <ci> ADH1 </ci>
+            </bvar>
+            <bvar>
+              <ci> AcAld </ci>
+            </bvar>
+            <bvar>
+              <ci> ADHADH1Ketoh </ci>
+            </bvar>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <times/>
+                  <ci> ADH1 </ci>
+                  <ci> ADHADH1kcat </ci>
+                </apply>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <apply>
+                        <minus/>
+                        <ci> EtOH </ci>
+                      </apply>
+                      <ci> NAD </ci>
+                    </apply>
+                    <apply>
+                      <times/>
+                      <apply>
+                        <times/>
+                        <ci> ADHADH1Kacald </ci>
+                        <ci> ADHADH1Kinadh </ci>
+                      </apply>
+                      <ci> KeqADH </ci>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> AcAld </ci>
+                      <ci> NADH </ci>
+                    </apply>
+                    <apply>
+                      <times/>
+                      <ci> ADHADH1Kacald </ci>
+                      <ci> ADHADH1Kinadh </ci>
+                    </apply>
+                  </apply>
+                </apply>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <plus/>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <plus/>
+                      <apply>
+                        <plus/>
+                        <apply>
+                          <plus/>
+                          <apply>
+                            <plus/>
+                            <apply>
+                              <plus/>
+                              <apply>
+                                <plus/>
+                                <apply>
+                                  <plus/>
+                                  <cn type="integer"> 1 </cn>
+                                  <apply>
+                                    <divide/>
+                                    <apply>
+                                      <times/>
+                                      <ci> ADHADH1Knad </ci>
+                                      <ci> EtOH </ci>
+                                    </apply>
+                                    <apply>
+                                      <times/>
+                                      <ci> ADHADH1Ketoh </ci>
+                                      <ci> ADHADH1Kinad </ci>
+                                    </apply>
+                                  </apply>
+                                </apply>
+                                <apply>
+                                  <divide/>
+                                  <apply>
+                                    <times/>
+                                    <ci> ADHADH1Knadh </ci>
+                                    <ci> AcAld </ci>
+                                  </apply>
+                                  <apply>
+                                    <times/>
+                                    <ci> ADHADH1Kacald </ci>
+                                    <ci> ADHADH1Kinadh </ci>
+                                  </apply>
+                                </apply>
+                              </apply>
+                              <apply>
+                                <divide/>
+                                <ci> NAD </ci>
+                                <ci> ADHADH1Kinad </ci>
+                              </apply>
+                            </apply>
+                            <apply>
+                              <divide/>
+                              <apply>
+                                <times/>
+                                <ci> EtOH </ci>
+                                <ci> NAD </ci>
+                              </apply>
+                              <apply>
+                                <times/>
+                                <ci> ADHADH1Ketoh </ci>
+                                <ci> ADHADH1Kinad </ci>
+                              </apply>
+                            </apply>
+                          </apply>
+                          <apply>
+                            <divide/>
+                            <apply>
+                              <times/>
+                              <apply>
+                                <times/>
+                                <ci> ADHADH1Knadh </ci>
+                                <ci> AcAld </ci>
+                              </apply>
+                              <ci> NAD </ci>
+                            </apply>
+                            <apply>
+                              <times/>
+                              <apply>
+                                <times/>
+                                <ci> ADHADH1Kacald </ci>
+                                <ci> ADHADH1Kinad </ci>
+                              </apply>
+                              <ci> ADHADH1Kinadh </ci>
+                            </apply>
+                          </apply>
+                        </apply>
+                        <apply>
+                          <divide/>
+                          <apply>
+                            <times/>
+                            <apply>
+                              <times/>
+                              <ci> EtOH </ci>
+                              <ci> AcAld </ci>
+                            </apply>
+                            <ci> NAD </ci>
+                          </apply>
+                          <apply>
+                            <times/>
+                            <apply>
+                              <times/>
+                              <ci> ADHADH1Ketoh </ci>
+                              <ci> ADHADH1Kiacald </ci>
+                            </apply>
+                            <ci> ADHADH1Kinad </ci>
+                          </apply>
+                        </apply>
+                      </apply>
+                      <apply>
+                        <divide/>
+                        <ci> NADH </ci>
+                        <ci> ADHADH1Kinadh </ci>
+                      </apply>
+                    </apply>
+                    <apply>
+                      <divide/>
+                      <apply>
+                        <times/>
+                        <apply>
+                          <times/>
+                          <ci> ADHADH1Knad </ci>
+                          <ci> EtOH </ci>
+                        </apply>
+                        <ci> NADH </ci>
+                      </apply>
+                      <apply>
+                        <times/>
+                        <apply>
+                          <times/>
+                          <ci> ADHADH1Ketoh </ci>
+                          <ci> ADHADH1Kinad </ci>
+                        </apply>
+                        <ci> ADHADH1Kinadh </ci>
+                      </apply>
+                    </apply>
+                  </apply>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <times/>
+                      <ci> AcAld </ci>
+                      <ci> NADH </ci>
+                    </apply>
+                    <apply>
+                      <times/>
+                      <ci> ADHADH1Kacald </ci>
+                      <ci> ADHADH1Kinadh </ci>
+                    </apply>
+                  </apply>
+                </apply>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <times/>
+                      <ci> EtOH </ci>
+                      <ci> AcAld </ci>
+                    </apply>
+                    <ci> NADH </ci>
+                  </apply>
+                  <apply>
+                    <times/>
+                    <apply>
+                      <times/>
+                      <ci> ADHADH1Kacald </ci>
+                      <ci> ADHADH1Kietoh </ci>
+                    </apply>
+                    <ci> ADHADH1Kinadh </ci>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+          </lambda>
+        </math>
