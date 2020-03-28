@@ -14,6 +14,7 @@ Public Class Apply : Inherits symbols
     Public Property divide As mathOperator
     Public Property times As mathOperator
     Public Property plus As mathOperator
+    Public Property power As mathOperator
 
     Public Property cn As constant
 
@@ -28,6 +29,8 @@ Public Class Apply : Inherits symbols
                 Return "*"
             ElseIf Not plus Is Nothing Then
                 Return "+"
+            ElseIf Not power Is Nothing Then
+                Return "^"
             Else
                 Return "-"
             End If
@@ -38,7 +41,7 @@ Public Class Apply : Inherits symbols
         If ci.IsNullOrEmpty Then
             Return [operator] & $"( {apply.JoinBy(" ")} )"
         ElseIf ci.Length = 1 Then
-            Return $"{[operator]} {ci(Scan0)}"
+            Return $"{ci(Scan0)} {[operator]}"
         ElseIf ci.Length = 2 Then
             Return $"({ci(0)} {[operator]} {ci(1)})"
         Else
