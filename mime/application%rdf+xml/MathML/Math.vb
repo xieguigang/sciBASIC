@@ -1,10 +1,10 @@
 ﻿Imports System.Xml.Serialization
 
+<XmlRoot("math", Namespace:="http://www.w3.org/1998/Math/MathML")>
 <XmlType("math", Namespace:="http://www.w3.org/1998/Math/MathML")>
 Public Class Math
 
-    <XmlElement("apply")>
-    Public Property applyValue As Apply
+    Public Property apply As Apply
     Public Property lambda As lambda
 
 End Class
@@ -38,17 +38,8 @@ Public Class Apply : Inherits symbols
     End Property
 
     Public Overrides Function ToString() As String
-        If ci.IsNullOrEmpty Then
-            Return [operator] & $"( {apply.JoinBy(" ")} )"
-        ElseIf ci.Length = 1 Then
-            Return $"{ci(Scan0)} {[operator]}"
-        ElseIf ci.Length = 2 Then
-            Return $"({ci(0)} {[operator]} {ci(1)})"
-        Else
-            Return "invalid"
-        End If
+        Return contentBuilder.ToString(Me)
     End Function
-
 End Class
 
 Public Class mathOperator
@@ -78,4 +69,8 @@ Public Class symbols
 
     <XmlElement("ci")>
     Public Property ci As String()
+
+    Public Overrides Function ToString() As String
+        Return ci.JoinBy(" ")
+    End Function
 End Class
