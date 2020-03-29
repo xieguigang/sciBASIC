@@ -27,7 +27,7 @@ Public Class Simulator(Of T As Individual)
     ''' 
     ''' </summary>
     ''' <param name="size">the grid size</param>
-    Sub New(size As Size)
+    Sub New(size As Size, activator As Func(Of T))
         Dim grid = MAT(Of CellEntity(Of T))(size.Height, size.Width)
 
         Me.grid = grid
@@ -35,7 +35,7 @@ Public Class Simulator(Of T As Individual)
 
         For j As Integer = 0 To size.Width - 1
             For i As Integer = 0 To size.Height - 1
-                grid(i)(j) = New CellEntity(Of T)(i, j)
+                grid(i)(j) = New CellEntity(Of T)(i, j, activator())
             Next
         Next
 
@@ -63,13 +63,19 @@ Public Class Simulator(Of T As Individual)
     End Sub
 
     Private Sub runRandom()
+        For Each cell In RandomCells()
+            Call cell.Tick()
+        Next
+    End Sub
+
+    Public Iterator Function RandomCells() As IEnumerable(Of CellEntity(Of T))
         Dim x As Integer() = size.Width.SeqRandom
         Dim y As Integer() = size.Height.SeqRandom
 
         For Each xi As Integer In x
             For Each yi As Integer In y
-                Call grid(yi)(xi).Tick()
+                Yield grid(yi)(xi)
             Next
         Next
-    End Sub
+    End Function
 End Class

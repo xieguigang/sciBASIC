@@ -5,7 +5,8 @@ Public Class CellEntity(Of T As Individual) : Inherits GridCell(Of T)
 
     Protected adjacents As CellEntity(Of T)()
 
-    Sub New(i As Integer, j As Integer)
+    Sub New(i As Integer, j As Integer, obj As T)
+        data = obj
         index = New Point(i, j)
     End Sub
 
