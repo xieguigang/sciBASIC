@@ -203,6 +203,12 @@ Namespace Language
             Return x - n.Value
         End Operator
 
+        ''' <summary>
+        ''' value / b
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(x As i32, b As Integer) As Double
             Return x.Value / b
