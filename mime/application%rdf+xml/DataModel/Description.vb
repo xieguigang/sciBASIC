@@ -43,7 +43,7 @@
 
 Imports System.Xml.Serialization
 
-<XmlType("Description", [Namespace]:=RDFEntity.XmlnsNamespace)>
+<XmlType("DescriptionModel", [Namespace]:=RDFEntity.XmlnsNamespace)>
 Public MustInherit Class Description
 
     <XmlNamespaceDeclarations()>
