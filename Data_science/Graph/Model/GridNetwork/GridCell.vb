@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 
-Public Class GridCell(Of T As Class)
+Public Class GridCell(Of T)
 
     ''' <summary>
     ''' 二维数组之中的索引 
