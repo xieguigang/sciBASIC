@@ -75,10 +75,10 @@ Public Class Array
     End Function
 End Class
 
-<XmlType("item", [Namespace]:=RDFEntity.XmlnsNamespace)>
+<XmlType("item", [Namespace]:="NA")>
 Public Class li
 
-    <XmlAttribute("li", [Namespace]:=RDFEntity.XmlnsNamespace)>
+    <XmlAttribute([Namespace]:=RDFEntity.XmlnsNamespace)>
     Public Property resource As String
 
     Public Overrides Function ToString() As String
