@@ -343,6 +343,7 @@
     <Compile Include="MathML\Math.vb" />
     <Compile Include="MathML\maction.vb" />
     <Compile Include="MathML\contentBuilder.vb" />
+    <Compile Include="NamespaceDoc.vb" />
     <Compile Include="RDFEntity.vb" />
     <Compile Include="RDF.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
