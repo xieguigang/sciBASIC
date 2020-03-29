@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Class Simulator(Of T As Individual)
 
@@ -63,19 +64,24 @@ Public Class Simulator(Of T As Individual)
     End Sub
 
     Private Sub runRandom()
-        For Each cell In RandomCells()
-            Call cell.Tick()
-        Next
-    End Sub
-
-    Public Iterator Function RandomCells() As IEnumerable(Of CellEntity(Of T))
         Dim x As Integer() = size.Width.SeqRandom
         Dim y As Integer() = size.Height.SeqRandom
 
         For Each xi As Integer In x
             For Each yi As Integer In y
-                Yield grid(yi)(xi)
+                Call grid(yi)(xi).Tick()
             Next
         Next
+    End Sub
+
+    Public Iterator Function RandomCells() As IEnumerable(Of CellEntity(Of T))
+        Dim y, x As Integer
+
+        Do While True
+            x = randf.seeds.Next(0, size.Width)
+            y = randf.seeds.Next(0, size.Height)
+
+            Yield grid(y)(x)
+        Loop
     End Function
 End Class
