@@ -120,7 +120,7 @@ Namespace Layouts.Orthogonal
                     Dim currentCell As GridCell = grid.FindCell(V(j).label)
 
                     ' if vj has not changed it’s place from the previous iteration then
-                    If Not gridCell Is currentCell AndAlso Not gridCell.node Is V(j) Then
+                    If Not gridCell Is currentCell AndAlso Not gridCell.data Is V(j) Then
                         Call grid.SwapNode(currentCell.index, gridCell.index)
                     Else
                         ' Try to swap vj with nodes nearby;
@@ -155,7 +155,7 @@ Namespace Layouts.Orthogonal
                     Dim currentCell As GridCell = grid.FindCell(V(j).label)
 
                     ' if vj has not changed it’s place from the previous iteration then
-                    If Not gridCell Is currentCell AndAlso Not gridCell.node Is V(j) Then
+                    If Not gridCell Is currentCell AndAlso Not gridCell.data Is V(j) Then
                         Call grid.SwapNode(currentCell.index, gridCell.index)
                     Else
                         ' Try to swap vj with nodes nearby;
@@ -184,7 +184,7 @@ Namespace Layouts.Orthogonal
             Dim gain As Double
 
             For Each nearby As GridCell In workspace.grid.GetAdjacentCells(origin.index).Shuffles
-                If nearby.node Is Nothing Then
+                If nearby.data Is Nothing Then
                     ' 附近的单元格是没有节点的，直接放置进去?
                     Call workspace.grid.MoveNode(origin.index, nearby.index)
                 Else

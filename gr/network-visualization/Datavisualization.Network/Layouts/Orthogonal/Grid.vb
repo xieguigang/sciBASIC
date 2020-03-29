@@ -1,100 +1,101 @@
 ﻿#Region "Microsoft.VisualBasic::17a5243dd032235928bc241a2b44bf11, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Grid.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GridCell
-    ' 
-    '         Properties: index, location, node
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: PutNode, RemoveNode
-    ' 
-    '     Class Grid
-    ' 
-    '         Properties: actualSize, GetAllNodeFilledCells, size
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: FindCell, FindIndex, GetAdjacentCells, PutRandomNodes
-    ' 
-    '         Sub: moveNode, (+2 Overloads) MoveNode, SwapNode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GridCell
+' 
+'         Properties: index, location, node
+' 
+'         Function: ToString
+' 
+'         Sub: PutNode, RemoveNode
+' 
+'     Class Grid
+' 
+'         Properties: actualSize, GetAllNodeFilledCells, size
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: FindCell, FindIndex, GetAdjacentCells, PutRandomNodes
+' 
+'         Sub: moveNode, (+2 Overloads) MoveNode, SwapNode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Emit.Marshal
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports GridIndex = Microsoft.VisualBasic.Data.GraphTheory.Grid
 
 Namespace Layouts.Orthogonal
 
-    Public Class GridCell
+    Public Class GridCell : Inherits GridCell(Of Node)
 
-        Public Property index As Point
+        ''' <summary>
+        ''' 实际的物理位置
+        ''' </summary>
+        ''' <returns></returns>
         Public Property location As PointF
-
-        Public ReadOnly Property node As Node
 
         ''' <summary>
         ''' 将目标指定的节点<paramref name="node"/>对象放置在当前的单元格内，然后更新坐标位置为当前的单元格的位置
         ''' </summary>
         ''' <param name="node"></param>
         Public Sub PutNode(node As Node)
-            Me._node = node
+            Me.data = node
 
             node.data.initialPostion.x = location.X
             node.data.initialPostion.y = location.Y
         End Sub
 
         Public Sub RemoveNode()
-            Me._node = Nothing
+            Me.data = Nothing
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Dim nodeLabel$
 
-            If node Is Nothing Then
+            If data Is Nothing Then
                 nodeLabel = "<none>"
             Else
-                nodeLabel = node.label
+                nodeLabel = data.label
             End If
 
             Return $"[{index.X},{index.Y}] x:={location.X}, y:={location.Y}; {nodeLabel}"
@@ -132,7 +133,7 @@ Namespace Layouts.Orthogonal
                 Return gridCells _
                     .IteratesALL _
                     .Where(Function(cell)
-                               Return Not cell.node Is Nothing
+                               Return Not cell.data Is Nothing
                            End Function) _
                     .ToArray
             End Get
@@ -175,13 +176,13 @@ Namespace Layouts.Orthogonal
             Dim x As GridCell = Me(a)
             Dim y As GridCell = Me(b)
 
-            If x.node Is Nothing Then
+            If x.data Is Nothing Then
                 Call MoveNode(b, a)
-            ElseIf y.node Is Nothing Then
+            ElseIf y.data Is Nothing Then
                 Call MoveNode(a, b)
             Else
-                Dim vi = x.node
-                Dim vj = y.node
+                Dim vi = x.data
+                Dim vj = y.data
 
                 nodes(vi.label) = y
                 y.PutNode(vi)
@@ -194,7 +195,7 @@ Namespace Layouts.Orthogonal
         Public Sub MoveNode(from As Point, [to] As Point)
             Dim fromCell As GridCell = Me(from)
             Dim toCell As GridCell = Me([to])
-            Dim node As Node = fromCell.node
+            Dim node As Node = fromCell.data
 
             Call moveNode(fromCell, toCell, node)
         End Sub
@@ -312,7 +313,7 @@ Namespace Layouts.Orthogonal
 
                     If Not V.EndRead Then
                         Call cell.PutNode(++V)
-                        Call nodes.Add(cell.node.label, cell)
+                        Call nodes.Add(cell.data.label, cell)
                     Else
                         break = True
                         Exit For
