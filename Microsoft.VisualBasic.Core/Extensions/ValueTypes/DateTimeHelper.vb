@@ -197,6 +197,13 @@ Namespace ValueTypes
                 .ToLocalTime()
         End Function
 
+        Public Function FromMilliseconds(milliseconds As Long) As Date
+            Dim start As New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            Dim [date] = start.AddMilliseconds(milliseconds).ToLocalTime()
+
+            Return [date]
+        End Function
+
         Const ZeroDate1$ = "0001-01-01, 00:00:00"
         Const ZeroDate2$ = "0000-00-00, 00:00:00"
         ''' <summary>
