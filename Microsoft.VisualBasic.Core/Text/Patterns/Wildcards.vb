@@ -67,7 +67,11 @@ Namespace Text.Patterns
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function WildcardMatch(wildcard$, s$, Optional ignoreCase As Boolean = False) As Boolean
-            Return WildcardMatch(wildcard, s, 0, 0, ignoreCase)
+            If s.StringEmpty Then
+                Return False
+            Else
+                Return WildcardMatch(wildcard, s, 0, 0, ignoreCase)
+            End If
         End Function
 
         Const NeverRun$ = "This code is never run, so this exception is useless."

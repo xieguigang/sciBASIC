@@ -500,7 +500,7 @@ Public Module PathExtensions
     ''' <returns></returns>
     <Extension>
     Public Function FileLength(path As String) As Long
-        If Not path.FileExists Then
+        If Not path.FileExists OrElse path.DirectoryExists Then
             Return -1&
         Else
             Return FileIO.FileSystem.GetFileInfo(path).Length

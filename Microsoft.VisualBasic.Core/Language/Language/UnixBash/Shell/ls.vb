@@ -187,42 +187,48 @@ Namespace Language.UnixBash
         ''' <param name="directory"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator <=(ls As Search, directory$) As IEnumerable(Of String)
-            Dim l As Boolean = ls.opts.ContainsKey(SearchOpt.Options.LongName)
-
             If Not directory.DirectoryExists Then
                 Call $"Directory {directory} is not valid on your file system!".Warning
                 Return {}
-            End If
+            Else
+                With ls
+                    Dim list As IEnumerable(Of String)
 
+                    If .opts.ContainsKey(SearchOpt.Options.Directory) Then
+                        list = directory.ListDirectory(.SearchType)
+                    Else
+                        list = directory.ReadDirectory(.SearchType)
+                    End If
+
+                    Return DoFileNameGreps(ls, files:=list)
+                End With
+            End If
+        End Operator
+
+        Public Shared Function DoFileNameGreps(ls As Search, files As IEnumerable(Of String)) As IEnumerable(Of String)
+            Dim l As Boolean = ls.opts.ContainsKey(SearchOpt.Options.LongName)
             Dim wc$() = ls.wildcards
             Dim isMatch As Func(Of String, Boolean) =
                 AddressOf New wildcardsCompatible With {
                     .regexp = If(wc.IsNullOrEmpty, {"*"}, wc)
                 }.IsMatch
-            Dim list As IEnumerable(Of String)
 
             With ls
                 If .opts.ContainsKey(SearchOpt.Options.Directory) Then
-                    list = directory.ListDirectory(.SearchType)
-                Else
-                    list = directory.ReadDirectory(.SearchType)
-                End If
-
-                If .opts.ContainsKey(SearchOpt.Options.Directory) Then
                     If l Then
-                        Return list.Where(isMatch)
+                        Return files.Where(isMatch)
                     Else
-                        Return list.Where(isMatch) _
+                        Return files.Where(isMatch) _
                             .Select(Function(s)
                                         Return s.BaseName
                                     End Function)
                     End If
                 Else
                     If l Then
-                        Return list.Where(isMatch)
+                        Return files.Where(isMatch)
                     Else
                         Return From path As String
-                               In list
+                               In files
                                Where isMatch(path)
                                Let name As String = path.Replace("\", "/") _
                                                         .Split("/"c) _
@@ -231,7 +237,7 @@ Namespace Language.UnixBash
                     End If
                 End If
             End With
-        End Operator
+        End Function
 
         Public Shared Operator >(ls As Search, DIR As String) As IEnumerable(Of String)
             Throw New NotSupportedException
