@@ -31,9 +31,3 @@ Public Class CellEntity(Of T As Individual) : Inherits GridCell(Of T)
         Call data.Tick(getAdjacents)
     End Sub
 End Class
-
-Public Interface Individual
-
-    Sub Tick(adjacents As IEnumerable(Of Individual))
-
-End Interface
