@@ -83,7 +83,7 @@ Namespace My.Resources
         '''H4 { font-size: 10pt; color: black; }
         '''PRE { BACKGROUND-COLOR: #FBEDBB; FONT-FAMILY: &quot;Courier New&quot;, Courier, mono; WHITE-SPACE: pre; }
         '''CODE { COLOR: #990000; FONT-FAMILY: &quot;Courier New&quot;, Courier, mono; }
-        '''.S [rest of string was truncated]&quot;;.
+        '''.SpacedList li [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property CPOL() As String
             Get
@@ -105,7 +105,7 @@ Namespace My.Resources
         '''software and other kinds of works.
         '''
         '''  The licenses for most software and other practical works are designed
-        '''to [rest of string was truncated]&quot;;.
+        '''to take away yo [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property gpl() As String
             Get
@@ -134,7 +134,7 @@ Namespace My.Resources
         '''MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
         '''GNU General Public License for more details.
         '''
-        '''You should have received a copy of the GNU  [rest of string was truncated]&quot;;.
+        '''You should have received a copy of the GNU General Pu [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property license() As String
             Get
@@ -150,7 +150,7 @@ Namespace My.Resources
         '''3GPP MSEQ File	application/vnd.mseq	.mseq	IANA: 3GPP MSEQ File
         '''3M Post It Notes	application/vnd.3m.post-it-notes	.pwn	IANA: 3M Post It Notes
         '''3rd Generation Partnership Project - Pic Large	application/vnd.3gpp.pic-bw-large	.plb	3GPP
-        '''3rd Generation Partnership Project - Pic Small	appli [rest of string was truncated]&quot;;.
+        '''3rd Generation Partnership Project - Pic Small	application/ [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property List_of_MIME_types___Internet_Media_Types_() As String
             Get

@@ -102,7 +102,9 @@ Namespace Math
 
             Return hash.ToDictionary(
                 Function(tp) tp.Item1,
-                Function(tp) tp.Item2)
+                Function(tp)
+                    Return tp.Item2
+                End Function)
         End Function
 
         ''' <summary>
