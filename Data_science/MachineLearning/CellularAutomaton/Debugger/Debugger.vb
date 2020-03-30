@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Linq
 
 Public Class Debugger(Of T As Individual) : Implements IDisposable
 
@@ -42,7 +43,14 @@ Public Class Debugger(Of T As Individual) : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects).
-                Call WriteCDF.Flush(file, cache, GetType(T))
+                Call cache _
+                    .Select(Function(l)
+                                Return l.Select(Function(x) x.ToArray).ToArray
+                            End Function) _
+                    .DoCall(Sub(matrix)
+                                WriteCDF.Flush(file, matrix.ToArray, GetType(T))
+                            End Sub)
+
                 Call cache.Free
             End If
 

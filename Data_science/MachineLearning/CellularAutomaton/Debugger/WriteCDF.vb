@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Language
 
 Module WriteCDF
 
-    Public Sub Flush(path As String, cache As List(Of Integer)()(), type As Type)
+    Public Sub Flush(path As String, cache As Integer()()(), type As Type)
         Using file As New CDFWriter(path)
             Dim w = cache(Scan0).Length
             Dim h = cache.Length
