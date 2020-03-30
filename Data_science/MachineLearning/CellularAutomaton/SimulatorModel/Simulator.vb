@@ -3,8 +3,8 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Class Simulator(Of T As Individual)
 
-    ReadOnly grid As CellEntity(Of T)()()
-    ReadOnly size As Size
+    Friend ReadOnly grid As CellEntity(Of T)()()
+    Friend ReadOnly size As Size
 
     ''' <summary>
     ''' 

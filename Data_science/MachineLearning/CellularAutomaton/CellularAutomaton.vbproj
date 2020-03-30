@@ -68,10 +68,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CellEntity.vb" />
+    <Compile Include="Debugger\Debugger.vb" />
+    <Compile Include="Debugger\WriteCDF.vb" />
+    <Compile Include="SimulatorModel\CellEntity.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="Individual.vb" />
-    <Compile Include="Simulator.vb" />
+    <Compile Include="SimulatorModel\Individual.vb" />
+    <Compile Include="SimulatorModel\Simulator.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
