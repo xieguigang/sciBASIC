@@ -123,7 +123,8 @@ End Interface
     <Extension>
     Public Function OpenBinaryReader(path$, Optional encoding As Encodings = Encodings.ASCII, Optional buffered& = 1024 * 1024 * 10) As BinaryDataReader
         If FileIO.FileSystem.GetFileInfo(path).Length <= buffered Then
-            Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)   ' 文件数据将会被缓存
+            ' 文件数据将会被缓存
+            Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)
             Dim ms As New MemoryStream(byts)
 
             Return New BinaryDataReader(ms, encoding)
