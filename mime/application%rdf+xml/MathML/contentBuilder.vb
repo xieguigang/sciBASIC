@@ -1,4 +1,7 @@
-﻿Imports System.Xml
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports System.Xml
 
 Namespace MathML
 
@@ -13,8 +16,32 @@ Namespace MathML
         ''' </summary>
         ''' <param name="mathML"></param>
         ''' <returns></returns>
-        Public Function ParseXml(mathML As XmlTextReader) As BinaryExpression
+        Public Function ParseXml(mathML As XmlReader) As BinaryExpression
+            mathML.MoveToContent()
+            mathML.moveToElementName("lambda")
+            mathML.moveToElementName("apply")
+
+            mathML = XmlReader.Create(New MemoryStream(Encoding.UTF8.GetBytes(mathML.ReadInnerXml)))
+            mathML.MoveToContent()
+
+            Return mathML.parseInternal()
+        End Function
+
+        <Extension>
+        Private Function parseInternal(mathML As XmlReader) As BinaryExpression
+            Dim [operator] = mathML.Name
+            Dim left, right As BinaryExpression
+
+            mathML.moveToElementName("apply")
+
 
         End Function
+
+        <Extension>
+        Private Sub moveToElementName(xml As XmlReader, name As String)
+            Do While xml.Name <> name AndAlso Not xml.EOF
+                Call xml.Read()
+            Loop
+        End Sub
     End Module
 End Namespace

@@ -33,7 +33,7 @@ Namespace MathML
 
         Public Shared Function FromMathML(xml As String) As BinaryExpression
             Using buffer As New MemoryStream(Encoding.UTF8.GetBytes(xml))
-                Dim reader As XmlTextReader = XmlTextReader.Create(buffer)
+                Dim reader As XmlReader = XmlReader.Create(buffer)
                 Dim exp As BinaryExpression = contentBuilder.ParseXml(mathML:=reader)
 
                 Return exp
