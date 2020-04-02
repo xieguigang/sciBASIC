@@ -340,6 +340,7 @@
     <Compile Include="DataModel\Description.vb" />
     <Compile Include="DataModel\DCMI.vb" />
     <Compile Include="DataTypes.vb" />
+    <Compile Include="MathML\BinaryExpression.vb" />
     <Compile Include="MathML\Math.vb" />
     <Compile Include="MathML\maction.vb" />
     <Compile Include="MathML\contentBuilder.vb" />
