@@ -358,7 +358,7 @@ Namespace Linq
 
         <Extension, ExportAPI("Sequence")>
         Public Function Sequence(n As Integer, offset As Integer) As Integer()
-            Dim array As Integer() = n.Sequence
+            Dim array As Integer() = n.Sequence.ToArray
 
             For i As Integer = 0 To array.Length - 1
                 array(i) = array(i) + offset

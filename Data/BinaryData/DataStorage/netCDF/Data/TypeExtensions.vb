@@ -66,6 +66,7 @@ Namespace netCDF
                 Case GetType(String) : Return CDFDataTypes.CHAR
                 Case GetType(Byte) : Return CDFDataTypes.BYTE
                 Case GetType(Long) : Return CDFDataTypes.LONG
+                Case GetType(Boolean) : Return CDFDataTypes.BOOLEAN
                 Case Else
                     Return CDFDataTypes.undefined
             End Select
@@ -90,7 +91,7 @@ Namespace netCDF
         ''' <returns>size of the type</returns>
         Public Function sizeof(type As CDFDataTypes) As Integer
             Select Case type
-                Case CDFDataTypes.BYTE
+                Case CDFDataTypes.BYTE, CDFDataTypes.BOOLEAN
                     Return 1
                 Case CDFDataTypes.CHAR
                     Return 1

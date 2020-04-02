@@ -94,5 +94,6 @@ Namespace netCDF
         ''' #define NC_INT64   10
         ''' </summary>
         <Description("long")> [LONG] = 10
+        <Description("boolean")> [BOOLEAN] = 11
     End Enum
 End Namespace

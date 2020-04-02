@@ -72,6 +72,7 @@ Namespace netCDF.Components
         Public Property tiny_num As Single()
         Public Property numerics As Double()
         Public Property longs As Long()
+        Public Property flags As Boolean()
 
         Public ReadOnly Property Length As Integer
             Get
@@ -90,6 +91,8 @@ Namespace netCDF.Components
                         Return tiny_int.Length
                     Case CDFDataTypes.LONG
                         Return longs.Length
+                    Case CDFDataTypes.BOOLEAN
+                        Return flags.Length
                     Case Else
                         Return 0
                 End Select
@@ -112,6 +115,8 @@ Namespace netCDF.Components
                     Return CDFDataTypes.DOUBLE
                 ElseIf Not longs.IsNullOrEmpty Then
                     Return CDFDataTypes.LONG
+                ElseIf Not flags.IsNullOrEmpty Then
+                    Return CDFDataTypes.BOOLEAN
                 Else
                     ' null
                     Return CDFDataTypes.undefined
@@ -136,6 +141,8 @@ Namespace netCDF.Components
                         Return longs
                     Case CDFDataTypes.SHORT
                         Return tiny_int
+                    Case CDFDataTypes.BOOLEAN
+                        Return flags
                     Case Else
                         Return Nothing
                 End Select
@@ -153,6 +160,7 @@ Namespace netCDF.Components
                 Case CDFDataTypes.INT : stringify = integers.JoinBy(",")
                 Case CDFDataTypes.SHORT : stringify = tiny_int.JoinBy(",")
                 Case CDFDataTypes.LONG : stringify = longs.JoinBy(",")
+                Case CDFDataTypes.BOOLEAN : stringify = flags.Select(Function(b) If(b, 1, 0)).JoinBy(",")
                 Case Else
                     Return "null"
             End Select
@@ -170,6 +178,7 @@ Namespace netCDF.Components
         Public Function GetBuffer(encoding As Encoding) As Byte()
             Select Case cdfDataType
                 Case CDFDataTypes.BYTE : Return Convert.FromBase64String(byteStream)
+                Case CDFDataTypes.BOOLEAN : Return flags.Select(Function(b) CByte(If(b, 1, 0))).ToArray
                 Case CDFDataTypes.CHAR : Return encoding.GetBytes(chars)
                 Case CDFDataTypes.DOUBLE
                     Return numerics _
@@ -212,6 +221,11 @@ Namespace netCDF.Components
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(data As Boolean()) As CDFData
+            Return New CDFData With {.flags = data}
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data As Char()) As CDFData
             Return New CDFData With {.chars = New String(data)}
         End Operator
@@ -250,6 +264,8 @@ Namespace netCDF.Components
             Select Case data.type
                 Case CDFDataTypes.BYTE
                     Return data.values.As(Of Byte).ToArray
+                Case CDFDataTypes.BOOLEAN
+                    Return data.values.As(Of Boolean).ToArray
                 Case CDFDataTypes.CHAR
                     Return data.values.As(Of Char).ToArray
                 Case CDFDataTypes.DOUBLE
