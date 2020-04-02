@@ -1,6 +1,9 @@
-﻿Module contentBuilder
+﻿Namespace MathML
 
-    Public Function ToString(lambda As Apply) As String
+    Module contentBuilder
 
-    End Function
-End Module
+        Public Function ToString(lambda As Apply) As String
+
+        End Function
+    End Module
+End Namespace

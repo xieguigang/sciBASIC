@@ -1,76 +1,79 @@
 ﻿Imports System.Xml.Serialization
 
-<XmlRoot("math", Namespace:="http://www.w3.org/1998/Math/MathML")>
-<XmlType("math", Namespace:="http://www.w3.org/1998/Math/MathML")>
-Public Class Math
+Namespace MathML
 
-    Public Property apply As Apply
-    Public Property lambda As lambda
+    <XmlRoot("math", Namespace:="http://www.w3.org/1998/Math/MathML")>
+    <XmlType("math", Namespace:="http://www.w3.org/1998/Math/MathML")>
+    Public Class Math
 
-End Class
+        Public Property apply As Apply
+        Public Property lambda As lambda
 
-Public Class Apply : Inherits symbols
+    End Class
 
-    Public Property divide As mathOperator
-    Public Property times As mathOperator
-    Public Property plus As mathOperator
-    Public Property power As mathOperator
+    Public Class Apply : Inherits symbols
 
-    Public Property cn As constant
+        Public Property divide As mathOperator
+        Public Property times As mathOperator
+        Public Property plus As mathOperator
+        Public Property power As mathOperator
 
-    <XmlElement("apply")>
-    Public Property apply As Apply()
+        Public Property cn As constant
 
-    Public ReadOnly Property [operator] As String
-        Get
-            If Not divide Is Nothing Then
-                Return "/"
-            ElseIf Not times Is Nothing Then
-                Return "*"
-            ElseIf Not plus Is Nothing Then
-                Return "+"
-            ElseIf Not power Is Nothing Then
-                Return "^"
-            Else
-                Return "-"
-            End If
-        End Get
-    End Property
+        <XmlElement("apply")>
+        Public Property apply As Apply()
 
-    Public Overrides Function ToString() As String
-        Return contentBuilder.ToString(Me)
-    End Function
-End Class
+        Public ReadOnly Property [operator] As String
+            Get
+                If Not divide Is Nothing Then
+                    Return "/"
+                ElseIf Not times Is Nothing Then
+                    Return "*"
+                ElseIf Not plus Is Nothing Then
+                    Return "+"
+                ElseIf Not power Is Nothing Then
+                    Return "^"
+                Else
+                    Return "-"
+                End If
+            End Get
+        End Property
 
-Public Class mathOperator
-End Class
+        Public Overrides Function ToString() As String
+            Return contentBuilder.ToString(Me)
+        End Function
+    End Class
 
-Public Class constant
+    Public Class mathOperator
+    End Class
 
-    <XmlAttribute>
-    Public Property type As String
-    <XmlText>
-    Public Property value As String
+    Public Class constant
 
-    Public Overrides Function ToString() As String
-        Return $"({type}) {value}"
-    End Function
+        <XmlAttribute>
+        Public Property type As String
+        <XmlText>
+        Public Property value As String
 
-End Class
+        Public Overrides Function ToString() As String
+            Return $"({type}) {value}"
+        End Function
 
-Public Class lambda
+    End Class
 
-    <XmlElement("bvar")>
-    Public Property bvar As symbols()
-    Public Property apply As Apply
-End Class
+    Public Class lambda
 
-Public Class symbols
+        <XmlElement("bvar")>
+        Public Property bvar As symbols()
+        Public Property apply As Apply
+    End Class
 
-    <XmlElement("ci")>
-    Public Property ci As String()
+    Public Class symbols
 
-    Public Overrides Function ToString() As String
-        Return ci.JoinBy(" ")
-    End Function
-End Class
+        <XmlElement("ci")>
+        Public Property ci As String()
+
+        Public Overrides Function ToString() As String
+            Return ci.JoinBy(" ")
+        End Function
+    End Class
+End Namespace
