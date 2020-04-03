@@ -32,7 +32,11 @@ Namespace MathML
                 End If
             End If
 
-            Return $"{left} {operators(lambda.[operator]).Description} {right}"
+            If lambda.applyright Is Nothing Then
+                Return $"{operators(lambda.[operator]).Description} {left}"
+            Else
+                Return $"{left} {operators(lambda.[operator]).Description} {right}"
+            End If
         End Function
 
         ''' <summary>
@@ -89,7 +93,12 @@ Namespace MathML
                 right = applys(1).parseInternal
             Else
                 left = apply.elements(1).getTextSymbol
-                right = apply.elements(2).getTextSymbol
+
+                If apply.elements.Length > 2 Then
+                    right = apply.elements(2).getTextSymbol
+                Else
+                    right = Nothing
+                End If
             End If
 
             Dim exp As New BinaryExpression With {
