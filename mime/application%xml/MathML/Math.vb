@@ -38,10 +38,6 @@ Namespace MathML
                 End If
             End Get
         End Property
-
-        Public Overrides Function ToString() As String
-            Return contentBuilder.ToString(Me)
-        End Function
     End Class
 
     Public Class mathOperator

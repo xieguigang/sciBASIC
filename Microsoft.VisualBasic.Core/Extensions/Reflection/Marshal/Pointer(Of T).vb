@@ -293,6 +293,12 @@ Namespace Emit.Marshal
             Return ptr
         End Operator
 
+        ''' <summary>
+        ''' move back current read position index
+        ''' </summary>
+        ''' <param name="ptr"></param>
+        ''' <param name="d"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator -(ptr As Pointer(Of T), d As Integer) As Pointer(Of T)
             ptr.index -= d
             Return ptr

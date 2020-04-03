@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{04230B2F-CD32-49A3-92C1-444C6F29BD1D}</ProjectGuid>
+    <ProjectGuid>{4AA05DDC-1815-4CCC-8F33-DB2B2F3B1A93}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <StartupObject>test.Module1</StartupObject>
     <RootNamespace>test</RootNamespace>
@@ -130,21 +130,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\mime\application%25xml\application_xml.vbproj">
+    <ProjectReference Include="..\application_xml.vbproj">
       <Project>{25af39f4-76af-411f-ac19-0dd1e128d801}</Project>
       <Name>application_xml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MathLambda.vbproj">
-      <Project>{db845b19-91dd-48ec-91f7-7e1f0127b01d}</Project>
-      <Name>MathLambda</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
