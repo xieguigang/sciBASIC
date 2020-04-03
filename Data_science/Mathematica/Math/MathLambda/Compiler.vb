@@ -2,14 +2,15 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.xml
 Imports ML = Microsoft.VisualBasic.MIME.application.xml.MathML.BinaryExpression
-Imports MLlambda = Microsoft.VisualBasic.MIME.application.xml.MathML.LambdaExpression
+Imports MLLambda = Microsoft.VisualBasic.MIME.application.xml.MathML.LambdaExpression
+Imports MLSymbol = Microsoft.VisualBasic.MIME.application.xml.MathML.SymbolExpression
 
 ''' <summary>
 ''' mathML -> lambda -> linq expression -> compile VB lambda
 ''' </summary>
 Public Module Compiler
 
-    Public Function CreateLambda(lambda As MLlambda) As LambdaExpression
+    Public Function CreateLambda(lambda As MLLambda) As LambdaExpression
         Dim parameters = lambda.parameters.Select(Function(name) Expression.Parameter(GetType(Double), name)).ToDictionary(Function(par) par.Name)
         Dim body As Expression = CreateBinary(lambda.lambda, parameters)
         Dim expr As LambdaExpression = Expression.Lambda(body, lambda.parameters.Select(Function(par) parameters(par)).ToArray)
@@ -17,9 +18,15 @@ Public Module Compiler
         Return expr
     End Function
 
-    Private Function CreateBinary(member As [Variant](Of ML, String), parameters As Dictionary(Of String, ParameterExpression)) As Expression
-        If member Like GetType(String) Then
-            Return parameters(member.TryCast(Of String))
+    Private Function CreateBinary(member As [Variant](Of ML, MLSymbol), parameters As Dictionary(Of String, ParameterExpression)) As Expression
+        If member Like GetType(MLSymbol) Then
+            With member.TryCast(Of MLSymbol)
+                If .isNumericLiteral Then
+                    Return Expression.Constant(Val(.text), GetType(Double))
+                Else
+                    Return parameters(.text)
+                End If
+            End With
         Else
             Return CreateBinary(member.TryCast(Of ML), parameters)
         End If
