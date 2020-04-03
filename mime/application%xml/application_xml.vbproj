@@ -110,6 +110,7 @@
     <Compile Include="MathML\ContentBuilder.vb" />
     <Compile Include="MathML\maction.vb" />
     <Compile Include="MathML\Math.vb" />
+    <Compile Include="MathML\mathOperators.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

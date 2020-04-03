@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel
-Imports Microsoft.VisualBasic.Language
+﻿Imports Microsoft.VisualBasic.Language
 
 Namespace MathML
 
@@ -7,11 +6,22 @@ Namespace MathML
 
         Public Property [operator] As String
 
-        Public Property applyleft As [Variant](Of BinaryExpression, String)
-        Public Property applyright As [Variant](Of BinaryExpression, String)
+        Public Property applyleft As [Variant](Of BinaryExpression, SymbolExpression)
+        Public Property applyright As [Variant](Of BinaryExpression, SymbolExpression)
 
         Public Overrides Function ToString() As String
             Return ContentBuilder.ToString(Me)
+        End Function
+
+    End Class
+
+    Public Class SymbolExpression
+
+        Public Property text As String
+        Public Property isNumericLiteral As Boolean
+
+        Public Overrides Function ToString() As String
+            Return text
         End Function
 
     End Class
@@ -32,12 +42,4 @@ Namespace MathML
         End Function
 
     End Class
-
-    Public Enum mathOperators
-        <Description("+")> plus
-        <Description("*")> times
-        <Description("/")> divide
-        <Description("^")> power
-        <Description("-")> minus
-    End Enum
 End Namespace
