@@ -35,7 +35,15 @@ Public Module Compiler
     Private Function CreateBinary(member As ML, parameters As Dictionary(Of String, ParameterExpression)) As Expression
         Select Case MathML.ContentBuilder.SimplyOperator(member.operator)
             Case "+" : Return Expression.Add(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
-            Case "-" : Return Expression.Subtract(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
+            Case "-"
+                If member.applyright Is Nothing Then
+                    Return Expression.Negate(CreateBinary(member.applyleft, parameters))
+                Else
+                    Return Expression.Subtract(
+                        CreateBinary(member.applyleft, parameters),
+                        CreateBinary(member.applyright, parameters)
+                    )
+                End If
             Case "*" : Return Expression.Multiply(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
             Case "/" : Return Expression.Divide(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
             Case "^" : Return Expression.Power(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
