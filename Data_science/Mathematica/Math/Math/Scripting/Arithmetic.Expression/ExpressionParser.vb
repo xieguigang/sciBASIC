@@ -212,7 +212,7 @@ Namespace Scripting
                     o = (++tokens).Text.First  ' tokens++ 移动指针到下一个元素
 
                     If o = "!"c Then
-                        Dim stackMeta = New MetaExpression(Function() Factorial(meta.LEFT))
+                        Dim stackMeta = New MetaExpression(Function() VBMath.Factorial(meta.LEFT))
 
                         If tokens.EndRead Then
                             Call sep.Add(stackMeta)

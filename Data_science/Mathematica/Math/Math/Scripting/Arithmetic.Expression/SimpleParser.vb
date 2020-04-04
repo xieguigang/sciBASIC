@@ -86,7 +86,7 @@ Namespace Scripting
                     n = Val(s.Text)
 
                     If o = "!"c Then
-                        n = Factorial(n)
+                        n = VBMath.Factorial(n)
 
                         If tokens.EndRead Then
                             Call sep.Add(n, "+"c)
