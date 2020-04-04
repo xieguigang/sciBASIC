@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcec04406a86c0cb3081410442c043fa, mime\application%json\Serializer\ObjectSchema.vb"
+﻿#Region "Microsoft.VisualBasic::500eafd889c3b29802c3dd8898d22685, mime\application%json\Serializer\ObjectSchema.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Friend Class ObjectSchema
     End Function
 
 End Class
-

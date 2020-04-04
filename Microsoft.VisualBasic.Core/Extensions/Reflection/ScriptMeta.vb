@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caf3ef1d949278dacbb5e1f23cbbe699, Microsoft.VisualBasic.Core\Extensions\Reflection\ScriptMeta.vb"
+﻿#Region "Microsoft.VisualBasic::10cd986be3fd926160839206cb975118, Microsoft.VisualBasic.Core\Extensions\Reflection\ScriptMeta.vb"
 
     ' Author:
     ' 
@@ -170,4 +170,3 @@ NULL:       If Not strict Then
         End If
     End Function
 End Module
-

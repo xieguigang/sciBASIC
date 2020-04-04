@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::527b6880c33f79263b8aff97e2883ce0, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::fda1c38ae53e0b9f9133d16483a1adca, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\Extensions.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq

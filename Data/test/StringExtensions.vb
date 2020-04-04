@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2c87a942112ce875331122f803976d6, Data\TestProject\StringExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2c87a942112ce875331122f803976d6, Data\test\StringExtensions.vb"
 
     ' Author:
     ' 

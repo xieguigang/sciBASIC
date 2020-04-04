@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92d7c9a9d31263597b47e5d5ef04e8aa, Microsoft.VisualBasic.Core\Extensions\Reflection\EnumHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::8c6507e0510976e52464b0adf586720d, Microsoft.VisualBasic.Core\Extensions\Reflection\EnumHelpers.vb"
 
     ' Author:
     ' 
@@ -158,4 +158,3 @@ Public Module EnumHelpers
         Return flags.Select(AddressOf Description).JoinBy(deli)
     End Function
 End Module
-

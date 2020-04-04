@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2ed5b7f1902e25e6aa117ae9f7fa04f, Data_science\Mathematica\Math\Math\Scripting\Helpers\Arithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::bf2346c3b38a43659be692ec265f04df, Data_science\Mathematica\Math\Math\Scripting\Expression\Arithmetic.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Arithmetic
     ' 
-    '         Function: Evaluate, Factorial
+    '         Function: Evaluate, Factorial, RND
     ' 
     ' 
     ' /********************************************************************************/

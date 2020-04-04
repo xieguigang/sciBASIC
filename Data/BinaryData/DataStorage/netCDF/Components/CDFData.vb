@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5505a7f9ee7e2c550e620b9c7fe970d, Data\BinaryData\DataStorage\netCDF\Components\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::b7e0fff7fd2c090cf52c8261144118ae, Data\BinaryData\DataStorage\netCDF\Components\CDFData.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     '     Class CDFData
     ' 
-    '         Properties: byteStream, cdfDataType, chars, genericValue, integers
-    '                     Length, longs, numerics, tiny_int, tiny_num
+    '         Properties: byteStream, cdfDataType, chars, flags, genericValue
+    '                     integers, Length, longs, numerics, tiny_int
+    '                     tiny_num
     ' 
     '         Function: GetBuffer, ToString
     ' 

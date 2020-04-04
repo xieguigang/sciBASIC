@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0efa97547e395b217c0807504d57441f, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\StreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::0f0f0406b59029862822ac0739f17424, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\StreamReader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ZipStreamReader
     ' 
-    '         Function: GetZipSubStream, LoadZipArchive
+    '         Function: Decompress, GetZipSubStream, LoadZipArchive
     ' 
     ' 
     ' /********************************************************************************/

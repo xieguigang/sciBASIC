@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c1678926436a712cf0bdac01b72af1, vs_solutions\dev\VisualStudio\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b13b0ee8df0f526706e95dc433c90d23, vs_solutions\dev\VisualStudio\test\Module1.vb"
 
     ' Author:
     ' 
@@ -74,4 +74,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-

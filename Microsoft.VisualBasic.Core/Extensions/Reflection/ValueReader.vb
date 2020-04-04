@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c260d58e5add0c98389bac7acca148cd, Microsoft.VisualBasic.Core\Extensions\Reflection\ValueReader.vb"
+﻿#Region "Microsoft.VisualBasic::730e50db90928fe89e59df24de395b5c, Microsoft.VisualBasic.Core\Extensions\Reflection\ValueReader.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Public Module ValueReader
         Return CType(field.GetValue(obj), Integer)
     End Function
 End Module
-

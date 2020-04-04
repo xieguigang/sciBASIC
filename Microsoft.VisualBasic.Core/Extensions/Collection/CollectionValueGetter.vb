@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b68afda37cb723b655405d360d968c8c, Microsoft.VisualBasic.Core\Extensions\Collection\CollectionValueGetter.vb"
+﻿#Region "Microsoft.VisualBasic::781b185dab07cc8d30b406dfff03edd1, Microsoft.VisualBasic.Core\Extensions\Collection\CollectionValueGetter.vb"
 
     ' Author:
     ' 
@@ -279,4 +279,3 @@ Public Module CollectionValueGetter
         Return DirectCast(value, TProp)
     End Function
 End Module
-

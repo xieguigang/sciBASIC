@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f6029f7d263e9acd500eab48089d79d, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\ls.vb"
+﻿#Region "Microsoft.VisualBasic::a81909f72bcb2869129761dbd5078445, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\ls.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: SearchType, wildcards
     ' 
-    '         Function: Clone, ToString
+    '         Function: Clone, DoFileNameGreps, ToString
     '         Operators: (+3 Overloads) -, <, <<, (+2 Overloads) <=, >
     '                    (+2 Overloads) >=
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f67753422210a7faca34ce28cac702d, Microsoft.VisualBasic.Core\Language\Linq\Rapply.vb"
+﻿#Region "Microsoft.VisualBasic::91f1a64cf3bb254ca0f2bc9bee362f2d, Microsoft.VisualBasic.Core\Language\Linq\Rapply.vb"
 
     ' Author:
     ' 
@@ -73,4 +73,3 @@ Namespace Language
         End Function
     End Module
 End Namespace
-
