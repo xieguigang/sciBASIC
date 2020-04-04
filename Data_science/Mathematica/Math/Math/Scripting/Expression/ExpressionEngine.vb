@@ -1,5 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Scripting.Helpers
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports stdNum = System.Math
 
 Namespace Scripting.MathExpression

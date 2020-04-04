@@ -47,6 +47,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Scripting

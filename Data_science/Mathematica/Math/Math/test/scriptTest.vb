@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Math
+﻿Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 
 Module scriptTest
     Sub Main()
