@@ -43,56 +43,59 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Module Splitter
+Namespace Scripting.MathExpression
 
-    <Extension>
-    Friend Function SplitByTopLevelDelimiter(tokens As IEnumerable(Of MathToken), delimiter As MathTokens) As List(Of MathToken())
-        Dim blocks As New List(Of MathToken())
-        Dim buf As New List(Of MathToken)
-        Dim stack As New Stack(Of MathToken)
-        Dim tokenVector As MathToken() = tokens.ToArray
-        Dim isDelimiter As Func(Of MathToken, Boolean) = Function(t) t.name = delimiter
+    Module Splitter
 
-        If tokenVector.Length = 1 Then
-            Return blocks + tokenVector
-        End If
+        <Extension>
+        Friend Function SplitByTopLevelDelimiter(tokens As IEnumerable(Of MathToken), delimiter As MathTokens) As List(Of MathToken())
+            Dim blocks As New List(Of MathToken())
+            Dim buf As New List(Of MathToken)
+            Dim stack As New Stack(Of MathToken)
+            Dim tokenVector As MathToken() = tokens.ToArray
+            Dim isDelimiter As Func(Of MathToken, Boolean) = Function(t) t.name = delimiter
 
-        ' 使用最顶层的comma进行分割
-        For Each t As MathToken In tokenVector
-            Dim add As Boolean = True
-
-            If t.name = MathTokens.Open Then
-                stack.Push(t)
-            ElseIf t.name = MathTokens.Close Then
-                If stack.Count = 0 Then
-                    Throw New SyntaxErrorException(tokenVector.JoinBy(" "))
-                Else
-                    stack.Pop()
-                End If
+            If tokenVector.Length = 1 Then
+                Return blocks + tokenVector
             End If
 
-            If isDelimiter(t) Then
-                If stack.Count = 0 Then
-                    ' 这个是最顶层的分割
-                    If buf > 0 Then
-                        blocks += buf.PopAll
+            ' 使用最顶层的comma进行分割
+            For Each t As MathToken In tokenVector
+                Dim add As Boolean = True
+
+                If t.name = MathTokens.Open Then
+                    stack.Push(t)
+                ElseIf t.name = MathTokens.Close Then
+                    If stack.Count = 0 Then
+                        Throw New SyntaxErrorException(tokenVector.JoinBy(" "))
+                    Else
+                        stack.Pop()
                     End If
-
-                    blocks += {t}
-                    add = False
                 End If
+
+                If isDelimiter(t) Then
+                    If stack.Count = 0 Then
+                        ' 这个是最顶层的分割
+                        If buf > 0 Then
+                            blocks += buf.PopAll
+                        End If
+
+                        blocks += {t}
+                        add = False
+                    End If
+                End If
+
+                If add Then
+                    buf += t
+                End If
+            Next
+
+            If buf > 0 Then
+                Return blocks + buf.ToArray
+            Else
+                Return blocks
             End If
+        End Function
 
-            If add Then
-                buf += t
-            End If
-        Next
-
-        If buf > 0 Then
-            Return blocks + buf.ToArray
-        Else
-            Return blocks
-        End If
-    End Function
-
-End Module
+    End Module
+End Namespace

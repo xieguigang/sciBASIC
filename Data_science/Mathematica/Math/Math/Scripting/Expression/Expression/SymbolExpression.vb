@@ -1,16 +1,19 @@
-﻿Public Class SymbolExpression : Inherits Expression
+﻿Namespace Scripting.MathExpression.Impl
 
-    Public ReadOnly Property symbolName As String
+    Public Class SymbolExpression : Inherits Expression
 
-    Sub New(symbolName As String)
-        Me.symbolName = symbolName
-    End Sub
+        Public ReadOnly Property symbolName As String
 
-    Public Overrides Function Evaluate(env As ExpressionEngine) As Double
-        Return env.GetSymbolValue(symbolName)
-    End Function
+        Sub New(symbolName As String)
+            Me.symbolName = symbolName
+        End Sub
 
-    Public Overrides Function ToString() As String
-        Return symbolName
-    End Function
-End Class
+        Public Overrides Function Evaluate(env As ExpressionEngine) As Double
+            Return env.GetSymbolValue(symbolName)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return symbolName
+        End Function
+    End Class
+End Namespace

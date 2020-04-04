@@ -1,19 +1,22 @@
 ﻿Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Public Class MathToken : Inherits CodeToken(Of MathTokens)
+Namespace Scripting.MathExpression
 
-    Sub New(name As MathTokens, text As String)
-        Call MyBase.New(name, text)
-    End Sub
-End Class
+    Public Class MathToken : Inherits CodeToken(Of MathTokens)
 
-Public Enum MathTokens
-    Invalid
-    Literal
-    [Operator]
-    Open
-    Close
-    Symbol
-    Comma
-    Terminator
-End Enum
+        Sub New(name As MathTokens, text As String)
+            Call MyBase.New(name, text)
+        End Sub
+    End Class
+
+    Public Enum MathTokens
+        Invalid
+        Literal
+        [Operator]
+        Open
+        Close
+        Symbol
+        Comma
+        Terminator
+    End Enum
+End Namespace

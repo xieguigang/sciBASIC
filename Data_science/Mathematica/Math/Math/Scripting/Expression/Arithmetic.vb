@@ -43,9 +43,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
-Namespace Scripting.Helpers
+Namespace Scripting.MathExpression
 
     ''' <summary>
     ''' The basics arithmetic operators' definition.
@@ -66,7 +66,7 @@ Namespace Scripting.Helpers
             Function(a, b) a / b,
             Function(a, b) a \ b,
             Function(a, b) a Mod b,
-            AddressOf sys.Pow,
+            AddressOf stdNum.Pow,
             AddressOf Factorial
         }
 

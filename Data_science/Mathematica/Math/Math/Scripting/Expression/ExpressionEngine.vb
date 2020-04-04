@@ -2,19 +2,21 @@
 Imports Microsoft.VisualBasic.Math.Scripting.Helpers
 Imports stdNum = System.Math
 
-Public Class ExpressionEngine
+Namespace Scripting.MathExpression
 
-    ReadOnly symbols As New Dictionary(Of String, Double) From {
-        {"PI", stdNum.PI},
-        {"E", stdNum.E}
-    }
+    Public Class ExpressionEngine
 
-    ''' <summary>
-    ''' The mathematics calculation delegates collection with its specific name.
-    ''' (具有特定名称的数学计算委托方法的集合) 
-    ''' </summary>
-    ''' <remarks></remarks>
-    ReadOnly functions As New Dictionary(Of String, Func(Of Double(), Double)) From {
+        ReadOnly symbols As New Dictionary(Of String, Double) From {
+            {"PI", stdNum.PI},
+            {"E", stdNum.E}
+        }
+
+        ''' <summary>
+        ''' The mathematics calculation delegates collection with its specific name.
+        ''' (具有特定名称的数学计算委托方法的集合) 
+        ''' </summary>
+        ''' <remarks></remarks>
+        ReadOnly functions As New Dictionary(Of String, Func(Of Double(), Double)) From {
  _
             {"abs", Function(args) stdNum.Abs(args(Scan0))},
             {"acos", Function(args) stdNum.Acos(args(Scan0))},
@@ -44,52 +46,53 @@ Public Class ExpressionEngine
             {"truncate", Function(args) stdNum.Truncate(args(Scan0))},
             {"rnd", Function(args) Arithmetic.RND(args(Scan0), args(1))},
             {"int", Function(args) CType(args(Scan0), Integer)}
-    }
+        }
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="name">函数名</param>
-    Public Function AddFunction(name As String, parameters As String(), lambda As String) As ExpressionEngine
-        Dim lambdaExpression As Expression = New ExpressionTokenIcer(lambda).GetTokens.ToArray.DoCall(AddressOf BuildExpression)
-        Dim func As Func(Of Double(), Double) =
-            Function(arguments) As Double
-                Dim env As New ExpressionEngine
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">函数名</param>
+        Public Function AddFunction(name As String, parameters As String(), lambda As String) As ExpressionEngine
+            Dim lambdaExpression As Expression = New ExpressionTokenIcer(lambda).GetTokens.ToArray.DoCall(AddressOf BuildExpression)
+            Dim func As Func(Of Double(), Double) =
+                Function(arguments) As Double
+                    Dim env As New ExpressionEngine
 
-                For Each symbol In symbols
-                    env.symbols(symbol.Key) = symbol.Value
-                Next
+                    For Each symbol In symbols
+                        env.symbols(symbol.Key) = symbol.Value
+                    Next
 
-                For i As Integer = 0 To parameters.Length - 1
-                    env.symbols(parameters(i)) = arguments(i)
-                Next
+                    For i As Integer = 0 To parameters.Length - 1
+                        env.symbols(parameters(i)) = arguments(i)
+                    Next
 
-                Return lambdaExpression.Evaluate(env)
-            End Function
+                    Return lambdaExpression.Evaluate(env)
+                End Function
 
-        functions(name) = func
+            functions(name) = func
 
-        Return Me
-    End Function
+            Return Me
+        End Function
 
-    Public Function GetSymbolValue(name As String) As Double
-        Return symbols(name)
-    End Function
+        Public Function GetSymbolValue(name As String) As Double
+            Return symbols(name)
+        End Function
 
-    Public Function GetFunction(name As String) As Func(Of Double(), Double)
-        Return functions(name)
-    End Function
+        Public Function GetFunction(name As String) As Func(Of Double(), Double)
+            Return functions(name)
+        End Function
 
-    Public Function SetSymbol(symbol As String, value As Double) As ExpressionEngine
-        symbols(symbol) = value
-        Return Me
-    End Function
+        Public Function SetSymbol(symbol As String, value As Double) As ExpressionEngine
+            symbols(symbol) = value
+            Return Me
+        End Function
 
-    Public Function Evaluate(expression As String) As Double
-        Dim tokens As MathToken() = New ExpressionTokenIcer(expression).GetTokens.ToArray
-        Dim exp As Expression = ExpressionBuilder.BuildExpression(tokens)
-        Dim result As Double = exp.Evaluate(Me)
+        Public Function Evaluate(expression As String) As Double
+            Dim tokens As MathToken() = New ExpressionTokenIcer(expression).GetTokens.ToArray
+            Dim exp As Expression = ExpressionBuilder.BuildExpression(tokens)
+            Dim result As Double = exp.Evaluate(Me)
 
-        Return result
-    End Function
-End Class
+            Return result
+        End Function
+    End Class
+End Namespace

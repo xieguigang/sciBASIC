@@ -1,5 +1,8 @@
-﻿Public MustInherit Class Expression
+﻿Namespace Scripting.MathExpression.Impl
 
-    Public MustOverride Function Evaluate(env As ExpressionEngine) As Double
+    Public MustInherit Class Expression
 
-End Class
+        Public MustOverride Function Evaluate(env As ExpressionEngine) As Double
+
+    End Class
+End Namespace

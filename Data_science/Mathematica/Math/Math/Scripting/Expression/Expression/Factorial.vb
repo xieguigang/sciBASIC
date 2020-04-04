@@ -1,20 +1,23 @@
-﻿Public Class Factorial : Inherits Expression
+﻿Namespace Scripting.MathExpression.Impl
 
-    Public ReadOnly Property factor As Integer
+    Public Class Factorial : Inherits Expression
 
-    Sub New(factor As String)
-        Me.factor = Val(factor)
-    End Sub
+        Public ReadOnly Property factor As Integer
 
-    Public Overrides Function Evaluate(env As ExpressionEngine) As Double
-        Return VBMath.Factorial(factor)
-    End Function
+        Sub New(factor As String)
+            Me.factor = Val(factor)
+        End Sub
 
-    Public Overrides Function ToString() As String
-        If factor < 0 Then
-            Return $"({factor})!"
-        Else
-            Return $"{factor}!"
-        End If
-    End Function
-End Class
+        Public Overrides Function Evaluate(env As ExpressionEngine) As Double
+            Return VBMath.Factorial(factor)
+        End Function
+
+        Public Overrides Function ToString() As String
+            If factor < 0 Then
+                Return $"({factor})!"
+            Else
+                Return $"{factor}!"
+            End If
+        End Function
+    End Class
+End Namespace
