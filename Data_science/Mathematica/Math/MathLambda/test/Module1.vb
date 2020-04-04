@@ -1,10 +1,23 @@
-﻿Imports Microsoft.VisualBasic.Math.Lambda
+﻿Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Lambda
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.MIME.application.xml.MathML
 
 Module Module1
 
     Sub Main()
+        Call mathLambdaTest()
         Call complexExpressionTest()
+    End Sub
+
+    Sub mathLambdaTest()
+        Dim exp = New ExpressionTokenIcer("(x+y+z) ^ 2").GetTokens.ToArray.DoCall(AddressOf BuildExpression)
+        Dim lambda = ExpressionCompiler.CreateLambda({"x", "y", "z"}, exp)
+        Dim fun As Func(Of Double, Double, Double, Double) = lambda.Compile
+
+        Console.WriteLine(fun(1, 1, 1))
+
+        Pause()
     End Sub
 
     Sub complexExpressionTest()
