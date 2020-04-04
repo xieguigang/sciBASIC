@@ -1,6 +1,11 @@
-﻿Public Class ExpressionEngine
+﻿Imports stdNum = System.Math
 
-    ReadOnly symbols As New Dictionary(Of String, Double)
+Public Class ExpressionEngine
+
+    ReadOnly symbols As New Dictionary(Of String, Double) From {
+        {"PI", stdNum.PI},
+        {"E", stdNum.E}
+    }
 
     Public Function GetSymbolValue(name As String) As Double
         Return symbols(name)
