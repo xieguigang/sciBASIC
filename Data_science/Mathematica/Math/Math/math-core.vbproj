@@ -693,6 +693,7 @@
     <Compile Include="Scripting\NewFolder1\ExpressionBuilder.vb" />
     <Compile Include="Scripting\NewFolder1\ExpressionTokenIcer.vb" />
     <Compile Include="Scripting\NewFolder1\Expression\BinaryExpression.vb" />
+    <Compile Include="Scripting\NewFolder1\Expression\FunctionInvoke.vb" />
     <Compile Include="Scripting\NewFolder1\Expression\SymbolExpression.vb" />
     <Compile Include="Scripting\NewFolder1\Expression\Factorial.vb" />
     <Compile Include="Scripting\NewFolder1\Expression\Literal.vb" />

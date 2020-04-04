@@ -11,6 +11,10 @@ Public Class ExpressionEngine
         Return symbols(name)
     End Function
 
+    Public Function GetFunction(name As String) As Func(Of Double(), Double)
+
+    End Function
+
     Public Function SetSymbol(symbol As String, value As Double) As ExpressionEngine
         symbols(symbol) = value
         Return Me
