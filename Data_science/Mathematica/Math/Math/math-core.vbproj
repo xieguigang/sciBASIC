@@ -716,13 +716,6 @@
     <Compile Include="HashMaps\JenkinsHash.vb" />
     <Compile Include="Algebra\Vector\Extensions.vb" />
     <Compile Include="Algebra\Matrix.NET\Extensions.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\Func.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\FuncCaller.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\MetaExpression.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\ExpressionParser.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\SimpleParser.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\Expression.vb" />
     <Compile Include="Algebra\Helpers\MatrixMathArithmetic.vb" />
     <Compile Include="Algebra\Helpers\Constants.vb" />
     <Compile Include="Algebra\Helpers\Function.vb" />
@@ -758,7 +751,6 @@
     <Compile Include="Scripting\Helpers\MetaExpression.vb" />
     <Compile Include="Scripting\Helpers\MemoryCollection.vb" />
     <Compile Include="Scripting\Helpers\Variable.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\TokenIcer.vb" />
     <Compile Include="FuzzyLogic\FuzzyEngine.vb" />
     <Compile Include="FuzzyLogic\FuzzyRule.vb" />
     <Compile Include="FuzzyLogic\FuzzyRuleCollection.vb" />
@@ -781,9 +773,7 @@
     <Compile Include="Quantile\QuantileEstimationGK.vb" />
     <Compile Include="Scripting\ScriptEngine.vb" />
     <Compile Include="Scripting\Helpers\Arithmetic.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\SimpleExpression.vb" />
     <Compile Include="Scripting\Helpers\Constants.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\UnitExpression.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
