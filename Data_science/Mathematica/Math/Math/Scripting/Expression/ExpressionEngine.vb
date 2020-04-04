@@ -96,6 +96,11 @@ Namespace Scripting.MathExpression
             Return Me
         End Function
 
+        Public Function SetSymbol(symbol As String, expression As String) As ExpressionEngine
+            symbols(symbol) = Evaluate(expression)
+            Return Me
+        End Function
+
         Public Function Evaluate(expression As Expression) As Double
             Return expression.Evaluate(env:=Me)
         End Function
