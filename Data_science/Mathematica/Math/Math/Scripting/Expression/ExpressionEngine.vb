@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Math.Scripting.Helpers
+﻿Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Scripting.Helpers
 Imports stdNum = System.Math
 
 Public Class ExpressionEngine
@@ -13,7 +14,7 @@ Public Class ExpressionEngine
     ''' (具有特定名称的数学计算委托方法的集合) 
     ''' </summary>
     ''' <remarks></remarks>
-    ReadOnly SystemFunctions As New Dictionary(Of String, Func(Of Double(), Double)) From {
+    ReadOnly functions As New Dictionary(Of String, Func(Of Double(), Double)) From {
  _
             {"abs", Function(args) stdNum.Abs(args(Scan0))},
             {"acos", Function(args) stdNum.Acos(args(Scan0))},
@@ -50,7 +51,25 @@ Public Class ExpressionEngine
     ''' </summary>
     ''' <param name="name">函数名</param>
     Public Function AddFunction(name As String, parameters As String(), lambda As String) As ExpressionEngine
+        Dim lambdaExpression As Expression = New ExpressionTokenIcer(lambda).GetTokens.ToArray.DoCall(AddressOf BuildExpression)
+        Dim func As Func(Of Double(), Double) =
+            Function(arguments) As Double
+                Dim env As New ExpressionEngine
 
+                For Each symbol In symbols
+                    env.symbols(symbol.Key) = symbol.Value
+                Next
+
+                For i As Integer = 0 To parameters.Length - 1
+                    env.symbols(parameters(i)) = arguments(i)
+                Next
+
+                Return lambdaExpression.Evaluate(env)
+            End Function
+
+        functions(name) = func
+
+        Return Me
     End Function
 
     Public Function GetSymbolValue(name As String) As Double
@@ -58,7 +77,7 @@ Public Class ExpressionEngine
     End Function
 
     Public Function GetFunction(name As String) As Func(Of Double(), Double)
-        Return SystemFunctions(name)
+        Return functions(name)
     End Function
 
     Public Function SetSymbol(symbol As String, value As Double) As ExpressionEngine
