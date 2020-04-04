@@ -94,10 +94,7 @@ Namespace Scripting.MathExpression
             If c Like numbers Then
                 buf += c
             ElseIf c Like operators Then
-                If buf = 0 AndAlso c = "-"c Then
-                    ' is negative number
-                    buf += "-"c
-                ElseIf buf > 0 Then
+                If buf > 0 Then
                     ' number or symbol
                     Return populateToken(cacheNext:=c)
                 Else

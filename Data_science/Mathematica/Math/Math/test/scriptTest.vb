@@ -43,6 +43,9 @@ Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 
 Module scriptTest
     Sub Main()
+        Dim tokens2 = New ExpressionTokenIcer("((5) -X33)").GetTokens.ToArray
+
+
         'Dim tokens = New ExpressionTokenIcer("(((1+X33 + 9!) ^ 9) * (5+8! %33))").GetTokens.ToArray
         'Dim expression = ExpressionBuilder.BuildExpression(tokens)
 
