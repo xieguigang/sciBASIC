@@ -23,15 +23,33 @@ Public Module ExpressionBuilder
         End Select
     End Function
 
+    <Extension>
+    Private Function AsCallFunction(symbol As MathToken, parameters As List(Of MathToken())) As Expression
+        Dim argVals As Expression() = parameters.Select(AddressOf BuildExpression).ToArray
+        Dim funCall As New FunctionInvoke(symbol.text, argVals)
+
+        Return funCall
+    End Function
+
     Public Function BuildExpression(tokens As MathToken()) As Expression
         Dim blocks = tokens.SplitByTopLevelDelimiter(MathTokens.Operator)
 
         If blocks = 1 Then
             If blocks(Scan0).Length > 1 Then
-                ' (....)
-                tokens = blocks(Scan0)
-                tokens = tokens.Skip(1).Take(tokens.Length - 2).ToArray
-                blocks = tokens.SplitByTopLevelDelimiter(MathTokens.Operator)
+                If blocks(Scan0).isFunctionInvoke Then
+                    tokens = blocks(Scan0)
+                    blocks = tokens _
+                        .Skip(2) _
+                        .Take(tokens.Length - 2) _
+                        .SplitByTopLevelDelimiter(MathTokens.Comma)
+
+                    Return blocks(Scan0)(Scan0).AsCallFunction(blocks)
+                Else
+                    ' (....)
+                    tokens = blocks(Scan0)
+                    tokens = tokens.Skip(1).Take(tokens.Length - 2).ToArray
+                    blocks = tokens.SplitByTopLevelDelimiter(MathTokens.Operator)
+                End If
             Else
                 With blocks(Scan0)(Scan0)
                     Return .AsExpression
@@ -54,6 +72,23 @@ Public Module ExpressionBuilder
             Throw New SyntaxErrorException
         Else
             Return buf(Scan0)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' *
+    ''' </summary>
+    ''' <param name="tokens"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function isFunctionInvoke(tokens As MathToken()) As Boolean
+        If tokens(Scan0).name = MathTokens.Symbol AndAlso
+           tokens(1).name = MathTokens.Open AndAlso
+           tokens.Last.name = MathTokens.Close Then
+
+            Return True
+        Else
+            Return False
         End If
     End Function
 

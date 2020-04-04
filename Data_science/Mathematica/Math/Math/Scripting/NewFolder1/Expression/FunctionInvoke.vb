@@ -3,6 +3,11 @@
     Public Property funcName As String
     Public Property parameters As Expression()
 
+    Sub New(name As String, parameters As Expression())
+        Me.funcName = name
+        Me.parameters = parameters
+    End Sub
+
     Public Overrides Function Evaluate(env As ExpressionEngine) As Double
         Dim func As Func(Of Double(), Double) = env.GetFunction(funcName)
         Dim parameters As Double() = Me.parameters.Select(Function(x) x.Evaluate(env)).ToArray
