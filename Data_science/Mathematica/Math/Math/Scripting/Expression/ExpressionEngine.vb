@@ -49,7 +49,7 @@ Public Class ExpressionEngine
     ''' 
     ''' </summary>
     ''' <param name="name">函数名</param>
-    Public Function AddFunction(name As String, lambda As String) As ExpressionEngine
+    Public Function AddFunction(name As String, parameters As String(), lambda As String) As ExpressionEngine
 
     End Function
 

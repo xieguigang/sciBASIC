@@ -129,7 +129,7 @@ Namespace Scripting.Helpers
         ''' <param name="LowBound"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function RND(LowBound As Double, UpBound As Double) As Double
+        Public Function RND(LowBound As Double, UpBound As Double) As Double
             Dim rand As New Random(1000)
             If UpBound = 0R OrElse UpBound < LowBound Then
                 Return rand.NextDouble
