@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::241784ed47fac65bffa3ce66cd07bc9e, Data_science\MachineLearning\CellularAutomaton\SimulatorModel\Simulator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Simulator
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: RandomCells, Snapshot
-    ' 
-    '     Sub: Run, runOrder, runRandom
-    ' 
-    ' /********************************************************************************/
+' Class Simulator
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: RandomCells, Snapshot
+' 
+'     Sub: Run, runOrder, runRandom
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Math.Framework
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
-Public Class Simulator(Of T As Individual)
+Public Class Simulator(Of T As Individual) : Inherits Iterator.Kernel
 
     Friend ReadOnly grid As CellEntity(Of T)()()
     Friend ReadOnly size As Size
@@ -92,15 +93,19 @@ Public Class Simulator(Of T As Individual)
         Next
     End Sub
 
-    Public Sub Run(Optional random As Boolean = True)
+    Public Overloads Sub Run(Optional random As Boolean = True)
         If random Then
             Call runRandom()
         Else
-            Call runOrder()
+            Call [Step](Nothing)
         End If
     End Sub
 
-    Private Sub runOrder()
+    ''' <summary>
+    ''' runOrder()
+    ''' </summary>
+    ''' <param name="itr"></param>
+    Protected Overrides Sub [Step](itr As Integer)
         For j As Integer = 0 To size.Width - 1
             For i As Integer = 0 To size.Height - 1
                 Call grid(i)(j).Tick()
