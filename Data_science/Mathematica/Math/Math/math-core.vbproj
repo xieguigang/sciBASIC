@@ -662,7 +662,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
-    <Compile Include="Algebra\Framework\Iterator.vb" />
+    <Compile Include="Numerics\Framework\VariableObject.vb" />
+    <Compile Include="Numerics\Framework\Iterator.vb" />
     <Compile Include="Algebra\LP\Extensions.vb" />
     <Compile Include="Algebra\LP\LPP.vb" />
     <Compile Include="Algebra\LP\LPPSolution.vb" />

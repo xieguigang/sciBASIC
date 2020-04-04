@@ -99,7 +99,9 @@ Namespace Scripting
         Public Function AsTable() As Dictionary(Of String, T)
             Return index _
                 .ToDictionary(Function(k, i) k,
-                              Function(k, i) buffer(i))
+                              Function(k, i)
+                                  Return buffer(i)
+                              End Function)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
