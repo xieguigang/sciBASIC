@@ -698,6 +698,7 @@
     <Compile Include="Scripting\NewFolder1\Expression\Literal.vb" />
     <Compile Include="Scripting\NewFolder1\Expression\Expression.vb" />
     <Compile Include="Scripting\NewFolder1\MathToken.vb" />
+    <Compile Include="Scripting\NewFolder1\Splitter.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
     <Compile Include="Scripting\Factors\NamedVectorFactory.vb" />
     <Compile Include="Scripting\Factors\FactorVector.vb" />
