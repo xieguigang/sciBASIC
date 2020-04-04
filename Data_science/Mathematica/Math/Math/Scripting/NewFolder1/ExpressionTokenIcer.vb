@@ -21,8 +21,16 @@ Public Class ExpressionTokenIcer
             If Not (token = walkChar(++text)) Is Nothing Then
                 Yield token
 
-                If buf = 1 AndAlso buf(Scan0) Like operators Then
-                    Yield New MathToken(MathTokens.Operator, buf.ToString)
+                If buf = 1 Then
+                    If buf(Scan0) Like operators Then
+                        Yield New MathToken(MathTokens.Operator, buf.ToString)
+                    ElseIf buf(Scan0) = ","c Then
+                        Yield New MathToken(MathTokens.Comma, ",")
+                    ElseIf buf(Scan0) = "("c Then
+                        Yield New MathToken(MathTokens.Open, "(")
+                    ElseIf buf(Scan0) = ")"c Then
+                        Yield New MathToken(MathTokens.Close, ")")
+                    End If
 
                     buf *= 0
                 End If
@@ -66,11 +74,13 @@ Public Class ExpressionTokenIcer
             Else
                 Return New MathToken(MathTokens.Close, ")"c)
             End If
-        ElseIf c = ";"c Then
+        ElseIf c = ";"c OrElse c = ","c Then
             If buf > 0 Then
                 Return populateToken(cacheNext:=c)
-            Else
+            ElseIf c = ";"c Then
                 Return New MathToken(MathTokens.Terminator, ";"c)
+            Else
+                Return New MathToken(MathTokens.Comma, ","c)
             End If
         Else
             buf += c

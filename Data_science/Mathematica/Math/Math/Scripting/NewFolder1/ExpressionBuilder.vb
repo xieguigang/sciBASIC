@@ -40,7 +40,7 @@ Public Module ExpressionBuilder
                     tokens = blocks(Scan0)
                     blocks = tokens _
                         .Skip(2) _
-                        .Take(tokens.Length - 2) _
+                        .Take(tokens.Length - 3) _
                         .SplitByTopLevelDelimiter(MathTokens.Comma)
 
                     Return blocks(Scan0)(Scan0).AsCallFunction(blocks)
