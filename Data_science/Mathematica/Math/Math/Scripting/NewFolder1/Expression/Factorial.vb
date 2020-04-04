@@ -2,6 +2,10 @@
 
     Public ReadOnly Property factor As Integer
 
+    Sub New(factor As String)
+        Me.factor = Val(factor)
+    End Sub
+
     Public Overrides Function Evaluate(env As ExpressionEngine) As Double
         Return VBMath.Factorial(factor)
     End Function

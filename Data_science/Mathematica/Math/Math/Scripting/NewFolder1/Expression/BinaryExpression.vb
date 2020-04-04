@@ -2,9 +2,15 @@
 
 Public Class BinaryExpression : Inherits Expression
 
-    Public Property left As Expression
-    Public Property right As Expression
-    Public Property [operator] As Char
+    Public ReadOnly Property left As Expression
+    Public ReadOnly Property right As Expression
+    Public ReadOnly Property [operator] As Char
+
+    Sub New(left As Expression, right As Expression, op As Char)
+        Me.left = left
+        Me.right = right
+        Me.operator = op
+    End Sub
 
     Public Overrides Function Evaluate(env As ExpressionEngine) As Double
         Dim left As Double = Me.left.Evaluate(env)
