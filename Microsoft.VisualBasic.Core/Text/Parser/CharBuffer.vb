@@ -22,9 +22,27 @@ Namespace Text.Parser
             End Get
         End Property
 
+        Public ReadOnly Property Last As Char
+            Get
+                Return buffer(buffer.Count - 1)
+            End Get
+        End Property
+
+        Public Function GetLastOrDefault() As Char
+            If buffer.Count = 0 Then
+                Return Nothing
+            Else
+                Return buffer(buffer.Count - 1)
+            End If
+        End Function
+
         Public Sub Clear()
             Call buffer.Clear()
         End Sub
+
+        Public Function PopAllChars() As Char()
+            Return buffer.PopAll
+        End Function
 
         Public Overrides Function ToString() As String
             Return buffer.CharString
