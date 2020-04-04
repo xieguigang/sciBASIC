@@ -1,3 +1,6 @@
-﻿Public Class ExpressionBuilder
+﻿Public Module ExpressionBuilder
 
-End Class
+    Public Function BuildExpression(tokens As MathToken()) As Expression
+
+    End Function
+End Module
