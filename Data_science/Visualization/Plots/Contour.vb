@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::e0d689d762aa966d5ee96e079c976bed, Data_science\Visualization\Plots\Contour.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Contour
-    ' 
-    '     Function: __getData, Compile, (+3 Overloads) Plot
-    '     Class __plotHelper
-    ' 
-    '         Function: GetColor, GetData
-    ' 
-    '         Sub: Plot
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module Contour
+' 
+'     Function: __getData, Compile, (+3 Overloads) Plot
+'     Class __plotHelper
+' 
+'         Function: GetColor, GetData
+' 
+'         Sub: Plot
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,8 +59,8 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Scripting
-Imports Microsoft.VisualBasic.Math.Scripting.Types
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -79,17 +79,21 @@ Public Module Contour
     ''' <param name="exp$">A string math function expression: ``f(x,y)``</param>
     ''' <returns></returns>
     Public Function Compile(exp$) As Func(Of Double, Double, Double)
-        With New Expression
+        With New ExpressionEngine()
 
             !x = 0
             !y = 0
 
-            Dim func As SimpleExpression = .Compile(exp)
+            Dim func As Expression = New ExpressionTokenIcer(exp) _
+                .GetTokens _
+                .ToArray _
+                .DoCall(AddressOf BuildExpression)
 
             Return Function(x, y)
                        !x = x
                        !y = y
-                       Return func.Evaluate
+
+                       Return .DoCall(AddressOf func.Evaluate)
                    End Function
         End With
     End Function
@@ -289,11 +293,11 @@ Public Module Contour
             If func Is Nothing Then
                 ' 直接返回矩阵数据
                 Return LinqAPI.Exec(Of (x#, y#, Z#)) _
-					() <= From line As DataSet 
-						  In matrix 
-						  Let xi = Val(line.ID) 
-						  Let data = line.Properties.Select(Function(o) (x:=xi, y:=Val(o.Key), Z:=o.Value)) 
-						  Select Data
+                    () <= From line As DataSet
+                          In matrix
+                          Let xi = Val(line.ID)
+                          Let data = line.Properties.Select(Function(o) (X:=xi, Y:=Val(o.Key), Z:=o.Value))
+                          Select data
             Else
 
                 Return func _

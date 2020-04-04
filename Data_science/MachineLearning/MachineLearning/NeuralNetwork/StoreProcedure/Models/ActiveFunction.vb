@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::9bbad6cf7bb5421225b9d3126a901196, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ActiveFunction
-    ' 
-    '         Properties: [Function], Arguments, BipolarSigmoid, name, ReLU
-    '                     Sigmoid, Threshold
-    ' 
-    '         Function: CreateFunction, HasKey, Parse, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ActiveFunction
+' 
+'         Properties: [Function], Arguments, BipolarSigmoid, name, ReLU
+'                     Sigmoid, Threshold
+' 
+'         Function: CreateFunction, HasKey, Parse, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -154,10 +155,10 @@ Namespace NeuralNetwork.StoreProcedure
         End Operator
 
 #Region "Default Expressions"
-        Public Shared ReadOnly Property ReLU As [Default](Of  String) = "ReLU()"
-        Public Shared ReadOnly Property Threshold As [Default](Of  String) = "Threshold()"
-        Public Shared ReadOnly Property Sigmoid As [Default](Of  String) = "Sigmoid(alpha:=2.0)"
-        Public Shared ReadOnly Property BipolarSigmoid As [Default](Of  String) = "BipolarSigmoid(alpha:=2.0)"
+        Public Shared ReadOnly Property ReLU As [Default](Of String) = "ReLU()"
+        Public Shared ReadOnly Property Threshold As [Default](Of String) = "Threshold()"
+        Public Shared ReadOnly Property Sigmoid As [Default](Of String) = "Sigmoid(alpha:=2.0)"
+        Public Shared ReadOnly Property BipolarSigmoid As [Default](Of String) = "BipolarSigmoid(alpha:=2.0)"
 #End Region
 
         ''' <summary>
@@ -166,11 +167,13 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="expression">这个字符串表达式应该是<see cref="IActivationFunction.ToString()"/>的函数输出结果字符串</param>
         ''' <returns></returns>
         Public Shared Function Parse(expression As String) As ActiveFunction
-            Dim func As Func = FuncParser.TryParse(expression)
+            Dim func As NamedValue(Of String) = expression.GetTagValue("(", trim:=True)
 
             Return New ActiveFunction With {
                 .name = func.Name,
-                .Arguments = func.Args _
+                .Arguments = func.Value _
+                    .Trim(")"c) _
+                    .StringSplit("\s*,\s*") _
                     .Select(Function(a) a.GetTagValue(":=")) _
                     .Select(Function(a)
                                 Return New NamedValue With {
