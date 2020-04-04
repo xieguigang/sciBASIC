@@ -10,7 +10,7 @@ Module Module1
     Sub complexExpressionTest()
         Dim test As String = "E:\GCModeller\src\runtime\sciBASIC#\mime\etc\kinetics2.xml"
         Dim exp As LambdaExpression = LambdaExpression.FromMathML(test.ReadAllText)
-        Dim func = Compiler.CreateLambda(exp)
+        Dim func = MathMLCompiler.CreateLambda(exp)
         Dim del = func.Compile()
 
         Console.WriteLine(func)
@@ -22,7 +22,7 @@ Module Module1
     Sub simpleExpressionTest()
         Dim test As String = "E:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\MathLambda\mathML.xml"
         Dim exp As LambdaExpression = LambdaExpression.FromMathML(test.ReadAllText)
-        Dim func = Compiler.CreateLambda(exp)
+        Dim func = MathMLCompiler.CreateLambda(exp)
         Dim del As Func(Of Double, Double, Double, Double, Double, Double, Double) = func.Compile()
 
         Console.WriteLine(func)

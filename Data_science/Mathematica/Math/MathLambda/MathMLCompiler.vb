@@ -8,7 +8,7 @@ Imports MLSymbol = Microsoft.VisualBasic.MIME.application.xml.MathML.SymbolExpre
 ''' <summary>
 ''' mathML -> lambda -> linq expression -> compile VB lambda
 ''' </summary>
-Public Module Compiler
+Public Module MathMLCompiler
 
     Public Function CreateLambda(lambda As MLLambda) As LambdaExpression
         Dim parameters = lambda.parameters.Select(Function(name) Expression.Parameter(GetType(Double), name)).ToDictionary(Function(par) par.Name)
