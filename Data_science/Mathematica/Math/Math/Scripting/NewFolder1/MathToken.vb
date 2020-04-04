@@ -14,4 +14,5 @@ Public Enum MathTokens
     Open
     Close
     Symbol
+    Terminator
 End Enum

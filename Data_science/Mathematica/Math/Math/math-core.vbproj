@@ -689,7 +689,7 @@
     <Compile Include="Numerics\HalfHelper.vb" />
     <Compile Include="Quantile\DataQuartile.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
-    <Compile Include="Scripting\NewFolder1\ExpressionParser.vb" />
+    <Compile Include="Scripting\NewFolder1\ExpressionTokenIcer.vb" />
     <Compile Include="Scripting\NewFolder1\MathToken.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
     <Compile Include="Scripting\Factors\NamedVectorFactory.vb" />

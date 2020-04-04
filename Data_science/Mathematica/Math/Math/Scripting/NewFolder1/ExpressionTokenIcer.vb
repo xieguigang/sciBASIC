@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
-Public Class ExpressionParser
+Public Class ExpressionTokenIcer
 
     Dim text As CharPtr
     Dim buf As New CharBuffer
@@ -66,6 +66,12 @@ Public Class ExpressionParser
             Else
                 Return New MathToken(MathTokens.Close, ")"c)
             End If
+        ElseIf c = ";"c Then
+            If buf > 0 Then
+                Return populateToken(cacheNext:=c)
+            Else
+                Return New MathToken(MathTokens.Terminator, ";"c)
+            End If
         Else
             buf += c
         End If
@@ -92,6 +98,8 @@ Public Class ExpressionParser
             Return New MathToken(MathTokens.Open, "(")
         ElseIf text = ")" Then
             Return New MathToken(MathTokens.Close, ")")
+        ElseIf text = ";" Then
+            Return New MathToken(MathTokens.Terminator, ";")
         Else
             Throw New NotImplementedException(text)
         End If
