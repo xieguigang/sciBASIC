@@ -783,7 +783,6 @@
     <Compile Include="Scripting\Helpers\Arithmetic.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\SimpleExpression.vb" />
     <Compile Include="Scripting\Helpers\Constants.vb" />
-    <Compile Include="Scripting\Helpers\Function.vb" />
     <Compile Include="Scripting\Arithmetic.Expression\UnitExpression.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

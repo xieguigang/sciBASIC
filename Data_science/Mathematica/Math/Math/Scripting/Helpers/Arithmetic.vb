@@ -118,5 +118,24 @@ Namespace Scripting.Helpers
         Private Function Factorial(a As Double, b As Double) As Double
             Return VBMath.Factorial(a)
         End Function
+
+        ''' <summary>
+        ''' This function return a random number, you can specific the boundary of the random number in the parameters. 
+        ''' </summary>
+        ''' <param name="UpBound">
+        ''' If this parameter is empty or value is zero, then return the randome number between 0 and 1.
+        ''' (如果这个参数为空或者其值为0，那么函数就会返回0和1之间的随机数)
+        ''' </param>
+        ''' <param name="LowBound"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Shared Function RND(LowBound As Double, UpBound As Double) As Double
+            Dim rand As New Random(1000)
+            If UpBound = 0R OrElse UpBound < LowBound Then
+                Return rand.NextDouble
+            Else
+                Return LowBound + rand.NextDouble * (UpBound - LowBound)
+            End If
+        End Function
     End Module
 End Namespace
