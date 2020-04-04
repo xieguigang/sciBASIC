@@ -100,12 +100,22 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="run"></param>
         Private Sub setFunction(run As String)
+            Call SetFunction(Expression, run)
+        End Sub
+
+        ''' <summary>
+        ''' func add(x, y) x+y
+        ''' </summary>
+        ''' <param name="run"></param>
+        ''' 
+        <Extension>
+        Public Sub SetFunction(engine As ExpressionEngine, run As String)
             Dim declares As String = r.Match(run, ".+\(.+?\)").Value
             Dim lambda As String = Mid(run, declares.Length)
             Dim name As String = declares.Split("("c).First
             Dim parameters As String() = declares.GetStackValue("(", ")").StringSplit("\s*,\s*")
 
-            Expression.AddFunction(declares, parameters, lambda)
+            Call engine.AddFunction(declares, parameters, lambda)
         End Sub
 
         ''' <summary>
