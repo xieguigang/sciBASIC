@@ -55,6 +55,12 @@ Namespace Text.Parser
 
         ReadOnly buffer As New List(Of Char)
 
+        Default Public ReadOnly Property GetChar(i As Integer) As Char
+            Get
+                Return buffer(i)
+            End Get
+        End Property
+
         ''' <summary>
         ''' get current size of the data in this char buffer object
         ''' </summary>
@@ -78,6 +84,11 @@ Namespace Text.Parser
         End Operator
 
         Public Shared Operator +(buf As CharBuffer, c As Char) As CharBuffer
+            buf.buffer.Add(c)
+            Return buf
+        End Operator
+
+        Public Shared Operator +(buf As CharBuffer, c As Char?) As CharBuffer
             buf.buffer.Add(c)
             Return buf
         End Operator
@@ -107,6 +118,14 @@ Namespace Text.Parser
 
         Public Shared Operator <>(buf As CharBuffer, size As Integer) As Boolean
             Return buf.buffer.Count <> size
+        End Operator
+
+        Public Shared Operator >(buf As CharBuffer, size As Integer) As Boolean
+            Return buf.buffer.Count > size
+        End Operator
+
+        Public Shared Operator <(buf As CharBuffer, size As Integer) As Boolean
+            Return buf.buffer.Count < size
         End Operator
     End Class
 
