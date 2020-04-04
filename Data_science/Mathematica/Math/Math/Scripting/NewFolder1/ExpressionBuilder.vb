@@ -139,7 +139,7 @@ Public Module ExpressionBuilder
                 For j As Integer = 0 To buf.Count - 1
                     If buf(j) Like GetType(String) AndAlso test(op, buf(j).VB) Then
                         ' j-1 and j+1
-                        If i - 1 < 0 Then
+                        If j - 1 < 0 Then
                             Throw New SyntaxErrorException
                         Else
                             a = buf(j - 1).TryCast(Of Expression)

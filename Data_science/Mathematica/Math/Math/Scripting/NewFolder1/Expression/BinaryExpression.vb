@@ -21,6 +21,6 @@ Public Class BinaryExpression : Inherits Expression
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"{left} {[operator]} {right}"
+        Return $"({left} {[operator]} {right})"
     End Function
 End Class
