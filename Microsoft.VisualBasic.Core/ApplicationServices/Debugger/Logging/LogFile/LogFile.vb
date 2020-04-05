@@ -78,7 +78,7 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property FileName As String
+        Public ReadOnly Property fileName As String
             Get
                 Return FilePath.BaseName
             End Get
@@ -101,17 +101,17 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Path">This logfile will saved to.</param>
+        ''' <param name="path">This logfile will saved to.</param>
         ''' <remarks></remarks>
         ''' <param name="bufferSize">当日志的记录数目达到这个数目的时候就会将日志数据写入到文件之中</param>
-        Public Sub New(Path As String, Optional AutoFlush As Boolean = True, Optional bufferSize As Integer = 1024)
-            Dim file As New FileStream(Path, FileMode.Append)
+        Public Sub New(path As String, Optional autoFlush As Boolean = True, Optional bufferSize As Integer = 1024)
+            Dim file As New FileStream(path, FileMode.Append)
 
             buffer = New StreamWriter(file, Encoding.UTF8, bufferSize) With {
-                .AutoFlush = AutoFlush
+                .AutoFlush = autoFlush
             }
             buffer.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
-            FilePath = FileIO.FileSystem.GetFileInfo(Path).FullName
+            FilePath = FileIO.FileSystem.GetFileInfo(path).FullName
         End Sub
 
         Public Sub LogException(Msg As String, <CallerMemberName> Optional Object$ = Nothing)
