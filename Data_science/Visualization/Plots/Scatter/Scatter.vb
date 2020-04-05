@@ -72,7 +72,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -156,6 +155,43 @@ Public Module Scatter
         CubicSpline
     End Enum
 
+    ReadOnly splineValues As Dictionary(Of String, Splines) = Enums(Of Splines).ToDictionary(Function(a) a.Description.ToLower)
+
+    Public Function ParseSplineValue(describ As String) As Splines
+        With LCase(describ).Trim
+            If .DoCall(AddressOf splineValues.ContainsKey) Then
+                Return .DoCall(Function(key) splineValues(key))
+            Else
+                Return Splines.None
+            End If
+        End With
+    End Function
+
+    <Extension>
+    Private Function getSplinePoints(raw As PointData(), spline As Splines) As PointData()
+        Select Case spline
+            Case Splines.None
+                Return raw
+            Case Splines.B_Spline
+                Dim pointdata As PointF() = raw _
+                    .Select(Function(p) p.pt) _
+                    .BSpline(degree:=2) _
+                    .ToArray
+                Dim interplot As PointData() = pointdata _
+                    .Select(Function(p)
+                                Return New PointData With {
+                                    .pt = p
+                                }
+                            End Function) _
+                    .OrderBy(Function(p) p.pt.X) _
+                    .ToArray
+
+                Return interplot
+            Case Else
+                Throw New NotImplementedException(spline.ToString)
+        End Select
+    End Function
+
     ''' <summary>
     ''' Scatter plot function.(绘图函数，默认的输出大小为``4300px,2000px``)
     ''' </summary>
@@ -173,6 +209,9 @@ Public Module Scatter
     ''' <param name="preferPositive"><see cref="CreateAxisTicks"/></param>
     ''' <param name="hullConvexList">
     ''' a list of <see cref="SerialData.title"/> for draw hull convex polygon.
+    ''' </param>
+    ''' <param name="interplot">
+    ''' 是否对线条或者多边形数据进行插值圆滑处理
     ''' </param>
     ''' <returns></returns>
     <Extension>
@@ -214,7 +253,9 @@ Public Module Scatter
                          Optional gridColor$ = "white",
                          Optional legendBgFill As String = Nothing,
                          Optional legendSplit% = -1,
-                         Optional hullConvexList As String() = Nothing) As GraphicsData
+                         Optional hullConvexList As String() = Nothing,
+                         Optional XtickFormat$ = "F2",
+                         Optional YtickFormat$ = "F2") As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -264,14 +305,19 @@ Public Module Scatter
                         xlayout:=xlayout,
                         ylayout:=ylayout,
                         gridColor:=gridColor,
-                        gridFill:=gridFill
+                        gridFill:=gridFill,
+                        XtickFormat:=XtickFormat,
+                        YtickFormat:=YtickFormat
                     )
                 End If
 
-                Dim width = rect.PlotRegion.Width / 200
+                Dim width As Double = rect.PlotRegion.Width / 200
 
                 For Each line As SerialData In array
-                    Dim pts = line.pts.SlideWindows(2)
+                    Dim pts As SlideWindow(Of PointData)() = line.pts _
+                        .getSplinePoints(spline:=interplot) _
+                        .SlideWindows(2) _
+                        .ToArray
                     Dim pen As Pen = line.GetPen
                     Dim br As New SolidBrush(line.color)
                     Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
