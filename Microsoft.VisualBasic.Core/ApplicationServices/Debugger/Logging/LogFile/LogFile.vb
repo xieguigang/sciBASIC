@@ -103,8 +103,12 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="path">This logfile will saved to.</param>
         ''' <remarks></remarks>
         ''' <param name="bufferSize">当日志的记录数目达到这个数目的时候就会将日志数据写入到文件之中</param>
-        Public Sub New(path As String, Optional autoFlush As Boolean = True, Optional bufferSize As Integer = 1024)
-            Dim file As New FileStream(path, FileMode.Append)
+        Public Sub New(path As String,
+                       Optional autoFlush As Boolean = True,
+                       Optional bufferSize As Integer = 1024,
+                       Optional append As Boolean = True)
+
+            Dim file As New FileStream(path, If(append, FileMode.Append, FileMode.Truncate))
 
             buffer = New StreamWriter(file, Encoding.UTF8, bufferSize) With {
                 .AutoFlush = autoFlush
@@ -114,11 +118,11 @@ Namespace ApplicationServices.Debugging.Logging
         End Sub
 
         Public Sub LogException(Msg As String, <CallerMemberName> Optional Object$ = Nothing)
-            Call WriteLine(Msg, [Object], Type:=MSG_TYPES.ERR)
+            Call WriteLine(Msg, [Object], type:=MSG_TYPES.ERR)
         End Sub
 
         Public Sub LogException(ex As Exception, <CallerMemberName> Optional Object$ = Nothing)
-            Call WriteLine(ex.ToString, [Object], Type:=MSG_TYPES.ERR)
+            Call WriteLine(ex.ToString, [Object], type:=MSG_TYPES.ERR)
         End Sub
 
         ''' <summary>
@@ -126,13 +130,13 @@ Namespace ApplicationServices.Debugging.Logging
         ''' </summary>
         ''' <param name="Msg"></param>
         ''' <param name="[Object]"></param>
-        ''' <param name="Type"></param>
-        Public Sub WriteLine(Msg As String, <CallerMemberName> Optional [Object] As String = Nothing, Optional Type As MSG_TYPES = MSG_TYPES.INF)
+        ''' <param name="type"></param>
+        Public Sub WriteLine(Msg As String, <CallerMemberName> Optional [Object] As String = Nothing, Optional type As MSG_TYPES = MSG_TYPES.INF)
             Dim LogEntry As New LogEntry With {
                 .message = Msg,
                 .[object] = [Object],
                 .time = Now,
-                .level = Type
+                .level = type
             }
 
             buffer.WriteLine(LogEntry.ToString)
@@ -148,12 +152,12 @@ Namespace ApplicationServices.Debugging.Logging
         End Function
 
         Public Sub WriteLine(Optional s As String = "") Implements I_ConsoleDeviceHandle.WriteLine
-            Call WriteLine(s, Type:=MSG_TYPES.INF, [Object]:="")
+            Call WriteLine(s, type:=MSG_TYPES.INF, [Object]:="")
         End Sub
 
         Public Sub WriteLine(s As String())
             Dim str As String = String.Join(vbCrLf, s)
-            Call WriteLine(str, Type:=MSG_TYPES.INF, [Object]:="")
+            Call WriteLine(str, type:=MSG_TYPES.INF, [Object]:="")
         End Sub
 
         ''' <summary>
@@ -164,7 +168,7 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <remarks></remarks>
         Public Sub WriteLine(s As String, ParamArray args() As String) Implements I_ConsoleDeviceHandle.WriteLine
             Dim [object] As String = IIf(String.IsNullOrEmpty(args(0)), "", args(0))
-            Call WriteLine(s, Type:=MSG_TYPES.INF, [Object]:=[object])
+            Call WriteLine(s, type:=MSG_TYPES.INF, [Object]:=[object])
         End Sub
 
         Public Overloads Function Read() As Integer Implements I_ConsoleDeviceHandle.Read
