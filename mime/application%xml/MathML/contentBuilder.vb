@@ -124,7 +124,6 @@ Namespace MathML
         Private Function parseInternal(apply As XmlElement) As BinaryExpression
             Dim [operator] As XmlElement
             Dim left, right As [Variant](Of BinaryExpression, SymbolExpression)
-            Dim applys = apply.getElementsByTagName("apply").ToArray
 
             If apply.elements(Scan0).name Like symbols Then
                 [operator] = New XmlElement With {.name = "times"}
@@ -133,36 +132,19 @@ Namespace MathML
                 [operator] = apply.elements(Scan0)
             End If
 
-            If applys.Length = 1 Then
-                If apply.elements.Length = 2 Then
-                    If [operator].name = "minus" Then
-                        left = New SymbolExpression With {.text = 0, .isNumericLiteral = True}
-                        right = apply.elements(1).parseInternal
-                    Else
-                        Throw New NotImplementedException
-                    End If
-
+            If apply.elements.Length = 2 Then
+                If apply.elements(Scan0).name = "minus" Then
+                    apply.elements = {apply.elements(Scan0)} _
+                        .Join({New XmlElement With {.name = "cn", .text = 0}}) _
+                        .Join(apply.elements.Skip(1)) _
+                        .ToArray
                 Else
-                    If apply.elements(1).name = "apply" Then
-                        left = applys(Scan0).parseInternal
-                        right = apply.elements(2).getTextSymbol
-                    Else
-                        left = apply.elements(1).getTextSymbol
-                        right = applys(Scan0).parseInternal
-                    End If
-                End If
-            ElseIf applys.Length = 2 Then
-                left = applys(Scan0).parseInternal
-                right = applys(1).parseInternal
-            Else
-                left = apply.elements(1).getTextSymbol
-
-                If apply.elements.Length > 2 Then
-                    right = apply.elements(2).getTextSymbol
-                Else
-                    right = Nothing
+                    Throw New NotImplementedException(apply.elements(Scan0).name)
                 End If
             End If
+
+            left = apply.elements(1).ExpressionComponent
+            right = apply.elements(2).ExpressionComponent
 
             Dim exp As New BinaryExpression With {
                 .[operator] = [operator].name,
@@ -171,6 +153,15 @@ Namespace MathML
             }
 
             Return exp
+        End Function
+
+        <Extension>
+        Private Function ExpressionComponent(element As XmlElement) As [Variant](Of BinaryExpression, SymbolExpression)
+            If element.name = "apply" Then
+                Return element.parseInternal
+            Else
+                Return element.getTextSymbol
+            End If
         End Function
 
         <Extension>
