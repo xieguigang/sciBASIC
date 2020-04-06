@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::a51e8460b3b5b1c44b7c0b44875eb13f, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\SparseVector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SparseVector
-    ' 
-    '         Properties: [Dim], Length, Precision
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: Equals, GetEnumerator, Max, Min, Sum
-    ' 
-    '         Sub: SetValue
-    ' 
-    '         Operators: -, (+2 Overloads) *, /, (+2 Overloads) ^, (+2 Overloads) +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SparseVector
+' 
+'         Properties: [Dim], Length, Precision
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: Equals, GetEnumerator, Max, Min, Sum
+' 
+'         Sub: SetValue
+' 
+'         Operators: -, (+2 Overloads) *, /, (+2 Overloads) ^, (+2 Overloads) +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,7 +64,7 @@ Namespace LinearAlgebra
     ''' </summary>
     ''' <remarks>
     ''' 在这个向量中存在大量的零，主要适用于节省计算内存
-    ''' 因为有<see cref="index"/>索引的存在，所以假若零数值比较少的话，
+    ''' 因为有<see cref="buffer"/>索引的存在，所以假若零数值比较少的话，
     ''' 使用这个稀疏向量来存储数据反而会导致内存被过度占用
     ''' </remarks>
     ''' 
@@ -72,39 +72,51 @@ Namespace LinearAlgebra
     Public Class SparseVector : Inherits Vector
 
         ''' <summary>
-        ''' 非零值的索引号
+        ''' 非零值的索引号和对应的值
         ''' </summary>
-        ''' <remarks>
-        ''' 为了保持访问性能，<see cref="buffer"/>数组并不会频繁的更改其长度
-        ''' 所以在设置某个元素为零的时候，是通过将这个索引对应的元素设置为-1进行标记删除的
-        ''' -1表示空缺下来的元素
-        ''' </remarks>
-        ReadOnly index As List(Of Integer)
-        ReadOnly dimension%
+        Shadows ReadOnly buffer As Dictionary(Of Integer, Double)
 
+        ''' <summary>
+        ''' 这个向量的虚拟长度
+        ''' </summary>
+        Dim dimension As Integer
+
+        ''' <summary>
+        ''' 返回这个向量的虚拟长度
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 请注意，由于buffer对象记录的是非零元素的数据记录集合，所以其元素计数并不是当前
+        ''' 的这个向量对象的真实长度，<see cref="dimension"/>的值是真实的长度
+        ''' </remarks>
         Public Overrides ReadOnly Property Length As Integer
             Get
                 Return dimension
             End Get
         End Property
 
+        ''' <summary>
+        ''' 返回这个向量的虚拟长度
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides ReadOnly Property [Dim] As Integer
             Get
                 Return dimension
             End Get
         End Property
 
-        Protected ReadOnly Iterator Property Values As IEnumerable(Of Double)
+        ''' <summary>
+        ''' 返回所有的非零元素
+        ''' </summary>
+        ''' <returns></returns>
+        Protected ReadOnly Property Values As IEnumerable(Of Double)
             Get
-                For i As Integer = 0 To index.Count - 1
-                    If index(i) <> -1 Then
-                        Yield buffer(i)
-                    End If
-                Next
+                Return buffer.Values.AsEnumerable
             End Get
         End Property
 
 #Region "Index properties"
+
         Default Public Overrides Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of Double)
             Get
                 Return New Vector(Of Double)(IsTrue(booleans).Select(Function(index) Me(index)))
@@ -123,12 +135,10 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Default Public Overrides Property Item(index As Integer) As Double
             Get
-                Dim i As Integer = Me.index.IndexOf(index)
-
-                If i = -1 Then
-                    Return 0
+                If buffer.ContainsKey(index) Then
+                    Return buffer.Item(key:=index)
                 Else
-                    Return buffer(i)
+                    Return 0
                 End If
             End Get
             Set
@@ -182,76 +192,50 @@ Namespace LinearAlgebra
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="data"></param>
-        ''' <param name="index"></param>
+        ''' <param name="data">非零元素值列表</param>
+        ''' <param name="index">非零元素对应的索引编号</param>
         ''' <param name="length">
         ''' 因为存在大量零，数组中并不是存储真实的数据，而是非零值，所以在这里必须要有一个长度来标记出当前的这个向量的长度
         ''' </param>
         Private Sub New(data As IEnumerable(Of Double), index As IEnumerable(Of Integer), length%)
             Call MyBase.New(data)
 
-            Me.index = index.AsList
-            Me.dimension = length
+            buffer = New Dictionary(Of Integer, Double)
+
+            For Each i As SeqValue(Of Integer) In index.SeqIterator
+                buffer.Add(i.value, MyBase.buffer(i))
+            Next
+
+            dimension = length
         End Sub
 
         Sub New(data As IEnumerable(Of Double))
-            Dim dimension As Integer = 0
-            Dim buffer As New List(Of Double)
+            Call MyBase.New(New Double() {})
 
-            index = New List(Of Integer)
+            Dim dimension As Integer = 0
+            Dim buffer As New Dictionary(Of Integer, Double)
 
             For Each x As Double In data
-                If Math.Abs(x) < Precision Then
+                If stdNum.Abs(x) < Precision Then
                     ' 0.0
                 Else
-                    ' has a non-ZERO value
-                    index += dimension
-                    buffer += x
+                    ' has a non-ZERO value at current index
+                    buffer.Add(dimension, x)
                 End If
 
                 dimension += 1
             Next
 
-            Me.dimension = dimension
             Me.buffer = buffer
+            Me.dimension = dimension
         End Sub
 
         Public Sub SetValue(index%, value#)
-            Dim i As Integer = Me.index.IndexOf(index)
-
-            If value = 0.0 OrElse Math.Abs(value) < Precision Then
-                If i = -1 Then
-                    ' 将原来的零值设置为零值，则无变化
-                    ' do nothing
-                Else
-                    ' 将非零值设置为零
-                    Me.index(i) = -1
-                    Me.buffer(i) = Double.NaN
-                End If
+            If value = 0.0 OrElse stdNum.Abs(value) < Precision Then
+                buffer.Remove(key:=index)
             Else
-                ' value不为零的时候,可能会拓展buffer和index
-                If i = -1 Then
-                    ' 在原来的列表中不存在
-                    ' 则先填充-1的位置
-                    ' 没有-1的位置的时候才进行buffer的拓展
-                    For i = 0 To Me.index.Count - 1
-                        If Me.index(i) = -1 Then
-                            Me.buffer(i) = value
-                            Me.index(i) = index
-
-                            Return
-                        End If
-                    Next
-
-                    ' 需要拓展buffer
-                    ReDim Preserve Me.buffer(buffer.Length * 2)
-
-                    Me.index.Add(index)
-                    Me.buffer(Me.index.Count - 1) = value
-                Else
-                    ' 直接替换值
-                    Me.buffer(i) = value
-                End If
+                buffer.Remove(key:=index)
+                buffer.Add(index, value)
             End If
         End Sub
 
@@ -274,19 +258,21 @@ Namespace LinearAlgebra
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Sum() As Double
-            Return buffer.Sum
+            Return Values.Sum
         End Function
 
         Public Overloads Shared Function Equals(a#, b#) As Boolean
             Return stdNum.Abs(a - b) <= Precision
         End Function
 
+        ''' <summary>
+        ''' 这个枚举器函数会枚举出所有的元素，包括非零元素以及值等于零的元素
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Iterator Function GetEnumerator() As IEnumerator(Of Double)
-            Dim j As i32 = -1
-
             For i As Integer = 0 To dimension - 1
-                If (j = index.IndexOf(i)) > -1 Then
-                    Yield buffer(j)
+                If buffer.ContainsKey(i) Then
+                    Yield buffer(key:=i)
                 Else
                     Yield 0.0
                 End If

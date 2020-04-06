@@ -97,5 +97,9 @@ Namespace MathML
             Return XmlParser.ParseXml(xmlText).ParseXml
         End Function
 
+        Public Shared Function FromMathML(xml As XmlElement) As LambdaExpression
+            Return xml.ParseXml
+        End Function
+
     End Class
 End Namespace

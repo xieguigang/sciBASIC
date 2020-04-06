@@ -689,6 +689,7 @@
     <Compile Include="Numerics\Half.vb" />
     <Compile Include="Numerics\HalfHelper.vb" />
     <Compile Include="Quantile\DataQuartile.vb" />
+    <Compile Include="Scripting\Expression\FunctionElement.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
     <Compile Include="Scripting\Expression\ExpressionEngine.vb" />
     <Compile Include="Scripting\Expression\ExpressionBuilder.vb" />

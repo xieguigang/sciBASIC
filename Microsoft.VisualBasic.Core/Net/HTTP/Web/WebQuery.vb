@@ -218,12 +218,16 @@ Namespace Net.Http
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Query(Of T)(context As Context, Optional cacheType$ = ".xml", Optional ByRef hitCache As Boolean = False) As T
+            Return QueryCacheText(context, cacheType, hitCache).DoCall(Function(text) deserialization(text, GetType(T)))
+        End Function
+
+        Public Function QueryCacheText(context As Context, Optional cacheType$ = ".xml", Optional ByRef hitCache As Boolean = False) As String
             Dim result = queryText({context}, cacheType).First
             Dim cache As String = result.cache.ReadAllText(throwEx:=False)
 
             hitCache = result.hitCache
 
-            Return deserialization(cache, GetType(T))
+            Return cache
         End Function
 
         ''' <summary>

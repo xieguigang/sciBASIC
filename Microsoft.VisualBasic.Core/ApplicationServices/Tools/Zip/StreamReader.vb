@@ -91,6 +91,7 @@ Namespace ApplicationServices.Zip
             End Using
         End Function
 
+        <Extension>
         Public Function Decompress(file As ZipArchiveEntry) As MemoryStream
             Using ref As Stream = file.Open
                 Dim ms As New MemoryStream()
