@@ -44,7 +44,10 @@ Imports Microsoft.VisualBasic.MIME.application.xml.MathML
 Module Module1
 
     Sub Main()
-        Dim test = "E:\GCModeller\src\runtime\sciBASIC#\mime\etc\math3.xml"
+        ' Call genericParsertest2()
+
+
+        Dim test = "E:\GCModeller\src\runtime\sciBASIC#\mime\etc\math4.xml"
         Dim xml = Microsoft.VisualBasic.MIME.application.xml.XmlParser.ParseXml(test.ReadAllText)
         Dim exp As LambdaExpression = LambdaExpression.FromMathML(test.ReadAllText)
 
@@ -53,5 +56,12 @@ Module Module1
         Pause()
     End Sub
 
+    Sub genericParsertest2()
+        Dim xml = Microsoft.VisualBasic.MIME.application.xml.XmlParser.ParseXml("<cn type=""rational"">
+            1 <sep/> 2
+          </cn>")
+
+        Pause()
+    End Sub
 End Module
 

@@ -171,7 +171,14 @@ Namespace MathML
             If element.name = "ci" Then
                 Return New SymbolExpression With {.text = value}
             ElseIf element.name = "cn" Then
-                Return New SymbolExpression With {.text = value, .isNumericLiteral = True}
+                If element.attributes.TryGetValue("type") = "rational" Then
+                    Dim a = element.elements(0).text.TrimWhitespace
+                    Dim b = element.elements(2).text.TrimWhitespace
+
+                    Return New SymbolExpression With {.text = $"{a}/{b}", .isNumericLiteral = True}
+                Else
+                    Return New SymbolExpression With {.text = value, .isNumericLiteral = True}
+                End If
             Else
                 Throw New NotImplementedException(element.ToString)
             End If
@@ -180,7 +187,7 @@ Namespace MathML
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function TrimWhitespace(str As String) As String
-            Return str.Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
+            Return Strings.Trim(str).Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
         End Function
     End Module
 End Namespace
