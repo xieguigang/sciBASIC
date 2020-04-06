@@ -119,6 +119,10 @@ Namespace MathML
         End Function
 
         ReadOnly symbols As Index(Of String) = {"apply", "ci", "cn"}
+        ''' <summary>
+        ''' a list of standard math function
+        ''' </summary>
+        ReadOnly stdMathFunc As Index(Of String) = {"abs"}
 
         <Extension>
         Private Function parseInternal(apply As XmlElement) As BinaryExpression
