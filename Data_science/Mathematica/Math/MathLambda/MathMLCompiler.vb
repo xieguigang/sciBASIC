@@ -63,7 +63,7 @@ Public Module MathMLCompiler
         If member Like GetType(MLSymbol) Then
             With member.TryCast(Of MLSymbol)
                 If .isNumericLiteral Then
-                    Return Expression.Constant(Val(.text), GetType(Double))
+                    Return Expression.Constant(ParseDouble(.text), GetType(Double))
                 Else
                     Return parameters(.text)
                 End If

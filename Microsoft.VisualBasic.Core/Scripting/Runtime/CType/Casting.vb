@@ -290,7 +290,8 @@ Namespace Scripting.Runtime
             If s.Last = "%"c Then
                 Return Conversion.Val(Mid(s, 1, s.Length - 1)) / 100  ' 百分比
             ElseIf InStr(s, "/") > 0 Then
-                Dim t$() = s.Split("/"c) ' 处理分数
+                Dim t$() = s.Split("/"c)
+                ' 处理分数
                 Return Val(t(0)) / Val(t(1))
             ElseIf InStr(s, "e", CompareMethod.Text) > 0 Then
                 Dim t = s.ToLower.Split("e"c)
