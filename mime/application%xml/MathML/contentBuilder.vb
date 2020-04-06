@@ -134,12 +134,22 @@ Namespace MathML
             End If
 
             If applys.Length = 1 Then
-                If apply.elements(1).name = "apply" Then
-                    left = applys(Scan0).parseInternal
-                    right = apply.elements(2).getTextSymbol
+                If apply.elements.Length = 2 Then
+                    If [operator].name = "minus" Then
+                        left = New SymbolExpression With {.text = 0, .isNumericLiteral = True}
+                        right = apply.elements(1).parseInternal
+                    Else
+                        Throw New NotImplementedException
+                    End If
+
                 Else
-                    left = apply.elements(1).getTextSymbol
-                    right = applys(Scan0).parseInternal
+                    If apply.elements(1).name = "apply" Then
+                        left = applys(Scan0).parseInternal
+                        right = apply.elements(2).getTextSymbol
+                    Else
+                        left = apply.elements(1).getTextSymbol
+                        right = applys(Scan0).parseInternal
+                    End If
                 End If
             ElseIf applys.Length = 2 Then
                 left = applys(Scan0).parseInternal
