@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::c975db2f57e0be8dc333df2004a55231, Data_science\Visualization\Plots\Scatter\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Scatter
-    ' 
-    '     Function: CreateAxisTicks
-    ' 
-    '     Sub: drawErrorLine
-    '     Enum Splines
-    ' 
-    '         B_Spline, Bezier, CatmullRomSpline, CentripetalCatmullRomSpline, CubicSpline
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: (+2 Overloads) FromPoints, FromVector, (+5 Overloads) Plot, PlotFunction
-    ' 
-    ' /********************************************************************************/
+' Module Scatter
+' 
+'     Function: CreateAxisTicks
+' 
+'     Sub: drawErrorLine
+'     Enum Splines
+' 
+'         B_Spline, Bezier, CatmullRomSpline, CentripetalCatmullRomSpline, CubicSpline
+' 
+' 
+' 
+'  
+' 
+'     Function: (+2 Overloads) FromPoints, FromVector, (+5 Overloads) Plot, PlotFunction
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
@@ -129,42 +130,6 @@ Public Module Scatter
         End If
 
         Return (XTicks, YTicks)
-    End Function
-
-    ''' <summary>
-    ''' 线条插值类型
-    ''' </summary>
-    Public Enum Splines As Byte
-        ''' <summary>
-        ''' 无插值操作
-        ''' </summary>
-        None = 0
-        ''' <summary>
-        ''' 二次插值
-        ''' </summary>
-        B_Spline
-        ''' <summary>
-        ''' 贝塞尔曲线插值
-        ''' </summary>
-        Bezier
-        CatmullRomSpline
-        CentripetalCatmullRomSpline
-        ''' <summary>
-        ''' 三次插值处理
-        ''' </summary>
-        CubicSpline
-    End Enum
-
-    ReadOnly splineValues As Dictionary(Of String, Splines) = Enums(Of Splines).ToDictionary(Function(a) a.Description.ToLower)
-
-    Public Function ParseSplineValue(describ As String) As Splines
-        With LCase(describ).Trim
-            If .DoCall(AddressOf splineValues.ContainsKey) Then
-                Return .DoCall(Function(key) splineValues(key))
-            Else
-                Return Splines.None
-            End If
-        End With
     End Function
 
     <Extension>

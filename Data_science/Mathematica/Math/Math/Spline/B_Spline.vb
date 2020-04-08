@@ -82,7 +82,6 @@ Namespace Interpolation
         ''' <param name="RESOLUTION%"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
         Public Function BSpline(ctrlPts As IEnumerable(Of PointF), Optional degree! = 5, Optional RESOLUTION% = 10) As IEnumerable(Of PointF)
             Return ctrlPts.Compute(degree, RESOLUTION)
         End Function

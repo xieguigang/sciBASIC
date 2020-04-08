@@ -668,7 +668,7 @@
     <Compile Include="Algebra\LP\LPP.vb" />
     <Compile Include="Algebra\LP\LPPSolution.vb" />
     <Compile Include="Algebra\Matrix\NumpyExtensions.vb" />
-    <Compile Include="Algebra\PCA.vb" />
+    <Compile Include="Algebra\PCA\PCA.vb" />
     <Compile Include="Algebra\SVD.vb" />
     <Compile Include="Algebra\Vector\Class\HalfVector.vb" />
     <Compile Include="Algebra\Vector\Class\SparseVector.vb" />
