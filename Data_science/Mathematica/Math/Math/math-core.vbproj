@@ -662,6 +662,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\PCA\Algorithm.vb" />
+    <Compile Include="Algebra\PCA\Helper.vb" />
     <Compile Include="Numerics\Framework\VariableObject.vb" />
     <Compile Include="Numerics\Framework\Iterator.vb" />
     <Compile Include="Algebra\LP\Extensions.vb" />

@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 
-Namespace LinearAlgebra
+Namespace LinearAlgebra.Prcomp
 
     ''' <summary>
     ''' Performs principal component analysis on a set of data and returns the resulting data set. The
