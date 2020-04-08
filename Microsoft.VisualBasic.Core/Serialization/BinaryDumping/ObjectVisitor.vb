@@ -132,6 +132,10 @@ Namespace Serialization.BinaryDumping
             Dim isVisited As Boolean = False
             Dim isValueType As Boolean = False
 
+            If obj Is Nothing Then
+                Return
+            End If
+
             For Each field As FieldInfo In fields
                 value = field.GetValue(obj)
 

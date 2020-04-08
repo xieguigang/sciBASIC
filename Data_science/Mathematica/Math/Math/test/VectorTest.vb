@@ -65,6 +65,29 @@ Module VectorTest
         Pause()
     End Sub
 
+    Sub vectorCmpares2()
+        Dim a As Double() = {23, 65, 41, 0.023, 0.0031, 564, 0.006, 0.005, 6, 0.004}.JoinIterates(Repeats(0.00001, 1000000)).ToArray
+
+        SparseVector.Precision = 0.05
+
+        Dim v1 As New Vector(a)
+        Dim v2 As New SparseVector(a)
+
+        Dim sizeOfFull As Long = HeapSizeOf.MeasureSize(v1)
+        Dim sizeOfCompact As Long = HeapSizeOf.MeasureSize(v2)
+
+        Dim sum1 = v1.Sum
+        Dim sum2 = v2.Sum
+
+        Dim add1 = v1 + 1
+        Dim add12 = v2 + 1
+
+        sizeOfFull = HeapSizeOf.MeasureSize(add1)
+        sizeOfCompact = HeapSizeOf.MeasureSize(add12)
+
+        Pause()
+    End Sub
+
 
     Sub SparseVectorTest()
 
@@ -106,6 +129,8 @@ Module VectorTest
     End Sub
 
     Sub Main()
+
+        Call vectorCmpares2()
 
         Call SparseVectorTest()
         Call memoryTest()

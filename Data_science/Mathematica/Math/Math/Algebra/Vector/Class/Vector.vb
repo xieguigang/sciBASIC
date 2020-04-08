@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports numpy = Microsoft.VisualBasic.Language.Python
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace LinearAlgebra
 
@@ -158,7 +158,7 @@ Namespace LinearAlgebra
         Public ReadOnly Property SumMagnitude As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return sys.Sqrt(Me.Mod)
+                Return stdNum.Sqrt(Me.Mod)
             End Get
         End Property
 
@@ -180,7 +180,7 @@ Namespace LinearAlgebra
             End Get
         End Property
 
-        Private ReadOnly Property Data As Double() Implements IVector.Data
+        Protected Overridable ReadOnly Property Data As Double() Implements IVector.Data
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer

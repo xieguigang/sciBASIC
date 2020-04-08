@@ -115,6 +115,22 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        ''' <summary>
+        ''' returns all data values in current vector object.
+        ''' </summary>
+        ''' <returns></returns>
+        Protected Overrides ReadOnly Property Data As Double()
+            Get
+                Return Me.ToArray
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Array As Double()
+            Get
+                Return Me.ToArray
+            End Get
+        End Property
+
 #Region "Index properties"
 
         Default Public Overrides Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of Double)
@@ -209,6 +225,12 @@ Namespace LinearAlgebra
             dimension = length
         End Sub
 
+        ''' <summary>
+        ''' create a new sparse compact numeric vector from the given raw data
+        ''' </summary>
+        ''' <param name="data">
+        ''' the given raw data
+        ''' </param>
         Sub New(data As IEnumerable(Of Double))
             Call MyBase.New(New Double() {})
 
