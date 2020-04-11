@@ -40,7 +40,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports MAT = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports MAT = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.GeneralMatrix
 
 ''' <summary>
 ''' 正态分布随机数
