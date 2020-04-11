@@ -61,18 +61,18 @@ Namespace MathML
             Dim right As String = ""
 
             If Not lambda.applyleft Is Nothing Then
-                If lambda.applyleft Like GetType(SymbolExpression) Then
-                    left = lambda.applyleft.TryCast(Of SymbolExpression).ToString
+                If TypeOf lambda.applyleft Is BinaryExpression Then
+                    left = $"( {lambda.applyleft} )"
                 Else
-                    left = $"( {lambda.applyleft.TryCast(Of BinaryExpression).ToString} )"
+                    left = lambda.applyleft.ToString
                 End If
             End If
 
             If Not lambda.applyright Is Nothing Then
-                If lambda.applyright Like GetType(SymbolExpression) Then
-                    right = lambda.applyright.TryCast(Of SymbolExpression).ToString
+                If TypeOf lambda.applyright Is SymbolExpression Then
+                    right = $"( {lambda.applyright} )"
                 Else
-                    right = $"( {lambda.applyright.TryCast(Of BinaryExpression).ToString} )"
+                    right = lambda.applyright.ToString
                 End If
             End If
 
@@ -125,10 +125,11 @@ Namespace MathML
         ReadOnly stdMathFunc As Index(Of String) = {"abs"}
 
         <Extension>
-        Private Function parseInternal(apply As XmlElement) As BinaryExpression
+        Private Function parseInternal(apply As XmlElement) As MathExpression
             Dim [operator] As XmlElement
-            Dim left, right As [Variant](Of BinaryExpression, SymbolExpression)
 
+            ' 如果第一个元素是变量，常数或者apply表达式
+            ' 则默认操作符为乘法操作？
             If apply.elements(Scan0).name Like symbols Then
                 [operator] = New XmlElement With {.name = "times"}
                 apply.elements = {[operator]}.Join(apply.elements).ToArray
@@ -136,31 +137,43 @@ Namespace MathML
                 [operator] = apply.elements(Scan0)
             End If
 
-            If apply.elements.Length = 2 Then
-                If apply.elements(Scan0).name = "minus" Then
-                    apply.elements = {apply.elements(Scan0)} _
-                        .Join({New XmlElement With {.name = "cn", .text = 0}}) _
-                        .Join(apply.elements.Skip(1)) _
+            If [operator].name Like stdMathFunc Then
+                Return New MathFunctionExpression With {
+                    .name = [operator].name,
+                    .parameters = apply.elements _
+                        .Skip(1) _
+                        .Select(AddressOf ExpressionComponent) _
                         .ToArray
-                Else
-                    Throw New NotImplementedException(apply.elements(Scan0).name)
+                }
+            Else
+                Dim left, right As MathExpression
+
+                If apply.elements.Length = 2 Then
+                    If apply.elements(Scan0).name = "minus" Then
+                        apply.elements = {apply.elements(Scan0)} _
+                            .Join({New XmlElement With {.name = "cn", .text = 0}}) _
+                            .Join(apply.elements.Skip(1)) _
+                            .ToArray
+                    Else
+                        Throw New NotImplementedException(apply.elements(Scan0).name)
+                    End If
                 End If
+
+                left = apply.elements(1).ExpressionComponent
+                right = apply.elements(2).ExpressionComponent
+
+                Dim exp As New BinaryExpression With {
+                    .[operator] = [operator].name,
+                    .applyleft = left,
+                    .applyright = right
+                }
+
+                Return exp
             End If
-
-            left = apply.elements(1).ExpressionComponent
-            right = apply.elements(2).ExpressionComponent
-
-            Dim exp As New BinaryExpression With {
-                .[operator] = [operator].name,
-                .applyleft = left,
-                .applyright = right
-            }
-
-            Return exp
         End Function
 
         <Extension>
-        Private Function ExpressionComponent(element As XmlElement) As [Variant](Of BinaryExpression, SymbolExpression)
+        Private Function ExpressionComponent(element As XmlElement) As MathExpression
             If element.name = "apply" Then
                 Return element.parseInternal
             Else
