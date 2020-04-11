@@ -50,7 +50,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 
-Namespace Algebra.LinearProgramming
+Namespace LinearAlgebra.LinearProgramming
 
     ''' <summary>
     ''' Linear programming solver from: 

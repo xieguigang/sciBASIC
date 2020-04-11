@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::48069802075045023d88e43d4f764ee5, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Vector
-    ' 
-    '         Properties: [Mod], Data, Inf, IsNumeric, NAN
-    '                     Range, SumMagnitude, Unit, Zero
-    ' 
-    '         Constructor: (+8 Overloads) Sub New
-    '         Function: Abs, AsSparse, CumSum, DotProduct, Ones
-    '                   Order, Product, (+2 Overloads) rand, ScaleToRange, slice
-    '                   SumMagnitudes, (+2 Overloads) ToString
-    '         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
-    '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
-    '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Vector
+' 
+'         Properties: [Mod], Data, Inf, IsNumeric, NAN
+'                     Range, SumMagnitude, Unit, Zero
+' 
+'         Constructor: (+8 Overloads) Sub New
+'         Function: Abs, AsSparse, CumSum, DotProduct, Ones
+'                   Order, Product, (+2 Overloads) rand, ScaleToRange, slice
+'                   SumMagnitudes, (+2 Overloads) ToString
+'         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
+'                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
+'                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -559,7 +560,7 @@ Namespace LinearAlgebra
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As Matrix
+        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As GeneralMatrix
             '获取变量维数
             Dim N0 = v1.[Dim]
             Dim M0 = v2.[Dim]
@@ -569,7 +570,7 @@ Namespace LinearAlgebra
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
 
-            Dim vvmat As New Matrix(N0, N0)
+            Dim vvmat As New GeneralMatrix(N0, N0)
 
             For i As Integer = 0 To N0 - 1
                 For j As Integer = 0 To N0 - 1

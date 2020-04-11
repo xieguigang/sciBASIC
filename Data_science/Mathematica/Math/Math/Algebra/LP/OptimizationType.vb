@@ -45,7 +45,7 @@
 
 Imports System.ComponentModel
 
-Namespace Algebra.LinearProgramming
+Namespace LinearAlgebra.LinearProgramming
 
     Public Enum OptimizationType
 

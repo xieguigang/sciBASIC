@@ -48,7 +48,7 @@
 
 Imports System.Runtime.Serialization
 
-Namespace Matrix
+Namespace LinearAlgebra.Matrix
 
     ''' <summary>QR Decomposition.
     ''' For an m-by-n matrix A with m >= n, the QR decomposition is an m-by-n

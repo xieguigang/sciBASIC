@@ -48,8 +48,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Text
 
-Namespace Matrix
+Namespace LinearAlgebra.Matrix
 
+    <HideModuleName>
     Public Module Extensions
 
         <Extension>

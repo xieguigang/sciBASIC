@@ -42,7 +42,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Algebra.LinearProgramming
+Namespace LinearAlgebra.LinearProgramming
 
     Module Extensions
 

@@ -48,7 +48,7 @@
 
 Imports System.Runtime.Serialization
 
-Namespace Matrix
+Namespace LinearAlgebra.Matrix
 
     ''' <summary>Cholesky Decomposition.
     ''' For a symmetric, positive definite matrix A, the Cholesky decomposition

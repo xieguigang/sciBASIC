@@ -52,9 +52,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
-Namespace LinearAlgebra
+Namespace LinearAlgebra.Matrix
 
     Public Module vbMatrix
 
@@ -69,22 +69,22 @@ Namespace LinearAlgebra
         ''' <remarks>
         ''' 其中A为m*n的矩阵,r为A的秩.即A=Return_M*Return_N.函数执行成功返回r(也就是其秩)
         ''' </remarks>
-        <Extension> Public Function SG(K As Matrix) As (M As Matrix, N As Matrix, rank As Int16)
-            Dim erro As Double = sys.Pow(0.1, 10)
-            Dim n As Int16 = K.GetSize
+        <Extension> Public Function SG(K As GeneralMatrix) As (M As GeneralMatrix, N As GeneralMatrix, rank As Int16)
+            Dim erro As Double = stdNum.Pow(0.1, 10)
+            Dim n As Int16 = K.RowDimension
             Dim m As Int16 = K.Length / n
             Dim i As Int16
             Dim j As Int16
             Dim Rank As Int16 = GetRank(K, 9)
-            Dim return_M, return_N As Matrix
+            Dim return_M, return_N As GeneralMatrix
 
             If Rank = m And m = n Then
-                Return_M = New Matrix(m - 1, n - 1) '    ReDim Return_M(m - 1, n - 1)
-                Return_N = New Matrix(m - 1, n - 1) '    ReDim Return_N(m - 1, n - 1)
+                return_M = New GeneralMatrix(m - 1, n - 1) '    ReDim Return_M(m - 1, n - 1)
+                return_N = New GeneralMatrix(m - 1, n - 1) '    ReDim Return_N(m - 1, n - 1)
                 For i = 0 To m - 1
-                    Return_N(i, i) = 1
+                    return_N(i, i) = 1
                     For j = 0 To m - 1
-                        Return_M(i, j) = K(i, j)
+                        return_M(i, j) = K(i, j)
                     Next
                 Next
                 Return (return_M, return_N, Rank)
@@ -122,7 +122,7 @@ Namespace LinearAlgebra
                             temp = tempk(i, j) / tempk(i1, j)
                             For j1 = 0 To n - 1
                                 tempk(i1, j1) = tempk(i1, j1) * temp - tempk(i, j1)
-                                If sys.Abs(tempk(i1, j1)) <= erro Then
+                                If stdNum.Abs(tempk(i1, j1)) <= erro Then
                                     tempk(i1, j1) = 0
                                 End If
                             Next
@@ -133,19 +133,19 @@ Namespace LinearAlgebra
                 j += 1
             End While
             j1 = 0
-            Return_M = New Matrix(m - 1, Rank - 1) '    ReDim Return_M(m - 1, Rank - 1)
+            return_M = New GeneralMatrix(m - 1, Rank - 1) '    ReDim Return_M(m - 1, Rank - 1)
             For i = 0 To m - 1
                 j = i
                 While j < n
                     If tempk(i, j) <> 0 Then
                         For i1 = 0 To m - 1
-                            Return_M(i1, j1) = K(i1, j)
+                            return_M(i1, j1) = K(i1, j)
                         Next
                         j1 += 1
                         temp = tempk(i, j)
                         While j < n
                             tempk(i, j) /= temp
-                            If sys.Abs(tempk(i, j)) <= erro Then
+                            If stdNum.Abs(tempk(i, j)) <= erro Then
                                 tempk(i, j) = 0
                             End If
                             j += 1
@@ -155,10 +155,10 @@ Namespace LinearAlgebra
                     j += 1
                 End While
             Next
-            Return_N = New Matrix(Rank - 1, n - 1) '    ReDim Return_N(Rank - 1, n - 1)
+            return_N = New GeneralMatrix(Rank - 1, n - 1) '    ReDim Return_N(Rank - 1, n - 1)
             For i = 0 To Rank - 1
                 For j = 0 To n - 1
-                    Return_N(i, j) = tempk(i, j)
+                    return_N(i, j) = tempk(i, j)
                 Next
             Next
             Return (return_M, return_N, Rank)
@@ -171,13 +171,13 @@ Namespace LinearAlgebra
         ''' <param name="Return_K">求得的广义逆矩阵</param>
         ''' <returns>函数执行成功返回m,其中m代表Return_K的行数</returns>
         ''' <remarks></remarks>
-        Public Function Pinv(K As Matrix, Return_K As Matrix) As Int16
-            Dim n As Int16 = K.GetSize
+        Public Function Pinv(K As GeneralMatrix, Return_K As GeneralMatrix) As Int16
+            Dim n As Int16 = K.RowDimension
             Dim rank As Int16 = GetRank(K, 9)
             Dim m As Int16 = K.Length / n
-            Dim temp1(0, 0) As Double
-            Dim temp2(0, 0) As Double
-            Dim temp3(0, 0) As Double
+            Dim temp1 As GeneralMatrix = GeneralMatrix.Number
+            Dim temp2 As GeneralMatrix = GeneralMatrix.Number
+            Dim temp3 As GeneralMatrix = GeneralMatrix.Number
             If rank = m Then
                 If m = n Then
                     Inv2(K, Return_K, n)
@@ -193,8 +193,8 @@ Namespace LinearAlgebra
                 Inv2(temp2, temp3, n) 'temp3为逆
                 Mul(temp3, temp1, n, Return_K)
             Else
-                Dim s = Matrix.Number
-                Dim g = Matrix.Number
+                Dim s = GeneralMatrix.Number
+                Dim g = GeneralMatrix.Number
                 Dim s1(0, 0) As Double
                 Dim g1(0, 0) As Double
                 Dim s2(0, 0) As Double '逆
@@ -225,9 +225,9 @@ Namespace LinearAlgebra
         ''' <param name="Ret">求得的广义逆矩阵</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Pinv2(K As Matrix, Erro As Int16, m As Int16, Ret As Matrix) As Int16
+        Public Function Pinv2(K As GeneralMatrix, Erro As Int16, m As Int16, Ret As GeneralMatrix) As Int16
             Dim n As Integer = K.Length / m
-            Dim Erro1 As Double = sys.Pow(0.1, Erro)
+            Dim Erro1 As Double = stdNum.Pow(0.1, Erro)
             If Erro1 = 1 Then
                 Erro1 = 0
             End If
@@ -250,11 +250,11 @@ Namespace LinearAlgebra
                 If i = n + 1 Then
                     Exit For
                 End If
-                If sys.Abs(K(i, i)) <= Erro1 Then
+                If stdNum.Abs(K(i, i)) <= Erro1 Then
                     K(i, i) = 0
                     ii = i + 1
                     While ii <= m
-                        If sys.Abs(K(ii, i)) > Erro1 Then
+                        If stdNum.Abs(K(ii, i)) > Erro1 Then
                             For j = 0 To n
                                 temp = K(i, j)
                                 K(i, j) = K(ii, j)
@@ -274,17 +274,17 @@ Namespace LinearAlgebra
                 If K(i, i) <> 0 Then
                     For ii = 0 To m
                         If ii <> i Then
-                            If sys.Abs(K(ii, i)) > Erro1 Then
+                            If stdNum.Abs(K(ii, i)) > Erro1 Then
                                 temp = K(i, i) / K(ii, i)
                                 For j = 0 To n
                                     K(ii, j) = K(ii, j) * temp - K(i, j)
-                                    If sys.Abs(K(ii, j)) <= Erro1 Then
+                                    If stdNum.Abs(K(ii, j)) <= Erro1 Then
                                         K(ii, j) = 0
                                     End If
                                 Next
                                 For j = 0 To m
                                     P(ii, j) = P(ii, j) * temp - P(i, j)
-                                    If sys.Abs(P(ii, j)) <= Erro1 Then
+                                    If stdNum.Abs(P(ii, j)) <= Erro1 Then
                                         P(ii, j) = 0
                                     End If
                                 Next
@@ -299,11 +299,11 @@ Namespace LinearAlgebra
                 If j = m + 1 Then
                     Exit For
                 End If
-                If sys.Abs(K(j, j)) <= Erro1 Then
+                If stdNum.Abs(K(j, j)) <= Erro1 Then
                     K(j, j) = 0
                     jj = j + 1
                     While jj <= n
-                        If sys.Abs(K(j, jj)) > Erro1 Then
+                        If stdNum.Abs(K(j, jj)) > Erro1 Then
                             For i = 0 To m
                                 temp = K(i, j)
                                 K(i, j) = K(i, jj)
@@ -323,17 +323,17 @@ Namespace LinearAlgebra
                 If K(j, j) <> 0 Then
                     For jj = 0 To n
                         If jj <> j Then
-                            If sys.Abs(K(j, jj)) > Erro1 Then
+                            If stdNum.Abs(K(j, jj)) > Erro1 Then
                                 temp = K(j, j) / K(j, jj)
                                 For i = 0 To m
                                     K(i, jj) = K(i, jj) * temp - K(i, j)
-                                    If sys.Abs(K(i, jj)) <= Erro1 Then
+                                    If stdNum.Abs(K(i, jj)) <= Erro1 Then
                                         K(i, jj) = 0
                                     End If
                                 Next
                                 For i = 0 To n
                                     Q(i, jj) = Q(i, jj) * temp - Q(i, j)
-                                    If sys.Abs(Q(i, jj)) <= Erro1 Then
+                                    If stdNum.Abs(Q(i, jj)) <= Erro1 Then
                                         Q(i, jj) = 0
                                     End If
                                 Next
@@ -350,7 +350,7 @@ Namespace LinearAlgebra
                     E(i, i) = 1
                     For j = 0 To m
                         P(i, j) /= K(i, i)
-                        If sys.Abs(P(i, j)) <= Erro1 Then
+                        If stdNum.Abs(P(i, j)) <= Erro1 Then
                             P(i, j) = 0
                         End If
                     Next
@@ -372,8 +372,8 @@ Namespace LinearAlgebra
         ''' <param name="[error]">误差控制参数</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function GetRank(K As Matrix, [error] As Int16) As Int16
-            Dim n As Int16 = K.GetSize
+        Public Function GetRank(K As GeneralMatrix, [error] As Int16) As Int16
+            Dim n As Int16 = K.RowDimension
             Dim m As Int16 = K.Length \ n
             Dim i As Int16 = 0
             Dim i1 As Int16
@@ -478,8 +478,8 @@ Namespace LinearAlgebra
         ''' <param name="R">分解后的R矩阵</param>
         ''' <returns>函数执行成功返回True,失败返回False</returns>
         ''' <remarks></remarks>
-        Public Function QR(K As Matrix, Q As Matrix, R As Matrix) As Boolean
-            Dim n As Int16 = K.GetSize
+        Public Function QR(K As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix) As Boolean
+            Dim n As Int16 = K.RowDimension
             If n * n <> K.Length Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
                 Return False
             End If
@@ -522,10 +522,10 @@ Namespace LinearAlgebra
                 For j = 0 To n
                     Btemp(i) += B(j, i) * B(j, i)
                 Next
-                Btemp(i) = sys.Pow(Btemp(i), 0.5)
+                Btemp(i) = stdNum.Pow(Btemp(i), 0.5)
             Next
-            Q = New Matrix(n, n) '  ReDim Q(n, n)
-            R = New Matrix(n, n) '   ReDim R(n, n)
+            Q = New GeneralMatrix(n, n) '  ReDim Q(n, n)
+            R = New GeneralMatrix(n, n) '   ReDim R(n, n)
             For i = 0 To n
                 For j = 0 To n
                     Q(j, i) = B(j, i) / Btemp(i)
@@ -546,8 +546,8 @@ Namespace LinearAlgebra
         ''' <param name="Ret">正交规范化后的矩阵</param>
         ''' <returns>函数执行成功返回True,失败返回False</returns>
         ''' <remarks></remarks>
-        Public Function Schmidt(K As Matrix, Ret As Matrix) As Boolean
-            Dim n As Int16 = K.GetSize
+        Public Function Schmidt(K As GeneralMatrix, Ret As GeneralMatrix) As Boolean
+            Dim n As Int16 = K.RowDimension
             If n * n <> K.Length Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
                 Return False
             End If
@@ -588,9 +588,9 @@ Namespace LinearAlgebra
                 For j = 0 To n
                     Btemp(i) += B(j, i) * B(j, i)
                 Next
-                Btemp(i) = sys.Pow(Btemp(i), 0.5)
+                Btemp(i) = stdNum.Pow(Btemp(i), 0.5)
             Next
-            Ret = New Matrix(n, n) '  ReDim Ret(n, n)
+            Ret = New GeneralMatrix(n, n) '  ReDim Ret(n, n)
             For i = 0 To n
                 For j = 0 To n
                     Ret(j, i) = B(j, i) / Btemp(i)
@@ -610,7 +610,7 @@ Namespace LinearAlgebra
         ''' <param name="IsHess">K1是否已经是上Hessenberg矩阵</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function EigenValue(K11 As Matrix, n As Int16, LoopNumber As Int16, errors As Int16, Ret As Matrix, IsHess As Boolean) As Boolean 'ret里是n*2的数组，第一列是实数部分，第2列为虚数部分
+        Public Function EigenValue(K11 As GeneralMatrix, n As Int16, LoopNumber As Int16, errors As Int16, Ret As GeneralMatrix, IsHess As Boolean) As Boolean 'ret里是n*2的数组，第一列是实数部分，第2列为虚数部分
             Dim i As Int16 = K11.Length / n
             If n * n <> K11.Length Then '只有方阵才有特征值
                 Return False
@@ -619,9 +619,9 @@ Namespace LinearAlgebra
             Dim k As Int16
             Dim t As Int16
             Dim m As Int16
-            Dim A(0, 0) As Double
-            Ret = New Matrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
-            Dim erro As Double = sys.Pow(0.1, errors)
+            Dim A As GeneralMatrix = GeneralMatrix.Number
+            Ret = New GeneralMatrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
+            Dim erro As Double = stdNum.Pow(0.1, errors)
             Dim b As Double
             Dim c As Double
             Dim d As Double
@@ -645,7 +645,7 @@ Namespace LinearAlgebra
             Next
             If IsHess Then
                 i -= 1
-                ReDim A(i, n - 1)
+                A.Resize(i, n - 1)
                 For j = 0 To i
                     For k = 0 To n - 1
                         A(j, k) = K1(j, k)
@@ -658,7 +658,7 @@ Namespace LinearAlgebra
             While m <> 0
                 t = m - 1
                 While t > 0
-                    If sys.Abs(A(t, t - 1)) > erro * (Abs(A(t - 1, t - 1)) + sys.Abs(A(t, t))) Then
+                    If stdNum.Abs(A(t, t - 1)) > erro * (Abs(A(t - 1, t - 1)) + stdNum.Abs(A(t, t))) Then
                         t -= 1
                     Else
                         Exit While
@@ -731,7 +731,7 @@ Namespace LinearAlgebra
                             Else
                                 xy = 1
                             End If
-                            s = xy * sys.Pow(p * p + q * q + r * r, 0.5)
+                            s = xy * stdNum.Pow(p * p + q * q + r * r, 0.5)
                             If k <> t Then
                                 A(k, k - 1) = -s
                             End If
@@ -793,20 +793,20 @@ Namespace LinearAlgebra
         ''' <param name="ret">化为上(Hessenberg)矩阵后的矩阵</param>
         ''' <returns>函数成功返回Ret的阶数</returns>
         ''' <remarks></remarks>
-        Public Function Hessenberg(A As Matrix, n As Int16, ByRef ret As Matrix) As Int16 '
+        Public Function Hessenberg(A As GeneralMatrix, n As Int16, ByRef ret As GeneralMatrix) As Int16 '
             Dim i As Int16
             Dim j As Int16
             Dim k As Int16
             Dim temp As Double
             Dim MaxNumber As Int16
             n -= 1
-            ret = New Matrix(n, n) '   ReDim ret(n, n)
+            ret = New GeneralMatrix(n, n) '   ReDim ret(n, n)
             For k = 1 To n - 1
                 i = k - 1
                 MaxNumber = k
-                temp = sys.Abs(A(k, i))
+                temp = stdNum.Abs(A(k, i))
                 For j = k + 1 To n
-                    If sys.Abs(A(j, i)) > temp Then
+                    If stdNum.Abs(A(j, i)) > temp Then
                         MaxNumber = j
                     End If
                 Next
@@ -858,18 +858,18 @@ Namespace LinearAlgebra
         ''' <param name="U_m">U矩阵的行数</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function SvdSplit(A As Matrix, m As Int16, V As Matrix, V_m As Int16, S As Matrix, S_m As Int16, U As Matrix, U_m As Int16) As Boolean
+        Public Function SvdSplit(A As GeneralMatrix, m As Int16, V As GeneralMatrix, V_m As Int16, S As GeneralMatrix, S_m As Int16, U As GeneralMatrix, U_m As Int16) As Boolean
             'A=USV*
             Dim n As Int16 = A.Length / m
             Dim i As Int16
             Dim j As Int16
             Dim ii As Int16
-            Dim At = Matrix.Number
+            Dim At = GeneralMatrix.Number
             Dim AtA(0, 0) As Double
             Dim b(0, 0) As Double
             Dim b1(0, 0) As Double
             Dim temp As Double
-            Dim Error1 As Double = sys.Pow(0.1, 10) '误差控制
+            Dim Error1 As Double = stdNum.Pow(0.1, 10) '误差控制
             At = A.Transpose '   Math_Matrix_T(A, n, At)
             Mul(At, A, m, AtA)
             EigSym(AtA, n, 9, b, b1) 'b特征值，b1特征向量
@@ -892,9 +892,9 @@ Namespace LinearAlgebra
                     End If
                 Next
             Next
-            S = New Matrix(m, n) '    ReDim S(m, n)
-            V = New Matrix(n, n)  '    ReDim V(n, n)
-            U = New Matrix(m, m) '   ReDim U(m, m)
+            S = New GeneralMatrix(m, n) '    ReDim S(m, n)
+            V = New GeneralMatrix(n, n)  '    ReDim V(n, n)
+            U = New GeneralMatrix(m, m) '   ReDim U(m, m)
             ii = 0
             If m > n Then
                 j = n
@@ -904,7 +904,7 @@ Namespace LinearAlgebra
             For i = 0 To j '给s赋值
                 If b(i, 0) > Error1 Then
                     ii += 1
-                    S(i, i) = sys.Sqrt(b(i, 0))
+                    S(i, i) = stdNum.Sqrt(b(i, 0))
                 Else
                     Exit For
                 End If
@@ -914,13 +914,13 @@ Namespace LinearAlgebra
                 For i = 0 To n
                     temp += b1(i, j) * b1(i, j)
                 Next
-                temp = sys.Sqrt(temp)
+                temp = stdNum.Sqrt(temp)
                 For i = 0 To n
                     V(i, j) = b1(i, j) / temp
                 Next
             Next
             j = 0
-            At = New Matrix(n, 0)
+            At = New GeneralMatrix(n, 0)
             While j < ii
                 For i = 0 To n
                     At(i, 0) = V(i, j)
@@ -936,7 +936,7 @@ Namespace LinearAlgebra
                 j += 1
             End While
             While ii <= m
-                At = New Matrix(ii - 1, m)
+                At = New GeneralMatrix(ii - 1, m)
                 ReDim b(ii - 1, 0)
                 For i = 0 To ii - 1
                     For j = 0 To m
@@ -948,7 +948,7 @@ Namespace LinearAlgebra
                 For i = 0 To m
                     temp += A(i, 0) * A(i, 0)
                 Next
-                temp = sys.Sqrt(temp)
+                temp = stdNum.Sqrt(temp)
                 If temp = 0 Then
                     temp = Error1
                 End If
@@ -969,12 +969,12 @@ Namespace LinearAlgebra
         ''' <param name="x">求解得到的解</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Cramer22(K As Matrix, B As Matrix, k_m As Integer, x As Matrix) As Boolean 'Kx=B求解x。K不一定为方阵。其结果返回最小二乘解
-            Dim i As Integer = B.GetSize
+        Public Function Cramer22(K As GeneralMatrix, B As GeneralMatrix, k_m As Integer, x As GeneralMatrix) As Boolean 'Kx=B求解x。K不一定为方阵。其结果返回最小二乘解
+            Dim i As Integer = B.RowDimension
             If i <> 1 Or B.Length <> k_m Then
                 Return False
             End If
-            Dim kt = Matrix.Number
+            Dim kt = GeneralMatrix.Number
             Dim kmul(0, 0) As Double
             Dim n As Integer = K.Length / k_m
             kt = K.Transpose '   Math_Matrix_T(K, n, kt)
@@ -997,7 +997,7 @@ Namespace LinearAlgebra
         ''' <param name="N">方阵K的阶数</param>
         ''' <returns>函数成功返回其行列式的大小</returns>
         ''' <remarks></remarks>
-        Public Function Det2(k As Matrix, N As Integer) As Double '求矩阵的行列式。K的数组大小为N*N的,不然程序出错.这个适合N比较大的方阵
+        Public Function Det2(k As GeneralMatrix, N As Integer) As Double '求矩阵的行列式。K的数组大小为N*N的,不然程序出错.这个适合N比较大的方阵
             N -= 1
             Dim l(N, N) As Double
             Dim u(N, N) As Double
@@ -1018,8 +1018,8 @@ Namespace LinearAlgebra
         ''' <param name="K">为要判断的矩阵</param>
         ''' <returns>函数返回-1矩阵非对称矩阵,返回0矩阵不正定,返回1矩阵正定</returns>
         ''' <remarks></remarks>
-        Public Function SPD(K As Matrix) As Int16 '返回-1 矩阵非对称矩阵，返回0矩阵不正定，返回1矩阵正定.主要是判断矩阵是否是正定矩阵
-            Dim n As Int16 = K.GetSize
+        Public Function SPD(K As GeneralMatrix) As Int16 '返回-1 矩阵非对称矩阵，返回0矩阵不正定，返回1矩阵正定.主要是判断矩阵是否是正定矩阵
+            Dim n As Int16 = K.RowDimension
             Dim m As Int16 = K.Length / n
             If m <> n Then
                 Return -1
@@ -1064,7 +1064,7 @@ Namespace LinearAlgebra
         ''' <param name="is1_是否已经正定"></param>
         ''' <returns>函数成功返回True,失败返回False.(其中Lt是L的转置,即分解后 A=L×Lt)</returns>
         ''' <remarks></remarks>
-        Public Function LLt(A As Matrix, L As Matrix, is1_是否已经正定 As Boolean) As Boolean '。其中A=L*(L的转置)
+        Public Function LLt(A As GeneralMatrix, L As GeneralMatrix, is1_是否已经正定 As Boolean) As Boolean '。其中A=L*(L的转置)
             '用平方根法分解A
             If is1_是否已经正定 = False Then
                 If SPD(A) < 1 Then
@@ -1075,10 +1075,10 @@ Namespace LinearAlgebra
             Dim i As Integer
             Dim j As Integer
             Dim k As Integer
-            Dim n As Integer = A.GetSize
+            Dim n As Integer = A.RowDimension
             n -= 1
-            L = New Matrix(n, n) '     ReDim L(n, n)
-            L(0, 0) = sys.Sqrt(A(0, 0))
+            L = New GeneralMatrix(n, n) '     ReDim L(n, n)
+            L(0, 0) = stdNum.Sqrt(A(0, 0))
             For i = 1 To n
                 j = 0
                 While j < i
@@ -1102,7 +1102,7 @@ Namespace LinearAlgebra
                 If sun <= 0 Then
                     Return False
                 End If
-                L(i, i) = sys.Sqrt(sun)
+                L(i, i) = stdNum.Sqrt(sun)
             Next
             Return True
         End Function
@@ -1117,8 +1117,8 @@ Namespace LinearAlgebra
         ''' <param name="R_n">返回R矩阵的列数</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function QR22(A As Matrix, Q As Matrix, R As Matrix, Q_n As Int16, R_n As Int16) As Boolean '此函数不像Math_Matrix_QR2函数一样行数不小于列数,所以应该通用.
-            Dim n As Int16 = A.GetSize
+        Public Function QR22(A As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix, Q_n As Int16, R_n As Int16) As Boolean '此函数不像Math_Matrix_QR2函数一样行数不小于列数,所以应该通用.
+            Dim n As Int16 = A.RowDimension
             Dim m As Int16 = A.Length / n
             If m = 1 Or n = 1 Then
                 Return False
@@ -1131,8 +1131,8 @@ Namespace LinearAlgebra
             If m < n Then
                 max = m
             End If
-            Q = New Matrix(m, m) '   ReDim Q(m, m)
-            R = New Matrix(m, n) '    ReDim R(m, n)
+            Q = New GeneralMatrix(m, m) '   ReDim Q(m, m)
+            R = New GeneralMatrix(m, n) '    ReDim R(m, n)
             Dim i As Int16
             Dim j As Int16
             Dim l As Int16
@@ -1148,7 +1148,7 @@ Namespace LinearAlgebra
                 '误差控制
                 maxerr = 0
                 For i = k To m
-                    t = sys.Abs(A(i, k))
+                    t = stdNum.Abs(A(i, k))
                     If t > maxerr Then
                         maxerr = t
                     End If
@@ -1158,7 +1158,7 @@ Namespace LinearAlgebra
                     p = A(i, k) / maxerr
                     t += p * p
                 Next
-                a1 = maxerr * sys.Pow(t, 0.5)
+                a1 = maxerr * stdNum.Pow(t, 0.5)
                 If A(k, k) > 0 Then
                     a1 = 0 - a1
                 End If
@@ -1166,7 +1166,7 @@ Namespace LinearAlgebra
                 If t <= 0 Then
                     Return False
                 End If
-                p = sys.Pow(t, 0.5)
+                p = stdNum.Pow(t, 0.5)
                 If p > 0 Then
                     A(k, k) = (A(k, k) - a1) / p
                     i = k + 1
@@ -1231,8 +1231,8 @@ Namespace LinearAlgebra
         ''' <param name="R_n">返回R矩阵的列数</param>
         ''' <returns>函数成功返回True,失败返回False.使用本函数时,A矩阵的行数不能小于列数</returns>
         ''' <remarks></remarks>
-        Public Function QR2(A As Matrix, Q As Matrix, R As Matrix, Q_n As Int16, R_n As Int16) As Boolean '行数不小于列数
-            Dim n As Int16 = A.GetSize
+        Public Function QR2(A As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix, Q_n As Int16, R_n As Int16) As Boolean '行数不小于列数
+            Dim n As Int16 = A.RowDimension
             Dim m As Int16 = A.Length / n
             Dim max As Double = n - 1
             If m = 1 Or n = 1 Or m < n Then
@@ -1245,8 +1245,8 @@ Namespace LinearAlgebra
             R_n = n
             m -= 1
             n -= 1
-            Q = New Matrix(m, m) '        ReDim Q(m, m)
-            R = New Matrix(m, n) '  ReDim R(m, n)
+            Q = New GeneralMatrix(m, m) '        ReDim Q(m, m)
+            R = New GeneralMatrix(m, n) '  ReDim R(m, n)
             Dim i As Int16
             Dim j As Int16
             Dim l As Int16
@@ -1262,7 +1262,7 @@ Namespace LinearAlgebra
                 '误差控制
                 maxerr = 0
                 For i = k To m
-                    t = sys.Abs(A(i, k))
+                    t = stdNum.Abs(A(i, k))
                     If t > maxerr Then
                         maxerr = t
                     End If
@@ -1272,7 +1272,7 @@ Namespace LinearAlgebra
                     p = A(i, k) / maxerr
                     t += p * p
                 Next
-                a1 = maxerr * sys.Pow(t, 0.5)
+                a1 = maxerr * stdNum.Pow(t, 0.5)
                 If A(k, k) > 0 Then
                     a1 = 0 - a1
                 End If
@@ -1280,7 +1280,7 @@ Namespace LinearAlgebra
                 If t <= 0 Then
                     Return False
                 End If
-                p = sys.Pow(t, 0.5)
+                p = stdNum.Pow(t, 0.5)
                 If p > 0 Then
                     A(k, k) = (A(k, k) - a1) / p
                     i = k + 1
@@ -1344,13 +1344,13 @@ Namespace LinearAlgebra
         ''' <param name="U">为分解得到的U矩阵</param>
         ''' <returns>其意义是K=LU.函数执行成功返回True,失败返回False</returns>
         ''' <remarks></remarks>
-        Public Function LU(K As Matrix, n As Int16, L As Matrix, U As Matrix) As Boolean '方阵的LU分解
+        Public Function LU(K As GeneralMatrix, n As Int16, L As GeneralMatrix, U As GeneralMatrix) As Boolean '方阵的LU分解
             If n * n <> K.Length Then
                 Return False
             End If
             n -= 1
-            L = New Matrix(n, n) '    ReDim L(n, n)
-            U = New Matrix(n, n) '      ReDim U(n, n)
+            L = New GeneralMatrix(n, n) '    ReDim L(n, n)
+            U = New GeneralMatrix(n, n) '      ReDim U(n, n)
             Dim j As Int16
             Dim i As Int16
             Dim a As Int16
@@ -1394,13 +1394,13 @@ Namespace LinearAlgebra
         ''' <param name="N">方阵K的阶数</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Inv2(K As Matrix, Return_K As Matrix, N As Integer) As Boolean
+        Public Function Inv2(K As GeneralMatrix, Return_K As GeneralMatrix, N As Integer) As Boolean
             Dim i As Integer = K.Length \ N
             If i * N <> K.Length Then
                 Return False
             End If
             N -= 1
-            Return_K = New Matrix(N, N) '!!!!! Redim Return_K(N,N)
+            Return_K = New GeneralMatrix(N, N) '!!!!! Redim Return_K(N,N)
             If i = 1 Then
                 If K(0, 0) = 0 Then
                     Return False
@@ -1463,7 +1463,7 @@ Namespace LinearAlgebra
         ''' <param name="N">为矩阵A的阶数</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function DetF(k As Matrix, N As Integer) As Double '
+        Public Function DetF(k As GeneralMatrix, N As Integer) As Double '
             Dim i As Integer
             If N = 1 Then
                 Return k(0, 0)
@@ -1503,7 +1503,7 @@ Namespace LinearAlgebra
         ''' <param name="Return_K">为所求得的逆</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Inv(K As Matrix, Return_K As Matrix) As Boolean '求矩阵K的逆.成功返回True与其逆矩阵Return_K
+        Public Function Inv(K As GeneralMatrix, Return_K As GeneralMatrix) As Boolean '求矩阵K的逆.成功返回True与其逆矩阵Return_K
             Dim i As Integer = K.Length
             Dim N As Integer = System.Math.Pow(i, 0.5)
             If i <> N * N Or N = 1 Then '必须是N阶方阵
@@ -1514,7 +1514,7 @@ Namespace LinearAlgebra
                 Return False
             End If
             N -= 1
-            Return_K = New Matrix(N, N) '  ReDim Return_K(N, N)
+            Return_K = New GeneralMatrix(N, N) '  ReDim Return_K(N, N)
             Dim Temp((N - 1), (N - 1)) As Double
             Dim i_temp As Integer = 0
             Dim j_temp As Integer = 0
@@ -1558,12 +1558,12 @@ Namespace LinearAlgebra
         ''' <param name="Ret">获取到的奇异值矩阵,即返回的Ret是m*1的矩阵</param>
         ''' <returns>函数执行成功返回奇异值的个数,即Ret的行数,失败返回-1</returns>
         ''' <remarks></remarks>
-        Public Function Svd(A As Matrix, m As Int16, Ret As Matrix) As Int16 '返回矩阵A的奇异值Ret。本函数出错返回-1。成功返回奇异值的个数，即m*1矩阵的Ret的m
+        Public Function Svd(A As GeneralMatrix, m As Int16, Ret As GeneralMatrix) As Int16 '返回矩阵A的奇异值Ret。本函数出错返回-1。成功返回奇异值的个数，即m*1矩阵的Ret的m
             Dim n As Int16 = A.Length / m
             If n * m <> A.Length Then
                 Return -1
             End If
-            Dim At = Matrix.Number
+            Dim At = GeneralMatrix.Number
             At = A.Transpose '    Call Math_Matrix_T(A, n, At) '???原文If Math_Matrix_T(A, n, At) Then
             Dim AtA(0, 0) As Double
             If n > m Then
@@ -1582,11 +1582,11 @@ Namespace LinearAlgebra
                     End If
                 Next
                 If m <> -1 Then
-                    Ret = New Matrix(m, 0) '       ReDim Ret(m, 0)
+                    Ret = New GeneralMatrix(m, 0) '       ReDim Ret(m, 0)
                     m = 0
                     For i = 0 To n
                         If At(i, 0) > 0 Then
-                            Ret(m, 0) = sys.Sqrt(At(i, 0))
+                            Ret(m, 0) = stdNum.Sqrt(At(i, 0))
                             m += 1
                         End If
                     Next
@@ -1609,7 +1609,7 @@ Namespace LinearAlgebra
         ''' <param name="ret">返回的三对角阵</param>
         ''' <returns></returns>
         ''' <remarks>本函数采用用豪斯赫尔蒙德变换将实对称阵化为对称三对角</remarks>
-        Public Function SymTridMatrix(A As Matrix, n As Int16, Is对称 As Boolean, ret As Matrix) As Boolean '用豪斯赫尔蒙德变换将实对称阵化为对称三对角阵，翻译徐士良老师的解法
+        Public Function SymTridMatrix(A As GeneralMatrix, n As Int16, Is对称 As Boolean, ret As GeneralMatrix) As Boolean '用豪斯赫尔蒙德变换将实对称阵化为对称三对角阵，翻译徐士良老师的解法
             Dim m As Int16 = A.Length / n
             If m <> n Or m * n <> A.Length Then
                 Return False
@@ -1636,7 +1636,7 @@ Namespace LinearAlgebra
             Dim w(n) As Double
             Dim b(n, n) As Double
             Dim c(n, n) As Double
-            ret = New Matrix(n, n) '    ReDim ret(n, n)
+            ret = New GeneralMatrix(n, n) '    ReDim ret(n, n)
             k = 0
             While k < n - 1
                 s = 0
@@ -1644,12 +1644,12 @@ Namespace LinearAlgebra
                     d = A(k, i)
                     s += d * d
                 Next
-                s = sys.Pow(s, 0.5)
+                s = stdNum.Pow(s, 0.5)
                 If s <> 0 Then
                     For i = 0 To n
                         w(i) = 0
                     Next
-                    w(k + 1) = sys.Pow((1 + sys.Abs(A(k, k + 1) / s)) / 2, 0.5)
+                    w(k + 1) = stdNum.Pow((1 + stdNum.Abs(A(k, k + 1) / s)) / 2, 0.5)
                     i = k + 2
                     While i <= n
                         w(i) = A(k, i) / (2 * s * w(k + 1))
@@ -1705,7 +1705,7 @@ Namespace LinearAlgebra
         ''' 函数采用求代数余子式的方式进行求解,这样就存在一个问题,当目标矩阵的阶数很大的时候,本函数效率是相当慢的。
         ''' 建议使用左连翠提出的《伴随矩阵的新求法》里的方法进行求解。里面的方法可以求解非满秩矩阵的伴随矩阵。
         ''' </remarks>
-        Public Function Adj(K As Matrix, n As Int16, Ret As Matrix) As Boolean '求方阵K的伴随矩阵
+        Public Function Adj(K As GeneralMatrix, n As Int16, Ret As GeneralMatrix) As Boolean '求方阵K的伴随矩阵
             If n < 1 Or n * n <> K.Length Then
                 Return False
             End If
@@ -1718,7 +1718,7 @@ Namespace LinearAlgebra
             Dim is1 As Boolean = True
             Dim is2 As Boolean
             n -= 1
-            Ret = New Matrix(n, n) '   ReDim Ret(n, n)
+            Ret = New GeneralMatrix(n, n) '   ReDim Ret(n, n)
             Dim det As Double
             Dim temp(n - 1, n - 1) As Double
             For i = 0 To n
@@ -1761,13 +1761,13 @@ Namespace LinearAlgebra
         ''' 注意,本代码没有采用特征值法。而是直接采用2个矩阵相乘的方法(但又不是老老实实地去乘n次),因为用程序去求一个方阵的特征值,
         ''' 可能运算复杂度超过了你直接对矩阵相乘的复杂度,至少在n在1000以内大概是这样。
         ''' </remarks>
-        Public Function Pow(A As Matrix, m As Integer, n As Integer, Ret As Matrix) As Boolean '求m*m方阵的n次方。注意,没有采用特征值法。为原始的2个矩阵相乘
+        Public Function Pow(A As GeneralMatrix, m As Integer, n As Integer, Ret As GeneralMatrix) As Boolean '求m*m方阵的n次方。注意,没有采用特征值法。为原始的2个矩阵相乘
             m -= 1
             Dim i As Integer
             Dim j As Integer
             Dim k As Integer
             Dim temp(m, m) As Double
-            Ret = New Matrix(m, m) '  ReDim Ret(m, m)
+            Ret = New GeneralMatrix(m, m) '  ReDim Ret(m, m)
             If n < 9 Then
                 For i = 0 To m
                     For j = 0 To m
@@ -1833,7 +1833,7 @@ Namespace LinearAlgebra
         ''' 当执行下面的函数后,Ret是一个2×2的矩阵,即Ret(0,0)=2,Ret(0,1)=3,Ret(0,0)的2对应于(x^2+2x+3)当中2x的2,Ret(0,1)的3
         ''' 对应于(x^2+2x+3)当中常系数的3.用此函数前建议先把重根与实数根处理掉
         ''' </remarks>
-        Public Function PolyRoots2(A As Matrix, A_n As Integer, LoopNumber As Int16, Erro As Integer, Ret As Matrix) As Integer '失败返回0。成功返回Ret行数
+        Public Function PolyRoots2(A As GeneralMatrix, A_n As Integer, LoopNumber As Int16, Erro As Integer, Ret As GeneralMatrix) As Integer '失败返回0。成功返回Ret行数
             '本函数求解的根是复数根,且多项式A只有复数根,且不存在重根
             '如果A=(x^2+23x+4)则Ret（0,0）=23,Ret(0,1)=4
             '函数返回Ret的行数
@@ -1848,8 +1848,8 @@ Namespace LinearAlgebra
             Dim J As Double
             Dim ATemp(0, 0) As Double
             Dim ATemp2(0, 2) As Double
-            Dim Erro1 As Double = sys.Pow(0.1, Erro)
-            Ret = New Matrix(N, 1) '    ReDim Ret(N, 1)
+            Dim Erro1 As Double = stdNum.Pow(0.1, Erro)
+            Ret = New GeneralMatrix(N, 1) '    ReDim Ret(N, 1)
             While N >= 0
                 u = 1
                 v = 1
@@ -1869,7 +1869,7 @@ Namespace LinearAlgebra
                     J = c(A_n - 2) * c(A_n) - c(A_n - 1) * c(A_n - 1)
                     u = u + (c(A_n - 1) * b(A_n - 1) - c(A_n - 2) * b(A_n)) / J
                     v = v + (c(A_n - 1) * b(A_n) - c(A_n) * b(A_n - 1)) / J
-                    If sys.Abs(b(A_n)) <= Erro1 And sys.Abs(b(A_n - 1)) <= Erro1 Then
+                    If stdNum.Abs(b(A_n)) <= Erro1 And stdNum.Abs(b(A_n - 1)) <= Erro1 Then
                         Exit While
                     End If
                 End While
@@ -1881,7 +1881,7 @@ Namespace LinearAlgebra
                 PolyDiv(A, ATemp2, Nothing, ATemp, 11)
                 A_n = ATemp.Length - 1
                 i = A_n
-                A = New Matrix(0, i) '     ReDim A(0, i)
+                A = New GeneralMatrix(0, i) '     ReDim A(0, i)
                 While i >= 0
                     A(0, i) = ATemp(0, i)
                     i -= 1
@@ -1900,7 +1900,7 @@ Namespace LinearAlgebra
         ''' <remarks>
         ''' 函数运行原理是先求矩阵的奇异值,然后用最大的奇异值除以最小的奇异值即得矩阵的范数.对于只有1行或者1列的还得另行处理.这个函数和Matlab的Cond命令一样,即2范数
         ''' </remarks>
-        Public Function Cond(k As Matrix, m As Integer) As Double
+        Public Function Cond(k As GeneralMatrix, m As Integer) As Double
             '返回矩阵的2范数
             Dim s(0, 0) As Double
             Dim i As Integer
@@ -1929,15 +1929,15 @@ Namespace LinearAlgebra
         End Function
 
         ''' <summary>
-        ''' 构建散点图矩阵(Scatter Matrix)
+        ''' 构建散点图矩阵(Scatter GeneralMatrix)
         ''' </summary>
         ''' <param name="X">目标矩阵</param>
         ''' <param name="m">X矩阵的行数</param>
         ''' <param name="S">获得的散点矩阵</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Scatter(X As Matrix, m As Integer, S As Matrix) As Integer
-            '返回X矩阵的散点矩阵(Scatter Matrix)S
+        Public Function Scatter(X As GeneralMatrix, m As Integer, S As GeneralMatrix) As Integer
+            '返回X矩阵的散点矩阵(Scatter GeneralMatrix)S
             Dim n As Integer = X.Length \ m - 1
             m -= 1
             Dim i As Integer
@@ -1958,7 +1958,7 @@ Namespace LinearAlgebra
                     X(i, j) -= x1
                 Next
             Next
-            S = New Matrix(m, m) '    ReDim S(m, m)
+            S = New GeneralMatrix(m, m) '    ReDim S(m, m)
             For j = 0 To n
                 For i = 0 To m
                     tempx(i, 0) = X(i, j)
@@ -1984,31 +1984,31 @@ Namespace LinearAlgebra
         ''' <param name="Erro">误差控制参数</param>
         ''' <returns></returns>
         ''' <remarks>A1/A2=Ret……RetMod</remarks>
-        Public Function PolyDivEx(A1 As Matrix, A2 As Matrix, RetMod As Matrix, Ret As Matrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
+        Public Function PolyDivEx(A1 As GeneralMatrix, A2 As GeneralMatrix, RetMod As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
             Dim n1 As Integer = A1.Length
             Dim n2 As Integer = A2.Length
             Dim N As Integer
             Dim i As Integer
             If n1 < n2 Then
-                Ret = Matrix.Number '     ReDim Ret(0, 0)
+                Ret = GeneralMatrix.Number '     ReDim Ret(0, 0)
                 n1 -= 1
-                RetMod = New Matrix(0, n1) '   ReDim RetMod(0, n1)
+                RetMod = New GeneralMatrix(0, n1) '   ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
                 Return 1
             End If
-            Dim error1 As Double = sys.Abs(A2(0, 0)) * sys.Pow(0.1, Erro)
+            Dim error1 As Double = stdNum.Abs(A2(0, 0)) * stdNum.Pow(0.1, Erro)
             Dim j As Integer
             N = n1 - n2
-            Ret = New Matrix(0, N) '  ReDim Ret(0, N)
+            Ret = New GeneralMatrix(0, N) '  ReDim Ret(0, N)
             N = 0
             While n1 >= n2
                 Ret(0, N) = A1(0, 0) / A2(0, 0)
                 i = 1
                 While i < n2
                     A1(0, i) -= A2(0, i) * Ret(0, N)
-                    If sys.Abs(A1(0, i)) <= error1 Then
+                    If stdNum.Abs(A1(0, i)) <= error1 Then
                         A1(0, i) = 0
                     End If
                     i += 1
@@ -2032,12 +2032,12 @@ Namespace LinearAlgebra
                     Call A1.Resize(0, j) '    ReDim Preserve A1(0, j)
                 Else
                     n1 = 0
-                    RetMod = New Matrix(0, 0) '    ReDim RetMod(0, 0)
+                    RetMod = New GeneralMatrix(0, 0) '    ReDim RetMod(0, 0)
                 End If
             End While
             If n1 > 0 Then
                 n1 -= 1
-                RetMod = New Matrix(0, n1) '   ReDim RetMod(0, n1)
+                RetMod = New GeneralMatrix(0, n1) '   ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
@@ -2071,7 +2071,7 @@ Namespace LinearAlgebra
         '''    1.00000000000000 ]
         ''' ```
         ''' </remarks>
-        Public Sub EigTorF(A1 As Matrix, A_m As Integer, EigValve As Double, X As Matrix)
+        Public Sub EigTorF(A1 As GeneralMatrix, A_m As Integer, EigValve As Double, X As GeneralMatrix)
             '采用全选主元素法求解
             Dim n As Integer = A_m - 1
             A_m = n
@@ -2083,7 +2083,7 @@ Namespace LinearAlgebra
             Dim max As Double
             Dim temp, A(n, n) As Double
             Dim Index(n), b(n, 0) As Integer
-            X = New Matrix(n, 0) '  ReDim X(n, 0)
+            X = New GeneralMatrix(n, 0) '  ReDim X(n, 0)
             For i = 0 To n
                 For temp_i = 0 To n
                     A(i, temp_i) = A1(i, temp_i)
@@ -2097,7 +2097,7 @@ Namespace LinearAlgebra
                 max = 0
                 For temp_i = i To A_m
                     For temp_j = i To n
-                        temp = sys.Abs(A(temp_i, temp_j))
+                        temp = stdNum.Abs(A(temp_i, temp_j))
                         If temp > max Then
                             max = temp
                             Index_j = temp_j
@@ -2179,7 +2179,7 @@ A:              For temp_i = A_m + 1 To n
         ''' <param name="Ret_Eigenvectors">返回的特征值对应的特征向量</param>
         ''' <returns></returns>
         ''' <remarks>本代码采用雅可比过关法求解</remarks>
-        Public Function EigSym(A As Matrix, n As Int16, Erro1 As Int16, Ret As Matrix, Ret_Eigenvectors As Matrix) As Boolean '返回n阶对称矩阵K的特征值ret.翻译徐士良老师的算法。其方法是雅可比过关法。特征向量Ret_Eigenvectors每一列对应ret每一行的特征值
+        Public Function EigSym(A As GeneralMatrix, n As Int16, Erro1 As Int16, Ret As GeneralMatrix, Ret_Eigenvectors As GeneralMatrix) As Boolean '返回n阶对称矩阵K的特征值ret.翻译徐士良老师的算法。其方法是雅可比过关法。特征向量Ret_Eigenvectors每一列对应ret每一行的特征值
             Dim i As Int16 = A.Length / n
             If i * i <> A.Length Then
                 Return False
@@ -2205,8 +2205,8 @@ A:              For temp_i = A_m + 1 To n
             Dim x As Double
             Dim y As Double
             Dim d As Double
-            Dim ero As Double = sys.Pow(0.1, Erro1)
-            Ret_Eigenvectors = New Matrix(n, n) '  ReDim Ret_Eigenvectors(n, n)
+            Dim ero As Double = stdNum.Pow(0.1, Erro1)
+            Ret_Eigenvectors = New GeneralMatrix(n, n) '  ReDim Ret_Eigenvectors(n, n)
             For i = 0 To n
                 Ret_Eigenvectors(i, i) = 1
             Next
@@ -2217,13 +2217,13 @@ A:              For temp_i = A_m + 1 To n
                     ff += d * d
                 Next
             Next
-            ff = sys.Pow(2 * ff, 0.5)
+            ff = stdNum.Pow(2 * ff, 0.5)
 Loop0:
             ff /= (n + 1)
 Loop1:
             For i = 1 To n
                 For j = 0 To i - 1
-                    d = sys.Abs(A(i, j))
+                    d = stdNum.Abs(A(i, j))
                     If d > ff Then
                         p = i
                         q = j
@@ -2239,13 +2239,13 @@ Loop1:
 Loop00:
             x = -A(p, q)
             y = (A(q, q) - A(p, p)) / 2
-            comega = x / sys.Pow(x * x + y * y, 0.5)
+            comega = x / stdNum.Pow(x * x + y * y, 0.5)
             If y < 0 Then
                 comega = -comega
             End If
-            sn = 1 + sys.Pow(1 - comega * comega, 0.5)
-            sn = comega / sys.Pow(2 * sn, 0.5)
-            cn = sys.Pow(1 - sn * sn, 0.5)
+            sn = 1 + stdNum.Pow(1 - comega * comega, 0.5)
+            sn = comega / stdNum.Pow(2 * sn, 0.5)
+            cn = stdNum.Pow(1 - sn * sn, 0.5)
             fm = A(p, p)
             A(p, p) = fm * cn * cn + A(q, q) * sn * sn + A(p, q) * comega
             A(q, q) = fm * sn * sn + A(q, q) * cn * cn - A(p, q) * comega
@@ -2272,7 +2272,7 @@ Loop00:
             Next
             GoTo Loop1
 Loopexit:
-            Ret = New Matrix(n, 0) '   ReDim Ret(n, 0)
+            Ret = New GeneralMatrix(n, 0) '   ReDim Ret(n, 0)
             For i = 0 To n
                 Ret(i, 0) = A(i, i)
             Next
@@ -2288,12 +2288,12 @@ Loopexit:
         ''' <param name="Return_K">执行成功后返回的乘的结果的矩阵</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Mul(K1 As Matrix, K2 As Matrix, n As Integer, Return_K As Matrix) As Boolean '矩阵相乘K1为m*n,K2为n*l,Return_K为m*l
-            Dim i As Integer = K1.GetSize
+        Public Function Mul(K1 As GeneralMatrix, K2 As GeneralMatrix, n As Integer, Return_K As GeneralMatrix) As Boolean '矩阵相乘K1为m*n,K2为n*l,Return_K为m*l
+            Dim i As Integer = K1.RowDimension
             If i <> n Then
                 Return False
             End If
-            i = K2.GetSize
+            i = K2.RowDimension
             If i * n <> K2.Length Then
                 Return False
             End If
@@ -2301,7 +2301,7 @@ Loopexit:
             Dim b As Integer = i - 1
             Dim j As Integer = 0
             Dim k As Integer
-            Return_K = New Matrix(a, b) '     ReDim Retrun_K(a, b)
+            Return_K = New GeneralMatrix(a, b) '     ReDim Retrun_K(a, b)
             n -= 1
             For i = 0 To a
                 For j = 0 To b
@@ -2343,7 +2343,7 @@ Loopexit:
         '''     4.81532683312183   7.92820343443191  -5.38805756370240   8.16305909603188  ]
         ''' ```
         ''' </remarks>
-        Public Function Sqrt(K As Matrix, n As Integer, ks As Matrix) As Int16
+        Public Function Sqrt(K As GeneralMatrix, n As Integer, ks As GeneralMatrix) As Int16
             '求方阵K的平方根
             'n表示K的阶数
             'ks返回的平方根
@@ -2361,7 +2361,7 @@ Loopexit:
                 Next
                 Dim diag(n, n), eigtor(n, n), temp(n, 0), temp2(n, 0) As Double
                 For i = 0 To n
-                    diag(i, i) = sys.Sqrt(eigvalue(i, 0))
+                    diag(i, i) = stdNum.Sqrt(eigvalue(i, 0))
                     EigTorF(K, n + 1, eigvalue(i, 0), temp)
                     For j = 0 To n
                         eigtor(j, i) = temp(j, 0)
@@ -2422,12 +2422,12 @@ Loopexit:
         '''    -0.09684035444340     0.20977163011655     0.95676617484504     0.17707600892713
         '''     0.88364856259618     0.33406264059053     0.07478222238892    -0.31912379017620 ]
         ''' </remarks>
-        Public Function RU(F As Matrix, n As Integer, R As Matrix, U As Matrix) As Boolean
+        Public Function RU(F As GeneralMatrix, n As Integer, R As GeneralMatrix, U As GeneralMatrix) As Boolean
             '正定、非奇异方阵F进行右极分解
             'n为F的阶数
             '其中F=R*U
             'U^2=T(F)*F其中T(F)表示F的转置
-            Dim FT = Matrix.Number, temp(0, 0) As Double
+            Dim FT = GeneralMatrix.Number, temp(0, 0) As Double
             FT = F.Transpose '  Math_Matrix_T(F, n, FT)
             Mul(FT, F, n, temp)
             If Sqrt(temp, n, U) = -1 Then
@@ -2449,12 +2449,12 @@ Loopexit:
         ''' <param name="R">分解得到的一个正交矩阵，即F=V*R</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function VR(F As Matrix, n As Integer, V As Matrix, R As Matrix) As Boolean
+        Public Function VR(F As GeneralMatrix, n As Integer, V As GeneralMatrix, R As GeneralMatrix) As Boolean
             '正定、非奇异方阵F进行左极分解
             'n为F的阶数
             '其中F=V*R
             'V^2=F*T(F)其中T(F)表示F的转置
-            Dim FT = Matrix.Number, temp(0, 0) As Double
+            Dim FT = GeneralMatrix.Number, temp(0, 0) As Double
             FT = F.Transpose '     Math_Matrix_T(F, n, FT)
             Mul(F, FT, n, temp)
             If Sqrt(temp, n, V) = -1 Then
@@ -2475,7 +2475,7 @@ Loopexit:
         ''' <param name="ret">获得的关于矩阵K的Hamiltonian矩阵</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Hamiltonian(k As Matrix, m As Integer, ret As Matrix) As Int16
+        Public Function Hamiltonian(k As GeneralMatrix, m As Integer, ret As GeneralMatrix) As Int16
             '获取2n*2n对称矩阵对应的Hamiltonian矩阵
             '返回1表示矩阵维数不是2n*2n的
             '返回2表示矩阵非对称矩阵
@@ -2504,11 +2504,11 @@ Loopexit:
         ''' </summary>
         ''' <param name="n">构建Lehmer矩阵的阶数</param>
         ''' <param name="k">构建的Lehmer矩阵</param>
-        ''' <remarks>Lehmer Matrix</remarks>
-        Public Sub Lehmer(n As Integer, k As Matrix)
+        ''' <remarks>Lehmer GeneralMatrix</remarks>
+        Public Sub Lehmer(n As Integer, k As GeneralMatrix)
             '创建n阶Lehmer矩阵
             n -= 1
-            k = New Matrix(n, n) '   ReDim k(n, n)
+            k = New GeneralMatrix(n, n) '   ReDim k(n, n)
             Dim i As Integer
             Dim j As Integer
             For i = 0 To n
@@ -2530,13 +2530,13 @@ Loopexit:
         ''' <param name="Ret">获得的乘积结果多项式系数</param>
         ''' <returns></returns>
         ''' <remarks>Ret=Mul1*Mul2</remarks>
-        Public Function PolyMul(Mul1 As Matrix, Mul2 As Matrix, Ret As Matrix) As Integer
+        Public Function PolyMul(Mul1 As GeneralMatrix, Mul2 As GeneralMatrix, Ret As GeneralMatrix) As Integer
             '多项式相乘,函数返回Ret的大小.Ret为1行的矩阵
             Dim i As Integer
             Dim j As Integer
             Dim size1 As Integer = Mul1.Length - 1
             Dim size2 As Integer = Mul2.Length - 1
-            Ret = New Matrix(0, size1 + size2) '    ReDim Ret(0, size1 + size2)
+            Ret = New GeneralMatrix(0, size1 + size2) '    ReDim Ret(0, size1 + size2)
             For i = 0 To size1
                 For j = 0 To size2
                     Ret(0, i + j) += Mul1(0, i) * Mul2(0, j)
@@ -2555,31 +2555,31 @@ Loopexit:
         ''' <param name="Erro">误差控制参数</param>
         ''' <returns></returns>
         ''' <remarks>A1/A2=Ret……RetMod</remarks>
-        Public Function PolyDiv(A1 As Matrix, A2 As Matrix, RetMod As Matrix, Ret As Matrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
+        Public Function PolyDiv(A1 As GeneralMatrix, A2 As GeneralMatrix, RetMod As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
             Dim n1 As Integer = A1.Length
             Dim n2 As Integer = A2.Length
             Dim N As Integer
             Dim i As Integer
             If n1 < n2 Then
-                Ret = New Matrix(0, 0) '     ReDim Ret(0, 0)
+                Ret = New GeneralMatrix(0, 0) '     ReDim Ret(0, 0)
                 n1 -= 1
-                RetMod = New Matrix(0, n1) '     ReDim RetMod(0, n1)
+                RetMod = New GeneralMatrix(0, n1) '     ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
                 Return 1
             End If
-            Dim error1 As Double = sys.Abs(A2(0, 0)) * sys.Pow(0.1, Erro)
+            Dim error1 As Double = stdNum.Abs(A2(0, 0)) * stdNum.Pow(0.1, Erro)
             Dim j As Integer
             N = n1 - n2
-            Ret = New Matrix(0, N) '     ReDim Ret(0, N)
+            Ret = New GeneralMatrix(0, N) '     ReDim Ret(0, N)
             N = 0
             While n1 >= n2
                 Ret(0, N) = A1(0, 0) / A2(0, 0)
                 i = 1
                 While i < n2
                     A1(0, i) -= A2(0, i) * Ret(0, N)
-                    If sys.Abs(A1(0, i)) <= error1 Then
+                    If stdNum.Abs(A1(0, i)) <= error1 Then
                         A1(0, i) = 0
                     End If
                     i += 1
@@ -2600,15 +2600,15 @@ Loopexit:
                     End While
                     n1 -= i
                     j = n1 - 1
-                    A1 = New Matrix(0, j) '     ReDim Preserve A1(0, j)
+                    A1 = New GeneralMatrix(0, j) '     ReDim Preserve A1(0, j)
                 Else
                     n1 = 0
-                    RetMod = New Matrix(0, 0) '  ReDim RetMod(0, 0)
+                    RetMod = New GeneralMatrix(0, 0) '  ReDim RetMod(0, 0)
                 End If
             End While
             If n1 > 0 Then
                 n1 -= 1
-                RetMod = New Matrix(0, n1) '      ReDim RetMod(0, n1)
+                RetMod = New GeneralMatrix(0, n1) '      ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
@@ -2625,7 +2625,7 @@ Loopexit:
         ''' <param name="Erro">误差控制参数</param>
         ''' <returns></returns>
         ''' <remarks>A1%A2=Ret</remarks>
-        Public Function PolyMod(A1 As Matrix, A2 As Matrix, Ret As Matrix, Erro As Integer) As Integer
+        Public Function PolyMod(A1 As GeneralMatrix, A2 As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer
             '多项式求余Ret=A1%A2,函数返回余项Ret的列数.A1，A2，Ret均为1行的矩阵
             Dim a1n As Integer = A1.Length
             Dim a2n As Integer = A2.Length
@@ -2634,17 +2634,17 @@ Loopexit:
             a1n -= 1
             a2n -= 1
             If a2n = 0 Then
-                Ret = New Matrix(0, 0) '   ReDim Ret(0, 0)
+                Ret = New GeneralMatrix(0, 0) '   ReDim Ret(0, 0)
                 Return 1
             End If
             If a1n < a2n Then
-                Ret = New Matrix(0, a1n) '   ReDim Ret(0, a1n)
+                Ret = New GeneralMatrix(0, a1n) '   ReDim Ret(0, a1n)
                 For i = 0 To a1n
                     Ret(0, i) = A1(0, i)
                 Next
                 i = a1n + 1
             Else
-                Dim Erro1 As Double = sys.Abs(A2(0, 0)) * sys.Pow(0.1, Erro)
+                Dim Erro1 As Double = stdNum.Abs(A2(0, 0)) * stdNum.Pow(0.1, Erro)
                 Dim n As Integer
                 Dim is1 As Boolean
                 While a1n >= a2n
@@ -2653,11 +2653,11 @@ Loopexit:
                     For i = 1 To a2n
                         A1(0, i) -= temp * A2(0, i)
                         If is1 Then
-                            If sys.Abs(A1(0, i)) > Erro1 Then
+                            If stdNum.Abs(A1(0, i)) > Erro1 Then
                                 n = i
                                 is1 = False
                             End If
-                        ElseIf sys.Abs(A1(0, i)) <= Erro1 Then
+                        ElseIf stdNum.Abs(A1(0, i)) <= Erro1 Then
                             A1(0, i) = 0
                         End If
                     Next
@@ -2671,7 +2671,7 @@ Loopexit:
                         End While
                     End If
                     If n > a1n Then
-                        Ret = Matrix.Number '       ReDim Ret(0, 0)
+                        Ret = GeneralMatrix.Number '       ReDim Ret(0, 0)
                         Return 1
                     End If
                     For i = n To a1n
@@ -2679,7 +2679,7 @@ Loopexit:
                     Next
                     a1n -= n
                     If a1n < a2n Then
-                        Ret = New Matrix(0, a1n) '     ReDim Ret(0, a1n)
+                        Ret = New GeneralMatrix(0, a1n) '     ReDim Ret(0, a1n)
                         For i = 0 To a1n
                             Ret(0, i) = A1(0, i)
                         Next
@@ -2700,7 +2700,7 @@ Loopexit:
         ''' <param name="X">离散傅里叶变换逆变换的结果矩阵是Number*2的矩阵,X里的第一列代表数据的实数部分,第2列代表数据的虚数部分</param>
         ''' <returns>本函数执行成功返回True.本函数相当于Matlab的快速傅里叶变换逆变换函数IFFT</returns>
         ''' <remarks></remarks>
-        Public Function IDFT(k As Matrix, m As Integer, Number As Integer, X As Matrix) As Boolean
+        Public Function IDFT(k As GeneralMatrix, m As Integer, Number As Integer, X As GeneralMatrix) As Boolean
             '离散傅里叶变换逆变换,Number为点数
             '返回Number*2的矩阵,第一列为实数部分,第2列为虚数部分
             'k是m*2的矩阵,第一列为实数,第2列为虚数
@@ -2708,7 +2708,7 @@ Loopexit:
                 Return False
             End If
             m = Number - 1
-            X = New Matrix(m, 1) '     ReDim X(m, 1)
+            X = New GeneralMatrix(m, 1) '     ReDim X(m, 1)
             Dim i As Integer
             Dim j As Integer
             Dim tempx As Double
@@ -2718,13 +2718,13 @@ Loopexit:
             Dim tempcos As Double
             Dim tempsin As Double
             For i = 0 To m
-                temp = sys.PI * 2 * i / Number
+                temp = stdNum.PI * 2 * i / Number
                 tempx = 0
                 tempy = 0
                 For j = 0 To m
                     temp2 = temp * j
-                    tempcos = sys.Cos(temp2)
-                    tempsin = sys.Sin(temp2)
+                    tempcos = stdNum.Cos(temp2)
+                    tempsin = stdNum.Sin(temp2)
                     tempx += tempcos * k(j, 0) - tempsin * k(j, 1)
                     tempy += tempcos * k(j, 1) + tempsin * k(j, 0)
                 Next
@@ -2743,7 +2743,7 @@ Loopexit:
         ''' <param name="X">离散傅里叶变换的结果矩阵是Number*2的矩阵,X里的第一列代表数据的实数部分,第2列代表数据的虚数部分</param>
         ''' <returns>本函数执行成功返回True.本函数相当于Matlab的快速傅里叶变换函数FFT</returns>
         ''' <remarks></remarks>
-        Public Function DFT(k As Matrix, m As Integer, Number As Integer, X As Matrix) As Boolean
+        Public Function DFT(k As GeneralMatrix, m As Integer, Number As Integer, X As GeneralMatrix) As Boolean
             '离散傅里叶变换,Number为点数
             '返回Number*2的矩阵,第一列为实数部分,第2列为虚数部分
             'k是m*2的矩阵,第一列为实数,第2列为虚数
@@ -2751,7 +2751,7 @@ Loopexit:
                 Return False
             End If
             m = Number - 1
-            X = New Matrix(m, 1) '    ReDim X(m, 1)
+            X = New GeneralMatrix(m, 1) '    ReDim X(m, 1)
             Dim i As Integer
             Dim j As Integer
             Dim tempx As Double
@@ -2766,8 +2766,8 @@ Loopexit:
                 tempy = 0
                 For j = 0 To m
                     temp2 = temp * j
-                    tempcos = sys.Cos(temp2)
-                    tempsin = sys.Sin(temp2)
+                    tempcos = stdNum.Cos(temp2)
+                    tempsin = stdNum.Sin(temp2)
                     tempx += tempcos * k(j, 0) - tempsin * k(j, 1)
                     tempy += tempcos * k(j, 1) + tempsin * k(j, 0)
                 Next
@@ -2785,7 +2785,7 @@ Loopexit:
         ''' <param name="ret">获得的一个正交基矩阵</param>
         ''' <returns>函数失败返回小于1的数据，成功返回ret的行数</returns>
         ''' <remarks>对矩阵进行svd分解即用SvdSplit得到k=usv*,则s是奇异值矩阵,可以奇异值是否为0获得矩阵的秩r,然后ret就是m*r的矩阵且其就是u里的m*r的部分值</remarks>
-        Public Function Orth(k As Matrix, m As Integer, ret As Matrix) As Integer
+        Public Function Orth(k As GeneralMatrix, m As Integer, ret As GeneralMatrix) As Integer
             Dim u(0, 0) As Double
             Dim s(0, 0) As Double
             Dim sm As Integer
@@ -2810,7 +2810,7 @@ Loopexit:
                 Return 0
             End If
             m -= 1
-            ret = New Matrix(m, rank) '     ReDim ret(m, rank)
+            ret = New GeneralMatrix(m, rank) '     ReDim ret(m, rank)
             For i = 0 To m
                 For j = 0 To rank
                     ret(i, j) = u(i, j)
@@ -2826,8 +2826,8 @@ Loopexit:
         ''' <param name="start">幻方的中最小的正整数,一般可以设置为1</param>
         ''' <param name="k">获得的幻方</param>
         ''' <remarks></remarks>
-        Private Sub Magic(n As Integer, start As Double, k As Matrix)
-            k = New Matrix(n - 1, n - 1) ' ReDim k(n - 1, n - 1)
+        Private Sub Magic(n As Integer, start As Double, k As GeneralMatrix)
+            k = New GeneralMatrix(n - 1, n - 1) ' ReDim k(n - 1, n - 1)
             If n Mod 4 = 0 Then
                 Magic_4(n, start, k)
             ElseIf n Mod 2 = 0 Then
@@ -2837,7 +2837,7 @@ Loopexit:
             End If
         End Sub
 
-        Private Sub Magic_1(n As Integer, start As Double, k As Matrix)
+        Private Sub Magic_1(n As Integer, start As Double, k As GeneralMatrix)
             n -= 1
             Dim j As Integer = n \ 2
             k(0, j) = start
@@ -2875,7 +2875,7 @@ Loopexit:
             End While
         End Sub
 
-        Private Sub Magic_2(n As Integer, start As Double, k As Matrix)
+        Private Sub Magic_2(n As Integer, start As Double, k As GeneralMatrix)
             n = n \ 2 - 1
             Dim A(n, n) As Double
             Dim B(n, n) As Double
@@ -2928,7 +2928,7 @@ Loopexit:
             Next
         End Sub
 
-        Private Sub Magic_4(n As Integer, start As Double, k As Matrix)
+        Private Sub Magic_4(n As Integer, start As Double, k As GeneralMatrix)
             Dim i As Integer
             Dim j As Integer
             Dim temp As Integer
@@ -2992,7 +2992,7 @@ Loopexit:
         ''' 
         ''' 即AX=B
         ''' </remarks>
-        Public Function Sove2(A As Matrix, b As Matrix, A_m As Integer, B_m As Integer, X As Matrix) As Boolean
+        Public Function Sove2(A As GeneralMatrix, b As GeneralMatrix, A_m As Integer, B_m As Integer, X As GeneralMatrix) As Boolean
             '采用全选主元素法求解
             If A_m <> B_m Or B_m <> b.Length Then
                 Return False
@@ -3007,7 +3007,7 @@ Loopexit:
             Dim max As Double
             Dim temp As Double
             Dim Index(n) As Integer
-            X = New Matrix(n, 0) '   ReDim X(n, 0)
+            X = New GeneralMatrix(n, 0) '   ReDim X(n, 0)
             For i = 0 To n
                 Index(i) = i
             Next
@@ -3015,7 +3015,7 @@ Loopexit:
                 max = 0
                 For temp_i = i To A_m
                     For temp_j = i To n
-                        temp = sys.Abs(A(temp_i, temp_j))
+                        temp = stdNum.Abs(A(temp_i, temp_j))
                         If temp > max Then
                             max = temp
                             Index_j = temp_j
@@ -3108,7 +3108,7 @@ Loopexit:
         ''' <param name="Erro">误差控制参数</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function PolyGCF(A1 As Matrix, A1_n As Integer, A2 As Matrix, A2_n As Integer, Ret As Matrix, Erro As Integer) As Integer '求2个多项式的最大公因式Ret,
+        Public Function PolyGCF(A1 As GeneralMatrix, A1_n As Integer, A2 As GeneralMatrix, A2_n As Integer, Ret As GeneralMatrix, Erro As Integer) As Integer '求2个多项式的最大公因式Ret,
             '不知道为什么在调用Math_Matrix_PolyGCF_Call函数时,其参数A!会被当作 ByRef属性
             Dim A11(0, A1_n - 1) As Double
             Dim A22(0, A2_n - 1) As Double
@@ -3133,24 +3133,24 @@ Loopexit:
         ''' <param name="Erro"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function PolyGCFCall(A1 As Matrix, A1_n As Integer, A2 As Matrix, A2_n As Integer, Ret As Matrix, Erro As Integer) As Integer
+        Private Function PolyGCFCall(A1 As GeneralMatrix, A1_n As Integer, A2 As GeneralMatrix, A2_n As Integer, Ret As GeneralMatrix, Erro As Integer) As Integer
             If A1_n < A2_n Then
                 Return PolyGCFCall(A2, A2_n, A1, A1_n, Ret, Erro)
             ElseIf A2_n = 1 Then
-                Ret = New Matrix(0, 0) '     ReDim Ret(0, 0)
+                Ret = New GeneralMatrix(0, 0) '     ReDim Ret(0, 0)
                 Ret(0, 0) = 1
                 Return 1
             End If
             Dim i As Integer
             Dim j As Integer
-            Dim Erro1 As Double = sys.Abs(A1(0, 0)) * sys.Pow(0.1, Erro)
+            Dim Erro1 As Double = stdNum.Abs(A1(0, 0)) * stdNum.Pow(0.1, Erro)
             Dim temp As Double
             While True
                 temp = A1(0, 0) / A2(0, 0)
                 i = 1
                 While i < A2_n
                     A1(0, i) -= A2(0, i) * temp
-                    If sys.Abs(A1(0, i)) <= Erro1 Then
+                    If stdNum.Abs(A1(0, i)) <= Erro1 Then
                         A1(0, i) = 0
                     End If
                     i += 1
@@ -3164,7 +3164,7 @@ Loopexit:
                 End While
                 If i = A1_n Then
                     A2_n -= 1
-                    Ret = New Matrix(0, A2_n) '  ReDim Ret(0, A2_n)
+                    Ret = New GeneralMatrix(0, A2_n) '  ReDim Ret(0, A2_n)
                     For i = 0 To A2_n
                         Ret(0, i) = A2(0, i)
                     Next
@@ -3189,13 +3189,13 @@ Loopexit:
         ''' </summary>
         ''' <param name="n">表示产生帕斯卡(Pascal)矩阵的阶数</param>
         ''' <param name="k">产生的n阶帕斯卡(Pascal)矩阵</param>
-        ''' <remarks>Pascal Matrix即产生n阶的帕斯卡矩阵由杨辉三角形表组成的矩阵称为帕斯卡(Pascal)矩阵</remarks>
-        Public Sub Pascal(n As Integer, k As Matrix)
+        ''' <remarks>Pascal GeneralMatrix即产生n阶的帕斯卡矩阵由杨辉三角形表组成的矩阵称为帕斯卡(Pascal)矩阵</remarks>
+        Public Sub Pascal(n As Integer, k As GeneralMatrix)
             '产生n阶的帕斯卡矩阵由杨辉三角形表组成的矩阵称为帕斯卡(Pascal)矩阵。
             Dim i As Integer
             Dim j As Integer
             n -= 1
-            k = New Matrix(n, n) ' ReDim k(n, n)
+            k = New GeneralMatrix(n, n) ' ReDim k(n, n)
             For i = 0 To n
                 k(0, i) = 1
                 k(i, 0) = 1

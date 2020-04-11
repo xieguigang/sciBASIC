@@ -1,44 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::8b92e7bf66f110b2dde15416f87b21a9, Data_science\Mathematica\Math\Math\Algebra\Solvers\GaussianElimination.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GaussianElimination
-    ' 
-    '         Function: Solve, UpTri
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GaussianElimination
+' 
+'         Function: Solve, UpTri
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace LinearAlgebra.Solvers
 
@@ -51,10 +53,10 @@ Namespace LinearAlgebra.Solvers
         ''' <param name="b"></param>
         ''' <returns>x</returns>
         ''' <remarks></remarks>
-        Public Function Solve(A As Matrix, b As Vector) As Vector
+        Public Function Solve(A As GeneralMatrix, b As Vector) As Vector
             Dim n As Integer = b.Dim
             Dim TMP As Double
-            Dim Ab As Matrix = New Matrix(n, n + 1)
+            Dim Ab As New GeneralMatrix(n, n + 1)
 
             For i As Integer = 0 To n - 1
                 For j As Integer = 0 To n - 1
@@ -89,8 +91,8 @@ Namespace LinearAlgebra.Solvers
         ''' <param name="b"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function UpTri(A As Matrix, b As Vector) As Vector
-            Dim N As Integer = A.N
+        Public Function UpTri(A As GeneralMatrix, b As Vector) As Vector
+            Dim N As Integer = A.ColumnDimension
             Dim x As New Vector(N)
 
             x(N - 1) = b(N - 1) / A(N - 1, N - 1)

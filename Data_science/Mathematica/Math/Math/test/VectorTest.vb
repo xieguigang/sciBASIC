@@ -44,7 +44,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports numpy = Microsoft.VisualBasic.Math.NumpyExtensions
+Imports numpy = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumpyExtensions
 
 Module VectorTest
 

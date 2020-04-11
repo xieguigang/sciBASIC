@@ -47,7 +47,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Runtime.Serialization
 
-Namespace Matrix
+Namespace LinearAlgebra.Matrix
 
     ''' <summary>
     ''' Eigenvalues and eigenvectors of a real matrix. 

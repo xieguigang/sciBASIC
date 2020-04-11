@@ -47,7 +47,7 @@
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-Namespace Matrix
+Namespace LinearAlgebra.Matrix
 
     ''' <summary>Singular Value Decomposition.
     ''' <P>

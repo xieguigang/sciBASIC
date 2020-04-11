@@ -46,7 +46,7 @@
 
 Imports System.Text
 
-Namespace Algebra.LinearProgramming
+Namespace LinearAlgebra.LinearProgramming
 
     Public Class LPPSolution
 
