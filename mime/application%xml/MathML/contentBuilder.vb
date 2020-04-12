@@ -122,7 +122,7 @@ Namespace MathML
         ''' <summary>
         ''' a list of standard math function
         ''' </summary>
-        ReadOnly stdMathFunc As Index(Of String) = {"abs"}
+        ReadOnly stdMathFunc As Index(Of String) = {"abs", "cos", "sin", "tan", "max", "min"}
 
         <Extension>
         Private Function parseInternal(apply As XmlElement) As MathExpression
