@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math.Statistics.Linq
 
@@ -140,7 +140,7 @@ Namespace Math.Statistics.Linq
         '     source contains no elements.
         <Extension>
         Public Function StandardDeviationP(source As IEnumerable(Of Double)) As Double
-            Return sys.Sqrt(source.VarianceP())
+            Return System.Math.Sqrt(source.VarianceP())
         End Function
         '
         ' Summary:

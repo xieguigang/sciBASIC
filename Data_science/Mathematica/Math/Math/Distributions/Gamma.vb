@@ -171,7 +171,7 @@ Namespace Distributions
         <Extension>
         Public Function gamma(z As Double) As Double
             If (z < 0.5) Then
-                Return stdNum.PI / (stdNum.Sin(Math.PI * z) * gamma(1 - z))
+                Return stdNum.PI / (stdNum.Sin(stdNum.PI * z) * gamma(1 - z))
             ElseIf (z > 100) Then
                 Return stdNum.Exp(lngamma(z))
             Else

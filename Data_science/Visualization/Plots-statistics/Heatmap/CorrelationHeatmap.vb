@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Namespace Heatmap
 
@@ -124,7 +125,7 @@ Namespace Heatmap
                     Dim radius As DoubleRange = {0R, dw}
                     Dim getRadius = Function(corr#) As Double
                                         If variantSize Then
-                                            Return range.ScaleMapping(Math.Abs(corr), radius)
+                                            Return range.ScaleMapping(stdNum.Abs(corr), radius)
                                         Else
                                             Return dw
                                         End If

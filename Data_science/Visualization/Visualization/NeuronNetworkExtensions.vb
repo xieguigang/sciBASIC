@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::76be04c8a46f83fdcaae4842978de6cc, Data_science\Visualization\Visualization\NeuronNetworkExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NeuronNetworkExtensions
-    ' 
-    '     Function: CastTo, VisualizeModel
-    ' 
-    ' /********************************************************************************/
+' Module NeuronNetworkExtensions
+' 
+'     Function: CastTo, VisualizeModel
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports NeuronNetwork = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Network
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 网络可视化工具
@@ -120,23 +121,23 @@ Public Module NeuronNetworkExtensions
             .ToArray
         Dim weights As QuantileEstimationGK = model _
             .connections _
-            .Select(Function(syn) Math.Abs(syn.w)) _
+            .Select(Function(syn) stdNum.Abs(syn.w)) _
             .GKQuantile
         Dim threshold# = weights.Query(connectionCutoff)
         Dim edges = model.connections _
-            .Where(Function(syn) Math.Abs(syn.w) >= threshold) _
+            .Where(Function(syn) stdNum.Abs(syn.w) >= threshold) _
             .Select(Function(syn)
                         Return New NetworkEdge With {
-                            .FromNode = syn.in,
-                            .ToNode = syn.out,
+                            .fromNode = syn.in,
+                            .toNode = syn.out,
                             .value = syn.w
                         }
                     End Function) _
             .ToArray
 
         Return New NetworkTables With {
-            .Nodes = nodes,
-            .Edges = edges
+            .nodes = nodes,
+            .edges = edges
         }
     End Function
 

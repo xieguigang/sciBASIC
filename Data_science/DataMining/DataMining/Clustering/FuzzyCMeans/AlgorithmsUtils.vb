@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::f2e161881e1ee77de6df4661bbffd29f, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\AlgorithmsUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module AlgorithmsUtils
-    ' 
-    '         Function: DifferenceMatrix, DistanceToClusterCenters, GenerateDataPoints, GetElementIndex, GetMaxElement
-    '                   MakeInitialSeeds
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module AlgorithmsUtils
+' 
+'         Function: DifferenceMatrix, DistanceToClusterCenters, GenerateDataPoints, GetElementIndex, GetMaxElement
+'                   MakeInitialSeeds
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace FuzzyCMeans
 
@@ -66,7 +66,6 @@ Namespace FuzzyCMeans
         End Function
 
         ''' <summary>
-        ''' �������
         ''' </summary>
         ''' <param name="matrix1"></param>
         ''' <param name="matrix2"></param>
@@ -83,7 +82,7 @@ Namespace FuzzyCMeans
                 line = (+row)
 
                 For j As Integer = 0 To l - 1
-                    Dim result As Double = Math.Abs(line(j) - matrix2(row.i)(j))
+                    Dim result As Double = stdNum.Abs(line(j) - matrix2(row.i)(j))
                     rowDifferences.Add(result)
                 Next
 
@@ -114,10 +113,10 @@ Namespace FuzzyCMeans
                     Dim distance As Double
 
                     For i As Integer = 0 To x.Length - 1
-                        distance += Math.Pow(x(i) - c(i), 2)
+                        distance += stdNum.Pow(x(i) - c(i), 2)
                     Next
 
-                    distance = Math.Sqrt(distance)
+                    distance = stdNum.Sqrt(distance)
                     distancesToCenters.Add(distance)
                 Next
 

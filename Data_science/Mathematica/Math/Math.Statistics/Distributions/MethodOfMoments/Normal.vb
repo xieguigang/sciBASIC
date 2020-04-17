@@ -50,6 +50,7 @@
 ' * and open the template in the editor.
 ' 
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace Distributions.MethodOfMoments
 
@@ -111,8 +112,8 @@ Namespace Distributions.MethodOfMoments
                 q = 1 - q
             End If
 
-            Dim t As Double = Math.Sqrt(Math.Log(1 / Math.Pow(q, 2)))
-            x = t - (c0 + c1 * t + c2 * (Math.Pow(t, 2))) / (1 + d1 * t + d2 * Math.Pow(t, 2) + d3 * Math.Pow(t, 3))
+            Dim t As Double = stdNum.Sqrt(stdNum.Log(1 / stdNum.Pow(q, 2)))
+            x = t - (c0 + c1 * t + c2 * (stdNum.Pow(t, 2))) / (1 + d1 * t + d2 * stdNum.Pow(t, 2) + d3 * stdNum.Pow(t, 3))
             x = i * x
 
             Return (x * _StDev) + _Mean
@@ -123,13 +124,13 @@ Namespace Distributions.MethodOfMoments
             Dim rect As Double = 0
             If y1 > y2 Then
                 deltay = y1 - y2
-                rect = Math.Abs(y2 * deltax)
+                rect = stdNum.Abs(y2 * deltax)
             Else
                 deltay = y2 - y1
-                rect = Math.Abs(y1 * deltax)
+                rect = stdNum.Abs(y1 * deltax)
             End If
             Dim tri As Double = (1 \ 2) * (deltax * deltay)
-            Return rect + Math.Abs(tri)
+            Return rect + stdNum.Abs(tri)
         End Function
 
         Private Function FindArea(a As Double, inc As Double, x As Double) As Double
@@ -142,7 +143,7 @@ Namespace Distributions.MethodOfMoments
             Loop
             Dim y1 As Double = GetPDF(x1)
             Dim y2 As Double = GetPDF(x2)
-            Dim deltax As Double = Math.Abs(x1 - x2)
+            Dim deltax As Double = stdNum.Abs(x1 - x2)
             Dim area As Double = TrapazoidalIntegration(y1, y2, deltax)
             Dim interpvalue As Double = (x - x1) / (x2 - x1)
             a += area * interpvalue
@@ -153,7 +154,7 @@ Namespace Distributions.MethodOfMoments
             'decide which method i want to use.  errfunction, the method i came up with in vb, or something else.
             If value = _Mean Then Return 0.5
             Dim dist As Double = value - _Mean
-            Dim stdevs As Integer = CInt(Fix(Math.Floor(Math.Abs(dist / _StDev))))
+            Dim stdevs As Integer = CInt(Fix(stdNum.Floor(stdNum.Abs(dist / _StDev))))
             Dim inc As Double = 1 \ 250
             Dim a As Double = 0.5
             Dim a1 As Double = 0.682689492137 / 2
@@ -221,7 +222,7 @@ Namespace Distributions.MethodOfMoments
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetPDF(value As Double) As Double
-            Return (1 / Math.Sqrt(2 * Math.PI) * Math.Pow(_StDev, 2.0)) * Math.Exp((-(Math.Pow(value - _Mean, 2) / (2 * Math.Pow(_StDev, 2)))))
+            Return (1 / stdNum.Sqrt(2 * stdNum.PI) * stdNum.Pow(_StDev, 2.0)) * stdNum.Exp((-(stdNum.Pow(value - _Mean, 2) / (2 * stdNum.Pow(_StDev, 2)))))
         End Function
 
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)

@@ -52,11 +52,12 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Public Module Bubble
 
     Private Function logRadius(R#) As Double
-        Return Math.Log(R + 1) + 1
+        Return stdNum.Log(R + 1) + 1
     End Function
 
     ReadOnly usingLogRadius As New [Default](Of Func(Of Double, Double))(AddressOf logRadius)

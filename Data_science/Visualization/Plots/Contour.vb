@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Contour heatmap 
@@ -325,7 +326,7 @@ Public Module Contour
                     .Where(Function(x) Not (+x).IsNaNImaginary AndAlso (+x) <> 0R) _
                     .ToArray
                 indexLevels = reals _
-                    .Select(Function(x) Math.Abs(+x)) _
+                    .Select(Function(x) stdNum.Abs(+x)) _
                     .Log2Ranks(mapLevels)
             Else
                 reals = data _

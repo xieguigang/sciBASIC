@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports signals = System.ValueTuple(Of Double, Double)
+Imports stdNum = System.Math
 
 Namespace BarPlot
 
@@ -162,7 +163,7 @@ Namespace BarPlot
                            Dim e#
 
                            For Each n In highlights
-                               e = Math.Abs(n - x)
+                               e = stdNum.Abs(n - x)
 
                                If e <= err Then
                                    Return (e, n, True)

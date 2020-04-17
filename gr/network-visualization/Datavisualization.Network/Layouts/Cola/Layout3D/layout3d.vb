@@ -46,6 +46,8 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
 Imports number = System.Double
+Imports stdNum = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts.Cola
 
@@ -69,7 +71,7 @@ Namespace Layouts.Cola
             nodes.ForEach(Sub(v, i)
                               For Each [dim] As String In Layout3D.dims
                                   If v([dim]) = 0 Then
-                                      v([dim]) = Math.Seeds.NextDouble
+                                      v([dim]) = randf.seeds.NextDouble
                                   End If
                               Next
                               Me.result(0)(i) = v.x

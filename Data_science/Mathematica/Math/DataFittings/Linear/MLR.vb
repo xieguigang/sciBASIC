@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Multiple linear regression.(多元线性回归)
@@ -105,7 +106,7 @@ Public Class MLRFit
         Dim Yfit#
 
         Public Overrides Function ToString() As String
-            Return $"{Math.Abs(Y - Yfit)} = |{Y} - {Yfit}|"
+            Return $"{stdNum.Abs(Y - Yfit)} = |{Y} - {Yfit}|"
         End Function
 
         Public Shared Iterator Function RunTest(MLR As MLRFit, X As GeneralMatrix, Y As Vector) As IEnumerable(Of [Error])

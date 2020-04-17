@@ -48,6 +48,7 @@ Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace Drawing2D
 
@@ -68,12 +69,12 @@ Namespace Drawing2D
         ''' <param name="scaleX!"></param>
         ''' <param name="scaleY!"></param>
         Sub New(distance!, angle!, Optional scaleX! = 1, Optional scaleY! = 1)
-            Dim alpha! = angle / 180 * Math.PI
+            Dim alpha! = angle / 180 * stdNum.PI
 
             ' 计算出distance
             offset = New PointF With {
-                .X = distance * Math.Sin(alpha),
-                .Y = distance * Math.Cos(alpha)
+                .X = distance * stdNum.Sin(alpha),
+                .Y = distance * stdNum.Cos(alpha)
             }
             scale = New SizeF With {.Width = scaleX, .Height = scaleY}
         End Sub

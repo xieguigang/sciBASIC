@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::d97a4f8aaf9c55053c002f82202bdfad, Data_science\DataMining\DataMining\MarginalLikelihoodAnalysis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MarginalLikelihoodAnalysis
-    ' 
-    '     Properties: BootstrappedSE, Burnin, LogMarginalLikelihood
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: calculateLogMarginalLikelihood, logMarginalLikelihoodAICM, logMarginalLikelihoodArithmetic, logMarginalLikelihoodHarmonic, (+2 Overloads) logMarginalLikelihoodSmoothed
-    ' 
-    '     Sub: calculate
-    ' 
-    ' /********************************************************************************/
+' Class MarginalLikelihoodAnalysis
+' 
+'     Properties: BootstrappedSE, Burnin, LogMarginalLikelihood
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: calculateLogMarginalLikelihood, logMarginalLikelihoodAICM, logMarginalLikelihoodArithmetic, logMarginalLikelihoodHarmonic, (+2 Overloads) logMarginalLikelihoodSmoothed
+' 
+'     Sub: calculate
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Language.Java
+Imports stdNum = System.Math
 
 '
 ' * MarginalLikelihoodAnalysis.java
@@ -155,7 +156,7 @@ Public Class MarginalLikelihoodAnalysis
             sum = LogTricks.logSum(sum, v(i))
         Next
 
-        Return sum - Math.Log(size)
+        Return sum - stdNum.Log(size)
     End Function
 
     ''' <summary>
@@ -177,7 +178,7 @@ Public Class MarginalLikelihoodAnalysis
             denominator = LogTricks.logSum(denominator, sum - v(i))
         Next
 
-        Return sum - denominator + Math.Log(size)
+        Return sum - denominator + stdNum.Log(size)
     End Function
 
     ''' <summary>
@@ -236,7 +237,7 @@ Public Class MarginalLikelihoodAnalysis
                 var += (bootstrappedLogML(i) - bootstrappedAverage) * (bootstrappedLogML(i) - bootstrappedAverage)
             Next
             var /= (bootstrapLength - 1.0)
-            _bootstrappedSE = Math.Sqrt(var)
+            _bootstrappedSE = stdNum.Sqrt(var)
         End If
 
         marginalLikelihoodCalculated = True
@@ -251,10 +252,10 @@ Public Class MarginalLikelihoodAnalysis
     ''' <returns> the log marginal likelihood </returns>
     Public Function logMarginalLikelihoodSmoothed(v As IList(Of Double), delta As Double, Pdata As Double) As Double
 
-        Dim logDelta As Double = Math.Log(delta)
-        Dim logInvDelta As Double = Math.Log(1.0 - delta)
+        Dim logDelta As Double = stdNum.Log(delta)
+        Dim logInvDelta As Double = stdNum.Log(1.0 - delta)
         Dim n As Integer = v.Count
-        Dim logN As Double = Math.Log(n)
+        Dim logN As Double = stdNum.Log(n)
 
         Dim offset As Double = logInvDelta - Pdata
 
@@ -283,7 +284,7 @@ Public Class MarginalLikelihoodAnalysis
 
         Const tolerance As Double = 0.001 ' todo make class adjustable by accessor/setter
 
-        Do While Math.Abs(deltaP) > tolerance
+        Do While stdNum.Abs(deltaP) > tolerance
             Dim g1 As Double = logMarginalLikelihoodSmoothed(v, delta, Pdata) - Pdata
             Dim Pdata2 As Double = Pdata + g1
             dx = g1 * 10.0
@@ -296,10 +297,10 @@ Public Class MarginalLikelihoodAnalysis
                 Dim g3 As Double = logMarginalLikelihoodSmoothed(v, delta, Pdata3) - Pdata3
 
                 ' Try to do a Newton's method step
-                If Math.Abs(g3) <= Math.Abs(g2) AndAlso ((g3 > 0) OrElse (Math.Abs(dgdx) > 0.01)) Then
+                If stdNum.Abs(g3) <= stdNum.Abs(g2) AndAlso ((g3 > 0) OrElse (stdNum.Abs(dgdx) > 0.01)) Then
                     deltaP = Pdata3 - Pdata
                     Pdata = Pdata3 ' otherwise try to go 10 times as far as one step
-                ElseIf Math.Abs(g2) <= Math.Abs(g1) Then
+                ElseIf stdNum.Abs(g2) <= stdNum.Abs(g1) Then
                     Pdata2 += g2
                     deltaP = Pdata2 - Pdata
                     Pdata = Pdata2 ' otherwise go just one step

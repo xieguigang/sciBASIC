@@ -112,7 +112,7 @@ Namespace d3js.Layout
                 dy = anc(index).y - lab(index).Y
 
             ' 标签与anchor锚点之间的距离
-            Dim dist = Math.Sqrt(dx * dx + dy * dy),
+            Dim dist = stdNum.Sqrt(dx * dx + dy * dy),
                 overlap = True,
                 amount = 0
 
@@ -158,8 +158,8 @@ Namespace d3js.Layout
                     y11 = lab(i).Y - lab(i).height + 2.0
                     x12 = lab(i).X + lab(i).width
                     y12 = lab(i).Y + 2.0
-                    x_overlap = Math.Max(0, stdNum.Min(x12, x22) - Math.Max(x11, x21))
-                    y_overlap = Math.Max(0, stdNum.Min(y12, y22) - Math.Max(y11, y21))
+                    x_overlap = stdNum.Max(0, stdNum.Min(x12, x22) - stdNum.Max(x11, x21))
+                    y_overlap = stdNum.Max(0, stdNum.Min(y12, y22) - stdNum.Max(y11, y21))
                     overlap_area = x_overlap * y_overlap
                     ener += (overlap_area * w_lab2)
                 End If
@@ -170,8 +170,8 @@ Namespace d3js.Layout
                 x12 = anc(i).x + anc(i).r
                 y12 = anc(i).y + anc(i).r
 
-                x_overlap = Math.Max(0, stdNum.Min(x12, x22) - Math.Max(x11, x21))
-                y_overlap = Math.Max(0, stdNum.Min(y12, y22) - Math.Max(y11, y21))
+                x_overlap = stdNum.Max(0, stdNum.Min(x12, x22) - stdNum.Max(x11, x21))
+                y_overlap = stdNum.Max(0, stdNum.Min(y12, y22) - stdNum.Max(y11, y21))
 
                 overlap_area = x_overlap * y_overlap
                 ener += (overlap_area * w_lab_anc)
@@ -225,7 +225,7 @@ Namespace d3js.Layout
 
         Private Sub MonteCarlo(currT#, action As Action(Of Integer))
             ' select a random label which is not pinned
-            Dim i As Integer = unpinnedLabels(Math.Floor(Rnd() * unpinnedLabels.Length))
+            Dim i As Integer = unpinnedLabels(stdNum.Floor(Rnd() * unpinnedLabels.Length))
 
             ' save old coordinates
             Dim x_old = lab(i).X
@@ -247,7 +247,7 @@ Namespace d3js.Layout
             ' delta E
             Dim delta_energy = new_energy - old_energy
 
-            If (Rnd() < Math.Exp(-delta_energy / currT)) Then
+            If (Rnd() < stdNum.Exp(-delta_energy / currT)) Then
                 acc += 1
             Else
                 ' move back to old coordinates
@@ -264,8 +264,8 @@ Namespace d3js.Layout
             ' random angle
             Dim angle = (Rnd() - 0.5) * maxAngle
 
-            Dim s = Math.Sin(angle)
-            Dim c = Math.Cos(angle)
+            Dim s = stdNum.Sin(angle)
+            Dim c = stdNum.Cos(angle)
 
             ' translate label (relative to anchor at origin):
             lab(i).X -= anc(i).x

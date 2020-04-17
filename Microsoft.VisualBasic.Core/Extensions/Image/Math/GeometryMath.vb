@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::72e784aa218f24173d3973f71e86c1f0, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GeometryMath
-    ' 
-    '         Function: (+2 Overloads) angleBetween2Lines, GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
-    ' 
-    '     Enum QuadrantRegions
-    ' 
-    '         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
-    '         XRight, YBottom, YTop
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum Intersections
-    ' 
-    '         Containment, Intersection, None, Tangent
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GeometryMath
+' 
+'         Function: (+2 Overloads) angleBetween2Lines, GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
+' 
+'     Enum QuadrantRegions
+' 
+'         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
+'         XRight, YBottom, YTop
+' 
+'  
+' 
+' 
+' 
+'     Enum Intersections
+' 
+'         Containment, Intersection, None, Tangent
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -96,11 +96,11 @@ Namespace Imaging.Math2D
         End Function
 
         Public Function angleBetween2Lines(line1 As Point2D(), line2 As Point2D()) As Double
-            Dim angle1 = Math.Atan2(line1(0).Y - line1(1).Y, line1(0).X - line1(1).X)
-            Dim angle2 = Math.Atan2(line2(0).Y - line2(1).Y, line2(0).X - line2(1).X)
+            Dim angle1 = stdNum.Atan2(line1(0).Y - line1(1).Y, line1(0).X - line1(1).X)
+            Dim angle2 = stdNum.Atan2(line2(0).Y - line2(1).Y, line2(0).X - line2(1).X)
             Dim diff = angle1 - angle2
 
-            If diff > Math.PI OrElse diff < -Math.PI Then
+            If diff > stdNum.PI OrElse diff < -stdNum.PI Then
                 diff = angle2 - angle1
             End If
 
@@ -171,8 +171,8 @@ Namespace Imaging.Math2D
                     Return Intersections.Tangent
                 End If
                 If point.Y > stdNum.Min(p1.Y, p2.Y) Then
-                    If point.Y <= Math.Max(p1.Y, p2.Y) Then
-                        If point.X <= Math.Max(p1.X, p2.X) Then
+                    If point.Y <= stdNum.Max(p1.Y, p2.Y) Then
+                        If point.X <= stdNum.Max(p1.X, p2.X) Then
                             If p1.Y <> p2.Y Then
                                 Dim xinters As Double = (point.Y - p1.Y) * (p2.X - p1.X) / (p2.Y - p1.Y) + p1.X
                                 If p1.X = p2.X OrElse point.X <= xinters Then
@@ -196,7 +196,7 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         Public Function IntersectionOf(point As PointF, line As Line) As Intersections
             Dim bottomY As Single = stdNum.Min(line.Y1, line.Y2)
-            Dim topY As Single = Math.Max(line.Y1, line.Y2)
+            Dim topY As Single = stdNum.Max(line.Y1, line.Y2)
             Dim heightIsRight As Boolean = point.Y >= bottomY AndAlso point.Y <= topY
             'Vertical line, slope is divideByZero error!
             If line.X1 = line.X2 Then
@@ -355,20 +355,20 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <Extension>
         Public Function QuadrantRegion(origin As PointF, p As PointF, Optional d! = 5) As QuadrantRegions
-            If Math.Abs(p.X - origin.X) <= d AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+            If stdNum.Abs(p.X - origin.X) <= d AndAlso stdNum.Abs(p.Y - origin.Y) <= d Then
                 Return QuadrantRegions.Origin
             End If
 
-            If Math.Abs(p.X - origin.X) <= d AndAlso p.Y < origin.Y Then
+            If stdNum.Abs(p.X - origin.X) <= d AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.YTop
             End If
-            If Math.Abs(p.X - origin.X) <= d AndAlso p.Y > origin.Y Then
+            If stdNum.Abs(p.X - origin.X) <= d AndAlso p.Y > origin.Y Then
                 Return QuadrantRegions.YBottom
             End If
-            If p.X > origin.X AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+            If p.X > origin.X AndAlso stdNum.Abs(p.Y - origin.Y) <= d Then
                 Return QuadrantRegions.XRight
             End If
-            If p.X < origin.X AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+            If p.X < origin.X AndAlso stdNum.Abs(p.Y - origin.Y) <= d Then
                 Return QuadrantRegions.XLeft
             End If
 

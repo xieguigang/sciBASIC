@@ -125,7 +125,7 @@ Namespace Source.Arithmetic
 
                 For i As Integer = 0 To Signal.BUFFER_SIZE - 1
                     samples(i) = CSByte(Signal.AMPLITUDE * calculate(audioPosA, SignalA.Phase, audioPosB, SignalB.Phase))
-                    ' 2 * Math.PI * freq / SAMPLE_RATE;
+                    ' 2 * stdNum.PI * freq / SAMPLE_RATE;
                     audioPosA += 100 * SignalA.Freq / Signal.SAMPLE_RATE
                     audioPosB += 100 * SignalB.Freq / Signal.SAMPLE_RATE
                 Next

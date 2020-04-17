@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
+Imports stdNum = System.Math
 
 Namespace Drawing2D
 
@@ -243,8 +244,8 @@ Namespace Drawing2D
             Dim vector = shape.ToArray
             Dim x0 As New Vector(vector.Select(Function(pt) pt.X))
             Dim y0 As New Vector(vector.Select(Function(pt) pt.Y))
-            Dim x1 = x0 * Math.Cos(alpha) + y0 * Math.Sin(alpha)
-            Dim y1 = -x0 * Math.Sin(alpha) + y0 * Math.Cos(alpha)
+            Dim x1 = x0 * stdNum.Cos(alpha) + y0 * stdNum.Sin(alpha)
+            Dim y1 = -x0 * stdNum.Sin(alpha) + y0 * stdNum.Cos(alpha)
             Return (x1, y1).Point2D.ToArray
         End Function
 

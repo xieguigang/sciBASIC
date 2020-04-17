@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace Analysis.SimilarityImpl
 

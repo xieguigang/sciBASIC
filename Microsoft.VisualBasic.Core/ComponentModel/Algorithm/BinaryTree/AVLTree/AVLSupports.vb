@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
@@ -98,7 +99,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Friend Sub PutHeight(Of K, V)(node As BinaryTree(Of K, V))
-            node.SetValue("height", Math.Max(node.Left.height, node.Right.height) + 1)
+            node.SetValue("height", stdNum.Max(node.Left.height, node.Right.height) + 1)
         End Sub
     End Module
 End Namespace

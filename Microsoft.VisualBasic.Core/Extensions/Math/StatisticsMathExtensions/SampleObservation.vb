@@ -1,71 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::d960e0fbfbdd105bb003a9ea15bc6a1a, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\SampleObservation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class SampleObservation
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: getRaw
-    ' 
-    '     Sub: Add
-    ' 
-    ' /********************************************************************************/
+' Class SampleObservation
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: getRaw
+' 
+'     Sub: Add
+' 
+' /********************************************************************************/
 
 #End Region
 
-Public MustInherit Class SampleObservation
+Namespace Math.Statistics
 
-    Dim samples As New List(Of Double)
+    Public MustInherit Class SampleObservation
 
-    Sub New(samples As IEnumerable(Of Double))
-        Me.samples = New List(Of Double)(samples)
-    End Sub
+        Dim samples As New List(Of Double)
 
-    Public Sub Add(observation As Double)
-        Call samples.Add(observation)
-        Call addObservation(observation)
-    End Sub
+        Sub New(samples As IEnumerable(Of Double))
+            Me.samples = New List(Of Double)(samples)
+        End Sub
 
-    Protected MustOverride Sub addObservation(observation As Double)
-    Protected MustOverride Function getEigenvalue() As Double
+        Public Sub Add(observation As Double)
+            Call samples.Add(observation)
+            Call addObservation(observation)
+        End Sub
 
-    Protected Iterator Function getRaw() As IEnumerable(Of Double)
-        For Each obs As Double In samples
-            Yield obs
-        Next
-    End Function
+        Protected MustOverride Sub addObservation(observation As Double)
+        Protected MustOverride Function getEigenvalue() As Double
 
-    Public Shared Narrowing Operator CType(observation As SampleObservation) As Double
-        Return observation.getEigenvalue
-    End Operator
-End Class
+        Protected Iterator Function getRaw() As IEnumerable(Of Double)
+            For Each obs As Double In samples
+                Yield obs
+            Next
+        End Function
+
+        Public Shared Narrowing Operator CType(observation As SampleObservation) As Double
+            Return observation.getEigenvalue
+        End Operator
+    End Class
+End Namespace

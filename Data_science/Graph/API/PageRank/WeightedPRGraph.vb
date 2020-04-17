@@ -51,6 +51,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 Imports WeightTable = System.Collections.Generic.Dictionary(Of Integer, Double)
 
 Namespace Analysis.PageRank
@@ -206,17 +207,19 @@ Namespace Analysis.PageRank
 
                 d = 0
 
-                For Each v As WeightedPRNode In g.Vertex
-                    d += Math.Abs(v.Weight - nodes(v.ID))
+                For Each v As WeightedPRNode In g.vertex
+                    d += stdNum.Abs(v.Weight - nodes(v.ID))
                 Next
             Loop
 
             ' 在这里不可以按照weight从大到小排序，因为这会打乱原文的顺序，
             ' 可能会造成NLP模块所产生的摘要文本语句之间的逻辑不顺
             Return g _
-                .Vertex _
-                .ToDictionary(Function(v) v.Label,
-                              Function(v) v.Weight)
+                .vertex _
+                .ToDictionary(Function(v) v.label,
+                              Function(v)
+                                  Return v.Weight
+                              End Function)
         End Function
     End Module
 End Namespace

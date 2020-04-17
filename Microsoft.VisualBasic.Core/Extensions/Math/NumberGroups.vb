@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics
 Imports Microsoft.VisualBasic.Parallel
+Imports stdNum = System.Math
 
 Namespace Math
 
@@ -305,7 +306,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), offsets#) As IEnumerable(Of NamedCollection(Of T))
-            Return source.GroupBy(evaluate, equals:=Function(a, b) Abs(a - b) <= offsets)
+            Return source.GroupBy(evaluate, equals:=Function(a, b) stdNum.Abs(a - b) <= offsets)
         End Function
 
         ''' <summary>
@@ -317,7 +318,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GroupBy(numbers As IEnumerable(Of Double), offsets#) As IEnumerable(Of NamedCollection(Of Double))
-            Return numbers.GroupBy(Self(Of Double), Function(a, b) Abs(a - b) <= offsets)
+            Return numbers.GroupBy(Self(Of Double), Function(a, b) stdNum.Abs(a - b) <= offsets)
         End Function
 
         ''' <summary>

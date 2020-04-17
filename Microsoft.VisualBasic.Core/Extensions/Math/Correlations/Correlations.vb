@@ -356,7 +356,7 @@ Namespace Math.Correlations
 
             prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t), throwMaxIterError)
             ' for a large n
-            prob2 = Beta.erfcc(Abs(z * stdNum.Sqrt(n - 1.0)) / 1.4142136)
+            prob2 = Beta.erfcc(stdNum.Abs(z * stdNum.Sqrt(n - 1.0)) / 1.4142136)
 
             Return pcc
         End Function
@@ -370,7 +370,7 @@ Namespace Math.Correlations
             Public ReadOnly Property P As Double
                 <MethodImpl(MethodImplOptions.AggressiveInlining)>
                 Get
-                    Return -Math.Log10(pvalue)
+                    Return -stdNum.Log10(pvalue)
                 End Get
             End Property
 

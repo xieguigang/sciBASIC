@@ -75,11 +75,11 @@ Namespace Drawing3D
         ReadOnly angle, scale As Double
 
         Public Sub New()
-            Me.angle = Math.PI / 6
+            Me.angle = stdNum.PI / 6
             Me.scale = 70
             Me.transformation = {
                 ({Me.scale * stdNum.Cos(Me.angle), Me.scale * stdNum.Sin(Me.angle)}),
-                ({Me.scale * stdNum.Cos(Math.PI - Me.angle), Me.scale * stdNum.Sin(Math.PI - Me.angle)})
+                ({Me.scale * stdNum.Cos(stdNum.PI - Me.angle), Me.scale * stdNum.Sin(stdNum.PI - Me.angle)})
             }
             Dim lightPosition As New Point3D(2, -1, 3)
             Me.lightAngle = lightPosition.Normalize()

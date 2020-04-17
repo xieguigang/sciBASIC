@@ -1,48 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::a5eade1adc5a0ddc55e6e5bdf5e1bd2c, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Beta.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Beta
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetCDF, GetInvCDF, GetPDF, Validate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Beta
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetCDF, GetInvCDF, GetPDF, Validate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -100,14 +99,14 @@ Namespace Distributions.MethodOfMoments
                     testvalue = GetCDF(value)
                 End If
                 n += 1
-            Loop While Math.Abs(testvalue - probability) > 0.000000000000001 Or n <> 100
+            Loop While stdNum.Abs(testvalue - probability) > 0.000000000000001 Or n <> 100
             Return value
         End Function
         Public Overrides Function GetCDF(value As Double) As Double 'not sure this is right, technically it is the regularized incomplete beta.
             Return SpecialFunctions.RegularizedIncompleteBetaFunction(_Alpha, _Beta, value)
         End Function
         Public Overrides Function GetPDF(value As Double) As Double
-            Return (Math.Pow(value, (_Alpha - 1)) * (Math.Pow((1 - value), (_Beta - 1)))) / SpecialFunctions.BetaFunction(_Alpha, _Beta)
+            Return (stdNum.Pow(value, (_Alpha - 1)) * (stdNum.Pow((1 - value), (_Beta - 1)))) / SpecialFunctions.BetaFunction(_Alpha, _Beta)
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
             If _Alpha <= 0 Then Yield New Exception("Alpha must be greater than 0")

@@ -92,7 +92,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Seed() As Integer
-            Return Math.Abs(CInt(Math.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
+            Return stdNum.Abs(CInt(stdNum.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
 
         Public Sub SetSeed(seed As Integer)

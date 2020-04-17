@@ -1,49 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::2fe0d07955868418b85e03850536b27b, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Triangular.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Triangular
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetCDF, GetInvCDF, GetMax, GetMin, GetMostLikely
-    '                   GetPDF, Validate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Triangular
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetCDF, GetInvCDF, GetMax, GetMin, GetMostLikely
+'                   GetPDF, Validate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -51,7 +50,6 @@ Imports System.Collections.Generic
 ' * and open the template in the editor.
 ' 
 Namespace Distributions.MethodOfMoments
-
 
     ''' 
     ''' <summary>
@@ -92,22 +90,22 @@ Namespace Distributions.MethodOfMoments
             '        _MostLikely = PM.GetMean();
 
             'Alternate Method from Ben Chaon
-            Dim sqrt2 As Double = Math.Sqrt(2)
-            Dim sqrt3 As Double = Math.Sqrt(3)
+            Dim sqrt2 As Double = stdNum.Sqrt(2)
+            Dim sqrt3 As Double = stdNum.Sqrt(3)
             Dim a3 As Double = PM.Skew()
             Dim b3 As Double
             Dim angle As Double
             Dim aa As Double
             Dim bb As Double
             If 8 - a3 * a3 < 0 Then
-                a3 = Math.Sin(a3) * 2 * sqrt2
+                a3 = stdNum.Sin(a3) * 2 * sqrt2
                 b3 = 0
             Else
-                b3 = Math.Sqrt(8 - a3 * a3)
+                b3 = stdNum.Sqrt(8 - a3 * a3)
             End If
-            angle = Math.Atan2(b3, a3)
-            aa = Math.Cos(angle / 3.0)
-            bb = Math.Sin(angle / 3.0)
+            angle = stdNum.Atan2(b3, a3)
+            aa = stdNum.Cos(angle / 3.0)
+            bb = stdNum.Sin(angle / 3.0)
             _Min = (PM.Mean() + sqrt2 * PM.StandardDeviation() * (aa - sqrt3 * bb))
             _MostLikely = (PM.Mean() - 2 * sqrt2 * PM.StandardDeviation() * aa)
             _Max = (PM.Mean() + sqrt2 * PM.StandardDeviation() * (aa + sqrt3 * bb))
@@ -119,17 +117,17 @@ Namespace Distributions.MethodOfMoments
             If probability <= 0 Then
                 Return _Min
             ElseIf probability < (a / (_Max - _Min)) Then
-                Return _Min + Math.Sqrt(probability * (_Max - _Min) * a)
+                Return _Min + stdNum.Sqrt(probability * (_Max - _Min) * a)
             ElseIf probability < 1 Then
-                Return _Max - Math.Sqrt((1 - probability) * (_Max - _Min) * b)
+                Return _Max - stdNum.Sqrt((1 - probability) * (_Max - _Min) * b)
             Else
                 Return _Max
             End If
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
             If value < _Min Then Return 0
-            If value < _MostLikely Then Return (Math.Pow((value - _Min), 2) / (_Max - _Min) * (_MostLikely - _Min))
-            If value <= _Max Then Return 1 - (Math.Pow((_Max - value), 2) / (_Max - _Min) * (_Max - _MostLikely))
+            If value < _MostLikely Then Return (stdNum.Pow((value - _Min), 2) / (_Max - _Min) * (_MostLikely - _Min))
+            If value <= _Max Then Return 1 - (stdNum.Pow((_Max - value), 2) / (_Max - _Min) * (_Max - _MostLikely))
             Return 1
         End Function
         Public Overrides Function GetPDF(value As Double) As Double

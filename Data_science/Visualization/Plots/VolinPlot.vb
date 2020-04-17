@@ -219,7 +219,7 @@ Public Module VolinPlot
                     Dim q0 = C95lowerBound  'group.Min
                     Dim n As Integer = 30
                     Dim dstep = (C95upperBound - C95lowerBound) / n ' (group.Max - group.Min) / n
-                    Dim dy = Math.Abs(upper - lower) / n
+                    Dim dy = stdNum.Abs(upper - lower) / n
                     Dim outliers As New List(Of PointF)
 
                     For p As Integer = 0 To n
@@ -310,7 +310,7 @@ Public Module VolinPlot
                     Else
                         labelPos = New PointF With {
                             .X = X - labelSize.Width / 2,
-                            .Y = plotRegion.Bottom + labelSize.Width * Math.Sin(Math.PI / 4)
+                            .Y = plotRegion.Bottom + labelSize.Width * stdNum.Sin(stdNum.PI / 4)
                         }
 
                         ' 绘制X坐标轴分组标签

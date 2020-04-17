@@ -1,44 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::37ba5e4395e8fd41b17dec5501cdc0b0, Data_science\Mathematica\SignalProcessing\SignalProcessing\DFT.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class TFftAlgorithm
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Sub: FourierTransformation, InvDFT
-    ' 
-    ' /********************************************************************************/
+' Class TFftAlgorithm
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Sub: FourierTransformation, InvDFT
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Quick Fourier Transformation. 
@@ -115,8 +117,8 @@ Public Class TFftAlgorithm
         '                        and sin(0) = 0
         For k = 1 To N - 1
             '  init vectors of unit circle
-            cosine(k) = Math.Cos((2.0 * Math.PI * CDbl(k) / CDbl(N)))
-            sine(k) = Math.Sin((2.0 * Math.PI * CDbl(k) / CDbl(N)))
+            cosine(k) = stdNum.Cos((2.0 * stdNum.PI * CDbl(k) / CDbl(N)))
+            sine(k) = stdNum.Sin((2.0 * stdNum.PI * CDbl(k) / CDbl(N)))
         Next
     End Sub
 
@@ -165,7 +167,7 @@ Public Class TFftAlgorithm
 
             For i As Integer = 0 To 29
                 ' we only take the first 30 fourier components
-                xw(k) = xw(k) + (a(i) * Math.Cos(2.0 * Math.PI * CDbl(i * k) / CDbl(N)) + b(i) * Math.Sin(2.0 * Math.PI * CDbl(i * k) / CDbl(N)))
+                xw(k) = xw(k) + (a(i) * stdNum.Cos(2.0 * stdNum.PI * CDbl(i * k) / CDbl(N)) + b(i) * stdNum.Sin(2.0 * stdNum.PI * CDbl(i * k) / CDbl(N)))
             Next
         Next
     End Sub

@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports stdNum = System.Math
 
 Namespace Graphic
 
@@ -120,7 +121,7 @@ Namespace Graphic
             With data.ToArray
                 valueRange = .Select(Function(item)
                                          If logarithm > 0 Then
-                                             Return Math.Log(item.Value, logarithm)
+                                             Return stdNum.Log(item.Value, logarithm)
                                          Else
                                              Return item.Value
                                          End If
@@ -132,7 +133,7 @@ Namespace Graphic
         End Sub
 
         Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
-            Dim termValue# = If(logarithm > 0, Math.Log(item.Value, logarithm), item.Value)
+            Dim termValue# = If(logarithm > 0, stdNum.Log(item.Value, logarithm), item.Value)
             Dim index As Integer = valueRange.ScaleMapping(termValue, indexRange)
             Dim color As Color
 

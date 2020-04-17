@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports stdNum = System.Math
 
 Public Class Renderer3D : Inherits Renderer
     Implements IGraphicsEngine
@@ -71,7 +72,7 @@ Public Class Renderer3D : Inherits Renderer
         Me.dynamicsRadius = dynamicsRadius
     End Sub
 
-    Public Property rotate As Double = Math.PI / 3
+    Public Property rotate As Double = stdNum.PI / 3
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = regionProvider()

@@ -47,6 +47,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.Net.Http
+Imports stdNum = System.Math
 
 Namespace BSON
 
@@ -86,7 +87,7 @@ Namespace BSON
                     Case ValueType.Int64
                         Return CType(_int64, Int32)
                     Case ValueType.[Double]
-                        Return CType(Math.Truncate(_double), Int32)
+                        Return CType(stdNum.Truncate(_double), Int32)
                 End Select
 
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to Int32", valueType))
@@ -100,7 +101,7 @@ Namespace BSON
                     Case ValueType.Int64
                         Return CType(_int64, Int64)
                     Case ValueType.[Double]
-                        Return CType(Math.Truncate(_double), Int64)
+                        Return CType(stdNum.Truncate(_double), Int64)
                 End Select
 
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to Int64", valueType))

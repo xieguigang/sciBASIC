@@ -57,12 +57,13 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports any = System.Object
 Imports number = System.Double
+Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 
     Public Class packingOptions
         Public PADDING As Integer = 10
-        Public GOLDEN_SECTION As Double = (1 + Math.Sqrt(5)) / 2
+        Public GOLDEN_SECTION As Double = (1 + stdNum.Sqrt(5)) / 2
         Public FLOAT_EPSILON As Double = 0.0001
         Public MAX_INERATIONS As Integer = 100
     End Class
@@ -136,8 +137,8 @@ Namespace Layouts.Cola
                     f_x2 = [step](data, x2, desired_ratio)
                 End If
 
-                dx = Math.Abs(x1 - x2)
-                df = Math.Abs(f_x1 - f_x2)
+                dx = stdNum.Abs(x1 - x2)
+                df = stdNum.Abs(f_x1 - f_x2)
 
                 If f_x1 < curr_best_f Then
                     curr_best_f = f_x1
@@ -183,7 +184,7 @@ Namespace Layouts.Cola
                 put_rect(o, max_width)
             Next
 
-            Return Math.Abs(get_real_ratio() - desired_ratio)
+            Return stdNum.Abs(get_real_ratio() - desired_ratio)
         End Function
 
         ' looking for a position to one box

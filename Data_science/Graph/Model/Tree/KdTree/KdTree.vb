@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::99cf6545141760f638169efa0529309e, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class KdTree
-    ' 
-    '         Properties: balanceFactor
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: buildTree, count, findMax, findMin, height
-    '                   innerSearch, insert, nearest, nodeSearch, remove
-    ' 
-    '         Sub: nearestSearch, removeNode, saveNode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class KdTree
+' 
+'         Properties: balanceFactor
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: buildTree, count, findMax, findMin, height
+'                   innerSearch, insert, nearest, nodeSearch, remove
+' 
+'         Sub: nearestSearch, removeNode, saveNode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language.Python
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Python
+Imports stdNum = System.Math
 
 Namespace KdTree
 
@@ -63,7 +64,7 @@ Namespace KdTree
 
         Public ReadOnly Property balanceFactor() As Double
             Get
-                Return height(root) / (Math.Log(count(root)) / Math.Log(2))
+                Return height(root) / (stdNum.Log(count(root)) / stdNum.Log(2))
             End Get
         End Property
 
@@ -89,7 +90,7 @@ Namespace KdTree
                             Return a(dimensions([dim])) - b(dimensions([dim]))
                         End Function)
 
-            median = Math.Floor(points.Length / 2)
+            median = stdNum.Floor(points.Length / 2)
             node = New Node(points(median), [dim], parent)
             node.left = buildTree(points.slice(0, median), depth + 1, node)
             node.right = buildTree(points.slice(median + 1), depth + 1, node)
@@ -329,7 +330,7 @@ Namespace KdTree
                 saveNode(bestNodes, node, ownDistance, maxNodes)
             End If
 
-            If bestNodes.size < maxNodes OrElse Math.Abs(linearDistance) < bestNodes.peek.Item2 Then
+            If bestNodes.size < maxNodes OrElse stdNum.Abs(linearDistance) < bestNodes.peek.Item2 Then
                 If bestChild Is node.left Then
                     otherChild = node.right
                 Else
@@ -353,7 +354,7 @@ Namespace KdTree
             If node Is Nothing Then
                 Return 0
             Else
-                Return Math.Max(height(node.left), height(node.right)) + 1
+                Return stdNum.Max(height(node.left), height(node.right)) + 1
             End If
         End Function
 

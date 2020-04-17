@@ -209,7 +209,7 @@ Namespace Distributions
             End If
 
             If logP Then
-                Return Math.Log10(p)
+                Return stdNum.Log10(p)
             Else
                 Return p
             End If

@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Namespace BarPlot
 
@@ -178,7 +179,7 @@ Namespace BarPlot
                             ' 绘制系列标签
                             g.DrawString(legend.Name, legendFont, Brushes.Black, New PointF(x0 + boxWidth + 5, ly))
 
-                            maxWidth = Math.Max(maxWidth, g.MeasureString(legend.Name, legendFont).Width)
+                            maxWidth = stdNum.Max(maxWidth, g.MeasureString(legend.Name, legendFont).Width)
                             ly += boxSeperator + boxWidth
                         Next
 

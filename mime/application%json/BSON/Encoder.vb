@@ -45,6 +45,7 @@
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports stdNum = System.Math
 
 Namespace BSON
 
@@ -175,7 +176,7 @@ Namespace BSON
                 span = dt - New DateTime(1970, 1, 1, 0, 0, 0,
                 0, DateTimeKind.Utc)
             End If
-            Dim buf As Byte() = BitConverter.GetBytes(CType(Math.Truncate(span.TotalSeconds * 1000), Int64))
+            Dim buf As Byte() = BitConverter.GetBytes(CType(stdNum.Truncate(span.TotalSeconds * 1000), Int64))
             ms.Write(buf, 0, buf.Length)
         End Sub
     End Class

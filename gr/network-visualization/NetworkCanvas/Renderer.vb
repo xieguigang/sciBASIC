@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports stdNum = System.Math
 
 Public Class Renderer : Inherits AbstractRenderer
     Implements IGraphicsEngine
@@ -138,14 +139,14 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <param name="iPos"></param>
     ''' <returns></returns>
     Public Shared Function GraphToScreen(iPos As FDGVector2, rect As Rectangle) As Point
-        Dim x As Integer = CInt(Math.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
-        Dim y As Integer = CInt(Math.Truncate(iPos.y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
+        Dim x As Integer = CInt(stdNum.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
+        Dim y As Integer = CInt(stdNum.Truncate(iPos.y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
         Return New Point(x, y)
     End Function
 
     Public Shared Function GraphToScreen(iPos As Point, rect As Rectangle) As Point
-        Dim x As Integer = CInt(Math.Truncate(iPos.X + (CSng(rect.Right - rect.Left) / 2.0F)))
-        Dim y As Integer = CInt(Math.Truncate(iPos.Y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
+        Dim x As Integer = CInt(stdNum.Truncate(iPos.X + (CSng(rect.Right - rect.Left) / 2.0F)))
+        Dim y As Integer = CInt(stdNum.Truncate(iPos.Y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
         Return New Point(x, y)
     End Function
 

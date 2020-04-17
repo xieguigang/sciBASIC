@@ -44,6 +44,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 ' 尘中远，于2014.03.20
 ' 主页：http://blog.csdn.net/czyt1988/article/details/21743595
@@ -202,7 +203,7 @@ Public Module LeastSquares
             }
         Next
 
-        result.RMSE = Math.Sqrt(result.SSE / CDbl(length))
+        result.RMSE = stdNum.Sqrt(result.SSE / CDbl(length))
         result.ErrorTest = err.ToArray
     End Sub
 
@@ -214,12 +215,12 @@ Public Module LeastSquares
         Dim max As Double
 
         For k = 0 To n - 2
-            max = Math.Abs(A(k * n + k))
+            max = stdNum.Abs(A(k * n + k))
             ' find maxmum
             r = k
             For i = k + 1 To n - 2
-                If max < Math.Abs(A(i * n + i)) Then
-                    max = Math.Abs(A(i * n + i))
+                If max < stdNum.Abs(A(i * n + i)) Then
+                    max = stdNum.Abs(A(i * n + i))
                     r = i
                 End If
             Next

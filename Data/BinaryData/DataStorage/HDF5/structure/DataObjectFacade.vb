@@ -269,7 +269,7 @@ Namespace HDF5.struct
 
                         readLayout.dimensionLength = dimensionLength
 
-                        'int ndims = Math.min(dimensionLength.length, maxDimensionLength.length);
+                        'int ndims = stdNum.min(dimensionLength.length, maxDimensionLength.length);
                         'layout.setNumberOfDimensions(ndims);
                         readLayout.maxDimensionLength = maxDimensionLength
                     End If

@@ -42,6 +42,7 @@
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>Full</DebugType>

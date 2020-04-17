@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Fractions
 
@@ -122,7 +122,7 @@ Namespace Fractions
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim gSize = region.PlotRegion.Size
-                    Dim r# = sys.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
+                    Dim r# = stdNum.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
                     Dim topLeft As New Point(margin.Left, margin.Top)
                     Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
                     Dim layoutRect As Rectangle
@@ -172,8 +172,8 @@ Namespace Fractions
 
                                 ' 标签文本信息跟随pie的值而变化的
                                 Dim layout As New PointF With {
-                                    .X = (r * 1.15 * Math.Cos((start / 360) * (2 * Math.PI))) + centra.X,
-                                    .Y = (r * 1.15 * Math.Sin((start / 360) * (2 * Math.PI))) + centra.Y
+                                    .X = (r * 1.15 * stdNum.Cos((start / 360) * (2 * stdNum.PI))) + centra.X,
+                                    .Y = (r * 1.15 * stdNum.Sin((start / 360) * (2 * stdNum.PI))) + centra.Y
                                 }
 
                                 labelSize = g.MeasureString(x.Name, font)

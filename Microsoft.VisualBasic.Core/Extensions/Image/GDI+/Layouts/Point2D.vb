@@ -45,7 +45,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Imaging.LayoutModel
 
@@ -95,7 +95,7 @@ Namespace Imaging.LayoutModel
         ''' <returns> Returns a new point for the location. </returns>
         Public Overridable ReadOnly Property Point As Point
             Get
-                Return New Point(CInt(Fix(sys.Round(X))), CInt(Fix(sys.Round(Y))))
+                Return New Point(CInt(Fix(stdNum.Round(X))), CInt(Fix(stdNum.Round(Y))))
             End Get
         End Property
 
@@ -148,7 +148,7 @@ Namespace Imaging.LayoutModel
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Function Equals(a As Point2D, b As Point2D) As Boolean
-            Return Math.Abs(a.X - b.X) <= 0.001 AndAlso Math.Abs(a.Y - b.Y) <= 0.001
+            Return stdNum.Abs(a.X - b.X) <= 0.001 AndAlso stdNum.Abs(a.Y - b.Y) <= 0.001
         End Function
 
         ''' <summary>

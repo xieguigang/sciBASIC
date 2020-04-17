@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Public Module RegressionPlot
 
@@ -225,10 +226,10 @@ Public Module RegressionPlot
                             .Y = fit(.X)
                         }
 
-                        line = New Line(A, B).ParallelShift(Math.Abs(point.Err))
+                        line = New Line(A, B).ParallelShift(stdNum.Abs(point.Err))
                         plusError.Add(scaler.Translate(line.A))
 
-                        line = New Line(A, B).ParallelShift(-Math.Abs(point.Err))
+                        line = New Line(A, B).ParallelShift(-stdNum.Abs(point.Err))
                         negError.Add(scaler.Translate(line.A))
                     Next
 

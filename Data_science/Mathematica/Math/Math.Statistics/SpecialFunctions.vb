@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::90c42ef52d6461da668c61f7e37a41a5, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module SpecialFunctions
-    ' 
-    '     Function: BetaFunction, Binomial, Choose, Correlation, Covariance
-    '               EvaluatePolynomial, Factorial, gamma, gammaln, incbcf
-    '               incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal, MutualProbability
-    '               pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
-    ' 
-    ' /********************************************************************************/
+' Module SpecialFunctions
+' 
+'     Function: BetaFunction, Binomial, Choose, Correlation, Covariance
+'               EvaluatePolynomial, Factorial, gamma, gammaln, incbcf
+'               incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal, MutualProbability
+'               pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' @author Will_and_Sara
@@ -63,7 +63,7 @@ Public Module SpecialFunctions
         Else
             Dim BPM1 As New MomentFunctions.BasicProductMoments(array1)
             Dim BPM2 As New MomentFunctions.BasicProductMoments(array2)
-            Dim number As Integer = sys.Min(array1.Length, array2.Length)
+            Dim number As Integer = stdNum.Min(array1.Length, array2.Length)
             For i As Integer = 0 To number - 1
                 tmp += (array1(i) - BPM1.Mean()) * (array2(i) * BPM2.Mean())
             Next
@@ -79,7 +79,7 @@ Public Module SpecialFunctions
         Else
             Dim BPM1 As New MomentFunctions.BasicProductMoments(array1)
             Dim BPM2 As New MomentFunctions.BasicProductMoments(array2)
-            Dim number As Integer = sys.Min(array1.Length, array2.Length)
+            Dim number As Integer = stdNum.Min(array1.Length, array2.Length)
             For i As Integer = 0 To number - 1
                 tmp += (array1(i) - BPM1.Mean()) * (array2(i) * BPM2.Mean())
             Next
@@ -112,7 +112,7 @@ Public Module SpecialFunctions
     Public Function Binomial(probability As Double, n As Integer, k As Integer) As Double
         Dim value As Double = 0
         For i As Integer = 0 To k
-            value = value + Choose(n, i) * (Math.Pow(probability, i)) * (Math.Pow(1 - probability, n - i))
+            value = value + Choose(n, i) * (stdNum.Pow(probability, i)) * (stdNum.Pow(1 - probability, n - i))
         Next
         Return value + 1
     End Function
@@ -138,7 +138,7 @@ Public Module SpecialFunctions
     End Function
 
     Public Function BetaFunction(a As Double, b As Double) As Double
-        Return Math.Exp(gammaln(a) + gammaln(b) - gammaln(a - b))
+        Return stdNum.Exp(gammaln(a) + gammaln(b) - gammaln(a - b))
     End Function
 
     ''' <summary>
@@ -205,11 +205,11 @@ Public Module SpecialFunctions
         '           a      b   _             _     _
         '          x  (1-x)   | (a+b) / ( a | (a) | (b) ) .   
 
-        y = a * Math.Log(x)
-        t = b * Math.Log(xc)
-        If (a + b) < MAXGAM AndAlso Math.Abs(y) < MAXLOG AndAlso Math.Abs(t) < MAXLOG Then
-            t = Math.Pow(xc, b)
-            t *= Math.Pow(x, a)
+        y = a * stdNum.Log(x)
+        t = b * stdNum.Log(xc)
+        If (a + b) < MAXGAM AndAlso stdNum.Abs(y) < MAXLOG AndAlso stdNum.Abs(t) < MAXLOG Then
+            t = stdNum.Pow(xc, b)
+            t *= stdNum.Pow(x, a)
             t /= a
             t *= w
             t *= safeDiv(gamma(a + b), gamma(a) * gamma(b))
@@ -224,11 +224,11 @@ Public Module SpecialFunctions
         End If
         ' Resort to logarithms.  
         y += t + gammaln(a + b) - gammaln(a) - gammaln(b)
-        y += Math.Log(w / a)
+        y += stdNum.Log(w / a)
         If y < MINLOG Then
             t = 0.0
         Else
-            t = Math.Exp(y)
+            t = stdNum.Exp(y)
         End If
 
         If flag Then
@@ -289,7 +289,7 @@ Public Module SpecialFunctions
             qkm1 = qk
             If qk <> 0 Then r = pk / qk
             If r <> 0 Then
-                t = Math.Abs((ans - r) / r)
+                t = stdNum.Abs((ans - r) / r)
                 ans = r
             Else
                 t = 1.0
@@ -303,13 +303,13 @@ Public Module SpecialFunctions
             k6 -= 1.0
             k7 += 2.0
             k8 += 2.0
-            If (Math.Abs(qk) + Math.Abs(pk)) > big Then
+            If (stdNum.Abs(qk) + stdNum.Abs(pk)) > big Then
                 pkm2 *= biginv
                 pkm1 *= biginv
                 qkm2 *= biginv
                 qkm1 *= biginv
             End If
-            If (Math.Abs(qk) < biginv) OrElse (Math.Abs(pk) < biginv) Then
+            If (stdNum.Abs(qk) < biginv) OrElse (stdNum.Abs(pk) < biginv) Then
                 pkm2 *= big
                 pkm1 *= big
                 qkm2 *= big
@@ -373,7 +373,7 @@ Public Module SpecialFunctions
 
             If qk <> 0 Then r = pk / qk
             If r <> 0 Then
-                t = Math.Abs((ans - r) / r)
+                t = stdNum.Abs((ans - r) / r)
                 ans = r
             Else
                 t = 1.0
@@ -390,13 +390,13 @@ Public Module SpecialFunctions
             k7 += 2.0
             k8 += 2.0
 
-            If (Math.Abs(qk) + Math.Abs(pk)) > big Then
+            If (stdNum.Abs(qk) + stdNum.Abs(pk)) > big Then
                 pkm2 *= biginv
                 pkm1 *= biginv
                 qkm2 *= biginv
                 qkm1 *= biginv
             End If
-            If (Math.Abs(qk) < biginv) OrElse (Math.Abs(pk) < biginv) Then
+            If (stdNum.Abs(qk) < biginv) OrElse (stdNum.Abs(pk) < biginv) Then
                 pkm2 *= big
                 pkm1 *= big
                 qkm2 *= big
@@ -413,7 +413,7 @@ Public Module SpecialFunctions
             If Not x.IsNaNImaginary Then
                 Return 0
             Else
-                Return Math.Sign(x) / Math.Sign(y)
+                Return stdNum.Sign(x) / stdNum.Sign(y)
             End If
         Else
             If x.IsNaNImaginary Then
@@ -443,7 +443,7 @@ Public Module SpecialFunctions
         n = 2.0
         s = 0.0
         z = MACHEP * ai
-        Do While Math.Abs(v) > z
+        Do While stdNum.Abs(v) > z
             u = (n - b) * x / n
             t *= u
             v = t / (a + n)
@@ -453,20 +453,20 @@ Public Module SpecialFunctions
         s += t1
         s += ai
 
-        u = a * Math.Log(x)
+        u = a * stdNum.Log(x)
 
-        If (a + b) < MAXGAM AndAlso Math.Abs(u) < MAXLOG Then
+        If (a + b) < MAXGAM AndAlso stdNum.Abs(u) < MAXLOG Then
             n = gamma(a + b)
             v = gamma(a) * gamma(b)
             t = safeDiv(n, v)
-            s = s * t * Math.Pow(x, a)
+            s = s * t * stdNum.Pow(x, a)
         Else
-            t = gammaln(a + b) - gammaln(a) - gammaln(b) + u + Math.Log(s)
+            t = gammaln(a + b) - gammaln(a) - gammaln(b) + u + stdNum.Log(s)
 
             If t < MINLOG Then
                 s = 0.0
             Else
-                s = Math.Exp(t)
+                s = stdNum.Exp(t)
             End If
         End If
 
@@ -482,15 +482,15 @@ Public Module SpecialFunctions
         Dim stir As Double() = {0.00078731139579309368, -0.00022954996161337813, -0.0026813261780578124, 0.0034722222160545866, 0.08333333333334822}
         Dim MaxStir As Double = 143.01608
         Dim w As Double = 1 / x
-        Dim y As Double = Math.Exp(x)
+        Dim y As Double = stdNum.Exp(x)
         w = 1 + w * EvaluatePolynomial(w, stir)
         If x > MaxStir Then
-            Dim v As Double = Math.Pow(x, 0.5 * x - 0.25)
+            Dim v As Double = stdNum.Pow(x, 0.5 * x - 0.25)
             y = v * (v / y)
         Else
-            y = Math.Pow(x, x - 0.5) / y
+            y = stdNum.Pow(x, x - 0.5) / y
         End If
-        Return Math.Sqrt(Math.PI) * y * w
+        Return stdNum.Sqrt(stdNum.PI) * y * w
     End Function
 
     ''' <summary>
@@ -520,9 +520,9 @@ Public Module SpecialFunctions
         Dim pk, pkm1, pkm2, qk, qkm1, qkm2 As Double
         If x <= 0 OrElse a <= 0 Then Return 1.0
         If x < 1.0 OrElse x < a Then Return 1.0 - IncompleteGamma(a, x)
-        ax = a * Math.Log(x) - x - gammaln(a)
+        ax = a * stdNum.Log(x) - x - gammaln(a)
         If ax < -MAXLOG Then Return 0.0
-        ax = Math.Exp(ax)
+        ax = stdNum.Exp(ax)
         y = 1.0 - a
         z = x + y + 1.0
         c = 0.0
@@ -540,7 +540,7 @@ Public Module SpecialFunctions
             qk = qkm1 * z - qkm2 * yc
             If qk <> 0 Then
                 r = pk / qk
-                t = Math.Abs((ans - r) / r)
+                t = stdNum.Abs((ans - r) / r)
                 ans = r
             Else
                 t = 1.0
@@ -549,7 +549,7 @@ Public Module SpecialFunctions
             pkm1 = pk
             qkm2 = qkm1
             qkm1 = qk
-            If Math.Abs(pk) > big Then
+            If stdNum.Abs(pk) > big Then
                 pkm2 *= biginv
                 pkm1 *= biginv
                 qkm2 *= biginv
@@ -569,9 +569,9 @@ Public Module SpecialFunctions
         Dim ans, ax, c, r As Double
         If x <= 0 OrElse a <= 0 Then Return 0.0
         If x > 1.0 AndAlso x > a Then Return 1.0 - IncompleteGammaComplement(a, x)
-        ax = a * Math.Log(x) - x - gammaln(a)
+        ax = a * stdNum.Log(x) - x - gammaln(a)
         If ax < -MAXLOG Then Return (0.0)
-        ax = Math.Exp(ax)
+        ax = stdNum.Exp(ax)
         r = a
         c = 1.0
         ans = 1.0
@@ -598,12 +598,12 @@ Public Module SpecialFunctions
         c(4) = 0.001208650973866179
         c(5) = -0.000005395239384953
         Dim tmp As Double = x + 5.5
-        tmp = (x + 0.5) * Math.Log(tmp) - tmp
+        tmp = (x + 0.5) * stdNum.Log(tmp) - tmp
         Dim err As Double = 1.0000000001900149
         For i As Integer = 0 To 4
             err += c(i) / (x + i + 1)
         Next
-        Return tmp + Math.Log(Math.Sqrt(Math.PI * 2) * err / x)
+        Return tmp + stdNum.Log(stdNum.Sqrt(stdNum.PI * 2) * err / x)
     End Function
 
     ''' <summary>
@@ -614,11 +614,11 @@ Public Module SpecialFunctions
     ''' <returns></returns>
     Public Function gamma(x As Double) As Double
         Dim lp As Double
-        Dim lq As Double = Math.Abs(x)
+        Dim lq As Double = stdNum.Abs(x)
         Dim lz As Double
         If lq > 33.0 Then
             If x < 0 Then
-                lp = Math.Floor(lq)
+                lp = stdNum.Floor(lq)
                 If lp = lq Then Return Double.NaN 'gammaoverflow 
                 lz = lq - lp
             End If
@@ -626,10 +626,10 @@ Public Module SpecialFunctions
                 lp += 1
                 lz = lq - lp
             End If
-            lz = lq * Math.Sin(Math.PI * lz)
+            lz = lq * stdNum.Sin(stdNum.PI * lz)
             If lz = 0 Then 'gamma overflow Return Double.NaN
-                lz = Math.Abs(lz)
-                lz = Math.PI / (lz * StirlingsFormula(lq))
+                lz = stdNum.Abs(lz)
+                lz = stdNum.PI / (lz * StirlingsFormula(lq))
                 Return -lz
             Else
                 Return StirlingsFormula(x)

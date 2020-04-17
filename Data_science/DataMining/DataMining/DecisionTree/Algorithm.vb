@@ -43,6 +43,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
+Imports stdNum = System.Math
 
 Namespace DecisionTree
 
@@ -182,7 +183,7 @@ Namespace DecisionTree
                 If firstDivision = 0.0 OrElse secondDivision = 0.0 Then
                     stepsForCalculation.Add(0.0)
                 Else
-                    stepsForCalculation.Add(-firstDivision * Math.Log(firstDivision, 2) - secondDivision * Math.Log(secondDivision, 2))
+                    stepsForCalculation.Add(-firstDivision * stdNum.Log(firstDivision, 2) - secondDivision * stdNum.Log(secondDivision, 2))
                 End If
             Next
 
@@ -197,7 +198,7 @@ Namespace DecisionTree
             Dim amountForDifferentValue = data.GetAmountOfEdgesAndTotalPositivResults(data.columns - 1)
             Dim stepsForCalculation = amountForDifferentValue _
                 .[Select](Function(item) item(0, 0) / CDbl(totalRows)) _
-                .[Select](Function(division) -division * Math.Log(division, 2)) _
+                .[Select](Function(division) -division * stdNum.Log(division, 2)) _
                 .ToList()
 
             Return stepsForCalculation.Sum()

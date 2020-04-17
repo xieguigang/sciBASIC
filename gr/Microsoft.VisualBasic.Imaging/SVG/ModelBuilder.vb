@@ -63,10 +63,10 @@ Namespace SVG
             Dim endAngle! = startAngle + sweepAngle
             Dim rX = width / 2
             Dim rY = height / 2
-            Dim x1 = x + rX * stdNum.Cos(Math.PI * startAngle / 180)
-            Dim y1 = y + rY * stdNum.Sin(Math.PI * startAngle / 180)
-            Dim x2 = x + rX * stdNum.Cos(Math.PI * endAngle / 180)
-            Dim y2 = y + rY * stdNum.Sin(Math.PI * endAngle / 180)
+            Dim x1 = x + rX * stdNum.Cos(stdNum.PI * startAngle / 180)
+            Dim y1 = y + rY * stdNum.Sin(stdNum.PI * startAngle / 180)
+            Dim x2 = x + rX * stdNum.Cos(stdNum.PI * endAngle / 180)
+            Dim y2 = y + rY * stdNum.Sin(stdNum.PI * endAngle / 180)
             Dim d = $"M{x},{y}  L{x1},{y1}  A{rX},{rY} 0 0,1 {x2},{y2} z" ' 1 means clockwise
 
             Return New path With {

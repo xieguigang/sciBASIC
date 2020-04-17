@@ -123,7 +123,7 @@ Namespace Graphic.Legend
                     }
 
                     labelPos = New PointF With {
-                        .X = Math.Max(c.X + r, labelPos.X),
+                        .X = stdNum.Max(c.X + r, labelPos.X),
                         .Y = labelPos.Y
                     }
 
@@ -332,7 +332,7 @@ Namespace Graphic.Legend
                 With graphicSize
 
                     Dim width! = .Width + .Height * 1.25 + maxTitleSize.Width
-                    Dim height! = (Math.Max(.Height, maxTitleSize.Height) + d + 1) * legendList.Length
+                    Dim height! = (stdNum.Max(.Height, maxTitleSize.Height) + d + 1) * legendList.Length
                     Dim background As Brush = Nothing
 
                     If Not fillBg.StringEmpty Then

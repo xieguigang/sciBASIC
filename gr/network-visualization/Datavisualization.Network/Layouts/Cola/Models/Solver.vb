@@ -47,6 +47,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 
@@ -203,7 +204,7 @@ Namespace Layouts.Cola
             satisfy()
             cost = bs.cost()
 
-            While (Math.Abs(lastcost - cost) > 0.0001)
+            While (stdNum.Abs(lastcost - cost) > 0.0001)
                 satisfy()
                 lastcost = cost
                 cost = bs.cost()

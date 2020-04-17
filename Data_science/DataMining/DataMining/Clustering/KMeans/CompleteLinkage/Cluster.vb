@@ -47,6 +47,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports stdNum = System.Math
 
 Namespace KMeans.CompleteLinkage
 
@@ -86,7 +87,7 @@ Namespace KMeans.CompleteLinkage
 
             For i1 As Integer = 0 To numPointsInC1 - 1
                 For i2 As Integer = 0 To numPointsInC2 - 1
-                    maxDistance = Math.Max(points1(i1).distanceToOtherPoint(points2(i2)), maxDistance)
+                    maxDistance = stdNum.Max(points1(i1).distanceToOtherPoint(points2(i2)), maxDistance)
                 Next i2
             Next i1
 
@@ -162,10 +163,10 @@ Namespace KMeans.CompleteLinkage
             Dim c2Coordinates As Double() = c2.entityVector
 
             For dimenIndex As Integer = 0 To ___dimension - 1
-                distanceSquared += Math.Pow(((c1Coordinates(dimenIndex)) - c2Coordinates(dimenIndex)), 2)
+                distanceSquared += stdNum.Pow(((c1Coordinates(dimenIndex)) - c2Coordinates(dimenIndex)), 2)
             Next
 
-            Return Math.Sqrt(distanceSquared)
+            Return stdNum.Sqrt(distanceSquared)
         End Function
     End Module
 End Namespace

@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports stdNum = System.Math
 
 Namespace KMeans
 
@@ -170,7 +171,9 @@ Namespace KMeans
                         props = x.node _
                             .Properties _
                             .ToDictionary(Function(xx) xx.Key,
-                                          Function(xx) CStr(Math.Round(xx.Value, 4)))
+                                          Function(xx)
+                                              Return CStr(stdNum.Round(xx.Value, 4))
+                                          End Function)
                     End If
 
                     Return New FileStream.Node With {

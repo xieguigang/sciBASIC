@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Namespace Plot3D
 
@@ -280,8 +281,8 @@ Namespace Plot3D
                     }
                     Dim legend As GraphicsData = colors.ColorMapLegend(
                         haveUnmapped:=False,
-                        min:=Math.Round(averages.Min, 1),
-                        max:=Math.Round(averages.Max, 1),
+                        min:=stdNum.Round(averages.Min, 1),
+                        max:=stdNum.Round(averages.Max, 1),
                         title:=legendTitle,
                         titleFont:=legendFont)
                     Dim lsize As Size = legend.Size

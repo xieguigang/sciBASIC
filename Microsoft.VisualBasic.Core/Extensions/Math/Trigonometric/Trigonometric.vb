@@ -75,7 +75,7 @@ Namespace Math
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="radian">``0 -> 2*<see cref="Math.PI"/>``</param>
+        ''' <param name="radian">``0 -> 2*<see cref="stdNum.PI"/>``</param>
         ''' <returns></returns>
         Public Function GetAngleVector(radian As Single, Optional r As Double = 1) As PointF
             Dim x = stdNum.Cos(radian) * r
@@ -135,8 +135,8 @@ Namespace Math
         <Extension>
         Public Function MovePoint(p As PointF, angle As Double, distance As Integer) As PointF
             Return New PointF With {
-                .X = p.X + distance * Math.Sin(angle * Math.PI / 180),
-                .Y = p.Y + distance * Math.Cos(angle * Math.PI / 180)
+                .X = p.X + distance * stdNum.Sin(angle * stdNum.PI / 180),
+                .Y = p.Y + distance * stdNum.Cos(angle * stdNum.PI / 180)
             }
         End Function
 

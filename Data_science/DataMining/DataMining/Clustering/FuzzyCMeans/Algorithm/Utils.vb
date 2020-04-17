@@ -1,49 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::11bfaa159701db232b33c3f317f35365, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module FuzzyCMeansAlgorithm
-    ' 
-    '         Function: CreateMembershipMatrix, MakeFuzzyClusters, RecalculateCoordinateOfFuzzyClusterCenters
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module FuzzyCMeansAlgorithm
+' 
+'         Function: CreateMembershipMatrix, MakeFuzzyClusters, RecalculateCoordinateOfFuzzyClusterCenters
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 Namespace FuzzyCMeans
 
@@ -83,7 +82,7 @@ Namespace FuzzyCMeans
                         distance = 0.0000001
                     End If
 
-                    Dim membershipValue As Double = Math.Pow(1 / distance, (1 / (fuzzificationParameter - 1)))
+                    Dim membershipValue As Double = stdNum.Pow(1 / distance, (1 / (fuzzificationParameter - 1)))
                     sum += membershipValue
                     unNormaizedMembershipValues.Add(membershipValue)
                 Next
@@ -119,10 +118,10 @@ Namespace FuzzyCMeans
                     Dim pointCoordinates As FuzzyCMeansEntity = pair.Key
                     Dim membershipValues As List(Of Double) = pair.Value
 
-                    clusterMembershipValuesSums(i) += Math.Pow(membershipValues(i), fuzzificationParameter)
+                    clusterMembershipValuesSums(i) += stdNum.Pow(membershipValues(i), fuzzificationParameter)
 
                     For j As Integer = 0 To pointCoordinates.Length - 1
-                        clusterCoordinatesSum(j) += pointCoordinates(j) * Math.Pow(membershipValues(i), fuzzificationParameter)
+                        clusterCoordinatesSum(j) += pointCoordinates(j) * stdNum.Pow(membershipValues(i), fuzzificationParameter)
                     Next
                 Next
 

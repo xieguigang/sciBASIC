@@ -57,7 +57,7 @@ Namespace Imaging.Math2D
         End Function
 
         Public Shared Function length(paramVector2D As Vector2D) As Double
-            Return Math.Sqrt(paramVector2D.x * paramVector2D.x + paramVector2D.y * paramVector2D.y)
+            Return stdNum.Sqrt(paramVector2D.x * paramVector2D.x + paramVector2D.y * paramVector2D.y)
         End Function
 
         Public Shared Function absAngle(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
@@ -76,7 +76,7 @@ Namespace Imaging.Math2D
             If d3 <= -1.0 Then
                 d3 = -1.0
             End If
-            Return Math.Acos(d3)
+            Return stdNum.Acos(d3)
         End Function
 
         Public Shared Function absAngleDeg(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
@@ -117,13 +117,13 @@ Namespace Imaging.Math2D
             If stdNum.Min(paramDouble1, paramDouble3) > paramDouble5 + paramDouble7 Then
                 Return False
             End If
-            If Math.Max(paramDouble1, paramDouble3) < paramDouble5 - paramDouble7 Then
+            If stdNum.Max(paramDouble1, paramDouble3) < paramDouble5 - paramDouble7 Then
                 Return False
             End If
             If stdNum.Min(paramDouble2, paramDouble4) > paramDouble6 + paramDouble7 Then
                 Return False
             End If
-            If Math.Max(paramDouble2, paramDouble4) < paramDouble6 - paramDouble7 Then
+            If stdNum.Max(paramDouble2, paramDouble4) < paramDouble6 - paramDouble7 Then
                 Return False
             End If
             Dim d1 As Double = paramDouble4 - paramDouble2
@@ -137,16 +137,16 @@ Namespace Imaging.Math2D
             Dim localDimension As New Rectangle2D()
             Dim i As Integer = dimension2.Width - dimension1.Width
             Dim j As Integer = dimension2.Height - dimension1.Height
-            Dim d3 As Double = Math.Sqrt(i * i + j * j)
+            Dim d3 As Double = stdNum.Sqrt(i * i + j * j)
             Dim d1 As Double = 0.8660254 * i - 0.5 * j
             Dim d2 As Double = -0.8660254 * i - 0.5 * j
 
-            If Math.Abs(d1) < Math.Abs(d2) Then
-                dimension1.Width += CInt(Math.Truncate((-0.5 * i - 0.8660254 * j) * paramInt / d3))
-                dimension1.Height += CInt(Math.Truncate(d1 * paramInt / d3))
+            If stdNum.Abs(d1) < stdNum.Abs(d2) Then
+                dimension1.Width += CInt(stdNum.Truncate((-0.5 * i - 0.8660254 * j) * paramInt / d3))
+                dimension1.Height += CInt(stdNum.Truncate(d1 * paramInt / d3))
             Else
-                dimension1.Width += CInt(Math.Truncate((-0.5 * i + 0.8660254 * j) * paramInt / d3))
-                dimension1.Height += CInt(Math.Truncate(d2 * paramInt / d3))
+                dimension1.Width += CInt(stdNum.Truncate((-0.5 * i + 0.8660254 * j) * paramInt / d3))
+                dimension1.Height += CInt(stdNum.Truncate(d2 * paramInt / d3))
             End If
 
             Return localDimension
@@ -160,8 +160,8 @@ Namespace Imaging.Math2D
             localVector2D3 = localVector2D3 * (1.0 / localVector2D3.Length())
             Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)
             localVector2D1 = localVector2D1 * (paramInt / localVector2D1.Length())
-            paramDimension1.Width -= CInt(Math.Truncate(localVector2D1.x))
-            paramDimension1.Height -= CInt(Math.Truncate(localVector2D1.y))
+            paramDimension1.Width -= CInt(stdNum.Truncate(localVector2D1.x))
+            paramDimension1.Height -= CInt(stdNum.Truncate(localVector2D1.y))
             Return localDimension
         End Function
 
@@ -216,8 +216,8 @@ Namespace Imaging.Math2D
             localVector2D3 = localVector2D3 * (1.0 / localVector2D3.Length())
             Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)
             localVector2D1 = localVector2D1 * (paramInt / localVector2D1.Length())
-            paramDimension.Width += CInt(Math.Truncate(localVector2D1.x))
-            paramDimension.Height += CInt(Math.Truncate(localVector2D1.y))
+            paramDimension.Width += CInt(stdNum.Truncate(localVector2D1.x))
+            paramDimension.Height += CInt(stdNum.Truncate(localVector2D1.y))
             Return localDimension
         End Function
     End Class

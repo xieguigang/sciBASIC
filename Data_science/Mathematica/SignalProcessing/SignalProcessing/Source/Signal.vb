@@ -124,7 +124,7 @@ Namespace Source
 
             For i As Integer = 0 To BUFFER_SIZE - 1
                 samples(i) = CSByte(AMPLITUDE * calculate(audioPos, phase))
-                ' audioPos += 2 * Math.PI * freq / SAMPLE_RATE;
+                ' audioPos += 2 * stdNum.PI * freq / SAMPLE_RATE;
                 audioPos += 440 * freq / SAMPLE_RATE
             Next
 

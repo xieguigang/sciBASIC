@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Namespace IO
 
@@ -72,7 +73,7 @@ Namespace IO
                      Let y = b(key)
                      Into Sum((x - y) ^ 2) '
 
-            Return Math.Sqrt(d)
+            Return stdNum.Sqrt(d)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

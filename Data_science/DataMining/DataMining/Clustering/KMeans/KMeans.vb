@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Namespace KMeans
 
@@ -75,10 +76,10 @@ Namespace KMeans
             End If
 
             For i As Integer = 0 To count - 1
-                sum = sum + Math.Pow(Math.Abs(X(i) - Y(i)), 2)
+                sum = sum + stdNum.Pow(stdNum.Abs(X(i) - Y(i)), 2)
             Next
 
-            Dim distance As Double = Math.Sqrt(sum)
+            Dim distance As Double = stdNum.Sqrt(sum)
             Return distance
         End Function
 
@@ -103,7 +104,7 @@ Namespace KMeans
             End If
 
             For i As Integer = 0 To count - 1
-                sum = sum + Math.Abs(X(i) - Y(i))
+                sum = sum + stdNum.Abs(X(i) - Y(i))
             Next
 
             Return sum

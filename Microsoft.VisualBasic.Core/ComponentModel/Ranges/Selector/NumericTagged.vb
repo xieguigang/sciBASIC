@@ -46,6 +46,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports stdNum = System.Math
 
 Namespace ComponentModel.Ranges
 
@@ -82,7 +83,7 @@ Namespace ComponentModel.Ranges
             If d = 0R Then
                 Return 0
             Else
-                Return Math.Sign(d)
+                Return stdNum.Sign(d)
             End If
         End Function
 

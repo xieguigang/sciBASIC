@@ -68,6 +68,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.My.JavaScript
+Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 
@@ -144,7 +145,7 @@ Namespace Layouts.Cola
             Get
                 Dim dx = Me.source.p.X - Me.target.p.X
                 Dim dy = Me.source.p.Y - Me.target.p.Y
-                Return Math.Sqrt(dx * dx + dy * dy)
+                Return stdNum.Sqrt(dx * dx + dy * dy)
             End Get
         End Property
 

@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports any = System.Object
 Imports number = System.Double
+Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 

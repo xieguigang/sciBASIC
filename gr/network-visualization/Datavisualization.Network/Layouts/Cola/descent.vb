@@ -48,6 +48,8 @@
 
 Imports System.Threading
 Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts.Cola
 
@@ -128,7 +130,7 @@ Namespace Layouts.Cola
         Public snapStrength As Double = 1000
         Public scaleSnapByMaxH As Boolean = False
 
-        Private random As Random = Math.Seeds
+        Private random As Random = randf.seeds
 
         Public project As Action(Of Double(), Double(), Double())() = Nothing
 
@@ -222,7 +224,7 @@ Namespace Layouts.Cola
                 l += x * x
             Next
 
-            l = Math.Sqrt(l)
+            l = stdNum.Sqrt(l)
 
             Return u.Select(Function(xi) xi * Me.minD / l).ToArray
         End Function
@@ -276,7 +278,7 @@ Namespace Layouts.Cola
                             x(i)(v) += rd(i)
                         Next
                     End While
-                    Dim l As Double = Math.Sqrt(sd2)
+                    Dim l As Double = stdNum.Sqrt(sd2)
                     Dim D__3 As Double = Me.Dmatrix(u)(v)
                     Dim weight = If(Me.Gmatrix IsNot Nothing, Me.Gmatrix(u)(v), 1)
                     If weight > 1 AndAlso l > D__3 OrElse Not D__3.IsNaNImaginary Then
@@ -301,7 +303,7 @@ Namespace Layouts.Cola
                 Next
                 For i = 0 To Me.k - 1
                     Me.H(i)(u)(u) = Huu(i)
-                    maxH = Math.Max(maxH, Huu(i))
+                    maxH = stdNum.Max(maxH, Huu(i))
                 Next
             Next
             ' Grid snap forces
@@ -317,7 +319,7 @@ Namespace Layouts.Cola
                     Dim m = xiu / g
                     Dim f = m Mod 1
                     Dim q = m - f
-                    Dim a = Math.Abs(f)
+                    Dim a = stdNum.Abs(f)
                     Dim dx = If((a <= 0.5), xiu - q * g, If((xiu > 0), xiu - (q + 1) * g, xiu - (q - 1) * g))
                     If -r < dx AndAlso dx <= r Then
                         If Me.scaleSnapByMaxH Then
@@ -453,7 +455,7 @@ Namespace Layouts.Cola
                                    Me.e(i)(j) = x0(i)(j) - r(i)(j)
                                End Sub)
                 Dim beta = Me.computeStepSize(Me.e)
-                beta = Math.Max(0.2, System.Math.Min(beta, 1))
+                beta = stdNum.Max(0.2, System.Math.Min(beta, 1))
                 Me.stepAndProject(x0, r, Me.e, beta)
             End If
         End Sub
@@ -463,7 +465,7 @@ Namespace Layouts.Cola
             Dim converged = False
             While Not converged AndAlso System.Math.Max(Interlocked.Decrement(iterations), iterations + 1) > 0
                 Dim s = Me.rungeKutta()
-                converged = Math.Abs(stress / s - 1) < Me.threshold
+                converged = stdNum.Abs(stress / s - 1) < Me.threshold
                 stress = s
             End While
             Return stress
@@ -509,7 +511,7 @@ Namespace Layouts.Cola
                         Dim dx = Me.x(i)(u) - Me.x(i)(v)
                         l += dx * dx
                     Next
-                    l = Math.Sqrt(l)
+                    l = stdNum.Sqrt(l)
                     Dim d = Me.Dmatrix(u)(v)
                     If Not d.IsNaNImaginary Then
                         Continue While
