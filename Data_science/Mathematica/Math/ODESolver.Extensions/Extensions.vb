@@ -71,7 +71,7 @@ Imports stdNum = System.Math
     ''' Generates datafram and then can makes the result save data into a csv file.
     ''' </summary>
     ''' <param name="xDisp"></param>
-    ''' <param name="fix%">Formats output by using <see cref="Round"/></param>
+    ''' <param name="fix%">Formats output by using <see cref="stdNum.Round"/></param>
     ''' <returns></returns>
     ''' 
     <Extension>
