@@ -40,6 +40,8 @@
 #End Region
 
 Imports System.Linq.Expressions
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports ScriptExpression = Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl.Expression
 
@@ -53,24 +55,51 @@ Namespace Scripting.MathExpression
                               Function(name)
                                   Return Expressions.Expression.Parameter(GetType(Double), name)
                               End Function)
-            Dim body As Expressions.Expression = CreateExpression(parameters, model)
+            Dim body As Expressions.Expression = CreateExpression(parameters, model, {})
             Dim lambda As LambdaExpression = Expressions.Expression.Lambda(body, parameters.Values.ToArray)
 
             Return lambda
         End Function
 
-        Private Function CreateExpression(parameters As Dictionary(Of String, ParameterExpression), model As ScriptExpression) As Expressions.Expression
+        Private Function CreateExpression(parameters As Dictionary(Of String, ParameterExpression),
+                                          model As ScriptExpression,
+                                          applied As Index(Of String)) As Expressions.Expression
             Select Case model.GetType
                 Case GetType(Literal)
                     Return Expressions.Expression.Constant(DirectCast(model, Literal).Evaluate(Nothing), GetType(Double))
                 Case GetType(Factorial)
                     Return Expressions.Expression.Constant(DirectCast(model, Factorial).Evaluate(Nothing), GetType(Double))
                 Case GetType(SymbolExpression)
-                    Return parameters(DirectCast(model, SymbolExpression).symbolName)
+                    Dim symbolName As String = DirectCast(model, SymbolExpression).symbolName
+
+                    If parameters.ContainsKey(symbolName) Then
+                        If Not symbolName Like applied Then
+                            applied += symbolName
+                        End If
+
+                        Return parameters(symbolName)
+                    Else
+                        With parameters _
+                            .Where(Function(t) Not t.Key Like applied) _
+                            .OrderByDescending(Function(t)
+                                                   Return LevenshteinDistance.ComputeDistance(t.Key, symbolName)?.MatchSimilarity >= 0.5
+                                               End Function) _
+                            .FirstOrDefault
+
+                            If Not .Value Is Nothing Then
+                                Call $"the missing {symbolName} is replaced by un-applied '{ .Key}'!".Warning
+
+                                applied += .Key
+                                Return .Value
+                            Else
+                                Throw New EntryPointNotFoundException(symbolName)
+                            End If
+                        End With
+                    End If
                 Case GetType(Impl.BinaryExpression)
                     Dim bin As Impl.BinaryExpression = DirectCast(model, Impl.BinaryExpression)
-                    Dim left As Expressions.Expression = CreateExpression(parameters, bin.left)
-                    Dim right As Expressions.Expression = CreateExpression(parameters, bin.right)
+                    Dim left As Expressions.Expression = CreateExpression(parameters, bin.left, applied)
+                    Dim right As Expressions.Expression = CreateExpression(parameters, bin.right, applied)
 
                     Select Case bin.operator
                         Case "+"c : Return Expressions.Expression.Add(left, right)
