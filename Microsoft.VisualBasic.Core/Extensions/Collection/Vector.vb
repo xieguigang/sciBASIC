@@ -88,7 +88,7 @@ Public Module VectorExtensions
             Call Array.Sort(a, compares)
         Else
             Return a.AsEnumerable _
-                .Sort(compares) _
+                .sort(compares) _
                 .ToArray
         End If
 

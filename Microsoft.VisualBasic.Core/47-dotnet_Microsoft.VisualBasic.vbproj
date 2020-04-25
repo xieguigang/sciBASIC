@@ -1248,6 +1248,7 @@
     <Compile Include="My\JavaScript\ES6\Map.vb" />
     <Compile Include="My\JavaScript\Linq.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="My\JavaScript\String.vb" />
     <Compile Include="My\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
@@ -1337,6 +1338,9 @@
     <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
     <Compile Include="Serialization\ICloneable.vb" />
     <Compile Include="Text\Parser\CharBuffer.vb" />
+    <Compile Include="Text\Patterns\NamespaceDoc.vb" />
+    <Compile Include="Text\Patterns\Validator\isIP.vb" />
+    <Compile Include="Text\Patterns\Validator\Validator.vb" />
     <Compile Include="Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb" />
     <Compile Include="Text\Xml\Models\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
