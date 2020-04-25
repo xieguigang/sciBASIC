@@ -155,7 +155,11 @@ Public Module IOExtensions
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
-    Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate, Optional doClear As Boolean = False) As FileStream
+    Public Function Open(path$,
+                         Optional mode As FileMode = FileMode.OpenOrCreate,
+                         Optional doClear As Boolean = False,
+                         Optional [readOnly] As Boolean = False) As FileStream
+
         Dim access As FileShare
 
         If path.StringEmpty Then
@@ -180,7 +184,7 @@ Public Module IOExtensions
             access = FileShare.Read
         End If
 
-        Return IO.File.Open(path, mode, FileAccess.ReadWrite, access)
+        Return IO.File.Open(path, mode, If([readOnly], FileAccess.Read, FileAccess.ReadWrite), access)
     End Function
 
     ''' <summary>

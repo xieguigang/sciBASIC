@@ -56,6 +56,11 @@ Namespace ApplicationServices.Terminal
 
         Public ReadOnly Property ps1 As PS1
         Public ReadOnly Property shell As Action(Of String)
+        ''' <summary>
+        ''' a candidate list for implements auto-complete for console input.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property autoCompleteCandidates As New List(Of String)
         Public ReadOnly Property dev As TextReader
 
         ''' <summary>

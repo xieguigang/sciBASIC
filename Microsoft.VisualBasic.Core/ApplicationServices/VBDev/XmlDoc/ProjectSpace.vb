@@ -155,7 +155,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 projActivator = Function(name) New Project(name)
             End If
 
-            Using fs As New FileStream(xmlfile, FileMode.Open)
+            ' 20200423
+            ' file should be read access, or
+            ' System.UnauthorizedAccessException: Access to the path "/usr/local/share/R_bin/REnv.xml" is denied.
+            ' on linux platform
+            Using fs As New FileStream(xmlfile, FileMode.Open, access:=FileAccess.Read)
                 Dim streamWriter As New StreamReader(fs)
                 Dim xml$ = streamWriter.ReadToEnd.TrimAssemblyDoc()
                 Dim s As New StringReader(xml)
