@@ -42,9 +42,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
 
 Namespace DBSCAN
 
@@ -76,9 +74,13 @@ Namespace DBSCAN
         ''' <param name="epsilon">Desired region ball radius</param>
         ''' <param name="minPts">Minimum number of points to be in a region</param>
         ''' <returns>sets of clusters, renew the parameter</returns>
-        Public Function ComputeClusterDbscan(allPoints As T(), epsilon As Double, minPts As Integer) As NamedCollection(Of T)()
+        Public Function ComputeClusterDBSCAN(allPoints As T(),
+                                             epsilon As Double,
+                                             minPts As Integer,
+                                             Optional isseed As Integer() = Nothing) As NamedCollection(Of T)()
             Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints.[Select](Function(x) New DbscanPoint(Of T)(x)).ToArray()
             Dim clusterId As Integer = 0
+            Dim seeds As New List(Of Integer)
 
             For i As Integer = 0 To allPointsDbscan.Length - 1
                 Dim p As DbscanPoint(Of T) = allPointsDbscan(i)
@@ -96,12 +98,15 @@ Namespace DBSCAN
                 Else
                     clusterId += 1
                     ExpandCluster(allPointsDbscan, p, neighborPts, clusterId, epsilon, minPts)
+                    seeds.Add(i)
                 End If
             Next
 
             With allPointsDbscan _
                 .Where(Function(x) x.ClusterId > 0) _
                 .GroupBy(Function(x) x.ClusterId)
+
+                isseed = seeds.ToArray
 
                 Return .Select(Function(x)
                                    Return New NamedCollection(Of T) With {
