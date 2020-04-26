@@ -42,7 +42,7 @@
 Imports Microsoft.VisualBasic.DataMining.DBSCAN
 
 Public Class MyCustomDatasetItem
-    Inherits DatasetItemBase
+
     Public X As Double
     Public Y As Double
 
