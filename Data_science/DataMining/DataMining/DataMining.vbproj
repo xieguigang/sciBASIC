@@ -621,7 +621,6 @@
     <Compile Include="ComponentModel\Evaluation\NamespaceDoc.vb" />
     <Compile Include="ComponentModel\IntegerEntity.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
-    <Compile Include="Clustering\DBSCAN\DatasetItemBase.vb" />
     <Compile Include="Clustering\DBSCAN\DbscanAlgorithm.vb" />
     <Compile Include="Clustering\DBSCAN\DbscanPoint.vb" />
     <Compile Include="Clustering\FuzzyCMeans\AlgorithmsUtils.vb" />

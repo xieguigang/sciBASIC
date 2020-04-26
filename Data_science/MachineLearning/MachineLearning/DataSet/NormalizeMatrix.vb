@@ -97,7 +97,17 @@ Namespace StoreProcedure
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function NormalizeInput(sample As Sample, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double()
-            Return sample.vector _
+            Return NormalizeInput(sample.vector, method)
+        End Function
+
+        ''' <summary>
+        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
+        ''' </summary>
+        ''' <param name="sample"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function NormalizeInput(sample As IEnumerable(Of Double), Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double()
+            Return sample _
                 .Select(Function(x, i)
                             Return doNormalInternal(matrix(i), x, method)
                         End Function) _

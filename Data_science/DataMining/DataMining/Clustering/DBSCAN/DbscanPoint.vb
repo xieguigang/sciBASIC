@@ -59,4 +59,9 @@ Namespace DBSCAN
             Return $"[{ClusterId}] {ClusterPoint.ToString}"
         End Function
     End Class
+
+    Public Enum ClusterIDs As Integer
+        Unclassified = 0
+        Noise = -1
+    End Enum
 End Namespace
