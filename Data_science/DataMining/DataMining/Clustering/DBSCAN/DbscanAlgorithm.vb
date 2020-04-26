@@ -77,7 +77,7 @@ Namespace DBSCAN
         Public Function ComputeClusterDBSCAN(allPoints As T(),
                                              epsilon As Double,
                                              minPts As Integer,
-                                             Optional isseed As Integer() = Nothing) As NamedCollection(Of T)()
+                                             Optional ByRef isseed As Integer() = Nothing) As NamedCollection(Of T)()
             Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints.[Select](Function(x) New DbscanPoint(Of T)(x)).ToArray()
             Dim clusterId As Integer = 0
             Dim seeds As New List(Of Integer)

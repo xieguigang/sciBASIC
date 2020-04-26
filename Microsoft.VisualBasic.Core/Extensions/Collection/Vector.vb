@@ -73,6 +73,12 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 <HideModuleName>
 Public Module VectorExtensions
 
+    <Extension>
+    Public Function SetValue(a As Array, value As Object, i As SeqValue(Of Integer)) As Array
+        Call a.SetValue(value, i.i)
+        Return a
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
