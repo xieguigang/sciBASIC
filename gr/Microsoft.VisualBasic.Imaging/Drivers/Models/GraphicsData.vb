@@ -67,6 +67,23 @@ Namespace Driver
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Driver As Drivers
 
+        Public ReadOnly Property content_type As String
+            Get
+                Select Case Driver
+                    Case Drivers.GDI
+                        Return "image/png"
+                    Case Drivers.PS
+                        Return "application/postscript"
+                    Case Drivers.SVG
+                        Return "text/xml"
+                    Case Drivers.WMF
+                        Return "application/x-wmf"
+                    Case Else
+                        Return "application/octet-stream"
+                End Select
+            End Get
+        End Property
+
         ''' <summary>
         ''' The image size
         ''' </summary>

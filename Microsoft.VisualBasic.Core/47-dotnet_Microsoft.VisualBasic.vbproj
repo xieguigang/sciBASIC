@@ -1102,8 +1102,6 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -1337,6 +1335,7 @@
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
     <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
     <Compile Include="Serialization\ICloneable.vb" />
+    <Compile Include="Text\IO\Encodings.vb" />
     <Compile Include="Text\Parser\CharBuffer.vb" />
     <Compile Include="Text\Patterns\NamespaceDoc.vb" />
     <Compile Include="Text\Patterns\Validator\isIP.vb" />
@@ -1680,7 +1679,7 @@
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinModel.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\Extensions.vb" />
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
-    <Compile Include="Text\TextEncodings.vb" />
+    <Compile Include="Text\IO\TextEncodings.vb" />
     <Compile Include="Net\HTTP\HTTP_RFC.vb" />
     <Compile Include="Net\HTTP\Stream\Base64Codec.vb" />
     <Compile Include="Net\Protocol\NetResponse.vb" />

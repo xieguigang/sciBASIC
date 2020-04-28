@@ -713,6 +713,15 @@ Public Module KeyValuePairExtensions
         Return d.ContainsKey(key) AndAlso Not String.IsNullOrEmpty(d(key))
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="nc"></param>
+    ''' <param name="allStrings">get all of the string values for each 
+    ''' parameter name? if this parameter value is TRUE, then the value 
+    ''' of the output dictionary will be a string array.
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Function ToDictionary(nc As NameValueCollection, Optional allStrings As Boolean = False) As [Variant](Of Dictionary(Of String, String), Dictionary(Of String, String()))
         If allStrings Then

@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::851342afa5a29be39326f664a9c6cbbc, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module App
-    ' 
-    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
-    '                 ExceptionLogFile, ExecutablePath, Github, HOME, Info
-    '                 InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp
-    '                 LogErrDIR, NanoTime, NextTempName, OutFile, PID
-    '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunningInGitBash
-    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
-    '                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __listFiles, __sysTEMP, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode
-    '               ElapsedMilliseconds, Exit, finalizeCLI, FormatTime, GenerateTemp
-    '               (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile, GetNextUniqueName
-    '               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
-    '               NullDevice, (+11 Overloads) RunCLI, RunCLIInternal, SelfFolk, SelfFolks
-    '               Shell, tempCode, TemporaryEnvironment, TraceBugs
-    ' 
-    '     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
-    '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
-    '          RunAsAdmin, SetBufferSize, StartGC, StopGC
-    ' 
-    ' /********************************************************************************/
+' Module App
+' 
+'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
+'                 ExceptionLogFile, ExecutablePath, Github, HOME, Info
+'                 InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp
+'                 LogErrDIR, NanoTime, NextTempName, OutFile, PID
+'                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
+'                 ProductSharedDIR, ProductSharedTemp, References, Running, RunningInGitBash
+'                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
+'                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __listFiles, __sysTEMP, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode
+'               ElapsedMilliseconds, Exit, finalizeCLI, FormatTime, GenerateTemp
+'               (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile, GetNextUniqueName
+'               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
+'               NullDevice, (+11 Overloads) RunCLI, RunCLIInternal, SelfFolk, SelfFolks
+'               Shell, tempCode, TemporaryEnvironment, TraceBugs
+' 
+'     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
+'          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
+'          RunAsAdmin, SetBufferSize, StartGC, StopGC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -175,7 +175,7 @@ Public Module App
     ''' <see cref="Console.OpenStandardOutput()"/> as default text output device. [<see cref="StreamWriter"/>]
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StdOut As [Default](Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
+    Public ReadOnly Property StdOut As [Default](Of TextWriter)
     Public ReadOnly Property StdInput As [Default](Of TextReader) = New StreamReader(Console.OpenStandardInput)
 
     ''' <summary>
@@ -458,6 +458,21 @@ Public Module App
                         }
                     End Function) _
             .ToArray)
+
+        ' 20200428
+        ' 因为在CodePage拓展函数所属的TextEncodings模块的构造函数之中，会需要调用当前的这个App模块之中的环境变量函数
+        ' 进行默认字符编码的设置，所以在这里不可以使用CodePage拓展函数，否则会产生循环引用导致程序初始化错误
+        '
+        ' System.TypeInitializationException: The type initializer for 'Microsoft.VisualBasic.App' threw an exception. ---> System.TypeInitializationException: The type initializer for 'Microsoft.VisualBasic.Text.TextEncodings' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object
+        ' at Microsoft.VisualBasic.App.GetVariable (System.String name) [0x00001] in <eb97044717724341a21be2d5b902e6d1>:0
+        ' at Microsoft.VisualBasic.Text.TextEncodings..cctor () [0x00034] in <eb97044717724341a21be2d5b902e6d1>:0
+        ' --- End of inner exception stack trace ---
+        ' at Microsoft.VisualBasic.App..cctor () [0x0032f] in <eb97044717724341a21be2d5b902e6d1>:0
+        ' --- End of inner exception stack trace ---
+        ' at Rserve.Program.Main () [0x00001] in <419e486af7e7476b893119a59f5f71e8>:0
+        ' 
+        ' Encodings.UTF8WithoutBOM.CodePage
+        App.StdOut = Console.OpenStandardOutput.OpenTextWriter(New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
