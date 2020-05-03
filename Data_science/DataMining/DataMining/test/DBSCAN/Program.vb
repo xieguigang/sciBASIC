@@ -64,7 +64,7 @@ Class Program
         Dim clusters As HashSet(Of MyCustomDatasetItem()) = Nothing
 
         Dim dbs = New DbscanAlgorithm(Of MyCustomDatasetItem)(Function(x, y) Math.Sqrt(((x.X - y.X) * (x.X - y.X)) + ((x.Y - y.Y) * (x.Y - y.Y))))
-        dbs.ComputeClusterDbscan(allPoints:=featureData, epsilon:=0.01, minPts:=10, clusters:=clusters)
+        Dim result = dbs.ComputeClusterDBSCAN(allPoints:=featureData, epsilon:=0.01, minPts:=10)
 
 
 

@@ -58,13 +58,18 @@ Namespace DBSCAN
     Public Class DbscanAlgorithm(Of T)
 
         ReadOnly _metricFunc As Func(Of T, T, Double)
+        ReadOnly _full As Boolean
 
         ''' <summary>
         ''' Takes metric function to compute distances between dataset items T
         ''' </summary>
         ''' <param name="metricFunc"></param>
-        Public Sub New(metricFunc As Func(Of T, T, Double))
+        ''' <param name="full">
+        ''' A logical option for indicates that evaluate all neighbor points or not for test and create cluster members
+        ''' </param>
+        Public Sub New(metricFunc As Func(Of T, T, Double), Optional full As Boolean = True)
             _metricFunc = metricFunc
+            _full = full
         End Sub
 
         ''' <summary>
@@ -78,7 +83,10 @@ Namespace DBSCAN
                                              epsilon As Double,
                                              minPts As Integer,
                                              Optional ByRef isseed As Integer() = Nothing) As NamedCollection(Of T)()
-            Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints.[Select](Function(x) New DbscanPoint(Of T)(x)).ToArray()
+
+            Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints _
+                .Select(Function(x) New DbscanPoint(Of T)(x)) _
+                .ToArray()
             Dim clusterId As Integer = 0
             Dim seeds As New List(Of Integer)
 
@@ -141,7 +149,7 @@ Namespace DBSCAN
             For i As Integer = 0 To neighborPts.Length - 1
                 Dim pn As DbscanPoint(Of T) = neighborPts(i)
 
-                If Not pn.IsVisited Then
+                If _full OrElse Not pn.IsVisited Then
                     pn.IsVisited = True
                     neighborPts2 = RegionQuery(allPoints, pn.ClusterPoint, epsilon)
 
