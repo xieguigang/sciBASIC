@@ -51,7 +51,20 @@ Namespace d3js.scale
     ''' </summary>
     Public Class LinearScale : Inherits IScale(Of LinearScale)
 
+        ''' <summary>
+        ''' 作图的时候的数据区间
+        ''' </summary>
         Dim _domain As DoubleRange
+
+        ''' <summary>
+        ''' 作图的时候的数据区间
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property valueDomain As DoubleRange
+            Get
+                Return _domain
+            End Get
+        End Property
 
         ''' <summary>
         ''' Constructs a new continuous scale with the unit domain [0, 1], the unit range [0, 1], 
@@ -62,10 +75,19 @@ Namespace d3js.scale
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' 将图形数据映射为实际的像素位置
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         Default Public Overrides ReadOnly Property Value(x As Double) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _domain.ScaleMapping(x, _range)
+                If _domain.Length = 0.0 Then
+                    Return 0
+                Else
+                    Return _domain.ScaleMapping(x, _range)
+                End If
             End Get
         End Property
 
@@ -90,16 +112,31 @@ Namespace d3js.scale
             Return Me
         End Function
 
+        ''' <summary>
+        ''' 设置绘图的值区间
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function domain(values As IEnumerable(Of String)) As LinearScale
             Return domain(values.Select(AddressOf Val))
         End Function
 
+        ''' <summary>
+        ''' 设置绘图的值区间
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function domain(values As IEnumerable(Of Integer)) As LinearScale
             Return domain(values.Select(Function(x) CDbl(x)))
         End Function
 
+        ''' <summary>
+        ''' 设置绘图的值区间
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function domain(singles As IEnumerable(Of Single)) As LinearScale
             Return domain(singles.Select(Function(x) CDbl(x)))

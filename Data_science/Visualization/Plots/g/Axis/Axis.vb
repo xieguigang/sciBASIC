@@ -137,6 +137,17 @@ Namespace Graphic.Axis
             End With
         End Sub
 
+        <Extension>
+        Private Sub checkScaler(scaler As DataScaler)
+            If scaler.X.valueDomain.Length = 0.0 Then
+                Throw New InvalidProgramException("the x axis range length is ZERO!")
+            ElseIf scaler.Y.valueDomain.Length = 0.0 Then
+                Throw New InvalidProgramException("the y axis range length is ZERO!")
+            Else
+                ' pass
+            End If
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -174,6 +185,7 @@ Namespace Graphic.Axis
                 .DashStyle = Drawing2D.DashStyle.Dot
             }
 
+            Call scaler.checkScaler
             Call g.FillRectangle(gridFill.GetBrush, rect)
 
             If showGrid AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then

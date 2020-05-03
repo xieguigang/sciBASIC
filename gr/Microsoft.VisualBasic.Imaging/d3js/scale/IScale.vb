@@ -63,6 +63,9 @@ Namespace d3js.scale
             defaultRange = DirectCast({0#, 1.0#}, IEnumerable(Of Double)).AsDefault
         End Sub
 
+        ''' <summary>
+        ''' 绘图的时候的实际的像素区间
+        ''' </summary>
         Protected _range As DoubleRange = defaultRange.DefaultValue.Range
 
         ''' <summary>
@@ -71,6 +74,7 @@ Namespace d3js.scale
         ''' domain value to the second range value, and so on. If there are fewer elements in the range 
         ''' than in the domain, the scale will reuse values from the start of the range. If range is 
         ''' not specified, this method returns the current range.
+        ''' (设置绘图的实际的像素区间)
         ''' </summary>
         ''' <param name="values"></param>
         ''' <returns></returns>
@@ -81,7 +85,7 @@ Namespace d3js.scale
         End Function
 
         ''' <summary>
-        ''' 输入绘图的坐标轴在画布上面的X/Y值的范围
+        ''' 输入绘图的坐标轴在画布上面的X/Y值的范围(设置绘图的实际的像素区间)
         ''' </summary>
         ''' <param name="integers"></param>
         ''' <returns></returns>
@@ -90,6 +94,11 @@ Namespace d3js.scale
             Return range(integers.Select(Function(x) CDbl(x)))
         End Function
 
+        ''' <summary>
+        ''' (设置绘图的实际的像素区间)
+        ''' </summary>
+        ''' <param name="singles"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function range(Optional singles As IEnumerable(Of Single) = Nothing) As T
             Return range(singles.Select(Function(x) CDbl(x)))
