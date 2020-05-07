@@ -68,6 +68,9 @@ Namespace My
             {MSG_TYPES.WRN, ConsoleColor.Yellow}
         }
 
+        Public redirectWarning As LoggingDriver
+        Public redirectError As LoggingDriver
+
         ''' <summary>
         ''' Translate <see cref="MSG_TYPES"/> to <see cref="ConsoleColor"/>
         ''' </summary>

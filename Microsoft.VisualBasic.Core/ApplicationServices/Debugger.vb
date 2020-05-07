@@ -277,7 +277,12 @@ Public Module VBDebugger
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
-        Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
+        If My.Log4VB.redirectError Is Nothing Then
+            Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
+        Else
+            Call My.Log4VB.redirectError(memberName, msg, MSG_TYPES.ERR)
+            Return False
+        End If
     End Function
 
     ''' <summary>
@@ -315,7 +320,9 @@ Public Module VBDebugger
     ''' <returns></returns>
     <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
-        If Not Mute Then
+        If Not My.Log4VB.redirectWarning Is Nothing Then
+            Call My.Log4VB.redirectError(calls, msg, MSG_TYPES.WRN)
+        ElseIf Not Mute Then
             Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 
             Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
