@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::33f65d802b8d5e9527405bea56d7794c, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module WebServiceUtils
-    ' 
-    '     Properties: DefaultUA, Protocols, Proxy
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, (+2 Overloads) DownloadFile
-    '               GenerateDictionary, GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy
-    '               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, IsURLPattern
-    '               (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
-    '               UrlDecode, UrlEncode, UrlPathEncode
-    ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    ' 
-    ' /********************************************************************************/
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, (+2 Overloads) DownloadFile
+'               GenerateDictionary, GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy
+'               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, IsURLPattern
+'               (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
+'               UrlDecode, UrlEncode, UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -84,7 +85,7 @@ Public Module WebServiceUtils
     ''' Web protocols enumeration
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Protocols As String() = {"http://", "https://", "ftp://", "sftp://"}
+    Public ReadOnly Property Protocols As IReadOnlyCollection(Of String) = {"http://", "https://", "ftp://", "sftp://"}
 
     Public Const URLPattern$ = "http(s)?://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
 
@@ -97,7 +98,7 @@ Public Module WebServiceUtils
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function isURL(url As String) As Boolean
-        Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(Protocols) = 1
+        Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(DirectCast(Protocols, String())) = 1
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -163,34 +164,27 @@ Public Module WebServiceUtils
     ''' 因为post可能会传递数组数据进来，则这个时候就会出现重复的键名，则已经不再适合字典类型了，这里改为返回<see cref="NameValueCollection"/>
     ''' </returns>
     <Extension>
-    Public Function GenerateDictionary(tokens As String(), Optional lowercase As Boolean = True) As NameValueCollection
-        Dim out As New NameValueCollection
+    Public Function ParseUrlQueryParameters(tokens As String(), Optional lowercase As Boolean = True) As NameValueCollection
+        Dim query As New NameValueCollection
 
         If tokens.IsNullOrEmpty Then
-            Return out
+            Return query
         End If
-        If tokens.Length = 1 Then  ' 只有url，没有附带的参数，则返回一个空的字典集合
+        If tokens.Length = 1 Then
+            ' 只有url，没有附带的参数，则返回一个空的字典集合
             If InStr(tokens(Scan0), "=") = 0 Then
-                Return out
+                Return query
             End If
         End If
 
-        Dim LQuery = (From s As String
-                      In tokens
-                      Let p As Integer = InStr(s, "="c)
-                      Let Key As String = Mid(s, 1, p - 1)
-                      Let value = Mid(s, p + 1)
-                      Select Key,
-                          value).ToArray
+        For Each x As NamedValue(Of String) In tokens.Select(Function(q) q.GetTagValue("="))
+            Dim name As String = If(lowercase, x.Name.ToLower, x.Name)
+            Dim value As String = UrlDecode(x.Value)
 
-        For Each x In LQuery
-            Dim name As String = If(lowercase,
-                x.Key.ToLower,
-                x.Key)
-            Call out.Add(name, x.value)
+            Call query.Add(name, value)
         Next
 
-        Return out
+        Return query
     End Function
 
     ''' <summary>
@@ -210,7 +204,7 @@ Public Module WebServiceUtils
             tokens = url.Split("&"c)
         End With
 
-        Return GenerateDictionary(tokens, transLower)
+        Return ParseUrlQueryParameters(tokens, transLower)
     End Function
 
     ReadOnly urlEscaping As [Default](Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
@@ -341,7 +335,7 @@ Public Module WebServiceUtils
         End If
 
         Dim params$() = data.UrlDecode.Split("&"c)
-        Dim table = GenerateDictionary(params, toLower)
+        Dim table = ParseUrlQueryParameters(params, toLower)
         Return table
     End Function
 

@@ -153,9 +153,11 @@ Namespace ApplicationServices.Zip
                                               Optional overwriteMethod As Overwrite = Overwrite.IfNewer,
                                               Optional extractToFlat As Boolean = False)
 
-            ' Opens the zip file up to be read
-            Using archive As ZipArchive = ZipFile.OpenRead(sourceArchiveFileName)
+            ' 20200507 为了避免excel在打开文件的时候占用目标文件
+            ' xlsx文件是否应该先复制到临时文件位置再进行解压缩呢?
 
+            ' Opens the zip file up to be read
+            Using archive As ZipArchive = ZipFile.Open(sourceArchiveFileName, ZipArchiveMode.Read)
                 Dim rootDir$ = Nothing
                 Dim isFolderArchive = sourceArchiveFileName.IsSourceFolderZip(folder:=rootDir)
                 Dim fullName$

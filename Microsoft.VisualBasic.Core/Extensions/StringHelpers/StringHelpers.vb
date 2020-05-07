@@ -1149,7 +1149,8 @@ Public Module StringHelpers
     ''' <param name="find"></param>
     ''' <returns></returns>
     <ExportAPI("InStr.Any")>
-    <Extension> Public Function InStrAny(text$, ParamArray find$()) As Integer
+    <Extension>
+    Public Function InStrAny(text$, ParamArray find$()) As Integer
         For Each token As String In find
             Dim idx% = Strings.InStr(text, token, CompareMethod.Text)
 
