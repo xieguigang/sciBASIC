@@ -112,7 +112,6 @@ Public Module EnumHelpers
     ''' <param name="value"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("Get.Description")>
     <Extension>
     Public Function Description(value As [Enum], Optional deli$ = "|") As String
 #Else
@@ -125,22 +124,33 @@ Public Module EnumHelpers
     ''' <remarks></remarks>
     <Extension> Public Function Description(value As [Enum]) As String
 #End If
+        Static descriptionCache As New Dictionary(Of Object, String)
+
+        If descriptionCache.ContainsKey(value) Then
+            Return descriptionCache(value)
+        End If
+
         Dim type As Type = value.GetType()
         Dim s As String = value.ToString
         Dim memInfos As MemberInfo() = type.GetMember(name:=s)
+        Dim result As String
 
         If memInfos.IsNullOrEmpty Then
             ' 当枚举类型为OR组合的时候，得到的是一个数字
             If s.IsPattern("\d+") Then
-                Return FlagCombinationDescription(flag:=CLng(s), type:=type, deli:=deli)
+                result = FlagCombinationDescription(flag:=CLng(s), type:=type, deli:=deli)
             Else
-                Return s
+                result = s
             End If
+        Else
+            result = memInfos _
+                .First _
+                .Description([default]:=s)
         End If
 
-        Return memInfos _
-            .First _
-            .Description([default]:=s)
+        descriptionCache.Add(value, result)
+
+        Return result
     End Function
 
     Public Function FlagCombinationDescription(flag As Long, type As Type, deli$) As String
