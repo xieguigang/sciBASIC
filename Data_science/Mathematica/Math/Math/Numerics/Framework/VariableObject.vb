@@ -55,7 +55,7 @@ Namespace Framework
         ''' the unique id of current object variable 
         ''' </summary>
         ''' <returns></returns>
-        Public Property Id As String Implements IKeyedEntity(Of String).Key
+        Public Overridable Property Id As String Implements IKeyedEntity(Of String).Key
 
         Public Overrides Function ToString() As String
             Return $"Dim {Id} As f64 = {Value}"

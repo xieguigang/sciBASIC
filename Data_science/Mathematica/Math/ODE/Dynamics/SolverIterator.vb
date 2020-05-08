@@ -50,7 +50,8 @@ Namespace Dynamics
 
     Public Class SolverIterator
 
-        Dim rk4 As RungeKutta4
+        ReadOnly rk4 As RungeKutta4
+
         Dim solverEnumerator As IEnumerator(Of Integer)
         Dim triggers As New List(Of Action)
 

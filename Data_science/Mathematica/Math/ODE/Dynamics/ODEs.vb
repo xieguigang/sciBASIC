@@ -81,14 +81,19 @@ Namespace Dynamics
     ''' </summary>
     Public MustInherit Class ODEs
 
-        ReadOnly __vars As Dictionary(Of var)
+        ReadOnly __vars As Dictionary(Of String, var)
         Protected Friend vars As var()
 
         Public Const y0RefName As String = NameOf(__vars)
 
-        Default Public ReadOnly Property GetVar(Name$) As var
+        ''' <summary>
+        ''' get variable by given unique name
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Default Public ReadOnly Property GetVar(name As String) As var
             Get
-                Return __vars(Name)
+                Return __vars(name)
             End Get
         End Property
 
@@ -142,12 +147,12 @@ Namespace Dynamics
                 Call f.value.SetValue(Me, x)
             Next
 
-            __vars = New Dictionary(Of var)(vars)
+            __vars = vars.ToDictionary(Function(a) a.Name)
         End Sub
 
         Protected Sub New(vars As var())
             Me.vars = vars
-            Me.__vars = New Dictionary(Of var)(vars)
+            Me.__vars = vars.ToDictionary(Function(a) a.Name)
         End Sub
 
         ''' <summary>
@@ -215,7 +220,7 @@ Namespace Dynamics
                       In system.vars
                       Select New NamedCollection(Of Double) With {
                           .name = var.Name,
-                          .value = y(var)
+                          .value = y(var).ToArray
                       }
 
             ' 强制进行内存回收，以应对在蒙特卡洛分析的时候的内存泄漏

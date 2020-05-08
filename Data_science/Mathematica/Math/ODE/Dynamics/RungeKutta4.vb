@@ -85,7 +85,7 @@ Namespace Dynamics
         End Sub
 
         Public Sub GetResult(ByRef x As Double(), ByRef y As List(Of Double)())
-            x = Me.x
+            x = Me.x.ToArray
             y = Me.y
         End Sub
 

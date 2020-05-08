@@ -135,7 +135,7 @@ Namespace d3js.scale
         ''' <summary>
         ''' 设置绘图的值区间
         ''' </summary>
-        ''' <param name="values"></param>
+        ''' <param name="singles"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function domain(singles As IEnumerable(Of Single)) As LinearScale
