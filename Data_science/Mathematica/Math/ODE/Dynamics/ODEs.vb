@@ -167,7 +167,9 @@ Namespace Dynamics
         ''' <param name="incept">是否是为蒙特卡洛实验设计的？</param>
         ''' <returns></returns>
         Public Function GetY0(Optional incept As Boolean = False) As Double()
-            Return If(incept, Me.vars, Me.y0) _
+            Dim symbols As var() = If(incept, Me.vars, Me.y0)
+
+            Return symbols _
                 .OrderBy(Function(o) o.Index) _
                 .Select(Function(o) o.Value) _
                 .ToArray
