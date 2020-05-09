@@ -82,9 +82,4 @@ Namespace ComponentModel
         ''' <returns></returns>
         Property FilePath As String
     End Interface
-
-    Public Interface IDocumentEditor : Inherits ISaveHandle
-        Property DocumentPath As String
-        Function LoadDocument(path As String) As Boolean
-    End Interface
 End Namespace
