@@ -99,7 +99,7 @@ Namespace Dynamics.Data
         End Function
 
         <Extension>
-        Private Function merge(data As ODEsOut(), aggregate As Func(Of IEnumerable(Of Double), Double))
+        Private Function merge(data As ODEsOut(), aggregate As Func(Of IEnumerable(Of Double), Double)) As ODEsOut
             Dim minLen% = data.Min(Function(x) x.x.Length)
             Dim vars As String() = data.First.y.Keys.ToArray
             Dim y As New Dictionary(Of NamedCollection(Of Double))
@@ -122,7 +122,7 @@ Namespace Dynamics.Data
                         .Select(Function(v) v.y(k).value(index)) _
                         .DoCall(aggregate)
 
-                    y(k).Value(i) = value
+                    y(k).value(i) = value
                 Next
             Next
 
