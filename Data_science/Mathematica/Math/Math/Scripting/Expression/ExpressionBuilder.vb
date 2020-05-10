@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 
 Namespace Scripting.MathExpression
@@ -72,7 +73,11 @@ Namespace Scripting.MathExpression
 
         <Extension>
         Private Function AsCallFunction(symbol As MathToken, parameters As List(Of MathToken())) As Expression
-            Dim argVals As Expression() = parameters.Select(AddressOf BuildExpression).ToArray
+            Dim argVals As Expression() = parameters _
+                .IteratesALL _
+                .SplitByTopLevelDelimiter(MathTokens.Comma) _
+                .Select(AddressOf BuildExpression) _
+                .ToArray
             Dim funCall As New FunctionInvoke(symbol.text, argVals)
 
             Return funCall
