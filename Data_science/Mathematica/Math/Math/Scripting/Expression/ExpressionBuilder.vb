@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::45ce04528c8dcf6c7fe9955dd60f25d9, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ExpressionBuilder
-    ' 
-    '         Function: AsCallFunction, AsExpression, BuildExpression, isFunctionInvoke, isOperator
-    ' 
-    '         Sub: joinNegatives, processOperators
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ExpressionBuilder
+' 
+'         Function: AsCallFunction, AsExpression, BuildExpression, isFunctionInvoke, isOperator
+' 
+'         Sub: joinNegatives, processOperators
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -72,13 +72,16 @@ Namespace Scripting.MathExpression
         End Function
 
         <Extension>
-        Private Function AsCallFunction(symbol As MathToken, parameters As List(Of MathToken())) As Expression
-            Dim argVals As Expression() = parameters _
-                .IteratesALL _
+        Private Function AsCallFunction(tokens As MathToken()) As Expression
+            Dim funSymbol As MathToken = tokens(Scan0)
+            Dim argVals As Expression() = tokens _
+                .Skip(2) _
+                .Take(tokens.Length - 3) _
                 .SplitByTopLevelDelimiter(MathTokens.Comma) _
+                .Where(Function(b) Not (b.Length = 1 AndAlso b(Scan0).name = MathTokens.Comma)) _
                 .Select(AddressOf BuildExpression) _
                 .ToArray
-            Dim funCall As New FunctionInvoke(symbol.text, argVals)
+            Dim funCall As New FunctionInvoke(funSymbol.text, argVals)
 
             Return funCall
         End Function
@@ -89,13 +92,7 @@ Namespace Scripting.MathExpression
             If blocks = 1 Then
                 If blocks(Scan0).Length > 1 Then
                     If blocks(Scan0).isFunctionInvoke Then
-                        tokens = blocks(Scan0)
-                        blocks = tokens _
-                            .Skip(2) _
-                            .Take(tokens.Length - 3) _
-                            .SplitByTopLevelDelimiter(MathTokens.Comma)
-
-                        Return blocks(Scan0)(Scan0).AsCallFunction(blocks)
+                        Return blocks(Scan0).AsCallFunction
                     Else
                         ' (....)
                         tokens = blocks(Scan0)
