@@ -63,36 +63,38 @@ Namespace Net.Http
 
             If protocol.StringEmpty Then
                 protocol = "http://"
-                url = url.TrimStart("/"c)
+                port = 80
+                hostName = "localhost"
+                path = url.Trim("/"c)
             Else
                 url = url.Substring(protocol.Length + 1)
-            End If
 
-            With url.GetTagValue("/", trim:=False, failureNoName:=False)
-                hostName = .Name
-                path = .Value
-
-                With hostName.GetTagValue(":", False, True)
+                With url.GetTagValue("/", trim:=False, failureNoName:=False)
                     hostName = .Name
+                    path = .Value
 
-                    If .Value = "" Then
-                        Select Case protocol
-                            Case "http://"
-                                port = 80
-                            Case "https://"
-                                port = 443
-                            Case "ftp://"
-                                port = 21
-                            Case "sftp://"
-                                port = 22
-                            Case Else
-                                port = -1
-                        End Select
-                    Else
-                        port = Integer.Parse(.Value)
-                    End If
+                    With hostName.GetTagValue(":", False, True)
+                        hostName = .Name
+
+                        If .Value = "" Then
+                            Select Case protocol
+                                Case "http://"
+                                    port = 80
+                                Case "https://"
+                                    port = 443
+                                Case "ftp://"
+                                    port = 21
+                                Case "sftp://"
+                                    port = 22
+                                Case Else
+                                    port = -1
+                            End Select
+                        Else
+                            port = Integer.Parse(.Value)
+                        End If
+                    End With
                 End With
-            End With
+            End If
         End Sub
 
         Private Sub New()
