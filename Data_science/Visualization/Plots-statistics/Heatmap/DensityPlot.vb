@@ -192,9 +192,9 @@ Namespace Heatmap
                     unmapColor:=NameOf(Color.Gray))
 
                 If TypeOf g Is Graphics2D Then
-                    Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size)
+                    Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size, padding)
                 Else
-                    Return New SVGData(g, g.Size)
+                    Return New SVGData(g, g.Size, padding)
                 End If
             End Using
         End Function

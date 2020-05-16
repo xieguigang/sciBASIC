@@ -180,7 +180,8 @@ Public Module NetworkVisualizer
                               Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge,
                               Optional convexHullScale! = 1.125,
                               Optional convexHullCurveDegree As Single = 2,
-                              Optional fillConvexHullPolygon As Boolean = True) As GraphicsData
+                              Optional fillConvexHullPolygon As Boolean = True,
+                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Call GetType(NetworkVisualizer).Assembly _
             .FromAssembly _
@@ -356,7 +357,7 @@ Public Module NetworkVisualizer
 
         Call "Start Render...".__INFO_ECHO
 
-        Return g.GraphicsPlots(frameSize.ToSize, margin, background, plotInternal)
+        Return g.GraphicsPlots(frameSize.ToSize, margin, background, plotInternal, driver:=driver)
     End Function
 
     Public Function DirectMapRadius(Optional scale# = 1) As Func(Of Node, Single)
@@ -710,7 +711,7 @@ Public Module NetworkVisualizer
         If iteration > 0 Then
             Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
             Call d3js _
-                .labeler(maxMove:=100, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=50, w_lab_anc:=50, w_orient:=2) _
+                .labeler(maxMove:=1, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=10, w_lab_anc:=10, w_orient:=2) _
                 .Anchors(labels.Select(Function(x) x.anchor)) _
                 .Labels(labels.Select(Function(x) x.label)) _
                 .Size(frameSize) _

@@ -1,52 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::de4770c0ab88d45d33427288dffca2cf, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GraphicsData
-    ' 
-    '         Properties: Height, Size, Width
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GraphicsData
+' 
+'         Properties: Height, Size, Width
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: (+2 Overloads) Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Driver
 
@@ -88,19 +90,19 @@ Namespace Driver
         ''' The image size
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Size As Size
+        Public ReadOnly Property Layout As GraphicsRegion
 
         Public ReadOnly Property Width As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Size.Width
+                Return _Layout.Size.Width
             End Get
         End Property
 
         Public ReadOnly Property Height As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Size.Height
+                Return _Layout.Size.Height
             End Get
         End Property
 
@@ -110,8 +112,11 @@ Namespace Driver
         ''' <param name="img">其实这个参数在基类<see cref="GraphicsData"/>之中是无用的，只是为了统一接口而设置的</param>
         ''' <param name="size"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(img As Object, size As Size)
-            Me.Size = size
+        Sub New(img As Object, size As Size, padding As Padding)
+            Me.Layout = New GraphicsRegion With {
+                .Size = size,
+                .Padding = padding
+            }
         End Sub
 
         ''' <summary>

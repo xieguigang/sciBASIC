@@ -46,7 +46,7 @@ Namespace Net.Http
                 End If
 
                 query = tmp _
-                    .Split("?"c) _
+                    .Split("&"c) _
                     .ParseUrlQueryParameters() _
                     .ToDictionary(allStrings:=True) _
                     .TryCast(Of Dictionary(Of String, String()))

@@ -80,7 +80,7 @@ Namespace SVG
         ''' <param name="svg"></param>
         ''' <returns></returns>
         Public Function DrawImage(svg As SVGData) As Drawing.Image
-            Using g As Graphics2D = svg.Size.CreateGDIDevice
+            Using g As Graphics2D = svg.Layout.Size.CreateGDIDevice
                 With g
                     Call .Clear(svg.SVG.bg.GetBrush)
                     Call .drawLayer(svg)

@@ -1,54 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::b03eb005761cec66c5ea9c7bdaed9b82, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\ImageData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ImageData
-    ' 
-    '         Properties: DefaultFormat, Driver, Image
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) Save
-    ' 
-    '         Sub: Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ImageData
+' 
+'         Properties: DefaultFormat, Driver, Image
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) Save
+' 
+'         Sub: Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Driver
 
@@ -63,8 +64,8 @@ Namespace Driver
         ''' <returns></returns>
         Public ReadOnly Property Image As Drawing.Image
 
-        Public Sub New(img As Object, size As Size)
-            MyBase.New(img, size)
+        Public Sub New(img As Object, size As Size, padding As Padding)
+            MyBase.New(img, size, padding)
 
             If img.GetType() Is GetType(Bitmap) Then
                 Image = CType(DirectCast(img, Bitmap), Drawing.Image)
@@ -73,12 +74,12 @@ Namespace Driver
             End If
         End Sub
 
-        Sub New(image As System.Drawing.Image)
-            Call Me.New(image, image.Size)
+        Sub New(image As Drawing.Image)
+            Call Me.New(image, image.Size, New Padding)
         End Sub
 
         Sub New(bitmap As Bitmap)
-            Call Me.New(bitmap, bitmap.Size)
+            Call Me.New(bitmap, bitmap.Size, New Padding)
         End Sub
 
         ''' <summary>

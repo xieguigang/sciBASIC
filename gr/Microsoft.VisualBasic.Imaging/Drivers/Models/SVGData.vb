@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::057737d63152e061dc6781e29e831296, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SVGData
-    ' 
-    '         Properties: Driver, SVG, title, XmlComment
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Render, (+2 Overloads) Save
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SVGData
+' 
+'         Properties: Driver, SVG, title, XmlComment
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Render, (+2 Overloads) Save
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.SVG
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Driver
 
@@ -70,13 +71,14 @@ Namespace Driver
         ''' <param name="img"></param>
         ''' <param name="size"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub New(img As Object, size As Size)
-            MyBase.New(img, size)
+        Public Sub New(img As Object, size As Size, padding As Padding)
+            Call MyBase.New(img, size, padding)
+
             Me.engine = DirectCast(img, GraphicsSVG)
         End Sub
 
-        Sub New(canvas As GraphicsSVG)
-            Call Me.New(canvas, canvas.Size)
+        Sub New(canvas As GraphicsSVG, padding As Padding)
+            Call Me.New(canvas, canvas.Size, padding)
         End Sub
 
         Public Overrides ReadOnly Property Driver As Drivers
@@ -101,14 +103,14 @@ Namespace Driver
                 Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
 
-            With Size
+            With Layout.Size
                 Dim sz$ = $"{ .Width},{ .Height}"
                 Return engine.WriteSVG(path, sz, XmlComment, title:=title)
             End With
         End Function
 
         Public Overrides Function Save(out As Stream) As Boolean
-            With Size
+            With Layout.Size
                 Dim sz$ = $"{ .Width},{ .Height}"
                 Return engine.WriteSVG(out, size:=sz, comments:=XmlComment, title:=title)
             End With

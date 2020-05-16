@@ -241,7 +241,7 @@ Namespace Drawing2D
                     Call svg.Clear(bg.TranslateColor)
                     Call plotAPI(svg, region)
 
-                    Return New SVGData(svg, size)
+                    Return New SVGData(svg, size, padding)
                 Case Drivers.PS
                     Dim ps As New GraphicsPS(size)
 
@@ -249,7 +249,7 @@ Namespace Drawing2D
                 Case Drivers.WMF
                     Using wmf As New Wmf(size, WmfData.wmfTmp, bg)
                         Call plotAPI(wmf, region)
-                        Return New WmfData(wmf.wmfFile, size)
+                        Return New WmfData(wmf.wmfFile, size, padding)
                     End Using
                 Case Else
                     ' using gdi+ graphics driver
@@ -272,7 +272,7 @@ Namespace Drawing2D
 
                         Call plotAPI(g, region)
 
-                        Return New ImageData(g.ImageResource, size)
+                        Return New ImageData(g.ImageResource, size, padding)
                     End Using
             End Select
         End Function

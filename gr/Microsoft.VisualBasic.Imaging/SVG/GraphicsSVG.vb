@@ -637,27 +637,27 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, rect As Rectangle)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, rect)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, point As Point)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, point)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, x, y)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer, width As Integer, height As Integer)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, x, y, width, height)
         End Sub
 
         Public Overrides Sub DrawImageUnscaledAndClipped(image As Drawing.Image, rect As Rectangle)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaledAndClipped(img, rect)
         End Sub
 #End Region

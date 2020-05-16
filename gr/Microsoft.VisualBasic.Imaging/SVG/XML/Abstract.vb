@@ -88,7 +88,7 @@ Namespace SVG.XML
         ''' 2. 空字符串或者空格表示没有注释信息
         ''' 3. 其他字符串的时候则使用给定的字符串做注释
         ''' </summary>
-        <XmlIgnore> Public XmlCommentValue$
+        <XmlIgnore> Public XmlCommentValue$ = ""
 
         ''' <summary>
         ''' Read Only
