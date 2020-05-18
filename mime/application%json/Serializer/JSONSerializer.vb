@@ -160,7 +160,9 @@ Public Module JSONSerializer
 
     <Extension>
     Public Function GetJson(schema As Type, obj As Object, opt As JSONSerializerOptions) As String
-        If schema.IsArray OrElse schema.IsInheritsFrom(GetType(List(Of )), strict:=False) Then
+        If obj Is Nothing Then
+            Return "null"
+        ElseIf schema.IsArray OrElse schema.IsInheritsFrom(GetType(List(Of )), strict:=False) Then
             Dim elementJSON = schema.populateArrayJson(obj, opt).ToArray
 
             If opt.indent Then
