@@ -40,6 +40,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Public Module Extensions
 
@@ -47,5 +48,35 @@ Public Module Extensions
     <Extension>
     Public Function AsSignal(signals As IEnumerable(Of TimeSignal)) As Signal
         Return New Signal(signals)
+    End Function
+
+    ''' <summary>
+    ''' 信噪比就是信号的平均功率和噪声的平均功率之比，即：S/N。
+    ''' 用分贝（dB）作为度量单位，即信噪比（dB）= 10 * log10(S/N) (dB)
+    ''' 例如：当S/N=10时，信噪比为10dB；当S/N=1000时，信噪比为30dB。
+    ''' </summary>
+    ''' <param name="signal"></param>
+    ''' <param name="noise"></param>
+    ''' <returns></returns>
+    Public Function SNRatio(signal As Double, noise As Double) As Double
+        Return 10 * stdNum.Log10(If(noise <= 0.0, Double.MaxValue, signal / noise))
+    End Function
+
+    ''' <summary>
+    ''' ### 香农公式
+    ''' 
+    ''' 香农(Shannon)用信息论的理论推导出了带宽受限且有高斯白噪声干扰的信道的极限、无差错的信息传输速率。
+    ''' 信道的极限信息传输速率 C 可表达为
+    ''' 
+    ''' ``C = W log2(1+S/N) b/s``
+    '''
+    ''' 信道的带宽或信道中的信噪比越大，则信息的极限传输速率就越高。 只要信息传输速率低于信道的极限信息传输速率，就一定可以找到某种办法来实现无差错的传输。 实际信道上能够达到的信息传输速率要比香农的极限传输速率低不少。
+    ''' </summary>
+    ''' <param name="bandWidth">为信道的带宽（以 Hz 为单位）</param>
+    ''' <param name="signal">为信道内所传信号的平均功率</param>
+    ''' <param name="noise">为信道内部的高斯噪声功率</param>
+    ''' <returns></returns>
+    Public Function ShannonTransferRate(bandWidth As Double, signal As Double, noise As Double) As Double
+        Return bandWidth * stdNum.Log(1 + signal / noise, 2)
     End Function
 End Module
