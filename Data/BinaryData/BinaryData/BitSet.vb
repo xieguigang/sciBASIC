@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c942e6bcbb07c5edcdd9ec311d9b4692, Data\BinaryData\BinaryData\BitSet.vb"
+﻿#Region "Microsoft.VisualBasic::5b72a20dba4f681b752abf8be400171d, Data\BinaryData\BinaryData\BitSet.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b1fe3e3c735c559977691c5c2cf2856, Data_science\Visualization\Plots\g\ColorManager.vb"
+﻿#Region "Microsoft.VisualBasic::3e3d9250e48d51b96de211eff0a7a5d0, Data_science\Visualization\Plots\g\ColorManager.vb"
 
     ' Author:
     ' 

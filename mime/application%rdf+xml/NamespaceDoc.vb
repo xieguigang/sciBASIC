@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90f5b7328851b14440529d54d2775329, mime\application%rdf+xml\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3c9a185699e9c6257c2f4ebfa991f0c5, mime\application%rdf+xml\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@
 ''' </summary>
 Module NamespaceDoc
 End Module
-

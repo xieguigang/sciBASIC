@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f15346b59071c14aebe6d85f4c5d1c1, Data_science\Mathematica\SignalProcessing\SignalProcessing\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::cedec0ab49058c16a059f42b9e830606, Data_science\Mathematica\SignalProcessing\SignalProcessing\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: AsSignal
+    '     Function: AsSignal, ShannonTransferRate, SNRatio
     ' 
     ' /********************************************************************************/
 

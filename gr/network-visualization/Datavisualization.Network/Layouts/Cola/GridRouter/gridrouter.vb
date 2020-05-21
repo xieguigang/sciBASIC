@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::40742c5d7ddf2ca88a3e6cf2512a9d6b, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
+﻿#Region "Microsoft.VisualBasic::1a0424a33c4a6e21784b6648e3138d8a, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class GridRouter
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: findAncestorPathBetween, findLineage, getDepth, getGridLines, getOrder
-'                   getRoutePath, getSegmentSets, isLeft, isStraight, makeSegments
-'                   orderEdges, route, routeEdges, siblingObstacles
-' 
-'         Sub: nudgeSegments, nudgeSegs, unreverseEdges
-'         Class AncestorPath
-' 
-' 
-' 
-'         Class Pair
-' 
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Class GridRouter
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: findAncestorPathBetween, findLineage, getDepth, getGridLines, getOrder
+    '                   getRoutePath, getSegmentSets, isLeft, isStraight, makeSegments
+    '                   orderEdges, route, routeEdges, siblingObstacles
+    ' 
+    '         Sub: nudgeSegments, nudgeSegs, unreverseEdges
+    '         Class AncestorPath
+    ' 
+    ' 
+    ' 
+    '         Class Pair
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::481aa80c3ab3ee9dc450dd07ace36248, Data_science\MachineLearning\CellularAutomaton\Debugger\WriteCDF.vb"
+﻿#Region "Microsoft.VisualBasic::3c004661e68c365899c938c6a9a93674, Data_science\MachineLearning\CellularAutomaton\Debugger\WriteCDF.vb"
 
     ' Author:
     ' 
@@ -75,4 +75,3 @@ Module WriteCDF
         End Using
     End Sub
 End Module
-

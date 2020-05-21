@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a31ee1012035c63a20b6a4a2adc7082, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Arctan.vb"
+﻿#Region "Microsoft.VisualBasic::73b97bd3da14c1a328975ca711b33bae, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Arctan.vb"
 
     ' Author:
     ' 

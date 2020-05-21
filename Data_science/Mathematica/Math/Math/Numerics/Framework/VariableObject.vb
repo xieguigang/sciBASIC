@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::232711f39a24ae99103bda37c06fc426, Data_science\Mathematica\Math\Math\Numerics\Framework\VariableObject.vb"
+﻿#Region "Microsoft.VisualBasic::9f9f5fc9a4ee76fd8c055f5bdf6d441b, Data_science\Mathematica\Math\Math\Numerics\Framework\VariableObject.vb"
 
     ' Author:
     ' 

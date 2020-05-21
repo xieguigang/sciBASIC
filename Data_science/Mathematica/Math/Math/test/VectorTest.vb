@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58e43d9135e88870023623b3f09d084f, Data_science\Mathematica\Math\Math\test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::bcd0f4cfccfca6e8aa6564bfd51dafa6, Data_science\Mathematica\Math\Math\test\VectorTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module VectorTest
     ' 
-    '     Sub: Main, memoryTest, numpyTest, SparseVectorTest
+    '     Sub: Main, memoryTest, numpyTest, SparseVectorTest, vectorCmpares2
     ' 
     ' /********************************************************************************/
 

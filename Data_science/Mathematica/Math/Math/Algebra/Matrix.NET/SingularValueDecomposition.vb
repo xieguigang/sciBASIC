@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3ad3079f9bb2d15971c9d3faa828076, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SingularValueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::07a8d5733ca45bc924bf7578c4ea40c2, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SingularValueDecomposition.vb"
 
     ' Author:
     ' 

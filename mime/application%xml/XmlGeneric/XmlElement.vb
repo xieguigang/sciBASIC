@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc3330e1a34d3f0ce957fe9bd6ee716b, mime\application%xml\XmlGeneric\XmlElement.vb"
+﻿#Region "Microsoft.VisualBasic::58ae6372c475a9c0b6c594f154ec2bf5, mime\application%xml\XmlGeneric\XmlElement.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Public Class XmlElement
     End Function
 
 End Class
-

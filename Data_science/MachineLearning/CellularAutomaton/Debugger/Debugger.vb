@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa1a0dd70f88037f8424c8126e9165ba, Data_science\MachineLearning\CellularAutomaton\Debugger\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::495621c2aecd50a552d5d9d5ba8f2b5f, Data_science\MachineLearning\CellularAutomaton\Debugger\Debugger.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Public Class Debugger(Of T As Individual) : Implements IDisposable
 #End Region
 
 End Class
-

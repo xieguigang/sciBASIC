@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2dbb7f7f5cc1b7b5e1415174a8f12f2, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::b95c1ec16de4a1f262e1eddf0f4e1f73, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 

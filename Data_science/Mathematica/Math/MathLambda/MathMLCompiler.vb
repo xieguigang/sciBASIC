@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dea10533435f8a1229abdbd725747a9c, Data_science\Mathematica\Math\MathLambda\MathMLCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::f59476bc1647bd45bb9921eab52a197f, Data_science\Mathematica\Math\MathLambda\MathMLCompiler.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Public Module MathMLCompiler
         End Select
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b78e66c3ab3654ed6e133ec0d402a442, Data_science\Mathematica\Math\Math\test\scriptTest.vb"
+﻿#Region "Microsoft.VisualBasic::e837fb36b272bd1c0861e4389cec353b, Data_science\Mathematica\Math\Math\test\scriptTest.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Module scriptTest
         Pause()
     End Sub
 End Module
-

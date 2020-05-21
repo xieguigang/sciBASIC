@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8143fda0ef460503e9ba1181f3ed555c, mime\application%rdf+xml\test\mathMLloaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::93ee43aa3455dae54daa53c9142543a5, mime\application%rdf+xml\test\mathMLloaderTest.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Module mathMLloaderTest
         Pause()
     End Sub
 End Module
-

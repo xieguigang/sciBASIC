@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::493f58e4849a4c111bd7fc1f4ab39cb4, Data_science\Mathematica\Math\Math\Algebra\Matrix\numpyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7621943edf71d9db719907c951a86954, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\numpyExtensions.vb"
 
     ' Author:
     ' 
@@ -31,17 +31,17 @@
 
     ' Summaries:
 
-    ' Module NumpyExtensions
-    ' 
-    ' 
     '     Enum ApplyOnAxis
-    ' 
-    ' 
     ' 
     ' 
     '  
     ' 
-    '     Function: Apply, Mean, Sort, Std, Sum
+    ' 
+    ' 
+    '     Module NumpyExtensions
+    ' 
+    '         Function: Apply, Mean, Sort, Std, Sum
+    ' 
     ' 
     ' /********************************************************************************/
 

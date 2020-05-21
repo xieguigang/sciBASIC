@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c624245468fbb691c7835ea7ba2d80d, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::24fe77940a2e97203e4ee57610c1000c, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
 
     ' Author:
     ' 

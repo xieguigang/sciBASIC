@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc068ac6d7b6db8ac8c6ad7a40baba2a, Data_science\Mathematica\Math\Math\Scripting\ParameterCompute.vb"
+﻿#Region "Microsoft.VisualBasic::0af73256bed2c212a8a132af1a013e40, Data_science\Mathematica\Math\Math\Scripting\ParameterCompute.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,9 @@
 
     ' Summaries:
 
-    '     Module ParameterExpression
+    '     Module ParameterExpressionScript
     ' 
-    '         Function: Demo, (+2 Overloads) Evaluate, GetValue
+    '         Function: (+2 Overloads) Evaluate, GetValue
     ' 
     '         Sub: Apply
     ' 

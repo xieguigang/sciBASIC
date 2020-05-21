@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f716cbd827f5be2f7c8cfddf2a9059d8, Data_science\Graph\Model\GridNetwork\GridCell.vb"
+﻿#Region "Microsoft.VisualBasic::8a444ce22fb97bf5756722b3b7cfe9ca, Data_science\Graph\Model\GridNetwork\GridCell.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Public Class GridCell(Of T)
     End Function
 
 End Class
-

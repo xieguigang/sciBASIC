@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dc1f5438651c205e1c8604da18da611, Data_science\Visualization\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::cca7f67a5ce7e1c264b2acee0f56e224, Data_science\Visualization\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 

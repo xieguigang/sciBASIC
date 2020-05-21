@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de13e550a74fbf0d3ba36aac56878868, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::b1d2d4a8de2b23e3d0254d3ddd3fe339, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Function: (+2 Overloads) After, Append, Coalesce, (+3 Overloads) Delete, (+2 Overloads) Fill
     '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
-    '               Midv, RepeatCalls, Replicate, (+3 Overloads) Sort, Split
-    '               VectorShadows
+    '               Midv, RepeatCalls, Replicate, SetValue, (+3 Overloads) Sort
+    '               Split, VectorShadows
     ' 
     '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
     '     Enum DelimiterLocation

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d08fd8dfce6d983445bbe9711dc16bb2, Microsoft.VisualBasic.Core\Extensions\Math\Information\Entropy.vb"
+﻿#Region "Microsoft.VisualBasic::149889335b38136e0d3eccf502b78876, Microsoft.VisualBasic.Core\Extensions\Math\Information\Entropy.vb"
 
     ' Author:
     ' 

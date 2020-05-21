@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9da379de7a509b7f30cb035a60cf2062, Microsoft.VisualBasic.Core\ComponentModel\File\FileSaveHandle.vb"
+﻿#Region "Microsoft.VisualBasic::5ef71297399135e126fed3e188fa55c2, Microsoft.VisualBasic.Core\ComponentModel\File\FileSaveHandle.vb"
 
     ' Author:
     ' 
@@ -38,12 +38,6 @@
     '     Interface IFileReference
     ' 
     '         Properties: FilePath
-    ' 
-    '     Interface IDocumentEditor
-    ' 
-    '         Properties: DocumentPath
-    ' 
-    '         Function: LoadDocument
     ' 
     ' 
     ' /********************************************************************************/

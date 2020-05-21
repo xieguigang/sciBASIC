@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02e00f4bcf63954910ebdfecbf8e0da8, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::cc1a50cfd794850bea1f6236b34e518e, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: matrix, names
     ' 
-    '         Function: CreateFromSamples, doNormalInternal, DoNormalize, NormalizeInput
+    '         Function: CreateFromSamples, doNormalInternal, DoNormalize, (+2 Overloads) NormalizeInput
     ' 
     ' 
     ' /********************************************************************************/

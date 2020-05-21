@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::367e0b4851290a7085cb39e0517832b6, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::4801875ecb38a7a0b9fd7d4a935d8405, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -33,16 +33,11 @@
 
     '     Module VBMath
     ' 
-    '         Function: (+7 Overloads) Abs, Acos, Asin, Atan, Atan2
-    '                   BigMul, (+2 Overloads) Ceiling, Cos, Cosh, Covariance
-    '                   CumSum, Distance, (+2 Overloads) DivRem, (+6 Overloads) EuclideanDistance, Exp
-    '                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
-    '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, (+2 Overloads) Log2
-    '                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
-    '                   Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, RMSE
-    '                   (+8 Overloads) Round, RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign
-    '                   Sin, Sinh, Sqrt, (+5 Overloads) Sum, Tan
-    '                   Tanh, (+2 Overloads) Truncate, WeighedAverage
+    '         Function: Covariance, CumSum, Distance, (+6 Overloads) EuclideanDistance, Factorial
+    '                   FactorialSequence, FormatNumeric, Hypot, IsPowerOf2, (+2 Overloads) Log2
+    '                   LogN, Max, PoissonPDF, Pow2, (+3 Overloads) ProductALL
+    '                   (+3 Overloads) RangesAt, RMS, RMSE, RSD, (+4 Overloads) SD
+    '                   (+2 Overloads) seq, (+5 Overloads) Sum, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/

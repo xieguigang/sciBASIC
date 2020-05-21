@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2093898056d175f6565079233c95f96, mime\application%xml\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::78b2f42de1bb467fca2cc03efdef17fa, mime\application%xml\test\Module1.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Module1
     ' 
-    '     Sub: Main
+    '     Sub: genericParsertest2, Main
     ' 
     ' /********************************************************************************/
 
@@ -64,4 +64,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-

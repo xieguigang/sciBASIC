@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c31d7ab31182bb60e11d100d26a680b, Data_science\Mathematica\Math\Math\Numerics\Half.vb"
+﻿#Region "Microsoft.VisualBasic::216ba640b8f32fbb45c0022a8705be67, Data_science\Mathematica\Math\Math\Numerics\Half.vb"
 
     ' Author:
     ' 

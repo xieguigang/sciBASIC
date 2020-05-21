@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31af8e055b1c25b765afc43fe441d45d, Data_science\Mathematica\Math\MathLambda\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::c3026202b75479261d80b20e0784f498, Data_science\Mathematica\Math\MathLambda\test\Module1.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Module Module1
     End Sub
 
 End Module
-

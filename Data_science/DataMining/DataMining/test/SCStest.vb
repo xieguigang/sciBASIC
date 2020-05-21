@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e468f022c330b402399f94e654bda8d, Data_science\DataMining\DataMining\test\SCStest.vb"
+﻿#Region "Microsoft.VisualBasic::77ecf295ebc94a7fed2f7840bc48e56e, Data_science\DataMining\DataMining\test\SCStest.vb"
 
     ' Author:
     ' 

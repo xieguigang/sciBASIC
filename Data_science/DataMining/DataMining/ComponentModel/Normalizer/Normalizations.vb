@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::000f9726f4e38f4cd76c22f23b064156, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
+﻿#Region "Microsoft.VisualBasic::3dedefdd1048462ef8ae351c9e67cadd, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51f4e0823eace463c561742891339d88, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::654afc13fef556209f289b48bf96d7f4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Pyramid.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c6507e0510976e52464b0adf586720d, Microsoft.VisualBasic.Core\Extensions\Reflection\EnumHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::eaca38e33d0009246042e31bc7b525e5, Microsoft.VisualBasic.Core\Extensions\Reflection\EnumHelpers.vb"
 
     ' Author:
     ' 

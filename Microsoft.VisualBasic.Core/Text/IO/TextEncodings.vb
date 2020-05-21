@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dba5ba95a22a740945e28474f9756840, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::97ec3dd8ce5258a3d20632a17595bf98, Microsoft.VisualBasic.Core\Text\IO\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,6 @@
 
     ' Summaries:
 
-    '     Enum Encodings
-    ' 
-    '         GB2312, Unicode, UTF16, UTF32, UTF7
-    '         UTF8, UTF8WithoutBOM
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     '     Module TextEncodings
     ' 
     '         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM

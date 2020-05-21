@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b54dc2fd8c1e55213258f1adf7e262e1, mime\application%rdf+xml\test\Test1.vb"
+﻿#Region "Microsoft.VisualBasic::cb960f65e8eec8d7940fed87be82e305, mime\application%rdf+xml\test\Test1.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@
 '        <RDFIgnore> Public Property IgnoredProperty As KeyValuePair(Of Integer, String)
 '    End Class
 'End Class
-

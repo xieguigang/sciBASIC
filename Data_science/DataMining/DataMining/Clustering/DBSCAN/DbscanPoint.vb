@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a3d95fdb473ab81f1abb1be0519052f, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanPoint.vb"
+﻿#Region "Microsoft.VisualBasic::877132dbf5150fb08a32fb406394e504, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanPoint.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,13 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
+    ' 
+    '     Enum ClusterIDs
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cac490ce7e3b0bea66f2eb4ae1c1b39, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::2a400f2941399dca39d7a0138cd01b90, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -43,11 +43,12 @@
     '                   Condition, Copy, Create, Determinant, Eigen
     '                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+3 Overloads) Multiply
     '                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
-    '                   QRD, Rank, RowVectors, Solve, SolveTranspose
-    '                   (+2 Overloads) Subtract, SubtractEquals, SVD, ToString, Trace
-    '                   Transpose
+    '                   Number, QRD, Rank, RowVectors, Solve
+    '                   SolveTranspose, (+2 Overloads) Subtract, SubtractEquals, SVD, ToString
+    '                   Trace, Transpose
     ' 
-    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
+    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, Resize
+    '              (+4 Overloads) SetMatrix
     ' 
     '         Operators: (+3 Overloads) -, (+3 Overloads) *, +
     ' 

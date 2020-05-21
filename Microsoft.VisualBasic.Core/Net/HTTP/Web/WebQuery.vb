@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0aad775191d43052fc49e9977064fcf, Microsoft.VisualBasic.Core\Net\HTTP\Web\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::164d6a879c001bd9487bd2e00848ea4c, Microsoft.VisualBasic.Core\Net\HTTP\Web\WebQuery.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: IsNullKey, (+2 Overloads) Query, queryText
+    '         Function: IsNullKey, (+2 Overloads) Query, QueryCacheText, queryText
     ' 
     '         Sub: runHttpGet
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8471f6db87cf22a4d1379f8f11699409, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ca4155b102858fe0f93f81caa984232f, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 

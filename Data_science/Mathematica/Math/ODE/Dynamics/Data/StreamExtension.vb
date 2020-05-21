@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6716b6a35c098758002a55ab97db31f1, Data_science\Mathematica\Math\ODE\Dynamics\Data\StreamExtension.vb"
+﻿#Region "Microsoft.VisualBasic::21c7b59f3286485d29202e79ef245f10, Data_science\Mathematica\Math\ODE\Dynamics\Data\StreamExtension.vb"
 
     ' Author:
     ' 

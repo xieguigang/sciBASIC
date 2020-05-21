@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::756907767ff92ff44f7b56eab7556924, Data_science\Visualization\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::c3800760165ab31a066b74e71f26b1b9, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     ' 
     '         Function: __plotLabel, (+2 Overloads) DrawLabel
     ' 
-    '         Sub: (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY, DrawYGrid
+    '         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
+    '              DrawYGrid
     ' 
     ' 
     ' /********************************************************************************/

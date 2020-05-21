@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68aab791a54c85b16b8dc4ff3146cada, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::891f0552ada4acc03a6ba0492cc131f9, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Class Shell
     ' 
-    '         Properties: dev, History, ps1, Quite, shell
+    '         Properties: autoCompleteCandidates, dev, History, ps1, Quite
+    '                     shell
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: Run

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2c315cace57aa35901976e083415d73, Data_science\MachineLearning\CellularAutomaton\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3782d485329399bd28bfc40c0fd349f5, Data_science\MachineLearning\CellularAutomaton\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -91,4 +90,3 @@ Public Module Extensions
         Return matrix
     End Function
 End Module
-

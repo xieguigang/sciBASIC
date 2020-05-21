@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4767c5cfa345de9985a70253fced24a, Data_science\Mathematica\Math\Math\Numerics\BigDecimal.vb"
+﻿#Region "Microsoft.VisualBasic::fc797087b8e6b1f0191438bd21953e32, Data_science\Mathematica\Math\Math\Numerics\BigDecimal.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce7bba626256af99c8867e8f6eaf7cb2, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
+﻿#Region "Microsoft.VisualBasic::f63f4ce7c384e92a6a8ca0c8f2bc7d29, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\WhichIndex.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,13 @@
 
     ' Summaries:
 
-    '     Class Which
+    '     Module WhichSymbol
+    ' 
+    ' 
+    ' 
+    '     Class WhichIndex
+    ' 
+    '         Properties: Symbol
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: [True], GetMinIndex, Index, (+2 Overloads) IsFalse, (+2 Overloads) IsGreaterThan

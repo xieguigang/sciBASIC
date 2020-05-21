@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22a892bca1fd45770e9a38fca1eb961c, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
+﻿#Region "Microsoft.VisualBasic::2ee7f8ed5f4d818ea7071fb14d915976, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
 
     ' Author:
     ' 

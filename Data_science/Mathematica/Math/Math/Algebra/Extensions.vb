@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::238a219c288bc1cb0d5a0be3c79474e9, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::74295104d9bc0b68efa8e65c3ecde59b, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     ' 
     '     Module HelperExtensions
     ' 
-    '         Function: PrimitiveLinearEquation, Summary, Tangent
+    '         Function: PrimitiveLinearEquation, Tangent
     ' 
     ' 
     ' 

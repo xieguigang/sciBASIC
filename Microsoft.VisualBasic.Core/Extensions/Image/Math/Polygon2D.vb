@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc574527d2cf191a65a4d70d66c9fb61, Microsoft.VisualBasic.Core\Extensions\Image\Math\Polygon2D.vb"
+﻿#Region "Microsoft.VisualBasic::ed735d40bf3169727d9cde11e6da1b39, Microsoft.VisualBasic.Core\Extensions\Image\Math\Polygon2D.vb"
 
     ' Author:
     ' 

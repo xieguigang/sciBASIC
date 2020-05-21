@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b16cb98b92f3aa84492e451f00e5b9e, gr\physics\Math.vb"
+﻿#Region "Microsoft.VisualBasic::c275b262f31e05eb63a41a2159d5414a, gr\physics\Math.vb"
 
     ' Author:
     ' 
