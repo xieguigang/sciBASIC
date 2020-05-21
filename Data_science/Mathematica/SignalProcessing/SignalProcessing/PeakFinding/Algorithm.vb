@@ -39,7 +39,7 @@ Namespace PeakFinding
             Dim angles As Vector2D() = sin(line.Array).ToArray
             ' 删掉所有角度低于阈值的片段
             ' 剩下所有递增的坡度片段
-            Dim slopes As SeqValue(Of Vector2D())() = filterByCosAngles(angles).ToArray
+            Dim slopes As SeqValue(Of Vector2D())() = filterBySinAngles(angles).ToArray
             Dim rawSignals As IVector(Of ITimeSignal) = data.Shadows
             Dim rtmin, rtmax As Double
             Dim time As Vector = rawSignals.Select(Function(t) t.time).AsVector
@@ -68,7 +68,7 @@ Namespace PeakFinding
             Next
         End Function
 
-        Private Iterator Function filterByCosAngles(angles As Vector2D()) As IEnumerable(Of SeqValue(Of Vector2D()))
+        Private Iterator Function filterBySinAngles(angles As Vector2D()) As IEnumerable(Of SeqValue(Of Vector2D()))
             Dim buffer As New List(Of Vector2D)
             Dim i As i32 = 0
 
