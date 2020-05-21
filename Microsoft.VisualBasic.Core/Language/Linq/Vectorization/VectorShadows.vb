@@ -103,7 +103,8 @@ Namespace Language.Vectorization
             End Set
         End Property
 
-        Public Function [As](Of V)() As V()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function [As](Of V)() As IEnumerable(Of V)
             Return buffer.As(Of V)
         End Function
 

@@ -81,10 +81,14 @@ Public Module DoubleLinear
                                       Optional weighted As Weights = Nothing,
                                       Optional max As Integer = -1,
                                       Optional ByRef removed As List(Of PointF) = Nothing,
-                                      Optional keepsLowestPoint As Boolean = False) As IFitted
+                                      Optional keepsLowestPoint As Boolean = False,
+                                      Optional removesZeroY As Boolean = False) As IFitted
 
         Dim pointVec As PointF() = points.OrderBy(Function(p) p.X).ToArray
 
+        If removesZeroY Then
+            removed.AddRange(pointVec.Where(Function(p) Not p.Y > 0))
+        End If
         If max < 0 Then
             ' auto
             max = pointVec.Length / 2 - 1

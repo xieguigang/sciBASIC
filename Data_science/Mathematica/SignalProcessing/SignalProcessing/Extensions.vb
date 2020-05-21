@@ -42,6 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports stdNum = System.Math
 
+<HideModuleName>
 Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

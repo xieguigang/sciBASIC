@@ -1366,7 +1366,7 @@
     <Compile Include="Extensions\Collection\Linq\VectorAssertExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
     <Compile Include="Extensions\Collection\Linq\NumericSequence.vb" />
-    <Compile Include="Extensions\Collection\Linq\Which.vb" />
+    <Compile Include="Extensions\Collection\Linq\WhichIndex.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Collection\AnonymousTypeHelper.vb" />

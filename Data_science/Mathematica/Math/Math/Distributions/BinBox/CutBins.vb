@@ -106,6 +106,11 @@ Namespace Distributions.BinBox
             Dim upbound#
             Dim list As New List(Of T)
 
+            If v.Length = 1 Then
+                Yield New DataBinBox(Of T)(v, eval)
+                Return
+            End If
+
             slideWindowSteps = slideWindowSteps Or width.When(slideWindowSteps <= 0)
 
             Do While lowerbound < max

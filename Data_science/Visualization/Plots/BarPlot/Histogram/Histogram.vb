@@ -208,6 +208,10 @@ Namespace BarPlot.Histogram
             Dim margin As Padding = padding
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    If groups.Samples.Length = 1 AndAlso groups.Samples.First.data.Length = 0 Then
+                        Call "No content data for plot histogram chart...".Warning
+                        Return
+                    End If
 
                     Dim scalerData As New Scaling(groups, False)
                     Dim annotations As Dictionary(Of NamedValue(Of Color)) = groups.Serials.ToDictionary

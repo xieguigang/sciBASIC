@@ -49,18 +49,31 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Linq
 
+    <HideModuleName>
+    Public Module WhichSymbol
+
+        Public ReadOnly Which As New WhichIndex
+
+    End Module
+
     ''' <summary>
     ''' Where is the Min() or Max() or first TRUE or FALSE ?
     ''' (这个模块之中的函数返回来的都是集合之中的符合条件的对象元素的index坐标)
     ''' </summary>
-    Public NotInheritable Class Which
+    Public NotInheritable Class WhichIndex
 
-        'Default Public Shared ReadOnly Property Items(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of Integer)
-        '    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        '    Get
-        '        Return Which.Index(booleans)
-        '    End Get
-        'End Property
+        Public Shared ReadOnly Property Symbol As WhichIndex
+            Get
+                Return Which
+            End Get
+        End Property
+
+        Default Public ReadOnly Property Items(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of Integer)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me.IsTrue(booleans)
+            End Get
+        End Property
 
         ''' <summary>
         ''' Returns the collection element its index where the test expression <paramref name="predicate"/> result is TRUE
@@ -71,14 +84,14 @@ Namespace Linq
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Index(Of T)(source As IEnumerable(Of T), predicate As Func(Of T, Boolean)) As IEnumerable(Of Integer)
+        Public Function Index(Of T)(source As IEnumerable(Of T), predicate As Func(Of T, Boolean)) As IEnumerable(Of Integer)
             Return source _
                 .SeqIterator _
                 .Where(Function(i) predicate(i.value)) _
                 .Select(Function(o) o.i)
         End Function
 
-        Public Shared Function GetMinIndex(values As List(Of Double)) As Integer
+        Public Function GetMinIndex(values As List(Of Double)) As Integer
             Dim min As Double = Double.MaxValue
             Dim minIndex As Integer = 0
             For i As Integer = 0 To values.Count - 1
@@ -94,7 +107,7 @@ Namespace Linq
         ''' <summary>
         ''' 在这里不适用Module类型，要不然会和其他的Max拓展函数产生冲突的。。
         ''' </summary>
-        Private Sub New()
+        Friend Sub New()
         End Sub
 
         ''' <summary>
@@ -108,12 +121,12 @@ Namespace Linq
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Max(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
+        Public Function Max(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
             Return x.MaxIndex
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Max(Of T, K As IComparable)(x As IEnumerable(Of T), compareProject As Func(Of T, K)) As Integer
+        Public Function Max(Of T, K As IComparable)(x As IEnumerable(Of T), compareProject As Func(Of T, K)) As Integer
             Return x.Select(compareProject).MaxIndex
         End Function
 
@@ -128,7 +141,7 @@ Namespace Linq
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Min(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
+        Public Function Min(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
             Return x.MinIndex
         End Function
 
@@ -139,7 +152,7 @@ Namespace Linq
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IsTrue(v As IEnumerable(Of Boolean), Optional offset% = 0) As Integer()
+        Public Function IsTrue(v As IEnumerable(Of Boolean), Optional offset% = 0) As Integer()
             Return v _
                 .SeqIterator _
                 .Where(Function(b) True = +b) _
@@ -154,7 +167,7 @@ Namespace Linq
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IsTrue(list As Object) As Integer()
+        Public Function IsTrue(list As Object) As Integer()
             Return IsTrue(DirectCast(list, IEnumerable).Cast(Of Object).Select(Function(o) CBool(o)))
         End Function
 
@@ -174,16 +187,16 @@ Namespace Linq
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IsTrue([operator] As Func(Of Boolean())) As Integer()
+        Public Function IsTrue([operator] As Func(Of Boolean())) As Integer()
             Return IsTrue([operator]())
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IsFalse([operator] As Func(Of Boolean())) As Integer()
-            Return Which.IsFalse([operator]())
+        Public Function IsFalse([operator] As Func(Of Boolean())) As Integer()
+            Return WhichIndex.IsFalse([operator]())
         End Function
 
-        Public Shared Function Top(Of T As IComparable(Of T))(seq As IEnumerable(Of T), n As Integer) As Integer()
+        Public Function Top(Of T As IComparable(Of T))(seq As IEnumerable(Of T), n As Integer) As Integer()
             Return seq.SeqIterator _
                 .OrderByDescending(Function(x) x.value) _
                 .Take(n) _
@@ -198,7 +211,7 @@ Namespace Linq
         ''' <param name="array"></param>
         ''' <param name="condi"></param>
         ''' <returns></returns>
-        Public Shared Iterator Function [True](Of T)(array As IEnumerable(Of T), condi As Assert(Of T)) As IEnumerable(Of Integer)
+        Public Iterator Function [True](Of T)(array As IEnumerable(Of T), condi As Assert(Of T)) As IEnumerable(Of Integer)
             Dim i%
 
             For Each x As T In array
@@ -220,7 +233,7 @@ Namespace Linq
         ''' <remarks>因为这个返回的是一个迭代器，所以可以和First结合产生FirstGreaterThan表达式</remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IsGreaterThan(Of T As IComparable)(source As IEnumerable(Of T), compareTo As T) As IEnumerable(Of Integer)
+        Public Function IsGreaterThan(Of T As IComparable)(source As IEnumerable(Of T), compareTo As T) As IEnumerable(Of Integer)
             Return source _
                 .SeqIterator _
                 .Where(Function(o) Language.GreaterThan(o.value, compareTo)) _
@@ -228,7 +241,7 @@ Namespace Linq
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function IsGreaterThan(Of T, C As IComparable)(source As IEnumerable(Of T), getValue As Func(Of T, C), compareTo As C) As IEnumerable(Of Integer)
+        Public Function IsGreaterThan(Of T, C As IComparable)(source As IEnumerable(Of T), getValue As Func(Of T, C), compareTo As C) As IEnumerable(Of Integer)
             Return Which.IsGreaterThan(source.Select(getValue), compareTo)
         End Function
     End Class

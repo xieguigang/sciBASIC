@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Linq.Which
+Imports Microsoft.VisualBasic.Linq.WhichIndex
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports stdNum = System.Math
 
@@ -135,10 +135,10 @@ Namespace LinearAlgebra
 
         Default Public Overrides Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of Double)
             Get
-                Return New Vector(Of Double)(IsTrue(booleans).Select(Function(index) Me(index)))
+                Return New Vector(Of Double)(Linq.Which.IsTrue(booleans).Select(Function(index) Me(index)))
             End Get
             Set(value As Vector(Of Double))
-                For Each index As SeqValue(Of Integer) In IsTrue(booleans).SeqIterator
+                For Each index As SeqValue(Of Integer) In Linq.Which.IsTrue(booleans).SeqIterator
                     Call SetValue(index.value, value(index))
                 Next
             End Set

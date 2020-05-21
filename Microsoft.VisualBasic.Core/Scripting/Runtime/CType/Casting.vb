@@ -57,7 +57,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Scripting.Runtime
 

@@ -61,8 +61,17 @@ Namespace BarPlot.Histogram
         <Extension>
         Public Function NewModel(hist As IEnumerable(Of DataBinBox(Of Double)), step!, legend As Legend) As HistProfile
             Dim data As DataBinBox(Of Double)() = hist.ToArray
-            Dim min = data(Scan0).Raw.Min
+            Dim min As Double
             Dim boxes As New List(Of HistogramData)
+
+            If data.Length = 0 Then
+                Return New HistProfile With {
+                    .legend = legend,
+                    .data = {}
+                }
+            Else
+                min = data(Scan0).Raw.Min
+            End If
 
             For Each box In data
                 boxes += New HistogramData With {
