@@ -162,7 +162,11 @@ Public Module JSONSerializer
     Public Function GetJson(schema As Type, obj As Object, opt As JSONSerializerOptions) As String
         If obj Is Nothing Then
             Return "null"
-        ElseIf schema.IsArray OrElse schema.IsInheritsFrom(GetType(List(Of )), strict:=False) Then
+        ElseIf schema.IsAbstract OrElse schema Is GetType(Object) AndAlso Not obj Is Nothing Then
+            schema = obj.GetType
+        End If
+
+        If schema.IsArray OrElse schema.IsInheritsFrom(GetType(List(Of )), strict:=False) Then
             Dim elementJSON = schema.populateArrayJson(obj, opt).ToArray
 
             If opt.indent Then
@@ -198,11 +202,15 @@ Public Module JSONSerializer
 
             Return DirectCast(obj, IDictionary).populateTableJson(valueType, opt)
         Else
-            If schema.IsAbstract AndAlso Not obj Is Nothing Then
+            If Not opt.digest Is Nothing AndAlso opt.digest.ContainsKey(schema) Then
+                obj = opt.digest(schema)(obj)
                 schema = obj.GetType
+
+                Return GetJson(schema, obj, opt)
+            Else
+                ' isObject
+                Return schema.populateObjectJson(obj, opt)
             End If
-            ' isObject
-            Return schema.populateObjectJson(obj, opt)
         End If
     End Function
 End Module
