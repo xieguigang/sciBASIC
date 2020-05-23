@@ -61,7 +61,9 @@ Namespace Text
         Public ReadOnly Property UTF8WithoutBOM As New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False)
 
         ''' <summary>
-        ''' 获取操作系统的当前 ANSI 代码页的编码。这个属性可以通过``default_encoding``环境参数来设置
+        ''' <see cref="Encoding.Default"/>
+        ''' 
+        ''' (获取操作系统的当前 ANSI 代码页的编码。这个属性可以通过``default_encoding``环境参数来设置)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property DefaultEncoding As defaultEncoding = Encoding.Default
