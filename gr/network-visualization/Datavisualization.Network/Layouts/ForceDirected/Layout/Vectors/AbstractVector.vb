@@ -125,6 +125,10 @@ Namespace Layouts
             Return $"x={x}, y={y}, z={z}"
         End Function
 
+        Public Shared Function Vector2D(x#, y#) As FDGVector2
+            Return New FDGVector2(x, y)
+        End Function
+
         Public MustOverride Function Add(v2 As AbstractVector) As AbstractVector Implements IVector.Add
         Public MustOverride Function Subtract(v2 As AbstractVector) As AbstractVector Implements IVector.Subtract
         Public MustOverride Function Multiply(n As Single) As AbstractVector Implements IVector.Multiply

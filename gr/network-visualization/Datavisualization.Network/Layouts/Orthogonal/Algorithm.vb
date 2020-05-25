@@ -84,6 +84,9 @@ Namespace Layouts.Orthogonal
                 If V(i).data.size.IsNullOrEmpty Then
                     V(i).data.size = {defaultNodeSize, defaultNodeSize}
                 End If
+                If V(i).data.initialPostion Is Nothing Then
+                    V(i).data.initialPostion = AbstractVector.Vector2D(0, 0)
+                End If
             Next
 
             ' T的作用是用来计算交换的范围
