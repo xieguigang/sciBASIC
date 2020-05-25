@@ -61,41 +61,76 @@ Namespace Layouts.Orthogonal
 
         Public ReadOnly Property totalEdgeLength As Double
             Get
-                Dim len As Double
+                'Dim len As Double
 
-                For Each edge As Edge In g.graphEdges
-                    len += distance(edge.U, edge.V, cellSize, delta)
-                Next
+                'For Each edge As Edge In g.graphEdges
+                '    len += distance(edge.U, edge.V, cellSize, delta)
+                'Next
 
-                Return len
+                'Return len
+                Return g.graphEdges _
+                    .AsParallel _
+                    .Select(Function(edge)
+                                Return distance(edge.U, edge.V, cellSize, delta)
+                            End Function) _
+                    .Sum
             End Get
         End Property
 
         Public ReadOnly Property totalIntersections As Integer
             Get
-                Dim n As Integer
+                'Dim n As Integer
 
-                For Each i As Edge In g.graphEdges
-                    Dim a = i.U.data.initialPostion
-                    Dim b = i.V.data.initialPostion
+                'For Each i As Edge In g.graphEdges
+                '    Dim a = i.U.data.initialPostion
+                '    Dim b = i.V.data.initialPostion
 
-                    For Each j As Edge In g.graphEdges
-                        If i Is j Then
-                            Continue For
-                        End If
+                '    For Each j As Edge In g.graphEdges
+                '        If i Is j Then
+                '            Continue For
+                '        End If
 
-                        Dim c = j.U.data.initialPostion
-                        Dim d = j.V.data.initialPostion
+                '        Dim c = j.U.data.initialPostion
+                '        Dim d = j.V.data.initialPostion
 
-                        If GeometryMath.GetLineIntersection(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y) = Intersections.Intersection Then
-                            n += 1
-                        End If
-                    Next
-                Next
+                '        If GeometryMath.GetLineIntersection(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y) = Intersections.Intersection Then
+                '            n += 1
+                '        End If
+                '    Next
+                'Next
 
-                Return n
+                'Return n
+                Return g.graphEdges _
+                    .AsParallel _
+                    .Select(AddressOf intersectionCounts) _
+                    .Sum
             End Get
         End Property
+
+        Private Function intersectionCounts(i As Edge) As Integer
+            Dim a = i.U.data.initialPostion
+            Dim b = i.V.data.initialPostion
+            Dim n As Integer
+
+            For Each j As Edge In g.graphEdges
+                If i Is j Then
+                    Continue For
+                End If
+
+                Dim c = j.U.data.initialPostion
+                Dim d = j.V.data.initialPostion
+
+                If GeometryMath.GetLineIntersection(a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y) = Intersections.Intersection Then
+                    n += 1
+                End If
+            Next
+
+            Return n
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"total length: {totalEdgeLength}, temperature: {totalIntersections}"
+        End Function
 
     End Class
 End Namespace

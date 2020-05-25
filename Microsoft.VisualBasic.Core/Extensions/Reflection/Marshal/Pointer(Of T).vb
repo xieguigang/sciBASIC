@@ -247,6 +247,18 @@ Namespace Emit.Marshal
         '    Return p(offset)
         'End Operator
 
+        Public Overloads Shared Operator IsTrue(p As Pointer(Of T)) As Boolean
+            Return Not p.EndRead
+        End Operator
+
+        Public Overloads Shared Operator IsFalse(p As Pointer(Of T)) As Boolean
+            Return p.EndRead
+        End Operator
+
+        Public Overloads Shared Operator Not(p As Pointer(Of T)) As Boolean
+            Return Not p.EndRead
+        End Operator
+
         ''' <summary>
         ''' 获取得到当前的元素
         ''' </summary>

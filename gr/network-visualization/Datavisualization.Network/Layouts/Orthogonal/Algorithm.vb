@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::fd953f7da3c73e4a852839d0a6020852, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Algorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Algorithm
-    ' 
-    '         Function: neighboursMedianX, neighboursMedianY, ResetNodeSize
-    ' 
-    '         Sub: DoLayout, SwapNearbyNode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Algorithm
+' 
+'         Function: neighboursMedianX, neighboursMedianY, ResetNodeSize
+' 
+'         Sub: DoLayout, SwapNearbyNode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,12 +73,12 @@ Namespace Layouts.Orthogonal
         ''' some minimum distance between node has to be ensured
         ''' </param>
         <Extension>
-        Public Sub DoLayout(graph As NetworkGraph, gridSize As Size, Optional delta# = 1, Optional defaultNodeSize# = 1)
+        Public Sub DoLayout(graph As NetworkGraph, gridSize As Size, Optional delta# = 1, Optional defaultNodeSize# = 1, Optional debug As Boolean = True)
             ' 只针对非孤立的网络节点来进行布局的计算
             ' 孤立节点会在for循环中的swap步骤进行被动布局
             Dim V As Node() = graph.GetConnectedVertex.ToArray
             Dim compactionDir = True
-            Dim iterationCount = 90 * V.Length
+            Dim iterationCount = 1 * V.Length
 
             For i As Integer = 0 To V.Length - 1
                 If V(i).data.size.IsNullOrEmpty Then
@@ -131,14 +131,17 @@ Namespace Layouts.Orthogonal
 
                     ' if vj has not changed it’s place from the previous iteration then
                     If Not gridCell Is currentCell AndAlso Not gridCell.data Is V(j) Then
-                        Call grid.SwapNode(currentCell.index, gridCell.index)
+                        ' Call grid.SwapNode(currentCell.index, gridCell.index)
+                        Call workspace.TrySwapTwoNode(origin:=gridCell, target:=currentCell)
                     Else
                         ' Try to swap vj with nodes nearby;
                         Call workspace.SwapNearbyNode(origin:=gridCell)
                     End If
                 Next
 
-                Call Console.WriteLine("[{0}] {1}%, T={2}, total:={3}", i, (100 * i / [stop]).ToString("F2"), T, totalEdgeLength)
+                If debug Then
+                    Call Console.WriteLine("[{0}] {1}%, T={2}, total:={3}", i, (100 * i / [stop]).ToString("F2"), T, totalEdgeLength)
+                End If
 
                 If iterationCount Mod 9 = 0 Then
                     workspace.compact(compactionDir, 3, False)
@@ -166,14 +169,17 @@ Namespace Layouts.Orthogonal
 
                     ' if vj has not changed it’s place from the previous iteration then
                     If Not gridCell Is currentCell AndAlso Not gridCell.data Is V(j) Then
-                        Call grid.SwapNode(currentCell.index, gridCell.index)
+                        ' Call grid.SwapNode(currentCell.index, gridCell.index)
+                        Call workspace.TrySwapTwoNode(origin:=gridCell, target:=currentCell)
                     Else
                         ' Try to swap vj with nodes nearby;
                         Call workspace.SwapNearbyNode(origin:=gridCell)
                     End If
                 Next
 
-                Call Console.WriteLine("[{0}] {1}%, T={2}", i, (100 * i / iterationCount).ToString("F2"), T)
+                If debug Then
+                    Call Console.WriteLine("[{0}] {1}%, T={2}", i, (100 * i / iterationCount).ToString("F2"), T)
+                End If
 
                 If iterationCount Mod 9 = 0 Then
                     workspace.compact(compactionDir, stdNum.Max(1, 1 + 2 * (iterationCount - i - 30) / (0.5 * iterationCount)), False)
@@ -187,11 +193,46 @@ Namespace Layouts.Orthogonal
         End Sub
 
         <Extension>
-        Private Sub SwapNearbyNode(workspace As Workspace, origin As GridCell)
-            ' Dim totalLenBefore As Double = workspace.totalEdgeLength
+        Private Sub TrySwapTwoNode(workspace As Workspace, origin As GridCell, target As GridCell)
+            Dim totalLenBefore As Double = workspace.totalEdgeLength
             Dim totalIntersectionsBefore As Double = workspace.totalIntersections
-            Dim totalAfter As Double
-            Dim gain As Double
+            Dim gainLen As Double
+            Dim gainInter As Double
+
+            If target.data Is Nothing Then
+                ' 附近的单元格是没有节点的，直接放置进去?
+                Call workspace.grid.MoveNode(origin.index, target.index)
+            Else
+                Call workspace.grid.SwapNode(origin.index, target.index)
+            End If
+
+            gainLen = workspace.totalEdgeLength - totalLenBefore
+            gainInter = totalIntersectionsBefore - workspace.totalIntersections
+
+            ' 目的是减少相交的边连接
+            If gainLen * gainInter > 0 Then
+                Return
+                'End If
+                '
+                'totalAfter = workspace.totalEdgeLength
+                'gain = totalAfter - totalLenBefore
+                '
+                'If gain > 0 Then
+                'Exit For
+            Else
+                ' restore
+                Call workspace.grid.SwapNode(origin.index, target.index)
+            End If
+        End Sub
+
+        <Extension>
+        Private Sub SwapNearbyNode(workspace As Workspace, origin As GridCell)
+            ' 因为为了避免重复计算totalEdgeLength而带来的性能损失
+            ' 在这里就不和TrySwapTwoNode函数的调用进行合并了
+            Dim totalLenBefore As Double = workspace.totalEdgeLength
+            Dim totalIntersectionsBefore As Double = workspace.totalIntersections
+            Dim gainLen As Double
+            Dim gainInter As Double
 
             For Each nearby As GridCell In workspace.grid.GetAdjacentCells(origin.index).Shuffles
                 If nearby.data Is Nothing Then
@@ -201,11 +242,11 @@ Namespace Layouts.Orthogonal
                     Call workspace.grid.SwapNode(origin.index, nearby.index)
                 End If
 
-                totalAfter = workspace.totalIntersections
-                gain = totalAfter - totalIntersectionsBefore
+                gainLen = workspace.totalEdgeLength - totalLenBefore
+                gainInter = totalIntersectionsBefore - workspace.totalIntersections
 
                 ' 目的是减少相交的边连接
-                If gain < 0 Then
+                If gainLen * gainInter > 0 Then
                     Exit For
                     'End If
                     '
