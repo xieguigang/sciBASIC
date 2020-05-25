@@ -73,12 +73,19 @@ Namespace Layouts.Orthogonal
         ''' some minimum distance between node has to be ensured
         ''' </param>
         <Extension>
-        Public Sub DoLayout(graph As NetworkGraph, gridSize As Size, Optional delta# = 1)
+        Public Sub DoLayout(graph As NetworkGraph, gridSize As Size, Optional delta# = 1, Optional defaultNodeSize# = 1)
             ' 只针对非孤立的网络节点来进行布局的计算
             ' 孤立节点会在for循环中的swap步骤进行被动布局
             Dim V As Node() = graph.GetConnectedVertex.ToArray
             Dim compactionDir = True
             Dim iterationCount = 90 * V.Length
+
+            For i As Integer = 0 To V.Length - 1
+                If V(i).data.size.IsNullOrEmpty Then
+                    V(i).data.size = {defaultNodeSize, defaultNodeSize}
+                End If
+            Next
+
             ' T的作用是用来计算交换的范围
             ' 随着迭代的进行T将会越来越小
             ' 交换的范围从开始的非常大到最终的非常小
