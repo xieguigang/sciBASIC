@@ -94,6 +94,22 @@ Namespace Layouts.EdgeBundling
         ''' <param name="tX">x of target node</param>
         ''' <param name="tY">y of target node</param>
         ''' <returns></returns>
+        Public Function pointAuto(sX As Double, sY As Double, tX As Double, tY As Double) As PointF
+            If isDirectPoint Then
+                Return originalLocation
+            Else
+                Return convert(sX, sY, tX, tY)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Rotate And scale the vector to the handle position
+        ''' </summary>
+        ''' <param name="sX">x of source node</param>
+        ''' <param name="sY">y of source node</param>
+        ''' <param name="tX">x of target node</param>
+        ''' <param name="tY">y of target node</param>
+        ''' <returns></returns>
         Public Function convert(sX As Double, sY As Double, tX As Double, tY As Double) As PointF
             ' Original edge vector v = (vx, vy). (from source to target)
             Dim vx = tX - sX

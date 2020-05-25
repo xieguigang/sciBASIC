@@ -634,6 +634,7 @@
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected3D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected2D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVectorExtensions.vb" />
+    <Compile Include="Layouts\Orthogonal\Router.vb" />
     <Compile Include="Layouts\Orthogonal\Workspace.vb" />
     <Compile Include="Layouts\Orthogonal\Math.vb" />
     <Compile Include="Layouts\Orthogonal\Compaction.vb" />

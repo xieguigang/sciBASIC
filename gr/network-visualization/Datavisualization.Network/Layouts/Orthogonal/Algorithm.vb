@@ -73,12 +73,20 @@ Namespace Layouts.Orthogonal
         ''' some minimum distance between node has to be ensured
         ''' </param>
         <Extension>
-        Public Sub DoLayout(graph As NetworkGraph, gridSize As Size, Optional delta# = 1, Optional defaultNodeSize# = 1, Optional debug As Boolean = True)
+        Public Sub DoLayout(graph As NetworkGraph, gridSize As Size,
+                            Optional delta# = 1,
+                            Optional defaultNodeSize# = 1,
+                            Optional iterationCount% = -1,
+                            Optional debug As Boolean = True)
+
             ' 只针对非孤立的网络节点来进行布局的计算
             ' 孤立节点会在for循环中的swap步骤进行被动布局
             Dim V As Node() = graph.GetConnectedVertex.ToArray
             Dim compactionDir = True
-            Dim iterationCount = 1 * V.Length
+
+            If iterationCount <= 0 Then
+                iterationCount = 2 * V.Length
+            End If
 
             For i As Integer = 0 To V.Length - 1
                 If V(i).data.size.IsNullOrEmpty Then

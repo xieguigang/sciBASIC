@@ -646,12 +646,12 @@ Public Module NetworkVisualizer
                            Call g.DrawLine(lineColor, line(0), line(1))
                        End Sub
             Try
-                Dim bends = edge.data.bends _
-                    .SafeQuery _
-                    .Where(Function(bend)
-                               Return Not bend.isDirectPoint
-                           End Function) _
-                    .ToArray
+                Dim bends As Handle() = edge.data.bends.SafeQuery.ToArray
+                '.SafeQuery _
+                '.Where(Function(bend)
+                '           Return Not bend.isDirectPoint
+                '       End Function) _
+                '.ToArray
 
                 If drawEdgeBends AndAlso Not bends.IsNullOrEmpty Then
                     If bends.Length <> edge.data.bends.Length Then
@@ -662,8 +662,8 @@ Public Module NetworkVisualizer
                         Call draw({a, b})
                     Else
                         For Each line As SlideWindow(Of Handle) In bends.SlideWindows(2)
-                            Dim pta = line(Scan0).convert(a.X, a.Y, b.X, b.Y)
-                            Dim ptb = line(1).convert(a.X, a.Y, b.X, b.Y)
+                            Dim pta = line(Scan0).pointAuto(a.X, a.Y, b.X, b.Y)
+                            Dim ptb = line(1).pointAuto(a.X, a.Y, b.X, b.Y)
 
                             Call {pta, ptb}.DoCall(draw)
                         Next
