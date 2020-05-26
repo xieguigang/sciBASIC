@@ -29,6 +29,14 @@ Namespace Layouts.EdgeBundling
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="source">边的起始位点</param>
+        ''' <param name="target">边的终止位点</param>
+        ''' <param name="x">当前的这个拐点的X位置</param>
+        ''' <param name="y">当前的这个拐点的Y位置</param>
+        ''' <returns></returns>
         Public Function defineHandle(source As PointF, target As PointF, x#, y#) As Handle
             Return convertToRatio(source, target, New PointF(x, y))
         End Function
