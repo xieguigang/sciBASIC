@@ -76,7 +76,7 @@ Namespace Layouts.EdgeBundling
                 handle.cosTheta = If(dotProduct = 0.0#, 0, dotProduct / (dist1 * dist2))
 
                 ' Avoid rounding problem
-                If handle.cosTheta > 0.99 Then
+                If handle.cosTheta > 1 Then
                     handle.cosTheta = 1
                 End If
 
