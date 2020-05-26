@@ -21,7 +21,9 @@ Namespace Layouts.Orthogonal
                 Dim points As New List(Of Handle)
 
                 points += HandleCreator.defineHandle(a, b, a.X, a.Y)
-                points += HandleCreator.defineHandle(a, b, b.X, a.Y)
+                points += HandleCreator.defineHandle(a, b, a.X, (a.Y + b.Y) / 2)
+                points += HandleCreator.defineHandle(a, b, a.X, b.Y)
+                points += HandleCreator.defineHandle(a, b, (a.X + b.X) / 2, b.Y)
                 points += HandleCreator.defineHandle(a, b, b.X, b.Y)
 
                 edge.data.bends = points.ToArray

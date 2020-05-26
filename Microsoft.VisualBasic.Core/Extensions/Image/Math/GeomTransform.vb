@@ -286,7 +286,20 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
-            Return stdNum.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+            Return stdNum.Sqrt(stdNum.Pow(x1 - x2, 2) + stdNum.Pow(y1 - y2, 2))
+        End Function
+
+        ''' <summary>
+        ''' 计算两个二维坐标的欧几里得距离
+        ''' </summary>
+        ''' <param name="x1#"></param>
+        ''' <param name="y1#"></param>
+        ''' <param name="x2#"></param>
+        ''' <param name="y2#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Distance(x1 As Decimal, y1 As Decimal, x2 As Decimal, y2 As Decimal) As Double
+            Return stdNum.Sqrt(stdNum.Pow(x1 - x2, 2) + stdNum.Pow(y1 - y2, 2))
         End Function
 
         ''' <summary>

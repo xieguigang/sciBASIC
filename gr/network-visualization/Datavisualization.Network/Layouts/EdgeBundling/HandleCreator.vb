@@ -34,32 +34,17 @@ Namespace Layouts.EdgeBundling
         ''' </summary>
         ''' <param name="source">边的起始位点</param>
         ''' <param name="target">边的终止位点</param>
-        ''' <param name="x">当前的这个拐点的X位置</param>
-        ''' <param name="y">当前的这个拐点的Y位置</param>
+        ''' <param name="hx">当前的这个拐点的X位置</param>
+        ''' <param name="hy">当前的这个拐点的Y位置</param>
         ''' <returns></returns>
-        Public Function defineHandle(source As PointF, target As PointF, x#, y#) As Handle
-            Return convertToRatio(source, target, New PointF(x, y))
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="source"></param>
-        ''' <param name="target"></param>
-        ''' <param name="absolutePoint">拐点的位置</param>
-        ''' <returns></returns>
-        Public Function convertToRatio(source As PointF, target As PointF, absolutePoint As PointF) As Handle
+        Public Function defineHandle(source As PointF, target As PointF, hx#, hy#) As Handle
             ' Location of source node
-            Dim sX = source.X
-            Dim sY = source.Y
+            Dim sX As Decimal = source.X
+            Dim sY As Decimal = source.Y
 
             ' Location of target node
-            Dim tX = target.X
-            Dim tY = target.Y
-
-            ' Location of handle
-            Dim hX = absolutePoint.X
-            Dim hY = absolutePoint.Y
+            Dim tX As Decimal = target.X
+            Dim tY As Decimal = target.Y
 
             ' Vector v1
             ' Distance from source to target (Edge length)
@@ -78,8 +63,8 @@ Namespace Layouts.EdgeBundling
             Else
                 ' Vector v2
                 ' Distance from source to current handle
-                Dim v2x = hX - sX
-                Dim v2y = hY - sY
+                Dim v2x As Decimal = hx - sX
+                Dim v2y As Decimal = hy - sY
                 ' final double dist2 = Math.sqrt(Math.pow(v2x, 2) + Math.pow(v2y, 2));
                 Dim dist2 = geometry.Distance(sX, sY, hX, hY)
 
@@ -88,10 +73,10 @@ Namespace Layouts.EdgeBundling
 
                 ' Dot product of v1 And v2
                 Dim dotProduct = (v1x * v2x) + (v1y * v2y)
-                handle.cosTheta = If(dotProduct = 0.0!, 0, dotProduct / (dist1 * dist2))
+                handle.cosTheta = If(dotProduct = 0.0#, 0, dotProduct / (dist1 * dist2))
 
                 ' Avoid rounding problem
-                If handle.cosTheta > 1 Then
+                If handle.cosTheta > 0.99 Then
                     handle.cosTheta = 1
                 End If
 

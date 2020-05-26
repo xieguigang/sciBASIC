@@ -97,7 +97,7 @@ Namespace Layouts
 
         Const MaxGdiDimensionPixels = 20000
 
-        Public Property Point2D As Point
+        Public Property Point2D As PointF
             Get
                 If x.IsNaNImaginary OrElse x > MaxGdiDimensionPixels Then
                     x = MaxGdiDimensionPixels
@@ -110,11 +110,11 @@ Namespace Layouts
                     y = -MaxGdiDimensionPixels
                 End If
 
-                Return New Point(x, y)
+                Return New PointF(x, y)
             End Get
-            Set(value As Point)
-                x = value.X
-                y = value.Y
+            Set
+                x = Value.X
+                y = Value.Y
             End Set
         End Property
 
