@@ -49,20 +49,20 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace Layouts.EdgeBundling
 
     ''' <summary>
-    ''' 进行网络之中的边连接的布局走向的拐点的矢量化描述
+    ''' 进行网络之中的边连接的布局走向的``拐点``的矢量化描述
     ''' </summary>
     ''' <remarks>
     ''' https://github.com/cytoscape/cytoscape-impl/blob/93530ef3b35511d9b1fe0d0eb913ecdcd3b456a8/ding-impl/ding-presentation-impl/src/main/java/org/cytoscape/ding/impl/HandleImpl.java#L247
     ''' </remarks>
     Public Class Handle
 
-        Dim cosTheta# = Double.NaN
-        Dim sinTheta# = Double.NaN
-        Dim ratio# = Double.NaN
+        Friend cosTheta# = Double.NaN
+        Friend sinTheta# = Double.NaN
+        Friend ratio# = Double.NaN
 
         ' Original handle location
-        Dim x# = 0
-        Dim y# = 0
+        Friend x# = 0
+        Friend y# = 0
 
         Const DELIMITER As Char = ","c
 
@@ -72,6 +72,10 @@ Namespace Layouts.EdgeBundling
             End Get
         End Property
 
+        ''' <summary>
+        ''' 当前的这个位置是一个绝对位置，并非矢量描述位置
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property originalLocation As PointF
             Get
                 Return New PointF(x, y)
