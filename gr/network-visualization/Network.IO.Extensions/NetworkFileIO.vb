@@ -76,8 +76,21 @@ Public Module NetworkFileIO
         Return New Network(Of T_Node, T_Edge) With {
             .edges = $"{directory}/network-edges.csv".LoadCsv(Of T_Edge),
             .nodes = $"{directory}/nodes.csv".LoadCsv(Of T_Node),
-            .meta = $"{directory}/meta.json".LoadJSON(Of MetaData) Or (New MetaData).AsDefault
+            .meta = loadMetaJson(directory)
         }
+    End Function
+
+    Private Function loadMetaJson(directory As String) As MetaData
+        Dim metaJson = $"{directory}/meta.json"
+        Dim meta As MetaData
+
+        If metaJson.FileExists Then
+            meta = metaJson.LoadJSON(Of MetaData) Or (New MetaData).AsDefault
+        Else
+            meta = New MetaData
+        End If
+
+        Return meta
     End Function
 
     ''' <summary>
@@ -94,7 +107,7 @@ Public Module NetworkFileIO
             Return New NetworkTables With {
                 .edges = tables.edges.LoadCsv(Of NetworkEdge),
                 .nodes = tables.nodes.LoadCsv(Of Node),
-                .meta = $"{DIR}/meta.json".LoadJSON(Of MetaData) Or (New MetaData).AsDefault
+                .meta = loadMetaJson(DIR)
             }
         End If
     End Function

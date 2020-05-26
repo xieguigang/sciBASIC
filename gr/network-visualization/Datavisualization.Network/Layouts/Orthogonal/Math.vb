@@ -101,7 +101,15 @@ Namespace Layouts.Orthogonal
         Public Function GridCellSize(nodes As IEnumerable(Of Node)) As Double
             Dim nodeVector = nodes.ToArray
             Dim w = nodeVector.Select(Function(n) n.data.size(0)).ToArray
-            Dim h = nodeVector.Select(Function(n) n.data.size(1)).ToArray
+            Dim h As Double() = nodeVector _
+                .Select(Function(n)
+                            If n.data.size.Length < 2 Then
+                                Return n.data.size(Scan0)
+                            Else
+                                Return n.data.size(1)
+                            End If
+                        End Function) _
+                .ToArray
             Dim Lmin = stdNum.Min(w.Min, h.Min)
             Dim Lmax = stdNum.Max(w.Max, h.Max)
 

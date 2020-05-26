@@ -91,6 +91,8 @@ Namespace Layouts.Orthogonal
             For i As Integer = 0 To V.Length - 1
                 If V(i).data.size.IsNullOrEmpty Then
                     V(i).data.size = {defaultNodeSize, defaultNodeSize}
+                ElseIf V(i).data.size.Length = 1 Then
+                    V(i).data.size = {V(i).data.size(Scan0), V(i).data.size(Scan0)}
                 End If
                 If V(i).data.initialPostion Is Nothing Then
                     V(i).data.initialPostion = AbstractVector.Vector2D(0, 0)
