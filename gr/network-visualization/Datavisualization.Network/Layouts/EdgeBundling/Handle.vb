@@ -162,11 +162,11 @@ Namespace Layouts.EdgeBundling
             Else
                 Return strRepresentation _
                     .Split("|"c) _
-                    .Select(AddressOf parseHandle)
+                    .Select(AddressOf ParseHandle)
             End If
         End Function
 
-        Private Shared Function parseHandle(str As String) As Handle
+        Private Shared Function ParseHandle(str As String) As Handle
             Dim parts As Double() = str _
                 .Split(DELIMITER) _
                 .Select(AddressOf Double.Parse) _
