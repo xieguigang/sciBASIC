@@ -1,5 +1,4 @@
-﻿Imports System.Drawing
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
 Imports Microsoft.VisualBasic.Language
@@ -21,7 +20,7 @@ Namespace Layouts.Orthogonal
                 Dim b = edge.V.data.initialPostion.Point2D
                 Dim points As New List(Of Handle)
 
-                points += HandleCreator.defineHandle(a, b, a.X, b.Y)
+                points += HandleCreator.defineHandle(a, b, a.X, a.Y)
                 points += HandleCreator.defineHandle(a, b, b.X, a.Y)
                 points += HandleCreator.defineHandle(a, b, b.X, b.Y)
 

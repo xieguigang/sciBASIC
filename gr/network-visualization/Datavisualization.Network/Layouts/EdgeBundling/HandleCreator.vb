@@ -88,7 +88,7 @@ Namespace Layouts.EdgeBundling
 
                 ' Dot product of v1 And v2
                 Dim dotProduct = (v1x * v2x) + (v1y * v2y)
-                handle.cosTheta = dotProduct / (dist1 * dist2)
+                handle.cosTheta = If(dotProduct = 0.0!, 0, dotProduct / (dist1 * dist2))
 
                 ' Avoid rounding problem
                 If handle.cosTheta > 1 Then
