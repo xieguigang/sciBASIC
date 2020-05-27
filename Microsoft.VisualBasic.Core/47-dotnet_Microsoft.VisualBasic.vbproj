@@ -1143,6 +1143,8 @@
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
@@ -1770,7 +1772,7 @@
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb" />
-    <Compile Include="ApplicationServices\Terminal\Utility\ManualPages.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\ManualPages.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Linq\CPOLLicense.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsCovariance.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb" />
