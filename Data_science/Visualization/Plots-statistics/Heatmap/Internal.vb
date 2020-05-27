@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5a36ac06a9864684d5d6fbcccee54d8, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::82d9eb7c427e5c2094dfe5d347b6665d, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Internal
     ' 
-    '         Function: doPlot, Log
+    '         Function: DataScaleLevels, doPlot, Log
     ' 
     '         Sub: DrawClass
     ' 

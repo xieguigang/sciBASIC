@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1fce60ec1f9cb29f4d279fcbc48b6be, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::a833ab8148b9d516325196f6ae3f944e, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module NetworkFileIO
     ' 
-    '     Function: IsEmptyTables, (+2 Overloads) Load, Save
+    '     Function: IsEmptyTables, (+2 Overloads) Load, loadMetaJson, Save
     ' 
     ' /********************************************************************************/
 

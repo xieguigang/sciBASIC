@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a5d321babc2b043212c8da631cfb5ea, Microsoft.VisualBasic.Core\Text\IO\Encodings.vb"
+﻿#Region "Microsoft.VisualBasic::2951c98b0cb5bc1f46b422c8bf436421, Microsoft.VisualBasic.Core\Text\IO\Encodings.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Text
 

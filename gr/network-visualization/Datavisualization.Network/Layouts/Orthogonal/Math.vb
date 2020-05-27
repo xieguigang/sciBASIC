@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd5c2e237b4aee3d73b1e2079954be6d, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Math.vb"
+﻿#Region "Microsoft.VisualBasic::b63cce605f44a24371200da47f0df874, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Math.vb"
 
     ' Author:
     ' 

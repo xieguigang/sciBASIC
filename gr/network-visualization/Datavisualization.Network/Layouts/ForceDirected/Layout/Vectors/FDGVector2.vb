@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5dd1a71f26b694b3403955021ec400f, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\FDGVector2.vb"
+﻿#Region "Microsoft.VisualBasic::293989434f626172ffa2f217d395156a, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\FDGVector2.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class FDGVector2
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
     '                   Magnitude, Multiply, Normal, Normalize, Random
     '                   SetIdentity, SetZero, Subtract, Zero

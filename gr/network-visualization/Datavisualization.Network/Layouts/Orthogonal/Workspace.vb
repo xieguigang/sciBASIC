@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30fc98f61ee17f034d4deeafae91aed9, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::5cf45fb0eca42c7b1e9459d8e8d2836e, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Workspace.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Class Workspace
     ' 
     '         Properties: totalEdgeLength, totalIntersections
+    ' 
+    '         Function: intersectionCounts, ToString
     ' 
     ' 
     ' /********************************************************************************/

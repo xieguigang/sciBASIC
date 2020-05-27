@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8faba21490d0e9f7c4d08f0e4e38e028, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
+﻿#Region "Microsoft.VisualBasic::a892db87c395ca10c4076a0698abd7c1, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 

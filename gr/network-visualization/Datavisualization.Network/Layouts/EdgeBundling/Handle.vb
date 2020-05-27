@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::248a39b15bd2d7d403929814eabb921c, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle.vb"
+﻿#Region "Microsoft.VisualBasic::f5367ca3557b887bc063a200f7d26c30, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: isDirectPoint, originalLocation
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: convert, getSerializableString, parseHandle, ParseHandles, ToString
+    '         Function: convert, getSerializableString, ParseHandle, ParseHandles, pointAuto
+    '                   ToString
     ' 
     ' 
     ' /********************************************************************************/

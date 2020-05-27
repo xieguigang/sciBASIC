@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c734a53e8b2db35559e389ab1e6dfe, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Doppler.vb"
+﻿#Region "Microsoft.VisualBasic::90ebf5768b21e30ccf8c4c86d36ef286, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Doppler.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Public Module Doppler
         Throw New NotImplementedException
     End Function
 End Module
-
