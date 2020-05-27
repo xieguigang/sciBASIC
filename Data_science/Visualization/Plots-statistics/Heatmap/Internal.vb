@@ -149,6 +149,31 @@ Namespace Heatmap
             End If
         End Sub
 
+        <Extension>
+        Public Function DataScaleLevels(array As DataSet(), keys$(), logScale#, scaleMethod As DrawElements, levels%)
+            Dim scaleData As DataSet()
+
+            If logScale > 0 Then
+                Dim names As New NamedVectorFactory(keys)
+
+                scaleData = array _
+                    .Select(Function(x)
+                                Dim vector As Vector = names.AsVector(x.Properties)
+                                vector = Vector.Log(vector, logScale)
+
+                                Return New DataSet With {
+                                    .ID = x.ID,
+                                    .Properties = names.Translate(vector)
+                                }
+                            End Function) _
+                    .ToArray
+            Else
+                scaleData = array
+            End If
+
+            Return scaleData.DoDataScale(scaleMethod, levels - 1)
+        End Function
+
         ''' <summary>
         ''' 一些共同的绘图元素过程
         ''' </summary>
@@ -366,30 +391,12 @@ Namespace Heatmap
                         End If
                     End If
 
-                    Dim scaleData As DataSet()
 
-                    If logScale > 0 Then
-                        Dim names As New NamedVectorFactory(keys)
-
-                        scaleData = array _
-                            .Select(Function(x)
-                                        Dim vector As Vector = names.AsVector(x.Properties)
-                                        vector = Vector.Log(vector, logScale)
-
-                                        Return New DataSet With {
-                                            .ID = x.ID,
-                                            .Properties = names.Translate(vector)
-                                        }
-                                    End Function) _
-                            .ToArray
-                    Else
-                        scaleData = array
-                    End If
 
                     Dim args As New PlotArguments With {
                         .colors = colors,
                         .left = left,
-                        .levels = scaleData.DoDataScale(scaleMethod, colors.Length - 1),
+                        .levels = array.DataScaleLevels(keys, logScale, scaleMethod, colors.Length),
                         .top = top,
                         .ColOrders = colKeys,
                         .RowOrders = rowKeys,

@@ -120,17 +120,23 @@ Namespace Drawing2D
         Sub New()
             Dim type$ = Strings.LCase(App.GetVariable(GraphicDriverEnvironmentConfigName))
 
-            Select Case type
-                Case "svg" : g.__defaultDriver = Drivers.SVG
-                Case "gdi" : g.__defaultDriver = Drivers.GDI
-                Case "ps" : g.__defaultDriver = Drivers.PS
-                Case "wmf" : g.__defaultDriver = Drivers.WMF
-                Case Else
-                    g.__defaultDriver = Drivers.Default
-            End Select
+            g.__defaultDriver = ParseDriverEnumValue(type)
 
             Call $"The default graphics driver value is config as {g.__defaultDriver.Description}({type}).".__INFO_ECHO
         End Sub
+
+        Public Function ParseDriverEnumValue(str As String) As Drivers
+            Dim type$ = Strings.LCase(str)
+
+            Select Case type
+                Case "svg" : Return Drivers.SVG
+                Case "gdi" : Return Drivers.GDI
+                Case "ps" : Return Drivers.PS
+                Case "wmf" : Return Drivers.WMF
+                Case Else
+                    Return Drivers.Default
+            End Select
+        End Function
 
         ''' <summary>
         ''' Get the result from commandline environment variable: ``graphic_driver``

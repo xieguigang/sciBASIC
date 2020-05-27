@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::34463f5b11d7217102871b5f64a86aac, Data_science\Mathematica\Math\DataFrame\Correlation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Correlation
-    ' 
-    '     Function: CorrelatesNormalized, CorrelationMatrix, Pearson, Spearman
-    ' 
-    ' /********************************************************************************/
+' Module Correlation
+' 
+'     Function: CorrelatesNormalized, CorrelationMatrix, Pearson, Spearman
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations.Correlations
 
@@ -53,13 +53,13 @@ Public Module Correlation
     ''' <returns></returns>
     ''' 
     <Extension>
-    Public Function CorrelationMatrix(data As IEnumerable(Of DataSet), Optional doCor As ICorrelation = Nothing) As IEnumerable(Of DataSet)
-        Dim dataset As DataSet() = data.ToArray
-        Dim columns = dataset.PropertyNames _
+    Public Function CorrelationMatrix(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional doCor As ICorrelation = Nothing) As IEnumerable(Of DataSet)
+        Dim dataVals As DataSet() = data.ToArray
+        Dim columns = dataVals.PropertyNames _
             .Select(Function(colName)
                         Return New NamedValue(Of Double()) With {
                             .Name = colName,
-                            .Value = dataset _
+                            .Value = dataVals _
                                 .Select(Function(d) d(colName)) _
                                 .ToArray
                         }
@@ -69,7 +69,7 @@ Public Module Correlation
         Return Correlations.CorrelationMatrix(columns, doCor) _
             .Select(Function(r)
                         Return New DataSet With {
-                            .ID = r.Name,
+                            .Key = r.Name,
                             .Properties = r.Value
                         }
                     End Function)
@@ -82,9 +82,9 @@ Public Module Correlation
     ''' <param name="doCor">假若这个参数为空，则默认使用<see cref="Correlations.GetPearson(Double(), Double())"/></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function CorrelatesNormalized(data As IEnumerable(Of DataSet), Optional doCor As ICorrelation = Nothing) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
-        Dim dataset As DataSet() = data.ToArray
-        Dim keys$() = dataset(Scan0) _
+    Public Iterator Function CorrelatesNormalized(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional doCor As ICorrelation = Nothing) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
+        Dim dataVals As DataSet() = data.ToArray
+        Dim keys$() = dataVals(Scan0) _
             .Properties _
             .Keys _
             .ToArray
@@ -92,19 +92,19 @@ Public Module Correlation
 
         doCor = doCor Or PearsonDefault
 
-        For Each x As DataSet In dataset
+        For Each x As DataSet In dataVals
             Dim out As New Dictionary(Of String, Double)
             Dim array#() = keys _
                 .Select(Of Double)(x) _
                 .ToArray
 
-            For Each y As DataSet In dataset
+            For Each y As DataSet In dataVals
                 b = keys.Select(Of Double)(y).ToArray
-                out(y.ID) = doCor(X:=array, Y:=b)
+                out(y.Key) = doCor(X:=array, Y:=b)
             Next
 
             Yield New NamedValue(Of Dictionary(Of String, Double)) With {
-                .Name = x.ID,
+                .Name = x.Key,
                 .Value = out
             }
         Next
@@ -112,12 +112,12 @@ Public Module Correlation
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Pearson(data As IEnumerable(Of DataSet), Optional visit As MatrixVisit = MatrixVisit.ByRow) As IEnumerable(Of DataSet)
+    Public Function Pearson(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional visit As MatrixVisit = MatrixVisit.ByRow) As IEnumerable(Of DataSet)
         If visit = MatrixVisit.ByRow Then
             Return data.CorrelatesNormalized(AddressOf GetPearson) _
                 .Select(Function(r)
                             Return New DataSet With {
-                                .ID = r.Name,
+                                .Key = r.Name,
                                 .Properties = r.Value
                             }
                         End Function)
@@ -128,12 +128,12 @@ Public Module Correlation
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Spearman(data As IEnumerable(Of DataSet), Optional visit As MatrixVisit = MatrixVisit.ByRow) As IEnumerable(Of DataSet)
+    Public Function Spearman(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional visit As MatrixVisit = MatrixVisit.ByRow) As IEnumerable(Of DataSet)
         If visit = MatrixVisit.ByRow Then
             Return data.CorrelatesNormalized(AddressOf Correlations.Spearman) _
                 .Select(Function(r)
                             Return New DataSet With {
-                                .ID = r.Name,
+                                .Key = r.Name,
                                 .Properties = r.Value
                             }
                         End Function)

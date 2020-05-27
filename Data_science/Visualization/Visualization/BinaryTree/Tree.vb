@@ -46,7 +46,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.DataMining.KMeans
@@ -151,9 +150,8 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <ExportAPI("Cluster.Trees.Network",
-                   Info:="Create network model for visualize the binary tree clustering result.")>
-        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityClusterModel), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
+        <Extension>
+        Public Function bTreeNET(source As IEnumerable(Of EntityClusterModel), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
             Dim array = (From x As EntityClusterModel
                          In source
                          Let path As String() = x.Cluster.Split("."c)
@@ -195,8 +193,8 @@ Namespace KMeans
                 nodes)
 
             Return New FileStream.NetworkTables With {
-                .Edges = edges,
-                .Nodes = nodes.ToArray
+                .edges = edges,
+                .nodes = nodes.ToArray
             }
         End Function
 

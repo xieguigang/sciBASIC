@@ -112,6 +112,10 @@ Namespace Layouts
             Call Me.New(pt.X, pt.Y)
         End Sub
 
+        Sub New(pt As PointF)
+            Call Me.New(pt.X, pt.Y)
+        End Sub
+
         Public Overrides Function GetHashCode() As Integer
             Return CInt(Truncate(x)) Xor CInt(Truncate(y))
         End Function
@@ -160,7 +164,6 @@ Namespace Layouts
         Public Overloads Shared Operator <>(a As FDGVector2, b As FDGVector2) As Boolean
             Return Not (a = b)
         End Operator
-
 
         Public Overrides Function Add(v2 As AbstractVector) As AbstractVector
             Dim v22 As FDGVector2 = TryCast(v2, FDGVector2)
