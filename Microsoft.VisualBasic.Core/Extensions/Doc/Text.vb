@@ -98,9 +98,11 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 
+    ''' 这个函数会自动判断所给定的数据是一个文件路径或者文本数据
+    ''' 如果是文件路径则会返回该文本文件之中的所有的行数据
+    ''' 反之将目标数据当作为文本返回所有文本行
     ''' </summary>
-    ''' <param name="handle$">
+    ''' <param name="handle">
     ''' + 当这个参数为文件路径的时候会返回<see cref="Linq.IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
     ''' + 当这个参数只是为文本字符串的时候，则会返回<see cref="LineTokens"/>函数的结果
     ''' </param>
