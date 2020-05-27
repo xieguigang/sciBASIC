@@ -101,6 +101,12 @@ Namespace CommandLine
         Public ReadOnly Property Bin As String Implements IIORedirectAbstract.Bin
         Public ReadOnly Property CLIArguments As String Implements IIORedirectAbstract.CLIArguments
 
+        Public ReadOnly Property redirectDevice As String
+            Get
+                Return _TempRedirect
+            End Get
+        End Property
+
         ''' <summary>
         ''' 将目标子进程的标准终端输出文件复制到一个新的文本文件之中
         ''' </summary>
@@ -134,12 +140,12 @@ Namespace CommandLine
         ''' (请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)
         ''' </param>
         ''' <param name="environment">Temporary environment variable</param>
-        ''' <param name="FolkNew">Folk the process on a new console window if this parameter value is TRUE</param>
+        ''' <param name="folkNew">Folk the process on a new console window if this parameter value is TRUE</param>
         ''' <param name="stdRedirect">If not want to redirect the std out to your file, just leave this value blank.</param>
         Sub New(file$,
                 Optional argv$ = "",
                 Optional environment As IEnumerable(Of ValueTuple) = Nothing,
-                Optional FolkNew As Boolean = False,
+                Optional folkNew As Boolean = False,
                 Optional stdRedirect$ = "",
                 Optional stdin$ = Nothing,
                 Optional debug As Boolean = True,
@@ -173,9 +179,9 @@ Namespace CommandLine
             Call "".SaveTo(_TempRedirect)
 
             If App.IsMicrosoftPlatform Then
-                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew, stdin, isShellCommand)
+                shellScript = ScriptingExtensions.Cmd(file, argv, environment, folkNew, stdin, isShellCommand)
             Else
-                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin, isShellCommand)
+                shellScript = ScriptingExtensions.Bash(file, argv, environment, folkNew, stdin, isShellCommand)
             End If
 
             If debug Then
@@ -202,7 +208,9 @@ Namespace CommandLine
 #If UNIX Then
             ' xdg-open: file '/tmp/gut_16s/15201/tmp00003.sh' does not exist
             With New Process() With {
-                .StartInfo = New ProcessStartInfo(path)
+                .StartInfo = New ProcessStartInfo(path) With {
+                    .CreateNoWindow = False
+                }
             }
                 Call .Start()
                 Call .WaitForExit()
