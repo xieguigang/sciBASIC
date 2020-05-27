@@ -1,9 +1,27 @@
-﻿Namespace ApplicationServices.Terminal.Utility
+﻿Imports System.Text
+
+Namespace ApplicationServices.Terminal.Utility
+
+    Public Class Index
+
+        Public Property index As String
+        Public Property category As Integer
+        Public Property [date] As Date = Now
+        Public Property keyword As String
+        Public Property title As String
+
+        Public Overrides Function ToString() As String
+            Return $".TH {Strings.UCase(index)} {category} {[date].Year}-{[date].Month.ToString.PadLeft(2, "0"c)}-{[date].Day.ToString.PadLeft(2, "0")} ""{keyword}"" ""{title}"""
+        End Function
+
+    End Class
 
     ''' <summary>
     ''' man手册页（manual pages，“手册”），是类UNIX系统最重要的手册工具。多数类UNIX都预装了它，这也包括Arch。使用man手册页的命令是：man。
     ''' </summary>
     Public Class UnixManPage
+
+        Public Property index As Index
 
         Public Property PROLOG As String
 
@@ -63,7 +81,21 @@
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return ""
+            Return ToString(Me, Nothing)
+        End Function
+
+        Public Overloads Shared Function ToString(man As UnixManPage, Optional comments$ = Nothing) As String
+            Dim text As New StringBuilder
+
+            If Not comments.StringEmpty Then
+                For Each line As String In comments.LineTokens
+                    Call text.AppendLine($".\"" {line}")
+                Next
+            End If
+
+            Call text.AppendLine(man.index.ToString)
+
+            Return text.ToString
         End Function
     End Class
 End Namespace
