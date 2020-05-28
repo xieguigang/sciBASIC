@@ -456,17 +456,17 @@
     <Compile Include="DendrogramVisualize\NodeLayout.vb" />
     <Compile Include="HierarchyBuilder\HierarchyLink.vb" />
     <Compile Include="PrintHelper.vb" />
-    <Compile Include="DoCluster.vb" />
+    <Compile Include="ClusteringAlgorithm\DoCluster.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
-    <Compile Include="Cluster.vb" />
-    <Compile Include="ClusteringAlgorithm.vb" />
+    <Compile Include="ClusteringAlgorithm\Cluster.vb" />
+    <Compile Include="ClusteringAlgorithm\ClusteringAlgorithm.vb" />
     <Compile Include="HierarchyBuilder\HierarchyTreeNode.vb" />
-    <Compile Include="DefaultClusteringAlgorithm.vb" />
+    <Compile Include="ClusteringAlgorithm\DefaultClusteringAlgorithm.vb" />
     <Compile Include="HierarchyBuilder\Distance.vb" />
     <Compile Include="HierarchyBuilder\DistanceMap.vb" />
     <Compile Include="HierarchyBuilder\HierarchyBuilder.vb" />
-    <Compile Include="LinkageStrategy.vb" />
-    <Compile Include="PDistClusteringAlgorithm.vb" />
+    <Compile Include="ClusteringAlgorithm\LinkageStrategy.vb" />
+    <Compile Include="ClusteringAlgorithm\PDistClusteringAlgorithm.vb" />
     <Compile Include="DendrogramVisualize\ClusterComponent.vb" />
     <Compile Include="DendrogramVisualize\DendrogramPanel.vb" />
     <Compile Include="DendrogramVisualize\Paintable.vb" />
@@ -476,13 +476,13 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Mathematica\Math\DataFrame\DataFrame.vbproj">
+      <Project>{6140aed7-e317-46dd-9c15-7fe400795992}</Project>
+      <Name>DataFrame</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
@@ -492,9 +492,9 @@
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
       <Name>Microsoft.VisualBasic.Imaging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mime\text%25html\mime-htmls.vbproj">
+    <ProjectReference Include="..\..\..\..\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>mime-htmls</Name>
+      <Name>MIME-htmls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

@@ -119,7 +119,8 @@ Namespace Hierarchy
                 .Distance = New Distance(LinkageDistance)
             }
 
-            ' New clusters will track their children's leaf names; i.e. each cluster knows what part of the original data it contains
+            ' New clusters will track their children's leaf names; 
+            ' i.e.each cluster knows what part of the original data it contains
             cluster.AppendLeafNames(Left.LeafNames)
             cluster.AppendLeafNames(Right.LeafNames)
             cluster.AddChild(Left)

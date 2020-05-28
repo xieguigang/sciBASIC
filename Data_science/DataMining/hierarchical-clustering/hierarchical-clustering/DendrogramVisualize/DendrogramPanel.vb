@@ -113,7 +113,10 @@ Namespace DendrogramVisualize
         End Property
 
         ''' <summary>
-        ''' ``<see cref="Cluster.Name"/> --> class color expression``
+        ''' 对象的分类信息和颜色，假设这个属性存在值的话，会额外绘制一个表示对象类别的条带
+        ''' 反之则不进行绘制
+        ''' 
+        ''' (``<see cref="Cluster.Name"/> --> class color expression``)
         ''' </summary>
         ''' <returns></returns>
         Public Property ClassTable As Dictionary(Of String, String)
@@ -219,7 +222,7 @@ Namespace DendrogramVisualize
 
             ' 如果cluster的结果不为空
             If component IsNot Nothing Then
-                Return __draw(g2,
+                Return drawTree(g2,
                               wDisplay, hDisplay, xDisplayOrigin, yDisplayOrigin,
                               stroke:=Stroke.TryParse(branchStrokeCSS),
                               classLegendWidth:=classLegendWidth,
@@ -238,13 +241,13 @@ Namespace DendrogramVisualize
             End If
         End Function
 
-        Private Function __draw(g2 As Graphics2D,
-                                wDisplay%, hDisplay%,
-                                xDisplayOrigin%, yDisplayOrigin%,
-                                stroke As Stroke,
-                                classLegendWidth%,
-                                layout As Layouts,
-                                padding!) As NamedValue(Of PointF)()
+        Private Function drawTree(g2 As Graphics2D,
+                                  wDisplay%, hDisplay%,
+                                  xDisplayOrigin%, yDisplayOrigin%,
+                                  stroke As Stroke,
+                                  classLegendWidth%,
+                                  layout As Layouts,
+                                  padding!) As NamedValue(Of PointF)()
 
             If ShowLeafLabel Then
                 Dim nameGutterWidth% = component.GetMaxNameWidth(g2, False) + component.NamePadding

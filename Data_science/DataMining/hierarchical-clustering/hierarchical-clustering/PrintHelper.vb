@@ -55,7 +55,8 @@ Public Module PrintHelper
     ''' <param name="out">
     ''' If this output pointer is nothing, then by default is print onto the <see cref="Console.OpenStandardOutput"/>
     ''' </param>
-    <Extension> Public Sub Print(cluster As Cluster, Optional out As StreamWriter = Nothing)
+    <Extension>
+    Public Sub Print(cluster As Cluster, Optional out As StreamWriter = Nothing)
 
         With out Or New StreamWriter(Console.OpenStandardOutput).AsDefault
             Call .WriteLine(cluster.ToConsoleLine(indent:=Scan0))
@@ -65,14 +66,14 @@ Public Module PrintHelper
     End Sub
 
     <Extension>
-    Private Function ToConsoleLine(c As Cluster, Optional indent% = Scan0) As String
+    Public Function ToConsoleLine(c As Cluster, Optional indent% = Scan0) As String
         Dim sb As New StringBuilder
-        Call c.__consoleLine(sb, indent)
+        Call c.consoleLine(sb, indent)
         Return sb.ToString
     End Function
 
     <Extension>
-    Private Sub __consoleLine(c As Cluster, sb As StringBuilder, indent%)
+    Private Sub consoleLine(c As Cluster, sb As StringBuilder, indent%)
         For i As Integer = 0 To indent - 1
             Call sb.Append("  ")
         Next
@@ -84,7 +85,7 @@ Public Module PrintHelper
 
             ' 然后递归的将所有子节点的文本也生成出来
             For Each child As Cluster In .Children
-                Call child.__consoleLine(sb, indent + 1)
+                Call child.consoleLine(sb, indent + 1)
             Next
         End With
     End Sub

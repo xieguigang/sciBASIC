@@ -49,6 +49,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' a dissimilarity or similarity structure
+''' </summary>
 Public Class DistanceMatrix
 
     ReadOnly names As Index(Of String)

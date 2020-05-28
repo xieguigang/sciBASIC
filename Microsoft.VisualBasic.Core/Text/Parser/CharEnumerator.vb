@@ -101,7 +101,7 @@ Namespace Text.Parser
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Not(chars As CharPtr) As Boolean
+        Public Overloads Shared Operator Not(chars As CharPtr) As Boolean
             Return Not chars.EndRead
         End Operator
 
