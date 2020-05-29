@@ -1,54 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::68de761b1a44c645c72163c684bf0fc5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FontMetrics
-    ' 
-    '         Properties: Font, Graphics, Height
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) GetStringBounds
-    ' 
-    '     Module Extensions
-    ' 
-    '         Function: FontMetrics
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FontMetrics
+' 
+'         Properties: Font, Graphics, Height
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: (+2 Overloads) GetStringBounds
+' 
+'     Module Extensions
+' 
+'         Function: FontMetrics
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.SVG
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Text
@@ -69,7 +71,9 @@ Namespace Drawing2D.Text
 
         Sub New(font As Font, g As Graphics)
             Me.Font = font
+
             Height = g.MeasureString("1", font).Height
+            Graphics = g
         End Sub
 
         Sub New(font As CSSFont, g As Graphics)
@@ -82,12 +86,12 @@ Namespace Drawing2D.Text
         ''' <param name="s"></param>
         ''' <param name="g"></param>
         ''' <returns></returns>
-        Public Function GetStringBounds(s As String, g As Graphics) As RectangleF
-            Return New RectangleF(New Point, g.MeasureString(s, Font))
+        Public Shared Function GetStringBounds(s As String, font As Font, g As Graphics) As RectangleF
+            Return New RectangleF(New Point, g.MeasureString(s, font))
         End Function
 
         Public Function GetStringBounds(s As String) As RectangleF
-            Return GetStringBounds(s, Graphics)
+            Return GetStringBounds(s, Font, Graphics)
         End Function
 
         Public Shared Narrowing Operator CType(f As FontMetrics) As Font
@@ -97,9 +101,29 @@ Namespace Drawing2D.Text
 
     Public Module Extensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FontMetrics(g As Graphics2D) As FontMetrics
             Return New FontMetrics(g.Font, g.Graphics)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FontMetrics(g As GraphicsSVG, font As Font) As FontMetrics
+            Return New FontMetrics(font, g.internalGraphicsHelper)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FontMetrics(g As IGraphics, font As Font) As FontMetrics
+            Select Case g.GetType
+                Case GetType(Graphics2D)
+                    Return New FontMetrics(font, DirectCast(g, Graphics2D).Graphics)
+                Case GetType(GraphicsSVG)
+                    Return DirectCast(g, GraphicsSVG).FontMetrics(font)
+                Case Else
+                    Throw New InvalidCastException(g.GetType.FullName)
+            End Select
         End Function
     End Module
 End Namespace

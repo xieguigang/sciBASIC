@@ -155,22 +155,24 @@ Namespace DendrogramVisualize
         ''' 对于绘制水平方向的层次聚类树，则只需要将竖直布局样式的的点的x, y交换一下即可
         ''' 对于弧形布局的层次聚类树的绘制，则是将竖直样式的点的y映射为圆弧的度，x映射为圆弧的半径即可
         ''' </remarks>
-        Public Sub Paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.Paint
+        Public Sub Paint(g As IGraphics, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF))) Implements IPaintable.Paint
             Dim x1, y1, x2, y2 As Integer
-            Dim fontMetrics As FontMetrics = g.FontMetrics
+            Dim fontMetrics As FontMetrics = g.FontMetrics(args.labelFont)
 
             With args
 
                 If .layout = Layouts.Vertical Then
+                    ' 只变化X，Y不变，表示树枝在竖直布局下的水平延伸
                     x1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .xDisplayOffset))
                     y1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .yDisplayOffset))
                     x2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .xDisplayOffset))
-                    y2 = y1  ' 只变化X，Y不变，表示树枝在竖直布局下的水平延伸
+                    y2 = y1
                 Else
+                    ' 只变化Y，X不变，表示树枝在水平布局下的竖直延伸
                     y1 = CInt(Fix(InitPoint.X * .xDisplayFactor + .yDisplayOffset))
                     x1 = CInt(Fix(InitPoint.Y * .yDisplayFactor + .xDisplayOffset))
                     y2 = CInt(Fix(LinkPoint.X * .xDisplayFactor + .yDisplayOffset))
-                    x2 = x1  ' 只变化Y，X不变，表示树枝在水平布局下的竖直延伸
+                    x2 = x1
                 End If
 
                 If .LinkDotRadius > 0 Then
@@ -192,7 +194,7 @@ Namespace DendrogramVisualize
                         nx = x1 + NamePadding
                         ny = y1 - (fontMetrics.Height / 2) - 2
                     Else
-                        nx = x1 - g.MeasureString(Cluster.Name, g.Font).Width / 2
+                        nx = x1 - g.MeasureString(Cluster.Name, args.labelFont).Width / 2
                         ny = y1 + 5
                     End If
 
@@ -235,7 +237,7 @@ Namespace DendrogramVisualize
                     Cluster.Distance.Distance > 0 Then
 
                     Dim s As String = String.Format("{0:F2}", Cluster.Distance)
-                    Dim rect As RectangleF = fontMetrics.GetStringBounds(s, g.Graphics)
+                    Dim rect As RectangleF = fontMetrics.GetStringBounds(s)
                     Dim location As New PointF With {
                         .X = x1 - CInt(Fix(rect.Width)),
                         .Y = y1 - 2 - rect.Height
@@ -265,20 +267,20 @@ Namespace DendrogramVisualize
             End With
         End Sub
 
-        Private Function getNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
+        Private Function getNameWidth(g As IGraphics, labelFont As Font, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = 0
             If includeNonLeafs OrElse Cluster.Leaf Then
-                Dim rect As RectangleF = g.FontMetrics.GetStringBounds(Cluster.Name, g.Graphics)
+                Dim rect As RectangleF = g.FontMetrics(labelFont).GetStringBounds(Cluster.Name)
                 width = CInt(Fix(rect.Width))
             End If
             Return width
         End Function
 
-        Public Function GetMaxNameWidth(g As Graphics2D, includeNonLeafs As Boolean) As Integer
-            Dim width As Integer = getNameWidth(g, includeNonLeafs)
+        Public Function GetMaxNameWidth(g As IGraphics, labelFont As Font, includeNonLeafs As Boolean) As Integer
+            Dim width As Integer = getNameWidth(g, labelFont, includeNonLeafs)
 
             For Each comp As ClusterComponent In Children
-                Dim childWidth As Integer = comp.GetMaxNameWidth(g, includeNonLeafs)
+                Dim childWidth As Integer = comp.GetMaxNameWidth(g, labelFont, includeNonLeafs)
 
                 If childWidth > width Then
                     width = childWidth

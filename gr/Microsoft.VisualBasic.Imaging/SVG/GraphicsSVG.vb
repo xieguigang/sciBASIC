@@ -80,7 +80,7 @@ Namespace SVG
         ''' <summary>
         ''' 主要是需要进行字体的大小计算所需要使用的一个内部gdi+对象
         ''' </summary>
-        ReadOnly internalGraphicsHelper As Graphics = Graphics.FromImage(New Bitmap(10, 10))
+        Friend ReadOnly internalGraphicsHelper As Graphics = Graphics.FromImage(New Bitmap(10, 10))
 
         ''' <summary>
         ''' SVG图型的数据结构以及渲染是树形的，但是利用程序代码进行SVG数据的生成却是线性的

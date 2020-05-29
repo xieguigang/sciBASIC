@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::2c2b0690346dec9d943c5b704f3500d1, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\DendrogramPanel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DendrogramPanel
-    ' 
-    '         Properties: ClassTable, Debug, LineColor, LinkDotRadius, Model
-    '                     ScalePadding, ScaleTickLength, ScaleValueDecimals, ScaleValueInterval, ShowDistanceValues
-    '                     ShowLeafLabel, ShowScale
-    ' 
-    '         Function: __draw, (+2 Overloads) createComponent, Paint
-    ' 
-    '         Sub: updateModelMetrics
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DendrogramPanel
+' 
+'         Properties: ClassTable, Debug, LineColor, LinkDotRadius, Model
+'                     ScalePadding, ScaleTickLength, ScaleValueDecimals, ScaleValueInterval, ShowDistanceValues
+'                     ShowLeafLabel, ShowScale
+' 
+'         Function: __draw, (+2 Overloads) createComponent, Paint
+' 
+'         Sub: updateModelMetrics
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 ' 
@@ -189,15 +190,16 @@ Namespace DendrogramVisualize
         ''' <param name="branchStrokeCSS$"></param>
         ''' <param name="classLegendWidth%"></param>
         ''' <returns></returns>
-        Public Function Paint(g2 As Graphics2D,
+        Public Function Paint(g2 As IGraphics,
                               Optional region As Rectangle = Nothing,
                               Optional axisStrokeCSS$ = Stroke.AxisStroke,
                               Optional branchStrokeCSS$ = Stroke.AxisStroke,
                               Optional classLegendWidth% = 50,
+                              Optional labelFontCSS$ = CSSFont.PlotSubTitle,
                               Optional layout As Layouts = Layouts.Vertical) As NamedValue(Of PointF)()
 
             If region.IsEmpty Then
-                region = g2.ImageResource.EntireImage
+                region = New Rectangle(New Point, g2.Size)
             End If
 
             If Debug Then
@@ -211,14 +213,15 @@ Namespace DendrogramVisualize
             Dim xDisplayOrigin As Integer = region.Location.X
             Dim yDisplayOrigin As Integer = region.Location.Y
             Dim padding% = -1
+            Dim labelFont As Font = CSSFont.TryParse(labelFontCSS)
 
             If Not ClassTable.IsNullOrEmpty Then
-                padding = g2.MeasureString(ClassTable.Keys.MaxLengthString).Width + 10
+                padding = ClassTable.Keys.MaxLengthString.DoCall(Function(label) g2.MeasureString(label, labelFont)).Width + 10
                 wDisplay -= classLegendWidth - classLegendWidth
             End If
 
             ' 设置默认的笔对象
-            g2.Stroke = Stroke.TryParse(axisStrokeCSS)
+            Dim g2Stroke As Pen = Stroke.TryParse(axisStrokeCSS)
 
             ' 如果cluster的结果不为空
             If component IsNot Nothing Then
@@ -227,35 +230,37 @@ Namespace DendrogramVisualize
                               stroke:=Stroke.TryParse(branchStrokeCSS),
                               classLegendWidth:=classLegendWidth,
                               layout:=layout,
-                              padding:=padding)
+                              padding:=padding, g2Stroke:=g2Stroke, labelFont:=labelFont)
             Else
                 ' No data available 
                 Dim str As String = "No data"
-                Dim rect As RectangleF = g2.FontMetrics.GetStringBounds(str, g2.Graphics)
+                Dim rect As RectangleF = g2.FontMetrics(labelFont).GetStringBounds(str)
                 Dim xt As Integer = CInt(Fix(wDisplay / 2.0 - rect.Width / 2.0))
                 Dim yt As Integer = CInt(Fix(hDisplay / 2.0 - rect.Height / 2.0))
 
-                g2.DrawString(str, xt, yt)
+                g2.DrawString(str, labelFont, Brushes.Black, xt, yt)
 
                 Return {}
             End If
         End Function
 
-        Private Function drawTree(g2 As Graphics2D,
+        Private Function drawTree(g2 As IGraphics,
                                   wDisplay%, hDisplay%,
                                   xDisplayOrigin%, yDisplayOrigin%,
                                   stroke As Stroke,
                                   classLegendWidth%,
                                   layout As Layouts,
+                                  labelFont As Font,
+                                  g2Stroke As Pen,
                                   padding!) As NamedValue(Of PointF)()
 
             If ShowLeafLabel Then
-                Dim nameGutterWidth% = component.GetMaxNameWidth(g2, False) + component.NamePadding
+                Dim nameGutterWidth% = component.GetMaxNameWidth(g2, labelFont, False) + component.NamePadding
                 wDisplay -= nameGutterWidth
             End If
 
             If ShowScale Then
-                Dim rect As RectangleF = g2.FontMetrics.GetStringBounds("0", g2.Graphics)
+                Dim rect As RectangleF = g2.FontMetrics(labelFont).GetStringBounds("0")
                 Dim scaleHeight As Integer = rect.Height + ScalePadding + ScaleTickLength + scaleTickLabelPadding
                 hDisplay -= scaleHeight
                 yDisplayOrigin += scaleHeight
@@ -271,10 +276,12 @@ Namespace DendrogramVisualize
             Dim colorLegendSize As Size
 
             If layout = Layouts.Vertical Then
-                Dim legendHeight% = hDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
+                ' 绘图区域的高度除以个数
+                Dim legendHeight% = hDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1)
                 colorLegendSize = New Size(classLegendWidth, legendHeight)
             Else
-                Dim legendWidth% = wDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1) ' 绘图区域的高度除以个数
+                ' 绘图区域的高度除以个数
+                Dim legendWidth% = wDisplay / If(ClassTable.IsNullOrEmpty, 1, ClassTable.Count - 1)
                 Dim lheight = classLegendWidth
 
                 colorLegendSize = New Size(legendWidth, lheight)
@@ -293,7 +300,9 @@ Namespace DendrogramVisualize
                 .classLegendPadding = padding,
                 .ShowLabelName = ShowLeafLabel,
                 .LinkDotRadius = LinkDotRadius,
-                .layout = layout
+                .layout = layout,
+                .labelFont = labelFont,
+                .g2Stroke = g2Stroke
             }
 
             ' 从这里开始进行递归的绘制出整个进化树
@@ -301,42 +310,46 @@ Namespace DendrogramVisualize
 
             ' 在这里进行标尺的绘制
             If ShowScale Then
-                Dim x1 As Integer = xDisplayOrigin
-                Dim y1 As Integer = yDisplayOrigin - ScalePadding
-                Dim x2 As Integer = x1 + wDisplay
-                Dim y2 As Integer = y1
-
-                Call g2.DrawLine(x1, y1, x2, y2)
-
-                Dim totalDistance As Double = component.Cluster.TotalDistance
-                Dim xModelInterval As Double
-
-                If ScaleValueInterval <= 0 Then
-                    xModelInterval = totalDistance / 10.0
-                Else
-                    xModelInterval = ScaleValueInterval
-                End If
-
-                Dim xTick As Integer = xDisplayOrigin + wDisplay
-                y1 = yDisplayOrigin - ScalePadding
-                y2 = yDisplayOrigin - ScalePadding - ScaleTickLength
-                Dim distanceValue As Double = 0
-                Dim xDisplayInterval As Double = xModelInterval * xFactor
-
-                Do While xTick >= xDisplayOrigin
-
-                    ' 绘制坐标轴的Tick竖线
-                    Call g2.DrawLine(xTick, y1, xTick, y2)
-
-                    Dim distanceValueStr As String = sprintf("%." & ScaleValueDecimals & "f", distanceValue)
-                    Dim rect As RectangleF = g2.FontMetrics.GetStringBounds(distanceValueStr, g2.Graphics)
-                    g2.DrawString(distanceValueStr, CInt(Fix(xTick - (rect.Width / 2))), y2 - scaleTickLabelPadding - rect.Height)
-                    xTick -= xDisplayInterval
-                    distanceValue += xModelInterval
-                Loop
+                Call drawScale(g2, g2Stroke, labelFont, xDisplayOrigin%, yDisplayOrigin%, wDisplay, xFactor)
             End If
 
             Return labels
         End Function
+
+        Private Sub drawScale(g2 As IGraphics, g2Stroke As Pen, labelFont As Font, xDisplayOrigin%, yDisplayOrigin%, wDisplay!, xFactor!)
+            Dim x1 As Integer = xDisplayOrigin
+            Dim y1 As Integer = yDisplayOrigin - ScalePadding
+            Dim x2 As Integer = x1 + wDisplay
+            Dim y2 As Integer = y1
+
+            Call g2.DrawLine(g2Stroke, x1, y1, x2, y2)
+
+            Dim totalDistance As Double = component.Cluster.TotalDistance
+            Dim xModelInterval As Double
+
+            If ScaleValueInterval <= 0 Then
+                xModelInterval = totalDistance / 10.0
+            Else
+                xModelInterval = ScaleValueInterval
+            End If
+
+            Dim xTick As Integer = xDisplayOrigin + wDisplay
+            y1 = yDisplayOrigin - ScalePadding
+            y2 = yDisplayOrigin - ScalePadding - ScaleTickLength
+            Dim distanceValue As Double = 0
+            Dim xDisplayInterval As Double = xModelInterval * xFactor
+
+            Do While xTick >= xDisplayOrigin
+
+                ' 绘制坐标轴的Tick竖线
+                Call g2.DrawLine(g2Stroke, xTick, y1, xTick, y2)
+
+                Dim distanceValueStr As String = sprintf("%." & ScaleValueDecimals & "f", distanceValue)
+                Dim rect As RectangleF = g2.FontMetrics(labelFont).GetStringBounds(distanceValueStr)
+                g2.DrawString(distanceValueStr, labelFont, Brushes.Black, CInt(Fix(xTick - (rect.Width / 2))), y2 - scaleTickLabelPadding - rect.Height)
+                xTick -= xDisplayInterval
+                distanceValue += xModelInterval
+            Loop
+        End Sub
     End Class
 End Namespace

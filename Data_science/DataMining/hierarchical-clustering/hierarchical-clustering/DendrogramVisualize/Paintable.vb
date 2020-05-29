@@ -75,7 +75,7 @@ Namespace DendrogramVisualize
     ''' 
     ''' </summary>
     Public Interface IPaintable
-        Sub Paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
+        Sub Paint(g As IGraphics, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
     End Interface
 
     ''' <summary>
@@ -99,6 +99,8 @@ Namespace DendrogramVisualize
         ''' 点的大小
         ''' </summary>
         Dim LinkDotRadius As Integer
+        Dim labelFont As Font
+        Dim g2Stroke As Pen
 
     End Structure
 End Namespace
