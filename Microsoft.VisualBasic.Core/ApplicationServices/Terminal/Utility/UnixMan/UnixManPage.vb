@@ -1,4 +1,6 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Terminal.Utility
 
@@ -40,6 +42,7 @@ Namespace ApplicationServices.Terminal.Utility
         ''' </summary>
         ''' <returns></returns>
         Public Property DESCRIPTION As String
+        Public Property DETAILS As String
         ''' <summary>
         ''' 由浅入深的使用示例。
         ''' </summary>
@@ -49,7 +52,7 @@ Namespace ApplicationServices.Terminal.Utility
         ''' 命令行或者函数调用参数的意义。
         ''' </summary>
         ''' <returns></returns>
-        Public Property OPTIONS As String
+        Public Property OPTIONS As NamedValue(Of String)()
         ''' <summary>
         ''' 不同返回（退出）代码的含义。
         ''' </summary>
@@ -99,13 +102,39 @@ Namespace ApplicationServices.Terminal.Utility
 
             If Not man.SYNOPSIS.StringEmpty Then
                 Call text.AppendLine(".SH SYNOPSIS")
-                Call text.AppendLine($".B {man.NAME}")
                 Call text.AppendLine($"\fI{man.SYNOPSIS}\fR")
             End If
             If Not man.DESCRIPTION.StringEmpty Then
                 Call text.AppendLine(".SH DESCRIPTION")
                 Call text.AppendLine(".PP")
                 Call text.AppendLine(man.DESCRIPTION)
+                Call text.AppendLine(".PP")
+            End If
+
+            If Not man.OPTIONS.IsNullOrEmpty Then
+                Call text.AppendLine(".SH OPTIONS")
+
+                For Each opt As NamedValue(Of String) In man.OPTIONS.SafeQuery
+                    Call text.AppendLine(".PP")
+                    Call text.AppendLine($"\fB{opt.Name}\fB \fR\- {opt.Value}")
+                    Call text.AppendLine(".PP")
+                Next
+            End If
+
+            If Not man.DETAILS.StringEmpty Then
+                Call text.AppendLine(".SH DETAILS")
+                Call text.AppendLine(".PP")
+                Call text.AppendLine(man.DETAILS)
+                Call text.AppendLine(".PP")
+            End If
+            If Not man.SEE_ALSO.StringEmpty Then
+                Call text.AppendLine(".SH SEE ALSO")
+                Call text.AppendLine(man.SEE_ALSO)
+            End If
+            If Not man.FILES.StringEmpty Then
+                Call text.AppendLine(".SH FILES")
+                Call text.AppendLine(".PP")
+                Call text.AppendLine(man.FILES)
                 Call text.AppendLine(".PP")
             End If
             If Not man.AUTHOR.StringEmpty Then
