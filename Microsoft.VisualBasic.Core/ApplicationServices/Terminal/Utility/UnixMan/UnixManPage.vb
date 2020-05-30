@@ -42,6 +42,7 @@ Namespace ApplicationServices.Terminal.Utility
         ''' </summary>
         ''' <returns></returns>
         Public Property DESCRIPTION As String
+        Public Property VALUE As String
         Public Property DETAILS As String
         ''' <summary>
         ''' 由浅入深的使用示例。
@@ -119,6 +120,13 @@ Namespace ApplicationServices.Terminal.Utility
                     Call text.AppendLine($"\fB{opt.Name}\fB \fR\- {opt.Value}")
                     Call text.AppendLine(".PP")
                 Next
+            End If
+
+            If Not man.VALUE.StringEmpty Then
+                Call text.AppendLine(".SH VALUE")
+                Call text.AppendLine(".PP")
+                Call text.AppendLine(man.VALUE)
+                Call text.AppendLine(".PP")
             End If
 
             If Not man.DETAILS.StringEmpty Then
