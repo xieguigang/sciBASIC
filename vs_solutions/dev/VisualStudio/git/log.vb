@@ -51,7 +51,7 @@ Public Class log
     ''' <summary>
     ''' parse git log text
     ''' </summary>
-    ''' <param name="text"></param>
+    ''' <param name="text">output of ``git log [fileName]``</param>
     ''' <returns></returns>
     Public Shared Iterator Function ParseLogText(text As String) As IEnumerable(Of log)
         For Each block As String() In text.LineIterators.Split(Function(line) line.StartsWith("commit "), DelimiterLocation.NextFirst)
