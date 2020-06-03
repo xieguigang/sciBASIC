@@ -66,6 +66,10 @@ Namespace Text.Parser.HtmlParser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function TagAttributes(tag As String) As IEnumerable(Of NamedValue(Of String))
+            If tag.StringEmpty Then
+                Return {}
+            End If
+
             Return r _
                 .Matches(tag.GetBetween("<", ">"), attributeParse, RegexICSng) _
                 .EachValue _
