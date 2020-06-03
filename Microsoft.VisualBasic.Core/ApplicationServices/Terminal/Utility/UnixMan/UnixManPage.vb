@@ -147,7 +147,7 @@ Namespace ApplicationServices.Terminal.Utility
             End If
             If Not man.AUTHOR.StringEmpty Then
                 Call text.AppendLine(".SH AUTHOR")
-                Call text.AppendLine($"Written by {man.AUTHOR}")
+                Call text.AppendLine($"Written by \fB{man.AUTHOR.Replace("-", "\-")}\fR")
             End If
             If Not man.COPYRIGHT.StringEmpty Then
                 Call text.AppendLine(".SH COPYRIGHT")

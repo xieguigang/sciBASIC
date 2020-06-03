@@ -205,6 +205,15 @@ Namespace SVG.XML
         Sub New()
         End Sub
 
+        Sub New(rect As RectangleF)
+            With Me
+                .width = rect.Width
+                .height = rect.Height
+                .x = rect.X
+                .y = rect.Y
+            End With
+        End Sub
+
         Sub New(rect As Rectangle)
             With Me
                 .width = rect.Width

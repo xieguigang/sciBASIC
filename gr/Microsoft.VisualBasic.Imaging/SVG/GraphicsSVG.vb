@@ -860,6 +860,13 @@ Namespace SVG
             Call __svgData.Add(rectangle)
         End Sub
 
+        Public Overloads Sub DrawRectangle(pen As Pen, rect As RectangleF, fill As Color)
+            Dim rectangle As New rect(rect) With {
+              .style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
+          }
+            Call __svgData.Add(rectangle)
+        End Sub
+
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
             Dim rectangle As New rect() With {
                 .x = x,

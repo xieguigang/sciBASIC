@@ -276,7 +276,7 @@
   <ItemGroup>
     <Compile Include="Extensions.vb" />
     <Compile Include="AssemblyInfo.vb" />
-    <Compile Include="git\log.vb" />
+    <Compile Include="VersionControl\git\log.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -310,6 +310,7 @@
     <Compile Include="vbproj\ItemGroup.vb" />
     <Compile Include="vbproj\Project.vb" />
     <Compile Include="vbproj\PropertyGroup.vb" />
+    <Compile Include="VersionControl\svn.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
