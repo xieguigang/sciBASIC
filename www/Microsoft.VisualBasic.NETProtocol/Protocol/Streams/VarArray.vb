@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports Buffer = System.Array
 
-Namespace Net.Protocols.Streams.Array
+Namespace Protocols.Streams.Array
 
     ''' <summary>
     ''' The bytes length of the element in thee source sequence is not fixed.
@@ -61,7 +61,7 @@ Namespace Net.Protocols.Streams.Array
         Sub New(raw As Byte(), serilize As IGetBuffer(Of T), load As IGetObject(Of T))
             Call Me.New(serilize, load)
 
-            Dim lb As Byte() = New Byte(INT64 - 1) {}
+            Dim lb As Byte() = New Byte(Int64 - 1) {}
             Dim buf As Byte()
             Dim i As New Pointer
             Dim list As New List(Of T)
@@ -70,7 +70,7 @@ Namespace Net.Protocols.Streams.Array
 
             Do While raw.Length > i
 
-                Call Buffer.ConstrainedCopy(raw, i << INT64, lb, Scan0, INT64)
+                Call Buffer.ConstrainedCopy(raw, i << Int64, lb, Scan0, Int64)
 
                 l = BitConverter.ToInt64(lb, Scan0)
                 buf = New Byte(l - 1) {}

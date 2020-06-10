@@ -1,8 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.HTTP
-Imports Microsoft.VisualBasic.Net.Net.Protocols
-Imports Microsoft.VisualBasic.Net.Net.Protocols.Reflection
-Imports Microsoft.VisualBasic.Net.Net.Tcp
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Parallel
 
 ''' <summary>
 ''' Object for handles the request <see cref="Protocol"/>.

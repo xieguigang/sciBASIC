@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Buffer = System.Array
 
-Namespace Net.Protocols.Streams.Array
+Namespace Protocols.Streams.Array
 
     ''' <summary>
     ''' 对于<see cref="System.Int64"/>, <see cref="System.int32"/>, <see cref="System.Double"/>, <see cref="System.DateTime"/>

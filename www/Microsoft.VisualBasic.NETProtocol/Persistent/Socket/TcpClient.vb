@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::0d5887b9e22b6c438eae8da8f0f4884f, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\TcpClient.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PersistentClient
-    ' 
-    '         Properties: MessageHandler, MyLocalPort, MyServerHashCode, RemoteServerShutdown
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: readDataBuffer, Run, ToString
-    ' 
-    '         Sub: __receive, __send, BeginConnect, ConnectCallback, (+2 Overloads) Dispose
-    '              Receive, ReceiveCallback, requestHandle, WaitForConnected, WaitForHash
-    '              waitReceive
-    '         Class StateObject
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PersistentClient
+' 
+'         Properties: MessageHandler, MyLocalPort, MyServerHashCode, RemoteServerShutdown
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: readDataBuffer, Run, ToString
+' 
+'         Sub: __receive, __send, BeginConnect, ConnectCallback, (+2 Overloads) Dispose
+'              Receive, ReceiveCallback, requestHandle, WaitForConnected, WaitForHash
+'              waitReceive
+'         Class StateObject
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,16 +57,16 @@ Imports System.Net.Sockets
 Imports System.Reflection
 Imports System.Text
 Imports System.Threading
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols
 Imports Microsoft.VisualBasic.Parallel
 Imports TcpEndPoint = System.Net.IPEndPoint
 Imports TcpSocket = System.Net.Sockets.Socket
 
-Namespace Net.Tcp.Persistent.Socket
+Namespace Tcp.Persistent.Socket
 
     ''' <summary>
     ''' 请注意，这个对象是应用于客户端与服务器保持长连接所使用，并不会主动发送消息给服务器，而是被动的接受服务器的数据请求

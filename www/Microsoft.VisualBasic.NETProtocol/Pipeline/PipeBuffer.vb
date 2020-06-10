@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
-Namespace Parallel.MMFProtocol.Pipeline
+Namespace MMFProtocol.Pipeline
 
     Public Class PipeBuffer : Inherits RawStream
 

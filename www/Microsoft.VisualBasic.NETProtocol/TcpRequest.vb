@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::38749fdbdebc5b0e862ece93217f6f74, Microsoft.VisualBasic.Core\Net\Tcp\TcpRequest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TcpRequest
-    ' 
-    '         Properties: LocalIPAddress
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
-    ' 
-    '         Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
-    '              SendCallback
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TcpRequest
+' 
+'         Properties: LocalIPAddress
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
+' 
+'         Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
+'              SendCallback
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,11 +54,11 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.HTTP
+Imports Microsoft.VisualBasic.Parallel
 Imports TcpEndPoint = System.Net.IPEndPoint
 
-Namespace Net.Tcp
+Namespace Tcp
 
     ''' <summary>
     ''' The server socket should returns some data string to this client or this client 

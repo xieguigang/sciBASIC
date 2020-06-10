@@ -58,7 +58,7 @@
 
 Imports Microsoft.VisualBasic.Linq.Extensions
 
-Namespace Net.Protocols.Streams.Array
+Namespace Protocols.Streams.Array
 
     Public Class [Long] : Inherits ValueArray(Of Long)
 
