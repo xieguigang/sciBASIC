@@ -56,13 +56,6 @@ Namespace HTML
                   Publisher:="xie.guigang@live.com")>
     Public Module DocFormatter
 
-        <Extension>
-        Public Function IsFullURL(url As String) As Boolean
-            Dim protocol$ = Regex.Match(url, "((https?)|(ftp)|(mailto))://", RegexICSng).Value
-            Return Not String.IsNullOrEmpty(protocol) AndAlso
-                InStr(url, protocol) = 1
-        End Function
-
         ''' <summary>
         ''' High light all of the links in the text document automatically.
         ''' </summary>
