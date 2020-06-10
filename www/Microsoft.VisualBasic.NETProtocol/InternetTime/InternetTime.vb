@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::e248f0a8bddd63c17abae01e775dd959, www\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SNTPClient
-    ' 
-    '         Properties: LeapIndicator, LocalClockOffset, Mode, OriginateTimestamp, PollInterval
-    '                     Precision, ReceiveTimestamp, ReferenceID, ReferenceTimestamp, RootDelay
-    '                     RootDispersion, RoundTripDelay, Stratum, TransmitTimestamp, VersionNumber
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ComputeDate, GetMilliSeconds, IsResponseValid, ToString
-    ' 
-    '         Sub: Connect, Initialize, SetDate, SetTime
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SNTPClient
+' 
+'         Properties: LeapIndicator, LocalClockOffset, Mode, OriginateTimestamp, PollInterval
+'                     Precision, ReceiveTimestamp, ReferenceID, ReferenceTimestamp, RootDelay
+'                     RootDispersion, RoundTripDelay, Stratum, TransmitTimestamp, VersionNumber
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ComputeDate, GetMilliSeconds, IsResponseValid, ToString
+' 
+'         Sub: Connect, Initialize, SetDate, SetTime
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -117,12 +117,10 @@
 '* - First public release.
 '*/
 
-Imports System
 Imports System.Net
 Imports System.Net.Sockets
-Imports System.Runtime.InteropServices
 Imports System.Text
-
+Imports stdNum = System.Math
 
 'VB -Simple Network Time (NTP) Protocol Client
 'By Valer BOCAN , 6/25/2007
@@ -349,7 +347,7 @@ Namespace InternetTime
         Public ReadOnly Property PollInterval() As Int32
             Get
                 '// Thanks to Jim Hollenhorst <hollenho@attbi.com>
-                Return Math.Pow(2, SNTPData(2))
+                Return stdNum.Pow(2, SNTPData(2))
                 'Return Math.Round(Math.Pow(2, SNTPData(2)))
             End Get
         End Property
@@ -361,7 +359,7 @@ Namespace InternetTime
         Public ReadOnly Property Precision() As Double
             Get
                 '// Thanks to Jim Hollenhorst <hollenho@attbi.com>
-                Return Math.Pow(2, SNTPData(3))
+                Return stdNum.Pow(2, SNTPData(3))
                 'Return (1000 * Math.Pow(2, SNTPData(3) - 256))
             End Get
         End Property

@@ -646,7 +646,7 @@ Public Module NetworkVisualizer
                            Call g.DrawLine(lineColor, line(0), line(1))
                        End Sub
             Try
-                Dim bends As Handle() = edge.data.bends.SafeQuery.ToArray
+                Dim bends As XYMetaHandle() = edge.data.bends.SafeQuery.ToArray
                 '.SafeQuery _
                 '.Where(Function(bend)
                 '           Return Not bend.isDirectPoint
@@ -661,9 +661,9 @@ Public Module NetworkVisualizer
                     If bends.Length = 1 Then
                         Call draw({a, b})
                     Else
-                        For Each line As SlideWindow(Of Handle) In bends.SlideWindows(2)
-                            Dim pta = line(Scan0).pointAuto(a.X, a.Y, b.X, b.Y)
-                            Dim ptb = line(1).pointAuto(a.X, a.Y, b.X, b.Y)
+                        For Each line As SlideWindow(Of XYMetaHandle) In bends.SlideWindows(2)
+                            Dim pta = line(Scan0).GetPoint(a.X, a.Y, b.X, b.Y)
+                            Dim ptb = line(1).GetPoint(a.X, a.Y, b.X, b.Y)
 
                             Call {pta, ptb}.DoCall(draw)
                         Next

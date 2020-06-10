@@ -200,7 +200,7 @@ Namespace Graph
         ''' </summary>
         ''' <returns></returns>
         Public Property length As Single
-        Public Property bends As Handle()
+        Public Property bends As XYMetaHandle()
         Public Property color As SolidBrush
 
         Public Sub New()

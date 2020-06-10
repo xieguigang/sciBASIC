@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::f5367ca3557b887bc063a200f7d26c30, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Handle
-    ' 
-    '         Properties: isDirectPoint, originalLocation
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: convert, getSerializableString, ParseHandle, ParseHandles, pointAuto
-    '                   ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Handle
+' 
+'         Properties: isDirectPoint, originalLocation
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: convert, getSerializableString, ParseHandle, ParseHandles, pointAuto
+'                   ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,6 +48,9 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts.EdgeBundling
+
+    ' 20200610
+    ' 在计算三角函数的时候似乎误差非常大
 
     ''' <summary>
     ''' 进行网络之中的边连接的布局走向的``拐点``的矢量化描述
@@ -103,7 +106,7 @@ Namespace Layouts.EdgeBundling
             If isDirectPoint Then
                 Return originalLocation
             Else
-                Return convert(sX, sY, tX, tY)
+                Return convert(tX, tY, sX, sY)
             End If
         End Function
 

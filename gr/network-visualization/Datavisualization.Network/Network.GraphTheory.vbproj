@@ -632,6 +632,7 @@
     <Compile Include="Layouts\EdgeBundling\Barycentre.vb" />
     <Compile Include="Layouts\EdgeBundling\Handle.vb" />
     <Compile Include="Layouts\EdgeBundling\HandleCreator.vb" />
+    <Compile Include="Layouts\EdgeBundling\XYMetaHandle.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected3D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected2D.vb" />
     <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVectorExtensions.vb" />
