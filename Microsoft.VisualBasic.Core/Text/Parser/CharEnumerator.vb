@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f189648e6096fdf1ff2f336ffa3c895, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::acb9f64ccd2af1baae298fd13a8742fd, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
 
     ' Author:
     ' 

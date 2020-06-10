@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c87377f84f81fca7644f2dc0ff8ecb5, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::2c87377f84f81fca7644f2dc0ff8ecb5, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
 
     ' Author:
     ' 

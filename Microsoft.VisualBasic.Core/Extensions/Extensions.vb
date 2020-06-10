@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16a43f0f495280079a5a0f6fb8c0bd2e, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ee0134f682f5dcabcdda90b54a004f8c, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -48,8 +48,8 @@
     '               ToBoolean, ToDictionary, ToNormalizedPathString, ToString, ToStringArray
     '               ToVector, (+3 Overloads) TrimNull, TryCount, Unlist, WriteAddress
     ' 
-    '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
-    '          SwapItem, SwapWith
+    '     Sub: Add, FillBlank, Removes, Swap, SwapItem
+    '          SwapWith
     ' 
     ' 
     ' 

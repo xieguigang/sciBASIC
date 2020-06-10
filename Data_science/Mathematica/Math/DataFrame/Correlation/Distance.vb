@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a53d2c03896f276bcfd5d3e61ff4ad56, Data_science\Mathematica\Math\DataFrame\Correlation\Distance.vb"
+﻿#Region "Microsoft.VisualBasic::dce4dbd3336a35ce0b6fa3c00c5962c7, Data_science\Mathematica\Math\DataFrame\Correlation\Distance.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Public Module Distance
         Return data.MatrixBuilder(AddressOf EuclideanDistance, True)
     End Function
 End Module
-

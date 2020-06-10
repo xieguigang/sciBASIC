@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56d798fa99e0913e169eb63aa4e9bdac, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::086acf50dd3606a854966bb317d15555, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class IORedirectFile
     ' 
-    '         Properties: Bin, CLIArguments, StandardOutput
+    '         Properties: Bin, CLIArguments, redirectDevice, StandardOutput
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

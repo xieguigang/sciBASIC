@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26d34881265a9011c2271b70bc919f8d, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\LinkageStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::26d34881265a9011c2271b70bc919f8d, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\LinkageStrategy.vb"
 
     ' Author:
     ' 

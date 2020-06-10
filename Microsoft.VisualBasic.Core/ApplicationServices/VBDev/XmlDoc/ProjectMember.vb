@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97c5b5808964bc177799fc805f9eb683, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectMember.vb"
+﻿#Region "Microsoft.VisualBasic::1dc90cb2f12c162a72a05f6fc744aa42, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectMember.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: [Declare], Name, Params, Remarks, Returns
     '                     Summary, Type
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57f1af11b91be5b3fe9a419710b60e66, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ManualPages.vb"
+﻿#Region "Microsoft.VisualBasic::4f2fcc2de0828c1688275a428f71a035, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\UnixMan\ManualPages.vb"
 
     ' Author:
     ' 
@@ -38,14 +38,6 @@
     '         Function: FromFile, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose, ShowManual
-    ' 
-    '     Class IndexedManual
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __sp
-    ' 
-    '         Sub: PrintPrompted, ShowManual
     ' 
     ' 
     ' /********************************************************************************/

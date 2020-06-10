@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac78e0e3b6b7dba2c2fa4a4acad57024, Microsoft.VisualBasic.Core\Net\Tcp\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9b9dd98c459e4e3b744bd09868859621, Microsoft.VisualBasic.Core\Net\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TCPExtensions
     ' 
-    '         Function: ConnectSocket, GetFirstAvailablePort, (+2 Overloads) Ping, PortIsAvailable, PortIsUsed
+    '         Function: ConnectSocket, GetFirstAvailablePort, PortIsAvailable, PortIsUsed
     ' 
     ' 
     ' /********************************************************************************/

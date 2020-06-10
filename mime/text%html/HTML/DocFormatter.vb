@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab5a552442d097c425f68d45f589d562, mime\text%html\HTML\DocFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::ce11177a4a55262a3bf620d805baa9cb, mime\text%html\HTML\DocFormatter.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module DocFormatter
     ' 
-    '         Function: HighlightEMail, HighlightLinks, HighlightURL, IsFullURL
+    '         Function: HighlightEMail, HighlightLinks, HighlightURL
     ' 
     ' 
     ' /********************************************************************************/

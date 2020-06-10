@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2f88aee7d9b23f8fddd3e572e99b01e, Data_science\Mathematica\Math\DataFrame\InternalHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::93b12635b715e4be73e1991fa1bde011, Data_science\Mathematica\Math\DataFrame\InternalHelpers.vb"
 
     ' Author:
     ' 
@@ -59,4 +59,3 @@ Friend Module InternalHelpers
         Return data.Select(Function(r) r.Properties(name))
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88ab8d732ac7df6cf7ded92a647665e8, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::44925dd7bfcfeeaf290facfd4c51af75, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module WebServiceUtils
     ' 
-    '     Properties: DefaultUA, Protocols, Proxy
+    '     Properties: DefaultUA, LocalIPAddress, Protocols, Proxy
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 

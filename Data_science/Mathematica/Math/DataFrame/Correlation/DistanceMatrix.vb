@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6061035a268629ca9cb4390fa99e054f, Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::31bdfe45d9eb0040e42038f1e0760f28, Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
 
     ' Author:
     ' 
@@ -180,4 +180,3 @@ Public Class DistanceMatrix
     End Function
 
 End Class
-

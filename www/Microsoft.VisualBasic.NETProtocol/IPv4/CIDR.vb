@@ -1,50 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::f326c36f4dc30a9d20ba7ec1e056c2ff, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
+﻿#Region "Microsoft.VisualBasic::686e5010694ce36a2ab7b95cfa3787ec, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class IPv4
-' 
-'     Properties: BroadcastAddress, CIDR, hostAddressRange, IPAddress, Netmask
-'                 netmaskInBinary, numberOfHosts, WildcardMask
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: __invalidIPAddress, __invalidNetMask, contains, Contains, GetAvailableIPs
-'               GetBinary, GetBroadcastAddress, GetCIDR, GetHostAddressRange, GetNumberOfHosts
-'               GetWildcardMask, NumericIpToSymbolic, NumericNetmaskToSymbolic, ToString
-' 
-'     Sub: __checkNetMask, IPNumeric, NetMaskNumeric
-' 
-' /********************************************************************************/
+    ' Class IPv4
+    ' 
+    '     Properties: BroadcastAddress, CIDR, hostAddressRange, IPAddress, Netmask
+    '                 netmaskInBinary, numberOfHosts, WildcardMask
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: contains, Contains, GetAvailableIPs, GetBinary, GetBroadcastAddress
+    '               GetCIDR, GetHostAddressRange, GetNumberOfHosts, GetWildcardMask, invalidIPAddress
+    '               invalidNetMask, NumericIpToSymbolic, NumericNetmaskToSymbolic, ToString
+    ' 
+    '     Sub: checkNetMask, IPNumeric, NetMaskNumeric
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

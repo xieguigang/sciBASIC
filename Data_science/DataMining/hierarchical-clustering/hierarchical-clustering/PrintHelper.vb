@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eaffc540afecb371890fe930727abc5f, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\PrintHelper.vb"
+﻿#Region "Microsoft.VisualBasic::9a703d6b8f0d79e65e77da7389403e63, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\PrintHelper.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: ToConsoleLine
     ' 
-    '     Sub: __consoleLine, Print
+    '     Sub: consoleLine, Print
     ' 
     ' /********************************************************************************/
 

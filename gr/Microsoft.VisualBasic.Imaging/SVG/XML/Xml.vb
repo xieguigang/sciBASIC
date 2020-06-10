@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f1073b7c0fc94012b9380ef133a75e1, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::6d6c519d9ad4a4293658d6ef668ec199, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@
     '         Properties: height, rx, ry, width, x
     '                     y
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Operators: +
     ' 
     '     Class path

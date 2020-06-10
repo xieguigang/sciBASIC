@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fecc1f169380d7646b988a197acae238, Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
+﻿#Region "Microsoft.VisualBasic::0086af2b61ca063f1f06136769c62a3d, Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
 
     ' Author:
     ' 
@@ -130,4 +130,3 @@ Public Module Builder
         End With
     End Function
 End Module
-
