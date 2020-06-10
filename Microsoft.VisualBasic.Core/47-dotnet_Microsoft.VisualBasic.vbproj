@@ -1141,6 +1141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
+    <Compile Include="ApplicationServices\Parallel\RequestStream.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb" />
@@ -1338,6 +1339,7 @@
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
     <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
     <Compile Include="Serialization\ICloneable.vb" />
+    <Compile Include="Serialization\RawStream.vb" />
     <Compile Include="Text\IO\Encodings.vb" />
     <Compile Include="Text\Parser\CharBuffer.vb" />
     <Compile Include="Text\Patterns\NamespaceDoc.vb" />

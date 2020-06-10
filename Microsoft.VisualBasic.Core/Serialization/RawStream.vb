@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::6f35238d4e079cd2d617b33b2fcecd44, Microsoft.VisualBasic.Core\Net\Protocol\Abstract.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface ISerializable
-    ' 
-    '         Function: Serialize
-    ' 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Class RawStream
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetRawStream
-    '         Operators: <=, >=
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface ISerializable
+' 
+'         Function: Serialize
+' 
+'     Delegate Sub
+' 
+' 
+'     Class RawStream
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetRawStream
+'         Operators: <=, >=
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Parallel
 
-Namespace Net.Protocols
+Namespace Serialization
 
     ''' <summary>
     ''' 支持序列化的对象，则这个对象可以被应用于<see cref="RequestStream"/>数据载体的网络传输操作过程
@@ -65,8 +65,6 @@ Namespace Net.Protocols
         ''' <returns></returns>
         Function Serialize() As Byte()
     End Interface
-
-    Public Delegate Sub ProcessMessagePush(message As RequestStream)
 
     ''' <summary>
     ''' 原始串流的基本模型，这个流对象应该具备有两个基本的方法：
@@ -119,27 +117,27 @@ Namespace Net.Protocols
         Public Const SingleFloat As Integer = 4
         Public Const DecimalInt As Integer = 12
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="addr">IPEndPoint string value likes 127.0.0.1:8080</param>
-        ''' <param name="raw"></param>
-        ''' <returns></returns>
-        ''' <![CDATA[
-        '''
-        ''' Dim rep As RequestStream = "127.0.0.1:80" <= New RequestStream With {
-        '''     ...
-        ''' }
-        ''' ]]>
-        Public Shared Operator <=(addr As String, raw As RawStream) As RequestStream
-            Dim ep As New IPEndPoint(addr)
-            Dim invoke As New TcpRequest(ep)
-            Dim rep As New RequestStream(invoke.SendMessage(raw.Serialize))
-            Return rep
-        End Operator
+        '''' <summary>
+        '''' 
+        '''' </summary>
+        '''' <param name="addr">IPEndPoint string value likes 127.0.0.1:8080</param>
+        '''' <param name="raw"></param>
+        '''' <returns></returns>
+        '''' <![CDATA[
+        ''''
+        '''' Dim rep As RequestStream = "127.0.0.1:80" <= New RequestStream With {
+        ''''     ...
+        '''' }
+        '''' ]]>
+        'Public Shared Operator <=(addr As String, raw As RawStream) As RequestStream
+        '    Dim ep As New IPEndPoint(addr)
+        '    Dim invoke As New TcpRequest(ep)
+        '    Dim rep As New RequestStream(invoke.SendMessage(raw.Serialize))
+        '    Return rep
+        'End Operator
 
-        Public Shared Operator >=(addr As String, raw As RawStream) As RequestStream
-            Throw New NotSupportedException
-        End Operator
+        'Public Shared Operator >=(addr As String, raw As RawStream) As RequestStream
+        '    Throw New NotSupportedException
+        'End Operator
     End Class
 End Namespace

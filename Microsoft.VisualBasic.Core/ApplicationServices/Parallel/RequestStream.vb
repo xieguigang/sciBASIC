@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::91aa0df44e71de2973ac111c0de8b7d4, Microsoft.VisualBasic.Core\Net\Protocol\RequestStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class RequestStream
-    ' 
-    '         Properties: BufferLength, ChunkBuffer, FullRead, Protocol, ProtocolCategory
-    '                     TotalBytes
-    ' 
-    '         Constructor: (+7 Overloads) Sub New
-    '         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetRawStream, GetString, GetUTF8String
-    '                   IsAvaliableStream, (+2 Overloads) LoadObject, Serialize, ToString
-    '         Enum Protocols
-    ' 
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: IsPing, IsPlantText, IsSSL_PublicToken, IsSSLHandshaking, IsSSLProtocol
-    '                 TryGetSystemProtocol
-    ' 
-    '     Function: SystemProtocol
-    '     Operators: (+3 Overloads) <>, (+3 Overloads) =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class RequestStream
+' 
+'         Properties: BufferLength, ChunkBuffer, FullRead, Protocol, ProtocolCategory
+'                     TotalBytes
+' 
+'         Constructor: (+7 Overloads) Sub New
+'         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetRawStream, GetString, GetUTF8String
+'                   IsAvaliableStream, (+2 Overloads) LoadObject, Serialize, ToString
+'         Enum Protocols
+' 
+' 
+' 
+' 
+'  
+' 
+'     Properties: IsPing, IsPlantText, IsSSL_PublicToken, IsSSLHandshaking, IsSSLProtocol
+'                 TryGetSystemProtocol
+' 
+'     Function: SystemProtocol
+'     Operators: (+3 Overloads) <>, (+3 Overloads) =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,10 +63,11 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Abstract
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace Net.Protocols
+Namespace Parallel
 
     ''' <summary>
     ''' Socket user client => Socket server data request &amp;

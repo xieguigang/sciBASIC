@@ -68,21 +68,6 @@ Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace Net.Abstract
 
-#Region "Delegate Abstract Interface"
-
-    Public Delegate Function SendMessageInvoke(Message As String) As String
-
-    Public Delegate Sub ForceCloseHandle(socket As StateObject)
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="request"></param>
-    ''' <param name="RemoteAddress"></param>
-    ''' <returns></returns>
-    Public Delegate Function DataRequestHandler(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
-#End Region
-
     ''' <summary>
     ''' Socket listening object which is running at the server side asynchronous able multiple threading.
     ''' (运行于服务器端上面的Socket监听对象，多线程模型)
