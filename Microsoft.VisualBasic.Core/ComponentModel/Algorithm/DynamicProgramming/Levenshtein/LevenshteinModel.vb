@@ -53,11 +53,26 @@ Imports stdNum = System.Math
 
 Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
+    Public Class ArrayRow
+
+        Public Property data As Double()
+
+        Default Public Property Item(index As Integer) As Double
+            Get
+                Return data(index)
+            End Get
+            Set(value As Double)
+                data(index) = value
+            End Set
+        End Property
+
+    End Class
+
     Public Class DistResult
 
         Public Property Reference As String
         Public Property Hypotheses As String
-        Public Property DistTable As Streams.Array.Double()
+        Public Property DistTable As ArrayRow()
         ''' <summary>
         ''' How doest the <see cref="Hypotheses"/> evolve from <see cref="Reference"/>.(这个结果描述了subject是如何变化成为Query的)
         ''' </summary>
@@ -88,8 +103,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
                 Dim reference As String = __getReference()
                 Dim hypotheses As String = __getSubject()
 
-                Return DistTable(reference.Length) _
-                    .Values(hypotheses.Length)
+                Return DistTable(reference.Length).data(hypotheses.Length)
             End Get
         End Property
 
@@ -159,16 +173,16 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
             Return obj
         End Function
 
-        Public Function TrimMatrix(l As Integer) As Streams.Array.Double()
+        Public Function TrimMatrix(l As Integer) As ArrayRow()
             Me.DistTable = Me.DistTable _
                 .Select(Function(row)
                             Dim values#() = row _
-                                .Values _
+                                .data _
                                 .Select(Function(n) stdNum.Round(n, l)) _
                                 .ToArray
 
-                            Return New Streams.Array.Double With {
-                                .Values = values
+                            Return New ArrayRow With {
+                                .data = values
                             }
                         End Function) _
                 .ToArray

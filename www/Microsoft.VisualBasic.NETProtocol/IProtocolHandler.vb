@@ -56,4 +56,19 @@ Public Module Extensions
     End Function
 
     Public Const PING_REQUEST As String = "PING/TTL-78973"
+
+#Region ""
+
+    <Extension>
+    Public Sub SendMessage(host As System.Net.IPEndPoint, request As String, Callback As Action(Of String))
+        Dim client As New TcpRequest(host)
+        Call New Threading.Thread(Sub() Callback(client.SendMessage(request))).Start()
+    End Sub
+
+    <Extension>
+    Public Sub SendMessage(host As Net.IPEndPoint, request As String, Callback As Action(Of String))
+        Call host.GetIPEndPoint.SendMessage(request, Callback)
+    End Sub
+
+#End Region
 End Module

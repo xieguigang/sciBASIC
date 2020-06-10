@@ -273,8 +273,8 @@ Vladimir I",
                     result.DistTable = distTable _
                         .ToVectorList _
                         .Select(Function(vec)
-                                    Return New Streams.Array.Double With {
-                                        .Values = vec
+                                    Return New ArrayRow With {
+                                        .data = vec
                                     }
                                 End Function) _
                         .ToArray

@@ -287,21 +287,6 @@ Public Module Extensions
         Return array
     End Function
 
-#Region ""
-
-    <ExportAPI("SendMessage")>
-    <Extension> Public Sub SendMessage(host As System.Net.IPEndPoint, request As String, Callback As Action(Of String))
-        Dim client As New TcpRequest(host)
-        Call New Threading.Thread(Sub() Callback(client.SendMessage(request))).Start()
-    End Sub
-
-    <ExportAPI("SendMessage")>
-    <Extension> Public Sub SendMessage(host As Net.IPEndPoint, request As String, Callback As Action(Of String))
-        Call host.GetIPEndPoint.SendMessage(request, Callback)
-    End Sub
-
-#End Region
-
     ''' <summary>
     ''' Constrain the inherits class type into the base type.
     ''' (基类集合与继承类的集合约束)

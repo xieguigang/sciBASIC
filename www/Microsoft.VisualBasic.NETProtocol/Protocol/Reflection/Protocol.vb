@@ -43,6 +43,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Parallel
+
 Namespace Protocols.Reflection
 
     ''' <summary>
@@ -109,7 +111,7 @@ Namespace Protocols.Reflection
 
         ''' <summary>
         ''' This method is usually using for generates a details protocol processor, example 
-        ''' is calling the method interface: <see cref="Net.Abstract.DataRequestHandler"/>
+        ''' is calling the method interface: <see cref="DataRequestHandler"/>
         ''' Correspondent to the protocol entry property <see cref="RequestStream.Protocol"/>
         ''' </summary>
         ''' <param name="Method"></param>
