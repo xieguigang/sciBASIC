@@ -320,6 +320,10 @@
     <Compile Include="Persistent\Socket\ServicesSocket.vb" />
     <Compile Include="Persistent\Socket\TcpClient.vb" />
     <Compile Include="Persistent\Socket\WorkSocket.vb" />
+    <Compile Include="Pipeline\API.vb" />
+    <Compile Include="Pipeline\PipeBuffer.vb" />
+    <Compile Include="Pipeline\Pipeline.vb" />
+    <Compile Include="Pipeline\PipeStream.vb" />
     <Compile Include="Protocol\IVerifySession.vb" />
     <Compile Include="Protocol\NetResponse.vb" />
     <Compile Include="Protocol\Reflection\AppMgr.vb" />
@@ -331,6 +335,7 @@
     <Compile Include="Protocol\Streams\ArrayBase.vb" />
     <Compile Include="Protocol\Streams\String.vb" />
     <Compile Include="Protocol\Streams\VarArray.vb" />
+    <Compile Include="ServerModule.vb" />
     <Compile Include="StateObject.vb" />
     <Compile Include="TcpRequest.vb" />
     <Compile Include="TcpServicesSocket.vb" />

@@ -19,13 +19,7 @@ Public Delegate Function SendMessageInvoke(Message As String) As String
 
 Public Delegate Sub ForceCloseHandle(socket As StateObject)
 
-''' <summary>
-''' 
-''' </summary>
-''' <param name="request"></param>
-''' <param name="RemoteAddress"></param>
-''' <returns></returns>
-Public Delegate Function DataRequestHandler(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
+
 #End Region
 
 Public Delegate Sub ProcessMessagePush(message As RequestStream)

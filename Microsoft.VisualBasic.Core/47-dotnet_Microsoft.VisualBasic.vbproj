@@ -1172,7 +1172,6 @@
     <Compile Include="My\Framework\DoConfiguration.vb" />
     <Compile Include="My\Framework\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
-    <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
     <Compile Include="ApplicationServices\Tools\Plugin\Loader.vb" />
@@ -1689,10 +1688,6 @@
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb" />
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\API.vb" />
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\PipeBuffer.vb" />
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\PipeStream.vb" />
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\Pipeline.vb" />
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
     <Compile Include="Scripting\TokenIcer\ParserCommon.vb" />

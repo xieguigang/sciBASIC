@@ -70,6 +70,14 @@ Imports Microsoft.VisualBasic.Text
 Namespace Parallel
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="request"></param>
+    ''' <param name="RemoteAddress"></param>
+    ''' <returns></returns>
+    Public Delegate Function DataRequestHandler(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
+
+    ''' <summary>
     ''' Socket user client => Socket server data request &amp;
     ''' Socket server => Socket user client data response package.
     ''' (Socket客户端 => Socket服务器所发送的数据请求以及从
