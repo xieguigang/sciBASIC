@@ -368,6 +368,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\Bag.vb" />
+    <Compile Include="DataModel\Resource.vb" />
     <Compile Include="DataModel\Description.vb" />
     <Compile Include="DataModel\DCMI.vb" />
     <Compile Include="DataTypes.vb" />
