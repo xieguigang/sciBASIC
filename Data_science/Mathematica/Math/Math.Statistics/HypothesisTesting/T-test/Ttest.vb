@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::deaaf712d4de261c9801360ceffffa18, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module t
-    ' 
-    '         Function: Pvalue, (+2 Overloads) Tcdf, (+2 Overloads) Test, welch2df, welch2t
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module t
+' 
+'         Function: Pvalue, (+2 Overloads) Tcdf, (+2 Overloads) Test, welch2df, welch2t
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,11 +71,12 @@ Namespace Hypothesis
             Return New TtestResult With {
                 .alpha = alpha,
                 .DegreeFreedom = sample.SampleSize - 1,
-                .StdErr = stdNum.Sqrt(x.Variance / sample.SampleSize),
+                .StdErr = stdNum.Sqrt(sample.Variance / sample.SampleSize),
                 .TestValue = (sample.Mean - mu) / .StdErr,
                 .Pvalue = Pvalue(.TestValue, .DegreeFreedom, alternative),
                 .Mean = sample.Mean,
-                .Alternative = alternative
+                .alternative = alternative,
+                .x = sample.ToArray
             }
         End Function
 
@@ -129,9 +130,11 @@ Namespace Hypothesis
                 .StdErr = stdErr,
                 .TestValue = testVal,
                 .Pvalue = pvalue,
-                .Alternative = alternative,
+                .alternative = alternative,
                 .MeanX = left.Mean,
-                .MeanY = right.Mean
+                .MeanY = right.Mean,
+                .x = va,
+                .y = vb
             }
         End Function
 

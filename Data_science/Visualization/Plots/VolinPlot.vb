@@ -209,16 +209,16 @@ Public Module VolinPlot
 
                 For Each group As NamedCollection(Of Double) In matrix
                     Dim quartile As DataQuartile = group.Quartile
-                    Dim C95lowerBound = quartile.Q1 - 1.5 * quartile.IQR
-                    Dim C95upperBound = quartile.Q3 + 1.5 * quartile.IQR
-                    Dim upper = yScale.TranslateY(C95upperBound)
-                    Dim lower = yScale.TranslateY(C95lowerBound)
+                    Dim lowerBound = quartile.Q1 - 1.5 * quartile.IQR
+                    Dim upperBound = quartile.Q3 + 1.5 * quartile.IQR
+                    Dim upper = yScale.TranslateY(upperBound)
+                    Dim lower = yScale.TranslateY(lowerBound)
                     ' 计算数据分布的密度之后，进行左右对称的线条的生成
                     Dim line_l As New List(Of PointF)
                     Dim line_r As New List(Of PointF)
-                    Dim q0 = C95lowerBound  'group.Min
+                    Dim q0 = lowerBound  'group.Min
                     Dim n As Integer = 30
-                    Dim dstep = (C95upperBound - C95lowerBound) / n ' (group.Max - group.Min) / n
+                    Dim dstep = (upperBound - lowerBound) / n ' (group.Max - group.Min) / n
                     Dim dy = stdNum.Abs(upper - lower) / n
                     Dim outliers As New List(Of PointF)
 
@@ -278,13 +278,13 @@ Public Module VolinPlot
                     Call g.FillRectangle(polygonStroke.Brush, iqrBox)
 
                     ' draw 95% CI
-                    C95upperBound = group.Average + 1.96 * group.StdError
-                    C95lowerBound = group.Average - 1.96 * group.StdError
+                    upperBound = group.Average + 1.96 * group.StdError
+                    lowerBound = group.Average - 1.96 * group.StdError
 
                     Call g.DrawLine(
                         pen:=polygonStroke,
-                        pt1:=New PointF(X, yScale.TranslateY(C95lowerBound)),
-                        pt2:=New PointF(X, yScale.TranslateY(C95upperBound))
+                        pt1:=New PointF(X, yScale.TranslateY(lowerBound)),
+                        pt2:=New PointF(X, yScale.TranslateY(upperBound))
                     )
 
                     ' draw median point
@@ -292,7 +292,7 @@ Public Module VolinPlot
 
                     ' 在右上绘制数据的分布信息
                     Dim sampleDescrib As String =
-                    $"CI95%: {C95lowerBound.ToString(yTickFormat)} ~ {C95upperBound.ToString(yTickFormat)}" & vbCrLf &
+                    $"CI95%: {lowerBound.ToString(yTickFormat)} ~ {upperBound.ToString(yTickFormat)}" & vbCrLf &
                     $"Median: {quartile.Q2.ToString(yTickFormat)}" & vbCrLf &
                     $"Normal Range: {(quartile.Q1 - 1.5 * quartile.IQR).ToString(yTickFormat)} ~ {(quartile.Q3 + 1.5 * quartile.IQR).ToString(yTickFormat)}"
 
