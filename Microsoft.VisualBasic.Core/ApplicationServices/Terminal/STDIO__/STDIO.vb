@@ -125,7 +125,7 @@ Namespace ApplicationServices.Terminal
         ''' <remarks></remarks>
         Public Sub cat(ParamArray out As String())
             Dim s As String = String.Join("", out)
-            Call Console.Write(s)
+            Call Console.Write(sprintf(s))
         End Sub
 
         ''' <summary>
