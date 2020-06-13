@@ -171,7 +171,7 @@ Namespace FileIO.Path
         '''
         Public Shared Function SearchScriptFile(dir$, keyword$, Optional withExtension$ = Nothing) As IEnumerable(Of String)
             Dim scriptFileNameRule$ = $"*{keyword}*{withExtension}"
-            Dim extNameAssert As Assert(Of String)
+            Dim extNameAssert As Predicate(Of String)
 
             If withExtension.StringEmpty Then
                 extNameAssert = Function(path) path.ExtensionSuffix.StringEmpty
