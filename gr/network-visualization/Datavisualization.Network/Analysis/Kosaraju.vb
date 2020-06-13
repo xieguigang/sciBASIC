@@ -49,11 +49,11 @@ Namespace Analysis
 
         Public Shared Function StronglyConnectedComponents(gr As NetworkGraph, Optional forwardTraversal As Boolean = True) As Kosaraju
             Dim search As New Kosaraju
-            search.dfsLoop(gr, If(forwardTraversal, FORWARD_TRAVERSAL, BACKWARD_TRAVERSAL))
+            search.loop(gr, If(forwardTraversal, FORWARD_TRAVERSAL, BACKWARD_TRAVERSAL))
             Return search
         End Function
 
-        Friend Sub dfsLoop(ByVal gr As NetworkGraph, tp As EdgeTraversalPolicy)
+        Private Sub [loop](ByVal gr As NetworkGraph, tp As EdgeTraversalPolicy)
             Dim vs As ICollection(Of Node)
 
             If pass = 0 Then
@@ -73,7 +73,7 @@ Namespace Analysis
 
                     While Not deque.Empty
                         v = deque.Peek()
-                        dfs(tp, v)
+                        Call depthFirstSearch(tp, v)
                     End While
 
                     If pass = 1 Then
@@ -86,7 +86,7 @@ Namespace Analysis
             pass += 1
         End Sub
 
-        Private Sub dfs(ByVal tp As EdgeTraversalPolicy, ByVal v As Node)
+        Private Sub depthFirstSearch(tp As EdgeTraversalPolicy, v As Node)
             For Each edge As Edge In tp.edges(v.directedVertex)
                 Dim [next] As Node = tp.vertex(edge)
 
