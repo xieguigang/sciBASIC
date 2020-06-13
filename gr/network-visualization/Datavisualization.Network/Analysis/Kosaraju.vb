@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Deque
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Language
 
 Namespace Analysis
 
@@ -35,6 +36,8 @@ Namespace Analysis
         Dim scc As New List(Of Integer)()
         Dim pass As Integer = 0
         Dim deque As New Deque(Of Node)
+        Dim subnetwork As New List(Of Edge())
+        Dim buffer As New List(Of Edge)
 
         Shared ReadOnly FORWARD_TRAVERSAL As New ForwardTraversal()
         Shared ReadOnly BACKWARD_TRAVERSAL As New BackwardTraversal()
@@ -46,6 +49,10 @@ Namespace Analysis
                 Return v2.data.mass.CompareTo(v1.data.mass)
             End Function
         End Class
+
+        Public Function GetComponents() As IEnumerable(Of Edge())
+            Return subnetwork.AsEnumerable
+        End Function
 
         Public Shared Function StronglyConnectedComponents(gr As NetworkGraph) As Kosaraju
             Dim search As New Kosaraju
@@ -91,6 +98,7 @@ Namespace Analysis
                     If pass = 1 Then
                         scc.Add(t)
                         t = 0
+                        subnetwork.Add(buffer.PopAll)
                     End If
                 End If
             Next
@@ -101,6 +109,8 @@ Namespace Analysis
         Private Sub depthFirstSearch(tp As EdgeTraversalPolicy, v As Node)
             For Each edge As Edge In tp.edges(v.directedVertex)
                 Dim [next] As Node = tp.vertex(edge)
+
+                buffer.Add(edge)
 
                 If Not [next].visited Then
                     [next].visited = True

@@ -232,7 +232,9 @@ Namespace Graph
                 .data = New EdgeData With {
                     .label = data.label,
                     .length = data.length,
-                    .Properties = New Dictionary(Of String, String)(data.Properties)
+                    .Properties = New Dictionary(Of String, String)(data.Properties),
+                    .bends = data.bends.ToArray,
+                    .color = data.color
                 }
             }
         End Function

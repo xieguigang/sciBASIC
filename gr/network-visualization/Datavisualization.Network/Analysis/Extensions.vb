@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Analysis
 
@@ -86,7 +87,30 @@ Namespace Analysis
                                                 Optional minVertices As Integer = 5) As IEnumerable(Of NetworkGraph)
 
             Dim analysis As Kosaraju = Kosaraju.StronglyConnectedComponents(g)
+            Dim subnetwork As NetworkGraph
+            Dim nodes As Node()
 
+            For Each part As Edge() In analysis.GetComponents.Where(Function(a) a.Length <> g.size.edges)
+                subnetwork = New NetworkGraph
+                nodes = part _
+                    .Select(Function(a) {a.U, a.V}) _
+                    .IteratesALL _
+                    .Distinct _
+                    .ToArray
+
+                If nodes.Length < minVertices Then
+                    Continue For
+                End If
+
+                For Each v As Node In nodes.Select(Function(a) a.Clone)
+                    Call subnetwork.AddNode(v)
+                Next
+                For Each edge As Edge In part.Select(Function(a) a.Clone)
+                    Call subnetwork.CreateEdge(edge.U, edge.V, 0, edge.data)
+                Next
+
+                Yield subnetwork
+            Next
         End Function
     End Module
 End Namespace

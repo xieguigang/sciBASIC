@@ -32,7 +32,11 @@
         ''' </summary>
         Public ReadOnly Property First As T Implements IDeque(Of T).First
             Get
-                Return data(Scan0)
+                If data.Count = 0 Then
+                    Return Nothing
+                Else
+                    Return data(Scan0)
+                End If
             End Get
         End Property
 
@@ -41,7 +45,11 @@
         ''' </summary>
         Public ReadOnly Property Last As T Implements IDeque(Of T).Last
             Get
-                Return data(Count - 1)
+                If data.Count = 0 Then
+                    Return Nothing
+                Else
+                    Return data(Count - 1)
+                End If
             End Get
         End Property
 
