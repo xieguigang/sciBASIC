@@ -586,7 +586,9 @@
     <Compile Include="Analysis\Similarity\Similarity.vb" />
     <Compile Include="Graph\GraphTree.vb" />
     <Compile Include="Analysis\Model\AdjacencySet.vb" />
-    <Compile Include="Graph\Model\NameOf.vb" />
+    <Compile Include="Graph\Model\data\NodeData.vb" />
+    <Compile Include="Graph\Model\data\EdgeData.vb" />
+    <Compile Include="Graph\Model\data\NameOf.vb" />
     <Compile Include="IDynamicsTable.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
     <Compile Include="Layouts\Cola\descent.vb" />
@@ -650,7 +652,7 @@
     <Compile Include="Graph\Extensions.vb" />
     <Compile Include="Graph\Model\Edge.vb" />
     <Compile Include="Graph\Model\Graph.vb" />
-    <Compile Include="Graph\Model\GraphData.vb" />
+    <Compile Include="Graph\Model\data\GraphData.vb" />
     <Compile Include="Graph\Model\Node.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IForceDirected.vb" />
     <Compile Include="Layouts\ForceDirected\Interfaces\IGraph.vb" />

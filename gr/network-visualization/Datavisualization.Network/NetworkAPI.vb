@@ -41,7 +41,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 
 Public Module NetworkAPI
 

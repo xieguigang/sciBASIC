@@ -98,6 +98,15 @@ Namespace Graph
         Implements IGraphValueContainer(Of NodeData)
         Implements ICloneable(Of Node)
 
+        Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
+
+        ''' <summary>
+        ''' Get all of the edge collection that connect to current node object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property adjacencies As AdjacencySet(Of Edge)
+        Public Property pinned As Boolean
+
         ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置
         ''' </summary>
@@ -115,15 +124,6 @@ Namespace Graph
         Sub New()
             Call Me.New(Nothing, Nothing)
         End Sub
-
-        Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
-
-        ''' <summary>
-        ''' Get all of the edge collection that connect to current node object
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property adjacencies As AdjacencySet(Of Edge)
-        Public Property pinned As Boolean
 
         Public Overrides Function GetHashCode() As Integer
             Return label.GetHashCode()
