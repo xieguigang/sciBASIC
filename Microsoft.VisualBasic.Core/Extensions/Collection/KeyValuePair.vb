@@ -169,6 +169,22 @@ Public Module KeyValuePairExtensions
     End Function
 #End Region
 
+    <Extension>
+    Public Function DescendingMap(Of T As INamedValue)(data As IEnumerable(Of T)) As Dictionary(Of String, T)
+        Return data.OrderByDescending(Function(a) a.Key).ToDictionary(Function(a) a.Key)
+    End Function
+
+    <Extension>
+    Public Function DescendingMap(Of Key As IComparable(Of Key), T)(data As IEnumerable(Of KeyValuePair(Of Key, T))) As Dictionary(Of Key, T)
+        Dim map As New Dictionary(Of Key, T)
+
+        For Each item In data.OrderByDescending(Function(a) a.Key)
+            Call map.Add(item.Key, item.Value)
+        Next
+
+        Return map
+    End Function
+
     ''' <summary>
     ''' Create a tuple for two elements
     ''' </summary>

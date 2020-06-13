@@ -584,6 +584,7 @@
     <Compile Include="Analysis\Model\EdgeSet.vb" />
     <Compile Include="Analysis\Model\GraphIndex.vb" />
     <Compile Include="Analysis\Kosaraju.vb" />
+    <Compile Include="Analysis\Model\EdgeTraversalPolicy.vb" />
     <Compile Include="Analysis\Similarity\ClassConnectivity.vb" />
     <Compile Include="Analysis\Similarity\GraphTopology.vb" />
     <Compile Include="Analysis\Similarity\Similarity.vb" />

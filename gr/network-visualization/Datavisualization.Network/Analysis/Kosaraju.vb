@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Deque
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Deque
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Namespace Analysis
@@ -24,7 +26,7 @@ Namespace Analysis
     '''  
     ''' > https://github.com/awadalaa/kosaraju
     ''' </summary>
-    Public Class Kosaraju
+    Public NotInheritable Class Kosaraju
 
         Dim t As Integer
         ''' <summary>
@@ -34,7 +36,18 @@ Namespace Analysis
         Dim pass As Integer = 0
         Dim deque As Deque(Of Node)
 
-        Sub dfsLoop(ByVal gr As NetworkGraph, ByVal tp As EdgeTraversalPolicy)
+        Shared ReadOnly FORWARD_TRAVERSAL As New ForwardTraversal()
+        Shared ReadOnly BACKWARD_TRAVERSAL As New BackwardTraversal()
+
+        Private Class NodeCompares : Implements IComparer(Of Node)
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Public Function Compare(v1 As Node, v2 As Node) As Integer Implements IComparer(Of Node).Compare
+                Return v2.data.mass.CompareTo(v1.data.mass)
+            End Function
+        End Class
+
+        Sub dfsLoop(ByVal gr As NetworkGraph, Optional forwardTraversal As Boolean = True)
             t = 0
             deque = New Deque(Of Node)()
 
@@ -43,18 +56,18 @@ Namespace Analysis
             If pass = 0 Then
                 vs = gr.verticesInReversedOrder.Values
             Else
-                vs = New System.Collections.Generic.SortedSet(Of com.technalaa.kosaraju.DirectedVertex)(New com.technalaa.kosaraju.KosarajuSCC.ComparatorAnonymousInnerClass())
+                vs = New System.Collections.Generic.SortedSet(Of Node)(New NodeCompares)
                 vs.addAll(gr.vertices.Values)
             End If
 
-            For Each v As com.technalaa.kosaraju.DirectedVertex In vs
+            For Each v As Node In vs
                 If Not v.visited Then
                     v.visited = True
                     deque.push(v)
 
                     While Not deque.Empty
                         v = deque.peek()
-                        dfs(tp, v)
+                        dfs(If(forwardTraversal, FORWARD_TRAVERSAL, BACKWARD_TRAVERSAL), v)
                     End While
 
                     If pass = 1 Then
@@ -81,7 +94,7 @@ Namespace Analysis
             t += 1
 
             If pass = 0 Then
-                v.f = t
+                v.data.mass = t
             End If
 
             deque.pop()
