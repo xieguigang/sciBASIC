@@ -214,7 +214,7 @@ Namespace Language.Default
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +([default] As [Default](Of T), assert As Assert(Of Object)) As [Default](Of T)
+        Public Shared Operator +([default] As [Default](Of T), assert As Predicate(Of Object)) As [Default](Of T)
             Return New [Default](Of T) With {
                 .assert = assert,
                 .value = [default].value
@@ -243,7 +243,7 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function getDefault(value As T, [default] As T, assert As Assert(Of Object))
+        Private Shared Function getDefault(value As T, [default] As T, assert As Predicate(Of Object))
             Return If(assert(value), [default], value)
         End Function
 

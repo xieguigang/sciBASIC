@@ -59,8 +59,8 @@ Namespace Language
         ''' <summary>
         ''' The default value assertor. If target object assert result is nothing or empty, then this function will returns True.
         ''' </summary>
-        Friend ReadOnly defaultAssert As New [Default](Of Assert(Of Object)) With {
-            .Value = AddressOf ExceptionHandle.Default,
+        Friend ReadOnly defaultAssert As New [Default](Of Predicate(Of Object)) With {
+            .value = AddressOf ExceptionHandle.Default,
             .assert = Function(assert)
                           Return assert Is Nothing
                       End Function
@@ -111,9 +111,9 @@ Namespace Language
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        Public Function [Default](Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As [Default](Of T)
+        Public Function [Default](Of T)(x As T, Optional isNothing As Predicate(Of Object) = Nothing) As [Default](Of T)
             Return New [Default](Of T) With {
-                .Value = x,
+                .value = x,
                 .assert = isNothing Or defaultAssert
             }
         End Function
@@ -128,7 +128,7 @@ Namespace Language
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         <DebuggerStepThrough>
-        Public Function AsDefault(Of T)(x As T, Optional [If] As Assert(Of Object) = Nothing) As [Default](Of T)
+        Public Function AsDefault(Of T)(x As T, Optional [If] As Predicate(Of Object) = Nothing) As [Default](Of T)
             Return [Default](x, [If])
         End Function
 
@@ -158,7 +158,7 @@ Namespace Language
         <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function [When](Of T)([default] As T, expression As Assert(Of T)) As [Default](Of T)
+        Public Function [When](Of T)([default] As T, expression As Predicate(Of T)) As [Default](Of T)
             Return [default].AsDefault().When(assert:=expression)
         End Function
 
