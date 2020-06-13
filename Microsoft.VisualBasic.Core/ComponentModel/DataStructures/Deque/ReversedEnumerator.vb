@@ -1,18 +1,13 @@
 ﻿Namespace ComponentModel.Collection.Deque
 
-    Friend Class Enumerator(Of S) : Implements IEnumerator(Of S)
+    Friend Class ReversedEnumerator(Of S)
+        Implements IEnumerator(Of S)
 
-        ''' <summary>
-        ''' initialize with -1 to ensure that InvalidOperationException 
-        ''' is thrown when Current is called befor the first call of 
-        ''' MoveNext
-        ''' </summary>
-        Dim curIndex As Integer = -1
+        Dim curIndex As Integer
 
         ''' <summary>
         ''' version of Deque(Of T) this Enumerator is enumerating from the moment this enumerator has been created
-        ''' </summary>
-        ''' 
+        ''' </summary> 
         Dim version As Long
 
         ''' <summary>
@@ -23,6 +18,10 @@
         Public Sub New(ByVal que As Deque(Of S), ByVal version As Long)
             Me.version = version
             Me.que = que
+
+            ' initialize with que.Count to ensure that InvalidOperationException 
+            ' Is thrown when Current is called befor the first call of MoveNext
+            curIndex = que.Count
         End Sub
 
         Public ReadOnly Property Current As S Implements IEnumerator(Of S).Current
@@ -52,9 +51,9 @@
                 Throw New InvalidOperationException()
             End If
 
-            curIndex += 1
+            curIndex -= 1
 
-            If curIndex >= que.Count Then
+            If curIndex < 0 Then
                 Return False
             End If
 
@@ -62,7 +61,7 @@
         End Function
 
         Public Sub Reset() Implements IEnumerator.Reset
-            curIndex = 0
+            curIndex = que.Count - 1
         End Sub
     End Class
 End Namespace
