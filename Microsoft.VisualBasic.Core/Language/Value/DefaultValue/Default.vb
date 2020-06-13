@@ -67,8 +67,6 @@ Imports Microsoft.VisualBasic.Language.Perl
 
 Namespace Language.Default
 
-    Public Delegate Function Assert(Of T)(obj As T) As Boolean
-
     ''' <summary>
     ''' + Test of A eqauls to B?
     ''' </summary>
@@ -140,7 +138,7 @@ Namespace Language.Default
         ''' test on the object, means object value is missing or null, then default 
         ''' value <see cref="DefaultValue"/> will be returns.
         ''' </summary>
-        Dim assert As Assert(Of Object)
+        Dim assert As Predicate(Of Object)
 
         ''' <summary>
         ''' 这个判断函数优化了对数字类型的判断
@@ -170,7 +168,7 @@ Namespace Language.Default
             End Select
         End Function
 
-        Sub New(value As T, Optional assert As Assert(Of Object) = Nothing)
+        Sub New(value As T, Optional assert As Predicate(Of Object) = Nothing)
             Me.value = value
             Me.assert = assert Or defaultAssert
         End Sub
@@ -184,7 +182,7 @@ Namespace Language.Default
         ''' + 如果这个参数为true，则表示表达式为lazy加载，只会执行一次
         ''' + 反之当这个参数为false的时候，则表达式会不断的产生新的值
         ''' </param>
-        Sub New(populator As Func(Of T), Optional assert As Assert(Of Object) = Nothing, Optional isLazy As Boolean = True)
+        Sub New(populator As Func(Of T), Optional assert As Predicate(Of Object) = Nothing, Optional isLazy As Boolean = True)
             If isLazy Then
                 Me.lazy = populator.AsLazy
             Else
@@ -199,7 +197,7 @@ Namespace Language.Default
             Return Me
         End Function
 
-        Public Function [When](assert As Assert(Of T)) As [Default](Of T)
+        Public Function [When](assert As Predicate(Of T)) As [Default](Of T)
             Me.assert = Function(o) assert(DirectCast(o, T))
             Return Me
         End Function

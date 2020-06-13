@@ -105,7 +105,10 @@ Namespace Graph
         ''' </summary>
         ''' <returns></returns>
         Public Property adjacencies As AdjacencySet(Of Edge)
+        Public Property directedVertex As DirectedVertex
+
         Public Property pinned As Boolean
+        Public Property visited As Boolean
 
         ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置

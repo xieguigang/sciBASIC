@@ -579,6 +579,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\Model\DirectedVertex.vb" />
     <Compile Include="Analysis\Model\EdgeSet.vb" />
     <Compile Include="Analysis\Model\GraphIndex.vb" />
     <Compile Include="Analysis\Similarity\ClassConnectivity.vb" />
