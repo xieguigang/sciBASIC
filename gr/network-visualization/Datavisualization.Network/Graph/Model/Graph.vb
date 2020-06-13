@@ -237,9 +237,14 @@ Namespace Graph
 
             Dim tuple = _index.AddEdge(edge)
 
+            ' gr.addEdge(edge)
+            ' tail.addOutgoingEdge(edge)
+            ' head.addIncomingEdge(edge)
+
             edge.U.adjacencies = tuple.U
             edge.V.adjacencies = tuple.V
             edge.U.directedVertex.addEdge(edge)
+            edge.V.directedVertex.addEdge(edge)
 
             Call notify()
 

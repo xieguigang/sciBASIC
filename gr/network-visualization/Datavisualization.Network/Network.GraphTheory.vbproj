@@ -554,6 +554,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualC.STLCLR" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -582,6 +583,7 @@
     <Compile Include="Analysis\Model\DirectedVertex.vb" />
     <Compile Include="Analysis\Model\EdgeSet.vb" />
     <Compile Include="Analysis\Model\GraphIndex.vb" />
+    <Compile Include="Analysis\Kosaraju.vb" />
     <Compile Include="Analysis\Similarity\ClassConnectivity.vb" />
     <Compile Include="Analysis\Similarity\GraphTopology.vb" />
     <Compile Include="Analysis\Similarity\Similarity.vb" />
