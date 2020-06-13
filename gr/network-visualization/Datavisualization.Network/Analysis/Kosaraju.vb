@@ -32,7 +32,7 @@ Namespace Analysis
         ''' <summary>
         ''' the strong connected components
         ''' </summary>
-        Dim scc As New List(Of Integer?)()
+        Dim scc As New List(Of Integer)()
         Dim pass As Integer = 0
         Dim deque As New Deque(Of Node)
 
@@ -47,11 +47,23 @@ Namespace Analysis
             End Function
         End Class
 
-        Public Shared Function StronglyConnectedComponents(gr As NetworkGraph, Optional forwardTraversal As Boolean = True) As Kosaraju
+        Public Shared Function StronglyConnectedComponents(gr As NetworkGraph) As Kosaraju
             Dim search As New Kosaraju
-            search.loop(gr, If(forwardTraversal, FORWARD_TRAVERSAL, BACKWARD_TRAVERSAL))
+
+            Call search.loop(gr, BACKWARD_TRAVERSAL)
+            Call search.reset(gr)
+            Call search.loop(gr, FORWARD_TRAVERSAL)
+            Call search.reset(gr)
+
             Return search
         End Function
+
+        Private Sub reset(gr As NetworkGraph)
+            ' do graph reset
+            For Each v In gr.vertex
+                v.visited = False
+            Next
+        End Sub
 
         Private Sub [loop](ByVal gr As NetworkGraph, tp As EdgeTraversalPolicy)
             Dim vs As ICollection(Of Node)
