@@ -9,11 +9,11 @@ Namespace Analysis.Model
         ''' <summary>
         ''' me to target
         ''' </summary>
-        ReadOnly outgoingEdges As New HashSet(Of Edge)
+        Friend ReadOnly outgoingEdges As New HashSet(Of Edge)
         ''' <summary>
         ''' source to me
         ''' </summary>
-        ReadOnly incomingEdges As New HashSet(Of Edge)
+        Friend ReadOnly incomingEdges As New HashSet(Of Edge)
 
         Sub New(label As String)
             Me.label = label

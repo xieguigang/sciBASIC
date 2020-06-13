@@ -4,7 +4,7 @@ Namespace Analysis.Model
 
     Public Interface EdgeTraversalPolicy
         Function edges(v As DirectedVertex) As ISet(Of Edge)
-        Function vertex(e As Edge) As DirectedVertex
+        Function vertex(e As Edge) As Node
     End Interface
 
     Friend Class ForwardTraversal : Implements EdgeTraversalPolicy
@@ -16,8 +16,8 @@ Namespace Analysis.Model
             Return v.outgoingEdges
         End Function
 
-        Public Overridable Function vertex(ByVal e As Edge) As DirectedVertex Implements EdgeTraversalPolicy.vertex
-            Return e.head
+        Public Overridable Function vertex(ByVal e As Edge) As Node Implements EdgeTraversalPolicy.vertex
+            Return e.U
         End Function
     End Class
 
@@ -30,8 +30,8 @@ Namespace Analysis.Model
             Return v.incomingEdges
         End Function
 
-        Public Overridable Function vertex(ByVal e As Edge) As DirectedVertex Implements EdgeTraversalPolicy.vertex
-            Return e.tail
+        Public Overridable Function vertex(ByVal e As Edge) As Node Implements EdgeTraversalPolicy.vertex
+            Return e.V
         End Function
     End Class
 End Namespace

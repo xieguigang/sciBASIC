@@ -32,9 +32,9 @@ Namespace Analysis
         ''' <summary>
         ''' the strong connected components
         ''' </summary>
-        Dim scc As System.Collections.Generic.List(Of Integer?) = New System.Collections.Generic.List(Of Integer?)()
+        Dim scc As New List(Of Integer?)()
         Dim pass As Integer = 0
-        Dim deque As Deque(Of Node)
+        Dim deque As New Deque(Of Node)
 
         Shared ReadOnly FORWARD_TRAVERSAL As New ForwardTraversal()
         Shared ReadOnly BACKWARD_TRAVERSAL As New BackwardTraversal()
@@ -47,27 +47,33 @@ Namespace Analysis
             End Function
         End Class
 
-        Sub dfsLoop(ByVal gr As NetworkGraph, Optional forwardTraversal As Boolean = True)
-            t = 0
-            deque = New Deque(Of Node)()
+        Public Shared Function StronglyConnectedComponents(gr As NetworkGraph, Optional forwardTraversal As Boolean = True) As Kosaraju
+            Dim search As New Kosaraju
+            search.dfsLoop(gr, If(forwardTraversal, FORWARD_TRAVERSAL, BACKWARD_TRAVERSAL))
+            Return search
+        End Function
 
+        Friend Sub dfsLoop(ByVal gr As NetworkGraph, tp As EdgeTraversalPolicy)
             Dim vs As ICollection(Of Node)
 
             If pass = 0 Then
-                vs = gr.verticesInReversedOrder.Values
+                ' 这里是按照id降序
+                vs = gr.vertex _
+                    .OrderByDescending(Function(a) a.ID) _
+                    .ToArray
             Else
-                vs = New System.Collections.Generic.SortedSet(Of Node)(New NodeCompares)
-                vs.addAll(gr.vertices.Values)
+                ' 这里是按照结果值升序
+                vs = New SortedSet(Of Node)(gr.vertex, New NodeCompares)
             End If
 
             For Each v As Node In vs
                 If Not v.visited Then
                     v.visited = True
-                    deque.push(v)
+                    deque.AddHead(v)
 
                     While Not deque.Empty
-                        v = deque.peek()
-                        dfs(If(forwardTraversal, FORWARD_TRAVERSAL, BACKWARD_TRAVERSAL), v)
+                        v = deque.Peek()
+                        dfs(tp, v)
                     End While
 
                     If pass = 1 Then
@@ -81,12 +87,12 @@ Namespace Analysis
         End Sub
 
         Private Sub dfs(ByVal tp As EdgeTraversalPolicy, ByVal v As Node)
-            For Each edge As Edge In tp.edges(v)
+            For Each edge As Edge In tp.edges(v.directedVertex)
                 Dim [next] As Node = tp.vertex(edge)
 
                 If Not [next].visited Then
                     [next].visited = True
-                    deque.push([next])
+                    deque.AddHead([next])
                     Return
                 End If
             Next
@@ -97,7 +103,7 @@ Namespace Analysis
                 v.data.mass = t
             End If
 
-            deque.pop()
+            deque.RemoveHead()
         End Sub
     End Class
 End Namespace

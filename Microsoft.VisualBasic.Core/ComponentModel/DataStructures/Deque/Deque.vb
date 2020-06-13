@@ -32,7 +32,7 @@
         ''' </summary>
         Public ReadOnly Property First As T Implements IDeque(Of T).First
             Get
-                Return data(0)
+                Return data(Scan0)
             End Get
         End Property
 
@@ -61,6 +61,14 @@
         End Property
 
         ''' <summary>
+        ''' Retrieves, but does not remove, the head of this queue, or returns null if this queue is empty.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Peek() As T
+            Return First
+        End Function
+
+        ''' <summary>
         ''' Adds an object to the end of the Deque(Of T).
         ''' </summary>
         ''' <param name="item"></param>
@@ -80,7 +88,7 @@
         End Sub
 
         ''' <summary>
-        ''' returns the firts element of the Deque(Of T) and removes it from Deque(Of T)
+        ''' pop returns the firts element of the Deque(Of T) and removes it from Deque(Of T)
         ''' </summary>
         ''' <returns></returns>
         Public Function RemoveHead() As T Implements IDeque(Of T).RemoveHead
