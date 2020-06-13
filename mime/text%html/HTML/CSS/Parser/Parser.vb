@@ -45,7 +45,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace HTML.CSS.Parser
@@ -100,7 +99,7 @@ Namespace HTML.CSS.Parser
         Public Function GetTagWithCSS(CSS$, Optional selectorFilter$ = Nothing) As CSSFile
             Dim tagWithCSSList As New List(Of Selector)
             Dim IndivisualTag As List(Of String) = IndivisualTags(CSS.SolveStream)
-            Dim filter As Assert(Of String)
+            Dim filter As Predicate(Of String)
 
             If selectorFilter.StringEmpty Then
                 filter = Function() True
