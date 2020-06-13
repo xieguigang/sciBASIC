@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection.Deque
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Namespace Analysis
 
@@ -31,6 +32,59 @@ Namespace Analysis
         ''' </summary>
         Dim scc As System.Collections.Generic.List(Of Integer?) = New System.Collections.Generic.List(Of Integer?)()
         Dim pass As Integer = 0
-        Dim deque As IDeque(Of Node)
+        Dim deque As Deque(Of Node)
+
+        Sub dfsLoop(ByVal gr As NetworkGraph, ByVal tp As EdgeTraversalPolicy)
+            t = 0
+            deque = New Deque(Of Node)()
+
+            Dim vs As ICollection(Of Node)
+
+            If pass = 0 Then
+                vs = gr.verticesInReversedOrder.Values
+            Else
+                vs = New System.Collections.Generic.SortedSet(Of com.technalaa.kosaraju.DirectedVertex)(New com.technalaa.kosaraju.KosarajuSCC.ComparatorAnonymousInnerClass())
+                vs.addAll(gr.vertices.Values)
+            End If
+
+            For Each v As com.technalaa.kosaraju.DirectedVertex In vs
+                If Not v.visited Then
+                    v.visited = True
+                    deque.push(v)
+
+                    While Not deque.Empty
+                        v = deque.peek()
+                        dfs(tp, v)
+                    End While
+
+                    If pass = 1 Then
+                        scc.Add(t)
+                        t = 0
+                    End If
+                End If
+            Next
+
+            pass += 1
+        End Sub
+
+        Private Sub dfs(ByVal tp As EdgeTraversalPolicy, ByVal v As Node)
+            For Each edge As Edge In tp.edges(v)
+                Dim [next] As Node = tp.vertex(edge)
+
+                If Not [next].visited Then
+                    [next].visited = True
+                    deque.push([next])
+                    Return
+                End If
+            Next
+
+            t += 1
+
+            If pass = 0 Then
+                v.f = t
+            End If
+
+            deque.pop()
+        End Sub
     End Class
 End Namespace
