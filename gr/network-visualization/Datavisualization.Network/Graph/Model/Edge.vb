@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::4a119d823da1f9e8e3aa9eb875d0d242, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Edge
-    ' 
-    '         Properties: data, ID, isDirected, m_interationtype, m_source
-    '                     m_target, weight
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Edge
+' 
+'         Properties: data, ID, isDirected, m_interationtype, m_source
+'                     m_target, weight
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -84,9 +84,10 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Graph
 
@@ -233,7 +234,7 @@ Namespace Graph
                     .label = data.label,
                     .length = data.length,
                     .Properties = New Dictionary(Of String, String)(data.Properties),
-                    .bends = data.bends.ToArray,
+                    .bends = data.bends.SafeQuery.ToArray,
                     .color = data.color
                 }
             }
