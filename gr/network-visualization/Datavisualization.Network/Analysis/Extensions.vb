@@ -85,7 +85,8 @@ Namespace Analysis
                                                 Optional weakMode As Boolean = True,
                                                 Optional minVertices As Integer = 5) As IEnumerable(Of NetworkGraph)
 
-        End Function
+            Dim analysis As Kosaraju = Kosaraju.StronglyConnectedComponents(g)
 
+        End Function
     End Module
 End Namespace
