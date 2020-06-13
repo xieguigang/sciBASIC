@@ -80,7 +80,7 @@ Namespace ComponentModel
         ''' 即与只读属性'ListData'相比，这个字段的列表中可能含有空引用的元素对象.
         ''' </remarks>
         Dim list As New List(Of T)
-        Dim isNothing As Assert(Of T) = Function(x) x Is Nothing
+        Dim isNothing As Predicate(Of T) = Function(x) x Is Nothing
 
         ''' <summary>
         ''' 返回所有不为空的元素的数量，因为本列表的存储特性的关系，为空的位置实际上是没有值的，所以不会返回这些为空的值的统计数量
@@ -149,13 +149,13 @@ Namespace ComponentModel
             End Set
         End Property
 
-        Sub New(Optional isNothing As Assert(Of T) = Nothing)
+        Sub New(Optional isNothing As Predicate(Of T) = Nothing)
             If Not isNothing Is Nothing Then
                 Me.isNothing = isNothing
             End If
         End Sub
 
-        Sub New(capacity%, Optional isNothing As Assert(Of T) = Nothing)
+        Sub New(capacity%, Optional isNothing As Predicate(Of T) = Nothing)
             Call Me.New(isNothing)
 
             For i As Integer = 0 To capacity - 1
@@ -163,7 +163,7 @@ Namespace ComponentModel
             Next
         End Sub
 
-        Sub New(source As IEnumerable(Of T), Optional isNothing As Assert(Of T) = Nothing)
+        Sub New(source As IEnumerable(Of T), Optional isNothing As Predicate(Of T) = Nothing)
             Call Me.New(isNothing)
             Call Add(source)
         End Sub

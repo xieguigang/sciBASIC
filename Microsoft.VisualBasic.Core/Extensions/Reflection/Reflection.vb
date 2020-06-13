@@ -120,7 +120,7 @@ Public Module EmitReflection
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsLambda(Of T)(assert As Assert(Of T)) As Func(Of T, Boolean)
+    Public Function AsLambda(Of T)(assert As Predicate(Of T)) As Func(Of T, Boolean)
         ' System.ArgumentException: '无法绑定到目标方法，因其签名或安全透明度与委托类型的签名或安全透明度不兼容。
         ' assert.Method.CreateDelegate(GetType(Func(Of T, Boolean)))
         Return Function(x) assert(x)

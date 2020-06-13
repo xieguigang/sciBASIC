@@ -68,10 +68,10 @@ Namespace ComponentModel.DataSourceModel
         ''' Controls for <see cref="PropertyAccess"/> on <see cref="PropertyInfo"/>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccess, Assert(Of PropertyInfo))
+        Public ReadOnly Property Flags As IReadOnlyDictionary(Of PropertyAccess, Predicate(Of PropertyInfo))
 
         Sub New()
-            Flags = New Dictionary(Of PropertyAccess, Assert(Of PropertyInfo)) From {
+            Flags = New Dictionary(Of PropertyAccess, Predicate(Of PropertyInfo)) From {
  _
                 {PropertyAccess.Readable, Function(p) p.CanRead},
                 {PropertyAccess.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
@@ -152,7 +152,7 @@ Namespace ComponentModel.DataSourceModel
             Return props.ToDictionary(Function(x) x.Name)
         End Function
 
-        ReadOnly alwaysTrue As [Default](Of Assert(Of Object)) = New Assert(Of Object)(Function() True)
+        ReadOnly alwaysTrue As [Default](Of Predicate(Of Object)) = New Predicate(Of Object)(Function() True)
 
         ''' <summary>
         ''' 将对象之中的所有属性值都取出来以字符串的形式生成一个字典对象
@@ -164,7 +164,7 @@ Namespace ComponentModel.DataSourceModel
         <Extension>
         Public Function DictionaryTable(Of T)(x As T,
                                               Optional primitiveType As Boolean = False,
-                                              Optional where As Assert(Of Object) = Nothing) As Dictionary(Of String, String)
+                                              Optional where As Predicate(Of Object) = Nothing) As Dictionary(Of String, String)
 
             Dim schema As Dictionary(Of String, PropertyInfo) = GetType(T).getOrCache
             Dim table As New Dictionary(Of String, String)

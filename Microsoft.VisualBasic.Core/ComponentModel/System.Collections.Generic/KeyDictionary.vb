@@ -61,7 +61,7 @@ Namespace ComponentModel.Collection
 
     Public Class HashTable(Of T) : Inherits Dictionary(Of String, T)
 
-        ReadOnly assert As Assert(Of Object)
+        ReadOnly assert As Predicate(Of Object)
 
         Default Public Overloads Property Item(key As String) As [Default](Of T)
             Get
@@ -73,7 +73,7 @@ Namespace ComponentModel.Collection
             End Set
         End Property
 
-        Sub New(copy As Dictionary(Of String, T), Optional assert As Assert(Of Object) = Nothing)
+        Sub New(copy As Dictionary(Of String, T), Optional assert As Predicate(Of Object) = Nothing)
             Call MyBase.New(copy)
 
             Me.assert = assert

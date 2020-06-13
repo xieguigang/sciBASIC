@@ -81,28 +81,28 @@ Namespace Language
 
         Public ReadOnly Property Expression(Optional null$ = "Nothing",
                                             Optional stringEscaping As Func(Of String, String) = Nothing,
-                                            Optional isVar As Assert(Of String) = Nothing) As String
+                                            Optional isVar As Predicate(Of String) = Nothing) As String
             Get
                 Dim val$
 
-                Static [isNot] As New [Default](Of Assert(Of String))(Function(var) False)
+                Static [isNot] As New [Default](Of Predicate(Of String))(Function(var) False)
 
-                If value Is Nothing Then
+                If Value Is Nothing Then
                     val = null
-                ElseIf value.GetType Is GetType(String) Then
+                ElseIf Value.GetType Is GetType(String) Then
                     ' string can be a variable name
-                    If (isVar Or [isNot])(value) Then
-                        val = value
+                    If (isVar Or [isNot])(Value) Then
+                        val = Value
                     Else
-                        val = $"""{(stringEscaping Or noEscaping)(value)}"""
+                        val = $"""{(stringEscaping Or noEscaping)(Value)}"""
                     End If
-                ElseIf value.GetType Is GetType(Char) Then
-                    val = $"""{value}"""
+                ElseIf Value.GetType Is GetType(Char) Then
+                    val = $"""{Value}"""
                 Else
-                    val = value
+                    val = Value
                 End If
 
-                Return $"{name} = {val}"
+                Return $"{Name} = {val}"
             End Get
         End Property
 

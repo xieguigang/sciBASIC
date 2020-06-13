@@ -57,9 +57,9 @@ Namespace Language.Perl
     Public Structure ExceptionHandle
 
         Dim message$
-        Dim failure As Assert(Of Object)
+        Dim failure As Predicate(Of Object)
 
-        Shared ReadOnly defaultHandler As New Assert(Of Object)(AddressOf [Default])
+        Shared ReadOnly defaultHandler As New Predicate(Of Object)(AddressOf [Default])
 
         ''' <summary>
         ''' Returns True means test failure(<paramref name="obj"/> is nothing or empty!)

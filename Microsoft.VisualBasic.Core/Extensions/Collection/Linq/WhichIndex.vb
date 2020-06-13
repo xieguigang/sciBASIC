@@ -217,7 +217,7 @@ Namespace Linq
         ''' <param name="array"></param>
         ''' <param name="condi"></param>
         ''' <returns></returns>
-        Public Iterator Function [True](Of T)(array As IEnumerable(Of T), condi As Assert(Of T)) As IEnumerable(Of Integer)
+        Public Iterator Function [True](Of T)(array As IEnumerable(Of T), condi As Predicate(Of T)) As IEnumerable(Of Integer)
             Dim i%
 
             For Each x As T In array

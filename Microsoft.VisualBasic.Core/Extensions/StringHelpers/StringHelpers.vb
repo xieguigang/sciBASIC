@@ -991,7 +991,7 @@ Public Module StringHelpers
                                       Optional regex As Boolean = False,
                                       Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
 
-        Dim delimiterTest As Assert(Of String)
+        Dim delimiterTest As Predicate(Of String)
 
         If regex Then
             With New Regex(delimiter, opt)
@@ -1017,7 +1017,7 @@ Public Module StringHelpers
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Split(source As IEnumerable(Of String),
-                                   delimiterPredicate As Assert(Of String),
+                                   delimiterPredicate As Predicate(Of String),
                                    Optional includes As Boolean = True) As IEnumerable(Of String())
 
         Dim list As New List(Of String)
