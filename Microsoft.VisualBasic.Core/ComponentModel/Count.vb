@@ -98,6 +98,7 @@ Namespace ComponentModel
         End Operator
     End Class
 
+    <HideModuleName>
     Public Module CounterExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

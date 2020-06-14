@@ -121,7 +121,7 @@ Namespace Analysis.Dijkstra
         ''' <param name="label$"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetLocation(label$) As Vertex
+        Public Function GetLocation(label As String) As Vertex
             Return points.Where(Function(x) x.label = label).FirstOrDefault
         End Function
 
