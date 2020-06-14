@@ -1261,7 +1261,7 @@
     <Compile Include="Language\Value\CharStream.vb" />
     <Compile Include="Language\Value\Variant.vb" />
     <Compile Include="My\File.vb" />
-    <Compile Include="My\Module1.vb" />
+    <Compile Include="My\FileFormats.vb" />
     <Compile Include="Net\HTTP\URL.vb" />
     <Compile Include="Net\HTTP\Web\WebQuery.vb" />
     <Compile Include="Net\HTTP\Web\WebQueryModule.vb" />
