@@ -30,6 +30,8 @@ Namespace Analysis
         ''' 中介中心度，计算经过一个点的最短路径的数量。经过一个点的最短路径的数量越多，就说明它的中介中心度越高。
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function BetweennessCentrality(graph As DijkstraRouter) As Dictionary(Of String, Integer)
             Dim hits As New Dictionary(Of String, Counter)
             Dim routes As New List(Of Route)

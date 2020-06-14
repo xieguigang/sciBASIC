@@ -61,6 +61,8 @@ Namespace Graph
         <DumpNode>
         Public Property neighbours As Integer()
 
+        Public Property betweennessCentrality As Double
+
         Public Sub New()
             MyBase.New()
 
