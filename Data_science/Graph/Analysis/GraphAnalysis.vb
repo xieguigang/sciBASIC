@@ -25,6 +25,10 @@ Namespace Analysis
             Return routine
         End Function
 
+        ''' <summary>
+        ''' 中介中心度，计算经过一个点的最短路径的数量。经过一个点的最短路径的数量越多，就说明它的中介中心度越高。
+        ''' </summary>
+        ''' <returns></returns>
         Public Function BetweennessCentrality()
 
         End Function

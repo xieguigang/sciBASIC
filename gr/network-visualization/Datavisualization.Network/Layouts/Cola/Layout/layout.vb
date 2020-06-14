@@ -52,11 +52,11 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports any = System.Object
 Imports number = System.Double
-Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 
