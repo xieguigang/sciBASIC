@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports number = System.Double
 Imports stdNum = System.Math
 
-Namespace Dijkstra
+Namespace Analysis.Dijkstra
 
     Public Class Neighbour
 

@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Connection = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
 
-Namespace Dijkstra
+Namespace Analysis.Dijkstra
 
     ''' <summary>
     ''' 从出发点到终点所经过的路径

@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Dijkstra
+Namespace Analysis.Dijkstra
 
     ''' <summary>
     ''' ## Dijkstra:Shortest Route Calculation - Object Oriented
