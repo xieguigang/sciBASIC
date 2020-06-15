@@ -142,7 +142,7 @@ Namespace PCA
             Dim dx = x.Max - x.Min
             Dim xaxis = $"({x.Min - dx / 5},{x.Max + dx / 5}),n=10"
 
-            Return Bubble.Plot(serials, size.SizeParser, xAxis:=xaxis, strokeColorAsMainColor:=True)
+            Return Bubble.Plot(serials, size, xAxis:=xaxis, strokeColorAsMainColor:=True)
         End Function
     End Module
 End Namespace
