@@ -592,7 +592,7 @@ Public Module Scatter
                         lineWidth!,
                         ptSize!,
                         lineType)
-        Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
+        Return Bubble.Plot({s}, size:=$"{size.Width},{size.Height}", padding:=padding, bg:=bg)
     End Function
 
     <Extension>
@@ -611,7 +611,7 @@ Public Module Scatter
                         lineWidth!,
                         ptSize!,
                         lineType)
-        Return {s}.Plot(size:=size, padding:=padding, bg:=bg)
+        Return Bubble.Plot({s}, size:=$"{size.Width},{size.Height}", padding:=padding, bg:=bg)
     End Function
 
     <Extension>
