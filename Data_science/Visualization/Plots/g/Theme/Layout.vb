@@ -1,11 +1,14 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Canvas
 
-    Public MustInherit Class Layout
+    Public MustInherit Class Layout : Implements IsEmpty
+
+        Friend MustOverride ReadOnly Property isEmpty As Boolean Implements IsEmpty.IsEmpty
 
         ''' <summary>
         ''' 
@@ -60,6 +63,20 @@ Namespace Graphic.Canvas
         Public Property x As Double
         Public Property y As Double
 
+        Friend Overrides ReadOnly Property isEmpty As Boolean
+            Get
+                Return (x.IsNaNImaginary OrElse x = 0.0) AndAlso (y.IsNaNImaginary OrElse y = 0.0)
+            End Get
+        End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(location As PointF)
+            x = location.X
+            y = location.Y
+        End Sub
+
         Public Overrides Function GetLocation(canvas As GraphicsRegion, dependency As LayoutDependency) As PointF
             Return New PointF(x, y)
         End Function
@@ -73,6 +90,12 @@ Namespace Graphic.Canvas
         Public Property x As Double
         Public Property y As Double
         Public Property target As String = "canvas"
+
+        Friend Overrides ReadOnly Property isEmpty As Boolean
+            Get
+                Return (x.IsNaNImaginary OrElse x = 0.0) AndAlso (y.IsNaNImaginary OrElse y = 0.0) AndAlso target.StringEmpty
+            End Get
+        End Property
 
         Public Overrides Function GetLocation(canvas As GraphicsRegion, dependency As LayoutDependency) As PointF
             Dim rect As RectangleF = dependency.GetTarget(target)

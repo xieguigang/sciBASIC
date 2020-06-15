@@ -55,6 +55,7 @@ Imports stdNum = System.Math
 
 Namespace Graphic.Legend
 
+    <HideModuleName>
     Public Module LegendPlotExtensions
 
         Private ReadOnly legendExpressions As Dictionary(Of String, LegendStyles) =

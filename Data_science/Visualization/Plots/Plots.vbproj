@@ -504,6 +504,7 @@
     <Compile Include="g\Canvas.vb" />
     <Compile Include="g\Plot.vb" />
     <Compile Include="g\ColorManager.vb" />
+    <Compile Include="g\Theme\Extensions.vb" />
     <Compile Include="g\Theme\Layout.vb" />
     <Compile Include="g\Theme\FontStyle.vb" />
     <Compile Include="g\Theme\Theme.vb" />

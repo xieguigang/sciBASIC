@@ -8,37 +8,26 @@ Namespace Graphic
 
     Public MustInherit Class Plot
 
-        ''' <summary>
-        ''' the main title
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property main As String = Me.GetType.Name
+        Protected ReadOnly theme As Theme
+
+        Public Property xlabel As String = "X"
+        Public Property ylabel As String = "Y"
 
         ''' <summary>
-        ''' the sub-title
+        ''' the main title string
         ''' </summary>
         ''' <returns></returns>
-        Public Property subtitle As String
-        Public Property legendTitle As String
-
-        Public Property mainStyle As FontStyle
-        Public Property subTitleStyle As FontStyle
-        Public Property legendTitleStyle As FontStyle
-
-        Public Property size As String = "1600,1200"
-        Public Property padding As String = g.DefaultPadding
-
-        Public Property background As String
+        Public Property main As String
 
         Sub New(theme As Theme)
-
+            Me.theme = theme
         End Sub
 
-        Public Function Plot(Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Public Function Plot(Optional size$ = Resolution2K.Size, Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
                 size:=size.SizeParser,
-                padding:=padding,
-                bg:=background,
+                padding:=theme.padding,
+                bg:=theme.background,
                 plotAPI:=AddressOf PlotInternal,
                 driver:=driver,
                 dpi:=$"{ppi},{ppi}"
