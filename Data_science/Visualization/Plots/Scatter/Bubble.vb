@@ -118,7 +118,7 @@ Public Class Bubble : Inherits Plot
             .yAxisLayout = ylayout,
             .drawLegend = legend,
             .legendLayout = New Absolute(legendAnchor),
-            .legendBoxStroke = legendBorder.ToString,
+            .legendBoxStroke = legendBorder?.ToString,
             .axisLabelCSS = axisLabelFontCSS
         }
 
