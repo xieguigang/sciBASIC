@@ -263,7 +263,7 @@ Public Class Bubble : Inherits Plot
             .Height(plotrect.Height) _
             .Anchors(anchors) _
             .Labels(labels) _
-            .Start(showProgress:=False, nsweeps:=2000)
+            .Start(showProgress:=False, nsweeps:=3000)
 
         Dim anchor As Anchor
         Dim label As Label
