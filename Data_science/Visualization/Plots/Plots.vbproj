@@ -498,9 +498,15 @@
     <Compile Include="g\Axis\Axis.vb" />
     <Compile Include="BarPlot\BarPlot2.vb" />
     <Compile Include="BarPlot\Histogram\DataModel.vb" />
+    <Compile Include="g\Axis\DataScaler\YScaler.vb" />
+    <Compile Include="g\Axis\DataScaler\TermScaler.vb" />
     <Compile Include="g\Axis\TimeRange.vb" />
     <Compile Include="g\Canvas.vb" />
+    <Compile Include="g\Plot.vb" />
     <Compile Include="g\ColorManager.vb" />
+    <Compile Include="g\Theme\Layout.vb" />
+    <Compile Include="g\Theme\FontStyle.vb" />
+    <Compile Include="g\Theme\Theme.vb" />
     <Compile Include="VolinPlot.vb" />
     <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="BarPlot\Data\csv.vb" />
@@ -511,7 +517,7 @@
     <Compile Include="g\Axis\AxisData.vb" />
     <Compile Include="g\Axis\AxisProvider.vb" />
     <Compile Include="g\Axis\Styles.vb" />
-    <Compile Include="g\DataScaler.vb" />
+    <Compile Include="g\Axis\DataScaler\DataScaler.vb" />
     <Compile Include="g\Mapper.vb" />
     <Compile Include="g\ProfileGroup.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />

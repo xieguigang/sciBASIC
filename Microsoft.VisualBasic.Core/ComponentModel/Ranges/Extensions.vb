@@ -159,6 +159,11 @@ Namespace ComponentModel.Ranges
             End If
 
             Dim vector#() = from.ToArray
+
+            If vector.Length = 1 Then
+                Return {[to].Max}
+            End If
+
             Dim scale = New DoubleRange(vector).GetScaler
             Dim percentages#() = vector.Select(scale).ToArray
             Dim length# = [to].Length

@@ -98,7 +98,7 @@ Namespace csv
                             .errMinus = x.errMinus,
                             .errPlus = x.errPlus,
                             .pt = New PointF(x.X, x.Y),
-                            .Tag = x.tag,
+                            .tag = x.tag,
                             .value = x.value,
                             .Statics = x.Statics
                         }

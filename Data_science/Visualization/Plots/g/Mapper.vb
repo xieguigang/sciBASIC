@@ -199,7 +199,7 @@ Namespace Graphic
                 Select New PointData(px, py) With {
                     .errMinus = p.errMinus,
                     .errPlus = p.errPlus,
-                    .Tag = p.Tag,
+                    .tag = p.tag,
                     .value = p.value,
                     .Statics = p.Statics,
                     .color = p.color,

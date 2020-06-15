@@ -342,9 +342,23 @@ Namespace Graphic.Axis
             Return n
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <param name="ticks%"></param>
+        ''' <param name="absoluteScalling">
+        ''' 从最小值开始还是从零开始计算？
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
-        Public Function GetAxisValues(range As DoubleRange, Optional parts% = 10, Optional absoluteScalling As Boolean = False) As Double()
-            Return GetAxisValues(range.Max, parts, range.Min, absoluteScalling:=absoluteScalling)
+        Public Function GetAxisValues(range As DoubleRange, Optional ticks% = 10, Optional absoluteScalling As Boolean = False) As Double()
+            ' Return GetAxisValues(range.Max, parts, range.Min, absoluteScalling:=absoluteScalling)
+            If absoluteScalling Then
+                Return New DoubleRange(stdNum.Min(0, range.Min), range.Max).CreateAxisTicks(ticks)
+            Else
+                Return range.CreateAxisTicks(ticks)
+            End If
         End Function
 
         <Extension>
@@ -365,6 +379,8 @@ Namespace Graphic.Axis
                     l.Add(i)
                     i += tick
                 Loop
+
+                l += max
             Catch ex As Exception
                 Dim debug As New Dictionary(Of String, Double) From {
                     {NameOf(min), min},
