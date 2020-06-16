@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.Dijkstra
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Analysis
 
@@ -34,11 +35,16 @@ Namespace Analysis
         <Extension>
         Public Function BetweennessCentrality(graph As DijkstraRouter) As Dictionary(Of String, Integer)
             Dim hits As New Dictionary(Of String, Counter)
-            Dim routes As New List(Of Route)
+            Dim routes As Route（) = graph.points _
+                .AsParallel _
+                .Select(Function(node)
+                            Return graph.CalculateMinCost(node).Values
+                        End Function) _
+                .IteratesALL _
+                .ToArray
 
             For Each node As Vertex In graph.points
                 hits.Add(node.label, 0)
-                routes.AddRange(graph.CalculateMinCost(node).Values)
             Next
 
             For Each route As Route In routes

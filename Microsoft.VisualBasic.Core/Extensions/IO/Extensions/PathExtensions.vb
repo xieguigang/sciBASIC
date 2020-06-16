@@ -872,10 +872,10 @@ Public Module PathExtensions
     <ExportAPI("Dir.FullPath")>
     <Extension> Public Function GetDirectoryFullPath(dir$, <CallerMemberName> Optional stack$ = Nothing) As String
         Try
-            Return FileIO.FileSystem _
-                .GetDirectoryInfo(dir) _
-                .FullName _
-                .Replace("\", "/")
+            Dim dirInfo As New DirectoryInfo(dir)
+            Dim fullName As String = dirInfo.FullName.Replace("\", "/")
+
+            Return fullName
         Catch ex As Exception
             stack = stack & " --> " & NameOf(GetDirectoryFullPath)
 

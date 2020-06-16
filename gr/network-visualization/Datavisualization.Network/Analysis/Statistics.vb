@@ -75,6 +75,18 @@ Namespace Analysis
             Return DijkstraRouter.FromNetwork(graph, undirected).BetweennessCentrality
         End Function
 
+        <Extension>
+        Public Function ComputeBetweennessCentrality(graph As NetworkGraph) As Dictionary(Of String, Integer)
+            Dim data = graph.BetweennessCentrality
+
+            For Each node In graph.vertex
+                node.data.betweennessCentrality = data(node.label)
+                node.data(names.REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY) = data(node.label)
+            Next
+
+            Return data
+        End Function
+
         ''' <summary>
         ''' 这个函数计算网络的节点的degree，然后将degree数据写入节点的同时，通过字典返回给用户
         ''' </summary>
@@ -98,21 +110,20 @@ Namespace Analysis
 
                     If Not connectNodes.ContainsKey(node.label) Then
                         ' 这个节点是孤立的节点，度为零
-                        node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE, 0)
-                        node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, 0)
-                        node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, 0)
-
+                        node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE, 0)
+                        node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_IN, 0)
+                        node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_OUT, 0)
                     Else
                         d = connectNodes(node.label)
-                        node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
+                        node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE, d)
 
                         If .in.ContainsKey(node.label) Then
                             d = .in(node.label)
-                            node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
+                            node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
                         End If
                         If .out.ContainsKey(node.label) Then
                             d = .out(node.label)
-                            node.data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
+                            node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
                         End If
                     End If
                 Next

@@ -186,7 +186,7 @@ Namespace Imaging
         ''' <param name="res$"></param>
         ''' <returns></returns>
         <Extension> Public Function GetBrush(res$) As Brush
-            Dim bgColor As Color = res.TranslateColor
+            Dim bgColor As Color = res.TranslateColor(throwEx:=False)
 
             If Not bgColor.IsEmpty Then
                 Return New SolidBrush(bgColor)

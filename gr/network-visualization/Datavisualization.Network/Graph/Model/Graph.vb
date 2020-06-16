@@ -312,8 +312,11 @@ Namespace Graph
         ''' <remarks>
         ''' 使用这个函数所构建的节点对象的<see cref="Node.ID"/>是自增的，<paramref name="label"/>则会赋值给<see cref="Node.Label"/>属性
         ''' </remarks>
-        Public Function CreateNode(label As String) As Node
-            Dim data As New NodeData With {.label = label}
+        Public Function CreateNode(label As String, Optional data As NodeData = Nothing) As Node
+            If data Is Nothing Then
+                data = New NodeData With {.label = label}
+            End If
+
             Dim tNewNode As New Node(label, data) With {
                 .ID = _nextNodeId
             }

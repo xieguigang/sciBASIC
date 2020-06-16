@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::fa4042b45a94ab9d675007c7334b0012, gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module forceNetwork
-    ' 
-    '         Function: (+2 Overloads) doForceLayout, doRandomLayout
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module forceNetwork
+' 
+'         Function: (+2 Overloads) doForceLayout, doRandomLayout
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,33 @@ Namespace Layouts
             With parameters
                 Return net.doForceLayout(.Stiffness, .Repulsion, .Damping, .Iterations, showProgress:=showProgress)
             End With
+        End Function
+
+        ''' <summary>
+        ''' 这个函数用来检查所有的节点是否都是处于零位置
+        ''' 
+        ''' #### 20200616
+        ''' 
+        ''' **假若所有的节点都是处于零位置，则<see cref="doForceLayout"/>函数无法正常工作**
+        ''' 
+        ''' 因为布局引擎会自动使用随机位置初始化位置为空值的节点
+        ''' 所以在这里只需要检查非空位置的节点即可
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function CheckZero(g As NetworkGraph) As Boolean
+            For Each v As Node In g.vertex
+                If Not v.data?.initialPostion Is Nothing Then
+                    Dim p As AbstractVector = v.data.initialPostion
+
+                    If p.x <> 0 OrElse p.y <> 0 OrElse p.z <> 0 Then
+                        Return False
+                    End If
+                End If
+            Next
+
+            Return True
         End Function
 
         ''' <summary>
@@ -124,7 +151,7 @@ Namespace Layouts
             Next
 
             Call physicsEngine.EachNode(
-                Sub(node, point)
+                Sub(node As Node, point As LayoutPoint)
                     node.data.initialPostion = point.position
                 End Sub)
 

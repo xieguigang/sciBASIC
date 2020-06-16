@@ -102,7 +102,8 @@ Namespace FileStream
                 For Each key As String In {
                     names.REFLECTION_ID_MAPPING_DEGREE,
                     names.REFLECTION_ID_MAPPING_DEGREE_IN,
-                    names.REFLECTION_ID_MAPPING_DEGREE_OUT
+                    names.REFLECTION_ID_MAPPING_DEGREE_OUT,
+                    names.REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY
                 }.Where(Function(p) n.data.HasProperty(p))
 
                     data(key) = n.data(key)
@@ -159,9 +160,15 @@ Namespace FileStream
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CreateGraph(net As NetworkTables,
                                                 Optional nodeColor As Func(Of Node, Brush) = Nothing,
+                                                Optional defaultBrush$ = "black",
                                                 Optional defaultNodeSize$ = "20,20") As NetworkGraph
 
-            Return CreateGraph(Of Node, NetworkEdge)(net, nodeColor, defaultNodeSize:=defaultNodeSize)
+            Return CreateGraph(Of Node, NetworkEdge)(
+                net,
+                nodeColor,
+                defaultBrush:=defaultBrush,
+                defaultNodeSize:=defaultNodeSize
+            )
         End Function
 
         ''' <summary>

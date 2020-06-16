@@ -522,7 +522,7 @@ Namespace Graphic.Axis
                     Dim labelImage As Image = label.__plotLabel(labelFont, False)
                     Dim point As New Point With {
                         .X = (size.Width - labelImage.Width) / 2 + scaler.region.Left,
-                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 3
+                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 4
                     }
 
                     Call g.DrawImageUnscaled(labelImage, point)
@@ -531,7 +531,7 @@ Namespace Graphic.Axis
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim point As New PointF With {
                         .X = (size.Width - fSize.Width) / 2 + scaler.region.Left,
-                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 3
+                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 4
                     }
 
                     ' Call $"[X:={label}] {point.ToString}".__INFO_ECHO

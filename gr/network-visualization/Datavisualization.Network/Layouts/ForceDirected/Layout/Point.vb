@@ -174,7 +174,7 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"{node} [{position.x}, {position.y}, {position.z}]"
         End Function
     End Class
 End Namespace
