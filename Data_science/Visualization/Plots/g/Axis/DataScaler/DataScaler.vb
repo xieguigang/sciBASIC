@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f94211002e12eb417d2fb7e10b97dc2, Data_science\Visualization\Plots\g\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::0bb9cc9bddbe082216ff46b4f2d34f71, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
 
     ' Author:
     ' 
@@ -31,30 +31,16 @@
 
     ' Summaries:
 
-    '     Module DataScalerExtensions
-    ' 
-    '         Function: TupleScaler
-    ' 
-    '     Class TermScaler
-    ' 
-    '         Properties: AxisTicks, X
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Translate, TranslateX
-    ' 
-    '     Class YScaler
-    ' 
-    '         Properties: region, Y
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: TranslateHeight, (+2 Overloads) TranslateY
-    ' 
     '     Class DataScaler
     ' 
     '         Properties: AxisTicks, X
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) Translate, TranslateX
+    ' 
+    '     Module DataScalerExtensions
+    ' 
+    '         Function: TupleScaler
     ' 
     ' 
     ' /********************************************************************************/

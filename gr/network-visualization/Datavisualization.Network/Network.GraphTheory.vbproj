@@ -594,6 +594,7 @@
     <Compile Include="Graph\Model\data\EdgeData.vb" />
     <Compile Include="Graph\Model\data\NameOf.vb" />
     <Compile Include="IDynamicsTable.vb" />
+    <Compile Include="Layouts\Circular\CircularLayout.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
     <Compile Include="Layouts\Cola\descent.vb" />
     <Compile Include="Layouts\Cola\Layout\Group.vb" />

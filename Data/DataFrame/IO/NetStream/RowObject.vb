@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08e5a3941d67e1a8f45a9e3010a28419, Data\DataFrame\IO\NetStream\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::eda1b6a42e778bc44dde43f84f74aaf2, Data\DataFrame\IO\NetStream\RowObject.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@
 '        End Function
 '    End Class
 'End Namespace
-

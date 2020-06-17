@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f4861b2277154ede918a88180ab0989, Microsoft.VisualBasic.Core\test\sqltest.vb"
+﻿#Region "Microsoft.VisualBasic::14fe4bf9ce988049a70dd17c060e23d6, Microsoft.VisualBasic.Core\test\sqltest.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Module sqltest
         Call queryMeta.SaveTo("C:\Users\Administrator\Desktop\list_meta.sql")
     End Sub
 End Module
-

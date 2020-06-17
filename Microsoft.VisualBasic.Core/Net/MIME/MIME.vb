@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57c15c7a6904d026effc96807ea2f0e2, Microsoft.VisualBasic.Core\Net\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::705d7443b0c83e291c7d49fcde73415e, Microsoft.VisualBasic.Core\Net\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -74,6 +74,10 @@ Namespace Net.Protocols.ContentTypes
         Public Const ZIP As String = "application/zip"
         Public Const Png As String = "image/png"
 
+        ''' <summary>
+        ''' ``application/octet-stream``
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property UnknownType As New ContentType With {
             .FileExt = "*.*",
             .MIMEType = Unknown,

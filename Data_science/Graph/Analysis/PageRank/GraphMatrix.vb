@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a605fd195c0f78d4b9587f5a2ce2f424, Data_science\Graph\API\PageRank\GraphMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::a605fd195c0f78d4b9587f5a2ce2f424, Data_science\Graph\Analysis\PageRank\GraphMatrix.vb"
 
     ' Author:
     ' 

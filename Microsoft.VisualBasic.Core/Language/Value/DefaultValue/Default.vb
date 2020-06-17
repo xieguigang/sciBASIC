@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7215eacef6da5d9f4c3c795ae8d23869, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::54467bcb1d0626f3f4ef23e204bcb70a, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,6 @@
     '     Delegate Function
     ' 
     ' 
-    '     Delegate Function
-    ' 
-    ' 
     '     Interface IDefault
     ' 
     '         Properties: DefaultValue
@@ -52,8 +49,6 @@
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) [When], getDefault, GetNumericAssert, ToString
     '         Operators: (+2 Overloads) +, (+6 Overloads) Or
-    ' 
-    ' 
     ' 
     ' 
     ' 
