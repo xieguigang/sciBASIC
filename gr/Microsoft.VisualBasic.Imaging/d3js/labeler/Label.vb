@@ -107,7 +107,11 @@ Namespace d3js.Layout
         ''' the label text.
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 20200618 实际上这个标签文本与实际的标签没有很多关联，也可以为一个用于获取图片对象的主键
+        ''' </remarks>
         Public Property text As String
+
         ''' <summary>
         ''' 在计算位置的时候，这个标签将不会被随机模拟事件选中
         ''' 即这个标签当这个属性为true的时候不会发生任何变化

@@ -43,7 +43,7 @@
 #End Region
 
 Imports System.Drawing
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace d3js.Layout
 
@@ -80,13 +80,13 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="circle">假设anchor是一个圆，画圆的时候是依据矩形框来建模的</param>
         Sub New(circle As Rectangle)
-            r = sys.Min(circle.Width, circle.Height) / 2
+            r = stdNum.Min(circle.Width, circle.Height) / 2
             x = circle.Left + r
             y = circle.Top + r
         End Sub
 
         Sub New(circle As RectangleF)
-            r = sys.Min(circle.Width, circle.Height) / 2
+            r = stdNum.Min(circle.Width, circle.Height) / 2
             x = circle.Left + r
             y = circle.Top + r
         End Sub

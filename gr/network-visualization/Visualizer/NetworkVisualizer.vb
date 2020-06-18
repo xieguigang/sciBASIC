@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::2adff0e11d98836b460eba3cdd83b384, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NetworkVisualizer
-    ' 
-    '     Properties: BackgroundColor
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    '         Function: DirectMapRadius, DrawImage, drawVertexNodes
-    ' 
-    '         Sub: drawEdges, drawhullPolygon, drawLabels
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module NetworkVisualizer
+' 
+'     Properties: BackgroundColor
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+'         Function: DirectMapRadius, DrawImage, drawVertexNodes
+' 
+'         Sub: drawEdges, drawhullPolygon, drawLabels
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -162,6 +162,7 @@ Public Module NetworkVisualizer
                               Optional edgeDashTypes As [Variant](Of Dictionary(Of String, DashStyle), DashStyle) = Nothing,
                               Optional edgeShadowDistance As Single = 0,
                               Optional drawNodeShape As DrawNodeShape = Nothing,
+                              Optional nodeWidget As Action(Of IGraphics, PointF, Double, Node) = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional getLabelPosition As GetLabelPosition = Nothing,
                               Optional getLabelColor As Func(Of Node, Color) = Nothing,
@@ -177,6 +178,7 @@ Public Module NetworkVisualizer
                               Optional labelTextStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;",
                               Optional showConvexHullLegend As Boolean = True,
                               Optional drawEdgeBends As Boolean = True,
+                              Optional drawEdgeDirection As Boolean = False,
                               Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge,
                               Optional convexHullScale! = 1.125,
                               Optional convexHullCurveDegree As Single = 2,
@@ -310,7 +312,8 @@ Public Module NetworkVisualizer
                     throwEx,
                     edgeShadowDistance:=edgeShadowDistance,
                     defaultEdgeColor:=defaultEdgeColor.TranslateColor,
-                    drawEdgeBends:=drawEdgeBends
+                    drawEdgeBends:=drawEdgeBends,
+                    drawEdgeDirection:=drawEdgeDirection
                 )
 
                 Call "Render network elements...".__INFO_ECHO
@@ -332,7 +335,8 @@ Public Module NetworkVisualizer
                     drawNodeShape:=drawNodeShape,
                     getLabelPosition:=getLabelPosition,
                     labelWordWrapWidth:=labelWordWrapWidth,
-                    isLabelPinned:=isLabelPinned
+                    isLabelPinned:=isLabelPinned,
+                    nodeWidget:=nodeWidget
                 )
 
                 If displayId AndAlso labels = 0 Then
@@ -387,7 +391,8 @@ Public Module NetworkVisualizer
                                               drawNodeShape As DrawNodeShape,
                                               getLabelPosition As GetLabelPosition,
                                               labelWordWrapWidth As Integer,
-                                              isLabelPinned As Func(Of Node, String, Boolean)) As IEnumerable(Of LayoutLabel)
+                                              isLabelPinned As Func(Of Node, String, Boolean),
+                                              nodeWidget As Action(Of IGraphics, PointF, Double, Node)) As IEnumerable(Of LayoutLabel)
         Dim pt As Point
         Dim br As Brush
         Dim rect As RectangleF
@@ -434,6 +439,10 @@ Public Module NetworkVisualizer
                 End If
             Else
                 rect = drawNodeShape(n.label, g, br, r, center)
+            End If
+
+            If Not nodeWidget Is Nothing Then
+                Call nodeWidget(g, center, r, n)
             End If
 
             ' 如果当前的节点没有超出有效的视图范围,并且参数设置为显示id编号
@@ -603,7 +612,8 @@ Public Module NetworkVisualizer
                           throwEx As Boolean,
                           edgeShadowDistance As Single,
                           defaultEdgeColor As Color,
-                          drawEdgeBends As Boolean)
+                          drawEdgeBends As Boolean,
+                          drawEdgeDirection As Boolean)
 
         For Each edge As Edge In net.graphEdges
             Dim n As Node = edge.U
@@ -632,19 +642,8 @@ Public Module NetworkVisualizer
                 .Width = lineColor.Width,
                 .DashStyle = lineColor.DashStyle
             }
-            Dim draw = Sub(line As PointF())
-                           Dim pt1, pt2 As PointF
+            Dim draw = g.internalDrawEdgeLine(edgeShadowDistance, edgeShadowColor, lineColor)
 
-                           If edgeShadowDistance <> 0 Then
-                               pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
-                               pt2 = line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance)
-
-                               Call g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
-                           End If
-
-                           ' 直接画一条直线
-                           Call g.DrawLine(lineColor, line(0), line(1))
-                       End Sub
             Try
                 Dim bends As XYMetaHandle() = edge.data.bends.SafeQuery.ToArray
                 '.SafeQuery _
@@ -659,17 +658,20 @@ Public Module NetworkVisualizer
                     End If
 
                     If bends.Length = 1 Then
-                        Call draw({a, b})
+                        Call draw({a, b}, drawEdgeDirection)
                     Else
-                        For Each line As SlideWindow(Of XYMetaHandle) In bends.SlideWindows(2)
+                        Dim segmentTuples = bends.SlideWindows(2).ToArray
+
+                        For i As Integer = 0 To segmentTuples.Length - 1
+                            Dim line As SlideWindow(Of XYMetaHandle) = segmentTuples(i)
                             Dim pta = line(Scan0).GetPoint(a.X, a.Y, b.X, b.Y)
                             Dim ptb = line(1).GetPoint(a.X, a.Y, b.X, b.Y)
 
-                            Call {pta, ptb}.DoCall(draw)
+                            Call draw({pta, ptb}, If(i = segmentTuples.Length - 1, drawEdgeDirection, False))
                         Next
                     End If
                 Else
-                    Call draw({a, b})
+                    Call draw({a, b}, drawEdgeDirection)
                 End If
             Catch ex As Exception
                 Dim line As New Dictionary(Of String, String) From {
@@ -685,6 +687,34 @@ Public Module NetworkVisualizer
             End Try
         Next
     End Sub
+
+    <Extension>
+    Private Function internalDrawEdgeLine(g As IGraphics, edgeShadowDistance!, edgeShadowColor As Pen, lineColor As Pen) As Action(Of PointF(), Boolean)
+        Dim pt1, pt2 As PointF
+
+        Return Sub(line, drawDir)
+                   If edgeShadowDistance <> 0 Then
+                       ' 绘制底层的阴影
+                       pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+                       pt2 = line(1).OffSet2D(edgeShadowDistance, edgeShadowDistance)
+
+                       If drawDir Then
+                           edgeShadowColor.EndCap = LineCap.ArrowAnchor
+                       End If
+
+                       g.DrawLine(edgeShadowColor, pt1:=pt1, pt2:=pt2)
+                       edgeShadowColor.EndCap = LineCap.Flat
+                   End If
+
+                   If drawDir Then
+                       lineColor.EndCap = LineCap.ArrowAnchor
+                   End If
+
+                   ' 直接画一条直线
+                   g.DrawLine(lineColor, line(0), line(1))
+                   lineColor.EndCap = LineCap.Flat
+               End Sub
+    End Function
 
     ''' <summary>
     ''' 使用退火算法计算出节点标签文本的位置

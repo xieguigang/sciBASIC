@@ -74,6 +74,11 @@ Namespace ApplicationServices.Terminal
         End Function
 
         <Extension>
+        Public Function Print(source As IEnumerable(Of IEnumerable(Of String)), Optional addBorder As Boolean = True) As String
+            Return source.Select(Function(a) a.ToArray).Print(addBorder)
+        End Function
+
+        <Extension>
         Public Function Print(source As IEnumerable(Of String()), Optional addBorder As Boolean = True) As String
             Dim out As New StringBuilder
             Dim dev As New StringWriter(out)

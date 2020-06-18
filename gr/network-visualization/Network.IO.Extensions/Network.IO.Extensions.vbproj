@@ -284,6 +284,7 @@
     <Compile Include="Cytoscape\CytoscapeTableLoader.vb" />
     <Compile Include="IO\FileStream\MetaData.vb" />
     <Compile Include="IO\ModelLoader.vb" />
+    <Compile Include="IO\TabularCreator.vb" />
     <Compile Include="NetworkFileIO.vb" />
     <Compile Include="CorrelationGraph.vb" />
     <Compile Include="IO\FileStream\csv\Edge.vb" />
