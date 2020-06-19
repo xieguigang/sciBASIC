@@ -54,6 +54,12 @@ Namespace Layouts.EdgeBundling
         Public Property xoffsetscale As Double
         Public Property yoffsetscale As Double
 
+        Public ReadOnly Property isNaN As Boolean
+            Get
+                Return xoffsetscale.IsNaNImaginary OrElse yoffsetscale.IsNaNImaginary
+            End Get
+        End Property
+
         ''' <summary>
         ''' 将当前的这个矢量描述转换为实际的点位置
         ''' </summary>

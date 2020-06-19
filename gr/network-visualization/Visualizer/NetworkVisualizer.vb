@@ -646,13 +646,9 @@ Public Module NetworkVisualizer
 
             Try
                 Dim bends As XYMetaHandle() = edge.data.bends.SafeQuery.ToArray
-                '.SafeQuery _
-                '.Where(Function(bend)
-                '           Return Not bend.isDirectPoint
-                '       End Function) _
-                '.ToArray
+                Dim isNan As Boolean = bends.Any(Function(bend) bend.isNaN)
 
-                If drawEdgeBends AndAlso Not bends.IsNullOrEmpty Then
+                If (Not isNan) AndAlso drawEdgeBends AndAlso Not bends.IsNullOrEmpty Then
                     If bends.Length <> edge.data.bends.Length Then
                         Call $"{edge.ID} removes {edge.data.bends.Length - bends.Length} bends points.".__DEBUG_ECHO
                     End If
