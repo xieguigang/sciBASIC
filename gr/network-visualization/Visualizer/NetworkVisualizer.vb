@@ -226,7 +226,7 @@ Public Module NetworkVisualizer
 
         Call "Initialize gdi objects...".__INFO_ECHO
 
-        Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke).GDIObject
+        Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke)?.GDIObject
         Dim baseFont As Font = CSSFont.TryParse(
             labelFontBase, New CSSFont With {
                 .family = FontFace.MicrosoftYaHei,
@@ -424,7 +424,10 @@ Public Module NetworkVisualizer
                 If TypeOf g Is Graphics2D Then
                     Try
                         Call g.FillPie(br, rect, 0, 360)
-                        Call g.DrawEllipse(stroke, rect)
+
+                        If Not stroke Is Nothing Then
+                            Call g.DrawEllipse(stroke, rect)
+                        End If
                     Catch ex As Exception
                         If throwEx Then
                             Throw New Exception(rect.GetJson, ex)

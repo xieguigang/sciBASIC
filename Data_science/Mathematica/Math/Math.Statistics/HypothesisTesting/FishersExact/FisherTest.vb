@@ -245,7 +245,8 @@ Namespace Hypothesis.FishersExact
                 .two_tail_pvalue = twotail,
                 .less_pvalue = left,
                 .greater_pvalue = right,
-                .hyper_state = rtvl.hyper_stat
+                .hyper_state = rtvl.hyper_stat,
+                .matrix = {n11, n12, n21, n22}
             }
         End Function
     End Module
