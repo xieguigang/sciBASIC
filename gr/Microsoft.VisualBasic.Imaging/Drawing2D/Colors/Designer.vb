@@ -311,10 +311,10 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property MaterialPalette As Color() = {
-            Color.Red, Color.Pink, Color.Black, Color.Purple, Color.DarkViolet,
+            Color.Red, Color.Green, Color.CadetBlue, Color.Pink, Color.Black, Color.Purple, Color.DarkViolet,
             Color.Indigo, Color.Blue, Color.LightBlue, Color.Cyan, Color.Teal,
-            Color.Green, Color.LightGreen, Color.Lime, Color.Yellow, Color.Orchid,
-            Color.Orange, Color.DarkOrange, Color.Brown, Color.Gray, Color.CadetBlue
+            Color.LightGreen, Color.Lime, Color.Yellow, Color.Orchid,
+            Color.Orange, Color.DarkOrange, Color.Brown, Color.Gray
         }
 
         Public ReadOnly Property Category31 As Color() = {
