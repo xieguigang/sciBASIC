@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -591,7 +591,7 @@ Public Module NetworkVisualizer
 
                 Dim positions = group _
                     .Select(Function(p) scalePos(p.label)) _
-                    .JarvisMatch _
+                    .ConcaveHull _ ' .JarvisMatch _
                     .Enlarge(convexHullScale!)
                 Dim color As Color = colors.Next
 
