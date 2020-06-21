@@ -114,6 +114,7 @@ Public Module NetworkVisualizer
     ''' 
     ''' + expression = max/min largest or smallest group
     ''' + expression = 'a,b,c,d,e' node category to draw hull polygon 
+    ''' + expression = top&lt;n> show top n largest group
     ''' 
     ''' (需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组)
     ''' </param>
@@ -180,7 +181,7 @@ Public Module NetworkVisualizer
                               Optional drawEdgeBends As Boolean = True,
                               Optional drawEdgeDirection As Boolean = False,
                               Optional convexHullLabelFontCSS$ = CSSFont.Win7VeryLarge,
-                              Optional convexHullScale! = 1.125,
+                              Optional convexHullScale! = 1.0125,
                               Optional convexHullCurveDegree As Single = 2,
                               Optional fillConvexHullPolygon As Boolean = True,
                               Optional driver As Drivers = Drivers.Default) As GraphicsData
@@ -570,6 +571,13 @@ Public Module NetworkVisualizer
                       .First _
                       .Key
             }
+        ElseIf hullPolygonGroups.Value.IsPattern("top\s*\d+") Then
+            hullPolygon = groups _
+                .Where(Function(group) group.Count > 2) _
+                .OrderByDescending(Function(n) n.Count) _
+                .Take(hullPolygonGroups.Value.Match("\d+").DoCall(AddressOf Integer.Parse)) _
+                .Select(Function(group) group.Key) _
+                .ToArray
         Else
             hullPolygon = hullPolygonGroups.Value.Split(","c)
         End If
