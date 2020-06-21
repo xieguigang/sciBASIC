@@ -89,6 +89,13 @@ Namespace Drawing2D.Text
             End If
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="str">目标字符串</param>
+        ''' <param name="width">一行文本所限定的字符个数</param>
+        ''' <param name="splitChars">在行末所插入的分隔符</param>
+        ''' <returns></returns>
         <Extension>
         Public Function DoWordWrap(str$, width%, Optional splitChars$ = " -" & ASCII.TAB) As String
             Dim words = Explode(str, splitChars)

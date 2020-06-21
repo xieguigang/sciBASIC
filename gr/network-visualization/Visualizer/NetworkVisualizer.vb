@@ -135,7 +135,7 @@ Public Module NetworkVisualizer
     ''' 当这个参数为空字符串的时候，将不进行描边
     ''' </param>
     ''' <param name="labelWordWrapWidth">
-    ''' 小于等于零表示不进行自动textwrap
+    ''' 每一行文本所限定的字符数量，小于等于零表示不进行自动textwrap
     ''' </param>
     ''' <returns></returns>
     ''' <remarks>
@@ -542,6 +542,7 @@ Public Module NetworkVisualizer
 
         Dim hullPolygon As Index(Of String)
         Dim groups = drawPoints _
+            .Where(Function(n) Not n.data(hullPolygonGroups.Name).StringEmpty) _
             .GroupBy(Function(n)
                          Return n.data(hullPolygonGroups.Name)
                      End Function) _
@@ -785,6 +786,10 @@ Public Module NetworkVisualizer
 
                 lx = .label.X
                 ly = .label.Y
+
+                If label.offsetDistance >= stdNum.Max(g.Size.Width, g.Size.Height) * 0.01 Then
+                    Call g.DrawLine(New Pen(Brushes.Gray, 10) With {.DashStyle = DashStyle.Dot}, label.anchor, label.GetTextAnchor)
+                End If
 
                 With g.MeasureString(.label.text, .style)
                     If lx < 0 Then

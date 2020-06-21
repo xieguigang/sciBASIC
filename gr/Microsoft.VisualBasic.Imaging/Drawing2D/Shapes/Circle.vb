@@ -126,13 +126,13 @@ Namespace Drawing2D.Shapes
         ''' <param name="center"></param>
         ''' <param name="radius"></param>
         ''' <param name="br"></param>
-        Public Overloads Shared Sub Draw(ByRef g As IGraphics, center As Point, radius!,
+        Public Overloads Shared Sub Draw(ByRef g As IGraphics, center As PointF, radius!,
                                          Optional br As Brush = Nothing,
                                          Optional border As Stroke = Nothing)
 
-            Dim rect As New Rectangle With {
-                .Location = New Point(center.X - radius, center.Y - radius),
-                .Size = New Size With {
+            Dim rect As New RectangleF With {
+                .Location = New PointF(center.X - radius, center.Y - radius),
+                .Size = New SizeF With {
                     .Width = radius * 2,
                     .Height = .Width
                 }
@@ -140,7 +140,7 @@ Namespace Drawing2D.Shapes
             Call g.FillPie(br Or BlackBrush, rect, 0, 360)
 
             If Not border Is Nothing Then
-                rect = New Rectangle With {
+                rect = New RectangleF With {
                     .X = center.X - radius - border.width,
                     .Y = center.Y - radius - border.width,
                     .Width = radius * 2 + 1,
