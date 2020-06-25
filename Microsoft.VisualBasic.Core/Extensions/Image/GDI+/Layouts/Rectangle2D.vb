@@ -209,10 +209,14 @@ Namespace Imaging.LayoutModel
             Me.Height = height
         End Sub
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(layout As (x#, y#, w#, h#))
             Call Me.New(layout.x, layout.y, layout.w, layout.h)
         End Sub
+
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(width%, height%)
@@ -270,6 +274,8 @@ Namespace Imaging.LayoutModel
             Me.Height = h
         End Sub
 
+#If NET_48 Then
+
         ''' <summary>
         ''' Adds the given rectangle to this rectangle. Union two rectangle.
         ''' (取两个区域的交集部分，并且这个函数会改变当前的这个矩形对象的值)
@@ -284,7 +290,6 @@ Namespace Imaging.LayoutModel
                 End With
             End If
         End Sub
-
         Private Shared Function union(x#, y#, right#, bottom#, r As Rectangle2D) As (x#, y#, w#, h#)
             Dim minX As Double = sys.Min(x, r.X)
             Dim minY As Double = sys.Min(y, r.Y)
@@ -308,6 +313,8 @@ Namespace Imaging.LayoutModel
         Public Function Union(rect As Rectangle2D) As Rectangle2D
             Return New Rectangle2D(union(X, Y, Right, Bottom, rect))
         End Function
+
+#End If
 
         ''' <summary>
         ''' Grows the rectangle by the given amount, that is, this method subtracts

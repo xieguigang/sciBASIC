@@ -56,15 +56,17 @@ Namespace Net.Http
 
         Dim WithEvents task As wgetTask
         Dim cursorTop%
+        Dim originalTop%
 
         ''' <summary>
         ''' Create a new file download task
         ''' </summary>
         ''' <param name="url">The remote resource to download.</param>
         ''' <param name="save">The file save location</param>
-        Sub New(url$, save$)
-            task = New wgetTask(url, save)
+        Sub New(url$, save$, headers As Dictionary(Of String, String))
+            task = New wgetTask(url, save, headers)
             cursorTop = Console.CursorTop
+            originalTop = Console.CursorTop
         End Sub
 
         ''' <summary>
@@ -77,7 +79,7 @@ Namespace Net.Http
                 Call task.Dispose()
 
                 Call Console.WriteLine()
-                Call Console.WriteLine($"{Now.ToString} ({StringFormats.Lanudry(task.downloadSpeed)}/s) - '{task.saveFile.FileName}' saved [{task.saveFile.FileLength}]")
+                Call Console.WriteLine($"{Now} ({StringFormats.Lanudry(task.downloadSpeed)}/s) - '{task.saveFile.FileName}' saved [{task.saveFile.FileLength}]")
                 Call Console.WriteLine()
             End If
         End Sub
@@ -93,7 +95,8 @@ Namespace Net.Http
         End Sub
 
         Private Sub ClearLine()
-            Console.CursorLeft = 1
+            Console.CursorLeft = 0
+            Console.Write(" ")
             Console.Write(New String(" "c, Console.BufferWidth - 1))
             Console.CursorLeft = 1
             Console.CursorTop -= 1
@@ -115,7 +118,7 @@ Namespace Net.Http
 
             Call Console.WriteLine()
 
-            Call ClearLine() : Console.WriteLine($"--{Now.ToString}--  {task.url}")
+            Call ClearLine() : Console.WriteLine($"--{Now}--  {task.url}")
             Call ClearLine() : Console.WriteLine($"     => '{task.saveFile.FileName}'")
             Call ClearLine() : Console.WriteLine()
             Call ClearLine() : Console.WriteLine($"Resolving {resp.ResponseUri.Host} ({domain})... {remote}")
@@ -129,6 +132,17 @@ Namespace Net.Http
             cursorTop = Console.CursorTop
         End Sub
 
+        Private Sub clearOutput()
+            Console.CursorTop = originalTop
+
+            For i As Integer = 0 To 13
+                Call ClearLine()
+                Call Console.WriteLine()
+            Next
+
+            Console.CursorTop = originalTop
+        End Sub
+
         ''' <summary>
         ''' 执行有详细进度信息显示的文件下载操作, 如果只需要调用一个单纯的文件下载函数, 
         ''' 请使用<see cref="DownloadFile(String, String, String, String, Integer, DownloadProgressChangedEventHandler, String, String)"/>拓展函数
@@ -136,11 +150,19 @@ Namespace Net.Http
         ''' <param name="url$"></param>
         ''' <param name="save$"></param>
         ''' <returns></returns>
-        Public Shared Function Download(url$, Optional save$ = Nothing) As Boolean
+        Public Shared Function Download(url$,
+                                        Optional save$ = Nothing,
+                                        Optional headers As Dictionary(Of String, String) = Nothing,
+                                        Optional clear As Boolean = False) As Boolean
+
             Dim local As New Value(Of String)
-            Dim task As New wget(url, local = save Or $"./{url.Split("?"c).First.FileName}".AsDefault)
+            Dim task As New wget(url, local = save Or $"./{url.Split("?"c).First.FileName}".AsDefault, headers)
 
             Call task.Run()
+
+            If clear Then
+                Call task.clearOutput()
+            End If
 
             Return local.Value.FileLength > 0
         End Function

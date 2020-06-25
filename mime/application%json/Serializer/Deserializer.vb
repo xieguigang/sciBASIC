@@ -65,7 +65,9 @@ Public Module Deserializer
     ''' <returns></returns>
     <Extension>
     Public Function CreateObject(json As JsonElement, schema As Type) As Object
-        If TypeOf json Is JsonArray Then
+        If json Is Nothing Then
+            Return Nothing
+        ElseIf TypeOf json Is JsonArray Then
             If Not schema.IsArray Then
                 Throw New InvalidCastException
             Else

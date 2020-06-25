@@ -96,6 +96,7 @@ Namespace Net.Http
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property isDownloading As Boolean
+        Public ReadOnly Property headers As Dictionary(Of String, String)
 
         ''' <summary>
         ''' 
@@ -104,10 +105,11 @@ Namespace Net.Http
         ''' <param name="saveFile">
         ''' Module will create a new <see cref="FileStream"/> that writes to this desired download path
         ''' </param>
-        Sub New(downloadUrl As String, saveFile As String)
+        Sub New(downloadUrl As String, saveFile As String, headers As Dictionary(Of String, String))
             Me.fs = saveFile.Open(doClear:=True)
             Me.url = downloadUrl
             Me.saveFile = saveFile
+            Me.headers = headers
         End Sub
 
         Public Function StartTask(Optional doRetry As Boolean = True, Optional bufferSize% = 1024) As Boolean
@@ -147,7 +149,7 @@ RE:
 
         Private Sub doTaskInternal(bufferSize As Integer)
             ' Make a request for the url of the file to be downloaded
-            Dim req As WebRequest = HttpGet.BuildWebRequest(url, Nothing, Nothing, UserAgent.GoogleChrome)
+            Dim req As WebRequest = HttpGet.BuildWebRequest(url, headers, Nothing, UserAgent.GoogleChrome)
             Dim remote$ = "NA"
 
             If TypeOf req Is HttpWebRequest Then
@@ -185,6 +187,7 @@ RE:
             Dim buffer(bufferSize - 1) As Byte
             Dim read As Integer = Integer.MaxValue
             Dim interval As Double
+            Dim secondAgo As Double
 
             Do While Not exitJob(read)
                 ' Read the buffer from the response the WebRequest gave you
@@ -201,7 +204,10 @@ RE:
                 ' by the total formatted seconds of the downloadedTime
                 Call (currentSize / interval).DoCall(AddressOf _speedSamples.Add)
 
-                RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
+                If interval - secondAgo > 1 Then
+                    secondAgo = interval
+                    RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
+                End If
             Loop
         End Sub
 
@@ -215,6 +221,17 @@ RE:
             End If
 
             Dim progress$
+            Dim ETA$
+
+            If totalSize > 0 Then
+                If downloadSpeed <= 0 Then
+                    ETA = "n/a"
+                Else
+                    ETA = TimeSpan.FromSeconds((totalSize - currentSize) / downloadSpeed).FormatTime
+                End If
+            Else
+                ETA = "n/a"
+            End If
 
             If _isUnknownContentSize Then
                 progress = $"<unknown>%, {StringFormats.Lanudry(downloadSpeed)}/sec"
@@ -225,7 +242,7 @@ RE:
             Dim elapsed$ = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).FormatTime
             Dim busyStr As New String("."c, busy)
 
-            Return $"> '{saveFile.FileName}'{busyStr}  {StringFormats.Lanudry(currentSize)} [{progress}], elapsed {elapsed}"
+            Return $"> '{saveFile.FileName}'{busyStr}  {StringFormats.Lanudry(currentSize)} [{progress}], elapsed {elapsed}, [ETA {ETA}]"
         End Function
 
 #Region "IDisposable Support"

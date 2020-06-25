@@ -78,7 +78,7 @@ Namespace Javascript
                 Case GetType(Date)
                     Return Casting.CastDate(GetStripString)
                 Case Else
-                    Return Scripting.CTypeDynamic(value, typeOfT)
+                    Return Scripting.CTypeDynamic(GetStripString, typeOfT)
             End Select
         End Function
 

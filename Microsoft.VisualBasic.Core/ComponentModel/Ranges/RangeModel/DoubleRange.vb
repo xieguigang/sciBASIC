@@ -221,6 +221,8 @@ Namespace ComponentModel.Ranges.Model
             End With
         End Operator
 
+#If NET_48 Then
+
         Public Shared Widening Operator CType(tuple As (min#, max#)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
@@ -232,6 +234,8 @@ Namespace ComponentModel.Ranges.Model
         Public Shared Widening Operator CType(tuple As (min&, max&)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
+
+#End If
 
         Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
             Return New DoubleRange(vector.Min, vector.Max)

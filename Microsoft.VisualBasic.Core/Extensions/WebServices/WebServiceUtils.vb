@@ -772,13 +772,17 @@ RE0:
     ''' </summary>
     ''' <returns></returns>
     Public Function GetMyIPAddress() As String
-        Dim hasInternet As Boolean
+        Dim hasInternet As Boolean = False
+
+#If NET_48 Then
 
         Try
             hasInternet = Not PingUtility.Ping(System.Net.IPAddress.Parse(MicrosoftDNS)) > Integer.MaxValue
         Catch ex As Exception
             hasInternet = False
         End Try
+
+#End If
 
         If hasInternet Then
             ' IPAddress on Internet

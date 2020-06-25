@@ -146,10 +146,14 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
             Return (arg.Name, arg.Value)
         End Operator
+
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(name As String) As ArgumentReference

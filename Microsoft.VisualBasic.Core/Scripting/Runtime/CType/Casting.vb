@@ -342,8 +342,12 @@ Namespace Scripting.Runtime
             If obj.StringEmpty OrElse obj = "0000-00-00 00:00:00" OrElse obj.ToUpper = "NULL" OrElse obj.ToUpper = "NA" Then
                 Return New Date
             ElseIf obj.IsPattern("\d+") Then
+#If NET_48 Then
                 ' unix timestamp
                 Return CLng(Val(obj)).FromUnixTimeStamp
+#Else
+                Throw New NotImplementedException
+#End If
             ElseIf obj.IsPattern("/Date\(\d+\+\d+\)/") Then
                 ' /Date(1559115042272+0800)/
                 ' json格式的

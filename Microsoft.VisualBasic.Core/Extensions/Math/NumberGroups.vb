@@ -185,6 +185,9 @@ Namespace Math
         <Extension> Public Iterator Function GroupBy(Of T)(source As IEnumerable(Of T),
                                                            evaluate As Func(Of T, Double),
                                                            equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
+
+#If NET_48 Then
+
             ' 先进行预处理：求值然后进行排序
             Dim tagValues = source _
                 .Select(Function(o) (evaluate(o), o)) _
@@ -214,6 +217,9 @@ Namespace Math
             If members > 0 Then
                 Yield New NamedCollection(Of T)(CStr(means.Average), members)
             End If
+#Else
+            Throw New NotImplementedException
+#End If
         End Function
 
         ''' <summary>

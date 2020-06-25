@@ -68,12 +68,16 @@ Namespace ComponentModel
             Me.Name = name
         End Sub
 
+#If NET_48 Then
+
         Public Function AsTuple() As NamedValue(Of (T, T))
             Return New NamedValue(Of (T, T)) With {
                 .Name = Name,
                 .Value = (Item1, Item2)
             }
         End Function
+
+#End If
 
         Public Overrides Function ToString() As String
             Return Name

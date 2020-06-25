@@ -305,7 +305,7 @@ Public Module NetworkVisualizer
 
                 Call "Render network edges...".__INFO_ECHO
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
-                Call g.drawEdges(
+                labels += g.drawEdges(
                     net,
                     minLinkWidthValue,
                     edgeDashTypes,
@@ -634,16 +634,30 @@ Public Module NetworkVisualizer
         End If
     End Sub
 
+    ''' <summary>
+    ''' 这个函数会将edge作为一个layout的shape返回用于标签的布局计算
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <param name="net"></param>
+    ''' <param name="minLinkWidthValue"></param>
+    ''' <param name="edgeDashTypes"></param>
+    ''' <param name="scalePos"></param>
+    ''' <param name="throwEx"></param>
+    ''' <param name="edgeShadowDistance"></param>
+    ''' <param name="defaultEdgeColor"></param>
+    ''' <param name="drawEdgeBends"></param>
+    ''' <param name="drawEdgeDirection"></param>
+    ''' <returns></returns>
     <Extension>
-    Private Sub drawEdges(g As IGraphics, net As NetworkGraph,
-                          minLinkWidthValue As [Default](Of Single),
-                          edgeDashTypes As Dictionary(Of String, DashStyle),
-                          scalePos As Dictionary(Of String, PointF),
-                          throwEx As Boolean,
-                          edgeShadowDistance As Single,
-                          defaultEdgeColor As Color,
-                          drawEdgeBends As Boolean,
-                          drawEdgeDirection As Boolean)
+    Private Iterator Function drawEdges(g As IGraphics, net As NetworkGraph,
+                                        minLinkWidthValue As [Default](Of Single),
+                                        edgeDashTypes As Dictionary(Of String, DashStyle),
+                                        scalePos As Dictionary(Of String, PointF),
+                                        throwEx As Boolean,
+                                        edgeShadowDistance As Single,
+                                        defaultEdgeColor As Color,
+                                        drawEdgeBends As Boolean,
+                                        drawEdgeDirection As Boolean) As IEnumerable(Of LayoutLabel)
 
         For Each edge As Edge In net.graphEdges
             Dim n As Node = edge.U
@@ -684,7 +698,7 @@ Public Module NetworkVisualizer
                     End If
 
                     If bends.Length = 1 Then
-                        Call draw({a, b}, drawEdgeDirection)
+                        Yield draw({a, b}, drawEdgeDirection)
                     Else
                         Dim segmentTuples = bends.SlideWindows(2).ToArray
 
@@ -693,11 +707,11 @@ Public Module NetworkVisualizer
                             Dim pta = line(Scan0).GetPoint(a.X, a.Y, b.X, b.Y)
                             Dim ptb = line(1).GetPoint(a.X, a.Y, b.X, b.Y)
 
-                            Call draw({pta, ptb}, If(i = segmentTuples.Length - 1, drawEdgeDirection, False))
+                            Yield draw({pta, ptb}, If(i = segmentTuples.Length - 1, drawEdgeDirection, False))
                         Next
                     End If
                 Else
-                    Call draw({a, b}, drawEdgeDirection)
+                    Yield draw({a, b}, drawEdgeDirection)
                 End If
             Catch ex As Exception
                 Dim line As New Dictionary(Of String, String) From {
@@ -712,13 +726,13 @@ Public Module NetworkVisualizer
                 End If
             End Try
         Next
-    End Sub
+    End Function
 
     <Extension>
-    Private Function internalDrawEdgeLine(g As IGraphics, edgeShadowDistance!, edgeShadowColor As Pen, lineColor As Pen) As Action(Of PointF(), Boolean)
+    Private Function internalDrawEdgeLine(g As IGraphics, edgeShadowDistance!, edgeShadowColor As Pen, lineColor As Pen) As Func(Of PointF(), Boolean, LayoutLabel)
         Dim pt1, pt2 As PointF
 
-        Return Sub(line, drawDir)
+        Return Function(line, drawDir)
                    If edgeShadowDistance <> 0 Then
                        ' 绘制底层的阴影
                        pt1 = line(0).OffSet2D(edgeShadowDistance, edgeShadowDistance)
@@ -733,13 +747,26 @@ Public Module NetworkVisualizer
                    End If
 
                    If drawDir Then
-                       lineColor.EndCap = LineCap.ArrowAnchor
+                       Dim bigArrow As New AdjustableArrowCap(4, 4)
+
+                       lineColor.CustomEndCap = bigArrow ' LineCap.ArrowAnchor
                    End If
 
                    ' 直接画一条直线
                    g.DrawLine(lineColor, line(0), line(1))
                    lineColor.EndCap = LineCap.Flat
-               End Sub
+
+                   Return New LayoutLabel With {
+                       .anchor = New Anchor((line(Scan0).X + line(1).X) / 2, (line(Scan0).Y + line(1).Y) / 2, 5),
+                       .color = Nothing,
+                       .label = New Label(Nothing, .anchor, New Size(stdNum.Abs(line(Scan0).X - line(1).X), stdNum.Abs(line(Scan0).Y - line(1).Y))) With {
+                           .pinned = True
+                       },
+                       .node = Nothing,
+                       .shapeRectangle = .label.rectangle,
+                       .style = Nothing
+                   }
+               End Function
     End Function
 
     ''' <summary>

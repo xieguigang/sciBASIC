@@ -521,6 +521,8 @@ Namespace Imaging
 
         Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CreateGDIDevice(t As (width%, height%),
                                                     Optional filled As Color = Nothing,
@@ -529,6 +531,8 @@ Namespace Imaging
                                                     Optional dpi$ = "100,100") As Graphics2D
             Return CreateGDIDevice(t.width, t.height, filled:=filled, dpi:=dpi, trace:=trace)
         End Function
+
+#End If
 
         ''' <summary>
         ''' 创建一个GDI+的绘图设备，默认的背景填充色为白色

@@ -65,6 +65,8 @@ Namespace ApplicationServices.Terminal
     ''' </remarks>
     Public Class MarkdownRender
 
+#If NET_48 Then
+
         Shared ReadOnly defaultTheme As [Default](Of MarkdownTheme) = New MarkdownTheme With {
             .[Global] = Nothing,
             .BlockQuote = (ConsoleColor.Black, ConsoleColor.Gray),
@@ -75,7 +77,7 @@ Namespace ApplicationServices.Terminal
             .Italy = (ConsoleColor.Yellow, ConsoleColor.DarkGray),
             .HeaderSpan = (ConsoleColor.DarkGreen, ConsoleColor.Yellow)
         }
-
+#End If
         Dim theme As MarkdownTheme
         Dim markdown As CharPtr
         Dim indent As Integer
@@ -310,12 +312,20 @@ Namespace ApplicationServices.Terminal
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub Print(markdown As String, Optional theme As MarkdownTheme = Nothing, Optional indent% = 0)
+#If NET_48 Then
             Call New MarkdownRender(theme Or defaultTheme).DoPrint(markdown, indent)
+#Else
+            Throw New NotImplementedException
+#End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function DefaultStyleRender() As MarkdownRender
+#If NET_48 Then
             Return New MarkdownRender(defaultTheme)
+#Else
+            Throw New NotImplementedException
+#End If
         End Function
     End Class
 End Namespace

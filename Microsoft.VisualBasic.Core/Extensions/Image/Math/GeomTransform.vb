@@ -375,6 +375,8 @@ Namespace Imaging.Math2D
             Return CalculateAngle(p1.PointF, p2.PointF)
         End Function
 
+#If NET_48 Then
+
         ''' <summary>
         ''' 函数返回切线和X轴之间的夹角
         ''' </summary>
@@ -386,6 +388,8 @@ Namespace Imaging.Math2D
         Public Function Angle(tangent As (A As PointF, B As PointF)) As Double
             Return CalculateAngle(tangent.A, tangent.B)
         End Function
+
+#End If
 
         ''' <summary>
         ''' 获取目标多边形对象的边界结果，包括左上角的位置以及所占的矩形区域的大小

@@ -95,10 +95,14 @@ Namespace ComponentModel
             Return Me
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ValueTuple() As (bind As T, target As K)
             Return (Bind, Target)
         End Function
+
+#End If
 
         ''' <summary>
         ''' Implicit convert this binding as the <see cref="System.Tuple(Of T, K)"/>

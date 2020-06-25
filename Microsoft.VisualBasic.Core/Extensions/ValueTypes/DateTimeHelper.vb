@@ -184,6 +184,8 @@ Namespace ValueTypes
             Return (time.ToUniversalTime - ZERO).TotalSeconds
         End Function
 
+#If NET_48 Then
+
         ''' <summary>
         ''' 将Unix时间戳转换为可读的日期
         ''' </summary>
@@ -197,6 +199,8 @@ Namespace ValueTypes
                 .DateTime _
                 .ToLocalTime()
         End Function
+
+#End If
 
         Public Function FromMilliseconds(milliseconds As Long) As Date
             Dim start As New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)

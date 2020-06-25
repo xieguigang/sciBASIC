@@ -118,12 +118,16 @@ Namespace ApplicationServices.Terminal
             End If
         End Function
 
+#If NET_48 Then
+
         Public Shared Widening Operator CType(colors As (fore As ConsoleColor, back As ConsoleColor)) As ConsoleFontStyle
             Return New ConsoleFontStyle With {
                 .ForeColor = colors.fore,
                 .BackgroundColor = colors.back
             }
         End Operator
+
+#End If
 
         Public Shared Function HtmlColorCode(color As ConsoleColor) As String
             Return Drawing.Color.FromName(color.ToString).ToHtmlColor

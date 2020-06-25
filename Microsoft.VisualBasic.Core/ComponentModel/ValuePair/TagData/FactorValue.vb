@@ -55,13 +55,15 @@ Namespace ComponentModel.TagData
         Public Property factor As T
         Public Property result As V
 
+#If NET_48 Then
+
         Public Shared Widening Operator CType(value As (factor As T, result As V)) As FactorValue(Of T, V)
             Return New FactorValue(Of T, V) With {
                 .factor = value.factor,
                 .result = value.result
             }
         End Operator
-
+#End If
     End Class
 
     Public Class FactorString(Of T As {Structure, IComparable(Of T)})

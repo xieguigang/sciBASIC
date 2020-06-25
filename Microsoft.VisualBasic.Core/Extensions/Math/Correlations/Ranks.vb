@@ -53,6 +53,8 @@
 
 Imports Microsoft.VisualBasic.Linq
 
+#If NET_48 Then
+
 Namespace Math
 
     Public Delegate Function Evaluate(Of T)(x As T) As Double
@@ -124,3 +126,5 @@ Namespace Math
         End Function
     End Module
 End Namespace
+
+#End If

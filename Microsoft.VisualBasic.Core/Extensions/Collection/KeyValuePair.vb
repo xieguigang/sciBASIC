@@ -89,6 +89,8 @@ Public Module KeyValuePairExtensions
         End If
     End Function
 
+#If NET_48 Then
+
     <Extension>
     Public Function TupleTable(tuple As (String(), String())) As Dictionary(Of String, String)
         Dim table As New Dictionary(Of String, String)
@@ -99,6 +101,7 @@ Public Module KeyValuePairExtensions
 
         Return table
     End Function
+#End If
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -186,6 +189,8 @@ Public Module KeyValuePairExtensions
         Return map
     End Function
 
+#If NET_48 Then
+
     ''' <summary>
     ''' Create a tuple for two elements
     ''' </summary>
@@ -199,6 +204,8 @@ Public Module KeyValuePairExtensions
     Public Function Tuple(Of T1, T2)(a As T1, b As T2) As (T1, T2)
         Return (a, b)
     End Function
+
+#End If
 
     ''' <summary>
     ''' 将目标键值对集合保存为一个``Tsv``文件
@@ -226,6 +233,8 @@ Public Module KeyValuePairExtensions
         Return file.SaveTo(saveTo, encoding.CodePage)
     End Function
 
+#If NET_48 Then
+
     ''' <summary>
     ''' tuple set to dictionary table
     ''' </summary>
@@ -238,6 +247,8 @@ Public Module KeyValuePairExtensions
     Public Function AsTable(Of K, V)(tuples As IEnumerable(Of (K, V))) As Dictionary(Of K, V)
         Return tuples.ToDictionary(Function(t) t.Item1, Function(t) t.Item2)
     End Function
+
+#End If
 
     ''' <summary>
     ''' Item selector by directly text equals match.
@@ -337,6 +348,8 @@ Public Module KeyValuePairExtensions
             .ToArray
     End Function
 
+#If NET_48 Then
+
     <Extension>
     Public Iterator Function EnumerateTuples(Of T)(table As Dictionary(Of String, T)) As IEnumerable(Of (name As String, obj As T))
         For Each entry In table
@@ -350,6 +363,8 @@ Public Module KeyValuePairExtensions
             Yield (entry.Key, entry.Value)
         Next
     End Function
+
+#End If
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>

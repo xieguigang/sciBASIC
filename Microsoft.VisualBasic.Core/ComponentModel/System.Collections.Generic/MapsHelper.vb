@@ -203,10 +203,14 @@ Namespace ComponentModel
             Property Maps As V
         End Interface
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(map As Map(Of T1, V)) As (key As T1, mapAs As V)
             Return (map.Key, map.Maps)
         End Operator
+
+#End If
 
         ''' <summary>
         ''' 因为map主要的作用是获取得到key所配对的value结果，所以在这里是转换为<see cref="Maps"/>结果值的

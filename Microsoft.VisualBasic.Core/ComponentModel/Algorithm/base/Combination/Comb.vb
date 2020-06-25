@@ -102,6 +102,8 @@ Namespace ComponentModel.Algorithm.base
                    Order By array.Length Descending
         End Function
 
+#If NET_48 Then
+
         Public Function GetObjectPair() As (T, T)
             If source.Count = 1 Then
                 Return Nothing
@@ -121,6 +123,8 @@ Namespace ComponentModel.Algorithm.base
                 Return pair
             End If
         End Function
+
+#End If
 
         Friend Sub New()
         End Sub

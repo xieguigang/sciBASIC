@@ -314,6 +314,8 @@ Namespace Scripting.TokenIcer
             Return $"[{name}] {text}"
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(token As CodeToken(Of Tokens), element As (Tokens, String())) As Boolean
             Return token.name.Equals(element.Item1) AndAlso (element.Item2.IndexOf(token.text) > -1)
@@ -333,5 +335,7 @@ Namespace Scripting.TokenIcer
         Public Overloads Shared Operator <>(token As CodeToken(Of Tokens), element As (Tokens, String)) As Boolean
             Return Not token = element
         End Operator
+
+#End If
     End Class
 End Namespace

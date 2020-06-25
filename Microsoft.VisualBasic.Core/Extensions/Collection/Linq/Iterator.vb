@@ -50,12 +50,16 @@ Namespace Linq
     <HideModuleName>
     Public Module IteratorExtensions
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         <DebuggerStepThrough>
         Public Function Tuples(Of T)(seq As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of (i%, val As T))
             Return seq.Select(Function(i) (i.i, i.value))
         End Function
+
+#End If
 
         ''' <summary>
         ''' 
@@ -101,6 +105,8 @@ Namespace Linq
             End If
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         <DebuggerStepThrough>
@@ -122,6 +128,8 @@ Namespace Linq
                 Yield New SeqValue(Of (T1, T2))(i + offset, value)
             Next
         End Function
+
+#End If
 
         ''' <summary>
         ''' Move the enumerator pointer to next and get next value, if the pointer is reach the end, then will returns nothing

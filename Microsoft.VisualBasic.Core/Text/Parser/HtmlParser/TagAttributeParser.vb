@@ -168,6 +168,8 @@ Namespace Text.Parser.HtmlParser
             Return img.attr("src")
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function src(img As (tag$, attrs As NamedValue(Of String)())) As String
@@ -178,6 +180,8 @@ Namespace Text.Parser.HtmlParser
         Public Function img(html$) As (tag$, attrs As NamedValue(Of String)())
             Return ("img", r.Match(html, imgHtmlTagPattern, RegexICSng).Value.TagAttributes.ToArray)
         End Function
+#End If
+
 #End Region
     End Module
 End Namespace

@@ -93,6 +93,8 @@ Namespace Math
                                                getSample As Func(Of T, Double),
                                           Optional Level As Integer = 10) As Dictionary(Of String, Integer)
 
+#If NET_48 Then
+
             Dim samples As Double() = data.Select(getSample).ToArray
             Dim levels As Integer() = samples.GenerateMapping(Level)
             Dim hash = data _
@@ -105,6 +107,9 @@ Namespace Math
                 Function(tp)
                     Return tp.Item2
                 End Function)
+#Else
+            Throw New NotImplementedException
+#End If
         End Function
 
         ''' <summary>

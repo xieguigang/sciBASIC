@@ -247,10 +247,14 @@ Namespace ComponentModel.Collection
             Return table
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CreateBuckets(Of K, V)(source As IEnumerable(Of (K, V)), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
             Return source.CreateBuckets(Function(t) t.Item1, Function(t) t.Item2, size:=size)
         End Function
+
+#End If
     End Module
 End Namespace

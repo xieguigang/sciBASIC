@@ -206,6 +206,8 @@ Namespace ComponentModel.DataSourceModel
             End If
         End Operator
 
+#If NET_48 Then
+
         ''' <summary>
         ''' Convert from tuple
         ''' </summary>
@@ -221,6 +223,8 @@ Namespace ComponentModel.DataSourceModel
         Public Shared Widening Operator CType(tuple As (name$, value As T, describ$)) As NamedValue(Of T)
             Return New NamedValue(Of T)(tuple.name, tuple.value, tuple.describ)
         End Operator
+
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(tuple As NamedValue(Of T), compares As T) As Boolean

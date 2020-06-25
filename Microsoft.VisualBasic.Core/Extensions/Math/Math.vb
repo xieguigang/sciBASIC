@@ -380,6 +380,8 @@ Namespace Math
             End If
         End Function
 
+#If NET_48 Then
+
 #Region "Sum all tuple members"
 
         ''' <summary>
@@ -426,6 +428,8 @@ Namespace Math
             Return t.Item1 + t.Item2 + t.Item3 + t.Item4 + t.Item5
         End Function
 #End Region
+
+#End If
 
         ''' <summary>
         ''' 计算出所有的数的乘积
@@ -589,11 +593,15 @@ Namespace Math
             End If
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Distance(pt As (X#, Y#), x#, y#) As Double
             Return {pt.X, pt.Y}.EuclideanDistance({x, y})
         End Function
+
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>

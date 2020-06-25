@@ -89,6 +89,7 @@ Public Module CategoryOperations
     ''' <returns></returns>
     <Extension>
     Public Function CategoryValues(Of T)(categories As IEnumerable(Of NamedCollection(Of T))) As Dictionary(Of T, String)
+#If NET_48 Then
         Return categories _
             .Select(Function(category)
                         Return category.Select(Function(item) (item, category.name))
@@ -98,5 +99,8 @@ Public Module CategoryOperations
                           Function(category)
                               Return category.Item2
                           End Function)
+#Else
+        Throw New NotImplementedException
+#End If
     End Function
 End Module

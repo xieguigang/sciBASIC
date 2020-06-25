@@ -335,7 +335,12 @@ Namespace CommandLine.ManView
                     Call Console.WriteLine()
 
                     Dim allContentTypes = allExts _
-                        .Select(Function(ext) (ext:=ext, Type:=ext.GetMIMEDescrib)) _
+                        .Select(Function(ext)
+                                    Return New With {
+                                        Key .ext = ext,
+                                            .type = ext.GetMIMEDescrib
+                                    }
+                                End Function) _
                         .ToArray
                     Dim table$()() = allContentTypes _
                         .Select(Function(content)
