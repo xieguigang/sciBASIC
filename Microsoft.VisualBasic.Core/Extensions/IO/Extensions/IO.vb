@@ -185,7 +185,7 @@ Public Module IOExtensions
             access = FileShare.Read
         End If
 
-        Return IO.File.Open(path, mode, If([readOnly], FileAccess.Read, FileAccess.ReadWrite), access)
+        Return New FileStream(path, mode, If([readOnly], FileAccess.Read, FileAccess.ReadWrite), access, App.BufferSize)
     End Function
 
     ''' <summary>

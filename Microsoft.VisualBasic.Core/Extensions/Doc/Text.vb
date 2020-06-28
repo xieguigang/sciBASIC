@@ -181,8 +181,10 @@ Public Module TextDoc
     Public Function OpenWriter(path$,
                                Optional encoding As Encodings = Encodings.UTF8,
                                Optional newLine$ = ASCII.LF,
-                               Optional append As Boolean = False) As StreamWriter
-        Return FileIO.OpenWriter(path, encoding.CodePage, newLine, append)
+                               Optional append As Boolean = False,
+                               Optional bufferSize As Integer = -1) As StreamWriter
+
+        Return FileIO.OpenWriter(path, encoding.CodePage, newLine, append, bufferSize:=bufferSize)
     End Function
 
     ''' <summary>

@@ -71,6 +71,12 @@ Namespace Language.Values
             Return str.Value.First
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function StartsWith(str As ByRefString, start As String) As Boolean
+            Return str.Value.StartsWith(start)
+        End Function
+
         ''' <summary>
         ''' Creates a delegate of the specified type from this method.
         ''' </summary>
