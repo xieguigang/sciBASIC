@@ -378,8 +378,9 @@ Public Module Extensions
         Dim dd As String = dat.Day.FormatZero
         Dim hh As String = dat.Hour.FormatZero
         Dim mmin As String = dat.Minute.FormatZero
+        Dim sec As String = dat.Second.FormatZero
 
-        Return String.Format("{0}-{1}-{2} {3}.{4}", yy, mm, dd, hh, mmin)
+        Return String.Format("{0}-{1}-{2} {3}.{4}.{5}", yy, mm, dd, hh, mmin, sec)
     End Function
 
     ''' <summary>

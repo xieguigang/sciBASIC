@@ -283,12 +283,12 @@ Namespace Scripting
             If Types.ContainsKey(lowers) Then
                 Return Types(lowers)
             Else
-                Dim typeInfo As Type = Type.GetType(name, False, True)
+                Dim type As Type = Type.GetType(name, False, True)
 
-                If typeInfo Is Nothing AndAlso objectGeneric Then
+                If type Is Nothing AndAlso objectGeneric Then
                     Return GetType(Object)
                 Else
-                    Return typeInfo
+                    Return type
                 End If
             End If
         End Function

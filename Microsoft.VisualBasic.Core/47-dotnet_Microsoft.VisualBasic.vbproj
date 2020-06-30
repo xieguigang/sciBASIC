@@ -1433,7 +1433,7 @@
     <Compile Include="ComponentModel\Settings\Inf\IniFile.vb" />
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileTable.vb" />
-    <Compile Include="ComponentModel\SingletonHolder.vb" />
+    <Compile Include="My\SingletonHolder.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\BinaryPriorityQueue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />

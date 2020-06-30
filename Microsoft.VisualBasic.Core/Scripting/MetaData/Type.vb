@@ -66,6 +66,8 @@ Namespace Scripting.MetaData
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property assembly As String
+        <XmlAttribute> Public Property reference As String
+
         ''' <summary>
         ''' <see cref="Type.FullName"/>.(类型源)
         ''' </summary>
@@ -90,12 +92,13 @@ Namespace Scripting.MetaData
         ''' </summary>
         ''' <param name="info"></param>
         Sub New(info As Type)
-            Call doInfoParser(info, assembly, fullName)
+            Call doInfoParser(info, assembly, fullName, reference)
         End Sub
 
-        Private Shared Sub doInfoParser(info As Type, ByRef assm As String, ByRef id As String)
+        Private Shared Sub doInfoParser(info As Type, ByRef assm As String, ByRef id As String, ByRef reference As String)
             assm = info.Assembly.Location.FileName
             id = info.FullName
+            reference = info.Assembly.FullName
         End Sub
 
         Public Overrides Function ToString() As String
@@ -155,6 +158,17 @@ Namespace Scripting.MetaData
                 If Not type Is Nothing Then
                     Return type
                 End If
+
+                Try
+                    ' 20200630 fix of the bugs of load the identical assembly file from different location
+                    ' due to the reason of context 'LoadNeither' to context 'Default'
+                    assm = System.Reflection.Assembly.Load(reference)
+                    type = assm.GetType(fullName)
+
+                    Return type
+                Catch ex As Exception
+
+                End Try
             End If
 
             ' 错误一般出现在loadassembly阶段
@@ -196,10 +210,15 @@ Namespace Scripting.MetaData
         ''' <param name="b"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator =(a As TypeInfo, b As Type) As Boolean
-            Dim assm As String = Nothing, type As String = Nothing
-            Call doInfoParser(b, assm, type)
+            Dim assm As String = Nothing
+            Dim type As String = Nothing
+            Dim reference As String = Nothing
+
+            Call doInfoParser(b, assm, type, reference)
+
             Return String.Equals(a.assembly, assm, StringComparison.OrdinalIgnoreCase) AndAlso
-                String.Equals(a.fullName, type, StringComparison.Ordinal)
+                String.Equals(a.fullName, type, StringComparison.Ordinal) AndAlso
+                String.Equals(a.reference, reference, StringComparison.Ordinal)
         End Operator
 
         Public Overloads Shared Operator <>(a As TypeInfo, b As Type) As Boolean
