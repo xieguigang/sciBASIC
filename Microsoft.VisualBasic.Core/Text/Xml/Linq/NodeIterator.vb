@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::ddeeb7ad1a7ce33ee9840b24595558b1, Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module NodeIterator
-    ' 
-    '         Function: GetArrayTemplate, IterateArrayNodes
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module NodeIterator
+' 
+'         Function: GetArrayTemplate, IterateArrayNodes
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -72,34 +72,44 @@ Namespace Text.Xml.Linq
         ''' </summary>
         ''' <param name="path$"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function IterateArrayNodes(path$, tag$, Optional filter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of String)
-            Dim buffer As New List(Of String)
-            Dim start$ = "<" & tag
-            Dim ends$ = $"</{tag}>"
-            Dim stack%
-            Dim tagOpen As Boolean = False
-            Dim lefts$
-            Dim i%
-            Dim xmlText$
+        <Extension>
+        Public Function IterateArrayNodes(path$, tag$, Optional filter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of String)
+            Return New NodeIteratorImpl(tag).PopulateData(path, filter)
+        End Function
+    End Module
 
+    Friend Class NodeIteratorImpl
+
+        ReadOnly start1$
+        ReadOnly start3$
+        ReadOnly start2$
+        ReadOnly ends$
+
+        Dim stack%
+        Dim tagOpen As Boolean = False
+        Dim lefts$
+        Dim i%
+        Dim buffer As New List(Of String)
+
+        Sub New(tag As String)
+            start1 = "<" & tag & "/"
+            start2 = "<" & tag & " "
+            start3 = "<" & tag & ">"
+            ends = $"</{tag}>"
+        End Sub
+
+        Public Iterator Function PopulateData(path As String, filter As Func(Of String, Boolean)) As IEnumerable(Of String)
             For Each line As String In path.IterateAllLines
                 If tagOpen Then
-
                     i = InStr(line, ends)
 
                     If i > 0 Then
                         ' 遇到了结束标签，则取出来
                         If stack > 0 Then
-                            stack -= 1 ' 内部栈，还没有结束，则忽略当前的这个标签
+                            ' 内部栈，还没有结束，则忽略当前的这个标签
+                            stack -= 1
                         Else
-                            ' 这个是真正的结束标签
-                            lefts = Mid(line, i + ends.Length)
-                            buffer += ends
-                            tagOpen = False
-
-                            xmlText = buffer.JoinBy(vbLf)
-                            buffer *= 0
-                            buffer += lefts
+                            Dim xmlText$ = getXmlSection(line)
 
                             If Not filter Is Nothing AndAlso filter(xmlText) Then
                                 ' skip
@@ -111,21 +121,61 @@ Namespace Text.Xml.Linq
                             ' 这里要跳出来，否则后面buffer += line处任然会添加这个结束标签行的
                             Continue For
                         End If
-                    ElseIf InStr(line, start) > 0 Then
+                    ElseIf checkStart(line, Nothing) Then
                         stack += 1
                     End If
 
                     buffer += line
                 Else
                     ' 需要一直遍历到开始标签为止
-                    i = InStr(line, start)
-
-                    If i > 0 Then
+                    If checkStart(line, i) Then
                         tagOpen = True
                         buffer += Mid(line, i)
                     End If
                 End If
             Next
+
+            If buffer > 0 AndAlso Not buffer.All(Function(s) Strings.Trim(s).StringEmpty) Then
+                Call $"[{path}] is an incomplete xml dataset!".Warning
+            End If
         End Function
-    End Module
+
+        Private Function getXmlSection(line As String) As String
+            Dim xmlText$
+
+            ' 这个是真正的结束标签
+            lefts = Mid(line, i + ends.Length)
+            buffer += ends
+            tagOpen = False
+
+            xmlText = buffer.JoinBy(vbLf)
+            buffer *= 0
+            buffer += lefts
+
+            Return xmlText
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function checkStart(line As String, ByRef i As Integer) As Boolean
+            i = InStr(line, start1)
+
+            If i > 0 Then
+                Return True
+            End If
+
+            i = InStr(line, start2)
+
+            If i > 0 Then
+                Return True
+            End If
+
+            i = InStr(line, start3)
+
+            If i > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+    End Class
 End Namespace

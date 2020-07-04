@@ -127,7 +127,8 @@ Namespace HDF5.device
 
         Public Function readBytes(n As Integer) As Byte()
             If n < 0 Then
-                Throw New ArgumentException("n should be greater than 0")
+                ' Throw New ArgumentException("n should be greater than 0")
+                Return {}
             End If
 
             Dim buf As Byte() = New Byte(n - 1) {}

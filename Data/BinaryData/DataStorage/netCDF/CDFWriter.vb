@@ -200,7 +200,7 @@ Namespace netCDF
 #End Region
 
         Dim output As BinaryDataWriter
-        Dim globalAttrs As attribute()
+        Dim globalAttrs As New List(Of attribute)
         Dim dimensionList As Dictionary(Of String, SeqValue(Of Dimension))
         Dim variables As List(Of variable)
         Dim recordDimensionLength As UInteger
@@ -223,7 +223,7 @@ Namespace netCDF
         ''' <param name="attrs"></param>
         ''' <returns></returns>
         Public Function GlobalAttributes(ParamArray attrs As attribute()) As CDFWriter
-            globalAttrs = attrs
+            Call globalAttrs.AddRange(attrs)
             Return Me
         End Function
 
@@ -317,7 +317,7 @@ Namespace netCDF
                 Call writeAttributes(output, var.attributes)
                 Call output.Write(var.type)
                 ' varSize
-                Call output.Write(var.size)
+                Call output.Write(CUInt(var.size))
                 ' version = 1, write 4 bytes
                 Call output.Write(var.offset)
                 Call output.Flush()
@@ -449,6 +449,10 @@ Namespace netCDF
                 .Select(Function(d) dimensionList(d).i) _
                 .ToArray
         End Function
+
+        Public Sub AddVariable(name$, data As CDFData, [dim] As Dimension, Optional attrs As attribute() = Nothing)
+            Call AddVariable(name, data, {[dim]}, attrs)
+        End Sub
 
         ''' <summary>
         ''' 如果<paramref name="dims"/>是不存在的，则会自动添加

@@ -161,7 +161,7 @@ Public Class Bubble : Inherits Plot
 
         Dim scale As Func(Of Double, Double) = New Func(Of Double, Double)(Function(r) r) Or usingLogRadius.When(usingLogScaleRadius)
         Dim x, y As d3js.scale.LinearScale
-        Dim xTicks = mapper.xAxis.CreateAxisTicks
+        Dim xTicks = mapper.xAxis.CreateAxisTicks(ticks:=5)
         Dim yTicks = mapper.yAxis.CreateAxisTicks
         Dim labels As New List(Of Label)
         Dim anchors As New List(Of Anchor)

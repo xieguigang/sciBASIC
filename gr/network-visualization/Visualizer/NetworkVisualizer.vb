@@ -822,8 +822,10 @@ Public Module NetworkVisualizer
                 lx = .label.X
                 ly = .label.Y
 
-                If label.offsetDistance >= stdNum.Max(g.Size.Width, g.Size.Height) * 0.01 Then
-                    Call g.DrawLine(New Pen(Brushes.Gray, 10) With {.DashStyle = DashStyle.Dot}, label.anchor, label.GetTextAnchor)
+                If iteration > 0 Then
+                    If label.offsetDistance >= stdNum.Max(g.Size.Width, g.Size.Height) * 0.01 Then
+                        Call g.DrawLine(New Pen(Brushes.Gray, 10) With {.DashStyle = DashStyle.Dot}, label.anchor, label.GetTextAnchor)
+                    End If
                 End If
 
                 With g.MeasureString(.label.text, .style)

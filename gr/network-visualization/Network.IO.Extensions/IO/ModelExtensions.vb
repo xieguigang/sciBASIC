@@ -95,9 +95,15 @@ Namespace FileStream
         <Extension>
         Public Function ScaleRadius(ByRef graph As NetworkGraph, range As DoubleRange) As NetworkGraph
             Dim nodes = graph.vertex.ToArray
+            Dim sizeRange As DoubleRange = nodes _
+                .Select(Function(a) a.data.size) _
+                .IteratesALL _
+                .Range
 
             For i As Integer = 0 To nodes.Length - 1
-                nodes(i).data.size = nodes(i).data.size.RangeTransform(range)
+                nodes(i).data.size = nodes(i).data.size _
+                    .Select(Function(r) sizeRange.ScaleMapping(r, range)) _
+                    .ToArray
             Next
 
             Return graph

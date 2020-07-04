@@ -111,8 +111,10 @@ Namespace HDF5.device
 
         Public Overrides Function readByte() As Byte
             If Me.offset >= Me.filesize Then
-                Throw New IOException("file offset reached to end of file")
+                ' Throw New IOException("file offset reached to end of file")
+                Return Nothing
             End If
+
             Dim b As Byte = CByte(Me.randomaccessfile.ReadByte())
 
             MyBase.offset += 1

@@ -100,7 +100,7 @@ Namespace Graphic
             If Not ignoreAxis Then
 
                 If Not ignoreX Then
-                    xAxis = New Vector(xrange.CreateAxisTicks(parts))
+                    xAxis = New Vector(xrange.CreateAxisTicks(parts / 2))
                 Else
                     xAxis = New Vector({0R})
                 End If

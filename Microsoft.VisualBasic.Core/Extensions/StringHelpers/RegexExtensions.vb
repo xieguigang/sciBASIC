@@ -274,7 +274,12 @@ Public Module RegexExtensions
             Return False
         End If
 
-        Dim match$ = Regex.Match(s, pattern, opt).Value
+        Static patternCache As New Dictionary(Of String, Regex)
+
+        Dim match$ = patternCache _
+            .ComputeIfAbsent(pattern, lazyValue:=Function(r) New Regex(r, opt)) _
+            .Match(s) _
+            .Value
 
         If match = s Then
             Return True

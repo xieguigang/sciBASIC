@@ -968,14 +968,18 @@ Public Module StringHelpers
     ''' <returns></returns>
     <Extension>
     Public Function StringReplace(s$, pattern$, replaceAs$, Optional opt As RegexOptions = RegexICSng) As String
-        Dim targets$() = r.Matches(s, pattern, opt).ToArray
-        Dim sb As New StringBuilder(s)
+        If Not s Is Nothing Then
+            Dim targets$() = r.Matches(s, pattern, opt).ToArray
+            Dim sb As New StringBuilder(s)
 
-        For Each t As String In targets
-            Call sb.Replace(t, replaceAs)
-        Next
+            For Each t As String In targets
+                Call sb.Replace(t, replaceAs)
+            Next
 
-        Return sb.ToString
+            Return sb.ToString
+        Else
+            Return ""
+        End If
     End Function
 
     ''' <summary>

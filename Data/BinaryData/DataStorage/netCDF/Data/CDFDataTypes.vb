@@ -92,8 +92,13 @@ Namespace netCDF
 
         ''' <summary>
         ''' #define NC_INT64   10
+        ''' 
+        ''' probably not supports by the standard netCDF4 library on linux and NASA Panoply software...
         ''' </summary>
         <Description("long")> [LONG] = 10
+        ''' <summary>
+        ''' probably not supports by the standard netCDF4 library on linux and NASA Panoply software...
+        ''' </summary>
         <Description("boolean")> [BOOLEAN] = 11
     End Enum
 End Namespace
