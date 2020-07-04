@@ -508,6 +508,7 @@
     <Compile Include="g\Theme\Layout.vb" />
     <Compile Include="g\Theme\FontStyle.vb" />
     <Compile Include="g\Theme\Theme.vb" />
+    <Compile Include="Scatter\LinePlot.vb" />
     <Compile Include="VolinPlot.vb" />
     <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="BarPlot\Data\csv.vb" />
