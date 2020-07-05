@@ -82,19 +82,18 @@ Namespace Heatmap
             Dim keys$() = data.keys
             Dim maxLabelSize = data.keys _
                 .MaxLengthString _
-                .MeasureSize(g, rowLabelFont) _
-                .Width
+                .MeasureSize(g, rowLabelFont)
             Dim plotRegion = canvas.PlotRegion
             Dim dStep As New SizeF With {
-                .Width = (plotRegion.Width - maxLabelSize * 1.25) / data.size,
-                .Height = (plotRegion.Height - maxLabelSize) / data.size
+                .Width = (plotRegion.Width - maxLabelSize.Width) / data.size,
+                .Height = (plotRegion.Height - maxLabelSize.Width) / data.size
             }
             ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
             Dim dw! = dStep.Width - gridBrush.Width
             Dim dh! = dStep.Height - gridBrush.Width
             Dim legendSize = plotRegion.Width / 5
             ' 每一个方格的大小是不变的
-            Dim r! = stdNum.Min(dw, dh)
+            Dim r! = stdNum.Max(dw, dh)
             Dim dr!
             Dim blockSize As New SizeF With {.Width = r, .Height = r}
             Dim i% = 1
@@ -107,7 +106,7 @@ Namespace Heatmap
                                     Return blockSize.Width
                                 End If
                             End Function
-            Dim rawLeft! = plotRegion.Left + maxLabelSize
+            Dim rawLeft! = plotRegion.Left + maxLabelSize.Width
             Dim top = canvas.Padding.Top + g.MeasureString(data.keys.First, rowLabelFont).Width
             Dim levels = data.PopulateRowObjects(Of DataSet).ToArray.DataScaleLevels(data.keys, -1, DrawElements.None, mapLevels)
             Dim llayout As New Rectangle With {
