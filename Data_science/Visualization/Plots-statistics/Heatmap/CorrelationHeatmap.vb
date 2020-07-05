@@ -41,7 +41,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -56,7 +55,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.DataFrame
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 
 Namespace Heatmap
@@ -86,11 +84,10 @@ Namespace Heatmap
                 .MaxLengthString _
                 .MeasureSize(g, rowLabelFont) _
                 .Width
-            Dim leftOffSet% = canvas.Padding.Left / 1.5
             Dim plotRegion = canvas.PlotRegion
             Dim dStep As New SizeF With {
-                .Width = (plotRegion.Width - maxLabelSize) / data.size,
-                .Height = plotRegion.Height / data.size
+                .Width = (plotRegion.Width - maxLabelSize * 1.25) / data.size,
+                .Height = (plotRegion.Height - maxLabelSize) / data.size
             }
             ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
             Dim dw! = dStep.Width - gridBrush.Width
@@ -195,7 +192,7 @@ Namespace Heatmap
 
                 Dim sz As SizeF = g.MeasureString(x.value, rowLabelFont)
                 Dim y As Single = top - dw - (sz.Height - dw) / 2
-                Dim lx! = rawLeft - sz.Width - stdNum.Min(dw, dh)
+                Dim lx! = rawLeft - sz.Width
 
                 Call g.DrawString(x.value, rowLabelFont, Brushes.Black, New PointF(lx, y))
             Next
