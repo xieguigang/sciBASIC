@@ -94,10 +94,12 @@ Namespace Heatmap
             Dim dh! = dStep.Height - gridBrush.Width
             Dim legendSize = plotRegion.Width / 5
             ' 每一个方格的大小是不变的
-            Dim blockSize As New SizeF(stdNum.Min(dw, dh), stdNum.Min(dw, dh))
+            Dim r! = stdNum.Min(dw, dh)
+            Dim dr!
+            Dim blockSize As New SizeF With {.Width = r, .Height = r}
             Dim i% = 1
             Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-            Dim radius As DoubleRange = {0R, dw}
+            Dim radius As DoubleRange = {0R, r}
             Dim getRadius = Function(corr#) As Double
                                 If variantSize Then
                                     Return Range.ScaleMapping(stdNum.Abs(corr), radius)
@@ -105,8 +107,6 @@ Namespace Heatmap
                                     Return dw
                                 End If
                             End Function
-            Dim r!
-            Dim dr!
             Dim rawLeft! = plotRegion.Left + maxLabelSize
             Dim top = canvas.Padding.Top + g.MeasureString(data.keys.First, rowLabelFont).Width
             Dim levels = data.PopulateRowObjects(Of DataSet).ToArray.DataScaleLevels(data.keys, -1, DrawElements.None, mapLevels)
