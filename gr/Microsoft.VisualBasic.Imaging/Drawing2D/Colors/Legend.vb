@@ -258,20 +258,27 @@ Namespace Drawing2D.Colors
                 .ToArray
 
             Dim delta = legendHeight / (ticks.Length + 1)
+            Dim tickStr As String
 
             y += delta
             x -= ruleOffset
             tickFont = New Font(tickFont.FontFamily, tickFont.Size * 2.5 / 3)
 
             ' 画出剩余的小标尺
-            For Each tick In ticks
+            For Each tick As Double In ticks
+
+                tickStr = tick.ToString($"F{roundDigit}")
+
+                If tick >= 0 Then
+                    tickStr = " " & tickStr
+                End If
 
                 point = New PointF With {
                     .X = x + 2,
                     .Y = y - tickFont.Height / 2
                 }
                 g.DrawLine(Pens.Black, x, y, x - 5, y)
-                g.DrawString(tick.ToString($"F{roundDigit}"), tickFont, Brushes.Gray, point)
+                g.DrawString(tickStr, tickFont, Brushes.Gray, point)
 
                 y += delta
             Next
