@@ -102,9 +102,9 @@ Namespace Heatmap
             Dim radius As DoubleRange = {0R, r}
             Dim getRadius = Function(corr#) As Double
                                 If variantSize Then
-                                    Return Range.ScaleMapping(stdNum.Abs(corr), radius)
+                                    Return range.ScaleMapping(stdNum.Abs(corr), radius)
                                 Else
-                                    Return dw
+                                    Return blockSize.Width
                                 End If
                             End Function
             Dim rawLeft! = plotRegion.Left + maxLabelSize
@@ -159,7 +159,7 @@ Namespace Heatmap
                         End If
 
                         r = getRadius(corr:=c)
-                        dr = (dw - r) / 2
+                        dr = (blockSize.Width - r) / 2
 
                         If r <> 0! Then
                             Call g.FillPie(b, rect.Left + dr, rect.Top + dr, r, r, 0, 360)
