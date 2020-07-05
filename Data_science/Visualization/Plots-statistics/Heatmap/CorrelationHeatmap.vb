@@ -121,7 +121,7 @@ Namespace Heatmap
                 titleFont:=CSSFont.TryParse(theme.legendTitleCSS),
                 title:=legendTitle,
                 tickFont:=CSSFont.TryParse(theme.legendLabelCSS),
-                Stroke.TryParse(Stroke.StrongHighlightStroke)
+                tickAxisStroke:=Stroke.TryParse(Stroke.StrongHighlightStroke)
             )
 
             ' 在这里绘制具体的矩阵
@@ -182,22 +182,20 @@ Namespace Heatmap
                         End With
                     End If
 
-                    left += dw!
+                    left += blockSize.Width
                     i += 1
                 Next
 
                 left = rawLeft
-                top += dw!
+                top += blockSize.Height
                 i = 1
 
                 Dim sz As SizeF = g.MeasureString(x.value, rowLabelFont)
-                Dim y As Single = top - dw - (sz.Height - dw) / 2
-                Dim lx! = rawLeft - sz.Width
+                Dim y As Single = top - blockSize.Width - (sz.Height - blockSize.Width) / 2
+                Dim lx! = rawLeft - sz.Width - blockSize.Width / 2
 
                 Call g.DrawString(x.value, rowLabelFont, Brushes.Black, New PointF(lx, y))
             Next
-
-            rawLeft -= dw / 1.5
         End Sub
 
         ''' <summary>
