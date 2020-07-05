@@ -53,6 +53,7 @@ Namespace Graphic.Canvas
         Public Property mainCSS As String
         Public Property subtitleCSS As String
         Public Property legendTitleCSS As String
+        Public Property legendLabelCSS As String
         Public Property legendLayout As Layout
         Public Property legendBoxStroke As String
         Public Property tagCSS As String
@@ -60,6 +61,7 @@ Namespace Graphic.Canvas
         Public Property yAxisLayout As YAxisLayoutStyles
         Public Property axisLabelCSS As String
         Public Property drawLegend As Boolean
+        Public Property drawGrid As Boolean
 
     End Class
 End Namespace
