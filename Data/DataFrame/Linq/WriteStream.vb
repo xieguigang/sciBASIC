@@ -98,7 +98,7 @@ Namespace IO.Linq
         ''' <returns></returns>
         Public ReadOnly Property IsMetaIndexed As Boolean
             Get
-                Return rowWriter.IsMetaIndexed
+                Return rowWriter.isMetaIndexed
             End Get
         End Property
 

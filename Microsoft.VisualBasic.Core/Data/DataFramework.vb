@@ -305,18 +305,33 @@ Namespace ComponentModel.DataSourceModel
             Return numerics.Any(Function(num) num Is type)
         End Function
 
+        Public Enum EnumCastTo
+            none
+            [string]
+            [integer]
+        End Enum
+
         ''' <summary>
         ''' 如果目标类型的属性之中值包含有基础类型，则是一个非复杂类型，反之包含任意一个非基础类型，则是一个复杂类型
         ''' </summary>
         ''' <param name="type"></param>
+        ''' <param name="enumCast">by default we treat the enum type as non-primtive type.</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function IsComplexType(type As Type) As Boolean
+        Public Function IsComplexType(type As Type, Optional enumCast As EnumCastTo = EnumCastTo.none) As Boolean
             Return Not type _
                 .Schema(PropertyAccess.NotSure, PublicProperty, True) _
                 .Values _
-                .Where(Function(t) Not IsPrimitive(t.PropertyType)) _
+                .Where(Function(t)
+                           Dim ptype As Type = t.PropertyType
+
+                           If ptype.IsEnum AndAlso enumCast <> EnumCastTo.none Then
+                               Return False
+                           Else
+                               Return Not IsPrimitive(ptype)
+                           End If
+                       End Function) _
                 .FirstOrDefault Is Nothing
         End Function
 #End If

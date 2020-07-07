@@ -213,7 +213,9 @@ Namespace Text
         ''' <param name="value"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function CodePage(value As Encodings) As Encoding
+        <DebuggerStepThrough>
+        <Extension>
+        Public Function CodePage(value As Encodings) As Encoding
             If _TextEncodings.ContainsKey(value) Then
                 Return _TextEncodings(value)
             Else
