@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace CommandLine
 
-    Public Class Grouping : Implements IEnumerable(Of Groups)
+    Friend Class Grouping : Implements IEnumerable(Of Groups)
 
         Public Class Groups : Inherits GroupingDefineAttribute
 
