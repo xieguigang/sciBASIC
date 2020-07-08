@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36e514099caeeb4140f6a8ab98e877ea, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::04b9c178ca09b0d6ae5231d36df4ef75, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1891b04d5a9032266b2b13b0585199f8, Microsoft.VisualBasic.Core\Extensions\Collection\CategoryOperations.vb"
+﻿#Region "Microsoft.VisualBasic::736a8b87454bd3cbf3cdfb26e423679b, Microsoft.VisualBasic.Core\Extensions\Collection\CategoryOperations.vb"
 
     ' Author:
     ' 

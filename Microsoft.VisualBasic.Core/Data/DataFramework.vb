@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0241616370a0f4eada155176918194f2, Microsoft.VisualBasic.Core\Data\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::92e2c492ea3f12e65fcfcf3234a14838, Microsoft.VisualBasic.Core\Data\DataFramework.vb"
 
     ' Author:
     ' 
@@ -36,11 +36,17 @@
     '         Properties: Flags, StringBuilders, StringParsers
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: DictionaryTable, getOrCache, (+2 Overloads) Schema, ValueTable
+    '         Function: CreateObject, DictionaryTable, getOrCache, GetValue, IsComplexType
+    '                   ParseSchemaInternal, (+2 Overloads) Schema, ValueTable
     '         Delegate Function
     ' 
-    '             Function: CreateObject, GetValue, IsComplexType, IsNumericType, IsPrimitive
-    '                       ParseSchemaInternal, valueToString
+    '             Function: IsNumericType, IsPrimitive, valueToString
+    '         Enum EnumCastTo
+    ' 
+    '             [integer], [string], none
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' 

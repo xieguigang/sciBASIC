@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::923d8969616415108d9842f4375482e3, Microsoft.VisualBasic.Core\ComponentModel\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::4c421c9bacc62e71d5a5d56e32189900, Microsoft.VisualBasic.Core\My\SingletonHolder.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,20 @@
     '         Properties: Instance
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class SharedObject
+    ' 
+    '         Properties: Instance
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class SharedObject
+    ' 
+    '         Properties: GetObject
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: SetObject
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f42201e9e52687f453865716d9725236, gr\network-visualization\Network.IO.Extensions\IO\ModelLoader.vb"
+﻿#Region "Microsoft.VisualBasic::ce97cdb042a345d10b10201f40bcc083, gr\network-visualization\Network.IO.Extensions\IO\ModelLoader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ModelLoader
     ' 
-    '         Function: (+2 Overloads) CreateGraph, getEdgeGuid, Tabular
+    '         Function: (+2 Overloads) CreateGraph, getEdgeGuid
     ' 
     ' 
     ' /********************************************************************************/

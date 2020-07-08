@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::276b066d7023317eb993e641da98ae27, Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::984a84e4365c66125b0a0d9240d87fd8, Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '         Function: CalcOffsets, Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer
     '                   GlobalAttributes
     ' 
-    '         Sub: (+2 Overloads) AddVariable, (+2 Overloads) Dispose, Save, writeAttributes
+    '         Sub: (+3 Overloads) AddVariable, (+2 Overloads) Dispose, Save, writeAttributes
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34e51ab66ce1337fe6ca77b61ab64b28, Data\BinaryData\DataStorage\HDF5\device\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::c0d5e7e4bdb4d0dd6fb1e5904898fb4b, Data\BinaryData\DataStorage\HDF5\device\BinaryReader.vb"
 
     ' Author:
     ' 

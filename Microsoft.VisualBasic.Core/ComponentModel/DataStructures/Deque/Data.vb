@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da6f13c331572bb12778b500685aa89a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\Data.vb"
+﻿#Region "Microsoft.VisualBasic::c051f1019da34c6386195c533c01eacc, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\Data.vb"
 
     ' Author:
     ' 
@@ -446,5 +446,3 @@ Namespace ComponentModel.Collection.Deque
         End Sub
     End Class
 End Namespace
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c288460a938ad420f75ead28d814dcc2, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::58077c6b20a05471b6aa4adc11dc1904, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Class Theme
     ' 
-    '         Properties: axisLabelCSS, background, drawLegend, legendBoxStroke, legendLayout
-    '                     legendTitleCSS, mainCSS, padding, subtitleCSS, tagCSS
-    '                     xAxisLayout, yAxisLayout
+    '         Properties: axisLabelCSS, background, drawGrid, drawLegend, legendBoxStroke
+    '                     legendLabelCSS, legendLayout, legendTitleCSS, mainCSS, padding
+    '                     subtitleCSS, tagCSS, xAxisLayout, yAxisLayout
     ' 
     ' 
     ' /********************************************************************************/

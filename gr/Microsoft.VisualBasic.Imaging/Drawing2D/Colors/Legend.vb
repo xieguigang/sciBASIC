@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eff94b256dbf274e434126a959deafcd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::4c5fd78a555d5f7528ac1fbef332a01c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
     ' Author:
     ' 

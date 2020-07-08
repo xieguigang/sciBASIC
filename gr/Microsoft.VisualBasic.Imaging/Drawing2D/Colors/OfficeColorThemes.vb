@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a175482ce4e5718fbac45d5c2542b07, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
+﻿#Region "Microsoft.VisualBasic::c92a9eae2e29ab67023e78e124aa2723, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Sub: InternalLoadAllThemes
     ' 
-    '     Class Theme
+    '     Class OfficeColorTheme
     ' 
     '         Properties: accents, dk1, dk2, folHlink, hlink
     '                     lt1, lt2, name

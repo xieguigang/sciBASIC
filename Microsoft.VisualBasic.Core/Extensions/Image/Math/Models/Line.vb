@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d95835778349348f609695497b663a28, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Line.vb"
+﻿#Region "Microsoft.VisualBasic::4f40d19673af91658a2ca9e453fd2a0b, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Line.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::691a77310703b8aab87c47bf628741a6, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::29bddad057f601259afa0138d77bab9d, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,13 @@
 
     '     Class RowWriter
     ' 
-    '         Properties: Columns, MetaRow, SchemaProvider
+    '         Properties: columns, metaRow, schemaProvider
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetRowNames, ToRow
     '         Delegate Function
     ' 
-    '             Properties: HaveMeta, IsMetaIndexed
+    '             Properties: hasMeta, isMetaIndexed
     ' 
     '             Function: __buildRowMeta, __buildRowNullMeta, __meta, CacheIndex, GetMetaTitles
     '                       ToString

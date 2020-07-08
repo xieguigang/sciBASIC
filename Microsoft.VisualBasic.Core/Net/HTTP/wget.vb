@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a15da93ae4a68df8fc4475617b2f434f, Microsoft.VisualBasic.Core\Net\HTTP\wget.vb"
+﻿#Region "Microsoft.VisualBasic::d64a23d994ed18fccdf8e5548a97dcbb, Microsoft.VisualBasic.Core\Net\HTTP\wget.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Function: Download, ToString
     ' 
-    '         Sub: ClearLine, DownloadProcess, ReportRequest, Run
+    '         Sub: ClearLine, clearOutput, DownloadProcess, ReportRequest, Run
     ' 
     ' 
     ' /********************************************************************************/

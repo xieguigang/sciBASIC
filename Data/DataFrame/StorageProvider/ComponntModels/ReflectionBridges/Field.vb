@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb39a5883d6e1da5e7923c666c41d69e, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
+﻿#Region "Microsoft.VisualBasic::6d11cd9ce72980b2195df3b9d7ba765e, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Column
     ' 
-    '         Properties: Define, Name, ProviderId
+    '         Properties: define, Name, ProviderId
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: CreateObject, ToString

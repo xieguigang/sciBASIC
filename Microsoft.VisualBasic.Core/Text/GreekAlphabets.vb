@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50606af3773d9b3a413b90aa75fbec3a, Microsoft.VisualBasic.Core\Text\GreekAlphabets.vb"
+﻿#Region "Microsoft.VisualBasic::2665c6b7d1385a3e2bf66fa2d2bedc94, Microsoft.VisualBasic.Core\Text\GreekAlphabets.vb"
 
     ' Author:
     ' 

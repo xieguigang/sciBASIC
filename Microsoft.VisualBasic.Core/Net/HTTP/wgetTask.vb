@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e615a7c6adaa9974a382d09816854b8a, Microsoft.VisualBasic.Core\Net\HTTP\wgetTask.vb"
+﻿#Region "Microsoft.VisualBasic::a222e94cc36e10773edbc38e0bae6c73, Microsoft.VisualBasic.Core\Net\HTTP\wgetTask.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class wgetTask
     ' 
-    '         Properties: currentSize, downloadSpeed, isDownloading, saveFile, totalSize
-    '                     url
+    '         Properties: currentSize, downloadSpeed, headers, isDownloading, saveFile
+    '                     totalSize, url
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
