@@ -50,6 +50,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
@@ -94,6 +95,10 @@ Namespace Driver
                 Return Drivers.GDI
             End Get
         End Property
+
+        Public Overrides Function GetDataURI() As DataURI
+            Return New DataURI(Image)
+        End Function
 
         Const InvalidSuffix$ = "The gdi+ image file save path: {0} ending with *.svg file extension suffix!"
 

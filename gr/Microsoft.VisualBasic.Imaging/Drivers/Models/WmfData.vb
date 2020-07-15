@@ -46,6 +46,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
@@ -76,6 +77,12 @@ Namespace Driver
                 Throw New InvalidDataException("The input img data is nothing or file unavailable currently!")
             End If
         End Sub
+
+        Public Overrides Function GetDataURI() As DataURI
+            Using file As Stream = tempfile.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return New DataURI(file, content_type)
+            End Using
+        End Function
 
         Public Overrides Function Save(path As String) As Boolean
             Return tempfile.FileCopy(path)

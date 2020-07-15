@@ -180,6 +180,10 @@ Namespace Scripting
             Call Expression.SetSymbol(name, expr)
         End Sub
 
+        Public Sub SetVariable(name$, value As Double)
+            Call Expression.SetSymbol(name, value)
+        End Sub
+
         Public Function ParseExpression(expression As String) As Expression
             Return New ExpressionTokenIcer(expression) _
                 .GetTokens _

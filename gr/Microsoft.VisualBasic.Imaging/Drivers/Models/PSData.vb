@@ -46,6 +46,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
@@ -56,6 +57,10 @@ Namespace Driver
         End Sub
 
         Public Overrides ReadOnly Property Driver As Drivers
+
+        Public Overrides Function GetDataURI() As DataURI
+            Throw New NotImplementedException()
+        End Function
 
         Public Overrides Function Save(path As String) As Boolean
             Throw New NotImplementedException()

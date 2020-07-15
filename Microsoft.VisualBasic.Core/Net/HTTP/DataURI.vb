@@ -86,6 +86,27 @@ Namespace Net.Http
             Call Me.New(image.ToBase64String, ContentTypes.MIME.Png, Nothing)
         End Sub
 
+        Sub New(stream As Stream, mime$, Optional charset$ = Nothing)
+            Me.mime = mime
+            Me.chartSet = charset
+
+            Dim chunkbuffer As New List(Of Byte)
+            Dim buffer As Byte() = New Byte(1024) {}
+            Dim nreads As Integer
+
+            Do While stream.Position < stream.Length
+                nreads = stream.Read(buffer, Scan0, buffer.Length)
+
+                If nreads <= 0 Then
+                    Exit Do
+                Else
+                    Call chunkbuffer.AddRange(buffer.Take(nreads))
+                End If
+            Loop
+
+            Me.base64 = chunkbuffer.ToBase64String
+        End Sub
+
         Public Sub New(base64$, mime$, Optional charset$ = Nothing)
             Me.base64 = base64
             Me.mime = mime

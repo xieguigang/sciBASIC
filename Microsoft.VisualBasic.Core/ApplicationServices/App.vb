@@ -135,7 +135,7 @@ Public Module App
     ''' Gets the number of ticks that represent the date and time of this instance.
     ''' 
     ''' The number of ticks that represent the date and time of this instance. The value
-    ''' is between DateTime.MinValue.Ticks and DateTime.MaxValue.Ticks.
+    ''' is between <see cref="DateTime.MinValue"/> and <see cref="DateTime.MaxValue"/>.
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property NanoTime As Long

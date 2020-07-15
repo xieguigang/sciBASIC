@@ -48,6 +48,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
@@ -92,6 +93,18 @@ Namespace Driver
         Public Property title As String
 
         Const InvalidSuffix$ = "The SVG image file save path: {0} not ending with *.svg file extension suffix!"
+
+        Public Overrides Function GetDataURI() As DataURI
+            Dim layoutSize = Layout.Size
+            Dim sz$ = $"{layoutSize.Width},{layoutSize.Height}"
+
+            Using data As New MemoryStream
+                Call engine.WriteSVG(data, sz, XmlComment, title:=title)
+                Call data.Seek(Scan0, SeekOrigin.Begin)
+
+                Return New DataURI(data, content_type)
+            End Using
+        End Function
 
         ''' <summary>
         ''' Save the image as svg file.

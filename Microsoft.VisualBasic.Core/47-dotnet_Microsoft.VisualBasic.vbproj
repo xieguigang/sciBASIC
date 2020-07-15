@@ -39,7 +39,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>FRAMEWORD_CORE=1,NET_48=FALSE</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>

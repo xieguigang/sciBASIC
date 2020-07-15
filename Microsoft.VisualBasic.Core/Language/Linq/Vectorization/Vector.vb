@@ -262,6 +262,15 @@ Namespace Language.Vectorization
             End Set
         End Property
 
+        Default Public Overloads Property Item(range As (start%, ends%)) As List(Of T)
+            Get
+                Return New List(Of T)(Me.Skip(range.start).Take(count:=range.ends - range.start))
+            End Get
+            Set(value As List(Of T))
+                Me(New IntRange(range.start, range.ends)) = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' Gets subset of the collection by using a discontinues index
         ''' </summary>

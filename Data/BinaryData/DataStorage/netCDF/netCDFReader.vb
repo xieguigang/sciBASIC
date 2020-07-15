@@ -188,6 +188,10 @@ Namespace netCDF
                 .ToDictionary(Function(var) var.name)
         End Sub
 
+        Sub New(file As Stream, Optional encoding As Encodings = Encodings.UTF8)
+            Call Me.New(New BinaryDataReader(file, encoding))
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(path$, Optional encoding As Encodings = Encodings.UTF8)
             Call Me.New(path.OpenBinaryReader(encoding))

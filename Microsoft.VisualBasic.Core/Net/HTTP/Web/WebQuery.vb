@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::85f0858057db32d8783f73d508bfe512, Microsoft.VisualBasic.Core\Net\HTTP\Web\WebQuery.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class WebQuery
-    ' 
-    '         Properties: offlineMode
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: IsNullKey, (+2 Overloads) Query, QueryCacheText, queryText
-    ' 
-    '         Sub: runHttpGet
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class WebQuery
+' 
+'         Properties: offlineMode
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: IsNullKey, (+2 Overloads) Query, QueryCacheText, queryText
+' 
+'         Sub: runHttpGet
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization
 
@@ -67,6 +68,8 @@ Namespace Net.Http
     ''' <remarks>
     ''' 这个模块不会重复请求404状态的资源
     ''' </remarks>
+    ''' 
+    <FrameworkConfig(WebQuery(Of Boolean).WebQueryDebug)>
     Public Class WebQuery(Of Context)
 
         Friend url As Func(Of Context, String)
@@ -90,9 +93,12 @@ Namespace Net.Http
         ''' </summary>
         Protected cache$
         Protected sleepInterval As Integer
-        Protected debug As Boolean = True
+
+        Protected Shared debug As Boolean = True
 
         Shared ReadOnly interval As [Default](Of Integer)
+
+        Friend Const WebQueryDebug As String = "webquery.debug"
 
         Shared Sub New()
             Static defaultInterval As [Default](Of String) = "3000"
@@ -100,10 +106,13 @@ Namespace Net.Http
             With Val(App.GetVariable("sleep") Or defaultInterval)
                 ' controls of the interval by /@set sleep=xxxxx
                 interval = CInt(.ByRef).AsDefault(Function(x) x <= 0)
+                debug = App.GetVariable(WebQueryDebug).ParseBoolean
             End With
 
-            ' display debug info
-            Call $"WebQuery download worker thread sleep interval is {interval}ms".__INFO_ECHO
+            If debug Then
+                ' display debug info
+                Call $"WebQuery download worker for query context [{GetType(Context).FullName}] thread sleep interval is {interval}ms".__INFO_ECHO
+            End If
         End Sub
 
         ''' <summary>
@@ -125,8 +134,7 @@ Namespace Net.Http
                 <CallerMemberName>
                 Optional cache$ = Nothing,
                 Optional interval% = -1,
-                Optional offline As Boolean = False,
-                Optional debug As Boolean = True)
+                Optional offline As Boolean = False)
 
             Call Me.New(cache, interval, offline)
 
@@ -134,7 +142,6 @@ Namespace Net.Http
             Me.contextGuid = contextGuid Or Scripting.ToString(Of Context)
             Me.deserialization = parser Or XmlParser
             Me.prefix = prefix
-            Me.debug = debug
         End Sub
 
         Friend Sub New(cache$, interval%, offline As Boolean)
@@ -142,7 +149,7 @@ Namespace Net.Http
             Me.sleepInterval = interval Or WebQuery(Of Context).interval
             Me.offlineMode = offline
 
-            If offlineMode Then
+            If offlineMode AndAlso debug Then
                 Call $"WebQuery of '{Me.GetType.Name}' running in offline mode!".__DEBUG_ECHO
             End If
         End Sub
@@ -183,7 +190,7 @@ Namespace Net.Http
 
                 If Not url Like url404 Then
                     Call runHttpGet(cache, url, hitCache)
-                Else
+                ElseIf debug Then
                     Call $"{id} 404 Not Found!".PrintException
                 End If
 
@@ -224,12 +231,18 @@ Namespace Net.Http
         End Function
 
         Public Function QueryCacheText(context As Context, Optional cacheType$ = ".xml", Optional ByRef hitCache As Boolean = False) As String
-            Dim result = queryText({context}, cacheType).First
-            Dim cache As String = result.cache.ReadAllText(throwEx:=False)
+            hitCache = False
 
-            hitCache = result.hitCache
+            If context Is Nothing Then
+                Return Nothing
+            Else
+                Dim result As (cache$, hitCache As Boolean) = queryText({context}, cacheType).First
+                Dim cache As String = result.cache.ReadAllText(throwEx:=False)
 
-            Return cache
+                hitCache = result.hitCache
+
+                Return cache
+            End If
         End Function
 
         ''' <summary>

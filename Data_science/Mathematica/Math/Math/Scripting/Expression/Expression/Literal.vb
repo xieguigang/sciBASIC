@@ -53,12 +53,44 @@ Namespace Scripting.MathExpression.Impl
             Me.number = Val(text)
         End Sub
 
+        Sub New(x As Double)
+            Me.number = x
+        End Sub
+
+        Public Function GetNegative() As Literal
+            Return New Literal(-1 * number)
+        End Function
+
+        Public Function GetReciprocal() As Literal
+            Return New Literal(1 / number)
+        End Function
+
         Public Overrides Function Evaluate(env As ExpressionEngine) As Double
             Return number
+        End Function
+
+        Public Overloads Shared Function Evaluate(left As Literal, op As Char, right As Literal) As Literal
+            Dim a As Double = left.Evaluate(Nothing)
+            Dim b As Double = right.Evaluate(Nothing)
+
+            Select Case op
+                Case "+" : Return a + b
+                Case "-" : Return a - b
+                Case "*" : Return a * b
+                Case "/" : Return a / b
+                Case "%" : Return a Mod b
+                Case "^" : Return a ^ b
+                Case Else
+                    Throw New NotImplementedException(op)
+            End Select
         End Function
 
         Public Overrides Function ToString() As String
             Return number
         End Function
+
+        Public Overloads Shared Widening Operator CType(x As Double) As Literal
+            Return New Literal(x)
+        End Operator
     End Class
 End Namespace
