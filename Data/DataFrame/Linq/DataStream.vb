@@ -1,70 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::a666025c59794ab55d6898e1c447c4b5, Data\DataFrame\Linq\DataStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class SchemaReader
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Module DataLinqStream
-    ' 
-    '         Function: AsLinq, CastObject, ForEach, OpenHandle
-    ' 
-    '     Class DataStream
-    ' 
-    '         Properties: SchemaOridinal
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
-    ' 
-    '         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
-    '         Structure __taskHelper
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: RunTask
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Class SchemaReader
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: ToString
+' 
+'     Module DataLinqStream
+' 
+'         Function: AsLinq, CastObject, ForEach, OpenHandle
+' 
+'     Class DataStream
+' 
+'         Properties: SchemaOridinal
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
+' 
+'         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
+'         Structure __taskHelper
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Sub: RunTask
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -182,7 +183,7 @@ Namespace IO.Linq
     ''' <summary>
     ''' Buffered large text dataset Table reader
     ''' </summary>
-    Public Class DataStream : Inherits BufferedStream
+    Public Class DataStream
         Implements ISchema
         Implements IDisposable
 
@@ -190,11 +191,13 @@ Namespace IO.Linq
         ''' The title row, which is the mapping source of the class property name.
         ''' </summary>
         ReadOnly _title As RowObject
+        ReadOnly _file As StreamReader
 
         ''' <summary>
         ''' The columns and their index order
         ''' </summary>
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
+        Public ReadOnly Property FileName As String
 
         Sub New()
             _schema = New Dictionary(Of String, Integer)
@@ -202,18 +205,23 @@ Namespace IO.Linq
         End Sub
 
         Sub New(file$, Optional encoding As Encoding = Nothing, Optional bufSize% = 64 * 1024 * 1024)
-            Call MyBase.New(file, encoding, bufSize)
-
             Dim first As String = file.ReadFirstLine
 
             _title = RowObject.TryParse(first)
-            _schema = _title.Select(
-                Function(colName, idx) New With {
-                    .colName = colName,
-                    .ordinal = idx}) _
-                    .ToDictionary(Function(x) x.colName.ToLower,
-                                  Function(x) x.ordinal)
-            Me.FileName = file
+            _schema = _title _
+                .Select(Function(colName, idx)
+                            Return New With {
+                                .colName = colName,
+                                .ordinal = idx
+                            }
+                        End Function) _
+                .ToDictionary(Function(x) x.colName.ToLower,
+                              Function(x)
+                                  Return x.ordinal
+                              End Function)
+
+            Me._FileName = file
+            Me._file = file.OpenReader(encoding)
 
             Call $"{file.ToFileURL} handle opened...".__DEBUG_ECHO
         End Sub
@@ -238,16 +246,13 @@ Namespace IO.Linq
         ''' 这个函数主要是为了处理第一行数据
         ''' 因为在构造函数部分已经读取了第一行来解析schema，所以在这里需要对第一个数据块做一些额外的处理
         ''' </remarks>
-        Public Overrides Function BufferProvider() As String()
-            Dim buffer As String() = MyBase.BufferProvider()
+        Private Iterator Function BufferProvider() As IEnumerable(Of String)
+            Call _file.BaseStream.Seek(Scan0, SeekOrigin.Begin)
+            Call _file.ReadLine()
 
-            If __firstBlock Then
-                __firstBlock = False
-                buffer = buffer.Skip(1).ToArray
-            Else         '  不是第一个数据块，则不需要额外处理，直接返回
-            End If
-
-            Return buffer
+            Do While Not Me._file.EndOfStream
+                Yield Me._file.ReadLine
+            Loop
         End Function
 
         ''' <summary>
@@ -263,24 +268,14 @@ Namespace IO.Linq
             Call RowBuilder.IndexOf(Me)
             Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
-            Do While True
-                Dim buffer As String() = BufferProvider()
+            For Each line As String In BufferProvider()
+                Dim row As RowObject = RowObject.TryParse(line)
+                Dim obj As Object = Activator.CreateInstance(type)
 
-                For Each line As String In buffer
-                    Dim row As RowObject = RowObject.TryParse(line)
-                    Dim obj As Object = Activator.CreateInstance(type)
+                obj = RowBuilder.FillData(row, obj)
 
-                    obj = RowBuilder.FillData(row, obj)
-
-                    Call invoke(DirectCast(obj, T))
-                Next
-
-                If EndRead Then
-                    Exit Do
-                ElseIf Not silent Then
-                    Call EchoLine("Process next block....")
-                End If
-            Loop
+                Call invoke(DirectCast(obj, T))
+            Next
         End Sub
 
         ''' <summary>
@@ -301,36 +296,26 @@ Namespace IO.Linq
             Call RowBuilder.IndexOf(Me)
             Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
-            Do While True
-                Dim chunks As IEnumerable(Of String()) =
-                    TaskPartitions.SplitIterator(BufferProvider(), blockSize)
+            Dim chunks As IEnumerable(Of String()) = TaskPartitions.SplitIterator(BufferProvider(), blockSize)
 
-                For Each block As String() In chunks
-                    Dim LQuery As RowObject() =
-                        LinqAPI.Exec(Of RowObject) <=
+            For Each block As String() In chunks
+                Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) _
  _
-                            From line As String
-                            In block.AsParallel
-                            Select RowObject.TryParse(line)
+                    () <= From line As String
+                          In block.AsParallel
+                          Select RowObject.TryParse(line)
 
-                    Dim values As T() = LinqAPI.Exec(Of T) <=
+                Dim values As T() = LinqAPI.Exec(Of T) <=
  _
-                        From row As RowObject
-                        In LQuery.AsParallel
-                        Let obj As Object = Activator.CreateInstance(type)
-                        Let data = RowBuilder.FillData(row, obj)
-                        Select DirectCast(data, T)
+                    From row As RowObject
+                    In LQuery.AsParallel
+                    Let obj As Object = Activator.CreateInstance(type)
+                    Let data = RowBuilder.FillData(row, obj)
+                    Select DirectCast(data, T)
 
-                    Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
-                    Call cat(".")
-                Next
-
-                If EndRead Then
-                    Exit Do
-                Else
-                    Call "Process next block....".__INFO_ECHO(silent:=silent)
-                End If
-            Loop
+                Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
+                Call cat(".")
+            Next
         End Sub
 
         ''' <summary>
@@ -375,22 +360,18 @@ Namespace IO.Linq
             Call RowBuilder.IndexOf(Me)
             Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
-            Do While Not EndRead
+            Dim LQuery As IEnumerable(Of T) =
+ _
+                From line As String
+                In If(parallel, DirectCast(BufferProvider.AsParallel, IEnumerable(Of String)), DirectCast(BufferProvider(), IEnumerable(Of String)))
+                Let row As RowObject = RowObject.TryParse(line)
+                Let obj As Object = Activator.CreateInstance(type)
+                Let data As Object = RowBuilder.FillData(row, obj)
+                Select DirectCast(data, T)
 
-                Dim LQuery As IEnumerable(Of T) =
-                    From line As String
-                    In If(parallel,
-                        DirectCast(BufferProvider.AsParallel, IEnumerable(Of String)),
-                        DirectCast(BufferProvider(), IEnumerable(Of String)))
-                    Let row As RowObject = RowObject.TryParse(line)
-                    Let obj As Object = Activator.CreateInstance(type)
-                    Let data As Object = RowBuilder.FillData(row, obj)
-                    Select DirectCast(data, T)
-
-                For Each x As T In LQuery
-                    Yield x
-                Next
-            Loop
+            For Each obj As T In LQuery
+                Yield obj
+            Next
 
             Call Reset()
         End Function

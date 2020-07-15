@@ -1408,7 +1408,6 @@
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
     <Compile Include="ComponentModel\DataStructures\BitMap\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
-    <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Ranges\Relations.vb" />
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
