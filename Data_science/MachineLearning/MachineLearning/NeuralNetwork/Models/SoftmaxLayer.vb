@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
+﻿Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
 Namespace NeuralNetwork
@@ -8,22 +6,16 @@ Namespace NeuralNetwork
     ''' <summary>
     ''' softmax output layer of the classify result.
     ''' </summary>
-    Public Class SoftmaxLayer : Inherits Layer
+    Public NotInheritable Class SoftmaxLayer
 
-        Public Sub New(size As Integer, active As IActivationFunction, weight As Func(Of Double),
-                       Optional input As Layer = Nothing,
-                       Optional guid As i32 = Nothing)
-
-            Call MyBase.New(size, active, weight, input, guid)
+        Private Sub New()
         End Sub
 
-        Friend Sub New(neurons() As Neuron)
-            Call MyBase.New(neurons)
-        End Sub
-
-        Public Overrides Sub CalculateValue(Optional parallel As Boolean = False, Optional truncate As Double = -1)
+        Public Shared Sub CalculateValue(neurons As Neuron(),
+                                         Optional parallel As Boolean = False,
+                                         Optional truncate As Double = -1,
+                                         Optional doDropOutMode As Boolean = False)
             Dim V As Double()
-            Dim neurons As Neuron() = allActiveNodes.ToArray
 
             If Not parallel Then
                 Dim i As Integer = Scan0

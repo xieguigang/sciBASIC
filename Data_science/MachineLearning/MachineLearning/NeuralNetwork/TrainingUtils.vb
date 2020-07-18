@@ -182,7 +182,7 @@ Namespace NeuralNetwork
 
         Public Sub SetLayerNormalize(opt As Boolean)
             For Each layer As Layer In network.HiddenLayer
-                layer.doNormalize = opt
+                layer.softmaxNormalization = opt
             Next
         End Sub
 
