@@ -211,7 +211,13 @@ Namespace Distributions
                     Return .Max
                 End If
 
-                Dim hist = .Hist([step]:=New DoubleRange(.Min, .Max).Length / 5).ToArray
+                Dim steps As Double = New DoubleRange(.Min, .Max).Length / 5
+
+                If steps < 0.000001 Then
+                    Return .Average
+                End If
+
+                Dim hist = .Hist([step]:=steps).ToArray
                 Dim maxN = Which.Max(hist.Select(Function(bin) bin.Count))
                 Dim resample As Double()
 

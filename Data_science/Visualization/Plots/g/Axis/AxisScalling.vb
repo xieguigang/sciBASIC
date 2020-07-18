@@ -64,7 +64,11 @@ Namespace Graphic.Axis
         <Extension>
         Public Function CreateAxisTicks(range As DoubleRange, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
             With range
-                Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits)
+                If .Min.IsNaNImaginary AndAlso .Max.IsNaNImaginary Then
+                    Return {0, 1}
+                Else
+                    Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits)
+                End If
             End With
         End Function
 

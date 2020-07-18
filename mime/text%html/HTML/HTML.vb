@@ -97,7 +97,7 @@ Namespace HTML.DDM
         End Function
 
         Public Overrides Function ToString() As String
-            Return HTMLWriter.ToString(ToArray)
+            Return StreamWriter.ToString(ToArray)
         End Function
     End Class
 

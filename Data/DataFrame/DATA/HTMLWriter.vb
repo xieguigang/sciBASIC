@@ -68,7 +68,7 @@ Namespace DATA
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional title As String = "", Optional evenRowClassName$ = "even") As String
-            Return source.ToCsvDoc(False).ToHTMLTable(title:=title Or GetType(T).FullName.AsDefault, altClassName:=evenRowClassName)
+            Return source.ToCsvDoc(False).html(title:=title Or GetType(T).FullName.AsDefault, altClassName:=evenRowClassName)
         End Function
 
         <Extension>
@@ -80,9 +80,9 @@ Namespace DATA
             Optional title$ = "",
             Optional altClassName$ = Nothing) As String
 
-            Return source.ToCsvDoc(False).ToHTMLTable(
-                className:=className,
-                tableID:=tableID,
+            Return source.ToCsvDoc(False).html(
+                [class]:=className,
+                id:=tableID,
                 width:=width,
                 removes:=removes,
                 title:=title,
@@ -98,9 +98,9 @@ Namespace DATA
         ''' <returns></returns>
         ''' 
         <ExportAPI("ToHTML.Table")>
-        <Extension> Public Function ToHTMLTable(table As File,
-            Optional className$ = "",
-            Optional tableID$ = Nothing,
+        <Extension> Public Function html(table As File,
+            Optional class$ = "",
+            Optional id$ = Nothing,
             Optional width$ = "",
             Optional title$ = Nothing,
             Optional removes$() = Nothing,
@@ -115,11 +115,11 @@ Namespace DATA
                             Return table.Headers.IndexOf(name)
                         End Function))
 
-            If Not String.IsNullOrEmpty(className) Then
-                Call innerDoc.Append($" class=""{className}""")
+            If Not String.IsNullOrEmpty([class]) Then
+                Call innerDoc.Append($" class=""{[class]}""")
             End If
-            If Not String.IsNullOrEmpty(tableID) Then
-                Call innerDoc.Append($" id=""{tableID}""")
+            If Not String.IsNullOrEmpty(id) Then
+                Call innerDoc.Append($" id=""{id}""")
             End If
             If Not String.IsNullOrEmpty(width) Then
                 Call innerDoc.Append($" width=""{width}""")

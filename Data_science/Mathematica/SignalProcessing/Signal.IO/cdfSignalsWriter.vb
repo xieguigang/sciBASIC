@@ -83,7 +83,7 @@ Public Module cdfSignalsWriter
                     End Function) _
             .ToArray
 
-        For Each size In chunk_size.numerics
+        For Each size In chunk_size.integers
             index.Add((buffer_size, buffer_size + size - 1))
             buffer_size = buffer_size + size
         Next

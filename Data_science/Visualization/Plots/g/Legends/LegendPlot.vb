@@ -272,19 +272,21 @@ Namespace Graphic.Legend
                 lineWidth = font.Size / 2
             End If
 
-            Call g.DrawLegendShape(
-                pos, canvas, l.style, color,
-                border:=border,
-                radius:=radius,
-                labelPos:=labelPosition,
-                lineWidth:=lineWidth
-            )
-            Call g.DrawString(
-                l.title,
-                font,
-                brush:=titleBrush Or blackTitle,
-                point:=labelPosition
-            )
+            SyncLock blackTitle.DefaultValue
+                Call g.DrawLegendShape(
+                    pos, canvas, l.style, color,
+                    border:=border,
+                    radius:=radius,
+                    labelPos:=labelPosition,
+                    lineWidth:=lineWidth
+                )
+                Call g.DrawString(
+                    l.title,
+                    font,
+                    brush:=titleBrush Or blackTitle,
+                    point:=labelPosition
+                )
+            End SyncLock
 
             If fSize.Height > canvas.Height Then
                 Return fSize

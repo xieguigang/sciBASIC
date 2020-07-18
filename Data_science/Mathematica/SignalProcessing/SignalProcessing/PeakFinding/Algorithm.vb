@@ -106,7 +106,8 @@ Namespace PeakFinding
                 ' 在这里将区间的上限的积分值减去区间的下限的积分值即可得到当前的这个区间的积分值（近似于定积分）
                 Yield New SignalPeak With {
                     .integration = area.Last.y - area.First.y,
-                    .region = rawSignals((time >= rtmin) & (time <= rtmax))
+                    .region = rawSignals((time >= rtmin) & (time <= rtmax)),
+                    .baseline = baseline
                 }
             Next
         End Function

@@ -730,6 +730,7 @@
     <Compile Include="HTML\HTML.vb" />
     <Compile Include="HTML\HtmlParser\HtmlDocument.vb" />
     <Compile Include="HTML\HtmlParser\HtmlElement.vb" />
+    <Compile Include="HTML\Writer\HtmlWriter.vb" />
     <Compile Include="HTML\Xml\Node.vb" />
     <Compile Include="MarkDown\Articles.vb" />
     <Compile Include="MarkDown\IExtensionInterface.vb" />

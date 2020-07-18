@@ -1064,33 +1064,22 @@ Namespace Imaging
         Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
             Call Graphics.DrawEllipse(pen, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Draws an ellipse defined by a bounding rectangle specified by a pair of coordinates,
-        '     a height, and a width.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the ellipse.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws an ellipse defined by a bounding rectangle specified by a pair of coordinates,
+        ''' a height, and a width.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the ellipse.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="width">Width of the bounding rectangle that defines the ellipse.</param>
+        ''' <param name="height">Height of the bounding rectangle that defines the ellipse.</param>
         Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+            If x < 0 OrElse y < 0 Then
+                Return
+            End If
             Call Graphics.DrawEllipse(pen, x, y, width, height)
         End Sub
         '
@@ -2126,24 +2115,18 @@ Namespace Imaging
         Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
             Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub
-        '
-        ' Summary:
-        '     Draws a line connecting two System.Drawing.PointF structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   pt1:
-        '     System.Drawing.PointF structure that represents the first point to connect.
-        '
-        '   pt2:
-        '     System.Drawing.PointF structure that represents the second point to connect.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a line connecting two System.Drawing.PointF structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="pt1">System.Drawing.PointF structure that represents the first point to connect.</param>
+        ''' <param name="pt2">System.Drawing.PointF structure that represents the second point to connect.</param>
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
+            If pt1.X < 0 OrElse pt1.Y < 0 OrElse pt2.X < 0 OrElse pt2.Y < 0 Then
+                Return
+            End If
+
             Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub
         '
@@ -4021,6 +4004,9 @@ Namespace Imaging
         ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
         ''' side of the pie section.</param>
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+            If x < 0 OrElse y < 0 Then
+                Return
+            End If
             Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
         End Sub
         '

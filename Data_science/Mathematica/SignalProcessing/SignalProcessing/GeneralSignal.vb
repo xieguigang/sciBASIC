@@ -45,11 +45,20 @@
 Imports System.Drawing
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 
 Public Class GeneralSignal : Implements INamedValue
 
+    ''' <summary>
+    ''' usually is the time in unit second.(x axis)
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Measures As Double()
+    ''' <summary>
+    ''' the signal strength.(y axis)
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Strength As Double()
 
     ''' <summary>
@@ -60,6 +69,45 @@ Public Class GeneralSignal : Implements INamedValue
     Public Property measureUnit As String
     Public Property description As String
     Public Property meta As Dictionary(Of String, String)
+
+    Public ReadOnly Property MeasureRange As DoubleRange
+        Get
+            If Measures.IsNullOrEmpty Then
+                Return {0, 0}
+            Else
+                Return {Measures.Min, Measures.Max}
+            End If
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' take signal subset by a given range of <see cref="Measures"/>
+    ''' </summary>
+    ''' <param name="min">min of take by <see cref="Measures"/></param>
+    ''' <param name="max#">max of take by <see cref="Measures"/></param>
+    ''' <returns></returns>
+    Default Public ReadOnly Property GetByRange(min#, max#) As GeneralSignal
+        Get
+            Dim i As Integer = Which(Measures.Select(Function(a) a >= min)).FirstOrDefault
+            Dim j As Integer = Which(Measures.Select(Function(a) a >= max)).FirstOrDefault
+
+            If i = 0 AndAlso j = 0 Then
+                i = 0
+                j = Measures.Length - 1
+            ElseIf j = 0 Then
+                j = Measures.Length - 1
+            End If
+
+            Return New GeneralSignal With {
+                .description = description,
+                .measureUnit = measureUnit,
+                .meta = New Dictionary(Of String, String)(meta),
+                .reference = reference,
+                .Measures = Measures.Skip(i).Take(j - i).ToArray,
+                .Strength = Strength.Skip(i).Take(j - i).ToArray
+            }
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return description
@@ -90,6 +138,15 @@ Public Class GeneralSignal : Implements INamedValue
             Yield New PointF With {
                 .X = _Measures(i),
                 .Y = _Strength(i)
+            }
+        Next
+    End Function
+
+    Public Iterator Function GetTimeSignals() As IEnumerable(Of ITimeSignal)
+        For i As Integer = 0 To _Measures.Length - 1
+            Yield New TimeSignal With {
+                .time = _Measures(i),
+                .intensity = _Strength(i)
             }
         Next
     End Function

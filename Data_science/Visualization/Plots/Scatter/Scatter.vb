@@ -369,7 +369,7 @@ Public Module Scatter
                       Select New Legend With {
                           .color = sColor,
                           .fontstyle = legendFontCSS,
-                          .style = LegendStyles.Circle,
+                          .style = s.shape,
                           .title = s.title
                       }
             Dim legendParts As Legend()() = Nothing
@@ -389,7 +389,7 @@ Public Module Scatter
                     }
                 Else
                     legendPosition = New Point With {
-                        .X = region.Size.Width - lsize.Width / 2 - maxWidth,
+                        .X = region.Size.Width - lsize.Width / 3 - maxWidth,
                         .Y = rect.PlotRegion.Top + lFont.Height
                     }
                 End If

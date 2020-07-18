@@ -59,6 +59,8 @@ Public Module Extensions
     ''' <param name="signal"></param>
     ''' <param name="noise"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SNRatio(signal As Double, noise As Double) As Double
         Return 10 * stdNum.Log10(If(noise <= 0.0, Double.MaxValue, signal / noise))
     End Function
@@ -77,6 +79,8 @@ Public Module Extensions
     ''' <param name="signal">为信道内所传信号的平均功率</param>
     ''' <param name="noise">为信道内部的高斯噪声功率</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ShannonTransferRate(bandWidth As Double, signal As Double, noise As Double) As Double
         Return bandWidth * stdNum.Log(1 + signal / noise, 2)
     End Function

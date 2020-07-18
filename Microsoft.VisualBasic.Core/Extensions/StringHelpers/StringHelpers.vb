@@ -1214,7 +1214,7 @@ Public Module StringHelpers
     ''' <param name="s"></param>
     ''' <returns></returns>
     ''' <param name="trim">
-    ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
+    ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader 
     ''' </param>
     ''' <param name="escape">
     ''' 是否需要将字符串之中的``\n``转义为换行之后再进行分割？默认不进行转义
