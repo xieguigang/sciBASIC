@@ -172,12 +172,24 @@ Namespace NeuralNetwork
             End If
         End Sub
 
-        Public Function SetDropOut(percentage As Double) As TrainingUtils
-            _dropOutRate = percentage
+        Public Function SetSelective(opt As Boolean) As TrainingUtils
+            Selective = opt
+            Return Me
+        End Function
 
-            For Each layer As Layer In network.HiddenLayer
-                layer.doDropOutMode = True
-            Next
+        ''' <summary>
+        ''' set percentage for random drop out of the nodes in each layer
+        ''' </summary>
+        ''' <param name="percentage"></param>
+        ''' <returns></returns>
+        Public Function SetDropOut(percentage As Double) As TrainingUtils
+            If percentage > 0 Then
+                _dropOutRate = percentage
+
+                For Each layer As Layer In network.HiddenLayer
+                    layer.doDropOutMode = True
+                Next
+            End If
 
             Return Me
         End Function
