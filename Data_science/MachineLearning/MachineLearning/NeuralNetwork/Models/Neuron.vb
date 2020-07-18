@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::ce23fac549ef5dabddb06fe70f16ca8e, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Neuron
-    ' 
-    '         Properties: Bias, BiasDelta, Gradient, Guid, InputSynapses
-    '                     isDroppedOut, OutputSynapses, Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: CalculateError, (+2 Overloads) CalculateGradient, CalculateValue, ToString, UpdateWeights
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Neuron
+' 
+'         Properties: Bias, BiasDelta, Gradient, Guid, InputSynapses
+'                     isDroppedOut, OutputSynapses, Value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: CalculateError, (+2 Overloads) CalculateGradient, CalculateValue, ToString, UpdateWeights
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -156,27 +156,40 @@ Namespace NeuralNetwork
         ''' 赋值给<see cref="Value"/>,然后返回<see cref="Value"/>
         ''' </remarks>
         Public Overridable Function CalculateValue(doDropOut As Boolean, truncate As Double) As Double
+            Value = InputSynapsesValueSum(doDropOut, truncate)
+            Value = activation.Function(Value + Bias)
+
+            Return Value
+        End Function
+
+        ''' <summary>
+        ''' 这个函数主要是为了应用softmax输出所编写的
+        ''' </summary>
+        ''' <param name="doDropOut"></param>
+        ''' <param name="truncate"></param>
+        ''' <returns></returns>
+        Public Function InputSynapsesValueSum(doDropOut As Boolean, truncate As Double) As Double
+            Dim value As Double
+
             ' 在这里的计算过程为:
             ' 使用突触链接的权重值乘上当该突触的上游输入节点的训练值 + 误差
             ' 使用遗传算法进行优化的时候,可以将bias设置零
             ' 用遗传算法生成的应该是网络的拓扑结构,而网络的拓扑结构是和突触链接的权重相关的
             If doDropOut Then
-                Value = InputSynapses _
+                value = InputSynapses _
                     .Where(Function(edge)
                                Return Not edge.InputNeuron.isDroppedOut
                            End Function) _
                     .Sum(Function(a) a.Value)
             Else
-                Value = InputSynapses.Sum(Function(a) a.Value)
+                value = InputSynapses.Sum(Function(a) a.Value)
             End If
 
             If truncate > 0 Then
-                Value = ValueTruncate(Value, truncate)
+                value = ValueTruncate(value, truncate)
             End If
 
-            Value = activation.Function(Value + Bias)
-
-            Return Value
+            Return value
         End Function
 
         ''' <summary>
