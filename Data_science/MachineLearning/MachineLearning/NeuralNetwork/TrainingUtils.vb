@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::2b20c999ba2ca48e7aa4d3b49814e4f3, Data_science\MachineLearning\MachineLearning\NeuralNetwork\TrainingUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TrainingUtils
-    ' 
-    '         Properties: dropOutRate, MinError, NeuronNetwork, Selective, TrainingSet
-    '                     TrainingType, Truncate, XP
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: CalculateError, TakeSnapshot, trainingImpl
-    ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, SetDropOut, SetLayerNormalize
-    '              (+3 Overloads) Train
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TrainingUtils
+' 
+'         Properties: dropOutRate, MinError, NeuronNetwork, Selective, TrainingSet
+'                     TrainingType, Truncate, XP
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: CalculateError, TakeSnapshot, trainingImpl
+' 
+'         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, SetDropOut, SetLayerNormalize
+'              (+3 Overloads) Train
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -172,19 +172,27 @@ Namespace NeuralNetwork
             End If
         End Sub
 
-        Public Sub SetDropOut(percentage As Double)
+        Public Function SetDropOut(percentage As Double) As TrainingUtils
             _dropOutRate = percentage
 
             For Each layer As Layer In network.HiddenLayer
                 layer.doDropOutMode = True
             Next
-        End Sub
 
-        Public Sub SetLayerNormalize(opt As Boolean)
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' apply softmax normalization for each layer?
+        ''' </summary>
+        ''' <param name="opt"></param>
+        Public Function SetLayerNormalize(opt As Boolean) As TrainingUtils
             For Each layer As Layer In network.HiddenLayer
                 layer.softmaxNormalization = opt
             Next
-        End Sub
+
+            Return Me
+        End Function
 
         ''' <summary>
         ''' 在这里添加训练使用的数据集
