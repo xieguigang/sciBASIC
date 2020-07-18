@@ -95,7 +95,7 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' The active function
         ''' </summary>
-        Dim activation As IActivationFunction
+        Friend ReadOnly activation As IActivationFunction
 #End Region
 
 #Region "-- Constructors --"
