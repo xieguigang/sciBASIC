@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f34426831f024682cc7f1eeb5fc22db, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
+﻿#Region "Microsoft.VisualBasic::5c1a7bec2952b96ca6f7ad1a733059e6, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Driver
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Save
+    '         Function: GetDataURI, (+2 Overloads) Save
     ' 
     ' 
     ' /********************************************************************************/

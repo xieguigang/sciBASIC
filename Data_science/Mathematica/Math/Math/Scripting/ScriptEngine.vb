@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106fec3615174e49697168a5dd52342b, Data_science\Mathematica\Math\Math\Scripting\ScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::d87b0e7ead61ecca80eda2d8d3ddb432, Data_science\Mathematica\Math\Math\Scripting\ScriptEngine.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Function: Evaluate, ParseExpression, Shell
     ' 
-    '         Sub: setFunction, SetFunction, setSymbol, SetVariable
+    '         Sub: setFunction, SetFunction, setSymbol, (+2 Overloads) SetVariable
     ' 
     ' 
     ' /********************************************************************************/

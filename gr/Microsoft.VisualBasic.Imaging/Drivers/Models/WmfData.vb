@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1896556223b05f7cf4b0d5b5aa9c32a, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
+﻿#Region "Microsoft.VisualBasic::9833499dfe86910fddf3ac784fd49967, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Driver
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Save, wmfTmp
+    '         Function: GetDataURI, (+2 Overloads) Save, wmfTmp
     ' 
     ' 
     ' /********************************************************************************/

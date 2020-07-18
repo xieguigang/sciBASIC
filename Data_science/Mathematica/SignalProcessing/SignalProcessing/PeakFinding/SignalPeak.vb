@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a892db87c395ca10c4076a0698abd7c1, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
+﻿#Region "Microsoft.VisualBasic::54c2e31ba41305770897dd95e7e5fb75, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Structure SignalPeak
     ' 
-    '         Properties: rtmax, rtmin
+    '         Properties: rtmax, rtmin, snratio
     ' 
     '         Function: Subset, ToString
     ' 

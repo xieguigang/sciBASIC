@@ -1,67 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::a666025c59794ab55d6898e1c447c4b5, Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::66f86094400c5bd2d0a44ebabd4df249, Data\DataFrame\Linq\DataStream.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Delegate Function
-' 
-' 
-'     Class SchemaReader
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ToString
-' 
-'     Module DataLinqStream
-' 
-'         Function: AsLinq, CastObject, ForEach, OpenHandle
-' 
-'     Class DataStream
-' 
-'         Properties: SchemaOridinal
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
-' 
-'         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
-'         Structure __taskHelper
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Sub: RunTask
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Delegate Function
+    ' 
+    ' 
+    '     Class SchemaReader
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Module DataLinqStream
+    ' 
+    '         Function: AsLinq, CastObject, ForEach, OpenHandle
+    ' 
+    '     Class DataStream
+    ' 
+    '         Properties: FileName, SchemaOridinal
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
+    ' 
+    '         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
+    '         Structure __taskHelper
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: RunTask
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

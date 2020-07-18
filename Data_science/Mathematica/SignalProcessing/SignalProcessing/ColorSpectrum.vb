@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9faa6f29c885dc8531a94026aa727da, Data_science\Mathematica\SignalProcessing\SignalProcessing\ColorSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::1266fd82b94d43b27fd02b7841156d83, Data_science\Mathematica\SignalProcessing\SignalProcessing\ColorSpectrum.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Public Module ColorSpectrum
         Return colorSpace
     End Function
 End Module
-

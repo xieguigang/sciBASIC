@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a84d18bb2c8e3eda70c37ce80ae0988, Data_science\Visualization\Plots\Scatter\LinePlot.vb"
+﻿#Region "Microsoft.VisualBasic::5ccd42e5871c6d70ae5ad67d3505e5ab, Data_science\Visualization\Plots\Scatter\LinePlot.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Public Class LinePlot : Inherits Plot
         Throw New NotImplementedException()
     End Sub
 End Class
-

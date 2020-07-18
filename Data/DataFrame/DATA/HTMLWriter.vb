@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1956b0831fae346f67c4b2b48daf85dc, Data\DataFrame\DATA\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::08757385b6daafae4f53f4c78165db86, Data\DataFrame\DATA\HTMLWriter.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module HTMLWriter
     ' 
-    '         Function: titleRow, ToHTML, (+2 Overloads) ToHTMLTable
+    '         Function: html, titleRow, ToHTML, ToHTMLTable
     ' 
     '         Sub: bodyRow
     ' 
