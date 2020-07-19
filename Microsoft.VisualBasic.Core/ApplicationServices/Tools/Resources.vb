@@ -292,7 +292,18 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="assm"></param>
         Sub New(assm As Assembly)
-            Call Me.New(dll:=assm.Location.ParentPath & "/Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name)
+            Dim dllFile As String = assm.Location.ParentPath & "/Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name
+
+            If Not dllFile.FileExists Then
+                dllFile = App.HOME & "/Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name
+            End If
+            If Not dllFile.FileExists Then
+                Throw New EntryPointNotFoundException("missing assembly resource module: " & dllFile)
+            Else
+                FileName = FileIO.FileSystem.GetFileInfo(dllFile).FullName
+            End If
+
+            Call resourceAssemblyParser()
         End Sub
 
         Sub New(dll As String)
