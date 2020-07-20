@@ -46,6 +46,9 @@
 
 Namespace ComponentModel
 
+    ''' <summary>
+    ''' '<see cref="IOWorkModes"/>' is only used to determine whether to return data length or capacity from the 'limit' method:
+    ''' </summary>
     Public Enum IOWorkModes
         Read
         Write

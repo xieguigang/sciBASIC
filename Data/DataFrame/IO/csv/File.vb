@@ -776,6 +776,11 @@ B21,B22,B23,...
             Return csv
         End Function
 
+        Public Function Join(column As IEnumerable(Of String)) As File
+            Call __setColumn(column.ToArray, Headers.Count)
+            Return Me
+        End Function
+
         ''' <summary>
         ''' 去除Csv文件之中的重复记录
         ''' </summary>

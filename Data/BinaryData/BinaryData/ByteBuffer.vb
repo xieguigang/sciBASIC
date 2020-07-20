@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::db11fec413c5d14f0dbc43e2bf06c906, Data\BinaryData\BinaryData\ByteBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Enum Mode
-    ' 
-    '     Read, Write
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Class ByteBuffer
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: (+2 Overloads) [get], allocate, allocateDirect, capacity, clear
-    '               compact, Equals, flip, (+2 Overloads) getChar, (+2 Overloads) getDouble
-    '               (+2 Overloads) getFloat, (+2 Overloads) getInt, (+2 Overloads) getLong, (+2 Overloads) getShort, hasRemaining
-    '               limit, (+2 Overloads) position, (+2 Overloads) put, (+2 Overloads) putChar, (+2 Overloads) putDouble
-    '               (+2 Overloads) putFloat, (+2 Overloads) putInt, (+2 Overloads) putLong, (+2 Overloads) putShort, remaining
-    '               rewind
-    ' 
-    '     Sub: Finalize
-    ' 
-    ' /********************************************************************************/
+' Enum Mode
+' 
+'     Read, Write
+' 
+'  
+' 
+' 
+' 
+' Class ByteBuffer
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: (+2 Overloads) [get], allocate, allocateDirect, capacity, clear
+'               compact, Equals, flip, (+2 Overloads) getChar, (+2 Overloads) getDouble
+'               (+2 Overloads) getFloat, (+2 Overloads) getInt, (+2 Overloads) getLong, (+2 Overloads) getShort, hasRemaining
+'               limit, (+2 Overloads) position, (+2 Overloads) put, (+2 Overloads) putChar, (+2 Overloads) putDouble
+'               (+2 Overloads) putFloat, (+2 Overloads) putInt, (+2 Overloads) putLong, (+2 Overloads) putShort, remaining
+'               rewind
+' 
+'     Sub: Finalize
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -75,18 +75,11 @@
 
 
 Imports System.IO
-
-''' <summary>
-''' 'Mode' is only used to determine whether to return data length or capacity from the 'limit' method:
-''' </summary>
-Public Enum Mode
-    Read
-    Write
-End Enum
+Imports Microsoft.VisualBasic.ComponentModel
 
 Public Class ByteBuffer
 
-    Dim mode As Mode
+    Dim mode As IOWorkModes
     Dim stream As MemoryStream
     Dim reader As BinaryReader
     Dim writer As BinaryWriter
@@ -115,7 +108,7 @@ Public Class ByteBuffer
     Public Shared Function allocate(capacity As Integer) As ByteBuffer
         Dim buffer As New ByteBuffer()
         buffer.stream.Capacity = capacity
-        buffer.mode = Mode.Write
+        buffer.mode = IOWorkModes.Write
         Return buffer
     End Function
 
@@ -129,20 +122,20 @@ Public Class ByteBuffer
     End Function
 
     Public Function flip() As ByteBuffer
-        mode = Mode.Read
+        mode = IOWorkModes.Read
         stream.SetLength(stream.Position)
         stream.Position = 0
         Return Me
     End Function
 
     Public Function clear() As ByteBuffer
-        mode = Mode.Write
+        mode = IOWorkModes.Write
         stream.Position = 0
         Return Me
     End Function
 
     Public Function compact() As ByteBuffer
-        mode = Mode.Write
+        mode = IOWorkModes.Write
         Dim newStream As New System.IO.MemoryStream(stream.Capacity)
         stream.CopyTo(newStream)
         stream = newStream
@@ -155,7 +148,7 @@ Public Class ByteBuffer
     End Function
 
     Public Function limit() As Long
-        If mode = Mode.Write Then
+        If mode = IOWorkModes.Write Then
             Return stream.Capacity
         Else
             Return stream.Length
