@@ -10,6 +10,10 @@ Namespace IL
         Public Property OperandData As Byte()
         Public Property Offset As Integer
 
+        Public Overrides Function ToString() As String
+            Return GetCode()
+        End Function
+
         ''' <summary>
         ''' Returns a friendly strign representation of this instruction
         ''' </summary>
