@@ -136,7 +136,7 @@ Namespace Graphic.Legend
                     Dim a As New Point(pos.X + d, pos.Y + gSize.Height / 2)
                     Dim b As New Point(pos.X + gSize.Width - d, a.Y)
                     Dim pen As New Pen(color, lineWidth) With {
-                        .DashStyle = DashStyle.Dash
+                        .DashStyle = DashStyle.Dot
                     }
 
                     Call g.DrawLine(pen, a, b)

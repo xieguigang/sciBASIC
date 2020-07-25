@@ -263,6 +263,7 @@ Public Module Scatter
         End If
 
         Dim width As Double = rect.PlotRegion.Width / 200
+        Dim annotations As New Dictionary(Of String, (raw As SerialData, line As SerialData))
 
         For Each line As SerialData In array
             Dim pts As SlideWindow(Of PointData)() = line.pts _
@@ -353,10 +354,14 @@ Public Module Scatter
             If Not line.DataAnnotations.IsNullOrEmpty Then
                 Dim raw = array.Where(Function(s) s.title = line.title).First
 
-                For Each annotation As Annotation In line.DataAnnotations
-                    Call annotation.Draw(g, scaler, raw, rect)
-                Next
+                Call annotations.Add(line.title, (raw, line))
             End If
+        Next
+
+        For Each part In annotations.Values
+            For Each annotation As Annotation In part.line.DataAnnotations
+                Call annotation.Draw(g, scaler, part.raw, rect)
+            Next
         Next
 
         If showLegend Then
