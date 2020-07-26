@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af9b381a2b51d965e27cf6a3c884e29b, Data_science\Mathematica\Math\MathLambda\Symbolic.vb"
+﻿#Region "Microsoft.VisualBasic::18495e3221e8d7201abd4a08c9c7674d, Data_science\Mathematica\Math\MathLambda\Symbolic.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression

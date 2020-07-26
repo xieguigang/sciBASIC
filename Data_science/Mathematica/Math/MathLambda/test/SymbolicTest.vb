@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18abcfc2b2ac49d5d2f1a543d7b8ca20, Data_science\Mathematica\Math\MathLambda\test\SymbolicTest.vb"
+﻿#Region "Microsoft.VisualBasic::2ac4552b4ec569317ba762e37f0560ef, Data_science\Mathematica\Math\MathLambda\test\SymbolicTest.vb"
 
     ' Author:
     ' 
@@ -59,4 +59,3 @@ Module SymbolicTest
         Pause()
     End Sub
 End Module
-

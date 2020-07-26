@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82ad86a14276506d26974dca9f3cd332, Microsoft.VisualBasic.Core\ComponentModel\File\IOWorkModes.vb"
+﻿#Region "Microsoft.VisualBasic::84a5c8a6df5b7d04181144da60fd5ed5, Microsoft.VisualBasic.Core\ComponentModel\File\IOWorkModes.vb"
 
     ' Author:
     ' 

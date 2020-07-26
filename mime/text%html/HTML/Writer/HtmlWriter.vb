@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c38dd95f4702b4e0adf1cf90480b406d, mime\text%html\HTML\Writer\HtmlWriter.vb"
+﻿#Region "Microsoft.VisualBasic::12a8fc4eed84175fb7d0c68f1489c5b2, mime\text%html\HTML\Writer\HtmlWriter.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Public Class HtmlWriter
                </div>
     End Function
 End Class
-
