@@ -1,9 +1,12 @@
-﻿Namespace Serialization.Bencoding
+﻿Imports System.Text
+
+Namespace Serialization.Bencoding
 
     ''' <summary>
     ''' An interface for bencoded elements.
     ''' </summary>
     Public Interface BElement
+
         ''' <summary>
         ''' Generates the bencoded equivalent of the element.
         ''' </summary>
@@ -13,7 +16,7 @@
         ''' <summary>
         ''' Generates the bencoded equivalent of the element.
         ''' </summary>
-        ''' <paramname="u">The StringBuilder to append to.</param>
+        ''' <param name="u">The StringBuilder to append to.</param>
         ''' <returns>The bencoded equivalent of the element.</returns>
         Function ToBencodedString(ByVal u As StringBuilder) As StringBuilder
     End Interface

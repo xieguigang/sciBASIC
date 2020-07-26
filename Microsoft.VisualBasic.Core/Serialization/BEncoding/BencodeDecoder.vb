@@ -26,10 +26,11 @@ Namespace Serialization.Bencoding
     ''' A class used for decoding Bencoding.
     ''' </summary>
     Public Module BencodeDecoder
+
         ''' <summary>
         ''' Decodes the string.
         ''' </summary>
-        ''' <paramname="bencodedString">The bencoded string.</param>
+        ''' <param name="bencodedString">The bencoded string.</param>
         ''' <returns>An array of root elements.</returns>
         Public Function Decode(ByVal bencodedString As String) As BElement()
             Dim index = 0
@@ -74,7 +75,8 @@ Namespace Serialization.Bencoding
                 While bencodedString(index) <> "e"c
                     Dim K = ReadString(bencodedString, index)
                     Dim V = ReadElement(bencodedString, index)
-                    dict.Add(K, V)
+
+                    Call dict.Add(K, V)
                 End While
 
             Catch __unusedBencodingException1__ As BencodingException
@@ -153,8 +155,5 @@ Namespace Serialization.Bencoding
             Return New BencodingException("Bencoded string invalid.")
         End Function
     End Module
-
-
-
 
 End Namespace

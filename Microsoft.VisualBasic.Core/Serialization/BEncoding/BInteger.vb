@@ -1,31 +1,12 @@
-﻿Namespace Serialization.Bencoding
+﻿Imports System.Text
+
+Namespace Serialization.Bencoding
 
     ''' <summary>
     ''' A bencode integer.
     ''' </summary>
-    ''' <summary>
-    ''' Allows you to set an integer to a BInteger.
-    ''' </summary>
-    ''' <paramname="i">The integer.</param>
-    ''' <returns>The BInteger.</returns>
     Public Class BInteger
         Implements BElement, IComparable(Of BInteger)
-
-        ''' Cannot convert ConversionOperatorDeclarationSyntax, CONVERSION ERROR: Conversion for ConversionOperatorDeclaration not implemented, please report this issue in 'public static implicit oper...' at character 5739
-        ''' 
-        ''' 
-        ''' Input:
-        ''' 		/// <summary>
-        ''' 		/// Allows you to set an integer to a BInteger.
-        ''' 		/// </summary>
-        ''' 		/// <param name="i">The integer.</param>
-        ''' 		/// <returns>The BInteger.</returns>
-        ''' 		public static implicit operator Bencoding.BInteger(int i)
-        ''' 		{
-        ''' 			return new Bencoding.BInteger(i);
-        ''' 		}
-        ''' 
-        ''' 
 
         ''' <summary>
         ''' The value of the bencoded integer.
@@ -35,7 +16,7 @@
         ''' <summary>
         ''' The main constructor.
         ''' </summary>
-        ''' <paramname="value">The value of the bencoded integer.</param>
+        ''' <param name="value">The value of the bencoded integer.</param>
         Public Sub New(ByVal value As Long)
             Me.Value = value
         End Sub
@@ -62,7 +43,7 @@
             Return u.Append(Value.ToString()).Append("e"c)
         End Function
 
-        ''' <seecref="Object.GetHashCode()"/>
+        ''' <see cref="Object.GetHashCode()"/>
         Public Overrides Function GetHashCode() As Integer
             Return Value.GetHashCode()
         End Function
@@ -78,14 +59,23 @@
             End Try
         End Function
 
-        ''' <seecref="Object.ToString()"/>
+        ''' <see cref="Object.ToString()"/>
         Public Overrides Function ToString() As String
             Return Value.ToString()
         End Function
 
-        ''' <seecref="IComparable.CompareTo(Object)"/>
+        ''' <see cref="IComparable.CompareTo(Object)"/>
         Public Function CompareTo(ByVal other As BInteger) As Integer Implements IComparable(Of BInteger).CompareTo
             Return Value.CompareTo(other.Value)
         End Function
+
+        ''' <summary>
+        ''' Allows you to set an integer to a BInteger.
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Shared Widening Operator CType(n As Integer) As BInteger
+            Return New BInteger(n)
+        End Operator
     End Class
 End Namespace

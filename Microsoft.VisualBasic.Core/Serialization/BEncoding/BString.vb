@@ -1,32 +1,13 @@
 ﻿
+Imports System.Text
+
 Namespace Serialization.Bencoding
 
     ''' <summary>
     ''' A bencode string.
     ''' </summary>
-    ''' <summary>
-    ''' Allows you to set a string to a BString.
-    ''' </summary>
-    ''' <paramname="s">The string.</param>
-    ''' <returns>The BString.</returns>
     Public Class BString
         Implements BElement, IComparable(Of BString)
-
-        ''' Cannot convert ConversionOperatorDeclarationSyntax, CONVERSION ERROR: Conversion for ConversionOperatorDeclaration not implemented, please report this issue in 'public static implicit oper...' at character 7838
-        ''' 
-        ''' 
-        ''' Input:
-        ''' 		/// <summary>
-        ''' 		/// Allows you to set a string to a BString.
-        ''' 		/// </summary>
-        ''' 		/// <param name="s">The string.</param>
-        ''' 		/// <returns>The BString.</returns>
-        ''' 		public static implicit operator Bencoding.BString(string s)
-        ''' 		{
-        ''' 			return new Bencoding.BString(s);
-        ''' 		}
-        ''' 
-        ''' 
 
         ''' <summary>
         ''' The value of the bencoded integer.
@@ -36,7 +17,7 @@ Namespace Serialization.Bencoding
         ''' <summary>
         ''' The main constructor.
         ''' </summary>
-        ''' <paramname="value"></param>
+        ''' <param name="value"></param>
         Public Sub New(ByVal value As String)
             Me.Value = value
         End Sub
@@ -52,7 +33,7 @@ Namespace Serialization.Bencoding
         ''' <summary>
         ''' Generates the bencoded equivalent of the string.
         ''' </summary>
-        ''' <paramname="u">The StringBuilder to append to.</param>
+        ''' <param name="u">The StringBuilder to append to.</param>
         ''' <returns>The bencoded equivalent of the string.</returns>
         Public Function ToBencodedString(ByVal u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
             If u Is Nothing Then
@@ -64,7 +45,7 @@ Namespace Serialization.Bencoding
             Return u.Append(":"c).Append(Value)
         End Function
 
-        ''' <seecref="Object.GetHashCode()"/>
+        ''' <see cref="Object.GetHashCode()"/>
         Public Overrides Function GetHashCode() As Integer
             Return Value.GetHashCode()
         End Function
@@ -80,14 +61,23 @@ Namespace Serialization.Bencoding
             End Try
         End Function
 
-        ''' <seecref="Object.ToString()"/>
+        ''' <see cref="Object.ToString()"/>
         Public Overrides Function ToString() As String
             Return Value.ToString()
         End Function
 
-        ''' <seecref="IComparable.CompareTo(Object)"/>
+        ''' <see cref="IComparable.CompareTo(Object)"/>
         Public Function CompareTo(ByVal other As BString) As Integer Implements IComparable(Of BString).CompareTo
             Return Value.CompareTo(other.Value)
         End Function
+
+        ''' <summary>
+        ''' Allows you to set a string to a BString.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Widening Operator CType(s As String) As BString
+            Return New BString(value:=s)
+        End Operator
     End Class
 End Namespace

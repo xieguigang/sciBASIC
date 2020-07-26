@@ -1,4 +1,6 @@
-﻿Namespace Serialization.Bencoding
+﻿Imports System.Text
+
+Namespace Serialization.Bencoding
 
     ''' <summary>
     ''' A bencode dictionary.
@@ -6,6 +8,21 @@
     Public Class BDictionary
         Inherits SortedDictionary(Of BString, BElement)
         Implements BElement
+
+        ''' <summary>
+        ''' Gets or sets the value assosiated with the specified key.
+        ''' </summary>
+        ''' <param name="key">The key of the value to get or set.</param>
+        ''' <returns>The value assosiated with the specified key.</returns>
+        Default Public Overloads Property Item(ByVal key As String) As BElement
+            Get
+                Return Me(New BString(key))
+            End Get
+            Set(ByVal value As BElement)
+                Me(New BString(key)) = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' Generates the bencoded equivalent of the dictionary.
         ''' </summary>
@@ -17,7 +34,7 @@
         ''' <summary>
         ''' Generates the bencoded equivalent of the dictionary.
         ''' </summary>
-        ''' <paramname="u">The StringBuilder to append to.</param>
+        ''' <param name="u">The StringBuilder to append to.</param>
         ''' <returns>The bencoded equivalent of the dictionary.</returns>
         Public Function ToBencodedString(ByVal u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
             If u Is Nothing Then
@@ -37,42 +54,28 @@
         ''' <summary>
         ''' Adds the specified key-value pair to the dictionary.
         ''' </summary>
-        ''' <paramname="key">The specified key.</param>
-        ''' <paramname="value">The specified value.</param>
-        Public Sub Add(ByVal key As String, ByVal value As BElement)
+        ''' <param name="key">The specified key.</param>
+        ''' <param name="value">The specified value.</param>
+        Public Overloads Sub Add(ByVal key As String, ByVal value As BElement)
             MyBase.Add(New BString(key), value)
         End Sub
 
         ''' <summary>
         ''' Adds the specified key-value pair to the dictionary.
         ''' </summary>
-        ''' <paramname="key">The specified key.</param>
-        ''' <paramname="value">The specified value.</param>
-        Public Sub Add(ByVal key As String, ByVal value As String)
+        ''' <param name="key">The specified key.</param>
+        ''' <param name="value">The specified value.</param>
+        Public Overloads Sub Add(ByVal key As String, ByVal value As String)
             MyBase.Add(New BString(key), New BString(value))
         End Sub
 
         ''' <summary>
         ''' Adds the specified key-value pair to the dictionary.
         ''' </summary>
-        ''' <paramname="key">The specified key.</param>
-        ''' <paramname="value">The specified value.</param>
-        Public Sub Add(ByVal key As String, ByVal value As Integer)
+        ''' <param name="key">The specified key.</param>
+        ''' <param name="value">The specified value.</param>
+        Public Overloads Sub Add(ByVal key As String, ByVal value As Integer)
             MyBase.Add(New BString(key), New BInteger(value))
         End Sub
-
-        ''' <summary>
-        ''' Gets or sets the value assosiated with the specified key.
-        ''' </summary>
-        ''' <paramname="key">The key of the value to get or set.</param>
-        ''' <returns>The value assosiated with the specified key.</returns>
-        Default Public Property Item(ByVal key As String) As BElement
-            Get
-                Return Me(New BString(key))
-            End Get
-            Set(ByVal value As BElement)
-                Me(New BString(key)) = value
-            End Set
-        End Property
     End Class
 End Namespace

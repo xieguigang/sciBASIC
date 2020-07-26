@@ -1,12 +1,13 @@
-﻿Namespace Serialization.Bencoding
+﻿Imports System.Text
 
+Namespace Serialization.Bencoding
 
     ''' <summary>
     ''' A bencode list.
     ''' </summary>
-    Public Class BList
-        Inherits List(Of BElement)
+    Public Class BList : Inherits List(Of BElement)
         Implements BElement
+
         ''' <summary>
         ''' Generates the bencoded equivalent of the list.
         ''' </summary>
@@ -18,7 +19,7 @@
         ''' <summary>
         ''' Generates the bencoded equivalent of the list.
         ''' </summary>
-        ''' <paramname="u">The StringBuilder to append to.</param>
+        ''' <param name="u">The StringBuilder to append to.</param>
         ''' <returns>The bencoded equivalent of the list.</returns>
         Public Function ToBencodedString(ByVal u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
             If u Is Nothing Then
@@ -37,16 +38,16 @@
         ''' <summary>
         ''' Adds the specified value to the list.
         ''' </summary>
-        ''' <paramname="value">The specified value.</param>
-        Public Sub Add(ByVal value As String)
+        ''' <param name="value">The specified value.</param>
+        Public Overloads Sub Add(ByVal value As String)
             MyBase.Add(New BString(value))
         End Sub
 
         ''' <summary>
         ''' Adds the specified value to the list.
         ''' </summary>
-        ''' <paramname="value">The specified value.</param>
-        Public Sub Add(ByVal value As Integer)
+        ''' <param name="value">The specified value.</param>
+        Public Overloads Sub Add(ByVal value As Integer)
             MyBase.Add(New BInteger(value))
         End Sub
     End Class
