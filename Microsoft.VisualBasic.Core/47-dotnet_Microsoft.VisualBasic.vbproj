@@ -1412,6 +1412,14 @@
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
+    <Compile Include="Serialization\BEncoding\BencodeDecoder.vb" />
+    <Compile Include="Serialization\BEncoding\BElement.vb" />
+    <Compile Include="Serialization\BEncoding\BInteger.vb" />
+    <Compile Include="Serialization\BEncoding\BString.vb" />
+    <Compile Include="Serialization\BEncoding\BList.vb" />
+    <Compile Include="Serialization\BEncoding\BDictionary.vb" />
+    <Compile Include="Serialization\BEncoding\BencodingException.vb" />
+    <Compile Include="Serialization\BEncoding\BencodingExtensions.vb" />
     <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
     <Compile Include="Serialization\ICloneable.vb" />
     <Compile Include="Serialization\RawStream.vb" />
