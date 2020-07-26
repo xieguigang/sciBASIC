@@ -130,11 +130,18 @@ Public Module PathExtensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ExtensionSuffix(path$) As String
+    Public Function ExtensionSuffix(path As String) As String
         If path.StringEmpty Then
             Return ""
         Else
-            Return path.Split("."c).Last
+            Dim fileName = path.Split("\"c).Last.Split("/"c).Last
+            Dim suffix = fileName.Split("."c).Last
+
+            If fileName = suffix Then
+                Return ""
+            Else
+                Return suffix
+            End If
         End If
     End Function
 

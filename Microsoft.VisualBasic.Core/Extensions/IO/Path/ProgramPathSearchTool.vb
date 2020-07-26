@@ -51,7 +51,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports ENV = System.Environment
@@ -69,7 +68,7 @@ Namespace FileIO.Path
 
         ReadOnly Environments As New List(Of String) From {"ProgramFiles(x86)", "ProgramFiles"}
 
-        Const VERSION As String = "[-_`~.]\d+(\.\d+)*"
+        Const VERSION As String = "[-_`~.]\d+(\.\d+)*.+"
         Const TopDirectory As SearchOption = SearchOption.SearchTopLevelOnly
 
         Public ReadOnly Property Directories As IReadOnlyCollection(Of String)
@@ -240,7 +239,7 @@ Namespace FileIO.Path
             End If
 
             Dim driveName$ = drive.RootDirectory.FullName
-            Dim driveRoot = FileSystem.GetDirectories(driveName, SearchOption.SearchTopLevelOnly, keyword)
+            Dim driveRoot = FileSystem.GetDirectories(driveName, SearchOption.SearchTopLevelOnly, keyword).AsList + BranchRule(driveName, keyword)
             Dim files As New List(Of String)
             Dim ProgramFiles As String = String.Format("{0}/Program Files", drive.RootDirectory.FullName)
 
