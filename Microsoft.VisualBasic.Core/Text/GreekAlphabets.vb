@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50606af3773d9b3a413b90aa75fbec3a, Microsoft.VisualBasic.Core\Text\GreekAlphabets.vb"
+﻿#Region "Microsoft.VisualBasic::2665c6b7d1385a3e2bf66fa2d2bedc94, Microsoft.VisualBasic.Core\Text\GreekAlphabets.vb"
 
     ' Author:
     ' 
@@ -182,10 +182,14 @@ Namespace Text
             Return sb.ToString
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AlphabetUnescape(s$, contacts As (left As Char, right As Char), Optional upperCase As Boolean = False) As String
             Return s.unescapeInternal($"[{contacts.left}][a-z]{{2,10}}[{contacts.right}]", upperCase, True)
         End Function
+
+#End If
     End Module
 End Namespace

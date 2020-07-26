@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0da6460ad27eb002707f419ee229263, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
+﻿#Region "Microsoft.VisualBasic::70cc9877174b393c4be77b0d687fcd99, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
 
     ' Author:
     ' 
@@ -174,7 +174,7 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"{node} [{position.x}, {position.y}, {position.z}]"
         End Function
     End Class
 End Namespace

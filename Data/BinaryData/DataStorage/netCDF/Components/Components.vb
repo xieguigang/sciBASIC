@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e5696f3beb157e7024e29c700c5f887, Data\BinaryData\DataStorage\netCDF\Components\Components.vb"
+﻿#Region "Microsoft.VisualBasic::243b73db73781c629a1dd77c7b8791bc, Data\BinaryData\DataStorage\netCDF\Components\Components.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Structure Dimension
     ' 
-    '         Properties: [Double], [Integer], Text
+    '         Properties: [Boolean], [Byte], [Double], [Integer], [Long]
+    '                     [Short], Float, Text
     ' 
     '         Function: ToString
     ' 
@@ -54,7 +55,7 @@
     '         Properties: name, type, value
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '         Function: getBytes, getObjectValue, ToString
     ' 
     '     Class variable
     ' 
@@ -70,6 +71,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text
 
 Namespace netCDF.Components
 
@@ -100,9 +103,39 @@ Namespace netCDF.Components
             End Get
         End Property
 
+        Public Shared ReadOnly Property [Long] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Long).FullName, .size = 8}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property Float As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Single).FullName, .size = 4}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property [Short] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Short).FullName, .size = 2}
+            End Get
+        End Property
+
         Public Shared ReadOnly Property [Integer] As Dimension
             Get
                 Return New Dimension With {.name = GetType(Integer).FullName, .size = 4}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property [Byte] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Byte).FullName, .size = 1}
+            End Get
+        End Property
+
+        Public Shared ReadOnly Property [Boolean] As Dimension
+            Get
+                Return New Dimension With {.name = GetType(Boolean).FullName, .size = 1}
             End Get
         End Property
 
@@ -179,7 +212,9 @@ Namespace netCDF.Components
         <XmlAttribute> Public Property type As CDFDataTypes
         ''' <summary>
         ''' A number or string with the value of the attribute.
-        ''' (如果是bytes数组, 则应该编码为base64字符串之后赋值到这个属性, 并且类型应该设置为<see cref="CDFDataTypes.CHAR"/>, 因为在属性这里不接受数组类型)
+        ''' (如果是bytes数组, 则应该编码为base64字符串之后赋值到这个属性, 
+        ''' 并且类型应该设置为<see cref="CDFDataTypes.CHAR"/>, 因为在
+        ''' 属性这里不接受数组类型)
         ''' </summary>
         ''' <returns></returns>
         <XmlText>
@@ -193,6 +228,41 @@ Namespace netCDF.Components
             Me.value = value
             Me.type = type
         End Sub
+
+        Public Function getObjectValue() As Object
+            Select Case type
+                Case CDFDataTypes.BYTE : Return Byte.Parse(value)
+                Case CDFDataTypes.CHAR : Return value
+                Case CDFDataTypes.DOUBLE : Return Double.Parse(value)
+                Case CDFDataTypes.FLOAT : Return Single.Parse(value)
+                Case CDFDataTypes.INT : Return Integer.Parse(value)
+                Case CDFDataTypes.SHORT : Return Short.Parse(value)
+                Case CDFDataTypes.LONG : Return Long.Parse(value)
+
+                Case Else
+                    Throw New NotSupportedException
+            End Select
+        End Function
+
+        Public Function getBytes(Optional base64Bytes As Boolean = False) As Byte()
+            Select Case type
+                Case CDFDataTypes.BYTE : Return {Byte.Parse(value)}
+                Case CDFDataTypes.CHAR
+                    If base64Bytes Then
+                        Return value.Base64RawBytes
+                    Else
+                        Return UTF8WithoutBOM.GetBytes(value)
+                    End If
+                Case CDFDataTypes.DOUBLE : Return BitConverter.GetBytes(Double.Parse(value))
+                Case CDFDataTypes.FLOAT : Return BitConverter.GetBytes(Single.Parse(value))
+                Case CDFDataTypes.INT : Return BitConverter.GetBytes(Integer.Parse(value))
+                Case CDFDataTypes.SHORT : Return BitConverter.GetBytes(Short.Parse(value))
+                Case CDFDataTypes.LONG : Return BitConverter.GetBytes(Long.Parse(value))
+
+                Case Else
+                    Throw New NotSupportedException
+            End Select
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"Dim {name} As {type.Description} = {value}"
@@ -241,6 +311,10 @@ Namespace netCDF.Components
         ''' <returns></returns>
         <XmlAttribute> Public Property record As Boolean
 
+        ''' <summary>
+        ''' 惰性求值的属性
+        ''' </summary>
+        ''' <returns></returns>
         Public Property value As CDFData
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

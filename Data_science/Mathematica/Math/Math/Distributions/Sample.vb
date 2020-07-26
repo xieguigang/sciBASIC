@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efef4408cdd76f68c3c5c5aa29b9e482, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::a9b182cdf7610a862e74bdcd0038fb93, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class SampleDistribution
     ' 
-    '         Properties: average, max, min, quantile, size
-    '                     stdErr
+    '         Properties: average, CI95Range, max, min, outlierBoundary
+    '                     quantile, size, stdErr
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: GetRange, ToString
@@ -70,29 +70,53 @@ Namespace Distributions
         ''' <returns></returns>
         <XmlAttribute> Public Property quantile As Double()
 
+        Public ReadOnly Property CI95Range As Double()
+            Get
+                Return {
+                    average - 1.96 * stdErr,
+                    average + 1.96 * stdErr
+                }
+            End Get
+        End Property
+
+        Public ReadOnly Property outlierBoundary As Double()
+            Get
+                Dim Q1 = quantile(1)
+                Dim Q3 = quantile(3)
+                Dim IQR = Q3 - Q1
+
+                Return {
+                    Q1 - 1.5 * IQR,
+                    Q3 + 1.5 * IQR
+                }
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
-        Sub New(data As IEnumerable(Of Double))
-            Call Me.New(data.SafeQuery.ToArray)
+        Sub New(data As IEnumerable(Of Double), Optional estimateQuantile As Boolean = True)
+            Call Me.New(data.SafeQuery.ToArray, estimateQuantile)
         End Sub
 
-        Sub New(v As Double())
-            Dim q As QuantileEstimationGK = v.GKQuantile
-
+        Sub New(v As Double(), Optional estimateQuantile As Boolean = True)
             min = v.Min
             max = v.Max
             average = v.Average
             stdErr = v.StdError
             size = v.Length
 
-            quantile = {
-                q.Query(0),
-                q.Query(0.25),
-                q.Query(0.5),
-                q.Query(0.75),
-                q.Query(1)
-            }
+            If estimateQuantile Then
+                With v.GKQuantile
+                    quantile = {
+                        .Query(0),
+                        .Query(0.25),
+                        .Query(0.5),
+                        .Query(0.75),
+                        .Query(1)
+                    }
+                End With
+            End If
         End Sub
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08920a87692c09624918fe290bdd11a1, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb"
+﻿#Region "Microsoft.VisualBasic::fdd744a2f62d1942b365ea191ad05412, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 
 #End Region
 
-Namespace Terminal.xConsole
+Namespace ApplicationServices.Terminal.xConsole
 
     Public NotInheritable Class CoolWriteSettings
 

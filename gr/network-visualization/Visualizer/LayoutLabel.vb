@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c90f3b518528b13db6ae69c53cb38fa6, gr\network-visualization\Visualizer\LayoutLabel.vb"
+﻿#Region "Microsoft.VisualBasic::2483186c2e8bfe31bb31c89212c631a7, gr\network-visualization\Visualizer\LayoutLabel.vb"
 
     ' Author:
     ' 
@@ -33,18 +33,42 @@
 
     ' Class LayoutLabel
     ' 
+    '     Properties: offsetDistance
     ' 
+    '     Function: GetTextAnchor, ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Friend Class LayoutLabel
     Public label As Label
     Public anchor As Anchor
     Public style As Font
     Public color As Brush
+    Public node As Node
+    Public shapeRectangle As RectangleF
+
+    Public ReadOnly Property offsetDistance As Double
+        Get
+            Dim text As Point = GetTextAnchor()
+            Dim anchor As New Point(anchor.X, anchor.Y)
+
+            Return text.Distance(anchor)
+        End Get
+    End Property
+
+    Public Function GetTextAnchor() As Point
+        Return label.GetTextAnchor(anchor)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return label.text
+    End Function
 End Class

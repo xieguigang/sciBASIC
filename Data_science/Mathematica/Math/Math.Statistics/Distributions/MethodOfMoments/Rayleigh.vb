@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::235f4d8d59917f34807eaa538d9bb0d0, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
+﻿#Region "Microsoft.VisualBasic::6282c7313c21be312c0b984620ca7119, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
 
     ' Author:
     ' 
@@ -43,8 +43,7 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -75,13 +74,13 @@ Namespace Distributions.MethodOfMoments
             PeriodOfRecord = (BPM.SampleSize())
         End Sub
         Public Overrides Function GetInvCDF(probability As Double) As Double
-            Return _Sigma * Math.Sqrt(-2 * Math.Log(probability))
+            Return _Sigma * stdNum.Sqrt(-2 * stdNum.Log(probability))
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
-            Return 1 - (Math.Exp(-(Math.Pow(value, 2)) / (2 * (Math.Pow(_Sigma, 2)))))
+            Return 1 - (stdNum.Exp(-(stdNum.Pow(value, 2)) / (2 * (stdNum.Pow(_Sigma, 2)))))
         End Function
         Public Overrides Function GetPDF(value As Double) As Double
-            Return (value / (Math.Pow(_Sigma, 2))) * Math.Exp(-(Math.Pow(value, 2)) / (2 * (Math.Pow(_Sigma, 2))))
+            Return (value / (stdNum.Pow(_Sigma, 2))) * stdNum.Exp(-(stdNum.Pow(value, 2)) / (2 * (stdNum.Pow(_Sigma, 2))))
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
             If _Sigma <= 0 Then Yield New Exception("Sigma cannot be less than or equal to zero in the Rayleigh distribuiton.")

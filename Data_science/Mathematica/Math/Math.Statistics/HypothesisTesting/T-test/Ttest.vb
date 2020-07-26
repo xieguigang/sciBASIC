@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8119cd6c4ad57113d4dea14d06dce8fd, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
+﻿#Region "Microsoft.VisualBasic::076d18482231d90c4b0c11633370efef, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
+Imports stdNum = System.Math
 
 Namespace Hypothesis
 
@@ -70,11 +71,12 @@ Namespace Hypothesis
             Return New TtestResult With {
                 .alpha = alpha,
                 .DegreeFreedom = sample.SampleSize - 1,
-                .StdErr = Math.Sqrt(x.Variance / sample.SampleSize),
+                .StdErr = stdNum.Sqrt(sample.Variance / sample.SampleSize),
                 .TestValue = (sample.Mean - mu) / .StdErr,
                 .Pvalue = Pvalue(.TestValue, .DegreeFreedom, alternative),
                 .Mean = sample.Mean,
-                .Alternative = alternative
+                .alternative = alternative,
+                .x = sample.ToArray
             }
         End Function
 
@@ -111,7 +113,7 @@ Namespace Hypothesis
 
             Dim commonVariance# = ((left.SampleSize - 1) * va.Variance + (right.SampleSize - 1) * vb.Variance) / v
             Dim testVal#
-            Dim stdErr# = Math.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize))
+            Dim stdErr# = stdNum.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize))
 
             If varEqual Then
                 testVal = ((left.Mean - right.Mean) - mu) / stdErr
@@ -128,15 +130,17 @@ Namespace Hypothesis
                 .StdErr = stdErr,
                 .TestValue = testVal,
                 .Pvalue = pvalue,
-                .Alternative = alternative,
+                .alternative = alternative,
                 .MeanX = left.Mean,
-                .MeanY = right.Mean
+                .MeanY = right.Mean,
+                .x = va,
+                .y = vb
             }
         End Function
 
         Private Function welch2t(m1#, m2#, s1#, s2#, N1#, N2#) As Double
             Dim a = m1 - m2
-            Dim b = Math.Sqrt((s1 ^ 2) / N1 + (s2 ^ 2) / N2)
+            Dim b = stdNum.Sqrt((s1 ^ 2) / N1 + (s2 ^ 2) / N2)
             Dim t = a / b
             Return t
         End Function
@@ -163,7 +167,7 @@ Namespace Hypothesis
                 Case Hypothesis.Less
                     Return Tcdf(t, v)
                 Case Else
-                    Return 2 * (1 - Tcdf(Math.Abs(t), v))
+                    Return 2 * (1 - Tcdf(stdNum.Abs(t), v))
             End Select
         End Function
 

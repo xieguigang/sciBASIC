@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0d18ab2bc167c101b3f489add86fba7, Data_science\Mathematica\Math\Math\test\LPPTest.vb"
+﻿#Region "Microsoft.VisualBasic::b68fae1c46600e6bdc98cf14d449908b, Data_science\Mathematica\Math\Math\test\LPPTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,8 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Math.Algebra.LinearProgramming
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming
+
 ''' <summary>
 ''' https://github.com/gthole/lpp
 ''' </summary>

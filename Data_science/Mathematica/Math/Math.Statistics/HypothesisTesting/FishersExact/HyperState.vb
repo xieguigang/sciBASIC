@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8e8ae2facd37bb0a13e2e7560feffbf, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\HyperState.vb"
+﻿#Region "Microsoft.VisualBasic::cc63800415e644733dd9022b846c28a2, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\HyperState.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Class FishersExactPvalues
     ' 
-    '         Properties: greater_pvalue, hyper_state, less_pvalue, two_tail_pvalue
+    '         Properties: greater_pvalue, hyper_state, less_pvalue, matrix, two_tail_pvalue
     ' 
     '         Function: ToString
     ' 
@@ -91,10 +91,27 @@ Namespace Hypothesis.FishersExact
         ''' <returns></returns>
         Public Property greater_pvalue As Double
 
+        ''' <summary>
+        ''' [a,b,c,d]
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property matrix As Integer()
+
         Public Property hyper_state As HyperState
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"
+	Fisher's Exact Test for Count Data
+
+data:  [a={matrix(0)}, b={matrix(1)}, c={matrix(2)}, d={matrix(3)}]
+p-value = {two_tail_pvalue}
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+  0.008512238 20.296715040
+sample estimates:
+odds ratio 
+  0.693793 
+"
         End Function
     End Class
 End Namespace

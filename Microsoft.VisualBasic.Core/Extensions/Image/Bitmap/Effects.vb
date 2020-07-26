@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06ec40e2ebe79f96f8ab8b90ec897f42, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Effects.vb"
+﻿#Region "Microsoft.VisualBasic::124cc2313b48daeb8adc737d57e91e10, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Effects.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,7 @@ Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Imaging.BitmapImage
 
@@ -61,7 +60,7 @@ Namespace Imaging.BitmapImage
         ''' <remarks></remarks>
         <Extension> Public Function Vignette(image As Image, y1%, y2%, Optional renderColor As Color = Nothing) As Image
             Dim alpha As Integer = 0
-            Dim delta = (Math.PI / 2) / sys.Abs(y1 - y2)
+            Dim delta = (stdNum.PI / 2) / stdNum.Abs(y1 - y2)
             Dim offset As Double = 0
 
             renderColor = renderColor Or Color.White.AsDefaultColor
@@ -78,7 +77,7 @@ Namespace Imaging.BitmapImage
                         Dim pen As New Pen(color)
 
                         .DrawLine(pen, New Point(0, y), New Point(.Width, y))
-                        alpha = CInt(255 * sys.Sin(offset) ^ 2)
+                        alpha = CInt(255 * stdNum.Sin(offset) ^ 2)
                         offset += delta
                     Next
 
@@ -151,8 +150,9 @@ Namespace Imaging.BitmapImage
         ''' together adjacentBottom and oppositeTop.
         ''' 
         ''' </remarks>
-        <ExportAPI("Image.Rotate", Info:="Creates a new Image containing the same image only rotated.")>
-        <Extension> Public Function RotateImage(image As Image, angle!) As Bitmap
+        <ExportAPI("Image.Rotate")>
+        <Extension>
+        Public Function RotateImage(image As Image, angle!) As Bitmap
             If image Is Nothing Then
                 Throw New ArgumentNullException("image value is nothing!")
             End If
@@ -161,12 +161,12 @@ Namespace Imaging.BitmapImage
             Dim oldHeight As Double = CDbl(image.Height)
 
             ' Convert degrees to radians
-            Dim theta As Double = CDbl(angle) * sys.PI / 180.0
+            Dim theta As Double = CDbl(angle) * stdNum.PI / 180.0
             Dim lockedTheta As Double = theta
 
             ' Ensure theta is now [0, 2pi)
             While lockedTheta < 0.0
-                lockedTheta += 2 * sys.PI
+                lockedTheta += 2 * stdNum.PI
             End While
 
             Dim newWidth As Double, newHeight As Double
@@ -180,18 +180,18 @@ Namespace Imaging.BitmapImage
             ' on how much rotation is being done to the bitmap.
             '   Refer to the first paragraph in the explaination above for 
             '   reasons why.
-            If (lockedTheta >= 0.0 AndAlso lockedTheta < pi2) OrElse (lockedTheta >= sys.PI AndAlso lockedTheta < (Math.PI + pi2)) Then
-                adjacentTop = sys.Abs(Cos(lockedTheta)) * oldWidth
-                oppositeTop = sys.Abs(Sin(lockedTheta)) * oldWidth
+            If (lockedTheta >= 0.0 AndAlso lockedTheta < pi2) OrElse (lockedTheta >= stdNum.PI AndAlso lockedTheta < (stdNum.PI + pi2)) Then
+                adjacentTop = stdNum.Abs(Cos(lockedTheta)) * oldWidth
+                oppositeTop = stdNum.Abs(Sin(lockedTheta)) * oldWidth
 
-                adjacentBottom = sys.Abs(Cos(lockedTheta)) * oldHeight
-                oppositeBottom = sys.Abs(Sin(lockedTheta)) * oldHeight
+                adjacentBottom = stdNum.Abs(Cos(lockedTheta)) * oldHeight
+                oppositeBottom = stdNum.Abs(Sin(lockedTheta)) * oldHeight
             Else
-                adjacentTop = sys.Abs(Sin(lockedTheta)) * oldHeight
-                oppositeTop = sys.Abs(Cos(lockedTheta)) * oldHeight
+                adjacentTop = stdNum.Abs(Sin(lockedTheta)) * oldHeight
+                oppositeTop = stdNum.Abs(Cos(lockedTheta)) * oldHeight
 
-                adjacentBottom = sys.Abs(Sin(lockedTheta)) * oldWidth
-                oppositeBottom = sys.Abs(Cos(lockedTheta)) * oldWidth
+                adjacentBottom = stdNum.Abs(Sin(lockedTheta)) * oldWidth
+                oppositeBottom = stdNum.Abs(Cos(lockedTheta)) * oldWidth
             End If
 
             newWidth = adjacentTop + oppositeBottom
@@ -226,7 +226,7 @@ Namespace Imaging.BitmapImage
                     New Point(0, CInt(Truncate(adjacentBottom)))
                 }
 
-            ElseIf lockedTheta >= pi2 AndAlso lockedTheta < sys.PI Then
+            ElseIf lockedTheta >= pi2 AndAlso lockedTheta < stdNum.PI Then
 
                 points = {
                     New Point(nWidth, CInt(Truncate(oppositeTop))),
@@ -234,7 +234,7 @@ Namespace Imaging.BitmapImage
                     New Point(CInt(Truncate(oppositeBottom)), 0)
                 }
 
-            ElseIf lockedTheta >= sys.PI AndAlso lockedTheta < (Math.PI + pi2) Then
+            ElseIf lockedTheta >= stdNum.PI AndAlso lockedTheta < (stdNum.PI + pi2) Then
 
                 points = {
                     New Point(CInt(Truncate(adjacentTop)), nHeight),

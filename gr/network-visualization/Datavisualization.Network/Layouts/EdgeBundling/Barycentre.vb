@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b831d9c948729f853d5abbed983f4708, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Barycentre.vb"
+﻿#Region "Microsoft.VisualBasic::3400aebf48d132542aefa2b678fefb60, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Barycentre.vb"
 
     ' Author:
     ' 
@@ -63,47 +63,49 @@ Namespace Layouts.EdgeBundling
         Public Function DoBarycentreEdgeLayout(g As NetworkGraph) As NetworkGraph
             ' 遍历每一个节点
             ' 得到与该节点连接的所有的边
-            For Each node As Node In g.vertex
-                Dim links As Edge() = node.adjacencies _
-                    .EnumerateAllEdges _
-                    .Distinct _
-                    .ToArray
-                Dim centras As New List(Of PointF)
+            'For Each node As Node In g.vertex
+            '    Dim links As Edge() = node.adjacencies _
+            '        .EnumerateAllEdges _
+            '        .Distinct _
+            '        .ToArray
+            '    Dim centras As New List(Of PointF)
 
-                If links.IsNullOrEmpty Then
-                    Continue For
-                End If
+            '    If links.IsNullOrEmpty Then
+            '        Continue For
+            '    End If
 
-                ' 然后计算出每一条边的质心
-                For Each link As Edge In links
-                    centras += link.Barycentre
-                    link.data!Barycentre = centras.Last.GetJson
-                Next
+            '    ' 然后计算出每一条边的质心
+            '    For Each link As Edge In links
+            '        centras += link.Barycentre
+            '        link.data!Barycentre = centras.Last.GetJson
+            '    Next
 
-                ' 然后计算出所有的这些质心的中心点
-                ' 这个中心点就是插值的控制点
-                Dim centra As PointF = centras.Centre
+            '    ' 然后计算出所有的这些质心的中心点
+            '    ' 这个中心点就是插值的控制点
+            '    Dim centra As PointF = centras.Centre
 
-                For Each link As Edge In links
-                    If Not link.data.controlsPoint.IsNullOrEmpty Then
-                        link.data.controlsPoint = {
-                            (link.data.controlsPoint.AsList + New FDGVector3(centra)).Average
-                        }
-                    Else
-                        link.data.controlsPoint = {
-                            New FDGVector3(centra)
-                        }
-                    End If
-                Next
-            Next
+            '    For Each link As Edge In links
+            '        If Not link.data.bends.IsNullOrEmpty Then
+            '            link.data.bends = {
+            '                (link.data.bends.AsList + New FDGVector3(centra)).Average
+            '            }
+            '        Else
+            '            link.data.bends = {
+            '                New Handle(centra)
+            '            }
+            '        End If
+            '    Next
+            'Next
 
-            Return g
+            Throw New NotImplementedException
+
+            'Return g
         End Function
 
         <Extension>
         Public Function Barycentre(link As Edge) As PointF
-            Dim w1 = link.data.weight + 1.0E-20
-            Dim w2 = link.data.weight + 1.0E-20
+            Dim w1 = link.weight + 1.0E-20
+            Dim w2 = link.weight + 1.0E-20
 
             w1 = w1 / (w1 + w2)
             w2 = w2 / (w1 + w2)

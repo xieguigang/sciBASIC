@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8f36b0edfb7202aadaeacfc27e2b874, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::29470e4e3ba298d26459fba7822dbc53, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     Public Class HistoryStacks : Implements ISaveHandle
         Implements IFileReference

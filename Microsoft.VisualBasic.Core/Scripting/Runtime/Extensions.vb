@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cbaca763259aab24b01598384794733, Microsoft.VisualBasic.Core\Scripting\Runtime\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::377f3d57b57d224a10c22e11077b8b3b, Microsoft.VisualBasic.Core\Scripting\Runtime\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Numerics
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: CreateArray, OverloadsBinaryOperator
+    '         Function: CreateArray, CreatePrimitiveType, OverloadsBinaryOperator
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Scripting.Runtime
 
-    Module Extensions
+    Public Module Extensions
 
         Public ReadOnly Property Numerics As Index(Of TypeCode)
 
@@ -68,6 +68,36 @@ Namespace Scripting.Runtime
                 TypeCode.UInt64
             }.Indexing
         End Sub
+
+        ''' <summary>
+        ''' ``<see cref="TypeCode"/> -> <see cref="Type"/>``
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function CreatePrimitiveType(type As TypeCode) As Type
+            Select Case type
+                Case TypeCode.Boolean : Return GetType(Boolean)
+                Case TypeCode.Byte : Return GetType(Byte)
+                Case TypeCode.Char : Return GetType(Char)
+                Case TypeCode.DateTime : Return GetType(DateTime)
+                Case TypeCode.DBNull : Return GetType(Void)
+                Case TypeCode.Decimal : Return GetType(Decimal)
+                Case TypeCode.Double : Return GetType(Double)
+                Case TypeCode.Int16 : Return GetType(Int16)
+                Case TypeCode.Int32 : Return GetType(Int32)
+                Case TypeCode.Int64 : Return GetType(Int64)
+                Case TypeCode.Object : Return GetType(Object)
+                Case TypeCode.SByte : Return GetType(SByte)
+                Case TypeCode.Single : Return GetType(Single)
+                Case TypeCode.String : Return GetType(String)
+                Case TypeCode.UInt16 : Return GetType(UInt16)
+                Case TypeCode.UInt32 : Return GetType(UInt32)
+                Case TypeCode.UInt64 : Return GetType(UInt64)
+                Case Else
+                    Return Nothing
+            End Select
+        End Function
 
         <Extension>
         Public Function OverloadsBinaryOperator(methods As IEnumerable(Of MethodInfo)) As BinaryOperator

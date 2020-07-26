@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf3653266a2d5fbc7a5e79254b26f529, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMode.vb"
+﻿#Region "Microsoft.VisualBasic::967bb3e4808535d72913e773d1d5004f, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMode.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Namespace Math.Statistics.Linq

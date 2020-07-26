@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1caed66f74d315516938d217305277cc, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::ef2f6c2d77078e2ea20ef40460126436, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Reflector
     ' 
-    '         Function: __save, Convert, CreateRowBuilder, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema
+    '         Function: Convert, CreateRowBuilder, doSave, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema
     '                   GetsRowData, Load, LoadDataToObject, Save
     ' 
     ' 
@@ -117,33 +117,40 @@ Namespace StorageProvider.Reflection
         ''' <remarks></remarks>
         ''' 
         <Extension>
-        Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional strict As Boolean = False) As IEnumerable(Of Object)
+        Public Function LoadDataToObject(csv As DataFrame, type As Type,
+                                         Optional strict As Boolean = False,
+                                         Optional metaBlank As String = "",
+                                         Optional parallel As Boolean = True,
+                                         Optional silent As Boolean = False) As IEnumerable(Of Object)
+
             Dim schema As TableSchema = TableSchema.CreateObjectInternal(type, strict).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
-            Dim parallel As Boolean = True
 
 #If DEBUG Then
             parallel = False
 #End If
 
+            Dim sequence = csv._innerTable _
+                .SeqIterator _
+                .Populate(parallel)
             Dim buf = From line As SeqValue(Of RowObject)
-                      In csv._innerTable.SeqIterator.Populate(parallel)
-                      Select LineNumber = line.i,
-                          FilledObject = Activator.CreateInstance(type),
+                      In sequence
+                      Select lineNumber = line.i,
+                          filledObject = Activator.CreateInstance(type),
                           row = line.value
 
             Call rowBuilder.IndexOf(csv)
-            Call rowBuilder.SolveReadOnlyMetaConflicts()
+            Call rowBuilder.SolveReadOnlyMetaConflicts(silent)
 
             ' 顺序需要一一对应，所以在最后这里进行了一下排序操作
             Dim LQuery = From item
                          In buf.Populate(parallel)
-                         Select item.LineNumber,
+                         Select item.lineNumber,
                              item.row,
-                             Data = rowBuilder.FillData(item.row, item.FilledObject)
-                         Order By LineNumber Ascending
+                             data = rowBuilder.FillData(item.row, item.filledObject, metaBlank)
+                         Order By lineNumber Ascending
 
-            Return LQuery.Select(Function(x) x.Data)
+            Return LQuery.Select(Function(x) x.data)
         End Function
 
         ''' <summary>
@@ -151,13 +158,17 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <typeparam name="TClass"></typeparam>
         ''' <param name="df"></param>
-        ''' <param name="explicit"></param>
+        ''' <param name="strict"></param>
         ''' <returns></returns>
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Convert(Of TClass As Class)(df As DataFrame, Optional explicit As Boolean = True) As IEnumerable(Of TClass)
-            Return df.LoadDataToObject(GetType(TClass), explicit).As(Of TClass)
+        Public Function Convert(Of TClass As Class)(df As DataFrame,
+                                                    Optional strict As Boolean = True,
+                                                    Optional metaBlank$ = "",
+                                                    Optional silent As Boolean = False) As IEnumerable(Of TClass)
+
+            Return df.LoadDataToObject(GetType(TClass), strict, metaBlank, silent:=silent).As(Of TClass)
         End Function
 
         ''' <summary>
@@ -177,6 +188,7 @@ Namespace StorageProvider.Reflection
                                             Optional fast As Boolean = False,
                                             Optional maps As Dictionary(Of String, String) = Nothing,
                                             Optional mute As Boolean = False,
+                                            Optional metaBlank As String = "",
                                             Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As IEnumerable(Of T)
             If Not path.FileExists Then
                 ' 空文件
@@ -196,7 +208,7 @@ Namespace StorageProvider.Reflection
             End If
 
             Call $"Reflector load data into type {GetType(T).FullName}".__DEBUG_ECHO(mute:=mute)
-            buffer = Reflector.Convert(Of T)(reader, Explicit)
+            buffer = Reflector.Convert(Of T)(reader, Explicit, metaBlank, silent:=mute)
             Call "[Job Done!]".__DEBUG_ECHO(mute:=mute)
 
             Return buffer
@@ -253,17 +265,19 @@ Namespace StorageProvider.Reflection
                 .CacheIndex(source, reorderKeys)
 
             schemaOut = rowWriter _
-                .Columns _
+                .columns _
                 .ToDictionary(Function(x) x.Name,
-                              Function(x) x.BindProperty.PropertyType)
+                              Function(x)
+                                  Return x.BindProperty.PropertyType
+                              End Function)
 
             Dim title As RowObject = rowWriter.GetRowNames(maps).Join(rowWriter.GetMetaTitles)
 
             Yield title
 
-            If Not rowWriter.MetaRow Is Nothing Then
+            If Not rowWriter.metaRow Is Nothing Then
                 ' 只读属性会和字典属性产生冲突
-                Dim valueType As Type = rowWriter.MetaRow _
+                Dim valueType As Type = rowWriter.metaRow _
                                                  .Dictionary _
                                                  .GenericTypeArguments _
                                                  .Last
@@ -274,7 +288,7 @@ Namespace StorageProvider.Reflection
                         Call schemaOut.Add(key, valueType)
                     Next
                 Catch ex As Exception
-                    Dim msg = $"key:='{key}', keys:={schemaOut.Keys.GetJson}, metaKeys:={rowWriter.GetMetaTitles.GetJson}"
+                    Dim msg = $"key:='{key}', keys:={schemaOut.Keys.AsEnumerable.GetJson}, metaKeys:={rowWriter.GetMetaTitles.GetJson}"
                     ex = New Exception(msg, ex)
                     Throw ex
                 End Try
@@ -327,7 +341,8 @@ Namespace StorageProvider.Reflection
                 metaBlank,
                 maps,
                 parallel,
-                reorderKeys:=reorderKeys).DataFrame
+                reorderKeys:=reorderKeys
+            ).DataFrame
         End Function
 
         ''' <summary>

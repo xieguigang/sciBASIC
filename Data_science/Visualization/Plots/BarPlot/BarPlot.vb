@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71053f499d2130d4a88bd2163ff4d804, Data_science\Visualization\Plots\BarPlot\BarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::b510d797ed32b3924484dbec29de30c2, Data_science\Visualization\Plots\BarPlot\BarPlot.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Namespace BarPlot
 
@@ -223,8 +224,8 @@ Namespace BarPlot
 
                 ' 得到斜边的长度
                 Dim sz = g.MeasureString((+key), font)
-                Dim dx! = sz.Width * Math.Cos(angle)
-                Dim dy! = sz.Width * Math.Sin(angle)
+                Dim dx! = sz.Width * stdNum.Cos(angle)
+                Dim dy! = sz.Width * stdNum.Sin(angle)
 
                 Call g.DrawString(key, font, Brushes.Black, left - dx, bottom, angle)
             Next
@@ -260,7 +261,7 @@ Namespace BarPlot
                     legendPos = New Point(X, Y)
                 End If
 
-                Call g.DrawLegends(legendPos, legends,,, legendBorder)
+                Call g.DrawLegends(legendPos, legends,,, shapeBorder:=legendBorder)
             End If
         End Sub
 

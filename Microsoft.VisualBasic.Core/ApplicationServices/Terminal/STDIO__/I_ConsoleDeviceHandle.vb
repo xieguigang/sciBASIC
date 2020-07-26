@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aa3a0e8fd3451b671d76bef6a1c3bbc, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb"
+﻿#Region "Microsoft.VisualBasic::6178e4969cf54bba78fcbd6d7ed5eafa, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 
 #End Region
 
-Namespace Terminal.STDIO__
+Namespace ApplicationServices.Terminal.STDIO__
 
     ''' <summary>
     ''' Represents the standard input, output, and error streams for console applications.(表示一个输入输出流控制台界面接口)

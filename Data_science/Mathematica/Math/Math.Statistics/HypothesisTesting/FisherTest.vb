@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a698404d5fa0d80ee7643ff572007763, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::fe0864b97f882d7ac706df3471a6c8e4, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Numerics
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' ### Fisher's exact test
@@ -116,7 +117,7 @@ Public Module FisherTest
         For Each factor In gx
             If gy.ContainsKey(factor.Key) Then
                 ' 取最少的
-                min = VBMath.Min(factor.Value, gy(factor.Key))
+                min = stdNum.Min(factor.Value, gy(factor.Key))
                 dx.Add(factor.Key, factor.Value - min)
                 gy(factor.Key) -= min
             Else

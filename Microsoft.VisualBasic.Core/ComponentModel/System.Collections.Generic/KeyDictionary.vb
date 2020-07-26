@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96de3680f1c003d276cb4347540c5482, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::7ed8ebeefb3e68c17addcd9f70591c81, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Namespace ComponentModel.Collection
 
     Public Class HashTable(Of T) : Inherits Dictionary(Of String, T)
 
-        ReadOnly assert As Assert(Of Object)
+        ReadOnly assert As Predicate(Of Object)
 
         Default Public Overloads Property Item(key As String) As [Default](Of T)
             Get
@@ -73,7 +73,7 @@ Namespace ComponentModel.Collection
             End Set
         End Property
 
-        Sub New(copy As Dictionary(Of String, T), Optional assert As Assert(Of Object) = Nothing)
+        Sub New(copy As Dictionary(Of String, T), Optional assert As Predicate(Of Object) = Nothing)
             Call MyBase.New(copy)
 
             Me.assert = assert
@@ -137,6 +137,7 @@ Namespace ComponentModel.Collection
             End Set
         End Property
 
+        <DebuggerStepThrough>
         Sub New()
             Call MyBase.New
         End Sub
@@ -151,10 +152,13 @@ Namespace ComponentModel.Collection
         ''' The System.Collections.Generic.IDictionary`2 whose elements are copied to the
         ''' new System.Collections.Generic.SortedDictionary`2.
         ''' </param>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(source As Dictionary(Of String, V))
             Call MyBase.New(source)
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(source As IEnumerable(Of V), Optional overridesDuplicateds As Boolean = False)
             Call Me.New
 
@@ -169,6 +173,7 @@ Namespace ComponentModel.Collection
             End If
         End Sub
 
+        <DebuggerStepThrough>
         Public Function GetValueList() As List(Of V)
             Return Values.AsList
         End Function
@@ -177,10 +182,13 @@ Namespace ComponentModel.Collection
         ''' Adds an element with the specified key and value into the System.Collections.Generic.SortedDictionary`2.
         ''' </summary>
         ''' <param name="item"></param>
+        ''' 
+        <DebuggerStepThrough>
         Public Overloads Sub Add(item As V)
             Call MyBase.Add(item.Key, item)
         End Sub
 
+        <DebuggerStepThrough>
         Public Sub AddRange(source As IEnumerable(Of V))
             For Each x As V In source
                 Call MyBase.Add(x.Key, x)
@@ -222,6 +230,7 @@ Namespace ComponentModel.Collection
         ''' <param name="item"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function Have(item As V) As Boolean
             Return MyBase.ContainsKey(item.Key)
         End Function
@@ -289,7 +298,12 @@ Namespace ComponentModel.Collection
         ''' <param name="item"></param>
         ''' <returns></returns>
         Public Shared Operator +(list As Dictionary(Of V), item As V) As Dictionary(Of V)
-            Call list.Add(item)
+            If Not list.ContainsKey(item.Key) Then
+                list.Add(item)
+            Else
+                Throw New DuplicateNameException(item.Key)
+            End If
+
             Return list
         End Operator
 

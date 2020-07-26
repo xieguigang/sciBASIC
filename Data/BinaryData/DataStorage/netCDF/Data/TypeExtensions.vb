@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8645547bb2f4c4929082432fcc1d974, Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c75dafdd2046ac5bfbba0492280c1fd4, Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module TypeExtensions
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: num2str, readNumber, readType, sizeof, str2num
+    '         Function: GetCDFTypeCode, num2str, sizeof, str2num
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,11 +42,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.IO
 
 Namespace netCDF
 
-    Module TypeExtensions
+    <HideModuleName>
+    Public Module TypeExtensions
 
         ReadOnly description As Dictionary(Of CDFDataTypes, String)
         ReadOnly enumParser As Dictionary(Of String, CDFDataTypes)
@@ -55,6 +55,22 @@ Namespace netCDF
             description = Enums(Of CDFDataTypes).ToDictionary(Function(type) type, Function(type) type.Description)
             enumParser = description.ReverseMaps
         End Sub
+
+        <Extension>
+        Public Function GetCDFTypeCode(type As Type) As CDFDataTypes
+            Select Case type
+                Case GetType(Double) : Return CDFDataTypes.DOUBLE
+                Case GetType(Single) : Return CDFDataTypes.FLOAT
+                Case GetType(Integer) : Return CDFDataTypes.INT
+                Case GetType(Short) : Return CDFDataTypes.SHORT
+                Case GetType(String) : Return CDFDataTypes.CHAR
+                Case GetType(Byte) : Return CDFDataTypes.BYTE
+                Case GetType(Long) : Return CDFDataTypes.LONG
+                Case GetType(Boolean) : Return CDFDataTypes.BOOLEAN
+                Case Else
+                    Return CDFDataTypes.undefined
+            End Select
+        End Function
 
         ''' <summary>
         ''' Parse a number into their respective type
@@ -75,7 +91,7 @@ Namespace netCDF
         ''' <returns>size of the type</returns>
         Public Function sizeof(type As CDFDataTypes) As Integer
             Select Case type
-                Case CDFDataTypes.BYTE
+                Case CDFDataTypes.BYTE, CDFDataTypes.BOOLEAN
                     Return 1
                 Case CDFDataTypes.CHAR
                     Return 1
@@ -85,7 +101,7 @@ Namespace netCDF
                     Return 4
                 Case CDFDataTypes.FLOAT
                     Return 4
-                Case CDFDataTypes.DOUBLE
+                Case CDFDataTypes.DOUBLE, CDFDataTypes.LONG
                     Return 8
                 Case Else
                     ' istanbul ignore next 
@@ -102,64 +118,6 @@ Namespace netCDF
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function str2num(type As String) As CDFDataTypes
             Return enumParser.TryGetValue(LCase(type), [default]:=CDFDataTypes.undefined)
-        End Function
-
-        ''' <summary>
-        ''' Auxiliary function to read numeric data
-        ''' </summary>
-        ''' <param name="size%">size - Size of the element to read</param>
-        ''' <param name="bufferReader">bufferReader - Function to read next value</param>
-        ''' <returns>{Array&lt;number>|number}</returns>
-        Public Function readNumber(size%, bufferReader As Func(Of Object)) As Object
-            If (size <> 1) Then
-                Dim numbers As New List(Of Object)
-
-                For i As Integer = 0 To size - 1
-                    numbers.Add(bufferReader())
-                Next
-
-                Return numbers
-            Else
-                Return bufferReader()
-            End If
-        End Function
-
-        ''' <summary>
-        ''' Given a type And a size reads the next element.
-        ''' (这个函数会根据<paramref name="type"/>类以及<paramref name="size"/>的不同而返回不同的数据结果:
-        ''' + 根据<paramref name="type"/>可能会返回字符串或者数字
-        ''' + 如果<paramref name="size"/>等于1,则只会返回单个数字, 如果<paramref name="size"/>大于1, 则会返回一个数组
-        ''' )
-        ''' </summary>
-        ''' <param name="buffer">buffer - Buffer for the file data</param>
-        ''' <param name="type">type - Type of the data to read</param>
-        ''' <param name="size">size - Size of the element to read</param>
-        ''' <returns>``{string|Array&lt;number>|number}``</returns>
-        Public Function readType(buffer As BinaryDataReader, type As CDFDataTypes, size As Integer) As Object
-            If buffer.EndOfStream Then
-                Call $"Binary reader ""{buffer.ToString}"" offset out of boundary!".Warning
-                ' 已经出现越界了
-                Return Nothing
-            End If
-
-            Select Case type
-                Case CDFDataTypes.BYTE
-                    Return buffer.ReadBytes(size)
-                Case CDFDataTypes.CHAR
-                    Return New String(buffer.ReadChars(size)).TrimNull
-                Case CDFDataTypes.SHORT
-                    Return readNumber(size, AddressOf buffer.ReadInt16)
-                Case CDFDataTypes.INT
-                    Return readNumber(size, AddressOf buffer.ReadInt32)
-                Case CDFDataTypes.FLOAT
-                    Return readNumber(size, AddressOf buffer.ReadSingle)
-                Case CDFDataTypes.DOUBLE
-                    Return readNumber(size, AddressOf buffer.ReadDouble)
-
-                Case Else
-                    ' istanbul ignore next
-                    Return Utils.notNetcdf(True, $"non valid type {type}")
-            End Select
         End Function
     End Module
 End Namespace

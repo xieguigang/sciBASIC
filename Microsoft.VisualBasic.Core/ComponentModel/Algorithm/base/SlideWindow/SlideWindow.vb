@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7975f639c9878a467e69a57bf62f0424, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
+﻿#Region "Microsoft.VisualBasic::7a3156fb0868cd0be2c2da152b5023fc, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
 
     ' Author:
     ' 
@@ -113,6 +113,7 @@ Namespace ComponentModel.Algorithm.base
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property Length As Integer
+            <DebuggerStepThrough>
             Get
                 If Items.IsNullOrEmpty Then
                     Return 0
@@ -122,7 +123,8 @@ Namespace ComponentModel.Algorithm.base
             End Get
         End Property
 
-        Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+        <DebuggerStepThrough>
+        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
             Index = address
         End Sub
 
@@ -130,12 +132,14 @@ Namespace ComponentModel.Algorithm.base
             Return $"{Index} --> {Items.GetJson}"
         End Function
 
+        <DebuggerStepThrough>
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each o As T In Items
                 Yield o
             Next
         End Function
 
+        <DebuggerStepThrough>
         Private Iterator Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function

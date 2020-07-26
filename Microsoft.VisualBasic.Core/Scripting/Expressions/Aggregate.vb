@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10c538a5029327a24db621be937c1762, Microsoft.VisualBasic.Core\Scripting\Expressions\Aggregate.vb"
+﻿#Region "Microsoft.VisualBasic::883efcb5ab21f62333f0b4d7c2beb12c, Microsoft.VisualBasic.Core\Scripting\Expressions\Aggregate.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace Scripting.Expressions
 
+    ''' <summary>
+    ''' Helper module for get lambda function by scripting text
+    ''' </summary>
     Public Module Aggregate
 
         ''' <summary>

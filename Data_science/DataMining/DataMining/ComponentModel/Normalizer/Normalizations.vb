@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::000f9726f4e38f4cd76c22f23b064156, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
+﻿#Region "Microsoft.VisualBasic::3dedefdd1048462ef8ae351c9e67cadd, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
 
     ' Author:
     ' 
@@ -53,6 +53,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports stdNum = System.Math
 
 Namespace ComponentModel.Normalizer
 
@@ -125,7 +126,7 @@ Namespace ComponentModel.Normalizer
                 ElseIf samples.min >= 0 Then
                     Return -1
                 Else
-                    Return x / Math.Abs(samples.min)
+                    Return x / stdNum.Abs(samples.min)
                 End If
             End If
         End Function

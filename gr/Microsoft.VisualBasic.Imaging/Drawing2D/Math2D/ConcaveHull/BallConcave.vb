@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::935b7ed2483dd267d95c45b7d2af914a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\BallConcave.vb"
+﻿#Region "Microsoft.VisualBasic::2bd52c0a813f1414e69524e348c82497, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\BallConcave.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Point = System.Drawing.PointF
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Drawing2D.Math2D.ConcaveHull
 
@@ -311,7 +311,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             If r * r / (dx * dx + dy * dy) - 0.25 < 0 Then
                 Return New Point(-1, -1)
             End If
-            Dim sqrt As Double = sys.Sqrt(r * r / (dx * dx + dy * dy) - 0.25)
+            Dim sqrt As Double = stdNum.Sqrt(r * r / (dx * dx + dy * dy) - 0.25)
             Return New Point(cx - dy * sqrt, cy + dx * sqrt)
         End Function
 

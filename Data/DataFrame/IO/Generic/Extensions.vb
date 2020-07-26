@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43664211ae70ec59bbe2e5656e712c1b, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a4d9bffec2befe6cd929f92f6dbfbde5, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     '     Module Extensions
     ' 
     '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
-    '                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
-    '                   Transpose, Values, (+2 Overloads) Vector
+    '                   EuclideanDistance, GroupBy, NamedMatrix, NamedValues, Project
+    '                   (+2 Overloads) PropertyNames, Transpose, Values, (+2 Overloads) Vector
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,12 +50,15 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Namespace IO
 
     ''' <summary>
     ''' Data extension for <see cref="DataSet"/> and <see cref="EntityObject"/>
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module Extensions
 
         <Extension>
@@ -70,7 +73,13 @@ Namespace IO
                      Let y = b(key)
                      Into Sum((x - y) ^ 2) '
 
-            Return Math.Sqrt(d)
+            Return stdNum.Sqrt(d)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function NamedValues(matrix As IEnumerable(Of DataSet), propertyName$) As Dictionary(Of String, Double)
+            Return matrix.ToDictionary(Function(d) d.ID, Function(d) d(propertyName))
         End Function
 
         ''' <summary>
@@ -170,6 +179,7 @@ Namespace IO
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
             Return datasets _
                 .Select(Function(x) x([property])) _

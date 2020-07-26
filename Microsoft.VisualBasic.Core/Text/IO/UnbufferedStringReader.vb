@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b79e4afc046df4d4e13ceb4c18f7d9f7, Microsoft.VisualBasic.Core\Text\IO\UnbufferedStringReader.vb"
+﻿#Region "Microsoft.VisualBasic::adf20358f38810671cce007f14ff5eb1, Microsoft.VisualBasic.Core\Text\IO\UnbufferedStringReader.vb"
 
     ' Author:
     ' 
@@ -46,8 +46,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
 Imports System.IO
 
 Namespace Text

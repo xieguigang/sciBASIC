@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07f576d6802e72d1991665021af6bc1d, Data_science\Visualization\Plots\g\Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::0ffc75a73faa3471fe6128b554bc730f, Data_science\Visualization\Plots\g\Mapper.vb"
 
     ' Author:
     ' 
@@ -100,7 +100,7 @@ Namespace Graphic
             If Not ignoreAxis Then
 
                 If Not ignoreX Then
-                    xAxis = New Vector(xrange.CreateAxisTicks(parts))
+                    xAxis = New Vector(xrange.CreateAxisTicks(parts / 2))
                 Else
                     xAxis = New Vector({0R})
                 End If
@@ -110,9 +110,15 @@ Namespace Graphic
                     yAxis = New Vector({0R})
                 End If
 
-                dx = xAxis.Max - xAxis.Min
+                If xAxis.Length = 0 Then
+                    dx = 0
+                    xmin = 0
+                Else
+                    dx = xAxis.Max - xAxis.Min
+                    xmin = xAxis.Min
+                End If
+
                 dy = yAxis.Max - yAxis.Min
-                xmin = xAxis.Min
                 ymin = yAxis.Min
             Else
                 dx = xrange.Max - xrange.Min
@@ -193,7 +199,7 @@ Namespace Graphic
                 Select New PointData(px, py) With {
                     .errMinus = p.errMinus,
                     .errPlus = p.errPlus,
-                    .Tag = p.Tag,
+                    .tag = p.tag,
                     .value = p.value,
                     .Statics = p.Statics,
                     .color = p.color,
@@ -203,7 +209,7 @@ Namespace Graphic
                 Yield New SerialData With {
                     .color = s.color,
                     .lineType = s.lineType,
-                    .PointSize = s.PointSize,
+                    .pointSize = s.pointSize,
                     .pts = pts,
                     .title = s.title,
                     .width = s.width,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b2a995592ac29c3908c6d5929d38511, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Spinner.vb"
+﻿#Region "Microsoft.VisualBasic::c36dcec78290e972fa2362d0ba847402, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Spinner.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
 Imports System.Drawing
 Imports System.Threading
 
-Namespace Terminal.xConsole
+Namespace ApplicationServices.Terminal.xConsole
 
 #Region "SPINNER ⌛"
 
@@ -156,4 +156,5 @@ Namespace Terminal.xConsole
     End Class
 
 #End Region
+
 End Namespace

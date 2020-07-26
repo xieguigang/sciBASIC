@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e98245da8f32902e2db52fc51c5f60cd, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::b0f62a09d0699a2f94c0d1c3d84b26ac, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
     ' Author:
     ' 

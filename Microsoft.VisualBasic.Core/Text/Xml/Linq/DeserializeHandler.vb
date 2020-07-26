@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27e001b80e444b8c1062b34d12be842e, Microsoft.VisualBasic.Core\Text\Xml\Linq\DeserializeHandler.vb"
+﻿#Region "Microsoft.VisualBasic::73ec576aa7efd1e7c755d62144fc32f4, Microsoft.VisualBasic.Core\Text\Xml\Linq\DeserializeHandler.vb"
 
     ' Author:
     ' 
@@ -98,6 +98,12 @@ Namespace Text.Xml.Linq
             Return xml.Replace($"xmlns=""{ReplaceXmlns}""", "")
         End Function
 
+        ''' <summary>
+        ''' This method have bugs when deal with the xml when it have 
+        ''' multiple xml namespace value
+        ''' </summary>
+        ''' <param name="xml"></param>
+        ''' <returns></returns>
         Public Function LoadXml(xml As String) As T
             Call sb.Clear()
             Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
@@ -110,7 +116,7 @@ Namespace Text.Xml.Linq
             xml = sb.ToString
 
             ' 对调整好的Xml文档执行反序列化操作
-            Return xml.LoadFromXml(Of T)
+            Return xml.LoadFromXml(Of T)(doNamespaceIgnorant:=True)
         End Function
 
         Public Overrides Function ToString() As String

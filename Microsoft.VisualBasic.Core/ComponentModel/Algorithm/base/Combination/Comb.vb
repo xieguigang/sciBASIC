@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1696f908c778b7346677fded1a4d746b, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\Combination\Comb.vb"
+﻿#Region "Microsoft.VisualBasic::23de0b0315d40945dbc9fee01bc440e8, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\Combination\Comb.vb"
 
     ' Author:
     ' 
@@ -102,6 +102,8 @@ Namespace ComponentModel.Algorithm.base
                    Order By array.Length Descending
         End Function
 
+#If NET_48 Then
+
         Public Function GetObjectPair() As (T, T)
             If source.Count = 1 Then
                 Return Nothing
@@ -121,6 +123,8 @@ Namespace ComponentModel.Algorithm.base
                 Return pair
             End If
         End Function
+
+#End If
 
         Friend Sub New()
         End Sub

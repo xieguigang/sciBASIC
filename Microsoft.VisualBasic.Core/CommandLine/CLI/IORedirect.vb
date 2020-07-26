@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3471837b8895154ee1106f6135a2fed, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::f61fb3b53c42dcb8214bdef82e0056fa, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 
@@ -62,10 +62,10 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.STDIO__
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
-Imports Microsoft.VisualBasic.Terminal.STDIO
-Imports Microsoft.VisualBasic.Terminal.STDIO__
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine

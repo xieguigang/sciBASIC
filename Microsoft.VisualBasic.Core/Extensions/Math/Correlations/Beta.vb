@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10435732b5abf83eaebf8ff01a0c3905, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::cc5ee750fec3f85eedeffd4537f53201, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Beta.vb"
 
     ' Author:
     ' 
@@ -40,16 +40,18 @@
 
 #End Region
 
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math.Correlations
 
     Public Module Beta
 
-        Const SWITCH As Integer = 3000, MAXIT As Integer = 1000
+        Const SWITCH As Integer = 3000
         Const EPS As Double = 0.0000003, FPMIN As Double = 1.0E-30
 
-        Public Function betai(a As Double, b As Double, x As Double) As Double
+        Public MAXIT As Integer = 5000
+
+        Public Function betai(a As Double, b As Double, x As Double, Optional throwMaxIterError As Boolean = True) As Double
             Dim bt As Double
 
             If x < 0.0 OrElse x > 1.0 Then
@@ -59,13 +61,13 @@ Namespace Math.Correlations
             If x = 0.0 OrElse x = 1.0 Then
                 bt = 0.0
             Else
-                bt = sys.Exp(gammln(a + b) - gammln(a) - gammln(b) + a * sys.Log(x) + b * sys.Log(1.0 - x))
+                bt = stdNum.Exp(gammln(a + b) - gammln(a) - gammln(b) + a * stdNum.Log(x) + b * stdNum.Log(1.0 - x))
             End If
 
             If x < (a + 1.0) / (a + b + 2.0) Then
-                Return bt * betacf(a, b, x) / a
+                Return bt * betacf(a, b, x, throwMaxIterError) / a
             Else
-                Return 1.0 - bt * betacf(b, a, 1.0 - x) / b
+                Return 1.0 - bt * betacf(b, a, 1.0 - x, throwMaxIterError) / b
             End If
         End Function
 
@@ -74,7 +76,7 @@ Namespace Math.Correlations
 
             y = x
             tmp = x + 5.5
-            tmp -= (x + 0.5) * sys.Log(tmp)
+            tmp -= (x + 0.5) * stdNum.Log(tmp)
             ser = 1.00000000019001
 
             For j As Integer = 0 To 5
@@ -82,7 +84,7 @@ Namespace Math.Correlations
                 ser += cof(j) / y
             Next
 
-            Return -tmp + sys.Log(2.506628274631 * ser / x)
+            Return -tmp + stdNum.Log(2.506628274631 * ser / x)
         End Function
 
         ReadOnly cof As Double() = {
@@ -94,7 +96,9 @@ Namespace Math.Correlations
             -0.000005395239384953
         }
 
-        Private Function betacf(a As Double, b As Double, x As Double) As Double
+        Const MaxIterReachError$ = "a:={0} or b:={1} too big, or MAXIT too small in betacf"
+
+        Private Function betacf(a As Double, b As Double, x As Double, throwMaxIterError As Boolean) As Double
             Dim m As Integer, m2 As Integer
             Dim aa As Double,
                 c As Double,
@@ -110,9 +114,11 @@ Namespace Math.Correlations
             qam = a - 1.0
             c = 1.0
             d = 1.0 - qab * x / qap
-            If sys.Abs(d) < FPMIN Then
+
+            If stdNum.Abs(d) < FPMIN Then
                 d = FPMIN
             End If
+
             d = 1.0 / d
             h = d
 
@@ -120,36 +126,43 @@ Namespace Math.Correlations
                 m2 = 2 * m
                 aa = m * (b - m) * x / ((qam + m2) * (a + m2))
                 d = 1.0 + aa * d
-                If sys.Abs(d) < FPMIN Then
+
+                If stdNum.Abs(d) < FPMIN Then
                     d = FPMIN
                 End If
+
                 c = 1.0 + aa / c
-                If sys.Abs(c) < FPMIN Then
+
+                If stdNum.Abs(c) < FPMIN Then
                     c = FPMIN
                 End If
+
                 d = 1.0 / d
                 h *= d * c
                 aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
                 d = 1.0 + aa * d
-                If sys.Abs(d) < FPMIN Then
+
+                If stdNum.Abs(d) < FPMIN Then
                     d = FPMIN
                 End If
+
                 c = 1.0 + aa / c
-                If sys.Abs(c) < FPMIN Then
+
+                If stdNum.Abs(c) < FPMIN Then
                     c = FPMIN
                 End If
+
                 d = 1.0 / d
                 del = d * c
                 h *= del
-                If sys.Abs(del - 1.0) < EPS Then
+
+                If stdNum.Abs(del - 1.0) < EPS Then
                     Exit For
                 End If
             Next
 
-            If m > MAXIT Then
-                Dim msg As String =
-                $"a:={a} or b:={b} too big, or MAXIT too small in betacf"
-                Throw New ArgumentException(msg)
+            If m > MAXIT AndAlso throwMaxIterError Then
+                Throw New ArgumentException(String.Format(MaxIterReachError, a, b))
             End If
 
             Return h
@@ -158,9 +171,9 @@ Namespace Math.Correlations
         Public Function erfcc(x As Double) As Double
             Dim t As Double, z As Double, ans As Double
 
-            z = sys.Abs(x)
+            z = stdNum.Abs(x)
             t = 1.0 / (1.0 + 0.5 * z)
-            ans = t * sys.Exp(-z * z - 1.26551223 +
+            ans = t * stdNum.Exp(-z * z - 1.26551223 +
                            t * (1.00002368 +
                            t * (0.37409196 +
                            t * (0.09678418 +

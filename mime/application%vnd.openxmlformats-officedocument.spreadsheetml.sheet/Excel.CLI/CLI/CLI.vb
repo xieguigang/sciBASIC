@@ -1,43 +1,43 @@
-﻿#Region "Microsoft.VisualBasic::92de9c7e41e484a88df1aae9c89b9765, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::f112ac7c9d91b47d0ee28097726e3f01, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\CLI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module CLI
-' 
-'     Function: Association, cbind, NameValues, rbind, rbindGroup
-'               Removes, Subtract, Takes, Transpose, Union
-'               Unique
-' 
-' /********************************************************************************/
+    ' Module CLI
+    ' 
+    '     Function: Association, cbind, NameValues, rbind, rbindGroup
+    '               Removes, SubsetByColumns, Subtract, Takes, Transpose
+    '               Union, Unique
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -274,53 +275,63 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     End Function
 
     <ExportAPI("/association")>
-    <Usage("/association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /out <out.csv>]")>
+    <Usage("/association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /column.B <scan0> /ignore.blank.index /out <out.csv>]")>
+    <Description("Append part of data of table ``b`` to table ``a``")>
     Public Function Association(args As CommandLine) As Integer
         Dim a$ = args <= "/a"
         Dim b$ = args <= "/b"
         Dim columnNameA$ = args("/column.A")
+        Dim BcolumnIndex$ = args("/column.B")
         Dim bName$ = b.BaseName
-        Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA)
-        Dim bData = EntityObject.LoadDataSet(b) _
-            .GroupBy(Function(bb) bb.ID) _
-            .ToDictionary(Function(g) g.Key,
+        Dim ignoreBlankIndex As Boolean = args("/ignore.blank.index")
+        Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA) _
+            .GroupBy(Function(n) If(n.ID.StringEmpty, "", n.ID)) _
+            .ToDictionary(Function(n) n.Key,
                           Function(g)
-                              Dim values = g _
-                                  .Select(Function(bb) bb.Properties) _
-                                  .IteratesALL _
-                                  .GroupBy(Function(p) p.Key) _
-                                  .ToDictionary(Function(p) p.Key,
-                                                Function(v)
-                                                    Return v.Values _
-                                                        .Select(Function(s) s.Split(";"c)) _
-                                                        .IteratesALL _
-                                                        .Distinct _
-                                                        .JoinBy(";")
-                                                End Function)
-
-                              Return New EntityObject With {
-                                  .ID = g.Key,
-                                  .Properties = values
-                              }
+                              Return g.ToArray
                           End Function)
+        Dim mapsB As New Dictionary(Of String, String) From {
+            {BcolumnIndex, NameOf(EntityObject.ID)}
+        }
         Dim out$ = args("/out") Or $"{a.TrimSuffix}_AND_{bName}.csv"
         Dim associates As New List(Of EntityObject)
+        Dim key$
 
-        For Each x As EntityObject In aData
-            If bData.ContainsKey(x.ID) Then
-                Dim copy As EntityObject = x.Copy
-                Dim y = bData(x.ID)
+        If ignoreBlankIndex Then
+            If aData.ContainsKey("") Then
+                associates += aData.Popout("")
+            End If
+        End If
 
-                For Each [property] In y.Properties
-                    Dim key = bName & "." & [property].Key
-                    copy.Properties.Add(key, [property].Value)
+        ' 假设B的数据非常大的话
+        For Each rowB As EntityObject In b.OpenHandle(maps:=mapsB).AsLinq(Of EntityObject)
+            If ignoreBlankIndex AndAlso rowB.ID.StringEmpty Then
+                Continue For
+            End If
+
+            If aData.ContainsKey(rowB.ID) Then
+                Dim rowsA As EntityObject() = aData.Popout(rowB.ID)
+
+                For Each x As EntityObject In rowsA
+                    For Each [property] In rowB.Properties
+                        key = bName & "." & [property].Key
+                        x.Properties.Add(key, [property].Value)
+                    Next
+
+                    associates += x
                 Next
 
-                associates += copy
-            Else
-                associates += x
+                If aData.Count = 0 Then
+                    ' 已经关联完了，不需要在遍历整个B文件的数据
+                    Exit For
+                End If
             End If
         Next
+
+        If aData.Count > 0 Then
+            ' 还有一部分的数据是没有在B中存在关联的
+            associates += aData.Values.IteratesALL
+        End If
 
         Return associates _
             .SaveDataSet(out, KeyMap:=columnNameA) _

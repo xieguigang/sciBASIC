@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e0cfe8fe42ca5f508c2f6df254c5533, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
+﻿#Region "Microsoft.VisualBasic::a373ceddc045fc08bab152d5d679bf8a, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
 
     ' Author:
     ' 
@@ -85,6 +85,8 @@ Namespace ComponentModel.Ranges
 
     Public Module UnitConvertorExtensions
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUnitConvertor(Of T As Structure)() As (unit As T, value As Double)()
             Return Enums(Of T)() _
@@ -112,6 +114,8 @@ Namespace ComponentModel.Ranges
 
             Return -1
         End Function
+
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -195,6 +199,8 @@ Namespace ComponentModel.Ranges
         Sub New()
         End Sub
 
+#If NET_48 Then
+
         ''' <summary>
         ''' Unit convert
         ''' </summary>
@@ -204,10 +210,14 @@ Namespace ComponentModel.Ranges
             Return Me = convert
         End Function
 
+#End If
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{Value} ({DirectCast(CObj(Unit), [Enum]).Description})"
         End Function
+
+#If NET_48 Then
 
         Shared ReadOnly converts As (unit As TUnit, value#)() = UnitConvertorExtensions.GetUnitConvertor(Of TUnit)
 
@@ -230,5 +240,7 @@ Namespace ComponentModel.Ranges
         Public Overloads Shared Operator <>(value As UnitValue(Of TUnit), unit As TUnit) As UnitValue(Of TUnit)
             Throw New NotImplementedException
         End Operator
+
+#End If
     End Class
 End Namespace

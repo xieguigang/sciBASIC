@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6f151fca4df58bc36151064ea48392f, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::70c83d8bbc5a2cccd9599f3a29dfbef4, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -87,7 +87,7 @@ Namespace Language.Vectorization
         ''' 如果不希望将内部引用进行修改，请使用迭代器或者<see cref="Enumerable.ToArray"/> Linq拓展
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Array As T()
+        Public Overridable ReadOnly Property Array As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer
@@ -201,10 +201,12 @@ Namespace Language.Vectorization
         ''' <returns></returns>
         Default Public Overridable Overloads Property Item(index%) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            <DebuggerStepThrough>
             Get
                 Return buffer(index)
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            <DebuggerStepThrough>
             Set(value As T)
                 buffer(index) = value
             End Set
@@ -260,6 +262,15 @@ Namespace Language.Vectorization
             End Set
         End Property
 
+        Default Public Overloads Property Item(range As (start%, ends%)) As List(Of T)
+            Get
+                Return New List(Of T)(Me.Skip(range.start).Take(count:=range.ends - range.start))
+            End Get
+            Set(value As List(Of T))
+                Me(New IntRange(range.start, range.ends)) = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' Gets subset of the collection by using a discontinues index
         ''' </summary>
@@ -310,7 +321,7 @@ Namespace Language.Vectorization
         Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of T)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Vector(Of T)(Me(indices:=Linq.Which.IsTrue(booleans)))
+                Return New Vector(Of T)(Me(indices:=Linq.Which(booleans)))
             End Get
             Set(value As Vector(Of T))
                 For Each i In booleans.SeqIterator
@@ -323,9 +334,12 @@ Namespace Language.Vectorization
 #End Region
 
 #Region "Constructor"
+
+        <DebuggerStepThrough>
         Public Sub New()
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(capacity%)
             buffer = New T(capacity - 1) {}
         End Sub
@@ -334,15 +348,19 @@ Namespace Language.Vectorization
         ''' 构建一个新的向量对象，这个向量对象只提供基本的数据存储和访问模型，并没有提供高级的动态处理和模式解析的操作
         ''' </summary>
         ''' <param name="data"></param>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(data As IEnumerable(Of T))
             buffer = data.ToArray
         End Sub
 #End Region
 
+        <DebuggerStepThrough>
         Public Overrides Function ToString() As String
             Return $"{buffer.Length} @ {GetType(T).FullName}"
         End Function
 
+        <DebuggerStepThrough>
         Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each element As T In buffer
                 Yield element
@@ -355,7 +373,7 @@ Namespace Language.Vectorization
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Which(assert As Func(Of T, Boolean)) As Integer()
-            Return Linq.Which.IsTrue(Me.Select(assert))
+            Return Linq.Which(Me.Select(assert))
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14c04f9e275fa69452350d6e3f26a155, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::72d4ec733dd4c54271b45616fcc40ac4, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '         Sub: Assign
     ' 
-    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Mod
+    '         Operators: -, (+3 Overloads) +, <>, =, (+2 Overloads) Mod
     ' 
     ' 
     ' /********************************************************************************/
@@ -89,12 +89,14 @@ Namespace Linq
             End Get
         End Property
 
+        <DebuggerStepThrough>
         Sub New(i%, x As T)
             Me.i = i
             value = x
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overrides Function ToString() As String
             Return Me.value.GetJson(False)
         End Function
@@ -164,6 +166,10 @@ Namespace Linq
             Return x.value
         End Operator
 
+        Public Shared Operator +(x As SeqValue(Of T), i As Integer) As Integer
+            Return x.i + i
+        End Operator
+
         ''' <summary>
         ''' Get value from <see cref="value"/> property.
         ''' </summary>
@@ -189,6 +195,7 @@ Namespace Linq
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function CompareTo(other As Integer) As Integer Implements IComparable(Of Integer).CompareTo
             Return i.CompareTo(other)
         End Function
@@ -205,6 +212,7 @@ Namespace Linq
             Return i.CompareTo(DirectCast(obj, SeqValue(Of T)).i)
         End Function
 
+        <DebuggerStepThrough>
         Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
             i = address
         End Sub

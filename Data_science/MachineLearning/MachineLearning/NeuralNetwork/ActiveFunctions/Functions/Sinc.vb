@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::351890197a987f1fddbef4ba90486e43, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\Sinc.vb"
+﻿#Region "Microsoft.VisualBasic::09b762e7d9f32180af2f17d46fe6b2b7, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\Sinc.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork.Activations
 
@@ -61,7 +62,7 @@ Namespace NeuralNetwork.Activations
             If x = 0R Then
                 Return 1
             Else
-                Return Math.Sin(x) / x
+                Return stdNum.Sin(x) / x
             End If
         End Function
 
@@ -73,7 +74,7 @@ Namespace NeuralNetwork.Activations
             If x = 0R Then
                 Return 0
             Else
-                Return Math.Cos(x) / x - Math.Sin(x) / (x ^ 2)
+                Return stdNum.Cos(x) / x - stdNum.Sin(x) / (x ^ 2)
             End If
         End Function
     End Class

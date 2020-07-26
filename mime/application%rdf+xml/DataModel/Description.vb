@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::194870d454153b4e2c6e2490c39ae3b1, mime\application%rdf+xml\DataModel\Description.vb"
+﻿#Region "Microsoft.VisualBasic::b8afdcaf910b1cd7349433ea0f243840, mime\application%rdf+xml\DataModel\Description.vb"
 
     ' Author:
     ' 
@@ -43,16 +43,17 @@
 
 Imports System.Xml.Serialization
 
-<XmlType("Description", [Namespace]:=RDF.Namespace)>
-Public Class Description
+<XmlType("DescriptionModel", [Namespace]:="NA")>
+Public MustInherit Class Description
 
     <XmlNamespaceDeclarations()>
-    Public xmlns As XmlSerializerNamespaces
+    Public xmlns As New XmlSerializerNamespaces
+
+    <XmlAttribute("about", [Namespace]:=RDFEntity.XmlnsNamespace)>
+    Public Property about As String
 
     Sub New()
-        xmlns.Add("rdf", RDF.Namespace)
+        xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
     End Sub
 
-    <XmlAttribute("about", [Namespace]:=RDF.Namespace)>
-    Public Property about As String
 End Class

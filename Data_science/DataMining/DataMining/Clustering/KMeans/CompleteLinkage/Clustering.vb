@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d42023f1d6515710acda3073db81fd3, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::6a006682ddab98d0c5316656e42aef13, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Clustering.vb"
 
     ' Author:
     ' 
@@ -55,11 +55,8 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Text
-Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 Namespace KMeans.CompleteLinkage
 
@@ -174,7 +171,7 @@ Namespace KMeans.CompleteLinkage
                         mKMeansClusters(i).Center = mKMeansClusters(i).CalculateCenter()
                         currentKMeansCost += mKMeansClusters(i).CalculateKMeansCost()
                     Next i
-                Loop While Math.Abs(oldKmeansCost - currentKMeansCost) > 1
+                Loop While stdNum.Abs(oldKmeansCost - currentKMeansCost) > 1
 
                 If currentKMeansCost < minKMeansCost Then
                     minKMeansCost = currentKMeansCost

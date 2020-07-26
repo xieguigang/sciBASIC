@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f6c030d1d82c0ce6c117b9699227ef0, Microsoft.VisualBasic.Core\My\Framework\DoConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::543d83f97ddfdac8886ead022637d65c, Microsoft.VisualBasic.Core\My\Framework\DoConfiguration.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,16 @@ Namespace My.FrameworkInternal
 
             ' load config from config file.
             For Each config In configuration.environment.SafeQuery
-                Call App.JoinVariable(config.Key, config.Value)
+                ' 在加载配置文件的时候需要注意一下
+                ' 用户从命令行中配置的变量的优先级应该要高于配置文件中加载的默认变量值
+                ' 所以在这个for循环中
+                ' 需要首先检查一下配置项是否存在
+                ' 不可以直接赋值
+                If App.GetVariable(config.Key) Is Nothing Then
+                    ' 只写入未存在的变量就可以了
+                    ' 已存在的变量是在App模块自动初始化加载的
+                    Call App.JoinVariable(config.Key, config.Value)
+                End If
             Next
 
             ' --load_options.disable 开关将会禁止所有的环境项目的设置

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9988a01fe3a072b391b86080ef2b2388, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::76a4b672575315f3e85de0b09f8255cb, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: Length, Max, Min
     ' 
     '         Constructor: (+7 Overloads) Sub New
-    '         Function: (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
-    '                   ScaleMapping, (+2 Overloads) ToString, TryParse
+    '         Function: Contains, (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside
+    '                   (+2 Overloads) IsOverlapping, ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =, (+2 Overloads) Like
     ' 
     ' 
@@ -53,7 +53,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 
@@ -62,7 +61,7 @@ Namespace ComponentModel.Ranges.Model
     ''' <summary>
     ''' Represents a double range with minimum and maximum values
     ''' </summary>
-    Public Class DoubleRange : Implements IRanges(Of Double)
+    Public Class DoubleRange : Implements IRangeModel(Of Double)
         Implements Enumeration(Of Double)
 
         ''' <summary>
@@ -70,14 +69,14 @@ Namespace ComponentModel.Ranges.Model
         ''' </summary>
         ''' 
         <XmlAttribute("min")>
-        Public Property Min As Double Implements IRanges(Of Double).Min
+        Public Property Min As Double Implements IRangeModel(Of Double).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
         '''   
         <XmlAttribute("max")>
-        Public Property Max As Double Implements IRanges(Of Double).Max
+        Public Property Max As Double Implements IRangeModel(Of Double).Max
 
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
@@ -106,7 +105,13 @@ Namespace ComponentModel.Ranges.Model
         ''' </summary>
         ''' <param name="data"></param>
         Sub New(data As Double())
-            Call Me.New(data.Min, data.Max)
+            If data.Length = 0 Then
+                Min = Double.NaN
+                Max = Double.NaN
+            Else
+                Min = data.Min
+                Max = data.Max
+            End If
         End Sub
 
         ''' <summary>
@@ -139,6 +144,10 @@ Namespace ComponentModel.Ranges.Model
         Sub New()
         End Sub
 
+        Public Function Contains(subRange As DoubleRange) As Boolean
+            Return IsInside(subRange.Min) AndAlso IsInside(subRange.Max)
+        End Function
+
         ''' <summary>
         ''' [min=xxx, max=xxx]
         ''' </summary>
@@ -166,7 +175,7 @@ Namespace ComponentModel.Ranges.Model
         ''' <returns><b>True</b> if the specified value is inside this range or
         ''' <b>false</b> otherwise.</returns>
         ''' 
-        Public Function IsInside(x As Double) As Boolean Implements IRanges(Of Double).IsInside
+        Public Function IsInside(x As Double) As Boolean Implements IRangeModel(Of Double).IsInside
             Return ((x >= Min) AndAlso (x <= Max))
         End Function
 
@@ -195,11 +204,11 @@ Namespace ComponentModel.Ranges.Model
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 
-        Public Function IsInside(range As IRanges(Of Double)) As Boolean Implements IRanges(Of Double).IsInside
+        Public Function IsInside(range As IRangeModel(Of Double)) As Boolean Implements IRangeModel(Of Double).IsInside
             Return ((IsInside(range.Min)) AndAlso (IsInside(range.Max)))
         End Function
 
-        Public Function IsOverlapping(range As IRanges(Of Double)) As Boolean Implements IRanges(Of Double).IsOverlapping
+        Public Function IsOverlapping(range As IRangeModel(Of Double)) As Boolean Implements IRangeModel(Of Double).IsOverlapping
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 
@@ -217,6 +226,8 @@ Namespace ComponentModel.Ranges.Model
             End With
         End Operator
 
+#If NET_48 Then
+
         Public Shared Widening Operator CType(tuple As (min#, max#)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
@@ -228,6 +239,8 @@ Namespace ComponentModel.Ranges.Model
         Public Shared Widening Operator CType(tuple As (min&, max&)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
+
+#End If
 
         Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
             Return New DoubleRange(vector.Min, vector.Max)

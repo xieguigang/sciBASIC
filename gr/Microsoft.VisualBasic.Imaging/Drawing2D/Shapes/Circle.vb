@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9490f2816c0da8b6b17f1427ef4dfc0e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::82de2410ed858d64e7e58ca39b45cfb2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
     ' Author:
     ' 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Namespace Drawing2D.Shapes
 
@@ -99,7 +100,7 @@ Namespace Drawing2D.Shapes
             Return rect
         End Function
 
-        Shared ReadOnly black As [Default](Of  String) = NameOf(black)
+        Shared ReadOnly black As [Default](Of String) = NameOf(black)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function PathIterator(center As PointF, radius!, Optional vertices% = 30) As IEnumerable(Of PointF)
@@ -107,7 +108,7 @@ Namespace Drawing2D.Shapes
         End Function
 
         Public Shared Iterator Function PathIterator(centerX!, centerY!, radius!, Optional vertices% = 30) As IEnumerable(Of PointF)
-            Dim deltaAngle# = 2 * Math.PI / vertices
+            Dim deltaAngle# = 2 * stdNum.PI / vertices
             Dim X#, Y#
 
             For i As Integer = 0 To vertices - 1
@@ -125,13 +126,13 @@ Namespace Drawing2D.Shapes
         ''' <param name="center"></param>
         ''' <param name="radius"></param>
         ''' <param name="br"></param>
-        Public Overloads Shared Sub Draw(ByRef g As IGraphics, center As Point, radius!,
+        Public Overloads Shared Sub Draw(ByRef g As IGraphics, center As PointF, radius!,
                                          Optional br As Brush = Nothing,
                                          Optional border As Stroke = Nothing)
 
-            Dim rect As New Rectangle With {
-                .Location = New Point(center.X - radius, center.Y - radius),
-                .Size = New Size With {
+            Dim rect As New RectangleF With {
+                .Location = New PointF(center.X - radius, center.Y - radius),
+                .Size = New SizeF With {
                     .Width = radius * 2,
                     .Height = .Width
                 }
@@ -139,7 +140,7 @@ Namespace Drawing2D.Shapes
             Call g.FillPie(br Or BlackBrush, rect, 0, 360)
 
             If Not border Is Nothing Then
-                rect = New Rectangle With {
+                rect = New RectangleF With {
                     .X = center.X - radius - border.width,
                     .Y = center.Y - radius - border.width,
                     .Width = radius * 2 + 1,
@@ -148,7 +149,11 @@ Namespace Drawing2D.Shapes
                 border.fill = border.fill Or black.When(border.fill.StringEmpty)
 
                 Call g.DrawCircle(
-                    rect.Centre, radius, border.GDIObject, fill:=False)
+                    centra:=rect.Centre,
+                    r:=radius,
+                    color:=border.GDIObject,
+                    fill:=False
+                )
             End If
         End Sub
     End Class

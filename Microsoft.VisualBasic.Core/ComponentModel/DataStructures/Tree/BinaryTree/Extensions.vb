@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02910dad45c4d59dbeeed97a2dcd1667, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::802e18b3a0207e31c900371e274252e9, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,8 @@
 
 #End Region
 
-Imports sys = System.Math
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
+Imports stdNum = System.Math
 
 Namespace ComponentModel.DataStructures.BinaryTree
 
@@ -70,7 +71,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Return 0
             Else
 
-                Dim minl = sys.Min(a.Length, b.Length)
+                Dim minl = stdNum.Min(a.Length, b.Length)
                 Dim c1, c2 As Char
 
                 For i As Integer = 0 To minl - 1
@@ -101,7 +102,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <param name="b$"></param>
         ''' <returns></returns>
         Public Function NameFuzzyMatch(a$, b$) As Integer
-            Dim similarity = Text.Levenshtein.ComputeDistance(a, b)
+            Dim similarity = LevenshteinDistance.ComputeDistance(a, b)
 
             If a.TextEquals(b) Then
                 Return 0

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b024577ea1fdaa7118bd6e089a956260, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumeration.vb"
+﻿#Region "Microsoft.VisualBasic::3c4b5e020dd25b44ba41feb2c4e20222, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumeration.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '     Module EnumerationExtensions
     ' 
-    '         Function: AsEnumerable
+    '         Function: AsEnumerable, (+2 Overloads) AsObjectEnumerator
     '         Class Enumerator
     ' 
     '             Function: GetEnumerator, IEnumerable_GetEnumerator
@@ -81,6 +81,7 @@ Namespace Linq
         Function GetEnumerator() As IEnumerator
     End Interface
 
+    <HideModuleName>
     Public Module EnumerationExtensions
 
         Private Class Enumerator(Of T) : Implements IEnumerable(Of T)
@@ -97,6 +98,36 @@ Namespace Linq
                 Return Enumeration.GetEnumerator
             End Function
         End Class
+
+        ''' <summary>
+        ''' 将一个<see cref="Array"/>对象转换为一个<see cref="Object"/>对象的枚举序列
+        ''' </summary>
+        ''' <param name="enums"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 使用这个拓展函数的原因是<see cref="Array"/>对象不能够产生对象的枚举序列用于Linq拓展函数
+        ''' </remarks>
+        <Extension>
+        Public Iterator Function AsObjectEnumerator(enums As Array) As IEnumerable(Of Object)
+            For i As Integer = 0 To enums.Length - 1
+                Yield enums.GetValue(i)
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 将一个<see cref="Array"/>对象转换为一个<see cref="Object"/>对象的枚举序列
+        ''' </summary>
+        ''' <param name="enums"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 使用这个拓展函数的原因是<see cref="Array"/>对象不能够产生对象的枚举序列用于Linq拓展函数
+        ''' </remarks>
+        <Extension>
+        Public Iterator Function AsObjectEnumerator(Of T)(enums As Array) As IEnumerable(Of T)
+            For i As Integer = 0 To enums.Length - 1
+                Yield DirectCast(enums.GetValue(i), T)
+            Next
+        End Function
 
         ''' <summary>
         ''' Returns the input typed as <see cref="IEnumerable(Of T)"/>.

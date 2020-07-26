@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ceea95906ed80e045120aa58ab0bf6, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::37ab85fe1bea2c91e089a163c37861ad, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Vector2D.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,8 @@
 
 #End Region
 
+Imports stdNum = System.Math
+
 Namespace Imaging.Math2D
 
     ''' <summary>
@@ -55,7 +57,7 @@ Namespace Imaging.Math2D
 
         Public ReadOnly Property Length As Double
             Get
-                Return Math.Sqrt(x ^ 2 + y ^ 2)
+                Return stdNum.Sqrt(x ^ 2 + y ^ 2)
             End Get
         End Property
 

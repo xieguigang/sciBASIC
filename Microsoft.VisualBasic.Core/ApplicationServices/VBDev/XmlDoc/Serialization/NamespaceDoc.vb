@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e5c81b520ee5bc426622c3be0d8268e, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0c0c6cdbf3c27738d9dcadaf89831893, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                 .Select(Function(ns) ns.Types) _
                 .IteratesALL _
                 .Where(AddressOf IsNamespaceDoc) _
-                .GroupBy(Function(doc) doc.Namespace.Path) _
+                .GroupBy(Function(doc) doc.Namespace.fullName) _
                 .ToDictionary(Function(ns) ns.Key,
                               Function(nsGroup)
                                   Return nsGroup _

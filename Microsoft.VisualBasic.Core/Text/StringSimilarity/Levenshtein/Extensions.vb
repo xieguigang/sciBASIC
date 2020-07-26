@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1750ddfdcc7e6195deb2ddb76c3dcc66, Microsoft.VisualBasic.Core\Text\StringSimilarity\Levenshtein\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::91fdbd5ab073e0638d3ad0552d11a05c, Microsoft.VisualBasic.Core\Text\StringSimilarity\Levenshtein\Extensions.vb"
 
     ' Author:
     ' 
@@ -44,10 +44,12 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Levenshtein
 
+    <HideModuleName>
     Public Module LevExtensions
 
         <Extension> Public Sub GetMatches(Of T)(edits As DistResult, ref As T(), hyp As T(), ByRef refOUT As T(), ByRef hypOUT As T())

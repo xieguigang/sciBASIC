@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::483cde5ad46acf2c65ce1061000bb57f, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb"
+﻿#Region "Microsoft.VisualBasic::94719152a098083183a484812c6f9ecc, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb"
 
     ' Author:
     ' 
@@ -176,8 +176,7 @@ Namespace Math.Statistics.Linq
         '     source contains no elements.
         <Extension>
         Public Function Median(source As IEnumerable(Of Single)) As Single
-            Dim sortedList = From number In source Order By number Select number
-
+            Dim sortedList = (From number In source Order By number Select number).ToArray
             Dim count As Integer = sortedList.Count()
             Dim itemIndex As Integer = count \ 2
 

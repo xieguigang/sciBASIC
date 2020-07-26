@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a175482ce4e5718fbac45d5c2542b07, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
+﻿#Region "Microsoft.VisualBasic::c92a9eae2e29ab67023e78e124aa2723, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Sub: InternalLoadAllThemes
     ' 
-    '     Class Theme
+    '     Class OfficeColorTheme
     ' 
     '         Properties: accents, dk1, dk2, folHlink, hlink
     '                     lt1, lt2, name
@@ -90,20 +90,20 @@ Namespace Drawing2D.Colors
 
     Public Module OfficeColorThemes
 
-        Public ReadOnly Property Office2016 As Theme
-        Public ReadOnly Property Office2010 As Theme
-        Public ReadOnly Property Slipstream As Theme
-        Public ReadOnly Property Marquee As Theme
-        Public ReadOnly Property Aspect As Theme
-        Public ReadOnly Property Paper As Theme
+        Public ReadOnly Property Office2016 As OfficeColorTheme
+        Public ReadOnly Property Office2010 As OfficeColorTheme
+        Public ReadOnly Property Slipstream As OfficeColorTheme
+        Public ReadOnly Property Marquee As OfficeColorTheme
+        Public ReadOnly Property Aspect As OfficeColorTheme
+        Public ReadOnly Property Paper As OfficeColorTheme
 
         Sub New()
-            Office2016 = Theme.LoadFromXml(My.Resources.Default_Office)
-            Office2010 = Theme.LoadFromXml(My.Resources.Default_Office2007_2010)
-            Marquee = Theme.LoadFromXml(My.Resources.Default_Marquee)
-            Aspect = Theme.LoadFromXml(My.Resources.Default_Aspect)
-            Paper = Theme.LoadFromXml(My.Resources.Default_Paper)
-            Slipstream = Theme.LoadFromXml(My.Resources.Default_Slipstream)
+            Office2016 = OfficeColorTheme.LoadFromXml(My.Resources.Default_Office)
+            Office2010 = OfficeColorTheme.LoadFromXml(My.Resources.Default_Office2007_2010)
+            Marquee = OfficeColorTheme.LoadFromXml(My.Resources.Default_Marquee)
+            Aspect = OfficeColorTheme.LoadFromXml(My.Resources.Default_Aspect)
+            Paper = OfficeColorTheme.LoadFromXml(My.Resources.Default_Paper)
+            Slipstream = OfficeColorTheme.LoadFromXml(My.Resources.Default_Slipstream)
 
             Call InternalLoadAllThemes()
         End Sub
@@ -112,7 +112,7 @@ Namespace Drawing2D.Colors
         ''' All office color themes
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Themes As New Dictionary(Of Theme)
+        Public ReadOnly Property Themes As New Dictionary(Of OfficeColorTheme)
 
         Private Sub InternalLoadAllThemes()
             Dim resMgr As Type = GetType(My.Resources.Resources)
@@ -125,7 +125,7 @@ Namespace Drawing2D.Colors
 
             For Each theme As PropertyInfo In datas
                 Dim xml As String = TryCast(theme.GetValue(Nothing, Nothing), String)
-                Dim t As Theme = Drawing2D.Colors.Theme.LoadFromXml(xml)
+                Dim t As OfficeColorTheme = Drawing2D.Colors.OfficeColorTheme.LoadFromXml(xml)
 
                 t.name = t.name.Replace("Default_", "")
                 Call Themes.Add(t) ' 顺序不能变换，否则键名就不一致了
@@ -141,7 +141,7 @@ Namespace Drawing2D.Colors
             If Themes.ContainsKey(theme) Then
                 Return Themes(theme).GetAccentColors
             Else
-                For Each t As Theme In Themes.Values
+                For Each t As OfficeColorTheme In Themes.Values
                     If t.name.TextEquals(theme) Then
                         Return t.GetAccentColors
                     End If
@@ -152,7 +152,7 @@ Namespace Drawing2D.Colors
         End Function
     End Module
 
-    <XmlRoot("clrScheme")> Public Class Theme : Implements INamedValue
+    <XmlRoot("clrScheme")> Public Class OfficeColorTheme : Implements INamedValue
 
         <XmlAttribute>
         Public Property name As String Implements INamedValue.Key
@@ -176,7 +176,7 @@ Namespace Drawing2D.Colors
             Return name
         End Function
 
-        Public Shared Function LoadFromXml(xml$) As Theme
+        Public Shared Function LoadFromXml(xml$) As OfficeColorTheme
             Dim s As New StringBuilder(
                 If(xml.FileExists, xml.ReadAllText, xml))
 
@@ -192,7 +192,7 @@ Namespace Drawing2D.Colors
             xml = s.ToString
             xml = Regex.Replace(xml, "a:accent\d+", "accent")
 
-            Dim t As Theme = xml.LoadFromXml(Of Theme)
+            Dim t As OfficeColorTheme = xml.LoadFromXml(Of OfficeColorTheme)
             Return t
         End Function
 

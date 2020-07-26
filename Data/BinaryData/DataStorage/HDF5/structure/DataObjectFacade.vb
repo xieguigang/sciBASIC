@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a77c51519ee646efc496590510f12208, Data\BinaryData\DataStorage\HDF5\structure\DataObjectFacade.vb"
+﻿#Region "Microsoft.VisualBasic::7d2367e21368193dd3544504baf5b012, Data\BinaryData\DataStorage\HDF5\structure\DataObjectFacade.vb"
 
     ' Author:
     ' 
@@ -269,7 +269,7 @@ Namespace HDF5.struct
 
                         readLayout.dimensionLength = dimensionLength
 
-                        'int ndims = Math.min(dimensionLength.length, maxDimensionLength.length);
+                        'int ndims = stdNum.min(dimensionLength.length, maxDimensionLength.length);
                         'layout.setNumberOfDimensions(ndims);
                         readLayout.maxDimensionLength = maxDimensionLength
                     End If

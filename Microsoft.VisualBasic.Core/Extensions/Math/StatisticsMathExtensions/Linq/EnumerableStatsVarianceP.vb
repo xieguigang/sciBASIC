@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::473e67c72806d54d9b38834ee8ef01b7, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsVarianceP.vb"
+﻿#Region "Microsoft.VisualBasic::6545eb8949de4057adb0b2a70f9f7dd6, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsVarianceP.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math.Statistics.Linq
 
@@ -142,7 +142,7 @@ Namespace Math.Statistics.Linq
         Public Function VarianceP(source As IEnumerable(Of Double)) As Double
             Dim avg As Double = source.Average()
             Dim d As Double = source.Aggregate(0.0, func:=Function(total, [next]) As Double
-                                                              total += sys.Pow([next] - avg, 2)
+                                                              total += System.Math.Pow([next] - avg, 2)
                                                               Return total
                                                           End Function)
             Return d / source.Count()

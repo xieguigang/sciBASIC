@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c11dc0f1c9e9d6407961c01820bf2f7, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::2b78908f372006a0a22c9656e6e98638, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports DataSet = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of System.Collections.Generic.Dictionary(Of String, Double))
-Imports sys = System.Math
+Imports stdNum = System.Math
 Imports Vector = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of Double())
 
 Namespace Math.Correlations
@@ -122,7 +122,6 @@ Namespace Math.Correlations
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        <ExportAPI("SW", Info:="Sandelin-Wasserman similarity function")>
         Public Function SW(x As Double(), y As Double()) As Double
             Dim p = From i As Integer
                     In x.Sequence
@@ -156,7 +155,6 @@ Namespace Math.Correlations
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        <ExportAPI("KLD", Info:="Kullback-Leibler divergence")>
         Public Function KLD(x As Double(), y As Double()) As Double
             Dim index As Integer() = x.Sequence.ToArray
             Dim a As Double = Aggregate i As Integer In index Into Sum(KLDi(x(i), y(i)))
@@ -171,7 +169,7 @@ Namespace Math.Correlations
                 Return 0R
             Else
                 ' KLD(P||Q) = Σ[P(i)*ln(P(i)/Q(i))]
-                Dim value As Double = Xa * sys.Log(Xa / Ya)
+                Dim value As Double = Xa * stdNum.Log(Xa / Ya)
                 Return value
             End If
         End Function
@@ -309,7 +307,7 @@ Namespace Math.Correlations
                 n2 += (s * (s - 1)) / 2
             Next
 
-            denom = sys.Sqrt((n0 - n1) * (n0 - n2))
+            denom = stdNum.Sqrt((n0 - n1) * (n0 - n2))
 
             If denom = 0 Then
                 denom += 0.000000001
@@ -332,7 +330,7 @@ Namespace Math.Correlations
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
-        ''' <param name="prob"></param>
+        ''' <param name="prob">p-value in R ``cor.test`` function.</param>
         ''' <param name="prob2"></param>
         ''' <param name="z">fisher's z trasnformation</param>
         ''' <returns></returns>
@@ -340,21 +338,25 @@ Namespace Math.Correlations
         ''' checked by Excel
         ''' </remarks>
         <ExportAPI("Pearson")>
-        Public Function GetPearson(x#(), y#(), Optional ByRef prob# = 0, Optional ByRef prob2# = 0, Optional ByRef z# = 0) As Double
+        Public Function GetPearson(x#(), y#(), Optional ByRef prob# = 0, Optional ByRef prob2# = 0, Optional ByRef z# = 0, Optional throwMaxIterError As Boolean = True) As Double
             Dim t#, df#
             Dim pcc As Double = GetPearson(x, y)
             Dim n As Integer = x.Length
 
+            If pcc > 1 Then
+                pcc = 1
+            End If
+
             ' fisher's z trasnformation
-            z = 0.5 * sys.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
+            z = 0.5 * stdNum.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
 
             ' student's t probability
             df = n - 2
-            t = pcc * sys.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
+            t = pcc * stdNum.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
 
-            prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t))
+            prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t), throwMaxIterError)
             ' for a large n
-            prob2 = Beta.erfcc(Abs(z * sys.Sqrt(n - 1.0)) / 1.4142136)
+            prob2 = Beta.erfcc(stdNum.Abs(z * stdNum.Sqrt(n - 1.0)) / 1.4142136)
 
             Return pcc
         End Function
@@ -368,7 +370,7 @@ Namespace Math.Correlations
             Public ReadOnly Property P As Double
                 <MethodImpl(MethodImplOptions.AggressiveInlining)>
                 Get
-                    Return -Math.Log10(pvalue)
+                    Return -stdNum.Log10(pvalue)
                 End Get
             End Property
 
@@ -432,7 +434,7 @@ Namespace Math.Correlations
                 sxy += xt * yt
             Next
 
-            Return sxy / (Sqrt(sxx * syy) + TINY)
+            Return sxy / (stdNum.Sqrt(sxx * syy) + TINY)
         End Function
 
         ''' <summary>
@@ -466,11 +468,6 @@ Namespace Math.Correlations
         ''' checked!
         ''' </remarks>
         '''
-        <ExportAPI("Spearman",
-               Info:="This method should not be used in cases where the data set is truncated; 
-               that is, when the Spearman correlation coefficient is desired for the top X records 
-               (whether by pre-change rank or post-change rank, or both), the user should use the 
-               Pearson correlation coefficient formula given above.")>
         Public Function Spearman(X#(), Y#()) As Double
             If X.Length <> Y.Length Then
                 Call throwNotAgree(X, Y)

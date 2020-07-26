@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf9c2b1393a625f0030b0dc643af94c9, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\EventProc.vb"
+﻿#Region "Microsoft.VisualBasic::e5d124ec5793dd97ffb34ea0fbf396f7, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\EventProc.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports sys = System.Math
 
-Namespace Terminal.Utility
+Namespace ApplicationServices.Terminal.Utility
 
     ''' <summary>
     ''' Generates the task progress for the console output.(处理任务进度)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f079db4c8197f3ad463dc4d22c1334b, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogNormal.vb"
+﻿#Region "Microsoft.VisualBasic::f671736e3a1117fc6a2d91a451354882, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogNormal.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,7 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -76,7 +75,7 @@ Namespace Distributions.MethodOfMoments
         ''' <param name="data"> the sampled data (in linear space) </param>
         Public Sub New(data As Double())
             For i As Integer = 0 To data.Length - 1
-                data(i) = Math.Log10(data(i))
+                data(i) = stdNum.Log10(data(i))
             Next i
             Dim BPM As New MomentFunctions.BasicProductMoments(data)
             _Mean = BPM.Mean()
@@ -85,29 +84,29 @@ Namespace Distributions.MethodOfMoments
         End Sub
         Public Overrides Function GetInvCDF(probability As Double) As Double
             Dim z As New Normal(_Mean, _StDev)
-            Return Math.Pow(10, z.GetInvCDF(probability))
+            Return stdNum.Pow(10, z.GetInvCDF(probability))
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
             Dim n As New Distributions.MethodOfMoments.Normal(_Mean, _StDev)
-            Return n.GetCDF(Math.Log10(value))
+            Return n.GetCDF(stdNum.Log10(value))
         End Function
         Public Overrides Function GetPDF(value As Double) As Double
             Dim n As New Distributions.MethodOfMoments.Normal(_Mean, _StDev)
-            Return n.GetPDF(Math.Log10(value))
+            Return n.GetPDF(stdNum.Log10(value))
         End Function
         Public Overridable Function Bullentin17BConfidenceLimit(probability As Double, alphaValue As Double) As Double
             Dim sn As New Normal(0, 1)
             Dim k As Double = sn.GetInvCDF(probability)
             Dim z As Double = sn.GetInvCDF(alphaValue)
-            Dim zSquared As Double = Math.Pow(z, 2)
-            Dim kSquared As Double = Math.Pow(k, 2)
+            Dim zSquared As Double = stdNum.Pow(z, 2)
+            Dim kSquared As Double = stdNum.Pow(k, 2)
             Dim Avalue As Double = (1 - (zSquared) / 2 \ (PeriodOfRecord() - 1))
             Dim Bvalue As Double = (kSquared) - ((zSquared) / PeriodOfRecord())
-            Dim RootValue As Double = Math.Sqrt(kSquared - (Avalue * Bvalue))
+            Dim RootValue As Double = stdNum.Sqrt(kSquared - (Avalue * Bvalue))
             If alphaValue > 0.5 Then
-                Return Math.Pow(10, _Mean + _StDev * (k + RootValue) / Avalue)
+                Return stdNum.Pow(10, _Mean + _StDev * (k + RootValue) / Avalue)
             Else
-                Return Math.Pow(10, _Mean + _StDev * (k - RootValue) / Avalue)
+                Return stdNum.Pow(10, _Mean + _StDev * (k - RootValue) / Avalue)
             End If
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)

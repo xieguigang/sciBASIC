@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31d8b9f22429d611d4f0652277834839, Data_science\Visualization\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::d5ba3724d0de6d347751c270ef39322e, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     ' 
     '         Function: __plotLabel, (+2 Overloads) DrawLabel
     ' 
-    '         Sub: (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY, DrawYGrid
+    '         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
+    '              DrawYGrid
     ' 
     ' 
     ' /********************************************************************************/
@@ -114,6 +115,7 @@ Namespace Graphic.Axis
                             Optional labelFont$ = CSSFont.Win7Large,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
+                            Optional gridColor$ = "white",
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
@@ -130,9 +132,21 @@ Namespace Graphic.Axis
                     axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel,
                     XtickFormat:=XtickFormat,
                     YtickFormat:=YtickFormat,
-                    tickFontStyle:=tickFontStyle
+                    tickFontStyle:=tickFontStyle,
+                    gridColor:=gridColor
                 )
             End With
+        End Sub
+
+        <Extension>
+        Private Sub checkScaler(scaler As DataScaler)
+            If scaler.X.valueDomain.Length = 0.0 Then
+                Throw New InvalidProgramException("the x axis range length is ZERO!")
+            ElseIf scaler.Y.valueDomain.Length = 0.0 Then
+                Throw New InvalidProgramException("the y axis range length is ZERO!")
+            Else
+                ' pass
+            End If
         End Sub
 
         ''' <summary>
@@ -172,9 +186,10 @@ Namespace Graphic.Axis
                 .DashStyle = Drawing2D.DashStyle.Dot
             }
 
+            Call scaler.checkScaler
             Call g.FillRectangle(gridFill.GetBrush, rect)
 
-            If Not scaler.AxisTicks.X.IsNullorEmpty Then
+            If showGrid AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
                 For Each tick In scaler.AxisTicks.X
                     Dim x = scaler.X(tick) + offset.X
                     Dim top As New Point(x, rect.Top)
@@ -185,7 +200,7 @@ Namespace Graphic.Axis
                 Next
             End If
 
-            If Not scaler.AxisTicks.Y.IsNullorEmpty Then
+            If showGrid AndAlso Not scaler.AxisTicks.Y.IsNullOrEmpty Then
                 For Each tick In scaler.AxisTicks.Y
                     Dim y = scaler.TranslateY(tick) + offset.Y
                     Dim left As New Point(rect.Left, y)
@@ -198,14 +213,19 @@ Namespace Graphic.Axis
 
             Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
 
-            If htmlLabel Then
-                Call "Axis Labeling using HTML render is enable.".__INFO_ECHO
-            Else
-                Call "Axis Labeling using HTML render was disabled!".__INFO_ECHO
-            End If
+            'If htmlLabel Then
+            '    Call "Axis Labeling using HTML render is enable.".__INFO_ECHO
+            'Else
+            '    Call "Axis Labeling using HTML render was disabled!".__INFO_ECHO
+            'End If
 
             If xlayout <> XAxisLayoutStyles.None Then
-                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=XtickFormat)
+                Call g.DrawX(pen, xlabel, scaler, xlayout, scaler.Y(0), offset,
+                             labelFontStyle,
+                             tickFont,
+                             htmlLabel:=htmlLabel,
+                             tickFormat:=XtickFormat
+                     )
             End If
             If ylayout <> YAxisLayoutStyles.None Then
                 Call g.DrawY(pen, ylabel,
@@ -306,17 +326,28 @@ Namespace Graphic.Axis
             Dim maxYTickSize!
 
             If Not yTicks.IsNullOrEmpty Then
+                Dim p As PointF
+
                 For Each tick As Double In yTicks
                     Dim y! = scaler.TranslateY(tick) + offset.Y
                     Dim axisY As New PointF(ZERO.X, y)
 
                     If showAxisLine Then
-                        Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                        If layout = YAxisLayoutStyles.Right Then
+                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X + delta, y))
+                        Else
+                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                        End If
                     End If
 
                     Dim labelText = (tick).ToString(tickFormat)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
-                    Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
+
+                    If layout = YAxisLayoutStyles.Right Then
+                        p = New PointF(ZERO.X + delta, y - sz.Height / 2)
+                    Else
+                        p = New PointF(ZERO.X - delta - sz.Width, y - sz.Height / 2)
+                    End If
 
                     If sz.Width > maxYTickSize Then
                         maxYTickSize = sz.Width
@@ -351,11 +382,14 @@ Namespace Graphic.Axis
                         location = New PointF(5, location.Y)
                     End If
 
-                    Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
-
-                    With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                        Call .DrawString(label, font, Brushes.Black, location, -90)
-                    End With
+                    ' Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
+                    If TypeOf g Is Graphics2D Then
+                        With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                            Call .DrawString(label, font, Brushes.Black, location, -90)
+                        End With
+                    Else
+                        Call g.DrawString(label, font, Brushes.Black, location)
+                    End If
                 End If
             End If
         End Sub
@@ -442,7 +476,7 @@ Namespace Graphic.Axis
         <Extension> Public Sub DrawX(ByRef g As IGraphics,
                                      pen As Pen, label$,
                                      scaler As DataScaler,
-                                     layout As XAxisLayoutStyles, offset As Point,
+                                     layout As XAxisLayoutStyles, Y0#, offset As Point,
                                      labelFont$,
                                      tickFont As Font,
                                      Optional overridesTickLine% = -1,
@@ -458,6 +492,8 @@ Namespace Graphic.Axis
                     Y += size.Height / 2 + offset.Y
                 Case XAxisLayoutStyles.Top
                     Y += 0
+                Case XAxisLayoutStyles.ZERO
+                    Y = Y0 + offset.Y
                 Case Else
                     Y += size.Height
             End Select
@@ -468,7 +504,7 @@ Namespace Graphic.Axis
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
-            If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullorEmpty Then
+            If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
                 For Each tick# In scaler.AxisTicks.X
                     Dim x As Single = scaler.X(tick) + offset.X
                     Dim axisX As New PointF(x, ZERO.Y)
@@ -486,7 +522,7 @@ Namespace Graphic.Axis
                     Dim labelImage As Image = label.__plotLabel(labelFont, False)
                     Dim point As New Point With {
                         .X = (size.Width - labelImage.Width) / 2 + scaler.region.Left,
-                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 3
+                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 4
                     }
 
                     Call g.DrawImageUnscaled(labelImage, point)
@@ -495,10 +531,10 @@ Namespace Graphic.Axis
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim point As New PointF With {
                         .X = (size.Width - fSize.Width) / 2 + scaler.region.Left,
-                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 3
+                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 4
                     }
 
-                    Call $"[X:={label}] {point.ToString}".__INFO_ECHO
+                    ' Call $"[X:={label}] {point.ToString}".__INFO_ECHO
                     Call g.DrawString(label, font, Brushes.Black, point)
                 End If
             End If

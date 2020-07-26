@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b424b363e40ad81926efb551f42c475a, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
+﻿#Region "Microsoft.VisualBasic::65df798d0bac6c64b70b0dd1301982a7, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
 
     ' Author:
     ' 
@@ -57,12 +57,14 @@ Public Module FrameExports
         Dim names = samples.NormalizeMatrix.names.SeqIterator.ToArray
         Dim dataset = matrix _
             .Select(Function(r)
+                        Dim vec As Double() = r.vector
+
                         Return New Excel With {
                             .ID = r.ID,
                             .Properties = names.ToDictionary(
                                 Function(name) name.value,
                                 Function(name)
-                                    Return r.status(name)
+                                    Return vec(name)
                                 End Function)
                         }
                     End Function) _

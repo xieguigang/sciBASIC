@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::115015938390807a34ca8490dffd48d3, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\BipolarSigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::91ff4a0c85fb542f8f8f654eb078be03, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\BipolarSigmoid.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork.Activations
 
@@ -135,7 +136,7 @@ Namespace NeuralNetwork.Activations
         ''' <remarks>The method calculates function value at point <paramref name="x"/>.</remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function [Function](x As Double) As Double
-            Return ((2 / (1 + Math.Exp(-_Alpha * x))) - 1)
+            Return ((2 / (1 + stdNum.Exp(-_Alpha * x))) - 1)
         End Function
 
         ''' <summary>

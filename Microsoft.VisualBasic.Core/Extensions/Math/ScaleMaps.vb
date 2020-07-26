@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6576a5569926b427ebe1e6bbd35401cb, Microsoft.VisualBasic.Core\Extensions\Math\ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::360175455062a35ba9643ead039d1a74, Microsoft.VisualBasic.Core\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 
@@ -93,6 +93,8 @@ Namespace Math
                                                getSample As Func(Of T, Double),
                                           Optional Level As Integer = 10) As Dictionary(Of String, Integer)
 
+#If NET_48 Then
+
             Dim samples As Double() = data.Select(getSample).ToArray
             Dim levels As Integer() = samples.GenerateMapping(Level)
             Dim hash = data _
@@ -102,7 +104,12 @@ Namespace Math
 
             Return hash.ToDictionary(
                 Function(tp) tp.Item1,
-                Function(tp) tp.Item2)
+                Function(tp)
+                    Return tp.Item2
+                End Function)
+#Else
+            Throw New NotImplementedException
+#End If
         End Function
 
         ''' <summary>
@@ -193,7 +200,6 @@ Namespace Math
         ''' <param name="center">either a logical value or a numeric vector of length equal to the number of columns of x</param>
         ''' <param name="isScale">either a logical value or a numeric vector of length equal to the number of columns of x</param>
         ''' <returns></returns>
-        <ExportAPI("Scale", Info:="function centers and/or scales the columns of a numeric matrix.")>
         Public Function Scale(<Parameter("x", "numeric matrix")> data As IEnumerable(Of Double),
                               <Parameter("center", "either a logical value or a numeric vector of length equal to the number of columns of x")>
                               Optional center As Boolean = True,

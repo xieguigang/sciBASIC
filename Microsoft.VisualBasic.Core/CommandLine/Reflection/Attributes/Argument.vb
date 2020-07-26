@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75f8ae1bb23daaa167294cbe5d4d92fc, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Argument.vb"
+﻿#Region "Microsoft.VisualBasic::64214d9aa13eb893c9ab261d3880468b, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Argument.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,12 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
+    ' 
+    '     Class OutputAttribute
+    ' 
+    '         Properties: extension, result
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
@@ -205,5 +211,22 @@ Namespace CommandLine.Reflection
 
             Return sb.ToString
         End Function
+    End Class
+
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
+    Public Class OutputAttribute : Inherits Attribute
+
+        Public ReadOnly Property result As Type
+        ''' <summary>
+        ''' The file extension name, like ``*.csv``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property extension As String
+
+        Sub New(resultType As Type, fileExt$)
+            result = resultType
+            extension = fileExt
+        End Sub
+
     End Class
 End Namespace

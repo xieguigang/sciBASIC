@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c176a3449e6963f3c96c283bb180af0d, Data_science\Visualization\Plots\BarPlot\Histogram\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::c6714e5a9244d73bb1d292776f27c032, Data_science\Visualization\Plots\BarPlot\Histogram\Histogram.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Histogram
     ' 
-    '         Function: HistogramPlot, (+5 Overloads) Plot
+    '         Function: (+2 Overloads) HistogramPlot, (+5 Overloads) Plot
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,7 +56,10 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -161,11 +164,14 @@ Namespace BarPlot.Histogram
                              Optional padding$ = g.DefaultPadding,
                              Optional showGrid As Boolean = True) As GraphicsData
             Dim data As New List(Of Double)
-            Dim engine As New Expression
+            Dim engine As New ExpressionEngine
+            Dim exp As Expression = New ExpressionTokenIcer(expression) _
+                .GetTokens _
+                .ToArray _
+                .DoCall(AddressOf BuildExpression)
 
             For Each x As Double In xrange.Value.seq(steps)
-                Call engine.SetVariable(xrange.Name, x#)
-                data += engine.Evaluation(expression$)
+                data += engine.SetSymbol(xrange.Name, x#).Evaluate(exp)
             Next
 
             Return Plot(data, xrange.Value, color, bg, size, padding, showGrid)
@@ -202,6 +208,10 @@ Namespace BarPlot.Histogram
             Dim margin As Padding = padding
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    If groups.Samples.Length = 1 AndAlso groups.Samples.First.data.Length = 0 Then
+                        Call "No content data for plot histogram chart...".Warning
+                        Return
+                    End If
 
                     Dim scalerData As New Scaling(groups, False)
                     Dim annotations As Dictionary(Of NamedValue(Of Color)) = groups.Serials.ToDictionary
@@ -292,15 +302,14 @@ Namespace BarPlot.Histogram
                         End If
 
                         Call g.DrawLegends(
-                            legendPos,
-                            groups.Samples _
-                                .Select(Function(h) h.legend),
-                            ,,
-                            legendBorder)
+                            topLeft:=legendPos,
+                            legends:=groups.Samples.Select(Function(h) h.legend),
+                            regionBorder:=legendBorder
+                        )
                     End If
                 End Sub
 
-            Return GraphicsPlots(size.SizeParser, margin, bg$, plotInternal)
+            Return g.GraphicsPlots(size.SizeParser, margin, bg$, plotInternal)
         End Function
 
         ''' <summary>
@@ -328,33 +337,70 @@ Namespace BarPlot.Histogram
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
                                       Optional showLegend As Boolean = True) As GraphicsData
-
-            With data.ToArray.Hist([step])
-
-                Dim histLegend As New Legend With {
-                    .color = color,
-                    .fontstyle = CSSFont.Win7LargerBold,
-                    .style = LegendStyles.Rectangle,
-                    .title = serialsTitle
-                }
-
-                Dim s As HistProfile = .NewModel([step], histLegend)
-                Dim group As New HistogramGroup With {
-                    .Samples = {s},
-                    .Serials = {s.SerialData}
-                }
-
-                histData = s.data
-
-                Return group.Plot(
-                    bg:=bg, padding:=padding, size:=size,
-                    showGrid:=showGrid,
-                    showTagChartLayer:=False,
-                    xlabel:=xLabel, Ylabel:=yLabel,
-                    xAxis:=xAxis,
-                    showLegend:=showLegend
+            Return data.ToArray _
+                .Hist([step]) _
+                .HistogramPlot([step]:=[step],
+                               serialsTitle:=serialsTitle,
+                               color:=color,
+                               bg:=bg,
+                               size:=size,
+                               padding:=padding,
+                               showGrid:=showGrid,
+                               histData:=histData,
+                               xLabel:=xLabel,
+                               yLabel:=yLabel,
+                               xAxis:=xAxis,
+                               showLegend:=showLegend
                 )
-            End With
+        End Function
+
+        ''' <summary>
+        ''' 绘制频数
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="step">The step width value for create the input <paramref name="data"/> bin box.</param>
+        ''' <param name="serialsTitle$"></param>
+        ''' <param name="color$"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="size"></param>
+        ''' <param name="showGrid"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function HistogramPlot(data As IEnumerable(Of DataBinBox(Of Double)),
+                                      Optional step! = 1,
+                                      Optional serialsTitle$ = "histogram plot",
+                                      Optional color$ = "lightblue",
+                                      Optional bg$ = "white",
+                                      Optional size$ = "1600,1200",
+                                      Optional padding$ = DefaultPadding,
+                                      Optional showGrid As Boolean = True,
+                                      Optional ByRef histData As HistogramData() = Nothing,
+                                      Optional xLabel$ = "X",
+                                      Optional yLabel$ = "Y",
+                                      Optional xAxis$ = Nothing,
+                                      Optional showLegend As Boolean = True) As GraphicsData
+            Dim histLegend As New Legend With {
+                .color = color,
+                .fontstyle = CSSFont.Win7LargerBold,
+                .style = LegendStyles.Rectangle,
+                .title = serialsTitle
+            }
+            Dim s As HistProfile = data.NewModel([step], histLegend)
+            Dim group As New HistogramGroup With {
+                .Samples = {s},
+                .Serials = {s.SerialData}
+            }
+
+            histData = s.data
+
+            Return group.Plot(
+                bg:=bg, padding:=padding, size:=size,
+                showGrid:=showGrid,
+                showTagChartLayer:=False,
+                xlabel:=xLabel, Ylabel:=yLabel,
+                xAxis:=xAxis,
+                showLegend:=showLegend
+            )
         End Function
     End Module
 End Namespace

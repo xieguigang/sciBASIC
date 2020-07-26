@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6af94cfea22ccf423dbfe4fe5db5d5ac, Microsoft.VisualBasic.Core\My\Framework\Config.vb"
+﻿#Region "Microsoft.VisualBasic::ec9bbaee6431787cf17776fb8f0c20c4, Microsoft.VisualBasic.Core\My\Framework\Config.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,8 @@
     '         Properties: DefaultFile, environment, level, mute, updates
     ' 
     '         Function: Load, Save, saveDefault, ToString
+    ' 
+    '         Sub: fetchConfig
     ' 
     ' 
     ' /********************************************************************************/
@@ -112,25 +114,39 @@ Namespace My.FrameworkInternal
                            Return file.BaseName.StartsWith("Microsoft.VisualBasic")
                        End Function) _
                 .ToArray
-            Dim assembly As Assembly
-            Dim configNames As FrameworkConfigAttribute()
 
             For Each file As String In modules
-                assembly = Assembly.LoadFile(file)
-                configNames = assembly.GetTypes _
-                    .Select(Function(type)
-                                Return type.GetCustomAttributes(Of FrameworkConfigAttribute)
-                            End Function) _
-                    .IteratesALL _
-                    .ToArray
-
-                For Each configName As FrameworkConfigAttribute In configNames
-                    config.environment(configName.Name) = ""
-                Next
+#If UNIX Then
+                Try
+                    Call fetchConfig(config, file)
+                Catch ex As Exception
+                    ' ignores the bugs in environment
+                    ' mono on linux
+                    ' Could not load file or assembly 'PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.
+                    Call ex.Message.Print
+                    Call file.Warning
+                End Try
+#Else
+                Call fetchConfig(config, file)
+#End If
             Next
 
             Return config.Save
         End Function
+
+        Private Shared Sub fetchConfig(config As Config, file$)
+            Dim assembly As Assembly = Assembly.LoadFile(file)
+            Dim configNames As FrameworkConfigAttribute() = assembly.GetTypes _
+                .Select(Function(type)
+                            Return type.GetCustomAttributes(Of FrameworkConfigAttribute)
+                        End Function) _
+                .IteratesALL _
+                .ToArray
+
+            For Each configName As FrameworkConfigAttribute In configNames
+                config.environment(configName.Name) = ""
+            Next
+        End Sub
 
         Private Function Save() As Config
             Call Me _

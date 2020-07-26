@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::677cab0ad3137bc4e63a8cf7939e93ae, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1d4cbb9c5ee48170cd32bf5bb6e0d404, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@
 #End Region
 
 Imports System.IO
-Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Parallel.MMFProtocol.MapStream
 
@@ -90,7 +90,7 @@ Namespace Parallel.MMFProtocol.MapStream
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Uri
+            Return URI
         End Function
     End Class
 

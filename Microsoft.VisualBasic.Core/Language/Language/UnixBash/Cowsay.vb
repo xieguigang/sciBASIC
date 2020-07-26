@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fd474cee93bf8f6967bce44e951e500, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Cowsay.vb"
+﻿#Region "Microsoft.VisualBasic::ba4b0cdb8500ef891eab9b8b03368ac8, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Cowsay.vb"
 
     ' Author:
     ' 
@@ -116,8 +116,6 @@ H   H EEEEE LLLLL LLLLL  OOO  ,,    W W   OOO  R   R LLLLL DDDD  !!
         ''' <param name="msg"></param>
         ''' <returns></returns>
         ''' 
-        <ExportAPI("Cowsay",
-               Info:="Show cowsay with a specific input message on your console screen. you can using /dead to change its face.")>
         Public Function RunCowsay(msg As String, Optional isDead As Boolean = False) As String
             If isDead Then
                 msg = __msgbox(msg) & DeadCow

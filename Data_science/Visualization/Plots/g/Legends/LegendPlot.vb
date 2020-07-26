@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::644eccc9090820deb1fde3767db55f06, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::6194adb691f50591af0b08ab104b6ad8, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -51,10 +51,11 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Graphic.Legend
 
+    <HideModuleName>
     Public Module LegendPlotExtensions
 
         Private ReadOnly legendExpressions As Dictionary(Of String, LegendStyles) =
@@ -116,14 +117,14 @@ Namespace Graphic.Legend
             Select Case style
 
                 Case LegendStyles.Circle
-                    Dim r As Single = sys.Min(gSize.Height, gSize.Width) / 2
+                    Dim r As Single = stdNum.Min(gSize.Height, gSize.Width) / 2
                     Dim c As New Point With {
                         .X = pos.X + gSize.Height,
                         .Y = pos.Y + gSize.Height / 2
                     }
 
                     labelPos = New PointF With {
-                        .X = Math.Max(c.X + r, labelPos.X),
+                        .X = stdNum.Max(c.X + r, labelPos.X),
                         .Y = labelPos.Y
                     }
 
@@ -135,14 +136,14 @@ Namespace Graphic.Legend
                     Dim a As New Point(pos.X + d, pos.Y + gSize.Height / 2)
                     Dim b As New Point(pos.X + gSize.Width - d, a.Y)
                     Dim pen As New Pen(color, lineWidth) With {
-                        .DashStyle = DashStyle.Dash
+                        .DashStyle = DashStyle.Dot
                     }
 
                     Call g.DrawLine(pen, a, b)
 
                 Case LegendStyles.Diamond
 
-                    Dim d As Integer = sys.Min(gSize.Height, gSize.Width)
+                    Dim d As Integer = stdNum.Min(gSize.Height, gSize.Width)
                     Dim topLeft As New Point With {
                         .X = pos.X + (gSize.Width - d) / 2,
                         .Y = pos.Y + (gSize.Height - d) / 2
@@ -152,7 +153,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Hexagon
 
-                    Dim d As Integer = sys.Min(gSize.Height, gSize.Width)
+                    Dim d As Integer = stdNum.Min(gSize.Height, gSize.Width)
                     Dim topLeft As New Point With {
                         .X = pos.X + (gSize.Width - d) / 2,
                         .Y = pos.Y + (gSize.Height - d) / 2
@@ -191,7 +192,7 @@ Namespace Graphic.Legend
                         color, border)
 
                 Case LegendStyles.Square
-                    Dim r As Single = sys.Min(gSize.Height, gSize.Width)
+                    Dim r As Single = stdNum.Min(gSize.Height, gSize.Width)
                     Dim location As New Point With {
                         .X = pos.X + gSize.Width - r,
                         .Y = pos.Y + gSize.Height - r
@@ -215,7 +216,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Triangle
 
-                    Dim d As Integer = sys.Min(gSize.Height, gSize.Width)
+                    Dim d As Integer = stdNum.Min(gSize.Height, gSize.Width)
                     Dim topLeft As New Point With {
                         .X = pos.X + (gSize.Width - d) / 2,
                         .Y = pos.Y + (gSize.Height - d) / 2
@@ -255,7 +256,7 @@ Namespace Graphic.Legend
                                    l As Legend,
                                    Optional border As Stroke = Nothing,
                                    Optional radius% = 5,
-                                   Optional titleBrush As Brush = Nothing) As SizeF
+                                   Optional titleBrush As Brush = Nothing, Optional lineWidth! = -1) As SizeF
 
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
@@ -265,21 +266,27 @@ Namespace Graphic.Legend
             }
             Dim color As Brush = l.color.GetBrush
 
-            Static blackTitle As [Default](Of  Brush) = Brushes.Black
+            Static blackTitle As [Default](Of Brush) = Brushes.Black
 
-            Call g.DrawLegendShape(
-                pos, canvas, l.style, color,
-                border:=border,
-                radius:=radius,
-                labelPos:=labelPosition,
-                lineWidth:=font.Size
-            )
-            Call g.DrawString(
-                l.title,
-                font,
-                brush:=titleBrush Or blackTitle,
-                point:=labelPosition
-            )
+            If lineWidth <= 0 Then
+                lineWidth = font.Size / 2
+            End If
+
+            SyncLock blackTitle.DefaultValue
+                Call g.DrawLegendShape(
+                    pos, canvas, l.style, color,
+                    border:=border,
+                    radius:=radius,
+                    labelPos:=labelPosition,
+                    lineWidth:=lineWidth
+                )
+                Call g.DrawString(
+                    l.title,
+                    font,
+                    brush:=titleBrush Or blackTitle,
+                    point:=labelPosition
+                )
+            End SyncLock
 
             If fSize.Height > canvas.Height Then
                 Return fSize
@@ -294,6 +301,9 @@ Namespace Graphic.Legend
         ''' <param name="g"></param>
         ''' <param name="topLeft"></param>
         ''' <param name="legends"></param>
+        ''' <param name="fillBg">
+        ''' The background color of the legend area, by default is transparent
+        ''' </param>
         ''' <param name="gSize">
         ''' 单个legend图形的绘图区域的大小，图例之中的shap的大小都是根据这个参数来进行限制自动调整的
         ''' </param>
@@ -305,48 +315,60 @@ Namespace Graphic.Legend
                                topLeft As Point,
                                legends As IEnumerable(Of Legend),
                                Optional gSize$ = "120,45",
+                               Optional fillBg$ = Nothing,
                                Optional d% = 10,
-                               Optional border As Stroke = Nothing,
+                               Optional shapeBorder As Stroke = Nothing,
                                Optional regionBorder As Stroke = Nothing,
                                Optional roundRectRegion As Boolean = True,
                                Optional radius% = 5,
                                Optional titleBrush As Brush = Nothing)
 
             Dim ZERO As Point = topLeft
-            Dim n As Integer
             Dim size As SizeF
             Dim legendList As Legend() = legends.ToArray
             Dim graphicSize As SizeF = gSize.FloatSizeParser
 
-            For Each l As Legend In legendList
-                n += 1
-                size = g.DrawLegend(topLeft, graphicSize, l, border, radius, titleBrush)
-                topLeft = New Point With {
-                    .X = topLeft.X,
-                    .Y = size.Height + d + topLeft.Y
-                }
-            Next
-
             If Not regionBorder Is Nothing Then
                 Dim maxTitleSize As SizeF = legendList.MaxLegendSize(g)
+                Dim rect As Rectangle
 
                 With graphicSize
 
                     Dim width! = .Width + .Height * 1.25 + maxTitleSize.Width
-                    Dim height! = (Math.Max(.Height, maxTitleSize.Height) + d + 1) * n
+                    Dim height! = (stdNum.Max(.Height, maxTitleSize.Height) + d + 1) * legendList.Length
+                    Dim background As Brush = Nothing
+
+                    If Not fillBg.StringEmpty Then
+                        background = fillBg.GetBrush
+                    End If
 
                     size = New SizeF(width, height)
                     ZERO = New Point(ZERO.X - d, ZERO.Y - d * 1.2)
 
                     If roundRectRegion Then
-                        Call RoundRect.Draw(g, ZERO, size, 15,, regionBorder)
+                        Call RoundRect.Draw(g, ZERO, size, 15, background, regionBorder)
                     Else
-                        g.DrawRectangle(
-                            regionBorder.GDIObject,
-                            New Rectangle(ZERO, size.ToSize))
+                        rect = New Rectangle(ZERO, size.ToSize)
+
+                        If Not background Is Nothing Then
+                            Call g.FillRectangle(background, rect)
+                        End If
+
+                        Call g.DrawRectangle(
+                            pen:=regionBorder.GDIObject,
+                            rect:=rect
+                        )
                     End If
                 End With
             End If
+
+            For Each l As Legend In legendList
+                size = g.DrawLegend(topLeft, graphicSize, l, shapeBorder, radius, titleBrush)
+                topLeft = New Point With {
+                    .X = topLeft.X,
+                    .Y = size.Height + d + topLeft.Y
+                }
+            Next
         End Sub
 
         ''' <summary>

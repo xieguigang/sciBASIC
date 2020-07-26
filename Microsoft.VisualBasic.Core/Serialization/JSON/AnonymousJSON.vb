@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85970f575669d31dd25b44f3643abf94, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
+﻿#Region "Microsoft.VisualBasic::1b91527d50add25190b977ab7da43911, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,8 @@ Namespace Serialization.JSON
     ''' <summary>
     ''' Extension helpers for deal with the anonymous type
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module AnonymousJSONExtensions
 
         <Extension>

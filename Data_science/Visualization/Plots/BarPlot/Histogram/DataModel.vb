@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d7d532944de312862f63820fcc2ed81, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::092a8021c659ead964ddc3a907975033, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
     ' 
     '         Properties: SerialData
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetLine
     ' 
     ' 
@@ -66,7 +66,6 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BarPlot.Histogram
@@ -158,10 +157,13 @@ Namespace BarPlot.Histogram
         Sub New(data As IEnumerable(Of HistProfile))
             Samples = data
             Serials = data _
-                .Select(Function(x) New NamedValue(Of Color) With {
-                    .Name = x.legend.title,
-                    .Value = x.legend.color.ToColor
-                })
+                .Select(Function(x)
+                            Return New NamedValue(Of Color) With {
+                                .Name = x.legend.title,
+                                .Value = x.legend.color.ToColor
+                            }
+                        End Function) _
+                .ToArray
         End Sub
     End Class
 
@@ -190,8 +192,10 @@ Namespace BarPlot.Histogram
                 .color = color,
                 .width = width,
                 .lineType = type,
-                .PointSize = ptSize,
-                .pts = data.Select(Function(x) x.LinePoint)
+                .pointSize = ptSize,
+                .pts = data _
+                    .Select(Function(x) x.LinePoint) _
+                    .ToArray
             }
         End Function
 
@@ -227,27 +231,6 @@ Namespace BarPlot.Histogram
                     .x2 = x2,
                     .y = n
                 }
-        End Sub
-
-        ''' <summary>
-        ''' Tag值为直方图的高，value值为直方图的平均值连线
-        ''' </summary>
-        ''' <param name="hist"></param>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(hist As IEnumerable(Of DataBinBox(Of Double)), step!)
-            data = hist _
-                .Select(Function(range)
-                            Dim data As Double() = range.Raw
-
-                            Return New HistogramData With {
-                                .x1 = data.Min,
-                                .x2 = .x1 + step!,
-                                .y = data.Length,
-                                .pointY = data.Average
-                            }
-                        End Function) _
-                .ToArray
         End Sub
     End Structure
 End Namespace

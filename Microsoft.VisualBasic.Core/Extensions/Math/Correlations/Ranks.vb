@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1202199871dd4ca34776ef09c46824e, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::cef5429e4da708b30d69850ac85a9318, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranks.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
+
+#If NET_48 Then
 
 Namespace Math
 
@@ -124,3 +126,5 @@ Namespace Math
         End Function
     End Module
 End Namespace
+
+#End If

@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::4c98d5b78e53cf950b5de8a670cfe083, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
+﻿#Region "Microsoft.VisualBasic::cb01831866ef1e20340c123d2350abb6, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class DynamicObjectLoader
-' 
-'         Properties: Attribute, Count, DataRecordItem, FieldCount, Item
-'                     Keys, LineNumber, RowData, Schema, Values
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: [TryCast], __tryGetValue, ContainsKey, CreateSchema, GetBoolean
-'                   GetByte, GetBytes, GetChar, GetChars, GetData
-'                   GetDataTypeName, GetDateTime, GetDecimal, GetDouble, GetDynamicMemberNames
-'                   GetEnumerator, GetEnumerator1, GetFieldType, GetFloat, GetGuid
-'                   GetInt16, GetInt32, GetInt64, GetKey, GetName
-'                   (+2 Overloads) GetOrdinal, GetString, GetValue, (+2 Overloads) GetValues, IDataRecord_GetValue
-'                   IsDBNull, Read, SetAttributeValue, ToString, TryGetMember
-'                   TryGetValue, TrySetMember
-' 
-' 
-' /********************************************************************************/
+    '     Class DynamicObjectLoader
+    ' 
+    '         Properties: Attribute, Count, DataRecordItem, FieldCount, Item
+    '                     Keys, lineNumber, RowData, Schema, Values
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: [TryCast], ContainsKey, GetBoolean, GetByte, GetBytes
+    '                   GetChar, GetChars, GetData, GetDataTypeName, GetDateTime
+    '                   GetDecimal, GetDouble, GetDynamicMemberNames, GetEnumerator, GetEnumerator1
+    '                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
+    '                   GetInt64, GetKey, GetName, (+2 Overloads) GetOrdinal, GetString
+    '                   GetValue, (+2 Overloads) GetValues, IDataRecord_GetValue, internalTryGetByrefValue, IsDBNull
+    '                   ParseSchema, Read, SetAttributeValue, ToString, TryGetMember
+    '                   TryGetValue, TrySetMember
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

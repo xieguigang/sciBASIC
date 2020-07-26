@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20bb872ad35df8e5c8832b5227b4a686, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMoments.vb"
+﻿#Region "Microsoft.VisualBasic::e4c66540bb4c757815e0625777a6e6d2, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMoments.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -77,7 +78,7 @@ Namespace MomentFunctions
         Public ReadOnly Property StDev() As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Math.Sqrt(_SampleVariance)
+                Return stdNum.Sqrt(_SampleVariance)
             End Get
         End Property
 
@@ -187,7 +188,7 @@ Namespace MomentFunctions
                     N21 = 0
                 End If
 
-                _SampleVariance = N21 + (Math.Pow(observation - Mean, 2.0)) / count
+                _SampleVariance = N21 + (stdNum.Pow(observation - Mean, 2.0)) / count
                 means = newmean
             End If
 
@@ -204,8 +205,8 @@ Namespace MomentFunctions
         Private Sub TestForConvergence()
             If Count > _MinValuesBeforeConvergenceTest Then
                 If Not IsConverged Then
-                    Dim var As Double = (_ZAlphaForConvergence * Me.StDev()) / (Me.Mean() * Math.Abs(Me.StDev()))
-                    _IsConverged = (Math.Abs(var) <= _ToleranceForConvergence)
+                    Dim var As Double = (_ZAlphaForConvergence * Me.StDev()) / (Me.Mean() * stdNum.Abs(Me.StDev()))
+                    _IsConverged = (stdNum.Abs(var) <= _ToleranceForConvergence)
                 End If
             End If
         End Sub

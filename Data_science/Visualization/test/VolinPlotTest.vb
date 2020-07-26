@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4eac5906847f21ac201442cc6405b015, Data_science\Visualization\test\VolinPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::7c6f76be586555303be099a2a84e3d02, Data_science\Visualization\test\VolinPlotTest.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,8 @@
 
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 Module VolinPlotTest
 
@@ -48,8 +50,13 @@ Module VolinPlotTest
         Dim data As IEnumerable(Of DataSet) = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.csv").ToArray
 
 
-        Call VolinPlot.Plot(dataset:=data, size:="2400,2700", removesOutliers:=False, yTickFormat:="G2").Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.png")
+
+        Call VolinPlot.Plot(dataset:=data, size:="3300,3600", removesOutliers:=False, yTickFormat:="G2").Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.png")
+
+        g.SetDriver(Drivers.SVG)
+
+        Call VolinPlot.Plot(dataset:=data, size:="3300,3600", removesOutliers:=False, yTickFormat:="G2", labelAngle:=0.0).Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.svg")
+
         Call Pause()
     End Sub
 End Module
-

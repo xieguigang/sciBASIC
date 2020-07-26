@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a607bc785b695f6fd2a7934d8db2e268, Microsoft.VisualBasic.Core\Language\Language\UnixBash\FileSystem\PathMapper.vb"
+﻿#Region "Microsoft.VisualBasic::b1f00c0eacb45b936b842463e796746e, Microsoft.VisualBasic.Core\Language\Language\UnixBash\FileSystem\PathMapper.vb"
 
     ' Author:
     ' 
@@ -76,7 +76,8 @@ Namespace Language.UnixBash.FileSystem
                 Return path
             End If
 
-            If path.First = "~" Then ' HOME
+            If path.First = "~" Then
+                ' HOME
                 path = Mid(path, 2)
 
                 If path.First = "/" Then
@@ -89,8 +90,13 @@ Namespace Language.UnixBash.FileSystem
             ElseIf path.First = "#"c Then
                 path = Mid(path, 2)
                 Return $"{App.HOME}/{path}"
+            ElseIf path.StartsWith("//\d+(\.\d+){3}", RegexICSng) Then
+                ' is a network location
+                ' full path
+                Return path
 
-            ElseIf path.First = "/" Then  ' /   ROOT
+            ElseIf path.First = "/" Then
+                ' /   ROOT
                 path = "C:\" & path
             ElseIf InStr(path, "/usr/bin", CompareMethod.Text) = 1 Then
                 path = Mid(path, 9)

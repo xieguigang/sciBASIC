@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9ed3680d43f9e470c9020d607fd9229, Microsoft.VisualBasic.Core\Language\Linq\List.vb"
+﻿#Region "Microsoft.VisualBasic::97da8365fa96ed7542d9b3a0afc0ccf3, Microsoft.VisualBasic.Core\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
-    '         Operators: (+5 Overloads) -, *, ^, (+8 Overloads) +, <
+    '         Operators: (+5 Overloads) -, *, ^, (+9 Overloads) +, <
     '                    <=, (+2 Overloads) <>, (+2 Overloads) =, >, >=
     '                    >>
     ' 
@@ -256,7 +256,7 @@ Namespace Language
         Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Me(Which.IsTrue(booleans))
+                Return Me(Which(booleans))
             End Get
             Set(value As T())
                 For Each i In booleans.SeqIterator
@@ -275,6 +275,8 @@ Namespace Language
         ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
         ''' </summary>
         ''' <param name="source">The collection whose elements are copied to the new list.</param>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(source As IEnumerable(Of T))
             Call MyBase.New(If(source Is Nothing, {}, source.ToArray))
         End Sub
@@ -285,14 +287,18 @@ Namespace Language
         ''' to accommodate the number of elements copied.
         ''' </summary>
         ''' <param name="x">The collection whose elements are copied to the new list.</param>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(ParamArray x As T())
-            Call MyBase.New(x)
+            Call MyBase.New(If(x Is Nothing, {}, x))
         End Sub
 
         ''' <summary>
         ''' Initializes a new instance of the Microsoft VisualBasic language <see cref="List(Of T)"/> class 
         ''' that is empty and has the default initial capacity.
         ''' </summary>
+        ''' 
+        <DebuggerStepThrough>
         Public Sub New()
             Call MyBase.New
         End Sub
@@ -302,10 +308,13 @@ Namespace Language
         ''' is empty and has the specified initial capacity.
         ''' </summary>
         ''' <param name="capacity">The number of elements that the new list can initially store.</param>
+        ''' 
+        <DebuggerStepThrough>
         Public Sub New(capacity As Integer)
             Call MyBase.New(capacity)
         End Sub
 
+        <DebuggerStepThrough>
         Public Sub New(size As Integer, fill As T)
             For i As Integer = 0 To size - 1
                 Call Add(fill)
@@ -377,10 +386,23 @@ Namespace Language
             End If
         End Operator
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="n">
+        ''' If parameter <paramref name="n"/> equals to ZERO, then just 
+        ''' <see cref="Clear()"/> the list contents and keeps the object 
+        ''' reference.
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Operator *(list As List(Of T), n%) As List(Of T)
             Select Case n
-                Case <= 0
+                Case < 0
                     Return New List(Of T)
+                Case 0
+                    Call list.Clear()
+                    Return list
                 Case 1
                     Return New List(Of T)(list)
                 Case > 1
@@ -478,6 +500,11 @@ Namespace Language
         '    Call list.AddRange(vals.MatrixAsIterator)
         '    Return list
         'End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(vals As T(), list As List(Of T)) As List(Of T)
+            Return New List(Of T)(vals) + list.AsEnumerable
+        End Operator
 
         ''' <summary>
         ''' 批量的从目标列表之中移除<paramref name="removes"/>集合之中的对象

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::386f4666f498cdf2e8c0408435a662ea, Data_science\Mathematica\SignalProcessing\SignalProcessing\TimeSignals.vb"
+﻿#Region "Microsoft.VisualBasic::d4b4948a3bb654fabcfbed9e27cf829d, Data_science\Mathematica\SignalProcessing\SignalProcessing\TimeSignals.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,15 @@
 
     ' Summaries:
 
-    ' Class TimeSignal
+    ' Structure TimeSignal
     ' 
-    '     Properties: intensity, time
+    '     Properties: m_intensity, m_time
     ' 
     '     Function: SignalSequence, ToString
+    ' 
+    ' Interface ITimeSignal
+    ' 
+    '     Properties: intensity, time
     ' 
     ' Class Signal
     ' 
@@ -50,10 +54,22 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 
-Public Class TimeSignal
+Public Structure TimeSignal : Implements ITimeSignal
 
-    Public Property time As Double
-    Public Property intensity As Double
+    Dim time As Double
+    Dim intensity As Double
+
+    Private ReadOnly Property m_time As Double Implements ITimeSignal.time
+        Get
+            Return time
+        End Get
+    End Property
+
+    Private ReadOnly Property m_intensity As Double Implements ITimeSignal.intensity
+        Get
+            Return intensity
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return $"[{time}, {intensity}]"
@@ -67,7 +83,14 @@ Public Class TimeSignal
             }
         Next
     End Function
-End Class
+End Structure
+
+Public Interface ITimeSignal
+
+    ReadOnly Property time As Double
+    ReadOnly Property intensity As Double
+
+End Interface
 
 Public Class Signal : Inherits Vector(Of TimeSignal)
 

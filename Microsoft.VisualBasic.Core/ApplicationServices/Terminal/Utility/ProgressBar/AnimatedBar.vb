@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::add5e7662691a588b501cb9803aff443, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\AnimatedBar.vb"
+﻿#Region "Microsoft.VisualBasic::7ecf9a25b3a13bff5a6779a441d97e3c, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\AnimatedBar.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 
 #End Region
 
-Namespace Terminal.ProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar
 
     Public Class AnimatedBar
         Inherits AbstractBar

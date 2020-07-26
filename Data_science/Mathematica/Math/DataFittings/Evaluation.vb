@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c624245468fbb691c7835ea7ba2d80d, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::24fe77940a2e97203e4ee57610c1000c, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Data fitting result evaluation.
@@ -103,7 +104,7 @@ Public Class Evaluation
         result.SSR = pCalc.Select(Function(t) t.SSR).Sum
         ' 残差平方和
         result.SSE = pCalc.Select(Function(t) t.SSE).Sum
-        result.RMSE = Math.Sqrt(result.SSE / CDbl(length))
+        result.RMSE = stdNum.Sqrt(result.SSE / CDbl(length))
 
         Return result
     End Function

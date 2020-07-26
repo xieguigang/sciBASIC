@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a51f874214b53f5d20beb2edb471bb3, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
+﻿#Region "Microsoft.VisualBasic::c76e81bfb9e03a58bbb5f16f79a0b7c5, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports stdNum = System.Math
 
 Public Class Renderer3D : Inherits Renderer
     Implements IGraphicsEngine
@@ -71,7 +72,7 @@ Public Class Renderer3D : Inherits Renderer
         Me.dynamicsRadius = dynamicsRadius
     End Sub
 
-    Public Property rotate As Double = Math.PI / 3
+    Public Property rotate As Double = stdNum.PI / 3
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = regionProvider()
@@ -103,7 +104,7 @@ Public Class Renderer3D : Inherits Renderer
     End Sub
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
-        Dim r As Single = If(dynamicsRadius, n.Data.radius, radiushash(n))
+        Dim r As Single = If(dynamicsRadius, n.data.size(0), radiushash(n))
 
         If r < 0.6 OrElse Single.IsNaN(r) OrElse r > 500 Then
             Return

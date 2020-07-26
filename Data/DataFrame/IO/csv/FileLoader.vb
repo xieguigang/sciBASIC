@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c09ed081e97b3295ce78bfb357b48464, Data\DataFrame\IO\csv\FileLoader.vb"
+﻿#Region "Microsoft.VisualBasic::fc19ae585c69037118fe07f49d8cbb24, Data\DataFrame\IO\csv\FileLoader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module FileLoader
     ' 
-    '         Function: FastLoad, Load
+    '         Function: FastLoad, Load, parallelLoad
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,15 +42,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace IO
@@ -135,32 +131,35 @@ Namespace IO
                 Call $"Required test for skip on field: [{skipWhile.Name}], but no such field exists in current file data...".Warning
             End If
 
-            Dim parallelLoad = Function() As IEnumerable(Of RowObject)
-                                   Dim loader = From s As SeqValue(Of String)
-                                                In buf.Skip(1).SeqIterator.AsParallel
-                                                Where test(s.value)
-                                                Select row = New RowObject(s.value), i = s.i
-                                                Order By i Ascending
-                                   Dim testForSkip = skipWhile.Value
+            Return first + buf.parallelLoad(headerIndex, test, skipWhile).AsList
+        End Function
 
-                                   If headerIndex = -1 Then
-                                       ' returns all
-                                       Return loader.Select(Function(r) r.row)
-                                   Else
-                                       Return loader _
-                                           .Where(Function(r)
-                                                      If testForSkip(r.row(headerIndex)) Then
-                                                          ' is a row not needed...
-                                                          Return False
-                                                      Else
-                                                          Return True
-                                                      End If
-                                                  End Function) _
-                                           .Select(Function(r) r.row)
-                                   End If
-                               End Function
+        <Extension>
+        Private Function parallelLoad(buf$(), headerIndex%, test As Func(Of String, Boolean), skipWhile As NamedValue(Of Func(Of String, Boolean))) As IEnumerable(Of RowObject)
+            Dim testForSkip = skipWhile.Value
+            Dim loader = From s As SeqValue(Of String)
+                         In buf.Skip(1) _
+                            .SeqIterator _
+                            .AsParallel
+                         Where test(s.value)
+                         Select row = New RowObject(s.value), i = s.i
+                         Order By i Ascending
 
-            Return first + parallelLoad().AsList
+            If headerIndex = -1 Then
+                ' returns all
+                Return loader.Select(Function(r) r.row)
+            Else
+                Return loader _
+                    .Where(Function(r)
+                               If testForSkip(r.row(headerIndex)) Then
+                                   ' is a row not needed...
+                                   Return False
+                               Else
+                                   Return True
+                               End If
+                           End Function) _
+                    .Select(Function(r) r.row)
+            End If
         End Function
     End Module
 End Namespace

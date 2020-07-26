@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ec1019ecd833e3e960644068a61d875, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::a7b3b2bcbd65e2cca27ea57113bcafca, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module CastStringVector
     ' 
     '         Function: AsBoolean, (+4 Overloads) AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
-    '                   AsInteger, AsNumeric, AsSingle, AsType
+    '                   AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
     ' 
     ' 
     ' /********************************************************************************/
@@ -61,7 +61,7 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString(Object, String)"/>.
+        ''' Convert the numeric <see cref="Object"/> type as the <see cref="String"/> text type by <see cref="InputHandler.ToString"/>.
         ''' </summary>
         ''' <param name="values"></param>
         ''' <returns></returns>
@@ -86,7 +86,7 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' 使用<see cref="Scripting.ToString(Object, String)"/>方法将对象集合转换为字符串序列
+        ''' 使用<see cref="Scripting.ToString"/>方法将对象集合转换为字符串序列
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="values"></param>
@@ -107,6 +107,12 @@ Namespace Scripting.Runtime
         <Extension>
         Public Function AsNumeric(values As Dictionary(Of String, String)) As Dictionary(Of String, Double)
             Return values.ToDictionary(Function(x) x.Key, Function(x) x.Value.ParseNumeric)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsNumeric(values As Dictionary(Of String, Integer)) As Dictionary(Of String, Double)
+            Return values.ToDictionary(Function(x) x.Key, Function(x) CDbl(x.Value))
         End Function
 
         ''' <summary>

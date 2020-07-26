@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8b53631825032b8d61fba1f87c3cd3b, Data\DataFrame\test\parserTest.vb"
+﻿#Region "Microsoft.VisualBasic::5a4a1636783b89d8aeed2c4132bc5866, Data\DataFrame\test\parserTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module parserTest
     ' 
-    '     Sub: Main
+    '     Sub: fileLoaderTest, Main
     ' 
     ' /********************************************************************************/
 
@@ -45,6 +45,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module parserTest
 
     Sub Main()
+
+        Call fileLoaderTest()
 
 
         Call CharsParser(<string>A,"","","","NA"</string>).GetJson(True).__DEBUG_ECHO
@@ -61,6 +63,12 @@ Module parserTest
         ' Call columns .SaveTo ("D:\ddd.csv")
 
         Call columns.GetJson(True).__DEBUG_ECHO
+
+        Pause()
+    End Sub
+
+    Sub fileLoaderTest()
+        Dim table As File = File.Load("D:\GCModeller\src\runtime\sciBASIC#\Data\data\outlining.csv")
 
         Pause()
     End Sub

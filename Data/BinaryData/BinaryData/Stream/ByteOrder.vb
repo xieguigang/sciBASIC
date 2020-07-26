@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::221dea0227f74273b85f02afa7c50459, Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
+﻿#Region "Microsoft.VisualBasic::6197f9d0bf127f64bdf0d4f3ff9fc354, Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
 
     ' Author:
     ' 
@@ -42,13 +42,16 @@
     ' 
     '     Properties: SystemByteOrder
     ' 
-    '     Function: NeedsReversion
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: AsNetworkByteOrderBuffer, NeedsReversion, networkByteOrderBigEndian, networkByteOrderLittleEndian
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
+
 ''' <summary>
 ''' Represents the possible endianness of binary data.
 ''' </summary>
@@ -70,6 +73,7 @@ End Enum
 <HideModuleName> Public Module ByteOrderHelper
 
     Dim _systemByteOrder As ByteOrder
+    Dim _networkByteOrderConvertor As Func(Of IEnumerable(Of Double), Byte())
 
     ''' <summary>
     ''' Gets the <see cref="ByteOrder"/> of the system executing the assembly.
@@ -83,9 +87,41 @@ End Enum
         End Get
     End Property
 
+    Sub New()
+        If BitConverter.IsLittleEndian Then
+            _networkByteOrderConvertor = AddressOf networkByteOrderLittleEndian
+        Else
+            _networkByteOrderConvertor = AddressOf networkByteOrderBigEndian
+        End If
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function NeedsReversion(order As ByteOrder) As Boolean
         Return order <> ByteOrderHelper.SystemByteOrder
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsNetworkByteOrderBuffer(data As IEnumerable(Of Double)) As Byte()
+        Return _networkByteOrderConvertor(data)
+    End Function
+
+    Private Function networkByteOrderLittleEndian(d As IEnumerable(Of Double)) As Byte()
+        Dim buffer As Byte() = d _
+            .Select(AddressOf BitConverter.GetBytes) _
+            .IteratesALL _
+            .ToArray
+
+        Call Array.Reverse(buffer)
+
+        Return buffer
+    End Function
+
+    Private Function networkByteOrderBigEndian(d As IEnumerable(Of Double)) As Byte()
+        Return d _
+            .Select(AddressOf BitConverter.GetBytes) _
+            .IteratesALL _
+            .ToArray
     End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::362d8a48d54289db8155454da6540db6, Data_science\Visualization\Plots-statistics\TimeTrends.vb"
+﻿#Region "Microsoft.VisualBasic::c0720034b29f8f278eb3690a35c5c549, Data_science\Visualization\Plots-statistics\TimeTrends.vb"
 
     ' Author:
     ' 
@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports stdNum = System.Math
 
 Public Module TimeTrends
 
@@ -142,7 +143,7 @@ Public Module TimeTrends
                          Optional legendTitleColor$ = "black",
                          Optional displayLegendBorder As Boolean = True) As GraphicsData
 
-        Static shortDateString As New [Default](Of  Func(Of Date, String))(Function(d) d.ToShortDateString)
+        Static shortDateString As New [Default](Of Func(Of Date, String))(Function(d) d.ToShortDateString)
 
         Dim dates = data.OrderBy(Function(d) d.date).ToArray
         Dim timer As TimeRange = dates _
@@ -214,7 +215,7 @@ Public Module TimeTrends
                         x = x - labelSize.Width / 2
                         y = rect.Bottom + labelSize.Width * (3 / 4)
 
-                        maxLabelXWidth = Math.Max(
+                        maxLabelXWidth = stdNum.Max(
                             labelSize.Width,
                             maxLabelXWidth
                         )

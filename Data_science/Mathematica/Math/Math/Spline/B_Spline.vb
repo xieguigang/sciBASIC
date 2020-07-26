@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbed3c3fa7ed82de96fd7c12a1c46661, Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
+﻿#Region "Microsoft.VisualBasic::84336cdfd4b2ad6df6f2ad4367255f1d, Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,7 @@
 
     '     Module B_Spline
     ' 
-    '         Function: (+2 Overloads) BSpline, Compute
-    ' 
-    '         Sub: OutputPoint
+    '         Function: (+2 Overloads) BSpline, Compute, OutputPoint
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,7 +42,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Interpolation
@@ -66,14 +63,15 @@ Namespace Interpolation
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function BSpline(ctrlPts As IEnumerable(Of Point), Optional degree! = 5, Optional RESOLUTION% = 10) As List(Of PointF)
-            Return ctrlPts.Select(Function(pt)
-                                      Return New PointF With {
-                                          .X = pt.X,
-                                          .Y = pt.Y
-                                      }
-                                  End Function) _
-                          .Compute(degree, RESOLUTION)
+        Public Function BSpline(ctrlPts As IEnumerable(Of Point), Optional degree! = 5, Optional RESOLUTION% = 10) As IEnumerable(Of PointF)
+            Return ctrlPts _
+                .Select(Function(pt)
+                            Return New PointF With {
+                                .X = pt.X,
+                                .Y = pt.Y
+                            }
+                        End Function) _
+                .Compute(degree, RESOLUTION)
         End Function
 
         ''' <summary>
@@ -84,8 +82,7 @@ Namespace Interpolation
         ''' <param name="RESOLUTION%"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function BSpline(ctrlPts As IEnumerable(Of PointF), Optional degree! = 5, Optional RESOLUTION% = 10) As List(Of PointF)
+        Public Function BSpline(ctrlPts As IEnumerable(Of PointF), Optional degree! = 5, Optional RESOLUTION% = 10) As IEnumerable(Of PointF)
             Return ctrlPts.Compute(degree, RESOLUTION)
         End Function
 
@@ -98,9 +95,9 @@ Namespace Interpolation
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function Compute(controlPoints As IEnumerable(Of PointF), Optional degree! = 5, Optional RESOLUTION% = 10) As List(Of PointF)
-            Dim out As New List(Of PointF)
+        Public Iterator Function Compute(controlPoints As IEnumerable(Of PointF), Optional degree! = 5, Optional RESOLUTION% = 10) As IEnumerable(Of PointF)
             Dim ctrlPts = controlPoints.ToArray
+            Dim p As PointF?
 
             If ctrlPts.Length > 1 Then
                 Dim ustep As Double = 1.0 / (RESOLUTION * (ctrlPts.Length - 1))
@@ -124,28 +121,29 @@ Namespace Interpolation
                 Dim u As Double = 0
 
                 While u < 1
-                    Call ctrlPts.OutputPoint(out, t, k, u)
+                    p = ctrlPts.OutputPoint(t, k, u)
                     u += ustep
+
+                    If Not p Is Nothing Then
+                        Yield p.Value
+                    End If
                 End While
 
-                out.Add(ctrlPts.Last())
+                Yield ctrlPts.Last()
             End If
-
-            Return out
         End Function
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="ctrlPts"></param>
-        ''' <param name="out"></param>
         ''' <param name="t"></param>
         ''' <param name="k%">
         ''' 因为在这个函数里面的k参数是用来计算数组元素的index的，所以在这里不使用实数来表示了，而是使用整形数
         ''' </param>
         ''' <param name="u"></param>
         <Extension>
-        Private Sub OutputPoint(ctrlPts As PointF(), out As List(Of PointF), t As Double(), k%, u As Double)
+        Private Function OutputPoint(ctrlPts As PointF(), t As Double(), k%, u As Double) As PointF?
             Dim i As Integer, j As Integer, r As Integer
             Dim d1 As Double, d2 As Double
             Dim l As Integer = 0
@@ -162,7 +160,7 @@ Namespace Interpolation
                 Dim index As Integer = l - k + 1 + j
 
                 If index < 0 OrElse index > ctrlPts.Length - 1 Then
-                    Return
+                    Return Nothing
                 End If
 
                 A(j) = New PointF() With {
@@ -181,7 +179,7 @@ Namespace Interpolation
                 Next
             Next
 
-            out.Add(A(k - 1))
-        End Sub
+            Return A(k - 1)
+        End Function
     End Module
 End Namespace

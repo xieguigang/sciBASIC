@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1110699dc4dd396363970e2d12d42435, Microsoft.VisualBasic.Core\My\InnerQueue.vb"
+﻿#Region "Microsoft.VisualBasic::497600900f97d7e319fec3b8ee15cd98, Microsoft.VisualBasic.Core\My\InnerQueue.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,10 @@ Namespace My
     ''' </summary>
     Module InnerQueue
 
+        ''' <summary>
+        ''' The internal task queue of the sciBASIC.NET framework
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property InnerThread As New ThreadQueue
 
         ''' <summary>

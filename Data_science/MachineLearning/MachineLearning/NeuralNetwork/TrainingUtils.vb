@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5340d69e3b164c426c88b6869067640, Data_science\MachineLearning\MachineLearning\NeuralNetwork\TrainingUtils.vb"
+﻿#Region "Microsoft.VisualBasic::8b53e30886eb3b711b2f4389b4164fef, Data_science\MachineLearning\MachineLearning\NeuralNetwork\TrainingUtils.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,10 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: CalculateError, TakeSnapshot, trainingImpl
+    '         Function: CalculateError, SetDropOut, SetLayerNormalize, SetSelective, TakeSnapshot
+    '                   trainingImpl
     ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, SetDropOut, SetLayerNormalize
-    '              (+3 Overloads) Train
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,12 +49,14 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Protocols
 Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
-Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Text
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork
 
@@ -65,6 +67,7 @@ Namespace NeuralNetwork
 
         Public Property TrainingType As TrainingType = TrainingType.Epoch
         Public Property MinError As Double = Helpers.MinimumError
+
         ''' <summary>
         ''' 对<see cref="Neuron.Gradient"/>的剪裁限制阈值，小于等于零表示不进行剪裁，默认不剪裁
         ''' </summary>
@@ -98,19 +101,19 @@ Namespace NeuralNetwork
             End Get
         End Property
 
-        Public ReadOnly Property TrainingSet As Sample()
+        Public ReadOnly Property TrainingSet As TrainingSample()
             Get
-                Return _dataSets.ToArray
+                Return dataSets.ToArray
             End Get
         End Property
 
-        ReadOnly _dataSets As New List(Of Sample)
         ReadOnly network As Network
 
         ''' <summary>
         ''' 模型当前的训练误差
         ''' </summary>
         Dim errors#
+        Dim dataSets As New List(Of TrainingSample)
 
         ''' <summary>
         ''' 训练所使用到的经验数量,即数据集的大小size
@@ -119,7 +122,7 @@ Namespace NeuralNetwork
         Public ReadOnly Property XP As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _dataSets.Count
+                Return dataSets.Count
             End Get
         End Property
 
@@ -164,24 +167,44 @@ Namespace NeuralNetwork
         End Function
 
         Public Sub RemoveLast()
-            If Not _dataSets.Count = 0 Then
-                Call _dataSets.RemoveLast
+            If Not dataSets.Count = 0 Then
+                Call dataSets.RemoveLast
             End If
         End Sub
 
-        Public Sub SetDropOut(percentage As Double)
-            _dropOutRate = percentage
+        Public Function SetSelective(opt As Boolean) As TrainingUtils
+            Selective = opt
+            Return Me
+        End Function
 
-            For Each layer As Layer In network.HiddenLayer
-                layer.doDropOutMode = True
-            Next
-        End Sub
+        ''' <summary>
+        ''' set percentage for random drop out of the nodes in each layer
+        ''' </summary>
+        ''' <param name="percentage"></param>
+        ''' <returns></returns>
+        Public Function SetDropOut(percentage As Double) As TrainingUtils
+            If percentage > 0 Then
+                _dropOutRate = percentage
 
-        Public Sub SetLayerNormalize(opt As Boolean)
+                For Each layer As Layer In network.HiddenLayer
+                    layer.doDropOutMode = True
+                Next
+            End If
+
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' apply softmax normalization for each layer?
+        ''' </summary>
+        ''' <param name="opt"></param>
+        Public Function SetLayerNormalize(opt As Boolean) As TrainingUtils
             For Each layer As Layer In network.HiddenLayer
-                layer.doNormalize = opt
+                layer.softmaxNormalization = opt
             Next
-        End Sub
+
+            Return Me
+        End Function
 
         ''' <summary>
         ''' 在这里添加训练使用的数据集
@@ -191,11 +214,19 @@ Namespace NeuralNetwork
         ''' <param name="input"></param>
         ''' <param name="output"></param>
         Public Sub Add(input As Double(), output As Double())
-            Call _dataSets.Add(New Sample(input, output))
+            dataSets += New TrainingSample With {
+                .sample = input,
+                .classify = output,
+                .sampleID = App.NextTempName
+            }
         End Sub
 
         Public Sub Add(x As Sample)
-            Call _dataSets.Add(x)
+            dataSets += New TrainingSample With {
+                .sampleID = x.ID,
+                .classify = x.target,
+                .sample = x.vector
+            }
         End Sub
 
         ''' <summary>
@@ -209,7 +240,7 @@ Namespace NeuralNetwork
             ' 
             ' 训练所使用的样本数据的顺序可能会对结果产生影响
             ' 所以在训练之前会需要打乱样本的顺序来避免出现问题
-            Dim trainingDataSet As Sample() = _dataSets.Shuffles
+            Dim trainingDataSet As TrainingSample() = dataSets.Shuffles
 
             If TrainingType = TrainingType.Epoch Then
                 Call Train(trainingDataSet, Helpers.MaxEpochs, parallel)
@@ -219,20 +250,35 @@ Namespace NeuralNetwork
         End Sub
 
 #Region "-- Training --"
-        Public Overloads Sub Train(dataSets As Sample(), numEpochs As Integer, Optional parallel As Boolean = False)
+        Public Overloads Sub Train(dataSets As TrainingSample(), numEpochs As Integer, Optional parallel As Boolean = False)
             Using progress As New ProgressBar("Training ANN...")
-                Dim tick As New ProgressProvider(numEpochs)
+                Dim tick As New ProgressProvider(progress, numEpochs)
                 Dim msg$
                 Dim ETA$
+                Dim break As Boolean = False
+                Dim cancelSignal As UserTaskCancelAction = Nothing
+
+                If App.IsConsoleApp Then
+                    cancelSignal = New UserTaskCancelAction(
+                        Sub()
+                            Call "User cancel of the training loop...".__DEBUG_ECHO
+                            break = True
+                        End Sub)
+                End If
 
                 For i As Integer = 0 To numEpochs - 1
                     errors = trainingImpl(dataSets, parallel, Selective)
-                    ETA = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
+                    ETA = $"ETA: {tick.ETA().FormatTime}"
                     msg = $"Iterations: [{i}/{numEpochs}], errors={errors}{vbTab}learn_rate={network.LearnRate} {ETA}"
 #If UNIX Then
                     Call msg.__INFO_ECHO
 #Else
-                    Call progress.SetProgress(tick.StepProgress, msg)
+                    If App.IsMicrosoftPlatform Then
+                        Call progress.SetProgress(tick.StepProgress, msg)
+                    Else
+                        Call tick.StepProgress()
+                        Call msg.__INFO_ECHO
+                    End If
 #End If
                     If errors < 0.0001 Then
                         Selective = False
@@ -241,7 +287,14 @@ Namespace NeuralNetwork
                     If Not reporter Is Nothing Then
                         Call reporter(i, errors, network)
                     End If
+                    If break Then
+                        Exit For
+                    End If
                 Next
+
+                If Not cancelSignal Is Nothing Then
+                    Call cancelSignal.Dispose()
+                End If
             End Using
         End Sub
 
@@ -252,22 +305,22 @@ Namespace NeuralNetwork
         ''' <param name="parallel"></param>
         ''' <param name="selective"></param>
         ''' <returns></returns>
-        Private Function trainingImpl(dataSets As Sample(), parallel As Boolean, selective As Boolean) As Double
+        Private Function trainingImpl(dataSets As TrainingSample(), parallel As Boolean, selective As Boolean) As Double
             Dim errors As New List(Of Double)()
             Dim err#
-            Dim outputSize% = dataSets(Scan0).target.Length
+            Dim outputSize% = dataSets(Scan0).classify.Length
 
             If dropOutRate > 0 Then
                 Call network.DoDropOut(percentage:=dropOutRate)
             End If
 
-            For Each dataSet As Sample In dataSets
+            For Each dataSet As TrainingSample In dataSets
                 If selective Then
                     ' 如果是只针对误差较大的训练样本进行训练的话,则在这里会首先计算
                     ' 当前的训练样本的误差,如果当前的训练样本误差比较小的话,就
                     ' 不再进行当前的样本的训练了
                     ' sum
-                    err = CalculateError(network, dataSet.target)
+                    err = CalculateError(network, dataSet.classify)
                     ' means
                     If err / outputSize <= 0.05 Then
                         ' skip current sample
@@ -279,18 +332,28 @@ Namespace NeuralNetwork
                 ' 下面的两步代码调用完成一个样本的训练操作:
                 ' 首先根据当前样本进行计算
                 ' 然后根据误差调整响应节点的权重
-                Call network.ForwardPropagate(dataSet.status, parallel)
-                Call network.BackPropagate(dataSet.target, parallel)
-                Call errors.Add(CalculateError(network, dataSet.target))
+                Call network.ForwardPropagate(dataSet.sample, parallel)
+                Call network.BackPropagate(dataSet.classify, parallel)
+                Call errors.Add(CalculateError(network, dataSet.classify))
             Next
 
             Return errors.Average
         End Function
 
-        Public Overloads Sub Train(dataSets As Sample(), minimumError As Double, Optional parallel As Boolean = False)
+        Public Overloads Sub Train(dataSets As TrainingSample(), minimumError As Double, Optional parallel As Boolean = False)
             Dim [error] = 1.0
             Dim numEpochs = 0
             Dim progress$
+            Dim break As Boolean = False
+            Dim cancelSignal As UserTaskCancelAction = Nothing
+
+            If App.IsConsoleApp Then
+                cancelSignal = New UserTaskCancelAction(
+                        Sub()
+                            Call "User cancel of the training loop...".__DEBUG_ECHO
+                            break = True
+                        End Sub)
+            End If
 
             While [error] > minimumError AndAlso numEpochs < Integer.MaxValue
                 [error] = trainingImpl(dataSets, parallel, True)
@@ -303,6 +366,10 @@ Namespace NeuralNetwork
                     Call reporter(numEpochs, [error], network)
                 End If
             End While
+
+            If Not cancelSignal Is Nothing Then
+                Call cancelSignal.Dispose()
+            End If
         End Sub
 
         ''' <summary>
@@ -316,7 +383,7 @@ Namespace NeuralNetwork
             Dim err# = neuronNetwork.OutputLayer _
                 .Neurons _
                 .Select(Function(n, i)
-                            Return Math.Abs(n.CalculateError(targets(i)))
+                            Return stdNum.Abs(n.CalculateError(targets(i)))
                         End Function) _
                 .Sum()
 
@@ -340,14 +407,21 @@ Namespace NeuralNetwork
                             Optional train As Boolean = True,
                             Optional parallel As Boolean = False)
 
-            Dim offendingDataSet As Sample = _dataSets _
+            Dim offendingDataSet As TrainingSample = dataSets _
                 .FirstOrDefault(Function(x)
-                                    Return x.status.SequenceEqual(input) AndAlso x.target.SequenceEqual(convertedResults)
+                                    Return x.sample.SequenceEqual(input) AndAlso x.classify.SequenceEqual(convertedResults)
                                 End Function)
-            _dataSets.Remove(offendingDataSet)
 
-            If Not _dataSets.Exists(Function(x) x.status.SequenceEqual(input) AndAlso x.target.SequenceEqual(expectedResults)) Then
-                Call _dataSets.Add(New Sample(input, expectedResults))
+            If Not offendingDataSet.isEmpty Then
+                dataSets.Remove(offendingDataSet)
+            End If
+
+            If Not dataSets.Exists(Function(x) x.sample.SequenceEqual(input) AndAlso x.classify.SequenceEqual(expectedResults)) Then
+                dataSets += New TrainingSample With {
+                    .sampleID = App.NextTempName,
+                    .sample = input,
+                    .classify = expectedResults
+                }
             End If
 
             If train Then
@@ -355,10 +429,10 @@ Namespace NeuralNetwork
             End If
         End Sub
 
-        Public Sub Corrects(dataset As Sample, expectedResults As Double(),
+        Public Sub Corrects(dataset As TrainingSample, expectedResults As Double(),
                             Optional train As Boolean = True,
                             Optional parallel As Boolean = False)
-            Call Corrects(dataset.status, dataset.target, expectedResults, train, parallel)
+            Call Corrects(dataset.sample, dataset.classify, expectedResults, train, parallel)
         End Sub
     End Class
 End Namespace

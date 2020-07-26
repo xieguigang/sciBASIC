@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a013b6e862c6431f3c8dad3b7405712, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::03a0c1c189263b776fe431a5d9118070, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 
@@ -84,7 +84,6 @@ Namespace SecurityString
         ''' </summary>
         ''' <param name="input">任意字符串</param>
         ''' <returns></returns>
-        <ExportAPI("GetHashCode", Info:="Gets the hashcode of the input string.")>
         Public Function GetHashCode(input As String) As Long
             Dim md5 As String = MD5Hash.GetMd5Hash(input)
             Return ToLong(md5)
@@ -94,7 +93,6 @@ Namespace SecurityString
         ''' Gets the hashcode of the input string.
         ''' </summary>
         ''' <returns></returns>
-        <ExportAPI("GetHashCode", Info:="Gets the hashcode of the input string.")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetHashCode(data As IEnumerable(Of Byte)) As Long
             Return GetMd5Hash(data.ToArray).ToLong
@@ -105,7 +103,6 @@ Namespace SecurityString
         ''' </summary>
         ''' <param name="md5">计算所得到的MD5哈希值</param>
         ''' <returns></returns>
-        <ExportAPI("As.Long", Info:="Gets the hashcode of the md5 string.")>
         <Extension> Public Function ToLong(md5 As String) As Long
             Dim bytes = StringToByteArray(md5)
             Return ToLong(bytes)
@@ -190,7 +187,6 @@ Namespace SecurityString
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("Md5.Verify", Info:="Verify a hash against a string.")>
         Public Function VerifyMd5Hash(input As String, comparedHash As String) As Boolean
             If String.IsNullOrEmpty(input) OrElse String.IsNullOrEmpty(comparedHash) Then
                 Return False
@@ -226,7 +222,6 @@ Namespace SecurityString
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("File.Md5", Info:="Get the md5 hash calculation value for a specific file.")>
         <Extension>
         Public Function GetFileMd5(<Parameter("Path.Uri", "The file path of the target file to be calculated.")> PathUri As String) As String
             Dim size& = PathUri.FileLength
@@ -253,7 +248,6 @@ Namespace SecurityString
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        <ExportAPI("SaltValue", Info:="SHA256 8 bits salt value for the private key.")>
         Public Function SaltValue(value As String) As String
             Dim hash As String = GetMd5Hash(value)
             Dim chars() = {

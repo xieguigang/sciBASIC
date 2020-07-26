@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbe53afa0e9294999460f02514cbb0fc, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
+﻿#Region "Microsoft.VisualBasic::8639b08d08e7cc13f0c2bb565242a377, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
 
     ' Author:
     ' 
@@ -128,7 +128,7 @@ Public Class FitResult : Implements IFitted
     ''' 确定系数，系数是0~1之间的数，是数理上判定拟合优度的一个量
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property R_square() As Double Implements IFitted.CorrelationCoefficient
+    Public ReadOnly Property R_square() As Double Implements IFitted.R2
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return 1 - (SSE / (SSR + SSE))

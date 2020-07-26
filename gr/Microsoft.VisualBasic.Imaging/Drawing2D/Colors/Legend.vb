@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9127888ecabdeee599f582565878195d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::4c5fd78a555d5f7528ac1fbef332a01c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
     ' Author:
     ' 
@@ -77,8 +77,11 @@ Namespace Drawing2D.Colors
                                        Optional titleFont As Font = Nothing,
                                        Optional labelFont As Font = Nothing,
                                        Optional legendWidth! = -1) As GraphicsData
-            Dim br As SolidBrush() =
-                designer.Select(Function(c) New SolidBrush(c)).ToArray
+
+            Dim br As SolidBrush() = designer _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray
+
             Return br.ColorMapLegend(
                 title,
                 min, max,
@@ -86,7 +89,8 @@ Namespace Drawing2D.Colors
                 haveUnmapped,
                 lsize, padding,
                 titleFont, labelFont,
-                legendWidth)
+                legendWidth
+            )
         End Function
 
         Public Const DefaultPadding$ = "padding:50px 50px 100px 50px;"
@@ -153,7 +157,9 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="layout">legend的大小和位置</param>
-        ''' 
+        ''' <param name="unmapColor">
+        ''' 当这个参数为空值的时候，将不会绘制未映射颜色示例
+        ''' </param>
         <Extension>
         Public Sub ColorMapLegend(ByRef g As IGraphics, layout As Rectangle,
                                   designer As SolidBrush(),
@@ -252,20 +258,27 @@ Namespace Drawing2D.Colors
                 .ToArray
 
             Dim delta = legendHeight / (ticks.Length + 1)
+            Dim tickStr As String
 
             y += delta
             x -= ruleOffset
             tickFont = New Font(tickFont.FontFamily, tickFont.Size * 2.5 / 3)
 
             ' 画出剩余的小标尺
-            For Each tick In ticks
+            For Each tick As Double In ticks
+
+                tickStr = tick.ToString($"F{roundDigit}")
+
+                If tick >= 0 Then
+                    tickStr = " " & tickStr
+                End If
 
                 point = New PointF With {
                     .X = x + 2,
                     .Y = y - tickFont.Height / 2
                 }
                 g.DrawLine(Pens.Black, x, y, x - 5, y)
-                g.DrawString(tick.ToString($"F{roundDigit}"), tickFont, Brushes.Gray, point)
+                g.DrawString(tickStr, tickFont, Brushes.Gray, point)
 
                 y += delta
             Next

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a105e1a3b491012a57d3acb07d226bf8, Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
+﻿#Region "Microsoft.VisualBasic::3977c1422e6f7aac3bf4b0be0171a9af, Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,11 @@
     '     Module NodeIterator
     ' 
     '         Function: GetArrayTemplate, IterateArrayNodes
+    ' 
+    '     Class NodeIteratorImpl
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: checkStart, getXmlSection, PopulateData
     ' 
     ' 
     ' /********************************************************************************/
@@ -72,34 +77,44 @@ Namespace Text.Xml.Linq
         ''' </summary>
         ''' <param name="path$"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function IterateArrayNodes(path$, tag$, Optional filter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of String)
-            Dim buffer As New List(Of String)
-            Dim start$ = "<" & tag
-            Dim ends$ = $"</{tag}>"
-            Dim stack%
-            Dim tagOpen As Boolean = False
-            Dim lefts$
-            Dim i%
-            Dim xmlText$
+        <Extension>
+        Public Function IterateArrayNodes(path$, tag$, Optional filter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of String)
+            Return New NodeIteratorImpl(tag).PopulateData(path, filter)
+        End Function
+    End Module
 
+    Friend Class NodeIteratorImpl
+
+        ReadOnly start1$
+        ReadOnly start3$
+        ReadOnly start2$
+        ReadOnly ends$
+
+        Dim stack%
+        Dim tagOpen As Boolean = False
+        Dim lefts$
+        Dim i%
+        Dim buffer As New List(Of String)
+
+        Sub New(tag As String)
+            start1 = "<" & tag & "/"
+            start2 = "<" & tag & " "
+            start3 = "<" & tag & ">"
+            ends = $"</{tag}>"
+        End Sub
+
+        Public Iterator Function PopulateData(path As String, filter As Func(Of String, Boolean)) As IEnumerable(Of String)
             For Each line As String In path.IterateAllLines
                 If tagOpen Then
-
                     i = InStr(line, ends)
 
                     If i > 0 Then
                         ' 遇到了结束标签，则取出来
                         If stack > 0 Then
-                            stack -= 1 ' 内部栈，还没有结束，则忽略当前的这个标签
+                            ' 内部栈，还没有结束，则忽略当前的这个标签
+                            stack -= 1
                         Else
-                            ' 这个是真正的结束标签
-                            lefts = Mid(line, i + ends.Length)
-                            buffer += ends
-                            tagOpen = False
-
-                            xmlText = buffer.JoinBy(vbLf)
-                            buffer *= 0
-                            buffer += lefts
+                            Dim xmlText$ = getXmlSection(line)
 
                             If Not filter Is Nothing AndAlso filter(xmlText) Then
                                 ' skip
@@ -111,21 +126,61 @@ Namespace Text.Xml.Linq
                             ' 这里要跳出来，否则后面buffer += line处任然会添加这个结束标签行的
                             Continue For
                         End If
-                    ElseIf InStr(line, start) > 0 Then
+                    ElseIf checkStart(line, Nothing) Then
                         stack += 1
                     End If
 
                     buffer += line
                 Else
                     ' 需要一直遍历到开始标签为止
-                    i = InStr(line, start)
-
-                    If i > 0 Then
+                    If checkStart(line, i) Then
                         tagOpen = True
                         buffer += Mid(line, i)
                     End If
                 End If
             Next
+
+            If buffer > 0 AndAlso Not buffer.All(Function(s) Strings.Trim(s).StringEmpty) Then
+                Call $"[{path}] is an incomplete xml dataset!".Warning
+            End If
         End Function
-    End Module
+
+        Private Function getXmlSection(line As String) As String
+            Dim xmlText$
+
+            ' 这个是真正的结束标签
+            lefts = Mid(line, i + ends.Length)
+            buffer += ends
+            tagOpen = False
+
+            xmlText = buffer.JoinBy(vbLf)
+            buffer *= 0
+            buffer += lefts
+
+            Return xmlText
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function checkStart(line As String, ByRef i As Integer) As Boolean
+            i = InStr(line, start1)
+
+            If i > 0 Then
+                Return True
+            End If
+
+            i = InStr(line, start2)
+
+            If i > 0 Then
+                Return True
+            End If
+
+            i = InStr(line, start3)
+
+            If i > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+    End Class
 End Namespace

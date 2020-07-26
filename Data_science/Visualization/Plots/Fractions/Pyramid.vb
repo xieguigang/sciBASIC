@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edaf109102c304333ac7bb1211f54781, Data_science\Visualization\Plots\Fractions\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::d16db7c2cb2692277cbeb2e85ad93083, Data_science\Visualization\Plots\Fractions\Pyramid.vb"
 
     ' Author:
     ' 
@@ -133,7 +133,7 @@ Namespace Fractions
                     }
                 Next
 
-                Call g.DrawLegends(New Point(left, top), legends, ,, legendBorder)
+                Call g.DrawLegends(New Point(left, top), legends, ,, shapeBorder:=legendBorder)
             End Sub
 
             Return GraphicsPlots(size, margin, bg, plotInternal)

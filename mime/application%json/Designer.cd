@@ -19,12 +19,13 @@
       <FileName>BSON\BSONValue.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Microsoft.VisualBasic.MIME.application.json.BSON.Decoder" Collapsed="true">
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.BSON.Decoder" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="16.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAABAAAAAAAgAACAAEQAAAAAAAAIAAA=</HashCode>
+      <HashCode>AAAAAAAIACAAAAAAAAAAAAAgAACAAEQAAAAAAgAYAAA=</HashCode>
       <FileName>BSON\Decoder.vb</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Microsoft.VisualBasic.MIME.application.json.BSON.Encoder" Collapsed="true">
     <Position X="18" Y="0.5" Width="1.5" />
@@ -58,7 +59,7 @@
   <Class Name="Microsoft.VisualBasic.MIME.application.json.Javascript.JsonObject">
     <Position X="4" Y="4.75" Width="4.75" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAEABAEAAgQBAAEAAAAAAAEAAAAAAAAAAI=</HashCode>
+      <HashCode>AAIAAAAAAAAEABAEAAgQBAAEAAAAAgAEAAAAAAAAAAI=</HashCode>
       <FileName>Javascript\JsonObject.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -73,7 +74,7 @@
   <Enum Name="Microsoft.VisualBasic.MIME.application.json.BSON.ValueType" Collapsed="true">
     <Position X="14.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAAAACCCAAAAAAAAAAoAAQAAAAEAAAAEEAAAA=</HashCode>
+      <HashCode>AAAAEAAAAAACCCAAAAAAAAAAoAAQAAACEAAAAEEAAAA=</HashCode>
       <FileName>BSON\ValueType.vb</FileName>
     </TypeIdentifier>
   </Enum>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dee35150c4d9712b77546db26ed0980, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::67921b65119b54ff6abc7212bb5208b5, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
@@ -61,15 +61,15 @@ Namespace NeedlemanWunsch
 
         ReadOnly __empty As T
 
-        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), equals As IEquals(Of T), empty As T, toChar As Func(Of T, Char))
-            Call Me.New(equals, empty, toChar)
+        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), score As ScoreMatrix(Of T), empty As T, toChar As Func(Of T, Char))
+            Call Me.New(score, empty, toChar)
 
             Sequence1 = q.ToArray
             Sequence2 = s.ToArray
         End Sub
 
-        Sub New(match As IEquals(Of T), empty As T, toChar As Func(Of T, Char))
-            Call MyBase.New(match, toChar)
+        Sub New(score As ScoreMatrix(Of T), empty As T, toChar As Func(Of T, Char))
+            Call MyBase.New(score, toChar)
             __empty = empty
         End Sub
 
@@ -170,12 +170,12 @@ Namespace NeedlemanWunsch
 
             ' fill the first row and first column of matrix and tracebackMatrix
             For i As Integer = 0 To rows - 1
-                matrix(i)(0) = -i * Me.GapPenalty
+                matrix(i)(0) = -i * scoreMatrix.GapPenalty
                 tracebackMatrix(i)(0) = 1 ' see explanation below
             Next
 
             For j As Integer = 0 To columns - 1
-                matrix(0)(j) = -j * Me.GapPenalty
+                matrix(0)(j) = -j * scoreMatrix.GapPenalty
                 tracebackMatrix(0)(j) = 4 ' see explanation below
             Next
 
@@ -184,9 +184,9 @@ Namespace NeedlemanWunsch
             ' Fill matrix and traceback matrix
             For i As Integer = 1 To rows - 1
                 For j As Integer = 1 To columns - 1
-                    Dim a As Integer = matrix(i - 1)(j - 1) + Me.isMatch(seq1(j - 1), seq2(i - 1))
-                    Dim b As Integer = matrix(i)(j - 1) - Me.GapPenalty
-                    Dim c As Integer = matrix(i - 1)(j) - Me.GapPenalty
+                    Dim a As Integer = matrix(i - 1)(j - 1) + scoreMatrix.getMatchScore(seq1(j - 1), seq2(i - 1))
+                    Dim b As Integer = matrix(i)(j - 1) - scoreMatrix.GapPenalty
+                    Dim c As Integer = matrix(i - 1)(j) - scoreMatrix.GapPenalty
                     Dim max As Integer = Math.Max(a, b, c)
 
                     ' fill cell of the scoring matrix

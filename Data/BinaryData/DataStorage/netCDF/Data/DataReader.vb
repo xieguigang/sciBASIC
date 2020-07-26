@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::462f070c73adc8af55140fad8bccaa36, Data\BinaryData\DataStorage\netCDF\Data\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::603403e9357f489dec2420f36d151112, Data\BinaryData\DataStorage\netCDF\Data\DataReader.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Namespace netCDF
 
             ' 读取的结果是一个T()数组
             For i As Integer = 0 To size - 1
-                data(i) = TypeExtensions.readType(buffer, variable.type, 1)
+                data(i) = Utils.readType(buffer, variable.type, 1)
             Next
 
             Return data
@@ -101,7 +101,7 @@ Namespace netCDF
                 If buffer.EndOfStream Then
                     data(i) = Nothing
                 Else
-                    data(i) = TypeExtensions.readType(buffer, variable.type, width)
+                    data(i) = Utils.readType(buffer, variable.type, width)
                     buffer.Seek(nextOffset, SeekOrigin.Begin)
                 End If
             Next

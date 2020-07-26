@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e266ef3707ea88ae89c7bfbc8d789b4, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::7b47855e89a8f5f044bdf74ac27b35cf, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
     '                   GetGuid, GetInt16, GetInt32, GetInt64, GetObject
     '                   GetOrdinal, GetString, GetValue, HavebFlag, IsNull
     '                   IsTrue, OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput
-    '                   (+2 Overloads) Remove, ToArgumentVector, ToString
+    '                   (+2 Overloads) Remove, ToArgumentVector, ToString, TrimNamePrefix
     ' 
     '         Sub: (+2 Overloads) Add, Clear, CopyTo
     ' 
@@ -212,13 +212,14 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Default Public ReadOnly Property Item(paramName As String) As DefaultString
             Get
-                Dim LQuery As NamedValue(Of String) =
-                    arguments _
-                        .Where(Function(a)
-                                   Return String.Equals(a.Name, paramName, StringComparison.OrdinalIgnoreCase) OrElse
-                                          String.Equals(a.Name.Trim("\", "/", "-"), paramName, StringComparison.OrdinalIgnoreCase)
-                               End Function) _
-                        .FirstOrDefault
+                Dim LQuery As NamedValue(Of String) = arguments _
+                    .Where(Function(a)
+                               Return a.Name.TextEquals(paramName) OrElse
+                                      a.Name.DoCall(AddressOf TrimNamePrefix) _
+                                            .TextEquals(paramName)
+                           End Function) _
+                    .FirstOrDefault
+
                 ' 是值类型，不会出现空引用的情况
                 Dim value As String = LQuery.Value
 
@@ -276,6 +277,11 @@ Namespace CommandLine
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return cliCommandArgvs
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function TrimNamePrefix(argName As String) As String
+            Return argName.Trim("\", "/", "-")
         End Function
 
         ''' <summary>

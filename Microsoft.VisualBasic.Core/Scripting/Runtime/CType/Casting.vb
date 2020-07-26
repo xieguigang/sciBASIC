@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2dbb7f7f5cc1b7b5e1415174a8f12f2, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::e341c0e67c7e5993959378d9004c20b7, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Scripting.Runtime
 
@@ -290,7 +289,8 @@ Namespace Scripting.Runtime
             If s.Last = "%"c Then
                 Return Conversion.Val(Mid(s, 1, s.Length - 1)) / 100  ' 百分比
             ElseIf InStr(s, "/") > 0 Then
-                Dim t$() = s.Split("/"c) ' 处理分数
+                Dim t$() = s.Split("/"c)
+                ' 处理分数
                 Return Val(t(0)) / Val(t(1))
             ElseIf InStr(s, "e", CompareMethod.Text) > 0 Then
                 Dim t = s.ToLower.Split("e"c)
@@ -342,8 +342,12 @@ Namespace Scripting.Runtime
             If obj.StringEmpty OrElse obj = "0000-00-00 00:00:00" OrElse obj.ToUpper = "NULL" OrElse obj.ToUpper = "NA" Then
                 Return New Date
             ElseIf obj.IsPattern("\d+") Then
+#If NET_48 Then
                 ' unix timestamp
                 Return CLng(Val(obj)).FromUnixTimeStamp
+#Else
+                Throw New NotImplementedException
+#End If
             ElseIf obj.IsPattern("/Date\(\d+\+\d+\)/") Then
                 ' /Date(1559115042272+0800)/
                 ' json格式的

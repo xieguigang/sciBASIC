@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::287d2bd71c6f3b8c3d072d4d519edb8f, Microsoft.VisualBasic.Core\Net\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::3766486796e655ba5505b2d6ae0cfcd6, Microsoft.VisualBasic.Core\Net\Abstract.vb"
 
     ' Author:
     ' 
@@ -31,19 +31,6 @@
 
     ' Summaries:
 
-    '     Class IProtocolHandler
-    ' 
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
     '     Interface IServicesSocket
     ' 
     '         Properties: IsRunning, IsShutdown, LocalPort
@@ -55,45 +42,14 @@
     '         Properties: ResponseHandler
     ' 
     ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Net.Protocols.Reflection
-Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace Net.Abstract
-
-    ''' <summary>
-    ''' Object for handles the request <see cref="Protocol"/>.
-    ''' </summary>
-    Public MustInherit Class IProtocolHandler
-
-        MustOverride ReadOnly Property ProtocolEntry As Long
-        MustOverride Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
-    End Class
-
-#Region "Delegate Abstract Interface"
-
-    Public Delegate Function SendMessageInvoke(Message As String) As String
-
-    Public Delegate Sub ForceCloseHandle(socket As StateObject)
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="request"></param>
-    ''' <param name="RemoteAddress"></param>
-    ''' <returns></returns>
-    Public Delegate Function DataRequestHandler(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
-#End Region
 
     ''' <summary>
     ''' Socket listening object which is running at the server side asynchronous able multiple threading.

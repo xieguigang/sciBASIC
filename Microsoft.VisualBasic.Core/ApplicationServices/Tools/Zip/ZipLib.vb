@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9786fc773c8c2e947aeb3f58b211a294, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::0745f58eea48f3887b0cdcb974b9a7cd, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\ZipLib.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ZipLib
     ' 
-    '         Function: IsADirectoryEntry, IsSourceFolderZip
+    '         Function: CheckValidZipFile, IsADirectoryEntry, IsSourceFolderZip
     ' 
     '         Sub: AddToArchive, AppendZip, DeleteItems, DirectoryArchive, FileArchive
     ' 
@@ -68,6 +68,27 @@ Namespace ApplicationServices.Zip
          Publisher:="Tim Corey",
          Url:="http://www.codeproject.com/Articles/381661/Creating-Zip-Files-Easily-in-NET")>
     Public Module ZipLib
+
+        ''' <summary>
+        ''' Check if the given <paramref name="zip"/> file contains any data. 
+        ''' </summary>
+        ''' <param name="zip"></param>
+        ''' <returns></returns>
+        Public Function CheckValidZipFile(zip As String) As Boolean
+            Dim result As Boolean = False
+
+            If zip.FileExists(True) Then
+                Try
+                    Using archive As ZipArchive = ZipFile.OpenRead(zip)
+                        result = archive.Entries.Count > 0
+                    End Using
+                Catch ex As Exception
+                    result = False
+                End Try
+            End If
+
+            Return result
+        End Function
 
         ''' <summary>
         ''' 判断目标zip文件是否是直接将文件夹进行压缩的
@@ -185,7 +206,6 @@ Namespace ApplicationServices.Zip
         ''' Specifies what type of compression to use - defaults to Optimal
         ''' </param>
         ''' 
-        <ExportAPI("Zip.Add.Files", Info:="Allows you to add files to an archive, whether the archive already exists or not")>
         <Extension>
         Public Sub AddToArchive(<Parameter("files", "A set of file names that are to be added")> files As IEnumerable(Of String),
                                 <Parameter("Zip", "The name of the archive to you want to add your files to")> archiveFullName$,

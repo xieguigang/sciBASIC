@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d82c1b4fe9db7f573466bf1aedd0a1a, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::8c8ec2aba05ba07f480980262c636097, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\BooleanVector.vb"
 
     ' Author:
     ' 
@@ -93,8 +93,8 @@ Namespace Language.Vectorization
         End Function
 
         Public Overrides Function ToString() As String
-            Dim countTrue% = Linq.Which.IsTrue(buffer).Count
-            Dim countFalse% = Linq.Which.IsTrue(Not Me).Count
+            Dim countTrue% = Linq.Which(buffer).Count
+            Dim countFalse% = Linq.Which(Not Me).Count
 
             Return $"ALL({Length}) = {countTrue} true + {countFalse} false"
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6c3216ce47751b8d0e03cdc2968ecfa, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\HyperbolicTangent.vb"
+﻿#Region "Microsoft.VisualBasic::e55b898de49712fa94710f15e0557bbf, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\HyperbolicTangent.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork.Activations
 
@@ -77,8 +77,8 @@ Namespace NeuralNetwork.Activations
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Overrides Function [Function](x As Double) As Double
-            Dim a = Math.E ^ x
-            Dim b = Math.E ^ (-x)
+            Dim a = stdNum.E ^ x
+            Dim b = stdNum.E ^ (-x)
 
             Return (a - b) / (a + b)
         End Function
@@ -91,7 +91,7 @@ Namespace NeuralNetwork.Activations
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function Derivative(x As Double) As Double
-            Return 1 / (sys.Cosh(x) ^ 2)
+            Return 1 / (stdNum.Cosh(x) ^ 2)
         End Function
 
         Public Overrides Function ToString() As String

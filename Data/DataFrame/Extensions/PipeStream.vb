@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::594949555611ad51447ef6c7954543ce, Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::233fedda82169ca54292bc8373916359, Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,11 @@ Public Module PipeStream
         Return EntityObject.CreateFilter(filter)
     End Function
 
+    ''' <summary>
+    ''' 将一个任意的<see cref="RowObject"/>集合转换为一个csv表格文件模型对象
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DataFrame(data As IEnumerable(Of RowObject)) As Table

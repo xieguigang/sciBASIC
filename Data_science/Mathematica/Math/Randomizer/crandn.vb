@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ac5701c2f11393880201258bd9f5d1, Data_science\Mathematica\Math\Randomizer\crandn.vb"
+﻿#Region "Microsoft.VisualBasic::4c95d3182c8f409ca84bef4e1e353636, Data_science\Mathematica\Math\Randomizer\crandn.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports MAT = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports MAT = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.GeneralMatrix
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 正态分布随机数
@@ -80,9 +81,9 @@ Public Module crandn
             Dim k As Integer = 0
 
             While k < m
-                tmp1 = Math.Sqrt(-2 * Math.Log(1 - u(k)))
-                gauss(k) = tmp1 * Math.Cos(2 * Math.PI * u(k + 1))
-                gauss(k + 1) = tmp1 * Math.Sin(2 * Math.PI * u(k + 1))
+                tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(k)))
+                gauss(k) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(k + 1))
+                gauss(k + 1) = tmp1 * stdNum.Sin(2 * stdNum.PI * u(k + 1))
 
                 k = k + 2
             End While
@@ -94,15 +95,15 @@ Public Module crandn
             Dim k As Integer = 0
 
             While k < m - 1
-                tmp1 = Math.Sqrt(-2 * Math.Log(1 - u(k)))
-                gauss(k) = tmp1 * Math.Cos(2 * Math.PI * u(k + 1))
-                gauss(k + 1) = tmp1 * Math.Sin(2 * Math.PI * u(k + 1))
+                tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(k)))
+                gauss(k) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(k + 1))
+                gauss(k + 1) = tmp1 * stdNum.Sin(2 * stdNum.PI * u(k + 1))
 
                 k = k + 2
             End While
 
-            tmp1 = Math.Sqrt(-2 * Math.Log(1 - u(m - 1)))
-            gauss(m - 1) = tmp1 * Math.Cos(2 * Math.PI * u(m))
+            tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(m - 1)))
+            gauss(m - 1) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(m))
         End If
 
         Return gauss
@@ -152,9 +153,9 @@ Public Module crandn
             Dim k As Integer = 0
 
             While k < p
-                tmp1 = Math.Sqrt(-2 * Math.Log(1 - u(k)))
-                gauss(k) = tmp1 * Math.Cos(2 * Math.PI * u(k + 1))
-                gauss(k + 1) = tmp1 * Math.Sin(2 * Math.PI * u(k + 1))
+                tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(k)))
+                gauss(k) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(k + 1))
+                gauss(k + 1) = tmp1 * stdNum.Sin(2 * stdNum.PI * u(k + 1))
 
                 k = k + 2
             End While
@@ -165,15 +166,15 @@ Public Module crandn
             Dim k As Integer = 0
 
             While k < p - 1
-                tmp1 = Math.Sqrt(-2 * Math.Log(1 - u(k)))
-                gauss(k) = tmp1 * Math.Cos(2 * Math.PI * u(k + 1))
-                gauss(k + 1) = tmp1 * Math.Sin(2 * Math.PI * u(k + 1))
+                tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(k)))
+                gauss(k) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(k + 1))
+                gauss(k + 1) = tmp1 * stdNum.Sin(2 * stdNum.PI * u(k + 1))
 
                 k = k + 2
             End While
 
-            tmp1 = Math.Sqrt(-2 * Math.Log(1 - u(m)))
-            gauss(m) = tmp1 * Math.Cos(2 * Math.PI * u(m + 1))
+            tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(m)))
+            gauss(m) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(m + 1))
         End If
 
         Dim goal As New MAT(m, n)

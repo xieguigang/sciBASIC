@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2261783c20f9eb2ff55d69efe057d8b6, gr\network-visualization\Datavisualization.Network\Layouts\BarycentricMethod.vb"
+﻿#Region "Microsoft.VisualBasic::7014b27afd6bf6f7badeb34a624a3c22, gr\network-visualization\Datavisualization.Network\Layouts\BarycentricMethod.vb"
 
     ' Author:
     ' 
@@ -141,7 +141,7 @@ Namespace Layouts
                     Dim attractiveForce As Double = (distanceSquared - k * k) / k
 
                     ' Make edges stronger if people know each other.
-                    Dim weight As Double = edge.data.weight
+                    Dim weight As Double = edge.weight
 
                     attractiveForce *= (System.Math.Log(weight) * 0.5) + 1
 

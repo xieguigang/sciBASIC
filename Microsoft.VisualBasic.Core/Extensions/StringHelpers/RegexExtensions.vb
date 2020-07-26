@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee859640b797034c8e1716e154eef6fb, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8636845be1e9429a89e9fa90f29f3f0f, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -270,7 +270,22 @@ Public Module RegexExtensions
         ' 2018-6-1 因为空字符串肯定无法匹配上目标模式
         ' 所以match函数总回返回空字符串
         ' 由于s参数本身就是空字符串，所以会造成空字符串可以被任意模式完全匹配的bug
-        Return Not s.StringEmpty AndAlso Regex.Match(s, pattern, opt).Value = s
+        If s.StringEmpty Then
+            Return False
+        End If
+
+        Static patternCache As New Dictionary(Of String, Regex)
+
+        Dim match$ = patternCache _
+            .ComputeIfAbsent(pattern, lazyValue:=Function(r) New Regex(r, opt)) _
+            .Match(s) _
+            .Value
+
+        If match = s Then
+            Return True
+        Else
+            Return False
+        End If
     End Function
 
     ''' <summary>

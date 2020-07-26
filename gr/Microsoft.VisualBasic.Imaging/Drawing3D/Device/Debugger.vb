@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c32911fa6a8b7982bc4b94d7fc1ebec8, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::b907962092ca3153afaa50070739b62d, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Debugger.vb"
 
     ' Author:
     ' 
@@ -82,7 +82,7 @@ Namespace Drawing3D.Device
 
             ' 显示camera的调试信息
             Call draw(msg:=$"Rotation vector:       x={camera.angleX}, y={camera.angleY}, z={camera.angleZ}")
-            Call draw(msg:=$"View distance:         {camera.ViewDistance}")
+            Call draw(msg:=$"View distance:         {camera.viewDistance}")
             Call draw(msg:=$"FOV:                   {camera.fov}")
             Call draw(msg:=$"Screen size:           {camera.screen.Width}px X {camera.screen.Height}px")
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2de9d1a1f862d27f4c63d3699c80f6a, Data_science\Mathematica\Math\Math\Scripting\Factors\FactorVector.vb"
+﻿#Region "Microsoft.VisualBasic::92ed8a7056654fd5868a2bf770739960, Data_science\Mathematica\Math\Math\Scripting\Factors\FactorVector.vb"
 
     ' Author:
     ' 
@@ -99,7 +99,9 @@ Namespace Scripting
         Public Function AsTable() As Dictionary(Of String, T)
             Return index _
                 .ToDictionary(Function(k, i) k,
-                              Function(k, i) buffer(i))
+                              Function(k, i)
+                                  Return buffer(i)
+                              End Function)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

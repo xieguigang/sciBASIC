@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f9d5d527ea3547923ae6112ebf3b20c, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::63af967c53085db088ff23da5f9f8c58, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __tryFill, (+2 Overloads) FillData, ToString
+    '         Function: doColumnFill, (+2 Overloads) FillData, ToString
     ' 
     '         Sub: IndexOf, SolveReadOnlyMetaConflicts
     ' 
@@ -186,13 +186,13 @@ Namespace StorageProvider.ComponentModels
         ''' 对于只读属性而言，由于没有写入的过程，所以在从文件加在csv数据到.NET对象的时候会被放进字典属性里面，从而会导致输出的时候出现重复的域的BUG
         ''' 故而需要在这里将字典属性之中的只读属性的名称移除掉
         ''' </summary>
-        Public Sub SolveReadOnlyMetaConflicts()
+        Public Sub SolveReadOnlyMetaConflicts(silent As Boolean)
             ' 假若存在字典属性的话，则需要进行额外的处理
             If HaveMetaAttribute Then
                 ' why two reference that have the effects????
                 Dim schema As SchemaProvider = SchemaProvider.Raw.Raw
 
-                Call "Schema has meta dictionary property...".__DEBUG_ECHO
+                Call "Schema has meta dictionary property...".__DEBUG_ECHO(mute:=silent)
 
                 For Each name In NonIndexed.Keys.ToArray
                     ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他
@@ -206,14 +206,15 @@ Namespace StorageProvider.ComponentModels
             End If
         End Sub
 
-        Public Function FillData(row As RowObject, obj As Object) As Object
-            obj = __tryFill(row, obj)
+        Public Function FillData(row As RowObject, obj As Object, metaBlank$) As Object
+            obj = doColumnFill(row, obj)
 
             If HaveMetaAttribute Then
                 Dim values = From field As KeyValuePair(Of String, Integer)
                              In NonIndexed
                              Let s = row(field.Value)
-                             Let value = SchemaProvider.MetaAttributes.LoadMethod(s)
+                             Let str = If(s Is Nothing OrElse s.Length = 0, metaBlank, s)
+                             Let value = SchemaProvider.MetaAttributes.LoadMethod(str)
                              Select name = field.Key, value
 
                 Dim meta As IDictionary = SchemaProvider.MetaAttributes.CreateDictionary
@@ -286,8 +287,8 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="row"></param>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Function __tryFill(row As RowObject, obj As Object) As Object
-            Dim column As StorageProvider = Nothing
+        Private Function doColumnFill(row As RowObject, obj As Object) As Object
+            Dim column As StorageProvider
             Dim value$
             Dim propValue As Object
 

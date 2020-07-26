@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("sciBASIC.NET Framework: Core runtime for Microsoft VisualBasic 2017")>
-<Assembly: AssemblyDescription("sciBASIC.NET Framework: Core runtime for Microsoft VisualBasic 2017")>
-<Assembly: AssemblyCompany("xie.guigang@live.com")>
+<Assembly: AssemblyTitle("sciBASIC.NET Framework: Core runtime for Microsoft VisualBasic 2020")>
+<Assembly: AssemblyDescription("sciBASIC.NET Framework: Core runtime for Microsoft VisualBasic 2020")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
 <Assembly: AssemblyProduct("Microsoft.VisualBasic")>
-<Assembly: AssemblyCopyright("Copyright © GPL3 Licensed 2016")>
+<Assembly: AssemblyCopyright("Copyright © <xie.guigang@live.com>, GPL3 Licensed 2020")>
 <Assembly: AssemblyTrademark("Microsoft VisualBasic")>
 
 <Assembly: ComVisible(False)>

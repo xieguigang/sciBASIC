@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::c7181e3a1cca2f1c14aae77b3062892d, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::d20bb5be4046a2734ca54f784bfe4ae8, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Index
-' 
-'         Properties: Count, Map, Objects
-' 
-'         Constructor: (+4 Overloads) Sub New
-' 
-'         Function: Add, GetEnumerator, IEnumerable_GetEnumerator, indexing, (+2 Overloads) Intersect
-'                   NotExists, ToString
-' 
-'         Sub: Clear, Delete
-' 
-'         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
-'                    (+2 Overloads) IsTrue, (+2 Overloads) Like
-' 
-' 
-' /********************************************************************************/
+    '     Class Index
+    ' 
+    '         Properties: Count, Map, Objects
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
+    '                   indexing, (+2 Overloads) Intersect, NotExists, ToString
+    ' 
+    '         Sub: Clear, Delete
+    ' 
+    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
+    '                    (+2 Overloads) IsTrue, (+2 Overloads) Like
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -183,6 +183,14 @@ Namespace ComponentModel.Collection
                 Return Me.index(index).value
             End Get
         End Property
+
+        ''' <summary>
+        ''' 与<see cref="Objects"/>只读属性的功能相似，只不过这个函数是Linq枚举器模式
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function EnumerateMapKeys() As IEnumerable(Of String)
+            Return maps.Keys.AsEnumerable
+        End Function
 
         Public Function GetOrdinal(items As IEnumerable(Of T)) As Integer()
             Return items.Select(Function(element) Me(element)).ToArray

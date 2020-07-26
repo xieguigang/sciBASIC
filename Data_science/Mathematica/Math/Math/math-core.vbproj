@@ -12,7 +12,7 @@
     <AssemblyName>Microsoft.VisualBasic.Math.Core</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
@@ -219,6 +219,10 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86' ">
     <OutputPath>./bin</OutputPath>
@@ -264,6 +268,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -283,7 +288,7 @@
     <OutputPath>..\..\..\..\..\..\..\GCModeller\bin\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -357,7 +362,7 @@
     <OutputPath>bin\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -535,6 +540,102 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\BioDeep_database\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\BioDeep_database\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\BioDeep_database\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\mzkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -561,18 +662,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
-    <Compile Include="Algebra\Framework\Iterator.vb" />
+    <Compile Include="Algebra\PCA\Algorithm.vb" />
+    <Compile Include="Algebra\PCA\Helper.vb" />
+    <Compile Include="Numerics\Framework\VariableObject.vb" />
+    <Compile Include="Numerics\Framework\Iterator.vb" />
     <Compile Include="Algebra\LP\Extensions.vb" />
     <Compile Include="Algebra\LP\LPP.vb" />
     <Compile Include="Algebra\LP\LPPSolution.vb" />
-    <Compile Include="Algebra\Matrix\NumpyExtensions.vb" />
-    <Compile Include="Algebra\PCA.vb" />
+    <Compile Include="Algebra\Matrix.NET\Extensions\NumpyExtensions.vb" />
+    <Compile Include="Algebra\PCA\PCA.vb" />
     <Compile Include="Algebra\SVD.vb" />
     <Compile Include="Algebra\Vector\Class\HalfVector.vb" />
     <Compile Include="Algebra\Vector\Class\SparseVector.vb" />
     <Compile Include="Algebra\Vector\Class\Linq.vb" />
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
+    <Compile Include="Distributions\Abundance.vb" />
+    <Compile Include="FuzzyLogic\Models\Extensions.vb" />
     <Compile Include="Numerics\BigDecimal.vb" />
     <Compile Include="HashMaps\Crc32.vb" />
     <Compile Include="Distributions\BinBox\BinMaps.vb" />
@@ -585,7 +691,21 @@
     <Compile Include="Numerics\Half.vb" />
     <Compile Include="Numerics\HalfHelper.vb" />
     <Compile Include="Quantile\DataQuartile.vb" />
+    <Compile Include="Scripting\Aggregate\Aggregate.vb" />
+    <Compile Include="Scripting\Expression\ExpressionCompiler.vb" />
+    <Compile Include="Scripting\Expression\FunctionElement.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
+    <Compile Include="Scripting\Expression\ExpressionEngine.vb" />
+    <Compile Include="Scripting\Expression\ExpressionBuilder.vb" />
+    <Compile Include="Scripting\Expression\ExpressionTokenIcer.vb" />
+    <Compile Include="Scripting\Expression\Expression\BinaryExpression.vb" />
+    <Compile Include="Scripting\Expression\Expression\FunctionInvoke.vb" />
+    <Compile Include="Scripting\Expression\Expression\SymbolExpression.vb" />
+    <Compile Include="Scripting\Expression\Expression\Factorial.vb" />
+    <Compile Include="Scripting\Expression\Expression\Literal.vb" />
+    <Compile Include="Scripting\Expression\Expression\Expression.vb" />
+    <Compile Include="Scripting\Expression\MathToken.vb" />
+    <Compile Include="Scripting\Expression\Splitter.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
     <Compile Include="Scripting\Factors\NamedVectorFactory.vb" />
     <Compile Include="Scripting\Factors\FactorVector.vb" />
@@ -601,20 +721,12 @@
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />
     <Compile Include="Algebra\Vector\Extensions.vb" />
-    <Compile Include="Algebra\Matrix.NET\Extensions.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\FuncParser.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\Func.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\FuncCaller.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\MetaExpression.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\ExpressionParser.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\SimpleParser.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\Expression.vb" />
+    <Compile Include="Algebra\Matrix.NET\Extensions\Extensions.vb" />
     <Compile Include="Algebra\Helpers\MatrixMathArithmetic.vb" />
     <Compile Include="Algebra\Helpers\Constants.vb" />
     <Compile Include="Algebra\Helpers\Function.vb" />
     <Compile Include="Algebra\Helpers\Variable.vb" />
-    <Compile Include="Algebra\Matrix\Matrix.vb" />
-    <Compile Include="Algebra\Matrix\MatrixMath.vb" />
+    <Compile Include="Algebra\Matrix.NET\Extensions\MatrixMath.vb" />
     <Compile Include="Algebra\Vector\Class\Math.vb" />
     <Compile Include="Algebra\RSyntax\Math\Poisson.vb" />
     <Compile Include="Algebra\RSyntax\Math\Skellam.vb" />
@@ -641,12 +753,6 @@
     <Compile Include="Distributions\Gamma.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Spline\B_Spline.vb" />
-    <Compile Include="Scripting\Helpers\MetaExpression.vb" />
-    <Compile Include="Scripting\Helpers\MemoryCollection.vb" />
-    <Compile Include="Scripting\Helpers\Logical.vb" />
-    <Compile Include="Scripting\Helpers\Variable.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\TokenIcer.vb" />
-    <Compile Include="Scripting\Logical\LogicalEvaluate.vb" />
     <Compile Include="FuzzyLogic\FuzzyEngine.vb" />
     <Compile Include="FuzzyLogic\FuzzyRule.vb" />
     <Compile Include="FuzzyLogic\FuzzyRuleCollection.vb" />
@@ -654,9 +760,8 @@
     <Compile Include="FuzzyLogic\LinguisticVariableCollection.vb" />
     <Compile Include="FuzzyLogic\MembershipFunction.vb" />
     <Compile Include="FuzzyLogic\MembershipFunctionCollection.vb" />
-    <Compile Include="FuzzyLogic\Models\LDM.vb" />
+    <Compile Include="FuzzyLogic\Models\Models.vb" />
     <Compile Include="FuzzyLogic\Models\ModelAPI.vb" />
-    <Compile Include="Scripting\Logical\TokenIcer.vb" />
     <Compile Include="Algebra\LP\OptimizationType.vb" />
     <Compile Include="Algebra\Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\EigenvalueDecomposition.vb" />
@@ -669,11 +774,7 @@
     <Compile Include="Quantile\Quantile.vb" />
     <Compile Include="Quantile\QuantileEstimationGK.vb" />
     <Compile Include="Scripting\ScriptEngine.vb" />
-    <Compile Include="Scripting\Helpers\Arithmetic.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\SimpleExpression.vb" />
-    <Compile Include="Scripting\Helpers\Constants.vb" />
-    <Compile Include="Scripting\Helpers\Function.vb" />
-    <Compile Include="Scripting\Arithmetic.Expression\UnitExpression.vb" />
+    <Compile Include="Scripting\Expression\Arithmetic.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -691,9 +792,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Expression_Evaluate.sequencediagram.layout">
-      <DependentUpon>Expression_Evaluate.sequencediagram</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -702,7 +800,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Expression_Evaluate.sequencediagram" />
     <None Include="FuzzyLogic\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

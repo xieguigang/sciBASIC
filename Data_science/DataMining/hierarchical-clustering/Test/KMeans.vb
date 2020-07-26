@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::385438241cd6465da81b96d469e2e704, Data_science\DataMining\hierarchical-clustering\Test\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::2ed4f4192e231fd3689e01c4dc8d6ca4, Data_science\DataMining\hierarchical-clustering\Test\KMeans.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.DataMining.KMeans
 
 Module KMeans
 

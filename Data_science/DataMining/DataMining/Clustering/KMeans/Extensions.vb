@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3c086de764e7d82649f94920ed0c961, Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0305b0c772a7740a7d87cd53ccc61a06, Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,14 @@
 
     '     Module Extensions
     ' 
-    '         Function: Kmeans, ToKMeansModels, ValueGroups
+    '         Function: (+2 Overloads) Kmeans, ToKMeansModels, ValueGroups
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -48,6 +49,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace KMeans
 
+    <HideModuleName>
     Public Module Extensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -91,10 +93,11 @@ Namespace KMeans
         ''' <param name="source"></param>
         ''' <param name="expected"></param>
         ''' <returns></returns>
-        <Extension> Public Function Kmeans(source As IEnumerable(Of EntityClusterModel),
-                                           expected%,
-                                           Optional debug As Boolean = True,
-                                           Optional parallel As Boolean = True) As List(Of EntityClusterModel)
+        <Extension>
+        Public Function Kmeans(source As IEnumerable(Of EntityClusterModel),
+                               expected%,
+                               Optional debug As Boolean = True,
+                               Optional parallel As Boolean = True) As List(Of EntityClusterModel)
 
             Dim maps As String() = source _
                 .First _
@@ -121,6 +124,45 @@ Namespace KMeans
             Next
 
             Return result
+        End Function
+
+        <Extension>
+        Public Function Kmeans(points As IEnumerable(Of PointF),
+                               Optional expected% = 3,
+                               Optional debug As Boolean = True,
+                               Optional parallel As Boolean = True) As NamedCollection(Of PointF)()
+
+            Dim source As EntityClusterModel() = points _
+                .Select(Function(pt, i)
+                            Return New EntityClusterModel With {
+                                .ID = i,
+                                .Cluster = 0,
+                                .Properties = New Dictionary(Of String, Double) From {
+                                    {"x", CDbl(pt.X)},
+                                    {"y", CDbl(pt.Y)}
+                                }
+                            }
+                        End Function) _
+                .ToArray
+            Dim result = source.Kmeans(expected, debug, parallel)
+            Dim resultPoints As NamedCollection(Of PointF)() = result _
+                .GroupBy(Function(e) e.Cluster) _
+                .Select(Function(e)
+                            Return New NamedCollection(Of PointF) With {
+                                .name = e.Key,
+                                .value = e _
+                                    .Select(Function(p)
+                                                Return New PointF With {
+                                                    .X = p!x,
+                                                    .Y = p!y
+                                                }
+                                            End Function) _
+                                    .ToArray
+                            }
+                        End Function) _
+                .ToArray
+
+            Return resultPoints
         End Function
     End Module
 End Namespace

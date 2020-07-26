@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30ac82b8e9a5ffa17467b35f518157d4, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::cf8bdfeb8b26eaa233423c9071f9767d, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: base64, chartSet, mime
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: FromFile, IsWellFormedUriString, SVGImage, ToStream, ToString
     '                   URIParser
     ' 
@@ -78,7 +78,7 @@ Namespace Net.Http
         Sub New(file$, Optional codepage$ = Nothing)
             mime = Strings.LCase(file.FileMimeType.MIMEType)
             base64 = file.ReadBinary.ToBase64String
-            codepage = codepage
+            chartSet = codepage
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -86,7 +86,28 @@ Namespace Net.Http
             Call Me.New(image.ToBase64String, ContentTypes.MIME.Png, Nothing)
         End Sub
 
-        Public Sub New(base64$, mine$, Optional charset$ = Nothing)
+        Sub New(stream As Stream, mime$, Optional charset$ = Nothing)
+            Me.mime = mime
+            Me.chartSet = charset
+
+            Dim chunkbuffer As New List(Of Byte)
+            Dim buffer As Byte() = New Byte(1024) {}
+            Dim nreads As Integer
+
+            Do While stream.Position < stream.Length
+                nreads = stream.Read(buffer, Scan0, buffer.Length)
+
+                If nreads <= 0 Then
+                    Exit Do
+                Else
+                    Call chunkbuffer.AddRange(buffer.Take(nreads))
+                End If
+            Loop
+
+            Me.base64 = chunkbuffer.ToBase64String
+        End Sub
+
+        Public Sub New(base64$, mime$, Optional charset$ = Nothing)
             Me.base64 = base64
             Me.mime = mime
             Me.chartSet = charset
@@ -107,7 +128,7 @@ Namespace Net.Http
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function SVGImage(svg As String) As DataURI
-            Return New DataURI(base64:=TextEncodings.UTF8WithoutBOM.GetBytes(svg).ToBase64String, mine:="image/svg+xml")
+            Return New DataURI(base64:=TextEncodings.UTF8WithoutBOM.GetBytes(svg).ToBase64String, mime:="image/svg+xml")
         End Function
 
         ''' <summary>
@@ -129,12 +150,14 @@ Namespace Net.Http
             Dim t = uri.Split(";"c) _
                 .Select(Function(p) p.StringSplit("[:=,]")) _
                 .ToDictionary(Function(k) k(0).ToLower,
-                              Function(value) value(1))
+                              Function(value)
+                                  Return value(1)
+                              End Function)
 
             Return New DataURI(
                 base64:=t.TryGetValue("base64"),
                 charset:=t.TryGetValue("charset"),
-                mine:=t.TryGetValue("data")
+                mime:=t.TryGetValue("data")
             )
         End Function
 

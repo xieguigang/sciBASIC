@@ -1,50 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::65a79ec99c6b759492f9e2ac12130130, Microsoft.VisualBasic.Core\Net\HTTP\wgetTask.vb"
+﻿#Region "Microsoft.VisualBasic::a222e94cc36e10773edbc38e0bae6c73, Microsoft.VisualBasic.Core\Net\HTTP\wgetTask.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class wgetTask
-' 
-'         Properties: currentSize, downloadSpeed, isDownloading, saveFile, totalSize
-'                     url
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: ToString
-' 
-'         Sub: (+2 Overloads) Dispose, doTaskInternal, StartTask, switchStat, taskWithContentLength
-'              taskWithNoContentLength
-' 
-' 
-' /********************************************************************************/
+    '     Class wgetTask
+    ' 
+    '         Properties: currentSize, downloadSpeed, headers, isDownloading, saveFile
+    '                     totalSize, url
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: StartTask, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose, doDownloadTask, doTaskInternal, switchStat
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +61,7 @@ Namespace Net.Http
         ReadOnly fs As FileStream
 
         Dim _speedSamples As List(Of Double)
+        Dim _isUnknownContentSize As Boolean = False
 
         ''' <summary>
         ''' Size that has been downloaded
@@ -96,6 +96,7 @@ Namespace Net.Http
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property isDownloading As Boolean
+        Public ReadOnly Property headers As Dictionary(Of String, String)
 
         ''' <summary>
         ''' 
@@ -104,13 +105,14 @@ Namespace Net.Http
         ''' <param name="saveFile">
         ''' Module will create a new <see cref="FileStream"/> that writes to this desired download path
         ''' </param>
-        Sub New(downloadUrl As String, saveFile As String)
+        Sub New(downloadUrl As String, saveFile As String, headers As Dictionary(Of String, String))
             Me.fs = saveFile.Open(doClear:=True)
             Me.url = downloadUrl
             Me.saveFile = saveFile
+            Me.headers = headers
         End Sub
 
-        Public Function StartTask(Optional doRetry As Boolean = True) As Boolean
+        Public Function StartTask(Optional doRetry As Boolean = True, Optional bufferSize% = 1024) As Boolean
             Dim retry As Integer = If(doRetry, 0, 5)
             Dim result As Boolean = True
 
@@ -121,8 +123,10 @@ Namespace Net.Http
             End If
 RE:
             Try
-                Call doTaskInternal()
-            Catch ex As Exception
+                Call doTaskInternal(bufferSize)
+            Catch ex As Exception When Not TypeOf ex Is NotImplementedException
+                Call ex.PrintException
+
                 If retry < 3 Then
                     retry += 1
                     GoTo RE
@@ -143,9 +147,9 @@ RE:
 
         Dim _startTime&
 
-        Private Sub doTaskInternal()
+        Private Sub doTaskInternal(bufferSize As Integer)
             ' Make a request for the url of the file to be downloaded
-            Dim req As WebRequest = WebRequest.Create(url)
+            Dim req As WebRequest = HttpGet.BuildWebRequest(url, headers, Nothing, UserAgent.GoogleChrome)
             Dim remote$ = "NA"
 
             If TypeOf req Is HttpWebRequest Then
@@ -163,35 +167,34 @@ RE:
             _speedSamples = New List(Of Double)
             _currentSize = 0
             _startTime = App.ElapsedMilliseconds
+            _isUnknownContentSize = totalSize < 0
 
             RaiseEvent ReportRequest(req, resp, remote)
             RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
 
             If totalSize = -1 Then
-                Call taskWithNoContentLength(resp)
+                ' task with no Content-Length
+                Call doDownloadTask(resp, bufferSize, Function(read) read = 0)
             Else
-                Call taskWithContentLength(resp)
+                Call doDownloadTask(resp, bufferSize, Function() currentSize >= totalSize)
             End If
 
             resp.Close()
         End Sub
 
-        Private Sub taskWithNoContentLength(resp As WebResponse)
-            Throw New NotImplementedException
-        End Sub
-
-        Private Sub taskWithContentLength(resp As WebResponse)
+        Private Sub doDownloadTask(resp As WebResponse, bufferSize%, exitJob As Func(Of Integer, Boolean))
             ' Make a buffer
-            Dim buffer(8192) As Byte
-            Dim read As Integer
+            Dim buffer(bufferSize - 1) As Byte
+            Dim read As Integer = Integer.MaxValue
             Dim interval As Double
+            Dim secondAgo As Double
 
-            Do While currentSize < totalSize
+            Do While Not exitJob(read)
                 ' Read the buffer from the response the WebRequest gave you
-                read = resp.GetResponseStream.Read(buffer, 0, 8192)
+                read = resp.GetResponseStream.Read(buffer, Scan0, buffer.Length)
                 ' Write to filestream that you declared at the beginning 
                 ' of the DoWork sub
-                fs.Write(buffer, 0, read)
+                fs.Write(buffer, Scan0, read)
 
                 _currentSize += read
                 interval = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).TotalSeconds
@@ -201,7 +204,10 @@ RE:
                 ' by the total formatted seconds of the downloadedTime
                 Call (currentSize / interval).DoCall(AddressOf _speedSamples.Add)
 
-                RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
+                If interval - secondAgo > 1 Then
+                    secondAgo = interval
+                    RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
+                End If
             Loop
         End Sub
 
@@ -214,7 +220,29 @@ RE:
                 busy += 1
             End If
 
-            Return $"> '{saveFile.FileName}'{New String("."c, busy)}  {StringFormats.Lanudry(currentSize)} [{(100 * _currentSize / _totalSize).ToString("F2")}%, {StringFormats.Lanudry(downloadSpeed)}/sec], elapsed {TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).FormatTime}"
+            Dim progress$
+            Dim ETA$
+
+            If totalSize > 0 Then
+                If downloadSpeed <= 0 Then
+                    ETA = "n/a"
+                Else
+                    ETA = TimeSpan.FromSeconds((totalSize - currentSize) / downloadSpeed).FormatTime
+                End If
+            Else
+                ETA = "n/a"
+            End If
+
+            If _isUnknownContentSize Then
+                progress = $"<unknown>%, {StringFormats.Lanudry(downloadSpeed)}/sec"
+            Else
+                progress = $"{(100 * _currentSize / _totalSize).ToString("F2")}%, {StringFormats.Lanudry(downloadSpeed)}/sec"
+            End If
+
+            Dim elapsed$ = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).FormatTime
+            Dim busyStr As New String("."c, busy)
+
+            Return $"> '{saveFile.FileName}'{busyStr}  {StringFormats.Lanudry(currentSize)} [{progress}], elapsed {elapsed}, [ETA {ETA}]"
         End Function
 
 #Region "IDisposable Support"

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c3e852a5ac5d3e681d3d88fdeea1ba6, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\Combination\Combination.vb"
+﻿#Region "Microsoft.VisualBasic::84ca73ac7b975077f89047be641b8cb4, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\Combination\Combination.vb"
 
     ' Author:
     ' 
@@ -39,6 +39,8 @@
     ' /********************************************************************************/
 
 #End Region
+
+#If NET_48 Then
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
@@ -116,3 +118,5 @@ Namespace ComponentModel.Algorithm.base
         End Function
     End Module
 End Namespace
+
+#End If

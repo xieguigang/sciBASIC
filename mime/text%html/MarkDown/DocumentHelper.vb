@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fee3336c5fd9545d9a79fc13c324093, mime\text%html\MarkDown\DocumentHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a6396154483f34ef8cc619111bce2e9b, mime\text%html\MarkDown\DocumentHelper.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,10 @@
 
     ' Summaries:
 
+    '     Class DocumentToken
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '     Module DocumentHelper
     ' 
     ' 
@@ -55,6 +59,13 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace MarkDown
+
+    Friend Class DocumentToken : Inherits CodeToken(Of TokenType)
+
+        Sub New(name As TokenType, text$)
+            Call MyBase.New(name, text)
+        End Sub
+    End Class
 
     Module DocumentHelper
 
@@ -84,10 +95,10 @@ Namespace MarkDown
         ''' array is a two-element array; the first is either 'tag' or 'text'; the second is 
         ''' the actual value.
         ''' </summary>
-        Public Function TokenizeHTML(text As String) As List(Of Token(Of TokenType))
+        Public Function TokenizeHTML(text As String) As List(Of DocumentToken)
             Dim pos As Integer = 0
             Dim tagStart As Integer = 0
-            Dim tokens As New List(Of Token(Of TokenType))()
+            Dim tokens As New List(Of DocumentToken)()
 
             ' this regex is derived from the _tokenize() subroutine in Brad Choate's MTRegex plugin.
             ' http://www.bradchoate.com/past/mtregex.php
@@ -95,15 +106,15 @@ Namespace MarkDown
                 tagStart = m.Index
 
                 If pos < tagStart Then
-                    tokens += New Token(Of TokenType)(TokenType.Text, text.Substring(pos, tagStart - pos))
+                    tokens += New DocumentToken(TokenType.Text, text.Substring(pos, tagStart - pos))
                 End If
 
-                tokens += New Token(Of TokenType)(TokenType.Tag, m.Value)
+                tokens += New DocumentToken(TokenType.Tag, m.Value)
                 pos = tagStart + m.Length
             Next
 
             If pos < text.Length Then
-                tokens += New Token(Of TokenType)(TokenType.Text, text.Substring(pos, text.Length - pos))
+                tokens += New DocumentToken(TokenType.Text, text.Substring(pos, text.Length - pos))
             End If
 
             Return tokens

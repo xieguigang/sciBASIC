@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad353c7944723ac70347e48519bf0bd9, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::f93cba4a4e50f9b26e837fb86b1b2511, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,22 @@
 
     ' Summaries:
 
+    '     Enum TimeScales
+    ' 
+    '         Day, Hour, Millisecond, Minute, Month
+    '         Second, Year
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     '     Module DateTimeHelper
     ' 
     '         Properties: MonthList
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, IsEmpty
-    '                   ReadableElapsedTime, ToDate, UnixTimeStamp, YYMMDD
+    '         Function: DateSeq, FillDateZero, FromMilliseconds, FromUnixTimeStamp, GetMonthInteger
+    '                   IsEmpty, ReadableElapsedTime, ToDate, UnixTimeStamp, YYMMDD
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,8 +55,19 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.C
+Imports stdNum = System.Math
 
 Namespace ValueTypes
+
+    Public Enum TimeScales As Integer
+        Millisecond
+        Second
+        Minute
+        Hour
+        Day
+        Month
+        Year
+    End Enum
 
     Public Module DateTimeHelper
 
@@ -164,6 +184,8 @@ Namespace ValueTypes
             Return (time.ToUniversalTime - ZERO).TotalSeconds
         End Function
 
+#If NET_48 Then
+
         ''' <summary>
         ''' 将Unix时间戳转换为可读的日期
         ''' </summary>
@@ -176,6 +198,15 @@ Namespace ValueTypes
                 .FromUnixTimeSeconds(unixDateTime) _
                 .DateTime _
                 .ToLocalTime()
+        End Function
+
+#End If
+
+        Public Function FromMilliseconds(milliseconds As Long) As Date
+            Dim start As New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            Dim [date] = start.AddMilliseconds(milliseconds).ToLocalTime()
+
+            Return [date]
         End Function
 
         Const ZeroDate1$ = "0001-01-01, 00:00:00"
@@ -204,11 +235,11 @@ Namespace ValueTypes
 
             If microtime >= 1000 Then
                 unit = "s"
-                time = Math.Round(microtime / 1000, round)
+                time = stdNum.Round(microtime / 1000, round)
 
                 If time >= 60 Then
                     unit = "min"
-                    time = Math.Round(time / 60, round)
+                    time = stdNum.Round(time / 60, round)
                 End If
 
                 format = sprintf(format, time, unit)

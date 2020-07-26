@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d4e1fb426e663ef1274d278cb5d3a98, Data_science\Mathematica\Math\Math\Algebra\Solvers\SOR.vb"
+﻿#Region "Microsoft.VisualBasic::7895b78b6d7923a1de231156a2660081, Data_science\Mathematica\Math\Math\Algebra\Solvers\SOR.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,8 @@
 
 #End Region
 
-Imports sys = System.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports stdNum = System.Math
 
 Namespace LinearAlgebra.Solvers
 
@@ -55,8 +56,8 @@ Namespace LinearAlgebra.Solvers
         ''' <param name="e">误差容限</param>
         ''' <param name="Iteration">最大允许迭代次数</param>
         ''' <returns></returns>
-        Public Function Solve(A As Matrix, b As Vector, Optional Omiga As Double = 1.2, Optional e As Double = 0.00000001, Optional Iteration As Integer = 50) As Vector
-            Dim N As Integer = A.N
+        Public Function Solve(A As GeneralMatrix, b As Vector, Optional Omiga As Double = 1.2, Optional e As Double = 0.00000001, Optional Iteration As Integer = 50) As Vector
+            Dim N As Integer = A.ColumnDimension
             Dim x1 As Vector = New Vector(N), x As Vector = New Vector(N)
 
             For k As Integer = 0 To Iteration
@@ -73,7 +74,7 @@ Namespace LinearAlgebra.Solvers
                     x(i) = (b(i) - sum) * Omiga / A(i, i) + (1.0 - Omiga) * x1(i)
                 Next
 
-                Dim dx As Vector = x - x1, err As Double = sys.Sqrt(dx.Mod)
+                Dim dx As Vector = x - x1, err As Double = stdNum.Sqrt(dx.Mod)
 
                 If err < e Then
                     Exit For

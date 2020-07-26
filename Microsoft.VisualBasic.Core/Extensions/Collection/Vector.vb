@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c24963248bf4cc292874ecfd4a073fa, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::d00d41e1901ee5456469b2d421305430, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Function: (+2 Overloads) After, Append, Coalesce, (+3 Overloads) Delete, (+2 Overloads) Fill
     '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
-    '               Midv, RepeatCalls, Replicate, (+3 Overloads) Sort, Split
-    '               VectorShadows
+    '               Midv, RepeatCalls, Replicate, SetValue, (+3 Overloads) Sort
+    '               Split, VectorShadows
     ' 
     '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
     '     Enum DelimiterLocation
@@ -73,6 +73,12 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 <HideModuleName>
 Public Module VectorExtensions
 
+    <Extension>
+    Public Function SetValue(a As Array, value As Object, i As SeqValue(Of Integer)) As Array
+        Call a.SetValue(value, i.i)
+        Return a
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -88,7 +94,7 @@ Public Module VectorExtensions
             Call Array.Sort(a, compares)
         Else
             Return a.AsEnumerable _
-                .Sort(compares) _
+                .sort(compares) _
                 .ToArray
         End If
 
@@ -587,7 +593,8 @@ Public Module VectorExtensions
     ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
+    <Extension>
+    Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Predicate(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
         Dim tmp As New List(Of T)
 
         For Each x As T In source.SafeQuery

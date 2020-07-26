@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11bfaa159701db232b33c3f317f35365, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::2618abcc326be4c9a7e80eaaecc9be6a, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\Utils.vb"
 
     ' Author:
     ' 
@@ -40,10 +40,9 @@
 
 #End Region
 
-Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 Namespace FuzzyCMeans
 
@@ -83,7 +82,7 @@ Namespace FuzzyCMeans
                         distance = 0.0000001
                     End If
 
-                    Dim membershipValue As Double = Math.Pow(1 / distance, (1 / (fuzzificationParameter - 1)))
+                    Dim membershipValue As Double = stdNum.Pow(1 / distance, (1 / (fuzzificationParameter - 1)))
                     sum += membershipValue
                     unNormaizedMembershipValues.Add(membershipValue)
                 Next
@@ -119,10 +118,10 @@ Namespace FuzzyCMeans
                     Dim pointCoordinates As FuzzyCMeansEntity = pair.Key
                     Dim membershipValues As List(Of Double) = pair.Value
 
-                    clusterMembershipValuesSums(i) += Math.Pow(membershipValues(i), fuzzificationParameter)
+                    clusterMembershipValuesSums(i) += stdNum.Pow(membershipValues(i), fuzzificationParameter)
 
                     For j As Integer = 0 To pointCoordinates.Length - 1
-                        clusterCoordinatesSum(j) += pointCoordinates(j) * Math.Pow(membershipValues(i), fuzzificationParameter)
+                        clusterCoordinatesSum(j) += pointCoordinates(j) * stdNum.Pow(membershipValues(i), fuzzificationParameter)
                     Next
                 Next
 

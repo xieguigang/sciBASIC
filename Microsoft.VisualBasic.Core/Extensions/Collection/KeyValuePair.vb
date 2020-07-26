@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c026d261e64952d9a7ef92a273c04ed, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::14bad26458f81bb6a299753fc6f81193, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,15 @@
 
     ' Module KeyValuePairExtensions
     ' 
-    '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
-    '               AsNamedVector, AsTable, ComputeIfAbsent, (+3 Overloads) ContainsKey, DictionaryData
-    '               (+2 Overloads) EnumerateTuples, EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault
-    '               GroupByKey, HaveData, IGrouping, IterateNameCollections, IterateNameValues
-    '               IteratesAll, Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues
-    '               (+3 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects
-    '               SetOfKeyValuePairs, (+2 Overloads) Subset, tableInternal, Takes, (+3 Overloads) ToDictionary
-    '               Tsv, Tuple, (+2 Overloads) Values, XMLModel
+    '     Function: (+2 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
+    '               ComputeIfAbsent, (+3 Overloads) ContainsKey, (+2 Overloads) DescendingMap, DictionaryData, (+2 Overloads) EnumerateTuples
+    '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey
+    '               HaveData, IterateNameCollections, IterateNameValues, IteratesAll, Join
+    '               KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
+    '               Popout, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
+    '               (+2 Overloads) Subset, tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower
+    '               ToUpper, Tsv, Tuple, TupleTable, (+2 Overloads) Values
+    '               XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 
@@ -68,6 +69,39 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' 
 <HideModuleName>
 Public Module KeyValuePairExtensions
+
+    ''' <summary>
+    ''' 从目标字典中按照给定的键名称获取值然后删除给定的键名称对应的数据
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Popout(Of K, V)(table As Dictionary(Of K, V), key As K) As V
+        If table.ContainsKey(key) Then
+            Dim value As V = table(key)
+            table.Remove(key)
+            Return value
+        Else
+            Return Nothing
+        End If
+    End Function
+
+#If NET_48 Then
+
+    <Extension>
+    Public Function TupleTable(tuple As (String(), String())) As Dictionary(Of String, String)
+        Dim table As New Dictionary(Of String, String)
+
+        For i As Integer = 0 To tuple.Item1.Length - 1
+            Call table.Add(tuple.Item1(i), tuple.Item2(i))
+        Next
+
+        Return table
+    End Function
+#End If
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -139,6 +173,24 @@ Public Module KeyValuePairExtensions
     End Function
 #End Region
 
+    <Extension>
+    Public Function DescendingMap(Of T As INamedValue)(data As IEnumerable(Of T)) As Dictionary(Of String, T)
+        Return data.OrderByDescending(Function(a) a.Key).ToDictionary(Function(a) a.Key)
+    End Function
+
+    <Extension>
+    Public Function DescendingMap(Of Key As IComparable(Of Key), T)(data As IEnumerable(Of KeyValuePair(Of Key, T))) As Dictionary(Of Key, T)
+        Dim map As New Dictionary(Of Key, T)
+
+        For Each item In data.OrderByDescending(Function(a) a.Key)
+            Call map.Add(item.Key, item.Value)
+        Next
+
+        Return map
+    End Function
+
+#If NET_48 Then
+
     ''' <summary>
     ''' Create a tuple for two elements
     ''' </summary>
@@ -152,6 +204,8 @@ Public Module KeyValuePairExtensions
     Public Function Tuple(Of T1, T2)(a As T1, b As T2) As (T1, T2)
         Return (a, b)
     End Function
+
+#End If
 
     ''' <summary>
     ''' 将目标键值对集合保存为一个``Tsv``文件
@@ -179,6 +233,8 @@ Public Module KeyValuePairExtensions
         Return file.SaveTo(saveTo, encoding.CodePage)
     End Function
 
+#If NET_48 Then
+
     ''' <summary>
     ''' tuple set to dictionary table
     ''' </summary>
@@ -191,6 +247,8 @@ Public Module KeyValuePairExtensions
     Public Function AsTable(Of K, V)(tuples As IEnumerable(Of (K, V))) As Dictionary(Of K, V)
         Return tuples.ToDictionary(Function(t) t.Item1, Function(t) t.Item2)
     End Function
+
+#End If
 
     ''' <summary>
     ''' Item selector by directly text equals match.
@@ -212,12 +270,16 @@ Public Module KeyValuePairExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="pattern$"></param>
+    ''' <param name="pattern">The regular expression pattern.</param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <DebuggerStepThrough>
     <Extension>
-    Public Function [Select](Of T As INamedValue)(source As IEnumerable(Of T), pattern$) As IEnumerable(Of T)
-        Return source.Where(Function(i) r.Match(i.Key, pattern, RegexICSng).Success)
+    Public Function Takes(Of T As INamedValue)(source As IEnumerable(Of T), pattern$) As IEnumerable(Of T)
+        Return source _
+            .Where(Function(i)
+                       Return r.Match(i.Key, pattern, RegexICSng).Success
+                   End Function)
     End Function
 
     ''' <summary>
@@ -231,13 +293,20 @@ Public Module KeyValuePairExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Subset(Of T)(table As Dictionary(Of String, T), keys$()) As Dictionary(Of String, T)
-        Return keys _
-            .Select(Function(key)
-                        Return (key:=key, val:=table(key))
-                    End Function) _
-            .ToDictionary(Function(o) o.key,
-                          Function(o) o.val)
+    Public Function Subset(Of T)(table As Dictionary(Of String, T), keys$(), Optional ignoreMissing As Boolean = False) As Dictionary(Of String, T)
+        If ignoreMissing Then
+            Return keys _
+                .Where(AddressOf table.ContainsKey) _
+                .ToDictionary(Function(key) key,
+                              Function(key)
+                                  Return table(key)
+                              End Function)
+        Else
+            Return keys.ToDictionary(Function(key) key,
+                                     Function(key)
+                                         Return table(key)
+                                     End Function)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -255,24 +324,20 @@ Public Module KeyValuePairExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="keys"></param>
-    ''' <param name="nonExitsNULL">
-    ''' 如果这个参数为真，则对于不存在的键名，则使用
+    ''' <param name="default">
+    ''' Use this as default value is key is not exists
     ''' </param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional nonExitsNULL As Boolean = True) As T()
-        If nonExitsNULL Then
-            Return keys _
-                .Select(Function(key)
-                            Return If(table.ContainsKey(key), table(key), Nothing)
-                        End Function) _
-                .ToArray
-        Else
-            Return keys _
-                .Select(Function(key) table(key)) _
-                .ToArray
-        End If
+    Public Iterator Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional [default] As T = Nothing) As IEnumerable(Of T)
+        For Each key As String In keys
+            If table.ContainsKey(key) Then
+                Yield table(key)
+            Else
+                Yield [default]
+            End If
+        Next
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -282,6 +347,8 @@ Public Module KeyValuePairExtensions
             .Select(Function(n) New NamedValue With {.name = n.Name, .text = n.Value}) _
             .ToArray
     End Function
+
+#If NET_48 Then
 
     <Extension>
     Public Iterator Function EnumerateTuples(Of T)(table As Dictionary(Of String, T)) As IEnumerable(Of (name As String, obj As T))
@@ -297,35 +364,12 @@ Public Module KeyValuePairExtensions
         Next
     End Function
 
-    <Extension> Public Function AsNamedVector(Of T)(groups As IEnumerable(Of IGrouping(Of String, T))) As IEnumerable(Of NamedCollection(Of T))
-        Return groups.Select(Function(group)
-                                 Return New NamedCollection(Of T) With {
-                                    .Name = group.Key,
-                                    .Value = group.ToArray
-                                 }
-                             End Function)
-    End Function
+#End If
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsNamedValueTuples(Of T)(tuples As IEnumerable(Of KeyValuePair(Of String, T))) As IEnumerable(Of NamedValue(Of T))
         Return tuples.Select(Function(p) New NamedValue(Of T)(p.Key, p.Value))
-    End Function
-
-    <Extension>
-    Public Function AsGroups(Of T)(table As Dictionary(Of String, T())) As IEnumerable(Of NamedCollection(Of T))
-        Return table.Select(Function(item)
-                                Return New NamedCollection(Of T) With {
-                                    .Name = item.Key,
-                                    .Value = item.Value
-                                }
-                            End Function)
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function IGrouping(Of T)(source As IEnumerable(Of NamedCollection(Of T))) As IEnumerable(Of IGrouping(Of String, T))
-        Return source.Select(Function(x) DirectCast(x, IGrouping(Of String, T)))
     End Function
 
     ''' <summary>
@@ -352,7 +396,7 @@ Public Module KeyValuePairExtensions
     ''' <returns></returns>
     <Extension>
     Public Function IteratesAll(Of T As INamedValue)(source As IEnumerable(Of NamedCollection(Of T))) As T()
-        Return source.Select(Function(c) c.Value).IteratesALL.ToArray
+        Return source.Select(Function(c) c.value).IteratesALL.ToArray
     End Function
 
     ''' <summary>
@@ -367,8 +411,8 @@ Public Module KeyValuePairExtensions
             .GroupBy(Function(o) o.Key) _
             .Select(Function(g)
                         Return New NamedCollection(Of T) With {
-                             .Name = g.Key,
-                             .Value = g.ToArray
+                             .name = g.Key,
+                             .value = g.ToArray
                          }
                     End Function) _
             .ToArray
@@ -540,6 +584,9 @@ Public Module KeyValuePairExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="table"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 如果需要调用Linq模式的方法，可以使用<see cref="IterateNameValues"/>
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function NamedValues(Of T)(table As Dictionary(Of String, T)) As NamedValue(Of T)()
@@ -698,6 +745,15 @@ Public Module KeyValuePairExtensions
         Return d.ContainsKey(key) AndAlso Not String.IsNullOrEmpty(d(key))
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="nc"></param>
+    ''' <param name="allStrings">get all of the string values for each 
+    ''' parameter name? if this parameter value is TRUE, then the value 
+    ''' of the output dictionary will be a string array.
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Function ToDictionary(nc As NameValueCollection, Optional allStrings As Boolean = False) As [Variant](Of Dictionary(Of String, String), Dictionary(Of String, String()))
         If allStrings Then
@@ -735,6 +791,8 @@ Public Module KeyValuePairExtensions
     ''' <typeparam name="T">Unique identifier provider <see cref="INamedValue.Key"/></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
+    ''' 
+    <DebuggerStepThrough>
     <Extension>
     Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T), Optional replaceOnDuplicate As Boolean = False) As Dictionary(Of T)
         If source Is Nothing Then
@@ -757,6 +815,7 @@ Public Module KeyValuePairExtensions
         End If
     End Function
 
+    <DebuggerStepThrough>
     <Extension>
     Private Function tableInternal(Of T As INamedValue)(source As IEnumerable(Of T),
                                                         ByRef currentKey$,

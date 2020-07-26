@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7497de54115f6639b4080343f28b85c, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::e7ab0853d5c13c177cac4cf7c81a9ace, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -85,7 +85,10 @@ Namespace CommandLine.InteropService
         Public ReadOnly Property IsAvailable As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _executableAssembly.FileExists
+                ' exe file should be exists on file system 
+                ' and it also should be non-empty for 
+                ' execute the program
+                Return _executableAssembly.FileExists(True)
             End Get
         End Property
 

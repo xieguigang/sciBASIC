@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af8632ef4476a133e9aa85f1170921c1, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
+﻿#Region "Microsoft.VisualBasic::01ae9c3aacfdbd17598e4fb9613e11b0, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,12 @@
 
     '     Class SVGDataLayers
     ' 
-    '         Function: (+7 Overloads) Add, ApplyFilter, GetSVG, innerDefaultHeight, innerDefaultWidth
-    '                   updateLayerIndex
+    '         Properties: GetLastLayer, styles
     ' 
-    '         Sub: Add, ApplyFilter
+    '         Function: (+7 Overloads) Add, ApplyFilter, GenericEnumerator, GetEnumerator, GetSVG
+    '                   innerDefaultHeight, innerDefaultWidth, updateLayerIndex
+    ' 
+    '         Sub: Add, ApplyFilter, Clear
     ' 
     '         Operators: (+2 Overloads) +
     ' 
@@ -52,6 +54,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -60,9 +63,10 @@ Namespace SVG
     ''' <summary>
     ''' 使用<see cref="g"/>图层的方式构建出一个完整的SVG模型
     ''' </summary>
-    Public Class SVGDataLayers
+    Public Class SVGDataLayers : Implements Enumeration(Of g)
 
-        Protected Friend layers As New HashList(Of g)
+        Protected layers As New HashList(Of g)
+
         Protected Friend bg$
         Protected Friend Size As Size
 
@@ -70,6 +74,8 @@ Namespace SVG
         ''' <see cref="Filter.id"/>为字典的键名
         ''' </summary>
         Protected Friend filters As Dictionary(Of String, Filter)
+
+        Public ReadOnly Property styles As New List(Of String)
 
         ''' <summary>
         ''' Generates the <see cref="CSSLayer"/> index order value.
@@ -84,12 +90,28 @@ Namespace SVG
         End Property
 
         ''' <summary>
+        ''' Get the last graphic layer
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property GetLastLayer As g
+
+        ''' <summary>
+        ''' reset
+        ''' </summary>
+        Public Sub Clear()
+            layers *= 0
+            zlayer = 0
+            _styles *= 0
+            _GetLastLayer = Nothing
+        End Sub
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="zindex%">图层的编号</param>
         ''' <param name="filter$">filter的id编号</param>
         Public Sub ApplyFilter(zindex%, filter$)
-            layers(zindex).filter = $"url(#filter)"
+            layers(zindex).filter = $"url(#{filter})"
         End Sub
 
         ''' <summary>
@@ -112,82 +134,104 @@ Namespace SVG
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(text As XML.text) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .texts = {text},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(rect As rect) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .rect = {rect},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(line As line) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .lines = {line},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(circle As circle) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .circles = {circle},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(path As path) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .path = {path},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(polygon As polygon) As Integer
-            layers += New g With {
+        Public Function Add(polygon As polygon, layerComment$) As Integer
+            _GetLastLayer = New g With {
                 .polygon = {polygon},
-                .zIndex = ++zlayer
+                .zIndex = ++zlayer,
+                .XmlCommentValue = layerComment
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(image As XML.Image) As Integer
-            layers += New g With {
+            _GetLastLayer = New g With {
                 .images = {image},
                 .zIndex = ++zlayer
             }
+            layers += _GetLastLayer
+
             Return zlayer
         End Function
 
         Public Sub Add(data As SVGDataLayers)
+            Dim lastLayer As g = Nothing
+
             For Each layer In data.layers
                 layer.zIndex = ++zlayer
                 layers += layer
+                lastLayer = layer
             Next
+
+            If Not lastLayer Is Nothing Then
+                _GetLastLayer = lastLayer
+            End If
         End Sub
 #End Region
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function innerDefaultWidth() As [Default](Of  Integer)
+        Private Function innerDefaultWidth() As [Default](Of Integer)
             Return Size.Width.AsDefault(Function(n) CType(n, Integer) = 0)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function innerDefaultHeight() As [Default](Of  Integer)
+        Private Function innerDefaultHeight() As [Default](Of Integer)
             Return Size.Height.AsDefault(Function(n) CType(n, Integer) = 0)
         End Function
 
@@ -198,18 +242,26 @@ Namespace SVG
         ''' If this argument is ignored, then the default internal <see cref="Size"/> value will be used.
         ''' </param>
         ''' <returns></returns>
-        Public Function GetSVG(Optional size As Size = Nothing, Optional xmlComment$ = Nothing, Optional desc$ = Nothing) As SVGXml
+        Public Function GetSVG(Optional size As Size = Nothing,
+                               Optional xmlComment$ = Nothing,
+                               Optional desc$ = Nothing,
+                               Optional title$ = Nothing) As SVGXml
+
             Dim SVG As New SVGXml() With {
                 .Layers = layers,
-                .width = size.Width Or innerDefaultWidth(),
-                .height = size.Height Or innerDefaultHeight(),
                 .XmlComment = xmlComment,
-                .desc = desc
+                .desc = desc,
+                .title = title
             }
+            Dim css As New XmlMeta.CSS With {
+                .style = styles.JoinBy(vbCrLf & vbCrLf)
+            }
+
+            Call SVG.Size(New Size(size.Width Or innerDefaultWidth(), size.Height Or innerDefaultHeight()))
 
             If Not bg.StringEmpty Then
                 SVG.styleCSS = New XmlMeta.CSS With {
-                   .style = "svg{ background-color: " & bg & "; }"
+                   .style = "svg{ background: " & bg & "; stroke: black;}" & css.style
                 }
             End If
 
@@ -234,8 +286,19 @@ Namespace SVG
                 .bg = data.bg,
                 .layers = data.layers _
                               .Select(Function(l) l + offset) _
-                              .AsHashList
+                              .AsHashList,
+                ._GetLastLayer = data.GetLastLayer
             }
         End Operator
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of g) Implements Enumeration(Of g).GenericEnumerator
+            For Each layer As g In layers
+                Yield layer
+            Next
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of g).GetEnumerator
+            Yield GenericEnumerator()
+        End Function
     End Class
 End Namespace

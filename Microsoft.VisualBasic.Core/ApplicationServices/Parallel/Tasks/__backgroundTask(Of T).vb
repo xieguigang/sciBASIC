@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c60deb7b2b37593b3ba785850c01201e, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\__backgroundTask(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::34a34e1900ae68d22aacf908101a15b1, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\__backgroundTask(Of T).vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Function: Start, ToString
     ' 
-    '         Sub: __invokeTask, Abort
+    '         Sub: Abort, doInvokeTask
     ' 
     ' 
     ' 
@@ -91,7 +91,7 @@ Namespace Parallel.Tasks
 
         Sub New(task As IBackgroundTask(Of T))
             _TaskHandle = task
-            _taskThread = New Threading.Thread(AddressOf __invokeTask)
+            _taskThread = New Threading.Thread(AddressOf doInvokeTask)
         End Sub
 
         ''' <summary>
@@ -99,22 +99,22 @@ Namespace Parallel.Tasks
         ''' </summary>
         Public Sub Abort()
             Call _taskThread.Abort()
-            _TaskComplete = False
+            TaskComplete = False
             _RunningTask = False
         End Sub
 
         Public Function Start() As backgroundTask(Of T)
             If Not TaskRunning Then
                 _taskThread.Start()
-                _TaskComplete = False
+                TaskComplete = False
             End If
 
             Return Me
         End Function
 
-        Protected Overrides Sub __invokeTask()
+        Protected Overrides Sub doInvokeTask()
             Me._RunningTask = True
-            Me._TaskComplete = False
+            Me.TaskComplete = False
             Try
                 __getValue = _TaskHandle()
             Catch ex As Exception
@@ -122,7 +122,7 @@ Namespace Parallel.Tasks
                     New Exception(MethodBase.GetCurrentMethod.GetFullName, ex)
             End Try
             Me._RunningTask = False
-            Me._TaskComplete = True
+            Me.TaskComplete = True
         End Sub
     End Class
 End Namespace

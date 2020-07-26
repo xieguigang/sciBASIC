@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5902daeef0d58252270f07be64308405, gr\network-visualization\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::e5c0378645901d2c47c3e7ecc2631eb6, gr\network-visualization\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports stdNum = System.Math
 
 Public Class Renderer : Inherits AbstractRenderer
     Implements IGraphicsEngine
@@ -88,18 +89,20 @@ Public Class Renderer : Inherits AbstractRenderer
         Dim nr As New Dictionary(Of Node, Single)
 
         For Each edge As Edge In iForceDirected.graph.graphEdges
-            Dim w As Single = CSng(5.0! * edge.data.weight)
+            Dim w As Single = CSng(5.0! * edge.weight)
             w = If(w < 3.0!, 3.0!, w)
             Call ws.Add(edge, w)
         Next
         For Each n As Node In iForceDirected.graph.vertex
-            Dim r As Single = n.data.radius
+            Dim r As Single = n.data.size(0)
+
             If r = 0! Then
                 r = If(n.data.neighborhoods < 30,
                     n.data.neighborhoods * 9,
                     n.data.neighborhoods * 7)
                 r = If(r = 0, 20, r)
             End If
+
             Call nr.Add(n, r)
         Next
 
@@ -116,9 +119,9 @@ Public Class Renderer : Inherits AbstractRenderer
 
     Protected Sub doEdgeDrawing(edge As Edge, spring As Spring)
         If ZeroFilter Then
-            If (edge.U.data.radius < 0.6 OrElse edge.V.data.radius < 0.6) Then
+            If (edge.U.data.size(0) < 0.6 OrElse edge.V.data.size(0) < 0.6) Then
                 Return
-            ElseIf edge.U.data.radius > 500 OrElse edge.V.data.radius > 500 Then
+            ElseIf edge.U.data.size(0) > 500 OrElse edge.V.data.size(0) > 500 Then
                 Return
             End If
         End If
@@ -136,14 +139,14 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <param name="iPos"></param>
     ''' <returns></returns>
     Public Shared Function GraphToScreen(iPos As FDGVector2, rect As Rectangle) As Point
-        Dim x As Integer = CInt(Math.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
-        Dim y As Integer = CInt(Math.Truncate(iPos.y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
+        Dim x As Integer = CInt(stdNum.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
+        Dim y As Integer = CInt(stdNum.Truncate(iPos.y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
         Return New Point(x, y)
     End Function
 
     Public Shared Function GraphToScreen(iPos As Point, rect As Rectangle) As Point
-        Dim x As Integer = CInt(Math.Truncate(iPos.X + (CSng(rect.Right - rect.Left) / 2.0F)))
-        Dim y As Integer = CInt(Math.Truncate(iPos.Y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
+        Dim x As Integer = CInt(stdNum.Truncate(iPos.X + (CSng(rect.Right - rect.Left) / 2.0F)))
+        Dim y As Integer = CInt(stdNum.Truncate(iPos.Y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
         Return New Point(x, y)
     End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::777bae13367062c1f01cb459f1ea8d89, Data_science\DataMining\DataMining\Clustering\KMeans\Parallel\StreamAPI.vb"
+﻿#Region "Microsoft.VisualBasic::e75a12da30e9b0145b46885954361b50, Data_science\DataMining\DataMining\Clustering\KMeans\Parallel\StreamAPI.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace KMeans.Parallel

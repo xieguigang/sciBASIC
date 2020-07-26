@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::746397a3e498941b6c5ecaa188fa1fb3, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::842ede966f066ef8c19a778a952cc508, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\STDIO.vb"
 
     ' Author:
     ' 
@@ -50,13 +50,12 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Text
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     ''' <summary>
     ''' A standard input/output compatibility package that makes VisualBasic console
@@ -90,13 +89,14 @@ Namespace Terminal
 #Region "printf"
 
         ''' <summary>
-        ''' Output the string to the console using a specific formation.(按照指定的格式将字符串输出到终端窗口之上，请注意，这个函数除了将数据流输出到标准终端之外，还会输出到调试终端)
+        ''' Output the string to the console using a specific formation.
+        ''' (按照指定的格式将字符串输出到终端窗口之上，请注意，这个函数除了将数据流
+        ''' 输出到标准终端之外，还会输出到调试终端)
         ''' </summary>
         ''' <param name="s">A string to print on the console window.(输出到终端窗口之上的字符串)</param>
         ''' <param name="args">Formation parameters.(格式化参数)</param>
         ''' <remarks></remarks>
         '''
-        <ExportAPI("printf", Info:="Output the string to the console using a specific formation.")>
         Public Sub printf(s As String, ParamArray args As Object())
             s = sprintf(s, args)
 
@@ -125,7 +125,7 @@ Namespace Terminal
         ''' <remarks></remarks>
         Public Sub cat(ParamArray out As String())
             Dim s As String = String.Join("", out)
-            Call Console.Write(s)
+            Call Console.Write(sprintf(s))
         End Sub
 
         ''' <summary>
@@ -157,7 +157,6 @@ Namespace Terminal
         ''' <param name="sn"></param>
         ''' <param name="len"></param>
         ''' <returns></returns>
-        <ExportAPI("ZeroFill", Info:="Fill the number string with specific length of ZERO sequence to generates the fixed width string.")>
         Public Function ZeroFill(sn As String, len As Integer) As String
             If sn.Length >= len Then
                 Return sn

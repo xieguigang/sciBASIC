@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a813ff39dbc3234e2bf11e9e7eb0fd80, Data_science\Mathematica\Math\ODE\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e59387981fdef0ea010741b4f63afd65, Data_science\Mathematica\Math\ODE\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,8 @@
 Imports System.Linq.Expressions
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -52,17 +54,17 @@ Imports Microsoft.VisualBasic.Serialization.JSON
     ''' </summary>
     ''' <param name="system"></param>
     ''' <returns></returns>
-    <Extension> Public Function Solve(system As IEnumerable(Of var), dt As (from#, to#, step#)) As ODEsOut
-        Dim vector As var() = system.ToArray
+    <Extension> Public Function Solve(system As IEnumerable(Of NonlinearVar), dt As (from#, to#, step#)) As ODEsOut
+        Dim vector As NonlinearVar() = system.ToArray
         Dim df = Sub(dx#, ByRef dy As Vector)
-                     For Each x As var In vector
-                         dy(x) = x.Evaluate()
+                     For Each x As NonlinearVar In vector
+                         dy(x) = x.deSolve()
                      Next
                  End Sub
-        Dim ODEs As New GenericODEs(system.ToArray, df)
+        Dim ODEs As New GenericODEs(vector, df)
 
         With dt
-            Dim result As ODEsOut = ODEs.Solve((.to - .from) / .step, .from, .to)
+            Dim result As ODEsOut = ODEs.Solve(CInt((.to - .from) / .step), .from, .to)
             Return result
         End With
     End Function

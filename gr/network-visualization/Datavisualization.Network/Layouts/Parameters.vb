@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::298f0cb476094717427fc690f5914d9c, gr\network-visualization\Datavisualization.Network\Layouts\Parameters.vb"
+﻿#Region "Microsoft.VisualBasic::9e6b052ec463bdfad4a879f6c85c0f98, gr\network-visualization\Datavisualization.Network\Layouts\Parameters.vb"
 
     ' Author:
     ' 
@@ -92,7 +92,7 @@ Namespace Layouts
     End Class
 
     ''' <summary>
-    ''' Function parameters for <see cref="forceNetwork.doForceLayout(ByRef Graph.NetworkGraph, Double, Double, Double, Integer, Boolean)"/>
+    ''' Function parameters for <see cref="forceNetwork.doForceLayout"/>
     ''' </summary>
     <ClassName(NameOf(ForceDirectedArgs))>
     Public Class ForceDirectedArgs

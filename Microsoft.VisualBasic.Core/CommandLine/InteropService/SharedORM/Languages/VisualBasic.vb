@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0e120cd0724c822a82a40107e2e0093, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::e4aadecd84ae19dea90f2a572f5e5cfd, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: addXmlComments, createCliCalls, GetSourceCode, normAsVisualBasicName, optionalDefaultValue
-    '                   vbParameters
+    '         Function: addXmlComments, ArgumentXmlDocs, createCliCalls, GetSourceCode, normAsVisualBasicName
+    '                   optionalDefaultValue, vbParameters
     ' 
     '         Sub: cliCallsInternal
     ' 
@@ -47,8 +47,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder.VBLanguage
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
@@ -99,14 +101,19 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("    Sub New(App$)")
             Call vb.AppendLine($"        MyBase.{NameOf(InteropService._executableAssembly)} = App$")
             Call vb.AppendLine("    End Sub")
-            Call vb.AppendLine()
+            Call vb.AppendLine("        
+''' <summary>
+''' Create an internal CLI pipeline invoker from a given environment path. 
+''' </summary>
+''' <param name=""directory"">A directory path that contains the target application</param>
+''' <returns></returns>")
             Call vb.AppendLine("     <MethodImpl(MethodImplOptions.AggressiveInlining)>")
             Call vb.AppendLine($"    Public Shared Function FromEnvironment(directory As String) As {appName}")
             Call vb.AppendLine($"          Return New {appName}(App:=directory & ""/"" & {appName}.App)")
             Call vb.AppendLine("     End Function")
 
-            For Each API In Me.EnumeratesAPI
-                Call cliCallsInternal(vb, API.CLI, incompatible:=Not InCompatibleAttribute.CLRProcessCompatible(API.API))
+            For Each api As APITuple In Me.EnumeratesAPI
+                Call cliCallsInternal(vb, api, incompatible:=Not InCompatibleAttribute.CLRProcessCompatible(api.API))
             Next
 
             Call vb.AppendLine("End Class")
@@ -115,6 +122,11 @@ Namespace CommandLine.InteropService.SharedORM
             Return vb.ToString
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="description$"></param>
+        ''' <returns></returns>
         Private Shared Function addXmlComments(description$) As String
             If description.StringEmpty Then
                 description = "'''"
@@ -136,10 +148,11 @@ Namespace CommandLine.InteropService.SharedORM
         ''' 生成一个命令行API的调用代码
         ''' </summary>
         ''' <param name="vb"></param>
-        ''' <param name="API"></param>
+        ''' <param name="cli"></param>
         ''' <remarks>
         ''' </remarks>
-        Private Sub cliCallsInternal(vb As StringBuilder, API As NamedValue(Of CommandLine), incompatible As Boolean)
+        Private Sub cliCallsInternal(vb As StringBuilder, cli As APITuple, incompatible As Boolean)
+
 #Region "Code template"
 
             ' Public Function CommandName(args$,....Optional args$....) As Integer
@@ -150,11 +163,19 @@ Namespace CommandLine.InteropService.SharedORM
             ' End Function
 #End Region
 
+            Dim api As NamedValue(Of CommandLine) = cli.CLI
             ' 直接使用函数原型的名字了，会比较容易辨别一些
-            Dim func$ = API.Name
+            Dim func$ = api.Name
             ' Xml comment 已经是经过转义了的，所以不需要再做xml entity的转义了
-            Dim xmlComments$ = addXmlComments(API.Description)
+            Dim xmlComments$ = addXmlComments(api.Description)
             Dim params$()
+            Dim usage As Argument() = cli.API _
+                .GetCustomAttributes(True) _
+                .Where(Function(a)
+                           Return a.GetType Is GetType(Argument)
+                       End Function) _
+                .Select(Function(use) DirectCast(use, Argument)) _
+                .ToArray
 
             Try
                 If func.First <= "9" AndAlso func.First >= "0"c Then
@@ -163,20 +184,30 @@ Namespace CommandLine.InteropService.SharedORM
                     ' 不是以数字开头的，则尝试解决关键词的问题
                     func = KeywordProcessor.AutoEscapeVBKeyword(func)
                 End If
-                params = vbParameters(API.Value)
+                params = vbParameters(api.Value)
             Catch ex As Exception
-                ex = New Exception("Check for your CLI Usage definition: " & API.Value.ToString, ex)
+                ex = New Exception("Check for your CLI Usage definition: " & api.Value.ToString, ex)
                 Throw ex
             End Try
 
             Call vb.AppendLine(xmlComments)
+            Call vb.AppendLine(usage.DoCall(AddressOf ArgumentXmlDocs).JoinBy(vbCrLf))
 
-            Call vb.AppendLine($"Public Function {func}({params.JoinBy(", ")}) As Integer")
-            Call vb.AppendLine($"    Dim CLI As New StringBuilder(""{API.Value.Name}"")")
+            Dim deli$
 
+            If params.Length > 4 Then
+                deli = ", " & vbCrLf & New String(" "c, 20 + func.Length)
+            Else
+                deli = ", "
+            End If
+
+            Dim funcDeclare$ = $"Public Function {func}({params.JoinBy(deli)}) As Integer"
+
+            Call vb.AppendLine(funcDeclare)
+            Call vb.AppendLine($"    Dim CLI As New StringBuilder(""{api.Value.Name}"")")
             ' 插入命令名称和参数值之间的一个必须的空格
             Call vb.AppendLine("    Call CLI.Append("" "")")
-            Call vb.AppendLine(createCliCalls(+API))
+            Call vb.AppendLine(createCliCalls(+api))
             Call vb.AppendLine()
 
             If incompatible Then
@@ -191,6 +222,25 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("End Function")
         End Sub
 
+        Private Shared Function ArgumentXmlDocs(args As Argument()) As String()
+            Dim out As New List(Of String)
+            Dim param$
+            Dim comments$
+
+            For Each arg As Argument In args
+                comments = XmlEntity.EscapingXmlEntity(arg.Description) _
+                    .Replace("\n", vbCrLf) _
+                    .LineTokens _
+                    .Select(Function(l) "''' " & l) _
+                    .JoinBy(vbCrLf) _
+                    .Trim("'"c)
+                param = $"''' <param name=""{VisualBasic.normAsVisualBasicName(arg.Name)}"">{comments}
+''' </param>"
+                out += param
+            Next
+
+            Return out
+        End Function
 
         ''' <summary>
         ''' 在这个函数之中会生成函数的参数列表

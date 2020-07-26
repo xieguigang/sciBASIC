@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6c2b3e5d881c8a129a2f3fe5f61c166, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::71d18de8e8e6bd509a1d3cf9e9cfe4ce, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,11 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __executeEmpty, __getsAllCommands, apiInvoke, Contains, CreateEmptyCLIObject
-    '                   (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
-    '                   GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
-    '                   (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
+    '         Function: __getsAllCommands, apiInvoke, apiInvokeEtc, Contains, CreateEmptyCLIObject
+    '                   (+3 Overloads) CreateInstance, doExecuteNonCLIInput, doLoadApiInternal, (+3 Overloads) Execute, ExistsCommand
+    '                   GetAllCommands, getAPI, GetEnumerator, GetEnumerator1, GetPossibleCommand
+    '                   Help, ListingRelated, (+2 Overloads) Remove, SDKdocs, ToDictionary
+    '                   ToString, TryGetValue
     ' 
     '         Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
     ' 
@@ -51,6 +52,7 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 #If DEBUG Then
@@ -131,7 +133,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Overridable Function Execute(args As CommandLine) As Integer
             If Not args.IsNullOrEmpty Then
-                Dim i As Integer = apiInvoke(args.Name.ToLower, {args}, args.Parameters)
+                Dim i As Integer = apiInvoke(args.Name, {args}, args.Parameters)
 #If DEBUG Then
 
 #Else
@@ -143,7 +145,8 @@ Namespace CommandLine
 #End If
                 Return i
             Else
-                Return __executeEmpty() ' 命令行是空的
+                ' 命令行是空的
+                Return doExecuteNonCLIInput()
             End If
         End Function
 
@@ -152,15 +155,18 @@ Namespace CommandLine
         ''' 否则打印出所有的命令名称信息
         ''' </summary>
         ''' <returns></returns>
-        Private Function __executeEmpty() As Integer
+        Private Function doExecuteNonCLIInput() As Integer
             If Not ExecuteEmptyCli Is Nothing Then
+#If DEBUG Then
+                Return _ExecuteEmptyCli()
+#Else
                 Try
                     Return _ExecuteEmptyCli()
                 Catch ex As Exception
                     Call App.LogException(ex)
                     Call ex.PrintException
                 End Try
-
+#End If
                 Return -100
             Else
                 ' 当用户什么也不输入的时候，打印出所有的命令名称帮助信息
@@ -172,94 +178,95 @@ Namespace CommandLine
         ''' The interpreter runs all of the command from here.(所有的命令行都从这里开始执行)
         ''' </summary>
         ''' <param name="commandName"></param>
-        ''' <param name="argvs">就只有一个命令行对象</param>
+        ''' <param name="args">就只有一个命令行对象</param>
         ''' <param name="help_argvs"></param>
         ''' <returns></returns>
-        Private Function apiInvoke(commandName$, argvs As Object(), help_argvs$()) As Integer
-            Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
+        Private Function apiInvoke(commandName$, args As Object(), help_argvs$()) As Integer
+            Dim cli As CommandLine = DirectCast(args(Scan0), CommandLine)
 
-            If apiTable.ContainsKey(commandName) Then _
-                Return apiTable(commandName).Execute(argvs)
+            If apiTable.ContainsKey(commandName.ToLower) Then
+                Return apiTable(commandName.ToLower).Execute(args)
+            End If
 
-            If "??vars".TextEquals(commandName) Then
-                Call ExecuteImpl.PrintVariables()
+            Select Case commandName.ToLower
+                Case "??vars"
+                    Call ExecuteImpl.PrintVariables()
+                Case "??history"
+                    Call ExecuteImpl.HandleShellHistory(args:=cli)
+                Case "?", "??", "--help"
+                    If help_argvs.IsNullOrEmpty Then
+                        Return Help("")
+                    Else
+                        Return Help(help_argvs.First)
+                    End If
+                Case "~"  ' 打印出应用程序的位置，linux里面的HOME
+                    Call Console.WriteLine(App.ExecutablePath)
+                Case "man"
+                    Call ExecuteImpl.HandleProgramManual(Me, cli)
+                Case "/linux-bash"
+                    Call My.BashShell()
+                Case "/cli.dev"
+                    Call Me.CreateCLIPipelineFile(args:=cli)
+                Case Else
+                    If InStr(commandName, "??") = 1 Then
+                        ' 支持类似于R语言里面的 ??帮助命令
+                        ' 去除前面的两个??问号，得到查询的term
+                        Return Mid(commandName, 3).DoCall(AddressOf Help)
+                    Else
+                        Return apiInvokeEtc(commandName, cli)
+                    End If
+            End Select
 
-                Return 0
+            Return 0
+        End Function
 
-            ElseIf "??history".TextEquals(commandName) Then
+        Private Function apiInvokeEtc(commandName$, cli As CommandLine) As Integer
+            ' 命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
+            If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then
+                App.InputFile = commandName
 
-                Call ExecuteImpl.HandleShellHistory(args:=CLI)
-
-                Return 0
-
-            ElseIf String.Equals(commandName, "?") OrElse commandName = "??" OrElse commandName.TextEquals("--help") Then
-                If help_argvs.IsNullOrEmpty Then
-                    Return Help("")
+                If cli.IsTrue("--debug") Then
+                    Return ExecuteFile()(path:=commandName, args:=cli)
                 Else
-                    Return Help(help_argvs.First)
-                End If
-
-            ElseIf InStr(commandName, "??") = 1 Then  ' 支持类似于R语言里面的 ??帮助命令
-                ' 去除前面的两个??问号，得到查询的term
-                Return Mid(commandName, 3).DoCall(AddressOf Help)
-
-            ElseIf String.Equals(commandName, "~") Then
-                ' 打印出应用程序的位置，linux里面的HOME
-                Call Console.WriteLine(App.ExecutablePath)
-
-                Return 0
-
-            ElseIf String.Equals(commandName, "man") Then
-                Call ExecuteImpl.HandleProgramManual(Me, CLI)
-
-            ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
-                Return My.BashShell()
-
-            ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
-                Return Me.CreateCLIPipelineFile(args:=CLI)
-
-            Else
-                ' 命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
-                If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then
-                    App.InputFile = commandName
-
                     Try
-                        Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
+                        Return ExecuteFile()(path:=commandName, args:=cli)
                     Catch ex As Exception
                         ex = New Exception("Execute file failure!", ex)
-                        ex = New Exception(argvs(Scan0).ToString, ex)
+                        ex = New Exception(cli.ToString, ex)
                         Call App.LogException(ex)
                         Call ex.PrintException
-                    End Try
 
-                    Return -120
-                ElseIf Not ExecuteNotFound Is Nothing Then
-                    Try
-                        Return ExecuteNotFound()(DirectCast(argvs(Scan0), CommandLine))
-                    Catch ex As Exception
-                        ex = New Exception("Execute not found failure!", ex)
-                        ex = New Exception(argvs(Scan0).ToString, ex)
-                        Call App.LogException(ex)
-                        Call ex.PrintException
+                        Return 500
                     End Try
+                End If
 
-                    Return -1000
+                Return i
+            ElseIf Not ExecuteNotFound Is Nothing Then
+                Try
+                    Return ExecuteNotFound()(cli)
+                Catch ex As Exception
+                    ex = New Exception("Execute not found failure!", ex)
+                    ex = New Exception(cli.ToString, ex)
+                    Call App.LogException(ex)
+                    Call ex.PrintException
+                End Try
+
+                Return -1000
+            Else
+                Dim list$() = Me.ListingRelated(commandName)
+
+                If list.IsNullOrEmpty Then
+
+                    Call Console.WriteLine(BAD_COMMAND_NAME, commandName)
+                    Call Console.WriteLine()
+                    Call Console.WriteLine(PS1.Fedora12.ToString & " " & cli.ToString)
+
                 Else
-                    Dim list$() = Me.ListingRelated(commandName)
-
-                    If list.IsNullOrEmpty Then
-
-                        Call Console.WriteLine(BAD_COMMAND_NAME, commandName)
-                        Call Console.WriteLine()
-                        Call Console.WriteLine(PS1.Fedora12.ToString & " " & DirectCast(argvs(Scan0), CommandLine).ToString)
-
-                    Else
-                        Call listingCommands(list, commandName)
-                    End If
+                    Call listingCommands(list, commandName)
                 End If
             End If
 
-            Return -1
+            Return 0
         End Function
 
         Const BAD_COMMAND_NAME$ = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
@@ -315,7 +322,10 @@ Namespace CommandLine
         ''' will list all of the commands' help information.(假若本参数为空则函数会列出所有的命令的帮助信息)</param>
         ''' <returns>Error code, ZERO for no error</returns>
         ''' <remarks></remarks>
-        <ExportAPI("?", Usage:="? [CommandName]", Info:="Show Application help", Example:="? example_commandName")>
+        <ExportAPI("?")>
+        <Usage("? [CommandName]")>
+        <Description("Show Application help")>
+        <Example("? example_commandName")>
         Public Function Help(CommandName As String) As Integer
             If String.IsNullOrEmpty(CommandName) Then
                 ' List all commands when command name is empty.
@@ -417,37 +427,49 @@ Namespace CommandLine
         ''' <returns></returns>
         Private Shared Function getAPI(methodInfo As MethodInfo, commandAttribute As Type, [throw] As Boolean) As APIEntryPoint
             Dim cmdAttr As ExportAPIAttribute = Nothing
-            Dim commandInfo As APIEntryPoint
 
             Try
                 Dim attrs As Object() = methodInfo.GetCustomAttributes(commandAttribute, False)
+
                 If attrs.IsNullOrEmpty Then
                     Return Nothing
+                Else
+                    cmdAttr = DirectCast(attrs(0), ExportAPIAttribute)
                 End If
 
-                cmdAttr = DirectCast(attrs(0), ExportAPIAttribute)
-                commandInfo = New APIEntryPoint(cmdAttr, methodInfo, [throw]) ' 在这里将外部的属性标记和所属的函数的入口点进行连接
-                If cmdAttr.Info.StringEmpty Then
-                    cmdAttr.Info = methodInfo.Description ' 帮助信息的获取兼容系统的Description方法
-                End If
-                If cmdAttr.Usage.StringEmpty Then
-                    cmdAttr.Usage = methodInfo.Usage
-                End If
-                If cmdAttr.Example.StringEmpty Then
-                    cmdAttr.Example = methodInfo.ExampleInfo
-                End If
-
-                Return commandInfo
+                Return doLoadApiInternal(cmdAttr, methodInfo, [throw])
             Catch ex As Exception
                 If Not cmdAttr Is Nothing Then
                     ex = New Exception("This command API can not be imports: " & cmdAttr.GetJson, ex)
                     ex = New Exception(CheckNotice, ex)
                 End If
+
                 Call App.LogException(New Exception(methodInfo.FullName(True), ex))
                 Call ex.PrintException
 
                 Return Nothing
             End Try
+        End Function
+
+        ''' <summary>
+        ''' 在这里将外部的属性标记和所属的函数的入口点进行连接
+        ''' </summary>
+        ''' <returns></returns>
+        Private Shared Function doLoadApiInternal(cmdAttr As ExportAPIAttribute, methodInfo As MethodInfo, [throw] As Boolean) As APIEntryPoint
+            Dim commandInfo As New APIEntryPoint(cmdAttr, methodInfo, [throw])
+
+            If cmdAttr.Info.StringEmpty Then
+                ' 帮助信息的获取兼容系统的Description方法
+                cmdAttr.Info = methodInfo.Description
+            End If
+            If cmdAttr.Usage.StringEmpty Then
+                cmdAttr.Usage = methodInfo.Usage
+            End If
+            If cmdAttr.Example.StringEmpty Then
+                cmdAttr.Example = methodInfo.ExampleInfo
+            End If
+
+            Return commandInfo
         End Function
 
         Const CheckNotice As String = "Please checks for the export api definition on your CLI interface function."

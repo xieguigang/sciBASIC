@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17866a252f94bd85f412ba9d0aacab2c, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9cab04adaafb7f59a32c6fd96a71058f, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module ROCPlot
@@ -76,8 +77,8 @@ Public Module ROCPlot
         Return New SerialData With {
             .color = Color.Black,
             .lineType = DashStyle.Solid,
-            .PointSize = 5,
-            .Shape = LegendStyles.Triangle,
+            .pointSize = 5,
+            .shape = LegendStyles.Triangle,
             .pts = points _
                 .OrderBy(Function(p) p.pt.X) _
                 .ToArray,
@@ -131,10 +132,10 @@ Public Module ROCPlot
         Dim reference As New SerialData With {
             .color = AUCfillColor.TranslateColor,
             .lineType = DashStyle.Dash,
-            .PointSize = 5,
+            .pointSize = 5,
             .width = lineWidth,
             .pts = {New PointData(0, 0), New PointData(1, 1)},
-            .Shape = LegendStyles.Circle
+            .shape = LegendStyles.Circle
         }
 
         roc.width = lineWidth

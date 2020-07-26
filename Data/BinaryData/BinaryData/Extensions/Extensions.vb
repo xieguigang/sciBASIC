@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::608fcef57ada7c2c5b1918257cd1c1cf, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::309aaec301ec044722744c5785c1241f, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -39,15 +39,16 @@
     ' 
     '     Function: OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, (+2 Overloads) VerifyMagicSignature
     ' 
+    '     Sub: WriteByte
+    ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text
 
 Public Interface IMagicBlock
 
@@ -122,7 +123,8 @@ End Interface
     <Extension>
     Public Function OpenBinaryReader(path$, Optional encoding As Encodings = Encodings.ASCII, Optional buffered& = 1024 * 1024 * 10) As BinaryDataReader
         If FileIO.FileSystem.GetFileInfo(path).Length <= buffered Then
-            Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)   ' 文件数据将会被缓存
+            ' 文件数据将会被缓存
+            Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)
             Dim ms As New MemoryStream(byts)
 
             Return New BinaryDataReader(ms, encoding)
@@ -158,4 +160,9 @@ End Interface
             Loop
         End Using
     End Function
+
+    <Extension>
+    Public Sub WriteByte(stream As Stream, sbytes As SByte())
+        Call stream.Write(sbytes.CastByte, Scan0, sbytes.Length)
+    End Sub
 End Module

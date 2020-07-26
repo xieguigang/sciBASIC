@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d216526a496bf2fc312ec925d21209a9, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::891f0552ada4acc03a6ba0492cc131f9, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Class Shell
     ' 
-    '         Properties: dev, History, ps1, Quite, shell
+    '         Properties: autoCompleteCandidates, dev, History, ps1, Quite
+    '                     shell
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: Run
@@ -47,7 +48,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     ''' <summary>
     ''' Shell model for console.
@@ -56,10 +57,17 @@ Namespace Terminal
 
         Public ReadOnly Property ps1 As PS1
         Public ReadOnly Property shell As Action(Of String)
+        ''' <summary>
+        ''' a candidate list for implements auto-complete for console input.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property autoCompleteCandidates As New List(Of String)
         Public ReadOnly Property dev As TextReader
 
         ''' <summary>
         ''' Command text for exit the shell loop 
+        ''' 
+        ''' (默认的退出文本为vim的 ``:q`` 命令)
         ''' </summary>
         ''' <returns></returns>
         Public Property Quite As String = ":q"
@@ -85,7 +93,8 @@ Namespace Terminal
             Do While True
                 Call Console.Write(ps1.ToString)
 
-                If (cli = Console.ReadLine).Trim.StringEmpty Then
+                If Strings.Trim((cli = Console.ReadLine)).StringEmpty Then
+                    Call _shell(cli)
                     Continue Do
                 End If
 

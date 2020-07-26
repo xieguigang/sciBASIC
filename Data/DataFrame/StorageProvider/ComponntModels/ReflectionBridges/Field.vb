@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb39a5883d6e1da5e7923c666c41d69e, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
+﻿#Region "Microsoft.VisualBasic::6d11cd9ce72980b2195df3b9d7ba765e, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Column
     ' 
-    '         Properties: Define, Name, ProviderId
+    '         Properties: define, Name, ProviderId
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: CreateObject, ToString
@@ -55,11 +55,11 @@ Namespace StorageProvider.ComponentModels
         ''' The column attribute definition.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Define As ColumnAttribute
+        Public Property define As ColumnAttribute
 
         Public Overrides ReadOnly Property Name As String
             Get
-                Return Define.Name
+                Return define.Name
             End Get
         End Property
 
@@ -71,11 +71,12 @@ Namespace StorageProvider.ComponentModels
 
         Private Sub New(attr As ColumnAttribute, BindProperty As PropertyInfo)
             Call MyBase.New(BindProperty)
-            Define = attr
-            __toString = AddressOf Scripting.ToString
+
+            _define = attr
+            _toString = AddressOf Scripting.ToString
         End Sub
 
-        ReadOnly __toString As Func(Of Object, String)
+        ReadOnly _toString As Func(Of Object, String)
 
         ''' <summary>
         ''' With custom parser from the user code.
@@ -85,8 +86,9 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="parser"></param>
         Private Sub New(attr As ColumnAttribute, bindProperty As PropertyInfo, parser As IParser)
             Call MyBase.New(bindProperty, AddressOf parser.TryParse)
-            Define = attr
-            __toString = AddressOf parser.ToString
+
+            _define = attr
+            _toString = AddressOf parser.ToString
         End Sub
 
         Public Shared Function CreateObject(attr As ColumnAttribute, BindProperty As PropertyInfo) As Column
@@ -100,7 +102,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Public Overrides Function ToString([object] As Object) As String
-            Return __toString([object])
+            Return _toString([object])
         End Function
     End Class
 End Namespace

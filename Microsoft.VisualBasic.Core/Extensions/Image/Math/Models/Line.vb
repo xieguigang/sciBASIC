@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d95835778349348f609695497b663a28, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Line.vb"
+﻿#Region "Microsoft.VisualBasic::4f40d19673af91658a2ca9e453fd2a0b, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Line.vb"
 
     ' Author:
     ' 
@@ -108,6 +108,8 @@ Namespace Imaging.Math2D
             Return $"[{{{X1}, {Y1}}}, {{{X2}, {Y2}}}]"
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(pointTuple As (X#, Y#)()) As Line
             Return New Line With {
@@ -117,6 +119,8 @@ Namespace Imaging.Math2D
                 .Y2 = pointTuple(1).Y
             }
         End Operator
+
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(twoPoints As PointF()) As Line

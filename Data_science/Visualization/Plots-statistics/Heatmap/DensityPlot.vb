@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87e89b09f7cd9f2ed4f20c07d99ab4e9, Data_science\Visualization\Plots-statistics\Heatmap\DensityPlot.vb"
+﻿#Region "Microsoft.VisualBasic::bfa925c6a7434892c913634bac6cb5db, Data_science\Visualization\Plots-statistics\Heatmap\DensityPlot.vb"
 
     ' Author:
     ' 
@@ -128,7 +128,8 @@ Namespace Heatmap
                 .DensityMatrix(
                     pointVector,
                     schema:=colors,
-                    r:=ptSize)
+                    r:=ptSize
+                )
             Dim scatterPadding As Padding = padding
             Dim xAxis = xrange.CreateAxisTicks.AxisExpression
             Dim yAxis = yrange.CreateAxisTicks.AxisExpression
@@ -191,9 +192,9 @@ Namespace Heatmap
                     unmapColor:=NameOf(Color.Gray))
 
                 If TypeOf g Is Graphics2D Then
-                    Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size)
+                    Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size, padding)
                 Else
-                    Return New SVGData(g, g.Size)
+                    Return New SVGData(g, g.Size, padding)
                 End If
             End Using
         End Function
@@ -243,7 +244,7 @@ Namespace Heatmap
             Return New SerialData With {
                 .color = Color.Black,
                 .pts = serialData,
-                .PointSize = r!
+                .pointSize = r!
             }
         End Function
     End Module

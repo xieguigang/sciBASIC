@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7b6985a0997ef3768ef740897ce76e6, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\IndexSelector.vb"
+﻿#Region "Microsoft.VisualBasic::95139befeafc8875d31a9c3935bef117, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\IndexSelector.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '     Class OrderSelector
     ' 
-    '         Properties: Count, Desc
+    '         Properties: Count, Desc, Max, Min
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Find, FirstGreaterThan, GetEnumerator, IEnumerable_GetEnumerator, SelectByRange
@@ -120,6 +120,26 @@ Namespace ComponentModel.Ranges
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return source(index)
+            End Get
+        End Property
+
+        Public ReadOnly Property Max As T
+            Get
+                If Desc Then
+                    Return source.First
+                Else
+                    Return source.Last
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property Min As T
+            Get
+                If Desc Then
+                    Return source.Last
+                Else
+                    Return source.First
+                End If
             End Get
         End Property
 

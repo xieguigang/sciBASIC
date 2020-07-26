@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5eade1adc5a0ddc55e6e5bdf5e1bd2c, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::f06667250de2935a37a3b27ab18b8668, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Beta.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,7 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -100,14 +99,14 @@ Namespace Distributions.MethodOfMoments
                     testvalue = GetCDF(value)
                 End If
                 n += 1
-            Loop While Math.Abs(testvalue - probability) > 0.000000000000001 Or n <> 100
+            Loop While stdNum.Abs(testvalue - probability) > 0.000000000000001 Or n <> 100
             Return value
         End Function
         Public Overrides Function GetCDF(value As Double) As Double 'not sure this is right, technically it is the regularized incomplete beta.
             Return SpecialFunctions.RegularizedIncompleteBetaFunction(_Alpha, _Beta, value)
         End Function
         Public Overrides Function GetPDF(value As Double) As Double
-            Return (Math.Pow(value, (_Alpha - 1)) * (Math.Pow((1 - value), (_Beta - 1)))) / SpecialFunctions.BetaFunction(_Alpha, _Beta)
+            Return (stdNum.Pow(value, (_Alpha - 1)) * (stdNum.Pow((1 - value), (_Beta - 1)))) / SpecialFunctions.BetaFunction(_Alpha, _Beta)
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
             If _Alpha <= 0 Then Yield New Exception("Alpha must be greater than 0")

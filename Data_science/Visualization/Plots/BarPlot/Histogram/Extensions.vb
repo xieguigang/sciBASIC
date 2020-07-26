@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::852aa3effee3f1da81d005e1efbf7494, Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0d483779ffb9e360653fd14ef16a4226, Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 
 Namespace BarPlot.Histogram
@@ -49,6 +50,7 @@ Namespace BarPlot.Histogram
     Module Extensions
 
         ''' <summary>
+        ''' Tag值为直方图的高，value值为直方图的平均值连线
         ''' Syntax helper
         ''' </summary>
         ''' <param name="hist"></param>
@@ -58,8 +60,32 @@ Namespace BarPlot.Histogram
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function NewModel(hist As IEnumerable(Of DataBinBox(Of Double)), step!, legend As Legend) As HistProfile
-            Return New HistProfile(hist, [step]) With {
-                .legend = legend
+            Dim data As DataBinBox(Of Double)() = hist.ToArray
+            Dim min As Double
+            Dim boxes As New List(Of HistogramData)
+
+            If data.Length = 0 Then
+                Return New HistProfile With {
+                    .legend = legend,
+                    .data = {}
+                }
+            Else
+                min = data(Scan0).Raw.Min
+            End If
+
+            For Each box In data
+                boxes += New HistogramData With {
+                    .x1 = min,
+                    .x2 = min + [step],
+                    .y = box.Count,
+                    .pointY = If(box.Count = 0, 0, box.Raw.Average)
+                }
+                min = min + [step]
+            Next
+
+            Return New HistProfile With {
+                .legend = legend,
+                .data = boxes
             }
         End Function
     End Module

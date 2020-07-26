@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42aa90d57a9c12fb5abb3f794d617c0a, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\BinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::fda547a3430273c710bd626c128ca7b1, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\BinaryTree.vb"
 
     ' Author:
     ' 
@@ -78,6 +78,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         <Extension>
         Public Iterator Function TakeRange(Of K, V)(tree As BinaryTree(Of K, V), min As K, max As K, compares As Comparison(Of K)) As IEnumerable(Of Map(Of K, V))
+#If NET_48 Then
+
             Do While Not tree Is Nothing
                 Dim compare = (
                     min:=compares(min, tree.Key),
@@ -100,6 +102,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
                     tree = tree.Right
                 End If
             Loop
+#Else
+            Throw New NotImplementedException
+#End If
         End Function
 
         <Extension>

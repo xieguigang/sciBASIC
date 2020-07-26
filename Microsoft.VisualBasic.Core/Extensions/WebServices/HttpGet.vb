@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::994b1956aa075a24286a1fac61a9418f, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::0d7a9ce28cae3e697ecf76f2b53078b9, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -66,7 +66,7 @@ Public Module HttpGet
     ''' <param name="retry">发生错误的时候的重试的次数</param>
     ''' <returns>失败或者错误会返回空字符串</returns>
     ''' <remarks>这个工具只适合于文本数据的传输操作</remarks>
-    <ExportAPI("Webpage.Request", Info:="Get the html page content from a website request Or a html file on the local filesystem.")>
+    <ExportAPI("Webpage.Request")>
     <Extension> Public Function [GET](url As String,
                                       <Parameter("Request.TimeOut")>
                                       Optional retry As UInt16 = 0,
@@ -75,7 +75,8 @@ Public Module HttpGet
                                       Optional doNotRetry404 As Boolean = True,
                                       Optional UA$ = Nothing,
                                       Optional refer$ = Nothing,
-                                      Optional ByRef is404 As Boolean = False) As String
+                                      Optional ByRef is404 As Boolean = False,
+                                      Optional echo As Boolean = True) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -89,18 +90,26 @@ Public Module HttpGet
 #End If
         Dim isFileUrl As String = (InStr(url, "http://", CompareMethod.Text) <> 1) AndAlso (InStr(url, "https://", CompareMethod.Text) <> 1)
 
-        Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
+        If echo Then
+            Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
+        End If
 
         ' do status indicator reset
         is404 = False
 
         ' 类似于php之中的file_get_contents函数,可以读取本地文件内容
         If File.Exists(url) Then
-            Call "[Job DONE!]".__DEBUG_ECHO
+            If echo Then
+                Call "[Job DONE!]".__DEBUG_ECHO
+            End If
+
             Return url.ReadAllText
         Else
             If isFileUrl Then
-                Call $"URL {url.ToFileURL} can not be solved on your filesystem!".Warning
+                If echo Then
+                    Call $"URL {url.ToFileURL} can not be solved on your filesystem!".Warning
+                End If
+
                 is404 = True
                 Return ""
             End If
@@ -114,11 +123,11 @@ Public Module HttpGet
             headers(NameOf(refer)) = refer
         End If
 
-        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404)
+        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404, echo)
     End Function
 
     <Extension>
-    Private Function httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$, ByRef is404 As Boolean) As String
+    Private Function httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$, ByRef is404 As Boolean, echo As Boolean) As String
         Dim retryTime As Integer = 0
 
         If String.IsNullOrEmpty(proxy) Then
@@ -126,7 +135,7 @@ Public Module HttpGet
         End If
 
         Try
-RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet()
+RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet(echo:=echo)
         Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso DoNotRetry404
             is404 = True
             Return LogException(url, New Exception(url, ex))
@@ -193,7 +202,7 @@ RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet()
     ''' </summary>
     ''' <param name="webrequest"></param>
     ''' <returns></returns>
-    <Extension> Private Function urlGet(webrequest As HttpWebRequest) As String
+    <Extension> Private Function urlGet(webrequest As HttpWebRequest, echo As Boolean) As String
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim url As String = webrequest.RequestUri.ToString
 
@@ -214,7 +223,7 @@ RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet()
             If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
                 Call doctorcomError.PrintException
                 Return ""
-            Else
+            ElseIf echo Then
                 Dim time$ = ValueTypes.ReadableElapsedTime(timer.ElapsedMilliseconds)
                 Dim debug$ = $"[{url}] {title} - {Len(html)} chars in {time}"
 

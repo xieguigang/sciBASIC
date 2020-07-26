@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f832955dc356fa4e8249eb2bf7c2fd9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3ddda5eb863fa01d3549b70893089093, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+4 Overloads) Enlarge, (+4 Overloads) GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+    '         Function: (+5 Overloads) Enlarge, (+4 Overloads) GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
     ' 
     '         Sub: ShapeGlow
     '         Enum MoveTypes
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
+Imports stdNum = System.Math
 
 Namespace Drawing2D
 
@@ -93,7 +94,7 @@ Namespace Drawing2D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetTextAnchor(label As Label, anchor As PointF) As Point
-            Return label.Rectangle.GetTextAnchor(anchor)
+            Return label.rectangle.GetTextAnchor(anchor)
         End Function
 
         ''' <summary>
@@ -188,6 +189,19 @@ Namespace Drawing2D
         ''' <param name="shape">矢量图形的点集合</param>
         ''' <param name="scale#"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Enlarge(shape As IEnumerable(Of PointF), scale As SizeF) As PointF()
+            Return Enlarge(shape, (scale.Width, scale.Height))
+        End Function
+
+        ''' <summary>
+        ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
+        ''' </summary>
+        ''' <param name="shape">矢量图形的点集合</param>
+        ''' <param name="scale#"></param>
+        ''' <returns></returns>
         <Extension> Public Function Enlarge(shape As IEnumerable(Of PointF), scale As (width#, height#)) As PointF()
             Dim shapeVector = shape.ToArray
             Dim center = shapeVector.Centre
@@ -230,8 +244,8 @@ Namespace Drawing2D
             Dim vector = shape.ToArray
             Dim x0 As New Vector(vector.Select(Function(pt) pt.X))
             Dim y0 As New Vector(vector.Select(Function(pt) pt.Y))
-            Dim x1 = x0 * Math.Cos(alpha) + y0 * Math.Sin(alpha)
-            Dim y1 = -x0 * Math.Sin(alpha) + y0 * Math.Cos(alpha)
+            Dim x1 = x0 * stdNum.Cos(alpha) + y0 * stdNum.Sin(alpha)
+            Dim y1 = -x0 * stdNum.Sin(alpha) + y0 * stdNum.Cos(alpha)
             Return (x1, y1).Point2D.ToArray
         End Function
 

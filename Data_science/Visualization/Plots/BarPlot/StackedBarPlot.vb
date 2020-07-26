@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::080b782f18d02db5bd343f6da57d7e31, Data_science\Visualization\Plots\BarPlot\StackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e9f2ef640ccf303e3bac307c62bd7304, Data_science\Visualization\Plots\BarPlot\StackedBarPlot.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Namespace BarPlot
 
@@ -178,7 +179,7 @@ Namespace BarPlot
                             ' 绘制系列标签
                             g.DrawString(legend.Name, legendFont, Brushes.Black, New PointF(x0 + boxWidth + 5, ly))
 
-                            maxWidth = Math.Max(maxWidth, g.MeasureString(legend.Name, legendFont).Width)
+                            maxWidth = stdNum.Max(maxWidth, g.MeasureString(legend.Name, legendFont).Width)
                             ly += boxSeperator + boxWidth
                         Next
 

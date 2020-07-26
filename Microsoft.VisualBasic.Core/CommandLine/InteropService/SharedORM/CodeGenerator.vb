@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f7ca69490a4b9091c58e6698b7c17bf, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::dd77343e150b055962b20367cbc85c37, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,8 @@ Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace CommandLine.InteropService.SharedORM
 
@@ -108,9 +110,9 @@ Namespace CommandLine.InteropService.SharedORM
 
                 Try
                     help =
-$"```
-{apiUsage.Replace("<", "&lt;")}
-```" & vbCrLf & api.Info
+$"```bash
+{apiUsage.DoCall(AddressOf XmlEntity.EscapingXmlEntity)}
+```" & vbCrLf & api.Info.DoCall(AddressOf XmlEntity.EscapingXmlEntity)
 
                     CLI = New NamedValue(Of CommandLine) With {
                         .Name = api.EntryPoint.Name,

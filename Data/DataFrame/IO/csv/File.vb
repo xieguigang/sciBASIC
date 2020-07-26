@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60c0f50741ba4fb1373c344874776400, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::c2d6e47f508e772dd9278a3bae21332c, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
     '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Project
-    '                   Remove, Save, (+2 Overloads) ToArray, TokenCounts, ToString
+    '                   Remove, (+2 Overloads) Save, (+2 Overloads) ToArray, TokenCounts, ToString
     '                   Transpose, Trim
     ' 
     '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
@@ -50,8 +50,8 @@
     '             Properties: IsReadOnly, RowNumbers
     ' 
     '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, GetEnumerator
-    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, Join, Load
-    '                       loads, LoadTsv, Normalization, Parse, ReadHeaderRow
+    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, (+2 Overloads) Join, Load
+    '                       loads, (+2 Overloads) LoadTsv, Normalization, Parse, ReadHeaderRow
     '                       Remove, RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
@@ -316,9 +316,12 @@ B21,B22,B23,...
             Call _innerTable.Add(New RowObject(row))
         End Sub
 
+        ''' <summary>
+        ''' 添加一个空白行
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine()
-            Call _innerTable.Add(New String() {" "})
+            Call _innerTable.Add(New String() {""})
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -612,6 +615,11 @@ B21,B22,B23,...
             Return StreamIO.SaveDataFrame(Me, path, Encoding)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Save(path$, encoding As Encodings, Optional tsv As Boolean = False, Optional silent As Boolean = True) As Boolean
+            Return StreamIO.SaveDataFrame(Me, path, encoding.CodePage, tsv:=tsv, silent:=silent)
+        End Function
+
         ''' <summary>
         ''' 这个方法是保存<see cref="Csv.DataFrame"></see>对象之中的数据所需要的
         ''' </summary>
@@ -703,6 +711,12 @@ B21,B22,B23,...
             Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadTsv(path$, Optional encoding As Encoding = Nothing) As File
+            Return DataImports.Imports(path, ASCII.TAB, encoding)
+        End Function
+
+
         Public Shared Function ReadHeaderRow(path$, Optional encoding As Encodings = Encodings.UTF8, Optional tsv As Boolean = False) As RowObject
             Dim firstLine$ = path.ReadFirstLine(encoding.CodePage)
 
@@ -728,7 +742,7 @@ B21,B22,B23,...
         ''' <summary>
         ''' 对目标文本内容字符串进行解析，得到csv文件对象数据模型
         ''' </summary>
-        ''' <param name="content$"></param>
+        ''' <param name="content">这个参数是文本内容，而非是文件路径</param>
         ''' <param name="trimBlanks"></param>
         ''' <returns></returns>
         ''' 
@@ -760,6 +774,11 @@ B21,B22,B23,...
             Next
 
             Return csv
+        End Function
+
+        Public Function Join(column As IEnumerable(Of String)) As File
+            Call __setColumn(column.ToArray, Headers.Count)
+            Return Me
         End Function
 
         ''' <summary>

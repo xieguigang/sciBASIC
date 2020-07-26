@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60ddbcd44eb7801bdc087def256ad7e3, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f677199db0ebb949312f8f7b07d6aea1, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -52,12 +52,12 @@ Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 向量以及统计函数拓展
 ''' </summary>
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -101,7 +101,11 @@ Public Module Extensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SSM(q As Vector, s As Vector) As Double
-        Return (q * s).Sum / Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+        If q.All(Function(a) a = 0.0R) OrElse s.All(Function(a) a = 0.0R) Then
+            Return 0
+        Else
+            Return (q * s).Sum / stdNum.Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+        End If
     End Function
 
     ''' <summary>
@@ -177,7 +181,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Iterates(range As (From%, To%)) As IEnumerable(Of Integer)
-        Dim step% = sys.Sign(range.To - range.From)
+        Dim step% = stdNum.Sign(range.To - range.From)
 
         For i As Integer = range.From To range.To Step [step]
             Yield i
@@ -284,7 +288,7 @@ Public Module Extensions
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
         For Each x As SeqValue(Of Double) In data.SeqIterator
-            If sys.Abs(x.value - n) <= offset Then
+            If stdNum.Abs(x.value - n) <= offset Then
                 Return x.i
             End If
         Next

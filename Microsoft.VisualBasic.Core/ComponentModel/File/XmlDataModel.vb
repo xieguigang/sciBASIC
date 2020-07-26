@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c463731b5ea4ea70468881dc9e813dba, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::0186ad048f2a0e13a6b06622544fbc07, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Stylesheet, TypeComment
     ' 
-    '         Function: (+2 Overloads) GetTypeReferenceComment
+    '         Function: CreateTypeReferenceComment, (+2 Overloads) GetTypeReferenceComment
     ' 
     '         Sub: SaveTypeComment
     '         Interface IXmlType
@@ -61,6 +61,7 @@ Imports System.Runtime.Serialization
 Imports System.Web.Script.Serialization
 Imports System.Xml
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.SecurityString
@@ -115,6 +116,10 @@ Namespace ComponentModel
 
         Private Function GetTypeReferenceComment() As XmlComment
             Return New XmlDocument().CreateComment(GetTypeReferenceComment(Me.GetType))
+        End Function
+
+        Public Shared Function CreateTypeReferenceComment(type As Type) As XmlComment
+            Return New XmlDocument().CreateComment(GetTypeReferenceComment(type))
         End Function
 
         Public Shared Sub SaveTypeComment(model As IXmlType)
@@ -177,6 +182,7 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public Shared Function GetTypeReferenceComment(modelType As Type, Optional indent% = 4) As String
             Dim fullName$ = modelType.FullName
+            Dim devtools = modelType.Assembly.FromAssembly
             Dim assembly$ = modelType.Assembly.FullName
             Dim update As Date = File.GetLastWriteTime(modelType.Assembly.Location)
             Dim md5$ = modelType.Assembly.Location.GetFileMd5
@@ -184,8 +190,10 @@ Namespace ComponentModel
             Dim traceInfo$ = vbCrLf &
                 $"{indentBlank} model:     " & fullName & vbCrLf &
                 $"{indentBlank} assembly:  " & assembly & vbCrLf &
+                $"{indentBlank} version:   " & devtools.AssemblyVersion & vbCrLf &
+                $"{indentBlank} built:     " & devtools.BuiltTime.ToString & vbCrLf &
                 $"{indentBlank} md5:       " & md5 & vbCrLf &
-                $"{indentBlank} timestamp: " & update.ToLongDateString & vbCrLf &
+                $"{indentBlank} timestamp: " & update.ToString & vbCrLf &
                 "  "
 
             Return traceInfo

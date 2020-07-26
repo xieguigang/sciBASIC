@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fc5878b88d4cf980271bcdec774d3d7, Data_science\Visualization\Plots\BarPlot\Data\BarPlotDataExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::83229f720433ad0c58c17ce4686ebc47, Data_science\Visualization\Plots\BarPlot\Data\BarPlotDataExtensions.vb"
 
     ' Author:
     ' 
@@ -241,7 +241,7 @@ Namespace BarPlot.Data
                 Dim groupSamples = data.Samples.ToDictionary()
                 Dim groupData = groups _
                     .Select(Function(gk)
-                                Dim subsets = groupSamples.Takes(gk.Value)
+                                Dim subsets = groupSamples.Takes(gk.Value).ToArray
                                 Dim serials#() = subsets(Scan0) _
                                     .data _
                                     .Sequence _

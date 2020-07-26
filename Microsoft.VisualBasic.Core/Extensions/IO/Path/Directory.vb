@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63cbc4dd9aec4e57d75e98e7437fe50d, Microsoft.VisualBasic.Core\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::fd4eea6a026c054e1b97ca8c78f98bd8, Microsoft.VisualBasic.Core\Extensions\IO\Path\Directory.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Directory
     ' 
-    '         Properties: DIR
+    '         Properties: folder
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -60,19 +60,19 @@ Namespace FileIO
         ''' 当前的这个文件夹对象的文件路径
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property DIR As String
+        Public ReadOnly Property folder As String
 
         ''' <summary>
         ''' Construct a directory object from the specific Dir path value.
         ''' </summary>
-        ''' <param name="DIR">Target directory path</param>
-        Sub New(DIR As String)
-            Me.DIR = FileSystem.GetDirectoryInfo(DIR).FullName
+        ''' <param name="directory">Target directory path</param>
+        Sub New(directory As String)
+            Me.folder = FileSystem.GetDirectoryInfo(directory).FullName
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSubDirectories() As IEnumerable(Of String)
-            Return DIR.ListDirectory
+            Return folder.ListDirectory
         End Function
 
         ''' <summary>
@@ -84,7 +84,7 @@ Namespace FileIO
         ''' <returns></returns>
         Public Function GetFullPath(file As String) As String
             If Not IsAbsolutePath(file) Then
-                file = $"{DIR}/{file}"
+                file = $"{folder}/{file}"
             End If
 
             file = FileSystem.GetFileInfo(file).FullName
@@ -123,13 +123,13 @@ Namespace FileIO
                              Call list.Add(path)
                          End Sub
 
-            Call New CopyDirectoryAction(New Progress(Of String)(action)).Copy(DIR, target, includeSrc)
+            Call New CopyDirectoryAction(New Progress(Of String)(action)).Copy(folder, target, includeSrc)
 
             Return list
         End Function
 
         Public Overrides Function ToString() As String
-            Return DIR
+            Return folder
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -139,7 +139,7 @@ Namespace FileIO
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRelativePath(file As String) As String
-            Return PathExtensions.RelativePath(DIR, file, appendParent:=False)
+            Return PathExtensions.RelativePath(folder, file, appendParent:=False)
         End Function
 
         ''' <summary>

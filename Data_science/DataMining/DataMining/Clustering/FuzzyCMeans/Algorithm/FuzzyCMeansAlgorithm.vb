@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7798e698a10eae26852d772bd91e3844, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::8b6a1dbab239818337dfb44b47bcea7d, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace FuzzyCMeans
 
@@ -146,7 +147,7 @@ Namespace FuzzyCMeans
 
                             For i As Integer = 0 To pair.Value.Count - 1
                                 Dim value As Double = pair.Value(i)
-                                Call tooltip.Add(i, Math.Round(value, 2))
+                                Call tooltip.Add(i, stdNum.Round(value, 2))
                             Next
 
                             annotation.Memberships = tooltip

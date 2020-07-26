@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51b996278bdac69db934cad9a61fadbd, Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::74bdfd24383e3f832e06a8aa5f3f51a6, Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,14 @@
 
     ' Module ROC
     ' 
-    '     Function: AUC
+    '     Function: AUC, CreateValidateResult, ROC
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -47,32 +48,41 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Public Module ROC
 
     <Extension>
-    Public Function AUC(training As TrainingUtils) As Double()
-        Dim network = training.NeuronNetwork
-        Dim result = training.TrainingSet _
-            .Select(Function(sample)
-                        Dim predicts = network.Compute(sample.status.vector)
-                        Dim actuals = sample.target
+    Public Iterator Function CreateValidateResult(network As Network, validateSet As IEnumerable(Of TrainingSample)) As IEnumerable(Of Validate)
+        For Each sample As TrainingSample In validateSet
+            Dim predicts = network.Compute(sample.sample)
+            Dim actuals = sample.classify
 
-                        Return New Validate With {
-                            .actuals = actuals,
-                            .predicts = predicts
-                        }
-                    End Function) _
-            .ToArray
-        Dim attributes = result(Scan0).actuals
-        Dim thresholdSeq As New Sequence With {.n = 100, .range = {0, 1}}
+            Yield New Validate With {
+                .actuals = actuals,
+                .predicts = predicts
+            }
+        Next
+    End Function
+
+    <Extension>
+    Public Function ROC(result As IEnumerable(Of Validate), range As DoubleRange, attribute%, Optional n% = 20) As Validation()
+        Dim thresholdSeq As New Sequence With {.n = n, .range = range}
+
+        Return Validation.ROC(Of Validate)(
+            entity:=result,
+            getValidate:=Function(x, threshold) x.actuals(attribute) >= threshold,
+            getPredict:=Function(x, threshold) x.predicts(attribute) >= threshold,
+            threshold:=thresholdSeq
+        ).Where(Function(threshold)
+                    Return Not threshold.Specificity.IsNaNImaginary AndAlso
+                        Not threshold.Sensibility.IsNaNImaginary
+                End Function) _
+         .ToArray
+    End Function
+
+    <Extension>
+    Public Function AUC(training As TrainingUtils) As Double()
+        Dim network As Network = training.NeuronNetwork
+        Dim result As Validate() = network.CreateValidateResult(training.TrainingSet).ToArray
+        Dim attributes As Double() = result(Scan0).actuals
         Dim evalAUC = Function(null As Double, i As Integer) As Double
-                          Dim validations = Validation.ROC(Of Validate)(
-                              entity:=result,
-                              getValidate:=Function(x, threshold) x.actuals(i) >= threshold,
-                              getPredict:=Function(x, threshold) x.predicts(i) >= threshold,
-                              threshold:=thresholdSeq
-                          ).Where(Function(threshold)
-                                      Return Not threshold.Specificity.IsNaNImaginary AndAlso
-                                             Not threshold.Sensibility.IsNaNImaginary
-                                  End Function) _
-                           .ToArray
+                          Dim validations = result.ROC({0, 1}, attribute:=i)
                           Dim AUCValue = Validation.AUC(validations)
 
                           Return AUCValue

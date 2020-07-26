@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2598a65fb34771095d91101901cdc588, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::7c29662f4454da7bf5f2c1a7925ba40b, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -331,6 +331,9 @@ Public Module StringHelpers
     ''' <param name="args">An object array that contains zero or more objects to format.</param>
     ''' <returns>A copy of format in which the format items have been replaced by the string representation
     ''' of the corresponding objects in args.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <DebuggerStepThrough>
     <Extension>
     Public Function FormatString(s$, ParamArray args As Object()) As String
         Return String.Format(s, args)
@@ -353,13 +356,22 @@ Public Module StringHelpers
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="data"></param>
-    ''' <param name="delimiter$"></param>
+    ''' <param name="delimiter"></param>
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter$) As String
-        Return String.Join(delimiter, data.SafeQuery.Select(AddressOf Scripting.ToString).ToArray)
+    Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter$, Optional toString As Func(Of T, String) = Nothing) As String
+        If toString Is Nothing Then
+            toString = Function(o) Scripting.ToString(o)
+        End If
+
+        Return data _
+            .SafeQuery _
+            .Select(toString) _
+            .DoCall(Function(strs)
+                        Return String.Join(delimiter, strs.ToArray)
+                    End Function)
     End Function
 
     ''' <summary>
@@ -584,7 +596,6 @@ Public Module StringHelpers
     ''' <param name="ch"></param>
     ''' <returns></returns>
     '''
-    <ExportAPI("Count", Info:="Counting the specific char in the input string value.")>
     <Extension> Public Function Count(str$, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
             Return 0
@@ -791,7 +802,6 @@ Public Module StringHelpers
     ''' <param name="pattern">The regular expression pattern to match.</param>
     ''' <param name="options"></param>
     ''' <returns></returns>
-    <ExportAPI("Regex", Info:="Searches the specified input string for the first occurrence of the specified regular expression.")>
     <Extension> Public Function Match(<Parameter("input", "The string to search for a match.")> input$,
                                       <Parameter("Pattern", "The regular expression pattern to match.")> pattern$,
                                       Optional options As RegexOptions = RegexOptions.Multiline) As String
@@ -864,7 +874,6 @@ Public Module StringHelpers
     ''' <param name="tokens"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("Tokens.Count", Info:="Count the string value numbers.")>
     <Extension> Public Function TokenCount(tokens As IEnumerable(Of String), Optional ignoreCase As Boolean = False) As Dictionary(Of String, Integer)
         If Not ignoreCase Then
             ' 大小写敏感
@@ -915,10 +924,11 @@ Public Module StringHelpers
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("StringsSplit", Info:="This method is used to replace most calls to the Java String.split method.")>
-    <Extension> Public Function StringSplit(source$, pattern$,
-                                            Optional TrimTrailingEmptyStrings As Boolean = False,
-                                            Optional opt As RegexOptions = RegexICSng) As String()
+    <Extension>
+    Public Function StringSplit(source$, pattern$,
+                                Optional TrimTrailingEmptyStrings As Boolean = False,
+                                Optional opt As RegexOptions = RegexICSng) As String()
+
         If source.StringEmpty Then
             Return {}
         End If
@@ -958,14 +968,18 @@ Public Module StringHelpers
     ''' <returns></returns>
     <Extension>
     Public Function StringReplace(s$, pattern$, replaceAs$, Optional opt As RegexOptions = RegexICSng) As String
-        Dim targets$() = r.Matches(s, pattern, opt).ToArray
-        Dim sb As New StringBuilder(s)
+        If Not s Is Nothing Then
+            Dim targets$() = r.Matches(s, pattern, opt).ToArray
+            Dim sb As New StringBuilder(s)
 
-        For Each t As String In targets
-            Call sb.Replace(t, replaceAs)
-        Next
+            For Each t As String In targets
+                Call sb.Replace(t, replaceAs)
+            Next
 
-        Return sb.ToString
+            Return sb.ToString
+        Else
+            Return ""
+        End If
     End Function
 
     ''' <summary>
@@ -981,7 +995,7 @@ Public Module StringHelpers
                                       Optional regex As Boolean = False,
                                       Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
 
-        Dim delimiterTest As Assert(Of String)
+        Dim delimiterTest As Predicate(Of String)
 
         If regex Then
             With New Regex(delimiter, opt)
@@ -1007,7 +1021,7 @@ Public Module StringHelpers
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Split(source As IEnumerable(Of String),
-                                   delimiterPredicate As Assert(Of String),
+                                   delimiterPredicate As Predicate(Of String),
                                    Optional includes As Boolean = True) As IEnumerable(Of String())
 
         Dim list As New List(Of String)
@@ -1050,7 +1064,6 @@ Public Module StringHelpers
     ''' If fuzzy, then <see cref="InStr"/> will be used if ``String.Equals`` method have no result.
     ''' </param>
     ''' <returns></returns>
-    <ExportAPI("Located", Info:="String compares using String.Equals")>
     <Extension> Public Function Located(collection As IEnumerable(Of String), text$,
                                         Optional caseSensitive As Boolean = True,
                                         Optional fuzzy As Boolean = False) As Integer
@@ -1098,7 +1111,6 @@ Public Module StringHelpers
     ''' <param name="keyword"></param>
     ''' <param name="caseSensitive"></param>
     ''' <returns>返回第一个找到关键词的行数，没有找到则返回-1</returns>
-    <ExportAPI("Lookup", Info:="Search the string by keyword in a string collection.")>
     <Extension>
     Public Function Lookup(source As IEnumerable(Of String), keyword As String, Optional caseSensitive As Boolean = True) As Integer
         Dim method As CompareMethod = If(caseSensitive, CompareMethod.Binary, CompareMethod.Text)
@@ -1141,7 +1153,8 @@ Public Module StringHelpers
     ''' <param name="find"></param>
     ''' <returns></returns>
     <ExportAPI("InStr.Any")>
-    <Extension> Public Function InStrAny(text$, ParamArray find$()) As Integer
+    <Extension>
+    Public Function InStrAny(text$, ParamArray find$()) As Integer
         For Each token As String In find
             Dim idx% = Strings.InStr(text, token, CompareMethod.Text)
 
@@ -1201,7 +1214,7 @@ Public Module StringHelpers
     ''' <param name="s"></param>
     ''' <returns></returns>
     ''' <param name="trim">
-    ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
+    ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader 
     ''' </param>
     ''' <param name="escape">
     ''' 是否需要将字符串之中的``\n``转义为换行之后再进行分割？默认不进行转义

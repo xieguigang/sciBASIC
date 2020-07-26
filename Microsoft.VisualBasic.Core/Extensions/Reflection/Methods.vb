@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::965a865aa28a8655735ad083bc1825d6, Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::566a5359f103960306dcd8f231de2d24, Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module MethodsExtension
     ' 
-    '     Function: (+2 Overloads) AsLazy, (+2 Overloads) Invoke, (+2 Overloads) TryInvoke
+    '     Function: (+2 Overloads) AsLazy, (+2 Overloads) Invoke, IsMethodOverridesOf, (+2 Overloads) TryInvoke
     ' 
     ' /********************************************************************************/
 
@@ -102,5 +102,16 @@ Public Module MethodsExtension
     <Extension>
     Public Function Invoke(method As MethodInfo) As Object
         Return method.Invoke(Nothing, Nothing)
+    End Function
+
+    ''' <summary>
+    ''' Does current <paramref name="method"/> is overrides from the base <paramref name="type"/>
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsMethodOverridesOf(method As MethodInfo, type As Type) As Boolean
+        Return Not method.DeclaringType Is type AndAlso method.DeclaringType.IsInheritsFrom(type, strict:=False)
     End Function
 End Module

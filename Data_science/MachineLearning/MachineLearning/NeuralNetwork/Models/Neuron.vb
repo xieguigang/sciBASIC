@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::877e8333ef7b3d73a52f84cbc2b55a35, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::128816ac567c01bf3bc1df27ca2bafaa, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     '                     isDroppedOut, OutputSynapses, Value
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: CalculateError, (+2 Overloads) CalculateGradient, CalculateValue, ToString, UpdateWeights
+    '         Function: CalculateError, (+2 Overloads) CalculateGradient, CalculateValue, InputSynapsesValueSum, ToString
+    '                   UpdateWeights
     ' 
     ' 
     ' /********************************************************************************/
@@ -95,7 +96,7 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' The active function
         ''' </summary>
-        Dim activation As IActivationFunction
+        Friend ReadOnly activation As IActivationFunction
 #End Region
 
 #Region "-- Constructors --"
@@ -156,27 +157,40 @@ Namespace NeuralNetwork
         ''' 赋值给<see cref="Value"/>,然后返回<see cref="Value"/>
         ''' </remarks>
         Public Overridable Function CalculateValue(doDropOut As Boolean, truncate As Double) As Double
+            Value = InputSynapsesValueSum(doDropOut, truncate)
+            Value = activation.Function(Value + Bias)
+
+            Return Value
+        End Function
+
+        ''' <summary>
+        ''' 这个函数主要是为了应用softmax输出所编写的
+        ''' </summary>
+        ''' <param name="doDropOut"></param>
+        ''' <param name="truncate"></param>
+        ''' <returns></returns>
+        Public Function InputSynapsesValueSum(doDropOut As Boolean, truncate As Double) As Double
+            Dim value As Double
+
             ' 在这里的计算过程为:
             ' 使用突触链接的权重值乘上当该突触的上游输入节点的训练值 + 误差
             ' 使用遗传算法进行优化的时候,可以将bias设置零
             ' 用遗传算法生成的应该是网络的拓扑结构,而网络的拓扑结构是和突触链接的权重相关的
             If doDropOut Then
-                Value = InputSynapses _
+                value = InputSynapses _
                     .Where(Function(edge)
                                Return Not edge.InputNeuron.isDroppedOut
                            End Function) _
                     .Sum(Function(a) a.Value)
             Else
-                Value = InputSynapses.Sum(Function(a) a.Value)
+                value = InputSynapses.Sum(Function(a) a.Value)
             End If
 
             If truncate > 0 Then
-                Value = ValueTruncate(Value, truncate)
+                value = ValueTruncate(value, truncate)
             End If
 
-            Value = activation.Function(Value + Bias)
-
-            Return Value
+            Return value
         End Function
 
         ''' <summary>
@@ -210,7 +224,7 @@ Namespace NeuralNetwork
                 Gradient = Helpers.ValueTruncate(Gradient, truncate)
             End If
 
-            ' Gradient = Gradient + (If(Math.FlipCoin, 1, -1) * Math.seeds.NextDouble)
+            ' Gradient = Gradient + (If(Math.FlipCoin, 1, -1) * stdNum.seeds.NextDouble)
 
             Return Gradient
         End Function

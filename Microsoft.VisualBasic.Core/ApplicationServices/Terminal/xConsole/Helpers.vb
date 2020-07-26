@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48ab17311b3ed47c9fd117423a9c1d25, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::cba8301f977fe2567dbfef38b86e58d0, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Helpers.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 
-Namespace Terminal.xConsole
+Namespace ApplicationServices.Terminal.xConsole
 
     ''' <summary>
     ''' Console helper. http://blogs.microsoft.co.il/blogs/pavely/archive/2009/07/23/changing-console-fonts.aspx

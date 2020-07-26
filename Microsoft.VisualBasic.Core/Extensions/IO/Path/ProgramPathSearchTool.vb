@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ea48bcfccd3737ab9c2660a4589dd6, Microsoft.VisualBasic.Core\Extensions\IO\Path\ProgramPathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::a91da6ac7254f791f4d8bf32fe0cbf39, Microsoft.VisualBasic.Core\Extensions\IO\Path\ProgramPathSearchTool.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports ENV = System.Environment
@@ -69,7 +68,7 @@ Namespace FileIO.Path
 
         ReadOnly Environments As New List(Of String) From {"ProgramFiles(x86)", "ProgramFiles"}
 
-        Const VERSION As String = "[-_`~.]\d+(\.\d+)*"
+        Const VERSION As String = "[-_`~.]\d+(\.\d+)*.+"
         Const TopDirectory As SearchOption = SearchOption.SearchTopLevelOnly
 
         Public ReadOnly Property Directories As IReadOnlyCollection(Of String)
@@ -169,10 +168,9 @@ Namespace FileIO.Path
         ''' <returns></returns>
         ''' <remarks></remarks>
         '''
-        <ExportAPI("Search.Scripts", Info:="Search for the path of a script file with a specific extension name.")>
         Public Shared Function SearchScriptFile(dir$, keyword$, Optional withExtension$ = Nothing) As IEnumerable(Of String)
             Dim scriptFileNameRule$ = $"*{keyword}*{withExtension}"
-            Dim extNameAssert As Assert(Of String)
+            Dim extNameAssert As Predicate(Of String)
 
             If withExtension.StringEmpty Then
                 extNameAssert = Function(path) path.ExtensionSuffix.StringEmpty
@@ -241,7 +239,7 @@ Namespace FileIO.Path
             End If
 
             Dim driveName$ = drive.RootDirectory.FullName
-            Dim driveRoot = FileSystem.GetDirectories(driveName, SearchOption.SearchTopLevelOnly, keyword)
+            Dim driveRoot = FileSystem.GetDirectories(driveName, SearchOption.SearchTopLevelOnly, keyword).AsList + BranchRule(driveName, keyword)
             Dim files As New List(Of String)
             Dim ProgramFiles As String = String.Format("{0}/Program Files", drive.RootDirectory.FullName)
 

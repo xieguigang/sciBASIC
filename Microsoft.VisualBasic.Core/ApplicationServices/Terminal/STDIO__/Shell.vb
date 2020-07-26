@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ea13648757d596ce2efe0336862a71f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::829b3e617e6e0f1a77e9efb412c211fb, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\Shell.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 Imports System.Text.RegularExpressions
 Imports System.Runtime.InteropServices
 
-Namespace Terminal.STDIO__
+Namespace ApplicationServices.Terminal.STDIO__
 
     '
     ' * Created by SharpDevelop.

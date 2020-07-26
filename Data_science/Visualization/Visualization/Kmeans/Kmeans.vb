@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c33acc5c606aed6bbfdaae268dd6776f, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
+﻿#Region "Microsoft.VisualBasic::4099e5cb7c99287e3ed2869e3300b4d4, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
 
     ' Author:
     ' 
@@ -119,8 +119,8 @@ Namespace KMeans
                     .title = (+cluster).Key,
                     .color = color,
                     .pts = points,
-                    .Shape = LegendStyles.Triangle,
-                    .PointSize = pointSize
+                    .shape = LegendStyles.Triangle,
+                    .pointSize = pointSize
                 }
             Next
 

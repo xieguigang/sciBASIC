@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd1c912b652b022b7cc038f820bcd3ec, Data\DataFrame\DATA\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::005e17aa92afebcda0f45734d0115fe6, Data\DataFrame\DATA\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: LoadDataSet, LoadEntitySet, (+2 Overloads) ReadXlsx
     ' 
-    '         Sub: __updateMaps
+    '         Sub: doUpdateMaps
     ' 
     ' 
     ' /********************************************************************************/

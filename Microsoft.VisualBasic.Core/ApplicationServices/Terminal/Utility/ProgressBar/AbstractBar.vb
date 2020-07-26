@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb989a65864302229727d204bec99e19, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\AbstractBar.vb"
+﻿#Region "Microsoft.VisualBasic::09e8bf7ab154930de4c32b55df64709e, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\AbstractBar.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 
 #End Region
 
-Namespace Terminal.ProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar
 
     Public MustInherit Class AbstractBar
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45ac9a33c947aee64ce856d2139c6b56, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::716a388be5fa23a1244c22140dc5f95e, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: r, x, y
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,7 +43,7 @@
 #End Region
 
 Imports System.Drawing
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace d3js.Layout
 
@@ -75,12 +75,24 @@ Namespace d3js.Layout
             y = location.Y
         End Sub
 
+        Sub New(x#, y#, r#)
+            Me.r = r
+            Me.x = x
+            Me.y = y
+        End Sub
+
         ''' <summary>
         ''' 目标节点的绘图模型
         ''' </summary>
         ''' <param name="circle">假设anchor是一个圆，画圆的时候是依据矩形框来建模的</param>
         Sub New(circle As Rectangle)
-            r = sys.Min(circle.Width, circle.Height) / 2
+            r = stdNum.Min(circle.Width, circle.Height) / 2
+            x = circle.Left + r
+            y = circle.Top + r
+        End Sub
+
+        Sub New(circle As RectangleF)
+            r = stdNum.Min(circle.Width, circle.Height) / 2
             x = circle.Left + r
             y = circle.Top + r
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::658b9e48e8ed5b22a356061ad7ca6830, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::431ddd79b2af84876a5522f108fb6c60, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -254,8 +254,6 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI(NameOf(DataFrame),
-               Info:="Convert a database table into a dynamics dataframe in VisualBasic.")>
     <Extension> Public Function DataFrame(reader As DbDataReader) As DataFrame
         Dim csv As New IO.File
         Dim fields As Integer() = reader.FieldCount.Sequence.ToArray
@@ -319,7 +317,11 @@ Public Module Extensions
     ''' <returns></returns>
     <ExportAPI("Write.Csv")>
     <Extension>
-    Public Function SaveTable(data As IEnumerable, path$, Optional encoding As Encoding = Nothing, Optional type As Type = Nothing) As Boolean
+    Public Function SaveTable(data As IEnumerable, path$,
+                              Optional encoding As Encoding = Nothing,
+                              Optional type As Type = Nothing,
+                              Optional silent As Boolean = False) As Boolean
+
         If type Is Nothing Then
             For Each x As Object In data
                 If Not x Is Nothing Then
@@ -334,7 +336,11 @@ Public Module Extensions
                     typeDef:=type,
                     strict:=False,
                     schemaOut:=Nothing) _
-            .SaveDataFrame(path, encoding:=encoding)
+            .SaveDataFrame(
+                path:=path,
+                encoding:=encoding,
+                silent:=silent
+             )
     End Function
 
     <ExportAPI("Write.Csv")>
@@ -369,7 +375,6 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function DataFrame(data As File) As DataFrame
         Return DataFrame.CreateObject(data)
@@ -390,7 +395,8 @@ Public Module Extensions
     Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
                                                 Optional strict As Boolean = False,
                                                 Optional skipEmpty As Boolean = True,
-                                                Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+                                                Optional maps As Dictionary(Of String, String) = Nothing,
+                                                Optional silent As Boolean = False) As IEnumerable(Of T)
         Dim sheet As File_csv
 
         If skipEmpty Then
@@ -405,7 +411,7 @@ Public Module Extensions
 
         Return IO.DataFrame _
             .CreateObject(file:=sheet) _
-            .AsDataSource(Of T)(strict, maps)
+            .AsDataSource(Of T)(strict, maps, silent:=silent)
     End Function
 
     ''' <summary>
@@ -418,13 +424,14 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(df As DataFrame,
                                                             Optional explicit As Boolean = False,
-                                                            Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+                                                            Optional maps As Dictionary(Of String, String) = Nothing,
+                                                            Optional silent As Boolean = False) As IEnumerable(Of T)
         With df
             If Not maps Is Nothing Then
                 Call .ChangeMapping(maps)
             End If
 
-            Return Reflector.Convert(Of T)(.ByRef, explicit)
+            Return Reflector.Convert(Of T)(.ByRef, explicit, silent:=silent)
         End With
     End Function
 
@@ -437,9 +444,14 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(importsFile$, Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
+    <Extension> Public Function AsDataSource(Of T As Class)(importsFile$,
+                                                            Optional delimiter$ = ",",
+                                                            Optional explicit As Boolean = True,
+                                                            Optional silent As Boolean = False) As T()
+
         Dim df As DataFrame = IO.DataFrame.CreateObject([Imports](importsFile, delimiter))
-        Dim data As T() = Reflector.Convert(Of T)(df, explicit).ToArray
+        Dim data As T() = Reflector.Convert(Of T)(df, explicit, silent:=silent).ToArray
+
         Return data
     End Function
 
@@ -483,6 +495,7 @@ Public Module Extensions
                                                        Optional fast As Boolean = False,
                                                        Optional maps As NameMapping = Nothing,
                                                        Optional mute As Boolean = False,
+                                                       Optional metaBlank As String = "",
                                                        Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of T)
         Dim buffer As List(Of T)
         Dim fs$, ms&
@@ -495,6 +508,7 @@ Public Module Extensions
                 fast:=fast,
                 maps:=maps,
                 mute:=mute,
+                metaBlank:=metaBlank,
                 skipWhile:=skipWhile
             ).AsList
             ms = .ElapsedMilliseconds
@@ -550,7 +564,8 @@ Public Module Extensions
                                              Optional reorderKeys As Integer = 0,
                                              Optional layout As Dictionary(Of String, Integer) = Nothing,
                                              Optional tsv As Boolean = False,
-                                             Optional transpose As Boolean = False) As Boolean
+                                             Optional transpose As Boolean = False,
+                                             Optional silent As Boolean = False) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
@@ -561,9 +576,11 @@ Public Module Extensions
             .Select(Function(o) DirectCast(o, Object)) _
             .ToArray
 
-        Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
-        Call EchoLine($"Save data to file:///{path}")
-        Call EchoLine($"[CSV.Reflector] Reflector have {objSeq.Length} lines of data to write.")
+        If Not silent Then
+            Call EchoLine($"[CSV.Reflector::{GetType(T).FullName}]")
+            Call EchoLine($"Save data to file:///{path}")
+            Call EchoLine($"[CSV.Reflector] Reflector have {objSeq.Length} lines of data to write.")
+        End If
 
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source:=objSeq,
@@ -587,10 +604,11 @@ Public Module Extensions
         Dim success = csv.SaveDataFrame(
             path:=path,
             encoding:=encoding,
-            tsv:=tsv
+            tsv:=tsv,
+            silent:=silent
         )
 
-        If success Then
+        If success AndAlso Not silent Then
             Call "CSV saved!".EchoLine
         End If
 
@@ -651,17 +669,17 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="explicit">默认导出所有的可用属性</param>
+    ''' <param name="strict">默认导出所有的可用属性</param>
     ''' <param name="metaBlank">对于字典对象之中，空缺下来的域键名的值使用什么来替代？默认使用空白字符串</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function ToCsvDoc(Of T)(source As IEnumerable(Of T),
-                                               Optional explicit As Boolean = False,
+                                               Optional strict As Boolean = False,
                                                Optional maps As Dictionary(Of String, String) = Nothing,
                                                Optional metaBlank$ = "",
                                                Optional reorderKeys% = 0) As File
         Return Reflector.Save(
-            source, explicit,
+            source, strict,
             maps:=maps,
             metaBlank:=metaBlank,
             reorderKeys:=reorderKeys
@@ -676,8 +694,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Write.Csv", Info:="Save the data collection vector as a csv document.")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of Double), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
+    <Extension>
+    Public Function SaveTo(data As IEnumerable(Of Double), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim row As IEnumerable(Of String) = From n As Double
                                             In data
                                             Select s = n.ToString
@@ -693,8 +711,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("DblVector.LoadCsv", Info:="Load the data from the csv document as a double data type vector. ")>
-    <Extension> Public Function LoadDblVector(path As String) As Double()
+    <Extension>
+    Public Function LoadDblVector(path As String) As Double()
         Dim buf As IO.File = IO.File.Load(path)
         Dim FirstRow As RowObject = buf.First
         Dim data As Double() = FirstRow.Select(AddressOf Val).ToArray

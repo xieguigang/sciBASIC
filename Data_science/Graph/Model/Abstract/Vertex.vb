@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6278e28520da16ce420de8bb1ce786db, Data_science\Graph\Model\Abstract\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::8c6e2f9223c5c56c5b4fae9951579c5d, Data_science\Graph\Model\Abstract\Vertex.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Public Class Vertex : Implements INamedValue
     ''' <returns></returns>
     <XmlAttribute> Public Property ID As Integer Implements IAddress(Of Integer).Address
 
-    Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+    Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
         ID = address
     End Sub
 

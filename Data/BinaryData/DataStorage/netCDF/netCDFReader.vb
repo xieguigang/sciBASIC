@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf60f5a32d97a477f4d03edc972b7def, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::dede2d9e5139212133c4b828612732e5, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: dimensions, globalAttributes, recordDimension, variables, version
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, getDataVariableEntry
     '                   Open, ToString
@@ -145,17 +145,7 @@ Namespace netCDF
                     If .IsNothing Then
                         Return Nothing
                     Else
-                        Select Case .type
-                            Case CDFDataTypes.BYTE : Return Byte.Parse(.value)
-                            Case CDFDataTypes.CHAR : Return .value
-                            Case CDFDataTypes.DOUBLE : Return Double.Parse(.value)
-                            Case CDFDataTypes.FLOAT : Return Single.Parse(.value)
-                            Case CDFDataTypes.INT : Return Integer.Parse(.value)
-                            Case CDFDataTypes.SHORT : Return Short.Parse(.value)
-
-                            Case Else
-                                Throw New NotSupportedException
-                        End Select
+                        Return .getObjectValue
                     End If
                 End With
             End Get
@@ -196,6 +186,10 @@ Namespace netCDF
             Me.variableTable = header _
                 .variables _
                 .ToDictionary(Function(var) var.name)
+        End Sub
+
+        Sub New(file As Stream, Optional encoding As Encodings = Encodings.UTF8)
+            Call Me.New(New BinaryDataReader(file, encoding))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

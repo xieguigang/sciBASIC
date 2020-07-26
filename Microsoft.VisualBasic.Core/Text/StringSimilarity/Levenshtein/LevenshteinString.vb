@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::414e29f5596cf5bd5a370c34dea2a9f8, Microsoft.VisualBasic.Core\Text\StringSimilarity\Levenshtein\LevenshteinString.vb"
+﻿#Region "Microsoft.VisualBasic::b88487ba232c713061072c1359b96840, Microsoft.VisualBasic.Core\Text\StringSimilarity\Levenshtein\LevenshteinString.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
 Namespace Text.Levenshtein
 
@@ -75,7 +76,7 @@ Namespace Text.Levenshtein
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Like(s$, subject As LevenshteinString) As DistResult
-            Return Levenshtein.ComputeDistance(
+            Return LevenshteinDistance.ComputeDistance(
                 s.CharCodes,
                 subject._chars,
                 Function(a, b) a = b,
@@ -91,7 +92,7 @@ Namespace Text.Levenshtein
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Like(query As LevenshteinString, s$) As DistResult
-            Return Levenshtein.ComputeDistance(
+            Return LevenshteinDistance.ComputeDistance(
                 query._chars,
                 s.CharCodes,
                 Function(a, b) a = b,
@@ -107,7 +108,7 @@ Namespace Text.Levenshtein
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Like(query As LevenshteinString, subject As LevenshteinString) As DistResult
-            Return Levenshtein.ComputeDistance(
+            Return LevenshteinDistance.ComputeDistance(
                 query._chars,
                 subject._chars,
                 Function(a, b) a = b,

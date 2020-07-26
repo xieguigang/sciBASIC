@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa12a071e72aff1d873b712f8b77c23a, Data_science\DataMining\DataMining\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::75060762920fa9ff047692cd5be265a6, Data_science\DataMining\DataMining\Statistics.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@
 '
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Set of statistics functions.
@@ -164,7 +165,7 @@ Public Module Statistics
             i += 1
         End While
 
-        Return If((total = 0), 0, Math.Sqrt(stddev__1 / total))
+        Return If((total = 0), 0, stdNum.Sqrt(stddev__1 / total))
     End Function
 
     ''' <summary>
@@ -260,7 +261,7 @@ Public Module Statistics
         Next
 
         Dim min As Integer, max As Integer, hits As Integer
-        Dim h As Integer = CInt(Math.Truncate(total * (percent + (1 - percent) / 2)))
+        Dim h As Integer = CInt(stdNum.Truncate(total * (percent + (1 - percent) / 2)))
 
         ' get range min value
         min = 0
@@ -341,7 +342,7 @@ Public Module Statistics
                 p = CDbl(values(i)) / total
                 ' calculate entropy
                 If p <> 0 Then
-                    entropy__1 += (-p * Math.Log(p, 2))
+                    entropy__1 += (-p * stdNum.Log(p, 2))
                 End If
             Next
         End If

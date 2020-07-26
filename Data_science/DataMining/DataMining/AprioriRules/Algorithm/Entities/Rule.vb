@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5573c8298d4b10e7472b93db76d4fba4, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Rule.vb"
+﻿#Region "Microsoft.VisualBasic::0d944a811da25fe0c5327825d1745ae9, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Rule.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 
 Imports System.Data.Linq.Mapping
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
+Imports stdNum = System.Math
 
 Namespace AprioriRules.Entities
 
@@ -98,7 +99,7 @@ Namespace AprioriRules.Entities
 #End Region
 
         Public Overrides Function ToString() As String
-            Return $"({SupportXY}/{SupportX} = {Math.Round(Confidence, 4)}) {{ {X} }} -> {{ {Y} }}"
+            Return $"({SupportXY}/{SupportX} = {stdNum.Round(Confidence, 4)}) {{ {X} }} -> {{ {Y} }}"
         End Function
 
 #Region "IComparable<clssRules> Members"

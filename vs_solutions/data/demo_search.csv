@@ -1,0 +1,11 @@
+,authors,year,title,journal,cites,keywords
+38dca12684e6db3dd22b395de5ca3192,"Joan Daemen, Vincent Rijmen",2002,The Design of Rijndael: AES - The Advanced Encryption Standard,NULL,5264,Computer Science; AES Implementations; Advanced Encryption Standard Process
+47d5df3eb45532d22edc5cceaac5dde3,"Joan Daemen, Vincent Rijmen",2002,The Design of Rijndael,NULL,2453,Computer Security; Computer Science; AES Implementations
+e630f33298db41db8e01a99870a43e06,Simon Heron,2009,Encryption: Advanced Encryption Standard (AES),Network Security archive,1494,Computer Security; Computer Science; 56-bit Encryption
+63f369538a378c64cdeb4a8fa80d72b0,"Frederic P Miller, Agnes F Vandome, John Mcbrewster",2009,Advanced Encryption Standard,NULL,1014,Computer Security; Computer Science; AES Implementations
+71157d81e65d9d6c2cb4e0bfc7ecca15,"Martin Feldhofer, Sandra Dominikus, Johannes Wolkerstorfer",2004,Strong authentication for RFID systems using the AES algorithm,cryptographic hardware and embedded systems,989,Cryptographic Primitive; Authentication Protocol; Computer Science
+5c4f851af1c19f708e76a602eca91369,"Akashi Satoh, Sumio Morioka, Kohji Takano, Seiji Munetoh",2001,A Compact Rijndael Hardware Architecture with S-Box Optimization,international conference on the theory and application of cryptology and infor…,874,Computer Science; S-box; AES Implementations
+8e0b05cc6a2fb04323733e202c90ed35,"Mehdilaurent Akkar, Christophe Giraud",2001,"An Implementation of DES and AES, Secure against Some Attacks",cryptographic hardware and embedded systems,656,Implementation; Computer Security; Computer Science
+f441f2d192b0c392efcf08efe6d346ce,"Craig Gentry, Shai Halevi, Nigel P Smart",2012,Homomorphic Evaluation of the AES Circuit,international cryptology conference,641,Computer Science; Bootstrapping; Theoretical Computer Science
+836e3fc4b64e0278948321b39fdc9f94,"Adam J Elbirt, W Yip, B Chetwynd, Christof Paar",2001,An FPGA-based performance evaluation of the AES block cipher candidate algorithm finalists,IEEE Transactions on Very Large Scale Integration Systems,537,Algorithm; Electronic Engineering; Computer Science
+71594782f41002ef8ef040f0d2f87c64,"Xinmiao Zhang, Keshab K Parhi",2004,High-speed VLSI architectures for the AES algorithm,IEEE Transactions on Very Large Scale Integration Systems,512,Algorithm; Very-large-scale Integration; Electronic Engineering

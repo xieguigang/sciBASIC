@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28fd81d6ba14428fc2014e6d4c719427, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::fa3dd13e99c1792d5ee0bf03439a9218, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -202,13 +202,13 @@ Namespace Text.Parser.HtmlParser
         End Function
 
         ''' <summary>
-        ''' 获取两个尖括号之间的内容
+        ''' Gets the string value between two wrapper character.
+        ''' (获取两个尖括号之间的内容)
         ''' </summary>
         ''' <param name="html"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Html.GetValue", Info:="Gets the string value between two wrapper character.")>
         <Extension> Public Function GetValue(html As String) As String
             Return html.GetStackValue(">", "<")
         End Function

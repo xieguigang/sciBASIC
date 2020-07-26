@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27781645e84d4b74793b2849d11820d4, Microsoft.VisualBasic.Core\Language\Value\Numeric\i32.vb"
+﻿#Region "Microsoft.VisualBasic::a0dd7f0ddeeeb2695c0969010855fca2, Microsoft.VisualBasic.Core\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, Equals, (+2 Overloads) ToString
-    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+3 Overloads) <, <<
+    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+4 Overloads) +, (+3 Overloads) <, <<
     '                    <=, (+3 Overloads) >, >=, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
     ' 
     ' 
@@ -203,6 +203,12 @@ Namespace Language
             Return x - n.Value
         End Operator
 
+        ''' <summary>
+        ''' value / b
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(x As i32, b As Integer) As Double
             Return x.Value / b
@@ -272,6 +278,21 @@ Namespace Language
         Public Overloads Shared Operator +(x As i32, n%) As i32
             x.Value += n
             Return x
+        End Operator
+
+        Public Overloads Shared Operator +(x As i32, n&) As i32
+            x.Value += n
+            Return x
+        End Operator
+
+        ''' <summary>
+        ''' <paramref name="n"/> + <see cref="i32.Value"/>
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator +(n As Integer, x As i32) As Integer
+            Return n + x.Value
         End Operator
 
         ''' <summary>

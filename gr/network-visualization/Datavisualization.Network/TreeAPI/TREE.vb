@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1046fc72d01ff1f8948d4a42120165af, gr\network-visualization\Datavisualization.Network\TreeAPI\TREE.vb"
+﻿#Region "Microsoft.VisualBasic::e5f71ae8571386061ca04d0f46a6f147, gr\network-visualization\Datavisualization.Network\TreeAPI\TREE.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 
 Namespace TreeAPI
@@ -83,14 +84,14 @@ Namespace TreeAPI
 
     Public Class LeafX : Inherits TreeNode
 
-        Public Property LeafX As FileStream.NetworkEdge()
+        Public Property LeafX As Edge()
 
         Sub New(parent As String)
             Call MyBase.New(parent & "-LeafX", NodeTypes.LeafX)
         End Sub
 
         Public Overrides Function GetEntities() As String()
-            Return LeafX.Select(Function(x) x.ToNode).ToArray
+            Return LeafX.Select(Function(x) x.V.label).ToArray
         End Function
     End Class
 

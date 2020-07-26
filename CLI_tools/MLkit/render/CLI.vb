@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::359ab22acc9e2da86574d33287a13c66, CLI_tools\MLkit\render\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::b7c92b4e2fdd363137ca5bf9b613a5e5, CLI_tools\MLkit\render\CLI.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,14 @@
 
     ' Module CLI
     ' 
-    '     Function: VisualizeNetwork
+    '     Function: OrthogonalLayout, VisualizeNetwork
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
+Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
@@ -47,17 +48,45 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network
-Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
 Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 <CLI> Module CLI
+
+    <ExportAPI("/layout.orthogonal")>
+    <Usage("/layout.orthogonal /in <network.model.directory> [/node.size <width,height, default=13,8> /grid <size, default=500,300> /min.dist <default=20> /out <result.model.directory>]")>
+    <Description("Do orthogonal network layout for the input given network data model.")>
+    <Argument("/node.size", True, CLITypes.String,
+              AcceptTypes:={GetType(Size)},
+              Description:="The unify node size value in [width,height].")>
+    <Argument("/grid", True, CLITypes.String,
+              AcceptTypes:={GetType(Size)},
+              Description:="")>
+    Public Function OrthogonalLayout(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim nodeSize$ = args("/node.size") Or "13,8"
+        Dim grid$ = args("/grid") Or "700,500"
+        Dim minDist# = args("/min.dist") Or 20.0
+        Dim out$ = args("/out") Or ([in].TrimDIR & $".layout.orthogonal/")
+        Dim network As NetworkTables = NetworkFileIO.Load([in])
+        Dim graph As NetworkGraph = network _
+            .CreateGraph(defaultNodeSize:=nodeSize) _
+            .ResetNodeSize(nodeSize)
+
+        Call Orthogonal.DoLayout(graph, grid.SizeParser, delta:=minDist)
+
+        Return graph.Tabular _
+            .Save(out) _
+            .CLICode
+    End Function
 
     <ExportAPI("/network")>
     <Description("Rendering network data model as png/svg image.")>
@@ -80,7 +109,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
         Dim isCytoscape As Boolean = args("/cytoscape")
         Dim out$ = args("/out") Or $"{[in].TrimDIR}/image.png"
         Dim fdArgv As ForceDirectedArgs = Parameters.Load(args("/fd"), ForceDirectedArgs.DefaultNew)
-        Dim model = NetworkTables.Load(DIR:=[in], cytoscapeFormat:=isCytoscape).AnalysisDegrees
+        Dim model = NetworkFileIO.Load(DIR:=[in], cytoscapeFormat:=isCytoscape).AnalysisDegrees
         Dim graph As NetworkGraph = model.CreateGraph(nodeColor:=Function(n) n!color.GetBrush)
         Dim nodeSizeMapper As Func(Of Graph.Node, Single) = NodeStyles.NodeDegreeSize(graph.vertex, "30,300")
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5ffde156f52abbe08a37925af47ec4b, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::60fb88c016e2a1f955bfe3846e73a073, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -177,7 +177,7 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    ''' 从一个对象集合中创建索引
+    ''' 从一个对象集合中创建索引，请注意，传递进入这个函数的参数应该是经过去重操作之后的数据
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>

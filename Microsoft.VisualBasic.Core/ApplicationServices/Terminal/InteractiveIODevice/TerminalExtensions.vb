@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dc754b47a61180b1bdf10c4c1438493, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::09223a62d016cb1d5b3fdd044f2d19ab, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Imports System.Drawing
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     ''' <summary>
     ''' 这个终端事件会依赖于<see cref="App.Running"/>属性值来自动退出的
@@ -115,6 +115,10 @@ Namespace Terminal
             End RemoveHandler
             RaiseEvent()
                 Dim [new] As New Size(Console.WindowWidth, Console.WindowHeight)
+
+                If [new].Height >= Console.BufferHeight Then
+                    [new] = New Size([new].Width, Console.BufferHeight - 1)
+                End If
 
                 For Each h As ResizeEventHandle In resizeHandles
                     Call h([new], oldSize)

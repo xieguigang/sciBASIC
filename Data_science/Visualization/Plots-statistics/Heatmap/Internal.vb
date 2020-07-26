@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f519c06318b32e7cce22604c3a81f71b, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::82d9eb7c427e5c2094dfe5d347b6665d, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Internal
     ' 
-    '         Function: doPlot, Log
+    '         Function: DataScaleLevels, doPlot, Log
     ' 
     '         Sub: DrawClass
     ' 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports stdNum = System.Math
 
 Namespace Heatmap
 
@@ -86,7 +87,7 @@ Namespace Heatmap
                             If x = 0R Then
                                 Return 0
                             Else
-                                Return Math.Sign(x) * Math.Log(x, base)
+                                Return stdNum.Sign(x) * stdNum.Log(x, base)
                             End If
                         End Function) _
                 .AsVector
@@ -147,6 +148,31 @@ Namespace Heatmap
                 Next
             End If
         End Sub
+
+        <Extension>
+        Public Function DataScaleLevels(array As DataSet(), keys$(), logScale#, scaleMethod As DrawElements, levels%)
+            Dim scaleData As DataSet()
+
+            If logScale > 0 Then
+                Dim names As New NamedVectorFactory(keys)
+
+                scaleData = array _
+                    .Select(Function(x)
+                                Dim vector As Vector = names.AsVector(x.Properties)
+                                vector = Vector.Log(vector, logScale)
+
+                                Return New DataSet With {
+                                    .ID = x.ID,
+                                    .Properties = names.Translate(vector)
+                                }
+                            End Function) _
+                    .ToArray
+            Else
+                scaleData = array
+            End If
+
+            Return scaleData.DoDataScale(scaleMethod, levels - 1)
+        End Function
 
         ''' <summary>
         ''' 一些共同的绘图元素过程
@@ -365,30 +391,12 @@ Namespace Heatmap
                         End If
                     End If
 
-                    Dim scaleData As DataSet()
 
-                    If logScale > 0 Then
-                        Dim names As New NamedVectorFactory(keys)
-
-                        scaleData = array _
-                            .Select(Function(x)
-                                        Dim vector As Vector = names.AsVector(x.Properties)
-                                        vector = Vector.Log(vector, logScale)
-
-                                        Return New DataSet With {
-                                            .ID = x.ID,
-                                            .Properties = names.Translate(vector)
-                                        }
-                                    End Function) _
-                            .ToArray
-                    Else
-                        scaleData = array
-                    End If
 
                     Dim args As New PlotArguments With {
                         .colors = colors,
                         .left = left,
-                        .levels = scaleData.DoDataScale(scaleMethod, colors.Length - 1),
+                        .levels = array.DataScaleLevels(keys, logScale, scaleMethod, colors.Length),
                         .top = top,
                         .ColOrders = colKeys,
                         .RowOrders = rowKeys,
@@ -412,8 +420,8 @@ Namespace Heatmap
 
                         For Each key$ In keys
                             Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
-                            Dim dx! = sz.Width * Math.Cos(angle) + sz.Height / 2
-                            Dim dy! = sz.Width * Math.Sin(angle) + (sz.Width / 2) * Math.Cos(angle) - sz.Height
+                            Dim dx! = sz.Width * stdNum.Cos(angle) + sz.Height / 2
+                            Dim dy! = sz.Width * stdNum.Sin(angle) + (sz.Width / 2) * stdNum.Cos(angle) - sz.Height
                             Dim pos As New PointF(left - dx, top - dy)
 
                             Call text.DrawString(key$, colLabelFont, Brushes.Black, pos, angle, format)

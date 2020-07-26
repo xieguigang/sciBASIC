@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd9b906c7eedbec1cfe3851f560b608d, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserMsgPool.vb"
+﻿#Region "Microsoft.VisualBasic::0ef744c166decdba9b71780bde6c4411, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserMsgPool.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol.PushAPI
 

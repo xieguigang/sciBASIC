@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0efa97547e395b217c0807504d57441f, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\StreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::b7df676ea198508f698deedff360a1a1, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Zip\StreamReader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ZipStreamReader
     ' 
-    '         Function: GetZipSubStream, LoadZipArchive
+    '         Function: Decompress, GetZipSubStream, LoadZipArchive
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,7 +49,10 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Zip
 
-    <HideModuleName> Public Module ZipStreamReader
+    ''' <summary>
+    ''' zip file stream helper
+    ''' </summary>
+    Public Module ZipStreamReader
 
         ''' <summary>
         ''' 将zip文件中的所有数据包一次性的返回给上层调用代码
@@ -80,18 +83,23 @@ Namespace ApplicationServices.Zip
                 End If
 
                 For Each entry As ZipArchiveEntry In entries
-                    Using ref As Stream = entry.Open
-                        Dim ms As New MemoryStream()
-
-                        Call ref.CopyTo(ms)
-                        Call ms.Seek(0, SeekOrigin.Begin)
-
-                        Yield New NamedValue(Of MemoryStream) With {
-                            .Name = entry.Name,
-                            .Value = ms
-                        }
-                    End Using
+                    Yield New NamedValue(Of MemoryStream) With {
+                        .Name = entry.Name,
+                        .Value = Decompress(file:=entry)
+                    }
                 Next
+            End Using
+        End Function
+
+        <Extension>
+        Public Function Decompress(file As ZipArchiveEntry) As MemoryStream
+            Using ref As Stream = file.Open
+                Dim ms As New MemoryStream()
+
+                Call ref.CopyTo(ms)
+                Call ms.Seek(0, SeekOrigin.Begin)
+
+                Return ms
             End Using
         End Function
 

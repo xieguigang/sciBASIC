@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a327073d8c1912fb6d47e38285e938b0, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
+﻿#Region "Microsoft.VisualBasic::7b78bbdda617e9f717487208537fb069, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
 
     ' Author:
     ' 
@@ -92,7 +92,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Collections
 
-Namespace Terminal.Utility
+Namespace ApplicationServices.Terminal.Utility
 
     ''' <summary>
     ''' Constants used with PInvoke methods

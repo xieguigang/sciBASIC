@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8870d1ea2527a37629cc9a9052b48108, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\FDGVector3.vb"
+﻿#Region "Microsoft.VisualBasic::50d89b2cdf337e5839c669dcec8f33b1, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\FDGVector3.vb"
 
     ' Author:
     ' 
@@ -83,9 +83,9 @@
 '
 '
 
-Imports Microsoft.VisualBasic.Math
 Imports System.Drawing
 Imports System.Math
+Imports Microsoft.VisualBasic.Math
 
 Namespace Layouts
 
@@ -103,11 +103,12 @@ Namespace Layouts
             Call Me.New(p.X, p.Y, 0)
         End Sub
 
-        Public Sub New(iX As Single, iY As Single, iZ As Single)
-            MyBase.New()
-            x = iX
-            y = iY
-            z = iZ
+        Public Sub New(x As Single, y As Single, z As Single)
+            Call MyBase.New()
+
+            MyBase.x = x
+            MyBase.y = y
+            MyBase.z = z
         End Sub
 
         Public Overrides Function GetHashCode() As Integer

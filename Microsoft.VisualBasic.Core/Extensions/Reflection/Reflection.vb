@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::587fe76edd1b1658bf6c230bfac12179, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::71ec8303a5322c4a4442b14fc6e5863d, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,10 @@
 
     ' Module EmitReflection
     ' 
-    '     Function: [Get], API, AsLambda, Category, Collection2GenericIEnumerable
-    '               (+2 Overloads) CreateObject, (+6 Overloads) Description, Enums, ExampleInfo, FullName
-    '               GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint, GetDouble
-    '               GetFullName, GetInt, (+2 Overloads) GetReadWriteProperties, GetTypeElement, GetTypesHelper
-    '               (+2 Overloads) GetValue, getValueInternal, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
-    '               IsNonParametric, IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite
-    '               Source, Usage
+    '     Function: AsLambda, Collection2GenericIEnumerable, (+2 Overloads) CreateObject, (+3 Overloads) Description, FullName
+    '               (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint, GetFullName, (+2 Overloads) GetReadWriteProperties
+    '               GetTypeElement, GetTypesHelper, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
+    '               IsNonParametric, IsNumericType, ModuleVersion, ResourcesSatellite, Source
     ' 
     '     Sub: RunApp, runAppInternal
     ' 
@@ -53,7 +50,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
@@ -124,7 +120,7 @@ Public Module EmitReflection
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsLambda(Of T)(assert As Assert(Of T)) As Func(Of T, Boolean)
+    Public Function AsLambda(Of T)(assert As Predicate(Of T)) As Func(Of T, Boolean)
         ' System.ArgumentException: '无法绑定到目标方法，因其签名或安全透明度与委托类型的签名或安全透明度不兼容。
         ' assert.Method.CreateDelegate(GetType(Func(Of T, Boolean)))
         Return Function(x) assert(x)
@@ -208,50 +204,6 @@ Public Module EmitReflection
             TypeOf o Is Decimal)
     End Function
 #End Region
-
-    <Extension>
-    Public Function GetDouble(field As FieldInfo, Optional obj As Object = Nothing) As Double
-        Return CType(field.GetValue(obj), Double)
-    End Function
-
-    <Extension>
-    Public Function GetInt(field As FieldInfo, Optional obj As Object = Nothing) As Integer
-        Return CType(field.GetValue(obj), Integer)
-    End Function
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <param name="type"></param>
-    ''' <param name="[nameOf]"></param>
-    ''' <returns></returns>
-    <Extension> Public Function API(type As Type, [nameOf] As String, Optional strict As Boolean = False) As String
-#If NET_40 = 0 Then
-        Dim methods = type.GetMethods(BindingFlags.Public Or BindingFlags.Static)
-        Dim mBase As MethodInfo = (From m As MethodInfo In methods
-                                   Where String.Equals([nameOf], m.Name)
-                                   Select m).FirstOrDefault
-        Dim APIExport As ExportAPIAttribute
-
-        If mBase Is Nothing Then
-NULL:       If Not strict Then
-                Return [nameOf]
-            Else
-                Return ""
-            End If
-        Else
-            APIExport = mBase.GetCustomAttribute(Of ExportAPIAttribute)
-
-            If APIExport Is Nothing Then
-                GoTo NULL
-            Else
-                Return APIExport.Name
-            End If
-        End If
-#Else
-        Throw New NotSupportedException
-#End If
-    End Function
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
@@ -383,39 +335,6 @@ NULL:       If Not strict Then
     End Function
 
     ''' <summary>
-    ''' 出错会返回空集合
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <typeparam name="TProperty"></typeparam>
-    ''' <param name="collection"></param>
-    ''' <param name="name">使用System.NameOf()操作符来获取</param>
-    ''' <returns></returns>
-    <Extension> Public Function [Get](Of T, TProperty)(collection As ICollection(Of T), name As String, Optional trimNull As Boolean = True) As TProperty()
-        Dim properties = DataFramework.Schema(Of T)(PropertyAccess.Readable, nonIndex:=True)
-
-        If properties.IsNullOrEmpty OrElse Not properties.ContainsKey(name) Then
-            Return New TProperty() {}
-        End If
-
-        Dim [property] As PropertyInfo = properties(name)
-        Dim resultBuffer As TProperty()
-        Dim LQuery = From obj As T In collection.AsParallel
-                     Let value As Object = [property].GetValue(obj, Nothing)
-                     Let cast = If(value Is Nothing, Nothing, DirectCast(value, TProperty))
-                     Select cast
-
-        If trimNull Then
-            resultBuffer = LQuery _
-                .Where(Function(item) Not item Is Nothing) _
-                .ToArray
-        Else
-            resultBuffer = LQuery.ToArray
-        End If
-
-        Return resultBuffer
-    End Function
-
-    ''' <summary>
     ''' Is type <paramref name="a"/> inherits from <paramref name="base"/> type?
     ''' </summary>
     ''' <param name="a">继承类型继承自基本类型，具备有基本类型的所有特性</param>
@@ -496,132 +415,6 @@ NULL:       If Not strict Then
         End If
     End Function
 
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Get.Description",
-               Info:="Get the description data from a enum type value, if the target have no <see cref=""DescriptionAttribute""></see> attribute data then function will return the string value from the ToString() function.")>
-    <Extension> Public Function Description(value As [Enum]) As String
-#Else
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function Description(value As [Enum]) As String
-#End If
-        Dim type As Type = value.GetType()
-        Dim s As String = value.ToString
-        Dim memInfos As MemberInfo() = type.GetMember(name:=s)
-
-        If memInfos.IsNullOrEmpty Then
-            ' 当枚举类型为OR组合的时候，得到的是一个数字
-            If s.IsPattern("\d+") Then
-                Dim flag As Long = CLng(s)
-                Dim flags As New List(Of [Enum])
-                Dim flagValue As Long
-
-                For Each member In type.GetFields.Where(Function(field) field.FieldType Is type)
-                    flagValue = CLng(member.GetValue(Nothing))
-
-                    If flag And flagValue = flagValue Then
-                        flags += CType(member.GetValue(Nothing), [Enum])
-                    End If
-                Next
-
-                Return flags.Select(AddressOf Description).JoinBy("|")
-            Else
-                Return s
-            End If
-        End If
-
-        Return memInfos _
-            .First _
-            .Description([default]:=s)
-    End Function
-
-    ''' <summary>
-    ''' 获取得到定义该类型成员之上的<see cref="DescriptionAttribute"/>值或者默认定义
-    ''' </summary>
-    ''' <param name="m"></param>
-    ''' <param name="default$"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Description(m As MemberInfo, Optional default$ = Nothing) As String
-        Dim customAttrs() = m.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
-
-        If Not customAttrs.IsNullOrEmpty Then
-            Return DirectCast(customAttrs(Scan0), DescriptionAttribute).Description
-        Else
-            Return [default]
-        End If
-    End Function
-
-    <Extension> Public Function Category(m As MemberInfo, Optional default$ = Nothing) As String
-        Dim customAttrs() = m.GetCustomAttributes(
-           GetType(CategoryAttribute),
-           inherit:=False)
-
-        If Not customAttrs.IsNullOrEmpty Then
-            Return DirectCast(customAttrs(Scan0), CategoryAttribute).Category
-        Else
-            Return [default]
-        End If
-    End Function
-
-    ''' <summary>
-    ''' Get array value from the input flaged enum <paramref name="value"/>.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    Public Function GetAllEnumFlags(Of T As Structure)(value As T) As T()
-        Dim type As Type = GetType(T)
-        Dim array As New List(Of T)
-        Dim enumValue As [Enum] = CType(CObj(value), [Enum])
-
-        For Each flag As [Enum] In Enums(Of T)().Select(Function(o) CType(CObj(o), [Enum]))
-            If enumValue.HasFlag(flag) Then
-                array += DirectCast(CObj(flag), T)
-            End If
-        Next
-
-        Return array
-    End Function
-
-    ''' <summary>
-    ''' Enumerate all of the enum values in the specific <see cref="System.Enum"/> type data.
-    ''' (只允许枚举类型，其他的都返回空集合)
-    ''' </summary>
-    ''' <typeparam name="T">泛型类型约束只允许枚举类型，其他的都返回空集合</typeparam>
-    ''' <returns></returns>
-    Public Function Enums(Of T As Structure)() As T()
-        Dim enumType As Type = GetType(T)
-
-        If Not enumType.IsInheritsFrom(GetType(System.Enum)) Then
-            Return Nothing
-        End If
-
-        Dim EnumValues As Object() =
-            Scripting _
-            .CastArray(Of System.Enum)(enumType.GetEnumValues) _
-            .Select(Of Object)(Function(ar)
-                                   Return DirectCast(ar, Object)
-                               End Function) _
-            .ToArray
-        Dim values As T() = EnumValues _
-            .Select(Of T)(Function([enum]) DirectCast([enum], T)) _
-            .ToArray
-
-        Return values
-    End Function
-
     ''' <summary>
     ''' Gets all of the can read and write access property from a type define.
     ''' </summary>
@@ -643,94 +436,27 @@ NULL:       If Not strict Then
         Return LQuery
     End Function
 
-    ''' <summary>
-    ''' Get object usage information
-    ''' </summary>
-    ''' <param name="m"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Usage(m As MemberInfo) As String
-        Try
-            Dim attr As UsageAttribute = m.GetCustomAttribute(Of UsageAttribute)
-            Return attr.UsageInfo
-        Catch ex As Exception
-            Return Nothing
-        End Try
-    End Function
-
-    ''' <summary>
-    ''' Get example code of the <see cref="Usage"/>
-    ''' </summary>
-    ''' <param name="m"></param>
-    ''' <returns></returns>
-    <Extension> Public Function ExampleInfo(m As MemberInfo) As String
-        Try
-            Dim attr As ExampleAttribute = m.GetCustomAttribute(Of ExampleAttribute)
-            Return attr.ExampleInfo
-        Catch ex As Exception
-            Return Nothing
-        End Try
-    End Function
-
-    ''' <summary>
-    ''' 只对属性有效，出错会返回空值
-    ''' </summary>
-    ''' <param name="obj"></param>
-    ''' <param name="Name"></param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("GetValue")>
-    <Extension> Public Function GetValue(Type As Type, obj As Object, Name As String) As Object
-        Try
-            Return getValueInternal(Type, obj, Name)
-        Catch ex As Exception
-            Return App.LogException(ex, $"{GetType(Extensions).FullName}::{NameOf(GetValue)}")
-        End Try
-    End Function
-
-    Private Function getValueInternal(type As Type, obj As Object, Name As String) As Object
-        Dim [property] = type.GetProperty(Name, BindingFlags.Public Or BindingFlags.Instance)
-
-        If [property] Is Nothing Then
-            Return Nothing
-        Else
-            Dim value = [property].GetValue(obj, Nothing)
-            Return value
-        End If
-    End Function
-
-    ''' <summary>
-    ''' 只对属性有效，出错会返回空值
-    ''' </summary>
-    ''' <param name="obj"></param>
-    ''' <param name="Name"></param>
-    ''' <returns></returns>
-    <Extension> Public Function GetValue(Of T)(Type As Type, obj As Object, Name As String) As T
-        Dim value = Type.GetValue(obj, Name)
-        If value Is Nothing Then
-            Return Nothing
-        End If
-        Dim cast As T = DirectCast(value, T)
-        Return cast
-    End Function
-
 #If NET_40 = 0 Then
 
     ''' <summary>
-    ''' Try convert the type specific collection data type into a generic enumerable collection data type.(尝试将目标集合类型转换为通用的枚举集合类型)
+    ''' Try convert the type specific collection data type into a generic enumerable collection data type.
+    ''' (尝试将目标集合类型转换为通用的枚举集合类型)
     ''' </summary>
     ''' <param name="type">The type specific collection data type.(特定类型的集合对象类型，当然也可以是泛型类型)</param>
-    ''' <returns>If the target data type is not a collection data type then the original data type will be returns and the function displays a warning message.</returns>
+    ''' <returns>
+    ''' If the target data type is not a collection data type then the original data type 
+    ''' will be returns and the function displays a warning message.
+    ''' </returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Collection2GenericIEnumerable", Info:="Try convert the type specific collection data type into a generic enumerable collection data type.")>
+    <ExportAPI("Collection2GenericIEnumerable")>
     <Extension> Public Function Collection2GenericIEnumerable(type As Type, Optional showDebugMsg As Boolean = True) As Type
-
         If Array.IndexOf(type.GetInterfaces, GetType(IEnumerable)) = -1 Then
 EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" is not a collection type!".__DEBUG_ECHO
             Return type
         End If
 
-        Dim genericType As Type = GetType(Generic.IEnumerable(Of )) 'Type.GetType("System.Collections.Generic.IEnumerable")
+        Dim genericType As Type = GetType(IEnumerable(Of )) 'Type.GetType("System.Collections.Generic.IEnumerable")
         Dim elementType As Type = type.GetElementType
 
         If elementType Is Nothing Then
@@ -757,7 +483,7 @@ EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" i
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Delegate.GET_Invoke", Info:="Get the method reflection entry point for a anonymous lambda expression.")>
+    <ExportAPI("Delegate.GET_Invoke")>
     Public Function GetDelegateInvokeEntryPoint(obj As Object) As MethodInfo
         Dim type As Type = obj.GetType
         Dim entryPoint = LinqAPI.DefaultFirst(Of MethodInfo) _
@@ -768,31 +494,6 @@ EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" i
                   Select methodInfo
 
         Return entryPoint
-    End Function
-
-    ''' <summary>
-    ''' Get the scripting namespace value from <see cref="[Namespace]"/>
-    ''' </summary>
-    ''' <param name="app"></param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("Get.API.Namespace")>
-    <Extension> Public Function NamespaceEntry(app As Type, Optional nullWrapper As Boolean = False) As [Namespace]
-        Dim attr As Object() = Nothing
-        Try
-            attr = app.GetCustomAttributes(GetType([Namespace]), True)
-        Catch ex As Exception
-            Call LogException(New Exception(app.FullName, ex))
-        End Try
-        If attr.IsNullOrEmpty Then
-            Dim descr$ = app.FullName
-            If nullWrapper Then
-                descr = $"< {descr} >"
-            End If
-            Return New [Namespace](app.Name, descr, True)
-        Else
-            Return DirectCast(attr(Scan0), [Namespace])
-        End If
     End Function
 
     ''' <summary>

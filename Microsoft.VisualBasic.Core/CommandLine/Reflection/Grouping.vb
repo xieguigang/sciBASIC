@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b8ec8a564ea48316af97c0e2daa02e6, Microsoft.VisualBasic.Core\CommandLine\Reflection\Grouping.vb"
+﻿#Region "Microsoft.VisualBasic::c04af6ac96245fef695608204506533a, Microsoft.VisualBasic.Core\CommandLine\Reflection\Grouping.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace CommandLine
 
-    Public Class Grouping : Implements IEnumerable(Of Groups)
+    Friend Class Grouping : Implements IEnumerable(Of Groups)
 
         Public Class Groups : Inherits GroupingDefineAttribute
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df4decaecef9ee6e22832cf9f435b386, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedFit.vb"
+﻿#Region "Microsoft.VisualBasic::ac0f2e7cf158c383cee530b8b6ad546b, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedFit.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
+''' <summary>
+''' 加权拟合的结果
+''' </summary>
 Public Class WeightedFit : Implements IFitted
 
     ''' <summary>
@@ -57,7 +60,7 @@ Public Class WeightedFit : Implements IFitted
     ''' RYSQ: Multiple correlation coefficient (R2，相关系数)
     ''' </summary>
     ''' <returns></returns>
-    Public Property CorrelationCoefficient As Double Implements IFitted.CorrelationCoefficient
+    Public Property CorrelationCoefficient As Double Implements IFitted.R2
 
     ''' <summary>
     ''' SDV: Standard deviation of errors
@@ -99,6 +102,6 @@ Public Class WeightedFit : Implements IFitted
     Public Property ErrorTest As TestPoint() Implements IFitted.ErrorTest
 
     Public Overrides Function ToString() As String
-        Return $"{Polynomial.ToString("F4")} @ R2={CorrelationCoefficient.ToString("F4")}"
+        Return $"{Polynomial.ToString("G6")}, R2={CorrelationCoefficient.ToString("F4")}"
     End Function
 End Class

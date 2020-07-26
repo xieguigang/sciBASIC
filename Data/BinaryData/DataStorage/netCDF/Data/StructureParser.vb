@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aafd242a2240fa02d83212c4e5fd9c1, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::e9b674ac337576fde2b9c848c0fb977b, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
 
     ' Author:
     ' 
@@ -148,7 +148,7 @@ Namespace netCDF
 
                 ' Read attribute
                 Dim size = buffer.ReadUInt32()
-                Dim val = TypeExtensions.readType(buffer, type, size)
+                Dim val = Utils.readType(buffer, type, size)
 
                 ' Apply padding
                 Call Utils.padding(buffer)

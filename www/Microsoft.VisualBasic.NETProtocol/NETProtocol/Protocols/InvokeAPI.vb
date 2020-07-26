@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::168ef868b999421c2c627c72936fb305, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::b80ea0ff7ba3cff660bbc5a24d8af30f, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\InvokeAPI.vb"
 
     ' Author:
     ' 
@@ -54,9 +54,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol.Protocols
 

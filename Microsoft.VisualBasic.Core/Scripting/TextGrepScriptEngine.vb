@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f3e77cee1487311faf5ba5ef90dcc0f, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::4c814a4b6d9f19be0547acbfd0892fcf, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     '         Properties: DoNothing, IsDoNothing, MethodPointers, PipelinePointer
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Compile, CompileInternal, EnsureNotEmpty, Explains, Grep
+    '         Function: Compile, CompileFromTokens, EnsureNotEmpty, Explains, Grep
     '                   Match, MidString, NoOperation, Replace, Reverse
     '                   Tokens, ToString
     ' 
@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -61,9 +62,9 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
-Imports Token = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Scripting.TextGrepMethodToken)
+Imports Microsoft.VisualBasic.Linq
 Imports r = System.Text.RegularExpressions.Regex
-Imports System.ComponentModel
+Imports Token = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Scripting.TextGrepMethodToken)
 
 Namespace Scripting
 
@@ -135,23 +136,32 @@ Namespace Scripting
         ''' 对用户所输入的脚本进行编译，对于内部的空格，请使用单引号``'``进行分割
         ''' </summary>
         ''' <param name="scriptText">
-        ''' 如果这个参数传递的是一个空字符串，那么这个函数将会直接返回<see cref="DoNothing"/>脚本
+        ''' The script line should be this format: 
+        ''' ```
+        ''' script_tokens1;script_tokens2;....
+        ''' ```
+        ''' if there is any space in the script line, then the space should wrapped 
+        ''' by the ``'`` character.
+        ''' 
+        ''' (如果这个参数传递的是一个空字符串，那么这个函数将会直接返回<see cref="DoNothing"/>脚本)
         ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <ExportAPI("compile", Info:="", Usage:="script_tokens1;script_tokens2;....", Example:="")>
+        <ExportAPI("compile")>
+        <Usage("script_tokens1;script_tokens2;....")>
         Public Shared Function Compile(scriptText As String) As TextGrepScriptEngine
             If scriptText.StringEmpty Then
                 Return DoNothing
             ElseIf scriptText = "-" Then
                 Return DoNothing
             Else
-                Return CompileInternal(scriptText)
+                Return CLITools _
+                    .TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c) _
+                    .DoCall(AddressOf CompileFromTokens)
             End If
         End Function
 
-        Private Shared Function CompileInternal(scriptText As String) As TextGrepScriptEngine
-            Dim script$() = TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c)
+        Public Shared Function CompileFromTokens(script As String()) As TextGrepScriptEngine
             Dim builder = LinqAPI.Exec(Of Token) <=
  _
                 From sToken As String
@@ -244,8 +254,14 @@ Namespace Scripting
 
 #Region "API supports"
 
+        ''' <summary>
+        ''' DO_NOTHING
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="script"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("-", Info:="DO_NOTHING")>
+        <ExportAPI("-")>
         <Description("Do nothing with the source input")>
         Private Shared Function NoOperation(source As String, script As String()) As String
             Return source
@@ -265,7 +281,8 @@ Namespace Scripting
         ''' <param name="Script"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <ExportAPI("Tokens", Info:="", Usage:="tokens p_str pointer", Example:="")>
+        <ExportAPI("Tokens")>
+        <Usage("tokens p_str pointer")>
         <Argument("pointer", False, Description:="pointer must be a zero base integer number which is smaller than 
             the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last 
             element and ""first"" to get the first element in the tokens array.")>
@@ -288,7 +305,8 @@ Namespace Scripting
             End If
         End Function
 
-        <ExportAPI("match", Info:="", Usage:="match pattern", Example:="")>
+        <ExportAPI("match")>
+        <Usage("match pattern")>
         <Description("Get the text token which match pattern [{0}]")>
         Private Shared Function Match(source As String, script As String()) As String
             Dim pattern As String = script.Last
@@ -304,7 +322,7 @@ Namespace Scripting
         ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <ExportAPI("mid", Info:="Substring a token from the input text source.")>
+        <ExportAPI("mid")>
         <Description("Substring a region [{0}, {1}] from the input text source.")>
         Private Shared Function MidString(source As String, script As String()) As String
             Dim start As Integer = CInt(Val(script(1)))
@@ -317,7 +335,8 @@ Namespace Scripting
             End If
         End Function
 
-        <ExportAPI("replace", Usage:="replace <regx_text> <replace_value>")>
+        <ExportAPI("replace")>
+        <Usage("replace <regx_text> <replace_value>")>
         <Description("replace source with [{1}] where match pattern [{0}]")>
         Private Shared Function Replace(source As String, script As String()) As String
             Dim regexp As New Regex(script(1))

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08a9a905e213f1d2c912df93c52f86e6, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\Softplus.vb"
+﻿#Region "Microsoft.VisualBasic::528bb667112b0f3ee2d058036e03cad6, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\Softplus.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork.Activations
 
@@ -58,7 +59,7 @@ Namespace NeuralNetwork.Activations
         End Property
 
         Public Overrides Function [Function](x As Double) As Double
-            Return Math.Log(1 + Math.E ^ x)
+            Return stdNum.Log(1 + stdNum.E ^ x)
         End Function
 
         Public Overrides Function ToString() As String
@@ -66,7 +67,7 @@ Namespace NeuralNetwork.Activations
         End Function
 
         Protected Overrides Function Derivative(x As Double) As Double
-            Return 1 / (1 + Math.E ^ (-x))
+            Return 1 / (1 + stdNum.E ^ (-x))
         End Function
     End Class
 End Namespace

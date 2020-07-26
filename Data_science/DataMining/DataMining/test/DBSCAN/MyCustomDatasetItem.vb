@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::227b4b282bbf0e30f27f1423092b4d68, Data_science\DataMining\DataMining\test\DBSCAN\MyCustomDatasetItem.vb"
+﻿#Region "Microsoft.VisualBasic::4a0c43b209b7d3a4047aab292c2980bc, Data_science\DataMining\DataMining\test\DBSCAN\MyCustomDatasetItem.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 Imports Microsoft.VisualBasic.DataMining.DBSCAN
 
 Public Class MyCustomDatasetItem
-    Inherits DatasetItemBase
+
     Public X As Double
     Public Y As Double
 

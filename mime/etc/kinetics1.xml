@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <lambda>
+    <bvar>
+      <ci> Co </ci>
+    </bvar>
+    <bvar>
+      <ci> S </ci>
+    </bvar>
+    <bvar>
+      <ci> Km </ci>
+    </bvar>
+    <bvar>
+      <ci> kcat </ci>
+    </bvar>
+    <bvar>
+      <ci> E </ci>
+    </bvar>
+    <bvar>
+      <ci> kcat_Km </ci>
+    </bvar>
+    <apply>
+      <divide/>
+      <apply>
+        <times/>
+        <apply>
+          <times/>
+          <ci> kcat </ci>
+          <ci> E </ci>
+        </apply>
+        <ci> S </ci>
+      </apply>
+      <apply>
+        <plus/>
+        <ci> Km </ci>
+        <ci> S </ci>
+      </apply>
+    </apply>
+  </lambda>
+</math>

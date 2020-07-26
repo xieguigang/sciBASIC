@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba5a42b26cebb753302fe07afddec2fb, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Comparer.vb"
+﻿#Region "Microsoft.VisualBasic::01593ad3ec171e06d5ff5c175381c95e, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Comparer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 
 #End Region
 
-Namespace Terminal.xConsole
+Namespace ApplicationServices.Terminal.xConsole
 
 #Region "COMPARER 💻"
 

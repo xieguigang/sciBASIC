@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2e161881e1ee77de6df4661bbffd29f, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\AlgorithmsUtils.vb"
+﻿#Region "Microsoft.VisualBasic::1f7cdd555d5acf3389fb130bd353a060, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\AlgorithmsUtils.vb"
 
     ' Author:
     ' 
@@ -41,11 +41,11 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace FuzzyCMeans
 
@@ -66,7 +66,6 @@ Namespace FuzzyCMeans
         End Function
 
         ''' <summary>
-        ''' �������
         ''' </summary>
         ''' <param name="matrix1"></param>
         ''' <param name="matrix2"></param>
@@ -83,7 +82,7 @@ Namespace FuzzyCMeans
                 line = (+row)
 
                 For j As Integer = 0 To l - 1
-                    Dim result As Double = Math.Abs(line(j) - matrix2(row.i)(j))
+                    Dim result As Double = stdNum.Abs(line(j) - matrix2(row.i)(j))
                     rowDifferences.Add(result)
                 Next
 
@@ -114,10 +113,10 @@ Namespace FuzzyCMeans
                     Dim distance As Double
 
                     For i As Integer = 0 To x.Length - 1
-                        distance += Math.Pow(x(i) - c(i), 2)
+                        distance += stdNum.Pow(x(i) - c(i), 2)
                     Next
 
-                    distance = Math.Sqrt(distance)
+                    distance = stdNum.Sqrt(distance)
                     distancesToCenters.Add(distance)
                 Next
 

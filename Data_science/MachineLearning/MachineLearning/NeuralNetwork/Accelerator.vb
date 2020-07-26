@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39a67722cfbb3ffc5eae905d699f0a0f, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Accelerator.vb"
+﻿#Region "Microsoft.VisualBasic::7bd6f8699ad954db07ff31be58a518ae, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Accelerator.vb"
 
     ' Author:
     ' 
@@ -174,10 +174,10 @@ Namespace NeuralNetwork.Accelerator
 
         Dim network As Network
         Dim synapses As NamedCollection(Of Synapse)()
-        Dim dataSets As Sample()
+        Dim dataSets As TrainingSample()
 
         Sub New(network As Network, synapses As NamedCollection(Of Synapse)(), trainingSet As Sample())
-            Me.dataSets = trainingSet
+            Me.dataSets = trainingSet.Select(Function(a) New TrainingSample(a)).toarray
             Me.network = network
             Me.synapses = synapses
         End Sub
@@ -197,13 +197,13 @@ Namespace NeuralNetwork.Accelerator
 
             Dim errors As New List(Of Double)
 
-            For Each dataSet As Sample In dataSets
-                Call network.ForwardPropagate(dataSet.status, False)
+            For Each dataSet As TrainingSample In dataSets
+                Call network.ForwardPropagate(dataSet.sample, False)
                 ' 2019-1-14 因为在这里是计算误差，不是训练过程
                 ' 所以在这里不需要进行反向传播修改权重和bias参数
                 ' 否则会造成其他的解决方案的错误计算，因为反向传播将weights等参数更新了
                 ' Call network.BackPropagate(dataSet.target, False)
-                Call errors.Add(TrainingUtils.CalculateError(network, dataSet.target))
+                Call errors.Add(TrainingUtils.CalculateError(network, dataSet.classify))
             Next
 
             Return errors.Average

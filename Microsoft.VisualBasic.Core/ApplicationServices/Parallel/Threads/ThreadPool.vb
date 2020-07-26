@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::428f68cffb11bf82c69327e04c881853, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::d39ac1920d2b6f055611964ba2c8e2d8, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: GetAvaliableThread, GetStatus, ToString
     ' 
-    '         Sub: __allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
+    '         Sub: allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
     '         Structure __taskInvoke
     ' 
     '             Function: Run
@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports taskBind = Microsoft.VisualBasic.ComponentModel.Binding(Of System.Action, System.Action(Of Long))
+Imports TaskBinding = Microsoft.VisualBasic.ComponentModel.Binding(Of System.Action, System.Action(Of Long))
 
 Namespace Parallel.Threads
 
@@ -66,11 +66,12 @@ Namespace Parallel.Threads
     ''' </summary>
     Public Class ThreadPool : Implements IDisposable
 
-        ReadOnly __threads As TaskQueue(Of Long)()
+        ReadOnly threads As TaskQueue(Of Long)()
+
         ''' <summary>
         ''' 临时的句柄缓存
         ''' </summary>
-        ReadOnly __pendings As New Queue(Of taskBind)(capacity:=10240)
+        ReadOnly pendings As New Queue(Of TaskBinding)(capacity:=10240)
 
         ''' <summary>
         ''' 线程池之中的线程数量
@@ -79,7 +80,7 @@ Namespace Parallel.Threads
         Public ReadOnly Property NumOfThreads As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __threads.Length
+                Return threads.Length
             End Get
         End Property
 
@@ -91,7 +92,7 @@ Namespace Parallel.Threads
             Get
                 Dim n As Integer
 
-                For Each t In __threads
+                For Each t In threads
                     If t.Tasks > 0 Then
                         n += 1
                     End If
@@ -122,18 +123,18 @@ Namespace Parallel.Threads
         Public ReadOnly Property FullCapacity As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return WorkingThreads = __threads.Length
+                Return WorkingThreads = threads.Length
             End Get
         End Property
 
         Sub New(maxThread As Integer)
-            __threads = New TaskQueue(Of Long)(maxThread) {}
+            threads = New TaskQueue(Of Long)(maxThread) {}
 
-            For i As Integer = 0 To __threads.Length - 1
-                __threads(i) = New TaskQueue(Of Long)
+            For i As Integer = 0 To threads.Length - 1
+                threads(i) = New TaskQueue(Of Long)
             Next
 
-            Call ParallelExtension.RunTask(AddressOf __allocate)
+            Call ParallelExtension.RunTask(AddressOf allocate)
         End Sub
 
         Sub New()
@@ -150,10 +151,10 @@ Namespace Parallel.Threads
             Call out.Add(NameOf(Me.FullCapacity), FullCapacity)
             Call out.Add(NameOf(Me.NumOfThreads), NumOfThreads)
             Call out.Add(NameOf(Me.WorkingThreads), WorkingThreads)
-            Call out.Add(NameOf(Me.__pendings), __pendings.Count)
+            Call out.Add(NameOf(Me.pendings), pendings.Count)
 
-            For Each t As SeqValue(Of TaskQueue(Of Long)) In __threads.SeqIterator
-                With (+t)
+            For Each t As SeqValue(Of TaskQueue(Of Long)) In threads.SeqIterator
+                With t.value
                     Call out.Add("thread___" & t.i & "___" & .uid, .Tasks)
                 End With
             Next
@@ -167,12 +168,13 @@ Namespace Parallel.Threads
         ''' <param name="task"></param>
         ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
         Public Sub RunTask(task As Action, Optional callback As Action(Of Long) = Nothing)
-            Dim pends As New taskBind With {
+            Dim pends As New TaskBinding With {
                 .Bind = task,
                 .Target = callback
             }
-            SyncLock __pendings
-                Call __pendings.Enqueue(pends)
+
+            SyncLock pendings
+                Call pendings.Enqueue(pends)
             End SyncLock
         End Sub
 
@@ -190,11 +192,11 @@ Namespace Parallel.Threads
             Next
         End Sub
 
-        Private Sub __allocate()
+        Private Sub allocate()
             Do While Not Me.disposedValue
-                SyncLock __pendings
-                    If __pendings.Count > 0 Then
-                        Dim task As taskBind = __pendings.Dequeue
+                SyncLock pendings
+                    If pendings.Count > 0 Then
+                        Dim task As TaskBinding = pendings.Dequeue
                         Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
                         Dim callback As Action(Of Long) = task.Target
                         Call GetAvaliableThread.Enqueue(h, callback)  ' 当线程池里面的线程数量非常多的时候，这个事件会变长，所以讲分配的代码单独放在线程里面执行，以提神web服务器的响应效率
@@ -227,9 +229,9 @@ Namespace Parallel.Threads
         ''' </summary>
         ''' <returns></returns>
         Private Function GetAvaliableThread() As TaskQueue(Of Long)
-            Dim [short] As TaskQueue(Of Long) = __threads.First
+            Dim [short] As TaskQueue(Of Long) = threads.First
 
-            For Each t In __threads
+            For Each t In threads
                 If Not t.RunningTask Then
                     Return t
                 Else
@@ -243,7 +245,7 @@ Namespace Parallel.Threads
         End Function
 
         Public Overrides Function ToString() As String
-            Return __threads.GetJson
+            Return threads.GetJson
         End Function
 
 #Region "IDisposable Support"

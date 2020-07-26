@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00ff821a099908e75295b177c069fae6, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\Binding.vb"
+﻿#Region "Microsoft.VisualBasic::b9c95d6ced238bee01f55f3b174c8a00, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\Binding.vb"
 
     ' Author:
     ' 
@@ -95,10 +95,14 @@ Namespace ComponentModel
             Return Me
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ValueTuple() As (bind As T, target As K)
             Return (Bind, Target)
         End Function
+
+#End If
 
         ''' <summary>
         ''' Implicit convert this binding as the <see cref="System.Tuple(Of T, K)"/>

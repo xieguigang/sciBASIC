@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10639614f100433a4eb09a252f359a2b, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::ff183f829056bd9d3e85dd40eb94c431, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,10 @@
     ' 
     '         Properties: MyHashCode, Properties
     ' 
-    '         Function: EnumerateKeys, GetEnumerator, HasProperty, IEnumerable_GetEnumerator, ToString
+    '         Function: EnumerateKeys, GetEnumerator, GetItemValue, GetNames, HasProperty
+    '                   IDynamicsObject_GetItemValue, IEnumerable_GetEnumerator, ToString
     ' 
-    '         Sub: Add
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) SetValue
     ' 
     ' 
     ' /********************************************************************************/
@@ -59,13 +60,15 @@ Namespace ComponentModel.DataSourceModel
     Public MustInherit Class DynamicPropertyBase(Of T)
         Implements IDynamicMeta(Of T)
         Implements IEnumerable(Of NamedValue(Of T))
+        Implements IDynamicsObject
 
         ''' <summary>
         ''' The dynamics property object with specific type of value.
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>Can not serialize the dictionary object in to xml document.</remarks>
-        <XmlIgnore> Public Overridable Property Properties As Dictionary(Of String, T) Implements IDynamicMeta(Of T).Properties
+        <XmlIgnore>
+        Public Overridable Property Properties As Dictionary(Of String, T) Implements IDynamicMeta(Of T).Properties
             Get
                 If propertyTable Is Nothing Then
                     propertyTable = New Dictionary(Of String, T)
@@ -135,21 +138,56 @@ Namespace ComponentModel.DataSourceModel
             Call propertyTable.Add(propertyName, value)
         End Sub
 
+        Public Sub SetValue(propertyName$, value As T)
+            If propertyTable Is Nothing Then
+                propertyTable = New Dictionary(Of String, T)
+            End If
+
+            propertyTable(propertyName) = value
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetItemValue(propertyName As String) As T
+            Return ItemValue(propertyName)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub Add(propertyName As String, value As Object) Implements IDynamicsObject.Add
+            Call Add(propertyName, Conversion.CTypeDynamic(Of T)(value))
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub SetValue(propertyName As String, value As Object) Implements IDynamicsObject.SetValue
+            Call SetValue(propertyName, Conversion.CTypeDynamic(Of T)(value))
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function IDynamicsObject_GetItemValue(propertyName As String) As Object Implements IDynamicsObject.GetItemValue
+            Return GetItemValue(propertyName)
+        End Function
+
         ''' <summary>
-        ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified
-        ''' key.
+        ''' Determines whether the Dictionary contains the specified key.
         ''' </summary>
-        ''' <param name="name$">The key to locate in the System.Collections.Generic.Dictionary`2.</param>
+        ''' <param name="name">The key to locate in the Dictionary.</param>
         ''' <returns>
-        ''' true if the System.Collections.Generic.Dictionary`2 contains an element with
-        ''' the specified key; otherwise, false.
+        ''' true if the Dictionary contains an element with the specified key; 
+        ''' otherwise, false.
         ''' </returns>
-        Public Function HasProperty(name$) As Boolean
+        Public Function HasProperty(name As String) As Boolean Implements IDynamicsObject.HasName
             If propertyTable Is Nothing Then
                 Return False
             Else
                 Return propertyTable.ContainsKey(name)
             End If
+        End Function
+
+        ''' <summary>
+        ''' Get all keys in <see cref="Properties"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function GetNames() As IEnumerable(Of String) Implements IDynamicsObject.GetNames
+            Return Properties.Keys
         End Function
 
         ''' <summary>

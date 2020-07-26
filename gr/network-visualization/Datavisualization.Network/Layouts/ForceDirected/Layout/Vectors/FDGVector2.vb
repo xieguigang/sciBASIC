@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5dd1a71f26b694b3403955021ec400f, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\FDGVector2.vb"
+﻿#Region "Microsoft.VisualBasic::293989434f626172ffa2f217d395156a, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\FDGVector2.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class FDGVector2
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
     '                   Magnitude, Multiply, Normal, Normalize, Random
     '                   SetIdentity, SetZero, Subtract, Zero
@@ -112,6 +112,10 @@ Namespace Layouts
             Call Me.New(pt.X, pt.Y)
         End Sub
 
+        Sub New(pt As PointF)
+            Call Me.New(pt.X, pt.Y)
+        End Sub
+
         Public Overrides Function GetHashCode() As Integer
             Return CInt(Truncate(x)) Xor CInt(Truncate(y))
         End Function
@@ -160,7 +164,6 @@ Namespace Layouts
         Public Overloads Shared Operator <>(a As FDGVector2, b As FDGVector2) As Boolean
             Return Not (a = b)
         End Operator
-
 
         Public Overrides Function Add(v2 As AbstractVector) As AbstractVector
             Dim v22 As FDGVector2 = TryCast(v2, FDGVector2)

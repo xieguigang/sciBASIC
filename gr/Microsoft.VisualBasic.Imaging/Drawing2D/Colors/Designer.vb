@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::295e093ffb0389f7e0ecb0a3094e6320, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6401c0d3d2525cf4e1b5871f754bbdb4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
-    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, internalFills
+    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
     '                   IsColorNameList, rangeConstraint, SplitColorList
     ' 
     ' 
@@ -294,7 +294,7 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' <see cref="ColorMap"/> pattern names
         ''' </summary>
-        ReadOnly __allColorMapNames$() = {
+        ReadOnly allColorMapNames$() = {
             ColorMap.PatternAutumn,
             ColorMap.PatternCool,
             ColorMap.PatternGray,
@@ -311,10 +311,10 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property MaterialPalette As Color() = {
-            Color.Red, Color.Pink, Color.Black, Color.Purple, Color.DarkViolet,
+            Color.Red, Color.Green, Color.CadetBlue, Color.Pink, Color.Black, Color.Purple, Color.DarkViolet,
             Color.Indigo, Color.Blue, Color.LightBlue, Color.Cyan, Color.Teal,
-            Color.Green, Color.LightGreen, Color.Lime, Color.Yellow, Color.Orchid,
-            Color.Orange, Color.DarkOrange, Color.Brown, Color.Gray, Color.CadetBlue
+            Color.LightGreen, Color.Lime, Color.Yellow, Color.Orchid,
+            Color.Orange, Color.DarkOrange, Color.Brown, Color.Gray
         }
 
         Public ReadOnly Property Category31 As Color() = {
@@ -380,21 +380,23 @@ Namespace Drawing2D.Colors
         ''' (假若这里所输入的是一组颜色值，则必须是htmlcolor或者颜色名称，RGB表达式将不会被允许)
         ''' </param>
         ''' <returns></returns>
-        Public Function GetColors(exp$) As Color()
-            If exp.IsColorNameList Then
+        Public Function GetColors(exp As String) As Color()
+            If exp.StringEmpty Then
+                Return {}
+            ElseIf exp.IsColorNameList Then
                 Return Designer _
                     .SplitColorList(exp) _
                     .Select(AddressOf TranslateColor) _
                     .ToArray
             Else
                 With New DesignerExpression(exp)
-                    Return .Modify(Designer.GetColorsInternal(.Term))
+                    Return .Modify(Designer.getColorsInternal(.Term))
                 End With
             End If
         End Function
 
-        Private Function GetColorsInternal(term$) As Color()
-            If Array.IndexOf(__allColorMapNames, term.ToLower) > -1 Then
+        Private Function getColorsInternal(term$) As Color()
+            If Array.IndexOf(allColorMapNames, term.ToLower) > -1 Then
                 Return New ColorMap(20, 255).ColorSequence(term)
             End If
 

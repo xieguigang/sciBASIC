@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5782b024c7e50936395593d1f04136dd, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::941e12527cec9a68430f1b9449934c42, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -135,7 +135,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <param name="key"></param>
         ''' <param name="value"></param>
         ''' <param name="parent"></param>
-        ''' <param name="toString">Default debug view is <see cref="Scripting.ToString(Object, String)"/></param>
+        ''' <param name="toString">Default debug view is <see cref="Scripting.ToString"/></param>
         Sub New(key As K, value As V,
                 Optional parent As BinaryTree(Of K, V) = Nothing,
                 Optional toString As Func(Of K, String) = Nothing)

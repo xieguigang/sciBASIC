@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4286ac68bfeb8cf0c0220ed59acad432, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\Paintable.vb"
+﻿#Region "Microsoft.VisualBasic::72938d02444ebfcfb2f6966476622a99, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\Paintable.vb"
 
     ' Author:
     ' 
@@ -75,7 +75,7 @@ Namespace DendrogramVisualize
     ''' 
     ''' </summary>
     Public Interface IPaintable
-        Sub Paint(g As Graphics2D, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
+        Sub Paint(g As IGraphics, args As PainterArguments, ByRef labels As List(Of NamedValue(Of PointF)))
     End Interface
 
     ''' <summary>
@@ -99,6 +99,8 @@ Namespace DendrogramVisualize
         ''' 点的大小
         ''' </summary>
         Dim LinkDotRadius As Integer
+        Dim labelFont As Font
+        Dim g2Stroke As Pen
 
     End Structure
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87ff800f84a01faadeeb402ebf125a11, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PrintAsTable.vb"
+﻿#Region "Microsoft.VisualBasic::745f8702351cf36b991ed4657c0bb62d, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PrintAsTable.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module PrintAsTable
     ' 
-    '         Function: (+2 Overloads) Print
+    '         Function: (+3 Overloads) Print
     ' 
     '         Sub: Print, PrintTable
     '         Delegate Sub
@@ -71,6 +71,11 @@ Namespace ApplicationServices.Terminal
             Dim dev As New StringWriter(out)
             Call source.Print(dev, addBorder)
             Return out.ToString
+        End Function
+
+        <Extension>
+        Public Function Print(source As IEnumerable(Of IEnumerable(Of String)), Optional addBorder As Boolean = True) As String
+            Return source.Select(Function(a) a.ToArray).Print(addBorder)
         End Function
 
         <Extension>
@@ -115,10 +120,11 @@ Namespace ApplicationServices.Terminal
                               Select p,
                                   s = p.GetValue(x)) _
                           .ToDictionary(Function(o) o.p.Identity,
-                                        Function(o) Scripting.ToString(o.s))
+                                        Function(o)
+                                            Return Scripting.ToString(o.s)
+                                        End Function)
 
-            Dim table As List(Of String()) =
-                contents _
+            Dim table As List(Of String()) = contents _
                 .Select(Function(line)
                             Return titles.Select(Function(name) line(name)).ToArray
                         End Function) _
@@ -134,7 +140,7 @@ Namespace ApplicationServices.Terminal
         ''' <summary>
         ''' 与函数<see cref="Print"/>所不同的是，这个函数还会添加边框
         ''' </summary>
-        ''' <param name="source"></param>
+        ''' <param name="source">Each element is a row in table matrix</param>
         ''' <param name="dev"></param>
         ''' <param name="sep"></param>
         <Extension>

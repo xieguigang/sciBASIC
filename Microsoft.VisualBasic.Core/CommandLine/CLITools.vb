@@ -1,46 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::c88f1ab496a70fade4cc8cca8f21437b, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::3d2e2ee35c9e5aa0eed2f3faae608746, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module CLITools
-' 
-'         Function: __checkKeyDuplicated, Args, CreateObject, CreateParameterValues, Equals
-'                   GetLogicalFlags, GetTokens, IsPossibleLogicFlag, Join, makesureQuot
-'                   Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
-' 
-'         Sub: tupleParser
-' 
-' 
-' /********************************************************************************/
+    '     Module CLITools
+    ' 
+    '         Function: Args, checkKeyDuplicated, CreateObject, CreateParameterValues, Equals
+    '                   GetFileList, GetLogicalFlags, GetTokens, IsPossibleLogicFlag, Join
+    '                   makesureQuot, Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix
+    '                   (+3 Overloads) TryParse
+    ' 
+    '         Sub: AppSummary, tupleParser
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +72,19 @@ Namespace CommandLine
                         Description:="",
                         Revision:=52)>
     Public Module CLITools
+
+        ''' <summary>
+        ''' 在命令行之中使用逗号作为分隔符分隔多个文件
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
+        Public Function GetFileList(input As String) As IEnumerable(Of String)
+            If input.FileExists Then
+                Return {input}
+            Else
+                Return input.Split(","c)
+            End If
+        End Function
 
         ''' <summary>
         ''' 
@@ -120,7 +134,8 @@ Namespace CommandLine
         ''' <param name="includeLogicals">返回来的列表之中是否包含有逻辑开关</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function CreateParameterValues(tokens$(), includeLogicals As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
+        <Extension>
+        Public Function CreateParameterValues(tokens$(), includeLogicals As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
             Dim list As New List(Of NamedValue(Of String))
             Dim key As String
 
@@ -179,7 +194,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="args">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
-        <Extension> Public Function GetLogicalFlags(args As IEnumerable(Of String), ByRef singleValue$) As String()
+        <Extension>
+        Public Function GetLogicalFlags(args As IEnumerable(Of String), ByRef singleValue$) As String()
             Dim tokens$() = args.SafeQuery.ToArray
 
             If tokens.IsNullOrEmpty Then
@@ -231,7 +247,7 @@ Namespace CommandLine
         ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
+        <ExportAPI("TryParse")>
         <Extension>
         Public Function TryParse(args As StringList,
                                  Optional duplicatedAllows As Boolean = False,
@@ -250,7 +266,7 @@ Namespace CommandLine
                 .Skip(1) _
                 .GetLogicalFlags(singleValue)
             Dim cli As New CommandLine With {
-                .Name = tokens(Scan0).ToLower,
+                .Name = tokens(Scan0),
                 .Tokens = tokens,
                 .BoolFlags = bools,
                 .cliCommandArgvs = Join(tokens)
@@ -268,7 +284,7 @@ Namespace CommandLine
             If tokens.Length > 1 Then
                 cli.arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
 
-                Dim Dk As String() = __checkKeyDuplicated(cli.arguments)
+                Dim Dk As String() = checkKeyDuplicated(cli.arguments)
 
                 If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key$ = String.Join(", ", Dk)
@@ -283,7 +299,7 @@ Namespace CommandLine
 
         Const KeyDuplicated As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
 
-        Private Function __checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
+        Private Function checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
             Dim LQuery = (From param As NamedValue(Of String)
                           In source
                           Select param.Name.ToLower
@@ -301,7 +317,7 @@ Namespace CommandLine
         ''' Gets the commandline object for the current program.
         ''' </summary>
         ''' <returns></returns>
-        <ExportAPI("args", Info:="Gets the commandline object for the current program.")>
+        <ExportAPI("args")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Args() As CommandLine
             Return App.CommandLine
@@ -317,9 +333,10 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
+        <ExportAPI("TryParse")>
         Public Function TryParse(<Parameter("CLI", "The CLI arguments that inputs from the console by user.")> CLI$,
-                                 <Parameter("Duplicates.Allowed")> Optional duplicateAllowed As Boolean = False) As CommandLine
+                                 <Parameter("Duplicates.Allowed")>
+                                 Optional duplicateAllowed As Boolean = False) As CommandLine
 
             If String.IsNullOrEmpty(CLI) Then
                 Return New CommandLine
@@ -361,13 +378,14 @@ Namespace CommandLine
         ''' <summary>
         ''' ReGenerate the cli command line argument string text.(重新生成命令行字符串)
         ''' </summary>
-        ''' <param name="tokens">If the token value have a space character, then this function will be wrap that token with quot character automatically.</param>
+        ''' <param name="tokens">
+        ''' If the token value have a space character, then this function 
+        ''' will be wrap that token with quot character automatically.
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("Join",
-                   Info:="ReGenerate the cli command line argument string text. 
-                   NOTE: If the token have a space character, then this function will be wrap that token with quot character automatically.")>
+        <ExportAPI("Join")>
         Public Function Join(tokens As IEnumerable(Of String)) As String
             If tokens Is Nothing Then
                 Return ""
@@ -518,7 +536,8 @@ Namespace CommandLine
             For i As Integer = 0 To tokens.Length - 1
                 Dim s As String = tokens(i)
 
-                If s.First = InnerDelimited AndAlso s.Last = InnerDelimited Then    '消除单词单元中的双引号
+                ' 消除单词单元中的双引号
+                If s.First = InnerDelimited AndAlso s.Last = InnerDelimited Then
                     tokens(i) = Mid(s, 2, Len(s) - 2)
                 End If
             Next
@@ -573,7 +592,10 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 请注意，这个是有方向性的，由于是依照参数1来进行比较的，假若args2里面的参数要多于第一个参数，但是第一个参数里面的所有参数值都可以被参数2完全比对得上的话，就认为二者是相等的
+        ''' 请注意，这个是有方向性的，由于是依照参数1来进行比较的，
+        ''' 假若args2里面的参数要多于第一个参数，但是第一个参数里
+        ''' 面的所有参数值都可以被参数2完全比对得上的话，就认为二
+        ''' 者是相等的
         ''' </summary>
         ''' <param name="args1"></param>
         ''' <param name="args2"></param>

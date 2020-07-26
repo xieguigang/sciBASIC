@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd36d3ab4ddefc487b00cea0e137e762, Microsoft.VisualBasic.Core\Extensions\Image\Colors\ColorCube.vb"
+﻿#Region "Microsoft.VisualBasic::4dbf0912373c3b74eceee73fcdfb29bb, Microsoft.VisualBasic.Core\Extensions\Image\Colors\ColorCube.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Imaging
 
@@ -96,7 +96,7 @@ While any number of complex code solutions could be created to attempt to addres
         <ExportAPI("Brightness")>
         <Extension>
         Public Function GetBrightness(target As Color) As Integer
-            Return CInt(sys.Sqrt(0.241 * target.R ^ 2 + 0.691 * target.G ^ 2 + 0.068 * target.B ^ 2))
+            Return CInt(stdNum.Sqrt(0.241 * target.R ^ 2 + 0.691 * target.G ^ 2 + 0.068 * target.B ^ 2))
         End Function
 
         ''' <summary>
@@ -147,9 +147,9 @@ While any number of complex code solutions could be created to attempt to addres
                 e = DegreesToRadians(elevation)
             End If
 
-            r = distance * sys.Cos(a) * sys.Cos(e)
-            b = distance * sys.Sin(a) * sys.Cos(e)
-            g = distance * sys.Sin(e)
+            r = distance * stdNum.Cos(a) * stdNum.Cos(e)
+            b = distance * stdNum.Sin(a) * stdNum.Cos(e)
+            g = distance * stdNum.Sin(e)
 
             If Double.IsNaN(r) Then r = 0
             If Double.IsNaN(g) Then g = 0
@@ -157,9 +157,9 @@ While any number of complex code solutions could be created to attempt to addres
 
             Return Color.FromArgb(
                 alpha,
-                sys.Max(sys.Min(source.R + r, 255), 0),
-                sys.Max(sys.Min(source.G + g, 255), 0),
-                sys.Max(sys.Min(source.B + b, 255), 0))
+                stdNum.Max(stdNum.Min(source.R + r, 255), 0),
+                stdNum.Max(stdNum.Min(source.G + g, 255), 0),
+                stdNum.Max(stdNum.Min(source.B + b, 255), 0))
         End Function
 
         ''' <summary>
@@ -288,41 +288,41 @@ While any number of complex code solutions could be created to attempt to addres
 
         <ExportAPI("CompareLess")>
         Public Function CompareLess(value As Integer, inc As Integer) As Boolean
-            Return value < 255 - sys.Abs(inc)
+            Return value < 255 - stdNum.Abs(inc)
         End Function
 
         <ExportAPI("CompareGreater")>
         Public Function CompareGreater(value As Integer, inc As Integer) As Boolean
-            Return value > 0 + sys.Abs(inc)
+            Return value > 0 + stdNum.Abs(inc)
         End Function
 
         <ExportAPI("Radians")>
         Public Function DegreesToRadians(degrees As Double) As Double
-            Return degrees * (Math.PI / 180.0)
+            Return degrees * (stdNum.PI / 180.0)
         End Function
 
         <ExportAPI("Degrees")>
         Public Function RadiansToDegrees(radians As Double) As Double
-            Return CSng(radians * (180.0 / sys.PI))
+            Return CSng(radians * (180.0 / stdNum.PI))
         End Function
 
         <ExportAPI("Azimuth")>
         Public Function GetAzimuthTo(source As Color, target As Color) As Double
-            Return WrapAngle(sys.Atan2(CDbl(target.B) - CDbl(source.B), CDbl(target.R) - CDbl(source.R)))
+            Return WrapAngle(stdNum.Atan2(CDbl(target.B) - CDbl(source.B), CDbl(target.R) - CDbl(source.R)))
         End Function
 
         <ExportAPI("Elevation")>
         Public Function GetElevationTo(source As Color, target As Color) As Double
-            Return WrapAngle(sys.Atan2(CDbl(target.G) - CDbl(source.G), 255))
+            Return WrapAngle(stdNum.Atan2(CDbl(target.G) - CDbl(source.G), 255))
         End Function
 
         <ExportAPI("WrapAngle")>
         Public Function WrapAngle(radians As Double) As Double
-            While radians < -Math.PI
-                radians += sys.PI * 2
+            While radians < -stdNum.PI
+                radians += stdNum.PI * 2
             End While
-            While radians > sys.PI
-                radians -= sys.PI * 2
+            While radians > stdNum.PI
+                radians -= stdNum.PI * 2
             End While
             Return radians
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20618b45a4f5350f3398aa3f8c08cc22, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolution.vb"
+﻿#Region "Microsoft.VisualBasic::6e3128abeb2ad77a7cc02d49fe4343af, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolution.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@
 
 Imports System.Text
 
-Namespace Algebra.LinearProgramming
+Namespace LinearAlgebra.LinearProgramming
 
     Public Class LPPSolution
 

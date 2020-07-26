@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aab1b9b2169a2514e9852e9ae7370649, Data_science\Mathematica\Math\DataFittings\Linear\MLR.vb"
+﻿#Region "Microsoft.VisualBasic::39d4188be766f57e9840955d8183b2d0, Data_science\Mathematica\Math\DataFittings\Linear\MLR.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Matrix
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Multiple linear regression.(多元线性回归)
@@ -105,7 +106,7 @@ Public Class MLRFit
         Dim Yfit#
 
         Public Overrides Function ToString() As String
-            Return $"{Math.Abs(Y - Yfit)} = |{Y} - {Yfit}|"
+            Return $"{stdNum.Abs(Y - Yfit)} = |{Y} - {Yfit}|"
         End Function
 
         Public Shared Iterator Function RunTest(MLR As MLRFit, X As GeneralMatrix, Y As Vector) As IEnumerable(Of [Error])

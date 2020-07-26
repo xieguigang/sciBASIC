@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58e43d9135e88870023623b3f09d084f, Data_science\Mathematica\Math\Math\test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::bcd0f4cfccfca6e8aa6564bfd51dafa6, Data_science\Mathematica\Math\Math\test\VectorTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module VectorTest
     ' 
-    '     Sub: Main, memoryTest, numpyTest, SparseVectorTest
+    '     Sub: Main, memoryTest, numpyTest, SparseVectorTest, vectorCmpares2
     ' 
     ' /********************************************************************************/
 
@@ -44,7 +44,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports numpy = Microsoft.VisualBasic.Math.NumpyExtensions
+Imports numpy = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumpyExtensions
 
 Module VectorTest
 
@@ -61,6 +61,29 @@ Module VectorTest
         Dim sizeOfCompact As Long = HeapSizeOf.MeasureSize(compactVector)
 
         Dim foldChange = sizeOfFull / sizeOfCompact
+
+        Pause()
+    End Sub
+
+    Sub vectorCmpares2()
+        Dim a As Double() = {23, 65, 41, 0.023, 0.0031, 564, 0.006, 0.005, 6, 0.004}.JoinIterates(Repeats(0.00001, 1000000)).ToArray
+
+        SparseVector.Precision = 0.05
+
+        Dim v1 As New Vector(a)
+        Dim v2 As New SparseVector(a)
+
+        Dim sizeOfFull As Long = HeapSizeOf.MeasureSize(v1)
+        Dim sizeOfCompact As Long = HeapSizeOf.MeasureSize(v2)
+
+        Dim sum1 = v1.Sum
+        Dim sum2 = v2.Sum
+
+        Dim add1 = v1 + 1
+        Dim add12 = v2 + 1
+
+        sizeOfFull = HeapSizeOf.MeasureSize(add1)
+        sizeOfCompact = HeapSizeOf.MeasureSize(add12)
 
         Pause()
     End Sub
@@ -106,6 +129,8 @@ Module VectorTest
     End Sub
 
     Sub Main()
+
+        Call vectorCmpares2()
 
         Call SparseVectorTest()
         Call memoryTest()

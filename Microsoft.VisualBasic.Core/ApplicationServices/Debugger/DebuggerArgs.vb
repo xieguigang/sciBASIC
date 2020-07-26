@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fcd2b47d1a839220c30c326d2bb5bc1, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::fa71024ae59110502676ae6bedf13b14, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
 
     ' Author:
     ' 
@@ -43,9 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
@@ -222,6 +220,7 @@ Namespace ApplicationServices.Debugging
             End If
 
             _AutoPaused = args.GetBoolean("/auto-paused")
+            VBDebugger.inDebugMode = args.IsTrue("--debug")
 
             If args.GetBoolean("/mute") Then
                 VBDebugger.Mute = True

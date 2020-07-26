@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2622e56797782ff7ecee40e1c895766, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::086acf50dd3606a854966bb317d15555, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class IORedirectFile
     ' 
-    '         Properties: Bin, CLIArguments, StandardOutput
+    '         Properties: Bin, CLIArguments, redirectDevice, StandardOutput
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Text
 Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
 
 Namespace CommandLine
@@ -100,6 +101,12 @@ Namespace CommandLine
         Public ReadOnly Property Bin As String Implements IIORedirectAbstract.Bin
         Public ReadOnly Property CLIArguments As String Implements IIORedirectAbstract.CLIArguments
 
+        Public ReadOnly Property redirectDevice As String
+            Get
+                Return _TempRedirect
+            End Get
+        End Property
+
         ''' <summary>
         ''' 将目标子进程的标准终端输出文件复制到一个新的文本文件之中
         ''' </summary>
@@ -133,15 +140,16 @@ Namespace CommandLine
         ''' (请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)
         ''' </param>
         ''' <param name="environment">Temporary environment variable</param>
-        ''' <param name="FolkNew">Folk the process on a new console window if this parameter value is TRUE</param>
+        ''' <param name="folkNew">Folk the process on a new console window if this parameter value is TRUE</param>
         ''' <param name="stdRedirect">If not want to redirect the std out to your file, just leave this value blank.</param>
         Sub New(file$,
                 Optional argv$ = "",
                 Optional environment As IEnumerable(Of ValueTuple) = Nothing,
-                Optional FolkNew As Boolean = False,
+                Optional folkNew As Boolean = False,
                 Optional stdRedirect$ = "",
                 Optional stdin$ = Nothing,
-                Optional debug As Boolean = True)
+                Optional debug As Boolean = True,
+                Optional isShellCommand As Boolean = False)
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
@@ -150,7 +158,7 @@ Namespace CommandLine
             ' 没有小数点，说明可能只是一个命令，而不是具体的可执行程序文件名
             If InStr(file, ".") = 0 Then
                 ' do nothing
-            Else
+            ElseIf Not isShellCommand Then
                 ' 对于具体的程序文件的调用，在这里获取其完整路径
                 Try
                     file = FileIO.FileSystem.GetFileInfo(file).FullName
@@ -171,13 +179,17 @@ Namespace CommandLine
             Call "".SaveTo(_TempRedirect)
 
             If App.IsMicrosoftPlatform Then
-                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew, stdin)
+                shellScript = ScriptingExtensions.Cmd(file, argv, environment, folkNew, stdin, isShellCommand)
             Else
-                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin)
+                shellScript = ScriptingExtensions.Bash(file, argv, environment, folkNew, stdin, isShellCommand)
             End If
 
             If debug Then
-                Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+                If isShellCommand Then
+                    Call $"""{file}"" {argv}".__DEBUG_ECHO
+                Else
+                    Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+                End If
             End If
         End Sub
 
@@ -196,7 +208,9 @@ Namespace CommandLine
 #If UNIX Then
             ' xdg-open: file '/tmp/gut_16s/15201/tmp00003.sh' does not exist
             With New Process() With {
-                .StartInfo = New ProcessStartInfo(path)
+                .StartInfo = New ProcessStartInfo(path) With {
+                    .CreateNoWindow = False
+                }
             }
                 Call .Start()
                 Call .WaitForExit()
@@ -234,7 +248,7 @@ Namespace CommandLine
         Private Function writeScript() As String
             Dim ext$ = If(App.IsMicrosoftPlatform, ".bat", ".sh")
             Dim path$ = App.GetAppSysTempFile(ext, App.PID)
-            Call shellScript.SaveTo(path)
+            Call shellScript.SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
             Return path
         End Function
 

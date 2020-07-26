@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fc413b9762b2a91f4fae2aecd900021, Microsoft.VisualBasic.Core\Language\Value\ByRefValueExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::613f4b5f4e2c32a7a2c8c81fdff46410, Microsoft.VisualBasic.Core\Language\Value\ByRefValueExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ByRefValueExtensions
     ' 
-    '         Function: CreateDelegate, (+2 Overloads) First, Split, ToLower
+    '         Function: CreateDelegate, (+2 Overloads) First, Split, StartsWith, ToLower
     ' 
     ' 
     ' /********************************************************************************/
@@ -69,6 +69,12 @@ Namespace Language.Values
         <Extension>
         Public Function First(str As ByRefString) As Char
             Return str.Value.First
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function StartsWith(str As ByRefString, start As String) As Boolean
+            Return str.Value.StartsWith(start)
         End Function
 
         ''' <summary>

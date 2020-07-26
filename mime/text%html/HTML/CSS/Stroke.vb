@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf82a88b484df116111383a454930959, mime\text%html\HTML\CSS\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::56ad8b8d4c017a9efa26b01db90f7c9e, mime\text%html\HTML\CSS\Stroke.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: CSSValue, dash, fill, GDIObject, width
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetDashStyle, ToString, TryParse
+    '         Function: GetDashStyle, ParserImpl, ToString, TryParse
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +47,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 
 Namespace HTML.CSS
 
@@ -127,13 +128,23 @@ Namespace HTML.CSS
         End Function
 
         Public Shared Function TryParse(css$, Optional [default] As Stroke = Nothing) As Stroke
+            If css.StringEmpty Then
+                Return [default]
+            Else
+                Return css.DoCall(AddressOf ParserImpl)
+            End If
+        End Function
+
+        Private Shared Function ParserImpl(css As String) As Stroke
             Dim t As Dictionary(Of String, String) = css _
                 .Trim(";"c) _
                 .Split(";"c) _
                 .Select(AddressOf Trim) _
                 .Select(Function(s) s.GetTagValue(":", trim:=True)) _
                 .ToDictionary(Function(x) x.Name,
-                              Function(x) x.Value)
+                              Function(x)
+                                  Return x.Value
+                              End Function)
 
             Dim st As New Stroke With {
                 .dash = GetDashStyle(t.TryGetValue("stroke-dash")),
@@ -148,9 +159,18 @@ Namespace HTML.CSS
             Return st
         End Function
 
+        ''' <summary>
+        ''' 在进行隐式转换的时候，空值的话转换函数会返回空值
+        ''' </summary>
+        ''' <param name="stroke"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(stroke As Stroke) As Pen
-            Return stroke.GDIObject
+            If stroke Is Nothing Then
+                Return Nothing
+            Else
+                Return stroke.GDIObject
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
