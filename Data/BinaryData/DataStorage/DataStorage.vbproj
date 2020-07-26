@@ -514,6 +514,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASN.1\Extensions.vb" />
+    <Compile Include="ASN.1\Index.vb" />
     <Compile Include="ASN.1\StreamReader.vb" />
     <Compile Include="HDF5\dataset\ChunkedDatasetV3.vb" />
     <Compile Include="HDF5\dataset\CompactDataset.vb" />
