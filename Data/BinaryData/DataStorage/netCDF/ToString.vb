@@ -77,12 +77,14 @@ Namespace netCDF
 
             Call dev.WriteLine()
             Call dev.WriteLine("GLOBAL ATTRIBUTES")
+
             For Each attribute As attribute In file.globalAttributes
                 Call dev.WriteLine($"  {attribute.name.PadEnd(30)} = {attribute.value}")
             Next
 
             Call dev.WriteLine()
             Call dev.WriteLine("VARIABLES:")
+
             For Each variable As variable In file.variables
                 Dim value As CDFData = file.getDataVariable(variable)
                 Dim stringify = value.ToString
