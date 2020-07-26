@@ -122,6 +122,10 @@ Namespace ApplicationServices.Terminal.ProgressBar
             bar = bar.Insert(start, pointer)
         End Sub
 
+        Public Overrides Sub PrintMessage(msg As String)
+
+        End Sub
+
         ''' <summary>
         ''' prints the progress bar acorrding to pointers and current direction
         ''' </summary>

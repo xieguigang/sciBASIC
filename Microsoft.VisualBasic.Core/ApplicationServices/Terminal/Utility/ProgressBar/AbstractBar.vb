@@ -52,7 +52,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
         ''' Prints a simple message 
         ''' </summary>
         ''' <param name="msg">Message to print</param>
-        Public Sub PrintMessage(msg As String)
+        Public Overridable Sub PrintMessage(msg As String)
             Call Console.WriteLine(msg)
         End Sub
 
