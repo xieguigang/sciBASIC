@@ -59,6 +59,15 @@ Namespace PeakFinding
             End Get
         End Property
 
+        Public ReadOnly Property rt As Double
+            Get
+                Return region _
+                    .OrderByDescending(Function(a) a.intensity) _
+                    .FirstOrDefault _
+                    .time
+            End Get
+        End Property
+
         Public ReadOnly Property rtmin As Double
             Get
                 Return region.First.time
