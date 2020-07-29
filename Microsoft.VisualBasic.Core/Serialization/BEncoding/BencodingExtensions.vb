@@ -29,7 +29,7 @@ Namespace Serialization.Bencoding
         ''' <returns></returns>
         <Extension>
         Public Function ToBEncodeString(Of T)(obj As T, Optional digest As Func(Of Object, Object) = Nothing) As String
-            Return GetType(T).ToBEncode(obj, digest Or theSampleObjectDigest).ToBencodedString
+            Return ToBEncode(obj, digest Or theSampleObjectDigest).ToBencodedString
         End Function
 
         ReadOnly theSampleObjectDigest As New [Default](Of Func(Of Object, Object))(AddressOf theSameObject)
@@ -39,9 +39,14 @@ Namespace Serialization.Bencoding
         End Function
 
         <Extension>
-        Public Function ToBEncode(type As Type, obj As Object, digest As Func(Of Object, Object)) As BElement
+        Public Function ToBEncode(obj As Object, digest As Func(Of Object, Object)) As BElement
+            Dim type As Type
+
+            obj = digest(obj)
+            type = obj.GetType
+
             If type.IsArray Then
-                Return DirectCast(obj, Array).encodeList(type, digest)
+                Return DirectCast(obj, Array).encodeList(digest)
             ElseIf type.ImplementInterface(GetType(IDictionary)) Then
                 Dim table As New BDictionary
                 Dim raw As IDictionary = DirectCast(obj, IDictionary)
@@ -49,7 +54,7 @@ Namespace Serialization.Bencoding
 
                 For Each key As Object In raw.Keys
                     item = raw.Item(key)
-                    table.Add(New BString(key.ToString), item.GetType.ToBEncode(item, digest))
+                    table.Add(New BString(key.ToString), ToBEncode(item, digest))
                 Next
 
                 Return table
@@ -58,9 +63,9 @@ Namespace Serialization.Bencoding
             ElseIf type Is GetType(Integer) OrElse type Is GetType(Long) OrElse type Is GetType(Short) OrElse type Is GetType(Byte) Then
                 Return New BInteger(obj)
             ElseIf type.ImplementInterface(GetType(IList)) Then
-                Return DirectCast(obj, IList).encodeList(Nothing, digest)
+                Return DirectCast(obj, IList).encodeList(digest)
             Else
-                Return encodeObject(digest(obj), digest)
+                Return encodeObject(obj, digest)
             End If
         End Function
 
@@ -75,28 +80,18 @@ Namespace Serialization.Bencoding
 
             For Each reader As PropertyInfo In schema
                 item = reader.GetValue(obj, Nothing)
-                table.Add(New BString(reader.Name), item.GetType.ToBEncode(item, digest))
+                table.Add(New BString(reader.Name), ToBEncode(item, digest))
             Next
 
             Return table
         End Function
 
         <Extension>
-        Private Function encodeList(sequence As IEnumerable, type As Type, digest As Func(Of Object, Object)) As BElement
+        Private Function encodeList(sequence As IEnumerable, digest As Func(Of Object, Object)) As BElement
             Dim list As New BList
 
-            type = type.GetElementType
-
-            If type Is GetType(Object) Then
-                type = Nothing
-            End If
-
             For Each item As Object In sequence
-                If type Is Nothing Then
-                    Call list.Add(item.GetType.ToBEncode(item, digest))
-                Else
-                    Call list.Add(type.ToBEncode(item, digest))
-                End If
+                Call list.Add(ToBEncode(item, digest))
             Next
 
             Return list
