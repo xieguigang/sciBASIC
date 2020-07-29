@@ -239,6 +239,11 @@ Namespace Language
             Return n.Value
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(n As i32) As Long
+            Return CLng(n.Value)
+        End Operator
+
         ''' <summary>
         ''' 
         ''' </summary>
