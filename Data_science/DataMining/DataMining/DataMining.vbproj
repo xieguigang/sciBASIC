@@ -648,6 +648,7 @@
     <Compile Include="AprioriRules\Algorithm\Entities\Transaction.vb" />
     <Compile Include="AprioriRules\Algorithm\Implementation\StrongRules.vb" />
     <Compile Include="AprioriRules\Helper\Encoding.vb" />
+    <Compile Include="Clustering\FuzzyCMeans\Algorithm\MembershipMatrix.vb" />
     <Compile Include="ComponentModel\Class.vb" />
     <Compile Include="ComponentModel\Discretizer\NormalRangeDiscretizer.vb" />
     <Compile Include="ComponentModel\Evaluation\RegressionClassify.vb" />

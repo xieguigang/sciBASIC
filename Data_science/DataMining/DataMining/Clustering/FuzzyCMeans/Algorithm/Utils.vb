@@ -48,7 +48,7 @@ Namespace FuzzyCMeans
 
     Partial Public Module FuzzyCMeansAlgorithm
 
-        Private Function MakeFuzzyClusters(points As List(Of FuzzyCMeansEntity),
+        Friend Function MakeFuzzyClusters(points As List(Of FuzzyCMeansEntity),
                                    clusterCenters As List(Of FuzzyCMeansEntity),
                            fuzzificationParameter As Double,
                            ByRef membershipMatrix As Dictionary(Of FuzzyCMeansEntity, List(Of Double))) As Dictionary(Of FuzzyCMeansEntity, FuzzyCMeansEntity)
@@ -67,9 +67,7 @@ Namespace FuzzyCMeans
             Return clusters
         End Function
 
-        Private Function CreateMembershipMatrix(distancesToClusterCenters As Dictionary(Of FuzzyCMeansEntity, List(Of Double)),
-                                                fuzzificationParameter As Double) As Dictionary(Of FuzzyCMeansEntity, List(Of Double))
-
+        Friend Function CreateMembershipMatrix(distancesToClusterCenters As Dictionary(Of FuzzyCMeansEntity, List(Of Double)), fuzzificationParameter As Double) As Dictionary(Of FuzzyCMeansEntity, List(Of Double))
             Dim map As New Dictionary(Of FuzzyCMeansEntity, List(Of Double))()
 
             For Each pair As KeyValuePair(Of FuzzyCMeansEntity, List(Of Double)) In distancesToClusterCenters
@@ -97,7 +95,7 @@ Namespace FuzzyCMeans
             Return map
         End Function
 
-        Private Function RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters As List(Of FuzzyCMeansEntity),
+        Friend Function RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters As List(Of FuzzyCMeansEntity),
                                                                   membershipMatrix As Dictionary(Of FuzzyCMeansEntity, List(Of Double)),
                                                             fuzzificationParameter As Double) As List(Of FuzzyCMeansEntity)
 
