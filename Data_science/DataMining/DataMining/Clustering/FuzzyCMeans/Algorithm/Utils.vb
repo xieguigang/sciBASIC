@@ -68,7 +68,7 @@ Namespace FuzzyCMeans
         End Function
 
         Private Function CreateMembershipMatrix(distancesToClusterCenters As Dictionary(Of FuzzyCMeansEntity, List(Of Double)),
-                                                   fuzzificationParameter As Double) As Dictionary(Of FuzzyCMeansEntity, List(Of Double))
+                                                fuzzificationParameter As Double) As Dictionary(Of FuzzyCMeansEntity, List(Of Double))
 
             Dim map As New Dictionary(Of FuzzyCMeansEntity, List(Of Double))()
 
