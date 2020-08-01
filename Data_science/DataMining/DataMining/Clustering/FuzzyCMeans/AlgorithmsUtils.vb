@@ -51,28 +51,14 @@ Namespace FuzzyCMeans
 
     Public Module AlgorithmsUtils
 
-        Public Function GetMaxElement(values As List(Of List(Of Double))) As Double
-            Dim max As Double = Double.MinValue
-            For i As Integer = 0 To values.Count - 1
-                For j As Integer = 0 To values(0).Count - 1
-                    If values(i)(j) > max Then
-                        max = values(i)(j)
-                    End If
-
-                Next
-            Next
-
-            Return max
-        End Function
-
         ''' <summary>
         ''' </summary>
         ''' <param name="matrix1"></param>
         ''' <param name="matrix2"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function DifferenceMatrix(matrix1 As IEnumerable(Of List(Of Double)), matrix2 As List(Of List(Of Double))) As List(Of List(Of Double))
-            Dim d As New List(Of List(Of Double))()
+        Public Function DifferenceMatrix(matrix1 As IEnumerable(Of List(Of Double)), matrix2 As List(Of Double)()) As List(Of List(Of Double))
+            Dim diff As New List(Of List(Of Double))()
             Dim l% = matrix1.First.Count
             Dim line As List(Of Double)
 
@@ -82,48 +68,13 @@ Namespace FuzzyCMeans
                 line = (+row)
 
                 For j As Integer = 0 To l - 1
-                    Dim result As Double = stdNum.Abs(line(j) - matrix2(row.i)(j))
-                    rowDifferences.Add(result)
+                    rowDifferences.Add(stdNum.Abs(line(j) - matrix2(row.i)(j)))
                 Next
 
-                d.Add(rowDifferences)
+                diff.Add(rowDifferences)
             Next
 
-            Return d
-        End Function
-
-        Public Function GetElementIndex(list As List(Of List(Of Double)), element As List(Of Double)) As Integer
-            For i As Integer = 0 To list.Count - 1
-                If VectorEqualityComparer.VectorEqualsToAnother(list(i), element) Then
-                    Return i
-                End If
-            Next
-
-            Return -1
-        End Function
-
-        <Extension>
-        Public Function DistanceToClusterCenters(ls As List(Of FuzzyCMeansEntity), clusterCenters As List(Of FuzzyCMeansEntity)) As Dictionary(Of FuzzyCMeansEntity, List(Of Double))
-            Dim map As New Dictionary(Of FuzzyCMeansEntity, List(Of Double))()
-
-            For Each x As FuzzyCMeansEntity In ls
-                Dim distancesToCenters As New List(Of Double)()
-
-                For Each c As FuzzyCMeansEntity In clusterCenters
-                    Dim distance As Double
-
-                    For i As Integer = 0 To x.Length - 1
-                        distance += stdNum.Pow(x(i) - c(i), 2)
-                    Next
-
-                    distance = stdNum.Sqrt(distance)
-                    distancesToCenters.Add(distance)
-                Next
-
-                Call map.Add(x, distancesToCenters)
-            Next
-
-            Return map
+            Return diff
         End Function
 
         Public Function GenerateDataPoints(dimension As Integer) As HashSet(Of Vector)

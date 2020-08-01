@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::8b6a1dbab239818337dfb44b47bcea7d, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module FuzzyCMeansAlgorithm
-    ' 
-    '         Function: FuzzyCMeans
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module FuzzyCMeansAlgorithm
+' 
+'         Function: FuzzyCMeans
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
 
@@ -110,7 +111,7 @@ Namespace FuzzyCMeans
         Dim clusterCenters As List(Of FuzzyCMeansEntity)
         Dim trace As Dictionary(Of Integer, FuzzyCMeansEntity())
         Dim threshold As Double
-        Dim membershipMatrix As New Dictionary(Of FuzzyCMeansEntity, List(Of Double))
+        Dim membershipMatrix As New MembershipMatrix
         Dim fuzzificationParameter As Double
 
         Sub New(data As IEnumerable(Of FuzzyCMeansEntity), numberOfClusters%, thresholdVal#, fuzzificationParam As Double)
@@ -145,24 +146,13 @@ Namespace FuzzyCMeans
             Dim ptClone As New Value(Of FuzzyCMeansEntity)
             Dim clusters As Dictionary(Of FuzzyCMeansEntity, FuzzyCMeansEntity) = MakeFuzzyClusters(coordinates, clusterCenters, fuzzificationParameter, membershipMatrix)
 
-            'For Each pair As KeyValuePair(Of Entity, Entity) In clusters
-            '    For Each annotation As Entity In coordinates
-
-            '        If VectorEqualityComparer.VectorEqualsToAnother(annotation.Properties, pair.Key.Properties) Then
-            '            annotation.MarkClusterCenter(clusterColors(pair.Value))
-            '        End If
-            '    Next
-            'Next
-
-            For Each pair As KeyValuePair(Of FuzzyCMeansEntity, List(Of Double)) In membershipMatrix
+            For Each pair In membershipMatrix.GetMemberships
                 For Each annotation As FuzzyCMeansEntity In coordinates
-
-                    If VectorEqualityComparer.VectorEqualsToAnother(annotation.entityVector, pair.Key.entityVector) Then
+                    If VectorEqualityComparer.VectorEqualsToAnother(annotation.entityVector, pair.entity.entityVector) Then
                         Dim tooltip As New Dictionary(Of Integer, Double)
 
-                        For i As Integer = 0 To pair.Value.Count - 1
-                            Dim value As Double = pair.Value(i)
-                            Call tooltip.Add(i, stdNum.Round(value, 2))
+                        For i As Integer = 0 To pair.membership.Count - 1
+                            Call tooltip.Add(i, stdNum.Round(pair.membership(i), 2))
                         Next
 
                         annotation.memberships = tooltip
@@ -173,15 +163,14 @@ Namespace FuzzyCMeans
             Dim oldClusterCenters As List(Of FuzzyCMeansEntity) = clusterCenters
 
             clusterCenters = RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters, membershipMatrix, fuzzificationParameter)
-            If Not Trace Is Nothing Then
-                Call Trace.Add(iteration, clusterCenters)
+            If Not trace Is Nothing Then
+                Call trace.Add(iteration, clusterCenters)
             End If
 
-            Dim distancesToClusterCenters As Dictionary(Of FuzzyCMeansEntity, List(Of Double)) = coordinates.DistanceToClusterCenters(clusterCenters)
-            Dim newMembershipMatrix As Dictionary(Of FuzzyCMeansEntity, List(Of Double)) = CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
-
-            Dim differences As List(Of List(Of Double)) = newMembershipMatrix.Values.DifferenceMatrix(membershipMatrix.Values.AsList())
-            Dim maxElement As Double = GetMaxElement(differences)
+            Dim distancesToClusterCenters As MembershipMatrix = MembershipMatrix.DistanceToClusterCenters(coordinates, clusterCenters)
+            Dim newMembershipMatrix As MembershipMatrix = membershipMatrix.CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
+            Dim differences As List(Of List(Of Double)) = newMembershipMatrix.GetMembershipMatrix.DifferenceMatrix(membershipMatrix.GetMembershipMatrix.ToArray())
+            Dim maxElement As Double = differences.IteratesALL.Max
 
             Call $"Max element: {maxElement}".__DEBUG_ECHO
 
