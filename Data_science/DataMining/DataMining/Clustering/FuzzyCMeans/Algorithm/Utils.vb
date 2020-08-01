@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2618abcc326be4c9a7e80eaaecc9be6a, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::1f7cdd555d5acf3389fb130bd353a060, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\AlgorithmsUtils.vb"
 
     ' Author:
     ' 
@@ -31,92 +31,66 @@
 
     ' Summaries:
 
-    '     Module FuzzyCMeansAlgorithm
+    '     Module AlgorithmsUtils
     ' 
-    '         Function: CreateMembershipMatrix, MakeFuzzyClusters, RecalculateCoordinateOfFuzzyClusterCenters
+    '         Function: DifferenceMatrix, DistanceToClusterCenters, GenerateDataPoints, GetElementIndex, GetMaxElement
+    '                   MakeInitialSeeds
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace FuzzyCMeans
 
-    Partial Public Module FuzzyCMeansAlgorithm
+    Public Module AlgorithmsUtils
 
-        Friend Function MakeFuzzyClusters(points As List(Of FuzzyCMeansEntity),
-                                  clusterCenters As List(Of FuzzyCMeansEntity),
-                          fuzzificationParameter As Double,
-                          ByRef membershipMatrix As MembershipMatrix) As Dictionary(Of FuzzyCMeansEntity, FuzzyCMeansEntity)
+        ''' <summary>
+        ''' </summary>
+        ''' <param name="matrix1"></param>
+        ''' <param name="matrix2"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function DifferenceMatrix(matrix1 As IEnumerable(Of List(Of Double)), matrix2 As List(Of Double)()) As List(Of List(Of Double))
+            Dim diff As New List(Of List(Of Double))()
+            Dim l% = matrix1.First.Count
+            Dim line As List(Of Double)
 
-            Dim distancesToClusterCenters As MembershipMatrix = MembershipMatrix.DistanceToClusterCenters(points, clusterCenters)
-            Dim clusters As New Dictionary(Of FuzzyCMeansEntity, FuzzyCMeansEntity)()
-            Dim clusterNumber As Integer
+            For Each row As SeqValue(Of List(Of Double)) In matrix1.SeqIterator
+                Dim rowDifferences As New List(Of Double)()
 
-            membershipMatrix = membershipMatrix.CreateMembershipMatrix(distancesToClusterCenters, fuzzificationParameter)
+                line = (+row)
 
-            For Each value In membershipMatrix.GetMemberships
-                clusterNumber = Which.Max(value.membership)
-                clusters.Add(value.entity, clusterCenters(clusterNumber))
+                For j As Integer = 0 To l - 1
+                    rowDifferences.Add(stdNum.Abs(line(j) - matrix2(row.i)(j)))
+                Next
+
+                diff.Add(rowDifferences)
             Next
 
-            Return clusters
+            Return diff
         End Function
 
-        Friend Function RecalculateCoordinateOfFuzzyClusterCenters(clusterCenters As List(Of FuzzyCMeansEntity),
-                                                                 membershipMatrix As MembershipMatrix,
-                                                           fuzzificationParameter As Double) As List(Of FuzzyCMeansEntity)
+        Public Function MakeInitialSeeds(coordinates As List(Of FuzzyCMeansEntity), numberOfClusters As Integer) As List(Of FuzzyCMeansEntity)
+            Dim coordinatesCopy As List(Of FuzzyCMeansEntity) = coordinates.AsList()
+            Dim initialClusterCenters As New List(Of FuzzyCMeansEntity)()
+            Dim random As Random = randf.seeds
+            Dim clusterCenterPointNumber As Integer
 
-            Dim clusterMembershipValuesSums As New List(Of Double)()
-
-            For Each clusterCenter As FuzzyCMeansEntity In clusterCenters
-                clusterMembershipValuesSums.Add(0)
+            For i As Integer = 0 To numberOfClusters - 1
+                clusterCenterPointNumber = random.[Next](0, coordinatesCopy.Count)
+                initialClusterCenters.Add(coordinatesCopy(clusterCenterPointNumber))
+                coordinatesCopy.RemoveAt(clusterCenterPointNumber)
             Next
 
-            Dim weightedPointCoordinateSums As New List(Of List(Of Double))()
-            Dim memberRelationships = membershipMatrix.GetMemberships.ToArray
-
-            For i As Integer = 0 To clusterCenters.Count - 1
-                Dim clusterCoordinatesSum As New List(Of Double)()
-                For Each coordinate As Double In clusterCenters(0).entityVector
-                    clusterCoordinatesSum.Add(0)
-                Next
-
-                For Each pair In memberRelationships
-                    Dim pointCoordinates As FuzzyCMeansEntity = pair.entity
-                    Dim membershipValues As List(Of Double) = pair.membership
-
-                    clusterMembershipValuesSums(i) += stdNum.Pow(membershipValues(i), fuzzificationParameter)
-
-                    For j As Integer = 0 To pointCoordinates.Length - 1
-                        clusterCoordinatesSum(j) += pointCoordinates(j) * stdNum.Pow(membershipValues(i), fuzzificationParameter)
-                    Next
-                Next
-
-                weightedPointCoordinateSums.Add(clusterCoordinatesSum)
-            Next
-
-            Dim newClusterCenters As New List(Of FuzzyCMeansEntity)()
-
-            For i As Integer = 0 To clusterCenters.Count - 1
-                Dim coordinatesSums As List(Of Double) = weightedPointCoordinateSums(i)
-                Dim newCoordinates As New FuzzyCMeansEntity() With {
-                    .entityVector = New Double(coordinatesSums.Count - 1) {},
-                    .uid = clusterCenters(i).uid
-                }
-
-                For j As Integer = 0 To coordinatesSums.Count - 1
-                    newCoordinates(j) = coordinatesSums(j) / clusterMembershipValuesSums(i)
-                Next
-
-                newClusterCenters.Add(newCoordinates)
-            Next
-
-            Return newClusterCenters
+            Return initialClusterCenters
         End Function
     End Module
 End Namespace
