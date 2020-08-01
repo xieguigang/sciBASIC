@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a32a842344a05bc815fb79e62307ad30, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7a509eafe80a4022739ec13880c85e40, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,15 +38,15 @@
     ' 
     '     Function: [Set], Add, (+3 Overloads) AddRange, AsRange, (+2 Overloads) Average
     '               CheckDuplicated, Constrain, DateToString, DriverRun, FormatTime
-    '               FuzzyMatching, GetHexInteger, IndexOf, InsertOrUpdate, Invoke
-    '               InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy, Keys
-    '               (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5
-    '               ModifyValue, (+2 Overloads) Offset, Range, Remove, RemoveDuplicates
-    '               RemoveFirst, (+2 Overloads) RemoveLast, RunDriver, Second, SelectFile
-    '               SeqRandom, (+3 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell
-    '               Shuffles, Slice, (+2 Overloads) SplitMV, StdError, ToArray
-    '               ToBoolean, ToDictionary, ToNormalizedPathString, ToString, ToStringArray
-    '               ToVector, (+3 Overloads) TrimNull, TryCount, Unlist, WriteAddress
+    '               FuzzyMatching, IndexOf, InsertOrUpdate, Invoke, InvokeSet
+    '               Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy, Keys, (+2 Overloads) LongSeq
+    '               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
+    '               (+2 Overloads) Offset, Range, Remove, RemoveDuplicates, RemoveFirst
+    '               (+2 Overloads) RemoveLast, RunDriver, Second, SelectFile, SeqRandom
+    '               (+3 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles
+    '               Slice, (+2 Overloads) SplitMV, StdError, ToArray, ToBoolean
+    '               ToDictionary, ToNormalizedPathString, ToString, ToStringArray, ToVector
+    '               (+3 Overloads) TrimNull, TryCount, Unlist, WriteAddress
     ' 
     '     Sub: Add, FillBlank, Removes, Swap, SwapItem
     '          SwapWith

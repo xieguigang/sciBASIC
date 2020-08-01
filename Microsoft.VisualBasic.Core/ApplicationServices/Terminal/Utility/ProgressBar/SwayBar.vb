@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68d8592dd858e2855b51def64589e5dd, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\SwayBar.vb"
+﻿#Region "Microsoft.VisualBasic::2017947f4565118930c2ab5af95fb68d, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\SwayBar.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@
     ' 
     '     Function: buildBlankPointer
     ' 
-    '     Sub: (+2 Overloads) [Step], ClearBar, PlacePointer
+    '     Sub: (+2 Overloads) [Step], ClearBar, PlacePointer, PrintMessage
     ' 
     ' 
     ' /********************************************************************************/

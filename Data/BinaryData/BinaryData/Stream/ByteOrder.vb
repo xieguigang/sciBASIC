@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6197f9d0bf127f64bdf0d4f3ff9fc354, Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
+﻿#Region "Microsoft.VisualBasic::fc911ab3b71686af272382ccf4950067, Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
 
     ' Author:
     ' 

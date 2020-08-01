@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dfd4a93630853186c09260e549e2f2c, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::140159388cfb232e28bb0b2783a151fc, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Entity.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class FuzzyCMeansEntity
     ' 
-    '         Properties: MarkClusterCenter, Memberships, ProbablyMembership
+    '         Properties: MarkClusterCenter, memberships, probablyMembership
     ' 
     '         Function: ToString
     ' 

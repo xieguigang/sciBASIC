@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f7cdd555d5acf3389fb130bd353a060, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\AlgorithmsUtils.vb"
+﻿#Region "Microsoft.VisualBasic::0b2ea9db96ab4ac68646060a9ec8ebd2, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Algorithm\Utils.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,7 @@
 
     '     Module AlgorithmsUtils
     ' 
-    '         Function: DifferenceMatrix, DistanceToClusterCenters, GenerateDataPoints, GetElementIndex, GetMaxElement
-    '                   MakeInitialSeeds
+    '         Function: DifferenceMatrix, MakeInitialSeeds
     ' 
     ' 
     ' /********************************************************************************/

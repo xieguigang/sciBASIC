@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92fb3b9b252bde39973bff458c89c70c, vs_solutions\dev\VisualStudio\IL\MethodBodyReader.vb"
+﻿#Region "Microsoft.VisualBasic::75bbbd352531d2ceedbfc8dcce6a417b, vs_solutions\dev\VisualStudio\IL\MethodBodyReader.vb"
 
     ' Author:
     ' 
@@ -272,4 +272,3 @@ Namespace IL
         End Function
     End Class
 End Namespace
-
