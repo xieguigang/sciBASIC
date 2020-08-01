@@ -165,7 +165,7 @@ Namespace FuzzyCMeans
                             Call tooltip.Add(i, stdNum.Round(value, 2))
                         Next
 
-                        annotation.Memberships = tooltip
+                        annotation.memberships = tooltip
                     End If
                 Next
             Next
