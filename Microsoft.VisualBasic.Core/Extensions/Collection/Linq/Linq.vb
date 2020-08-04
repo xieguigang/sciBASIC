@@ -328,7 +328,7 @@ Namespace Linq
         ''' <returns></returns>
         <Extension>
         Public Iterator Function SeqIterator(n As Integer, Optional offset As Integer = 0) As IEnumerable(Of Integer)
-            If n < 0 Then
+            If (n + offset) < 0 Then
                 Dim ex As String = $"n:={n} is not a valid index generator value for sequence!"
                 Throw New Exception(ex)
             End If

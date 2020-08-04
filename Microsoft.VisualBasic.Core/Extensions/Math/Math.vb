@@ -64,6 +64,36 @@ Namespace Math
     <Package("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMath
 
+        Public Function Permut(k As Integer, n As Integer) As Long
+            Dim nfactors As Integer() = (n - 1).SeqIterator(offset:=1).ToArray
+            Dim nkfactors As Integer() = (n - k - 1).SeqIterator(offset:=1).ToArray
+
+            ' removes the same factor element
+            Dim nf As Integer()
+            Dim nk As Integer()
+
+            With nfactors.Indexing
+                nk = nkfactors.Where(Function(x) .IndexOf(x:=x) = -1).ToArray
+            End With
+            With nkfactors.Indexing
+                nf = nfactors.Where(Function(x) .IndexOf(x:=x) = -1).ToArray
+            End With
+
+            Dim i As Long = 1
+
+            For Each x In nf
+                i = i * x
+            Next
+
+            Dim j As Long = 1
+
+            For Each x In nk
+                j = j * x
+            Next
+
+            Return i / j
+        End Function
+
         ''' <summary>
         ''' ``Math.Log(x, newBase:=2)``
         ''' </summary>
