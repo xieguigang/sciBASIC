@@ -204,7 +204,7 @@ Namespace CommandLine
                 Case "man"
                     Call ExecuteImpl.HandleProgramManual(Me, cli)
                 Case "/linux-bash"
-                    Call My.BashShell()
+                    Call My.UNIX.BashShell()
                 Case "/cli.dev"
                     Call Me.CreateCLIPipelineFile(args:=cli)
                 Case Else
