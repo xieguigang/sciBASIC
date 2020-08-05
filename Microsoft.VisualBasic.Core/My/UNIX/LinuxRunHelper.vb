@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::b3a106c39670fb151d62b3b32d984b29, Microsoft.VisualBasic.Core\My\LinuxRunHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module LinuxRunHelper
-    ' 
-    '         Function: BashRun, BashShell, MonoRun
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module LinuxRunHelper
+' 
+'         Function: BashRun, BashShell, MonoRun
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Text
@@ -51,20 +52,24 @@ Namespace My.UNIX
     ''' </summary>
     Public Module LinuxRunHelper
 
+        Public Function GetLocationHelper() As String
+            Return Encodings.UTF8WithoutBOM.CodePage.GetString(My.Resources.bashRunner)
+        End Function
+
         ''' <summary>
         ''' Run from bash shell
         ''' </summary>
         ''' <returns></returns>
         Public Function BashRun() As String
+            Dim utf8 As Encoding = Encodings.UTF8WithoutBOM.CodePage
             Dim appName = App.AssemblyName
-            Dim bash As String = Encodings.UTF8WithoutBOM _
-                .CodePage _
-                .GetString(My.Resources.bashRunner) _
+            Dim locationHelper As String = utf8.GetString(My.Resources.bashRunner)
+            Dim bash As String = utf8.GetString(My.Resources.runMono) _
                 .Replace("{appName}", appName) _
                 .LineTokens _
                 .JoinBy(ASCII.LF)
 
-            Return bash
+            Return locationHelper & vbLf & bash
         End Function
 
         ''' <summary>

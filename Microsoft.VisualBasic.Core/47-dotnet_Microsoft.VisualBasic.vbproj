@@ -1985,6 +1985,7 @@
     <None Include="Resources\CPOL.htm" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\scripts\runMono.sh" />
     <None Include="Serialization\JSON\Formatter\readme.md" />
     <None Include="Net\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>

@@ -57,10 +57,3 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 # fi
 
 # echo "DIR is '$DIR'"
-
-# assemble the app path
-# and then run mono cli
-app="$DIR/{appName}.exe"
-cli="$@"
-
-mono "$app" $cli
