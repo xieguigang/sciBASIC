@@ -44,7 +44,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Text
 
-Namespace My
+Namespace My.UNIX
 
     ''' <summary>
     ''' mono shortcuts

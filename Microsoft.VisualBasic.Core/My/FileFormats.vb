@@ -54,5 +54,6 @@ Namespace My
         ''' tsv
         ''' </summary>
         table
+        bencode
     End Enum
 End Namespace
