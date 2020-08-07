@@ -633,5 +633,36 @@ Namespace CommandLine
                 Return reader.ReadToEnd
             End If
         End Function
+
+        ''' <summary>
+        ''' Gets the brief summary information of current cli command line object.
+        ''' (获取当前的命令行对象的参数摘要信息)
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <Extension>
+        Public Function GetCommandsOverview(cli As CommandLine) As String
+            Dim sb As New StringBuilder(vbCrLf, 1024)
+
+            Call sb.AppendLine($"Commandline arguments overviews{vbCrLf}Command Name  --  ""{cli.Name}""")
+            Call sb.AppendLine()
+            Call sb.AppendLine("---------------------------------------------------------")
+            Call sb.AppendLine()
+
+            If cli.arguments.Count = 0 Then
+                Return sb.AppendLine("No parameter was define in this commandline.").ToString
+            End If
+
+            Dim maxLenParameterName As Integer = Aggregate item As NamedValue(Of String)
+                                                 In cli.arguments
+                                                 Let str_len As Integer = Len(item.Name)
+                                                 Into Max(str_len)
+
+            For Each parameter As NamedValue(Of String) In cli.arguments
+                Call sb.AppendLine($"  {parameter.Name}  {New String(" "c, maxLenParameterName - Len(parameter.Name))}= ""{parameter.Value}"";")
+            Next
+
+            Return sb.ToString
+        End Function
     End Module
 End Namespace

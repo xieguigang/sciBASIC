@@ -307,34 +307,6 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the brief summary information of current cli command line object.
-        ''' (获取当前的命令行对象的参数摘要信息)
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function GetCommandsOverview() As String
-            Dim sb As New StringBuilder(vbCrLf, 1024)
-            Call sb.AppendLine($"Commandline arguments overviews{vbCrLf}Command Name  --  ""{Me.Name}""")
-            Call sb.AppendLine()
-            Call sb.AppendLine("---------------------------------------------------------")
-            Call sb.AppendLine()
-
-            If arguments.Count = 0 Then
-                Call sb.AppendLine("No parameter was define in this commandline.")
-                Return sb.ToString
-            End If
-
-            Dim MaxSwitchName As Integer = (From item As NamedValue(Of String)
-                                            In arguments
-                                            Select Len(item.Name)).Max
-            For Each sw As NamedValue(Of String) In arguments
-                Call sb.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
-            Next
-
-            Return sb.ToString
-        End Function
-
-        ''' <summary>
         ''' Checking for the missing required parameter, this function will returns the missing parameter
         ''' in the current cli command line object using a specific parameter name list.
         ''' (检查<paramref name="list"></paramref>之中的所有参数是否存在，函数会返回不存在的参数名)

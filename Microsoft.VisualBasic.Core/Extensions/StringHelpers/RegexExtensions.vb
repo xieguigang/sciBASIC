@@ -270,7 +270,7 @@ Public Module RegexExtensions
         ' 2018-6-1 因为空字符串肯定无法匹配上目标模式
         ' 所以match函数总回返回空字符串
         ' 由于s参数本身就是空字符串，所以会造成空字符串可以被任意模式完全匹配的bug
-        If s.StringEmpty Then
+        If s.StringEmpty AndAlso pattern <> StringEmptyPattern Then
             Return False
         End If
 
@@ -286,6 +286,23 @@ Public Module RegexExtensions
         Else
             Return False
         End If
+    End Function
+
+    Const StringEmptyPattern As String = "\s*"
+
+    ''' <summary>
+    ''' The enitre string input equals to the pattern's matched.
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="pattern"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsPattern(s As String, pattern As Regex) As Boolean
+        If s.StringEmpty AndAlso pattern.ToString <> StringEmptyPattern Then
+            Return False
+        End If
+
+        Return pattern.Match(s).Value = s
     End Function
 
     ''' <summary>

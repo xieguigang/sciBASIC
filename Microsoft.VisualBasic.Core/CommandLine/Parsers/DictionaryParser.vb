@@ -1,48 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::f332dc69aefd68863b03f3edc856ddbd, Microsoft.VisualBasic.Core\CommandLine\Parsers\DictionaryParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DictionaryParser
-    ' 
-    '         Function: TryParse
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DictionaryParser
+' 
+'         Function: TryParse
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Marshal
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Parsers
 
@@ -53,7 +54,7 @@ Namespace CommandLine.Parsers
         ''' </summary>
         ''' <param name="str$"></param>
         ''' <returns></returns>
-        Public Shared Function TryParse(str$) As Dictionary(Of String, String)
+        Public Shared Function TryParse(str As String) As Dictionary(Of String, String)
             Dim chars As New Pointer(Of Char)(str$)
             Dim tmp As New List(Of Char)
             Dim out As New Dictionary(Of String, String)
@@ -94,8 +95,10 @@ Namespace CommandLine.Parsers
                 t += New String(tmp)
             End If
 
+            Dim value As NamedValue(Of String)
+
             For Each var$ In t
-                Dim value = var.GetTagValue("="c)
+                value = var.GetTagValue("="c)
                 out(value.Name) = value.Value.GetString("'")
             Next
 

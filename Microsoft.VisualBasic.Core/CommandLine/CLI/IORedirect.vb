@@ -70,6 +70,17 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine
 
+    Public Delegate Function ProcessAyHandle(WaitForExit As Boolean, PushingData As String(), _DISP_DEBUG_INFO As Boolean) As Integer
+
+    ''' <summary>
+    ''' A function pointer for process the events when the target invoked child process was terminated and exit.
+    ''' (当目标进程退出的时候所调用的过程)
+    ''' </summary>
+    ''' <param name="exitCode">The exit code for the target sub invoke process.进程的退出代码</param>
+    ''' <param name="exitTime">The exit time for the target sub invoke process.(进程的退出时间)</param>
+    ''' <remarks></remarks>
+    Public Delegate Sub ProcessExitCallback(exitCode As Integer, exitTime As String)
+
     ''' <summary>
     ''' A communication fundation class type for the commandline program interop.
     ''' (一个简单的用于从当前进程派生子进程的Wrapper对象，假若需要folk出来的子进程对象
@@ -209,17 +220,6 @@ Namespace CommandLine
             End If
         End Sub
 
-        Public Delegate Function ProcessAyHandle(WaitForExit As Boolean, PushingData As String(), _DISP_DEBUG_INFO As Boolean) As Integer
-
-        ''' <summary>
-        ''' A function pointer for process the events when the target invoked child process was terminated and exit.
-        ''' (当目标进程退出的时候所调用的过程)
-        ''' </summary>
-        ''' <param name="exitCode">The exit code for the target sub invoke process.进程的退出代码</param>
-        ''' <param name="exitTime">The exit time for the target sub invoke process.(进程的退出时间)</param>
-        ''' <remarks></remarks>
-        Public Delegate Sub ProcessExitCallback(exitCode As Integer, exitTime As String)
-
         Private Sub outputHandler(sender As Object, e As DataReceivedEventArgs) Handles processInfo.OutputDataReceived
             If e.Data Is Nothing Then
                 Call outputWaitHandle.[Set]()
@@ -275,7 +275,7 @@ Namespace CommandLine
             End If
 
             If displaDebug Then
-                Dim Exe As String = FileIO.FileSystem.GetFileInfo(processInfo.StartInfo.FileName).FullName.Replace("\", "/")
+                Dim Exe As String = processInfo.StartInfo.FileName.GetFullPath.Replace("\", "/")
                 Dim argvs As String = processInfo.StartInfo.Arguments
 
                 Call Console.WriteLine("# ""{0}"" {1}", Exe, argvs)

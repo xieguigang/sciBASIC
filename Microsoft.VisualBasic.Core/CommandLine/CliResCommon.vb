@@ -69,9 +69,11 @@ Namespace CommandLine
                            Select [Property]
 
             Me.EXPORT = EXPORT
-            Me.Resource = propBufs.ToDictionary(Of String, Func(Of Byte()))(
+            Me.Resource = propBufs.ToDictionary(
                 Function(x) x.Name,
-                Function(x) New Func(Of Byte())(Function() DirectCast(x.GetValue(Nothing, Nothing), Byte())))
+                Function(x)
+                    Return New Func(Of Byte())(Function() DirectCast(x.GetValue(Nothing, Nothing), Byte()))
+                End Function)
         End Sub
 
         ''' <summary>

@@ -1259,6 +1259,7 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
+    <Compile Include="CommandLine\CLI\ProcessEx.vb" />
     <Compile Include="CommandLine\Reflection\ExportApiInformation.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\DataSource\Property\Extensions.vb" />

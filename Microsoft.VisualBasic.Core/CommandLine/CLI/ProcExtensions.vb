@@ -56,6 +56,8 @@ Namespace CommandLine
     ''' <summary>
     ''' How to found the process by CLI
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module ProcessExtensions
 
         ''' <summary>
@@ -72,10 +74,10 @@ Namespace CommandLine
         ''' <summary>
         ''' Get process by command line parameter.(按照命令行参数来获取进程实例)
         ''' </summary>
-        ''' <param name="CLI"></param>
+        ''' <param name="cli"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetProc(CLI As String) As Process
-            Dim CLICompared As CommandLine = CLI
+        <Extension> Public Function GetProc(cli As String) As Process
+            Dim CLICompared As CommandLine = CommandLine.op_Implicit(cli)
             Dim listProc As Process() = Proc.GetProcesses
             Dim process = LinqAPI.DefaultFirst(Of Process) _
  _

@@ -56,14 +56,14 @@ Namespace CommandLine.Parsers
         ''' <summary>
         ''' 非正则表达式命令行解析引擎
         ''' </summary>
-        ''' <param name="CLI$"></param>
+        ''' <param name="cli">the commandline string</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' + 双引号表示一个完整的token
         ''' + 空格为分隔符
         ''' </remarks>
-        <Extension> Public Function GetTokens(CLI$) As String()
-            Dim buffer As New Pointer(Of Char)(CLI)
+        <Extension> Public Function GetTokens(cli As String) As String()
+            Dim buffer As New Pointer(Of Char)(cli)
             Dim tokens As New List(Of String)
             Dim tmp As New List(Of Char)
             Dim c As Char
