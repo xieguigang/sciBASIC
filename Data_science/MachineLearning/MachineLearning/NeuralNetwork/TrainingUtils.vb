@@ -213,7 +213,7 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="input"></param>
         ''' <param name="output"></param>
-        Public Sub Add(input As Double(), output As Double())
+        Public Sub Add(input As Double(), ParamArray output As Double())
             dataSets += New TrainingSample With {
                 .sample = input,
                 .classify = output,
