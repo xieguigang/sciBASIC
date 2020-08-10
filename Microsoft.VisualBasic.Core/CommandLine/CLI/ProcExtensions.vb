@@ -83,7 +83,7 @@ Namespace CommandLine
  _
                 () <= From proc As Process
                       In listProc
-                      Let args = TryParse(proc.StartInfo.Arguments)
+                      Let args = Parsers.TryParse(proc.StartInfo.Arguments)
                       Where CLITools.Equals(CLICompared, args)  ' 由于参数的顺序可能会有些不一样，所以不可以直接按照字符串比较来获取
                       Select proc
 

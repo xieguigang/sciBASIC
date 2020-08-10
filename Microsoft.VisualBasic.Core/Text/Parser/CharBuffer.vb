@@ -55,6 +55,13 @@ Namespace Text.Parser
 
         ReadOnly buffer As New List(Of Char)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="i">
+        ''' 使用负数表示从尾到头
+        ''' </param>
+        ''' <returns></returns>
         Default Public ReadOnly Property GetChar(i As Integer) As Char
             Get
                 Return buffer(i)
@@ -128,6 +135,36 @@ Namespace Text.Parser
             End If
 
             Return buf
+        End Operator
+
+        ''' <summary>
+        ''' string equals?
+        ''' </summary>
+        ''' <param name="buf"></param>
+        ''' <param name="test"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(buf As CharBuffer, test As String) As Boolean
+            If buf <> test.Length Then
+                Return False
+            End If
+
+            For i As Integer = 0 To test.Length - 1
+                If buf.buffer(i) <> test(i) Then
+                    Return False
+                End If
+            Next
+
+            Return True
+        End Operator
+
+        ''' <summary>
+        ''' string not equals?
+        ''' </summary>
+        ''' <param name="buf"></param>
+        ''' <param name="test"></param>
+        ''' <returns></returns>
+        Public Shared Operator <>(buf As CharBuffer, test As String) As Boolean
+            Return Not buf = test
         End Operator
 
         Public Shared Operator =(buf As CharBuffer, size As Integer) As Boolean

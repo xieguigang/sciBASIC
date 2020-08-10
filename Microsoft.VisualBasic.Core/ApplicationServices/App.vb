@@ -1034,7 +1034,7 @@ Public Module App
     <ExportAPI("RunCLI")>
     <Extension>
     Public Function RunCLI(Interpreter As Type, args$, <CallerMemberName> Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, Nothing, Nothing, Nothing)
+        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -1075,7 +1075,7 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, executeEmpty, Nothing, Nothing)
+        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, executeEmpty, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -1097,7 +1097,7 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, executeEmpty, executeNotFound, Nothing)
+        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, executeEmpty, executeNotFound, Nothing)
     End Function
 
     ''' <summary>
@@ -1181,7 +1181,7 @@ Public Module App
     '''
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, Nothing, Nothing, executeFile)
+        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, Nothing, Nothing, executeFile)
     End Function
 
     ''' <summary>
@@ -1212,7 +1212,7 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As ExecuteFile, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLI(TryParse(args), executeFile, executeEmpty, caller)
+        Return Interpreter.RunCLI(Parsers.TryParse(args), executeFile, executeEmpty, caller)
     End Function
 
     ''' <summary>

@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::e341c0e67c7e5993959378d9004c20b7, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Casting
-    ' 
-    '         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
-    '                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
-    '                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
-    '                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
-    '                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
-    '                   ScriptValue, SizeParser, TryParse
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Casting
+' 
+'         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
+'                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
+'                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
+'                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
+'                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
+'                   ScriptValue, SizeParser, TryParse
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,6 +51,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -370,7 +371,7 @@ Namespace Scripting.Runtime
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastCommandLine(obj As String) As CommandLine.CommandLine
-            Return CommandLine.TryParse(obj)
+            Return Parsers.TryParse(obj)
         End Function
 
         ''' <summary>

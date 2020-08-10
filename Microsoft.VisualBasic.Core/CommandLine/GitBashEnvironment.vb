@@ -69,7 +69,7 @@ Namespace CommandLine
                 .Select(Function(t) t.Replace(gitBash, "")) _
                 .ToArray
             Dim cliString$ = tokens.JoinBy(" ")
-            Dim cli = CLITools.TryParse(tokens, False, cliString)
+            Dim cli = Parsers.TryParse(tokens, False, cliString)
 
             Return cli
         End Function

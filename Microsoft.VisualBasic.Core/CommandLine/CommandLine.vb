@@ -58,7 +58,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -387,12 +386,12 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(CommandLine As String) As CommandLine
-            Return TryParse(CommandLine)
+            Return Parsers.TryParse(CommandLine)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(CLI As Func(Of String)) As CommandLine
-            Return TryParse(CLI())
+            Return Parsers.TryParse(CLI())
         End Operator
 
         ''' <summary>
@@ -946,7 +945,7 @@ Namespace CommandLine
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(opt As String, args As CommandLine) As CommandLine
-            Return TryParse(args(opt))
+            Return Parsers.TryParse(args(opt))
         End Operator
 
         Public Shared Operator ^(args As CommandLine, [default] As String) As String

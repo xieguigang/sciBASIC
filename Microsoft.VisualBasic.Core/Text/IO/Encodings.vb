@@ -58,6 +58,9 @@ Namespace Text
         ''' <see cref="Encoding.Default"/>: Gets an encoding for the operating system's current ANSI code page.
         ''' </summary>
         [Default] = 0
+
+        ANSI = 1
+
         ASCII = 10
         ''' <summary>
         ''' Alias of the value <see cref="UTF16"/>.

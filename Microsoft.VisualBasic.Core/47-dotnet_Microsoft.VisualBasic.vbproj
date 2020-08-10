@@ -656,7 +656,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>false</Optimize>
@@ -1260,6 +1260,8 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
+    <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
+    <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />
     <Compile Include="CommandLine\Reflection\ExportApiInformation.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\DataSource\Property\Extensions.vb" />
@@ -1284,6 +1286,7 @@
     <Compile Include="Extensions\Reflection\EnumHelpers.vb" />
     <Compile Include="Extensions\StringHelpers\StringFormats.vb" />
     <Compile Include="Language\Linq\Rapply.vb" />
+    <Compile Include="My\RlangInterop.vb" />
     <Compile Include="My\Framework\FrameworkConfig.vb" />
     <Compile Include="My\Framework\DoConfiguration.vb" />
     <Compile Include="My\Framework\NamespaceDoc.vb" />
@@ -1465,6 +1468,7 @@
     <Compile Include="Serialization\RawStream.vb" />
     <Compile Include="Text\IO\Encodings.vb" />
     <Compile Include="Text\Parser\CharBuffer.vb" />
+    <Compile Include="Text\Parser\SyntaxTokenlizer.vb" />
     <Compile Include="Text\Patterns\NamespaceDoc.vb" />
     <Compile Include="Text\Patterns\Validator\isIP.vb" />
     <Compile Include="Text\Patterns\Validator\Validator.vb" />

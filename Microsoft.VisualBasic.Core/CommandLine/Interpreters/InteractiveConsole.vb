@@ -75,7 +75,7 @@ Namespace CommandLine
             Dim shell As New Shell(
                 ps1:=PS1.Fedora12,
                 exec:=Sub(input)
-                          Call CLITools.TryParse(input).DoCall(AddressOf RunAppInternal)
+                          Call Parsers.TryParse(input).DoCall(AddressOf RunAppInternal)
                       End Sub
             ) With {
                 .Quite = "exit"
