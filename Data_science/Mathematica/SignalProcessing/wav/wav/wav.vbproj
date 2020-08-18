@@ -37,7 +37,7 @@
     <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
-      <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
     <DocumentationFile>signalKit.xml</DocumentationFile>
@@ -126,6 +126,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SubChunk\Enums.vb" />
+    <Compile Include="SubChunk\Sample.vb" />
     <Compile Include="WaveFile.vb" />
     <Compile Include="SubChunk\Data.vb" />
     <Compile Include="SubChunk\FMT.vb" />
