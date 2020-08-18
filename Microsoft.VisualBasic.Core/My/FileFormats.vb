@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07b31fcd36c0b95ae820989475eda752, Microsoft.VisualBasic.Core\My\FileFormats.vb"
+﻿#Region "Microsoft.VisualBasic::91ca2564f973b57652fe5e8506ceadcd, Microsoft.VisualBasic.Core\My\FileFormats.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Enum FileFormats
     ' 
-    '         csv, json, table, xml
+    '         bencode, csv, json, table, xml
     ' 
     '  
     ' 

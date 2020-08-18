@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Data.IO
 ''' <summary>
 ''' The wav file model
 ''' </summary>
-Public Class File
+Public Class WaveFile
 
     ''' <summary>
     ''' Contains the letters "RIFF" in ASCII form (0x52494646 big-endian form).
@@ -85,8 +85,8 @@ Public Class File
     ''' <returns></returns>
     Public Property data As DataSubChunk
 
-    Public Shared Function Open(wav As BinaryDataReader) As File
-        Return New File With {
+    Public Shared Function Open(wav As BinaryDataReader) As WaveFile
+        Return New WaveFile With {
             .magic = wav.ReadString(4),
             .fileSize = wav.ReadInt32,
             .format = wav.ReadString(4),

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d7bef8f26346fcf7d51c91655aa4266, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::d06dd4959cc7fd100370e63101a122c2, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 
@@ -92,7 +92,7 @@ Namespace IO
             End If
 
             If i >= SchemaOridinal.Count Then
-                Throw New IndexOutOfRangeException(i)
+                Throw New IndexOutOfRangeException(i.ToString)
             Else
                 Return SchemaOridinal _
                     .First(Function(name) name.Value = i) _

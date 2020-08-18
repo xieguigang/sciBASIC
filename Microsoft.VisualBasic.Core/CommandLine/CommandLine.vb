@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b47855e89a8f5f044bdf74ac27b35cf, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::5be6a770764e3149c3121cd62e6832c1, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -39,12 +39,12 @@
     ' 
     '         Function: Assert, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains, ContainsParameter
     '                   GetBoolean, GetByte, GetBytes, GetChar, GetChars
-    '                   GetCommandsOverview, GetDateTime, GetDecimal, GetDictionary, GetDouble
-    '                   GetEnumerator, GetEnumerator1, GetFloat, GetFullDIRPath, GetFullFilePath
-    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetObject
-    '                   GetOrdinal, GetString, GetValue, HavebFlag, IsNull
-    '                   IsTrue, OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput
-    '                   (+2 Overloads) Remove, ToArgumentVector, ToString, TrimNamePrefix
+    '                   GetDateTime, GetDecimal, GetDictionary, GetDouble, GetEnumerator
+    '                   GetEnumerator1, GetFloat, GetFullDIRPath, GetFullFilePath, GetGuid
+    '                   GetInt16, GetInt32, GetInt64, GetObject, GetOrdinal
+    '                   GetString, GetValue, HavebFlag, IsNull, IsTrue
+    '                   OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput, (+2 Overloads) Remove
+    '                   ToArgumentVector, ToString, TrimNamePrefix
     ' 
     '         Sub: (+2 Overloads) Add, Clear, CopyTo
     ' 

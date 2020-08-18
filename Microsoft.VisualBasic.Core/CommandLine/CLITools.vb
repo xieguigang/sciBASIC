@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d2e2ee35c9e5aa0eed2f3faae608746, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::e1ac3b378d7c2b948c94322a2642714c, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,9 @@
 
     '     Module CLITools
     ' 
-    '         Function: Args, checkKeyDuplicated, CreateObject, CreateParameterValues, Equals
-    '                   GetFileList, GetLogicalFlags, GetTokens, IsPossibleLogicFlag, Join
-    '                   makesureQuot, Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix
-    '                   (+3 Overloads) TryParse
+    '         Function: Args, CreateObject, Equals, GetCommandsOverview, GetFileList
+    '                   GetTokens, Join, makesureQuot, Print, ShellExec
+    '                   SingleValueOrStdIn, TrimParamPrefix, TryParse
     ' 
     '         Sub: AppSummary, tupleParser
     ' 

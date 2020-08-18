@@ -116,7 +116,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="File.vb" />
+    <Compile Include="WaveFile.vb" />
     <Compile Include="SubChunk\Data.vb" />
     <Compile Include="SubChunk\FMT.vb" />
     <Compile Include="SubChunk\SubChunk.vb" />

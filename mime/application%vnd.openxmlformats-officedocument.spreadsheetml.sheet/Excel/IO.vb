@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39816aca617c96659f7dcd05a1a2596a, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
+﻿#Region "Microsoft.VisualBasic::d9e2af2d922e125f7dff9922da281324, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@ Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.MIME.Office.Excel.Model.Directory
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
@@ -66,7 +67,12 @@ Public Module IO
             success = False
 
             Try
-                UnZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+                If DataURI.IsWellFormedUriString(xlsx) Then
+                    UnZip.ImprovedExtractToDirectory(DataURI.URIParser(xlsx), destinationDirectoryName:=ROOT, Overwrite.Always)
+                Else
+                    UnZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+                End If
+
                 success = True
             Catch ex As Exception
                 exception = ex
@@ -105,7 +111,7 @@ Public Module IO
             ._rels = rels,
             .docProps = docProps,
             .xl = xl,
-            .FilePath = xlsx,
+            .FilePath = If(DataURI.IsWellFormedUriString(xlsx), "datauri://", xlsx),
             .ROOT = ROOT
         }
 

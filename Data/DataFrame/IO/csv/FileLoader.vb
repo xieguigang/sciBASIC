@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc19ae585c69037118fe07f49d8cbb24, Data\DataFrame\IO\csv\FileLoader.vb"
+﻿#Region "Microsoft.VisualBasic::3092b5266b5d683800024f6a883953e4, Data\DataFrame\IO\csv\FileLoader.vb"
 
     ' Author:
     ' 
@@ -122,7 +122,7 @@ Namespace IO
             Dim headerIndex As Integer = first.IndexOf(skipWhile.Name)
 
             If trimBlanks Then
-                test = Function(s) Not s.IsEmptyRow(","c)
+                test = Function(s) Not Tokenizer.IsEmptyRow(s, ","c)
             Else
                 test = Function(s) True
             End If

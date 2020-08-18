@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bd6f8699ad954db07ff31be58a518ae, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Accelerator.vb"
+﻿#Region "Microsoft.VisualBasic::3975243c6f0d47281f422fc907d6cdca, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\Accelerator.vb"
 
     ' Author:
     ' 
@@ -203,7 +203,7 @@ Namespace NeuralNetwork.Accelerator
                 ' 所以在这里不需要进行反向传播修改权重和bias参数
                 ' 否则会造成其他的解决方案的错误计算，因为反向传播将weights等参数更新了
                 ' Call network.BackPropagate(dataSet.target, False)
-                Call errors.Add(TrainingUtils.CalculateError(network, dataSet.classify))
+                Call errors.Add(TrainingUtils.CalculateError(network, dataSet.classify).Average)
             Next
 
             Return errors.Average

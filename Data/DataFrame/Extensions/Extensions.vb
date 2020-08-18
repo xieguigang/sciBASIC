@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::431ddd79b2af84876a5522f108fb6c60, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::73ba9bba3cd63930a0604565128482f0, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -99,7 +99,7 @@ Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function LoadTsv(Of T As Class)(path As DefaultString, Optional encoding As Encoding = Nothing) As T()
+    Public Function LoadTsv(Of T As Class)(path As DefaultString, Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
         Return path.DefaultValue.LoadTsv(Of T)(encoding)
     End Function
 
@@ -223,7 +223,7 @@ Public Module Extensions
 
         Dim doc As File = Reflector.Save(source, False)
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
-        Dim slines As String() = lines.Select(Function(x) x.AsLine(vbTab)).ToArray
+        Dim slines As String() = lines.Select(Function(x) x.AsLine(ASCII.TAB)).ToArray
         Dim sdoc As String = String.Join(vbCrLf, slines)
         Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
@@ -297,8 +297,8 @@ Public Module Extensions
 
         csv += {"ID", "value"}
         csv += table _
-            .Select(Function(map)
-                        Return New RowObject(New String() {map.Key, map.Value})
+            .Select(Function(map As KeyValuePair(Of String, Double))
+                        Return New RowObject(New String() {map.Key, map.Value.ToString})
                     End Function)
 
         Return csv.Save(path, encoding)

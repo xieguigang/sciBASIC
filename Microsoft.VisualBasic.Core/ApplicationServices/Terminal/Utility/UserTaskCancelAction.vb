@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1185cde58c7a8dc179cafbb41aac9979, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb"
+﻿#Region "Microsoft.VisualBasic::d26e173e479bc2089012635409f3bcc9, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,38 @@
     '     Class UserTaskCancelAction
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Dispose, handleCancel
+    ' 
+    '     Class ConsoleUserTaskAction
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, handleCancel
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    '     Class UserTaskSaveAction
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: detectKeyEvent
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Threading
+
 Namespace ApplicationServices.Terminal.Utility
 
     ''' <summary>
     ''' A finalize action after the user cancel current task operations.
     ''' </summary>
-    Public Class UserTaskCancelAction : Implements IDisposable
-
-        ReadOnly finalizeAction As Action
+    Public Class UserTaskCancelAction : Inherits ConsoleUserTaskAction
+        Implements IDisposable
 
         Sub New(finalize As Action)
-            finalizeAction = finalize
+            Call MyBase.New(userAction:=finalize)
 
             AddHandler Console.CancelKeyPress, AddressOf handleCancel
         End Sub
@@ -63,18 +74,12 @@ Namespace ApplicationServices.Terminal.Utility
             ' ctrl + C just break the current executation
             ' not exit program running
             terminate.Cancel = True
-            finalizeAction()
+            userAction()
         End Sub
 
-        Public Overrides Function ToString() As String
-            Return finalizeAction.ToString
-        End Function
-
 #Region "IDisposable Support"
-        Private disposedValue As Boolean ' 要检测冗余调用
-
         ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
+        Protected Overrides Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)。
@@ -86,21 +91,74 @@ Namespace ApplicationServices.Terminal.Utility
             End If
             disposedValue = True
         End Sub
-
-        ' TODO: 仅当以上 Dispose(disposing As Boolean)拥有用于释放未托管资源的代码时才替代 Finalize()。
-        'Protected Overrides Sub Finalize()
-        '    ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
-        '    Dispose(False)
-        '    MyBase.Finalize()
-        'End Sub
-
-        ' Visual Basic 添加此代码以正确实现可释放模式。
-        Public Sub Dispose() Implements IDisposable.Dispose
-            ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
-            Dispose(True)
-            ' TODO: 如果在以上内容中替代了 Finalize()，则取消注释以下行。
-            ' GC.SuppressFinalize(Me)
-        End Sub
 #End Region
+    End Class
+
+    Public MustInherit Class ConsoleUserTaskAction : Implements IDisposable
+
+        Protected disposedValue As Boolean
+
+        ''' <summary>
+        ''' 用户自定义操作
+        ''' </summary>
+        Protected ReadOnly userAction As Action
+
+        Sub New(userAction As Action)
+            Me.userAction = userAction
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{MyClass.GetType.Name}] {userAction.ToString}"
+        End Function
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)
+                End If
+
+                ' TODO: 释放未托管的资源(未托管的对象)并替代终结器
+                ' TODO: 将大型字段设置为 null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: 仅当“Dispose(disposing As Boolean)”拥有用于释放未托管资源的代码时才替代终结器
+        ' Protected Overrides Sub Finalize()
+        '     ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
+    End Class
+
+    Public Class UserTaskSaveAction : Inherits ConsoleUserTaskAction
+        Implements IDisposable
+
+        ReadOnly workerThread As Thread
+
+        Sub New(save As Action)
+            Call MyBase.New(userAction:=save)
+
+            workerThread = New Thread(AddressOf detectKeyEvent)
+            workerThread.Start()
+        End Sub
+
+        Private Sub detectKeyEvent()
+            Do While App.Running AndAlso Not disposedValue
+                Dim key As ConsoleKeyInfo = Console.ReadKey()
+
+                If key.Modifiers = ConsoleModifiers.Control AndAlso key.Key = ConsoleKey.S Then
+                    Call userAction()
+                End If
+            Loop
+
+            Call workerThread.Abort()
+        End Sub
     End Class
 End Namespace

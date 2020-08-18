@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acb9f64ccd2af1baae298fd13a8742fd, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::4237ad5a8459385d8bcd9f01d26ec31b, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,7 @@ Namespace Text.Parser
         Public ReadOnly Property Remaining As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return buffer.Skip(index).CharString
+                Return buffer.Skip(index + 1).CharString
             End Get
         End Property
 

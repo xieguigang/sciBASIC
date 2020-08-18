@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf3dd774d6fdb73ba908778a7e522c83, Microsoft.VisualBasic.Core\Serialization\BEncoding\BString.vb"
+﻿#Region "Microsoft.VisualBasic::3f2c3b5964eebb7d724dcb16fcf02434, Microsoft.VisualBasic.Core\Serialization\BEncoding\BString.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Text
 

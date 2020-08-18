@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70c83d8bbc5a2cccd9599f3a29dfbef4, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::61feeb113201015edb940e96d5da63e3, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -262,6 +262,7 @@ Namespace Language.Vectorization
             End Set
         End Property
 
+#If NET_48 Then
         Default Public Overloads Property Item(range As (start%, ends%)) As List(Of T)
             Get
                 Return New List(Of T)(Me.Skip(range.start).Take(count:=range.ends - range.start))
@@ -270,6 +271,7 @@ Namespace Language.Vectorization
                 Me(New IntRange(range.start, range.ends)) = value
             End Set
         End Property
+#End If
 
         ''' <summary>
         ''' Gets subset of the collection by using a discontinues index

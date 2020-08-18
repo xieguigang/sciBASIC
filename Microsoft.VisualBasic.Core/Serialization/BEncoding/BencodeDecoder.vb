@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cf53dc9fcf887079d131aaeff4649ed, Microsoft.VisualBasic.Core\Serialization\BEncoding\BencodeDecoder.vb"
+﻿#Region "Microsoft.VisualBasic::74e67badf6c1fbe8d97f58ff1264da87, Microsoft.VisualBasic.Core\Serialization\BEncoding\BencodeDecoder.vb"
 
     ' Author:
     ' 
@@ -200,4 +200,3 @@ Namespace Serialization.Bencoding
     End Module
 
 End Namespace
-

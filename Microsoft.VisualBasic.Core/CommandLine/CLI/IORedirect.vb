@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f61fb3b53c42dcb8214bdef82e0056fa, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::f50f16590232337d58b85a4dd6d637b1, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 
@@ -31,23 +31,25 @@
 
     ' Summaries:
 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Sub
+    ' 
+    ' 
     '     Class IORedirect
     ' 
     '         Properties: Bin, CLIArguments, ExitCode, HasExited, PID
     '                     StandardOutput
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Delegate Function
     ' 
+    '         Function: GetError, Read, ReadLine, Run, Shell
+    '                   (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
+    '                   WaitOutput
     ' 
-    '         Delegate Sub
-    ' 
-    '             Function: GetError, Read, ReadLine, Run, Shell
-    '                       (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
-    '                       WaitOutput
-    ' 
-    '             Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
-    '                  (+2 Overloads) WriteLine
+    '         Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
+    '              (+2 Overloads) WriteLine
     ' 
     ' 
     ' 

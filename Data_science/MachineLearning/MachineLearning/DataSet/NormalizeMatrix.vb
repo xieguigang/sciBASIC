@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc1a50cfd794850bea1f6236b34e518e, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::e5d3d816d04e777fda94fb2cf4d9bd7d, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -131,15 +131,7 @@ Namespace StoreProcedure
                     .SeqIterator _
                     .AsParallel _
                     .Select(Function(index)
-                                ' 遍历每一列的数据,将每一列的数据都执行归一化
-                                Dim [property] As Double() =
-                                    .Select(Function(sample)
-                                                Return sample(index)
-                                            End Function) _
-                                    .ToArray
-                                Dim dist As New SampleDistribution([property], estimateQuantile)
-
-                                Return (i:=index, Data:=dist)
+                                Return (i:=index, Data:= .ProjectData(index, estimateQuantile))
                             End Function) _
                     .OrderBy(Function(data) data.i) _
                     .Select(Function(r) r.Data) _

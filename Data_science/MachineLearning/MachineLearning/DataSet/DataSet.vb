@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::557ed0c54269a1c8a523c7963679cf82, Data_science\MachineLearning\MachineLearning\DataSet\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::1f98a4acadbce110710e17b12d90986a, Data_science\MachineLearning\MachineLearning\DataSet\DataSet.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: DataSamples, NormalizeMatrix, output, OutputSize, Size
     '                     width
     ' 
-    '         Function: createExtends, PopulateNormalizedSamples, ToString
+    '         Function: createExtends, JoinSamples, PopulateNormalizedSamples, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,6 +49,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace StoreProcedure
@@ -153,6 +154,34 @@ Namespace StoreProcedure
             Next
 
             Return extends
+        End Function
+
+        Public Shared Function JoinSamples(dataset As DataSet, samples As IEnumerable(Of Sample), Optional estimateQuantile As Boolean = True) As DataSet
+            Dim union As Sample() = dataset.DataSamples _
+                .AsEnumerable _
+                .JoinIterates(samples) _
+                .ToArray
+            Dim outputNames As String() = dataset.output
+            Dim inputNames As String() = dataset.NormalizeMatrix.names
+
+            If outputNames.IsNullOrEmpty Then
+                outputNames = union(Scan0).target _
+                    .Select(Function(x, i) $"Y_{i + 1}") _
+                    .ToArray
+            End If
+            If inputNames.IsNullOrEmpty Then
+                inputNames = union(Scan0).vector _
+                    .Select(Function(x, i) $"X_{i + 1}") _
+                    .ToArray
+            End If
+
+            Return New DataSet With {
+                .DataSamples = New SampleList With {
+                    .items = union
+                },
+                .NormalizeMatrix = NormalizeMatrix.CreateFromSamples(union, inputNames, estimateQuantile),
+                .output = outputNames
+            }
         End Function
 
         Public Overrides Function ToString() As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f258be222dc1352a8820ed3ba155c296, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::3fad47eab733fb86ba832d99a340e914, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: connections, errors, hiddenlayers, inputlayer, learnRate
     '                     momentum, neurons, outputlayer
     ' 
-    '         Function: GetPredictLambda, LoadModel, Snapshot
+    '         Function: GetPredictLambda, GetPredictLambda2, LoadModel, Snapshot
     ' 
     ' 
     ' /********************************************************************************/
@@ -63,7 +63,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 当前的这个模型快照在训练数据集上的预测误差
         ''' </summary>
         ''' <returns></returns>
-        Public Property errors As Double
+        Public Property errors As Double()
 
         Public Property neurons As NeuronNode()
         Public Property connections As Synapse()
@@ -88,6 +88,16 @@ Namespace NeuralNetwork.StoreProcedure
             End With
         End Function
 
+        Public Function GetPredictLambda2(normalize As NormalizeMatrix,
+                                          Optional method As Methods = Methods.NormalScaler,
+                                          Optional mute As Boolean = False) As Func(Of Double(), Double())
+            With Me.LoadModel(mute:=mute)
+                Return Function(sample)
+                           Return .Compute(normalize.NormalizeInput(sample, method))
+                       End Function
+            End With
+        End Function
+
         ''' <summary>
         ''' Dump the given Neuron <see cref="Network"/> as xml model data
         ''' </summary>
@@ -95,7 +105,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Snapshot(instance As Network, Optional errors# = 0) As NeuralNetwork
+        Public Shared Function Snapshot(instance As Network, Optional errors As Double() = Nothing) As NeuralNetwork
             Return StoreProcedure.TakeSnapshot(instance, errors)
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4409e16508515c3307575044399df24, Microsoft.VisualBasic.Core\Text\Parser\CharBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::a59babce3b991950d4db3a227e1593da, Microsoft.VisualBasic.Core\Text\Parser\CharBuffer.vb"
 
     ' Author:
     ' 
@@ -35,11 +35,11 @@
     ' 
     '         Properties: Last, Size
     ' 
-    '         Function: GetLastOrDefault, PopAllChars, ToString
+    '         Function: Add, GetLastOrDefault, Pop, PopAllChars, ToString
     ' 
     '         Sub: Clear
     ' 
-    '         Operators: *, (+3 Overloads) +, <, <>, =
+    '         Operators: *, (+3 Overloads) +, <, (+2 Overloads) <>, (+2 Overloads) =
     '                    >
     ' 
     ' 
@@ -84,6 +84,11 @@ Namespace Text.Parser
             End Get
         End Property
 
+        Public Function Add(c As Char) As CharBuffer
+            Call buffer.Add(c)
+            Return Me
+        End Function
+
         Public Function GetLastOrDefault() As Char
             If buffer.Count = 0 Then
                 Return Nothing
@@ -95,6 +100,12 @@ Namespace Text.Parser
         Public Sub Clear()
             Call buffer.Clear()
         End Sub
+
+        Public Function Pop() As Char
+            Dim last As Char = Me.Last
+            Call buffer.RemoveLast
+            Return last
+        End Function
 
         Public Function PopAllChars() As Char()
             Return buffer.PopAll

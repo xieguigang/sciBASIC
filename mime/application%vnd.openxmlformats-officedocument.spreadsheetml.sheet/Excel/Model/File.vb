@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f3c997898248206f03d6d2e399adaa0, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::8dc8a45789975423febec1cc3017bbb0, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
     ' Author:
     ' 
@@ -257,7 +257,7 @@ Public Class File : Implements IFileReference
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function Open(path$) As File
+    Public Shared Function Open(path As String) As File
         Return IO.CreateReader(xlsx:=path)
     End Function
 End Class

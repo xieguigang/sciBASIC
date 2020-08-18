@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf8bdfeb8b26eaa233423c9071f9767d, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::656e33ddc9971243c1ce72f313f57d48, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 
@@ -140,14 +140,13 @@ Namespace Net.Http
             If InStr(str, "data:") <> 1 Then
                 Return False
             Else
-                ' to do
+                Return InStr(str, "base64,") > 10
             End If
-
-            Return True
         End Function
 
         Public Shared Function URIParser(uri As String) As DataURI
-            Dim t = uri.Split(";"c) _
+            Dim tokens As Dictionary(Of String, String) = uri _
+                .Split(";"c) _
                 .Select(Function(p) p.StringSplit("[:=,]")) _
                 .ToDictionary(Function(k) k(0).ToLower,
                               Function(value)
@@ -155,9 +154,9 @@ Namespace Net.Http
                               End Function)
 
             Return New DataURI(
-                base64:=t.TryGetValue("base64"),
-                charset:=t.TryGetValue("charset"),
-                mime:=t.TryGetValue("data")
+                base64:=tokens.TryGetValue("base64"),
+                charset:=tokens.TryGetValue("charset"),
+                mime:=tokens.TryGetValue("data")
             )
         End Function
 

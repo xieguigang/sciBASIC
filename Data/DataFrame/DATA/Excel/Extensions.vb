@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::005e17aa92afebcda0f45734d0115fe6, Data\DataFrame\DATA\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6437060b21b49299f7ec7024a0701bfb, Data\DataFrame\DATA\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -74,7 +74,7 @@ Namespace Excel
         <Extension>
         Public Function ReadXlsx(Of T As Class)(file As String,
                                                 Optional sheetName As String = "Sheet1",
-                                                Optional maps As Dictionary(Of String, String) = Nothing) As T()
+                                                Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
             Dim df As DataFrame = file.ReadXlsx(sheetName)
             Return df.AsDataSource(Of T)(False, maps)
         End Function
@@ -89,7 +89,7 @@ Namespace Excel
         <Extension>
         Public Function LoadDataSet(file As String,
                                     Optional sheetName As String = "Sheet1",
-                                    Optional uidMaps As String = Nothing) As DataSet()
+                                    Optional uidMaps As String = Nothing) As IEnumerable(Of DataSet)
             Dim df As DataFrame = file.ReadXlsx(sheetName)
             Call df.doUpdateMaps(uidMaps)
             Return df.AsDataSource(Of DataSet)(False)
@@ -105,7 +105,7 @@ Namespace Excel
         <Extension>
         Public Function LoadEntitySet(file As String,
                                       Optional sheetName As String = "Sheet1",
-                                      Optional uidMaps As String = Nothing) As EntityObject()
+                                      Optional uidMaps As String = Nothing) As IEnumerable(Of EntityObject)
             Dim df As DataFrame = file.ReadXlsx(sheetName)
             Call df.doUpdateMaps(uidMaps)
             Return df.AsDataSource(Of EntityObject)(False)

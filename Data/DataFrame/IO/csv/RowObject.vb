@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::036e91fcb158e03a8ec41f47f4a468a0, Data\DataFrame\IO\csv\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::122f070f80786eef403d3357115f345c, Data\DataFrame\IO\csv\RowObject.vb"
 
     ' Author:
     ' 
@@ -94,7 +94,7 @@ Namespace IO
         ''' <param name="rawString">A raw string line which read from the Csv text file.</param>
         Sub New(rawString$, Optional tsv As Boolean = False)
             Try
-                buffer = Tokenizer.CharsParser(rawString, delimiter:=","c Or ASCII.TAB.When(tsv))
+                buffer = Tokenizer.CharsParser(rawString, delimiter:=","c Or ASCII.TAB.When(tsv)).AsList
             Catch ex As Exception
                 ex = New Exception(rawString)
                 Throw ex
@@ -305,7 +305,7 @@ Namespace IO
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property AsLine(Optional delimiter$ = ",") As String
+        Public ReadOnly Property AsLine(Optional delimiter As Char = ","c) As String
             Get
                 Dim array$() = buffer _
                     .Select(Function(cell)
@@ -342,8 +342,7 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Widening Operator CType(Line As String) As RowObject
-            Dim row As List(Of String) = Tokenizer.CharsParser(Line)
-            Return New RowObject(row)
+            Return New RowObject(Tokenizer.CharsParser(Line))
         End Operator
 
         Public Shared Function TryParse(line As String, Optional tsv As Boolean = False) As RowObject

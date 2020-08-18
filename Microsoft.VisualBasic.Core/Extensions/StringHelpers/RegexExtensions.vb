@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8636845be1e9429a89e9fa90f29f3f0f, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d7ca2546571541fd950172ca60573499, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Properties: RegexpTimeout
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) EachValue, EndsWith, IsPattern, Locates, PythonRawRegexp
+    '     Function: (+2 Overloads) EachValue, EndsWith, (+2 Overloads) IsPattern, Locates, PythonRawRegexp
     '               StartsWith, (+2 Overloads) ToArray
     '     Structure [NameOf]
     ' 

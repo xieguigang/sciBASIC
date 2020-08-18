@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a509eafe80a4022739ec13880c85e40, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e1d014d33fc1fd07d67e168da4678ca4, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -1408,7 +1408,8 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dotNETlist"></param>
     ''' <returns></returns>
-    <Extension> Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
+    <Extension>
+    Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
         If dotNETlist.IsNullOrEmpty Then
             dotNETlist = New List(Of T)
 
@@ -1431,13 +1432,15 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>
     ''' <returns></returns>
-    <Extension> Public Function RemoveLast(Of T)(ByRef list As List(Of T)) As List(Of T)
+    <Extension>
+    Public Function RemoveLast(Of T)(ByRef list As List(Of T)) As List(Of T)
         Return DirectCast(RemoveLast(dotNETlist:=list), List(Of T))
     End Function
 
 #End Region
 
-    <Extension> Public Function RemoveFirst(Of T)(ByRef list As List(Of T)) As List(Of T)
+    <Extension>
+    Public Function RemoveFirst(Of T)(ByRef list As List(Of T)) As List(Of T)
         If list.IsNullOrEmpty OrElse list.Count = 1 Then
             list = New List(Of T)
         Else
