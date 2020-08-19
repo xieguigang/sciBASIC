@@ -1,51 +1,90 @@
 ﻿#Region "Microsoft.VisualBasic::cc74e03f54d89983b3a14779c6b41fa5, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NetworkAPI
-    ' 
-    '     Function: EndPoints
-    ' 
-    ' /********************************************************************************/
+' Module NetworkAPI
+' 
+'     Function: EndPoints
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Linq
 
 Public Module NetworkAPI
 
     <Extension>
     Public Function EndPoints(network As Graph.NetworkGraph) As (input As Graph.Node(), output As Graph.Node())
         Return New NetworkGraph(Of Graph.Node, Graph.Edge)(network.vertex, network.graphEdges).EndPoints
+    End Function
+
+    ''' <summary>
+    ''' 移除的重复的边
+    ''' </summary>
+    ''' <remarks></remarks>
+    ''' <param name="directed">是否忽略方向？</param>
+    ''' <param name="ignoreTypes">是否忽略边的类型？</param>
+    <Extension>
+    Public Function RemoveDuplicated(g As Graph.NetworkGraph, Optional directed As Boolean = True, Optional ignoreTypes As Boolean = False) As Graph.NetworkGraph
+        Dim graph As New Graph.NetworkGraph()
+        Dim uid = Function(edge As Graph.Edge) As String
+                      If directed Then
+                          Return edge.GetDirectedGuid(ignoreTypes)
+                      Else
+                          Return edge.GetNullDirectedGuid(ignoreTypes)
+                      End If
+                  End Function
+
+        For Each node As Graph.Node In g.vertex
+            Call graph.AddNode(node.Clone)
+        Next
+
+        For Each edge As Graph.Edge In g.graphEdges _
+            .GroupBy(uid) _
+            .Select(Function(eg) eg.First)
+
+            Call New Graph.Edge With {
+                .U = graph.GetElementByID(edge.U.label),
+                .V = graph.GetElementByID(edge.V.label),
+                .isDirected = edge.isDirected,
+                .weight = edge.weight,
+                .data = edge.data
+            }.DoCall(AddressOf graph.AddEdge)
+        Next
+
+        Return graph
     End Function
 End Module

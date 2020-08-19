@@ -356,7 +356,7 @@ Namespace Graph
         ''' <param name="target"></param>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Overloads Function CreateEdge(source As String, target As String, Optional data As EdgeData = Nothing) As Edge
+        Public Overloads Function CreateEdge(source As String, target As String, Optional weight# = 0, Optional data As EdgeData = Nothing) As Edge
             If Not vertices.ContainsKey(source) Then
                 Return Nothing
             End If
@@ -371,7 +371,7 @@ Namespace Graph
                 data = New EdgeData
             End If
 
-            Return createEdgeInternal(u, v, data, 0)
+            Return createEdgeInternal(u, v, data, weight)
         End Function
 
         Public Overloads Function GetConnectedVertex(label As String) As Node()

@@ -406,6 +406,8 @@
     <Compile Include="Extensions.vb" />
     <Compile Include="ColorSpectrum.vb" />
     <Compile Include="GeneralSignal.vb" />
+    <Compile Include="Alignment.vb" />
+    <Compile Include="Resampler.vb" />
     <Compile Include="PeakFinding\Algorithm.vb" />
     <Compile Include="PeakFinding\Doppler.vb" />
     <Compile Include="PeakFinding\SignalPeak.vb" />

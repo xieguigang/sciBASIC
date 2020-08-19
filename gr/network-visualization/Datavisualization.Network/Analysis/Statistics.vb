@@ -104,6 +104,7 @@ Namespace Analysis
                                   Return list.Count
                               End Function)
             Dim d%
+            Dim dt As (Integer, Integer)
 
             With g.graphEdges.ComputeDegreeData
                 For Each node In g.vertex
@@ -115,16 +116,21 @@ Namespace Analysis
                         node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_OUT, 0)
                     Else
                         d = connectNodes(node.label)
+                        dt = (0, 0)
                         node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE, d)
 
                         If .in.ContainsKey(node.label) Then
                             d = .in(node.label)
                             node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
+                            dt = (d, 0)
                         End If
                         If .out.ContainsKey(node.label) Then
                             d = .out(node.label)
                             node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
+                            dt = (dt.Item1, d)
                         End If
+
+                        node.degree = dt
                     End If
                 Next
             End With
