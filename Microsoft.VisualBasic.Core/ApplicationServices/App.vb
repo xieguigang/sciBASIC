@@ -827,6 +827,8 @@ Public Module App
         End Get
     End Property
 
+    Public Property GetLastError As Exception
+
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at location: %<see cref="App.LocalData"/>%/.logs/err/.
     ''' (简单日志记录，函数返回空值)
@@ -837,6 +839,7 @@ Public Module App
     <ExportAPI("LogException")>
     Public Function LogException(ex As Exception, <CallerMemberName> Optional ByRef trace$ = "") As Object
         Try
+            GetLastError = ex
             trace = App.TraceBugs(ex, trace)
         Catch ex2 As Exception
             ' 错误日志文件的存放位置不可用或者被占用了不可写，则可能会出错，

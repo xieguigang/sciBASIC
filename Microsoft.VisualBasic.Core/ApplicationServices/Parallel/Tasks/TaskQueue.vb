@@ -214,8 +214,10 @@ Namespace Parallel.Tasks
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     For Each x As __task In __tasks
-                        ' 释放所有的线程阻塞
-                        Call x.receiveDone.Set()
+                        If Not x.receiveDone Is Nothing Then
+                            ' 释放所有的线程阻塞
+                            Call x.receiveDone.Set()
+                        End If
                     Next
                 End If
 
