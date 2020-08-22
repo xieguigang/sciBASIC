@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::8b8a45d8307c30f1fc663da7547ad78d, Data\BinaryData\DataStorage\netCDF\Components\Header.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Header
-    ' 
-    '         Properties: dimensions, globalAttributes, recordDimension, variables, version
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Header
+' 
+'         Properties: dimensions, globalAttributes, recordDimension, variables, version
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace netCDF.Components
@@ -77,7 +78,7 @@ Namespace netCDF.Components
         ''' List of global attributes
         ''' </summary>
         ''' <returns></returns>
-        Public Property globalAttributes As Attribute()
+        Public Property globalAttributes As attribute()
         ''' <summary>
         ''' List of variables
         ''' </summary>
@@ -114,5 +115,17 @@ Namespace netCDF.Components
             Me.variables = variables.variables
             Me.recordDimension.recordStep = variables.recordStep
         End Sub
+
+        Public Iterator Function checkVariableIdConflicts() As IEnumerable(Of String)
+            Dim uniqueId As New Index(Of String)
+
+            For Each var As variable In variables
+                If var.name Like uniqueId Then
+                    Yield var.name
+                Else
+                    uniqueId.Add(var.name)
+                End If
+            Next
+        End Function
     End Class
 End Namespace

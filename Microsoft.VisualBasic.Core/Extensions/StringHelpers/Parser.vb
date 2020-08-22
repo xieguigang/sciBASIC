@@ -175,7 +175,7 @@ Public Module PrimitiveParser
     End Function
 
     ''' <summary>
-    ''' <see cref="Double"/> text parser. (这个是一个非常安全的字符串解析函数)
+    ''' <see cref="Double"/> text parser. (这个是一个基于<see cref="ParseNumeric"/>的非常安全的字符串解析函数)
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>

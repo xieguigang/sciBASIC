@@ -75,6 +75,24 @@ Public Module ListExtensions
         Next
     End Function
 
+    <Extension>
+    Public Function Count(Of T As IEquatable(Of T))(list As IEnumerable(Of T), item As T) As Integer
+        Dim i As Integer = 0
+
+        For Each obj In list
+            If obj.Equals(item) Then
+                i += 1
+            End If
+        Next
+
+        Return i
+    End Function
+
+    '<Extension>
+    'Public Function Count(Of T As IComparable(Of T))(list As IEnumerable(Of T), item As T) As Integer
+
+    'End Function
+
     ''' <summary>
     ''' 查找出序列之中最频繁出现的对象(这个函数会自动跳过空值)
     ''' </summary>
