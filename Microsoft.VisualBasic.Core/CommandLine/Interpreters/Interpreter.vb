@@ -458,6 +458,7 @@ Namespace CommandLine
         Private Shared Function doLoadApiInternal(cmdAttr As ExportAPIAttribute, methodInfo As MethodInfo, [throw] As Boolean) As APIEntryPoint
             Dim commandInfo As New APIEntryPoint(cmdAttr, methodInfo, [throw])
 
+#Disable Warning
             If cmdAttr.Info.StringEmpty Then
                 ' 帮助信息的获取兼容系统的Description方法
                 cmdAttr.Info = methodInfo.Description
@@ -468,6 +469,7 @@ Namespace CommandLine
             If cmdAttr.Example.StringEmpty Then
                 cmdAttr.Example = methodInfo.ExampleInfo
             End If
+#Enable Warning
 
             Return commandInfo
         End Function

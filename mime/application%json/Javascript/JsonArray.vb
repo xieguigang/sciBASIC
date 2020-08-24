@@ -60,6 +60,13 @@ Namespace Javascript
             End Get
         End Property
 
+        Public Sub New()
+        End Sub
+
+        Sub New(objs As IEnumerable(Of JsonElement))
+            list = objs.SafeQuery.ToList
+        End Sub
+
         Public Sub Add(element As JsonElement)
             Call list.Add(element)
         End Sub
@@ -92,19 +99,6 @@ Namespace Javascript
 
         Public Overrides Function ToString() As String
             Return "JsonArray: {count: " & list.Count & "}"
-        End Function
-
-        Public Overrides Function BuildJsonString() As String
-            Dim a As New StringBuilder
-            Dim array$() = list _
-                .Select(Function(x) x.BuildJsonString) _
-                .ToArray
-
-            a.AppendLine("[")
-            a.AppendLine(array.JoinBy(", "))
-            a.AppendLine("]")
-
-            Return a.ToString
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of JsonElement) Implements IEnumerable(Of JsonElement).GetEnumerator

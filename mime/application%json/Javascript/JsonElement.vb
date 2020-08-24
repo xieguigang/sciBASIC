@@ -49,8 +49,6 @@ Namespace Javascript
     ''' </summary>
     Public MustInherit Class JsonElement
 
-        Public MustOverride Function BuildJsonString() As String
-
         Public Overrides Function ToString() As String
             Return "base::json"
         End Function

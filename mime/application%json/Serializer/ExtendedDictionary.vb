@@ -47,17 +47,21 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Module ExtendedDictionary
 
-    Public Function LoadExtendedJson(Of V, T As Dictionary(Of String, V))(json$) As T
+    Public Function LoadExtendedJson(Of V, T As Dictionary(Of String, V))(json$, Optional opts As JSONSerializerOptions = Nothing) As T
         ' 因为所需要反序列化的对象是一个字典的继承对象，所以这里得到的一定是字典对象
         Dim model As JsonObject = DirectCast(ParseJson(json$), JsonObject)
         Dim type As Type = GetType(T)
         Dim obj As Object = Activator.CreateInstance(type)
         Dim defines = type.getSpecificProperties(PropertyAccess.Writeable)
 
+        If opts Is Nothing Then
+            opts = New JSONSerializerOptions
+        End If
+
         For Each key$ In defines.Keys
             If model.ContainsKey(key$) Then
                 Dim o As JsonElement = model(key)
-                Dim j$ = o.BuildJsonString
+                Dim j$ = o.BuildJsonString(opts)
                 Dim entry As PropertyInfo = defines(key$)
                 Dim value = LoadObject(j$, entry.PropertyType)
 
@@ -72,7 +76,7 @@ Public Module ExtendedDictionary
         type = GetType(V)
 
         For Each key In model
-            Dim j As String = key.Value.BuildJsonString
+            Dim j As String = key.Value.BuildJsonString(opts)
             Dim value As V = DirectCast(LoadObject(j$, type,), V)
 
             Call out.Add(key.Name, value)
@@ -112,6 +116,9 @@ Public Module ExtendedDictionary
     ''' </remarks>
     Public Function GetExtendedJson(Of V, T As Dictionary(Of String, V))(obj As T, Optional indent As Boolean = False) As String
         Dim br As New JsonObject
+        Dim opts As New JSONSerializerOptions With {
+            .indent = indent
+        }
 
         For Each key$ In obj.Keys
             Call br.Add(key, obj(key$).GetJson)
@@ -136,7 +143,7 @@ Public Module ExtendedDictionary
             Call br.Add(key, valueJSON)
         Next
 
-        Dim json$ = br.BuildJsonString
+        Dim json$ = br.BuildJsonString(opts)
 
         If indent Then
             json = Formatter.Format(json:=json$)

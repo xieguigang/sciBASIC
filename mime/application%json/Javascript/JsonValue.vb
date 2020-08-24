@@ -94,16 +94,6 @@ Namespace Javascript
             Return s
         End Function
 
-        Public Overrides Function BuildJsonString() As String
-            If value Is Nothing Then
-                Return "null"
-            ElseIf value.GetType Is BSONValue Then
-                Return DirectCast(value, BSONValue).ToString
-            Else
-                Return Scripting.ToString(value, "null")
-            End If
-        End Function
-
         Public Overrides Function ToString() As String
             Return GetStripString()
         End Function
