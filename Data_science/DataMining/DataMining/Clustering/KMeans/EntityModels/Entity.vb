@@ -96,7 +96,9 @@ Namespace KMeans
                 .Properties = entityVector _
                     .SeqIterator _
                     .ToDictionary(Function(x) maps(x.i),
-                                  Function(x) x.value)
+                                  Function(x)
+                                      Return x.value
+                                  End Function)
             }
         End Function
 

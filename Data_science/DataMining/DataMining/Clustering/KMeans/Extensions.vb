@@ -98,15 +98,15 @@ Namespace KMeans
                                expected%,
                                Optional debug As Boolean = True,
                                Optional parallel As Boolean = True) As List(Of EntityClusterModel)
-
-            Dim maps As String() = source _
-                .First _
-                .Properties _
-                .Keys _
+            Dim rawInput As EntityClusterModel() = source.ToArray
+            Dim maps As String() = rawInput _
+                .Select(Function(a) a.Properties.Keys) _
+                .IteratesALL _
+                .Distinct _
                 .ToArray
             Dim clusters As ClusterCollection(Of ClusterEntity) =
                 ClusterDataSet(clusterCount:=expected,
-                               source:=source.Select(Function(x) x.ToModel).ToArray,
+                               source:=rawInput.Select(Function(x) x.ToModel(projection:=maps)).ToArray,
                                debug:=debug,
                                parallel:=parallel)
             Dim result As New List(Of EntityClusterModel)

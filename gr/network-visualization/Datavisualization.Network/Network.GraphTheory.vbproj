@@ -673,6 +673,7 @@
     <Compile Include="Graph\Abstract.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="NetworkAPI.vb" />
+    <Compile Include="TreeAPI\TreeGraph.vb" />
     <Compile Include="TreeAPI\TREE.vb" />
     <Compile Include="TreeAPI\Operations.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
