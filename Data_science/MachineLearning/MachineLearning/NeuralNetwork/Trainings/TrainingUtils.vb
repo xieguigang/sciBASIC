@@ -101,7 +101,7 @@ Namespace NeuralNetwork
             ' 
             ' 训练所使用的样本数据的顺序可能会对结果产生影响
             ' 所以在训练之前会需要打乱样本的顺序来避免出现问题
-            Return trainingImpl(network, dataSets.Shuffles, parallel, Selective, dropOutRate)
+            Return trainingImpl(network, dataSets.Shuffles, parallel, Selective, dropOutRate, backPropagate:=True)
         End Function
     End Class
 End Namespace

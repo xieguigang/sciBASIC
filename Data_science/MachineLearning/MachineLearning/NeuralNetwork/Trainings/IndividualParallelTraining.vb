@@ -167,7 +167,7 @@ Namespace NeuralNetwork
             Dim errors As Double() = individualNetworks _
                 .AsParallel _
                 .Select(Function(network)
-                            Dim temp = trainingImpl(network, dataSets(network.i), parallel, Selective, dropOutRate)
+                            Dim temp = trainingImpl(network, dataSets(network.i), parallel, Selective, dropOutRate, backPropagate:=True)
                             Return (network.i, Err:=temp(Scan0))
                         End Function) _
                 .OrderBy(Function(rtvl) rtvl.i) _

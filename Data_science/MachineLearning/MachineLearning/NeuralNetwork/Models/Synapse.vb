@@ -94,6 +94,9 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        Friend Sub New()
+        End Sub
+
         Public Sub New(inputNeuron As Neuron, outputNeuron As Neuron, weight As Func(Of Double))
             Call Me.New(inputNeuron, outputNeuron)
 

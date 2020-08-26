@@ -311,8 +311,14 @@ Namespace NeuralNetwork
         ''' <param name="dataSets"></param>
         ''' <param name="parallel"></param>
         ''' <param name="selective"></param>
-        ''' <returns></returns>
-        Friend Shared Function trainingImpl(network As Network, dataSets As TrainingSample(), parallel As Boolean, selective As Boolean, dropoutRate As Double) As Double()
+        ''' <returns>函数返回每一个output的误差值</returns>
+        Friend Shared Function trainingImpl(network As Network,
+                                            dataSets As TrainingSample(),
+                                            parallel As Boolean,
+                                            selective As Boolean,
+                                            dropoutRate As Double,
+                                            backPropagate As Boolean) As Double()
+
             Dim errors As New List(Of Double())()
             Dim err#()
             Dim outputSize% = dataSets(Scan0).classify.Length
@@ -340,7 +346,11 @@ Namespace NeuralNetwork
                 ' 首先根据当前样本进行计算
                 ' 然后根据误差调整响应节点的权重
                 Call network.ForwardPropagate(dataSet.sample, parallel)
-                Call network.BackPropagate(dataSet.classify, parallel)
+
+                If backPropagate Then
+                    Call network.BackPropagate(dataSet.classify, parallel)
+                End If
+
                 Call errors.Add(CalculateError(network, dataSet.classify))
             Next
 

@@ -121,6 +121,20 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
+        ''' 创建的神经链接是空的
+        ''' </summary>
+        ''' <param name="active"><see cref="Sigmoid"/> as default</param>
+        Friend Sub New(weight As Func(Of Double), active As IActivationFunction, id As String)
+            InputSynapses = New List(Of Synapse)
+            OutputSynapses = New List(Of Synapse)
+            Bias = weight()
+            Value = weight()
+            BiasDelta = weight()
+            activation = active
+            Guid = id
+        End Sub
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="inputNeurons"></param>

@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator.GAExtensions
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.DarwinismHybrid
 Imports StoreModel = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure.NeuralNetwork
 
 Public Class ANNDebugger

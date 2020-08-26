@@ -115,9 +115,14 @@ Namespace NeuralNetwork
         ''' 这个构造函数是给XML模型加载操作所使用的
         ''' </summary>
         ''' <param name="activations"></param>
-        Friend Sub New(activations As LayerActives)
-            Me.Activations = activations.GetXmlModels
+        Friend Sub New(activations As [Variant](Of LayerActives, IReadOnlyDictionary(Of String, ActiveFunction)))
             Me.LearnRateDecay = 0.00000001
+
+            If activations Like GetType(LayerActives) Then
+                Me.Activations = activations.TryCast(Of LayerActives).GetXmlModels
+            Else
+                Me.Activations = activations.TryCast(Of IReadOnlyDictionary(Of String, ActiveFunction))
+            End If
         End Sub
 
         ''' <summary>

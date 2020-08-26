@@ -619,8 +619,10 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\Functions\SigmoidFunction.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\Functions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\Functions\Threshold.vb" />
-    <Compile Include="NeuralNetwork\Trainings\Accelerator.vb" />
+    <Compile Include="NeuralNetwork\Trainings\DarwinismHybrid\Accelerator.vb" />
     <Compile Include="NeuralNetwork\Trainings\ANNTrainer.vb" />
+    <Compile Include="NeuralNetwork\Trainings\DarwinismHybrid\NetworkIndividual.vb" />
+    <Compile Include="NeuralNetwork\Trainings\DarwinismHybrid\Fitness.vb" />
     <Compile Include="NeuralNetwork\Trainings\IndividualParallelTraining.vb" />
     <Compile Include="NeuralNetwork\Models\SoftmaxLayer.vb" />
     <Compile Include="NeuralNetwork\Trainings\TrainingSample.vb" />
