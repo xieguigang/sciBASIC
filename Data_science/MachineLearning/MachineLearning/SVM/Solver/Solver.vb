@@ -178,10 +178,15 @@ Namespace SVM
             Loop While False
         End Sub
 
+        ''' <summary>
+        ''' reconstruct inactive elements of G from G_bar 
+        ''' and free variables
+        ''' </summary>
         Protected Sub reconstruct_gradient()
-            ' reconstruct inactive elements of G from G_bar and free variables
+            If active_size = l Then
+                Return
+            End If
 
-            If active_size = l Then Return
             Dim i, j As Integer
             Dim nr_free = 0
 
@@ -193,14 +198,18 @@ Namespace SVM
                 If is_free(j) Then nr_free += 1
             Next
 
-            If 2 * nr_free < active_size Then Procedures.info(ASCII.LF & "WARNING: using -h 0 may be faster" & ASCII.LF)
+            If 2 * nr_free < active_size Then
+                Procedures.info(ASCII.LF & "WARNING: using -h 0 may be faster" & ASCII.LF)
+            End If
 
             If nr_free * l > 2 * active_size * (l - active_size) Then
                 For i = active_size To l - 1
                     Dim Q_i = Q.GetQ(i, active_size)
 
                     For j = 0 To active_size - 1
-                        If is_free(j) Then G(i) += alpha(j) * Q_i(j)
+                        If is_free(j) Then
+                            G(i) += alpha(j) * Q_i(j)
+                        End If
                     Next
                 Next
             Else
@@ -229,6 +238,7 @@ Namespace SVM
             Me.Cp = Cp
             Me.Cn = Cn
             Me.eps = eps
+
             unshrink = False
 
             ' initialize alpha_status
@@ -479,10 +489,15 @@ Namespace SVM
 
             si.upper_bound_p = Cp
             si.upper_bound_n = Cn
+
             Procedures.info(ASCII.LF & "optimization finished, #iter = " & iter & ASCII.LF)
         End Sub
 
-        ' return 1 if already optimal, return 0 otherwise
+        ''' <summary>
+        ''' return 1 if already optimal, return 0 otherwise
+        ''' </summary>
+        ''' <param name="working_set"></param>
+        ''' <returns></returns>
         Protected Overridable Function select_working_set(working_set As Integer()) As Integer
             ' return i,j such that
             ' i: maximizes -y_i * grad(f)_i, i in I_up(\alpha)
