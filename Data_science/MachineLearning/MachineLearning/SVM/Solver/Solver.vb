@@ -185,8 +185,8 @@ Namespace SVM
         Protected Sub reconstruct_gradient()
             If active_size = l Then
                 Return
-            ElseIf active_size = -1 Then
-                Procedures.info($"unsure for active_size = -1?")
+            ElseIf active_size <= -1 Then
+                Procedures.info($"unsure for active_size index is negatuve value?")
                 Return
             End If
 
