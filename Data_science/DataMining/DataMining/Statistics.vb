@@ -87,19 +87,19 @@ Public Module Statistics
     Public Function Mean(values As Integer()) As Double
         Dim hits As Integer
         Dim total As Double = 0
-        Dim mean__1 As Double = 0
+        Dim meanVal As Double = 0
 
         ' for all values
         Dim i As Integer = 0, n As Integer = values.Length
         While i < n
             hits = values(i)
             ' accumulate mean
-            mean__1 += CDbl(i) * hits
+            meanVal += CDbl(i) * hits
             ' accumalate total
             total += hits
             i += 1
         End While
-        Return If((total = 0), 0, mean__1 / total)
+        Return If((total = 0), 0, meanVal / total)
     End Function
 
     ''' <summary>
@@ -148,7 +148,7 @@ Public Module Statistics
     ''' </remarks>
     ''' 
     Public Function StdDev(values As Integer(), mean As Double) As Double
-        Dim stddev__1 As Double = 0
+        Dim stddevVal As Double = 0
         Dim diff As Double
         Dim hits As Integer
         Dim total As Integer = 0
@@ -159,13 +159,13 @@ Public Module Statistics
             hits = values(i)
             diff = CDbl(i) - mean
             ' accumulate std.dev.
-            stddev__1 += diff * diff * hits
+            stddevVal += diff * diff * hits
             ' accumalate total
             total += hits
             i += 1
         End While
 
-        Return If((total = 0), 0, stdNum.Sqrt(stddev__1 / total))
+        Return If((total = 0), 0, stdNum.Sqrt(stddevVal / total))
     End Function
 
     ''' <summary>
@@ -207,18 +207,18 @@ Public Module Statistics
         Next
 
         Dim halfTotal As Integer = total \ 2
-        Dim median__1 As Integer = 0, v As Integer = 0
+        Dim medianVal As Integer = 0, v As Integer = 0
 
         ' find median value
-        While median__1 < n
-            v += values(median__1)
+        While medianVal < n
+            v += values(medianVal)
             If v >= halfTotal Then
                 Exit While
             End If
-            median__1 += 1
+            medianVal += 1
         End While
 
-        Return median__1
+        Return medianVal
     End Function
 
     ''' <summary>
@@ -327,7 +327,7 @@ Public Module Statistics
     Public Function Entropy(values As Integer()) As Double
         Dim n As Integer = values.Length
         Dim total As Integer = 0
-        Dim entropy__1 As Double = 0
+        Dim entropyVal As Double = 0
         Dim p As Double
 
         ' calculate total amount of hits
@@ -342,11 +342,11 @@ Public Module Statistics
                 p = CDbl(values(i)) / total
                 ' calculate entropy
                 If p <> 0 Then
-                    entropy__1 += (-p * stdNum.Log(p, 2))
+                    entropyVal += (-p * stdNum.Log(p, 2))
                 End If
             Next
         End If
-        Return entropy__1
+        Return entropyVal
     End Function
 
     ''' <summary>
@@ -377,17 +377,17 @@ Public Module Statistics
     ''' </remarks>
     ''' 
     Public Function Mode(values As Integer()) As Integer
-        Dim mode__1 As Integer = 0, curMax As Integer = 0
+        Dim modeVal As Integer = 0, curMax As Integer = 0
 
         Dim i As Integer = 0, length As Integer = values.Length
         While i < length
             If values(i) > curMax Then
                 curMax = values(i)
-                mode__1 = i
+                modeVal = i
             End If
             i += 1
         End While
 
-        Return mode__1
+        Return modeVal
     End Function
 End Module

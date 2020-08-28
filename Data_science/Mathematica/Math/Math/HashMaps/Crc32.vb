@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57494a88c004043ce4c5fbcbe6746563, Data_science\Mathematica\Math\Math\HashMaps\Crc32.vb"
+﻿#Region "Microsoft.VisualBasic::870564f55daf9d9f6c41a05626b4e5cc, Data_science\Mathematica\Math\Math\HashMaps\Crc32.vb"
 
     ' Author:
     ' 
@@ -109,11 +109,11 @@ Public Class Crc32
         &H2A6F2B94, &HB40BBE37, &HC30C8EA1, &H5A05DF1B, &H2D02EF8D
     }
 
-    Public Function AddToCRC32(ByVal c As Integer) As UInt32
+    Public Function AddToCRC32(c As Integer) As UInt32
         Return AddToCRC32(CUShort(c))
     End Function
 
-    Public Function AddToCRC32(ByVal c As UInt16) As UInt32
+    Public Function AddToCRC32(c As UInt16) As UInt32
         Dim octet As Byte = CByte((c And &HFF))
         Dim num2 As Byte = CByte((c >> 8))
         _CheckSum = Crc32.UPDC32(num2, _CheckSum)
@@ -121,7 +121,7 @@ Public Class Crc32
         Return Not _CheckSum
     End Function
 
-    Public Shared Function CRC32Bytes(ByVal bytes As Byte()) As UInt32
+    Public Shared Function CRC32Bytes(bytes As Byte()) As UInt32
         Dim maxValue As UInt32 = UInt32.MaxValue
         Dim length As Integer = bytes.Length
         Dim i As Integer = 0
@@ -133,7 +133,7 @@ Public Class Crc32
         Return Not maxValue
     End Function
 
-    Public Shared Function CRC32String(ByVal [text] As String) As UInt32
+    Public Shared Function CRC32String([text] As String) As UInt32
         Dim maxValue As UInt32 = UInt32.MaxValue
         Dim length As Integer = [text].Length
         Dim i As Integer = 0
@@ -153,7 +153,7 @@ Public Class Crc32
 
     ' #define UPDC32(octet,crc) (crc_32_tab[((crc) ^ ((uint8_t)octet)) & 0xff] ^ ((crc) >> 8))
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function UPDC32(ByVal octet As Byte, ByVal crc As UInt32) As UInt32
+    Public Shared Function UPDC32(octet As Byte, crc As UInt32) As UInt32
         Return (Crc32.crc_32_tab(CInt((((crc) Xor octet) And &HFF))) Xor (crc >> 8))
     End Function
 End Class

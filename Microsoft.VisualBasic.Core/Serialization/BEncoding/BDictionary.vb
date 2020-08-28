@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53b5e4d7ecece5f1027fbdf0bb551683, Microsoft.VisualBasic.Core\Serialization\BEncoding\BDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::66206dbd7e3b2a34fb27ee5c4c73ea1d, Microsoft.VisualBasic.Core\Serialization\BEncoding\BDictionary.vb"
 
     ' Author:
     ' 
@@ -58,11 +58,11 @@ Namespace Serialization.Bencoding
         ''' </summary>
         ''' <param name="key">The key of the value to get or set.</param>
         ''' <returns>The value assosiated with the specified key.</returns>
-        Default Public Overloads Property Item(ByVal key As String) As BElement
+        Default Public Overloads Property Item(key As String) As BElement
             Get
                 Return Me(New BString(key))
             End Get
-            Set(ByVal value As BElement)
+            Set(value As BElement)
                 Me(New BString(key)) = value
             End Set
         End Property
@@ -80,7 +80,7 @@ Namespace Serialization.Bencoding
         ''' </summary>
         ''' <param name="u">The StringBuilder to append to.</param>
         ''' <returns>The bencoded equivalent of the dictionary.</returns>
-        Public Function ToBencodedString(ByVal u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
+        Public Function ToBencodedString(u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
             If u Is Nothing Then
                 u = New StringBuilder("d"c)
             Else
@@ -100,7 +100,7 @@ Namespace Serialization.Bencoding
         ''' </summary>
         ''' <param name="key">The specified key.</param>
         ''' <param name="value">The specified value.</param>
-        Public Overloads Sub Add(ByVal key As String, ByVal value As BElement)
+        Public Overloads Sub Add(key As String, value As BElement)
             MyBase.Add(New BString(key), value)
         End Sub
 
@@ -109,7 +109,7 @@ Namespace Serialization.Bencoding
         ''' </summary>
         ''' <param name="key">The specified key.</param>
         ''' <param name="value">The specified value.</param>
-        Public Overloads Sub Add(ByVal key As String, ByVal value As String)
+        Public Overloads Sub Add(key As String, value As String)
             MyBase.Add(New BString(key), New BString(value))
         End Sub
 
@@ -118,7 +118,7 @@ Namespace Serialization.Bencoding
         ''' </summary>
         ''' <param name="key">The specified key.</param>
         ''' <param name="value">The specified value.</param>
-        Public Overloads Sub Add(ByVal key As String, ByVal value As Integer)
+        Public Overloads Sub Add(key As String, value As Integer)
             MyBase.Add(New BString(key), New BInteger(value))
         End Sub
     End Class

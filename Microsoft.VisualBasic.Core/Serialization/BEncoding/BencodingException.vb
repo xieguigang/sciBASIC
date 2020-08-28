@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97dffafcbd9c868718990dafe36b8ac3, Microsoft.VisualBasic.Core\Serialization\BEncoding\BencodingException.vb"
+﻿#Region "Microsoft.VisualBasic::f6b0e7311bbd742e92731c1f0e00928c, Microsoft.VisualBasic.Core\Serialization\BEncoding\BencodingException.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Namespace Serialization.Bencoding
         ''' Creates a new BencodingException.
         ''' </summary>
         ''' <param name="message">The message.</param>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
 
@@ -67,7 +67,7 @@ Namespace Serialization.Bencoding
         ''' </summary>
         ''' <param name="message">The message.</param>
         ''' <param name="inner">The inner exception.</param>
-        Public Sub New(ByVal message As String, ByVal inner As Exception)
+        Public Sub New(message As String, inner As Exception)
             MyBase.New(message, inner)
         End Sub
     End Class

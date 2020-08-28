@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47ef441b10287619ea0d782dab1f2d1c, Microsoft.VisualBasic.Core\Serialization\BEncoding\BencodingExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::163922ba57320b3d8683793de94ac606, Microsoft.VisualBasic.Core\Serialization\BEncoding\BencodingExtensions.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Namespace Serialization.Bencoding
         ''' <param name="s">The current instance.</param>
         ''' <returns>The root elements of the decoded string.</returns>
         <Extension()>
-        Public Function BDecode(ByVal s As String) As BElement()
+        Public Function BDecode(s As String) As BElement()
             Return Decode(s)
         End Function
 

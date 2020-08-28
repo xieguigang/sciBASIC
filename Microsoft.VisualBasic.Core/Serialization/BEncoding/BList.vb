@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aa00f21bf9fab499ff9dd419ffc9358, Microsoft.VisualBasic.Core\Serialization\BEncoding\BList.vb"
+﻿#Region "Microsoft.VisualBasic::f298ad8c28fb982a2a3ff79012ee7490, Microsoft.VisualBasic.Core\Serialization\BEncoding\BList.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,7 @@ Namespace Serialization.Bencoding
         ''' </summary>
         ''' <param name="u">The StringBuilder to append to.</param>
         ''' <returns>The bencoded equivalent of the list.</returns>
-        Public Function ToBencodedString(ByVal u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
+        Public Function ToBencodedString(u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
             If u Is Nothing Then
                 u = New StringBuilder("l"c)
             Else
@@ -83,7 +83,7 @@ Namespace Serialization.Bencoding
         ''' Adds the specified value to the list.
         ''' </summary>
         ''' <param name="value">The specified value.</param>
-        Public Overloads Sub Add(ByVal value As String)
+        Public Overloads Sub Add(value As String)
             MyBase.Add(New BString(value))
         End Sub
 
@@ -91,7 +91,7 @@ Namespace Serialization.Bencoding
         ''' Adds the specified value to the list.
         ''' </summary>
         ''' <param name="value">The specified value.</param>
-        Public Overloads Sub Add(ByVal value As Integer)
+        Public Overloads Sub Add(value As Integer)
             MyBase.Add(New BInteger(value))
         End Sub
     End Class

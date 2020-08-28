@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::552a1442a172ad8c33325607300fe083, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\Deque.vb"
+﻿#Region "Microsoft.VisualBasic::802129f8ed49dcb64229b2536bd47bc2, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\Deque.vb"
 
     ' Author:
     ' 
@@ -65,11 +65,11 @@ Namespace ComponentModel.Collection.Deque
         ''' <returns></returns>
         Public Property version As Long = 0
 
-        Default Public Property Item(ByVal i As Integer) As T Implements IList(Of T).Item
+        Default Public Property Item(i As Integer) As T Implements IList(Of T).Item
             Get
                 Return data(i)
             End Get
-            Set(ByVal value As T)
+            Set(value As T)
                 data(i) = value
                 version += 1
             End Set
@@ -129,7 +129,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="item"></param>
         ''' 
-        Public Sub Add(ByVal item As T) Implements ICollection(Of T).Add
+        Public Sub Add(item As T) Implements ICollection(Of T).Add
             data.AddEnd(item)
             version += 1
         End Sub
@@ -138,7 +138,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Adds an element to the beggining of the Deque(Of T)
         ''' </summary>
         ''' <param name="item"></param>
-        Public Sub AddHead(ByVal item As T) Implements IDeque(Of T).AddHead
+        Public Sub AddHead(item As T) Implements IDeque(Of T).AddHead
             data.AddBegining(item)
             version += 1
         End Sub
@@ -176,7 +176,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns>true if item is found in the Deque(Of T); otherwise, false.</returns>
-        Public Function Contains(ByVal item As T) As Boolean Implements ICollection(Of T).Contains
+        Public Function Contains(item As T) As Boolean Implements ICollection(Of T).Contains
             Return data.Contains(item)
         End Function
 
@@ -186,7 +186,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="array"></param>
         ''' <param name="arrayIndex"></param>
-        Public Sub CopyTo(ByVal array As T(), ByVal arrayIndex As Integer) Implements ICollection(Of T).CopyTo
+        Public Sub CopyTo(array As T(), arrayIndex As Integer) Implements ICollection(Of T).CopyTo
             data.CopyTo(array, arrayIndex, False)
         End Sub
 
@@ -197,7 +197,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="array"></param>
         ''' <param name="arrayIndex"></param>
-        Public Sub CopyToReversed(ByVal array As T(), ByVal arrayIndex As Integer)
+        Public Sub CopyToReversed(array As T(), arrayIndex As Integer)
             data.CopyTo(array, arrayIndex, True)
         End Sub
 
@@ -213,7 +213,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Searches for the specified object and returns the zero-based index of the first occurrence within the entire Deque(Of T).
         ''' </summary>
         ''' <returns>e zero-based index of the first occurrence of item within the entire Deque(Of T), if found; otherwise, -1.</returns> 
-        Public Function IndexOf(ByVal item As T) As Integer Implements IList(Of T).IndexOf
+        Public Function IndexOf(item As T) As Integer Implements IList(Of T).IndexOf
             Return data.IndexOf(item)
         End Function
 
@@ -222,7 +222,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="index"></param>
         ''' <param name="item"></param>
-        Public Sub Insert(ByVal index As Integer, ByVal item As T) Implements IList(Of T).Insert
+        Public Sub Insert(index As Integer, item As T) Implements IList(Of T).Insert
             data.Insert(index, item)
             version += 1
         End Sub
@@ -232,7 +232,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List(Of T).</returns>
-        Public Function Remove(ByVal item As T) As Boolean Implements ICollection(Of T).Remove
+        Public Function Remove(item As T) As Boolean Implements ICollection(Of T).Remove
             'TODO: do not change version when removal fails?
             version += 1
             Return data.Remove(item)
@@ -242,7 +242,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Removes the element at the specified index of the Deque(Of T).
         ''' </summary>
         ''' <param name="index"></param> 
-        Public Sub RemoveAt(ByVal index As Integer) Implements IList(Of T).RemoveAt
+        Public Sub RemoveAt(index As Integer) Implements IList(Of T).RemoveAt
             data.RemoveAt(index)
             version += 1
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f73bc823c25503c6b644e488bd95dd, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\IDeque.vb"
+﻿#Region "Microsoft.VisualBasic::130b099b72134ae9e6244e9048907fc1, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\IDeque.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Namespace ComponentModel.Collection.Deque
 
         ReadOnly Property First As T
         ReadOnly Property Last As T
-        Sub AddHead(ByVal item As T)
+        Sub AddHead(item As T)
         Function RemoveHead() As T
         Function RemoveTail() As T
         Function Reverse() As IDeque(Of T)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d39ac1920d2b6f055611964ba2c8e2d8, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::509bd70de3e76794dc72672508508751, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetAvaliableThread, GetStatus, ToString
+    '         Function: GetAvaliableThread, GetStatus, Start, ToString
     ' 
-    '         Sub: allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
+    '         Sub: [Exit], allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
     '         Structure __taskInvoke
     ' 
     '             Function: Run

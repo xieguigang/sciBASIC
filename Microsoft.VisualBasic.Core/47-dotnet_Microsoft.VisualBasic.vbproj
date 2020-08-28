@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>

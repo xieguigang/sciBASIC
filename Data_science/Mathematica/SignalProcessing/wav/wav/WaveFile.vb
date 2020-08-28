@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0365b2ced9b4d7fb76c46e71d54cd5f7, Data_science\Mathematica\SignalProcessing\wav\wav\File.vb"
+﻿#Region "Microsoft.VisualBasic::502bb136a5efb83aa1b3b263144f85ff, Data_science\Mathematica\SignalProcessing\wav\wav\WaveFile.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Class File
+    ' Class WaveFile
     ' 
     '     Properties: data, fileSize, fmt, format, magic
     ' 

@@ -455,6 +455,11 @@ Public Module KeyValuePairExtensions
         Return list.AsList
     End Function
 
+    <Extension>
+    Public Function Keys(Of T As INamedValue)(source As Enumeration(Of T), Optional distinct As Boolean = False) As List(Of String)
+        Return source.AsEnumerable.Keys
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Keys(Of K, V)(source As IEnumerable(Of IGrouping(Of K, V))) As K()
@@ -779,7 +784,9 @@ Public Module KeyValuePairExtensions
     <Extension>
     Public Function ToDictionary(Of K, V, KOut, VOut)(input As IEnumerable(Of KeyValuePair(Of K, V)), key As Func(Of K, V, KOut), value As Func(Of K, V, VOut)) As Dictionary(Of KOut, VOut)
         Return input.ToDictionary(Function(tuple) key(tuple.Key, tuple.Value),
-                                  Function(tuple) value(tuple.Key, tuple.Value))
+                                  Function(tuple)
+                                      Return value(tuple.Key, tuple.Value)
+                                  End Function)
     End Function
 
     Const sourceEmpty$ = "Source is nothing, returns empty dictionary table!"

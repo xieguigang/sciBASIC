@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e09963a232917b047214be1fea31f2f3, Microsoft.VisualBasic.Core\Serialization\BEncoding\BElement.vb"
+﻿#Region "Microsoft.VisualBasic::129b1f547a88240045919827921939cc, Microsoft.VisualBasic.Core\Serialization\BEncoding\BElement.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,6 @@ Namespace Serialization.Bencoding
         ''' </summary>
         ''' <param name="u">The StringBuilder to append to.</param>
         ''' <returns>The bencoded equivalent of the element.</returns>
-        Function ToBencodedString(ByVal u As StringBuilder) As StringBuilder
+        Function ToBencodedString(u As StringBuilder) As StringBuilder
     End Interface
 End Namespace

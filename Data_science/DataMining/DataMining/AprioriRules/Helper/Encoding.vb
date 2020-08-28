@@ -56,6 +56,8 @@ Namespace AprioriRules
     ''' <remarks></remarks>
     Public Class Encoding
 
+        ' 一个事务是有多个关联的对象组成的，在这里一个事务就是一个字符串，一个字符就是事务里面有关联信息的对象
+
         Public ReadOnly Property CodeMappings As IReadOnlyDictionary(Of Char, String)
         Public ReadOnly Property AllItems As String()
         Public ReadOnly Property AllCodes As Char()

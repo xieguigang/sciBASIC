@@ -114,6 +114,11 @@ Namespace Language
             Value = b
         End Sub
 
+        ''' <summary>
+        ''' do direct cast of <see cref="Value"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         <DebuggerStepThrough>
         Public Function [TryCast](Of T)() As T
             Return DirectCast(Value, T)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc797087b8e6b1f0191438bd21953e32, Data_science\Mathematica\Math\Math\Numerics\BigDecimal.vb"
+﻿#Region "Microsoft.VisualBasic::e1ccd6abd0347058a0a3f8e1dd9e1c7d, Data_science\Mathematica\Math\Math\Numerics\BigDecimal.vb"
 
     ' Author:
     ' 
@@ -149,28 +149,28 @@ Namespace Numerics
 
 #Region "Unsigned Integer Constructors"
         'Construct a BigDecimal number from Byte
-        Sub New(ByVal Num As Byte)
+        Sub New(Num As Byte)
             value = New BigInteger(Num)
             ILen = Num.ToString.Length
             MLen = 0
         End Sub
 
         'Construct a BigDecimal number from UShort
-        Sub New(ByVal Num As UShort)
+        Sub New(Num As UShort)
             value = New BigInteger(Num)
             ILen = Num.ToString.Length
             MLen = 0
         End Sub
 
         'Construct a BigDecimal number from UInteger
-        Sub New(ByVal Num As UInteger)
+        Sub New(Num As UInteger)
             value = New BigInteger(Num)
             ILen = Num.ToString.Length
             MLen = 0
         End Sub
 
         'Construct a BigDecimal number from ULong
-        Sub New(ByVal Num As ULong)
+        Sub New(Num As ULong)
             value = New BigInteger(Num)
             ILen = Num.ToString.Length
             MLen = 0
@@ -179,7 +179,7 @@ Namespace Numerics
 
 #Region "Signed Integral Constructors"
         'Construct a BigDecimal number from Signed Byte
-        Sub New(ByVal Num As SByte)
+        Sub New(Num As SByte)
             Dim t As String = Num.ToString & "."
             value = New BigInteger(Num)
             If t.StartsWith("-") Then
@@ -192,7 +192,7 @@ Namespace Numerics
         End Sub
 
         'Construct a BigDecimal number from Short
-        Sub New(ByVal Num As Short)
+        Sub New(Num As Short)
             Dim t As String = Num.ToString & "."
             value = New BigInteger(Num)
             If t.StartsWith("-") Then
@@ -205,7 +205,7 @@ Namespace Numerics
         End Sub
 
         'Construct a BigDecimal number from Integer
-        Sub New(ByVal Num As Integer)
+        Sub New(Num As Integer)
             Dim t As String = Num.ToString & "."
             value = New BigInteger(Num)
             If t.StartsWith("-") Then
@@ -218,7 +218,7 @@ Namespace Numerics
         End Sub
 
         'Construct a BigDecimal number from Long
-        Sub New(ByVal Num As Long)
+        Sub New(Num As Long)
             Dim t As String = Num.ToString & "."
             value = New BigInteger(Num)
             If t.StartsWith("-") Then
@@ -231,7 +231,7 @@ Namespace Numerics
         End Sub
 
         'Construct a BigDecimal number from BigInteger
-        Sub New(ByVal Num As BigInteger)
+        Sub New(Num As BigInteger)
             Dim t As String = Num.ToString & "."
             value = Num
             If t.StartsWith("-") Then
@@ -246,22 +246,22 @@ Namespace Numerics
 
 #Region "Decimal Constructors"
         'Construct a BigDecimal number from Decimal
-        Sub New(ByVal Num As Decimal)
+        Sub New(Num As Decimal)
             Parse(CStr(Num))
         End Sub
 
         'Construct a BigDecimal number from Single
-        Sub New(ByVal Num As Single)
+        Sub New(Num As Single)
             Parse(CStr(Num))
         End Sub
 
         'Construct a BigDecimal number from Double
-        Sub New(ByVal Num As Double)
+        Sub New(Num As Double)
             Parse(CStr(Num))
         End Sub
 
         'Construct a BigDecimal number from Byte array
-        Sub New(ByVal Num() As Byte)
+        Sub New(Num() As Byte)
             ILen = BitConverter.ToInt32({Num(0), Num(1), Num(2), Num(3)}, 0)
             MLen = BitConverter.ToInt32({Num(4), Num(5), Num(6), Num(7)}, 0)
             Dim VBytes(Num.Length - 9) As Byte
@@ -270,14 +270,14 @@ Namespace Numerics
         End Sub
 
         'Construct a BigDecimal number from String
-        Sub New(ByVal Num As String)
+        Sub New(Num As String)
             Parse(Num)
         End Sub
 #End Region
 
 #Region "Main Parser"
         'Parses and sets the attributes for BigDecimal
-        Private Sub Parse(ByVal Num As String)
+        Private Sub Parse(Num As String)
             Dim neg As Boolean = False
             Dim dec As Boolean = True
             Dim Str As String = ""
@@ -380,7 +380,7 @@ Namespace Numerics
 
         'Represents BigDecimal as string with a specified character for thousands delimiter
         Private Const ValDig As String = "-.0123456789" 'Valid characters for bigdecimal string
-        Public Overloads Function ToString(ByVal Spacer As Char) As String
+        Public Overloads Function ToString(Spacer As Char) As String
             If ValDig.Contains(Spacer) Then Throw New Exception("Invalid Character for use as spacer")
             Dim str As String = ToString()
             If Not Spacer = "" Then
@@ -413,7 +413,7 @@ Namespace Numerics
 
 #Region "Basic Operators"
         'Does addition on two BigDecimal numbers
-        Public Shared Operator +(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As BigDecimal
+        Public Shared Operator +(Num1 As BigDecimal, Num2 As BigDecimal) As BigDecimal
             Dim L As Integer = Num1.MLen
             Dim D As Integer = 0
             If Num1.MLen > Num2.MLen Then
@@ -428,7 +428,7 @@ Namespace Numerics
         End Operator
 
         'Does subtraction on two BigDecimal numbers
-        Public Shared Operator -(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As BigDecimal
+        Public Shared Operator -(Num1 As BigDecimal, Num2 As BigDecimal) As BigDecimal
             Dim L As Integer = Num1.MLen
             Dim D As Integer = 0
             If Num1.MLen > Num2.MLen Then
@@ -443,7 +443,7 @@ Namespace Numerics
         End Operator
 
         'Does multiplication on two BigDecimal numbers
-        Public Shared Operator *(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As BigDecimal
+        Public Shared Operator *(Num1 As BigDecimal, Num2 As BigDecimal) As BigDecimal
             Dim D As Integer = 0
             If Num1.MLen >= Num2.MLen _
             Then D = Num1.MLen - Num2.MLen _
@@ -460,13 +460,13 @@ Namespace Numerics
         ''' <param name="Num1"></param>
         ''' <param name="Num2"></param>
         ''' <returns></returns>
-        Public Shared Operator /(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As BigDecimal
+        Public Shared Operator /(Num1 As BigDecimal, Num2 As BigDecimal) As BigDecimal
             Return Div(Num1, Num2, Precision:=defaultPrecision)
         End Operator
 
         'Does division on two BigDecimal numbers with specified precision (no rounding)
-        Public Shared Function Div(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal,
-                                  Optional ByVal Precision As Integer = -1) As BigDecimal
+        Public Shared Function Div(Num1 As BigDecimal, Num2 As BigDecimal,
+                                  Optional Precision As Integer = -1) As BigDecimal
             If Num2.value.IsZero Then Throw New DivideByZeroException
             Dim P As Integer = (Num1.MLen * Num2.MLen) + Num1.ILen + Num2.ILen + 1
             Dim D As Integer = stdNum.Abs(Num1.MLen - Num2.MLen)
@@ -481,13 +481,13 @@ Namespace Numerics
         End Function
 
         'Raise BigDecimal to the power of an integer
-        Public Shared Operator ^(ByVal Num1 As BigDecimal, ByVal Num2 As Integer) As BigDecimal
+        Public Shared Operator ^(Num1 As BigDecimal, Num2 As Integer) As BigDecimal
             Return Pow(Num1, Num2)
         End Operator
 
         'Raise BigDecimal to power of integer with specified precision for negatives(no rounding)
-        Public Shared Function Pow(ByVal Num1 As BigDecimal, ByVal Num2 As Integer,
-                               Optional ByVal Precision As Integer = -1) As BigDecimal
+        Public Shared Function Pow(Num1 As BigDecimal, Num2 As Integer,
+                               Optional Precision As Integer = -1) As BigDecimal
             If Num2 = 0 Then Return One
             If Num2 < 0 Then
                 Num2 = stdNum.Abs(Num2)
@@ -503,7 +503,7 @@ Namespace Numerics
         End Function
 
         'Does Modular arithmetic on two BigDecimal numbers
-        Public Shared Operator Mod(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As BigDecimal
+        Public Shared Operator Mod(Num1 As BigDecimal, Num2 As BigDecimal) As BigDecimal
             If Num2.ILen > Num1.ILen Then Return Num1
             If Num2.value.IsZero Then Throw New DivideByZeroException
             Dim L As Integer = Num1.MLen
@@ -519,7 +519,7 @@ Namespace Numerics
         End Operator
 
         'Does equal comparison on two BigDecimal numbers
-        Public Shared Operator =(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As Boolean
+        Public Shared Operator =(Num1 As BigDecimal, Num2 As BigDecimal) As Boolean
             If Num1.value.Sign = Num2.value.Sign _
             AndAlso Num1.ILen = Num2.ILen _
             AndAlso Num1.MLen = Num2.MLen _
@@ -529,7 +529,7 @@ Namespace Numerics
         End Operator
 
         'Does greater than less than comparison on two BigDecimal numbers
-        Public Shared Operator <>(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As Boolean
+        Public Shared Operator <>(Num1 As BigDecimal, Num2 As BigDecimal) As Boolean
             If Num1.value.Sign = Num2.value.Sign _
             AndAlso Num1.ILen = Num2.ILen _
             AndAlso Num1.MLen = Num2.MLen _
@@ -539,7 +539,7 @@ Namespace Numerics
         End Operator
 
         'Does greater than comparison on two BigDecimal numbers
-        Public Shared Operator >(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As Boolean
+        Public Shared Operator >(Num1 As BigDecimal, Num2 As BigDecimal) As Boolean
             If Num1.Sign > Num2.Sign OrElse Num1.ILen > Num1.ILen Then Return True
             Dim L As Integer = Num1.MLen
             Dim D As Integer = 0
@@ -556,7 +556,7 @@ Namespace Numerics
         End Operator
 
         'Does less than comparison on two BigDecimal numbers
-        Public Shared Operator <(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As Boolean
+        Public Shared Operator <(Num1 As BigDecimal, Num2 As BigDecimal) As Boolean
             If Num1.Sign > Num2.Sign OrElse Num1.ILen > Num1.ILen Then Return True
             If Num1.MLen = Num2.MLen Then
                 Return Num1.value < Num2.value
@@ -577,7 +577,7 @@ Namespace Numerics
         End Operator
 
         'Does greater than or equal to comparison on two BigDecimal numbers
-        Public Shared Operator >=(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As Boolean
+        Public Shared Operator >=(Num1 As BigDecimal, Num2 As BigDecimal) As Boolean
             If Num1.Sign > Num2.Sign OrElse Num1.ILen > Num1.ILen Then Return True
             If Num1.MLen = Num2.MLen Then
                 Return Num1.value >= Num2.value
@@ -598,7 +598,7 @@ Namespace Numerics
         End Operator
 
         'Does less than or equal to comparison on two BigDecimal numbers
-        Public Shared Operator <=(ByVal Num1 As BigDecimal, ByVal Num2 As BigDecimal) As Boolean
+        Public Shared Operator <=(Num1 As BigDecimal, Num2 As BigDecimal) As Boolean
             If Num1.Sign > Num2.Sign OrElse Num1.ILen > Num1.ILen Then Return True
             If Num1.MLen = Num2.MLen Then
                 Return Num1.value <= Num2.value
@@ -621,13 +621,13 @@ Namespace Numerics
 
 #Region "Misc"
         'Multiplies a BigDecimal number by 10 raised to a specified exponent
-        Private Shared Function Pow10(ByVal value As BigDecimal, ByVal exponent As Integer) As BigInteger
+        Private Shared Function Pow10(value As BigDecimal, exponent As Integer) As BigInteger
             If value.value = 0 OrElse exponent = 0 Then Return value.value
             Return BigInteger.Multiply(value.value, BigInteger.Pow(10, exponent))
         End Function
 
         'Moves around the decimal value to mimic a BigDecimal multiplied by 10 to a negative power
-        Private Shared Function PowN10(ByVal value As String, ByVal exponent As Integer) As BigDecimal
+        Private Shared Function PowN10(value As String, exponent As Integer) As BigDecimal
             If value.StartsWith("-") Then
                 value = value.Remove(0, 1).PadLeft(exponent, "0"c)
                 Return New BigDecimal("-" & value.Insert(value.Length - exponent, "."))
@@ -637,7 +637,7 @@ Namespace Numerics
         End Function
 
         'Raises a bigdecimal to a negative integer power
-        Private Shared Function PowN10(ByVal Num As BigDecimal, ByVal exponent As Integer) As BigDecimal
+        Private Shared Function PowN10(Num As BigDecimal, exponent As Integer) As BigDecimal
             If exponent = 0 Then Return One
             Dim EXP As BigDecimal = ZeroPointOne
             For i = 1 To stdNum.Abs(exponent) : EXP *= ZeroPointOne : Next
@@ -645,8 +645,8 @@ Namespace Numerics
         End Function
 
         'Finds the square root of a bigdecimal number given the precision, no decimals if not specified
-        Public Shared Function Sqrt(ByVal Num As BigDecimal,
-                            Optional ByVal Precision As Integer = 0) As BigDecimal
+        Public Shared Function Sqrt(Num As BigDecimal,
+                            Optional Precision As Integer = 0) As BigDecimal
             Dim ourGuess As BigDecimal = Div(Num, Two, Precision)
             While True
                 Dim result As BigDecimal = Div(Num, ourGuess, Precision)
@@ -657,7 +657,7 @@ Namespace Numerics
         End Function
 
         'Returns PI to the specified decimal place
-        Public Shared Function Pi(ByVal Precision As Integer) As BigDecimal
+        Public Shared Function Pi(Precision As Integer) As BigDecimal
             Precision += 4 'Increase precision internally to account for rounding
             Dim answer As BigDecimal = Zero
             Dim term5 As BigDecimal = ThreePointTwo
@@ -684,17 +684,17 @@ Namespace Numerics
         End Function
 
         'Returns Phi to the specified decimal place
-        Public Shared Function Phi(ByVal Precision As Integer) As BigDecimal
+        Public Shared Function Phi(Precision As Integer) As BigDecimal
             Return (One + Sqrt(Five, Precision)) * ZeroPointFive
         End Function
 
         'Returns Tau to the specified decimal place
-        Public Shared Function Tau(ByVal Precision As Integer) As BigDecimal
+        Public Shared Function Tau(Precision As Integer) As BigDecimal
             Return Div(Pi(Precision + 1) * Two, One, Precision)
         End Function
 
         'Returns Pythagoras' constant to the specified decimal place
-        Public Shared Function PythagorasConst(ByVal Precision As Integer) As BigDecimal
+        Public Shared Function PythagorasConst(Precision As Integer) As BigDecimal
             Return Sqrt(Two, Precision)
         End Function
 #End Region

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cd67b9fa63af7a24739f1a9b0f5a232, mime\application%json\Javascript\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::9c65eded9c0728785170de03a93cbabd, mime\application%json\Javascript\JsonArray.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,9 @@
     ' 
     '         Properties: Length
     ' 
-    '         Function: BuildJsonString, ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: Add, Insert, Remove
     ' 

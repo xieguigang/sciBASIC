@@ -87,7 +87,9 @@ Namespace Scripting
         Public Function Translate(vector As Vector) As Dictionary(Of String, Double)
             Return factors.ToDictionary(
                 Function(factor) factor.FactorValue,
-                Function(i) vector(CInt(i.Value)))
+                Function(i)
+                    Return vector(CInt(i.Value))
+                End Function)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

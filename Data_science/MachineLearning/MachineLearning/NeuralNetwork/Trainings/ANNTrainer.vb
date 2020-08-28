@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::402ee3ca603440999f4a72005712efe0, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\ANNTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::b618e5905e5788e202f25b6ae4a319d0, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\ANNTrainer.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,8 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: CalculateError, errorSum, SetDropOut, SetLayerNormalize, SetSelective
-    '                   SetSnapshotLocation, trainingImpl
+    '         Function: CalculateError, errorSum, SetDropOut, SetLayerNormalize, SetOutputNames
+    '                   SetSelective, SetSnapshotLocation, trainingImpl
     ' 
     '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
     ' 
@@ -121,6 +121,7 @@ Namespace NeuralNetwork
         Protected errors As Double()
         Protected dataSets As New List(Of TrainingSample)
         Protected snapshotSaveLocation As String
+        Protected outputNames As String()
 
         ''' <summary>
         ''' 训练所使用到的经验数量,即数据集的大小size
@@ -177,6 +178,18 @@ Namespace NeuralNetwork
 
         Public Function SetSnapshotLocation(save As String) As ANNTrainer
             snapshotSaveLocation = save
+            Return Me
+        End Function
+
+        Public Function SetOutputNames(names As String()) As ANNTrainer
+            Dim maxLen As Integer = names.Select(AddressOf Strings.Len).Max
+
+            outputNames = names _
+                .Select(Function(str)
+                            Return str.PadRight(maxLen * 1.25)
+                        End Function) _
+                .ToArray
+
             Return Me
         End Function
 
@@ -281,7 +294,14 @@ Namespace NeuralNetwork
                     Else
                         Call tick.StepProgress()
                         Call msg.__INFO_ECHO
-                        Call $"[{errors.Select(Function(e) e.ToString("F3")).JoinBy(", ")}]".__DEBUG_ECHO
+
+                        If outputNames.IsNullOrEmpty Then
+                            Call $"[{errors.Select(Function(e) e.ToString("F3")).JoinBy(", ")}]".__DEBUG_ECHO
+                        Else
+                            For index As Integer = 0 To outputNames.Length - 1
+                                Call $"    {outputNames(index)} = {errors(index).ToString("F4")}".__INFO_ECHO
+                            Next
+                        End If
                     End If
 #End If
                     If errors.Average < 0.0001 Then
@@ -399,7 +419,15 @@ Namespace NeuralNetwork
                 numEpochs += 1
                 progress = ((minimumError / [error]) * 100).ToString("F2")
 
-                Call $"{numEpochs}{ASCII.TAB}Error:=[{[errors].Select(Function(a) a.ToString("F3")).JoinBy(", ")}]{ASCII.TAB}progress:={progress}%".__DEBUG_ECHO
+                If outputNames.IsNullOrEmpty Then
+                    Call $"{numEpochs}{ASCII.TAB}Error:=[{[errors].Select(Function(a) a.ToString("F3")).JoinBy(", ")}]{ASCII.TAB}progress:={progress}%".__DEBUG_ECHO
+                Else
+                    Call $"{numEpochs}{ASCII.TAB}Error:=[{[errors].Average}]{ASCII.TAB}progress:={progress}%".__DEBUG_ECHO
+
+                    For i As Integer = 0 To outputNames.Length - 1
+                        Call $"    {outputNames(i)}={errors(i)}".__INFO_ECHO
+                    Next
+                End If
 
                 If Not reporter Is Nothing Then
                     Call reporter(numEpochs, [error], network)

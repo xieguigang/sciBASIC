@@ -59,7 +59,9 @@ Namespace ComponentModel.DataSourceModel
     ''' <typeparam name="T"></typeparam>
     Public MustInherit Class DynamicPropertyBase(Of T)
         Implements IDynamicMeta(Of T)
-        Implements IEnumerable(Of NamedValue(Of T))
+        ' 因为ienumerable接口在进行json序列化的时候会被调用
+        ' 为了避免出现这个bug，所以在这里使用enumeration接口来保持兼容性
+        Implements Enumeration(Of NamedValue(Of T))
         Implements IDynamicsObject
 
         ''' <summary>
@@ -91,7 +93,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Default Public Overridable Overloads Property ItemValue(name$) As T
+        Default Public Overridable Overloads Property ItemValue(name As String) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If Properties.ContainsKey(name) Then
@@ -234,13 +236,13 @@ Namespace ComponentModel.DataSourceModel
             Return Function(pName$) dynamic(pName)
         End Operator
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of T)) Implements IEnumerable(Of NamedValue(Of T)).GetEnumerator
+        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of T)) Implements Enumeration(Of NamedValue(Of T)).GenericEnumerator
             For Each [property] In propertyTable
                 Yield New NamedValue(Of T)([property].Key, [property].Value)
             Next
         End Function
 
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements Enumeration(Of NamedValue(Of T)).GetEnumerator
             Yield GetEnumerator()
         End Function
     End Class

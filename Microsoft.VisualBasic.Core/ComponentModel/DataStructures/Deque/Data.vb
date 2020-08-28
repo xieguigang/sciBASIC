@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c051f1019da34c6386195c533c01eacc, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\Data.vb"
+﻿#Region "Microsoft.VisualBasic::aa7aef23b210ad75f1c3190ad265ea4d, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\Data.vb"
 
     ' Author:
     ' 
@@ -132,7 +132,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="i"></param>
         ''' <returns></returns>  
-        Default Public Property Item(ByVal i As Integer) As S
+        Default Public Property Item(i As Integer) As S
             Get
                 If i < 0 Then
                     Throw New ArgumentOutOfRangeException()
@@ -146,7 +146,7 @@ Namespace ComponentModel.Collection.Deque
 
                 Return data(GetIndexOfBlock(index))(GetIndexInBlock(index))
             End Get
-            Set(ByVal value As S)
+            Set(value As S)
                 If i < 0 Then
                     Throw New ArgumentOutOfRangeException()
                 End If
@@ -161,11 +161,11 @@ Namespace ComponentModel.Collection.Deque
             End Set
         End Property
 
-        Private Function GetIndexOfBlock(ByVal i As Integer) As Integer
+        Private Function GetIndexOfBlock(i As Integer) As Integer
             Return i / sizeOfBlock
         End Function
 
-        Private Function GetIndexInBlock(ByVal i As Integer) As Integer
+        Private Function GetIndexInBlock(i As Integer) As Integer
             Return i Mod sizeOfBlock
         End Function
 
@@ -219,7 +219,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Adds Item as a new Head of the Deque(Of T), Count is incremented
         ''' </summary>
         ''' <param name="item"></param>   
-        Public Sub AddBegining(ByVal item As S)
+        Public Sub AddBegining(item As S)
             If beforeFirst <= 0 Then
                 AllocBlockBeginning()
             End If
@@ -236,7 +236,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Adds Item as a new Tail of the Deque(Of T), Count is incremented
         ''' </summary>
         ''' <param name="item"></param> 
-        Public Sub AddEnd(ByVal item As S)
+        Public Sub AddEnd(item As S)
             If afterLast <= 0 Then
                 AllocBlockEnd()
             End If
@@ -287,7 +287,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="index"></param>
         ''' <param name="item"></param> 
-        Public Sub Insert(ByVal index As Integer, ByVal item As S)
+        Public Sub Insert(index As Integer, item As S)
             If index = Count Then
                 AddEnd(item)
                 Return
@@ -321,7 +321,7 @@ Namespace ComponentModel.Collection.Deque
         ''' removal of the first and the last item in O(1)
         ''' </summary>
         ''' <param name="index"></param> 
-        Public Sub RemoveAt(ByVal index As Integer)
+        Public Sub RemoveAt(index As Integer)
             If index < 0 OrElse index >= Count Then
                 Throw New ArgumentOutOfRangeException("My awesome exception")
             End If
@@ -352,7 +352,7 @@ Namespace ComponentModel.Collection.Deque
         ''' e zero-based index of the first occurrence of item within the 
         ''' entire Deque(Of T), if found; otherwise, -1.
         ''' </returns>
-        Public Function IndexOf(ByVal item As S) As Integer
+        Public Function IndexOf(item As S) As Integer
             For index = 0 To Count - 1
 
                 If Equals(Me(index), item) Then
@@ -368,7 +368,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns></returns> 
-        Public Function Remove(ByVal item As S) As Boolean
+        Public Function Remove(item As S) As Boolean
             Dim index = IndexOf(item)
 
             If index = -1 Then
@@ -384,7 +384,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns>true if item is found in the List(Of T); otherwise, false</returns> 
-        Public Function Contains(ByVal item As S) As Boolean
+        Public Function Contains(item As S) As Boolean
             For index = 0 To Count - 1
 
                 If Equals(Me(index), item) Then
@@ -420,7 +420,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, 
         ''' starting at the specified index of the target array.
         ''' </summary>    
-        Public Sub CopyTo(ByVal array As S(), ByVal arrayIndex As Integer, ByVal reversed As Boolean)
+        Public Sub CopyTo(array As S(), arrayIndex As Integer, reversed As Boolean)
             If array Is Nothing Then
                 Throw New ArgumentNullException()
             End If

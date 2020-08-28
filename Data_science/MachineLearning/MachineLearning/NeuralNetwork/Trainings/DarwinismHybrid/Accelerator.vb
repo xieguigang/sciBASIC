@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3975243c6f0d47281f422fc907d6cdca, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\Accelerator.vb"
+﻿#Region "Microsoft.VisualBasic::5b5cea8699ba5c029b239b641396d7c1, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\DarwinismHybrid\Accelerator.vb"
 
     ' Author:
     ' 
@@ -31,25 +31,11 @@
 
     ' Summaries:
 
-    '     Module GAExtensions
+    '     Module Accelerator
     ' 
-    '         Function: GetSynapseGroups
+    '         Function: GetSynapseGroups, RunGATrainer
     ' 
-    '         Sub: doPrint, RunGAAccelerator
-    ' 
-    '     Class WeightVector
-    ' 
-    '         Properties: MutationRate, UniqueHashKey
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Clone, Crossover, Mutate, ToString
-    ' 
-    '     Class Fitness
-    ' 
-    '         Properties: Cacheable
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Calculate
+    '         Sub: doPrint
     ' 
     ' 
     ' /********************************************************************************/
@@ -102,7 +88,7 @@ Namespace NeuralNetwork.DarwinismHybrid
 
             Call "Run GA helper!".__DEBUG_ECHO
             Call engine.AttachReporter(AddressOf doPrint)
-            Call engine.Train()
+            Call engine.Train(parallel:=True)
 
             Return ga.Best.target
         End Function

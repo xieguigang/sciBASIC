@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a8a59dfab932d806f25ba98e91a468b, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\ReverseQueue.vb"
+﻿#Region "Microsoft.VisualBasic::1ddff95eb64e37e432b078b011527db6, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\ReverseQueue.vb"
 
     ' Author:
     ' 
@@ -52,11 +52,11 @@ Namespace ComponentModel.Collection.Deque
 
     Public Class ReverseQueue(Of T) : Implements IDeque(Of T)
 
-        Default Public Property Item(ByVal index As Integer) As T Implements IList(Of T).Item
+        Default Public Property Item(index As Integer) As T Implements IList(Of T).Item
             Get
                 Return deque(Count - 1 - index)
             End Get
-            Set(ByVal value As T)
+            Set(value As T)
                 deque(Count - 1 - index) = value
             End Set
         End Property
@@ -99,7 +99,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         Dim deque As Deque(Of T)
 
-        Public Sub New(ByVal que As Deque(Of T))
+        Public Sub New(que As Deque(Of T))
             deque = que
         End Sub
 
@@ -107,7 +107,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Adds an object to the end of the reversed Deque(Of T).
         ''' </summary>
         ''' <param name="item"></param>
-        Public Sub Add(ByVal item As T) Implements ICollection(Of T).Add
+        Public Sub Add(item As T) Implements ICollection(Of T).Add
             deque.AddHead(item)
         End Sub
 
@@ -115,7 +115,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Adds an element to the beggining of the reversed Deque(Of T)
         ''' </summary>
         ''' <param name="item"></param>
-        Public Sub AddHead(ByVal item As T) Implements IDeque(Of T).AddHead
+        Public Sub AddHead(item As T) Implements IDeque(Of T).AddHead
             deque.Add(item)
         End Sub
 
@@ -131,14 +131,14 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns>true if item is found in the List(Of T); otherwise, false</returns> 
-        Public Function Contains(ByVal item As T) As Boolean Implements ICollection(Of T).Contains
+        Public Function Contains(item As T) As Boolean Implements ICollection(Of T).Contains
             Return deque.Contains(item)
         End Function
 
         ''' <summary>
         ''' Copies the entire Deque(Of T) to a compatible one-dimensional array, starting at the specified index of the target array.
         ''' </summary> 
-        Public Sub CopyTo(ByVal array As T(), ByVal arrayIndex As Integer) Implements ICollection(Of T).CopyTo
+        Public Sub CopyTo(array As T(), arrayIndex As Integer) Implements ICollection(Of T).CopyTo
             deque.CopyToReversed(array, arrayIndex)
         End Sub
 
@@ -154,7 +154,7 @@ Namespace ComponentModel.Collection.Deque
         ''' Searches for the specified object and returns the zero-based index of the first occurrence within the entire Deque(Of T).
         ''' </summary>
         ''' <returns>e zero-based index of the first occurrence of item within the entire Deque(Of T), if found; otherwise, -1.</returns>
-        Public Function IndexOf(ByVal item As T) As Integer Implements IList(Of T).IndexOf
+        Public Function IndexOf(item As T) As Integer Implements IList(Of T).IndexOf
             For index = 0 To Count - 1
                 If Equals(Me(index), item) Then
                     Return index
@@ -167,7 +167,7 @@ Namespace ComponentModel.Collection.Deque
         ''' <summary>
         ''' Inserts an element into the reversedDeque(Of T) at the specified index.
         ''' </summary>
-        Public Sub Insert(ByVal index As Integer, ByVal item As T) Implements IList(Of T).Insert
+        Public Sub Insert(index As Integer, item As T) Implements IList(Of T).Insert
             'user wants to add item to begining of reversed list
             If index = 0 Then
                 'I need to add it to end of actual list
@@ -181,14 +181,14 @@ Namespace ComponentModel.Collection.Deque
         ''' Removes the first occurrence of a specific object from the Deque(Of T).
         ''' </summary>
         ''' <returns>true if item is successfully removed; otherwise, false. This method also returns false if item was not found in the List(Of T).</returns>
-        Public Function Remove(ByVal item As T) As Boolean Implements ICollection(Of T).Remove
+        Public Function Remove(item As T) As Boolean Implements ICollection(Of T).Remove
             Return deque.Remove(item)
         End Function
 
         ''' <summary>
         ''' Removes the element at the specified index of the Deque(Of T).
         ''' </summary>
-        Public Sub RemoveAt(ByVal index As Integer) Implements IList(Of T).RemoveAt
+        Public Sub RemoveAt(index As Integer) Implements IList(Of T).RemoveAt
             deque.RemoveAt(Count - 1 - index)
         End Sub
 

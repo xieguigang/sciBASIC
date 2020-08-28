@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db44e7d9180270136ba9d59eef753a69, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Network.vb"
+﻿#Region "Microsoft.VisualBasic::b1cf1cc3111083b672567a9c48ff322d, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Network.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
     '                     Momentum, OutputLayer, Truncate
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: Compute, ForwardPropagate, ToString
     ' 
@@ -115,14 +115,14 @@ Namespace NeuralNetwork
         ''' 这个构造函数是给XML模型加载操作所使用的
         ''' </summary>
         ''' <param name="activations"></param>
-        Friend Sub New(activations As [Variant](Of LayerActives, IReadOnlyDictionary(Of String, ActiveFunction)))
+        Friend Sub New(activations As LayerActives)
             Me.LearnRateDecay = 0.00000001
+            Me.Activations = activations.GetXmlModels
+        End Sub
 
-            If activations Like GetType(LayerActives) Then
-                Me.Activations = activations.TryCast(Of LayerActives).GetXmlModels
-            Else
-                Me.Activations = activations.TryCast(Of IReadOnlyDictionary(Of String, ActiveFunction))
-            End If
+        Friend Sub New(activations As IReadOnlyDictionary(Of String, ActiveFunction))
+            Me.LearnRateDecay = 0.00000001
+            Me.Activations = activations
         End Sub
 
         ''' <summary>

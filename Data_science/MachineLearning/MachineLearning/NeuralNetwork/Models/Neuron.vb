@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::128816ac567c01bf3bc1df27ca2bafaa, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::ac7f81f6655aae662003cd97114eb313, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Bias, BiasDelta, Gradient, Guid, InputSynapses
     '                     isDroppedOut, OutputSynapses, Value
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: CalculateError, (+2 Overloads) CalculateGradient, CalculateValue, InputSynapsesValueSum, ToString
     '                   UpdateWeights
     ' 

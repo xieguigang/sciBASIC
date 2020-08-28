@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b49e9b86bd42020c163758950923f56, mime\application%json\Javascript\JsonValue.vb"
+﻿#Region "Microsoft.VisualBasic::da7cd0e704c57a5d6e8a1e8b3d417c63, mime\application%json\Javascript\JsonValue.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: BSONValue, value
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: BuildJsonString, GetStripString, Literal, ToString
+    '         Function: GetStripString, Literal, ToString
     ' 
     ' 
     ' /********************************************************************************/

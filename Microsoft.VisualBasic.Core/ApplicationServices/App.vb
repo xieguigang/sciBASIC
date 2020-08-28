@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::177624917d1aa76c0cb65da51a48b30c, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::84c3378635e791763385d423cea1f0a9, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -35,13 +35,14 @@
     ' 
     '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
     '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
-    '                 ExceptionLogFile, ExecutablePath, Github, HOME, Info
-    '                 InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp
-    '                 LogErrDIR, NanoTime, NextTempName, OutFile, PID
-    '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-    '                 ProductSharedDIR, ProductSharedTemp, References, Running, RunningInGitBash
-    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
-    '                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
+    '                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
+    '                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
+    '                 LocalDataTemp, LogErrDIR, NanoTime, NextTempName, OutFile
+    '                 PID, Platform, PreviousDirectory, Process, ProductName
+    '                 ProductProgramData, ProductSharedDIR, ProductSharedTemp, References, Running
+    '                 RunningInGitBash, RunTimeDirectory, StartTime, StartupDirectory, StdErr
+    '                 StdInput, StdOut, SysTemp, UnixTimeStamp, UserHOME
+    '                 Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7188ba71911a068b7614e46114ded93d, Microsoft.VisualBasic.Core\Serialization\BEncoding\BInteger.vb"
+﻿#Region "Microsoft.VisualBasic::0a03ed1f2498dcdf0be5178912b024c4, Microsoft.VisualBasic.Core\Serialization\BEncoding\BInteger.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Namespace Serialization.Bencoding
         ''' The main constructor.
         ''' </summary>
         ''' <param name="value">The value of the bencoded integer.</param>
-        Public Sub New(ByVal value As Long)
+        Public Sub New(value As Long)
             Me.Value = value
         End Sub
 
@@ -78,7 +78,7 @@ Namespace Serialization.Bencoding
         ''' Generates the bencoded equivalent of the integer.
         ''' </summary>
         ''' <returns>The bencoded equivalent of the integer.</returns>
-        Public Function ToBencodedString(ByVal u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
+        Public Function ToBencodedString(u As StringBuilder) As StringBuilder Implements BElement.ToBencodedString
             If u Is Nothing Then
                 u = New StringBuilder("i"c)
             Else
@@ -96,7 +96,7 @@ Namespace Serialization.Bencoding
         ''' <summary>
         ''' Int32.Equals(object)
         ''' </summary>
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             Try
                 Return Value.Equals(CType(obj, BInteger).Value)
             Catch
@@ -110,7 +110,7 @@ Namespace Serialization.Bencoding
         End Function
 
         ''' <see cref="IComparable.CompareTo(Object)"/>
-        Public Function CompareTo(ByVal other As BInteger) As Integer Implements IComparable(Of BInteger).CompareTo
+        Public Function CompareTo(other As BInteger) As Integer Implements IComparable(Of BInteger).CompareTo
             Return Value.CompareTo(other.Value)
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac611a33a6216095f867c9f50576c0a3, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\FMT.vb"
+﻿#Region "Microsoft.VisualBasic::375d059de8b1ab2342c6111fa887c983, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\FMT.vb"
 
     ' Author:
     ' 
@@ -31,20 +31,6 @@
 
     ' Summaries:
 
-    ' Enum wFormatTag
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Enum Channels
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     ' Class FMTSubChunk
     ' 
     '     Properties: audioFormat, BitsPerSample, BlockAlign, ByteRate, channels

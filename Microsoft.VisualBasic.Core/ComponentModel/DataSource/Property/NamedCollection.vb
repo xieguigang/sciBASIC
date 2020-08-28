@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b9847562175d79196b79633fc9eb27f, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection.vb"
+﻿#Region "Microsoft.VisualBasic::4ed807ffaf86073eb26ade6dde1e9fba, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection.vb"
 
     ' Author:
     ' 
@@ -143,7 +143,11 @@ Namespace ComponentModel.DataSourceModel
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return value.Length
+                If value Is Nothing Then
+                    Return 0
+                Else
+                    Return value.Length
+                End If
             End Get
         End Property
 
@@ -196,7 +200,11 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Overrides Function ToString() As String
-            Return name
+            If IsEmpty Then
+                Return "NULL"
+            Else
+                Return name
+            End If
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator

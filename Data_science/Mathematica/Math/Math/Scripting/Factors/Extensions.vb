@@ -88,7 +88,9 @@ Namespace Scripting
                 vector.index = value _
                     .SeqIterator _
                     .ToDictionary(Function(key) key.value,
-                                  Function(index) index.i)
+                                  Function(index)
+                                      Return index.i
+                                  End Function)
             End Set
         End Property
     End Module

@@ -51,8 +51,16 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Scripting
 
+    ''' <summary>
+    ''' 提供字符串映射到具体的数值
+    ''' </summary>
     Public Class NamedVector : Inherits FactorVector(Of Double)
 
+        ''' <summary>
+        ''' 添加一个映射
+        ''' </summary>
+        ''' <param name="factor$"></param>
+        ''' <param name="value#"></param>
         Public Sub Add(factor$, value#)
             If buffer Is Nothing Then
                 buffer = {}

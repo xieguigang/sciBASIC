@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::150c970f387a9309f8e5aa3b7cce8de1, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\IndividualParallelTraining.vb"
+﻿#Region "Microsoft.VisualBasic::a366eb3f8528bdcf7eec3692d900f1da, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\IndividualParallelTraining.vb"
 
     ' Author:
     ' 

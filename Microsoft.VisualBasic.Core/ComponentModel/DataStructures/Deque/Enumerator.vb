@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6119bb7e8a0c90f8a557fbe5734e7f99, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\Enumerator.vb"
+﻿#Region "Microsoft.VisualBasic::ed9fc06dfa15f5d676d8e5033794d4c7, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Deque\Enumerator.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         Dim que As Deque(Of S)
 
-        Public Sub New(ByVal que As Deque(Of S), ByVal version As Long)
+        Public Sub New(que As Deque(Of S), version As Long)
             Me.version = version
             Me.que = que
         End Sub
