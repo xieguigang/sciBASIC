@@ -49,7 +49,7 @@ Public Module StringFormats
     ''' </summary>
     ''' <param name="bytes"></param>
     ''' <returns>经过自动格式优化过后的大小显示字符串</returns>
-    Public Function Lanudry(bytes As Integer) As String
+    Public Function Lanudry(bytes As Double) As String
         If bytes <= 0 Then
             Return "0 B"
         End If
