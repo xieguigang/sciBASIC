@@ -185,6 +185,9 @@ Namespace SVM
         Protected Sub reconstruct_gradient()
             If active_size = l Then
                 Return
+            ElseIf active_size = -1 Then
+                Procedures.info($"unsure for active_size = -1?")
+                Return
             End If
 
             Dim i, j As Integer
@@ -304,8 +307,10 @@ Namespace SVM
 
                 If Threading.Interlocked.Decrement(counter) = 0 Then
                     counter = stdNum.Min(l, 1000)
-                    If shrinking Then do_shrinking()
-                    info(".")
+
+                    If shrinking Then
+                        do_shrinking()
+                    End If
                 End If
 
                 If select_working_set(working_set) <> 0 Then
@@ -313,7 +318,6 @@ Namespace SVM
                     reconstruct_gradient()
                     ' reset active set size and check
                     active_size = l
-                    info("*")
 
                     If select_working_set(working_set) <> 0 Then
                         Exit While
@@ -324,6 +328,7 @@ Namespace SVM
 
                 Dim i = working_set(0)
                 Dim j = working_set(1)
+
                 iter += 1
 
                 ' update alpha[i] and alpha[j], handle bounds carefully
@@ -457,8 +462,8 @@ Namespace SVM
                 If active_size < l Then
                     ' reconstruct the whole gradient to calculate objective value
                     reconstruct_gradient()
+
                     active_size = l
-                    info("*")
                 End If
 
                 Console.Error.Write(ASCII.LF & "WARNING: reaching max number of iterations" & ASCII.LF)
