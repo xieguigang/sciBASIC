@@ -127,7 +127,7 @@ Namespace SVM
         Public Property NumberOfSVPerClass As Integer()
         Public Property DimensionNames As String()
 
-        Friend Sub New()
+        Public Sub New()
         End Sub
 
         Public Overrides Function Equals(obj As Object) As Boolean
