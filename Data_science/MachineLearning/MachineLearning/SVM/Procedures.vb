@@ -55,12 +55,12 @@
 
 Imports System.IO
 Imports System.Runtime.InteropServices
-Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Namespace SVM
 
@@ -109,7 +109,9 @@ Namespace SVM
                 sum_alpha += alpha(i)
             Next
 
-            If Cp = Cn Then Procedures.info("nu = " & sum_alpha / (Cp * prob.Count) & ASCII.LF)
+            If Cp = Cn Then
+                Procedures.info("nu = " & sum_alpha / (Cp * prob.Count) & ASCII.LF)
+            End If
 
             For i = 0 To l - 1
                 alpha(i) *= y(i)
@@ -154,6 +156,7 @@ Namespace SVM
             Dim s As Solver_NU = New Solver_NU()
             s.Solve(l, New SVC_Q(prob, param, y), zeros, y, alpha, 1.0, 1.0, param.EPS, si, param.Shrinking)
             Dim r = si.r
+
             Procedures.info("C = " & 1 / r & ASCII.LF)
 
             For i = 0 To l - 1
