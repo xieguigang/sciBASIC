@@ -34,6 +34,21 @@ Namespace SVM
                 .ToArray
         End Function
 
+        Public Function Clone() As ProblemTable
+            Return New ProblemTable With {
+                .DimensionNames = DimensionNames.ToArray,
+                .vectors = vectors _
+                    .Select(Function(vec)
+                                Return New SupportVector With {
+                                    .id = vec.id,
+                                    .labels = New Dictionary(Of String, String)(vec.labels),
+                                    .Properties = New Dictionary(Of String, Double)(vec.Properties)
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        End Function
+
         ''' <summary>
         ''' 获取所指定的<paramref name="topic"/>下的所有标签数据，不去重
         ''' </summary>
