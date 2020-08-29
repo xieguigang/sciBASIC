@@ -55,6 +55,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -82,6 +83,12 @@ Namespace ApplicationServices.Terminal
         End Property
 
         Public Property FilePath As String Implements IFileReference.FilePath
+
+        Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Return {MIME.UnknownType}
+            End Get
+        End Property
 
         Dim LastHistory As History
 

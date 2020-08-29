@@ -52,6 +52,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.STDIO__
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Debugging.Logging
@@ -95,6 +96,12 @@ Namespace ApplicationServices.Debugging.Logging
         End Property
 
         Public Property filePath As String Implements IFileReference.FilePath
+
+        Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Return {New ContentType With {.FileExt = ".log", .Name = "Plant Log Text", .MIMEType = "plain/text"}}
+            End Get
+        End Property
 
         ''' <summary>
         ''' 
