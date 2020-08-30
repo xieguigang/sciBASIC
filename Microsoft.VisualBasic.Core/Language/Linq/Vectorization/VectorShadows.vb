@@ -75,11 +75,11 @@ Namespace Language.Vectorization
         Private Shared Function inspectType(type As Type) As VectorSchemaProvider
             Static typeCache As New Dictionary(Of Type, VectorSchemaProvider)
 
-            SyncLock typeCache
-                If Not typeCache.ContainsKey(type) Then
+            If Not typeCache.ContainsKey(type) Then
+                SyncLock typeCache
                     typeCache(type) = VectorSchemaProvider.CreateSchema(type)
-                End If
-            End SyncLock
+                End SyncLock
+            End If
 
             Return typeCache(type)
         End Function
