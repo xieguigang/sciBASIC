@@ -657,6 +657,9 @@
     <Compile Include="ComponentModel\Encoder\Class.vb" />
     <Compile Include="ComponentModel\Discretizer\NormalRangeDiscretizer.vb" />
     <Compile Include="ComponentModel\Encoder\ClassEncoder.vb" />
+    <Compile Include="ComponentModel\Evaluation\LabelEvaluate\ChangePoint.vb" />
+    <Compile Include="ComponentModel\Evaluation\LabelEvaluate\RankPair.vb" />
+    <Compile Include="ComponentModel\Evaluation\LabelEvaluate\PerformanceEvaluator.vb" />
     <Compile Include="ComponentModel\Evaluation\RegressionClassify.vb" />
     <Compile Include="ComponentModel\Evaluation\ROC.vb" />
     <Compile Include="ComponentModel\Evaluation\Validate.vb" />

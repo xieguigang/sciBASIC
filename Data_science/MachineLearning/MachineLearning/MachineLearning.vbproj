@@ -674,7 +674,6 @@
     <Compile Include="SVM\Node.vb" />
     <Compile Include="SVM\Parameter\Parameter.vb" />
     <Compile Include="SVM\Parameter\ParameterSelection.vb" />
-    <Compile Include="SVM\PerformanceEvaluator.vb" />
     <Compile Include="SVM\Kernel\PrecomputedKernel.vb" />
     <Compile Include="SVM\Prediction.vb" />
     <Compile Include="SVM\Models\Problem.vb" />
