@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Linq
 
-Namespace SVM
+Namespace SVM.StorageProcedure
 
     Public Class SupportVector : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue

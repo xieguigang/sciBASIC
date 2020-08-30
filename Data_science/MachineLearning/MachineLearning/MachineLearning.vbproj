@@ -658,6 +658,7 @@
     <Compile Include="RandomForests\NamespaceDoc.vb" />
     <Compile Include="RandomForests\StorageProcedure\MatrixLoader.vb" />
     <Compile Include="SVM\Cache.vb" />
+    <Compile Include="SVM\StorageProcedure\Models\SvmModelJSON.vb" />
     <Compile Include="SVM\StorageProcedure\Models\Model.vb" />
     <Compile Include="SVM\StorageProcedure\Models\ProblemTable.vb" />
     <Compile Include="SVM\SVMModel.vb" />
