@@ -23,6 +23,14 @@ Namespace SVM.StorageProcedure
             Return Me.GetJson
         End Function
 
+        Public Function CreateSVMModel() As SVMModel
+            Return New SVMModel With {
+                .factors = New ClassEncoder(factors),
+                .model = model,
+                .transform = If(rangeTransform Is Nothing, gaussianTransform.GetTransform, rangeTransform.GetTransform)
+            }
+        End Function
+
     End Class
 
     Public Class SVMMultipleSetJSON
@@ -43,6 +51,17 @@ Namespace SVM.StorageProcedure
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        Public Function CreateSVMModel() As SVMMultipleSet
+            Return New SVMMultipleSet With {
+                .dimensionNames = dimensionNames,
+                .topics = topics _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Return a.Value.CreateSVMModel()
+                                  End Function)
+            }
         End Function
 
     End Class
