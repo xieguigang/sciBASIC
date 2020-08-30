@@ -72,7 +72,6 @@ Namespace SVM
     ''' is learned.  Unless you know what you are doing, chances are you are best off using
     ''' the default values.
     ''' </summary>
-    <Serializable>
     Public Class Parameter : Implements ICloneable
 
         ''' <summary>

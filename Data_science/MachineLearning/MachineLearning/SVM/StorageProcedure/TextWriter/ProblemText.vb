@@ -62,7 +62,7 @@ Namespace SVM
                 output.Write(problem.Y(i))
 
                 For j = 0 To problem.X(i).Length - 1
-                    output.Write(" {0}:{1:0.000000}", problem.X(i)(j).Index, problem.X(i)(j).Value)
+                    output.Write(" {0}:{1:0.000000}", problem.X(i)(j).index, problem.X(i)(j).value)
                 Next
 
                 output.Write(ASCII.LF)

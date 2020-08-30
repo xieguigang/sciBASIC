@@ -140,8 +140,8 @@ Namespace SVM
             For i = 0 To prob.Count - 1
 
                 For j = 0 To prob.X(i).Length - 1
-                    Dim index = prob.X(i)(j).Index - 1
-                    Dim value = prob.X(i)(j).Value
+                    Dim index = prob.X(i)(j).index - 1
+                    Dim value = prob.X(i)(j).value
                     minVals(index) = stdNum.Min(minVals(index), value)
                     maxVals(index) = stdNum.Max(maxVals(index), value)
                 Next
@@ -167,8 +167,8 @@ Namespace SVM
             Dim output = New Node(input.Length - 1) {}
 
             For i = 0 To output.Length - 1
-                Dim index = input(i).Index
-                Dim value = input(i).Value
+                Dim index = input(i).index
+                Dim value = input(i).value
                 output(i) = New Node(index, Transform(value, index))
             Next
 

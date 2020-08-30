@@ -90,7 +90,7 @@ Namespace SVM
                 scaledProblem.X(i) = New Node(prob.X(i).Length - 1) {}
 
                 For j = 0 To scaledProblem.X(i).Length - 1
-                    scaledProblem.X(i)(j) = New Node(prob.X(i)(j).Index, range.Transform(prob.X(i)(j).Value, prob.X(i)(j).Index))
+                    scaledProblem.X(i)(j) = New Node(prob.X(i)(j).index, range.Transform(prob.X(i)(j).value, prob.X(i)(j).index))
                 Next
 
                 scaledProblem.Y(i) = prob.Y(i)

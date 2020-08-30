@@ -137,12 +137,12 @@ Namespace SVM
                 End If
 
                 If param.KernelType = KernelType.PRECOMPUTED Then
-                    output.Write("0:{0:0.000000}", CInt(p(0).Value))
+                    output.Write("0:{0:0.000000}", CInt(p(0).value))
                 Else
-                    output.Write("{0}:{1:0.000000}", p(0).Index, p(0).Value)
+                    output.Write("{0}:{1:0.000000}", p(0).index, p(0).value)
 
                     For j = 1 To p.Length - 1
-                        output.Write(" {0}:{1:0.000000}", p(j).Index, p(j).Value)
+                        output.Write(" {0}:{1:0.000000}", p(j).index, p(j).value)
                     Next
                 End If
 

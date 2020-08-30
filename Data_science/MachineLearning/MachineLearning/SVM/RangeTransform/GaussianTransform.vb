@@ -93,8 +93,8 @@ Namespace SVM
             For Each sample In prob.X
 
                 For i = 0 To sample.Length - 1
-                    means(sample(i).Index - 1) += sample(i).Value
-                    counts(sample(i).Index - 1) += 1
+                    means(sample(i).index - 1) += sample(i).value
+                    counts(sample(i).index - 1) += 1
                 Next
             Next
 
@@ -108,8 +108,8 @@ Namespace SVM
             For Each sample In prob.X
 
                 For i = 0 To sample.Length - 1
-                    Dim diff = sample(i).Value - means(sample(i).Index - 1)
-                    stddevs(sample(i).Index - 1) += diff * diff
+                    Dim diff = sample(i).value - means(sample(i).index - 1)
+                    stddevs(sample(i).index - 1) += diff * diff
                 Next
             Next
 
@@ -146,8 +146,8 @@ Namespace SVM
             Dim output = New Node(input.Length - 1) {}
 
             For i = 0 To output.Length - 1
-                Dim index = input(i).Index
-                Dim value = input(i).Value
+                Dim index = input(i).index
+                Dim value = input(i).value
                 output(i) = New Node(index, Transform(value, index))
             Next
 

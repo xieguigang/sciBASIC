@@ -93,7 +93,7 @@ Namespace SVM
                 Case KernelType.SIGMOID
                     Return stdNum.Tanh(_gamma * dot(_x(i), _x(j)) + _coef0)
                 Case KernelType.PRECOMPUTED
-                    Return _x(i)(CInt(_x(j)(0).Value)).Value
+                    Return _x(i)(CInt(_x(j)(0).value)).value
                 Case Else
                     Return 0
             End Select
@@ -128,8 +128,8 @@ Namespace SVM
 
             While True
 
-                If x.Index = y.Index Then
-                    sum += x.Value * y.Value
+                If x.index = y.index Then
+                    sum += x.value * y.value
                     i += 1
                     j += 1
 
@@ -147,7 +147,7 @@ Namespace SVM
                     End If
                 Else
 
-                    If x.Index > y.Index Then
+                    If x.index > y.index Then
                         j += 1
 
                         If j < ylen Then
@@ -181,8 +181,8 @@ Namespace SVM
 
             While True
 
-                If x.Index = y.Index Then
-                    Dim d = x.Value - y.Value
+                If x.index = y.index Then
+                    Dim d = x.value - y.value
                     sum += d * d
                     xIndex += 1
                     yIndex += 1
@@ -199,8 +199,8 @@ Namespace SVM
                     Else
                         Exit While
                     End If
-                ElseIf x.Index > y.Index Then
-                    sum += y.Value * y.Value
+                ElseIf x.index > y.index Then
+                    sum += y.value * y.value
 
                     If ++yIndex < yLength Then
                         y = yNodes(yIndex)
@@ -208,7 +208,7 @@ Namespace SVM
                         Exit While
                     End If
                 Else
-                    sum += x.Value * x.Value
+                    sum += x.value * x.value
 
                     If ++xIndex < xLength Then
                         x = xNodes(xIndex)
@@ -219,13 +219,13 @@ Namespace SVM
             End While
 
             While xIndex < xLength
-                Dim d = xNodes(xIndex).Value
+                Dim d = xNodes(xIndex).value
                 sum += d * d
                 xIndex += 1
             End While
 
             While yIndex < yLength
-                Dim d = yNodes(yIndex).Value
+                Dim d = yNodes(yIndex).value
                 sum += d * d
                 yIndex += 1
             End While
@@ -245,7 +245,7 @@ Namespace SVM
                 Case KernelType.SIGMOID
                     Return stdNum.Tanh(param.Gamma * dot(x, y) + param.Coefficient0)
                 Case KernelType.PRECOMPUTED
-                    Return x(CInt(y(0).Value)).Value
+                    Return x(CInt(y(0).value)).value
                 Case Else
                     Return 0
             End Select

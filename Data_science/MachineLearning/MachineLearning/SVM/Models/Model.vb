@@ -67,7 +67,7 @@ Namespace SVM
     ''' <summary>
     ''' Encapsulates an SVM Model.
     ''' </summary>
-    <Serializable> Public Class Model
+    Public Class Model
 
         ''' <summary>
         ''' Parameter object.
