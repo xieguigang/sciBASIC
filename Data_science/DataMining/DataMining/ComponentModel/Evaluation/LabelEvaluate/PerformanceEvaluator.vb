@@ -165,11 +165,19 @@ Namespace ComponentModel.Evaluation
         End Sub
 
         Private Function computePrecision(p As ChangePoint) As Single
-            Return CSng(p.TP) / (p.TP + p.FP)
+            If p.TP = 0 Then
+                Return 0
+            Else
+                Return CSng(p.TP) / (p.TP + p.FP)
+            End If
         End Function
 
         Private Function computeRecall(p As ChangePoint) As Single
-            Return CSng(p.TP) / (p.TP + p.FN)
+            If p.TP = 0 Then
+                Return 0
+            Else
+                Return CSng(p.TP) / (p.TP + p.FN)
+            End If
         End Function
 
         Private Sub computePR()
@@ -194,8 +202,13 @@ Namespace ComponentModel.Evaluation
                 End If
             Next
 
-            _prCurve.Add(New PointF(1, CSng(_changes(0).TP + _changes(0).FN) / (_changes(0).FP + _changes(0).TN)))
-            _ap = precisionSum / (_changes(0).FN + _changes(0).TP)
+            Dim lastPR As Single = CSng(_changes(0).TP + _changes(0).FN) / (_changes(0).FP + _changes(0).TN)
+
+            If Not (_PRCurve.Last.X = 1 AndAlso lastPR.IsNaNImaginary) Then
+                _PRCurve.Add(New PointF(1, lastPR))
+            End If
+
+            _AP = precisionSum / (_changes(0).FN + _changes(0).TP)
         End Sub
 
         Private Function computeTPR(cp As ChangePoint) As Single
@@ -203,7 +216,11 @@ Namespace ComponentModel.Evaluation
         End Function
 
         Private Function computeFPR(cp As ChangePoint) As Single
-            Return CSng(cp.FP) / (cp.FP + cp.TN)
+            If cp.FP = 0 Then
+                Return 0
+            Else
+                Return CSng(cp.FP) / (cp.FP + cp.TN)
+            End If
         End Function
 
         Private Sub computeRoC()
