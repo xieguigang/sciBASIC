@@ -48,6 +48,7 @@ Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -73,6 +74,12 @@ Namespace vbproj
         Public Property ItemGroups As ItemGroup()
         <XmlElement("Target")>
         Public Property Targets As Target()
+
+        Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
 
         ''' <summary>
         ''' 读取<see cref="AssemblyInfo"/>文件的时候会需要使用到这个属性

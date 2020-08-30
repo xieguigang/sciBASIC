@@ -97,6 +97,12 @@ Public Class File : Implements IFileReference
         End Set
     End Property
 
+    Public ReadOnly Property MimeType As Net.Protocols.ContentTypes.ContentType() Implements IFileReference.MimeType
+        Get
+            Throw New NotImplementedException()
+        End Get
+    End Property
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SheetNames() As IEnumerable(Of String)
         Return xl _

@@ -213,7 +213,7 @@ Namespace SVM
             ' determine filenames
 
             If i >= args.Length Then Throw New ArgumentException("No input file specified")
-            problem = ProblemText.Read(args(i))
+            ' problem = ProblemText.Read(args(i))
             If parameters.Gamma = 0 Then parameters.Gamma = 1.0 / problem.MaxIndex
 
             If i < args.Length - 1 Then
