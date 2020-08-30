@@ -85,8 +85,6 @@
 ' * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports System.Drawing
-Imports System.IO
-Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel.Evaluation
 
