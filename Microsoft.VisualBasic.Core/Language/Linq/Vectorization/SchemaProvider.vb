@@ -90,10 +90,30 @@ Namespace Language.Vectorization
         Public Const objectLike$ = "op_Like"
         Public Const nameIntegerDivision$ = "op_IntegerDivision"
 
-        Sub New(type As Type)
+        Private Sub New(type As Type,
+                        propertyList As Dictionary(Of String, PropertyInfo),
+                        propertyNames As Index(Of String),
+                        op_Concatenates As BinaryOperator,
+                        op_Likes As BinaryOperator,
+                        op_IntegerDivisions As BinaryOperator,
+                        methods As Dictionary(Of String, OverloadsFunction),
+                        operatorsBinary As Dictionary(Of ExpressionType, BinaryOperator),
+                        operatorsUnary As Dictionary(Of ExpressionType, MethodInfo))
+
             Me.Type = type
-            Me.propertyList = type.Schema(PropertyAccess.NotSure, PublicProperty, True)
-            Me.PropertyNames = propertyList _
+            Me.propertyList = propertyList
+            Me.PropertyNames = propertyNames
+            Me.op_Concatenates = op_Concatenates
+            Me.op_Likes = op_Likes
+            Me.op_IntegerDivisions = op_IntegerDivisions
+            Me.methods = methods
+            Me.operatorsBinary = operatorsBinary
+            Me.operatorsUnary = operatorsUnary
+        End Sub
+
+        Public Shared Function CreateSchema(type As Type) As VectorSchemaProvider
+            Dim propertyList = type.Schema(PropertyAccess.NotSure, PublicProperty, True)
+            Dim PropertyNames = propertyList _
                 .Values _
                 .Select(Function([property]) [property].Name) _
                 .Indexing
@@ -112,9 +132,11 @@ Namespace Language.Vectorization
                        End Function
 
             ' 因为字符串连接操作符在Linq表达式中并没有被定义，所以在这里需要特殊处理
-            op_Concatenates = find(stringContract)
-            op_Likes = find(objectLike)
-            op_IntegerDivisions = find(nameIntegerDivision)
+            Dim op_Concatenates = find(stringContract)
+            Dim op_Likes = find(objectLike)
+            Dim op_IntegerDivisions = find(nameIntegerDivision)
+            Dim operatorsBinary As New Dictionary(Of ExpressionType, BinaryOperator)
+            Dim operatorsUnary As New Dictionary(Of ExpressionType, MethodInfo)
 
             For Each op As IGrouping(Of String, MethodInfo) In operators _
                 .Where(Function(o)
@@ -144,12 +166,19 @@ Namespace Language.Vectorization
                 End If
             Next
 
-            Me.methods = methods _
+            Dim methodList = methods _
                 .Where(Function(m) Not m.IsStatic) _
                 .GroupBy(Function(func) func.Name) _
                 .Select(Function([overloads]) New OverloadsFunction([overloads].Key, [overloads])) _
                 .ToDictionary(Function(g) g.Name)
-        End Sub
+
+            Return New VectorSchemaProvider(
+                type, propertyList, PropertyNames,
+                op_Concatenates, op_Likes,
+                op_IntegerDivisions, methodList,
+                operatorsBinary, operatorsUnary
+            )
+        End Function
 
         ''' <summary>
         ''' Returns property names and function names
