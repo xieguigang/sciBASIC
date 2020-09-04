@@ -116,22 +116,29 @@ Namespace Layouts
                                       Optional Damping# = 0.83,
                                       Optional iterations% = 1000,
                                       Optional showProgress As Boolean = False,
-                                      Optional clearScreen As Boolean = False) As NetworkGraph
+                                      Optional clearScreen As Boolean = False,
+                                      Optional progressCallback As Action(Of String) = Nothing) As NetworkGraph
 
             Dim physicsEngine As New ForceDirected2D(net, Stiffness, Repulsion, Damping)
             Dim tick As Action(Of Integer)
             Dim progress As ProgressBar = Nothing
-
-            If showProgress Then
-                Dim ticking As ProgressProvider
-                Dim ETA$
-                Dim details$
-                Dim args$ = New ForceDirectedArgs With {
+            Dim args$ = New ForceDirectedArgs With {
                     .Damping = Damping,
                     .Iterations = iterations,
                     .Repulsion = Repulsion,
                     .Stiffness = Stiffness
                 }.GetJson
+
+            If progressCallback Is Nothing Then
+                progressCallback = Sub()
+
+                                   End Sub
+            End If
+
+            If showProgress Then
+                Dim ticking As ProgressProvider
+                Dim ETA$
+                Dim details$
 
                 progress = New ProgressBar("Do Force Directed Layout...", 1, CLS:=clearScreen)
                 ticking = New ProgressProvider(progress, iterations)
@@ -139,9 +146,12 @@ Namespace Layouts
                            ETA = "ETA=" & ticking.ETA().FormatTime
                            details = args & $" ({i}/{iterations}) " & ETA
                            progress.SetProgress(ticking.StepProgress, details)
+                           progressCallback(details)
                        End Sub
             Else
                 tick = Sub(i%)
+                           Dim details = args & $" [{i}/{iterations}]"
+                           progressCallback(details)
                        End Sub
             End If
 
