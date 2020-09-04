@@ -411,6 +411,10 @@ Namespace Graph
             Return _index.GetEdges(iNode.label)
         End Function
 
+        ''' <summary>
+        ''' 应该使用这个方法来安全的删除节点
+        ''' </summary>
+        ''' <param name="node"></param>
         Public Sub RemoveNode(node As Node)
             Call _index.Delete(node)
             Call vertices.Remove(node)
@@ -534,36 +538,22 @@ Namespace Graph
         ''' 因为克隆之后的操作可能会涉及对边或者节点对象的修改操作
         ''' </remarks>
         Private Function Clone() As Object Implements ICloneable.Clone
-            Dim vertices As New Dictionary(Of Node)
-            Dim edges As New List(Of Edge)
+            Dim g As New NetworkGraph
+
+            For Each v In vertex
+                g.CreateNode(v.label, v.data.Clone)
+            Next
 
             For Each edge As Edge In graphEdges
-                Dim U = ComputeIfNotExists(vertices, edge.U)
-                Dim V = ComputeIfNotExists(vertices, edge.V)
-
-                edges += New Edge With {
-                    .data = New EdgeData(edge.data),
-                    .U = U,
-                    .V = V,
-                    .ID = edge.ID,
-                    .isDirected = edge.isDirected,
-                    .weight = edge.weight
-                }
+                g.CreateEdge(
+                    u:=g.GetElementByID(edge.U.label),
+                    v:=g.GetElementByID(edge.V.label),
+                    weight:=edge.weight,
+                    data:=edge.data.Clone
+                )
             Next
 
-            ' 可能存在有孤立的节点
-            ' 这个也需要添加加进来
-            For Each node As Node In Me.vertex
-                Call ComputeIfNotExists(vertices, node)
-            Next
-
-            Dim copy As New NetworkGraph(vertices.Values, edges)
-
-            For Each node In copy.vertex
-
-            Next
-
-            Return copy
+            Return g
         End Function
 
         ''' <summary>

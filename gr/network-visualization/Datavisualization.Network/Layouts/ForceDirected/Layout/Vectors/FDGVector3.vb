@@ -103,6 +103,14 @@ Namespace Layouts
             Call Me.New(p.X, p.Y, 0)
         End Sub
 
+        Sub New(copy As AbstractVector)
+            If Not copy Is Nothing Then
+                x = copy.x
+                y = copy.y
+                z = copy.z
+            End If
+        End Sub
+
         Public Sub New(x As Single, y As Single, z As Single)
             Call MyBase.New()
 

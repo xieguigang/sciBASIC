@@ -60,6 +60,14 @@ Namespace Layouts.EdgeBundling
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(clone As XYMetaHandle)
+            xoffsetscale = clone.xoffsetscale
+            yoffsetscale = clone.yoffsetscale
+        End Sub
+
         ''' <summary>
         ''' 将当前的这个矢量描述转换为实际的点位置
         ''' </summary>

@@ -202,6 +202,10 @@ Namespace Imaging
                                            path$,
                                            Optional format As ImageFormats = ImageFormats.Png,
                                            Optional autoDispose As Boolean = False) As Boolean
+            If res Is Nothing Then
+                Return False
+            End If
+
             Try
                 Call path.ParentPath.MkDIR
 
