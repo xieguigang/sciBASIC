@@ -251,6 +251,8 @@ Public Module NetworkVisualizer
             getNodeLabel = Function(node)
                                Return node.GetDisplayText
                            End Function
+        ElseIf getNodeLabel Is Nothing Then
+            getNodeLabel = Function(v) Nothing
         End If
 
         defaultColor = If(defaultColor.StringEmpty, "skyblue", defaultColor)
