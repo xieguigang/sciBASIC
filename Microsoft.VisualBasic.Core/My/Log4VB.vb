@@ -68,7 +68,13 @@ Namespace My
             {MSG_TYPES.WRN, ConsoleColor.Yellow}
         }
 
+        ''' <summary>
+        ''' LoggingDriver(header$, message$, level As MSG_TYPES)
+        ''' </summary>
         Public redirectWarning As LoggingDriver
+        ''' <summary>
+        ''' LoggingDriver(header$, message$, level As MSG_TYPES)
+        ''' </summary>
         Public redirectError As LoggingDriver
 
         ''' <summary>
