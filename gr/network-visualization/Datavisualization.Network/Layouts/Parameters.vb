@@ -63,9 +63,9 @@ Namespace Layouts
 
         Public Property ForceDirectedArgs As ForceDirectedArgs
 
-        Public Const DefaultStiffness As Single = 81.76!
-        Public Const DefaultRepulsion As Single = 2000.0!
-        Public Const DefaultDamping As Single = 0.5!
+        Public Const DefaultStiffness As Double = 81.76!
+        Public Const DefaultRepulsion As Double = 2000.0!
+        Public Const DefaultDamping As Double = 0.5!
 
         Public Const DefaultFileName$ = "ForceDirectedArgs.ini"
 
@@ -102,19 +102,19 @@ Namespace Layouts
         ''' 这个参数值越小,则节点间的距离越大,网络的变化越平缓
         ''' </summary>
         ''' <returns></returns>
-        <DataFrameColumn> Public Property Stiffness As Single = 41.76!
+        <DataFrameColumn> Public Property Stiffness As Double = 41.76!
         ''' <summary>
         ''' 节点之间的排斥力大小,这个值越大,则节点间的距离越远,反之节点之间的距离越近
         ''' </summary>
         ''' <returns></returns>
-        <DataFrameColumn> Public Property Repulsion As Single = 10000.0!
+        <DataFrameColumn> Public Property Repulsion As Double = 10000.0!
 
         ''' <summary>
         ''' 阻尼,这个值越小,则变化越不明显,值接近于1的时候,网络的布局结构会变化非常大
         ''' 当这个参数值大于1的时候,网络将无法稳定下来
         ''' </summary>
         ''' <returns></returns>
-        <DataFrameColumn> Public Property Damping As Single = 0.4!
+        <DataFrameColumn> Public Property Damping As Double = 0.4!
         <DataFrameColumn> Public Property Iterations As Integer = 1000%
 
         Public Shared Function DefaultNew() As ForceDirectedArgs

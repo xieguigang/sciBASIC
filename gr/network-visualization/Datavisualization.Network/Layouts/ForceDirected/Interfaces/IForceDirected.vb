@@ -102,13 +102,13 @@ Namespace Layouts.Interfaces
     Public Interface IForceDirected
 
         ReadOnly Property graph() As NetworkGraph
-        ReadOnly Property Stiffness() As Single
-        ReadOnly Property Repulsion() As Single
-        ReadOnly Property Damping() As Single
+        ReadOnly Property Stiffness() As Double
+        ReadOnly Property Repulsion() As Double
+        ReadOnly Property Damping() As Double
         ' NOT Using
         ReadOnly Property WithinThreshold() As Boolean
 
-        Property Threshold As Single
+        Property Threshold As Double
 
         Sub Clear()
 
@@ -116,9 +116,9 @@ Namespace Layouts.Interfaces
         ''' Calculates the physics updates.
         ''' </summary>
         ''' <param name="iTimeStep"></param>
-        Sub Calculate(iTimeStep As Single)
+        Sub Calculate(iTimeStep As Double)
         Sub EachEdge(del As EdgeAction)
-        Sub SetPhysics(Stiffness As Single, Repulsion As Single, Damping As Single)
+        Sub SetPhysics(Stiffness As Double, Repulsion As Double, Damping As Double)
 
         ''' <summary>
         ''' 节点的经过计算之后的当前位置可以从这个方法之中获取得到

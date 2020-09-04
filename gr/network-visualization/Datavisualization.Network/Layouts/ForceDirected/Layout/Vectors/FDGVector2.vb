@@ -100,7 +100,7 @@ Namespace Layouts
             z = 0F
         End Sub
 
-        Public Sub New(iX As Single, iY As Single)
+        Public Sub New(iX As Double, iY As Double)
             MyBase.New()
             x = iX
             y = iY
@@ -179,13 +179,13 @@ Namespace Layouts
             Return Me
         End Function
 
-        Public Overrides Function Multiply(n As Single) As AbstractVector
+        Public Overrides Function Multiply(n As Double) As AbstractVector
             x = x * n
             y = y * n
             Return Me
         End Function
 
-        Public Overrides Function Divide(n As Single) As AbstractVector
+        Public Overrides Function Divide(n As Double) As AbstractVector
             If n = 0F Then
                 x = 0F
                 y = 0F
@@ -196,7 +196,7 @@ Namespace Layouts
             Return Me
         End Function
 
-        Public Overrides Function Magnitude() As Single
+        Public Overrides Function Magnitude() As Double
             Return CSng(Sqrt(CDbl(x * x) + CDbl(y * y)))
         End Function
 
@@ -240,23 +240,23 @@ Namespace Layouts
             temp.Subtract(b)
             Return temp
         End Operator
-        Public Overloads Shared Operator *(a As FDGVector2, b As Single) As FDGVector2
+        Public Overloads Shared Operator *(a As FDGVector2, b As Double) As FDGVector2
             Dim temp As New FDGVector2(a.x, a.y)
             temp.Multiply(b)
             Return temp
         End Operator
-        Public Overloads Shared Operator *(a As Single, b As FDGVector2) As FDGVector2
+        Public Overloads Shared Operator *(a As Double, b As FDGVector2) As FDGVector2
             Dim temp As New FDGVector2(b.x, b.y)
             temp.Multiply(a)
             Return temp
         End Operator
 
-        Public Overloads Shared Operator /(a As FDGVector2, b As Single) As FDGVector2
+        Public Overloads Shared Operator /(a As FDGVector2, b As Double) As FDGVector2
             Dim temp As New FDGVector2(a.x, a.y)
             temp.Divide(b)
             Return temp
         End Operator
-        Public Overloads Shared Operator /(a As Single, b As FDGVector2) As FDGVector2
+        Public Overloads Shared Operator /(a As Double, b As FDGVector2) As FDGVector2
             Dim temp As New FDGVector2(b.x, b.y)
             temp.Divide(a)
             Return temp

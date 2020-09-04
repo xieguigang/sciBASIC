@@ -88,17 +88,17 @@ Imports System.Text
 Namespace Layouts.Interfaces
 
     Public Interface IVector
-        Property x() As Single
+        Property x() As Double
 
-        Property y() As Single
+        Property y() As Double
 
-        Property z() As Single
+        Property z() As Double
 
         Function Add(v2 As AbstractVector) As AbstractVector
         Function Subtract(v2 As AbstractVector) As AbstractVector
-        Function Multiply(n As Single) As AbstractVector
-        Function Divide(n As Single) As AbstractVector
-        Function Magnitude() As Single
+        Function Multiply(n As Double) As AbstractVector
+        Function Divide(n As Double) As AbstractVector
+        Function Magnitude() As Double
         'public abstract AbstractVector Normal();
         Function Normalize() As AbstractVector
         Function SetZero() As AbstractVector

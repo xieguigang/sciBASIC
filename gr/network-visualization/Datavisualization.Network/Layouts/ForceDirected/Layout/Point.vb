@@ -99,7 +99,7 @@ Namespace Layouts
 
         Public Property position As AbstractVector
         Public Property node As Node
-        Public Property mass As Single
+        Public Property mass As Double
             Get
                 Return node.data.mass
             End Get

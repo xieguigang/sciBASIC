@@ -78,7 +78,7 @@ Namespace Graph
         ''' Mass weight
         ''' </summary>
         ''' <returns></returns>
-        Public Property mass As Single
+        Public Property mass As Double
 
         ''' <summary>
         ''' For 2d layout <see cref="FDGVector2"/> / 3d layout <see cref="FDGVector3"/>

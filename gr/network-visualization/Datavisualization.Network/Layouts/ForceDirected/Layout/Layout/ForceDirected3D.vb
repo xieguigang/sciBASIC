@@ -49,7 +49,7 @@ Namespace Layouts
     Public Class ForceDirected3D
         Inherits ForceDirected(Of FDGVector3)
 
-        Public Sub New(iGraph As NetworkGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
+        Public Sub New(iGraph As NetworkGraph, iStiffness As Double, iRepulsion As Double, iDamping As Double)
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
         End Sub
 

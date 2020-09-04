@@ -56,7 +56,7 @@ Namespace Graph
         ''' 这个属性值一般是由两个节点之间的坐标位置所计算出来的欧几里得距离
         ''' </summary>
         ''' <returns></returns>
-        Public Property length As Single
+        Public Property length As Double
         Public Property bends As XYMetaHandle()
         Public Property color As SolidBrush
 

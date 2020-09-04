@@ -94,10 +94,10 @@ Namespace Layouts
     Public MustInherit Class ForceDirected(Of Vector As IVector)
         Implements IForceDirected
 
-        Public Property stiffness As Single Implements IForceDirected.Stiffness
-        Public Property repulsion As Single Implements IForceDirected.Repulsion
-        Public Property damping As Single Implements IForceDirected.Damping
-        Public Property threshold As Single Implements IForceDirected.Threshold
+        Public Property stiffness As Double Implements IForceDirected.Stiffness
+        Public Property repulsion As Double Implements IForceDirected.Repulsion
+        Public Property damping As Double Implements IForceDirected.Damping
+        Public Property threshold As Double Implements IForceDirected.Threshold
         Public Property withinThreshold As Boolean Implements IForceDirected.WithinThreshold
 
         Protected nodePoints As Dictionary(Of String, LayoutPoint)
@@ -111,7 +111,7 @@ Namespace Layouts
             graph.Clear()
         End Sub
 
-        Public Sub New(iGraph As NetworkGraph, iStiffness As Single, iRepulsion As Single, iDamping As Single)
+        Public Sub New(iGraph As NetworkGraph, iStiffness As Double, iRepulsion As Double, iDamping As Double)
             graph = iGraph
             stiffness = iStiffness
             repulsion = iRepulsion
@@ -132,7 +132,7 @@ Namespace Layouts
         End Function
 
         Private Function createSpring(iedge As Edge) As Spring
-            Dim length As Single = iedge.data.length
+            Dim length As Double = iedge.data.length
             Dim existingSpring As Spring = Nothing
             Dim fromEdges As IEnumerable(Of Edge) = graph.GetEdges(iedge.U, iedge.V)
 
@@ -185,7 +185,7 @@ Namespace Layouts
 
                 If point1 IsNot point2 Then
                     Dim d As AbstractVector = point1.position - point2.position
-                    Dim distance As Single = d.Magnitude() + 0.1F
+                    Dim distance As Double = d.Magnitude() + 0.1F
                     Dim direction As AbstractVector = d.Normalize()
 
                     If n1.pinned AndAlso n2.pinned Then
@@ -216,7 +216,7 @@ Namespace Layouts
             For Each e As Edge In graph.graphEdges
                 Dim spring As Spring = GetSpring(e)
                 Dim d As AbstractVector = spring.point2.position - spring.point1.position
-                Dim displacement As Single = spring.length - d.Magnitude()
+                Dim displacement As Double = spring.length - d.Magnitude()
                 Dim direction As AbstractVector = d.Normalize()
 
                 If spring.point1.node.pinned AndAlso spring.point2.node.pinned Then
@@ -245,14 +245,14 @@ Namespace Layouts
                     'point.ApplyForce(direction * ((float)Math.Sqrt((double)(Repulsion / 100.0f))));
 
 
-                    Dim displacement As Single = direction.Magnitude()
+                    Dim displacement As Double = direction.Magnitude()
                     direction = direction.Normalize()
                     point.ApplyForce(direction * (stiffness * displacement * 0.4F))
                 End If
             Next
         End Sub
 
-        Protected Sub updateVelocity(iTimeStep As Single)
+        Protected Sub updateVelocity(iTimeStep As Double)
             For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
                 point.velocity.Add(point.acceleration * iTimeStep)
@@ -261,28 +261,30 @@ Namespace Layouts
             Next
         End Sub
 
-        Protected Sub updatePosition(iTimeStep As Single)
+        Protected Sub updatePosition(iTimeStep As Double)
             Dim point As LayoutPoint
+            Dim delta As AbstractVector
 
             For Each n As Node In graph.vertex
                 point = GetPoint(n)
-                point.position.Add(point.velocity * iTimeStep)
+                delta = point.velocity * iTimeStep
+                point.position.Add(delta)
             Next
         End Sub
 
-        Protected Function getTotalEnergy() As Single
-            Dim energy As Single = 0F
+        Protected Function getTotalEnergy() As Double
+            Dim energy As Double = 0F
 
             For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
-                Dim speed As Single = point.velocity.Magnitude()
+                Dim speed As Double = point.velocity.Magnitude()
                 energy += 0.5F * point.mass * speed * speed
             Next
 
             Return energy
         End Function
 
-        Public Sub Calculate(iTimeStep As Single) Implements IForceDirected.Calculate
+        Public Sub Calculate(iTimeStep As Double) Implements IForceDirected.Calculate
             ' time in second
             applyCoulombsLaw()
             applyHookesLaw()
@@ -291,9 +293,9 @@ Namespace Layouts
             updatePosition(iTimeStep)
 
             If getTotalEnergy() < threshold Then
-                WithinThreshold = True
+                withinThreshold = True
             Else
-                WithinThreshold = False
+                withinThreshold = False
             End If
         End Sub
 
@@ -313,7 +315,7 @@ Namespace Layouts
         Public Function Nearest(position As AbstractVector) As NearestPoint Implements IForceDirected.Nearest
             Dim min As New NearestPoint()
             Dim point As LayoutPoint
-            Dim distance As Single
+            Dim distance As Double
 
             For Each n As Node In graph.vertex
                 point = GetPoint(n)
@@ -331,10 +333,10 @@ Namespace Layouts
 
         Public MustOverride Function GetBoundingBox() As BoundingBox Implements IForceDirected.GetBoundingBox
 
-        Public Sub SetPhysics(Stiffness As Single, Repulsion As Single, Damping As Single) Implements IForceDirected.SetPhysics
-            Me.Stiffness = Stiffness
-            Me.Repulsion = Repulsion
-            Me.Damping = Damping
+        Public Sub SetPhysics(Stiffness As Double, Repulsion As Double, Damping As Double) Implements IForceDirected.SetPhysics
+            Me.stiffness = Stiffness
+            Me.repulsion = Repulsion
+            Me.damping = Damping
         End Sub
     End Class
 End Namespace

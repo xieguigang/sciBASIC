@@ -98,10 +98,10 @@ Namespace Layouts
 
         Public Property point1 As LayoutPoint
         Public Property point2 As LayoutPoint
-        Public Property length As Single
-        Public Property K As Single
+        Public Property length As Double
+        Public Property K As Double
 
-        Public Sub New(point1 As LayoutPoint, point2 As LayoutPoint, length As Single, K As Single)
+        Public Sub New(point1 As LayoutPoint, point2 As LayoutPoint, length As Double, K As Double)
             Me.point1 = point1
             Me.point2 = point2
             Me.length = length
@@ -117,7 +117,7 @@ Namespace Layouts
 
         Public node As Node
         Public point As LayoutPoint
-        Public distance As Single?
+        Public distance As Double?
 
         Public Sub New()
             node = Nothing
@@ -129,8 +129,8 @@ Namespace Layouts
     Public Class BoundingBox
 
         ' ~5% padding
-        Public Const defaultBB As Single = 2.0F
-        Public Const defaultPadding As Single = 0.07F
+        Public Const defaultBB As Double = 2.0F
+        Public Const defaultPadding As Double = 0.07F
 
         Public topRightBack As AbstractVector
         Public bottomLeftFront As AbstractVector

@@ -111,7 +111,7 @@ Namespace Layouts
             End If
         End Sub
 
-        Public Sub New(x As Single, y As Single, z As Single)
+        Public Sub New(x As Double, y As Double, z As Double)
             Call MyBase.New()
 
             MyBase.x = x
@@ -184,14 +184,14 @@ Namespace Layouts
             Return Me
         End Function
 
-        Public Overrides Function Multiply(n As Single) As AbstractVector
+        Public Overrides Function Multiply(n As Double) As AbstractVector
             x = x * n
             y = y * n
             z = z * n
             Return Me
         End Function
 
-        Public Overrides Function Divide(n As Single) As AbstractVector
+        Public Overrides Function Divide(n As Double) As AbstractVector
             If n = 0F Then
                 x = 0F
                 y = 0F
@@ -204,7 +204,7 @@ Namespace Layouts
             Return Me
         End Function
 
-        Public Overrides Function Magnitude() As Single
+        Public Overrides Function Magnitude() As Double
             Return CSng(Sqrt(CDbl(x * x) + CDbl(y * y) + CDbl(z * z)))
         End Function
 
@@ -246,18 +246,18 @@ Namespace Layouts
             temp.Subtract(b)
             Return temp
         End Operator
-        Public Overloads Shared Operator *(a As FDGVector3, b As Single) As FDGVector3
+        Public Overloads Shared Operator *(a As FDGVector3, b As Double) As FDGVector3
             Dim temp As New FDGVector3(a.x, a.y, a.z)
             temp.Multiply(b)
             Return temp
         End Operator
-        Public Overloads Shared Operator *(a As Single, b As FDGVector3) As FDGVector3
+        Public Overloads Shared Operator *(a As Double, b As FDGVector3) As FDGVector3
             Dim temp As New FDGVector3(b.x, b.y, b.z)
             temp.Multiply(a)
             Return temp
         End Operator
 
-        Public Overloads Shared Operator /(a As FDGVector3, b As Single) As FDGVector3
+        Public Overloads Shared Operator /(a As FDGVector3, b As Double) As FDGVector3
             Dim temp As New FDGVector3(a.x, a.y, a.z)
             temp.Divide(b)
             Return temp

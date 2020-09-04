@@ -91,9 +91,9 @@ Namespace Layouts
     Public MustInherit Class AbstractVector
         Implements IVector
 
-        Public Property x As Single Implements IVector.x
-        Public Property y As Single Implements IVector.y
-        Public Property z As Single Implements IVector.z
+        Public Property x As Double Implements IVector.x
+        Public Property y As Double Implements IVector.y
+        Public Property z As Double Implements IVector.z
 
         Const MaxGdiDimensionPixels = 20000
 
@@ -137,9 +137,9 @@ Namespace Layouts
 
         Public MustOverride Function Add(v2 As AbstractVector) As AbstractVector Implements IVector.Add
         Public MustOverride Function Subtract(v2 As AbstractVector) As AbstractVector Implements IVector.Subtract
-        Public MustOverride Function Multiply(n As Single) As AbstractVector Implements IVector.Multiply
-        Public MustOverride Function Divide(n As Single) As AbstractVector Implements IVector.Divide
-        Public MustOverride Function Magnitude() As Single Implements IVector.Magnitude
+        Public MustOverride Function Multiply(n As Double) As AbstractVector Implements IVector.Multiply
+        Public MustOverride Function Divide(n As Double) As AbstractVector Implements IVector.Divide
+        Public MustOverride Function Magnitude() As Double Implements IVector.Magnitude
         Public MustOverride Function Normalize() As AbstractVector Implements IVector.Normalize
         Public MustOverride Function SetZero() As AbstractVector Implements IVector.SetZero
         Public MustOverride Function SetIdentity() As AbstractVector Implements IVector.SetIdentity
@@ -162,7 +162,7 @@ Namespace Layouts
             Return Nothing
         End Operator
 
-        Public Shared Operator *(a As AbstractVector, b As Single) As AbstractVector
+        Public Shared Operator *(a As AbstractVector, b As Double) As AbstractVector
             If TypeOf a Is FDGVector2 Then
                 Return TryCast(a, FDGVector2) * b
             ElseIf TypeOf a Is FDGVector3 Then
@@ -171,7 +171,7 @@ Namespace Layouts
             Return Nothing
         End Operator
 
-        Public Shared Operator *(a As Single, b As AbstractVector) As AbstractVector
+        Public Shared Operator *(a As Double, b As AbstractVector) As AbstractVector
             If TypeOf b Is FDGVector2 Then
                 Return a * TryCast(b, FDGVector2)
             ElseIf TypeOf b Is FDGVector3 Then
@@ -180,7 +180,7 @@ Namespace Layouts
             Return Nothing
         End Operator
 
-        Public Shared Operator /(a As AbstractVector, b As Single) As AbstractVector
+        Public Shared Operator /(a As AbstractVector, b As Double) As AbstractVector
             If TypeOf a Is FDGVector2 Then
                 Return TryCast(a, FDGVector2) / b
             ElseIf TypeOf a Is FDGVector3 Then
