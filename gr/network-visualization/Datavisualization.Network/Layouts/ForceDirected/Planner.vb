@@ -23,7 +23,7 @@ Namespace Layouts.ForceDirected
         ''' <summary>
         ''' The attraction strength between two connected vertices
         ''' </summary>
-        Private Const VertexAttractionForceStrength As Double = 0.1R
+        Private Const VertexAttractionForceStrength As Double = 0.9R
 
         ''' <summary>
         ''' Plans the specified graph.
