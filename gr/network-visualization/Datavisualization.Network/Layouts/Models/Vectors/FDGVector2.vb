@@ -231,9 +231,14 @@ Namespace Layouts
         ''' <param name="norm">The norm.</param>
         ''' <returns>Vector.</returns>
         Public Function Normalized(<Out> ByRef norm As Double) As FDGVector2
-            norm = Magnitude()
-            Dim inverseNorm = 1.0R / norm
-            Return New FDGVector2(x * inverseNorm, y * inverseNorm)
+            If x = 0.0 AndAlso y = 0.0 Then
+                norm = 0
+                Return FDGVector2.Zero
+            Else
+                norm = Magnitude()
+                Dim inverseNorm = 1.0R / norm
+                Return New FDGVector2(x * inverseNorm, y * inverseNorm)
+            End If
         End Function
 
         Public Function Normal() As AbstractVector

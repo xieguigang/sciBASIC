@@ -139,7 +139,7 @@ Namespace Layouts.ForceDirected
         Private Function CreateRandomLocations(
        ByVal graph As NetworkGraph) As Dictionary(Of Node, Vector2D)
             Dim random = randf.seeds
-            Dim initialLocations = graph.vertex.ToDictionary(Function(v) v, Function(v) New Vector2D(random.NextDouble(), random.NextDouble()))
+            Dim initialLocations = graph.vertex.ToDictionary(Function(v) v, Function(v) New Vector2D(10000 * random.NextDouble(), 10000 * random.NextDouble()))
             Return initialLocations
         End Function
 
@@ -155,13 +155,17 @@ Namespace Layouts.ForceDirected
             Dim currentDistance As Double
             Dim direction = New FDGVector2([of] - from).Normalized(currentDistance)
 
-            ' strength decrease is proportional to the squared distance;
-            ' this imitates Coulomb's Law of the repulsion of charged particles (F = k*Q1*Q2/r^2)
-            ' where we assume the charge to be equal for all particles.
-            Dim strength = repulsionForce / (currentDistance * currentDistance)
+            If currentDistance = 0.0 OrElse (direction.x = 0.0 AndAlso direction.y = 0.0) Then
+                Return FDGVector2.Zero
+            Else
+                ' strength decrease is proportional to the squared distance;
+                ' this imitates Coulomb's Law of the repulsion of charged particles (F = k*Q1*Q2/r^2)
+                ' where we assume the charge to be equal for all particles.
+                Dim strength = repulsionForce / (currentDistance * currentDistance)
 
-            ' return the force vector
-            Return direction * strength
+                ' return the force vector
+                Return direction * strength
+            End If
         End Function
 
         ''' <summary>
@@ -193,15 +197,19 @@ Namespace Layouts.ForceDirected
             Dim currentDistance As Double
             Dim direction = New FDGVector2(locationOf - locationFrom).Normalized(currentDistance)
 
-            ' determine the spring strength by Hooke's law:
-            ' If the expected distance is larger than the current distance, the spring is
-            ' too short and should thus expand; hence the attraction force is zero.
-            ' If the expected distance is smaller than the current distance, the spring needs
-            ' to contract, hence the strength is positive.
-            Dim strength = attractionStrength * stdNum.Max(currentDistance - expectedDistance, 0)
+            If currentDistance = 0.0 OrElse (direction.x = 0.0 AndAlso direction.y = 0.0) Then
+                Return FDGVector2.Zero
+            Else
+                ' determine the spring strength by Hooke's law:
+                ' If the expected distance is larger than the current distance, the spring is
+                ' too short and should thus expand; hence the attraction force is zero.
+                ' If the expected distance is smaller than the current distance, the spring needs
+                ' to contract, hence the strength is positive.
+                Dim strength = attractionStrength * stdNum.Max(currentDistance - expectedDistance, 0)
 
-            ' In order to contract, we reverse the force direction
-            Return direction * -strength
+                ' In order to contract, we reverse the force direction
+                Return direction * -strength
+            End If
         End Function
     End Module
 End Namespace
