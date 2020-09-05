@@ -94,7 +94,7 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
-Namespace Layouts.Interfaces
+Namespace Layouts.SpringForce.Interfaces
 
     Public Delegate Sub EdgeAction(edge As Edge, spring As Spring)
     Public Delegate Sub NodeAction(edge As Node, point As LayoutPoint)

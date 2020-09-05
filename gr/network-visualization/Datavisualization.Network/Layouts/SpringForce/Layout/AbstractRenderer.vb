@@ -82,9 +82,9 @@
 '
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     Public MustInherit Class AbstractRenderer
         Implements IRenderer
@@ -104,7 +104,7 @@ Namespace Layouts
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="iTimeStep"><see cref="IForceDirected.Calculate(Single)"/></param>
+        ''' <param name="iTimeStep"><see cref="IForceDirected.Calculate"/></param>
         ''' <param name="physicsUpdate"></param>
         Public Sub Draw(iTimeStep As Double, Optional physicsUpdate As Boolean = True) Implements IRenderer.Draw
             If physicsUpdate Then

@@ -89,7 +89,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     Public Class FDGVector2 : Inherits AbstractVector
 

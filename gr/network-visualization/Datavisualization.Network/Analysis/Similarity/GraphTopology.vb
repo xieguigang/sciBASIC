@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.SimilarityImpl
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
 

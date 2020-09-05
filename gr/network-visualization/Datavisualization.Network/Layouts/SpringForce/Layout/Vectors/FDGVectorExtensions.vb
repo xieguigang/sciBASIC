@@ -42,7 +42,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     Module FDGVectorExtensions
 

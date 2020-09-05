@@ -85,7 +85,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Namespace Layouts.Interfaces
+Namespace Layouts.SpringForce.Interfaces
 
     Public Interface IVector
         Property x() As Double

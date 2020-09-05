@@ -42,9 +42,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     Public Class ForceDirected3D
         Inherits ForceDirected(Of FDGVector3)
@@ -54,14 +53,14 @@ Namespace Layouts
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
-            If Not (nodePoints.ContainsKey(iNode.Label)) Then
+            If Not (nodePoints.ContainsKey(iNode.label)) Then
                 Dim iniPosition As FDGVector3 = TryCast(iNode.data.initialPostion, FDGVector3)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If
-                nodePoints(iNode.Label) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
+                nodePoints(iNode.label) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
             End If
-            Return nodePoints(iNode.Label)
+            Return nodePoints(iNode.label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox

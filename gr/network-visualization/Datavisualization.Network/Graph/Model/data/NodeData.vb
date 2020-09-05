@@ -46,7 +46,7 @@
 
 Imports System.Drawing
 Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 

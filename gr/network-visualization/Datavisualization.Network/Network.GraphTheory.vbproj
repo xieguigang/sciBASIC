@@ -640,9 +640,9 @@
     <Compile Include="Layouts\EdgeBundling\Handle.vb" />
     <Compile Include="Layouts\EdgeBundling\HandleCreator.vb" />
     <Compile Include="Layouts\EdgeBundling\XYMetaHandle.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected3D.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected2D.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVectorExtensions.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Layout\ForceDirected3D.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Layout\ForceDirected2D.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Vectors\FDGVectorExtensions.vb" />
     <Compile Include="Layouts\Orthogonal\Router.vb" />
     <Compile Include="Layouts\Orthogonal\Workspace.vb" />
     <Compile Include="Layouts\Orthogonal\Math.vb" />
@@ -650,7 +650,7 @@
     <Compile Include="Layouts\Orthogonal\Grid.vb" />
     <Compile Include="Layouts\Orthogonal\Algorithm.vb" />
     <Compile Include="Layouts\Parameters.vb" />
-    <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
+    <Compile Include="Layouts\SpringForce\LayoutUpdater.vb" />
     <Compile Include="Layouts\forceNetwork.vb" />
     <Compile Include="Analysis\Extensions.vb" />
     <Compile Include="Analysis\Statistics.vb" />
@@ -659,17 +659,17 @@
     <Compile Include="Graph\Model\Graph.vb" />
     <Compile Include="Graph\Model\data\GraphData.vb" />
     <Compile Include="Graph\Model\Node.vb" />
-    <Compile Include="Layouts\ForceDirected\Interfaces\IForceDirected.vb" />
-    <Compile Include="Layouts\ForceDirected\Interfaces\IGraph.vb" />
-    <Compile Include="Layouts\ForceDirected\Interfaces\IRenderer.vb" />
-    <Compile Include="Layouts\ForceDirected\Interfaces\IVector.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\AbstractRenderer.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Vectors\AbstractVector.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVector2.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Vectors\FDGVector3.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Layout\ForceDirected.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Point.vb" />
-    <Compile Include="Layouts\ForceDirected\Layout\Spring.vb" />
+    <Compile Include="Layouts\SpringForce\Interfaces\IForceDirected.vb" />
+    <Compile Include="Layouts\SpringForce\Interfaces\IGraph.vb" />
+    <Compile Include="Layouts\SpringForce\Interfaces\IRenderer.vb" />
+    <Compile Include="Layouts\SpringForce\Interfaces\IVector.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\AbstractRenderer.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Vectors\AbstractVector.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Vectors\FDGVector2.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Vectors\FDGVector3.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Layout\ForceDirected.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Point.vb" />
+    <Compile Include="Layouts\SpringForce\Layout\Spring.vb" />
     <Compile Include="Graph\Abstract.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="NetworkAPI.vb" />
@@ -701,7 +701,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Layouts\ForceDirected\README.md" />
+    <None Include="Layouts\SpringForce\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -730,7 +730,9 @@
       <Name>physics</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Layouts\ForceDirected\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

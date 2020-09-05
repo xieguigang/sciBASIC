@@ -92,7 +92,7 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     Public Class Spring
 

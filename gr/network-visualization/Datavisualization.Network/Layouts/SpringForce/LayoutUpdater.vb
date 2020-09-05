@@ -48,9 +48,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     Public Module LayoutUpdater
 

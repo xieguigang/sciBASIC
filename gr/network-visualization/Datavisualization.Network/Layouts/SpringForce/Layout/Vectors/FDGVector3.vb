@@ -87,7 +87,7 @@ Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.Math
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     Public Class FDGVector3
         Inherits AbstractVector

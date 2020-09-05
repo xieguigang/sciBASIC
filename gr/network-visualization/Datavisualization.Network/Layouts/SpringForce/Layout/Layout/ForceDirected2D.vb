@@ -43,7 +43,7 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     ''' <summary>
     ''' Layout provider engine for the 2D network graphics.
@@ -57,16 +57,16 @@ Namespace Layouts
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
             Dim iniPosition As FDGVector2
 
-            If Not (nodePoints.ContainsKey(iNode.Label)) Then
+            If Not (nodePoints.ContainsKey(iNode.label)) Then
                 iniPosition = TryCast(iNode.data.initialPostion, FDGVector2)
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
 
-                nodePoints(iNode.Label) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+                nodePoints(iNode.label) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
             End If
 
-            Return nodePoints(iNode.Label)
+            Return nodePoints(iNode.label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox

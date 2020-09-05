@@ -87,9 +87,9 @@
 '
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     Public MustInherit Class ForceDirected(Of Vector As IVector)
         Implements IForceDirected
