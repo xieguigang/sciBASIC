@@ -168,6 +168,14 @@ Namespace Graph
             Call Me.New(Nothing, Nothing, Nothing, Nothing)
         End Sub
 
+        Public Function Other(current As Node) As Node
+            If U Is current Then
+                Return V
+            Else
+                Return U
+            End If
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return ID

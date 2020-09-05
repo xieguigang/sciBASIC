@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::293989434f626172ffa2f217d395156a, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\FDGVector2.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FDGVector2
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
-    '                   Magnitude, Multiply, Normal, Normalize, Random
-    '                   SetIdentity, SetZero, Subtract, Zero
-    '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, +, <>
-    '                    =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FDGVector2
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
+'                   Magnitude, Multiply, Normal, Normalize, Random
+'                   SetIdentity, SetZero, Subtract, Zero
+'         Operators: -, (+2 Overloads) *, (+2 Overloads) /, +, <>
+'                    =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -86,6 +86,8 @@
 Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 
@@ -106,6 +108,12 @@ Namespace Layouts
             y = iY
 
             z = 0F
+        End Sub
+
+        Sub New(point As Vector2D)
+            x = point.x
+            y = point.y
+            z = 0
         End Sub
 
         Sub New(pt As Point)
@@ -196,8 +204,31 @@ Namespace Layouts
             Return Me
         End Function
 
+        ''' <summary>
+        ''' Calculates the squared 2-norm of this instance.
+        ''' </summary>
+        ''' <returns>System.Double.</returns>
+        Public Function SquaredNorm() As Double
+            Return x * x + y * y
+        End Function
+
+        ''' <summary>
+        ''' [norm] Calculates the 2-norm of this instance.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function Magnitude() As Double
             Return CSng(Sqrt(CDbl(x * x) + CDbl(y * y)))
+        End Function
+
+        ''' <summary>
+        ''' Returns the normalized vector.
+        ''' </summary>
+        ''' <param name="norm">The norm.</param>
+        ''' <returns>Vector.</returns>
+        Public Function Normalized(<Out> ByRef norm As Double) As FDGVector2
+            norm = Magnitude()
+            Dim inverseNorm = 1.0R / norm
+            Return New FDGVector2(x * inverseNorm, y * inverseNorm)
         End Function
 
         Public Function Normal() As AbstractVector

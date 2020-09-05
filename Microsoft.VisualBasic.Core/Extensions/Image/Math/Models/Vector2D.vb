@@ -86,6 +86,10 @@ Namespace Imaging.Math2D
             End With
         End Operator
 
+        Public Shared Operator -(x As Vector2D, y As Vector2D) As Vector2D
+            Return New Vector2D(x.x - y.x, x.y - y.y)
+        End Operator
+
         ''' <summary>
         ''' multiple
         ''' </summary>

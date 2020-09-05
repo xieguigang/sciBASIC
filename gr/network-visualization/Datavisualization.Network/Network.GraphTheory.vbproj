@@ -640,6 +640,8 @@
     <Compile Include="Layouts\EdgeBundling\Handle.vb" />
     <Compile Include="Layouts\EdgeBundling\HandleCreator.vb" />
     <Compile Include="Layouts\EdgeBundling\XYMetaHandle.vb" />
+    <Compile Include="Layouts\ForceDirected\Graph.vb" />
+    <Compile Include="Layouts\ForceDirected\Planner.vb" />
     <Compile Include="Layouts\SpringForce\Layout\Layout\ForceDirected3D.vb" />
     <Compile Include="Layouts\SpringForce\Layout\Layout\ForceDirected2D.vb" />
     <Compile Include="Layouts\Models\Vectors\FDGVectorExtensions.vb" />
@@ -730,9 +732,7 @@
       <Name>physics</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Layouts\ForceDirected\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
