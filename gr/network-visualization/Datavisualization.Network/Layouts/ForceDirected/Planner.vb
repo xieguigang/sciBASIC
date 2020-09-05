@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
@@ -31,13 +32,19 @@ Namespace Layouts.ForceDirected
         ''' <param name="MaximumIterations">
         ''' The maximum number of iterations
         ''' </param>
-        Public Function Plan(ByVal graph As NetworkGraph, Optional MaximumIterations As Integer = 1000) As IReadOnlyDictionary(Of Node, Vector2D)
+        Public Function Plan(ByVal graph As NetworkGraph, Optional MaximumIterations As Integer = 1000, Optional progress As Action(Of String) = Nothing) As IReadOnlyDictionary(Of Node, Vector2D)
             ' create initial random locations for each vertex
             Dim currentLocations = CreateRandomLocations(graph)
 
             ' loop until the number of iterations exceeds the hard limit
             Const terminationThreshold = Planner.TerminationThreshold * Planner.TerminationThreshold
-            Dim i = 0
+            Dim i As i32 = 0
+
+            If progress Is Nothing Then
+                progress = Sub()
+                               ' do nothing
+                           End Sub
+            End If
 
             While i < MaximumIterations
                 ' the total displacement, used as a stop condition
@@ -75,7 +82,7 @@ Namespace Layouts.ForceDirected
                 If totalDisplacement < terminationThreshold Then
                     Exit While
                 Else
-                    i += 1
+                    Call progress($"[{++i}/{MaximumIterations}]")
                 End If
             End While
 
