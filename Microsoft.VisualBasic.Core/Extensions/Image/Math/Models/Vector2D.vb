@@ -75,6 +75,10 @@ Namespace Imaging.Math2D
             Me.y = y
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"[{x}, {y}]"
+        End Function
+
         Public Shared Operator +(a As Vector2D, b As Layout2D) As Vector2D
             Return New Vector2D(a.x + b.X, a.y + b.Y)
         End Operator
