@@ -25,15 +25,13 @@ Namespace Layouts.ForceDirected
         Private Const VertexAttractionForceStrength As Double = 0.1R
 
         ''' <summary>
-        ''' The maximum number of iterations
-        ''' </summary>
-        Private Const MaximumIterations As Integer = 1000
-
-        ''' <summary>
         ''' Plans the specified graph.
         ''' </summary>
         ''' <param name="graph">The graph.</param>
-        Public Function Plan(ByVal graph As NetworkGraph) As IReadOnlyDictionary(Of Node, Vector2D)
+        ''' <param name="MaximumIterations">
+        ''' The maximum number of iterations
+        ''' </param>
+        Public Function Plan(ByVal graph As NetworkGraph, Optional MaximumIterations As Integer = 1000) As IReadOnlyDictionary(Of Node, Vector2D)
             ' create initial random locations for each vertex
             Dim currentLocations = CreateRandomLocations(graph)
 
