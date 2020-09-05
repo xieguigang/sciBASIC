@@ -91,8 +91,8 @@ Namespace Layouts
     Public MustInherit Class AbstractVector
         Implements IVector
 
-        Public Property x As Double Implements IVector.x
-        Public Property y As Double Implements IVector.y
+        Public Overridable Property x As Double Implements IVector.x
+        Public Overridable Property y As Double Implements IVector.y
         Public Property z As Double Implements IVector.z
 
         Const MaxGdiDimensionPixels = 20000

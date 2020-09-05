@@ -8,7 +8,7 @@ Namespace Layouts.ForceDirected
     ''' <summary>
     ''' Class Planner.
     ''' </summary>
-    Public Class Planner
+    Public Module Planner
         ''' <summary>
         ''' The node displacement termination threshold
         ''' </summary>
@@ -44,17 +44,16 @@ Namespace Layouts.ForceDirected
             While i < MaximumIterations
                 ' the total displacement, used as a stop condition
                 Dim totalDisplacement = 0.0R
-
                 ' prepare the new positions
-                Dim newLocations = New Dictionary(Of Vertex, Location)(currentLocations)
+                Dim newLocations As New Dictionary(Of Node, Vector2D)(currentLocations)
 
                 ' iterate over all vertices ...
-                For Each vertex In graph.vertices
+                For Each vertex As Node In graph.vertex
                     ' obtain the vertex location
-                    Dim locationOf = currentLocations(vertex)
+                    Dim locationOf As Vector2D = currentLocations(vertex)
 
                     ' and process against all other vertices
-                    Dim netForce = Vector.Zero
+                    Dim netForce As FDGVector2 = FDGVector2.Zero
                     netForce += CalculateTotalRepulsion(graph, vertex, locationOf, currentLocations)
                     netForce += CalculateTotalAttraction(graph, vertex, locationOf, currentLocations) ' TODO: make use of force symmetry along edges here
 
@@ -67,7 +66,7 @@ Namespace Layouts.ForceDirected
                 Next
 
                 ' calculate the center
-                Dim center = newLocations.Aggregate(Vector.Zero, Function(vector, location) vector + CType(location.Value, Vector)) * (1.0R / currentLocations.Count)
+                Dim center As FDGVector2 = newLocations.Aggregate(FDGVector2.Zero, Function(vector, location) vector + New FDGVector2(location.Value)) * (1.0R / currentLocations.Count)
 
                 ' adjust each node to prevent creep
                 For Each location In newLocations
@@ -75,8 +74,11 @@ Namespace Layouts.ForceDirected
                 Next
 
                 ' early exit if nodes don't move much anymore
-                If totalDisplacement < terminationThreshold Then Exit While
-                Threading.Interlocked.Increment(i)
+                If totalDisplacement < terminationThreshold Then
+                    Exit While
+                Else
+                    i += 1
+                End If
             End While
 
             Return currentLocations
@@ -90,10 +92,15 @@ Namespace Layouts.ForceDirected
         ''' <param name="vertexLocation"></param>
         ''' <param name="currentLocations">The current locations.</param>
         ''' <returns>Vector.</returns>
-        Private Shared Function CalculateTotalRepulsion(
- ByVal graph As NetworkGraph, ByVal vertex As Node, ByVal vertexLocation As FDGVector2,
+        Private Function CalculateTotalRepulsion(
+ ByVal graph As NetworkGraph, ByVal vertex As Node, ByVal vertexLocation As Vector2D,
  ByVal currentLocations As IReadOnlyDictionary(Of Node, Vector2D)) As FDGVector2
-            Dim forces = From other In graph.GetEdges(vertex).AsParallel() Where Not other.Equals(vertex) Let otherLocation = currentLocations(other) Select GetRepulsionForce(vertexLocation, otherLocation)
+            Dim forces = From other As Node
+                         In graph.vertex.AsParallel()
+                         Where Not other Is vertex
+                         Let otherLocation = currentLocations(other)
+                         Select GetRepulsionForce(vertexLocation, otherLocation)
+
             Dim force = forces.Aggregate(DirectCast(FDGVector2.Zero, FDGVector2), Function(current, sumOfForces) sumOfForces + current)
             Return force
         End Function
@@ -106,10 +113,15 @@ Namespace Layouts.ForceDirected
         ''' <param name="vertexLocation"></param>
         ''' <param name="currentLocations">The current locations.</param>
         ''' <returns>Vector.</returns>
-        Private Shared Function CalculateTotalAttraction(
+        Private Function CalculateTotalAttraction(
  ByVal graph As NetworkGraph, ByVal vertex As Node, ByVal vertexLocation As Vector2D,
  ByVal currentLocations As IReadOnlyDictionary(Of Node, Vector2D)) As FDGVector2
-            Dim forces = From edges As Edge In graph.GetEdges(vertex).AsParallel() Let other = edges.Other(vertex) Let otherLocation = currentLocations(other) Select GetAttractionForce(graph, vertex, vertexLocation, other, otherLocation)
+            Dim forces = From edges As Edge
+                         In graph.GetEdges(vertex).AsParallel()
+                         Let other = edges.Other(vertex)
+                         Let otherLocation = currentLocations(other)
+                         Select GetAttractionForce(graph, vertex, vertexLocation, other, otherLocation)
+
             Dim force = forces.Aggregate(DirectCast(FDGVector2.Zero, FDGVector2), Function(current, sumOfForces) sumOfForces + current)
             Return force
         End Function
@@ -119,7 +131,7 @@ Namespace Layouts.ForceDirected
         ''' </summary>
         ''' <param name="graph">The graph.</param>
         ''' <returns>ILookup&lt;Vertex, Location&gt;.</returns>
-        Private Shared Function CreateRandomLocations(
+        Private Function CreateRandomLocations(
        ByVal graph As NetworkGraph) As Dictionary(Of Node, Vector2D)
             Dim random = randf.seeds
             Dim initialLocations = graph.vertex.ToDictionary(Function(v) v, Function(v) New Vector2D(random.NextDouble(), random.NextDouble()))
@@ -133,7 +145,7 @@ Namespace Layouts.ForceDirected
         ''' <param name="from">The other node.</param>
         ''' <param name="repulsionForce">The repulsion force.</param>
         ''' <returns>The force vector.</returns>
-        Private Shared Function GetRepulsionForce(ByVal [of] As Vector2D, ByVal from As Vector2D, ByVal Optional repulsionForce As Double = VertexRepulsionForceStrength) As FDGVector2
+        Private Function GetRepulsionForce(ByVal [of] As Vector2D, ByVal from As Vector2D, ByVal Optional repulsionForce As Double = VertexRepulsionForceStrength) As FDGVector2
             ' get the proximity and the direction
             Dim currentDistance As Double
             Dim direction = New FDGVector2([of] - from).Normalized(currentDistance)
@@ -157,7 +169,7 @@ Namespace Layouts.ForceDirected
         ''' <param name="locationFrom">The location from.</param>
         ''' <param name="attractionStrength">The attraction strength.</param>
         ''' <returns>The force vector.</returns>
-        Private Shared Function GetAttractionForce(
+        Private Function GetAttractionForce(
  ByVal graph As NetworkGraph,
  ByVal [of] As Node, ByVal locationOf As Vector2D,
  ByVal from As Node, ByVal locationFrom As Vector2D, ByVal Optional attractionStrength As Double = VertexAttractionForceStrength) As FDGVector2
@@ -186,5 +198,5 @@ Namespace Layouts.ForceDirected
             ' In order to contract, we reverse the force direction
             Return direction * -strength
         End Function
-    End Class
+    End Module
 End Namespace

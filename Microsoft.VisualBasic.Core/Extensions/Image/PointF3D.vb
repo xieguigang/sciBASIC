@@ -50,4 +50,11 @@ Namespace Imaging
         Property Y!
         Property Z!
     End Interface
+
+    Public Interface Layout2D
+
+        Property X As Double
+        Property Y As Double
+
+    End Interface
 End Namespace

@@ -87,6 +87,7 @@ Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -94,6 +95,10 @@ Imports Microsoft.VisualBasic.Math
 Namespace Layouts
 
     Public Class FDGVector2 : Inherits AbstractVector
+        Implements Layout2D
+
+        Public Overrides Property x As Double Implements Layout2D.X
+        Public Overrides Property y As Double Implements Layout2D.Y
 
         Public Sub New()
             MyBase.New()
