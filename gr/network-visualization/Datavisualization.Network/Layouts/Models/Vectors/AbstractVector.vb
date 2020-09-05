@@ -86,7 +86,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 
-Namespace Layouts.SpringForce
+Namespace Layouts
 
     Public MustInherit Class AbstractVector
         Implements IVector

@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Layouts
+Namespace Layouts.SpringForce
 
     ''' <summary>
     ''' The network graph layout parameters
