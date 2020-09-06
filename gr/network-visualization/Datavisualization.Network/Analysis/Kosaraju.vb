@@ -121,7 +121,7 @@ Namespace Analysis
             Next
         End Sub
 
-        Private Sub [loop](ByVal gr As NetworkGraph, tp As EdgeTraversalPolicy)
+        Private Sub [loop](gr As NetworkGraph, tp As EdgeTraversalPolicy)
             Dim vs As ICollection(Of Node)
 
             If pass = 0 Then

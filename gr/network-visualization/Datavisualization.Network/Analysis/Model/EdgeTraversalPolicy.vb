@@ -64,11 +64,11 @@ Namespace Analysis.Model
         Public Sub New()
         End Sub
 
-        Public Overridable Function edges(ByVal v As DirectedVertex) As ISet(Of Edge) Implements EdgeTraversalPolicy.edges
+        Public Overridable Function edges(v As DirectedVertex) As ISet(Of Edge) Implements EdgeTraversalPolicy.edges
             Return v.outgoingEdges
         End Function
 
-        Public Overridable Function vertex(ByVal e As Edge) As Node Implements EdgeTraversalPolicy.vertex
+        Public Overridable Function vertex(e As Edge) As Node Implements EdgeTraversalPolicy.vertex
             Return e.U
         End Function
     End Class
@@ -78,11 +78,11 @@ Namespace Analysis.Model
         Public Sub New()
         End Sub
 
-        Public Overridable Function edges(ByVal v As DirectedVertex) As ISet(Of Edge) Implements EdgeTraversalPolicy.edges
+        Public Overridable Function edges(v As DirectedVertex) As ISet(Of Edge) Implements EdgeTraversalPolicy.edges
             Return v.incomingEdges
         End Function
 
-        Public Overridable Function vertex(ByVal e As Edge) As Node Implements EdgeTraversalPolicy.vertex
+        Public Overridable Function vertex(e As Edge) As Node Implements EdgeTraversalPolicy.vertex
             Return e.V
         End Function
     End Class

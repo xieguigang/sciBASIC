@@ -32,7 +32,7 @@ Namespace Layouts.ForceDirected
         ''' <param name="MaximumIterations">
         ''' The maximum number of iterations
         ''' </param>
-        Public Function Plan(ByVal graph As NetworkGraph, Optional MaximumIterations As Integer = 1000, Optional progress As Action(Of String) = Nothing) As IReadOnlyDictionary(Of Node, Vector2D)
+        Public Function Plan(graph As NetworkGraph, Optional MaximumIterations As Integer = 1000, Optional progress As Action(Of String) = Nothing) As IReadOnlyDictionary(Of Node, Vector2D)
             ' create initial random locations for each vertex
             Dim currentLocations = CreateRandomLocations(graph)
 
@@ -98,8 +98,8 @@ Namespace Layouts.ForceDirected
         ''' <param name="currentLocations">The current locations.</param>
         ''' <returns>Vector.</returns>
         Private Function CalculateTotalRepulsion(
- ByVal graph As NetworkGraph, ByVal vertex As Node, ByVal vertexLocation As Vector2D,
- ByVal currentLocations As IReadOnlyDictionary(Of Node, Vector2D)) As FDGVector2
+ graph As NetworkGraph, vertex As Node, vertexLocation As Vector2D,
+ currentLocations As IReadOnlyDictionary(Of Node, Vector2D)) As FDGVector2
             Dim forces = From other As Node
                          In graph.vertex.AsParallel()
                          Where Not other Is vertex
@@ -119,8 +119,8 @@ Namespace Layouts.ForceDirected
         ''' <param name="currentLocations">The current locations.</param>
         ''' <returns>Vector.</returns>
         Private Function CalculateTotalAttraction(
- ByVal graph As NetworkGraph, ByVal vertex As Node, ByVal vertexLocation As Vector2D,
- ByVal currentLocations As IReadOnlyDictionary(Of Node, Vector2D)) As FDGVector2
+ graph As NetworkGraph, vertex As Node, vertexLocation As Vector2D,
+ currentLocations As IReadOnlyDictionary(Of Node, Vector2D)) As FDGVector2
             Dim forces = From edges As Edge
                          In graph.GetEdges(vertex).AsParallel()
                          Let other = edges.Other(vertex)
@@ -137,7 +137,7 @@ Namespace Layouts.ForceDirected
         ''' <param name="graph">The graph.</param>
         ''' <returns>ILookup&lt;Vertex, Location&gt;.</returns>
         Private Function CreateRandomLocations(
-       ByVal graph As NetworkGraph) As Dictionary(Of Node, Vector2D)
+       graph As NetworkGraph) As Dictionary(Of Node, Vector2D)
             Dim random = randf.seeds
             Dim initialLocations = graph.vertex.ToDictionary(Function(v) v, Function(v) New Vector2D(10000 * random.NextDouble(), 10000 * random.NextDouble()))
             Return initialLocations
@@ -150,7 +150,7 @@ Namespace Layouts.ForceDirected
         ''' <param name="from">The other node.</param>
         ''' <param name="repulsionForce">The repulsion force.</param>
         ''' <returns>The force vector.</returns>
-        Private Function GetRepulsionForce(ByVal [of] As Vector2D, ByVal from As Vector2D, ByVal Optional repulsionForce As Double = VertexRepulsionForceStrength) As FDGVector2
+        Private Function GetRepulsionForce([of] As Vector2D, from As Vector2D, Optional repulsionForce As Double = VertexRepulsionForceStrength) As FDGVector2
             ' get the proximity and the direction
             Dim currentDistance As Double
             Dim direction = New FDGVector2([of] - from).Normalized(currentDistance)
@@ -179,9 +179,9 @@ Namespace Layouts.ForceDirected
         ''' <param name="attractionStrength">The attraction strength.</param>
         ''' <returns>The force vector.</returns>
         Private Function GetAttractionForce(
- ByVal graph As NetworkGraph,
- ByVal [of] As Node, ByVal locationOf As Vector2D,
- ByVal from As Node, ByVal locationFrom As Vector2D, ByVal Optional attractionStrength As Double = VertexAttractionForceStrength) As FDGVector2
+ graph As NetworkGraph,
+ [of] As Node, locationOf As Vector2D,
+ from As Node, locationFrom As Vector2D, Optional attractionStrength As Double = VertexAttractionForceStrength) As FDGVector2
             ' if vertices are unconnected, there is no force that
             ' pulls them together.
             Dim edges As Edge() = graph.GetEdges([of], from).ToArray
