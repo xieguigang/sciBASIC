@@ -60,9 +60,18 @@ Namespace Layouts
         ''' <param name="showProgress"></param>
         <ExportAPI("Layout.ForceDirected")>
         <Extension>
-        Public Function doForceLayout(ByRef net As NetworkGraph, parameters As ForceDirectedArgs, Optional showProgress As Boolean = False) As NetworkGraph
+        Public Function doForceLayout(ByRef net As NetworkGraph, parameters As ForceDirectedArgs,
+                                      Optional showProgress As Boolean = False,
+                                      Optional progressCallback As Action(Of String) = Nothing) As NetworkGraph
             With parameters
-                Return net.doForceLayout(.Stiffness, .Repulsion, .Damping, .Iterations, showProgress:=showProgress)
+                Return net.doForceLayout(
+                    Stiffness:= .Stiffness,
+                    Repulsion:= .Repulsion,
+                    Damping:= .Damping,
+                    iterations:= .Iterations,
+                    showProgress:=showProgress,
+                    progressCallback:=progressCallback
+                )
             End With
         End Function
 
