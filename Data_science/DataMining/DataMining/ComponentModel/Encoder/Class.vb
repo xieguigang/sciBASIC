@@ -116,6 +116,14 @@ Namespace ComponentModel.Encoder
             Return Not a = b
         End Operator
 
+        Public Shared Operator =(a As Integer, b As ColorClass) As Boolean
+            Return a = b.enumInt
+        End Operator
+
+        Public Shared Operator <>(a As Integer, b As ColorClass) As Boolean
+            Return Not a = b
+        End Operator
+
         Public Shared Operator =(a As ColorClass, b As ColorClass) As Boolean
             Return a.color = b.color AndAlso a.enumInt = b.enumInt AndAlso a.name = b.name
         End Operator

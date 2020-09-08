@@ -104,7 +104,13 @@ Imports stdNum = System.Math
         If q.All(Function(a) a = 0.0R) OrElse s.All(Function(a) a = 0.0R) Then
             Return 0
         Else
-            Return (q * s).Sum / stdNum.Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+            Dim score As Double = (q * s).Sum / stdNum.Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+
+            If score.IsNaNImaginary Then
+                Return 0
+            Else
+                Return score
+            End If
         End If
     End Function
 

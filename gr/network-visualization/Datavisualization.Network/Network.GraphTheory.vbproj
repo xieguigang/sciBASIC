@@ -672,6 +672,7 @@
     <Compile Include="Layouts\SpringForce\Layout\Point.vb" />
     <Compile Include="Layouts\SpringForce\Layout\Spring.vb" />
     <Compile Include="Graph\Abstract.vb" />
+    <Compile Include="Layouts\Radial\RadialLayout.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="NetworkAPI.vb" />
     <Compile Include="TreeAPI\TreeGraph.vb" />

@@ -614,19 +614,24 @@ Namespace SVM
             sigmoid_train(prob.Count, dec_values, prob.Y, probAB)
         End Sub
 
-        ' Return parameter of a Laplace distribution 
+        ''' <summary>
+        ''' Return parameter of a Laplace distribution 
+        ''' </summary>
+        ''' <param name="prob"></param>
+        ''' <param name="param"></param>
+        ''' <returns></returns>
         Private Function svm_svr_probability(prob As Problem, param As Parameter) As Double
             Dim i As Integer
             Dim nr_fold = 5
-            Dim ymv = New Double(prob.Count - 1) {}
+            Dim ymv = New SVMPrediction(prob.Count - 1) {}
             Dim mae As Double = 0
             Dim newparam As Parameter = CType(param.Clone(), Parameter)
             newparam.Probability = False
             svm_cross_validation(prob, newparam, nr_fold, ymv)
 
             For i = 0 To prob.Count - 1
-                ymv(i) = prob.Y(i) - ymv(i)
-                mae += stdNum.Abs(ymv(i))
+                ymv(i) = New SVMPrediction With {.unifyValue = prob.Y(i) - ymv(i).unifyValue}
+                mae += stdNum.Abs(ymv(i).unifyValue)
             Next
 
             mae /= prob.Count
@@ -636,10 +641,10 @@ Namespace SVM
 
             For i = 0 To prob.Count - 1
 
-                If stdNum.Abs(ymv(i)) > 5 * std Then
+                If stdNum.Abs(ymv(i).unifyValue) > 5 * std Then
                     count = count + 1
                 Else
-                    mae += stdNum.Abs(ymv(i))
+                    mae += stdNum.Abs(ymv(i).unifyValue)
                 End If
             Next
 
@@ -996,8 +1001,14 @@ Namespace SVM
             Return model
         End Function
 
-        ' Stratified cross validation
-        Public Sub svm_cross_validation(prob As Problem, param As Parameter, nr_fold As Integer, target As Double())
+        ''' <summary>
+        ''' Stratified cross validation
+        ''' </summary>
+        ''' <param name="prob"></param>
+        ''' <param name="param"></param>
+        ''' <param name="nr_fold"></param>
+        ''' <param name="target"></param>
+        Public Sub svm_cross_validation(prob As Problem, param As Parameter, nr_fold As Integer, target As SVMPrediction())
             Dim i As Integer
             Dim fold_start = New Integer(nr_fold + 1 - 1) {}
             Dim l = prob.Count
@@ -1164,7 +1175,7 @@ Namespace SVM
             End If
         End Function
 
-        Public Function svm_predict_values(model As Model, x As Node(), dec_values As Double()) As Double
+        Public Function svm_predict_values(model As Model, x As Node(), dec_values As Double()) As SVMPrediction
             Dim i As Integer
 
             If model.Parameter.SvmType = SvmType.ONE_CLASS OrElse model.Parameter.SvmType = SvmType.EPSILON_SVR OrElse model.Parameter.SvmType = SvmType.NU_SVR Then
@@ -1179,9 +1190,9 @@ Namespace SVM
                 dec_values(0) = sum
 
                 If model.Parameter.SvmType = SvmType.ONE_CLASS Then
-                    Return If(sum > 0, 1, -1)
+                    Return New SVMPrediction With {.[class] = If(sum > 0, 1, -1), .score = sum, .unifyValue = .class}
                 Else
-                    Return sum
+                    Return New SVMPrediction With {.[class] = Integer.MinValue, .score = sum, .unifyValue = sum}
                 End If
             Else
                 Dim nr_class = model.NumberOfClasses
@@ -1246,7 +1257,11 @@ Namespace SVM
                     If vote(i) > vote(vote_max_idx) Then vote_max_idx = i
                 Next
 
-                Return model.ClassLabels(vote_max_idx)
+                Return New SVMPrediction With {
+                    .[class] = model.ClassLabels(vote_max_idx),
+                    .score = vote(vote_max_idx),
+                    .unifyValue = .class
+                }
             End If
         End Function
 
@@ -1256,9 +1271,9 @@ Namespace SVM
         ''' <param name="model"></param>
         ''' <param name="x"></param>
         ''' <returns>
-        ''' 在这里使用double数值类型主要是为了兼容分类以及打分这两种工作模式
+        ''' 兼容分类以及打分这两种工作模式
         ''' </returns>
-        Public Function svm_predict(model As Model, x As Node()) As Double
+        Public Function svm_predict(model As Model, x As Node()) As SVMPrediction
             Dim nr_class = model.NumberOfClasses
             Dim dec_values As Double()
 
@@ -1268,16 +1283,18 @@ Namespace SVM
                 dec_values = New Double(CInt(nr_class * (nr_class - 1) / 2) - 1) {}
             End If
 
-            Dim pred_result = svm_predict_values(model, x, dec_values)
+            Dim pred_result As SVMPrediction = svm_predict_values(model, x, dec_values)
             Return pred_result
         End Function
 
-        Public Function svm_predict_probability(model As Model, x As Node(), prob_estimates As Double()) As Double
+        Public Function svm_predict_probability(model As Model, x As Node(), prob_estimates As Double()) As SVMPrediction
             If (model.Parameter.SvmType = SvmType.C_SVC OrElse model.Parameter.SvmType = SvmType.NU_SVC) AndAlso model.PairwiseProbabilityA IsNot Nothing AndAlso model.PairwiseProbabilityB IsNot Nothing Then
                 Dim i As Integer
                 Dim nr_class = model.NumberOfClasses
                 Dim dec_values = New Double(CInt(nr_class * (nr_class - 1) / 2) - 1) {}
-                svm_predict_values(model, x, dec_values)
+
+                Call svm_predict_values(model, x, dec_values)
+
                 Dim min_prob = 0.0000001
                 Dim pairwise_prob = New Double(nr_class - 1, nr_class - 1) {}
                 Dim k = 0
@@ -1291,14 +1308,19 @@ Namespace SVM
                     Next
                 Next
 
-                multiclass_probability(nr_class, pairwise_prob, prob_estimates)
+                Call multiclass_probability(nr_class, pairwise_prob, prob_estimates)
+
                 Dim prob_max_idx = 0
 
                 For i = 1 To nr_class - 1
                     If prob_estimates(i) > prob_estimates(prob_max_idx) Then prob_max_idx = i
                 Next
 
-                Return model.ClassLabels(prob_max_idx)
+                Return New SVMPrediction With {
+                    .[class] = model.ClassLabels(prob_max_idx),
+                    .score = prob_estimates(prob_max_idx),
+                    .unifyValue = .class
+                }
             Else
                 Return svm_predict(model, x)
             End If
@@ -1394,4 +1416,12 @@ Namespace SVM
             End If
         End Function
     End Module
+
+    Public Structure SVMPrediction
+
+        Public Property [class] As Integer
+        Public Property score As Double
+        Public Property unifyValue As Double
+
+    End Structure
 End Namespace

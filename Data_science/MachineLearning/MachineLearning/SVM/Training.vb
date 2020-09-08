@@ -87,7 +87,7 @@ Namespace SVM
 
         Private Function doCrossValidation(problem As Problem, parameters As Parameter, nr_fold As Integer) As Double
             Dim i As Integer
-            Dim target = New Double(problem.Count - 1) {}
+            Dim target = New SVMPrediction(problem.Count - 1) {}
 
             Call svm_cross_validation(problem, parameters, nr_fold, target)
 
@@ -99,19 +99,19 @@ Namespace SVM
                 For i = 0 To problem.Count - 1
                     Dim y = problem.Y(i)
                     Dim v = target(i)
-                    total_error += (v - y) * (v - y)
-                    sumv += v
+                    total_error += (v.unifyValue - y) * (v.unifyValue - y)
+                    sumv += v.unifyValue
                     sumy += y
-                    sumvv += v * v
+                    sumvv += v.unifyValue ^ 2
                     sumyy += y * y
-                    sumvy += v * y
+                    sumvy += v.unifyValue * y
                 Next
 
                 Return (problem.Count * sumvy - sumv * sumy) / (stdNum.Sqrt(problem.Count * sumvv - sumv * sumv) * stdNum.Sqrt(problem.Count * sumyy - sumy * sumy))
             Else
 
                 For i = 0 To problem.Count - 1
-                    If target(i) = problem.Y(i) Then
+                    If target(i).class = problem.Y(i) Then
                         total_correct += 1
                     End If
                 Next

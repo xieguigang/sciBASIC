@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::9ce236e78dd8eb57a9e58293d7e2592a, Data_science\MachineLearning\MachineLearning\SVM\Prediction.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Prediction
-    ' 
-    '         Function: (+2 Overloads) Predict, PredictLabels, PredictLabelsProbability, PredictProbability
-    ' 
-    '         Sub: exit_with_help
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Prediction
+' 
+'         Function: (+2 Overloads) Predict, PredictLabels, PredictLabelsProbability, PredictProbability
+' 
+'         Sub: exit_with_help
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace SVM
@@ -113,13 +114,13 @@ Namespace SVM
             For i = 0 To problem.Count - 1
                 Dim target = problem.Y(i)
                 Dim x = problem.X(i)
-                Dim v As Double
+                Dim v As SVMPrediction
 
                 If predict_probability AndAlso (svm_type = SvmType.C_SVC OrElse svm_type = SvmType.NU_SVC) Then
                     v = svm_predict_probability(model, x, prob_estimates)
 
                     If output IsNot Nothing Then
-                        output.Write(v & " ")
+                        output.Write(v.GetJson & " ")
 
                         For j = 0 To nr_class - 1
                             output.Write(prob_estimates(j) & " ")
@@ -130,20 +131,20 @@ Namespace SVM
                 Else
                     v = svm_predict(model, x)
                     If output IsNot Nothing Then
-                        output.Write(v & ASCII.LF)
+                        output.Write(v.GetJson & ASCII.LF)
                     End If
                 End If
 
-                If v = target Then
+                If v.class = target Then
                     correct += 1
                 End If
 
-                [error] += (v - target) * (v - target)
-                sumv += v
+                [error] += (v.unifyValue - target) * (v.unifyValue - target)
+                sumv += v.unifyValue
                 sumy += target
-                sumvv += v * v
+                sumvv += v.unifyValue ^ 2
                 sumyy += target * target
-                sumvy += v * target
+                sumvy += v.unifyValue * target
                 total += 1
             Next
 
@@ -163,7 +164,7 @@ Namespace SVM
         ''' <param name="problem">The problem to solve</param>
         ''' <returns>The predicted labels</returns>
         <Extension()>
-        Public Function PredictLabels(model As Model, problem As Problem) As Double()
+        Public Function PredictLabels(model As Model, problem As Problem) As SVMPrediction()
             Return problem.X.[Select](Function(o) model.Predict(o)).ToArray()
         End Function
 
@@ -185,7 +186,7 @@ Namespace SVM
         ''' <param name="x">The vector for which to predict class</param>
         ''' <returns>The result</returns>
         <Extension()>
-        Public Function Predict(model As Model, x As Node()) As Double
+        Public Function Predict(model As Model, x As Node()) As SVMPrediction
             Return svm_predict(model, x)
         End Function
 
