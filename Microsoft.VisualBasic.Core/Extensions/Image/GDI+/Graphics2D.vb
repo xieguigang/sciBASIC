@@ -109,6 +109,7 @@ Namespace Imaging
             innerImage = base
             Size = base.Size
             Center = New Point(Size.Width / 2, Size.Height / 2)
+            Graphics = Graphics.FromImage(base)
         End Sub
 
         ''' <summary>
