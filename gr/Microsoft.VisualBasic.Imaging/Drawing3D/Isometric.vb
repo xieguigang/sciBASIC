@@ -258,16 +258,17 @@ Namespace Drawing3D
             End With
 
             For Each model2D As Model2D In models
-                '            this.ctx.globalAlpha = color.a;
-                '            this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
-                '            this.ctx.stroke();
-                '            this.ctx.fill();
-                '            this.ctx.restore();
-                With model2D
-                    Call canvas.FillPath(.Paint, .DrawPath.Path)
-                    ' 对于线条而言，直接使用DrawPath来进行绘制
-                    Call canvas.DrawPath(New Pen(.Paint), .DrawPath.Path)
-                End With
+                If model2D.isDot Then
+                    Throw New NotImplementedException
+                ElseIf model2D.isLine Then
+                    canvas.DrawLine(New Pen(model2D.baseColor), model2D.TransformedPoints(0).PointXY(canvas.Size), model2D.TransformedPoints(1).PointXY(canvas.Size))
+                Else
+                    With model2D
+                        Call canvas.FillPath(.Paint, .DrawPath.Path)
+                        ' 对于线条而言，直接使用DrawPath来进行绘制
+                        Call canvas.DrawPath(New Pen(.Paint), .DrawPath.Path)
+                    End With
+                End If
             Next
         End Sub
 

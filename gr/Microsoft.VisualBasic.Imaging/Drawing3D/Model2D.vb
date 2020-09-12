@@ -62,6 +62,18 @@ Namespace Drawing3D
         ''' </summary>
         Friend DrawPath As Path2D
 
+        Public ReadOnly Property isLine As Boolean
+            Get
+                Return path.isLine3D
+            End Get
+        End Property
+
+        Public ReadOnly Property isDot As Boolean
+            Get
+                Return path.isDot3D
+            End Get
+        End Property
+
         Friend Sub New(item As Model2D)
             TransformedPoints = item.TransformedPoints
             DrawPath = item.DrawPath
