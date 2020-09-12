@@ -210,13 +210,14 @@ Public Module Scatter
                     Optional legendSplit% = -1,
                     Optional hullConvexList As String() = Nothing,
                     Optional XtickFormat$ = "F2",
-                    Optional YtickFormat$ = "F2")
+                    Optional YtickFormat$ = "F2",
+                    Optional axisStroke$ = Stroke.AxisStroke)
 
         Dim array As SerialData() = c.ToArray
         Dim XTicks#(), YTicks#()
         Dim hullPolygonIndex As Index(Of String) = hullConvexList.SafeQuery.ToArray
 
-        With array.CreateAxisTicks(preferPositive)
+        With array.CreateAxisTicks(preferPositive, scale:=If(XaxisAbsoluteScalling, 1, 1.25))
             XTicks = .x
             YTicks = .y
         End With
@@ -259,7 +260,8 @@ Public Module Scatter
                 gridColor:=gridColor,
                 gridFill:=gridFill,
                 XtickFormat:=XtickFormat,
-                YtickFormat:=YtickFormat
+                YtickFormat:=YtickFormat,
+                axisStroke:=axisStroke
             )
         End If
 
@@ -525,56 +527,62 @@ Public Module Scatter
                          Optional legendSplit% = -1,
                          Optional hullConvexList As String() = Nothing,
                          Optional XtickFormat$ = "F2",
-                         Optional YtickFormat$ = "F2") As GraphicsData
+                         Optional YtickFormat$ = "F2",
+                         Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
+
+        Dim plotInternal =
+            Sub(ByRef g As IGraphics, layout As GraphicsRegion)
+                Call c.Plot(
+                    g:=g,
+                    rect:=layout,
+                    bg:=bg,
+                    showGrid:=showGrid,
+                    showLegend:=showLegend,
+                    legendPosition:=legendPosition,
+                    legendSize:=legendSize,
+                    drawLine:=drawLine,
+                    legendBorder:=legendBorder,
+                    legendRegionBorder:=legendRegionBorder,
+                    fill:=fill,
+                    fillPie:=fillPie,
+                    legendFontCSS:=legendFontCSS,
+                    absoluteScaling:=absoluteScaling,
+                    xaxis:=xaxis,
+                    XaxisAbsoluteScalling:=XaxisAbsoluteScalling,
+                    yaxis:=yaxis,
+                    YaxisAbsoluteScalling:=YaxisAbsoluteScalling,
+                    drawAxis:=drawAxis,
+                    xlayout:=xlayout,
+                    ylayout:=ylayout,
+                    Xlabel:=Xlabel,
+                    Ylabel:=Ylabel,
+                    ablines:=ablines,
+                    htmlLabel:=htmlLabel,
+                    ticksY:=ticksY,
+                    preferPositive:=preferPositive,
+                    interplot:=interplot,
+                    densityColor:=densityColor,
+                    tickFontStyle:=tickFontStyle,
+                    labelFontStyle:=labelFontStyle,
+                    title:=title,
+                    titleFontCSS:=titleFontCSS,
+                    gridColor:=gridColor,
+                    gridFill:=gridFill,
+                    legendSplit:=legendSplit,
+                    legendBgFill:=legendBgFill,
+                    hullConvexList:=hullConvexList,
+                    XtickFormat:=XtickFormat,
+                    YtickFormat:=YtickFormat,
+                    axisStroke:=axisStroke
+                )
+            End Sub
 
         Return g.GraphicsPlots(
             size:=size.SizeParser,
             padding:=padding,
             bg:=bg,
-            plotAPI:=Sub(ByRef g, layout)
-                         Call c.Plot(
-                            g:=g,
-                            rect:=layout,
-                            bg:=bg,
-                            showGrid:=showGrid,
-                            showLegend:=showLegend,
-                            legendPosition:=legendPosition,
-                            legendSize:=legendSize,
-                            drawLine:=drawLine,
-                            legendBorder:=legendBorder,
-                            legendRegionBorder:=legendRegionBorder,
-                            fill:=fill,
-                            fillPie:=fillPie,
-                            legendFontCSS:=legendFontCSS,
-                            absoluteScaling:=absoluteScaling,
-                            xaxis:=xaxis,
-                            XaxisAbsoluteScalling:=XaxisAbsoluteScalling,
-                            yaxis:=yaxis,
-                            YaxisAbsoluteScalling:=YaxisAbsoluteScalling,
-                            drawAxis:=drawAxis,
-                            xlayout:=xlayout,
-                            ylayout:=ylayout,
-                            Xlabel:=Xlabel,
-                            Ylabel:=Ylabel,
-                            ablines:=ablines,
-                            htmlLabel:=htmlLabel,
-                            ticksY:=ticksY,
-                            preferPositive:=preferPositive,
-                            interplot:=interplot,
-                            densityColor:=densityColor,
-                            tickFontStyle:=tickFontStyle,
-                            labelFontStyle:=labelFontStyle,
-                            title:=title,
-                            titleFontCSS:=titleFontCSS,
-                            gridColor:=gridColor,
-                            gridFill:=gridFill,
-                            legendSplit:=legendSplit,
-                            legendBgFill:=legendBgFill,
-                            hullConvexList:=hullConvexList,
-                            XtickFormat:=XtickFormat,
-                            YtickFormat:=YtickFormat
-                         )
-                     End Sub)
+            plotAPI:=plotInternal
+        )
     End Function
 
     Public Function Plot(x As Vector,

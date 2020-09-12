@@ -96,7 +96,10 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="color"></param>
         ''' <returns></returns>
-        <Extension> Public Function ToHtmlColor(color As Color) As String
+        ''' 
+        <DebuggerStepThrough>
+        <Extension>
+        Public Function ToHtmlColor(color As Color) As String
             'Dim RGBValue As Integer = color.ToArgb
             'Dim HexValue = DeciamlToHexadeciaml(RGBValue)
             'Return HexValue
