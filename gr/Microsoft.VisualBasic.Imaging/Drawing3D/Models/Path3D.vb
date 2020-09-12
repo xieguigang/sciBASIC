@@ -76,6 +76,18 @@ Namespace Drawing3D.Models.Isometric
             End Get
         End Property
 
+        Public ReadOnly Property isLine3D As Boolean
+            Get
+                Return Points.Count = 2
+            End Get
+        End Property
+
+        Public ReadOnly Property isDot3D As Boolean
+            Get
+                Return Points.Count = 1
+            End Get
+        End Property
+
         Public Sub New()
             Points = New List(Of Point3D)
         End Sub
@@ -199,6 +211,10 @@ Namespace Drawing3D.Models.Isometric
         ''' <param name="observer"></param>
         ''' <returns></returns>
         Public Function CountCloserThan(pathA As Path3D, observer As Point3D) As Integer
+            If pathA.isLine3D Then
+
+            End If
+
             Dim AB As Point3D = pathA.Points(0) - pathA.Points(1)
             Dim AC As Point3D = pathA.Points(0) - pathA.Points(2)
             Dim n As Point3D = VectorMath.CrossProduct(AB, AC)
@@ -209,14 +225,14 @@ Namespace Drawing3D.Models.Isometric
             ' Plane defined by pathA such as ax + by + zc = d
             ' Here d = nx*x + ny*y + nz*z = n.OA
             Dim d As Double = n.DotProduct(OA)
-            Dim observerPosition As Double = n.dotProduct(OU) - d
+            Dim observerPosition As Double = n.DotProduct(OU) - d
             Dim result As Integer = 0
             Dim result0 As Integer = 0
             Dim length As Integer = Me.Points.Count
 
             For i As Integer = 0 To length - 1
                 Dim OP As Point3D = Math3D.Transformation.ORIGIN - Me.Points(i)
-                Dim pPosition As Double = n.dotProduct(OP) - d
+                Dim pPosition As Double = n.DotProduct(OP) - d
 
                 ' careful with rounding approximations result += 1
                 If observerPosition * pPosition >= 0.000000001 Then

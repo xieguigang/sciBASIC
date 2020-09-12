@@ -115,6 +115,10 @@ Namespace Drawing3D.Device
             Dim j As Double = p2.Y - p1.Y
             Dim k As Double = p2.Z - p1.Z
 
+            If vertices.Length < 3 Then
+                Return color
+            End If
+
             p1 = vertices(2)
             p2 = vertices(1)
 

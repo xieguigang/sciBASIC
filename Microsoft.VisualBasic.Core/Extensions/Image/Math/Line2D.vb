@@ -1,74 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::f8438b50cf0c35b3c4604bac41fcce12, Microsoft.VisualBasic.Core\Language\Language\Java\Line2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Line2D
-    ' 
-    '         Function: linesIntersect, ptLineDist, ptLineDistSq, ptSegDist, ptSegDistSq
-    '                   relativeCCW
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Line2D
+' 
+'         Function: linesIntersect, ptLineDist, ptLineDistSq, ptSegDist, ptSegDistSq
+'                   relativeCCW
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Point2D = System.Drawing.PointF
+Imports stdNum = System.Math
 
 '
 ' * Copyright (c) 1997, 2013, Oracle and/or its affiliates. All rights reserved.
 ' * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
 ' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' *
-' 
 
-Namespace Language.Java
+Namespace Imaging.Math2D
 
 
     ''' <summary>
@@ -285,7 +266,7 @@ Namespace Language.Java
         ''' <returns> a double value that is the distance from the specified point
         '''                          to the specified line segment. </returns>
         Public Function ptSegDist(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
-            Return System.Math.Sqrt(ptSegDistSq(x1, y1, x2, y2, px, py))
+            Return stdNum.Sqrt(ptSegDistSq(x1, y1, x2, y2, px, py))
         End Function
 
         ''' <summary>
@@ -343,7 +324,75 @@ Namespace Language.Java
         ''' <returns> a double value that is the distance from the specified
         '''                   point to the specified line. </returns>
         Public Function ptLineDist(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
-            Return System.Math.Sqrt(ptLineDistSq(x1, y1, x2, y2, px, py))
+            Return stdNum.Sqrt(ptLineDistSq(x1, y1, x2, y2, px, py))
+        End Function
+    End Module
+
+    Public Module Line3D
+
+        ''' <summary>
+        ''' Returns the square of the distance from a point to a line.
+        ''' The distance measured is the distance between the specified
+        ''' point and the closest point on the infinitely-extended line
+        ''' defined by the specified coordinates.  If the specified point
+        ''' intersects the line, this method returns 0.0.
+        ''' </summary>
+        ''' <param name="x1"> the X coordinate of the start point of the specified line </param>
+        ''' <param name="y1"> the Y coordinate of the start point of the specified line </param>
+        ''' <param name="x2"> the X coordinate of the end point of the specified line </param>
+        ''' <param name="y2"> the Y coordinate of the end point of the specified line </param>
+        ''' <param name="px"> the X coordinate of the specified point being
+        '''           measured against the specified line </param>
+        ''' <param name="py"> the Y coordinate of the specified point being
+        '''           measured against the specified line </param>
+        ''' <returns> a double value that is the square of the distance from the
+        '''                  specified point to the specified line. </returns>
+        Public Function ptLineDistSq(x1 As Double, y1 As Double, z1 As Double, x2 As Double, y2 As Double, z2 As Double, px As Double, py As Double, pz As Double) As Double
+            ' Adjust vectors relative to x1,y1
+            ' x2,y2 becomes relative vector from x1,y1 to end of segment
+            x2 -= x1
+            y2 -= y1
+            z2 -= z1
+            ' px,py becomes relative vector from x1,y1 to test point
+            px -= x1
+            py -= y1
+            pz -= z1
+
+            Dim dotprod As Double = px * x2 + py * y2 + pz * z2
+            ' dotprod is the length of the px,py vector
+            ' projected on the x1,y1=>x2,y2 vector times the
+            ' length of the x1,y1=>x2,y2 vector
+            Dim projlenSq As Double = dotprod * dotprod / (x2 * x2 + y2 * y2 + z2 * z2)
+            ' Distance to line is now the length of the relative point
+            ' vector minus the length of its projection onto the line
+            Dim lenSq As Double = px * px + py * py + pz * pz - projlenSq
+            If lenSq < 0 Then lenSq = 0
+            Return lenSq
+        End Function
+
+        ''' <summary>
+        ''' Returns the distance from a point to a line.
+        ''' The distance measured is the distance between the specified
+        ''' point and the closest point on the infinitely-extended line
+        ''' defined by the specified coordinates.  If the specified point
+        ''' intersects the line, this method returns 0.0.
+        ''' </summary>
+        ''' <param name="x1"> the X coordinate of the start point of the specified line </param>
+        ''' <param name="y1"> the Y coordinate of the start point of the specified line </param>
+        ''' <param name="x2"> the X coordinate of the end point of the specified line </param>
+        ''' <param name="y2"> the Y coordinate of the end point of the specified line </param>
+        ''' <param name="px"> the X coordinate of the specified point being
+        '''           measured against the specified line </param>
+        ''' <param name="py"> the Y coordinate of the specified point being
+        '''           measured against the specified line </param>
+        ''' <returns> a double value that is the distance from the specified
+        '''                   point to the specified line. </returns>
+        Public Function ptLineDist(x1 As Double, y1 As Double, z1 As Double, x2 As Double, y2 As Double, z2 As Double, px As Double, py As Double, pz As Double) As Double
+            Return stdNum.Sqrt(ptLineDistSq(x1, y1, z1, x2, y2, z2, px, py, pz))
+        End Function
+
+        Public Function ptLineDist(la As PointF3D, lb As PointF3D, p As PointF3D) As Double
+            Return ptLineDist(la.X, la.Y, la.Z, lb.X, lb.Y, lb.Z, p.X, p.Y, p.Z)
         End Function
     End Module
 End Namespace

@@ -1550,7 +1550,7 @@
     <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />
-    <Compile Include="Language\Language\Java\Line2D.vb" />
+    <Compile Include="Extensions\Image\Math\Line2D.vb" />
     <Compile Include="Language\Language\Java\Collections.vb" />
     <Compile Include="Language\Language\Java\Reflection.vb" />
     <Compile Include="Language\Linq\Vectorization\SchemaProvider.vb" />
