@@ -41,6 +41,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Point2D = System.Drawing.PointF
 Imports stdNum = System.Math
 
@@ -391,7 +392,8 @@ Namespace Imaging.Math2D
             Return stdNum.Sqrt(ptLineDistSq(x1, y1, z1, x2, y2, z2, px, py, pz))
         End Function
 
-        Public Function ptLineDist(la As PointF3D, lb As PointF3D, p As PointF3D) As Double
+        <Extension>
+        Public Function ptLineDist(p As PointF3D, la As PointF3D, lb As PointF3D) As Double
             Return ptLineDist(la.X, la.Y, la.Z, lb.X, lb.Y, lb.Z, p.X, p.Y, p.Z)
         End Function
     End Module

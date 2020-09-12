@@ -97,9 +97,9 @@ Namespace Drawing3D
             Call Me.New(p.X, p.Y)
         End Sub
 
-        <XmlAttribute("x")> Public Property X As Single Implements PointF3D.X
-        <XmlAttribute("y")> Public Property Y As Single Implements PointF3D.Y
-        <XmlAttribute("z")> Public Property Z As Single Implements PointF3D.Z
+        <XmlAttribute("x")> Public Property X As Double Implements PointF3D.X
+        <XmlAttribute("y")> Public Property Y As Double Implements PointF3D.Y
+        <XmlAttribute("z")> Public Property Z As Double Implements PointF3D.Z
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
