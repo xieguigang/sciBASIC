@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::01c71c1d42e35b24bb15ae3a7808de8e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Module g
-    ' 
-    '         Properties: ActiveDriver, DriverExtensionName
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
-    '                   MeasureWidthOrHeight, ParseDriverEnumValue
-    ' 
-    '         Sub: FillBackground, SetDriver
-    '         Class InternalCanvas
-    ' 
-    '             Properties: bg, padding, size
-    ' 
-    '             Function: InvokePlot
-    '             Operators: (+2 Overloads) +, <=, >=
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Sub
+' 
+' 
+'     Module g
+' 
+'         Properties: ActiveDriver, DriverExtensionName
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
+'                   MeasureWidthOrHeight, ParseDriverEnumValue
+' 
+'         Sub: FillBackground, SetDriver
+'         Class InternalCanvas
+' 
+'             Properties: bg, padding, size
+' 
+'             Function: InvokePlot
+'             Operators: (+2 Overloads) +, <=, >=
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -210,6 +210,35 @@ Namespace Drawing2D
 
         ReadOnly defaultSize As [Default](Of Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
         ReadOnly defaultPaddingValue As [Default](Of Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
+
+        <Extension>
+        Public Function GraphicsPlots(base As GraphicsData, plot As IPlot) As GraphicsData
+            Dim region As GraphicsRegion = base.Layout
+
+            Select Case base.Driver
+                Case Drivers.GDI
+                    Using g As New Graphics2D(base.AsGDIImage)
+                        Dim rect As New Rectangle(New Point, g.Size)
+
+                        With g.Graphics
+                            .CompositingQuality = CompositingQuality.HighQuality
+                            .CompositingMode = CompositingMode.SourceOver
+                            .InterpolationMode = InterpolationMode.HighQualityBicubic
+                            .PixelOffsetMode = PixelOffsetMode.HighQuality
+                            .SmoothingMode = SmoothingMode.HighQuality
+                            .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                        End With
+
+                        Call plot(g, region)
+
+                        Return New ImageData(g.ImageResource, region.Size, region.Padding)
+                    End Using
+                Case Drivers.SVG
+                    Throw New NotImplementedException
+                Case Else
+                    Throw New NotImplementedException(base.Driver.ToString)
+            End Select
+        End Function
 
         ''' <summary>
         ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100).

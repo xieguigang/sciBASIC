@@ -105,6 +105,12 @@ Namespace Imaging
             Call Me.New(context.size, context.color.TranslateColor)
         End Sub
 
+        Sub New(base As Image)
+            innerImage = base
+            Size = base.Size
+            Center = New Point(Size.Width / 2, Size.Height / 2)
+        End Sub
+
         ''' <summary>
         ''' Can be serialize as a XML file node.
         ''' </summary>
