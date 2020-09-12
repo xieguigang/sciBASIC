@@ -52,6 +52,10 @@ Namespace BSON
     Public Class Encoder
 
         Private Sub encodeElement(ms As MemoryStream, name As String, v As JsonElement)
+            If v Is Nothing Then
+                Return
+            End If
+
             Select Case v.GetType
                 Case GetType(JsonObject)
                     ms.WriteByte(&H3)
