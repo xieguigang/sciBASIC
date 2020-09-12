@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' sciBASIC framework logo generator. A demo for the sciBASIC graphics artist system.
@@ -77,7 +78,7 @@ Module Program
 
         logo = logo.CorpBlank(blankColor:=Color.Transparent)
 
-        Using g As Graphics2D = Math.Max(logo.Width, logo.Height) _
+        Using g As Graphics2D = stdNum.Max(logo.Width, logo.Height) _
             .SquareSize _
             .CreateGDIDevice(filled:=Color.Transparent)
 

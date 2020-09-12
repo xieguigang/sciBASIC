@@ -81,8 +81,7 @@ Namespace Drawing3D
                 ({Me.scale * stdNum.Cos(Me.angle), Me.scale * stdNum.Sin(Me.angle)}),
                 ({Me.scale * stdNum.Cos(stdNum.PI - Me.angle), Me.scale * stdNum.Sin(stdNum.PI - Me.angle)})
             }
-            Dim lightPosition As New Point3D(2, -1, 3)
-            Me.lightAngle = lightPosition.Normalize()
+            Me.lightAngle = New Point3D(2, -1, 3).Normalize()
             Me.colorDifference = 0.2
             Me.lightColor = Color.FromArgb(255, 255, 255)
         End Sub
@@ -149,8 +148,9 @@ Namespace Drawing3D
 
                 model.TransformedPoints = New Point3D(model.path.Points.Count - 1) {}
 
+                ' Todo: test if .reset is not needed and rewind is enough
                 If Not model.DrawPath Is Nothing Then
-                    model.DrawPath.Rewind() 'Todo: test if .reset is not needed and rewind is enough
+                    model.DrawPath.Rewind()
                 End If
 
                 Dim i As Integer = 0

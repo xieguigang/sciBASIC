@@ -61,9 +61,15 @@ Namespace Data.Trinity
         ''' <param name="joinSpace"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Concatenate(list As IEnumerable(Of String), Optional comma$ = ",", Optional andalso$ = "and", Optional etc$ = "etc", Optional joinSpace As Boolean = True) As String
+        Public Function Concatenate(list As IEnumerable(Of String),
+                                    Optional comma$ = ",",
+                                    Optional andalso$ = "and",
+                                    Optional etc$ = "etc",
+                                    Optional joinSpace As Boolean = True,
+                                    Optional enUS As Boolean = False) As String
+
             Dim space As String = "" Or " ".When(joinSpace)
-            Dim dataArray As String() = list.SafeQuery.ToArray
+            Dim dataArray As String() = list.SafeQuery.Where(Function(s) Not s.StringEmpty).ToArray
 
             If dataArray.Length = 0 Then
                 Return Nothing
@@ -75,7 +81,13 @@ Namespace Data.Trinity
                 ElseIf .Length < 8 Then
                     Return .Take(.Length - 1).JoinBy(comma & space) & $"{space}{[andalso]}{space}" & .Last
                 Else
-                    Return .Take(7).JoinBy(comma & space) & $"{space}{[andalso]}{space}" & .ByRef(7) & $"{comma}{space}{etc}"
+                    Dim str = .Take(7).JoinBy(comma & space) & $"{space}{[andalso]}{space}" & .ByRef(7)
+
+                    If enUS Then
+                        Return str & $"{comma}{space}{etc}"
+                    Else
+                        Return str & space & etc
+                    End If
                 End If
             End With
         End Function

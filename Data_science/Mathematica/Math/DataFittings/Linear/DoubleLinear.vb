@@ -62,6 +62,36 @@ Public Module DoubleLinear
             .ToArray
     End Function
 
+    <Extension>
+    Private Function doFilterInternal(pointVec As PointF(), ByRef removed As List(Of PointF), removesZeroY As Boolean) As PointF()
+        Dim filter As PointF()
+
+        If removed Is Nothing Then
+            removed = New List(Of PointF)
+        End If
+
+        ' removes NaN, non-real
+        filter = pointVec _
+            .Where(Function(p)
+                       Return p.X.IsNaNImaginary OrElse p.Y.IsNaNImaginary
+                   End Function) _
+            .ToArray
+        removed.AddRange(filter)
+        pointVec = pointVec _
+            .Where(Function(p)
+                       Return Not (p.X.IsNaNImaginary OrElse p.Y.IsNaNImaginary)
+                   End Function) _
+            .ToArray
+
+        If removesZeroY Then
+            filter = pointVec.Where(Function(p) Not p.Y > 0).ToArray
+            removed.AddRange(filter)
+            pointVec = pointVec.Where(Function(p) p.Y >= 0).ToArray
+        End If
+
+        Return pointVec
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -84,11 +114,11 @@ Public Module DoubleLinear
                                       Optional keepsLowestPoint As Boolean = False,
                                       Optional removesZeroY As Boolean = False) As IFitted
 
-        Dim pointVec As PointF() = points.OrderBy(Function(p) p.X).ToArray
+        Dim pointVec As PointF() = points _
+            .OrderBy(Function(p) p.X) _
+            .ToArray _
+            .doFilterInternal(removed, removesZeroY)
 
-        If removesZeroY Then
-            removed.AddRange(pointVec.Where(Function(p) Not p.Y > 0))
-        End If
         If max < 0 Then
             ' auto
             max = pointVec.Length / 2 - 1

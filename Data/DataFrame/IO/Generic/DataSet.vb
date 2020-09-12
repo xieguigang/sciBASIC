@@ -77,7 +77,7 @@ Namespace IO
         End Property
 
         ''' <summary>
-        ''' 
+        ''' equivalent to <see cref="Properties"/>.Values.ToArray
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>

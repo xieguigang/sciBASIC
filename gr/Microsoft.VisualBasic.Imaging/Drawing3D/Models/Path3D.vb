@@ -89,9 +89,10 @@ Namespace Drawing3D.Models.Isometric
             Return $"depth={Depth}, [{pts.JoinBy(" ")}]"
         End Function
 
-        Public Sub Push(point As Point3D)
+        Public Function Push(point As Point3D) As Path3D
             Call Points.Add(point)
-        End Sub
+            Return Me
+        End Function
 
         ''' <summary>
         ''' Returns a new path with the points in reverse order

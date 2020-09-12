@@ -629,6 +629,7 @@
     <Compile Include="Drawing3D\Math3D\Transformation.vb" />
     <Compile Include="Drawing3D\Math3D\Vector.vb" />
     <Compile Include="Drawing3D\Models\Path3D.vb" />
+    <Compile Include="Drawing3D\Models\Shapes\Line.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Cylinder.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Knot.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Octahedron.vb" />

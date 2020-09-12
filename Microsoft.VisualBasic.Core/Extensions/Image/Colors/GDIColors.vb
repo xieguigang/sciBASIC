@@ -52,6 +52,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports stdNum = System.Math
 
 Namespace Imaging
 
@@ -368,7 +369,7 @@ Namespace Imaging
         ''' <param name="a"></param>
         ''' <param name="b"></param>
         ''' <returns></returns>
-        <Extension> Public Function Equals(a As Color, b As Color) As Boolean
+        <Extension> Public Function Equals(a As Color, b As Color, Optional tolerance% = 3) As Boolean
             If a.IsTransparent AndAlso b.IsTransparent Then
                 Return True
             End If
@@ -383,13 +384,13 @@ Namespace Imaging
                 Return False '  alpha值不相等，则颜色值肯定不相等
             End If
 
-            If a.B <> b.B Then
+            If stdNum.Abs(a.B - b.B) <= tolerance Then
                 Return False
             End If
-            If a.G <> b.G Then
+            If stdNum.Abs(a.G - b.G) <= tolerance Then
                 Return False
             End If
-            If a.R <> b.R Then
+            If stdNum.Abs(a.R - b.R) <= tolerance Then
                 Return False
             End If
 
