@@ -60,7 +60,16 @@ Namespace FileStream
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function Tabular(g As NetworkGraph, Optional properties$() = Nothing, Optional is2D As Boolean = True) As NetworkTables
+        Public Function Tabular(g As NetworkGraph,
+                                Optional properties$() = Nothing,
+                                Optional is2D As Boolean = True,
+                                Optional creators As String() = Nothing,
+                                Optional title$ = Nothing,
+                                Optional description$ = Nothing,
+                                Optional keywords$() = Nothing,
+                                Optional links$() = Nothing,
+                                Optional meta As Dictionary(Of String, String) = Nothing) As NetworkTables
+
             Dim nodes As Node() = g.createNodesTable(properties, is2D).ToArray
             Dim edges As New List(Of NetworkEdge)
 
@@ -87,7 +96,16 @@ Namespace FileStream
 
             Return New NetworkTables With {
                 .edges = edges,
-                .nodes = nodes
+                .nodes = nodes,
+                .meta = New MetaData With {
+                    .create_time = Now,
+                    .creators = creators,
+                    .description = description,
+                    .keywords = keywords,
+                    .links = links,
+                    .title = title,
+                    .additionals = meta
+                }
             }
         End Function
 
