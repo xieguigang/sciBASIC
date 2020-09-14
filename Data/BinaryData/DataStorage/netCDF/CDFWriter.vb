@@ -202,7 +202,7 @@ Namespace netCDF
         Dim output As BinaryDataWriter
         Dim globalAttrs As New List(Of attribute)
         Dim dimensionList As New Dictionary(Of String, SeqValue(Of Dimension))
-        Dim variables As List(Of variable)
+        Dim variables As New List(Of variable)
         Dim recordDimensionLength As UInteger
 
         Sub New(path As String, Optional encoding As Encodings = Encodings.UTF8)
