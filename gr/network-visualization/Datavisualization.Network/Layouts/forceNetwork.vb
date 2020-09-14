@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -62,7 +63,8 @@ Namespace Layouts
         <Extension>
         Public Function doForceLayout(ByRef net As NetworkGraph, parameters As ForceDirectedArgs,
                                       Optional showProgress As Boolean = False,
-                                      Optional progressCallback As Action(Of String) = Nothing) As NetworkGraph
+                                      Optional progressCallback As Action(Of String) = Nothing,
+                                      Optional cancel As Value(Of Boolean) = Nothing) As NetworkGraph
             With parameters
                 Return net.doForceLayout(
                     Stiffness:= .Stiffness,
@@ -70,7 +72,8 @@ Namespace Layouts
                     Damping:= .Damping,
                     iterations:= .Iterations,
                     showProgress:=showProgress,
-                    progressCallback:=progressCallback
+                    progressCallback:=progressCallback,
+                    cancel:=cancel
                 )
             End With
         End Function
@@ -127,7 +130,8 @@ Namespace Layouts
                                       Optional iterations% = 1000,
                                       Optional showProgress As Boolean = False,
                                       Optional clearScreen As Boolean = False,
-                                      Optional progressCallback As Action(Of String) = Nothing) As NetworkGraph
+                                      Optional progressCallback As Action(Of String) = Nothing,
+                                      Optional cancel As Value(Of Boolean) = Nothing) As NetworkGraph
 
             Dim physicsEngine As New ForceDirected2D(net, Stiffness, Repulsion, Damping)
             Dim tick As Action(Of Integer)
@@ -139,6 +143,9 @@ Namespace Layouts
                     .Stiffness = Stiffness
                 }.GetJson
 
+            If cancel Is Nothing Then
+                cancel = New Value(Of Boolean)(False)
+            End If
             If progressCallback Is Nothing Then
                 progressCallback = Sub()
 
@@ -166,6 +173,10 @@ Namespace Layouts
             End If
 
             For i As Integer = 0 To iterations
+                If True = cancel.Value Then
+                    Exit For
+                End If
+
                 Call physicsEngine.Calculate(0.05F)
                 Call tick(i)
             Next
