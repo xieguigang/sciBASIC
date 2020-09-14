@@ -62,12 +62,17 @@ Namespace Graphic.Axis
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function CreateAxisTicks(range As DoubleRange, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+        Public Function CreateAxisTicks(range As DoubleRange,
+                                        Optional ticks% = 10,
+                                        Optional decimalDigits% = 2,
+                                        Optional w_steps# = 0.8,
+                                        Optional w_min# = 0.1,
+                                        Optional w_max# = 0.1) As Double()
             With range
                 If .Min.IsNaNImaginary AndAlso .Max.IsNaNImaginary Then
                     Return {0, 1}
                 Else
-                    Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits)
+                    Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits, w_steps, w_max, w_min)
                 End If
             End With
         End Function
@@ -91,7 +96,12 @@ Namespace Graphic.Axis
         ''' <param name="decimalDigits%"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function CreateAxisTicks(min#, max#, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+        Public Function CreateAxisTicks(min#, max#,
+                                        Optional ticks% = 10,
+                                        Optional decimalDigits% = 2,
+                                        Optional w_steps As Double = 0.8,
+                                        Optional w_max As Double = 0.1,
+                                        Optional w_min As Double = 0.1) As Double()
 
             ' First, get the minimum and maximum of the series, toggle the zero_flag variable 
             ' if 0 Is between Then the min And max, And Get the range Of the data.
@@ -209,7 +219,7 @@ Namespace Graphic.Axis
             dMin = dMin / dMin.Max
             dMax = dMax / dMax.Max
 
-            Dim scores As Vector = dSteps * 0.8 + dMin * 0.1 + dMax * 0.1
+            Dim scores As Vector = dSteps * w_steps + dMin * w_min + dMax * w_max
             Dim tickArray#() = candidateArray(Which.Max(scores))
 
             ' 2018-2-1
