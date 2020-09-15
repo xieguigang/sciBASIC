@@ -72,9 +72,9 @@ Public Module XmlParser
                 If child.NodeType = XmlNodeType.Text Then
                     childs.Add(New XmlElement With {.text = child.ToString})
                 ElseIf child.NodeType = XmlNodeType.Element Then
-                    childs.Add(ParseXml(child))
+                    childs.Add(ParseXml(root:=CType(child, XElement)))
                 Else
-                    Throw New NotImplementedException(child.NodeType)
+                    Throw New NotImplementedException(child.NodeType.ToString)
                 End If
             Next
 

@@ -151,7 +151,7 @@ Namespace MathML
                 If apply.elements.Length = 2 Then
                     If apply.elements(Scan0).name = "minus" Then
                         apply.elements = {apply.elements(Scan0)} _
-                            .Join({New XmlElement With {.name = "cn", .text = 0}}) _
+                            .Join({New XmlElement With {.name = "cn", .text = "0"}}) _
                             .Join(apply.elements.Skip(1)) _
                             .ToArray
                     Else
