@@ -86,6 +86,16 @@ Namespace KMeans
 
         Public Property Center As T
 
+        ''' <summary>
+        ''' Returns the one dimensional array data located at the index
+        ''' </summary>
+        Default Public Overridable ReadOnly Property Item(Index As Integer) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _innerList(Index)
+            End Get
+        End Property
+
         Public Function CalculateKMeansCost() As Double
             Dim kMeansCost As Double = 0
             Dim distanceBetweenPoints As Double = 0
@@ -132,16 +142,6 @@ Namespace KMeans
                 _ClusterSum(count) = _ClusterSum(count) + data.entityVector(count)
             Next
         End Sub
-
-        ''' <summary>
-        ''' Returns the one dimensional array data located at the index
-        ''' </summary>
-        Default Public Overridable ReadOnly Property Item(Index As Integer) As T
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _innerList(Index)
-            End Get
-        End Property
 
         ''' <summary>
         ''' Will keep the center member variable, but clear the list of points

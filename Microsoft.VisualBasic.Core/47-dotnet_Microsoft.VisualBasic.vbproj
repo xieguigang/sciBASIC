@@ -126,7 +126,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_45=FALSE,NET_48=TRUE</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>

@@ -62,6 +62,7 @@ Namespace BSON
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
         Public Sub WriteBuffer(obj As JsonObject, buffer As Stream)
             Call New Encoder().encodeDocument(buffer, obj)
         End Sub

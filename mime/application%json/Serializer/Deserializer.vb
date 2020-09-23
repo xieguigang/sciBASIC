@@ -69,15 +69,19 @@ Public Module Deserializer
             Return Nothing
         ElseIf TypeOf json Is JsonArray Then
             If Not schema.IsArray Then
-                Throw New InvalidCastException
+                ' the schema require an object but gives an array
+                Return Nothing
             Else
                 Return DirectCast(json, JsonArray).createArray(schema.GetElementType)
             End If
         ElseIf TypeOf json Is JsonObject Then
             If schema.IsInheritsFrom(GetType([Variant])) Then
                 Return DirectCast(json, JsonObject).createVariant(schema)
-            Else
+            ElseIf Not schema.IsArray AndAlso Not schema.IsPrimitive AndAlso Not schema.IsEnum Then
                 Return DirectCast(json, JsonObject).createObject(schema)
+            Else
+                ' the schema require an array but given an object
+                Return Nothing
             End If
         ElseIf TypeOf json Is JsonValue Then
             Return DirectCast(json, JsonValue).Literal(schema)

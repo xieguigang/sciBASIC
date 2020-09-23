@@ -53,6 +53,11 @@ Namespace Javascript
             Return "base::json"
         End Function
 
+        ''' <summary>
+        ''' do direct cast to the required json element sub type.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [As](Of T As JsonElement)() As T
             Return DirectCast(Me, T)

@@ -48,10 +48,13 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Class Resampler
 
-    Dim raw As GeneralSignal
     Dim x As Double()
     Dim y As Double()
 
+    ''' <summary>
+    ''' populate the <see cref="GeneralSignal.Measures"/> of the raw signal
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property enumerateMeasures As Double()
         Get
             Return x.ToArray
@@ -95,7 +98,6 @@ Public Class Resampler
         Dim y = raw.Strength
 
         Return New Resampler With {
-            .raw = raw,
             .x = x.Select(Function(xi) xi.value).ToArray,
             .y = x.Select(Function(xi) y(xi.i)).ToArray
         }

@@ -90,10 +90,11 @@ Namespace ApplicationServices.Terminal
         Public Sub Run()
             Dim cli As Value(Of String) = ""
 
-            Do While True
-                Call Console.Write(ps1.ToString)
+            Do While App.Running
+                Call Console.Out.Write(ps1.ToString)
+                Call Console.Out.Flush()
 
-                If Strings.Trim((cli = Console.ReadLine)).StringEmpty Then
+                If Strings.Trim((cli = Console.In.ReadLine)).StringEmpty Then
                     Call _shell(cli)
                     Continue Do
                 End If

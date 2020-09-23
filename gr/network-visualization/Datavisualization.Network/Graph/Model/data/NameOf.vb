@@ -62,9 +62,12 @@ Namespace FileStream.Generic
         Public Const REFLECTION_ID_MAPPING_NODETYPE As String = "nodeType"
         Public Const REFLECTION_ID_MAPPING_NODECOLOR As String = "color"
         Public Const REFLECTION_ID_MAPPING_DEGREE$ = "degree"
+        Public Const REFLECTION_ID_MAPPING_RELATIVE_DEGREE_CENTRALITY$ = "degreeCentrality"
+        Public Const REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY$ = "OutDegreeCentrality"
         Public Const REFLECTION_ID_MAPPING_DEGREE_IN$ = REFLECTION_ID_MAPPING_DEGREE & ".in"
         Public Const REFLECTION_ID_MAPPING_DEGREE_OUT$ = REFLECTION_ID_MAPPING_DEGREE & ".out"
         Public Const REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY$ = "BetweenessCentrality"
+        Public Const REFLECTION_ID_MAPPING_RELATIVE_BETWEENESS_CENTRALITY$ = "RelativeBetweenessCentrality"
 
     End Module
 End Namespace

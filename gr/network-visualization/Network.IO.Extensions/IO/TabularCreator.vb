@@ -146,7 +146,10 @@ Namespace FileStream
                     names.REFLECTION_ID_MAPPING_DEGREE,
                     names.REFLECTION_ID_MAPPING_DEGREE_IN,
                     names.REFLECTION_ID_MAPPING_DEGREE_OUT,
-                    names.REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY
+                    names.REFLECTION_ID_MAPPING_RELATIVE_DEGREE_CENTRALITY,
+                    names.REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY,
+                    names.REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY,
+                    names.REFLECTION_ID_MAPPING_RELATIVE_BETWEENESS_CENTRALITY
                 }.Where(Function(p) n.data.HasProperty(p))
 
                     data(key) = n.data(key)

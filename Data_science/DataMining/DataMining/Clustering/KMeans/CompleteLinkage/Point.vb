@@ -1,56 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::3b6b87574e95b1920db255cf1111aa2f, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Point.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Point
-    ' 
-    '         Properties: CompleteLinkageResultCluster, LloydsResultCluster
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: distanceToOtherPoint, fromStringArray
-    ' 
-    '         Sub: CompleteLinkageCluster, SetKMeansCluster
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Point
+' 
+'         Properties: CompleteLinkageResultCluster, LloydsResultCluster
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: distanceToOtherPoint, fromStringArray
+' 
+'         Sub: CompleteLinkageCluster, SetKMeansCluster
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Text
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans.CompleteLinkage
 
@@ -58,6 +54,18 @@ Namespace KMeans.CompleteLinkage
 
         Private mResultantKMeansCluster As Integer = -1
         Private mResultantClusterCompleteLinkage As Integer = -1
+
+        Public ReadOnly Property LloydsResultCluster As Integer
+            Get
+                Return mResultantKMeansCluster
+            End Get
+        End Property
+
+        Public ReadOnly Property CompleteLinkageResultCluster As Integer
+            Get
+                Return mResultantClusterCompleteLinkage
+            End Get
+        End Property
 
         Public Sub New(units As Double())
             entityVector = units
@@ -67,39 +75,27 @@ Namespace KMeans.CompleteLinkage
         End Sub
 
         Public Shared Function fromStringArray(ParamArray unitsAsString As String()) As Point
-            Dim ___dimension As Integer = unitsAsString.Length
+            Dim dimension As Integer = unitsAsString.Length
 
-            Dim unitsAsDouble As Double() = New Double(___dimension - 1) {}
+            Dim unitsAsDouble As Double() = New Double(dimension - 1) {}
 
-            For i As Integer = 0 To ___dimension - 1
+            For i As Integer = 0 To dimension - 1
                 unitsAsDouble(i) = Convert.ToDouble(unitsAsString(i))
             Next i
 
             Return New Point(unitsAsDouble)
         End Function
 
-        Public Sub CompleteLinkageCluster(___cluster As Integer)
-            mResultantClusterCompleteLinkage = ___cluster
+        Public Sub CompleteLinkageCluster(cluster As Integer)
+            mResultantClusterCompleteLinkage = cluster
         End Sub
 
         Public Function distanceToOtherPoint(otherPoint As Point) As Double
             Return DistanceBetweenPoints(otherPoint)
         End Function
 
-        Public ReadOnly Property CompleteLinkageResultCluster As Integer
-            Get
-                Return mResultantClusterCompleteLinkage
-            End Get
-        End Property
-
         Public Sub SetKMeansCluster(kMeansCluster As Integer)
             mResultantKMeansCluster = kMeansCluster
         End Sub
-
-        Public ReadOnly Property LloydsResultCluster As Integer
-            Get
-                Return mResultantKMeansCluster
-            End Get
-        End Property
     End Class
 End Namespace

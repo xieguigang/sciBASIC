@@ -167,10 +167,12 @@ Namespace BSON
             Dim buf As Byte() = BitConverter.GetBytes(v)
             ms.Write(buf, 0, buf.Length)
         End Sub
+
         Private Sub encodeInt64(ms As MemoryStream, v As Int64)
             Dim buf As Byte() = BitConverter.GetBytes(v)
             ms.Write(buf, 0, buf.Length)
         End Sub
+
         Private Sub encodeUTCDateTime(ms As MemoryStream, dt As DateTime)
             Dim span As TimeSpan
             If dt.Kind = DateTimeKind.Local Then

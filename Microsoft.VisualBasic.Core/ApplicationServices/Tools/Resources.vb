@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::7392876bf13885efa480ec3fe7224860, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Resources.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ResourcesSatellite
-    ' 
-    '         Properties: FileName, MyResource, Resources
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: DirectLoadFrom, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString, LoadMy
-    ' 
-    '         Sub: doLoad, resourceAssemblyParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ResourcesSatellite
+' 
+'         Properties: FileName, MyResource, Resources
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: DirectLoadFrom, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString, LoadMy
+' 
+'         Sub: doLoad, resourceAssemblyParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -292,31 +292,38 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="assm"></param>
         Sub New(assm As Assembly)
-            Dim dllFile As String = assm.Location.ParentPath & "/Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name
+            Call Me.New(findResourceAssemblyFileName(assm))
+        End Sub
+
+        Sub New(dll As String)
+            Call resourceAssemblyParser(fileName:=FileIO.FileSystem.GetFileInfo(dll).FullName)
+        End Sub
+
+        Private Shared Function findResourceAssemblyFileName(assm As Assembly) As String
+            Dim resourceName As String = "Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name
+            Dim dllFile As String = $"{assm.Location.ParentPath}/{resourceName}"
 
             If Not dllFile.FileExists Then
-                dllFile = App.HOME & "/Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name
+                dllFile = $"{App.CurrentDirectory}/{resourceName}"
+            End If
+            If Not dllFile.FileExists Then
+                dllFile = $"{App.HOME}/{resourceName}"
             End If
             If Not dllFile.FileExists Then
                 Throw New EntryPointNotFoundException("missing assembly resource module: " & dllFile)
             Else
-                FileName = FileIO.FileSystem.GetFileInfo(dllFile).FullName
+                Return FileIO.FileSystem.GetFileInfo(dllFile).FullName
             End If
+        End Function
 
-            Call resourceAssemblyParser()
-        End Sub
-
-        Sub New(dll As String)
-            FileName = FileIO.FileSystem.GetFileInfo(dll).FullName
-            Call resourceAssemblyParser()
-        End Sub
-
-        Private Sub resourceAssemblyParser()
-            If FileName.FileExists Then
-                Call Assembly.LoadFile(FileName).DoCall(AddressOf doLoad)
+        Private Sub resourceAssemblyParser(fileName As String)
+            If fileName.FileExists Then
+                Call Assembly.LoadFile(fileName).DoCall(AddressOf doLoad)
             Else
-                Throw New DllNotFoundException($"Missing required resources satellite assembly file: {FileName.FileName}!")
+                Throw New DllNotFoundException($"Missing required resources satellite assembly file: {fileName.FileName}!")
             End If
+
+            _FileName = fileName
         End Sub
 
         Private Sub doLoad(assm As Assembly)

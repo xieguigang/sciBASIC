@@ -56,9 +56,13 @@ Namespace BSON
         ReadOnly raw As MemoryStream
         ReadOnly reader As BinaryReader
 
-        Friend Sub New(buf As Byte())
-            raw = New MemoryStream(buf)
-            reader = New BinaryReader(raw)
+        Sub New(buf As Byte())
+            Call Me.New(New MemoryStream(buf))
+        End Sub
+
+        Sub New(raw As Stream)
+            Me.raw = raw
+            Me.reader = New BinaryReader(raw)
         End Sub
 
         Public Function decodeDocument() As JsonObject
@@ -77,7 +81,6 @@ Namespace BSON
             ' zero
             Return obj
         End Function
-
 
         Private Function decodeArray() As JsonArray
             Dim obj As JsonObject = decodeDocument()
@@ -104,13 +107,15 @@ Namespace BSON
         ''' </summary>
         ''' <returns></returns>
         Private Function decodeCString() As String
-            Dim ms = New MemoryStream()
+            Dim ms As New MemoryStream()
 
             While True
-                Dim buf As Byte = CByte(reader.ReadByte())
+                Dim buf As Byte = reader.ReadByte()
+
                 If buf = 0 Then
                     Exit While
                 End If
+
                 ms.WriteByte(buf)
             End While
 

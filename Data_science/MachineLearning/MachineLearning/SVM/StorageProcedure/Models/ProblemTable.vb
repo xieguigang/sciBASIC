@@ -17,6 +17,10 @@ Namespace SVM.StorageProcedure
 
         Public Property vectors As SupportVector()
 
+        ''' <summary>
+        ''' the key collection of the support vector: <see cref="SupportVector.Properties"/> inputs.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property DimensionNames As String()
 
         Public Function GetTopics() As String()

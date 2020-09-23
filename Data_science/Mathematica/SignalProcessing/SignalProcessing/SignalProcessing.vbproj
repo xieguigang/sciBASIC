@@ -478,6 +478,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cluster\SignalClustering.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="ColorSpectrum.vb" />
     <Compile Include="GeneralSignal.vb" />

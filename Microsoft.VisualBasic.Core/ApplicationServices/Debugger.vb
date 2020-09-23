@@ -74,14 +74,20 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 Public Module VBDebugger
 
-    Friend inDebugMode As Boolean
+    Friend m_inDebugMode As Boolean
 
+    ''' <summary>
+    ''' if in the debug profile(which means ``DEBUG`` constant is defined for the compiler)
+    ''' then this function will always returns value ``true``;
+    ''' otherwise, return value by command line config argument ``--debug``
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property debugMode As Boolean
         Get
 #If DEBUG Then
             Return True
 #Else
-            Return inDebugMode
+            Return m_inDebugMode
 #End If
         End Get
     End Property
