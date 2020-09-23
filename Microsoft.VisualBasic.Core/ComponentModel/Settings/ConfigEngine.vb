@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb94b88579b5a80cf463c333ca85e8ea, Microsoft.VisualBasic.Core\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::46c658934339d6b9cddc6a8b7954205b, Microsoft.VisualBasic.Core\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ConfigEngine
     ' 
-    '         Properties: AllItems, FilePath, ProfileItemNode, ProfileItemType
+    '         Properties: AllItems, FilePath, MimeType, ProfileItemNode, ProfileItemType
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

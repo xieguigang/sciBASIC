@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29470e4e3ba298d26459fba7822dbc53, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::6ae599b39eb0aee132d5a6b71ef4900f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class HistoryStacks
     ' 
-    '         Properties: FilePath, HistoryList
+    '         Properties: FilePath, HistoryList, MimeType
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

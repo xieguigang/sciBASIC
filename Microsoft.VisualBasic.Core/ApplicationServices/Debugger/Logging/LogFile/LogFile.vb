@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8be51b503b4faa8b7e4454f57a8f9df6, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::846ccde5e85f5766e79f087f462fa474, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class LogFile
     ' 
-    '         Properties: fileName, filePath, NowTimeNormalizedString
+    '         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

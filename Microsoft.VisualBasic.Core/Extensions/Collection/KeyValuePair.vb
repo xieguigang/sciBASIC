@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14bad26458f81bb6a299753fc6f81193, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::781868a789d500d923c822e1b3b8d625, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '               ComputeIfAbsent, (+3 Overloads) ContainsKey, (+2 Overloads) DescendingMap, DictionaryData, (+2 Overloads) EnumerateTuples
     '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey
     '               HaveData, IterateNameCollections, IterateNameValues, IteratesAll, Join
-    '               KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
+    '               KeyItem, (+3 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
     '               Popout, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
     '               (+2 Overloads) Subset, tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower
     '               ToUpper, Tsv, Tuple, TupleTable, (+2 Overloads) Values

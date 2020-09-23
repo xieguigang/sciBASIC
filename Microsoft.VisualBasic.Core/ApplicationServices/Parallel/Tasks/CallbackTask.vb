@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cb14b35413196d04634cbeb887b9907, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\CallbackTask.vb"
+﻿#Region "Microsoft.VisualBasic::beb89ab911b1d121d3d9c05fcad1aea3, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\CallbackTask.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,20 @@
     '     Interface ICallbackTask
     ' 
     '         Properties: CallbackInvoke
+    ' 
+    '     Class RevokableTask
+    ' 
+    ' 
+    ' 
+    '     Class RevokableTaskLoop
+    ' 
+    '         Sub: RunTask
+    ' 
+    '     Class RevokableTaskLoop
+    ' 
+    '         Function: RunTask
+    ' 
+    '         Sub: populate
     ' 
     '     Class CallbackTask
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14ea50db7e080b8446bb4d673f2cd2d1, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\XYMetaHandle.vb"
+﻿#Region "Microsoft.VisualBasic::2f10f64ef20bc0a653e5e06d0b133d6d, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\XYMetaHandle.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: isNaN, xoffsetscale, yoffsetscale
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) CreateVector, GetPoint, ToString
     ' 
     ' 

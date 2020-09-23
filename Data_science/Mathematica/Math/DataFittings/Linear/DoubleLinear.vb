@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce6347253ac98fc763ef11e0f0f9830b, Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
+﻿#Region "Microsoft.VisualBasic::2cd9987b81191a20509b586b1eb63974, Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     ' 
     ' Module DoubleLinear
     ' 
-    '     Function: AutoPointDeletion, GetInputPoints
+    '     Function: AutoPointDeletion, doFilterInternal, GetInputPoints
     ' 
     ' 
     ' 

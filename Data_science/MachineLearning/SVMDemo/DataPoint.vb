@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afb3ec4eeedfd62a0fc0a302efae1bae, Data_science\MachineLearning\SVMDemo\DataPoint.vb"
+﻿#Region "Microsoft.VisualBasic::1d5514dab2f4b39b07db887ae8741926, Data_science\MachineLearning\SVMDemo\DataPoint.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Namespace SVMDemo
         Public Property Label As Double
     End Class
 End Namespace
-

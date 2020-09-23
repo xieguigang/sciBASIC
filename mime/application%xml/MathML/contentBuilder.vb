@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a62ddd15da25ccfe96b96cd2643b4707, mime\application%xml\MathML\contentBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::f39b88b16123d8fbbe6a9505c2d87a73, mime\application%xml\MathML\contentBuilder.vb"
 
     ' Author:
     ' 

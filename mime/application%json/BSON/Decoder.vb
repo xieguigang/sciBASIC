@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db758888eb34aecebf8fe9315cf1ed60, mime\application%json\BSON\Decoder.vb"
+﻿#Region "Microsoft.VisualBasic::f4817c01d780dd05fee869f6c4c91dcf, mime\application%json\BSON\Decoder.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Decoder
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: decodeArray, decodeCString, decodeDocument, decodeElement, decodeString
     ' 

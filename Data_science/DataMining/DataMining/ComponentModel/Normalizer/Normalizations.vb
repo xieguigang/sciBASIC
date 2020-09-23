@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dedefdd1048462ef8ae351c9e67cadd, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
+﻿#Region "Microsoft.VisualBasic::2cc7b8c7750e55427c51a1b77997d4b6, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
 
     ' Author:
     ' 
@@ -31,14 +31,6 @@
 
     ' Summaries:
 
-    '     Enum Methods
-    ' 
-    '         NormalScaler, RangeDiscretizer, RelativeScaler
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     '     Module Normalizations
     ' 
     '         Constructor: (+1 Overloads) Sub New

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a006682ddab98d0c5316656e42aef13, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::f5706ef9fabe0406b0aef4a6e95a475b, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Clustering.vb"
 
     ' Author:
     ' 
@@ -37,18 +37,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: __writeCluster
-    ' 
-    '     Class LloydsMethodClustering
-    ' 
-    '         Properties: Points
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Clustering
-    ' 
-    '     Class CompleteLinkageClustering
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Clustering
     ' 
     ' 
     ' /********************************************************************************/

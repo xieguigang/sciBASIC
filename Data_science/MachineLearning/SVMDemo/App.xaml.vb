@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb2d5f52cd4225a9e98e1843ac908cce, Data_science\MachineLearning\SVMDemo\App.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::8617a72d83035cc5aff970f9131dc104, Data_science\MachineLearning\SVMDemo\App.xaml.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Namespace SVMDemo
         Inherits Application
     End Class
 End Namespace
-

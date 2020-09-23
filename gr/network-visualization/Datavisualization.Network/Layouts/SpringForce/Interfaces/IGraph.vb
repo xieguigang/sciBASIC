@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87e17f1fbefd82f85f73f467c5e2a83d, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IGraph.vb"
+﻿#Region "Microsoft.VisualBasic::9fa733f3a6fe84854bff07c9b9232bb3, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IGraph.vb"
 
     ' Author:
     ' 

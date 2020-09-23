@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6784e7729e81ca8e92528426dcd0b630, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::fa496cfbcb8bb9440050fde34b59aa9a, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 

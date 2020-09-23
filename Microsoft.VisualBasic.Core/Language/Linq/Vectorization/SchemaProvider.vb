@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c544f50f316b66eab1c81133873f716f, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::677f5ea9fa56622501543cf8692e9b93, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -36,9 +36,9 @@
     '         Properties: PropertyNames, Type
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: [Concatenate], [IntegerDivision], [Like], binaryOperatorSelfLeft, GetDynamicMemberNames
-    '                   ToString, TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember, TrySetMember
-    '                   TryUnaryOperation
+    '         Function: [Concatenate], [IntegerDivision], [Like], binaryOperatorSelfLeft, CreateSchema
+    '                   GetDynamicMemberNames, ToString, TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember
+    '                   TrySetMember, TryUnaryOperation
     ' 
     ' 
     ' /********************************************************************************/

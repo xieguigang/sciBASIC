@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd8b6e02fa66d031c3e4a5049b727a56, mime\application%xml\XmlGeneric\Xmlparser.vb"
+﻿#Region "Microsoft.VisualBasic::e7c63981970fe09869b63e64eb35a38d, mime\application%xml\XmlGeneric\Xmlparser.vb"
 
     ' Author:
     ' 

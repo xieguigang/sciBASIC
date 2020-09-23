@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::511e6f0191e961d3fcb83365d19fa37d, Data_science\MachineLearning\SVMDemo\MainWindow.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::45fc5ad21ef13e7b44fcdae02ca19a5e, Data_science\MachineLearning\SVMDemo\MainWindow.xaml.vb"
 
     ' Author:
     ' 
@@ -220,4 +220,3 @@ Namespace SVMDemo
         End Function
     End Class
 End Namespace
-

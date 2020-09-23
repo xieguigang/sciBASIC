@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0935a7310ef6979912f174d7e4179e87, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Vectors\FDGVectorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0935a7310ef6979912f174d7e4179e87, gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVectorExtensions.vb"
 
     ' Author:
     ' 

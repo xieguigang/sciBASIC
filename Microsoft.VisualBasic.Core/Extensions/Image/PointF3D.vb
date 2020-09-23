@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b70ed42a2afa9a49564dac1214e5d1c3, Microsoft.VisualBasic.Core\Extensions\Image\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::aeea519afd17da857810af769111f0a1, Microsoft.VisualBasic.Core\Extensions\Image\PointF3D.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,10 @@
     '     Interface PointF3D
     ' 
     '         Properties: X, Y, Z
+    ' 
+    '     Interface Layout2D
+    ' 
+    '         Properties: X, Y
     ' 
     ' 
     ' /********************************************************************************/

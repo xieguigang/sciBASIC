@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b690cd5e7f1be5c84ee19be5d0532b1, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::66063545d289f827f86f5b16255b203f, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Graphics2D.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Center, Height, ImageResource, Size, Width
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     ' 
     '         Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
     ' 

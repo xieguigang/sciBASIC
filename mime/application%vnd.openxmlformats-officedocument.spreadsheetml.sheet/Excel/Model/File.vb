@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8dc8a45789975423febec1cc3017bbb0, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::0bbde0cabe836b47a313e3048091dfcb, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     ' Class File
     ' 
-    '     Properties: _rels, ContentTypes, docProps, FilePath, xl
+    '     Properties: _rels, ContentTypes, docProps, FilePath, MimeType
+    '                 xl
     ' 
     '     Function: AddSheetTable, CreatePackage, (+2 Overloads) GetTable, GetWorksheet, LoadDataSet
     '               Open, SheetNames, ToString, (+2 Overloads) WriteSheetTable, WriteXlsx
