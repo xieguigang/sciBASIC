@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::50e296800c2af195edb784e9dde0ff59, Data_science\MachineLearning\MachineLearning\SVM\Models\Problem.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Problem
-    ' 
-    '         Properties: Count, DimensionNames, MaxIndex, X, Y
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Equals, GetHashCode, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Problem
+' 
+'         Properties: Count, DimensionNames, MaxIndex, X, Y
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Equals, GetHashCode, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,7 +73,7 @@ Namespace SVM
         ''' <summary>
         ''' Number of vectors.
         ''' </summary>
-        Public ReadOnly Property Count As Integer
+        Public ReadOnly Property count As Integer
             Get
                 Return X.Length
             End Get
@@ -92,15 +92,15 @@ Namespace SVM
         ''' <summary>
         ''' Maximum index for a vector. this value is the width of each 
         ''' row in <see cref="X"/> and equals to the length of vector 
-        ''' <see cref="DimensionNames"/> 
+        ''' <see cref="dimensionNames"/> 
         ''' </summary>
-        Public Property MaxIndex As Integer
+        Public Property maxIndex As Integer
 
         ''' <summary>
         ''' the width of each row in <see cref="X"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Property DimensionNames As String()
+        Public Property dimensionNames As String()
 
         ''' <summary>
         ''' Constructor.
@@ -111,7 +111,7 @@ Namespace SVM
         Public Sub New(y As String(), x As Node()(), maxIndex As Integer)
             Me.Y = y.ClassEncoder.ToArray
             Me.X = x
-            Me.MaxIndex = maxIndex
+            Me.maxIndex = maxIndex
         End Sub
 
         ''' <summary>
@@ -124,17 +124,17 @@ Namespace SVM
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"dim {DimensionNames.GetJson}, {Y.Length} labels = {Y.Distinct.GetJson}"
+            Return $"dim {dimensionNames.GetJson}, {Y.Length} labels = {Y.Distinct.GetJson}"
         End Function
 
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim other As Problem = TryCast(obj, Problem)
             If other Is Nothing Then Return False
-            Return other.Count = Count AndAlso other.MaxIndex = MaxIndex AndAlso other.X.IsEqual(X) AndAlso other.Y.IsEqual(Y)
+            Return other.count = count AndAlso other.maxIndex = maxIndex AndAlso other.X.IsEqual(X) AndAlso other.Y.IsEqual(Y)
         End Function
 
         Public Overrides Function GetHashCode() As Integer
-            Return Count.GetHashCode() + MaxIndex.GetHashCode() + X.ComputeHashcode2() + Y.ComputeHashcode()
+            Return count.GetHashCode() + maxIndex.GetHashCode() + X.ComputeHashcode2() + Y.ComputeHashcode()
         End Function
     End Class
 End Namespace

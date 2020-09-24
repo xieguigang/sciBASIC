@@ -116,6 +116,7 @@ Public Module PathExtensions
                 Throw New Exception(path, ex)
             Else
                 Call App.LogException(ex, path)
+                Call ex.PrintException
             End If
 
             Return False
@@ -265,6 +266,13 @@ Public Module PathExtensions
     <Extension>
     Public Iterator Function ReadDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
         Dim current As New DirectoryInfo(DIR)
+
+        ' 20200924 skip invalid directory which have no
+        ' access 
+        If current.FullName.Trim("\"c, "/"c).IsPattern("[A-Z][:][/\\]System Volume Information") Then
+            Call $"Can not access to the {current}, skip enumerate files".Warning
+            Return
+        End If
 
         For Each file In current.EnumerateFiles
             Yield file.FullName

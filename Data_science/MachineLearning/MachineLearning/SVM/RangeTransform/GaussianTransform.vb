@@ -87,8 +87,8 @@ Namespace SVM
         ''' <param name="prob">The Problem to analyze</param>
         ''' <returns>The Gaussian transform for the problem</returns>
         Public Shared Function Compute(prob As Problem) As GaussianTransform
-            Dim counts = New Integer(prob.MaxIndex - 1) {}
-            Dim means = New Double(prob.MaxIndex - 1) {}
+            Dim counts = New Integer(prob.maxIndex - 1) {}
+            Dim means = New Double(prob.maxIndex - 1) {}
 
             For Each sample In prob.X
 
@@ -98,12 +98,12 @@ Namespace SVM
                 Next
             Next
 
-            For i = 0 To prob.MaxIndex - 1
+            For i = 0 To prob.maxIndex - 1
                 If counts(i) = 0 Then counts(i) = 2
                 means(i) /= counts(i)
             Next
 
-            Dim stddevs = New Double(prob.MaxIndex - 1) {}
+            Dim stddevs = New Double(prob.maxIndex - 1) {}
 
             For Each sample In prob.X
 
@@ -113,7 +113,7 @@ Namespace SVM
                 Next
             Next
 
-            For i = 0 To prob.MaxIndex - 1
+            For i = 0 To prob.maxIndex - 1
                 If stddevs(i) = 0 Then Continue For
                 stddevs(i) /= counts(i) - 1
                 stddevs(i) = stdNum.Sqrt(stddevs(i))

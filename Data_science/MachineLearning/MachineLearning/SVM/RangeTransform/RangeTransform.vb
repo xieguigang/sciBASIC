@@ -129,15 +129,15 @@ Namespace SVM
         ''' <param name="upperBound">The upper bound for scaling</param>
         ''' <returns>The Range transform for the problem</returns>
         Public Shared Function Compute(prob As Problem, lowerBound As Double, upperBound As Double) As RangeTransform
-            Dim minVals = New Double(prob.MaxIndex - 1) {}
-            Dim maxVals = New Double(prob.MaxIndex - 1) {}
+            Dim minVals = New Double(prob.maxIndex - 1) {}
+            Dim maxVals = New Double(prob.maxIndex - 1) {}
 
-            For i = 0 To prob.MaxIndex - 1
+            For i = 0 To prob.maxIndex - 1
                 minVals(i) = Double.MaxValue
                 maxVals(i) = Double.MinValue
             Next
 
-            For i = 0 To prob.Count - 1
+            For i = 0 To prob.count - 1
 
                 For j = 0 To prob.X(i).Length - 1
                     Dim index = prob.X(i)(j).index - 1
@@ -147,7 +147,7 @@ Namespace SVM
                 Next
             Next
 
-            For i = 0 To prob.MaxIndex - 1
+            For i = 0 To prob.maxIndex - 1
 
                 If minVals(i) = Double.MaxValue OrElse maxVals(i) = Double.MinValue Then
                     minVals(i) = 0

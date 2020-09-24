@@ -79,14 +79,14 @@ Namespace SVM
         Public Function Scale(range As IRangeTransform, prob As Problem) As Problem
             Dim scaledProblem As New Problem(
                 y:={},
-                x:=New Node(prob.Count - 1)() {},
-                maxIndex:=prob.MaxIndex
+                x:=New Node(prob.count - 1)() {},
+                maxIndex:=prob.maxIndex
             ) With {
-                .DimensionNames = prob.DimensionNames,
-                .Y = New ColorClass(prob.Count - 1) {}
+                .dimensionNames = prob.dimensionNames,
+                .Y = New ColorClass(prob.count - 1) {}
             }
 
-            For i = 0 To scaledProblem.Count - 1
+            For i = 0 To scaledProblem.count - 1
                 scaledProblem.X(i) = New Node(prob.X(i).Length - 1) {}
 
                 For j = 0 To scaledProblem.X(i).Length - 1

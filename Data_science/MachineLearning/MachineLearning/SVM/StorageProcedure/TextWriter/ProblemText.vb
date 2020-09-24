@@ -57,7 +57,7 @@ Namespace SVM
         ''' <param name="output">The stream to write the problem to.</param>
         ''' <param name="problem">The problem to write.</param>
         Public Sub Write(output As TextWriter, problem As Problem)
-            For i = 0 To problem.Count - 1
+            For i = 0 To problem.count - 1
                 output.Write(problem.Y(i))
 
                 For j = 0 To problem.X(i).Length - 1

@@ -77,22 +77,22 @@ Namespace SVM
         ''' <summary>
         ''' Contains custom weights for class labels.  Default weight value is 1.
         ''' </summary>
-        Dim _Weights As Dictionary(Of Integer, Double)
+        Dim m_Weights As Dictionary(Of Integer, Double)
 
         ''' <summary>
         ''' Type of SVM (default C-SVC)
         ''' </summary>
-        Public Property SvmType As SvmType
+        Public Property svmType As SvmType
 
         ''' <summary>
         ''' Type of kernel function (default Polynomial)
         ''' </summary>
-        Public Property KernelType As KernelType
+        Public Property kernelType As KernelType
 
         ''' <summary>
         ''' Degree in kernel function (default 3).
         ''' </summary>
-        Public Property Degree As Integer
+        Public Property degree As Integer
 
         ''' <summary>
         ''' Gamma in kernel function (default 1/k)
@@ -100,17 +100,17 @@ Namespace SVM
         ''' <remarks>
         ''' 这个参数比较重要，千万不可以设置为零，否则将无法进行数据分类
         ''' </remarks>
-        Public Property Gamma As Double = 0.5
+        Public Property gamma As Double = 0.5
 
         ''' <summary>
         ''' Zeroeth coefficient in kernel function (default 0)
         ''' </summary>
-        Public Property Coefficient0 As Double
+        Public Property coefficient0 As Double
 
         ''' <summary>
         ''' Cache memory size in MB (default 100)
         ''' </summary>
-        Public Property CacheSize As Double
+        Public Property cacheSize As Double
 
         ''' <summary>
         ''' Tolerance of termination criterion (default 0.001)
@@ -120,25 +120,25 @@ Namespace SVM
         ''' <summary>
         ''' The parameter C of C-SVC, epsilon-SVR, and nu-SVR (default 1)
         ''' </summary>
-        Public Property C As Double
+        Public Property c As Double
 
         ''' <summary>
         ''' <see cref="ColorClass.name"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Property Weights As Dictionary(Of Integer, Double)
+        Public Property weights As Dictionary(Of Integer, Double)
             Get
-                Return _Weights
+                Return m_Weights
             End Get
             Private Set
-                _Weights = Value
+                m_Weights = Value
             End Set
         End Property
 
         ''' <summary>
         ''' The parameter nu of nu-SVC, one-class SVM, and nu-SVR (default 0.5)
         ''' </summary>
-        Public Property Nu As Double
+        Public Property nu As Double
 
         ''' <summary>
         ''' The epsilon in loss function of epsilon-SVR (default 0.1)
@@ -148,30 +148,30 @@ Namespace SVM
         ''' <summary>
         ''' Whether to use the shrinking heuristics, (default True)
         ''' </summary>
-        Public Property Shrinking As Boolean
+        Public Property shrinking As Boolean
 
         ''' <summary>
         ''' Whether to train an SVC or SVR model for probability estimates, (default False)
         ''' </summary>
-        Public Property Probability As Boolean
+        Public Property probability As Boolean
 
         ''' <summary>
         ''' Default Constructor.  Gives good default values to all parameters.
         ''' </summary>
         Public Sub New()
-            SvmType = SvmType.C_SVC
-            KernelType = KernelType.RBF
-            Degree = 3
-            Gamma = 0.5
-            Coefficient0 = 0
-            Nu = 0.5
-            CacheSize = 40
-            C = 1
+            svmType = SvmType.C_SVC
+            kernelType = KernelType.RBF
+            degree = 3
+            gamma = 0.5
+            coefficient0 = 0
+            nu = 0.5
+            cacheSize = 40
+            c = 1
             EPS = 0.001
             P = 0.1
-            Shrinking = True
-            Probability = False
-            Weights = New Dictionary(Of Integer, Double)()
+            shrinking = True
+            probability = False
+            weights = New Dictionary(Of Integer, Double)()
         End Sub
 
         Public Overrides Function ToString() As String
@@ -180,22 +180,64 @@ Namespace SVM
 
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim other As Parameter = TryCast(obj, Parameter)
-            If other Is Nothing Then Return False
-            Return other.C = C AndAlso other.CacheSize = CacheSize AndAlso other.Coefficient0 = Coefficient0 AndAlso other.Degree = Degree AndAlso other.EPS = EPS AndAlso other.Gamma = Gamma AndAlso other.KernelType = KernelType AndAlso other.Nu = Nu AndAlso other.P = P AndAlso other.Probability = Probability AndAlso other.Shrinking = Shrinking AndAlso other.SvmType = SvmType AndAlso other.Weights.ToArray().IsEqual(Weights.ToArray())
+
+            If other Is Nothing Then
+                Return False
+            End If
+
+            Return other.c = c AndAlso
+                other.cacheSize = cacheSize AndAlso
+                other.coefficient0 = coefficient0 AndAlso
+                other.degree = degree AndAlso
+                other.EPS = EPS AndAlso
+                other.gamma = gamma AndAlso
+                other.kernelType = kernelType AndAlso
+                other.nu = nu AndAlso
+                other.P = P AndAlso
+                other.probability = probability AndAlso
+                other.shrinking = shrinking AndAlso
+                other.svmType = svmType AndAlso
+                other.weights.ToArray().IsEqual(weights.ToArray())
         End Function
 
         Public Overrides Function GetHashCode() As Integer
-            Return C.GetHashCode() + CacheSize.GetHashCode() + Coefficient0.GetHashCode() + Degree.GetHashCode() + EPS.GetHashCode() + Gamma.GetHashCode() + KernelType.GetHashCode() + Nu.GetHashCode() + P.GetHashCode() + Probability.GetHashCode() + Shrinking.GetHashCode() + SvmType.GetHashCode() + Weights.ToArray().ComputeHashcode()
+            Return c.GetHashCode() +
+                cacheSize.GetHashCode() +
+                coefficient0.GetHashCode() +
+                degree.GetHashCode() +
+                EPS.GetHashCode() +
+                gamma.GetHashCode() +
+                kernelType.GetHashCode() +
+                nu.GetHashCode() +
+                P.GetHashCode() +
+                probability.GetHashCode() +
+                shrinking.GetHashCode() +
+                svmType.GetHashCode() +
+                weights.ToArray().ComputeHashcode()
         End Function
 
-
 #Region "ICloneable Members"
+
         ''' <summary>
         ''' Creates a memberwise clone of this parameters object.
         ''' </summary>
         ''' <returns>The clone (as type Parameter)</returns>
         Public Function Clone() As Object Implements ICloneable.Clone
-            Return MemberwiseClone()
+            Return New Parameter With {
+                .c = c,
+                .cacheSize = cacheSize,
+                .coefficient0 = coefficient0,
+                .degree = degree,
+                .EPS = EPS,
+                .gamma = gamma,
+                .kernelType = kernelType,
+                .nu = nu,
+                .P = P,
+                .probability = probability,
+                .shrinking = shrinking,
+                .svmType = svmType,
+                .weights = New Dictionary(Of Integer, Double)(weights)
+            }
         End Function
 
 #End Region

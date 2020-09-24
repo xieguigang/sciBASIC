@@ -56,16 +56,16 @@ Namespace SVM
         ''' ''' <param name="output">The output stream</param>
         ''' ''' <param name="model">The model to write</param>
         Public Sub Write(output As TextWriter, model As Model)
-            Dim param = model.Parameter
+            Dim param = model.parameter
 
-            output.Write("svm_type {0}" & ASCII.LF, param.SvmType)
-            output.Write("kernel_type {0}" & ASCII.LF, param.KernelType)
+            output.Write("svm_type {0}" & ASCII.LF, param.svmType)
+            output.Write("kernel_type {0}" & ASCII.LF, param.kernelType)
 
-            If param.KernelType = KernelType.POLY Then output.Write("degree {0}" & ASCII.LF, param.Degree)
-            If param.KernelType = KernelType.POLY OrElse param.KernelType = KernelType.RBF OrElse param.KernelType = KernelType.SIGMOID Then output.Write("gamma {0:0.000000}" & ASCII.LF, param.Gamma)
-            If param.KernelType = KernelType.POLY OrElse param.KernelType = KernelType.SIGMOID Then output.Write("coef0 {0:0.000000}" & ASCII.LF, param.Coefficient0)
-            Dim nr_class = model.NumberOfClasses
-            Dim l = model.SupportVectorCount
+            If param.kernelType = KernelType.POLY Then output.Write("degree {0}" & ASCII.LF, param.degree)
+            If param.kernelType = KernelType.POLY OrElse param.kernelType = KernelType.RBF OrElse param.kernelType = KernelType.SIGMOID Then output.Write("gamma {0:0.000000}" & ASCII.LF, param.gamma)
+            If param.kernelType = KernelType.POLY OrElse param.kernelType = KernelType.SIGMOID Then output.Write("coef0 {0:0.000000}" & ASCII.LF, param.coefficient0)
+            Dim nr_class = model.numberOfClasses
+            Dim l = model.supportVectorCount
             output.Write("nr_class {0}" & ASCII.LF, nr_class)
             output.Write("total_sv {0}" & ASCII.LF, l)
 
@@ -73,55 +73,55 @@ Namespace SVM
                 output.Write("rho")
 
                 For i As Integer = 0 To CInt(nr_class * (nr_class - 1) / 2) - 1
-                    output.Write(" {0:0.000000}", model.Rho(i))
+                    output.Write(" {0:0.000000}", model.rho(i))
                 Next
 
                 output.Write(ASCII.LF)
             End If
 
-            If model.ClassLabels IsNot Nothing Then
+            If model.classLabels IsNot Nothing Then
                 output.Write("label")
 
                 For i = 0 To nr_class - 1
-                    output.Write(" {0}", model.ClassLabels(i))
+                    output.Write(" {0}", model.classLabels(i))
                 Next
 
                 output.Write(ASCII.LF)
             End If
             ' regression has probA only
-            If model.PairwiseProbabilityA IsNot Nothing Then
+            If model.pairwiseProbabilityA IsNot Nothing Then
                 output.Write("probA")
 
                 For i As Integer = 0 To CInt(nr_class * (nr_class - 1) / 2) - 1
-                    output.Write(" {0:0.000000}", model.PairwiseProbabilityA(i))
+                    output.Write(" {0:0.000000}", model.pairwiseProbabilityA(i))
                 Next
 
                 output.Write(ASCII.LF)
             End If
 
-            If model.PairwiseProbabilityB IsNot Nothing Then
+            If model.pairwiseProbabilityB IsNot Nothing Then
                 output.Write("probB")
 
                 For i As Integer = 0 To CInt(nr_class * (nr_class - 1) / 2) - 1
-                    output.Write(" {0:0.000000}", model.PairwiseProbabilityB(i))
+                    output.Write(" {0:0.000000}", model.pairwiseProbabilityB(i))
                 Next
 
                 output.Write(ASCII.LF)
             End If
 
-            If model.NumberOfSVPerClass IsNot Nothing Then
+            If model.numberOfSVPerClass IsNot Nothing Then
                 output.Write("nr_sv")
 
                 For i = 0 To nr_class - 1
-                    output.Write(" {0}", model.NumberOfSVPerClass(i))
+                    output.Write(" {0}", model.numberOfSVPerClass(i))
                 Next
 
                 output.Write(ASCII.LF)
             End If
 
             output.Write("SV" & ASCII.LF)
-            Dim sv_coef = model.SupportVectorCoefficients
-            Dim SV = model.SupportVectors
+            Dim sv_coef = model.supportVectorCoefficients
+            Dim SV = model.supportVectors
 
             For i = 0 To l - 1
 
@@ -136,7 +136,7 @@ Namespace SVM
                     Continue For
                 End If
 
-                If param.KernelType = KernelType.PRECOMPUTED Then
+                If param.kernelType = KernelType.PRECOMPUTED Then
                     output.Write("0:{0:0.000000}", CInt(p(0).value))
                 Else
                     output.Write("{0}:{1:0.000000}", p(0).index, p(0).value)

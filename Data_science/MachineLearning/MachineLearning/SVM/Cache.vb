@@ -74,6 +74,7 @@ Imports System.Runtime.InteropServices
 
 Namespace SVM
     Friend Class Cache
+
         Private _count As Integer
         Private _size As Long
 

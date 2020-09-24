@@ -111,7 +111,7 @@ Namespace SVM
                 End If
             End If
 
-            For i = 0 To problem.Count - 1
+            For i = 0 To problem.count - 1
                 Dim target = problem.Y(i)
                 Dim x = problem.X(i)
                 Dim v As SVMPrediction
@@ -150,7 +150,7 @@ Namespace SVM
 
             If output IsNot Nothing Then output.Close()
 
-            If model.Parameter.SvmType = SvmType.EPSILON_SVR OrElse model.Parameter.SvmType = SvmType.NU_SVR Then
+            If model.parameter.svmType = SvmType.EPSILON_SVR OrElse model.parameter.svmType = SvmType.NU_SVR Then
                 Return [error] / total
             Else
                 Return correct / total

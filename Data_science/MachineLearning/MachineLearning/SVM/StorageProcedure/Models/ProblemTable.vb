@@ -69,7 +69,7 @@ Namespace SVM.StorageProcedure
         ''' the key collection of the support vector: <see cref="SupportVector.Properties"/> inputs.
         ''' </summary>
         ''' <returns></returns>
-        Public Property DimensionNames As String()
+        Public Property dimensionNames As String()
 
         Public Function GetTopics() As String()
             ' 20200828
@@ -88,7 +88,7 @@ Namespace SVM.StorageProcedure
 
         Public Function Clone() As ProblemTable
             Return New ProblemTable With {
-                .DimensionNames = DimensionNames.ToArray,
+                .dimensionNames = dimensionNames.ToArray,
                 .vectors = vectors _
                     .Select(Function(vec)
                                 Return New SupportVector With {
@@ -107,7 +107,15 @@ Namespace SVM.StorageProcedure
         ''' <param name="topic"></param>
         ''' <returns></returns>
         Public Function GetTopicLabels(topic As String) As String()
-            Return vectors.Select(Function(a) a.labels(topic)).ToArray
+            Return vectors _
+                .Select(Function(a)
+                            If a.labels.ContainsKey(topic) Then
+                                Return a.labels(topic)
+                            Else
+                                Throw New KeyNotFoundException($"missing topic key '{topic}' for vector [{a.id}] for get svm classify result data!")
+                            End If
+                        End Function) _
+                .ToArray
         End Function
 
         Public Function GetProblem(topic As String) As Problem
@@ -115,7 +123,7 @@ Namespace SVM.StorageProcedure
             Dim labels As New List(Of String)
 
             For Each vec As SupportVector In vectors
-                Call DimensionNames _
+                Call dimensionNames _
                     .Select(Function(x, i) New Node(i + 1, vec(x))) _
                     .ToArray _
                     .DoCall(AddressOf inputs.Add)
@@ -124,8 +132,8 @@ Namespace SVM.StorageProcedure
             Next
 
             Return New Problem With {
-                .DimensionNames = DimensionNames,
-                .MaxIndex = .DimensionNames.Length,
+                .dimensionNames = dimensionNames,
+                .maxIndex = .dimensionNames.Length,
                 .X = inputs _
                     .Select(Function(i) Node.Copy(i).ToArray) _
                     .ToArray,
@@ -150,7 +158,7 @@ Namespace SVM.StorageProcedure
                 .ToArray
 
             Return New ProblemTable With {
-                .DimensionNames = names,
+                .dimensionNames = names,
                 .vectors = union
             }
         End Function

@@ -106,6 +106,7 @@ Namespace SVM
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim other As Node = TryCast(obj, Node)
             If other Is Nothing Then Return False
+
             Return _index = other._index AndAlso _value.Truncate() = other._value.Truncate()
         End Function
 

@@ -186,8 +186,8 @@ Namespace SVM
             System.Threading.Tasks.Parallel.ForEach(squares, New ParallelOptions With {
                 .MaxDegreeOfParallelism = Threads
             }, Sub(square)
-                   parameters.Value.C = square.C
-                   parameters.Value.Gamma = square.Gamma
+                   parameters.Value.c = square.C
+                   parameters.Value.gamma = square.Gamma
                    square.Score = PerformCrossValidation(problem, parameters.Value, nrfold)
                    If report IsNot Nothing Then report(square)
                End Sub)
@@ -242,8 +242,8 @@ Namespace SVM
             System.Threading.Tasks.Parallel.ForEach(squares, New ParallelOptions With {
                 .MaxDegreeOfParallelism = Threads
             }, Sub(square)
-                   parameters.Value.C = square.C
-                   parameters.Value.Gamma = square.Gamma
+                   parameters.Value.c = square.C
+                   parameters.Value.gamma = square.Gamma
                    Dim model = Train(problem, parameters.Value)
                    square.Score = Predict(validation, Nothing, model, False)
                    If report IsNot Nothing Then report(square)

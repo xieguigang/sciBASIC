@@ -58,12 +58,12 @@ Namespace SVM
         Private ReadOnly QD As Double()
 
         Public Sub New(prob As Problem, param As Parameter, y_ As SByte())
-            MyBase.New(prob.Count, prob.X, param)
+            MyBase.New(prob.count, prob.X, param)
             y = CType(y_.Clone(), SByte())
-            cache = New Cache(prob.Count, CLng(param.CacheSize) * (1 << 20))
-            QD = New Double(prob.Count - 1) {}
+            cache = New Cache(prob.count, CLng(param.cacheSize) * (1 << 20))
+            QD = New Double(prob.count - 1) {}
 
-            For i = 0 To prob.Count - 1
+            For i = 0 To prob.count - 1
                 QD(i) = KernelFunction(i, i)
             Next
         End Sub

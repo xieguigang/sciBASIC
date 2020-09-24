@@ -100,10 +100,10 @@ Namespace SVM
         End Function
 
         Public Sub New(l As Integer, x_ As Node()(), param As Parameter)
-            _kernelType = param.KernelType
-            _degree = param.Degree
-            _gamma = param.Gamma
-            _coef0 = param.Coefficient0
+            _kernelType = param.kernelType
+            _degree = param.degree
+            _gamma = param.gamma
+            _coef0 = param.coefficient0
             _x = CType(x_.Clone(), Node()())
 
             If _kernelType = KernelType.RBF Then
@@ -234,16 +234,16 @@ Namespace SVM
         End Function
 
         Public Shared Function KernelFunction(x As Node(), y As Node(), param As Parameter) As Double
-            Select Case param.KernelType
+            Select Case param.kernelType
                 Case KernelType.LINEAR
                     Return dot(x, y)
                 Case KernelType.POLY
-                    Return powi(param.Degree * dot(x, y) + param.Coefficient0, param.Degree)
+                    Return powi(param.degree * dot(x, y) + param.coefficient0, param.degree)
                 Case KernelType.RBF
                     Dim sum = computeSquaredDistance(x, y)
-                    Return stdNum.Exp(-param.Gamma * sum)
+                    Return stdNum.Exp(-param.gamma * sum)
                 Case KernelType.SIGMOID
-                    Return stdNum.Tanh(param.Gamma * dot(x, y) + param.Coefficient0)
+                    Return stdNum.Tanh(param.gamma * dot(x, y) + param.coefficient0)
                 Case KernelType.PRECOMPUTED
                     Return x(CInt(y(0).value)).value
                 Case Else

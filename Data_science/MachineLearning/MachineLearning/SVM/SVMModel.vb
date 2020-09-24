@@ -65,7 +65,7 @@ Namespace SVM
 
         Public ReadOnly Property DimensionNames As String()
             Get
-                Return model.DimensionNames
+                Return model.dimensionNames
             End Get
         End Property
 
