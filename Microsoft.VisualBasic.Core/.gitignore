@@ -16,3 +16,4 @@ obj/
 *.ide-wal
 *.sqlite
 *.sqlite-journal
+.vs/Microsoft.VisualBasic.Core/DesignTimeBuild/.dtbcache.v2
