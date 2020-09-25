@@ -68,6 +68,7 @@
 ' *****************************************************************************
 
 Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Serialization.JSON
 

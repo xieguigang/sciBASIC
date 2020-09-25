@@ -44,6 +44,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports stdNum = System.Math
 

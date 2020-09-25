@@ -43,6 +43,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
