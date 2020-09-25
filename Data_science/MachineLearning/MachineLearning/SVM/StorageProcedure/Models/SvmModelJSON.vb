@@ -53,6 +53,131 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SVM.StorageProcedure
 
+    Public Class supportNodeVector
+
+        Public Property index As Integer()
+        Public Property value As Double()
+
+        Public Iterator Function CreateNodes() As IEnumerable(Of Node)
+            For i As Integer = 0 To index.Length - 1
+                Yield New Node With {
+                    .index = index(i),
+                    .value = value(i)
+                }
+            Next
+        End Function
+
+        Public Shared Function CreateVector(nodes As Node()) As supportNodeVector
+            Dim index As Integer() = nodes.Select(Function(n) n.index).ToArray
+            Dim value As Double() = nodes.Select(Function(n) n.value).ToArray
+
+            Return New supportNodeVector With {
+                .index = index,
+                .value = value
+            }
+        End Function
+
+    End Class
+
+    Public Class Model
+
+        ''' <summary>
+        ''' Parameter object.
+        ''' </summary>
+        Public Property parameter As Parameter
+
+        ''' <summary>
+        ''' Number of classes in the model.
+        ''' </summary>
+        Public Property numberOfClasses As Integer
+
+        ''' <summary>
+        ''' Total number of support vectors.
+        ''' </summary>
+        Public Property supportVectorCount As Integer
+
+        ''' <summary>
+        ''' The support vectors.
+        ''' </summary>
+        Public Property supportVectors As supportNodeVector()
+
+        ''' <summary>
+        ''' The coefficients for the support vectors.
+        ''' </summary>
+        Public Property supportVectorCoefficients As Double()()
+
+        ''' <summary>
+        ''' Values in [1,...,num_training_data] to indicate SVs in the training set
+        ''' </summary>
+        Public Property supportVectorIndices As Integer()
+
+        ''' <summary>
+        ''' Constants in decision functions
+        ''' </summary>
+        Public Property rho As Double()
+
+        ''' <summary>
+        ''' First pairwise probability.
+        ''' </summary>
+        Public Property pairwiseProbabilityA As Double()
+
+        ''' <summary>
+        ''' Second pairwise probability.
+        ''' </summary>
+        Public Property pairwiseProbabilityB As Double()
+
+        ' for classification only
+
+        ''' <summary>
+        ''' Class labels.
+        ''' </summary>
+        Public Property classLabels As Integer()
+
+        ''' <summary>
+        ''' Number of support vectors per class.
+        ''' </summary>
+        Public Property numberOfSVPerClass As Integer()
+        Public Property dimensionNames As String()
+
+        Public Shared Function CreateJSONModel(svm As SVM.Model) As Model
+            Return New Model With {
+                .classLabels = svm.classLabels,
+                .dimensionNames = svm.dimensionNames,
+                .numberOfClasses = svm.numberOfClasses,
+                .numberOfSVPerClass = svm.numberOfSVPerClass,
+                .pairwiseProbabilityA = svm.pairwiseProbabilityA,
+                .pairwiseProbabilityB = svm.pairwiseProbabilityB,
+                .parameter = svm.parameter,
+                .rho = svm.rho,
+                .supportVectorCoefficients = svm.supportVectorCoefficients,
+                .supportVectorCount = svm.supportVectorCount,
+                .supportVectorIndices = svm.supportVectorIndices,
+                .supportVectors = svm.supportVectors _
+                    .Select(AddressOf supportNodeVector.CreateVector) _
+                    .ToArray
+            }
+        End Function
+
+        Public Function CreateModel() As SVM.Model
+            Return New SVM.Model With {
+                .classLabels = classLabels,
+                .dimensionNames = dimensionNames,
+                .numberOfClasses = numberOfClasses,
+                .numberOfSVPerClass = numberOfSVPerClass,
+                .pairwiseProbabilityA = pairwiseProbabilityA,
+                .pairwiseProbabilityB = pairwiseProbabilityB,
+                .parameter = parameter,
+                .rho = rho,
+                .supportVectorCoefficients = supportVectorCoefficients,
+                .supportVectorCount = supportVectorCount,
+                .supportVectorIndices = supportVectorIndices,
+                .supportVectors = supportVectors _
+                    .Select(Function(v) v.CreateNodes.ToArray) _
+                    .ToArray
+            }
+        End Function
+    End Class
+
     Public Class SvmModelJSON
 
         Public Property model As Model
@@ -62,7 +187,7 @@ Namespace SVM.StorageProcedure
 
         Public Shared Function CreateJSONModel(svm As SVMModel) As SvmModelJSON
             Return New SvmModelJSON With {
-                .model = svm.model,
+                .model = Model.CreateJSONModel(svm.model),
                 .factors = svm.factors.Colors,
                 .gaussianTransform = If(TypeOf svm.transform Is GaussianTransform, New GaussianTransformModel(svm.transform), Nothing),
                 .rangeTransform = If(TypeOf svm.transform Is RangeTransform, New RangeTransformModel(svm.transform), Nothing)
@@ -76,7 +201,7 @@ Namespace SVM.StorageProcedure
         Public Function CreateSVMModel() As SVMModel
             Return New SVMModel With {
                 .factors = New ClassEncoder(factors),
-                .model = model,
+                .model = model.CreateModel,
                 .transform = If(rangeTransform Is Nothing, gaussianTransform.GetTransform, rangeTransform.GetTransform)
             }
         End Function

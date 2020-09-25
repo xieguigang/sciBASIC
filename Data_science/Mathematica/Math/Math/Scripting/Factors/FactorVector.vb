@@ -47,6 +47,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Serialization.JSON
 

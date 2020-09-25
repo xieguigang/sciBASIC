@@ -53,7 +53,6 @@ Namespace BSON
 
     Public Class Decoder : Implements IDisposable
 
-        ReadOnly raw As MemoryStream
         ReadOnly reader As BinaryReader
 
         Sub New(buf As Byte())
@@ -61,7 +60,6 @@ Namespace BSON
         End Sub
 
         Sub New(raw As Stream)
-            Me.raw = raw
             Me.reader = New BinaryReader(raw)
         End Sub
 
@@ -188,7 +186,6 @@ Namespace BSON
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     Call reader.Dispose()
-                    Call raw.Dispose()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

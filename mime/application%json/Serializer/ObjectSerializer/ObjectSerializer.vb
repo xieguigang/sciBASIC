@@ -47,7 +47,6 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.ValueTypes
 
 Public Module ObjectSerializer
@@ -89,11 +88,20 @@ Public Module ObjectSerializer
         Dim valueType As Type
         Dim json As New JsonObject
         Dim valObj As Object
+        Dim graph As ObjectSchema = ObjectSchema.GetSchema(schema)
 
         For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
             [property] = reader.Value
             valueType = [property].PropertyType
             valObj = [property].GetValue(obj)
+
+            If valueType.IsInterface OrElse
+                valueType Is GetType(Object) OrElse
+                valueType.IsAbstract Then
+
+                valueType = valObj.GetType
+            End If
+
             json.Add(reader.Key, valueType.GetJsonElement(valObj, opt))
         Next
 

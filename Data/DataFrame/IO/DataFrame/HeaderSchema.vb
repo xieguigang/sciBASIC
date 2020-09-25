@@ -49,6 +49,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
@@ -76,7 +77,7 @@ Namespace IO
             Get
                 Return SchemaOridinal _
                     .OrderBy(Function(p) p.Value) _
-                    .Keys _
+                    .Select(Function(p) p.Key) _
                     .ToArray
             End Get
         End Property

@@ -921,12 +921,12 @@ Public Module App
     ''' <summary>
     ''' Example: ``tmp2A10.tmp``
     ''' </summary>
-    Dim _tmpHash As New Uid(10, Not IsMicrosoftPlatform)
+    Dim tempHashCode As New Uid(10, Not IsMicrosoftPlatform)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function tempCode() As String
-        SyncLock _tmpHash
-            Return FormatZero(++_tmpHash, "00000")
+        SyncLock tempHashCode
+            Return FormatZero(++tempHashCode, "00000")
         End SyncLock
     End Function
 

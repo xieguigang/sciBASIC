@@ -72,13 +72,21 @@ Namespace Javascript
         End Sub
 
         Public Function Literal(typeOfT As Type) As Object
+            Dim str As String = GetStripString()
+
             Select Case typeOfT
                 Case GetType(String)
-                    Return GetStripString()
+                    Return str
                 Case GetType(Date)
-                    Return Casting.CastDate(GetStripString)
+                    Return Casting.CastDate(str)
+                Case GetType(Boolean)
+                    Return str.ParseBoolean
                 Case Else
-                    Return Scripting.CTypeDynamic(GetStripString, typeOfT)
+                    If typeOfT.IsEnum Then
+                        Return [Enum].Parse(typeOfT, str)
+                    Else
+                        Return Scripting.CTypeDynamic(str, typeOfT)
+                    End If
             End Select
         End Function
 

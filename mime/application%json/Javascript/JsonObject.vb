@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::b73a666b3d517071d7b59a6b761b9b9e, mime\application%json\Javascript\JsonObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class JsonObject
-    ' 
-    '         Function: ContainsElement, ContainsKey, CreateObject, GetEnumerator, IEnumerable_GetEnumerator
-    '                   Remove, ToString
-    ' 
-    '         Sub: (+2 Overloads) Add, WriteBuffer
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class JsonObject
+' 
+'         Function: ContainsElement, ContainsKey, CreateObject, GetEnumerator, IEnumerable_GetEnumerator
+'                   Remove, ToString
+' 
+'         Sub: (+2 Overloads) Add, WriteBuffer
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
@@ -110,13 +111,25 @@ Namespace Javascript
             Return array.ContainsValue(element)
         End Function
 
+        Public Function Score(schema As Type) As Integer
+            Dim hits As Integer
+
+            For Each [property] As PropertyInfo In schema.GetProperties(PublicProperty)
+                If array.ContainsKey([property].Name) Then
+                    hits += 1
+                End If
+            Next
+
+            Return hits
+        End Function
+
         ''' <summary>
         ''' 反序列化为目标类型的对象实例
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         Public Function CreateObject(Of T As Class)() As T
-            Return Me.createObject(schema:=GetType(T))
+            Return Me.createObject(parent:=Nothing, schema:=GetType(T))
         End Function
 
         Public Overrides Function ToString() As String
