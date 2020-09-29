@@ -285,7 +285,7 @@ Namespace KMeans
                             Continue For
                         End If
 
-                        Call x._innerList(i).SwapWith(y._innerList(j))
+                        Call x._innerList(i).Swap(y._innerList(j))
                     Next
                 End If
             Next

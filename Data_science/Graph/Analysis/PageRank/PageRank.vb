@@ -178,7 +178,7 @@ Namespace Analysis.PageRank
 
                 For i As Integer = 0 To checkSteps - 1
                     ' swap arrays
-                    Call iOld.SwapWith(iNew)
+                    Call iOld.Swap(iNew)
 
                     ' an element in the 1 x I vector. 
                     ' all elements are identical.

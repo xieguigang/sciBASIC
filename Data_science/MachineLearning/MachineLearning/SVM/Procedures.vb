@@ -73,27 +73,10 @@ Namespace SVM
 
     Friend Module Procedures
 
-        Public Property IsVerbose As Boolean
-
         Dim rand As Random = randf.seeds
-        Dim svm_print_stdout As TextWriter = Console.Out
 
         Public Sub setRandomSeed(seed As Integer)
             rand = New Random(seed)
-        End Sub
-
-        Public Sub flush()
-            SyncLock svm_print_stdout
-                Call svm_print_stdout.Flush()
-            End SyncLock
-        End Sub
-
-        Public Sub info(s As String)
-            If IsVerbose Then
-                SyncLock svm_print_stdout
-                    Call svm_print_stdout.Write(s)
-                End SyncLock
-            End If
         End Sub
 
         Private Sub solve_c_svc(prob As Problem, param As Parameter, alpha As Double(), si As SolutionInfo, Cp As Double, Cn As Double)
@@ -122,7 +105,7 @@ Namespace SVM
             Next
 
             If Cp = Cn Then
-                Procedures.info("nu = " & sum_alpha / (Cp * prob.count) & ASCII.LF)
+                Logging.info("nu = " & sum_alpha / (Cp * prob.count) & ASCII.LF)
             End If
 
             For i = 0 To l - 1
@@ -169,7 +152,7 @@ Namespace SVM
 
             Dim r = si.r
 
-            Procedures.info("C = " & 1 / r & ASCII.LF)
+            Logging.info("C = " & 1 / r & ASCII.LF)
 
             For i = 0 To l - 1
                 alpha(i) *= y(i) / r
@@ -231,7 +214,7 @@ Namespace SVM
                 sum_alpha += stdNum.Abs(alpha(i))
             Next
 
-            Procedures.info("nu = " & sum_alpha / (param.c * l) & ASCII.LF)
+            Logging.info("nu = " & sum_alpha / (param.c * l) & ASCII.LF)
         End Sub
 
         Private Sub solve_nu_svr(prob As Problem, param As Parameter, alpha As Double(), si As SolutionInfo)
@@ -254,7 +237,7 @@ Namespace SVM
             Next
 
             Call New Solver_NU().Solve(2 * l, New SVR_Q(prob, param), linear_term, y, alpha2, C, C, param.EPS, si, param.shrinking)
-            Call Procedures.info("epsilon = " & -si.r & ASCII.LF)
+            Call Logging.info("epsilon = " & -si.r & ASCII.LF)
 
             For i = 0 To l - 1
                 alpha(i) = alpha2(i) - alpha2(i + l)
@@ -291,7 +274,7 @@ Namespace SVM
                     solve_nu_svr(prob, param, alpha, si)
             End Select
 
-            Procedures.info("obj = " & si.obj & ", rho = " & si.rho & ASCII.LF)
+            Logging.info("obj = " & si.obj & ", rho = " & si.rho & ASCII.LF)
 
             ' output SVs
 
@@ -315,7 +298,7 @@ Namespace SVM
                 End If
             Next
 
-            Procedures.info("nSV = " & nSV & ", nBSV = " & nBSV & ASCII.LF)
+            Logging.info("nSV = " & nSV & ", nBSV = " & nBSV & ASCII.LF)
 
             Return New decision_function() With {
                 .alpha = alpha,
@@ -442,13 +425,13 @@ Namespace SVM
                 End While
 
                 If stepsize < min_step Then
-                    Procedures.info("Line search fails in two-class probability estimates" & ASCII.LF)
+                    Logging.info("Line search fails in two-class probability estimates" & ASCII.LF)
                     Exit For
                 End If
             Next
 
             If iter >= max_iter Then
-                Procedures.info("Reaching maximal iterations in two-class probability estimates" & ASCII.LF)
+                Logging.info("Reaching maximal iterations in two-class probability estimates" & ASCII.LF)
             End If
 
             probAB(0) = A
@@ -529,7 +512,7 @@ Namespace SVM
             Next
 
             If iter >= max_iter Then
-                Procedures.info("Exceeds max_iter in multiclass_prob" & ASCII.LF)
+                Logging.info("Exceeds max_iter in multiclass_prob" & ASCII.LF)
             End If
         End Sub
 
@@ -670,7 +653,8 @@ Namespace SVM
             Next
 
             mae /= prob.count - count
-            Procedures.info("Prob. model for test data: target value = predicted value + z," & ASCII.LF & "z: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma=" & mae & ASCII.LF)
+            Logging.info("Prob. model for test data: target value = predicted value + z," & ASCII.LF & "z: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma=" & mae & ASCII.LF)
+
             Return mae
         End Function
 
@@ -845,7 +829,7 @@ Namespace SVM
             svm_group_classes(prob, nr_class, label, start, count, perm)
 
             If nr_class = 1 Then
-                Procedures.info("WARNING: training data in only one class. See README for details." & ASCII.LF)
+                Logging.info("WARNING: training data in only one class. See README for details." & ASCII.LF)
             End If
 
             Dim x = New Node(l - 1)() {}
@@ -977,7 +961,8 @@ Namespace SVM
                 nz_count(i) = nSV
             Next
 
-            Procedures.info("Total nSV = " & nnz & ASCII.LF)
+            Logging.info("Total nSV = " & nnz & ASCII.LF)
+
             model.supportVectorCount = nnz
             model.supportVectors = New Node(nnz - 1)() {}
             model.supportVectorIndices = New Integer(nnz - 1) {}
@@ -1484,19 +1469,15 @@ Namespace SVM
         End Function
 
         Public Function svm_check_probability_model(model As Model) As Integer
-            If (model.parameter.svmType = SvmType.C_SVC OrElse model.parameter.svmType = SvmType.NU_SVC) AndAlso model.pairwiseProbabilityA IsNot Nothing AndAlso model.pairwiseProbabilityB IsNot Nothing OrElse (model.parameter.svmType = SvmType.EPSILON_SVR OrElse model.parameter.svmType = SvmType.NU_SVR) AndAlso model.pairwiseProbabilityA IsNot Nothing Then
+            If (model.parameter.svmType = SvmType.C_SVC OrElse model.parameter.svmType = SvmType.NU_SVC) AndAlso
+                model.pairwiseProbabilityA IsNot Nothing AndAlso
+                model.pairwiseProbabilityB IsNot Nothing OrElse (model.parameter.svmType = SvmType.EPSILON_SVR OrElse model.parameter.svmType = SvmType.NU_SVR) AndAlso
+                model.pairwiseProbabilityA IsNot Nothing Then
+
                 Return 1
             Else
                 Return 0
             End If
         End Function
     End Module
-
-    Public Structure SVMPrediction
-
-        Public Property [class] As Integer
-        Public Property score As Double
-        Public Property unifyValue As Double
-
-    End Structure
 End Namespace

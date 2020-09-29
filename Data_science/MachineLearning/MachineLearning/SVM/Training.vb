@@ -70,22 +70,6 @@ Namespace SVM
     ''' </summary>
     Public Module Training
 
-        ''' <summary>
-        ''' Whether the system will output information to the console during the training process.
-        ''' </summary>
-        Public Property IsVerbose As Boolean
-            Get
-                Return Procedures.IsVerbose
-            End Get
-            Set(value As Boolean)
-                Procedures.IsVerbose = value
-            End Set
-        End Property
-
-        Public Sub flushLog()
-            Call Procedures.flush()
-        End Sub
-
         Private Function doCrossValidation(problem As Problem, parameters As Parameter, nr_fold As Integer) As Double
             Dim i As Integer
             Dim target = New SVMPrediction(problem.count - 1) {}

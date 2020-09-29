@@ -45,11 +45,11 @@
 Imports stdNum = System.Math
 
 Namespace SVM
-    '
-    ' Solver for nu-svm classification and regression
-    '
-    ' additional constraint: e^T \alpha = constant
-    '
+
+    ''' <summary>
+    ''' Solver for nu-svm classification and regression
+    ''' additional constraint: e^T \alpha = constant
+    ''' </summary>
     Friend NotInheritable Class Solver_NU
         Inherits Solver
 

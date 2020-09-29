@@ -1111,7 +1111,17 @@ Public Module Extensions
         Return LQuery
     End Function
 
-    <Extension> Public Sub Swap(Of T)(ByRef array As T(), a%, b%)
+    ''' <summary>
+    ''' swap two element in the array
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="a%"></param>
+    ''' <param name="b%"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub Swap(Of T)(ByRef array As T(), a%, b%)
         Dim tmp As T = array(a)
         array(a) = array(b)
         array(b) = tmp
@@ -1124,10 +1134,13 @@ Public Module Extensions
     ''' <param name="obj1"></param>
     ''' <param name="obj2"></param>
     ''' <remarks></remarks>
-    <Extension> Public Sub SwapWith(Of T)(ByRef obj1 As T, ByRef obj2 As T)
-        Dim objTemp As T = obj1
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub Swap(Of T)(ByRef obj1 As T, ByRef obj2 As T)
+        Dim temp As T = obj1
         obj1 = obj2
-        obj2 = objTemp
+        obj2 = temp
     End Sub
 
     ''' <summary>

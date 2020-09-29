@@ -66,30 +66,37 @@ Imports stdNum = System.Math
 
 Namespace SVM
 
-
-    ' An SMO algorithm in Fan et al., JMLR 6(2005), p. 1889--1918
-    ' Solves:
-    '
-    '	min 0.5(\alpha^T Q \alpha) + p^T \alpha
-    '
-    '		y^T \alpha = \delta
-    '		y_i = +1 or -1
-    '		0 <= alpha_i <= Cp for y_i = 1
-    '		0 <= alpha_i <= Cn for y_i = -1
-    '
-    ' Given:
-    '
-    '	Q, p, y, Cp, Cn, and an initial feasible point \alpha
-    '	l is the size of vectors and matrices
-    '	eps is the stopping tolerance
-    '
-    ' solution will be put in \alpha, objective value will be put in obj
-    '
+    ''' <summary>
+    ''' An SMO algorithm in Fan et al., JMLR 6(2005), p. 1889--1918
+    ''' Solves:
+    '''
+    ''' ```
+    '''	min 0.5(\alpha^T Q \alpha) + p^T \alpha
+    '''
+    '''		y^T \alpha = \delta
+    '''		y_i = +1 or -1
+    '''		0 &lt;= alpha_i &lt;= Cp for y_i = 1
+    '''		0 &lt;= alpha_i &lt;= Cn for y_i = -1
+    ''' ```
+    ''' 
+    ''' Given:
+    '''
+    '''	Q, p, y, Cp, Cn, and an initial feasible point \alpha
+    '''	l is the size of vectors and matrices
+    '''	eps is the stopping tolerance
+    '''
+    ''' solution will be put in \alpha, objective value will be put in obj
+    '''
+    ''' </summary>
     Friend Class Solver
 
         Protected active_size As Integer
         Protected y As SByte()
-        Protected G As Double()     ' gradient of objective function
+
+        ''' <summary>
+        ''' gradient of objective function
+        ''' </summary>
+        Protected G As Double()
         Protected Const LOWER_BOUND As Byte = 0
         Protected Const UPPER_BOUND As Byte = 1
         Protected Const FREE As Byte = 2
@@ -186,7 +193,7 @@ Namespace SVM
             If active_size = l Then
                 Return
             ElseIf active_size <= -1 Then
-                Procedures.info($"unsure for active_size index is negatuve value?")
+                Logging.info($"unsure for active_size index is negatuve value?")
                 Return
             End If
 
@@ -202,7 +209,7 @@ Namespace SVM
             Next
 
             If 2 * nr_free < active_size Then
-                Procedures.info(ASCII.LF & "WARNING: using -h 0 may be faster" & ASCII.LF)
+                Logging.info(ASCII.LF & "WARNING: using -h 0 may be faster" & ASCII.LF)
             End If
 
             If nr_free * l > 2 * active_size * (l - active_size) Then
@@ -495,7 +502,7 @@ Namespace SVM
             si.upper_bound_p = Cp
             si.upper_bound_n = Cn
 
-            Procedures.info(ASCII.LF & "optimization finished, #iter = " & iter & ASCII.LF)
+            Logging.info(ASCII.LF & "optimization finished, #iter = " & iter & ASCII.LF)
         End Sub
 
         ''' <summary>
