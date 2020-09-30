@@ -1927,7 +1927,7 @@
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\ProcessLock.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\Shell.vb" />
-    <Compile Include="ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
+    <Compile Include="ApplicationServices\Terminal\STDIO__\IConsole.vb" />
     <Compile Include="Language\Language\C\CFormatProvider.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\BitMap\HashModel.vb" />

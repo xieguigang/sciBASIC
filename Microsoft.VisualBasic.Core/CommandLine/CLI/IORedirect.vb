@@ -89,7 +89,7 @@ Namespace CommandLine
     ''' 不需要终端交互功能，则更加推荐使用<see cref="IORedirectFile"/>对象来进行调用)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class IORedirect : Implements I_ConsoleDeviceHandle
+    Public Class IORedirect : Implements STDIO__.InteractiveDevice
         Implements IDisposable, IIORedirectAbstract
 
         ''' <summary>
@@ -396,13 +396,13 @@ Namespace CommandLine
             Return Start(waitForExit:=True)
         End Function
 
-        Public Sub WriteLine(Optional s As String = "") Implements I_ConsoleDeviceHandle.WriteLine
-            If s.StringEmpty Then
-                Call input.WriteLine()
-            Else
-                Call input.WriteLine(s)
-            End If
+        Public Sub WriteLine() Implements STDIO__.InteractiveDevice.WriteLine
+            Call input.WriteLine()
+            Call input.Flush()
+        End Sub
 
+        Public Sub WriteLine(s As String) Implements STDIO__.InteractiveDevice.WriteLine
+            Call input.WriteLine(s)
             Call input.Flush()
         End Sub
 
@@ -433,18 +433,31 @@ Namespace CommandLine
             Return CType(commandLine, IORedirect)
         End Function
 
-        Private Function Read() As Integer Implements I_ConsoleDeviceHandle.Read
+        Private Function Read() As Integer Implements STDIO__.InteractiveDevice.Read
             Return output.Length
         End Function
 
-        Private Function ReadLine() As String Implements I_ConsoleDeviceHandle.ReadLine
+        Private Function ReadLine() As String Implements STDIO__.InteractiveDevice.ReadLine
             Return ""
         End Function
 
-        Public Sub WriteLine(s$, ParamArray args() As String) Implements I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(s$, ParamArray args() As Object) Implements STDIO__.InteractiveDevice.WriteLine
             Call input.WriteLine(String.Format(s, args))
             Call input.Flush()
         End Sub
+
+        Public Sub Clear() Implements STDIO__.InteractiveDevice.Clear
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Sub Write(str As String) Implements STDIO__.InteractiveDevice.Write
+            Call input.Write(str)
+            Call input.Flush()
+        End Sub
+
+        Public Function ReadKey() As ConsoleKeyInfo Implements STDIO__.InteractiveDevice.ReadKey
+            Throw New NotImplementedException()
+        End Function
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls

@@ -69,6 +69,12 @@ Namespace My
             Return str.ToString
         End Function
 
+        ''' <summary>
+        ''' processing a unicode char like ``&lt;aa>``
+        ''' </summary>
+        ''' <param name="output"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Function ProcessingRRawUniCode(output As String, Optional encoding As Encodings = Encodings.Unicode) As String
             Dim raw As String() = output.Matches("([<][a-z0-9]{1,2}[>])+").ToArray
             Dim str As New StringBuilder(output)

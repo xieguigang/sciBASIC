@@ -64,9 +64,9 @@ Namespace ApplicationServices.Debugging.Logging
     ''' <remarks>
     ''' 这个类模块将输入的信息格式化保存到文本文件之中，记录的信息包括信息头，消息文本，以及消息等级
     ''' </remarks>
-    Public Class LogFile : Implements IFileReference
+    Public Class LogFile
+        Implements IFileReference
         Implements IDisposable
-        Implements I_ConsoleDeviceHandle
 
         Dim buffer As TextWriter
         Dim counts&
@@ -153,11 +153,7 @@ Namespace ApplicationServices.Debugging.Logging
             Return $"[{counts} records]'{filePath.ToFileURL}'"
         End Function
 
-        Public Function ReadLine() As String Implements I_ConsoleDeviceHandle.ReadLine
-            Return ""
-        End Function
-
-        Public Sub WriteLine(Optional s As String = "") Implements I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(Optional s As String = "")
             Call WriteLine(s, type:=MSG_TYPES.INF, [Object]:="")
         End Sub
 
@@ -172,14 +168,10 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="s"></param>
         ''' <param name="args">{[Object] As String, Optional Type As MsgType = MsgType.INF, Optional WriteToScreen As Boolean = True}</param>
         ''' <remarks></remarks>
-        Public Sub WriteLine(s As String, ParamArray args() As String) Implements I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(s As String, ParamArray args() As String)
             Dim [object] As String = IIf(String.IsNullOrEmpty(args(0)), "", args(0))
             Call WriteLine(s, type:=MSG_TYPES.INF, [Object]:=[object])
         End Sub
-
-        Public Overloads Function Read() As Integer Implements I_ConsoleDeviceHandle.Read
-            Return -1
-        End Function
 
         ''' <summary>
         ''' 给出用于调试的系统的信息摘要

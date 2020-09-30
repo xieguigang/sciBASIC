@@ -1,98 +1,76 @@
 ﻿#Region "Microsoft.VisualBasic::8a44d4d7c0a850b279c521a8533b9eba, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Terminal
-    ' 
-    '         Properties: [Error], [In], BackgroundColor, BufferHeight, BufferWidth
-    '                     CapsLock, CursorLeft, CursorSize, CursorTop, CursorVisible
-    '                     ForegroundColor, InputEncoding, IsErrorRedirected, IsInputRedirected, IsOutputRedirected
-    '                     KeyAvailable, LargestWindowHeight, LargestWindowWidth, NumberLock, Out
-    '                     OutputEncoding, Title, TreatControlCAsInput, WindowHeight, WindowLeft
-    '                     WindowTop, WindowWidth
-    ' 
-    '         Function: (+2 Overloads) OpenStandardError, (+2 Overloads) OpenStandardInput, (+2 Overloads) OpenStandardOutput, Read, (+2 Overloads) ReadKey
-    '                   ReadLine
-    ' 
-    '         Sub: (+2 Overloads) Beep, Clear, (+2 Overloads) MoveBufferArea, ResetColor, SetBufferSize
-    '              SetCursorPosition, SetError, SetIn, SetOut, SetWindowPosition
-    '              SetWindowSize, (+17 Overloads) Write, (+19 Overloads) WriteLine
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Terminal
+' 
+'         Properties: [Error], [In], BackgroundColor, BufferHeight, BufferWidth
+'                     CapsLock, CursorLeft, CursorSize, CursorTop, CursorVisible
+'                     ForegroundColor, InputEncoding, IsErrorRedirected, IsInputRedirected, IsOutputRedirected
+'                     KeyAvailable, LargestWindowHeight, LargestWindowWidth, NumberLock, Out
+'                     OutputEncoding, Title, TreatControlCAsInput, WindowHeight, WindowLeft
+'                     WindowTop, WindowWidth
+' 
+'         Function: (+2 Overloads) OpenStandardError, (+2 Overloads) OpenStandardInput, (+2 Overloads) OpenStandardOutput, Read, (+2 Overloads) ReadKey
+'                   ReadLine
+' 
+'         Sub: (+2 Overloads) Beep, Clear, (+2 Overloads) MoveBufferArea, ResetColor, SetBufferSize
+'              SetCursorPosition, SetError, SetIn, SetOut, SetWindowPosition
+'              SetWindowSize, (+17 Overloads) Write, (+19 Overloads) WriteLine
+' 
+' 
+' /********************************************************************************/
 
 #End Region
-
-Imports STDIO = System.Console
 
 Namespace ApplicationServices.Terminal
 
     ''' <summary>
-    ''' Represents the standard input, output, and error streams for console applications. 交互式的命令行终端
+    ''' Represents the standard input, output, and error streams for console applications. 
+    ''' (交互式的命令行终端)
     ''' </summary>
     ''' <remarks></remarks>
-    Public MustInherit Class Terminal : Implements STDIO__.I_ConsoleDeviceHandle
+    Public Class Terminal : Implements STDIO__.IConsole
 
 #Region "Console Member Inherits Details"
 
 #Region "Public Methods"
 
         ''' <summary>
-        ''' Plays the sound of a beep through the console speaker.
-        ''' </summary>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.Security.HostProtectionException">System.Security.HostProtectionException: This method was executed on a server, such as SQL Server, that does not permit access to a user interface.</exception>
-        Public Sub Beep()
-            Call Console.Beep()
-        End Sub
-
-        ''' <summary>
-        ''' Plays the sound of a beep of a specified frequency and duration through the console speaker.
-        ''' </summary>
-        ''' <param name="frequency">The frequency of the beep, ranging from 37 to 32767 hertz.</param>
-        ''' <param name="duration">The duration of the beep measured in milliseconds.</param>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">frequency is less than 37 or more than 32767 hertz.-or-duration is less than or equal to zero.</exception>
-        ''' <exception cref="System.Security.HostProtectionException">This method was executed on a server, such as SQL Server, that does not permit access to the console.</exception>
-        Public Sub Beep(frequency As Integer, duration As Integer)
-            Call Console.Beep(frequency, duration)
-        End Sub
-
-        ''' <summary>
         ''' Clears the console buffer and corresponding console window of display information.
         ''' </summary>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub Clear()
+        Public Sub Clear() Implements STDIO__.IConsole.Clear
             Call Console.Clear()
         End Sub
 
@@ -340,7 +318,7 @@ Namespace ApplicationServices.Terminal
         ''' <param name="value">The value to write.</param>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub Write(value As String)
+        Public Sub Write(value As String) Implements STDIO__.IConsole.Write
             Call Console.Write(value)
         End Sub
 
@@ -390,25 +368,12 @@ Namespace ApplicationServices.Terminal
         ''' Writes the text representation of the specified array of objects to the standard output stream using the specified format information.
         ''' </summary>
         ''' <param name="format">A composite format string (see Remarks).</param>
-        ''' <param name="arg">An array of objects to write using format.</param>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        ''' <exception cref="System.ArgumentNullException">format or arg is null.</exception>
-        ''' <exception cref="System.FormatException">The format specification in format is invalid.</exception>
-        Public Sub Write(format As String, ParamArray arg() As Object)
-            Call Console.Write(format, arg)
-        End Sub
-
-        ''' <summary>
-        ''' Writes the text representation of the specified array of objects to the standard output stream using the specified format information.
-        ''' </summary>
-        ''' <param name="format">A composite format string (see Remarks).</param>
         ''' <param name="args">An array of objects to write using format.</param>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
         ''' <exception cref="System.ArgumentNullException">format or arg is null.</exception>
         ''' <exception cref="System.FormatException">The format specification in format is invalid.</exception>
-        Public Overridable Sub WriteLine(format As String, ParamArray args() As String) Implements STDIO__.I_ConsoleDeviceHandle.WriteLine
+        Public Sub Write(format As String, ParamArray args() As Object) Implements STDIO__.IConsole.WriteLine
             Call Console.WriteLine(format, args)
         End Sub
 
@@ -437,8 +402,8 @@ Namespace ApplicationServices.Terminal
         ''' </summary>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub WriteLine()
-            Call Console.WriteLine()
+        Public Sub WriteLine(str As String) Implements STDIO__.IConsole.WriteLine
+            Call Console.WriteLine(str)
         End Sub
 
         ''' <summary>
@@ -549,11 +514,10 @@ Namespace ApplicationServices.Terminal
         ''' <summary>
         ''' Writes the specified string value, followed by the current line terminator, to the standard output stream.
         ''' </summary>
-        ''' <param name="value">The value to write.</param>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Overridable Sub WriteLine(Optional value As String = "") Implements STDIO__.I_ConsoleDeviceHandle.WriteLine
-            Call Console.WriteLine(value)
+        Public Overridable Sub WriteLine() Implements STDIO__.IConsole.WriteLine
+            Call Console.WriteLine()
         End Sub
 
         ''' <summary>
@@ -697,7 +661,7 @@ Namespace ApplicationServices.Terminal
         ''' <returns>The next character from the input stream, or negative one (-1) if there are currently no more characters to be read.</returns>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Overridable Function Read() As Integer Implements STDIO__.I_ConsoleDeviceHandle.Read
+        Public Overridable Function Read() As Integer Implements STDIO__.IConsole.Read
             Return Console.Read
         End Function
 
@@ -707,7 +671,7 @@ Namespace ApplicationServices.Terminal
         ''' <returns>A System.ConsoleKeyInfo object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo object also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously with the console key.</returns>
         ''' <remarks></remarks>
         ''' <exception cref="System.InvalidOperationException">The System.Console.In property is redirected from some stream other than the console.</exception>
-        Public Overridable Function ReadKey() As System.ConsoleKeyInfo
+        Public Overridable Function ReadKey() As System.ConsoleKeyInfo Implements STDIO__.IConsole.ReadKey
             Return Console.ReadKey
         End Function
 
@@ -730,7 +694,7 @@ Namespace ApplicationServices.Terminal
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
         ''' <exception cref="System.OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string.</exception>
         ''' <exception cref="System.ArgumentOutOfRangeException">The number of characters in the next line of characters is greater than System.Int32.MaxValue.</exception>
-        Public Overridable Function ReadLine() As String Implements STDIO__.I_ConsoleDeviceHandle.ReadLine
+        Public Overridable Function ReadLine() As String Implements STDIO__.IConsole.ReadLine
             Return Console.ReadLine
         End Function
 #End Region
@@ -746,7 +710,7 @@ Namespace ApplicationServices.Terminal
         ''' <exception cref="System.ArgumentException">The color specified in a set operation is not a valid Color.</exception>
         ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Property BackgroundColor As System.ConsoleColor
+        Public Property BackgroundColor As System.ConsoleColor Implements STDIO__.IConsole.BackgroundColor
             Get
                 Return Console.BackgroundColor
             End Get
@@ -895,7 +859,7 @@ Namespace ApplicationServices.Terminal
         ''' <exception cref="System.ArgumentException">The color specified in a set operation is not a valid Color.</exception>
         ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Property ForegroundColor As System.ConsoleColor
+        Public Property ForegroundColor As System.ConsoleColor Implements STDIO__.IConsole.ForegroundColor
             Get
                 Return Console.ForegroundColor
             End Get
@@ -1147,7 +1111,7 @@ Namespace ApplicationServices.Terminal
         ''' <remarks></remarks>
         ''' <exception cref="System.ArgumentOutOfRangeException">The value of the System.Console.WindowWidth property or the value of the System.Console.WindowHeight property is less than or equal to 0.-or-The value of the System.Console.WindowHeight property plus the value of the System.Console.WindowTop property is greater than or equal to System.Int16.MaxValue.-or-The value of the System.Console.WindowWidth property or the value of the System.Console.WindowHeight property is greater than the largest possible window width or height for the current screen resolution and console font.</exception>
         ''' <exception cref="System.IO.IOException">Error reading or writing information.</exception>
-        Public Property WindowWidth As Integer
+        Public Property WindowWidth As Integer Implements STDIO__.IConsole.WindowWidth
             Get
                 Return Console.WindowWidth
             End Get

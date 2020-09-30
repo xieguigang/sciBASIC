@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::5a7f6e6c12029e7e628810bd183163fe, Microsoft.VisualBasic.Core\ApplicationServices\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Utils
-    ' 
-    '         Function: FormatTicks, TaskRun, (+2 Overloads) Time
-    ' 
-    '         Sub: TryRun
-    '         Delegate Function
-    ' 
-    '             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
-    ' 
-    '             Sub: (+2 Overloads) Wait
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Utils
+' 
+'         Function: FormatTicks, TaskRun, (+2 Overloads) Time
+' 
+'         Sub: TryRun
+'         Delegate Function
+' 
+'             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
+' 
+'             Sub: (+2 Overloads) Wait
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -60,6 +61,39 @@ Namespace ApplicationServices
     ''' App utils
     ''' </summary>
     Public Module Utils
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="commandLine"></param>
+        ''' <param name="windowStyle"></param>
+        ''' <param name="waitForExit">
+        ''' If NOT, then the function returns the associated process id value,
+        ''' else returns the process exit code.
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function Shell(commandLine$, Optional windowStyle As ProcessWindowStyle = ProcessWindowStyle.Normal, Optional waitForExit As Boolean = False) As Integer
+            Dim tokens As String() = CLIParser.GetTokens(commandLine)
+            Dim command As String = tokens.First
+            Dim arguments As String = tokens.Skip(1).Select(AddressOf Utils.CLIToken).JoinBy(" ")
+
+            Using child As New Process
+                Dim pInfo As New ProcessStartInfo(command, arguments)
+
+                child.StartInfo = pInfo
+                child.StartInfo.WindowStyle = windowStyle
+
+                Call child.Start()
+
+                If Not waitForExit Then
+                    Return child.Id
+                Else
+                    Call child.WaitForExit()
+                    Return child.ExitCode
+                End If
+            End Using
+        End Function
 
         ''' <summary>
         ''' Call target <see cref="Action"/> delegate, if exception occurs in the action, 

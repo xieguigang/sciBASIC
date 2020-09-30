@@ -118,6 +118,11 @@ Namespace SVM.StorageProcedure
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' create a problem model under the given <paramref name="topic"/>
+        ''' </summary>
+        ''' <param name="topic"></param>
+        ''' <returns></returns>
         Public Function GetProblem(topic As String) As Problem
             Dim inputs As New List(Of Node())
             Dim labels As New List(Of String)
