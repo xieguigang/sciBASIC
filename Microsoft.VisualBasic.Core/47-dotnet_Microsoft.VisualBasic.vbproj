@@ -1279,6 +1279,7 @@
     <Compile Include="Extensions\Collection\CategoryOperations.vb" />
     <Compile Include="Extensions\Collection\Linq\JoinExtensions.vb" />
     <Compile Include="Extensions\Collection\CollectionValueGetter.vb" />
+    <Compile Include="Extensions\Image\ImageFormats.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
     <Compile Include="Extensions\Reflection\ScriptMeta.vb" />

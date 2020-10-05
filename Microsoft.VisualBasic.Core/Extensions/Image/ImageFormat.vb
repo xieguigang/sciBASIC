@@ -62,59 +62,10 @@ Imports defaultFormat = Microsoft.VisualBasic.Language.Default.Default(Of System
 Namespace Imaging
 
     ''' <summary>
-    ''' Specifies the file format of the image.
-    ''' </summary>
-    Public Enum ImageFormats As Integer
-
-        ''' <summary>
-        ''' Gets the bitmap (BMP) image format.
-        ''' </summary>
-        Bmp
-        ''' <summary>
-        ''' Gets the enhanced metafile (EMF) image format.
-        ''' </summary>
-        Emf
-        ''' <summary>
-        ''' Gets the Exchangeable Image File (Exif) format.
-        ''' </summary>
-        Exif
-        ''' <summary>
-        ''' Gets the Graphics Interchange Format (GIF) image format.
-        ''' </summary>
-        Gif
-        ''' <summary>
-        ''' Gets the Windows icon image format.
-        ''' </summary>
-        Icon
-        ''' <summary>
-        ''' Gets the Joint Photographic Experts Group (JPEG) image format.
-        ''' </summary>
-        Jpeg
-        ''' <summary>
-        ''' Gets the format of a bitmap in memory.
-        ''' </summary>
-        MemoryBmp
-        ''' <summary>
-        ''' Gets the W3C Portable Network Graphics (PNG) image format.
-        ''' </summary>
-        Png
-        ''' <summary>
-        ''' Gets the Tagged Image File Format (TIFF) image format.
-        ''' </summary>
-        Tiff
-        ''' <summary>
-        ''' Gets the Windows metafile (WMF) image format.
-        ''' </summary>
-        Wmf
-        ''' <summary>
-        ''' Base64
-        ''' </summary>
-        Base64
-    End Enum
-
-    ''' <summary>
     ''' Specifies the file format of the image. Not inheritable.
     ''' </summary>
+    ''' 
+    <Extension>
     Public Module ImageFormatExtensions
 
         ''' <summary>
@@ -151,11 +102,12 @@ Namespace Imaging
         }
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function GetFormat(format As ImageFormats) As ImageFormat
-            Return __formats(format)
+        <Extension>
+        Public Function GetFormat(format As ImageFormats) As ImageFormat
+            Return formatsEnumMapping(format)
         End Function
 
-        Dim enumFormats As Dictionary(Of String, ImageFormats) =
+        ReadOnly enumFormats As Dictionary(Of String, ImageFormats) =
             [Enums](Of ImageFormats)() _
             .ToDictionary(Function(t) t.ToString.ToLower)
 
@@ -171,7 +123,7 @@ Namespace Imaging
             Return enumFormats.TryGetValue(LCase(format), [default]:=ImageFormats.Png)
         End Function
 
-        ReadOnly __formats As New SortedDictionary(Of ImageFormats, ImageFormat) From {
+        ReadOnly formatsEnumMapping As New SortedDictionary(Of ImageFormats, ImageFormat) From {
  _
             {ImageFormats.Bmp, ImageFormat.Bmp},
             {ImageFormats.Emf, ImageFormat.Emf},
@@ -219,7 +171,7 @@ Namespace Imaging
                     Call res.Save(path, format.GetFormat)
                 End If
             Catch ex As Exception
-                ex = New Exception(path.ToFileURL, ex)
+                ex = New Exception(path, ex)
                 Call App.LogException(ex)
                 Call ex.PrintException
                 Return False
