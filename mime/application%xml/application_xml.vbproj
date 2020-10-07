@@ -236,6 +236,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
     <DocumentationFile>Microsoft.VisualBasic.MIME.application.xml.xml</DocumentationFile>
+    <OutputPath>..\..\..\..\..\..\mzkit\dist\bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
