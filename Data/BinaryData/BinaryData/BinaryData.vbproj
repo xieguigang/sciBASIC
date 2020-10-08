@@ -618,6 +618,7 @@
     <Compile Include="Stream\ByteOrder.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="Extensions\ReaderProvider.vb" />
+    <Compile Include="Stream\ByteOrderHelper.vb" />
     <Compile Include="Stream\Offset.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Stream\SeekTask.vb" />
