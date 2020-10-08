@@ -967,11 +967,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' The first element in a collection.
-    ''' </summary>
-    Public Const Scan0 As Integer = 0
-
-    ''' <summary>
     ''' 函数只返回有重复的数据
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
