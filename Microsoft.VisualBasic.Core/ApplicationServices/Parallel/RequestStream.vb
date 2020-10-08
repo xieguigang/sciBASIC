@@ -124,6 +124,12 @@ Namespace Parallel
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="protocolCategory"></param>
+        ''' <param name="protocol"></param>
+        ''' <param name="buffer"><see cref="ChunkBuffer"/></param>
         Sub New(protocolCategory&, protocol&, buffer As Byte())
             Me.ProtocolCategory = protocolCategory
             Me.Protocol = protocol
