@@ -110,6 +110,12 @@ Namespace Graphic.Canvas
         ''' <returns></returns>
         Public Property axisLabelCSS As String
         ''' <summary>
+        ''' 坐标轴上的标尺的字体样式
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property axisTickCSS As String
+
+        ''' <summary>
         ''' 是否显示图例
         ''' </summary>
         ''' <returns></returns>
