@@ -65,7 +65,7 @@ Namespace NETProtocol
         End Enum
 
         Public ReadOnly Property ProtocolEntry As Long =
-        New Protocol(GetType(Protocols)).EntryPoint
+        New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
         Public Function NullMsg() As RequestStream
             Return New RequestStream(HTTP_RFC.RFC_NO_CONTENT, HTTP_RFC.RFC_OK, "")

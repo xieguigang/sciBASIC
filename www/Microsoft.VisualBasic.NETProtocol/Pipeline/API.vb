@@ -70,7 +70,7 @@ Namespace MMFProtocol.Pipeline
         End Enum
 
         Public ReadOnly Property Protocol As Long =
-            New Protocol(GetType(API.Protocols)).EntryPoint
+            New ProtocolAttribute(GetType(API.Protocols)).EntryPoint
 
         Public Function Delete(var As String, Optional port As Integer = API.PeplinePort) As Boolean
             Dim invoke As New TcpRequest("127.0.0.1", port)

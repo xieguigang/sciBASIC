@@ -71,7 +71,7 @@ Namespace Tcp.Persistent.Application.Protocols
             Broadcast
         End Enum
 
-        Public ReadOnly Property EntryPoint As Long = New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property EntryPoint As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SendChannelHashCode(hash As Integer) As RequestStream

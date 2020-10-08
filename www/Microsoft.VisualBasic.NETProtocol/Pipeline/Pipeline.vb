@@ -54,7 +54,7 @@ Namespace MMFProtocol.Pipeline
     ''' exec cmd /var $&lt;piplineName>, this can be using in the CLI programming for passing the variables between the program more efficient
     ''' </summary>
     ''' 
-    <Protocol(GetType(API.Protocols))>
+    <ProtocolAttribute(GetType(API.Protocols))>
     Public Class Pipeline
 
         ReadOnly _sockets As SortedDictionary(Of String, MapStream.MSWriter) =
@@ -92,7 +92,7 @@ Namespace MMFProtocol.Pipeline
         ''' 在写数据之前需要先使用这个方法进行内存区块的创建
         ''' </summary>
         ''' <returns></returns>
-        <Protocol(API.Protocols.Allocation)>
+        <ProtocolAttribute(API.Protocols.Allocation)>
         Private Function __allocated(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim s As String = request.GetUTF8String
             If Not API.IsRef(s) Then
@@ -111,7 +111,7 @@ Namespace MMFProtocol.Pipeline
             Return NetResponse.RFC_OK
         End Function
 
-        <Protocol(API.Protocols.Destroy)>
+        <ProtocolAttribute(API.Protocols.Destroy)>
         Private Function __destroy(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim var As String = request.GetUTF8String
 

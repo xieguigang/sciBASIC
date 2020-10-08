@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 
 ''' <summary>
-''' Object for handles the request <see cref="Protocol"/>.
+''' Object for handles the request <see cref="ProtocolAttribute"/>.
 ''' </summary>
 Public MustInherit Class IProtocolHandler
 

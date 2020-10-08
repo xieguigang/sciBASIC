@@ -53,7 +53,7 @@ Namespace NETProtocol.PushAPI
     ''' <summary>
     ''' 对User client开放的协议接口，也就是用户的客户端是通过这个模块来发送消息或者读取自己的消息
     ''' </summary>
-    <Protocol(GetType(Protocols.UserAPI.Protocols))>
+    <ProtocolAttribute(GetType(Protocols.UserAPI.Protocols))>
     Public Class UserAPI : Inherits APIBase
 
         ''' <summary>
@@ -84,7 +84,7 @@ Namespace NETProtocol.PushAPI
         ''' <param name="remote"></param>
         ''' <returns></returns>
         ''' 
-        <Protocol(Protocols.UserAPI.Protocols.InitUser)>
+        <ProtocolAttribute(Protocols.UserAPI.Protocols.InitUser)>
         Private Function __userInitPOST(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim sId As String = request.GetUTF8String
             Dim uid As Long = Protocols.UserAPI.Uid(sId)
@@ -125,7 +125,7 @@ Namespace NETProtocol.PushAPI
         ''' <param name="request"></param>
         ''' <param name="remote"></param>
         ''' <returns></returns>
-        <Protocol(Protocols.UserAPI.Protocols.GetData)>
+        <ProtocolAttribute(Protocols.UserAPI.Protocols.GetData)>
         Private Function __getData(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Dim id = request.LoadObject(Of Protocols.UserId)(AddressOf JSON.LoadJSON)
             If Not IsValid(id) Then

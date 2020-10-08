@@ -72,7 +72,7 @@ Namespace NETProtocol.Protocols
             PushToUser
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property ProtocolEntry As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
         <Extension> Public Function PushData(data As Byte()) As RequestStream
             Return New RequestStream(ProtocolEntry, Protocols.PushToUser, data)

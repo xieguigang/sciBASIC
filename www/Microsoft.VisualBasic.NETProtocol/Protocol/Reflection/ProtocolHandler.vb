@@ -86,7 +86,7 @@ Namespace Protocols.Reflection
         ''' <param name="obj">Protocol的实例</param>
         Sub New(obj As Object)
             Dim type As Type = obj.GetType
-            Dim entry As Protocol = Protocol.GetProtocolCategory(type)
+            Dim entry As ProtocolAttribute = ProtocolAttribute.GetProtocolCategory(type)
 
             Me.DeclaringType = entry?.DeclaringType
             Me.ProtocolEntry = entry?.EntryPoint
@@ -95,7 +95,7 @@ Namespace Protocols.Reflection
             Dim Methods = type.GetMethods(bindingAttr:=AllInstanceMethod)
             Dim LQuery = (From entryPoint As MethodInfo
                           In Methods
-                          Let Protocol As Protocol = Protocol.GetEntryPoint(entryPoint)
+                          Let Protocol As ProtocolAttribute = ProtocolAttribute.GetEntryPoint(entryPoint)
                           Let method As DataRequestHandler = GetMethod(obj, entryPoint)
                           Where Not (Protocol Is Nothing) AndAlso
                               Not method Is Nothing

@@ -50,7 +50,7 @@ Namespace NETProtocol.PushAPI
     ''' <summary>
     ''' 服务器端的其他模块调用消息更新推送的接口
     ''' </summary>
-    <Protocol(GetType(Protocols.InvokeAPI.Protocols))>
+    <ProtocolAttribute(GetType(Protocols.InvokeAPI.Protocols))>
     Public Class InvokeAPI : Inherits APIBase
 
         Sub New(push As PushServer)
@@ -62,7 +62,7 @@ Namespace NETProtocol.PushAPI
             Return __protocols.HandleRequest(request, remote)
         End Function
 
-        <Protocol(Protocols.InvokeAPI.Protocols.PushToUser)>
+        <ProtocolAttribute(Protocols.InvokeAPI.Protocols.PushToUser)>
         Private Function __invokePush(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Call PushServer.PushUpdate(request)
             Return NetResponse.RFC_OK

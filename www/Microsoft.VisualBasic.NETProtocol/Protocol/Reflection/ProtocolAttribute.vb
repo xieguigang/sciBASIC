@@ -52,7 +52,7 @@ Namespace Protocols.Reflection
     ''' and the details of the protocol processor. 
     ''' </summary>
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
-    Public Class Protocol : Inherits Attribute
+    Public Class ProtocolAttribute : Inherits Attribute
 
         ''' <summary>
         ''' Entry point for the data protocols, this property usually correspondent to the request stream's 
@@ -99,13 +99,13 @@ Namespace Protocols.Reflection
         ''' </summary>
         ''' <param name="Type"></param>
         ''' <returns></returns>
-        Public Shared Function GetProtocolCategory(Type As Type) As Protocol
-            Dim attrs As Object() = Type.GetCustomAttributes(attributeType:=GetType(Protocol), inherit:=True)
+        Public Shared Function GetProtocolCategory(Type As Type) As ProtocolAttribute
+            Dim attrs As Object() = Type.GetCustomAttributes(attributeType:=GetType(ProtocolAttribute), inherit:=True)
             If attrs.IsNullOrEmpty Then
                 Return Nothing
             End If
 
-            Dim attr As Protocol = DirectCast(attrs(Scan0), Protocol)
+            Dim attr As ProtocolAttribute = DirectCast(attrs(Scan0), ProtocolAttribute)
             Return attr
         End Function
 
@@ -116,13 +116,13 @@ Namespace Protocols.Reflection
         ''' </summary>
         ''' <param name="Method"></param>
         ''' <returns></returns>
-        Public Shared Function GetEntryPoint(Method As System.Reflection.MethodInfo) As Protocol
-            Dim attrs As Object() = Method.GetCustomAttributes(attributeType:=GetType(Protocol), inherit:=True)
+        Public Shared Function GetEntryPoint(Method As System.Reflection.MethodInfo) As ProtocolAttribute
+            Dim attrs As Object() = Method.GetCustomAttributes(attributeType:=GetType(ProtocolAttribute), inherit:=True)
             If attrs.IsNullOrEmpty Then
                 Return Nothing
             End If
 
-            Dim attr As Protocol = DirectCast(attrs(Scan0), Protocol)
+            Dim attr As ProtocolAttribute = DirectCast(attrs(Scan0), ProtocolAttribute)
             Return attr
         End Function
     End Class

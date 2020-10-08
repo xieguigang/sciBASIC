@@ -71,7 +71,7 @@ Namespace NETProtocol.Protocols
             GetData
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property ProtocolEntry As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
         ''' <summary>
         ''' 在服务器端调用得到用户的唯一标识符

@@ -357,7 +357,7 @@
     <Compile Include="Protocol\IVerifySession.vb" />
     <Compile Include="Protocol\NetResponse.vb" />
     <Compile Include="Protocol\Reflection\AppMgr.vb" />
-    <Compile Include="Protocol\Reflection\Protocol.vb" />
+    <Compile Include="Protocol\Reflection\ProtocolAttribute.vb" />
     <Compile Include="Protocol\Reflection\ProtocolHandler.vb" />
     <Compile Include="Protocol\Reflection\ProtocolInvoker.vb" />
     <Compile Include="Protocol\Streams\Array.vb" />
