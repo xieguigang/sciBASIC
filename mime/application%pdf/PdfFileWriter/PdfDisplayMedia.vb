@@ -250,7 +250,7 @@ Imports System
         ''' <summary>
         ''' Gets embedded media file class
         ''' </summary>
-        Private _MediaFile As PdfFileWriter.PdfEmbeddedFile
+        Private _MediaFile As PdfEmbeddedFile
 
         Public Property MediaFile As PdfEmbeddedFile
             Get

@@ -30,21 +30,21 @@
     ''' </summary>
     Public Class PdfInfo
         Inherits PdfObject
-        ''' <summary>
-        ''' Constructor for PdfInfo class
-        ''' </summary>
-        ''' <param name="Document">Main document class</param>
-        ''' <returns>PdfInfo object</returns>
-        ''' <remarks>
-        ''' <para>The constructor initialize the /Info dictionary with 4 key value pairs. </para>
-        ''' <listtype="table">
-        ''' <item><description>Creation date set to current local system date</description></item>
-        ''' <item><description>Modification date set to current local system date</description></item>
-        ''' <item><description>Creator is PdfFileWriter C# Class Library Version No</description></item>
-        ''' <item><description>Producer is PdfFileWriter C# Class Library Version No</description></item>
-        ''' </list>
-        ''' </remarks>
-        Public Shared Function CreatePdfInfo(ByVal Document As PdfDocument) As PdfInfo
+    ''' <summary>
+    ''' Constructor for PdfInfo class
+    ''' </summary>
+    ''' <param name="Document">Main document class</param>
+    ''' <returns>PdfInfo object</returns>
+    ''' <remarks>
+    ''' <para>The constructor initialize the /Info dictionary with 4 key value pairs. </para>
+    ''' <list type="table">
+    ''' <item><description>Creation date set to current local system date</description></item>
+    ''' <item><description>Modification date set to current local system date</description></item>
+    ''' <item><description>Creator is PdfFileWriter C# Class Library Version No</description></item>
+    ''' <item><description>Producer is PdfFileWriter C# Class Library Version No</description></item>
+    ''' </list>
+    ''' </remarks>
+    Public Shared Function CreatePdfInfo(ByVal Document As PdfDocument) As PdfInfo
             ' create a new default info object
             If Document.InfoObject Is Nothing Then
                 ' create and add info object to trailer dictionary

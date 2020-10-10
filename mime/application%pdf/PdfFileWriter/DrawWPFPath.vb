@@ -91,7 +91,7 @@ Imports SysWin = System.Windows
         ''' <summary>
         ''' Input path bounding box height
         ''' </summary>
-        Private _PathYAxis As PdfFileWriter.YAxisDirection, _PathBBoxX As Double, _PathBBoxY As Double, _PathBBoxWidth As Double, _PathBBoxHeight As Double
+        Private _PathYAxis As YAxisDirection, _PathBBoxX As Double, _PathBBoxY As Double, _PathBBoxWidth As Double, _PathBBoxHeight As Double
         ''' <summary>
         ''' Fill rule
         ''' </summary>

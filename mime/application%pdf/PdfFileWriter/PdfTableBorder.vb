@@ -198,7 +198,7 @@ Imports System.Drawing
         ''' <summary>
         ''' At least one cell vertical border is active
         ''' </summary>
-        Private _TopBorder As PdfFileWriter.PdfTableBorderStyle, _BottomBorder As PdfFileWriter.PdfTableBorderStyle, _HeaderHorBorder As PdfFileWriter.PdfTableBorderStyle, _CellHorBorder As PdfFileWriter.PdfTableBorderStyle, _HeaderVertBorder As PdfFileWriter.PdfTableBorderStyle(), _HeaderVertBorderActive As Boolean, _CellVertBorder As PdfFileWriter.PdfTableBorderStyle(), _CellVertBorderActive As Boolean
+        Private _TopBorder As PdfTableBorderStyle, _BottomBorder As PdfTableBorderStyle, _HeaderHorBorder As PdfTableBorderStyle, _CellHorBorder As PdfTableBorderStyle, _HeaderVertBorder As PdfTableBorderStyle(), _HeaderVertBorderActive As Boolean, _CellVertBorder As PdfTableBorderStyle(), _CellVertBorderActive As Boolean
 
         Public Property TopBorder As PdfTableBorderStyle
             Get

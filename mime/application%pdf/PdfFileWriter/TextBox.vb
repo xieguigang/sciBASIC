@@ -33,122 +33,122 @@ Imports System.Runtime.InteropServices
     ''' TextBoxLine class
     ''' </summary>
     Public Class TextBoxLine
-        ''' <summary>
-        ''' Gets line ascent.
-        ''' </summary>
-
-        ''' <summary>
-        ''' Gets line descent.
-        ''' </summary>
-
-        ''' <summary>
-        ''' Line is end of paragraph.
-        ''' </summary>
-
-        ''' <summary>
-        ''' Gets array of line segments.
-        ''' </summary>
-        Private _Ascent As Double, _Descent As Double, _EndOfParagraph As Boolean, _SegArray As PdfFileWriter.TextBoxSeg()
-
-        Public Property Ascent As Double
-            Get
-                Return _Ascent
-            End Get
-            Friend Set(ByVal value As Double)
-                _Ascent = value
-            End Set
-        End Property
-
-        Public Property Descent As Double
-            Get
-                Return _Descent
-            End Get
-            Friend Set(ByVal value As Double)
-                _Descent = value
-            End Set
-        End Property
-
-        Public Property EndOfParagraph As Boolean
-            Get
-                Return _EndOfParagraph
-            End Get
-            Friend Set(ByVal value As Boolean)
-                _EndOfParagraph = value
-            End Set
-        End Property
-
-        Public Property SegArray As TextBoxSeg()
-            Get
-                Return _SegArray
-            End Get
-            Friend Set(ByVal value As TextBoxSeg())
-                _SegArray = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets line height.
-        ''' </summary>
-        Public ReadOnly Property LineHeight As Double
-            Get
-                Return Ascent + Descent
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' TextBoxLine constructor.
-        ''' </summary>
-        ''' <param name="Ascent">Line ascent.</param>
-        ''' <param name="Descent">Line descent.</param>
-        ''' <param name="EndOfParagraph">Line is end of paragraph.</param>
-        ''' <param name="SegArray">Segments' array.</param>
-        Public Sub New(ByVal Ascent As Double, ByVal Descent As Double, ByVal EndOfParagraph As Boolean, ByVal SegArray As TextBoxSeg())
-            Me.Ascent = Ascent
-            Me.Descent = Descent
-            Me.EndOfParagraph = EndOfParagraph
-            Me.SegArray = SegArray
-            Return
-        End Sub
-    End Class
+    ''' <summary>
+    ''' Gets line ascent.
+    ''' </summary>
 
     ''' <summary>
-    ''' TextBox line segment class
+    ''' Gets line descent.
     ''' </summary>
-    Public Class TextBoxSeg
-        ''' <summary>
-        ''' Gets segment font.
-        ''' </summary>
 
-        ''' <summary>
-        ''' Gets segment font size.
-        ''' </summary>
+    ''' <summary>
+    ''' Line is end of paragraph.
+    ''' </summary>
 
-        ''' <summary>
-        ''' Gets segment drawing style.
-        ''' </summary>
+    ''' <summary>
+    ''' Gets array of line segments.
+    ''' </summary>
+    Private _Ascent As Double, _Descent As Double, _EndOfParagraph As Boolean, _SegArray As TextBoxSeg()
 
-        ''' <summary>
-        ''' Gets segment color.
-        ''' </summary>
+    Public Property Ascent As Double
+        Get
+            Return _Ascent
+        End Get
+        Friend Set(ByVal value As Double)
+            _Ascent = value
+        End Set
+    End Property
 
-        ''' <summary>
-        ''' Gets segment width.
-        ''' </summary>
+    Public Property Descent As Double
+        Get
+            Return _Descent
+        End Get
+        Friend Set(ByVal value As Double)
+            _Descent = value
+        End Set
+    End Property
 
-        ''' <summary>
-        ''' Gets segment space character count.
-        ''' </summary>
+    Public Property EndOfParagraph As Boolean
+        Get
+            Return _EndOfParagraph
+        End Get
+        Friend Set(ByVal value As Boolean)
+            _EndOfParagraph = value
+        End Set
+    End Property
 
-        ''' <summary>
-        ''' Gets segment text.
-        ''' </summary>
+    Public Property SegArray As TextBoxSeg()
+        Get
+            Return _SegArray
+        End Get
+        Friend Set(ByVal value As TextBoxSeg())
+            _SegArray = value
+        End Set
+    End Property
 
-        ''' <summary>
-        ''' Gets annotation action
-        ''' </summary>
-        Private _Font As PdfFileWriter.PdfFont, _FontSize As Double, _DrawStyle As PdfFileWriter.DrawStyle, _FontColor As System.Drawing.Color, _SegWidth As Double, _SpaceCount As Integer, _Text As String, _AnnotAction As PdfFileWriter.AnnotAction
+    ''' <summary>
+    ''' Gets line height.
+    ''' </summary>
+    Public ReadOnly Property LineHeight As Double
+        Get
+            Return Ascent + Descent
+        End Get
+    End Property
 
-        Public Property Font As PdfFont
+    ''' <summary>
+    ''' TextBoxLine constructor.
+    ''' </summary>
+    ''' <param name="Ascent">Line ascent.</param>
+    ''' <param name="Descent">Line descent.</param>
+    ''' <param name="EndOfParagraph">Line is end of paragraph.</param>
+    ''' <param name="SegArray">Segments' array.</param>
+    Public Sub New(ByVal Ascent As Double, ByVal Descent As Double, ByVal EndOfParagraph As Boolean, ByVal SegArray As TextBoxSeg())
+        Me.Ascent = Ascent
+        Me.Descent = Descent
+        Me.EndOfParagraph = EndOfParagraph
+        Me.SegArray = SegArray
+        Return
+    End Sub
+End Class
+
+''' <summary>
+''' TextBox line segment class
+''' </summary>
+Public Class TextBoxSeg
+    ''' <summary>
+    ''' Gets segment font.
+    ''' </summary>
+
+    ''' <summary>
+    ''' Gets segment font size.
+    ''' </summary>
+
+    ''' <summary>
+    ''' Gets segment drawing style.
+    ''' </summary>
+
+    ''' <summary>
+    ''' Gets segment color.
+    ''' </summary>
+
+    ''' <summary>
+    ''' Gets segment width.
+    ''' </summary>
+
+    ''' <summary>
+    ''' Gets segment space character count.
+    ''' </summary>
+
+    ''' <summary>
+    ''' Gets segment text.
+    ''' </summary>
+
+    ''' <summary>
+    ''' Gets annotation action
+    ''' </summary>
+    Private _Font As PdfFont, _FontSize As Double, _DrawStyle As DrawStyle, _FontColor As System.Drawing.Color, _SegWidth As Double, _SpaceCount As Integer, _Text As String, _AnnotAction As AnnotAction
+
+    Public Property Font As PdfFont
             Get
                 Return _Font
             End Get

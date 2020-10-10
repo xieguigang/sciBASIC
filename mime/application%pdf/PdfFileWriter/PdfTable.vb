@@ -184,7 +184,7 @@ Imports System.Drawing
         ''' <summary>
         ''' Borders control
         ''' </summary>
-        Private _Active As Boolean, _Columns As Integer, _Contents As PdfFileWriter.PdfContents, _DefaultCellStyle As PdfFileWriter.PdfTableStyle, _DefaultHeaderStyle As PdfFileWriter.PdfTableStyle, _Document As PdfFileWriter.PdfDocument, _HeaderHeight As Double, _Page As PdfFileWriter.PdfPage, _TablePageNumber As Integer, _RowBottomPosition As Double, _RowHeight As Double, _RowNumber As Integer, _Borders As PdfFileWriter.PdfTableBorder
+        Private _Active As Boolean, _Columns As Integer, _Contents As PdfContents, _DefaultCellStyle As PdfTableStyle, _DefaultHeaderStyle As PdfTableStyle, _Document As PdfDocument, _HeaderHeight As Double, _Page As PdfPage, _TablePageNumber As Integer, _RowBottomPosition As Double, _RowHeight As Double, _RowNumber As Integer, _Borders As PdfTableBorder
 
         Public Property Active As Boolean
             Get

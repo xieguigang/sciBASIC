@@ -204,7 +204,7 @@ Imports System.Runtime.InteropServices
         ''' <summary>
         ''' Gets parent PdfTable.
         ''' </summary>
-        Private _Index As Integer, _Header As Boolean, _Type As PdfFileWriter.CellType, _FormattedText As String, _TextBox As PdfFileWriter.TextBox, _TextBoxHeight As Double, _Image As PdfFileWriter.PdfImage, _Barcode As PdfFileWriter.Barcode, _FrameLeft As Double, _FrameWidth As Double, _ClientLeft As Double, _ClientBottom As Double, _ClientRight As Double, _ClientTop As Double, _Parent As PdfFileWriter.PdfTable
+        Private _Index As Integer, _Header As Boolean, _Type As CellType, _FormattedText As String, _TextBox As TextBox, _TextBoxHeight As Double, _Image As PdfImage, _Barcode As Barcode, _FrameLeft As Double, _FrameWidth As Double, _ClientLeft As Double, _ClientBottom As Double, _ClientRight As Double, _ClientTop As Double, _Parent As PdfTable
 
         Public Property Index As Integer
             Get
