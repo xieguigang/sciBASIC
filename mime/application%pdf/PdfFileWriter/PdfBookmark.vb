@@ -30,7 +30,7 @@ Namespace PdfFileWriter
     ''' PDF bookmark class
     ''' </summary>
     ''' <remarks>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#BookmarkSupport">2.9 Bookmark Support</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#BookmarkSupport">2.9 Bookmark Support</a>
     ''' </remarks>
     Public Class PdfBookmark
         Inherits PdfObject

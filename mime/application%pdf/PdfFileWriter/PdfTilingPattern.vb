@@ -51,10 +51,10 @@ Namespace PdfFileWriter
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#TilingPattern">For example of using tiling pattern see 3.3. Tiling Pattern</a>
+    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#TilingPattern">For example of using tiling pattern see 3.3. Tiling Pattern</a>
     ''' </para>
     ''' <para>
-    ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#TilingPattern2">or 3.8. Draw Rectangle with Rounded Corners and Filled with Brick Pattern</a>
+    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#TilingPattern2">or 3.8. Draw Rectangle with Rounded Corners and Filled with Brick Pattern</a>
     ''' </para>
     ''' </remarks>
     Public Class PdfTilingPattern

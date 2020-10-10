@@ -33,7 +33,7 @@ Namespace PdfFileWriter
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DataTableSupport">2.12 Data Table Support</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DataTableSupport">2.12 Data Table Support</a>
     ''' </para>
     ''' </remarks>
     Public Class PdfTableStyle

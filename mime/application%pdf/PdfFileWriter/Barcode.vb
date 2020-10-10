@@ -88,7 +88,7 @@ Namespace PdfFileWriter
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#BarcodeSupport">2.5 Barcode Support</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#BarcodeSupport">2.5 Barcode Support</a>
     ''' </para>
     ''' </remarks>
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

@@ -69,10 +69,10 @@ Namespace PdfFileWriter
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#ChartingSupport">2.10 Charting Support</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#ChartingSupport">2.10 Charting Support</a>
     ''' </para>
     ''' <para>
-    ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawChart">For example of drawing image see 3.11. Draw Pie Chart</a>
+    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawChart">For example of drawing image see 3.11. Draw Pie Chart</a>
     ''' </para>
     ''' </remarks>
     Public Class PdfChart

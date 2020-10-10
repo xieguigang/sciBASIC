@@ -72,10 +72,10 @@ Namespace PdfFileWriter
     ''' The main class for drawing a data table within a PDF document.
     ''' </para>
     ''' <para>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DataTableSupport">2.12 Data Table Support</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DataTableSupport">2.12 Data Table Support</a>
     ''' </para>
     ''' <para>
-    ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawDataTable">For example of drawing image see 3.13. Draw Book Order Form</a>
+    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawDataTable">For example of drawing image see 3.13. Draw Book Order Form</a>
     ''' </para>
     ''' </remarks>
     Public Class PdfTable
@@ -581,8 +581,12 @@ Namespace PdfFileWriter
             DefaultCellStyle = New PdfTableStyle()
             DefaultCellStyle.Font = Font
             DefaultCellStyle.FontSize = FontSize
-            DefaultCellStyle.Margin.Left = CSharpImpl.__Assign(DefaultCellStyle.Margin.Right, 3.0 / Document.ScaleFactor)
-            DefaultCellStyle.Margin.Bottom = CSharpImpl.__Assign(DefaultCellStyle.Margin.Top, 1.0 / Document.ScaleFactor)
+
+            DefaultCellStyle.Margin.Right = 3.0 / Document.ScaleFactor
+            DefaultCellStyle.Margin.Top = 1.0 / Document.ScaleFactor
+
+            DefaultCellStyle.Margin.Left = DefaultCellStyle.Margin.Right
+            DefaultCellStyle.Margin.Bottom = DefaultCellStyle.Margin.Top
 
             ' initialize default header style
             DefaultHeaderStyle = CellStyle
@@ -851,18 +855,11 @@ Namespace PdfFileWriter
 
                 ' call custom draw cell if required and draw header cell
                 Cell.ClientTop = _RowTopPosition - Cell.Style.Margin.Top
-                ''' Cannot convert IfStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-                '''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitIfStatement(IfStatementSyntax node)
-                '''    at Microsoft.CodeAnalysis.CSharp.Syntax.IfStatementSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-                '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-                '''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-                ''' 
-                ''' Input:
-                ''' 
-                ''' 			// call custom draw cell if required and draw header cell
-                ''' 			if(CustomDrawCellEvent == null || !Cell.Style.RaiseCustomDrawCellEvent || !CustomDrawCellEvent(this, Cell)) Cell.DrawCell();
-                ''' 
-                ''' 
+
+                ' call custom draw cell if required and draw header cell
+                If (CustomDrawCellEvent Is Nothing OrElse Not Cell.Style.RaiseCustomDrawCellEvent OrElse Not CustomDrawCellEvent(Me, Cell)) Then
+                    Cell.DrawCell()
+                End If
             Next
 
             ' adjust row position to next grid line
@@ -895,18 +892,13 @@ Namespace PdfFileWriter
 
                 ' call custom draw cell if required and draw header cell
                 Cell.ClientTop = _RowTopPosition - Cell.Style.Margin.Top
-                ''' Cannot convert IfStatementSyntax, System.InvalidCastException: Unable to cast object of type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.EmptyStatementSyntax' to type 'Microsoft.CodeAnalysis.VisualBasic.Syntax.ExpressionSyntax'.
-                '''    at ICSharpCode.CodeConverter.VB.MethodBodyExecutableStatementVisitor.VisitIfStatement(IfStatementSyntax node)
-                '''    at Microsoft.CodeAnalysis.CSharp.Syntax.IfStatementSyntax.Accept[TResult](CSharpSyntaxVisitor`1 visitor)
-                '''    at Microsoft.CodeAnalysis.CSharp.CSharpSyntaxVisitor`1.Visit(SyntaxNode node)
-                '''    at ICSharpCode.CodeConverter.VB.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-                ''' 
-                ''' Input:
-                ''' 
-                ''' 			// call custom draw cell if required and draw header cell
-                ''' 			if(CustomDrawCellEvent == null || !Cell.Style.RaiseCustomDrawCellEvent || !CustomDrawCellEvent(this, Cell)) Cell.DrawCell();
-                ''' 
-                ''' 
+
+
+                ' call custom draw cell if required and draw header cell
+                If (CustomDrawCellEvent Is Nothing OrElse Not Cell.Style.RaiseCustomDrawCellEvent OrElse Not CustomDrawCellEvent(Me, Cell)) Then
+                    Cell.DrawCell()
+                End If
+
             Next
 
             ' adjust row position to next grid line
@@ -1061,13 +1053,5 @@ Namespace PdfFileWriter
 
             Return
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Namespace

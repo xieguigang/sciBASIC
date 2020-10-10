@@ -131,10 +131,10 @@ Namespace PdfFileWriter
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#LanguageSupport">2.3 Language Support</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#LanguageSupport">2.3 Language Support</a>
     ''' </para>
     ''' <para>
-    ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#FontResources">For example of defining font resources see 3.2. Font Resources</a>
+    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#FontResources">For example of defining font resources see 3.2. Font Resources</a>
     ''' </para>
     ''' </remarks>
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

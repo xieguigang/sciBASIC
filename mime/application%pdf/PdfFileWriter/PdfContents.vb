@@ -356,7 +356,7 @@ Namespace PdfFileWriter
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#CoordinateSystem">2.1 Coordinate System</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#CoordinateSystem">2.1 Coordinate System</a>
     ''' </para>
     ''' </remarks>
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -1223,7 +1223,7 @@ Namespace PdfFileWriter
         ''' <param name="PP">Paint operator</param>
         ''' <remarks>
         ''' <para>
-        ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawHeart">For example of drawing heart see 3.10. Draw Heart</a>
+        ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawHeart">For example of drawing heart see 3.10. Draw Heart</a>
         ''' </para>
         ''' </remarks>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -1244,7 +1244,7 @@ Namespace PdfFileWriter
         ''' <param name="PP">Paint operator</param>
         ''' <remarks>
         ''' <para>
-        ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawHeart">For example of drawing heart see 3.10. Draw Heart</a>
+        ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawHeart">For example of drawing heart see 3.10. Draw Heart</a>
         ''' </para>
         ''' </remarks>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

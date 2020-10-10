@@ -69,7 +69,7 @@ Namespace PdfFileWriter
     ''' The PDF table cell class represent one cell in the table.
     ''' </para>
     ''' <para>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DataTableSupport">2.12 Data Table Support</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DataTableSupport">2.12 Data Table Support</a>
     ''' </para>
     ''' </remarks>
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -130,8 +130,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets Image if Type is Image.
         ''' </summary>
-        ''' <seealsocref="PdfTableCell.ImageWidth"/>
-        ''' <seealsocref="PdfTableCell.ImageHeight"/>
+        ''' <seealso cref="PdfTableCell.ImageWidth"/>
+        ''' <seealso cref="PdfTableCell.ImageHeight"/>
         ''' <remarks>
         ''' <para>
         ''' 	If ImageWidth and ImageHeight were not set by the user,
@@ -307,7 +307,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets or sets image width in user units.
         ''' </summary>
-        ''' <seealsocref="PdfTableCell.Image"/>
+        ''' <seealso cref="PdfTableCell.Image"/>
         ''' <remarks>
         ''' Please note "Remarks" in Image property for description
         ''' of ImageWidth and ImageHeight.
@@ -317,7 +317,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets or sets image height in user units.
         ''' </summary>
-        ''' <seealsocref="PdfTableCell.Image"/>
+        ''' <seealso cref="PdfTableCell.Image"/>
         ''' <remarks>
         ''' Please note "Remarks" in Image property for description
         ''' of ImageWidth and ImageHeight.
@@ -356,7 +356,7 @@ Namespace PdfFileWriter
         ''' <remarks>
         ''' <para>The user can activate the annotation action by clicking anywhere in the cell area.
         ''' Right click for attached file.</para>
-        ''' <listtype="table">
+        ''' <list type="table">
         ''' <item><description>Weblink action to activate web browser.</description></item>
         ''' <item><description>Go to action to jump to another page in the document.</description></item>
         ''' <item><description>Display media action to isplay video or play sound.</description></item>

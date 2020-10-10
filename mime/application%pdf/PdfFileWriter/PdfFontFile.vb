@@ -26,6 +26,7 @@
 Imports System
 Imports System.Collections.Generic
 Imports System.Text
+Imports i32 = Microsoft.VisualBasic.Language.i32
 
 Namespace PdfFileWriter
     Friend Class PdfFontFile
@@ -51,15 +52,15 @@ Namespace PdfFileWriter
         Private BufPtr As Integer
 
         ' table tags
-        Private Const cmapTag As UInteger = &H636d6170  ' "cmap"
+        Private Const cmapTag As UInteger = &H636D6170  ' "cmap"
         Private Const cvtTag As UInteger = &H63767420   ' "cvt"
         Private Const fpgmTag As UInteger = &H6670676D  ' "fpgm"
-        Private Const glyfTag As UInteger = &H676c7966  ' "glyf"
+        Private Const glyfTag As UInteger = &H676C7966  ' "glyf"
         Private Const headTag As UInteger = &H68656164  ' "head"
         Private Const hheaTag As UInteger = &H68686561  ' "hhea"
-        Private Const hmtxTag As UInteger = &H686d7478  ' "hmtx"
-        Private Const locaTag As UInteger = &H6c6f6361  ' "loca"
-        Private Const maxpTag As UInteger = &H6d617870  ' "maxp"
+        Private Const hmtxTag As UInteger = &H686D7478  ' "hmtx"
+        Private Const locaTag As UInteger = &H6C6F6361  ' "loca"
+        Private Const maxpTag As UInteger = &H6D617870  ' "maxp"
         Private Const prepTag As UInteger = &H70726570  ' "prep"
 
         ' this array must be in sorted order
@@ -747,6 +748,9 @@ Namespace PdfFileWriter
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
         Private Sub GetCompositeGlyph(ByVal MainList As List(Of CharInfo), ByVal CompList As List(Of Integer))
+            ' the glyph is not in main or composit lists, add it to the composit list
+            Dim Index As i32 = 0
+
             ' skip boundig box
             BufPtr = 10
 
@@ -756,9 +760,9 @@ Namespace PdfFileWriter
                 Dim Flags As CompFlag = CType(ReadUInt16BigEndian(), CompFlag)
                 Dim GlyphIndex As Integer = ReadUInt16BigEndian()
 
-                ' the glyph is not in main or composit lists, add it to the composit list
-                Dim Index As Integer
-                If MainList.BinarySearch(New CharInfo(GlyphIndex)) < 0 AndAlso CSharpImpl.__Assign(Index, CompList.BinarySearch(GlyphIndex)) < 0 Then CompList.Insert(Not Index, GlyphIndex)
+                If MainList.BinarySearch(New CharInfo(GlyphIndex)) < 0 AndAlso (Index = CompList.BinarySearch(GlyphIndex)) < 0 Then
+                    CompList.Insert(Not Index, GlyphIndex)
+                End If
 
                 ' read argument1 and 2
                 If (Flags And CompFlag.Arg1AndArg2AreWords) = 0 Then
@@ -900,7 +904,7 @@ Namespace PdfFileWriter
             If TableRecordArray(Tag.glyf).Length <> GlyphTableLength Then Throw New ApplicationException("Glyph table length does not match header")
 
             ' test if the table can be stored in short integer
-            headTable.IndexToLocFormat = If((GlyphTableLength And &Hfffe0000) = 0, CShort(0), CShort(1))
+            headTable.IndexToLocFormat = If((GlyphTableLength And &HFFFE0000) = 0, CShort(0), CShort(1))
 
             ' replace location array
             If headTable.IndexToLocFormat = 0 Then
@@ -949,10 +953,10 @@ Namespace PdfFileWriter
                 NewSubTbl.SegArray(0) = New cmapSeg(FirstChar, LastChar, 0, 2)
             Else
                 ' symbolic font
-                NewSubTbl.SegArray(0) = New cmapSeg(&Hf000 + FirstChar, &Hf000 + LastChar, 0, 2)
+                NewSubTbl.SegArray(0) = New cmapSeg(&HF000 + FirstChar, &HF000 + LastChar, 0, 2)
             End If
 
-            NewSubTbl.SegArray(1) = New cmapSeg(&HfffF, &HfffF, 1, 0)
+            NewSubTbl.SegArray(1) = New cmapSeg(&HFFFF, &HFFFF, 1, 0)
 
             ' table size
             Dim TblSize = 4 + 8 + 16 + 8 * NewSubTbl.SegCount + 2 * CharToGlyphArray.Length
@@ -1273,7 +1277,7 @@ Namespace PdfFileWriter
             Next
 
             ' calculate checksum of header plus table records
-            ChecksumAdjustment = &Hb1b0afba - (ChecksumAdjustment + TableChecksum(Buffer))
+            ChecksumAdjustment = &HB1B0AFBA - (ChecksumAdjustment + TableChecksum(Buffer))
 
             ' save header buffer
             Dim Header = Buffer
@@ -1436,13 +1440,5 @@ Namespace PdfFileWriter
 
             Return StrTag.ToString()
         End Function
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Namespace

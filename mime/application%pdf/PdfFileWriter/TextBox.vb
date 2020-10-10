@@ -272,27 +272,19 @@ Namespace PdfFileWriter
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawTextBox">For example of drawing TextBox see 3.12. Draw Text Box</a>
+    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawTextBox">For example of drawing TextBox see 3.12. Draw Text Box</a>
     ''' </para>
     ''' </remarks>
     Public Class TextBox
-        ''' <summary>
-        ''' Gets box width.
-        ''' </summary>
-
-        ''' <summary>
-        ''' Gets box height.
-        ''' </summary>
-
-        ''' <summary>
-        ''' Gets paragraph count.
-        ''' </summary>
 
         ''' <summary>
         ''' Gets first line is indented.
         ''' </summary>
         Private _BoxWidth As Double, _BoxHeight As Double, _ParagraphCount As Integer, _FirstLineIndent As Double
 
+        ''' <summary>
+        ''' Gets box width.
+        ''' </summary>
         Public Property BoxWidth As Double
             Get
                 Return _BoxWidth
@@ -302,6 +294,9 @@ Namespace PdfFileWriter
             End Set
         End Property
 
+        ''' <summary>
+        ''' Gets box height.
+        ''' </summary>
         Public Property BoxHeight As Double
             Get
                 Return _BoxHeight
@@ -320,6 +315,9 @@ Namespace PdfFileWriter
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets paragraph count.
+        ''' </summary>
         Public Property ParagraphCount As Integer
             Get
                 Return _ParagraphCount
@@ -462,14 +460,17 @@ Namespace PdfFileWriter
 
             ' end of textbox
             If LineStart >= LineArray.Count Then
-                LineStart = CSharpImpl.__Assign(LineEnd, LineArray.Count)
+                LineEnd = LineArray.Count
+                LineStart = LineEnd
                 Return 0.0
             End If
+
+            LineEnd = LineStart
 
             ' calculate height for requested line count
             Dim Total = 0.0
             Dim Height = 0.0
-            Dim [End] As Integer = CSharpImpl.__Assign(LineEnd, LineStart)
+            Dim [End] As Integer = LineEnd
 
             While True
                 Dim Line = LineArray([End])
@@ -843,13 +844,5 @@ Namespace PdfFileWriter
 
             Return
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Namespace

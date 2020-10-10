@@ -341,7 +341,7 @@ Namespace PdfFileWriter
     ''' Step 6: Create your PDF document file by calling CreateFile method of PdfDocument.
     ''' </para>
     ''' <para>
-    ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DocumentCreation">For example of document creation see 3.1. Document Creation Overview</a>
+    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DocumentCreation">For example of document creation see 3.1. Document Creation Overview</a>
     ''' </para>
     ''' </remarks>
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

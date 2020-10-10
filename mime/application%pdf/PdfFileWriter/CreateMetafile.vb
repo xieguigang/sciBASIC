@@ -37,15 +37,15 @@ Namespace PdfFileWriter
     ''' </summary>
     Public Class CreateMetafile
         Implements IDisposable
-        ''' <summary>
-        ''' Gets image metafile.
-        ''' </summary>
 
         ''' <summary>
         ''' Gets graphics object form image metafile.
         ''' </summary>
         Private _Metafile As System.Drawing.Imaging.Metafile, _Graphics As System.Drawing.Graphics
 
+        ''' <summary>
+        ''' Gets image metafile.
+        ''' </summary>
         Public Property Metafile As Metafile
             Get
                 Return _Metafile

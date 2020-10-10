@@ -328,6 +328,10 @@ Namespace Language
             Return i
         End Operator
 
+        Public Shared Operator Not(x As i32) As Integer
+            Return Not x.Value
+        End Operator
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CompareTo(other As Integer) As Integer Implements IComparable(Of Integer).CompareTo
             Return Value.CompareTo(other)

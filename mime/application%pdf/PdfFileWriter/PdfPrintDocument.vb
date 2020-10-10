@@ -39,7 +39,7 @@ Namespace PdfFileWriter
     ''' to an image. The image is displayed in the PDF document.
     ''' </para>
     ''' <para>
-    ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#PrintDocumentSupport">2.11 Print Document Support</a>
+    ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#PrintDocumentSupport">2.11 Print Document Support</a>
     ''' </para>
     ''' </remarks>
     Public Class PdfPrintDocument

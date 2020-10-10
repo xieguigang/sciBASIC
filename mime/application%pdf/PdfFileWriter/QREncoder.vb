@@ -1243,7 +1243,8 @@ Namespace PdfFileWriter
 
             ' Timing pattern
             For Z = 8 To QRCodeDimension - 8 - 1
-                BaseMatrix(Z, 6) = CSharpImpl.__Assign(BaseMatrix(6, Z), If((Z And 1) = 0, FixedBlack, FixedWhite))
+                BaseMatrix(6, Z) = If((Z And 1) = 0, FixedBlack, FixedWhite)
+                BaseMatrix(Z, 6) = BaseMatrix(6, Z)
             Next
 
             ' alignment pattern
@@ -1512,13 +1513,5 @@ Namespace PdfFileWriter
 
             Return
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Namespace

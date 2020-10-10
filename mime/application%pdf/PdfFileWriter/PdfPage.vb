@@ -232,7 +232,7 @@ Namespace PdfFileWriter
         ''' 	If web link is empty, ignore this call.
         ''' </para>
         ''' <para>
-        ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#WeblinkSupport">2.7 Web Link Support</a>
+        ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#WeblinkSupport">2.7 Web Link Support</a>
         ''' </para>
         ''' </remarks>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -255,7 +255,7 @@ Namespace PdfFileWriter
         ''' 	If web link is empty, ignore this call.
         ''' </para>
         ''' <para>
-        ''' For more information go to <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#WeblinkSupport">2.7 Web Link Support</a>
+        ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#WeblinkSupport">2.7 Web Link Support</a>
         ''' </para>
         ''' </remarks>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

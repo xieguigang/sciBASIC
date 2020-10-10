@@ -30,7 +30,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 
 Namespace PdfFileWriter
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
     ''' <summary>
     ''' One character/Glyph information class
     ''' </summary>
@@ -40,7 +40,6 @@ Namespace PdfFileWriter
     ''' associated glyph. The glyph geometry is defined in a square.
     ''' The square is DesignHeight by DesignHeight.
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     Public Class CharInfo
         Implements IComparable(Of CharInfo)
         ''' <summary>
@@ -839,41 +838,73 @@ Namespace PdfFileWriter
     ''' </remarks>
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     Public Class WinOutlineTextMetric
+
+
+
+
+
+        ''' <summary>
+        ''' Outline text metric full name
+        ''' </summary>
+        Private _otmSize As UInteger, _otmTextMetric As PdfFileWriter.WinTextMetric, _otmPanoseNumber As PdfFileWriter.WinPanose, _otmfsSelection As UInteger, _otmfsType As UInteger, _otmsCharSlopeRise As Integer, _otmsCharSlopeRun As Integer, _otmItalicAngle As Integer, _otmEMSquare As UInteger, _otmAscent As Integer, _otmDescent As Integer, _otmLineGap As UInteger, _otmsCapEmHeight As UInteger, _otmsXHeight As UInteger, _otmrcFontBox As PdfFileWriter.FontBox, _otmMacAscent As Integer, _otmMacDescent As Integer, _otmMacLineGap As UInteger, _otmusMinimumPPEM As UInteger, _otmptSubscriptSize As System.Drawing.Point, _otmptSubscriptOffset As System.Drawing.Point, _otmptSuperscriptSize As System.Drawing.Point, _otmptSuperscriptOffset As System.Drawing.Point, _otmsStrikeoutSize As UInteger, _otmsStrikeoutPosition As Integer, _otmsUnderscoreSize As Integer, _otmsUnderscorePosition As Integer, _otmpFamilyName As String, _otmpFaceName As String, _otmpStyleName As String, _otmpFullName As String
+
         ''' <summary>
         ''' Outline text metric size
         ''' </summary>
+        Public Property otmSize As UInteger
+            Get
+                Return _otmSize
+            End Get
+            Private Set(ByVal value As UInteger)
+                _otmSize = value
+            End Set
+        End Property
 
         ''' <summary>
         ''' Outline text metric TextMetric
         ''' </summary>
+        Public Property otmTextMetric As WinTextMetric
+            Get
+                Return _otmTextMetric
+            End Get
+            Private Set(ByVal value As WinTextMetric)
+                _otmTextMetric = value
+            End Set
+        End Property
 
         ''' <summary>
         ''' Outline text metric panose number
         ''' </summary>
+        Public Property otmPanoseNumber As WinPanose
+            Get
+                Return _otmPanoseNumber
+            End Get
+            Private Set(ByVal value As WinPanose)
+                _otmPanoseNumber = value
+            End Set
+        End Property
 
         ''' <summary>
         ''' Outline text metric FS selection
         ''' </summary>
+        Public Property otmfsSelection As UInteger
+            Get
+                Return _otmfsSelection
+            End Get
+            Private Set(ByVal value As UInteger)
+                _otmfsSelection = value
+            End Set
+        End Property
 
-        ''' <summary>
-        ''' Outline text metric FS type
-        ''' </summary>
 
-        ''' <summary>
-        ''' Outline text metric char slope rise
-        ''' </summary>
 
-        ''' <summary>
-        ''' Outline text metric char slope run
-        ''' </summary>
 
-        ''' <summary>
-        ''' Outline text metric italic angle
-        ''' </summary>
 
-        ''' <summary>
-        ''' Outline text metric EM square
-        ''' </summary>
+
+
+
+
+
 
         ''' <summary>
         ''' Outline text metric ascent
@@ -960,46 +991,8 @@ Namespace PdfFileWriter
         ''' </summary>
 
         ''' <summary>
-        ''' Outline text metric full name
+        ''' Outline text metric FS type
         ''' </summary>
-        Private _otmSize As UInteger, _otmTextMetric As PdfFileWriter.WinTextMetric, _otmPanoseNumber As PdfFileWriter.WinPanose, _otmfsSelection As UInteger, _otmfsType As UInteger, _otmsCharSlopeRise As Integer, _otmsCharSlopeRun As Integer, _otmItalicAngle As Integer, _otmEMSquare As UInteger, _otmAscent As Integer, _otmDescent As Integer, _otmLineGap As UInteger, _otmsCapEmHeight As UInteger, _otmsXHeight As UInteger, _otmrcFontBox As PdfFileWriter.FontBox, _otmMacAscent As Integer, _otmMacDescent As Integer, _otmMacLineGap As UInteger, _otmusMinimumPPEM As UInteger, _otmptSubscriptSize As System.Drawing.Point, _otmptSubscriptOffset As System.Drawing.Point, _otmptSuperscriptSize As System.Drawing.Point, _otmptSuperscriptOffset As System.Drawing.Point, _otmsStrikeoutSize As UInteger, _otmsStrikeoutPosition As Integer, _otmsUnderscoreSize As Integer, _otmsUnderscorePosition As Integer, _otmpFamilyName As String, _otmpFaceName As String, _otmpStyleName As String, _otmpFullName As String
-
-        Public Property otmSize As UInteger
-            Get
-                Return _otmSize
-            End Get
-            Private Set(ByVal value As UInteger)
-                _otmSize = value
-            End Set
-        End Property
-
-        Public Property otmTextMetric As WinTextMetric
-            Get
-                Return _otmTextMetric
-            End Get
-            Private Set(ByVal value As WinTextMetric)
-                _otmTextMetric = value
-            End Set
-        End Property
-
-        Public Property otmPanoseNumber As WinPanose
-            Get
-                Return _otmPanoseNumber
-            End Get
-            Private Set(ByVal value As WinPanose)
-                _otmPanoseNumber = value
-            End Set
-        End Property
-
-        Public Property otmfsSelection As UInteger
-            Get
-                Return _otmfsSelection
-            End Get
-            Private Set(ByVal value As UInteger)
-                _otmfsSelection = value
-            End Set
-        End Property
-
         Public Property otmfsType As UInteger
             Get
                 Return _otmfsType
@@ -1009,6 +1002,9 @@ Namespace PdfFileWriter
             End Set
         End Property
 
+        ''' <summary>
+        ''' Outline text metric char slope rise
+        ''' </summary>
         Public Property otmsCharSlopeRise As Integer
             Get
                 Return _otmsCharSlopeRise
@@ -1018,6 +1014,9 @@ Namespace PdfFileWriter
             End Set
         End Property
 
+        ''' <summary>
+        ''' Outline text metric char slope run
+        ''' </summary>
         Public Property otmsCharSlopeRun As Integer
             Get
                 Return _otmsCharSlopeRun
@@ -1027,6 +1026,9 @@ Namespace PdfFileWriter
             End Set
         End Property
 
+        ''' <summary>
+        ''' Outline text metric italic angle
+        ''' </summary>
         Public Property otmItalicAngle As Integer
             Get
                 Return _otmItalicAngle
@@ -1036,6 +1038,9 @@ Namespace PdfFileWriter
             End Set
         End Property
 
+        ''' <summary>
+        ''' Outline text metric EM square
+        ''' </summary>
         Public Property otmEMSquare As UInteger
             Get
                 Return _otmEMSquare
@@ -1281,14 +1286,12 @@ Namespace PdfFileWriter
         End Sub
     End Class
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' Font API class
     ''' </summary>
     ''' <remarks>
     ''' Windows API callable by C# program
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     Public Class FontApi
         Implements IDisposable
 
@@ -1390,13 +1393,11 @@ Namespace PdfFileWriter
             Return Info
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         ''' <summary>
         ''' Gets array of glyph metrics
         ''' </summary>
         ''' <param name="CharValue">Character code</param>
         ''' <returns>Array of character infos</returns>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function GetGlyphMetricsApi(ByVal CharValue As Integer) As CharInfo()
             ' first character of the 256 block
             Dim FirstChar = CharValue And &HFF00
@@ -1434,7 +1435,9 @@ Namespace PdfFileWriter
                 If GlyphIndex = 0 Then Continue For
 
                 ' get one glyph
-                If GetGlyphOutline(GDIHandle, FirstChar + CharCode, GGO_METRICS, Buffer, 0, IntPtr.Zero, UnitMatrix) < 0 Then ThrowSystemErrorException("Calling GetGlyphOutline failed")
+                If GetGlyphOutline(GDIHandle, FirstChar + CharCode, GGO_METRICS, Buffer, 0, IntPtr.Zero, UnitMatrix) < 0 Then
+                    ThrowSystemErrorException("Calling GetGlyphOutline failed")
+                End If
 
                 ' reset buffer pointer
                 BufPtr = 0
