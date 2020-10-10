@@ -40,7 +40,7 @@ Imports System.Numerics
 Imports System.Text
 
 'namespace Pdf417EncoderLibrary
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF417 Encoding control
     ''' </summary>
@@ -1312,4 +1312,4 @@ _Select0_CasePdfFileWriter_Pdf417Encoder_TextEncodingMode_Upper:
             Return
         End Sub
     End Class
-End Namespace
+

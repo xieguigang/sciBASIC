@@ -2,7 +2,7 @@
 Imports System.Collections.Generic
 Imports System.Text
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Layers list mode enumeration
     ''' </summary>
@@ -207,4 +207,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

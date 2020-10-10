@@ -24,7 +24,7 @@
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF document information dictionary
     ''' </summary>
@@ -145,4 +145,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

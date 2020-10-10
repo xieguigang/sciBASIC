@@ -29,7 +29,7 @@ Imports System.Windows.Media
 Imports Color = System.Drawing.Color
 Imports SysMedia = System.Windows.Media
 
-Namespace PdfFileWriter
+
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' PDF shading function class
@@ -105,4 +105,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

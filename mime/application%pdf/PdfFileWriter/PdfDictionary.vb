@@ -27,7 +27,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Text
 
-Namespace PdfFileWriter
+
     Friend Enum ValueType
         Other
         [String]
@@ -323,4 +323,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

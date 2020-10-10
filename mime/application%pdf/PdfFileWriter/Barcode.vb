@@ -26,7 +26,7 @@
 Imports System
 Imports System.Text
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Barcode box class
     ''' </summary>
@@ -1669,4 +1669,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

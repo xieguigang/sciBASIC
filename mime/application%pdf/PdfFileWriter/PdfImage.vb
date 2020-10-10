@@ -30,7 +30,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.InteropServices
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Save image as enumeration
     ''' </summary>
@@ -1137,4 +1137,4 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
             Return
         End Sub
     End Class
-End Namespace
+

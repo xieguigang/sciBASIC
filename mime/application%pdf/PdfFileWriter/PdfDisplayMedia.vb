@@ -25,7 +25,7 @@
 
 Imports System
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Temporary file permission enumeration
     ''' </summary>
@@ -471,4 +471,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

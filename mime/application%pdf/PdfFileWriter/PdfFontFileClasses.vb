@@ -25,7 +25,7 @@
 
 Imports System
 
-Namespace PdfFileWriter
+
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ' Font file header
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -321,4 +321,4 @@ Namespace PdfFileWriter
         ScaledComponentOffset = &H800       ' bit11 Composite designed to have the component offset scaled (designed for Apple rasterizer).
         UnscaledComponentOffset = &H1000    ' bit12 Composite designed not to have the component offset scaled (designed for the Microsoft TrueType rasterizer).
     End Enum
-End Namespace
+

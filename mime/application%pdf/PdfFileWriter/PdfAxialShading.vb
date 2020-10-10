@@ -25,7 +25,7 @@
 
 Imports SysMedia = System.Windows.Media
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Mapping mode for axial and radial shading
     ''' </summary>
@@ -210,4 +210,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

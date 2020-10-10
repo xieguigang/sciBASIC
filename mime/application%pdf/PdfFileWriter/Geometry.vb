@@ -25,7 +25,7 @@
 
 Imports System
 
-Namespace PdfFileWriter
+
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' Point in double precision class
@@ -425,4 +425,4 @@ Namespace PdfFileWriter
             Return New BezierD(X, Y - Height, X + CircleFactor * Width, Y - Height, X + Width, Y - CircleFactor * Height, X + Width, Y)
         End Function
     End Class
-End Namespace
+

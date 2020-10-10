@@ -167,7 +167,7 @@ Imports System.Text
 Imports System.Globalization
 Imports System.Security.Cryptography
 
-Namespace PdfFileWriter
+
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' Unit of measure enumeration
@@ -1152,4 +1152,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

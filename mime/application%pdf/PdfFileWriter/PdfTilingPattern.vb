@@ -25,7 +25,7 @@
 
 Imports System.Drawing
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF tiling type enumeration
     ''' </summary>
@@ -305,4 +305,4 @@ Namespace PdfFileWriter
             Return Pattern
         End Function
     End Class
-End Namespace
+

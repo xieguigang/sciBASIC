@@ -29,7 +29,7 @@ Imports System.IO
 Imports System.IO.Compression
 Imports System.Text
 
-Namespace PdfFileWriter
+
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ' Resource code enumeration
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -411,4 +411,4 @@ Namespace PdfFileWriter
             Return AdlerHigh << 16 Or AdlerLow
         End Function
     End Class
-End Namespace
+

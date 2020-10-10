@@ -24,7 +24,7 @@
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 
-Namespace PdfFileWriter
+
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' PDF rectangle in double precision class
@@ -132,4 +132,4 @@ Namespace PdfFileWriter
             End Get
         End Property
     End Class
-End Namespace
+

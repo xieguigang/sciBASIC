@@ -26,7 +26,7 @@
 Imports System.IO
 Imports System.Text
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF binary writer class
     ''' </summary>
@@ -109,4 +109,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

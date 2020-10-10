@@ -27,7 +27,7 @@ Imports System
 Imports System.IO
 Imports System.Collections.Generic
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF Embedded file class
     ''' </summary>
@@ -224,4 +224,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

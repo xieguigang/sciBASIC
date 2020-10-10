@@ -25,7 +25,7 @@
 
 Imports System.Collections.Generic
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF Annotation class
     ''' </summary>
@@ -186,4 +186,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

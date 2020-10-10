@@ -29,7 +29,7 @@ Imports System.Drawing
 Imports System.Runtime.InteropServices
 Imports System.Text
 
-Namespace PdfFileWriter
+
 
     ''' <summary>
     ''' One character/Glyph information class
@@ -1895,4 +1895,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

@@ -31,7 +31,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.InteropServices
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Create image metafile class
     ''' </summary>
@@ -153,4 +153,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

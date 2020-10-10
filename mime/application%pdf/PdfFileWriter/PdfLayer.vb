@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Lock/unlock layer enumeration
     ''' </summary>
@@ -104,4 +104,4 @@ Namespace PdfFileWriter
             Return ObjectNumber - Other.ObjectNumber
         End Function
     End Class
-End Namespace
+

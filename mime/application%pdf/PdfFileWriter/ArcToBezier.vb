@@ -39,7 +39,7 @@
 
 Imports System
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Arc type for DrawArc method
     ''' </summary>
@@ -207,4 +207,4 @@ Namespace PdfFileWriter
             Return SegArray
         End Function
     End Module
-End Namespace
+

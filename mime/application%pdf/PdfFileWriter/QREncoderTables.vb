@@ -34,7 +34,7 @@
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 'namespace QRCodeEncoderLibrary
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Static tables for QR Encoder
     ''' </summary>
@@ -342,4 +342,4 @@ Namespace PdfFileWriter
         {FixedBlack, FixedWhite, FixedWhite, FixedWhite, FixedBlack},
         {FixedBlack, FixedBlack, FixedBlack, FixedBlack, FixedBlack}}
     End Class
-End Namespace
+

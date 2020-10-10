@@ -42,7 +42,7 @@ Imports System.Drawing
 Imports SysMedia = System.Windows.Media
 Imports SysWin = System.Windows
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Y Axis direction
     ''' </summary>
@@ -725,4 +725,4 @@ Namespace PdfFileWriter
             Return New SizeD(Math.Abs(ScaleX) * PathSize.Width, Math.Abs(ScaleY) * PathSize.Height)
         End Function
     End Class
-End Namespace
+

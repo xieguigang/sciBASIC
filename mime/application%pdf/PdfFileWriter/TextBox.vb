@@ -28,7 +28,7 @@ Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' TextBoxLine class
     ''' </summary>
@@ -845,4 +845,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

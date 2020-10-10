@@ -28,7 +28,7 @@ Imports System.Collections.Generic
 Imports System.Text
 Imports i32 = Microsoft.VisualBasic.Language.i32
 
-Namespace PdfFileWriter
+
     Friend Class PdfFontFile
         Inherits PdfObject
 
@@ -1441,4 +1441,4 @@ Namespace PdfFileWriter
             Return StrTag.ToString()
         End Function
     End Class
-End Namespace
+

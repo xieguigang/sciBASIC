@@ -26,7 +26,7 @@
 Imports System
 Imports System.Drawing
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PdfImageControl is obolete. See latest documentation
     ''' </summary>
@@ -86,4 +86,4 @@ Namespace PdfFileWriter
 
         Friend _GrayToBWCutoff As Integer
     End Class
-End Namespace
+

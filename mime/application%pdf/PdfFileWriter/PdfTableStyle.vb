@@ -27,7 +27,7 @@ Imports System
 Imports System.Drawing
 Imports System.Globalization
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF table cell or header style class
     ''' </summary>
@@ -302,4 +302,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

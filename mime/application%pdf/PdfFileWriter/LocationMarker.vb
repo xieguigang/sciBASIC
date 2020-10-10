@@ -27,7 +27,7 @@ Imports System
 Imports System.Text
 Imports System.Collections.Generic
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Location marker scope
     ''' </summary>
@@ -182,4 +182,4 @@ Namespace PdfFileWriter
             Return String.CompareOrdinal(LocMarkerName, Other.LocMarkerName)
         End Function
     End Class
-End Namespace
+

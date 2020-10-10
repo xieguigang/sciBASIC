@@ -24,7 +24,7 @@
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF X object resource class
     ''' </summary>
@@ -129,4 +129,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

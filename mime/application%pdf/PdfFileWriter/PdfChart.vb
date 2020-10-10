@@ -28,7 +28,7 @@ Imports System
 Imports System.Drawing
 Imports System.Windows.Forms.DataVisualization.Charting
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Font size units for PdfChart.CreateFont method enumeration
     ''' </summary>
@@ -291,4 +291,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

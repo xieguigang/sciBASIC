@@ -27,7 +27,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Drawing
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF table start event handler delegate
     ''' </summary>
@@ -1054,4 +1054,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

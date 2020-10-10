@@ -26,7 +26,7 @@
 Imports System
 Imports System.Collections.Generic
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF Weblink class
     ''' </summary>
@@ -112,4 +112,4 @@ Namespace PdfFileWriter
             Return String.Compare(WebLinkStr, Other.WebLinkStr)
         End Function
     End Class
-End Namespace
+

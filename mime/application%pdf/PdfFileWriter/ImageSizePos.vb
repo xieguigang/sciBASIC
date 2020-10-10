@@ -25,7 +25,7 @@
 
 Imports System.Drawing
 
-Namespace PdfFileWriter
+
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' Image size and position class
@@ -122,4 +122,4 @@ Namespace PdfFileWriter
             Return OutputSize
         End Function
     End Module
-End Namespace
+

@@ -26,7 +26,7 @@
 Imports System
 Imports System.Collections.Generic
 
-Namespace PdfFileWriter
+
     Friend Class PdfExtGState
         Inherits PdfObject
         Implements IComparable(Of PdfExtGState)
@@ -89,4 +89,4 @@ Namespace PdfFileWriter
             Return String.Compare(Value, Other.Value)
         End Function
     End Class
-End Namespace
+

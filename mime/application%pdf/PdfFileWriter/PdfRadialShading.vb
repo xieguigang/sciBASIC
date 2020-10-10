@@ -26,7 +26,7 @@
 Imports System
 Imports SysMedia = System.Windows.Media
 
-Namespace PdfFileWriter
+
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' PDF radial shading resource class
@@ -208,4 +208,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

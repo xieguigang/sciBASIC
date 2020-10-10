@@ -31,7 +31,7 @@ Imports System.Text
 Imports System.Runtime.InteropServices
 Imports System.Linq
 
-Namespace PdfFileWriter
+
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' PDF font descriptor flags enumeration
@@ -1440,4 +1440,4 @@ Namespace PdfFileWriter
             Return GlyphIndex - Other.GlyphIndex
         End Function
     End Class
-End Namespace
+

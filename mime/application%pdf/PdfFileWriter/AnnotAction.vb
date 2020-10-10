@@ -25,11 +25,11 @@
 
 Imports System
 
-Namespace PdfFileWriter
-    ''' <summary>
-    ''' File attachement icon
-    ''' </summary>
-    Public Enum FileAttachIcon
+
+''' <summary>
+''' File attachement icon
+''' </summary>
+Public Enum FileAttachIcon
         ''' <summary>
         ''' Graph
         ''' </summary>
@@ -269,4 +269,4 @@ Namespace PdfFileWriter
             Return Equals(Note, StickyNote.Note) AndAlso Icon = StickyNote.Icon
         End Function
     End Class
-End Namespace
+

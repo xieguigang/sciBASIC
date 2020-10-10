@@ -30,7 +30,7 @@ Imports System.Drawing
 Imports System.Text
 Imports System.Runtime.InteropServices
 
-Namespace PdfFileWriter
+
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' PDF font style flags enumeration
@@ -3186,4 +3186,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

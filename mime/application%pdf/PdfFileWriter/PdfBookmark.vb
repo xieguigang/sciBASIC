@@ -25,7 +25,7 @@
 
 Imports System.Drawing
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF bookmark class
     ''' </summary>
@@ -304,4 +304,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

@@ -26,7 +26,7 @@
 Imports System
 Imports System.Drawing
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Border line style class
     ''' </summary>
@@ -678,4 +678,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

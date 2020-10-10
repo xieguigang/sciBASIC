@@ -27,7 +27,7 @@ Imports System
 Imports System.IO
 Imports System.Security.Cryptography
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' Encryption type enumeration
     ''' </summary>
@@ -426,4 +426,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

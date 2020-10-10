@@ -28,7 +28,7 @@ Imports System
 Imports System.Drawing
 Imports System.Drawing.Printing
 
-Namespace PdfFileWriter
+
     ''' <summary>
     ''' PDF print document class
     ''' </summary>
@@ -245,4 +245,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+

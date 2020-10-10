@@ -27,7 +27,7 @@ Imports System
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 
-Namespace PdfFileWriter
+
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' Cell type enumeration
@@ -785,4 +785,4 @@ Namespace PdfFileWriter
             Return
         End Sub
     End Class
-End Namespace
+
