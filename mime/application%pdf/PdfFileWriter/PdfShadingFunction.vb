@@ -45,8 +45,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF Shading function constructor
         ''' </summary>
-        ''' <paramname="Document">Document object parent of this function.</param>
-        ''' <paramname="ColorArray">Array of colors.</param>
+        ''' <param name="Document">Document object parent of this function.</param>
+        ''' <param name="ColorArray">Array of colors.</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub New(ByVal Document As PdfDocument, ByVal ColorArray As Color())      ' PDF document object
             ' Array of colors. Minimum 2.
@@ -67,8 +67,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF Shading function constructor
         ''' </summary>
-        ''' <paramname="Document">Document object parent of this function.</param>
-        ''' <paramname="Brush">System.Windows.Media gradient brush</param>
+        ''' <param name="Document">Document object parent of this function.</param>
+        ''' <param name="Brush">System.Windows.Media gradient brush</param>
         Public Sub New(ByVal Document As PdfDocument, ByVal Brush As SysMedia.GradientBrush)
             MyBase.New(Document, ObjectType.Stream)
             ' build dictionary

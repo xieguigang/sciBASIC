@@ -101,9 +101,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF X Object constructor
         ''' </summary>
-        ''' <paramname="Document">PDF document</param>
-        ''' <paramname="Width">X Object width</param>
-        ''' <paramname="Height">X Object height</param>
+        ''' <param name="Document">PDF document</param>
+        ''' <param name="Width">X Object width</param>
+        ''' <param name="Height">X Object height</param>
         Public Sub New(ByVal Document As PdfDocument, ByVal Optional Width As Double = 1.0, ByVal Optional Height As Double = 1.0)
             MyBase.New(Document, "/XObject")
             ' create resource code
@@ -123,7 +123,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Layer control
         ''' </summary>
-        ''' <paramname="Layer">PdfLayer object</param>
+        ''' <param name="Layer">PdfLayer object</param>
         Public Sub LayerControl(ByVal Layer As PdfObject)
             Dictionary.AddIndirectReference("/OC", Layer)
             Return

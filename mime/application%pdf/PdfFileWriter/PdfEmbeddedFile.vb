@@ -141,9 +141,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF embedded file class constructor
         ''' </summary>
-        ''' <paramname="Document">Current document</param>
-        ''' <paramname="FileName">File name</param>
-        ''' <paramname="PdfFileName">PDF file name (see remarks)</param>
+        ''' <param name="Document">Current document</param>
+        ''' <param name="FileName">File name</param>
+        ''' <param name="PdfFileName">PDF file name (see remarks)</param>
         ''' <returns>PdfEmbeddedFile object</returns>
         ''' <remarks>
         ''' <para>
@@ -176,7 +176,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compare two PdfEmbededFile objects
         ''' </summary>
-        ''' <paramname="Other">Other argument</param>
+        ''' <param name="Other">Other argument</param>
         ''' <returns>Compare result</returns>
         Public Function CompareTo(ByVal Other As PdfEmbeddedFile) As Integer Implements IComparable(Of PdfEmbeddedFile).CompareTo
             Return String.Compare(FileName, Other.FileName, True)
@@ -203,7 +203,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compare ExtToMime records
         ''' </summary>
-        ''' <paramname="Other">Other record</param>
+        ''' <param name="Other">Other record</param>
         ''' <returns></returns>
         Public Function CompareTo(ByVal Other As ExtToMime) As Integer Implements IComparable(Of ExtToMime).CompareTo
             Return String.Compare(Ext, Other.Ext, True)

@@ -42,9 +42,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PdfAnnotation constructor
         ''' </summary>
-        ''' <paramname="AnnotPage">Page object</param>
-        ''' <paramname="AnnotRect">Annotation rectangle</param>
-        ''' <paramname="AnnotAction">Annotation action</param>
+        ''' <param name="AnnotPage">Page object</param>
+        ''' <param name="AnnotRect">Annotation rectangle</param>
+        ''' <param name="AnnotAction">Annotation action</param>
         Friend Sub New(ByVal AnnotPage As PdfPage, ByVal AnnotRect As PdfRectangle, ByVal AnnotAction As AnnotAction)
             MyBase.New(AnnotPage.Document)
             ' save arguments
@@ -138,7 +138,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Activate annotation when page becomes visible.
         ''' </summary>
-        ''' <paramname="Activate">Activate or not-activate annotation.</param>
+        ''' <param name="Activate">Activate or not-activate annotation.</param>
         Public Sub ActivateActionWhenPageIsVisible(ByVal Activate As Boolean)
             ' applicable to screen action
             If AnnotAction.GetType() Is GetType(AnnotDisplayMedia) Then
@@ -156,7 +156,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Display border around annotation rectangle.
         ''' </summary>
-        ''' <paramname="BorderWidth">Border width</param>
+        ''' <param name="BorderWidth">Border width</param>
         Public Sub DisplayBorder(ByVal BorderWidth As Double)
             ' see page 611 section 8.4
             Dictionary.AddFormat("/BS", "<</W {0}>>", ToPt(BorderWidth))
@@ -166,7 +166,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Annotation rectangle appearance
         ''' </summary>
-        ''' <paramname="AppearanceDixtionary">PDF X Object</param>
+        ''' <param name="AppearanceDixtionary">PDF X Object</param>
         Public Sub Appearance(ByVal AppearanceDixtionary As PdfXObject)
             Dictionary.AddFormat("/AP", "<</N {0} 0 R>>", AppearanceDixtionary.ObjectNumber)
             Return

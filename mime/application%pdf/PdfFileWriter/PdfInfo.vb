@@ -33,7 +33,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor for PdfInfo class
         ''' </summary>
-        ''' <paramname="Document">Main document class</param>
+        ''' <param name="Document">Main document class</param>
         ''' <returns>PdfInfo object</returns>
         ''' <remarks>
         ''' <para>The constructor initialize the /Info dictionary with 4 key value pairs. </para>
@@ -59,7 +59,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Protected constructor
         ''' </summary>
-        ''' <paramname="Document">Main document object</param>
+        ''' <param name="Document">Main document object</param>
         Protected Sub New(ByVal Document As PdfDocument)
             MyBase.New(Document, ObjectType.Dictionary)
             ' set creation and modify dates
@@ -76,7 +76,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets document creation date and time
         ''' </summary>
-        ''' <paramname="Date">Creation date and time</param>
+        ''' <param name="Date">Creation date and time</param>
         Public Sub CreationDate(ByVal [Date] As Date)
             Dictionary.AddPdfString("/CreationDate", String.Format("D:{0}", [Date].ToString("yyyyMMddHHmmss")))
             Return
@@ -85,7 +85,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets document last modify date and time
         ''' </summary>
-        ''' <paramname="Date">Modify date and time</param>
+        ''' <param name="Date">Modify date and time</param>
         Public Sub ModDate(ByVal [Date] As Date)
             Dictionary.AddPdfString("/ModDate", String.Format("D:{0}", [Date].ToString("yyyyMMddHHmmss")))
             Return
@@ -94,7 +94,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets document title
         ''' </summary>
-        ''' <paramname="pTitle">Title</param>
+        ''' <param name="pTitle">Title</param>
         Public Sub Title(ByVal pTitle As String)
             Dictionary.AddPdfString("/Title", pTitle)
             Return
@@ -103,7 +103,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets document author 
         ''' </summary>
-        ''' <paramname="pAuthor">Author</param>
+        ''' <param name="pAuthor">Author</param>
         Public Sub Author(ByVal pAuthor As String)
             Dictionary.AddPdfString("/Author", pAuthor)
             Return
@@ -112,7 +112,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets document subject
         ''' </summary>
-        ''' <paramname="pSubject">Subject</param>
+        ''' <param name="pSubject">Subject</param>
         Public Sub Subject(ByVal pSubject As String)
             Dictionary.AddPdfString("/Subject", pSubject)
             Return
@@ -121,7 +121,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets keywords associated with the document
         ''' </summary>
-        ''' <paramname="pKeywords">Keywords list</param>
+        ''' <param name="pKeywords">Keywords list</param>
         Public Sub Keywords(ByVal pKeywords As String)
             Dictionary.AddPdfString("/Keywords", pKeywords)
             Return
@@ -130,7 +130,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets the name of the application that created the document
         ''' </summary>
-        ''' <paramname="pCreator">Creator</param>
+        ''' <param name="pCreator">Creator</param>
         Public Sub Creator(ByVal pCreator As String)
             Dictionary.AddPdfString("/Creator", pCreator)
             Return
@@ -139,7 +139,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets the name of the application that produced the document
         ''' </summary>
-        ''' <paramname="pProducer">Producer</param>
+        ''' <param name="pProducer">Producer</param>
         Public Sub Producer(ByVal pProducer As String)
             Dictionary.AddPdfString("/Producer", pProducer)
             Return

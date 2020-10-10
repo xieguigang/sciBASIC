@@ -137,7 +137,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Web link constructor
         ''' </summary>
-        ''' <paramname="WebLinkStr">Web link string</param>
+        ''' <param name="WebLinkStr">Web link string</param>
         Public Sub New(ByVal WebLinkStr As String)
             MyBase.New("/Link")
             Me.WebLinkStr = WebLinkStr
@@ -162,7 +162,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Go to annotation action constructor
         ''' </summary>
-        ''' <paramname="LocMarkerName">Location marker name</param>
+        ''' <param name="LocMarkerName">Location marker name</param>
         Public Sub New(ByVal LocMarkerName As String)
             MyBase.New("/Link")
             Me.LocMarkerName = LocMarkerName
@@ -187,7 +187,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Display media annotation action constructor
         ''' </summary>
-        ''' <paramname="DisplayMedia">PdfDisplayMedia</param>
+        ''' <param name="DisplayMedia">PdfDisplayMedia</param>
         Public Sub New(ByVal DisplayMedia As PdfDisplayMedia)
             MyBase.New("/Screen")
             Me.DisplayMedia = DisplayMedia
@@ -217,8 +217,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' File attachement constructor
         ''' </summary>
-        ''' <paramname="EmbeddedFile">Embedded file</param>
-        ''' <paramname="Icon">Icon enumeration</param>
+        ''' <param name="EmbeddedFile">Embedded file</param>
+        ''' <param name="Icon">Icon enumeration</param>
         Public Sub New(ByVal EmbeddedFile As PdfEmbeddedFile, ByVal Icon As FileAttachIcon)
             MyBase.New("/FileAttachment")
             Me.EmbeddedFile = EmbeddedFile
@@ -229,7 +229,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' File attachement constructor (no icon)
         ''' </summary>
-        ''' <paramname="EmbeddedFile">Embedded file</param>
+        ''' <param name="EmbeddedFile">Embedded file</param>
         Public Sub New(ByVal EmbeddedFile As PdfEmbeddedFile)
             MyBase.New("/FileAttachment")
             Me.EmbeddedFile = EmbeddedFile
@@ -255,8 +255,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sticky note annotation action constructor
         ''' </summary>
-        ''' <paramname="Note">Sticky note text</param>
-        ''' <paramname="Icon">Sticky note icon</param>
+        ''' <param name="Note">Sticky note text</param>
+        ''' <param name="Icon">Sticky note icon</param>
         Public Sub New(ByVal Note As String, ByVal Icon As StickyNoteIcon)
             MyBase.New("/Text")
             Me.Note = Note

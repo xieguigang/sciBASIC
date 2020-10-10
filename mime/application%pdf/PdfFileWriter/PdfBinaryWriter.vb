@@ -38,7 +38,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF binary writer constructor
         ''' </summary>
-        ''' <paramname="Stream">File or memory stream</param>
+        ''' <param name="Stream">File or memory stream</param>
         Public Sub New(ByVal Stream As Stream)
             MyBase.New(Stream, Encoding.UTF8)
         End Sub
@@ -46,7 +46,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Write String.
         ''' </summary>
-        ''' <paramname="Str">Input string</param>
+        ''' <param name="Str">Input string</param>
         ''' <remarks>
         ''' Convert each character from two bytes to one byte.
         ''' </remarks>
@@ -68,7 +68,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Write StringBuilder.
         ''' </summary>
-        ''' <paramname="Str">String builder input</param>
+        ''' <param name="Str">String builder input</param>
         ''' <remarks>
         ''' Convert each character from two bytes to one byte.
         ''' </remarks>
@@ -90,8 +90,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Combine format string with write string.
         ''' </summary>
-        ''' <paramname="FormatStr">Standard format string</param>
-        ''' <paramname="List">Array of objects</param>
+        ''' <param name="FormatStr">Standard format string</param>
+        ''' <param name="List">Array of objects</param>
         Public Sub WriteFormat(ByVal FormatStr As String, ParamArray List As Object())
             Dim Str = String.Format(FormatStr, List)
 

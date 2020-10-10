@@ -55,12 +55,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF radial shading constructor.
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object</param>
-        ''' <paramname="BBoxLeft">Bounding box left position</param>
-        ''' <paramname="BBoxBottom">Bounding box bottom position</param>
-        ''' <paramname="BBoxWidth">Bounding box width</param>
-        ''' <paramname="BBoxHeight">Bounding box height</param>
-        ''' <paramname="ShadingFunction">Shading function</param>
+        ''' <param name="Document">Parent PDF document object</param>
+        ''' <param name="BBoxLeft">Bounding box left position</param>
+        ''' <param name="BBoxBottom">Bounding box bottom position</param>
+        ''' <param name="BBoxWidth">Bounding box width</param>
+        ''' <param name="BBoxHeight">Bounding box height</param>
+        ''' <param name="ShadingFunction">Shading function</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub New(ByVal Document As PdfDocument, ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double, ByVal ShadingFunction As PdfShadingFunction)
             MyBase.New(Document)
@@ -96,8 +96,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF radial shading constructor for one unit bounding box
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object.</param>
-        ''' <paramname="ShadingFunction">Shading function.</param>
+        ''' <param name="Document">Parent PDF document object.</param>
+        ''' <param name="ShadingFunction">Shading function.</param>
         Public Sub New(ByVal Document As PdfDocument, ByVal ShadingFunction As PdfShadingFunction)
             Me.New(Document, 0.0, 0.0, 1.0, 1.0, ShadingFunction)
         End Sub
@@ -105,8 +105,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF radial shading constructor for one unit bounding box
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object.</param>
-        ''' <paramname="MediaBrush">System.Windows.Media brush</param>
+        ''' <param name="Document">Parent PDF document object.</param>
+        ''' <param name="MediaBrush">System.Windows.Media brush</param>
         ''' <remarks>Support for WPF media</remarks>
         Public Sub New(ByVal Document As PdfDocument, ByVal MediaBrush As SysMedia.RadialGradientBrush)
             Me.New(Document, 0.0, 0.0, 1.0, 1.0, New PdfShadingFunction(Document, MediaBrush))
@@ -117,10 +117,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set bounding box
         ''' </summary>
-        ''' <paramname="BBoxLeft">Bounding box left</param>
-        ''' <paramname="BBoxBottom">Bounding box bottom</param>
-        ''' <paramname="BBoxWidth">Bounding box width</param>
-        ''' <paramname="BBoxHeight">Bounding box height</param>
+        ''' <param name="BBoxLeft">Bounding box left</param>
+        ''' <param name="BBoxBottom">Bounding box bottom</param>
+        ''' <param name="BBoxWidth">Bounding box width</param>
+        ''' <param name="BBoxHeight">Bounding box height</param>
         Public Sub SetBoundingBox(ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double)
             ' bounding box
             Me.BBoxLeft = BBoxLeft
@@ -133,13 +133,13 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set gradient direction
         ''' </summary>
-        ''' <paramname="StartCenterX">Start circle center x position</param>
-        ''' <paramname="StartCenterY">Start circle center y position</param>
-        ''' <paramname="StartRadius">Start circle center radius</param>
-        ''' <paramname="EndCenterX">End circle center x position</param>
-        ''' <paramname="EndCenterY">End circle center y position</param>
-        ''' <paramname="EndRadius">End circle center radius</param>
-        ''' <paramname="Mapping">Mapping mode (relative absolute)</param>
+        ''' <param name="StartCenterX">Start circle center x position</param>
+        ''' <param name="StartCenterY">Start circle center y position</param>
+        ''' <param name="StartRadius">Start circle center radius</param>
+        ''' <param name="EndCenterX">End circle center x position</param>
+        ''' <param name="EndCenterY">End circle center y position</param>
+        ''' <param name="EndRadius">End circle center radius</param>
+        ''' <param name="Mapping">Mapping mode (relative absolute)</param>
         Public Sub SetGradientDirection(ByVal StartCenterX As Double, ByVal StartCenterY As Double, ByVal StartRadius As Double, ByVal EndCenterX As Double, ByVal EndCenterY As Double, ByVal EndRadius As Double, ByVal Mapping As MappingMode)
             Me.StartCenterX = StartCenterX
             Me.StartCenterY = StartCenterY
@@ -155,7 +155,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets anti-alias parameter
         ''' </summary>
-        ''' <paramname="Value">Anti-alias true or false</param>
+        ''' <param name="Value">Anti-alias true or false</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub AntiAlias(ByVal Value As Boolean)
             Dictionary.AddBoolean("/AntiAlias", Value)
@@ -166,8 +166,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Extend shading beyond axis
         ''' </summary>
-        ''' <paramname="Before">Before (true or false)</param>
-        ''' <paramname="After">After (true or false)</param>
+        ''' <param name="Before">Before (true or false)</param>
+        ''' <param name="After">After (true or false)</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub ExtendShading(ByVal Before As Boolean, ByVal After As Boolean)
             ExtendShadingBefore = Before

@@ -240,7 +240,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF table style default constructor.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
+        ''' <param name="Font">Font</param>
         Public Sub New(ByVal Optional Font As PdfFont = Nothing)
             Alignment = ContentAlignment.TopLeft
             BackgroundColor = Color.Empty
@@ -257,7 +257,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF table style constructor based on table's default cell style.
         ''' </summary>
-        ''' <paramname="Table">Table</param>
+        ''' <param name="Table">Table</param>
         Public Sub New(ByVal Table As PdfTable)
             Copy(Table.DefaultCellStyle)
             Return
@@ -266,7 +266,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF table style constructor as a copy of another style.
         ''' </summary>
-        ''' <paramname="Other">Copy constructor.</param>
+        ''' <param name="Other">Copy constructor.</param>
         Public Sub New(ByVal Other As PdfTableStyle)
             Copy(Other)
             Return
@@ -276,7 +276,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Copy one style to another 
         ''' </summary>
-        ''' <paramname="SourceStyle">Source style</param>
+        ''' <param name="SourceStyle">Source style</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub Copy(ByVal SourceStyle As PdfTableStyle)
             Alignment = SourceStyle.Alignment

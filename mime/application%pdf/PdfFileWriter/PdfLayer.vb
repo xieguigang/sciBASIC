@@ -70,8 +70,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Layer constructor
         ''' </summary>
-        ''' <paramname="LayersParent">Layers parent</param>
-        ''' <paramname="Name">Layer's name</param>
+        ''' <param name="LayersParent">Layers parent</param>
+        ''' <param name="Name">Layer's name</param>
         Public Sub New(ByVal LayersParent As PdfLayers, ByVal Name As String)
             MyBase.New(LayersParent.Document, ObjectType.Dictionary, "/OCG")
             ' save arguments
@@ -96,7 +96,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' CompareTo for IComparabler
         ''' </summary>
-        ''' <paramname="Other">Other layer</param>
+        ''' <param name="Other">Other layer</param>
         ''' <returns>Compare result</returns>
         Public Function CompareTo(ByVal Other As PdfLayer) As Integer Implements IComparable(Of PdfLayer).CompareTo
             Dim Cmp = String.Compare(RadioButton, Other.RadioButton)

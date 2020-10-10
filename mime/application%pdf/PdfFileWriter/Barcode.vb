@@ -58,8 +58,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor for no text
         ''' </summary>
-        ''' <paramname="TotalWidth">Total width</param>
-        ''' <paramname="TotalHeight">Total height</param>
+        ''' <param name="TotalWidth">Total width</param>
+        ''' <param name="TotalHeight">Total height</param>
         Public Sub New(ByVal TotalWidth As Double, ByVal TotalHeight As Double)
             Me.TotalWidth = TotalWidth
             Me.TotalHeight = TotalHeight
@@ -69,10 +69,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor for text included
         ''' </summary>
-        ''' <paramname="OriginX">Barcode origin X</param>
-        ''' <paramname="OriginY">Barcode origin Y</param>
-        ''' <paramname="TotalWidth">Total width</param>
-        ''' <paramname="TotalHeight">Total height</param>
+        ''' <param name="OriginX">Barcode origin X</param>
+        ''' <param name="OriginY">Barcode origin Y</param>
+        ''' <param name="TotalWidth">Total width</param>
+        ''' <param name="TotalHeight">Total height</param>
         Public Sub New(ByVal OriginX As Double, ByVal OriginY As Double, ByVal TotalWidth As Double, ByVal TotalHeight As Double)
             Me.OriginX = OriginX
             Me.OriginY = OriginY
@@ -157,7 +157,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Width of single bar code at indexed position expressed in narrow bar units.
         ''' </summary>
-        ''' <paramname="Index">Bar's index number.</param>
+        ''' <param name="Index">Bar's index number.</param>
         ''' <returns>Bar's width in narrow bar units.</returns>
         ''' <remarks>This virtual function must be implemented by derived class 
         ''' Index range is 0 to BarCount - 1</remarks>
@@ -169,10 +169,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Calculate total barcode height including text
         ''' </summary>
-        ''' <paramname="BarWidth">Narrow bar width</param>
-        ''' <paramname="BarcodeHeight">Barcode height</param>
-        ''' <paramname="TextFont">Text font</param>
-        ''' <paramname="FontSize">Text font size</param>
+        ''' <param name="BarWidth">Narrow bar width</param>
+        ''' <param name="BarcodeHeight">Barcode height</param>
+        ''' <param name="TextFont">Text font</param>
+        ''' <param name="FontSize">Text font size</param>
         ''' <returns>BarcodeBox result</returns>
         Public Overridable Function GetBarcodeBox(ByVal BarWidth As Double, ByVal BarcodeHeight As Double, ByVal TextFont As PdfFont, ByVal FontSize As Double) As BarcodeBox
             ' no text
@@ -436,7 +436,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Width of one bar at indexed position in narrow bar units.
         ''' </summary>
-        ''' <paramname="Index">Bar's index number.</param>
+        ''' <param name="Index">Bar's index number.</param>
         ''' <returns>Bar's width in narrow bar units.</returns>
         ''' <remarks>This virtual function must be implemented by derived class 
         ''' Index range is 0 to BarCount - 1</remarks>
@@ -450,7 +450,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode 128 constructor
         ''' </summary>
-        ''' <paramname="Text">Input text</param>
+        ''' <param name="Text">Input text</param>
         ''' <remarks>
         ''' <para>
         ''' Convert text to code 128.
@@ -685,7 +685,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode 128 constructor
         ''' </summary>
-        ''' <paramname="_CodeArray">Code array</param>
+        ''' <param name="_CodeArray">Code array</param>
         ''' <remarks>
         ''' <para>
         ''' Set Code Array and convert it to text.
@@ -1073,7 +1073,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Bar width as function of position in the barcode 39 
         ''' </summary>
-        ''' <paramname="Index">Array index.</param>
+        ''' <param name="Index">Array index.</param>
         ''' <returns>Width of one bar</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Overrides Function BarWidth(ByVal Index As Integer) As Integer
@@ -1084,7 +1084,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode 39 constructor
         ''' </summary>
-        ''' <paramname="Text">Barcode text</param>
+        ''' <param name="Text">Barcode text</param>
         ''' <remarks>
         ''' <para>
         ''' The constructor converts the text into code.
@@ -1151,7 +1151,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode 39 constructor
         ''' </summary>
-        ''' <paramname="_CodeArray">Code array</param>
+        ''' <param name="_CodeArray">Code array</param>
         ''' <remarks>
         ''' <para>
         ''' Sets code array and converts to equivalent text.
@@ -1323,7 +1323,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode width
         ''' </summary>
-        ''' <paramname="BarIndex">Code array index</param>
+        ''' <param name="BarIndex">Code array index</param>
         ''' <returns>Barcode EAN-13 single bar width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Overrides Function BarWidth(ByVal BarIndex As Integer) As Integer
@@ -1352,10 +1352,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Calculate total barcode height including text
         ''' </summary>
-        ''' <paramname="BarWidth">Narrow bar width</param>
-        ''' <paramname="BarcodeHeight">Barcode height</param>
-        ''' <paramname="TextFont">Text font</param>
-        ''' <paramname="FontSize">Text font size</param>
+        ''' <param name="BarWidth">Narrow bar width</param>
+        ''' <param name="BarcodeHeight">Barcode height</param>
+        ''' <param name="TextFont">Text font</param>
+        ''' <param name="FontSize">Text font size</param>
         ''' <returns>BarcodeBox result</returns>
         Public Overrides Function GetBarcodeBox(ByVal BarWidth As Double, ByVal BarcodeHeight As Double, ByVal TextFont As PdfFont, ByVal FontSize As Double) As BarcodeBox
             ' no text
@@ -1379,7 +1379,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode EAN13 Constructor
         ''' </summary>
-        ''' <paramname="Text">Input text</param>
+        ''' <param name="Text">Input text</param>
         ''' <remarks>
         ''' <para>
         ''' Convert text to code EAN-13 or UPC-A.
@@ -1451,7 +1451,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode EAN13 constructor.
         ''' </summary>
-        ''' <paramname="_CodeArray">Code array input.</param>
+        ''' <param name="_CodeArray">Code array input.</param>
         ''' 	<remarks>
         ''' <para>
         ''' The constructor sets CodeArray and converts it to text.
@@ -1585,7 +1585,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode width
         ''' </summary>
-        ''' <paramname="BarIndex">Code array index</param>
+        ''' <param name="BarIndex">Code array index</param>
         ''' <returns>float bar width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Overrides Function BarWidth(ByVal BarIndex As Integer) As Integer
@@ -1608,8 +1608,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Barcode interleave 2 of 5 constructor
         ''' </summary>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="AddChecksum">Add checksum digit</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="AddChecksum">Add checksum digit</param>
         Public Sub New(ByVal Text As String, ByVal Optional AddChecksum As Boolean = False)
             ' test argument
             If String.IsNullOrWhiteSpace(Text) Then Throw New ApplicationException("Barcode Interleave 2 of 5: Input text is null or empty")

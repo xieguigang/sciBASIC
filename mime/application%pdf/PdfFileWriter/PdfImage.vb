@@ -188,7 +188,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PdfImage constructor
         ''' </summary>
-        ''' <paramname="Document">PdfDocument</param>
+        ''' <param name="Document">PdfDocument</param>
         Public Sub New(ByVal Document As PdfDocument)
             MyBase.New(Document, ObjectType.Stream, "/XObject")
             ' set subtype to /Image
@@ -202,7 +202,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Load image from file
         ''' </summary>
-        ''' <paramname="ImageFileName">Image file name</param>
+        ''' <param name="ImageFileName">Image file name</param>
         Public Sub LoadImage(ByVal ImageFileName As String)
             LoadImage(LoadImageFromFile(ImageFileName))
             Return
@@ -211,7 +211,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Load image from Image derived class (Bitmap)
         ''' </summary>
-        ''' <paramname="Image">Image derived class</param>
+        ''' <param name="Image">Image derived class</param>
         Public Sub LoadImage(ByVal Image As Image)
             ' image rectangle
             ImageRectangle(Image)
@@ -232,7 +232,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Load image from black and white bool matrix
         ''' </summary>
-        ''' <paramname="BWImage">BW bool matrix</param>
+        ''' <param name="BWImage">BW bool matrix</param>
         Public Sub LoadImage(ByVal BWImage As Boolean(,))
             ' image dimensions
             WidthPix = BWImage.GetUpperBound(0) + 1
@@ -249,7 +249,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Load image fro Pdf417Encoder
         ''' </summary>
-        ''' <paramname="Pdf417Encoder">Pdf417 encoder</param>
+        ''' <param name="Pdf417Encoder">Pdf417 encoder</param>
         Public Sub LoadImage(ByVal Pdf417Encoder As Pdf417Encoder)
             ' barcode width and height
             WidthPix = Pdf417Encoder.ImageWidth
@@ -272,7 +272,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Load image from QRCode encoder
         ''' </summary>
-        ''' <paramname="QREncoder">QRCode encoder</param>
+        ''' <param name="QREncoder">QRCode encoder</param>
         Public Sub LoadImage(ByVal QREncoder As QREncoder)
             ' barcode width and height
             WidthPix = QREncoder.QRCodeImageDimension
@@ -952,7 +952,7 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         ''' <summary>
         ''' Calculates image size to preserve aspect ratio.
         ''' </summary>
-        ''' <paramname="InputSize">Image display area.</param>
+        ''' <param name="InputSize">Image display area.</param>
         ''' <returns>Adjusted image display area.</returns>
         ''' <remarks>
         ''' Calculates best fit to preserve aspect ratio.
@@ -966,8 +966,8 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         ''' <summary>
         ''' Calculates image size to preserve aspect ratio.
         ''' </summary>
-        ''' <paramname="Width">Image display width.</param>
-        ''' <paramname="Height">Image display height.</param>
+        ''' <param name="Width">Image display width.</param>
+        ''' <param name="Height">Image display height.</param>
         ''' <returns>Adjusted image display area.</returns>
         ''' <remarks>
         ''' Calculates best fit to preserve aspect ratio.
@@ -981,8 +981,8 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         ''' <summary>
         ''' Calculates image size to preserve aspect ratio and sets position.
         ''' </summary>
-        ''' <paramname="InputSize">Image display area</param>
-        ''' <paramname="Alignment">Content alignment</param>
+        ''' <param name="InputSize">Image display area</param>
+        ''' <param name="Alignment">Content alignment</param>
         ''' <returns>Adjusted image size and position within area.</returns>
         ''' <remarks>
         ''' Calculates best fit to preserve aspect ratio and adjust
@@ -997,9 +997,9 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         ''' <summary>
         ''' Calculates image size to preserve aspect ratio and sets position.
         ''' </summary>
-        ''' <paramname="Width">Image display width</param>
-        ''' <paramname="Height">Image display height</param>
-        ''' <paramname="Alignment">Content alignment</param>
+        ''' <param name="Width">Image display width</param>
+        ''' <param name="Height">Image display height</param>
+        ''' <param name="Alignment">Content alignment</param>
         ''' <returns>Adjusted image size and position within area.</returns>
         ''' <remarks>
         ''' Calculates best fit to preserve aspect ratio and adjust

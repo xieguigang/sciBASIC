@@ -31,8 +31,8 @@ Namespace PdfFileWriter
     ''' <summary>
     ''' PDF table start event handler delegate
     ''' </summary>
-    ''' <paramname="Table">Parent object.</param>
-    ''' <paramname="TableStartPos">Table top's position on the page.</param>
+    ''' <param name="Table">Parent object.</param>
+    ''' <param name="TableStartPos">Table top's position on the page.</param>
     ''' <remarks>
     ''' The purpose of the table start event handler is to allow custom 
     ''' drawing on the page before the header and the first row are drawn. 
@@ -43,8 +43,8 @@ Namespace PdfFileWriter
     ''' <summary>
     ''' PDF table end event handler delegate
     ''' </summary>
-    ''' <paramname="Table">Parent object.</param>
-    ''' <paramname="TableEndPos">Table bottom's position on the page.</param>
+    ''' <param name="Table">Parent object.</param>
+    ''' <param name="TableEndPos">Table bottom's position on the page.</param>
     ''' <remarks>
     ''' The purpose of the table end event handler is to allow custom 
     ''' drawing on the page after the last row was drawn. 
@@ -55,8 +55,8 @@ Namespace PdfFileWriter
     ''' <summary>
     ''' PDF table custom draw cell event handler delegate
     ''' </summary>
-    ''' <paramname="Table">The current table object.</param>
-    ''' <paramname="Cell">The current's cell object.</param>
+    ''' <param name="Table">The current table object.</param>
+    ''' <param name="Cell">The current's cell object.</param>
     ''' <returns>Action taken (see remarks).</returns>
     ''' <remarks>
     ''' <para>True if the event handler drew the cell.</para>
@@ -556,10 +556,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PdfTable constructor.
         ''' </summary>
-        ''' <paramname="Page">Current PdfPage.</param>
-        ''' <paramname="Contents">Current PdfContents.</param>
-        ''' <paramname="Font">Table's default font.</param>
-        ''' <paramname="FontSize">Table's default font size.</param>
+        ''' <param name="Page">Current PdfPage.</param>
+        ''' <param name="Contents">Current PdfContents.</param>
+        ''' <param name="Font">Table's default font.</param>
+        ''' <param name="FontSize">Table's default font size.</param>
         Public Sub New(ByVal Page As PdfPage, ByVal Contents As PdfContents, ByVal Optional Font As PdfFont = Nothing, ByVal Optional FontSize As Double = 9.0)
             ' save arguments
             Document = Page.Document
@@ -606,7 +606,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets the number of columns, and column's widths.
         ''' </summary>
-        ''' <paramname="ColumnWidth">Array of column widths.</param>
+        ''' <param name="ColumnWidth">Array of column widths.</param>
         ''' <remarks>
         ''' <para>
         ''' The length of the array sets the number of columns.
@@ -760,7 +760,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw one row.
         ''' </summary>
-        ''' <paramname="NewPage">Force new page.</param>
+        ''' <param name="NewPage">Force new page.</param>
         ''' <remarks>
         ''' The DrawRow method must be called for each row in the table.
         ''' Before calling this method all PdfTableCell values for the 

@@ -165,11 +165,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Create unique location marker
         ''' </summary>
-        ''' <paramname="LocMarkerName">Location marker name (case sensitive)</param>
-        ''' <paramname="LocMarkerPage">Location marker page</param>
-        ''' <paramname="Scope">Location marker scope</param>
-        ''' <paramname="FitArg">Fit enumeration</param>
-        ''' <paramname="SideArg">Fit optional arguments</param>
+        ''' <param name="LocMarkerName">Location marker name (case sensitive)</param>
+        ''' <param name="LocMarkerPage">Location marker page</param>
+        ''' <param name="Scope">Location marker scope</param>
+        ''' <param name="FitArg">Fit enumeration</param>
+        ''' <param name="SideArg">Fit optional arguments</param>
         Public Shared Sub Create(ByVal LocMarkerName As String, ByVal LocMarkerPage As PdfPage, ByVal Scope As LocMarkerScope, ByVal FitArg As DestFit, ParamArray SideArg As Double())
             If LocMarkerPage.Document.LocMarkerArray Is Nothing Then LocMarkerPage.Document.LocMarkerArray = New List(Of LocationMarker)()
             Dim Index As Integer = LocMarkerPage.Document.LocMarkerArray.BinarySearch(New LocationMarker(LocMarkerName))

@@ -65,10 +65,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor
         ''' </summary>
-        ''' <paramname="Left">Left side</param>
-        ''' <paramname="Bottom">Bottom side</param>
-        ''' <paramname="Right">Right side</param>
-        ''' <paramname="Top">Top side</param>
+        ''' <param name="Left">Left side</param>
+        ''' <param name="Bottom">Bottom side</param>
+        ''' <param name="Right">Right side</param>
+        ''' <param name="Top">Top side</param>
         Public Sub New(ByVal Left As Double, ByVal Bottom As Double, ByVal Right As Double, ByVal Top As Double)
             Me.Left = Left
             Me.Bottom = Bottom
@@ -80,7 +80,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Copy constructor
         ''' </summary>
-        ''' <paramname="Rect">Source rectangle</param>
+        ''' <param name="Rect">Source rectangle</param>
         Public Sub New(ByVal Rect As PdfRectangle)
             Left = Rect.Left
             Bottom = Rect.Bottom
@@ -92,7 +92,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor for margin
         ''' </summary>
-        ''' <paramname="AllTheSame">Single value for all sides</param>
+        ''' <param name="AllTheSame">Single value for all sides</param>
         Public Sub New(ByVal AllTheSame As Double)
             Left = AllTheSame
             Bottom = AllTheSame
@@ -104,8 +104,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor for margin
         ''' </summary>
-        ''' <paramname="Hor">Left and right value</param>
-        ''' <paramname="Vert">Top and bottom value</param>
+        ''' <param name="Hor">Left and right value</param>
+        ''' <param name="Vert">Top and bottom value</param>
         Public Sub New(ByVal Hor As Double, ByVal Vert As Double)
             Left = Hor
             Bottom = Vert

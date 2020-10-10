@@ -81,7 +81,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compare two PdfExtGState objects.
         ''' </summary>
-        ''' <paramname="Other">Other object.</param>
+        ''' <param name="Other">Other object.</param>
         ''' <returns>Compare result.</returns>
         Public Function CompareTo(ByVal Other As PdfExtGState) As Integer Implements IComparable(Of PdfExtGState).CompareTo
             Dim Cmp = String.Compare(Key, Other.Key)

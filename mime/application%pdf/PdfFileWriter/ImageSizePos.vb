@@ -39,10 +39,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Adjust image drawing area for both aspect ratio and content alignment
         ''' </summary>
-        ''' <paramname="ImageWidthPix">Image width in pixels.</param>
-        ''' <paramname="ImageHeightPix">Image height in pixels.</param>
-        ''' <paramname="DrawArea">Drawing area rectangle</param>
-        ''' <paramname="Alignment">Content alignment.</param>
+        ''' <param name="ImageWidthPix">Image width in pixels.</param>
+        ''' <param name="ImageHeightPix">Image height in pixels.</param>
+        ''' <param name="DrawArea">Drawing area rectangle</param>
+        ''' <param name="Alignment">Content alignment.</param>
         ''' <returns>Adjusted drawing area rectangle</returns>
         Public Function ImageArea(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawArea As PdfRectangle, ByVal Alignment As ContentAlignment) As PdfRectangle
             Return ImageArea(ImageWidthPix, ImageHeightPix, DrawArea.Left, DrawArea.Bottom, DrawArea.Width, DrawArea.Height, Alignment)
@@ -52,13 +52,13 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Adjust image drawing area for both aspect ratio and content alignment
         ''' </summary>
-        ''' <paramname="ImageWidthPix">Image width in pixels.</param>
-        ''' <paramname="ImageHeightPix">Image height in pixels.</param>
-        ''' <paramname="DrawAreaLeft">Drawing area left side.</param>
-        ''' <paramname="DrawAreaBottom">Drawing area bottom side.</param>
-        ''' <paramname="DrawAreaWidth">Drawing area width.</param>
-        ''' <paramname="DrawAreaHeight">Drawing area height.</param>
-        ''' <paramname="Alignment">Content alignment.</param>
+        ''' <param name="ImageWidthPix">Image width in pixels.</param>
+        ''' <param name="ImageHeightPix">Image height in pixels.</param>
+        ''' <param name="DrawAreaLeft">Drawing area left side.</param>
+        ''' <param name="DrawAreaBottom">Drawing area bottom side.</param>
+        ''' <param name="DrawAreaWidth">Drawing area width.</param>
+        ''' <param name="DrawAreaHeight">Drawing area height.</param>
+        ''' <param name="Alignment">Content alignment.</param>
         ''' <returns>Adjusted drawing area rectangle</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function ImageArea(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawAreaLeft As Double, ByVal DrawAreaBottom As Double, ByVal DrawAreaWidth As Double, ByVal DrawAreaHeight As Double, ByVal Alignment As ContentAlignment) As PdfRectangle
@@ -102,10 +102,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Calculate best fit to preserve aspect ratio
         ''' </summary>
-        ''' <paramname="ImageWidthPix">Image width in pixels.</param>
-        ''' <paramname="ImageHeightPix">Image height in pixels.</param>
-        ''' <paramname="DrawAreaWidth">Drawing area width.</param>
-        ''' <paramname="DrawAreaHeight">Drawing area height.</param>
+        ''' <param name="ImageWidthPix">Image width in pixels.</param>
+        ''' <param name="ImageHeightPix">Image height in pixels.</param>
+        ''' <param name="DrawAreaWidth">Drawing area width.</param>
+        ''' <param name="DrawAreaHeight">Drawing area height.</param>
         ''' <returns>Image size in user units.</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function ImageSize(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawAreaWidth As Double, ByVal DrawAreaHeight As Double) As SizeD

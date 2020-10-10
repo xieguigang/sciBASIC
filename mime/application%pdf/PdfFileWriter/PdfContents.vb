@@ -371,7 +371,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PdfContents constructor for page contents
         ''' </summary>
-        ''' <paramname="Page">Page parent</param>
+        ''' <param name="Page">Page parent</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub New(ByVal Page As PdfPage)
             MyBase.New(Page.Document, ObjectType.Stream)
@@ -389,7 +389,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PdfContents constructor unattached
         ''' </summary>
-        ''' <paramname="Document">Current PdfDocument</param>
+        ''' <param name="Document">Current PdfDocument</param>
         ''' <remarks>
         ''' This contents object must be explicitly attached to a page object
         ''' </remarks>
@@ -428,7 +428,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Layer start
         ''' </summary>
-        ''' <paramname="Layer">Layer object</param>
+        ''' <param name="Layer">Layer object</param>
         Public Sub LayerStart(ByVal Layer As PdfLayer)
             ' add to list of resources
             AddToUsedResources(Layer)
@@ -451,7 +451,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Convert PaintOp enumeration to String
         ''' </summary>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="PP">Paint operator</param>
         ''' <returns>Paint operator string</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function PaintOpStr(ByVal PP As PaintOp) As String
@@ -463,7 +463,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set paint operator
         ''' </summary>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetPaintOp(ByVal PP As PaintOp)
             ' apply paint operator
@@ -475,7 +475,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set line width
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
+        ''' <param name="Width">Line width</param>
         ''' <remarks>
         ''' Set line width for future path operations
         ''' </remarks>
@@ -489,7 +489,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set line cap
         ''' </summary>
-        ''' <paramname="LineCap">Line cap enumeration</param>
+        ''' <param name="LineCap">Line cap enumeration</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetLineCap(ByVal LineCap As PdfLineCap)
             MyBase.ObjectValueFormat("{0} J" & Microsoft.VisualBasic.Constants.vbLf, CInt(LineCap))
@@ -500,7 +500,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set line join
         ''' </summary>
-        ''' <paramname="LineJoin">Set line join enumeration</param>
+        ''' <param name="LineJoin">Set line join enumeration</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetLineJoin(ByVal LineJoin As PdfLineJoin)
             MyBase.ObjectValueFormat("{0} j" & Microsoft.VisualBasic.Constants.vbLf, CInt(LineJoin))
@@ -511,7 +511,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set miter limit
         ''' </summary>
-        ''' <paramname="MiterLimit">Miter limit</param>
+        ''' <param name="MiterLimit">Miter limit</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetMiterLimit(ByVal MiterLimit As Double)        ' default 10.0
             MyBase.ObjectValueFormat("{0} M" & Microsoft.VisualBasic.Constants.vbLf, Round(MiterLimit))
@@ -522,8 +522,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set dash line pattern
         ''' </summary>
-        ''' <paramname="DashArray">Dash array</param>
-        ''' <paramname="DashPhase">Dash phase</param>
+        ''' <param name="DashArray">Dash array</param>
+        ''' <param name="DashPhase">Dash phase</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetDashLine(ByVal DashArray As Double(), ByVal DashPhase As Double)      ' default []
             ' default 0
@@ -548,7 +548,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set gray level for non stroking (fill or brush) operations
         ''' </summary>
-        ''' <paramname="GrayLevel">Gray level (0.0 to 1.0)</param>
+        ''' <param name="GrayLevel">Gray level (0.0 to 1.0)</param>
         ''' <remarks>
         ''' Gray level must be 0.0 (black) to 1.0 (white).
         ''' </remarks>
@@ -562,7 +562,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set gray level for stroking (outline or pen) operations
         ''' </summary>
-        ''' <paramname="GrayLevel">Gray level (0.0 to 1.0)</param>
+        ''' <param name="GrayLevel">Gray level (0.0 to 1.0)</param>
         ''' <remarks>
         ''' Gray level must be 0.0 (black) to 1.0 (white).
         ''' </remarks>
@@ -576,7 +576,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set color for non stroking (fill or brush) operations
         ''' </summary>
-        ''' <paramname="Color">Color</param>
+        ''' <param name="Color">Color</param>
         ''' <remarks>Set red, green and blue components. Alpha is ignored</remarks>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetColorNonStroking(ByVal Color As Color)
@@ -588,7 +588,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set color for stroking (outline or pen) operations
         ''' </summary>
-        ''' <paramname="Color">Color</param>
+        ''' <param name="Color">Color</param>
         ''' <remarks>Set red, green and blue components. Alpha is ignored</remarks>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetColorStroking(ByVal Color As Color)
@@ -600,7 +600,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set opacity value (alpha) of color of for stroking operations
         ''' </summary>
-        ''' <paramname="Color">Color value</param>
+        ''' <param name="Color">Color value</param>
         ''' <remarks>Set alpha component. Ignore red, green and blue.</remarks>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetAlphaStroking(ByVal Color As Color)
@@ -612,7 +612,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set opacity value for stroking operations
         ''' </summary>
-        ''' <paramname="Alpha">Opacity value 0.0=transparent to 1.0=Opaque</param>
+        ''' <param name="Alpha">Opacity value 0.0=transparent to 1.0=Opaque</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetAlphaStroking(ByVal Alpha As Double)
             Dim AlphaStr As String
@@ -635,7 +635,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set opacity value (alpha) of color of for non-stroking operations
         ''' </summary>
-        ''' <paramname="Color">Color value</param>
+        ''' <param name="Color">Color value</param>
         ''' <remarks>Set alpha component. Ignore red, green and blue.</remarks>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetAlphaNonStroking(ByVal Color As Color)
@@ -647,7 +647,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set opacity value for non-stroking operations
         ''' </summary>
-        ''' <paramname="Alpha">Opacity value 0.0=transparent to 1.0=Opaque</param>
+        ''' <param name="Alpha">Opacity value 0.0=transparent to 1.0=Opaque</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetAlphaNonStroking(ByVal Alpha As Double)
             Dim AlphaStr As String
@@ -670,7 +670,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set color blend mode
         ''' </summary>
-        ''' <paramname="Blend">Blend method enumeration</param>
+        ''' <param name="Blend">Blend method enumeration</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetBlendMode(ByVal Blend As BlendMode)
             Dim ExtGState As PdfExtGState = PdfExtGState.CreateExtGState(Document, "/BM", "/" & Blend.ToString())
@@ -683,7 +683,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set pattern for non stroking (fill) operations
         ''' </summary>
-        ''' <paramname="Pattern">Pattern resource</param>
+        ''' <param name="Pattern">Pattern resource</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetPatternNonStroking(ByVal Pattern As PdfTilingPattern)
             AddToUsedResources(Pattern)
@@ -695,7 +695,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set pattern for stroking (outline) operations
         ''' </summary>
-        ''' <paramname="Pattern">Pattern resource</param>
+        ''' <param name="Pattern">Pattern resource</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetPatternStroking(ByVal Pattern As PdfContents)
             AddToUsedResources(Pattern)
@@ -707,7 +707,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw axial shading pattern
         ''' </summary>
-        ''' <paramname="Shading">Axial shading resource</param>
+        ''' <param name="Shading">Axial shading resource</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawShading(ByVal Shading As PdfAxialShading)
             AddToUsedResources(Shading)
@@ -719,7 +719,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw radial shading pattern
         ''' </summary>
-        ''' <paramname="Shading">Radial shading resource</param>
+        ''' <param name="Shading">Radial shading resource</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawShading(ByVal Shading As PdfRadialShading)
             AddToUsedResources(Shading)
@@ -731,12 +731,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set current transformation matrix
         ''' </summary>
-        ''' <paramname="a">A</param>
-        ''' <paramname="b">B</param>
-        ''' <paramname="c">C</param>
-        ''' <paramname="d">D</param>
-        ''' <paramname="e">E</param>
-        ''' <paramname="f">F</param>
+        ''' <param name="a">A</param>
+        ''' <param name="b">B</param>
+        ''' <param name="c">C</param>
+        ''' <param name="d">D</param>
+        ''' <param name="e">E</param>
+        ''' <param name="f">F</param>
         ''' <remarks>
         ''' Xpage = a * Xuser + c * Yuser + e
         ''' Ypage = b * Xuser + d * Yuser + f
@@ -754,7 +754,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate origin
         ''' </summary>
-        ''' <paramname="Orig">New origin</param>
+        ''' <param name="Orig">New origin</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub Translate(ByVal Orig As PointD)
             Translate(Orig.X, Orig.Y)
@@ -765,8 +765,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate origin
         ''' </summary>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub Translate(ByVal OriginX As Double, ByVal OriginY As Double)
             MyBase.ObjectValueFormat("1 0 0 1 {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY))
@@ -777,7 +777,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Scale
         ''' </summary>
-        ''' <paramname="pScale">New scale</param>
+        ''' <param name="pScale">New scale</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub Scale(ByVal pScale As Double)
             MyBase.ObjectValueFormat("{0} 0 0 {0} 0 0 cm" & Microsoft.VisualBasic.Constants.vbLf, Round(pScale))
@@ -788,8 +788,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate and scale
         ''' </summary>
-        ''' <paramname="Orig">Origin point</param>
-        ''' <paramname="Scale">Scale</param>
+        ''' <param name="Orig">Origin point</param>
+        ''' <param name="Scale">Scale</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub TranslateScale(ByVal Orig As PointD, ByVal Scale As Double)
             TranslateScale(Orig.X, Orig.Y, Scale)
@@ -800,9 +800,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate and scale
         ''' </summary>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="Scale">Scale</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="Scale">Scale</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub TranslateScale(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Scale As Double)
             MyBase.ObjectValueFormat("{2} 0 0 {2} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(Scale))
@@ -813,9 +813,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate and scale
         ''' </summary>
-        ''' <paramname="Orig">Origin point</param>
-        ''' <paramname="ScaleX">Horizontal scale</param>
-        ''' <paramname="ScaleY">Vertical scale</param>
+        ''' <param name="Orig">Origin point</param>
+        ''' <param name="ScaleX">Horizontal scale</param>
+        ''' <param name="ScaleY">Vertical scale</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub TranslateScale(ByVal Orig As PointD, ByVal ScaleX As Double, ByVal ScaleY As Double)
             TranslateScale(Orig.X, Orig.Y, ScaleX, ScaleY)
@@ -826,10 +826,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate and scale
         ''' </summary>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="ScaleX">Horizontal scale</param>
-        ''' <paramname="ScaleY">Vertical scale</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="ScaleX">Horizontal scale</param>
+        ''' <param name="ScaleY">Vertical scale</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub TranslateScale(ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double)
             MyBase.ObjectValueFormat("{2} 0 0 {3} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(ScaleX), Round(ScaleY))
@@ -840,9 +840,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate, scale and rotate
         ''' </summary>
-        ''' <paramname="Orig">Origin point</param>
-        ''' <paramname="Scale">Scale</param>
-        ''' <paramname="Rotate">Rotate (radians)</param>
+        ''' <param name="Orig">Origin point</param>
+        ''' <param name="Scale">Scale</param>
+        ''' <param name="Rotate">Rotate (radians)</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub TranslateScaleRotate(ByVal Orig As PointD, ByVal Scale As Double, ByVal Rotate As Double)        ' radians
             TranslateScaleRotate(Orig.X, Orig.Y, Scale, Rotate)
@@ -853,10 +853,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate, scale and rotate
         ''' </summary>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="Scale">Scale</param>
-        ''' <paramname="Rotate">Rotate (radians)</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="Scale">Scale</param>
+        ''' <param name="Rotate">Rotate (radians)</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub TranslateScaleRotate(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Scale As Double, ByVal Rotate As Double)
             MyBase.ObjectValueFormat("{2} {3} {4} {2} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(Scale * Math.Cos(Rotate)), Round(Scale * Math.Sin(Rotate)), Round(Scale * Math.Sin(-Rotate)))
@@ -867,11 +867,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Translate, scale and rotate
         ''' </summary>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="ScaleX">Horizontal scale</param>
-        ''' <paramname="ScaleY">Vertical scale</param>
-        ''' <paramname="Rotate">Rotate (radians)</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="ScaleX">Horizontal scale</param>
+        ''' <param name="ScaleY">Vertical scale</param>
+        ''' <param name="Rotate">Rotate (radians)</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub TranslateScaleRotate(ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double, ByVal Rotate As Double)
             MyBase.ObjectValueFormat("{2} {3} {4} {5} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(ScaleX * Math.Cos(Rotate)), Round(ScaleY * Math.Sin(Rotate)), Round(ScaleX * Math.Sin(-Rotate)), Round(ScaleY * Math.Cos(Rotate)))
@@ -882,7 +882,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Move current pointer to new position
         ''' </summary>
-        ''' <paramname="Point">New point</param>
+        ''' <param name="Point">New point</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub MoveTo(ByVal Point As PointD)
             MoveTo(Point.X, Point.Y)
@@ -893,8 +893,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Move current pointer to new position
         ''' </summary>
-        ''' <paramname="X">New X position</param>
-        ''' <paramname="Y">New Y position</param>
+        ''' <param name="X">New X position</param>
+        ''' <param name="Y">New Y position</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub MoveTo(ByVal X As Double, ByVal Y As Double)
             MyBase.ObjectValueFormat("{0} {1} m" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X), ToPt(Y))
@@ -905,7 +905,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw line from last position to new position
         ''' </summary>
-        ''' <paramname="Point">New point</param>
+        ''' <param name="Point">New point</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub LineTo(ByVal Point As PointD)
             LineTo(Point.X, Point.Y)
@@ -916,8 +916,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw line from last position to new position
         ''' </summary>
-        ''' <paramname="X">New X position</param>
-        ''' <paramname="Y">New Y position</param>
+        ''' <param name="X">New X position</param>
+        ''' <param name="Y">New Y position</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub LineTo(ByVal X As Double, ByVal Y As Double)
             MyBase.ObjectValueFormat("{0} {1} l" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X), ToPt(Y))
@@ -928,8 +928,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Bezier cubic path
         ''' </summary>
-        ''' <paramname="Bezier">Bezier object</param>
-        ''' <paramname="Point1Action">Point1 action</param>
+        ''' <param name="Bezier">Bezier object</param>
+        ''' <param name="Point1Action">Point1 action</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawBezier(ByVal Bezier As BezierD, ByVal Point1Action As BezierPointOne)
             Select Case Point1Action
@@ -947,9 +947,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Bezier cubic path
         ''' </summary>
-        ''' <paramname="P1">Point 1</param>
-        ''' <paramname="P2">Point 2</param>
-        ''' <paramname="P3">Point 3</param>
+        ''' <param name="P1">Point 1</param>
+        ''' <param name="P2">Point 2</param>
+        ''' <param name="P3">Point 3</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawBezier(ByVal P1 As PointD, ByVal P2 As PointD, ByVal P3 As PointD)
             DrawBezier(P1.X, P1.Y, P2.X, P2.Y, P3.X, P3.Y)
@@ -960,12 +960,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Bezier cubic path
         ''' </summary>
-        ''' <paramname="X1">Point 1 X</param>
-        ''' <paramname="Y1">Point 1 Y</param>
-        ''' <paramname="X2">Point 2 X</param>
-        ''' <paramname="Y2">Point 2 Y</param>
-        ''' <paramname="X3">Point 3 X</param>
-        ''' <paramname="Y3">Point 3 Y</param>
+        ''' <param name="X1">Point 1 X</param>
+        ''' <param name="Y1">Point 1 Y</param>
+        ''' <param name="X2">Point 2 X</param>
+        ''' <param name="Y2">Point 2 Y</param>
+        ''' <param name="X3">Point 3 X</param>
+        ''' <param name="Y3">Point 3 Y</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawBezier(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double, ByVal X3 As Double, ByVal Y3 As Double)
             MyBase.ObjectValueFormat("{0} {1} {2} {3} {4} {5} c" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X1), ToPt(Y1), ToPt(X2), ToPt(Y2), ToPt(X3), ToPt(Y3))
@@ -976,8 +976,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Bezier cubic path (P1 is the same as current point)
         ''' </summary>
-        ''' <paramname="P2">Point 2</param>
-        ''' <paramname="P3">Point 3</param>
+        ''' <param name="P2">Point 2</param>
+        ''' <param name="P3">Point 3</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawBezierNoP1(ByVal P2 As PointD, ByVal P3 As PointD)
             DrawBezierNoP1(P2.X, P2.Y, P3.X, P3.Y)
@@ -988,10 +988,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Bezier cubic path (P1 is the same as current point)
         ''' </summary>
-        ''' <paramname="X2">Point 2 X</param>
-        ''' <paramname="Y2">Point 2 Y</param>
-        ''' <paramname="X3">Point 3 X</param>
-        ''' <paramname="Y3">Point 3 Y</param>
+        ''' <param name="X2">Point 2 X</param>
+        ''' <param name="Y2">Point 2 Y</param>
+        ''' <param name="X3">Point 3 X</param>
+        ''' <param name="Y3">Point 3 Y</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawBezierNoP1(ByVal X2 As Double, ByVal Y2 As Double, ByVal X3 As Double, ByVal Y3 As Double)
             MyBase.ObjectValueFormat("{0} {1} {2} {3} v" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X2), ToPt(Y2), ToPt(X3), ToPt(Y3))
@@ -1002,8 +1002,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Bezier cubic path (P2 is the same as P3)
         ''' </summary>
-        ''' <paramname="P1">Point 1</param>
-        ''' <paramname="P3">Point 3</param>
+        ''' <param name="P1">Point 1</param>
+        ''' <param name="P3">Point 3</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawBezierNoP2(ByVal P1 As PointD, ByVal P3 As PointD)
             DrawBezierNoP2(P1.X, P1.Y, P3.X, P3.Y)
@@ -1014,10 +1014,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Bezier cubic path (P2 is the same as P3)
         ''' </summary>
-        ''' <paramname="X1">Point 1 X</param>
-        ''' <paramname="Y1">Point 1 Y</param>
-        ''' <paramname="X3">Point 3 X</param>
-        ''' <paramname="Y3">Point 3 Y</param>
+        ''' <param name="X1">Point 1 X</param>
+        ''' <param name="Y1">Point 1 Y</param>
+        ''' <param name="X3">Point 3 X</param>
+        ''' <param name="Y3">Point 3 Y</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawBezierNoP2(ByVal X1 As Double, ByVal Y1 As Double, ByVal X3 As Double, ByVal Y3 As Double)
             MyBase.ObjectValueFormat("{0} {1} {2} {3} y" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X1), ToPt(Y1), ToPt(X3), ToPt(Y3))
@@ -1028,12 +1028,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw arc
         ''' </summary>
-        ''' <paramname="ArcStart">Arc start point</param>
-        ''' <paramname="ArcEnd">Arc end point</param>
-        ''' <paramname="Radius">RadiusX as width and RadiusY as height</param>
-        ''' <paramname="Rotate">X axis rotation angle in radians</param>
-        ''' <paramname="Type">Arc type enumeration</param>
-        ''' <paramname="OutputStartPoint">Output start point</param>
+        ''' <param name="ArcStart">Arc start point</param>
+        ''' <param name="ArcEnd">Arc end point</param>
+        ''' <param name="Radius">RadiusX as width and RadiusY as height</param>
+        ''' <param name="Rotate">X axis rotation angle in radians</param>
+        ''' <param name="Type">Arc type enumeration</param>
+        ''' <param name="OutputStartPoint">Output start point</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawArc(ByVal ArcStart As PointD, ByVal ArcEnd As PointD, ByVal Radius As SizeD, ByVal Rotate As Double, ByVal Type As ArcType, ByVal OutputStartPoint As BezierPointOne)
             ' starting point
@@ -1061,7 +1061,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw line
         ''' </summary>
-        ''' <paramname="Line">Line object</param>
+        ''' <param name="Line">Line object</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawLine(ByVal Line As LineD)
             DrawLine(Line.P1.X, Line.P1.Y, Line.P2.X, Line.P2.Y)
@@ -1072,8 +1072,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw line
         ''' </summary>
-        ''' <paramname="P1">Point 1</param>
-        ''' <paramname="P2">Point 2</param>
+        ''' <param name="P1">Point 1</param>
+        ''' <param name="P2">Point 2</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawLine(ByVal P1 As PointD, ByVal P2 As PointD)
             DrawLine(P1.X, P1.Y, P2.X, P2.Y)
@@ -1084,10 +1084,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw line
         ''' </summary>
-        ''' <paramname="X1">Point 1 X</param>
-        ''' <paramname="Y1">Point 1 Y</param>
-        ''' <paramname="X2">Point 2 X</param>
-        ''' <paramname="Y2">Point 2 X</param>
+        ''' <param name="X1">Point 1 X</param>
+        ''' <param name="Y1">Point 1 Y</param>
+        ''' <param name="X2">Point 2 X</param>
+        ''' <param name="Y2">Point 2 X</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawLine(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double)
             MyBase.ObjectValueFormat("{0} {1} m {2} {3} l S" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X1), ToPt(Y1), ToPt(X2), ToPt(Y2))
@@ -1098,8 +1098,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw line with given line width
         ''' </summary>
-        ''' <paramname="Line">Line</param>
-        ''' <paramname="LineWidth">Line width</param>
+        ''' <param name="Line">Line</param>
+        ''' <param name="LineWidth">Line width</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawLine(ByVal Line As LineD, ByVal LineWidth As Double)
             DrawLine(Line.P1.X, Line.P1.Y, Line.P2.X, Line.P2.Y, LineWidth)
@@ -1110,9 +1110,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw line with given line width
         ''' </summary>
-        ''' <paramname="P1">Point 1</param>
-        ''' <paramname="P2">Point 2</param>
-        ''' <paramname="LineWidth">Line width</param>
+        ''' <param name="P1">Point 1</param>
+        ''' <param name="P2">Point 2</param>
+        ''' <param name="LineWidth">Line width</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawLine(ByVal P1 As PointD, ByVal P2 As PointD, ByVal LineWidth As Double)
             DrawLine(P1.X, P1.Y, P2.X, P2.Y, LineWidth)
@@ -1123,11 +1123,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw line with given line width
         ''' </summary>
-        ''' <paramname="X1">Point 1 X</param>
-        ''' <paramname="Y1">Point 1 Y</param>
-        ''' <paramname="X2">Point 2 X</param>
-        ''' <paramname="Y2">Point 2 X</param>
-        ''' <paramname="LineWidth">Line width</param>
+        ''' <param name="X1">Point 1 X</param>
+        ''' <param name="Y1">Point 1 Y</param>
+        ''' <param name="X2">Point 2 X</param>
+        ''' <param name="Y2">Point 2 X</param>
+        ''' <param name="LineWidth">Line width</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawLine(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double, ByVal LineWidth As Double)
             MyBase.ObjectValueFormat("q {0} w {1} {2} m {3} {4} l S Q" & Microsoft.VisualBasic.Constants.vbLf, ToPt(LineWidth), ToPt(X1), ToPt(Y1), ToPt(X2), ToPt(Y2))
@@ -1137,11 +1137,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw border line 
         ''' </summary>
-        ''' <paramname="X1">Point 1 X</param>
-        ''' <paramname="Y1">Point 1 Y</param>
-        ''' <paramname="X2">Point 2 X</param>
-        ''' <paramname="Y2">Point 2 X</param>
-        ''' <paramname="BorderStyle">PdfTableBorderStyle</param>
+        ''' <param name="X1">Point 1 X</param>
+        ''' <param name="Y1">Point 1 Y</param>
+        ''' <param name="X2">Point 2 X</param>
+        ''' <param name="Y2">Point 2 X</param>
+        ''' <param name="BorderStyle">PdfTableBorderStyle</param>
         Public Sub DrawLine(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double, ByVal BorderStyle As PdfTableBorderStyle)
             If BorderStyle.Display Then
                 MyBase.ObjectValueFormat("q {0} w {1} {2} {3} RG 0 J {4} {5} m {6} {7} l S Q" & Microsoft.VisualBasic.Constants.vbLf, ToPt(BorderStyle.Width), Round(CDbl(BorderStyle.Color.R) / 255.0), Round(CDbl(BorderStyle.Color.G) / 255.0), Round(CDbl(BorderStyle.Color.B) / 255.0), ToPt(X1), ToPt(Y1), ToPt(X2), ToPt(Y2))
@@ -1154,9 +1154,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw rectangle
         ''' </summary>
-        ''' <paramname="Origin">Origin (left-bottom)</param>
-        ''' <paramname="Size">Size</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="Origin">Origin (left-bottom)</param>
+        ''' <param name="Size">Size</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawRectangle(ByVal Origin As PointD, ByVal Size As SizeD, ByVal PP As PaintOp)
             DrawRectangle(Origin.X, Origin.Y, Size.Width, Size.Height, PP)
@@ -1167,11 +1167,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Rectangle
         ''' </summary>
-        ''' <paramname="OriginX">Origin X (left)</param>
-        ''' <paramname="OriginY">Origin Y (bottom)</param>
-        ''' <paramname="Width">Width</param>
-        ''' <paramname="Height">Height</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="OriginX">Origin X (left)</param>
+        ''' <param name="OriginY">Origin Y (bottom)</param>
+        ''' <param name="Width">Width</param>
+        ''' <param name="Height">Height</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawRectangle(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal PP As PaintOp)
             ' draw rectangle
@@ -1183,9 +1183,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw oval
         ''' </summary>
-        ''' <paramname="Origin">Origin (left-bottom)</param>
-        ''' <paramname="Size">Size</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="Origin">Origin (left-bottom)</param>
+        ''' <param name="Size">Size</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawOval(ByVal Origin As PointD, ByVal Size As SizeD, ByVal PP As PaintOp)
             DrawOval(Origin.X, Origin.Y, Size.Width, Size.Height, PP)
@@ -1196,11 +1196,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw oval
         ''' </summary>
-        ''' <paramname="OriginX">Origin X (left)</param>
-        ''' <paramname="OriginY">Origin Y (bottom)</param>
-        ''' <paramname="Width">Width</param>
-        ''' <paramname="Height">Height</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="OriginX">Origin X (left)</param>
+        ''' <param name="OriginY">Origin Y (bottom)</param>
+        ''' <param name="Width">Width</param>
+        ''' <param name="Height">Height</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawOval(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal PP As PaintOp)
             Width /= 2
@@ -1219,8 +1219,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw heart
         ''' </summary>
-        ''' <paramname="CenterLine">Center line</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="CenterLine">Center line</param>
+        ''' <param name="PP">Paint operator</param>
         ''' <remarks>
         ''' <para>
         ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawHeart">For example of drawing heart see 3.10. Draw Heart</a>
@@ -1237,11 +1237,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw heart
         ''' </summary>
-        ''' <paramname="CenterLineTopX">Center line top X</param>
-        ''' <paramname="CenterLineTopY">Center line top Y</param>
-        ''' <paramname="CenterLineBottomX">Center line bottom X</param>
-        ''' <paramname="CenterLineBottomY">Center line bottom Y</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="CenterLineTopX">Center line top X</param>
+        ''' <param name="CenterLineTopY">Center line top Y</param>
+        ''' <param name="CenterLineBottomX">Center line bottom X</param>
+        ''' <param name="CenterLineBottomY">Center line bottom Y</param>
+        ''' <param name="PP">Paint operator</param>
         ''' <remarks>
         ''' <para>
         ''' <ahref="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawHeart">For example of drawing heart see 3.10. Draw Heart</a>
@@ -1257,12 +1257,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw double Bezier path
         ''' </summary>
-        ''' <paramname="CenterLine">Center line</param>
-        ''' <paramname="Factor1">Factor 1</param>
-        ''' <paramname="Alpha1">Alpha 1</param>
-        ''' <paramname="Factor2">Factor 2</param>
-        ''' <paramname="Alpha2">Alpha 2</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="CenterLine">Center line</param>
+        ''' <param name="Factor1">Factor 1</param>
+        ''' <param name="Alpha1">Alpha 1</param>
+        ''' <param name="Factor2">Factor 2</param>
+        ''' <param name="Alpha2">Alpha 2</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawDoubleBezierPath(ByVal CenterLine As LineD, ByVal Factor1 As Double, ByVal Alpha1 As Double, ByVal Factor2 As Double, ByVal Alpha2 As Double, ByVal PP As PaintOp)
             ' two symmetric Bezier curves
@@ -1278,10 +1278,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Rounded Rectangle
         ''' </summary>
-        ''' <paramname="Origin">Origin (left-bottom)</param>
-        ''' <paramname="Size">Size</param>
-        ''' <paramname="Radius">Radius</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="Origin">Origin (left-bottom)</param>
+        ''' <param name="Size">Size</param>
+        ''' <param name="Radius">Radius</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawRoundedRectangle(ByVal Origin As PointD, ByVal Size As SizeD, ByVal Radius As Double, ByVal PP As PaintOp)
             DrawRoundedRectangle(Origin.X, Origin.Y, Size.Width, Size.Height, Radius, PP)
@@ -1292,12 +1292,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Rounded Rectangle
         ''' </summary>
-        ''' <paramname="OriginX">Origin X (left)</param>
-        ''' <paramname="OriginY">Origin Y (right)</param>
-        ''' <paramname="Width">Width</param>
-        ''' <paramname="Height">Height</param>
-        ''' <paramname="Radius">Radius</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="OriginX">Origin X (left)</param>
+        ''' <param name="OriginY">Origin Y (right)</param>
+        ''' <param name="Width">Width</param>
+        ''' <param name="Height">Height</param>
+        ''' <param name="Radius">Radius</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawRoundedRectangle(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal Radius As Double, ByVal PP As PaintOp)
             ' make sure radius is not too big
@@ -1320,12 +1320,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw Rectangle with Inward Corners
         ''' </summary>
-        ''' <paramname="OriginX">Origin X (left)</param>
-        ''' <paramname="OriginY">Origin Y (right)</param>
-        ''' <paramname="Width">Width</param>
-        ''' <paramname="Height">Height</param>
-        ''' <paramname="Radius">Radius</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="OriginX">Origin X (left)</param>
+        ''' <param name="OriginY">Origin Y (right)</param>
+        ''' <param name="Width">Width</param>
+        ''' <param name="Height">Height</param>
+        ''' <param name="Radius">Radius</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawInwardCornerRectangle(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal Radius As Double, ByVal PP As PaintOp)
             ' make sure radius is not too big
@@ -1348,8 +1348,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw polygon
         ''' </summary>
-        ''' <paramname="PathArray">Path array (min 2 points)</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="PathArray">Path array (min 2 points)</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawPolygon(ByVal PathArray As PointF(), ByVal PP As PaintOp)
             ' program error
@@ -1372,8 +1372,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw polygon
         ''' </summary>
-        ''' <paramname="PathArray">Path array of X and Y values (min 4 and even)</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="PathArray">Path array of X and Y values (min 4 and even)</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawPolygon(ByVal PathArray As Single(), ByVal PP As PaintOp)    ' pairs of x and y values
             ' program error
@@ -1399,12 +1399,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw regular polygon
         ''' </summary>
-        ''' <paramname="CenterX">Center X</param>
-        ''' <paramname="CenterY">Center Y</param>
-        ''' <paramname="Radius">Radius</param>
-        ''' <paramname="Alpha">Initial angle</param>
-        ''' <paramname="Sides">Number of sides</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="CenterX">Center X</param>
+        ''' <param name="CenterY">Center Y</param>
+        ''' <param name="Radius">Radius</param>
+        ''' <param name="Alpha">Initial angle</param>
+        ''' <param name="Sides">Number of sides</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawRegularPolygon(ByVal CenterX As Double, ByVal CenterY As Double, ByVal Radius As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
             DrawRegularPolygon(New PointD(CenterX, CenterY), Radius, Alpha, Sides, PP)
@@ -1415,11 +1415,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw regular polygon
         ''' </summary>
-        ''' <paramname="Center">Center position</param>
-        ''' <paramname="Radius">Radius</param>
-        ''' <paramname="Alpha">Initial angle</param>
-        ''' <paramname="Sides">Number of sides</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="Center">Center position</param>
+        ''' <param name="Radius">Radius</param>
+        ''' <param name="Alpha">Initial angle</param>
+        ''' <param name="Sides">Number of sides</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawRegularPolygon(ByVal Center As PointD, ByVal Radius As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
             ' validate sides
@@ -1445,12 +1445,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw star
         ''' </summary>
-        ''' <paramname="CenterX">Center X</param>
-        ''' <paramname="CenterY">Center Y</param>
-        ''' <paramname="Radius">Radius</param>
-        ''' <paramname="Alpha">Initial angle</param>
-        ''' <paramname="Sides">Number of sides</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="CenterX">Center X</param>
+        ''' <param name="CenterY">Center Y</param>
+        ''' <param name="Radius">Radius</param>
+        ''' <param name="Alpha">Initial angle</param>
+        ''' <param name="Sides">Number of sides</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawStar(ByVal CenterX As Double, ByVal CenterY As Double, ByVal Radius As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
             DrawStar(New PointD(CenterX, CenterY), Radius, Alpha, Sides, PP)
@@ -1461,11 +1461,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw star
         ''' </summary>
-        ''' <paramname="Center">Center position</param>
-        ''' <paramname="Radius">Radius</param>
-        ''' <paramname="Alpha">Initial angle</param>
-        ''' <paramname="Sides">Number of sides</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="Center">Center position</param>
+        ''' <param name="Radius">Radius</param>
+        ''' <param name="Alpha">Initial angle</param>
+        ''' <param name="Sides">Number of sides</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawStar(ByVal Center As PointD, ByVal Radius As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
             ' inner radius
@@ -1499,13 +1499,13 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw star
         ''' </summary>
-        ''' <paramname="CenterX">Center X</param>
-        ''' <paramname="CenterY">Center Y</param>
-        ''' <paramname="Radius1">Radius 1</param>
-        ''' <paramname="Radius2">Radius 2</param>
-        ''' <paramname="Alpha">Initial angle</param>
-        ''' <paramname="Sides">Number of sides</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="CenterX">Center X</param>
+        ''' <param name="CenterY">Center Y</param>
+        ''' <param name="Radius1">Radius 1</param>
+        ''' <param name="Radius2">Radius 2</param>
+        ''' <param name="Alpha">Initial angle</param>
+        ''' <param name="Sides">Number of sides</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawStar(ByVal CenterX As Double, ByVal CenterY As Double, ByVal Radius1 As Double, ByVal Radius2 As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
             DrawStar(New PointD(CenterX, CenterY), Radius1, Radius2, Alpha, Sides, PP)
@@ -1516,12 +1516,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw star
         ''' </summary>
-        ''' <paramname="Center">Center point</param>
-        ''' <paramname="Radius1">Radius 1</param>
-        ''' <paramname="Radius2">Radius 2</param>
-        ''' <paramname="Alpha">Initial angle</param>
-        ''' <paramname="Sides">Number of sides</param>
-        ''' <paramname="PP">Paint operator</param>
+        ''' <param name="Center">Center point</param>
+        ''' <param name="Radius1">Radius 1</param>
+        ''' <param name="Radius2">Radius 2</param>
+        ''' <param name="Alpha">Initial angle</param>
+        ''' <param name="Sides">Number of sides</param>
+        ''' <param name="PP">Paint operator</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawStar(ByVal Center As PointD, ByVal Radius1 As Double, ByVal Radius2 As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
             ' validate sides
@@ -1571,8 +1571,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set text position
         ''' </summary>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetTextPosition(ByVal PosX As Double, ByVal PosY As Double)
             MyBase.ObjectValueFormat("{0} {1} Td" & Microsoft.VisualBasic.Constants.vbLf, ToPt(PosX), ToPt(PosY))
@@ -1583,7 +1583,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set text rendering mode
         ''' </summary>
-        ''' <paramname="TR">Text rendering mode enumeration</param>
+        ''' <param name="TR">Text rendering mode enumeration</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetTextRenderingMode(ByVal TR As TextRendering)
             MyBase.ObjectValueFormat("{0} Tr" & Microsoft.VisualBasic.Constants.vbLf, CInt(TR))
@@ -1594,7 +1594,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set character extra spacing
         ''' </summary>
-        ''' <paramname="ExtraSpacing">Character extra spacing</param>
+        ''' <param name="ExtraSpacing">Character extra spacing</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetCharacterSpacing(ByVal ExtraSpacing As Double)
             MyBase.ObjectValueFormat("{0} Tc" & Microsoft.VisualBasic.Constants.vbLf, ToPt(ExtraSpacing))
@@ -1605,7 +1605,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set word extra spacing
         ''' </summary>
-        ''' <paramname="Spacing">Word extra spacing</param>
+        ''' <param name="Spacing">Word extra spacing</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetWordSpacing(ByVal Spacing As Double)
             MyBase.ObjectValueFormat("{0} Tw" & Microsoft.VisualBasic.Constants.vbLf, ToPt(Spacing))
@@ -1616,7 +1616,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Reverse characters in a string
         ''' </summary>
-        ''' <paramname="Text">Input string</param>
+        ''' <param name="Text">Input string</param>
         ''' <returns>Output string</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function ReverseString(ByVal Text As String) As String
@@ -1629,9 +1629,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw text
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Text width</returns>
         ''' <remarks>
         ''' This method must be used together with BeginTextMode,
@@ -1779,11 +1779,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw one line of text left justified
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Text width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Text As String) As Double       ' in points
@@ -1794,12 +1794,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw one line of text
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="Justify">Text justify enumeration</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="Justify">Text justify enumeration</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Text width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Justify As TextJustify, ByVal Text As String) As Double     ' in points
@@ -1834,12 +1834,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw one line of text width draw style
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="DrawStyle">Drawing style enumeration</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="DrawStyle">Drawing style enumeration</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Text width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal DrawStyle As DrawStyle, ByVal Text As String) As Double     ' in points
@@ -1850,12 +1850,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw one line of text with a given color
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="TextColor">Color</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="TextColor">Color</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Text width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal TextColor As Color, ByVal Text As String) As Double     ' in points
@@ -1868,14 +1868,14 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw one line of text with text justification, drawing style and color
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="Justify">Text justify enumeration</param>
-        ''' <paramname="DrawStyle">Drawing style enumeration</param>
-        ''' <paramname="TextColor">Color</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="Justify">Text justify enumeration</param>
+        ''' <param name="DrawStyle">Drawing style enumeration</param>
+        ''' <param name="TextColor">Color</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Text width</returns>
         Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Justify As TextJustify, ByVal DrawStyle As DrawStyle, ByVal TextColor As Color, ByVal Text As String) As Double     ' in points
             ' text is null or empty
@@ -1964,11 +1964,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw text with kerning array
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="KerningArray">Kerning array</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="KerningArray">Kerning array</param>
         ''' <returns>Text width</returns>
         ''' <remarks>
         ''' Each kerning item consists of text and position adjustment.
@@ -2105,11 +2105,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw text with kerning
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Text width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function DrawTextWithKerning(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Text As String) As Double        ' in points
@@ -2130,15 +2130,15 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw text with special effects
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="Justify">Text justify enumeration</param>
-        ''' <paramname="OutlineWidth">Outline width</param>
-        ''' <paramname="StrokingColor">Stoking (outline) color</param>
-        ''' <paramname="NonStokingColor">Non stroking (fill) color</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="Justify">Text justify enumeration</param>
+        ''' <param name="OutlineWidth">Outline width</param>
+        ''' <param name="StrokingColor">Stoking (outline) color</param>
+        ''' <param name="NonStokingColor">Non stroking (fill) color</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Text width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Justify As TextJustify, ByVal OutlineWidth As Double, ByVal StrokingColor As Color, ByVal NonStokingColor As Color, ByVal Text As String) As Double     ' in points
@@ -2210,13 +2210,13 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw text with annotation action
         ''' </summary>
-        ''' <paramname="Page">Current page</param>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="TextAbsPosX">Text absolute position X</param>
-        ''' <paramname="TextAbsPosY">Text absolute position Y</param>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="AnnotAction">Annotation action</param>
+        ''' <param name="Page">Current page</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="TextAbsPosX">Text absolute position X</param>
+        ''' <param name="TextAbsPosY">Text absolute position Y</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="AnnotAction">Annotation action</param>
         ''' <returns>Text width</returns>
         ''' <remarks>
         ''' 	The position arguments are in relation to the
@@ -2231,13 +2231,13 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw web link with one line of text
         ''' </summary>
-        ''' <paramname="Page">Current page</param>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="TextAbsPosX">Text absolute position X</param>
-        ''' <paramname="TextAbsPosY">Text absolute position Y</param>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="WebLinkStr">Web link</param>
+        ''' <param name="Page">Current page</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="TextAbsPosX">Text absolute position X</param>
+        ''' <param name="TextAbsPosY">Text absolute position Y</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="WebLinkStr">Web link</param>
         ''' <returns>Text width</returns>
         ''' <remarks>
         ''' 	The position arguments are in relation to the
@@ -2253,16 +2253,16 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw web link with one line of text
         ''' </summary>
-        ''' <paramname="Page">Current page</param>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="TextAbsPosX">Text absolute position X</param>
-        ''' <paramname="TextAbsPosY">Text absolute position Y</param>
-        ''' <paramname="Justify">Text justify enumeration.</param>
-        ''' <paramname="DrawStyle">Draw style enumeration</param>
-        ''' <paramname="TextColor">Color</param>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="WebLinkStr">Web link</param>
+        ''' <param name="Page">Current page</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="TextAbsPosX">Text absolute position X</param>
+        ''' <param name="TextAbsPosY">Text absolute position Y</param>
+        ''' <param name="Justify">Text justify enumeration.</param>
+        ''' <param name="DrawStyle">Draw style enumeration</param>
+        ''' <param name="TextColor">Color</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="WebLinkStr">Web link</param>
         ''' <returns>Text width</returns>
         ''' <remarks>
         ''' 	The position arguments are in relation to the
@@ -2277,16 +2277,16 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw text with annotation action
         ''' </summary>
-        ''' <paramname="Page">Current page</param>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="TextAbsPosX">Text absolute position X</param>
-        ''' <paramname="TextAbsPosY">Text absolute position Y</param>
-        ''' <paramname="Justify">Text justify enumeration.</param>
-        ''' <paramname="DrawStyle">Draw style enumeration</param>
-        ''' <paramname="TextColor">Color</param>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="AnnotAction">Annotation action</param>
+        ''' <param name="Page">Current page</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="TextAbsPosX">Text absolute position X</param>
+        ''' <param name="TextAbsPosY">Text absolute position Y</param>
+        ''' <param name="Justify">Text justify enumeration.</param>
+        ''' <param name="DrawStyle">Draw style enumeration</param>
+        ''' <param name="TextColor">Color</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="AnnotAction">Annotation action</param>
         ''' <returns>Text width</returns>
         ''' <remarks>
         ''' 	The position arguments are in relation to the
@@ -2317,12 +2317,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw TextBox
         ''' </summary>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosYTop">Position Y (by reference)</param>
-        ''' <paramname="PosYBottom">Position Y bottom</param>
-        ''' <paramname="LineNo">Start at line number</param>
-        ''' <paramname="TextBox">TextBox</param>
-        ''' <paramname="Page">Page if TextBox contains web link segment</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosYTop">Position Y (by reference)</param>
+        ''' <param name="PosYBottom">Position Y bottom</param>
+        ''' <param name="LineNo">Start at line number</param>
+        ''' <param name="TextBox">TextBox</param>
+        ''' <param name="Page">Page if TextBox contains web link segment</param>
         ''' <returns>Next line number</returns>
         ''' <remarks>
         ''' Before calling this method you must add text to a TextBox object.
@@ -2367,15 +2367,15 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw TextBox
         ''' </summary>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosYTop">Position Y (by reference)</param>
-        ''' <paramname="PosYBottom">Position Y bottom</param>
-        ''' <paramname="LineNo">Start at line number</param>
-        ''' <paramname="LineExtraSpace">Extra line spacing</param>
-        ''' <paramname="ParagraphExtraSpace">Extra paragraph spacing</param>
-        ''' <paramname="Justify">TextBox justify enumeration</param>
-        ''' <paramname="TextBox">TextBox</param>
-        ''' <paramname="Page">Page if TextBox contains web link segment</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosYTop">Position Y (by reference)</param>
+        ''' <param name="PosYBottom">Position Y bottom</param>
+        ''' <param name="LineNo">Start at line number</param>
+        ''' <param name="LineExtraSpace">Extra line spacing</param>
+        ''' <param name="ParagraphExtraSpace">Extra paragraph spacing</param>
+        ''' <param name="Justify">TextBox justify enumeration</param>
+        ''' <param name="TextBox">TextBox</param>
+        ''' <param name="Page">Page if TextBox contains web link segment</param>
         ''' <returns>Next line number</returns>
         ''' <remarks>
         ''' Before calling this method you must add text to a TextBox object.
@@ -2607,11 +2607,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Clip text exposing area underneath
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="Text">Text</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub ClipText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Text As String)      ' in points
             ' text is null or empty
@@ -2633,13 +2633,13 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw barcode
         ''' </summary>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="BarWidth">Narrow bar width</param>
-        ''' <paramname="BarHeight">Barcode height</param>
-        ''' <paramname="Barcode">Derived barcode class</param>
-        ''' <paramname="TextFont">Optional text font</param>
-        ''' <paramname="FontSize">Optional text font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="BarWidth">Narrow bar width</param>
+        ''' <param name="BarHeight">Barcode height</param>
+        ''' <param name="Barcode">Derived barcode class</param>
+        ''' <param name="TextFont">Optional text font</param>
+        ''' <param name="FontSize">Optional text font size</param>
         ''' <returns>Barcode width</returns>
         ''' <remarks>
         ''' <para>
@@ -2684,14 +2684,14 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw barcode
         ''' </summary>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="Justify">Barcode justify (using TextJustify enumeration)</param>
-        ''' <paramname="BarWidth">Narrow bar width</param>
-        ''' <paramname="BarcodeHeight">Barcode height</param>
-        ''' <paramname="Barcode">Derived barcode class</param>
-        ''' <paramname="TextFont">Text font</param>
-        ''' <paramname="FontSize">Text font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="Justify">Barcode justify (using TextJustify enumeration)</param>
+        ''' <param name="BarWidth">Narrow bar width</param>
+        ''' <param name="BarcodeHeight">Barcode height</param>
+        ''' <param name="Barcode">Derived barcode class</param>
+        ''' <param name="TextFont">Text font</param>
+        ''' <param name="FontSize">Text font size</param>
         ''' <returns>Barcode width</returns>
         ''' <remarks>
         ''' <para>
@@ -2736,15 +2736,15 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw barcode
         ''' </summary>
-        ''' <paramname="PosX">Position X</param>
-        ''' <paramname="PosY">Position Y</param>
-        ''' <paramname="Justify">Barcode justify (using TextJustify enumeration)</param>
-        ''' <paramname="BarWidth">Narrow bar width</param>
-        ''' <paramname="BarHeight">Barcode height</param>
-        ''' <paramname="BarColor">Barcode color</param>
-        ''' <paramname="Barcode">Derived barcode class</param>
-        ''' <paramname="TextFont">Text font</param>
-        ''' <paramname="FontSize">Text font size</param>
+        ''' <param name="PosX">Position X</param>
+        ''' <param name="PosY">Position Y</param>
+        ''' <param name="Justify">Barcode justify (using TextJustify enumeration)</param>
+        ''' <param name="BarWidth">Narrow bar width</param>
+        ''' <param name="BarHeight">Barcode height</param>
+        ''' <param name="BarColor">Barcode color</param>
+        ''' <param name="Barcode">Derived barcode class</param>
+        ''' <param name="TextFont">Text font</param>
+        ''' <param name="FontSize">Text font size</param>
         ''' <returns>Barcode width</returns>
         ''' <remarks>
         ''' <para>
@@ -2909,10 +2909,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw image (Height is calculated from width as per aspect ratio)
         ''' </summary>
-        ''' <paramname="Image">PdfImage resource</param>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="Width">Display width</param>
+        ''' <param name="Image">PdfImage resource</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="Width">Display width</param>
         ''' <remarks>
         ''' The chart will be stretched or shrunk to fit the display width
         ''' and display height. Use PdfImage.ImageSize(...) or 
@@ -2933,11 +2933,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw image
         ''' </summary>
-        ''' <paramname="Image">PdfImage resource</param>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="Width">Display width</param>
-        ''' <paramname="Height">Display height</param>
+        ''' <param name="Image">PdfImage resource</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="Width">Display width</param>
+        ''' <param name="Height">Display height</param>
         ''' <remarks>
         ''' The chart will be stretched or shrunk to fit the display width
         ''' and display height. Use PdfImage.ImageSize(...) or 
@@ -2957,12 +2957,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw WPF path
         ''' </summary>
-        ''' <paramname="Path">DrawWPFPath class</param>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="Width">Path area width</param>
-        ''' <paramname="Height">Path area height</param>
-        ''' <paramname="Alignment">Alignment of path bounding box in drawing area. 0=no alignment</param>
+        ''' <param name="Path">DrawWPFPath class</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="Width">Path area width</param>
+        ''' <param name="Height">Path area height</param>
+        ''' <param name="Alignment">Alignment of path bounding box in drawing area. 0=no alignment</param>
         Public Sub DrawWPFPath(ByVal Path As DrawWPFPath, ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal Optional Alignment As ContentAlignment = 0)
             ' draw WPF path
             Path.Draw(Me, OriginX, OriginY, Width, Height, Alignment)
@@ -2973,11 +2973,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw chart
         ''' </summary>
-        ''' <paramname="PdfChart">PdfChart resource</param>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="DisposeChart">Dispose chart</param>
-        ''' <paramname="GCCollect">Run the garbage collector</param>
+        ''' <param name="PdfChart">PdfChart resource</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="DisposeChart">Dispose chart</param>
+        ''' <param name="GCCollect">Run the garbage collector</param>
         ''' <remarks>
         ''' <para>
         ''' The chart is saved in the PDF document as an image.
@@ -3013,13 +3013,13 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw chart
         ''' </summary>
-        ''' <paramname="PdfChart">PdfChart resource</param>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="Width">Display width</param>
-        ''' <paramname="Height">Display height</param>
-        ''' <paramname="DisposeChart">Dispose chart</param>
-        ''' <paramname="GCCollect">Run the garbage collector</param>
+        ''' <param name="PdfChart">PdfChart resource</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="Width">Display width</param>
+        ''' <param name="Height">Display height</param>
+        ''' <param name="DisposeChart">Dispose chart</param>
+        ''' <param name="GCCollect">Run the garbage collector</param>
         ''' <remarks>
         ''' <para>
         ''' The chart is saved in the PDF document as an image.
@@ -3060,7 +3060,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw X Object
         ''' </summary>
-        ''' <paramname="XObject">X Object resource</param>
+        ''' <param name="XObject">X Object resource</param>
         ''' <remarks>
         ''' X object is displayed at current position. X object Size
         ''' is as per X object.
@@ -3079,9 +3079,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw X Object
         ''' </summary>
-        ''' <paramname="XObject">X Object resource</param>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
+        ''' <param name="XObject">X Object resource</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
         ''' <remarks>
         ''' X object Size is as per X object.
         ''' </remarks>
@@ -3098,11 +3098,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw X Object
         ''' </summary>
-        ''' <paramname="XObject">X Object resource</param>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="ScaleX">Horizontal scale factor</param>
-        ''' <paramname="ScaleY">Vertical scale factor</param>
+        ''' <param name="XObject">X Object resource</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="ScaleX">Horizontal scale factor</param>
+        ''' <param name="ScaleY">Vertical scale factor</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawXObject(ByVal XObject As PdfXObject, ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double)
             SaveGraphicsState()
@@ -3116,12 +3116,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw X Object
         ''' </summary>
-        ''' <paramname="XObject">X Object resource</param>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="ScaleX">Horizontal scale factor</param>
-        ''' <paramname="ScaleY">Vertical scale factor</param>
-        ''' <paramname="Alpha">Rotation angle</param>
+        ''' <param name="XObject">X Object resource</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="ScaleX">Horizontal scale factor</param>
+        ''' <param name="ScaleY">Vertical scale factor</param>
+        ''' <param name="Alpha">Rotation angle</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub DrawXObject(ByVal XObject As PdfXObject, ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double, ByVal Alpha As Double)
             SaveGraphicsState()
@@ -3145,7 +3145,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Commit object to PDF file
         ''' </summary>
-        ''' <paramname="GCCollect">Activate Garbage Collector</param>
+        ''' <param name="GCCollect">Activate Garbage Collector</param>
         Public Sub CommitToPdfFile(ByVal GCCollect As Boolean)
             ' make sure object was not written before
             If FilePosition = 0 Then
@@ -3178,7 +3178,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set paint operator
         ''' </summary>
-        ''' <paramname="PP">Paint operator from custom string</param>
+        ''' <param name="PP">Paint operator from custom string</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetPaintOp(ByVal PP As String)
             ' apply paint operator

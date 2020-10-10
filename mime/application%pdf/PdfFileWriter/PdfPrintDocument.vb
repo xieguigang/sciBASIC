@@ -103,7 +103,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF print document constructor
         ''' </summary>
-        ''' <paramname="Document">Current PDF document</param>
+        ''' <param name="Document">Current PDF document</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub New(ByVal Document As PdfDocument)
             ' save document
@@ -161,10 +161,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets margins in user units.
         ''' </summary>
-        ''' <paramname="LeftMargin">Left margin</param>
-        ''' <paramname="TopMargin">Top margin</param>
-        ''' <paramname="RightMargin">Right margin</param>
-        ''' <paramname="BottomMargin">Bottom margin</param>
+        ''' <param name="LeftMargin">Left margin</param>
+        ''' <param name="TopMargin">Top margin</param>
+        ''' <param name="RightMargin">Right margin</param>
+        ''' <param name="BottomMargin">Bottom margin</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetMargins(ByVal LeftMargin As Double, ByVal TopMargin As Double, ByVal RightMargin As Double, ByVal BottomMargin As Double)
             Dim Margins = DefaultPageSettings.Margins

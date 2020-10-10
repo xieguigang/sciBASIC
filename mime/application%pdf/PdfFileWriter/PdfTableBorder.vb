@@ -91,7 +91,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PdfTableBorderStyle constructor
         ''' </summary>
-        ''' <paramname="Width">Border line width</param>
+        ''' <param name="Width">Border line width</param>
         Public Sub New(ByVal Width As Double)
             Display = True
             Me.Width = Width
@@ -102,8 +102,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PdfTableBorderStyle constructor
         ''' </summary>
-        ''' <paramname="Width">Border line width</param>
-        ''' <paramname="Color">Border line color</param>
+        ''' <param name="Width">Border line width</param>
+        ''' <param name="Color">Border line color</param>
         Public Sub New(ByVal Width As Double, ByVal Color As Color)
             Display = True
             Me.Width = Width
@@ -124,8 +124,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set border line
         ''' </summary>
-        ''' <paramname="Width">Line width in user units</param>
-        ''' <paramname="Color">Line color</param>
+        ''' <param name="Width">Line width in user units</param>
+        ''' <param name="Color">Line color</param>
         Friend Sub [Set](ByVal Width As Double, ByVal Color As Color)
             Display = True
             Me.Width = Width
@@ -136,7 +136,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Copy border line style
         ''' </summary>
-        ''' <paramname="Other">Border line template</param>
+        ''' <param name="Other">Border line template</param>
         Friend Sub Copy(ByVal Other As PdfTableBorderStyle)
             Display = Other.Display
             Width = Other.Width
@@ -221,7 +221,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set top border line
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
+        ''' <param name="Width">Line width</param>
         Public Sub SetTopBorder(ByVal Width As Double)
             TestInit()
             TopBorder.Set(Width, Color.Black)
@@ -231,8 +231,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set top border line
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
-        ''' <paramname="Color">LineColor</param>
+        ''' <param name="Width">Line width</param>
+        ''' <param name="Color">LineColor</param>
         Public Sub SetTopBorder(ByVal Width As Double, ByVal Color As Color)
             TestInit()
             TopBorder.Set(Width, Color)
@@ -260,7 +260,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set bottom border line
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
+        ''' <param name="Width">Line width</param>
         Public Sub SetBottomBorder(ByVal Width As Double)
             TestInit()
             BottomBorder.Set(Width, Color.Black)
@@ -270,8 +270,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set bottom border line
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
-        ''' <paramname="Color">LineColor</param>
+        ''' <param name="Width">Line width</param>
+        ''' <param name="Color">LineColor</param>
         Public Sub SetBottomBorder(ByVal Width As Double, ByVal Color As Color)
             TestInit()
             BottomBorder.Set(Width, Color)
@@ -299,7 +299,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set header horizontal border line
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
+        ''' <param name="Width">Line width</param>
         Public Sub SetHeaderHorBorder(ByVal Width As Double)
             TestInit()
             HeaderHorBorder.Set(Width, Color.Black)
@@ -309,8 +309,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set header horizontal border line
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
-        ''' <paramname="Color">LineColor</param>
+        ''' <param name="Width">Line width</param>
+        ''' <param name="Color">LineColor</param>
         Public Sub SetHeaderHorBorder(ByVal Width As Double, ByVal Color As Color)
             TestInit()
             HeaderHorBorder.Set(Width, Color)
@@ -338,7 +338,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set cell horizontal border line
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
+        ''' <param name="Width">Line width</param>
         Public Sub SetCellHorBorder(ByVal Width As Double)
             TestInit()
             CellHorBorder.Set(Width, Color.Black)
@@ -348,8 +348,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set cell horizontal border line
         ''' </summary>
-        ''' <paramname="Width">Line width</param>
-        ''' <paramname="Color">LineColor</param>
+        ''' <param name="Width">Line width</param>
+        ''' <param name="Color">LineColor</param>
         Public Sub SetCellHorBorder(ByVal Width As Double, ByVal Color As Color)
             TestInit()
             CellHorBorder.Set(Width, Color)
@@ -368,7 +368,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Clear header vertical border line
         ''' </summary>
-        ''' <paramname="Index">Border line index</param>
+        ''' <param name="Index">Border line index</param>
         Public Sub ClearHeaderVertBorder(ByVal Index As Integer)
             TestInit()
             HeaderVertBorder(Index).Clear()
@@ -378,8 +378,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set header vertical border line
         ''' </summary>
-        ''' <paramname="Index">Border line index</param>
-        ''' <paramname="Width">Line width</param>
+        ''' <param name="Index">Border line index</param>
+        ''' <param name="Width">Line width</param>
         Public Sub SetHeaderVertBorder(ByVal Index As Integer, ByVal Width As Double)
             TestInit()
             HeaderVertBorder(Index).Set(Width, Color.Black)
@@ -389,9 +389,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set header horizontal border line
         ''' </summary>
-        ''' <paramname="Index">Border line index</param>
-        ''' <paramname="Width">Line width</param>
-        ''' <paramname="Color">LineColor</param>
+        ''' <param name="Index">Border line index</param>
+        ''' <param name="Width">Line width</param>
+        ''' <param name="Color">LineColor</param>
         Public Sub SetHeaderVertBorder(ByVal Index As Integer, ByVal Width As Double, ByVal Color As Color)
             TestInit()
             HeaderVertBorder(Index).Set(Width, Color)
@@ -419,7 +419,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Clear cell vertical border line
         ''' </summary>
-        ''' <paramname="Index">Border line index</param>
+        ''' <param name="Index">Border line index</param>
         Public Sub ClearCellVertBorder(ByVal Index As Integer)
             TestInit()
             CellVertBorder(Index).Clear()
@@ -429,8 +429,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set cell vertical border line
         ''' </summary>
-        ''' <paramname="Index">Border line index</param>
-        ''' <paramname="Width">Line width</param>
+        ''' <param name="Index">Border line index</param>
+        ''' <param name="Width">Line width</param>
         Public Sub SetCellVertBorder(ByVal Index As Integer, ByVal Width As Double)
             TestInit()
             CellVertBorder(Index).Set(Width, Color.Black)
@@ -440,9 +440,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set cell horizontal border line
         ''' </summary>
-        ''' <paramname="Index">Border line index</param>
-        ''' <paramname="Width">Line width</param>
-        ''' <paramname="Color">LineColor</param>
+        ''' <param name="Index">Border line index</param>
+        ''' <param name="Width">Line width</param>
+        ''' <param name="Color">LineColor</param>
         Public Sub SetCellVertBorder(ByVal Index As Integer, ByVal Width As Double, ByVal Color As Color)
             TestInit()
             CellVertBorder(Index).Set(Width, Color)
@@ -536,7 +536,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set all borders to the same line width
         ''' </summary>
-        ''' <paramname="Width">Border line width</param>
+        ''' <param name="Width">Border line width</param>
         Public Sub SetAllBorders(ByVal Width As Double)
             SetAllBorders(Width, Color.Black, Width, Color.Black)
             Return
@@ -545,8 +545,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set all borders to the same line width and color
         ''' </summary>
-        ''' <paramname="Width">Border line width</param>
-        ''' <paramname="Color">Border line color</param>
+        ''' <param name="Width">Border line width</param>
+        ''' <param name="Color">Border line color</param>
         Public Sub SetAllBorders(ByVal Width As Double, ByVal Color As Color)
             SetAllBorders(Width, Color, Width, Color)
             Return
@@ -555,8 +555,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set all borders
         ''' </summary>
-        ''' <paramname="FrameWidth">Frame border line width</param>
-        ''' <paramname="GridWidth">Grid borders line width</param>
+        ''' <param name="FrameWidth">Frame border line width</param>
+        ''' <param name="GridWidth">Grid borders line width</param>
         Public Sub SetAllBorders(ByVal FrameWidth As Double, ByVal GridWidth As Double)
             SetAllBorders(FrameWidth, Color.Black, GridWidth, Color.Black)
             Return
@@ -565,10 +565,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set all borders
         ''' </summary>
-        ''' <paramname="FrameWidth">Frame border line width</param>
-        ''' <paramname="FrameColor">Frame border color</param>
-        ''' <paramname="GridWidth">Grid borders line width</param>
-        ''' <paramname="GridColor">Grid line color</param>
+        ''' <param name="FrameWidth">Frame border line width</param>
+        ''' <param name="FrameColor">Frame border color</param>
+        ''' <param name="GridWidth">Grid borders line width</param>
+        ''' <param name="GridColor">Grid line color</param>
         Public Sub SetAllBorders(ByVal FrameWidth As Double, ByVal FrameColor As Color, ByVal GridWidth As Double, ByVal GridColor As Color)
             ' set is not allowed
             If Parent.Active OrElse TopBorder Is Nothing Then Throw New ApplicationException("Set borders after SetColumnWidth and before table is active.")
@@ -596,7 +596,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set frame border lines
         ''' </summary>
-        ''' <paramname="FrameWidth">Frame line width</param>
+        ''' <param name="FrameWidth">Frame line width</param>
         Public Sub SetFrame(ByVal FrameWidth As Double)
             SetFrame(FrameWidth, Color.Black)
             Return
@@ -605,8 +605,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set frame border lines
         ''' </summary>
-        ''' <paramname="FrameWidth">Frame line width</param>
-        ''' <paramname="FrameColor">Frame line color</param>
+        ''' <param name="FrameWidth">Frame line width</param>
+        ''' <param name="FrameColor">Frame line color</param>
         Public Sub SetFrame(ByVal FrameWidth As Double, ByVal FrameColor As Color)
             ' set is not allowed
             If Parent.Active OrElse TopBorder Is Nothing Then Throw New ApplicationException("Set borders after SetColumnWidth and before table is active.")

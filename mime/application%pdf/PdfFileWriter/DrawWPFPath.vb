@@ -196,8 +196,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set path geometry
         ''' </summary>
-        ''' <paramname="PathString">Path geometry text string</param>
-        ''' <paramname="YAxis">Y Axix direction</param>
+        ''' <param name="PathString">Path geometry text string</param>
+        ''' <param name="YAxis">Y Axix direction</param>
         Public Sub New(ByVal PathString As String, ByVal YAxis As YAxisDirection)
             Me.New(SysMedia.PathGeometry.CreateFromGeometry(SysMedia.Geometry.Parse(PathString)), YAxis)
         End Sub
@@ -205,8 +205,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Draw WPF path constructor
         ''' </summary>
-        ''' <paramname="MediaPath">System.Windows.Media path geometry</param>
-        ''' <paramname="PathYAxis">Y Axix direction</param>
+        ''' <param name="MediaPath">System.Windows.Media path geometry</param>
+        ''' <param name="PathYAxis">Y Axix direction</param>
         Public Sub New(ByVal MediaPath As SysMedia.PathGeometry, ByVal PathYAxis As YAxisDirection)
             ' save media path
             Me.MediaPath = MediaPath
@@ -254,7 +254,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set brush to solid color
         ''' </summary>
-        ''' <paramname="BrushColor">Solid color</param>
+        ''' <param name="BrushColor">Solid color</param>
         ''' <remarks>
         ''' <para>The method sets all 4 color components: Alpha Red Green and Blue.</para>
         ''' </remarks>
@@ -267,7 +267,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set brush to solid color
         ''' </summary>
-        ''' <paramname="SolidColorBrush">Media solid color brush</param>
+        ''' <param name="SolidColorBrush">Media solid color brush</param>
         Public Sub SetBrush(ByVal SolidColorBrush As SysMedia.SolidColorBrush)
             NonStroking = Color.FromArgb(SolidColorBrush.Color.R, SolidColorBrush.Color.G, SolidColorBrush.Color.B)
             BrushOpacity = SolidColorBrush.Color.A / 255.0 * SolidColorBrush.Opacity
@@ -277,8 +277,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set brush
         ''' </summary>
-        ''' <paramname="AxialShading">Axial shading</param>
-        ''' <paramname="BrushOpacity">Brush opacity (0.0 to 1.0)</param>
+        ''' <param name="AxialShading">Axial shading</param>
+        ''' <param name="BrushOpacity">Brush opacity (0.0 to 1.0)</param>
         Public Sub SetBrush(ByVal AxialShading As PdfAxialShading, ByVal Optional BrushOpacity As Double = 1.0)
             NonStroking = AxialShading
             Me.BrushOpacity = BrushOpacity
@@ -288,7 +288,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set brush
         ''' </summary>
-        ''' <paramname="LinearGradientBrush">Linear gradient brush</param>
+        ''' <param name="LinearGradientBrush">Linear gradient brush</param>
         ''' <remarks>This method sets BrushOpacity.</remarks>
         Public Sub SetBrush(ByVal LinearGradientBrush As SysMedia.LinearGradientBrush)
             NonStroking = LinearGradientBrush
@@ -299,8 +299,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set brush
         ''' </summary>
-        ''' <paramname="RadialShading">PDF radial shading brush</param>
-        ''' <paramname="BrushOpacity">Brush opacity</param>
+        ''' <param name="RadialShading">PDF radial shading brush</param>
+        ''' <param name="BrushOpacity">Brush opacity</param>
         Public Sub SetBrush(ByVal RadialShading As PdfRadialShading, ByVal Optional BrushOpacity As Double = 1.0)
             NonStroking = RadialShading
             Me.BrushOpacity = BrushOpacity
@@ -310,7 +310,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set brush
         ''' </summary>
-        ''' <paramname="RadialGradientBrush">Radial gradient brush</param>
+        ''' <param name="RadialGradientBrush">Radial gradient brush</param>
         ''' <remarks>This method sets BrushOpacity.</remarks>
         Public Sub SetBrush(ByVal RadialGradientBrush As SysMedia.RadialGradientBrush)
             NonStroking = RadialGradientBrush
@@ -321,8 +321,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set brush
         ''' </summary>
-        ''' <paramname="TilingPattern">PDF tiling pattern resource</param>
-        ''' <paramname="BrushOpacity">Brush opacity</param>
+        ''' <param name="TilingPattern">PDF tiling pattern resource</param>
+        ''' <param name="BrushOpacity">Brush opacity</param>
         Public Sub SetBrush(ByVal TilingPattern As PdfTilingPattern, ByVal Optional BrushOpacity As Double = 1.0)
             NonStroking = TilingPattern
             Me.BrushOpacity = BrushOpacity
@@ -352,7 +352,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set pen color
         ''' </summary>
-        ''' <paramname="PenColor">Pen color</param>
+        ''' <param name="PenColor">Pen color</param>
         Public Sub SetPen(ByVal PenColor As Color)
             Stroking = PenColor
             PenOpacity = PenColor.A / 255.0
@@ -362,7 +362,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set media pen
         ''' </summary>
-        ''' <paramname="MediaPen">Media pen</param>
+        ''' <param name="MediaPen">Media pen</param>
         Public Sub SetPen(ByVal MediaPen As SysMedia.Pen)
             If MediaPen.Brush Is Nothing OrElse MediaPen.Brush.GetType() IsNot GetType(SysMedia.SolidColorBrush) OrElse CType(MediaPen.Brush, SysMedia.SolidColorBrush).Color = SysMedia.Colors.Transparent Then Throw New ApplicationException("DrawWPFPath: System media pen must be SolidColorBrush")
             Stroking = MediaPen
@@ -372,7 +372,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Pen width
         ''' </summary>
-        ''' <paramname="PenWidth">Pen width in user coordinates</param>
+        ''' <param name="PenWidth">Pen width in user coordinates</param>
         Public Sub SetPenWidth(ByVal PenWidth As Double)
             Me.PenWidth = PenWidth
             Return

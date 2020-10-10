@@ -208,7 +208,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compare two glyphs for sort and binary search
         ''' </summary>
-        ''' <paramname="Other">Other CharInfo</param>
+        ''' <param name="Other">Other CharInfo</param>
         ''' <returns>Compare result</returns>
         Public Function CompareTo(ByVal Other As CharInfo) As Integer Implements IComparable(Of CharInfo).CompareTo
             Return GlyphIndex - Other.GlyphIndex
@@ -513,8 +513,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Kerning pair constructor
         ''' </summary>
-        ''' <paramname="First">First character</param>
-        ''' <paramname="Second">Second character</param>
+        ''' <param name="First">First character</param>
+        ''' <param name="Second">Second character</param>
         Public Sub New(ByVal First As Char, ByVal Second As Char)
             Me.First = First
             Me.Second = Second
@@ -524,7 +524,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compare kerning pairs
         ''' </summary>
-        ''' <paramname="Other">Other pair</param>
+        ''' <param name="Other">Other pair</param>
         ''' <returns>Compare result</returns>
         Public Function CompareTo(ByVal Other As WinKerningPair) As Integer Implements IComparable(Of WinKerningPair).CompareTo
             Return If(First <> Other.First, AscW(First) - AscW(Other.First), AscW(Second) - AscW(Other.Second))
@@ -1312,8 +1312,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Font API constructor
         ''' </summary>
-        ''' <paramname="DesignFont">Design font</param>
-        ''' <paramname="DesignHeight">Design height</param>
+        ''' <param name="DesignFont">Design font</param>
+        ''' <param name="DesignHeight">Design height</param>
         Public Sub New(ByVal DesignFont As Font, ByVal DesignHeight As Integer)
             ' save design height
             Me.DesignHeight = DesignHeight
@@ -1348,7 +1348,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets glyph metric
         ''' </summary>
-        ''' <paramname="CharCode">Character code</param>
+        ''' <param name="CharCode">Character code</param>
         ''' <returns>Character info class</returns>
         Public Function GetGlyphMetricsApiByCode(ByVal CharCode As Integer) As CharInfo
             ' get glyph index for char code
@@ -1365,7 +1365,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets glyph metric
         ''' </summary>
-        ''' <paramname="GlyphIndex">Character code</param>
+        ''' <param name="GlyphIndex">Character code</param>
         ''' <returns>Character info class</returns>
         Public Function GetGlyphMetricsApiByGlyphIndex(ByVal GlyphIndex As Integer) As CharInfo
             ' build unit matrix
@@ -1394,12 +1394,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets array of glyph metrics
         ''' </summary>
-        ''' <paramname="CharValue">Character code</param>
+        ''' <param name="CharValue">Character code</param>
         ''' <returns>Array of character infos</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function GetGlyphMetricsApi(ByVal CharValue As Integer) As CharInfo()
             ' first character of the 256 block
-            Dim FirstChar = CharValue And &Hff00
+            Dim FirstChar = CharValue And &HFF00
 
             ' use glyph index
             Dim UseGlyphIndex = FirstChar <> 0
@@ -1464,8 +1464,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets kerning pairs array
         ''' </summary>
-        ''' <paramname="FirstChar">First character</param>
-        ''' <paramname="LastChar">Last character</param>
+        ''' <param name="FirstChar">First character</param>
+        ''' <param name="LastChar">Last character</param>
         ''' <returns>Array of kerning pairs</returns>
         Public Function GetKerningPairsApi(ByVal FirstChar As Integer, ByVal LastChar As Integer) As WinKerningPair()
             ' get number of pairs
@@ -1575,9 +1575,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets font data tables
         ''' </summary>
-        ''' <paramname="TableTag">Table Tag</param>
-        ''' <paramname="Offset">Table offset</param>
-        ''' <paramname="BufSize">Table size</param>
+        ''' <param name="TableTag">Table Tag</param>
+        ''' <param name="Offset">Table offset</param>
+        ''' <param name="BufSize">Table size</param>
         ''' <returns>Table info as byte array</returns>
         Public Function GetFontDataApi(ByVal TableTag As UInteger, ByVal Offset As Integer, ByVal BufSize As Integer) As Byte()
             ' empty table
@@ -1587,7 +1587,7 @@ Namespace PdfFileWriter
             AllocateBuffer(BufSize)
 
             ' microsoft tag is in little endian format
-            Dim MSTag As UInteger = TableTag << 24 Or TableTag << 8 And &Hff0000 Or TableTag >> 8 And &Hff00 Or TableTag >> 24 And &HfF
+            Dim MSTag As UInteger = TableTag << 24 Or TableTag << 8 And &HFF0000 Or TableTag >> 8 And &HFF00 Or TableTag >> 24 And &HFF
 
             ' get outline text metrics information
             If CInt(GetFontData(GDIHandle, MSTag, Offset, Buffer, BufSize)) <> BufSize Then ThrowSystemErrorException("Get font data file header failed")
@@ -1615,8 +1615,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets glyph indices array
         ''' </summary>
-        ''' <paramname="FirstChar">First character</param>
-        ''' <paramname="LastChar">Last character</param>
+        ''' <param name="FirstChar">First character</param>
+        ''' <param name="LastChar">Last character</param>
         ''' <returns>Array of glyph indices.</returns>
         Public Function GetGlyphIndicesApi(ByVal FirstChar As Integer, ByVal LastChar As Integer) As Integer()
             ' character count

@@ -453,7 +453,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Encode unicode string
         ''' </summary>
-        ''' <paramname="StringData">Input text string</param>
+        ''' <param name="StringData">Input text string</param>
         Public Sub Encode(ByVal StringData As String)
             ' argument error
             If String.IsNullOrEmpty(StringData) Then Throw New ArgumentException("PDF417 Input barcode data string is null or empty.")
@@ -474,7 +474,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Encode binary bytes array
         ''' </summary>
-        ''' <paramname="BinaryData">Input binary byte array</param>
+        ''' <param name="BinaryData">Input binary byte array</param>
         Public Sub Encode(ByVal BinaryData As Byte())
             ' reset barcode matrix
             Pdf417BarcodeMatrix = Nothing
@@ -549,7 +549,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Adjust rows and columns to achive width to height ratio
         ''' </summary>
-        ''' <paramname="Ratio">Requested width to height ratio</param>
+        ''' <param name="Ratio">Requested width to height ratio</param>
         ''' <returns>Success or failure result</returns>
         Public Function WidthToHeightRatio(ByVal Ratio As Double) As Boolean
             Try
@@ -580,7 +580,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set number of data columns and data rows 
         ''' </summary>
-        ''' <paramname="dataColumns">Data columns</param>
+        ''' <param name="dataColumns">Data columns</param>
         ''' <returns>Success or failure result</returns>
         Public Function SetDataColumns(ByVal dataColumns As Integer) As Boolean
             Try
@@ -603,7 +603,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set number of data rows and data columns 
         ''' </summary>
-        ''' <paramname="dataRows">Data rowss</param>
+        ''' <param name="dataRows">Data rowss</param>
         ''' <returns>Success or failure result</returns>
         Public Function SetDataRows(ByVal dataRows As Integer) As Boolean
             Try

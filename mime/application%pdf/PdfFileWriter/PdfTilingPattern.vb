@@ -63,7 +63,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF Tiling pattern constructor.
         ''' </summary>
-        ''' <paramname="Document">Document object parent of the object.</param>
+        ''' <param name="Document">Document object parent of the object.</param>
         ''' <remarks>
         ''' This program support only color tiling pattern: PaintType = 1.
         ''' </remarks>
@@ -87,7 +87,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set tiling type
         ''' </summary>
-        ''' <paramname="TilingType">Tiling type</param>
+        ''' <param name="TilingType">Tiling type</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub SetTilingType(ByVal TilingType As TilingType)
             ' by default the constructor set tiling type to 1 = constant
@@ -99,7 +99,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set tile box
         ''' </summary>
-        ''' <paramname="Side">Length of one side.</param>
+        ''' <param name="Side">Length of one side.</param>
         ''' <remarks>
         ''' Set square bounding box and equal step
         ''' </remarks>
@@ -113,8 +113,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set tile box
         ''' </summary>
-        ''' <paramname="Width">Box width.</param>
-        ''' <paramname="Height">Box height.</param>
+        ''' <param name="Width">Box width.</param>
+        ''' <param name="Height">Box height.</param>
         ''' <remarks>
         ''' Set rectangle bounding box and equal step.
         ''' </remarks>
@@ -128,10 +128,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set bounding box and step 
         ''' </summary>
-        ''' <paramname="Width">Box width.</param>
-        ''' <paramname="Height">Box height.</param>
-        ''' <paramname="StepX">Horizontal step</param>
-        ''' <paramname="StepY">Vertical step</param>
+        ''' <param name="Width">Box width.</param>
+        ''' <param name="Height">Box height.</param>
+        ''' <param name="StepX">Horizontal step</param>
+        ''' <param name="StepY">Vertical step</param>
         ''' <remarks>
         ''' Set rectangle bounding box and independent step size.
         ''' </remarks>
@@ -148,7 +148,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set scale
         ''' </summary>
-        ''' <paramname="Scale">Scale factor.</param>
+        ''' <param name="Scale">Scale factor.</param>
         ''' <remarks>
         ''' Warning: the program replaces the transformation matrix
         ''' with a new one [Scale 0 0 Scale 0 0].
@@ -164,8 +164,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set scale
         ''' </summary>
-        ''' <paramname="ScaleX">Horizontal scale factor.</param>
-        ''' <paramname="ScaleY">Vertical scale factor.</param>
+        ''' <param name="ScaleX">Horizontal scale factor.</param>
+        ''' <param name="ScaleY">Vertical scale factor.</param>
         ''' <remarks>
         ''' Warning: the program replaces the transformation matrix
         ''' with a new one [ScaleX 0 0 ScaleY 0 0].
@@ -181,10 +181,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set scale and origin
         ''' </summary>
-        ''' <paramname="OriginX">Origin X</param>
-        ''' <paramname="OriginY">Origin Y</param>
-        ''' <paramname="ScaleX">Scale X</param>
-        ''' <paramname="ScaleY">Scale Y</param>
+        ''' <param name="OriginX">Origin X</param>
+        ''' <param name="OriginY">Origin Y</param>
+        ''' <param name="ScaleX">Scale X</param>
+        ''' <param name="ScaleY">Scale Y</param>
         ''' <remarks>
         ''' Warning: the program replaces the transformation matrix
         ''' with a new one [ScaleX 0 0 ScaleY OriginX OriginY].
@@ -200,12 +200,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set pattern transformation matrix
         ''' </summary>
-        ''' <paramname="a">A</param>
-        ''' <paramname="b">B</param>
-        ''' <paramname="c">C</param>
-        ''' <paramname="d">D</param>
-        ''' <paramname="e">E</param>
-        ''' <paramname="f">F</param>
+        ''' <param name="a">A</param>
+        ''' <param name="b">B</param>
+        ''' <param name="c">C</param>
+        ''' <param name="d">D</param>
+        ''' <param name="e">E</param>
+        ''' <param name="f">F</param>
         ''' <remarks>
         ''' Xpage = a * Xuser + c * Yuser + e
         ''' Ypage = b * Xuser + d * Yuser + f
@@ -221,10 +221,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Create new PdfTilingPattern class with brick pattern.
         ''' </summary>
-        ''' <paramname="Document">Current document object.</param>
-        ''' <paramname="Scale">Scale factor.</param>
-        ''' <paramname="Stroking">Stroking color.</param>
-        ''' <paramname="NonStroking">Non-stroking color.</param>
+        ''' <param name="Document">Current document object.</param>
+        ''' <param name="Scale">Scale factor.</param>
+        ''' <param name="Stroking">Stroking color.</param>
+        ''' <param name="NonStroking">Non-stroking color.</param>
         ''' <returns>PDF tiling pattern</returns>
         ''' <remarks>
         ''' <para>
@@ -265,11 +265,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Create new PdfTilingPattern class with weave pattern.
         ''' </summary>
-        ''' <paramname="Document">Current PDF document.</param>
-        ''' <paramname="Scale">Scale factor</param>
-        ''' <paramname="Background">Background color.</param>
-        ''' <paramname="Horizontal">Horizontal line color.</param>
-        ''' <paramname="Vertical">Vertical line color.</param>
+        ''' <param name="Document">Current PDF document.</param>
+        ''' <param name="Scale">Scale factor</param>
+        ''' <param name="Background">Background color.</param>
+        ''' <param name="Horizontal">Horizontal line color.</param>
+        ''' <param name="Vertical">Vertical line color.</param>
         ''' <returns>PDF tiling pattern</returns>
         ''' <remarks>
         ''' <para>

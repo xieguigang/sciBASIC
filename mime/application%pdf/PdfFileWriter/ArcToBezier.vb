@@ -73,11 +73,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Create eliptical arc
         ''' </summary>
-        ''' <paramname="ArcStart">Arc start point</param>
-        ''' <paramname="ArcEnd">Arc end point</param>
-        ''' <paramname="Radius">RadiusX as width and RadiusY as height</param>
-        ''' <paramname="Rotate">X axis rotation angle in radians</param>
-        ''' <paramname="Type">Arc type enumeration</param>
+        ''' <param name="ArcStart">Arc start point</param>
+        ''' <param name="ArcEnd">Arc end point</param>
+        ''' <param name="Radius">RadiusX as width and RadiusY as height</param>
+        ''' <param name="Rotate">X axis rotation angle in radians</param>
+        ''' <param name="Type">Arc type enumeration</param>
         ''' <returns>Array of points.</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function CreateArc(ByVal ArcStart As PointD, ByVal ArcEnd As PointD, ByVal Radius As SizeD, ByVal Rotate As Double, ByVal Type As ArcType) As PointD()
@@ -121,10 +121,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Create circular arc
         ''' </summary>
-        ''' <paramname="ArcStart">Arc starting point</param>
-        ''' <paramname="ArcEnd">Arc ending point</param>
-        ''' <paramname="Radius">Arc radius</param>
-        ''' <paramname="Type">Arc type</param>
+        ''' <param name="ArcStart">Arc starting point</param>
+        ''' <param name="ArcEnd">Arc ending point</param>
+        ''' <param name="Radius">Arc radius</param>
+        ''' <param name="Type">Arc type</param>
         ''' <returns>Array of points.</returns>
         Friend Function CircularArc(ByVal ArcStart As PointD, ByVal ArcEnd As PointD, ByVal Radius As Double, ByVal Type As ArcType) As PointD()
             ' chord line from start point to end point

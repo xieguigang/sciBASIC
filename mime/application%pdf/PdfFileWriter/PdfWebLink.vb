@@ -72,8 +72,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add a weblink
         ''' </summary>
-        ''' <paramname="Document">PDF document</param>
-        ''' <paramname="WebLinkStr">Weblink text</param>
+        ''' <param name="Document">PDF document</param>
+        ''' <param name="WebLinkStr">Weblink text</param>
         ''' <returns>Weblink object</returns>
         ''' <remarks>
         ''' <para>
@@ -106,7 +106,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compare two WebLinkStr objects.
         ''' </summary>
-        ''' <paramname="Other">Other object.</param>
+        ''' <param name="Other">Other object.</param>
         ''' <returns>Compare result.</returns>
         Public Function CompareTo(ByVal Other As PdfWebLink) As Integer Implements IComparable(Of PdfWebLink).CompareTo
             Return String.Compare(WebLinkStr, Other.WebLinkStr)

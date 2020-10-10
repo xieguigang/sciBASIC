@@ -38,8 +38,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Layers constructor
         ''' </summary>
-        ''' <paramname="Document">PDF Document</param>
-        ''' <paramname="Name">Layers name</param>
+        ''' <param name="Document">PDF Document</param>
+        ''' <param name="Name">Layers name</param>
         Public Sub New(ByVal Document As PdfDocument, ByVal Name As String)
             MyBase.New(Document)
             ' Make sure it is done only once
@@ -60,7 +60,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Layer's display order in layers panel
         ''' </summary>
-        ''' <paramname="Layer">Layer object</param>
+        ''' <param name="Layer">Layer object</param>
         Public Sub DisplayOrder(ByVal Layer As PdfLayer)
             OrderList.Add(Layer)
             Return
@@ -69,7 +69,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Layer's display order group start marker
         ''' </summary>
-        ''' <paramname="GroupName">Optional group name</param>
+        ''' <param name="GroupName">Optional group name</param>
         Public Sub DisplayOrderStartGroup(ByVal Optional GroupName As String = "")
             OrderList.Add(GroupName)
             Return

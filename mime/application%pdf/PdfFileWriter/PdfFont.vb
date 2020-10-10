@@ -116,8 +116,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Kerning adjustment constructor
         ''' </summary>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="Adjust">Adjustment</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="Adjust">Adjustment</param>
         Public Sub New(ByVal Text As String, ByVal Adjust As Double)
             Me.Text = Text
             Me.Adjust = Adjust
@@ -185,10 +185,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF Font resource constructor
         ''' </summary>
-        ''' <paramname="Document">Document object</param>
-        ''' <paramname="FontFamilyName">Font family name</param>
-        ''' <paramname="FontStyle">Font style</param>
-        ''' <paramname="EmbeddedFont">Embedded font</param>
+        ''' <param name="Document">Document object</param>
+        ''' <param name="FontFamilyName">Font family name</param>
+        ''' <param name="FontStyle">Font style</param>
+        ''' <param name="EmbeddedFont">Embedded font</param>
         ''' <returns>PdfFont resource</returns>
         ''' <remarks>The returned result is either a new PdfFont or an
         ''' existing one with the same properties.</remarks>
@@ -327,7 +327,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Get character information
         ''' </summary>
-        ''' <paramname="CharValue">Character value</param>
+        ''' <param name="CharValue">Character value</param>
         ''' <returns>Character information class</returns>
         Public Function GetCharInfo(ByVal CharValue As Integer) As CharInfo
             ' no support for control characters 
@@ -370,8 +370,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Font units to user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="Value">Design value</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="Value">Design value</param>
         ''' <returns>Design value in user units</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function FontDesignToUserUnits(ByVal FontSize As Double, ByVal Value As Integer) As Double
@@ -382,7 +382,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Font design units to PDF design units
         ''' </summary>
-        ''' <paramname="Value">Font design value</param>
+        ''' <param name="Value">Font design value</param>
         ''' <returns>PDF dictionary value</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function FontDesignToPdfUnits(ByVal Value As Integer) As Double
@@ -393,7 +393,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Line spacing in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Line spacing</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function LineSpacing(ByVal FontSize As Double) As Double
@@ -404,7 +404,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Font ascent in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Font ascent</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function Ascent(ByVal FontSize As Double) As Double
@@ -415,7 +415,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Font ascent in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Font ascent plus half of internal leading.</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function AscentPlusLeading(ByVal FontSize As Double) As Double
@@ -426,7 +426,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Font descent in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Font descent</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function Descent(ByVal FontSize As Double) As Double
@@ -437,7 +437,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Font descent in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Font descent plus half of internal leading.</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function DescentPlusLeading(ByVal FontSize As Double) As Double
@@ -448,7 +448,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Capital M height in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Capital M height</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function CapHeight(ByVal FontSize As Double) As Double
@@ -459,7 +459,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Strikeout position in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Strikeout position</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function StrikeoutPosition(ByVal FontSize As Double) As Double
@@ -470,7 +470,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Strikeout width in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Strikeout line width.</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function StrikeoutWidth(ByVal FontSize As Double) As Double
@@ -481,7 +481,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Underline position in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Underline position</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function UnderlinePosition(ByVal FontSize As Double) As Double
@@ -492,7 +492,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Underline width in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Underline line width.</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function UnderlineWidth(ByVal FontSize As Double) As Double
@@ -503,7 +503,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Subscript position in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Subscript position</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function SubscriptPosition(ByVal FontSize As Double) As Double
@@ -514,7 +514,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Subscript character size in points
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Subscript font size</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function SubscriptSize(ByVal FontSize As Double) As Double
@@ -526,7 +526,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Superscript character position
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Superscript position</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function SuperscriptPosition(ByVal FontSize As Double) As Double
@@ -537,7 +537,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Superscript character size in points
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
+        ''' <param name="FontSize">Font size</param>
         ''' <returns>Superscript font size</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function SuperscriptSize(ByVal FontSize As Double) As Double
@@ -549,8 +549,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Character width in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="CharValue">Character code</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="CharValue">Character code</param>
         ''' <returns>Character width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function CharWidth(ByVal FontSize As Double, ByVal CharValue As Char) As Double
@@ -561,9 +561,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Character width in user units
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="DrawStyle">Draw style</param>
-        ''' <paramname="CharValue">Character code</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="DrawStyle">Draw style</param>
+        ''' <param name="CharValue">Character code</param>
         ''' <returns>Character width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function CharWidth(ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal CharValue As Char) As Double
@@ -581,8 +581,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Character bounding box in user coordinate units.
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="CharValue">Character</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="CharValue">Character</param>
         ''' <returns>Bounding box</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function CharBoundingBox(ByVal FontSize As Double, ByVal CharValue As Char) As PdfRectangle
@@ -598,8 +598,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Text width
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function TextWidth(ByVal FontSize As Double, ByVal Text As String) As Double
@@ -618,11 +618,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Word spacing to stretch text to given width
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="ReqWidth">Required width</param>
-        ''' <paramname="WordSpacing">Output word spacing</param>
-        ''' <paramname="CharSpacing">Output character spacing</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="ReqWidth">Required width</param>
+        ''' <param name="WordSpacing">Output word spacing</param>
+        ''' <param name="CharSpacing">Output character spacing</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>True-done, False-not done.</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function TextFitToWidth(ByVal FontSize As Double, ByVal ReqWidth As Double, <Out> ByRef WordSpacing As Double, <Out> ByRef CharSpacing As Double, ByVal Text As String) As Boolean
@@ -675,8 +675,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Text bounding box in user coordinate units.
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Bounding box</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function TextBoundingBox(ByVal FontSize As Double, ByVal Text As String) As PdfRectangle
@@ -721,7 +721,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Text Kerning
         ''' </summary>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Text">Text</param>
         ''' <returns>Kerning adjustment pairs</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function TextKerning(ByVal Text As String) As KerningAdjust()
@@ -781,8 +781,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Text kerning width
         ''' </summary>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="KerningArray">Kerning array</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="KerningArray">Kerning array</param>
         ''' <returns>Width</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function TextKerningWidth(ByVal FontSize As Double, ByVal KerningArray As KerningAdjust()) As Double     ' in points
@@ -1375,7 +1375,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compage PDF font objects
         ''' </summary>
-        ''' <paramname="Other">Other PDFFont</param>
+        ''' <param name="Other">Other PDFFont</param>
         ''' <returns>Compare result</returns>
         Public Function CompareTo(ByVal Other As PdfFont) As Integer Implements IComparable(Of PdfFont).CompareTo
             Dim Cmp = String.Compare(FontFamilyName, Other.FontFamilyName, True)

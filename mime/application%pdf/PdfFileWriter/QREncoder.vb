@@ -296,7 +296,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Encode one string into QRCode boolean matrix
         ''' </summary>
-        ''' <paramname="StringDataSegment">string data segment</param>
+        ''' <param name="StringDataSegment">string data segment</param>
         Public Sub Encode(ByVal StringDataSegment As String)
             ' empty
             If String.IsNullOrEmpty(StringDataSegment) Then Throw New ArgumentNullException("String data segment is null or missing")
@@ -312,7 +312,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Encode array of strings into QRCode boolean matrix
         ''' </summary>
-        ''' <paramname="StringDataSegments">string data segments</param>
+        ''' <param name="StringDataSegments">string data segments</param>
         Public Sub Encode(ByVal StringDataSegments As String())
             ' empty
             If StringDataSegments Is Nothing OrElse StringDataSegments.Length = 0 Then Throw New ArgumentNullException("String data segments are null or empty")
@@ -340,7 +340,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Encode one data segment into QRCode boolean matrix
         ''' </summary>
-        ''' <paramname="SingleDataSeg">Data segment byte array</param>
+        ''' <param name="SingleDataSeg">Data segment byte array</param>
         ''' <returns>QR Code boolean matrix</returns>
         Public Sub Encode(ByVal SingleDataSeg As Byte())
             ' test data segments array
@@ -354,7 +354,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Encode data segments array into QRCode boolean matrix
         ''' </summary>
-        ''' <paramname="DataSegArray">Data array of byte arrays</param>
+        ''' <param name="DataSegArray">Data array of byte arrays</param>
         ''' <returns>QR Code boolean matrix</returns>
         Public Sub Encode(ByVal DataSegArray As Byte()())
             ' test data segments array

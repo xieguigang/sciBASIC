@@ -67,8 +67,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Create image metafile constructor
         ''' </summary>
-        ''' <paramname="Width">Image width in pixels.</param>
-        ''' <paramname="Height">Image height in pixels.</param>
+        ''' <param name="Width">Image width in pixels.</param>
+        ''' <param name="Height">Image height in pixels.</param>
         Public Sub New(ByVal Width As Integer, ByVal Height As Integer)
             Using Stream As MemoryStream = New MemoryStream()
 
@@ -97,7 +97,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Save image metafile
         ''' </summary>
-        ''' <paramname="FileName">File name</param>
+        ''' <param name="FileName">File name</param>
         Public Sub SaveMetafile(ByVal FileName As String)
             ' Get a handle to the metafile
             Dim MetafileHandle As IntPtr = Metafile.GetHenhmetafile()

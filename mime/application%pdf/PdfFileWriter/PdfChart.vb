@@ -147,8 +147,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF chart constructor
         ''' </summary>
-        ''' <paramname="Document">Document object parent of this chart.</param>
-        ''' <paramname="MSChart">.NET Chart object.</param>
+        ''' <param name="Document">Document object parent of this chart.</param>
+        ''' <param name="MSChart">.NET Chart object.</param>
         ''' <remarks>
         ''' It is the responsibility of the calling program to release
         ''' the resources of the input chart object. After PdfChart
@@ -191,10 +191,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Static method to create .NET Chart object.
         ''' </summary>
-        ''' <paramname="Document">Current document object.</param>
-        ''' <paramname="Width">Chart width in user units.</param>
-        ''' <paramname="Height">Chart height in user units.</param>
-        ''' <paramname="Resolution">Resolution in pixels per inch (optional argument).</param>
+        ''' <param name="Document">Current document object.</param>
+        ''' <param name="Width">Chart width in user units.</param>
+        ''' <param name="Height">Chart height in user units.</param>
+        ''' <param name="Resolution">Resolution in pixels per inch (optional argument).</param>
         ''' <returns>.NET Chart object</returns>
         ''' <remarks>
         ''' The returned chart has the correct width and height in pixels.
@@ -219,10 +219,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Helper method to create a font for chart drawing.
         ''' </summary>
-        ''' <paramname="FontFamilyName">Font family name.</param>
-        ''' <paramname="FontStyle">Font style.</param>
-        ''' <paramname="FontSize">Font size per unit argument.</param>
-        ''' <paramname="Unit">Font size unit.</param>
+        ''' <param name="FontFamilyName">Font family name.</param>
+        ''' <param name="FontStyle">Font style.</param>
+        ''' <param name="FontSize">Font size per unit argument.</param>
+        ''' <param name="Unit">Font size unit.</param>
         ''' <returns>.NET font</returns>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Function CreateFont(ByVal FontFamilyName As String, ByVal FontStyle As FontStyle, ByVal FontSize As Double, ByVal Unit As FontSizeUnit) As Font  ' font family name
@@ -254,8 +254,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Commit object to PDF file
         ''' </summary>
-        ''' <paramname="DisposeChart">Dispose Chart object</param>
-        ''' <paramname="GCCollect">Activate Garbage Collector</param>
+        ''' <param name="DisposeChart">Dispose Chart object</param>
+        ''' <param name="GCCollect">Activate Garbage Collector</param>
         Public Sub CommitToPdfFile(ByVal DisposeChart As Boolean, ByVal GCCollect As Boolean)
             ' make sure not to do it twice
             If FilePosition = 0 Then

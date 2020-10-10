@@ -44,7 +44,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Default constructor
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object</param>
+        ''' <param name="Document">Parent PDF document object</param>
         ''' <remarks>
         ''' Page size is taken from PdfDocument
         ''' </remarks>
@@ -61,8 +61,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object</param>
-        ''' <paramname="PageSize">Paper size for this page</param>
+        ''' <param name="Document">Parent PDF document object</param>
+        ''' <param name="PageSize">Paper size for this page</param>
         ''' <remarks>
         ''' PageSize override the default page size
         ''' </remarks>
@@ -80,9 +80,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object</param>
-        ''' <paramname="PaperType">Paper type</param>
-        ''' <paramname="Landscape">If Lanscape is true, width and height are swapped.</param>
+        ''' <param name="Document">Parent PDF document object</param>
+        ''' <param name="PaperType">Paper type</param>
+        ''' <param name="Landscape">If Lanscape is true, width and height are swapped.</param>
         ''' <remarks>
         ''' PaperType and orientation override the default page size.
         ''' </remarks>
@@ -109,9 +109,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Constructor
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object</param>
-        ''' <paramname="Width">Page width</param>
-        ''' <paramname="Height">Page height</param>
+        ''' <param name="Document">Parent PDF document object</param>
+        ''' <param name="Width">Page width</param>
+        ''' <param name="Height">Page height</param>
         ''' <remarks>
         ''' Width and Height override the default page size
         ''' </remarks>
@@ -127,7 +127,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Clone Constructor
         ''' </summary>
-        ''' <paramname="Page">Existing page object</param>
+        ''' <param name="Page">Existing page object</param>
         Public Sub New(ByVal Page As PdfPage)
             MyBase.New(Page.Document, ObjectType.Dictionary, "/Page")
             Width = Page.Width
@@ -168,7 +168,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add existing contents to page
         ''' </summary>
-        ''' <paramname="Contents">Contents object</param>
+        ''' <param name="Contents">Contents object</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub AddContents(ByVal Contents As PdfContents)
             ' set page contents flag
@@ -193,8 +193,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add annotation action
         ''' </summary>
-        ''' <paramname="AnnotRect">Annotation rectangle</param>
-        ''' <paramname="AnnotAction">Annotation action derived class</param>
+        ''' <param name="AnnotRect">Annotation rectangle</param>
+        ''' <param name="AnnotAction">Annotation action derived class</param>
         ''' <returns>PdfAnnotation object</returns>
         Public Function AddAnnotation(ByVal AnnotRect As PdfRectangle, ByVal AnnotAction As AnnotAction) As PdfAnnotation
             If AnnotAction.GetType() Is GetType(AnnotLinkAction) Then
@@ -219,11 +219,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add weblink to this page
         ''' </summary>
-        ''' <paramname="LeftAbsPos">Left position of weblink area</param>
-        ''' <paramname="BottomAbsPos">Bottom position of weblink area</param>
-        ''' <paramname="RightAbsPos">Right position of weblink area</param>
-        ''' <paramname="TopAbsPos">Top position of weblink area</param>
-        ''' <paramname="WebLinkStr">Hyperlink string</param>
+        ''' <param name="LeftAbsPos">Left position of weblink area</param>
+        ''' <param name="BottomAbsPos">Bottom position of weblink area</param>
+        ''' <param name="RightAbsPos">Right position of weblink area</param>
+        ''' <param name="TopAbsPos">Top position of weblink area</param>
+        ''' <param name="WebLinkStr">Hyperlink string</param>
         ''' <returns>PdfAnnotation object</returns>
         ''' <remarks>
         ''' <para>
@@ -245,8 +245,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add weblink to this page
         ''' </summary>
-        ''' <paramname="AnnotRect">Weblink area</param>
-        ''' <paramname="WebLinkStr">Hyperlink string</param>
+        ''' <param name="AnnotRect">Weblink area</param>
+        ''' <param name="WebLinkStr">Hyperlink string</param>
         ''' <returns>PdfAnnotation object</returns>
         ''' <remarks>
         ''' <para>
@@ -267,10 +267,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add location marker
         ''' </summary>
-        ''' <paramname="LocMarkerName">Location marker name</param>
-        ''' <paramname="Scope">Location marker scope</param>
-        ''' <paramname="FitArg">PDF reader display control</param>
-        ''' <paramname="SideArg">Optional dimensions for FitArg control</param>
+        ''' <param name="LocMarkerName">Location marker name</param>
+        ''' <param name="Scope">Location marker scope</param>
+        ''' <param name="FitArg">PDF reader display control</param>
+        ''' <param name="SideArg">Optional dimensions for FitArg control</param>
         Public Sub AddLocationMarker(ByVal LocMarkerName As String, ByVal Scope As LocMarkerScope, ByVal FitArg As DestFit, ParamArray SideArg As Double())
             LocationMarker.Create(LocMarkerName, Me, Scope, FitArg, SideArg)
             Return
@@ -279,8 +279,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add go to action
         ''' </summary>
-        ''' <paramname="LocMarkerName">Destination name</param>
-        ''' <paramname="AnnotRect">Annotation rectangle</param>
+        ''' <param name="LocMarkerName">Destination name</param>
+        ''' <param name="AnnotRect">Annotation rectangle</param>
         ''' <returns>PdfAnnotation object</returns>
         Public Function AddLinkAction(ByVal LocMarkerName As String, ByVal AnnotRect As PdfRectangle) As PdfAnnotation
             Return New PdfAnnotation(Me, AnnotRect, New AnnotLinkAction(LocMarkerName))
@@ -289,8 +289,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add rendering screen action to page
         ''' </summary>
-        ''' <paramname="AnnotRect">Annotation rectangle</param>
-        ''' <paramname="DisplayMedia">Display media object</param>
+        ''' <param name="AnnotRect">Annotation rectangle</param>
+        ''' <param name="DisplayMedia">Display media object</param>
         ''' <returns>PdfAnnotation</returns>
         Public Function AddScreenAction(ByVal AnnotRect As PdfRectangle, ByVal DisplayMedia As PdfDisplayMedia) As PdfAnnotation
             Return New PdfAnnotation(Me, AnnotRect, New AnnotDisplayMedia(DisplayMedia))
@@ -299,9 +299,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add annotation file attachement with icon
         ''' </summary>
-        ''' <paramname="AnnotRect">Annotation rectangle</param>
-        ''' <paramname="EmbeddedFile">Embedded file</param>
-        ''' <paramname="Icon">Icon</param>
+        ''' <param name="AnnotRect">Annotation rectangle</param>
+        ''' <param name="EmbeddedFile">Embedded file</param>
+        ''' <param name="Icon">Icon</param>
         ''' <returns>PdfAnnotation</returns>
         ''' <remarks>The AnnotRect is the icon rectangle area. To access the file
         ''' the user has to right click on the icon.</remarks>
@@ -312,8 +312,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add annotation file attachement with no icon
         ''' </summary>
-        ''' <paramname="AnnotRect">Annotation rectangle</param>
-        ''' <paramname="EmbeddedFile">Embedded file</param>
+        ''' <param name="AnnotRect">Annotation rectangle</param>
+        ''' <param name="EmbeddedFile">Embedded file</param>
         ''' <returns>PdfAnnotation</returns>
         ''' <remarks>The AnnotRect is any area on the page. When the user right click this
         ''' area a floating menu will be displayed.</remarks>
@@ -324,10 +324,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add sticky note to this page
         ''' </summary>
-        ''' <paramname="AbsLeft">Icon page absolute left position</param>
-        ''' <paramname="AbsTop">Icon page absolute top position</param>
-        ''' <paramname="Note">Sticky note text string</param>
-        ''' <paramname="Icon">Sticky note icon enumeration</param>
+        ''' <param name="AbsLeft">Icon page absolute left position</param>
+        ''' <param name="AbsTop">Icon page absolute top position</param>
+        ''' <param name="Note">Sticky note text string</param>
+        ''' <param name="Icon">Sticky note icon enumeration</param>
         ''' <returns>PdfAnnotation</returns>
         Public Function AddStickyNote(ByVal AbsLeft As Double, ByVal AbsTop As Double, ByVal Note As String, ByVal Icon As StickyNoteIcon) As PdfAnnotation
             Return New PdfAnnotation(Me, New PdfRectangle(AbsLeft, AbsTop, AbsLeft, AbsTop), New AnnotStickyNote(Note, Icon))

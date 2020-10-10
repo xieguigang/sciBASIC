@@ -67,12 +67,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF axial shading constructor.
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object</param>
-        ''' <paramname="BBoxLeft">Bounding box left position</param>
-        ''' <paramname="BBoxBottom">Bounding box bottom position</param>
-        ''' <paramname="BBoxWidth">Bounding box width</param>
-        ''' <paramname="BBoxHeight">Bounding box height</param>
-        ''' <paramname="ShadingFunction">Shading function</param>
+        ''' <param name="Document">Parent PDF document object</param>
+        ''' <param name="BBoxLeft">Bounding box left position</param>
+        ''' <param name="BBoxBottom">Bounding box bottom position</param>
+        ''' <param name="BBoxWidth">Bounding box width</param>
+        ''' <param name="BBoxHeight">Bounding box height</param>
+        ''' <param name="ShadingFunction">Shading function</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub New(ByVal Document As PdfDocument, ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double, ByVal ShadingFunction As PdfShadingFunction)
             MyBase.New(Document)
@@ -106,8 +106,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF axial shading constructor for unit bounding box
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object</param>
-        ''' <paramname="ShadingFunction">Shading function</param>
+        ''' <param name="Document">Parent PDF document object</param>
+        ''' <param name="ShadingFunction">Shading function</param>
         Public Sub New(ByVal Document As PdfDocument, ByVal ShadingFunction As PdfShadingFunction)
             Me.New(Document, 0.0, 0.0, 1.0, 1.0, ShadingFunction)
         End Sub
@@ -115,8 +115,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF axial shading constructor for unit bounding box
         ''' </summary>
-        ''' <paramname="Document">Parent PDF document object</param>
-        ''' <paramname="MediaBrush">System.Windows.Media brush</param>
+        ''' <param name="Document">Parent PDF document object</param>
+        ''' <param name="MediaBrush">System.Windows.Media brush</param>
         Public Sub New(ByVal Document As PdfDocument, ByVal MediaBrush As SysMedia.LinearGradientBrush)
             Me.New(Document, 0.0, 0.0, 1.0, 1.0, New PdfShadingFunction(Document, MediaBrush))
             SetAxisDirection(MediaBrush.StartPoint.X, MediaBrush.StartPoint.Y, MediaBrush.EndPoint.X, MediaBrush.EndPoint.Y, If(MediaBrush.MappingMode = SysMedia.BrushMappingMode.RelativeToBoundingBox, MappingMode.Relative, MappingMode.Absolute))
@@ -126,10 +126,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set bounding box
         ''' </summary>
-        ''' <paramname="BBoxLeft">Bounding box left</param>
-        ''' <paramname="BBoxBottom">Bounding box bottom</param>
-        ''' <paramname="BBoxWidth">Bounding box width</param>
-        ''' <paramname="BBoxHeight">Bounding box height</param>
+        ''' <param name="BBoxLeft">Bounding box left</param>
+        ''' <param name="BBoxBottom">Bounding box bottom</param>
+        ''' <param name="BBoxWidth">Bounding box width</param>
+        ''' <param name="BBoxHeight">Bounding box height</param>
         Public Sub SetBoundingBox(ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double)
             ' bounding box
             Me.BBoxLeft = BBoxLeft
@@ -142,11 +142,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set gradient axis direction
         ''' </summary>
-        ''' <paramname="StartPointX">Start point x</param>
-        ''' <paramname="StartPointY">Start point y</param>
-        ''' <paramname="EndPointX">End point x</param>
-        ''' <paramname="EndPointY">End point y</param>
-        ''' <paramname="Mapping">Mapping mode (Relative or Absolute)</param>
+        ''' <param name="StartPointX">Start point x</param>
+        ''' <param name="StartPointY">Start point y</param>
+        ''' <param name="EndPointX">End point x</param>
+        ''' <param name="EndPointY">End point y</param>
+        ''' <param name="Mapping">Mapping mode (Relative or Absolute)</param>
         Public Sub SetAxisDirection(ByVal StartPointX As Double, ByVal StartPointY As Double, ByVal EndPointX As Double, ByVal EndPointY As Double, ByVal Mapping As MappingMode)
             Me.StartPointX = StartPointX
             Me.StartPointY = StartPointY
@@ -160,7 +160,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Sets anti-alias parameter
         ''' </summary>
-        ''' <paramname="Value">Anti-alias true or false</param>
+        ''' <param name="Value">Anti-alias true or false</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub AntiAlias(ByVal Value As Boolean)
             Dictionary.AddBoolean("/AntiAlias", Value)
@@ -171,8 +171,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Extend shading beyond axis
         ''' </summary>
-        ''' <paramname="Before">Before (true or false)</param>
-        ''' <paramname="After">After (true or false)</param>
+        ''' <param name="Before">Before (true or false)</param>
+        ''' <param name="After">After (true or false)</param>
         '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
         Public Sub ExtendShading(ByVal Before As Boolean, ByVal After As Boolean)
             ExtendShadingBefore = Before

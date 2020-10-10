@@ -101,10 +101,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add child bookmark
         ''' </summary>
-        ''' <paramname="Title">Bookmark title.</param>
-        ''' <paramname="Page">Page</param>
-        ''' <paramname="YPos">Vertical position.</param>
-        ''' <paramname="OpenEntries">Open child bookmarks attached to this one.</param>
+        ''' <param name="Title">Bookmark title.</param>
+        ''' <param name="Page">Page</param>
+        ''' <param name="YPos">Vertical position.</param>
+        ''' <param name="OpenEntries">Open child bookmarks attached to this one.</param>
         ''' <returns>Bookmark object</returns>
         ''' <remarks>
         ''' Add bookmark as a child to this bookmark.
@@ -123,12 +123,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add child bookmark
         ''' </summary>
-        ''' <paramname="Title">Bookmark title.</param>
-        ''' <paramname="Page">Page</param>
-        ''' <paramname="YPos">Vertical position.</param>
-        ''' <paramname="Paint">Bookmark color.</param>
-        ''' <paramname="TextStyle">Bookmark text style.</param>
-        ''' <paramname="OpenEntries">Open child bookmarks attached to this one.</param>
+        ''' <param name="Title">Bookmark title.</param>
+        ''' <param name="Page">Page</param>
+        ''' <param name="YPos">Vertical position.</param>
+        ''' <param name="Paint">Bookmark color.</param>
+        ''' <param name="TextStyle">Bookmark text style.</param>
+        ''' <param name="OpenEntries">Open child bookmarks attached to this one.</param>
         ''' <returns>Bookmark object</returns>
         ''' <remarks>
         ''' Add bookmark as a child to this bookmark.
@@ -149,12 +149,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add child bookmark
         ''' </summary>
-        ''' <paramname="Title">Bookmark title.</param>
-        ''' <paramname="Page">Page</param>
-        ''' <paramname="XPos">Horizontal position</param>
-        ''' <paramname="YPos">Vertical position.</param>
-        ''' <paramname="Zoom">Zoom factor (1.0 is 100%. 0.0 is no change from existing zoom).</param>
-        ''' <paramname="OpenEntries">Open child bookmarks attached to this one.</param>
+        ''' <param name="Title">Bookmark title.</param>
+        ''' <param name="Page">Page</param>
+        ''' <param name="XPos">Horizontal position</param>
+        ''' <param name="YPos">Vertical position.</param>
+        ''' <param name="Zoom">Zoom factor (1.0 is 100%. 0.0 is no change from existing zoom).</param>
+        ''' <param name="OpenEntries">Open child bookmarks attached to this one.</param>
         ''' <returns>Bookmark object</returns>
         ''' <remarks>
         ''' Add bookmark as a child to this bookmark.
@@ -175,14 +175,14 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add child bookmark
         ''' </summary>
-        ''' <paramname="Title">Bookmark title.</param>
-        ''' <paramname="Page">Page</param>
-        ''' <paramname="XPos">Horizontal position</param>
-        ''' <paramname="YPos">Vertical position.</param>
-        ''' <paramname="Zoom">Zoom factor (1.0 is 100%. 0.0 is no change from existing zoom).</param>
-        ''' <paramname="Paint">Bookmark color.</param>
-        ''' <paramname="TextStyle">Bookmark text style.</param>
-        ''' <paramname="OpenEntries">Open child bookmarks attached to this one.</param>
+        ''' <param name="Title">Bookmark title.</param>
+        ''' <param name="Page">Page</param>
+        ''' <param name="XPos">Horizontal position</param>
+        ''' <param name="YPos">Vertical position.</param>
+        ''' <param name="Zoom">Zoom factor (1.0 is 100%. 0.0 is no change from existing zoom).</param>
+        ''' <param name="Paint">Bookmark color.</param>
+        ''' <param name="TextStyle">Bookmark text style.</param>
+        ''' <param name="OpenEntries">Open child bookmarks attached to this one.</param>
         ''' <returns>Bookmark object</returns>
         ''' <remarks>
         ''' Add bookmark as a child to this bookmark.
@@ -244,7 +244,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Gets child bookmark
         ''' </summary>
-        ''' <paramname="IndexArray">Array of indices</param>
+        ''' <param name="IndexArray">Array of indices</param>
         ''' <returns>Child bookmark or null if not found.</returns>
         ''' <remarks>
         ''' Gets PdfBookmark object based on index.

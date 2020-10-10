@@ -272,8 +272,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Display media constructor
         ''' </summary>
-        ''' <paramname="MediaFile">Embedded media file</param>
-        ''' <paramname="MimeType">Mime type</param>
+        ''' <param name="MediaFile">Embedded media file</param>
+        ''' <param name="MimeType">Mime type</param>
         ''' <remarks>
         ''' <para>
         ''' If mime type is null the program will try to convert file extension
@@ -358,7 +358,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Display media player controls
         ''' </summary>
-        ''' <paramname="Display">Display/no display command</param>
+        ''' <param name="Display">Display/no display command</param>
         Public Sub DisplayControls(ByVal Display As Boolean)
             MediaPlayBE.AddBoolean("/C", Display)
             Return
@@ -367,7 +367,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Repeat count
         ''' </summary>
-        ''' <paramname="Count">Count</param>
+        ''' <param name="Count">Count</param>
         ''' <remarks>
         ''' 	<para>
         ''' 	Count of zero means replay indefinitly.
@@ -388,13 +388,13 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set media window
         ''' </summary>
-        ''' <paramname="MediaWindow">Media window</param>
-        ''' <paramname="Width">Floating window width</param>
-        ''' <paramname="Height">Floating window height</param>
-        ''' <paramname="Position">Floating window position</param>
-        ''' <paramname="TitleBar">Floating window title bar</param>
-        ''' <paramname="Resize">Floating window resize</param>
-        ''' <paramname="Title">Floating window title</param>
+        ''' <param name="MediaWindow">Media window</param>
+        ''' <param name="Width">Floating window width</param>
+        ''' <param name="Height">Floating window height</param>
+        ''' <param name="Position">Floating window position</param>
+        ''' <param name="TitleBar">Floating window title bar</param>
+        ''' <param name="Resize">Floating window resize</param>
+        ''' <param name="Title">Floating window title</param>
         ''' <remarks>
         ''' <para>
         ''' All optional arguments are applicable to floating window only.
@@ -437,7 +437,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Scale media
         ''' </summary>
-        ''' <paramname="ScaleCode">Scale media code</param>
+        ''' <param name="ScaleCode">Scale media code</param>
         Public Sub ScaleMedia(ByVal ScaleCode As ScaleMediaCode)
             ' media scale and position within annotation rectangle
             ' Value 0 to 5 How to scale the media to fit annotation area page 770 T 9.15
@@ -448,7 +448,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Initial media operation
         ''' </summary>
-        ''' <paramname="OperationCode">Media operation code enumeration</param>
+        ''' <param name="OperationCode">Media operation code enumeration</param>
         Public Sub InitialMediaOperation(ByVal OperationCode As MediaOperation)
             ' Operation to perform when rendition action is triggered.
             ' Page 669 T 8.64 S 8.5
@@ -459,7 +459,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Media temporary file permission
         ''' </summary>
-        ''' <paramname="Permission">Permissions flags</param>
+        ''' <param name="Permission">Permissions flags</param>
         ''' <remarks><para>
         ''' The PDF reader must save the media file to a temporary file
         ''' in order for the player to play it.

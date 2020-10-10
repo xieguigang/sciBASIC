@@ -410,7 +410,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Get page object
         ''' </summary>
-        ''' <paramname="Index">Page index (zero based)</param>
+        ''' <param name="Index">Page index (zero based)</param>
         ''' <returns>PdfPage object</returns>
         Public Function GetPage(ByVal Index As Integer) As PdfPage
             If Index < 0 OrElse Index >= PageArray.Count Then Throw New ApplicationException("GetPage invalid argument")
@@ -469,7 +469,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF document constructor.
         ''' </summary>
-        ''' <paramname="FileName">Document file name.</param>
+        ''' <param name="FileName">Document file name.</param>
         ''' <remarks>
         ''' <para>This constructor generates a document with default letter size
         ''' page (height 11”, width 8.5”).</para>
@@ -489,7 +489,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF document constructor.
         ''' </summary>
-        ''' <paramname="Stream">File or memory stream.</param>
+        ''' <param name="Stream">File or memory stream.</param>
         ''' <remarks>
         ''' <para>This constructor generates a document with default letter size
         ''' page (height 11”, width 8.5”).</para>
@@ -512,10 +512,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF document constructor.
         ''' </summary>
-        ''' <paramname="Width">Page Width</param>
-        ''' <paramname="Height">Page height</param>
-        ''' <paramname="ScaleFactor">Scale factor</param>
-        ''' <paramname="FileName">Document file name.</param>
+        ''' <param name="Width">Page Width</param>
+        ''' <param name="Height">Page height</param>
+        ''' <param name="ScaleFactor">Scale factor</param>
+        ''' <param name="FileName">Document file name.</param>
         ''' <remarks>
         ''' <para>This constructor generates a document with default page size
         ''' as per width and height arguments in user units.</para>
@@ -538,10 +538,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF document constructor.
         ''' </summary>
-        ''' <paramname="Width">Page Width</param>
-        ''' <paramname="Height">Page height</param>
-        ''' <paramname="ScaleFactor">Scale factor</param>
-        ''' <paramname="Stream">File or memory stream.</param>
+        ''' <param name="Width">Page Width</param>
+        ''' <param name="Height">Page height</param>
+        ''' <param name="ScaleFactor">Scale factor</param>
+        ''' <param name="Stream">File or memory stream.</param>
         ''' <remarks>
         ''' <para>This constructor generates a document with default page size
         ''' as per width and height arguments in user units.</para>
@@ -567,10 +567,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF document constructor
         ''' </summary>
-        ''' <paramname="Width">Page width.</param>
-        ''' <paramname="Height">Page height.</param>
-        ''' <paramname="UnitOfMeasure">Unit of measure code.</param>
-        ''' <paramname="FileName">Document file name.</param>
+        ''' <param name="Width">Page width.</param>
+        ''' <param name="Height">Page height.</param>
+        ''' <param name="UnitOfMeasure">Unit of measure code.</param>
+        ''' <param name="FileName">Document file name.</param>
         ''' <remarks>
         ''' <para>This constructor generates a document with default page size
         ''' as per width and height arguments in user units.</para>
@@ -593,10 +593,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF document constructor
         ''' </summary>
-        ''' <paramname="Width">Page width.</param>
-        ''' <paramname="Height">Page height.</param>
-        ''' <paramname="UnitOfMeasure">Unit of measure code.</param>
-        ''' <paramname="Stream">File or memory stream.</param>
+        ''' <param name="Width">Page width.</param>
+        ''' <param name="Height">Page height.</param>
+        ''' <param name="UnitOfMeasure">Unit of measure code.</param>
+        ''' <param name="Stream">File or memory stream.</param>
         ''' <remarks>
         ''' <para>This constructor generates a document with default page size
         ''' as per width and height arguments in user units.</para>
@@ -622,10 +622,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF document constructor
         ''' </summary>
-        ''' <paramname="PaperType">Paper type</param>
-        ''' <paramname="Landscape">True for landscape, false for portrait.</param>
-        ''' <paramname="UnitOfMeasure">Unit of measure code.</param>
-        ''' <paramname="FileName">Document file name.</param>
+        ''' <param name="PaperType">Paper type</param>
+        ''' <param name="Landscape">True for landscape, false for portrait.</param>
+        ''' <param name="UnitOfMeasure">Unit of measure code.</param>
+        ''' <param name="FileName">Document file name.</param>
         ''' <remarks>
         ''' <para>This constructor generates a document with default page size
         ''' of Letter, Leagal, A3, A4 or A5.</para>
@@ -654,10 +654,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' PDF document constructor
         ''' </summary>
-        ''' <paramname="PaperType">Paper type</param>
-        ''' <paramname="Landscape">True for landscape, false for portrait.</param>
-        ''' <paramname="UnitOfMeasure">Unit of measure code.</param>
-        ''' <paramname="Stream">File or memory stream.</param>
+        ''' <param name="PaperType">Paper type</param>
+        ''' <param name="Landscape">True for landscape, false for portrait.</param>
+        ''' <param name="UnitOfMeasure">Unit of measure code.</param>
+        ''' <param name="Stream">File or memory stream.</param>
         ''' <remarks>
         ''' <para>This constructor generates a document with default page size
         ''' of Letter, Leagal, A3, A4 or A5.</para>
@@ -769,7 +769,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set encryption
         ''' </summary>
-        ''' <paramname="Permissions">Permission flags.</param>
+        ''' <param name="Permissions">Permission flags.</param>
         ''' <remarks>
         ''' The PDF File Writer library will encrypt the PDF document
         ''' using AES-128 encryption. User password set to default. Owner 
@@ -787,8 +787,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set encryption
         ''' </summary>
-        ''' <paramname="UserPassword">User password</param>
-        ''' <paramname="Permissions">Permission flags</param>
+        ''' <param name="UserPassword">User password</param>
+        ''' <param name="Permissions">Permission flags</param>
         ''' <remarks>
         ''' The PDF File Writer library will encrypt the PDF document
         ''' using AES-128 encryption. User password is as per argument. Owner 
@@ -808,10 +808,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Set encryption
         ''' </summary>
-        ''' <paramname="UserPassword">User password</param>
-        ''' <paramname="OwnerPassword">Owner password</param>
-        ''' <paramname="Permissions">Permission flags</param>
-        ''' <paramname="EncryptionType">Encryption type</param>
+        ''' <param name="UserPassword">User password</param>
+        ''' <param name="OwnerPassword">Owner password</param>
+        ''' <param name="Permissions">Permission flags</param>
+        ''' <param name="EncryptionType">Encryption type</param>
         ''' <remarks>
         ''' The PDF File Writer library will encrypt the PDF document
         ''' using either AES-128 encryption or standard 128 (RC4) encryption.
@@ -851,8 +851,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Move page to another position
         ''' </summary>
-        ''' <paramname="SourceIndex">Page's current position</param>
-        ''' <paramname="DestinationIndex">Page's new position</param>
+        ''' <param name="SourceIndex">Page's current position</param>
+        ''' <param name="DestinationIndex">Page's new position</param>
         Public Sub MovePage(ByVal SourceIndex As Integer, ByVal DestinationIndex As Integer)
             If SourceIndex < 0 OrElse SourceIndex >= PageCount OrElse DestinationIndex < 0 OrElse DestinationIndex > PageCount Then Throw New ApplicationException("Move page invalid argument")
 

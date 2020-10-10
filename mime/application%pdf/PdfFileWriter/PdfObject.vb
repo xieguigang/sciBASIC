@@ -143,7 +143,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compare the resource codes of two PDF objects.
         ''' </summary>
-        ''' <paramname="Other">Other PdfObject</param>
+        ''' <param name="Other">Other PdfObject</param>
         ''' <returns>Compare result</returns>
         ''' <remarks>
         ''' Used by PdfContents to maintain resource objects in sorted order.

@@ -98,10 +98,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' TextBoxLine constructor.
         ''' </summary>
-        ''' <paramname="Ascent">Line ascent.</param>
-        ''' <paramname="Descent">Line descent.</param>
-        ''' <paramname="EndOfParagraph">Line is end of paragraph.</param>
-        ''' <paramname="SegArray">Segments' array.</param>
+        ''' <param name="Ascent">Line ascent.</param>
+        ''' <param name="Descent">Line descent.</param>
+        ''' <param name="EndOfParagraph">Line is end of paragraph.</param>
+        ''' <param name="SegArray">Segments' array.</param>
         Public Sub New(ByVal Ascent As Double, ByVal Descent As Double, ByVal EndOfParagraph As Boolean, ByVal SegArray As TextBoxSeg())
             Me.Ascent = Ascent
             Me.Descent = Descent
@@ -223,11 +223,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' TextBox segment constructor.
         ''' </summary>
-        ''' <paramname="Font">Segment font.</param>
-        ''' <paramname="FontSize">Segment font size.</param>
-        ''' <paramname="DrawStyle">Segment drawing style.</param>
-        ''' <paramname="FontColor">Segment color.</param>
-        ''' <paramname="AnnotAction">Segment annotation action.</param>
+        ''' <param name="Font">Segment font.</param>
+        ''' <param name="FontSize">Segment font size.</param>
+        ''' <param name="DrawStyle">Segment drawing style.</param>
+        ''' <param name="FontColor">Segment color.</param>
+        ''' <param name="AnnotAction">Segment annotation action.</param>
         Public Sub New(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal AnnotAction As AnnotAction)
             Me.Font = Font
             Me.FontSize = FontSize
@@ -241,7 +241,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' TextBox segment copy constructor.
         ''' </summary>
-        ''' <paramname="CopySeg">Source TextBox segment.</param>
+        ''' <param name="CopySeg">Source TextBox segment.</param>
         Friend Sub New(ByVal CopySeg As TextBoxSeg)
             Font = CopySeg.Font
             FontSize = CopySeg.FontSize
@@ -255,11 +255,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Compare two TextBox segments.
         ''' </summary>
-        ''' <paramname="Font">Segment font.</param>
-        ''' <paramname="FontSize">Segment font size.</param>
-        ''' <paramname="DrawStyle">Segment drawing style.</param>
-        ''' <paramname="FontColor">Segment color.</param>
-        ''' <paramname="AnnotAction">Segment annotation action.</param>
+        ''' <param name="Font">Segment font.</param>
+        ''' <param name="FontSize">Segment font size.</param>
+        ''' <param name="DrawStyle">Segment drawing style.</param>
+        ''' <param name="FontColor">Segment color.</param>
+        ''' <param name="AnnotAction">Segment annotation action.</param>
         ''' <returns>Result</returns>
         Friend Function IsEqual(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal AnnotAction As AnnotAction) As Boolean
             ' test all but annotation action
@@ -351,9 +351,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' TextBox constructor
         ''' </summary>
-        ''' <paramname="BoxWidth">Box width.</param>
-        ''' <paramname="FirstLineIndent">First line is indented.</param>
-        ''' <paramname="LineBreakFactor">Line break factor.</param>
+        ''' <param name="BoxWidth">Box width.</param>
+        ''' <param name="FirstLineIndent">First line is indented.</param>
+        ''' <param name="LineBreakFactor">Line break factor.</param>
         Public Sub New(ByVal BoxWidth As Double, ByVal Optional FirstLineIndent As Double = 0.0, ByVal Optional LineBreakFactor As Double = 0.5)
             If BoxWidth <= 0.0 Then Throw New ApplicationException("Box width must be greater than zero")
             Me.BoxWidth = BoxWidth
@@ -386,7 +386,7 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Access TextBoxLine array.
         ''' </summary>
-        ''' <paramname="Index">Index</param>
+        ''' <param name="Index">Index</param>
         ''' <returns>TextBoxLine</returns>
         Default Public ReadOnly Property Item(ByVal Index As Integer) As TextBoxLine
             Get
@@ -397,8 +397,8 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' TextBox height including extra line and paragraph space.
         ''' </summary>
-        ''' <paramname="LineExtraSpace">Extra line space.</param>
-        ''' <paramname="ParagraphExtraSpace">Extra paragraph space.</param>
+        ''' <param name="LineExtraSpace">Extra line space.</param>
+        ''' <param name="ParagraphExtraSpace">Extra paragraph space.</param>
         ''' <returns>Height</returns>
         Public Function BoxHeightExtra(ByVal LineExtraSpace As Double, ByVal ParagraphExtraSpace As Double) As Double
             Dim Height = BoxHeight
@@ -410,9 +410,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Thwe height of the first LineCount lines including extra line and paragraph space.
         ''' </summary>
-        ''' <paramname="LineCount">The requested number of lines.</param>
-        ''' <paramname="LineExtraSpace">Extra line space.</param>
-        ''' <paramname="ParagraphExtraSpace">Extra paragraph space.</param>
+        ''' <param name="LineCount">The requested number of lines.</param>
+        ''' <param name="LineExtraSpace">Extra line space.</param>
+        ''' <param name="ParagraphExtraSpace">Extra paragraph space.</param>
         ''' <returns>Height</returns>
         Public Function BoxHeightExtra(ByVal LineCount As Integer, ByVal LineExtraSpace As Double, ByVal ParagraphExtraSpace As Double) As Double
             ' textbox is empty
@@ -442,11 +442,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' The height of a block of lines within TextBox not excedding request height.
         ''' </summary>
-        ''' <paramname="LineStart">Start line</param>
-        ''' <paramname="LineEnd">End line</param>
-        ''' <paramname="RequestHeight">Requested height</param>
-        ''' <paramname="LineExtraSpace">Extra line space.</param>
-        ''' <paramname="ParagraphExtraSpace">Extra paragraph space.</param>
+        ''' <param name="LineStart">Start line</param>
+        ''' <param name="LineEnd">End line</param>
+        ''' <param name="RequestHeight">Requested height</param>
+        ''' <param name="LineExtraSpace">Extra line space.</param>
+        ''' <param name="ParagraphExtraSpace">Extra paragraph space.</param>
         ''' <returns>Height</returns>
         ''' <remarks>
         ''' LineStart will be adjusted forward to skip blank lines. LineEnd 
@@ -534,9 +534,9 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add text to text box.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="Text">Text</param>
         Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal Text As String)
             AddText(Font, FontSize, DrawStyle.Normal, Color.Black, Text, CType(Nothing, AnnotAction))
             Return
@@ -545,10 +545,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add text to text box.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="AnnotAction">Annotation action</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="AnnotAction">Annotation action</param>
         Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal Text As String, ByVal AnnotAction As AnnotAction)
             AddText(Font, FontSize, DrawStyle.Underline, Color.Blue, Text, AnnotAction)
             Return
@@ -557,10 +557,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add text to text box.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="WebLinkStr">Web link</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="WebLinkStr">Web link</param>
         Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal Text As String, ByVal WebLinkStr As String)
             AddText(Font, FontSize, DrawStyle.Underline, Color.Blue, Text, New AnnotWebLink(WebLinkStr))
             Return
@@ -569,10 +569,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add text to text box.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="DrawStyle">Drawing style</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="DrawStyle">Drawing style</param>
+        ''' <param name="Text">Text</param>
         Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal Text As String)
             AddText(Font, FontSize, DrawStyle, Color.Empty, Text, CType(Nothing, AnnotAction))
             Return
@@ -581,10 +581,10 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add text to text box.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="FontColor">Text color</param>
-        ''' <paramname="Text">Text</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="FontColor">Text color</param>
+        ''' <param name="Text">Text</param>
         Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal FontColor As Color, ByVal Text As String)
             AddText(Font, FontSize, DrawStyle.Normal, FontColor, Text, CType(Nothing, AnnotAction))
             Return
@@ -593,11 +593,11 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add text to text box.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="DrawStyle">Drawing style</param>
-        ''' <paramname="FontColor">Text color</param>
-        ''' <paramname="Text">Web link (URL)</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="DrawStyle">Drawing style</param>
+        ''' <param name="FontColor">Text color</param>
+        ''' <param name="Text">Web link (URL)</param>
         Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal Text As String)
             AddText(Font, FontSize, DrawStyle, FontColor, Text, CType(Nothing, AnnotAction))
         End Sub
@@ -605,12 +605,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add text to text box.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="DrawStyle">Drawing style</param>
-        ''' <paramname="FontColor">Text color</param>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="WebLinkStr">Web link (URL)</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="DrawStyle">Drawing style</param>
+        ''' <param name="FontColor">Text color</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="WebLinkStr">Web link (URL)</param>
         Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal Text As String, ByVal WebLinkStr As String)
             AddText(Font, FontSize, DrawStyle, FontColor, Text, New AnnotWebLink(WebLinkStr))
         End Sub
@@ -618,12 +618,12 @@ Namespace PdfFileWriter
         ''' <summary>
         ''' Add text to text box.
         ''' </summary>
-        ''' <paramname="Font">Font</param>
-        ''' <paramname="FontSize">Font size</param>
-        ''' <paramname="DrawStyle">Drawing style</param>
-        ''' <paramname="FontColor">Text color</param>
-        ''' <paramname="Text">Text</param>
-        ''' <paramname="AnnotAction">Web link</param>
+        ''' <param name="Font">Font</param>
+        ''' <param name="FontSize">Font size</param>
+        ''' <param name="DrawStyle">Drawing style</param>
+        ''' <param name="FontColor">Text color</param>
+        ''' <param name="Text">Text</param>
+        ''' <param name="AnnotAction">Web link</param>
         Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal Text As String, ByVal AnnotAction As AnnotAction)
             ' text is null or empty
             If String.IsNullOrEmpty(Text) Then Return
