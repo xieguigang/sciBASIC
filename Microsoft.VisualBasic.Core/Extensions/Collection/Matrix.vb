@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
+<HideModuleName>
 Public Module MatrixExtensions
 
     ''' <summary>

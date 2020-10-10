@@ -1361,7 +1361,7 @@ Friend Class PdfFontFile
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
     Private Function ReadInt64BigEndian() As Long
-        Return CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 56 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 48 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 40 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 32 Or CUInt(Buffer(Math.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 24 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 16 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 8 Or Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))
+        Return CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 56 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 48 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 40 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 32 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 24 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 16 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 8 Or Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))
     End Function
 
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
