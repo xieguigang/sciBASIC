@@ -59,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq

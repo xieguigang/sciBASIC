@@ -44,7 +44,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Text
 
