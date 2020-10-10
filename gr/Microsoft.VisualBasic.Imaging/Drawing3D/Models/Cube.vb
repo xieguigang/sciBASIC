@@ -45,8 +45,9 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing3D.Models
 
