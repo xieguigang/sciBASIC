@@ -1,6 +1,5 @@
 ﻿Imports System.Drawing
-Imports System.Windows.Forms.DataVisualization.Charting
-Imports PdfFileWriter
+Imports Microsoft.VisualBasic.MIME.application.pdf
 
 Module Module1
 
