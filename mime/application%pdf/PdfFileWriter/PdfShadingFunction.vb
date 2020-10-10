@@ -25,6 +25,8 @@
 
 Imports System
 Imports System.Drawing
+Imports System.Windows.Media
+Imports Color = System.Drawing.Color
 Imports SysMedia = System.Windows.Media
 
 Namespace PdfFileWriter
@@ -53,7 +55,7 @@ Namespace PdfFileWriter
             Constructorhelper(ColorArray.Length)
 
             ' add color array to contents stream
-            For Each Color In ColorArray
+            For Each Color As Color In ColorArray
                 ObjectValueList.Add(Color.R)    ' red
                 ObjectValueList.Add(Color.G)    ' green
                 ObjectValueList.Add(Color.B)    ' blue
@@ -73,7 +75,7 @@ Namespace PdfFileWriter
             Constructorhelper(Brush.GradientStops.Count)
 
             ' add color array to contents stream
-            For Each [Stop] In Brush.GradientStops
+            For Each [Stop] As GradientStop In Brush.GradientStops
                 ObjectValueList.Add([Stop].Color.R) ' red
                 ObjectValueList.Add([Stop].Color.G) ' green
                 ObjectValueList.Add([Stop].Color.B) ' blue

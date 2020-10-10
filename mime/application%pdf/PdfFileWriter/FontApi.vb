@@ -1428,7 +1428,7 @@ Namespace PdfFileWriter
             Dim CharInfoArray = New CharInfo(255) {}
 
             ' loop for all characters
-            For CharCode = Start To 256 - 1
+            For CharCode As Integer = Start To 256 - 1
                 ' charater not defined
                 Dim GlyphIndex = GlyphIndexArray(CharCode)
                 If GlyphIndex = 0 Then Continue For
