@@ -61,6 +61,12 @@ Namespace BSON
             End Using
         End Function
 
+        Public Function Load(buf As Stream) As JsonObject
+            Using decoder As New Decoder(buf)
+                Return decoder.decodeDocument()
+            End Using
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub WriteBuffer(obj As JsonObject, buffer As Stream)

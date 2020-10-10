@@ -1030,7 +1030,8 @@ Namespace SVM
         Public Function svm_train(prob As Problem, param As Parameter) As Model
             Dim model As New Model() With {
                 .parameter = param,
-                .dimensionNames = prob.dimensionNames
+                .dimensionNames = prob.dimensionNames,
+                .trainingSize = prob.count
             }
             Dim isOneClass As Boolean =
                 param.svmType = SvmType.ONE_CLASS OrElse

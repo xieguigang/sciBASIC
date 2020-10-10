@@ -165,6 +165,11 @@ Public Structure PointData
     Public color$
     Public stroke$
 
+    ''' <summary>
+    ''' 坐标轴的值模式为字符串模式的时候
+    ''' </summary>
+    Public axisLabel As String
+
     Sub New(x!, y!)
         pt = New PointF(x, y)
     End Sub

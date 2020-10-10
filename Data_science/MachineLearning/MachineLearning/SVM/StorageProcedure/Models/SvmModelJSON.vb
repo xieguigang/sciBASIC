@@ -138,6 +138,7 @@ Namespace SVM.StorageProcedure
         ''' </summary>
         Public Property numberOfSVPerClass As Integer()
         Public Property dimensionNames As String()
+        Public Property trainingSize As Integer
 
         Public Shared Function CreateJSONModel(svm As SVM.Model) As Model
             Return New Model With {
@@ -154,7 +155,8 @@ Namespace SVM.StorageProcedure
                 .supportVectorIndices = svm.supportVectorIndices,
                 .supportVectors = svm.supportVectors _
                     .Select(AddressOf supportNodeVector.CreateVector) _
-                    .ToArray
+                    .ToArray,
+                .trainingSize = svm.trainingSize
             }
         End Function
 
@@ -173,7 +175,8 @@ Namespace SVM.StorageProcedure
                 .supportVectorIndices = supportVectorIndices,
                 .supportVectors = supportVectors _
                     .Select(Function(v) v.CreateNodes.ToArray) _
-                    .ToArray
+                    .ToArray,
+                .trainingSize = trainingSize
             }
         End Function
     End Class

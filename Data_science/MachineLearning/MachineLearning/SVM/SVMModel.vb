@@ -89,5 +89,15 @@ Namespace SVM
         Public Property dimensionNames As String()
         Public Property topics As Dictionary(Of String, SVMModel)
 
+        Public Function trainingSize() As Integer
+            Dim sizeList = topics.Values.Select(Function(a) a.model.trainingSize).ToArray
+
+            If Not sizeList.All(Function(a) a = sizeList(Scan0)) Then
+                Throw New InvalidDataContractException("model is invalid!")
+            End If
+
+            Return sizeList(Scan0)
+        End Function
+
     End Class
 End Namespace

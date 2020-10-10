@@ -53,6 +53,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace SVM.StorageProcedure
 
+    ''' <summary>
+    ''' data -> labels
+    ''' </summary>
     Public Class SupportVector : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
 

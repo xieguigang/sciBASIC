@@ -127,6 +127,8 @@ Namespace SVM
         Public Property numberOfSVPerClass As Integer()
         Public Property dimensionNames As String()
 
+        Public Property trainingSize As Integer
+
         Public Sub New()
         End Sub
 

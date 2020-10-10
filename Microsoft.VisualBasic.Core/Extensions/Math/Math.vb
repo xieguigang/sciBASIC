@@ -45,8 +45,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.ConstrainedExecution
-Imports System.Security
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language

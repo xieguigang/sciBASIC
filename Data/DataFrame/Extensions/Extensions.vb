@@ -315,7 +315,6 @@ Public Module Extensions
     ''' If this <see cref="Type"/> information provider is nothing, then the function will peeks of the first sevral element for the type information.
     ''' </param>
     ''' <returns></returns>
-    <ExportAPI("Write.Csv")>
     <Extension>
     Public Function SaveTable(data As IEnumerable, path$,
                               Optional encoding As Encoding = Nothing,
