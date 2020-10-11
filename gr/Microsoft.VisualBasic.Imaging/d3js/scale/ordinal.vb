@@ -85,7 +85,7 @@ Namespace d3js.scale
         Default Public Overrides ReadOnly Property Value(term As String) As Double
             Get
                 If positions.IsNullOrEmpty Then
-                    positions = _range.Enumerate(index.Count + 2)
+                    positions = _range.Enumerate(index.Count + 1)
                 End If
 
                 If Not index.NotExists(term) Then
