@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::d5ba3724d0de6d347751c270ef39322e, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Axis
-    ' 
-    '         Properties: delta
-    ' 
-    '         Function: __plotLabel, (+2 Overloads) DrawLabel
-    ' 
-    '         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
-    '              DrawYGrid
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Axis
+' 
+'         Properties: delta
+' 
+'         Function: __plotLabel, (+2 Overloads) DrawLabel
+' 
+'         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
+'              DrawYGrid
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Language
@@ -505,11 +506,26 @@ Namespace Graphic.Axis
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
             If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
-                For Each tick# In scaler.AxisTicks.X
-                    Dim x As Single = scaler.X(tick) + offset.X
-                    Dim axisX As New PointF(x, ZERO.Y)
+                ' 绘制坐标轴标签
+                Dim ticks As (x#, label$)()
 
-                    Dim labelText = (tick).ToString(tickFormat)
+                If TypeOf scaler.X Is LinearScale Then
+                    ticks = scaler.AxisTicks.X _
+                        .Select(Function(tick)
+                                    Return (scaler.X(tick), (tick).ToString(tickFormat))
+                                End Function) _
+                        .ToArray
+                Else
+                    ticks = DirectCast(scaler.X, OrdinalScale) _
+                        .getTerms _
+                        .Select(Function(tick) (scaler.X(tick.value), tick.value)) _
+                        .ToArray
+                End If
+
+                For Each tick As (X#, label$) In ticks
+                    Dim x As Single = tick.X + offset.X
+                    Dim axisX As New PointF(x, ZERO.Y)
+                    Dim labelText = tick.label
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))

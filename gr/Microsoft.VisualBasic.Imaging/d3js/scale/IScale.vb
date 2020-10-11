@@ -57,13 +57,17 @@ Namespace d3js.scale
         ''' value transform
         ''' </summary>
         ''' <param name="x#"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' pixel value in plot range
+        ''' </returns>
         Default Public MustOverride ReadOnly Property Value(x#) As Double
         ''' <summary>
         ''' term value transform
         ''' </summary>
         ''' <param name="term$"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' pixel value in plot range
+        ''' </returns>
         Default Public MustOverride ReadOnly Property Value(term$) As Double
 
         ''' <summary>
@@ -105,7 +109,7 @@ Namespace d3js.scale
         ''' <param name="values"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function range(Optional values As IEnumerable(Of Double) = Nothing) As T
+        Public Overridable Function range(Optional values As IEnumerable(Of Double) = Nothing) As T
             _range = (values Or defaultRange).Range
             Return Me
         End Function
