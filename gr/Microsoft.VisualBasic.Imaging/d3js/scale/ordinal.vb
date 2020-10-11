@@ -59,6 +59,16 @@ Namespace d3js.scale
         Dim factors As Factor(Of String)()
         Dim index As Index(Of String)
 
+        ''' <summary>
+        ''' count of the term factors
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides ReadOnly Property domainSize As Double
+            Get
+                Return index.Count
+            End Get
+        End Property
+
         Default Public Overrides ReadOnly Property Value(x As Double) As Double
             Get
                 Return Me(x.ToString)

@@ -48,10 +48,36 @@ Imports Microsoft.VisualBasic.Language.Default
 
 Namespace d3js.scale
 
-    Public MustInherit Class IScale(Of T As IScale(Of T))
+    ''' <summary>
+    ''' data scaler and transform
+    ''' </summary>
+    Public MustInherit Class Scaler
 
+        ''' <summary>
+        ''' value transform
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <returns></returns>
         Default Public MustOverride ReadOnly Property Value(x#) As Double
+        ''' <summary>
+        ''' term value transform
+        ''' </summary>
+        ''' <param name="term$"></param>
+        ''' <returns></returns>
         Default Public MustOverride ReadOnly Property Value(term$) As Double
+
+        ''' <summary>
+        ''' 作图的用户数据的区间长度
+        ''' </summary>
+        ''' <returns>
+        ''' + 对于<see cref="LinearScale"/>这个属性值为浮点数
+        ''' + 对于<see cref="OrdinalScale"/>这个属性值为整形数
+        ''' </returns>
+        Public MustOverride ReadOnly Property domainSize As Double
+
+    End Class
+
+    Public MustInherit Class IScale(Of T As IScale(Of T)) : Inherits Scaler
 
         Public MustOverride Function domain(values As IEnumerable(Of Double)) As T
         Public MustOverride Function domain(values As IEnumerable(Of String)) As T

@@ -140,7 +140,7 @@ Namespace Graphic.Axis
 
         <Extension>
         Private Sub checkScaler(scaler As DataScaler)
-            If scaler.X.valueDomain.Length = 0.0 Then
+            If scaler.X.domainSize = 0.0 Then
                 Throw New InvalidProgramException("the x axis range length is ZERO!")
             ElseIf scaler.Y.valueDomain.Length = 0.0 Then
                 Throw New InvalidProgramException("the y axis range length is ZERO!")

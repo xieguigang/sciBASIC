@@ -60,7 +60,11 @@ Namespace Graphic.Axis
     ''' </summary>
     Public Class DataScaler : Inherits YScaler
 
-        Public Property X As LinearScale
+        ''' <summary>
+        ''' X坐标轴主要是为了兼容数值类型的连续映射以及标签类型的坐标值的离散映射
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property X As Scaler
         Public Property AxisTicks As (X As Vector, Y As Vector)
 
         ''' <summary>
