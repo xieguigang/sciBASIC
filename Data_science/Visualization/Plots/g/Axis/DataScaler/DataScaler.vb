@@ -84,6 +84,19 @@ Namespace Graphic.Axis
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Translate(point As PointData) As PointF
+            Dim x As Single
+
+            If TypeOf Me.X Is OrdinalScale Then
+                x = DirectCast(Me.X, OrdinalScale)(point.axisLabel)
+            Else
+                x = DirectCast(Me.X, LinearScale)(point.pt.X)
+            End If
+
+            Return New PointF(x, TranslateY(point.pt.Y))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Translate(point As PointF) As PointF
             Return Translate(point.X, point.Y)
         End Function

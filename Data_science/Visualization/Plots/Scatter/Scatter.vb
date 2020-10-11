@@ -332,8 +332,8 @@ Public Module Scatter
                     Dim a As PointData = pt.First
                     Dim b As PointData = pt.Last
 
-                    pt1 = scaler.Translate(a.pt.X, a.pt.Y)
-                    pt2 = scaler.Translate(b.pt.X, b.pt.Y)
+                    pt1 = scaler.Translate(a)
+                    pt2 = scaler.Translate(b)
 
                     polygon.Add(pt1)
                     polygon.Add(pt2)
@@ -396,7 +396,7 @@ Public Module Scatter
                 End If
 
                 For Each pt As PointData In scatter
-                    Dim pt1 = scaler.Translate(pt.pt.X, pt.pt.Y)
+                    Dim pt1 = scaler.Translate(pt)
 
                     polygon.Add(pt1)
 
