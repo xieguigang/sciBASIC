@@ -191,10 +191,24 @@ Namespace Graphic.Axis
             Call g.FillRectangle(gridFill.GetBrush, rect)
 
             If showGrid AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
-                For Each tick In scaler.AxisTicks.X
-                    Dim x = scaler.X(tick) + offset.X
-                    Dim top As New Point(x, rect.Top)
-                    Dim bottom As New Point(x, rect.Bottom)
+                Dim ticks As Double()
+
+                If TypeOf scaler.X Is OrdinalScale Then
+                    ticks = DirectCast(scaler.X, OrdinalScale) _
+                        .getTerms _
+                        .Objects _
+                        .Select(Function(label) scaler.X(label)) _
+                        .ToArray
+                Else
+                    ticks = scaler.AxisTicks.X _
+                        .Select(Function(xi) scaler.X(xi)) _
+                        .ToArray
+                End If
+
+                For Each tick As Double In ticks
+                    Dim x As Single = tick + offset.X
+                    Dim top As New PointF(x, rect.Top)
+                    Dim bottom As New PointF(x, rect.Bottom)
 
                     ' 绘制x网格线
                     Call g.DrawLine(gridPenX, top, bottom)
