@@ -384,7 +384,7 @@ Public Module Scatter
                         Call g.drawErrorLine(scaler, pt2, b.pt.Y - b.errMinus, width, br)
                     End If
 
-                    Call Application.DoEvents()
+                    Call Parallel.DoEvents()
                 Next
             Else
                 Dim scatter As IEnumerable(Of PointData)
@@ -404,7 +404,7 @@ Public Module Scatter
                         Call g.FillPie(getPointBrush(pt), pt1.X - r, pt1.Y - r, d, d, 0, 360)
                     End If
 
-                    Call Application.DoEvents()
+                    Call Parallel.DoEvents()
                 Next
             End If
 
