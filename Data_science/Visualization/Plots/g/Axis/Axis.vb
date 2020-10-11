@@ -228,12 +228,6 @@ Namespace Graphic.Axis
 
             Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
 
-            'If htmlLabel Then
-            '    Call "Axis Labeling using HTML render is enable.".__INFO_ECHO
-            'Else
-            '    Call "Axis Labeling using HTML render was disabled!".__INFO_ECHO
-            'End If
-
             If xlayout <> XAxisLayoutStyles.None Then
                 Call g.DrawX(pen, xlabel, scaler, xlayout, scaler.Y(0), offset,
                              labelFontStyle,

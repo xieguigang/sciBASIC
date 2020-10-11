@@ -112,6 +112,7 @@ Namespace d3js.scale
         End Property
 
         Public Overrides Function range(Optional values As IEnumerable(Of Double) = Nothing) As OrdinalScale
+            _range = values.Range
             Return Me
         End Function
 

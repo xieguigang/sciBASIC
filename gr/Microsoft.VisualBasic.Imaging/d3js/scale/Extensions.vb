@@ -60,6 +60,8 @@ Namespace d3js.scale
     ''' <remarks>
     ''' + https://stackoverflow.com/questions/29785238/d3-different-between-scale-in-ordinal-and-linear
     ''' </remarks>
+    ''' 
+    <HideModuleName>
     Public Module Extensions
 
         ''' <summary>
@@ -82,7 +84,9 @@ Namespace d3js.scale
         ''' 'Alice' and 'Bob'? I don't know. Neither does D3.
         ''' </summary>
         ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)> Public Function ordinal() As OrdinalScale
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function ordinal() As OrdinalScale
             Return New OrdinalScale
         End Function
 
@@ -105,7 +109,9 @@ Namespace d3js.scale
         ''' domain.
         ''' </summary>
         ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)> Public Function linear() As LinearScale
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function linear() As LinearScale
             Return New LinearScale
         End Function
 
