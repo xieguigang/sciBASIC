@@ -244,7 +244,7 @@ Namespace Graphic.Axis
             End If
             If ylayout <> YAxisLayoutStyles.None Then
                 Call g.DrawY(pen, ylabel,
-                             scaler, scaler.X(0), scaler.AxisTicks.Y,
+                             scaler, scaler.X.Zero, scaler.AxisTicks.Y,
                              ylayout, offset,
                              labelFontStyle,
                              tickFont,

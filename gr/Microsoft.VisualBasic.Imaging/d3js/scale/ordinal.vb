@@ -76,6 +76,12 @@ Namespace d3js.scale
             End Get
         End Property
 
+        Public Overrides ReadOnly Property Zero As Double
+            Get
+                Return _range.Min
+            End Get
+        End Property
+
         Default Public Overrides ReadOnly Property Value(term As String) As Double
             Get
                 If positions.IsNullOrEmpty Then

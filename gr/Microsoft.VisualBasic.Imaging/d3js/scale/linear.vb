@@ -78,6 +78,12 @@ Namespace d3js.scale
             End Get
         End Property
 
+        Public Overrides ReadOnly Property Zero As Double
+            Get
+                Return Me(0.0)
+            End Get
+        End Property
+
         ''' <summary>
         ''' Constructs a new continuous scale with the unit domain [0, 1], the unit range [0, 1], 
         ''' the default interpolator and clamping disabled. Linear scales are a good default 

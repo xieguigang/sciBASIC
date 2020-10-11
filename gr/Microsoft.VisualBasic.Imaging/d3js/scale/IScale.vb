@@ -71,6 +71,12 @@ Namespace d3js.scale
         Default Public MustOverride ReadOnly Property Value(term$) As Double
 
         ''' <summary>
+        ''' 返回用户作图数据为零的时候的绘图位置映射结果数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public MustOverride ReadOnly Property Zero As Double
+
+        ''' <summary>
         ''' 作图的用户数据的区间长度
         ''' </summary>
         ''' <returns>
