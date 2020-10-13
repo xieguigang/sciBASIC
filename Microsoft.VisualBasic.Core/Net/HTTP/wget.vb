@@ -41,6 +41,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Net
 Imports Microsoft.VisualBasic.Language
 
@@ -49,12 +50,19 @@ Namespace Net.Http
     ''' <summary>
     ''' 命令行下的下载程序组件
     ''' </summary>
-    Public Class wget
+    Public Class wget : Implements IDisposable
 
         Dim WithEvents task As wgetTask
         Dim cursorTop%
 
+        Private disposedValue As Boolean
+
         Sub New(url$, save$)
+            task = New wgetTask(url, save)
+            cursorTop = Console.CursorTop
+        End Sub
+
+        Sub New(url$, save As Stream)
             task = New wgetTask(url, save)
             cursorTop = Console.CursorTop
         End Sub
@@ -116,5 +124,39 @@ Namespace Net.Http
 
             Return local.Value.FileLength > 0
         End Function
+
+        Public Shared Function Download(url$, save As Stream) As Boolean
+            Using task As New wget(url, save)
+                Call task.Run()
+            End Using
+
+            Return True
+        End Function
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                    Call task.Dispose()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 End Namespace
