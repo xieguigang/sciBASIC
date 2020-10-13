@@ -1250,6 +1250,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
+    <Compile Include="ApplicationServices\Parallel\DuplexPipe.vb" />
     <Compile Include="ApplicationServices\Parallel\RequestStream.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb" />
