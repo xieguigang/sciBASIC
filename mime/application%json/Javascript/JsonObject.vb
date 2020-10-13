@@ -54,9 +54,12 @@ Namespace Javascript
     ''' Dictionary/Array equivalent in javascript
     ''' </summary>
     Public Class JsonObject : Inherits JsonModel
+        Implements IDisposable
         Implements IEnumerable(Of NamedValue(Of JsonElement))
 
         ReadOnly array As New Dictionary(Of String, JsonElement)
+
+        Private disposedValue As Boolean
 
 #Region "Indexer"
 
@@ -148,5 +151,35 @@ Namespace Javascript
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)
+                    For Each value As JsonElement In array.Values
+                        Call JsonModel.DisposeObjects(value)
+                    Next
+
+                    Call array.Clear()
+                End If
+
+                ' TODO: 释放未托管的资源(未托管的对象)并替代终结器
+                ' TODO: 将大型字段设置为 null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: 仅当“Dispose(disposing As Boolean)”拥有用于释放未托管资源的代码时才替代终结器
+        ' Protected Overrides Sub Finalize()
+        '     ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 End Namespace

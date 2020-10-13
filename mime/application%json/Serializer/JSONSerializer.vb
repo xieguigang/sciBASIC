@@ -99,7 +99,7 @@ Public Module JSONSerializer
         ElseIf value.GetType Is obj.BSONValue Then
             Return DirectCast(value, BSONValue).ToString
         Else
-            Return Scripting.ToString(value, "null")
+            Return BSONValue.FromValue(value).ToString
         End If
     End Function
 
