@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27781645e84d4b74793b2849d11820d4, Microsoft.VisualBasic.Core\Language\Value\Numeric\i32.vb"
+﻿#Region "Microsoft.VisualBasic::088d89691c0090a29016cf74af9b6ab0, Microsoft.VisualBasic.Core\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: Hex, Oct
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) CompareTo, Equals, (+2 Overloads) ToString
-    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+3 Overloads) <, <<
+    '         Function: (+2 Overloads) CompareTo, Equals, GetHexInteger, (+2 Overloads) ToString
+    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+4 Overloads) +, (+3 Overloads) <, <<
     '                    <=, (+3 Overloads) >, >=, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
     ' 
     ' 
@@ -45,6 +45,7 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.Runtime.CompilerServices
 
 Namespace Language
@@ -92,6 +93,21 @@ Namespace Language
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return Value
+        End Function
+
+        ''' <summary>
+        ''' 将16进制的数字转换为10进制数
+        ''' </summary>
+        ''' <param name="hex$"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 因为直接使用vb的<see cref="Val"/>函数转换，在Linux上面可能会出错，所以需要在这里用.NET自己的方法来转换
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetHexInteger(hex As String) As Integer
+            Dim num% = Integer.Parse(hex, NumberStyles.HexNumber)
+            Return num
         End Function
 
         ''' <summary>
@@ -203,6 +219,12 @@ Namespace Language
             Return x - n.Value
         End Operator
 
+        ''' <summary>
+        ''' value / b
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(x As i32, b As Integer) As Double
             Return x.Value / b
@@ -231,6 +253,11 @@ Namespace Language
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(n As i32) As Integer
             Return n.Value
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(n As i32) As Long
+            Return CLng(n.Value)
         End Operator
 
         ''' <summary>
@@ -274,6 +301,21 @@ Namespace Language
             Return x
         End Operator
 
+        Public Overloads Shared Operator +(x As i32, n&) As i32
+            x.Value += n
+            Return x
+        End Operator
+
+        ''' <summary>
+        ''' <paramref name="n"/> + <see cref="i32.Value"/>
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator +(n As Integer, x As i32) As Integer
+            Return n + x.Value
+        End Operator
+
         ''' <summary>
         ''' p的值增加x，然后返回之前的值
         ''' </summary>
@@ -284,6 +326,10 @@ Namespace Language
             Dim i As Integer = p.Value
             p.Value += x
             Return i
+        End Operator
+
+        Public Shared Operator Not(x As i32) As Integer
+            Return Not x.Value
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

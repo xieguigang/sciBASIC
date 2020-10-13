@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::132bcc16d970a6deeae3a85e3aada97a, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
+﻿#Region "Microsoft.VisualBasic::78f741da79e61b6b64965e263fa4af77, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
 
     ' Author:
     ' 
@@ -72,11 +72,13 @@ Namespace Language.Vectorization
         Protected linq As DataValue(Of T)
         Protected ReadOnly type As VectorSchemaProvider = inspectType(GetType(T))
 
-        Shared ReadOnly typeCache As New Dictionary(Of Type, VectorSchemaProvider)
-
         Private Shared Function inspectType(type As Type) As VectorSchemaProvider
+            Static typeCache As New Dictionary(Of Type, VectorSchemaProvider)
+
             If Not typeCache.ContainsKey(type) Then
-                typeCache(type) = New VectorSchemaProvider(type)
+                SyncLock typeCache
+                    typeCache(type) = VectorSchemaProvider.CreateSchema(type)
+                End SyncLock
             End If
 
             Return typeCache(type)
@@ -103,7 +105,8 @@ Namespace Language.Vectorization
             End Set
         End Property
 
-        Public Function [As](Of V)() As V()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function [As](Of V)() As IEnumerable(Of V)
             Return buffer.As(Of V)
         End Function
 

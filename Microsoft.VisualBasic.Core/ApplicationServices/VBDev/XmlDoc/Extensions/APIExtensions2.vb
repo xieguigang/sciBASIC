@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4825eb0012b5c1f3ebc20d5daefdc2b7, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb"
+﻿#Region "Microsoft.VisualBasic::3783fe2a91209660cae73e35e945cfb3, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                         Dim skip As Boolean = False
 
                         For Each nsName As String In excludeNamespace
-                            If InStr(ns.Path, nsName) = 1 Then
+                            If InStr(ns.fullName, nsName) = 1 Then
                                 skip = True
                                 Exit For
                             End If
@@ -72,7 +72,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                         End If
                     End If
 
-                    With ns.Path.ToLower
+                    With ns.fullName.ToLower
                         If namespaces.ContainsKey(.ByRef) Then
                             namespaces(.ByRef) = namespaces(.ByRef).Add(ns, proj:=out)
                         Else
@@ -100,7 +100,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
 
         <Extension>
         Private Function Add(ns1 As ProjectNamespace, ns2 As ProjectNamespace, proj As Project) As ProjectNamespace
-            Dim path$ = ns1.Path
+            Dim path$ = ns1.fullName
             Dim types As New Dictionary(Of String, ProjectType)
 
             For Each type As ProjectType In ns1.Types + ns2.Types.AsList
@@ -114,7 +114,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             Next
 
             Return New ProjectNamespace(proj, types) With {
-                .Path = path
+                .fullName = path
             }
         End Function
 

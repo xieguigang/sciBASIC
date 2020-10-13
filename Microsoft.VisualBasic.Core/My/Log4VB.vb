@@ -1,60 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::5210ca600366a201431189d4c7463c8c, Microsoft.VisualBasic.Core\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::ee3dc174777e5f473318adfcc80a9915, Microsoft.VisualBasic.Core\My\Log4VB.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Log4VB
-' 
-'         Function: getColor, Print
-' 
-'         Sub: Print, Println
-' 
-' 
-' /********************************************************************************/
+    '     Module Log4VB
+    ' 
+    '         Function: getColor, Print
+    ' 
+    '         Sub: (+2 Overloads) Print, Println
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
-Imports System.ComponentModel.Composition
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
-Imports Microsoft.VisualBasic.Terminal
 
 Namespace My
 
     ''' <summary>
     ''' VB.NET <see cref="Console"/> log framework.
     ''' </summary>
-    Module Log4VB
+    Public Module Log4VB
 
+        ''' <summary>
+        ''' Additional user log file drivers
+        ''' </summary>
         Friend ReadOnly logs As New List(Of LoggingDriver)
 
         ''' <summary>
@@ -67,7 +68,22 @@ Namespace My
             {MSG_TYPES.WRN, ConsoleColor.Yellow}
         }
 
+        ''' <summary>
+        ''' LoggingDriver(header$, message$, level As MSG_TYPES)
+        ''' </summary>
+        Public redirectWarning As LoggingDriver
+        ''' <summary>
+        ''' LoggingDriver(header$, message$, level As MSG_TYPES)
+        ''' </summary>
+        Public redirectError As LoggingDriver
+
+        ''' <summary>
+        ''' Translate <see cref="MSG_TYPES"/> to <see cref="ConsoleColor"/>
+        ''' </summary>
+        ''' <param name="level"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension>
         Private Function getColor(level As Integer) As ConsoleColor
             Return If(DebuggerTagColors.ContainsKey(level), DebuggerTagColors(level), CType(level, ConsoleColor))

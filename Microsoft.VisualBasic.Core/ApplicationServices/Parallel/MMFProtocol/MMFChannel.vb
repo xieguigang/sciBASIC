@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab3c4c8a2c451e14dce950d548490d07, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb"
+﻿#Region "Microsoft.VisualBasic::205c05be186b42548f64d0608048ec4a, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb"
 
     ' Author:
     ' 
@@ -57,8 +57,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Parallel.MMFProtocol.MapStream
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
 Namespace Parallel.MMFProtocol

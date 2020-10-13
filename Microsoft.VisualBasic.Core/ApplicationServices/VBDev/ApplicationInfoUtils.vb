@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e071016dbd75bb9fd6a352e061c08a3, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
+﻿#Region "Microsoft.VisualBasic::cf8455df341b24dd64c369f064f14400, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
     ' Author:
     ' 
@@ -144,7 +144,8 @@ Namespace ApplicationServices.Development
                 .AssemblyDescription = GetProductDescription(assm),
                 .Guid = GetGuid(assm),
                 .AssemblyVersion = assm.tryGetVersion.ToString,
-                .BuiltTime = assm.CalculateCompileTime
+                .BuiltTime = assm.CalculateCompileTime,
+                .AssemblyFullName = assm.GetName.ToString
             }
         End Function
 

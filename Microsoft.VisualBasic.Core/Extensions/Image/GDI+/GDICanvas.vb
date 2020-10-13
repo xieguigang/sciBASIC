@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec414b409ccfae2670da0d33969d8b8b, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::32af086ca747a9c890f6963324fbe806, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -68,6 +68,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
+    ''' <summary>
+    ''' 这个对象是<see cref="Graphics2D"/>以及<see cref="Wmf"/>公用的基础类型
+    ''' </summary>
     Public MustInherit Class GDICanvas : Inherits IGraphics
         Implements IDisposable
 
@@ -1061,33 +1064,22 @@ Namespace Imaging
         Public Overrides Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
             Call Graphics.DrawEllipse(pen, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Draws an ellipse defined by a bounding rectangle specified by a pair of coordinates,
-        '     a height, and a width.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the ellipse.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws an ellipse defined by a bounding rectangle specified by a pair of coordinates,
+        ''' a height, and a width.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the ellipse.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="width">Width of the bounding rectangle that defines the ellipse.</param>
+        ''' <param name="height">Height of the bounding rectangle that defines the ellipse.</param>
         Public Overrides Sub DrawEllipse(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+            If x < 0 OrElse y < 0 Then
+                Return
+            End If
             Call Graphics.DrawEllipse(pen, x, y, width, height)
         End Sub
         '
@@ -2123,24 +2115,18 @@ Namespace Imaging
         Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
             Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub
-        '
-        ' Summary:
-        '     Draws a line connecting two System.Drawing.PointF structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   pt1:
-        '     System.Drawing.PointF structure that represents the first point to connect.
-        '
-        '   pt2:
-        '     System.Drawing.PointF structure that represents the second point to connect.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a line connecting two System.Drawing.PointF structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="pt1">System.Drawing.PointF structure that represents the first point to connect.</param>
+        ''' <param name="pt2">System.Drawing.PointF structure that represents the second point to connect.</param>
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
+            If pt1.X < 0 OrElse pt1.Y < 0 OrElse pt2.X < 0 OrElse pt2.Y < 0 Then
+                Return
+            End If
+
             Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub
         '
@@ -3909,49 +3895,27 @@ Namespace Imaging
         Public Overrides Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
             Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of an ellipse defined by a bounding rectangle specified by
-        '     a pair of coordinates, a width, and a height.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of an ellipse defined by a bounding rectangle specified by
+        ''' a pair of coordinates, a width, and a height.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse.</param>
+        ''' <param name="width">Width of the bounding rectangle that defines the ellipse.</param>
+        ''' <param name="height">Height of the bounding rectangle that defines the ellipse.</param>
         Public Overrides Sub FillEllipse(brush As Brush, x As Single, y As Single, width As Single, height As Single)
             Call Graphics.FillEllipse(brush, x, y, width, height)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   path:
-        '     System.Drawing.Drawing2D.GraphicsPath that represents the path to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-path is null.
+
+        ''' <summary>
+        ''' Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="path">System.Drawing.Drawing2D.GraphicsPath that represents the path to fill.</param>
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
             Call Graphics.FillPath(brush, path)
         End Sub
@@ -4040,6 +4004,9 @@ Namespace Imaging
         ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
         ''' side of the pie section.</param>
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+            If x < 0 OrElse y < 0 Then
+                Return
+            End If
             Call Graphics.FillPie(brush, x, y, width, height, startAngle, sweepAngle)
         End Sub
         '
@@ -5150,10 +5117,11 @@ Namespace Imaging
 #End Region
 
         ''' <summary>
-        ''' Releases all resources used by this <see cref="System.Drawing.Graphics"/>.
+        ''' Releases all resources used by this <see cref="Graphics"/>.
         ''' </summary>
         Public Overrides Sub Dispose() Implements IDisposable.Dispose
-            Call Graphics.Dispose()  ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+            ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
+            Call Graphics.Dispose()
         End Sub
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::956ebcd8a97a2cc25b960fde016dcc9d, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::b21a3f5b2e783a5420e7d6570b5d53cf, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
     ' Author:
     ' 
@@ -214,8 +214,10 @@ Namespace Parallel.Tasks
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     For Each x As __task In __tasks
-                        ' 释放所有的线程阻塞
-                        Call x.receiveDone.Set()
+                        If Not x.receiveDone Is Nothing Then
+                            ' 释放所有的线程阻塞
+                            Call x.receiveDone.Set()
+                        End If
                     Next
                 End If
 

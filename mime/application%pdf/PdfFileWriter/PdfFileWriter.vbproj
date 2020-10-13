@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9779403-50DF-0334-1325-E2BA59586F98}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.VisualBasic.MIME.application.pdf</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.MIME.application.pdf</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG,TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.pdf.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DefineTrace>true</DefineTrace>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.pdf.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG,TRACE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.pdf.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.pdf.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnnotAction.vb" />
+    <Compile Include="ArcToBezier.vb" />
+    <Compile Include="Barcode.vb" />
+    <Compile Include="CreateMetafile.vb" />
+    <Compile Include="LocationMarker.vb" />
+    <Compile Include="DrawWPFPath.vb" />
+    <Compile Include="Pdf417Encoder.vb" />
+    <Compile Include="Pdf417EncoderTables.vb" />
+    <Compile Include="PdfAnnotation.vb" />
+    <Compile Include="PdfDictionary.vb" />
+    <Compile Include="PdfEmbeddedFile.vb" />
+    <Compile Include="PdfExtGState.vb" />
+    <Compile Include="PdfImageControl.vb" />
+    <Compile Include="PdfInfo.vb" />
+    <Compile Include="PdfLayer.vb" />
+    <Compile Include="PdfLayers.vb" />
+    <Compile Include="PdfRectangle.vb" />
+    <Compile Include="PdfDisplayMedia.vb" />
+    <Compile Include="PdfTable.vb" />
+    <Compile Include="FontApi.vb" />
+    <Compile Include="Geometry.vb" />
+    <Compile Include="ImageSizePos.vb" />
+    <Compile Include="PdfAxialShading.vb" />
+    <Compile Include="PdfChart.vb" />
+    <Compile Include="PdfContents.vb" />
+    <Compile Include="PdfDocument.vb" />
+    <Compile Include="PdfEncryption.vb" />
+    <Compile Include="PdfFont.vb" />
+    <Compile Include="PdfFontFile.vb" />
+    <Compile Include="PdfFontFileClasses.vb" />
+    <Compile Include="PdfImage.vb" />
+    <Compile Include="PdfObject.vb" />
+    <Compile Include="PdfBookmark.vb" />
+    <Compile Include="PdfPage.vb" />
+    <Compile Include="PdfRadialShading.vb" />
+    <Compile Include="PdfShadingFunction.vb" />
+    <Compile Include="PdfTableBorder.vb" />
+    <Compile Include="PdfTableCell.vb" />
+    <Compile Include="PdfTableStyle.vb" />
+    <Compile Include="PdfTilingPattern.vb" />
+    <Compile Include="PdfBinaryWriter.vb" />
+    <Compile Include="PdfWebLink.vb" />
+    <Compile Include="PdfXObject.vb" />
+    <Compile Include="PdfPrintDocument.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.vb" />
+    <Compile Include="QREncoder.vb" />
+    <Compile Include="QREncoderTables.vb" />
+    <Compile Include="TextBox.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
+      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

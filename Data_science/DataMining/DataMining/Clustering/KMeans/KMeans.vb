@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3aec03a505c9969228be583ccc3306b2, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::778f0cfb84dfb3fc3fbd64d9b0c5b9c6, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Namespace KMeans
 
@@ -75,10 +76,10 @@ Namespace KMeans
             End If
 
             For i As Integer = 0 To count - 1
-                sum = sum + Math.Pow(Math.Abs(X(i) - Y(i)), 2)
+                sum = sum + stdNum.Pow(stdNum.Abs(X(i) - Y(i)), 2)
             Next
 
-            Dim distance As Double = Math.Sqrt(sum)
+            Dim distance As Double = stdNum.Sqrt(sum)
             Return distance
         End Function
 
@@ -103,7 +104,7 @@ Namespace KMeans
             End If
 
             For i As Integer = 0 To count - 1
-                sum = sum + Math.Abs(X(i) - Y(i))
+                sum = sum + stdNum.Abs(X(i) - Y(i))
             Next
 
             Return sum
@@ -129,15 +130,10 @@ Namespace KMeans
         ''' Returns an Array Defining A Data Point Representing The Cluster Mean or Centroid
         ''' </returns>
         Public Function ClusterMean(cluster As Double(,)) As Double()
-            Dim rowCount As Integer = 0
-            Dim fieldCount As Integer = 0
-            Dim dataSum As Double(,)
-            Dim centroid As Double()
-
-            rowCount = cluster.GetUpperBound(0) + 1
-            fieldCount = cluster.GetUpperBound(1) + 1
-            dataSum = New Double(0, fieldCount - 1) {}
-            centroid = New Double(fieldCount - 1) {}
+            Dim rowCount = cluster.GetUpperBound(0) + 1
+            Dim fieldCount = cluster.GetUpperBound(1) + 1
+            Dim dataSum As Double(,) = New Double(0, fieldCount - 1) {}
+            Dim centroid As Double() = New Double(fieldCount - 1) {}
 
             '((20+30)/2), ((170+160)/2), ((80+120)/2)
             For j As Integer = 0 To fieldCount - 1
@@ -165,13 +161,17 @@ Namespace KMeans
         ''' <param name="parallel">
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
         ''' </param>
-        <Extension> Public Function ClusterDataSet(Of T As EntityBase(Of Double))(
-                                                 source As IEnumerable(Of T),
-                                                 clusterCount%,
-                                           Optional debug As Boolean = False,
-                                           Optional stop% = -1,
-                                           Optional parallel As Boolean = True) As ClusterCollection(Of T)
-
+        ''' <remarks>
+        ''' if the <paramref name="clusterCount"/> parameter value is greater than the
+        ''' element count of the <paramref name="source"/> collection, then this api 
+        ''' function will throw an exception
+        ''' </remarks>
+        <Extension>
+        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(source As IEnumerable(Of T),
+                                                                      clusterCount%,
+                                                                      Optional debug As Boolean = False,
+                                                                      Optional stop% = -1,
+                                                                      Optional parallel As Boolean = True) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
@@ -181,7 +181,6 @@ Namespace KMeans
             Dim cluster As KMeansCluster(Of T) = Nothing
             Dim clusters As New ClusterCollection(Of T)
             Dim clusterNumbers As New List(Of Integer)
-            Dim Random As New Random
 
             If clusterCount >= rowCount Then
                 Dim msg$ = $"[cluster.count:={clusterCount}] >= [source.length:={rowCount}], this will caused a dead loop!"
@@ -193,7 +192,7 @@ Namespace KMeans
             End If
 
             While clusterNumbers.Count < clusterCount
-                clusterNumber = Random.[Next](0, rowCount - 1)
+                clusterNumber = randf.seeds.[Next](0, rowCount - 1)
 
                 If Not clusterNumbers.Contains(clusterNumber) Then
                     cluster = New KMeansCluster(Of T)
@@ -290,7 +289,7 @@ Namespace KMeans
                             Continue For
                         End If
 
-                        Call x._innerList(i).SwapWith(y._innerList(j))
+                        Call x._innerList(i).Swap(y._innerList(j))
                     Next
                 End If
             Next

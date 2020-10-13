@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55234b4e078ecfd7de610386fc031c73, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\[Namespace].vb"
+﻿#Region "Microsoft.VisualBasic::c53ca668721f309f19d1339f9989f926, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\[Namespace].vb"
 
     ' Author:
     ' 
@@ -111,7 +111,7 @@ Namespace CommandLine.Reflection
         ''' Constant of type information for the reflection
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property TypeInfo As System.Type = GetType([Namespace])
+        Public Shared ReadOnly Property TypeInfo As Type = GetType([Namespace])
 
         Public Overrides Function ToString() As String
             If String.IsNullOrEmpty(Description) Then

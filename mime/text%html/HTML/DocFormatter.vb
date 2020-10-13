@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab5a552442d097c425f68d45f589d562, mime\text%html\HTML\DocFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::ce11177a4a55262a3bf620d805baa9cb, mime\text%html\HTML\DocFormatter.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module DocFormatter
     ' 
-    '         Function: HighlightEMail, HighlightLinks, HighlightURL, IsFullURL
+    '         Function: HighlightEMail, HighlightLinks, HighlightURL
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,13 +55,6 @@ Namespace HTML
                   Category:=APICategories.UtilityTools,
                   Publisher:="xie.guigang@live.com")>
     Public Module DocFormatter
-
-        <Extension>
-        Public Function IsFullURL(url As String) As Boolean
-            Dim protocol$ = Regex.Match(url, "((https?)|(ftp)|(mailto))://", RegexICSng).Value
-            Return Not String.IsNullOrEmpty(protocol) AndAlso
-                InStr(url, protocol) = 1
-        End Function
 
         ''' <summary>
         ''' High light all of the links in the text document automatically.

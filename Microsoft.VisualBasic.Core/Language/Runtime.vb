@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07b523fb539260b7cd01bff7c4c2311e, Microsoft.VisualBasic.Core\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::0ecfd84af752a0f4bd479a6358a3a7b8, Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
     ' Author:
     ' 
@@ -81,28 +81,28 @@ Namespace Language
 
         Public ReadOnly Property Expression(Optional null$ = "Nothing",
                                             Optional stringEscaping As Func(Of String, String) = Nothing,
-                                            Optional isVar As Assert(Of String) = Nothing) As String
+                                            Optional isVar As Predicate(Of String) = Nothing) As String
             Get
                 Dim val$
 
-                Static [isNot] As New [Default](Of Assert(Of String))(Function(var) False)
+                Static [isNot] As New [Default](Of Predicate(Of String))(Function(var) False)
 
-                If value Is Nothing Then
+                If Value Is Nothing Then
                     val = null
-                ElseIf value.GetType Is GetType(String) Then
+                ElseIf Value.GetType Is GetType(String) Then
                     ' string can be a variable name
-                    If (isVar Or [isNot])(value) Then
-                        val = value
+                    If (isVar Or [isNot])(Value) Then
+                        val = Value
                     Else
-                        val = $"""{(stringEscaping Or noEscaping)(value)}"""
+                        val = $"""{(stringEscaping Or noEscaping)(Value)}"""
                     End If
-                ElseIf value.GetType Is GetType(Char) Then
-                    val = $"""{value}"""
+                ElseIf Value.GetType Is GetType(Char) Then
+                    val = $"""{Value}"""
                 Else
-                    val = value
+                    val = Value
                 End If
 
-                Return $"{name} = {val}"
+                Return $"{Name} = {val}"
             End Get
         End Property
 
@@ -146,10 +146,14 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
             Return (arg.Name, arg.Value)
         End Operator
+
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(name As String) As ArgumentReference

@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol
 
-    <Protocol(GetType(UserProtocols.Protocols))>
+    <ProtocolAttribute(GetType(UserProtocols.Protocols))>
     Public Class User : Implements IDisposable
 
         ' ReadOnly __updateThread As Persistent.Application.USER
@@ -98,7 +98,7 @@ Namespace NETProtocol
         ''' <param name="uid"></param>
         ''' <param name="args"></param>
         ''' <returns></returns>
-        <Protocol(UserProtocols.Protocols.PushInit)>
+        <ProtocolAttribute(UserProtocols.Protocols.PushInit)>
         Private Function __pushUpdate(uid As Long, args As RequestStream) As RequestStream
             Call RunTask(AddressOf __downloadMsg)
             Return NetResponse.RFC_OK

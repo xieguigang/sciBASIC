@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9160e040ebbed1a91b64f569685cfeac, Data_science\Mathematica\Math\ODE\ODESolvers\ODE.vb"
+﻿#Region "Microsoft.VisualBasic::48989c74a7761dd42d8a802636df5b28, Data_science\Mathematica\Math\ODE\ODESolvers\ODE.vb"
 
     ' Author:
     ' 
@@ -37,24 +37,12 @@
     ' 
     '     Function: ToString
     ' 
-    ' Class ODEOutput
-    ' 
-    '     Properties: Description, ID, X, xrange, Y
-    '                 y0
-    ' 
-    '     Function: ToString
-    ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text.Xml.Models
 
 ''' <summary>
 ''' Ordinary differential equation(ODE).(常微分方程的模型)
@@ -94,34 +82,5 @@ Public Class ODE : Implements INamedValue
 
     Public Overrides Function ToString() As String
         Return df.ToString
-    End Function
-End Class
-
-Public Class ODEOutput : Implements INamedValue
-
-    <XmlAttribute>
-    Public Property ID As String Implements INamedValue.Key
-    Public Property X As Sequence
-    Public Property Y As NumericVector
-
-    <XmlText>
-    Public Property Description As String
-
-    Public ReadOnly Property y0 As Double
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return Y.Vector.First
-        End Get
-    End Property
-
-    Public ReadOnly Property xrange As DoubleRange
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return New DoubleRange(X.Range)
-        End Get
-    End Property
-
-    Public Overrides Function ToString() As String
-        Return Y.Vector.GetJson
     End Function
 End Class

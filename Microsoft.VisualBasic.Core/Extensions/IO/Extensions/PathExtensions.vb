@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f5d0dea545dc27fb96d0c4b194c8f5d, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::fa496cfbcb8bb9440050fde34b59aa9a, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,12 @@
     ' Module PathExtensions
     ' 
     '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-    '               DirectoryName, EnumerateFiles, ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
-    '               FileLength, FileMove, FileName, FileOpened, GetBaseName
-    '               GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath, ListDirectory
-    '               ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short, (+2 Overloads) NormalizePathString
+    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
+    '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
+    '               GetFullPath, ListDirectory, ListFiles, Long2Short, (+2 Overloads) NormalizePathString
     '               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory
-    '               (+2 Overloads) RelativePath, SafeCopyTo, SourceCopy, SplitPath, TheFile
-    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    '               (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile, ToDIR_URL
+    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
     ' 
     '     Sub: MkDIR
     ' 
@@ -54,12 +53,10 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.FileIO
-Imports Microsoft.VisualBasic.FileIO.Path
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -100,7 +97,8 @@ Public Module PathExtensions
     ''' <param name="path">The file path or the directory path.</param>
     ''' <param name="throwEx"></param>
     ''' <returns></returns>
-    <Extension> Public Function DeleteFile(path$, Optional throwEx As Boolean = False) As Boolean
+    <Extension>
+    Public Function DeleteFile(path$, Optional throwEx As Boolean = False) As Boolean
         Try
             If path.FileExists Then
                 Call FileIO.FileSystem.DeleteFile(
@@ -118,6 +116,7 @@ Public Module PathExtensions
                 Throw New Exception(path, ex)
             Else
                 Call App.LogException(ex, path)
+                Call ex.PrintException
             End If
 
             Return False
@@ -132,12 +131,33 @@ Public Module PathExtensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ExtensionSuffix(path$) As String
+    Public Function ExtensionSuffix(path As String) As String
         If path.StringEmpty Then
             Return ""
         Else
-            Return path.Split("."c).Last
+            Dim fileName = path.Split("\"c).Last.Split("/"c).Last
+            Dim suffix = fileName.Split("."c).Last
+
+            If fileName = suffix Then
+                Return ""
+            Else
+                Return suffix
+            End If
         End If
+    End Function
+
+    ''' <summary>
+    ''' Test if is there any given extension name is equals 
+    ''' to the extension name of the specific file 
+    ''' <paramref name="path"/>.
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="isAny">不带小数点的文件拓展名列表</param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ExtensionSuffix(path$, ParamArray isAny As String()) As Boolean
+        Return path.ExtensionSuffix.DoCall(Function(ext) isAny.Any(Function(s) s.TextEquals(ext)))
     End Function
 
     ''' <summary>
@@ -247,6 +267,13 @@ Public Module PathExtensions
     Public Iterator Function ReadDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
         Dim current As New DirectoryInfo(DIR)
 
+        ' 20200924 skip invalid directory which have no
+        ' access 
+        If current.FullName.Trim("\"c, "/"c).IsPattern("[A-Z][:][/\\]System Volume Information") Then
+            Call $"Can not access to the {current}, skip enumerate files".Warning
+            Return
+        End If
+
         For Each file In current.EnumerateFiles
             Yield file.FullName
         Next
@@ -267,7 +294,10 @@ Public Module PathExtensions
     ''' <param name="[option]"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function ListDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
+    Public Iterator Function ListDirectory(DIR$,
+                                           Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly,
+                                           Optional fullName As Boolean = True) As IEnumerable(Of String)
+
         Dim current As New DirectoryInfo(DIR)
 
         If Not current.Exists Then
@@ -276,10 +306,14 @@ Public Module PathExtensions
         End If
 
         For Each folder In current.EnumerateDirectories
-            Yield folder.FullName
+            If fullName Then
+                Yield folder.FullName
+            Else
+                Yield folder.Name
+            End If
 
             If [option] = FileIO.SearchOption.SearchAllSubDirectories Then
-                For Each path In folder.FullName.ListDirectory([option])
+                For Each path In folder.FullName.ListDirectory([option], fullName)
                     Yield path
                 Next
             End If
@@ -333,7 +367,7 @@ Public Module PathExtensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Path2Url", Info:="Gets the URL type file path.")>
+    <ExportAPI("Path2Url")>
     <Extension> Public Function ToFileURL(path As String) As String
         If String.IsNullOrEmpty(path) Then
             Return ""
@@ -481,7 +515,9 @@ Public Module PathExtensions
     ''' <returns></returns>
     <Extension>
     Public Function FileLength(path As String) As Long
-        If Not path.FileExists Then
+        If path.StringEmpty Then
+            Return -1
+        ElseIf Not path.FileExists OrElse path.DirectoryExists Then
             Return -1&
         Else
             Return FileIO.FileSystem.GetFileInfo(path).Length
@@ -553,7 +589,7 @@ Public Module PathExtensions
     ''' <returns></returns>
     ''' <remarks></remarks>
 #If FRAMEWORD_CORE Then
-    <ExportAPI("File.Exists", Info:="Check if the target file object is exists on your file system or not.")>
+    <ExportAPI("File.Exists")>
     <Extension> Public Function FileExists(path$, Optional ZERO_Nonexists As Boolean = False) As Boolean
 #Else
     <Extension> Public Function FileExists(path As String) As Boolean
@@ -590,12 +626,11 @@ Public Module PathExtensions
     ''' </summary>
     ''' <param name="DIR"></param>
     ''' <returns></returns>
-    <ExportAPI("DIR.Exists", Info:="Determine that the target directory is exists on the file system or not?")>
+    <ExportAPI("DIR.Exists")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DirectoryExists(DIR As String) As Boolean
-        Return Not String.IsNullOrEmpty(DIR) AndAlso
-            FileIO.FileSystem.DirectoryExists(DIR)
+        Return Not String.IsNullOrEmpty(DIR) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
     End Function
 
     ''' <summary>
@@ -618,7 +653,7 @@ Public Module PathExtensions
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("File.IsOpened", Info:="Detect while the target file is opened by someone process.")>
+    <ExportAPI("File.IsOpened")>
     <Extension> Public Function FileOpened(FileName As String) As Boolean
         Try
             Using FileOpenDetect As New FileStream(
@@ -649,7 +684,7 @@ Public Module PathExtensions
     ''' 所以在这里为了更加方便的兼容文件夹或者文件路径，在这使用字符串的方法来
     ''' 进行截取
     ''' </remarks>
-    <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
+    <ExportAPI(NameOf(BaseName))>
     <Extension> Public Function BaseName(fsObj$, Optional allowEmpty As Boolean = False) As String
         If fsObj.StringEmpty Then
             If allowEmpty Then
@@ -675,17 +710,6 @@ Public Module PathExtensions
 
         Dim name = String.Join(".", t)
         Return name
-    End Function
-
-    ''' <summary>
-    ''' <see cref="basename"/> shortcuts extension.
-    ''' </summary>
-    ''' <param name="path"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function GetBaseName(path As String) As String
-        Return BaseName(path)
     End Function
 
     ''' <summary>
@@ -746,205 +770,14 @@ Public Module PathExtensions
     End Function
 
     ''' <summary>
-    '''
-    ''' </summary>
-    ''' <param name="DIR"></param>
-    ''' <param name="keyword"></param>
-    ''' <param name="ext">元素的排布是有顺序的</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Get.File.Path")>
-    <Extension> Public Function GetFile(DIR As String,
-                                       <Parameter("Using.Keyword")> keyword As String,
-                                       <Parameter("List.Ext")> ParamArray ext As String()) _
-                                    As <FunctionReturns("A list of file path which match with the keyword and the file extension name.")> String()
-
-        Dim Files As IEnumerable(Of String) = ls - l - wildcards(ext) <= DIR
-        Dim matches = (From Path As String
-                       In Files.AsParallel
-                       Let NameID = BaseName(Path)
-                       Where InStr(NameID, keyword, CompareMethod.Text) > 0
-                       Let ExtValue = Path.Split("."c).Last
-                       Select Path,
-                           ExtValue)
-        Dim LQuery =
-            From extType As String
-            In ext
-            Select From path
-                   In matches
-                   Where InStr(extType, path.ExtValue, CompareMethod.Text) > 0
-                   Select path.Path
-        Return LQuery.IteratesALL.Distinct.ToArray
-    End Function
-
-    ''' <summary>
-    ''' [<see cref="FileIO.SearchOption.SearchAllSubDirectories"/>，这个函数会扫描目标文件夹下面的所有文件。]
-    ''' 请注意，本方法是不能够产生具有相同的主文件名的数据的。假若目标GBK是使用本模块之中的方法保存或者导出来的，
-    ''' 则可以使用本方法生成Entry列表；（在返回的结果之中，KEY为文件名，没有拓展名，VALUE为文件的路径）
-    ''' </summary>
-    ''' <param name="source"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Load.ResourceEntry",
-               Info:="Load the file from a specific directory from the source parameter as the resource entry list.")>
-    <Extension>
-    Public Function LoadSourceEntryList(<Parameter("Dir.Source", "The source directory which will be searchs for file.")> source As String,
-                                        <Parameter("List.Ext", "The list of the file extension.")> ext As String(),
-                                        Optional topLevel As Boolean = True) As Dictionary(Of String, String)
-
-        If ext.IsNullOrEmpty Then
-            ext = {"*.*"}
-        End If
-
-        Dim LQuery = (From path As String
-                      In If(topLevel, ls - l, ls - l - r) - wildcards(ext) <= source
-                      Select ID = BaseName(path),
-                          path
-                      Group By ID Into Group).ToArray
-
-        ext = LinqAPI.Exec(Of String) <= From value As String
-                                         In ext
-                                         Select value.Split(CChar(".")).Last.ToLower
-
-        Dim res As Dictionary(Of String, String) = LQuery _
-            .ToDictionary(Function(x) x.ID,
-                          Function(x)
-
-                              Return LinqAPI.DefaultFirst(Of String) _
- _
-                                () <= From path
-                                      In x.Group
-                                      Let pathValue = path.path
-                                      Let extValue As String = pathValue.Split("."c).Last.ToLower
-                                      Where Array.IndexOf(ext, extValue) > -1
-                                      Select pathValue
-
-                          End Function)
-
-        With From entry
-             In res
-             Where Not String.IsNullOrEmpty(entry.Value)
-             Select entry
-
-            res = .ToDictionary(Function(x) x.Key,
-                                Function(x) x.Value)
-        End With
-
-        Call $"{NameOf(ProgramPathSearchTool)} load {res.Count} source entry...".__DEBUG_ECHO
-
-        Return res
-    End Function
-
-    ''' <summary>
-    ''' 可以使用本方法生成Entry列表；（在返回的结果之中，KEY为文件名，没有拓展名，VALUE为文件的路径）
-    ''' 请注意，这个函数会搜索目标文件夹下面的所有的文件夹的
-    ''' </summary>
-    ''' <param name="source"></param>
-    ''' <param name="ext">文件类型的拓展名称</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function LoadSourceEntryList(source$, ParamArray ext$()) As Dictionary(Of String, String)
-        If Not FileIO.FileSystem.DirectoryExists(source) Then
-            Return New Dictionary(Of String, String)
-        End If
-
-        Dim LQuery = From path As String
-                     In FileIO.FileSystem.GetFiles(source, FileIO.SearchOption.SearchAllSubDirectories, ext)
-                     Select ID = BaseName(path),
-                          path
-                     Group By ID Into Group
-        Dim dict As Dictionary(Of String, String) =
-            LQuery.ToDictionary(Function(x) x.ID,
-                                Function(x) x.Group.First.path)
-        Return dict
-    End Function
-
-    ''' <summary>
-    ''' 允许有重复的数据
-    ''' </summary>
-    ''' <param name="DIR"></param>
-    ''' <param name="exts"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("Load.ResourceEntry")>
-    <Extension> Public Function LoadEntryList(<Parameter("Dir.Source")> DIR$, ParamArray exts$()) As NamedValue(Of String)()
-        Return LinqAPI.Exec(Of NamedValue(Of String)) _
- _
-            () <= From path As String
-                  In ls - l - ShellSyntax.r - wildcards(exts) <= DIR
-                  Select New NamedValue(Of String) With {
-                      .Name = path.BaseName,
-                      .Value = path
-                  }
-
-    End Function
-
-    <ExportAPI("Load.ResourceEntry", Info:="Load the file from a specific directory from the source parameter as the resource entry list.")>
-    <Extension>
-    Public Function LoadSourceEntryList(source As IEnumerable(Of String)) As Dictionary(Of String, String)
-        Dim LQuery = From path As String
-                     In source
-                     Select ID = BaseName(path),
-                         path
-                     Group By ID Into Group
-        Dim res As Dictionary(Of String, String) =
-            LQuery.ToDictionary(Function(x) x.ID,
-                                Function(x) x.Group.First.path)
-        Return res
-    End Function
-
-    ''' <summary>
-    ''' 将不同来源<paramref name="source"></paramref>的文件复制到目标文件夹<paramref name="copyto"></paramref>之中
-    ''' </summary>
-    ''' <param name="source"></param>
-    ''' <param name="copyto"></param>
-    ''' <returns>返回失败的文件列表</returns>
-    ''' <remarks></remarks>
-    <ExportAPI("Source.Copy",
-               Info:="Copy the file in the source list into the copyto directory, function returns the failed operation list.")>
-    Public Function SourceCopy(source As IEnumerable(Of String), CopyTo As String, Optional [Overrides] As Boolean = False) As String()
-        Dim failedList As New List(Of String)
-
-        For Each file As String In source
-            Try
-                Call FileIO.FileSystem.CopyFile(file, CopyTo & "/" & FileIO.FileSystem.GetFileInfo(file).Name, [Overrides])
-            Catch ex As Exception
-                Call failedList.Add(file)
-                Call App.LogException(New Exception(file, ex))
-            End Try
-        Next
-
-        Return failedList.ToArray
-    End Function
-
-    <ExportAPI("Get.FrequentPath",
-               Info:="Gets a directory path which is most frequent appeared in the file list.")>
-    Public Function GetMostAppreancePath(files As IEnumerable(Of String)) As String
-        If files Is Nothing Then
-            Return ""
-        End If
-
-        Dim LQuery = From strPath As String
-                     In files
-                     Select FileIO.FileSystem.GetParentPath(strPath)
-        Return LQuery _
-            .TokenCount(ignoreCase:=True) _
-            .OrderByDescending(Function(x) x.Value) _
-            .FirstOrDefault _
-            .Key
-    End Function
-
-    ''' <summary>
-    ''' 获取相对于本应用程序的目标文件的相对路径(请注意，所生成的相对路径之中的字符串最后是没有文件夹的分隔符\或者/的)
+    ''' Get the specific file system object its relative path to the application base directory.
+    ''' 
+    ''' (获取相对于本应用程序的目标文件的相对路径(请注意，所生成的相对路径之中的字符串最后是没有文件夹的分隔符\或者/的))
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI(NameOf(RelativePath),
-               Info:="Get the specific file system object its relative path to the application base directory.")>
+    <ExportAPI(NameOf(RelativePath))>
     Public Function RelativePath(path As String) As String
         Return RelativePath(App.HOME, path)
     End Function
@@ -957,8 +790,7 @@ Public Module PathExtensions
     ''' <param name="pcTo">所需要生成相对路径的目标文件系统对象的绝对路径或者相对路径</param>
     ''' <param name="appendParent">是否将父目录的路径也添加进入相对路径之中？默认是</param>
     ''' <returns></returns>
-    <ExportAPI(NameOf(RelativePath),
-               Info:="Gets the relative path value of pcTo file system object relative to a reference directory pcFrom")>
+    <ExportAPI(NameOf(RelativePath))>
     Public Function RelativePath(pcFrom$, pcTo$,
                                  Optional appendParent As Boolean = True,
                                  Optional fixZipPath As Boolean = False) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
@@ -1042,7 +874,7 @@ Public Module PathExtensions
     ''' <param name="file"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("File.FullPath", Info:="Gets the full path of the file.")>
+    <ExportAPI("File.FullPath")>
     <Extension> Public Function GetFullPath(file As String) As String
         Return FileIO.FileSystem.GetFileInfo(file).FullName.Replace("\", "/")
     End Function
@@ -1054,13 +886,13 @@ Public Module PathExtensions
     ''' <param name="dir"></param>
     ''' <param name="stack">当程序出错误的时候记录进入日志的一个追踪目标参数，调试用</param>
     ''' <returns></returns>
-    <ExportAPI("Dir.FullPath", Info:="Gets the full path of the directory.")>
+    <ExportAPI("Dir.FullPath")>
     <Extension> Public Function GetDirectoryFullPath(dir$, <CallerMemberName> Optional stack$ = Nothing) As String
         Try
-            Return FileIO.FileSystem _
-                .GetDirectoryInfo(dir) _
-                .FullName _
-                .Replace("\", "/")
+            Dim dirInfo As New DirectoryInfo(dir)
+            Dim fullName As String = dirInfo.FullName.Replace("\", "/")
+
+            Return fullName
         Catch ex As Exception
             stack = stack & " --> " & NameOf(GetDirectoryFullPath)
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3379a8e565c6ff797bf9586cabb4ca96, Data_science\Visualization\Plots-statistics\QQPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ed43de2c9f0c1d94cf59c15eb0e3d271, Data_science\Visualization\Plots-statistics\QQPlot.vb"
 
     ' Author:
     ' 
@@ -141,7 +141,7 @@ Public Module QQPlot
 
         Dim qqserial As New SerialData With {
             .color = Color.Black,
-            .PointSize = pointSize,
+            .pointSize = pointSize,
             .pts = points,
             .title = "q-q"
         }

@@ -1,0 +1,125 @@
+﻿''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
+'	PdfFileWriter
+'	PDF File Write C# Class Library.
+'
+'	ImageSizePoos
+'	Support class for image aspect ratio calculations.
+'
+'	Uzi Granot
+'	Version: 1.0
+'	Date: April 1, 2013
+'	Copyright (C) 2013-2019 Uzi Granot. All Rights Reserved
+'
+'	PdfFileWriter C# class library and TestPdfFileWriter test/demo
+'  application are free software.
+'	They is distributed under the Code Project Open License (CPOL).
+'	The document PdfFileWriterReadmeAndLicense.pdf contained within
+'	the distribution specify the license agreement and other
+'	conditions and notes. You must read this document and agree
+'	with the conditions specified in order to use this software.
+'
+'	For version history please refer to PdfDocument.cs
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Imports System.Drawing
+
+
+    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    ''' <summary>
+    ''' Image size and position class
+    ''' </summary>
+    ''' <remarks>
+    ''' Delta X and Y are the adjustments to image position to
+    ''' meet the content alignment request.
+    ''' </remarks>
+    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    Public Module ImageSizePos
+        ''' <summary>
+        ''' Adjust image drawing area for both aspect ratio and content alignment
+        ''' </summary>
+        ''' <param name="ImageWidthPix">Image width in pixels.</param>
+        ''' <param name="ImageHeightPix">Image height in pixels.</param>
+        ''' <param name="DrawArea">Drawing area rectangle</param>
+        ''' <param name="Alignment">Content alignment.</param>
+        ''' <returns>Adjusted drawing area rectangle</returns>
+        Public Function ImageArea(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawArea As PdfRectangle, ByVal Alignment As ContentAlignment) As PdfRectangle
+            Return ImageArea(ImageWidthPix, ImageHeightPix, DrawArea.Left, DrawArea.Bottom, DrawArea.Width, DrawArea.Height, Alignment)
+        End Function
+
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        ''' <summary>
+        ''' Adjust image drawing area for both aspect ratio and content alignment
+        ''' </summary>
+        ''' <param name="ImageWidthPix">Image width in pixels.</param>
+        ''' <param name="ImageHeightPix">Image height in pixels.</param>
+        ''' <param name="DrawAreaLeft">Drawing area left side.</param>
+        ''' <param name="DrawAreaBottom">Drawing area bottom side.</param>
+        ''' <param name="DrawAreaWidth">Drawing area width.</param>
+        ''' <param name="DrawAreaHeight">Drawing area height.</param>
+        ''' <param name="Alignment">Content alignment.</param>
+        ''' <returns>Adjusted drawing area rectangle</returns>
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        Public Function ImageArea(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawAreaLeft As Double, ByVal DrawAreaBottom As Double, ByVal DrawAreaWidth As Double, ByVal DrawAreaHeight As Double, ByVal Alignment As ContentAlignment) As PdfRectangle
+            Dim DeltaX As Double = 0
+            Dim DeltaY As Double = 0
+            Dim Width As Double
+            Dim Height As Double
+
+            ' calculate height to fit aspect ratio
+            Height = DrawAreaWidth * ImageHeightPix / ImageWidthPix
+
+            If Height <= DrawAreaHeight Then
+                Width = DrawAreaWidth
+
+                If Height < DrawAreaHeight Then
+                    If Alignment = ContentAlignment.MiddleLeft OrElse Alignment = ContentAlignment.MiddleCenter OrElse Alignment = ContentAlignment.MiddleRight Then
+                        DeltaY = 0.5 * (DrawAreaHeight - Height)
+                    ElseIf Alignment = ContentAlignment.TopLeft OrElse Alignment = ContentAlignment.TopCenter OrElse Alignment = ContentAlignment.TopRight Then
+                        DeltaY = DrawAreaHeight - Height
+                    End If
+                    ' calculate width to fit aspect ratio
+                End If
+            Else
+                Width = DrawAreaHeight * ImageWidthPix / ImageHeightPix
+                Height = DrawAreaHeight
+
+                If Width < DrawAreaWidth Then
+                    If Alignment = ContentAlignment.TopCenter OrElse Alignment = ContentAlignment.MiddleCenter OrElse Alignment = ContentAlignment.BottomCenter Then
+                        DeltaX = 0.5 * (DrawAreaWidth - Width)
+                    ElseIf Alignment = ContentAlignment.TopRight OrElse Alignment = ContentAlignment.MiddleRight OrElse Alignment = ContentAlignment.BottomRight Then
+                        DeltaX = DrawAreaWidth - Width
+                    End If
+                End If
+            End If
+
+            ' position rectangle
+            Return New PdfRectangle(DrawAreaLeft + DeltaX, DrawAreaBottom + DeltaY, DrawAreaLeft + DeltaX + Width, DrawAreaBottom + DeltaY + Height)
+        End Function
+
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        ''' <summary>
+        ''' Calculate best fit to preserve aspect ratio
+        ''' </summary>
+        ''' <param name="ImageWidthPix">Image width in pixels.</param>
+        ''' <param name="ImageHeightPix">Image height in pixels.</param>
+        ''' <param name="DrawAreaWidth">Drawing area width.</param>
+        ''' <param name="DrawAreaHeight">Drawing area height.</param>
+        ''' <returns>Image size in user units.</returns>
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        Public Function ImageSize(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawAreaWidth As Double, ByVal DrawAreaHeight As Double) As SizeD
+            Dim OutputSize As SizeD = New SizeD()
+            OutputSize.Height = DrawAreaWidth * ImageHeightPix / ImageWidthPix
+
+            If OutputSize.Height <= DrawAreaHeight Then
+                OutputSize.Width = DrawAreaWidth
+            Else
+                OutputSize.Width = DrawAreaHeight * ImageWidthPix / ImageHeightPix
+                OutputSize.Height = DrawAreaHeight
+            End If
+
+            Return OutputSize
+        End Function
+    End Module
+

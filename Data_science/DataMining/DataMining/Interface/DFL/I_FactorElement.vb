@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da2c6ecb8a208c7baa35299785b5ffc0, Data_science\DataMining\DataMining\Interface\DFL\I_FactorElement.vb"
+﻿#Region "Microsoft.VisualBasic::0748f70313fc01e2b6809c5f8a59e771, Data_science\DataMining\DataMining\Interface\DFL\I_FactorElement.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Serialization.ShadowsCopy
+Imports stdNum = System.Math
 
 Namespace DFL_Driver
 
@@ -60,7 +60,7 @@ Namespace DFL_Driver
         ''' <remarks></remarks>
         Dim _Weight As Double
         ''' <summary>
-        '''  1 - <see cref="Math.Abs"></see>(<see cref="_Weight"></see>)
+        '''  1 - <see cref="stdNum.Abs"></see>(<see cref="_Weight"></see>)
         ''' </summary>
         ''' <remarks></remarks>
         Protected _ABS_Weight As Double
@@ -77,7 +77,7 @@ Namespace DFL_Driver
             End Get
             Set(value As Double)
                 _Weight = value
-                _ABS_Weight = 1 - Math.Abs(value)
+                _ABS_Weight = 1 - stdNum.Abs(value)
             End Set
         End Property
 

@@ -1,56 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::f32d5c3495dc5724145fce4200d4b8b3, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::259916add95847b428f447c83000ce8a, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LPP
-    ' 
-    '         Properties: ArtificialVariableAssignments, DecimalFormat, ObjectFunctionVariables, PIVOT_ITERATION_LIMIT, USE_SUBSCRIPT_UNICODE
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
-    '                   isFeasible, runIteration, solve, ToString
-    ' 
-    '         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LPP
+' 
+'         Properties: ArtificialVariableAssignments, DecimalFormat, ObjectFunctionVariables, PIVOT_ITERATION_LIMIT, USE_SUBSCRIPT_UNICODE
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
+'                   isFeasible, runIteration, solve, ToString
+' 
+'         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports stdNum = System.Math
 
-Namespace Algebra.LinearProgramming
+Namespace LinearAlgebra.LinearProgramming
 
     ''' <summary>
     ''' Linear programming solver from: 
@@ -380,7 +382,7 @@ Namespace Algebra.LinearProgramming
 
             ' Set up parameters for finding subsets
             Dim n As Integer = variableNames.Count - q
-            Dim powerSetSize As Integer = CInt(Fix(Math.Pow(2, n)))
+            Dim powerSetSize As Integer = CInt(Fix(stdNum.Pow(2, n)))
 
             For i As Integer = 0 To powerSetSize - 1
 
@@ -476,12 +478,12 @@ Namespace Algebra.LinearProgramming
             If showProgress Then
                 progress = New ProgressBar("Run LPP Solution Iterations...")
 
-                With New ProgressProvider(PIVOT_ITERATION_LIMIT)
+                With New ProgressProvider(progress, PIVOT_ITERATION_LIMIT)
                     Dim ETA$, msg$
 
                     tick = Sub()
                                limiter += 1
-                               ETA = .ETA(progress.ElapsedMilliseconds).FormatTime
+                               ETA = .ETA().FormatTime
                                msg = $"Iteration {limiter}/{PIVOT_ITERATION_LIMIT}, ETA={ETA}"
                                progress.SetProgress(.StepProgress, msg)
                            End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e248f0a8bddd63c17abae01e775dd959, www\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
+﻿#Region "Microsoft.VisualBasic::f3fa48dc568a78d98f41090dfba56f89, www\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
 
     ' Author:
     ' 
@@ -117,12 +117,10 @@
 '* - First public release.
 '*/
 
-Imports System
 Imports System.Net
 Imports System.Net.Sockets
-Imports System.Runtime.InteropServices
 Imports System.Text
-
+Imports stdNum = System.Math
 
 'VB -Simple Network Time (NTP) Protocol Client
 'By Valer BOCAN , 6/25/2007
@@ -349,7 +347,7 @@ Namespace InternetTime
         Public ReadOnly Property PollInterval() As Int32
             Get
                 '// Thanks to Jim Hollenhorst <hollenho@attbi.com>
-                Return Math.Pow(2, SNTPData(2))
+                Return stdNum.Pow(2, SNTPData(2))
                 'Return Math.Round(Math.Pow(2, SNTPData(2)))
             End Get
         End Property
@@ -361,7 +359,7 @@ Namespace InternetTime
         Public ReadOnly Property Precision() As Double
             Get
                 '// Thanks to Jim Hollenhorst <hollenho@attbi.com>
-                Return Math.Pow(2, SNTPData(3))
+                Return stdNum.Pow(2, SNTPData(3))
                 'Return (1000 * Math.Pow(2, SNTPData(3) - 256))
             End Get
         End Property

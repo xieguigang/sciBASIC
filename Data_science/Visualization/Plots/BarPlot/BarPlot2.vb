@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::082f6aa874eb6ea645f641f500e04aed, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::ca9b2aa8b9e087b2dd599c8725610472, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 
@@ -150,7 +150,7 @@ Namespace BarPlot
                             legendPos = New Point(CInt(size.Width * 0.8), margin.Top)
                         End If
 
-                        Call g.DrawLegends(legendPos, legends,,, legendBorder)
+                        Call g.DrawLegends(legendPos, legends,,, shapeBorder:=legendBorder)
                     End If
                 End Sub
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c24963248bf4cc292874ecfd4a073fa, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::d00d41e1901ee5456469b2d421305430, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Function: (+2 Overloads) After, Append, Coalesce, (+3 Overloads) Delete, (+2 Overloads) Fill
     '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
-    '               Midv, RepeatCalls, Replicate, (+3 Overloads) Sort, Split
-    '               VectorShadows
+    '               Midv, RepeatCalls, Replicate, SetValue, (+3 Overloads) Sort
+    '               Split, VectorShadows
     ' 
     '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
     '     Enum DelimiterLocation
@@ -69,15 +69,33 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 ''' <summary>
 ''' Extension methods for the .NET object sequence
 ''' </summary>
+''' 
+<HideModuleName>
 Public Module VectorExtensions
 
+    <Extension>
+    Public Function SetValue(a As Array, value As Object, i As SeqValue(Of Integer)) As Array
+        Call a.SetValue(value, i.i)
+        Return a
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="compares"></param>
+    ''' <param name="modification">是否修改原始输入的<paramref name="a"/>序列? 否则会创建一个新的数组序列返回</param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Sort(Of T)(ByRef a As T(), compares As Comparison(Of T), Optional modification As Boolean = True) As T()
         If modification Then
             Call Array.Sort(a, compares)
         Else
-            Return a.AsEnumerable.Sort(compares).ToArray
+            Return a.AsEnumerable _
+                .sort(compares) _
+                .ToArray
         End If
 
         Return a
@@ -113,12 +131,13 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Dynamics add a element into the target array.
+    ''' Dynamics add a element into the target array.(注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
-    <Extension> Public Sub Add(Of T)(ByRef vector As T(), value As T)
+    <Extension>
+    Public Sub Add(Of T)(ByRef vector As T(), value As T)
         If vector.IsNullOrEmpty Then
             vector = {value}
         Else
@@ -574,7 +593,8 @@ Public Module VectorExtensions
     ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
+    <Extension>
+    Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Predicate(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
         Dim tmp As New List(Of T)
 
         For Each x As T In source.SafeQuery

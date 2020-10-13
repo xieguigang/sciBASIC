@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c1c46cbd2631aa9d993af74ef412941, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\FuzzyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::56ca8394901e3711d8a68d1244080637, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\FuzzyGroup.vb"
 
     ' Author:
     ' 
@@ -46,13 +46,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text.Levenshtein
 
 Namespace ComponentModel.Collection
 

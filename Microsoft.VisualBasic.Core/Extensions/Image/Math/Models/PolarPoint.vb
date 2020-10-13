@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b00ccfe620212184b72ad7e8ea8c600f, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\PolarPoint.vb"
+﻿#Region "Microsoft.VisualBasic::608abffde3f61be9ee3d4904c843e0f5, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\PolarPoint.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         Public Property Angle As Single
 
+#If NET_48 Then
+
         ''' <summary>
         ''' 与这个极坐标点等价的笛卡尔直角坐标系上面的坐标点
         ''' </summary>
@@ -71,6 +73,8 @@ Namespace Imaging.Math2D
             End Get
         End Property
 
+#End If
+
         ''' <summary>
         ''' 显示这个极坐标点
         ''' </summary>
@@ -79,11 +83,15 @@ Namespace Imaging.Math2D
             Return $"({Radius}, {Angle}°)"
         End Function
 
+#If NET_48 Then
+
         Public Shared Widening Operator CType(polar As (radius#, angle!)) As PolarPoint
             Return New PolarPoint With {
                 .Angle = polar.angle,
                 .Radius = polar.radius
             }
         End Operator
+
+#End If
     End Class
 End Namespace

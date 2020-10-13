@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef41705e254d691dbb8f24e0267176a3, Microsoft.VisualBasic.Core\Extensions\Image\Colors\HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::bad7ca9a2534978375ad2e9f04b5d307, Microsoft.VisualBasic.Core\Extensions\Image\Colors\HexColor.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Drawing
 Imports System.Globalization
+Imports Microsoft.VisualBasic.Language
 
 Namespace Imaging
 
@@ -57,9 +58,9 @@ Namespace Imaging
             Dim Blue As String
             HexColor = HexColor.Trim("#"c)
             '"&H" &
-            Red = GetHexInteger(Mid(HexColor, 1, 2))
-            Green = GetHexInteger(Mid(HexColor, 3, 2))
-            Blue = GetHexInteger(Mid(HexColor, 5, 2))
+            Red = i32.GetHexInteger(Mid(HexColor, 1, 2))
+            Green = i32.GetHexInteger(Mid(HexColor, 3, 2))
+            Blue = i32.GetHexInteger(Mid(HexColor, 5, 2))
             Return Color.FromArgb(Integer.Parse(Red), Integer.Parse(Green), Integer.Parse(Blue))
         End Function
 

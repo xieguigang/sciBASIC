@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3f9c219c2f6cc5d6f74421f62d0b979, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\SigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::688017fff2d0caf0d777b85a98dc8e8d, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\SigmoidFunction.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork.Activations
 
@@ -68,7 +69,7 @@ Namespace NeuralNetwork.Activations
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function [Function](x As Double) As Double
-            Return If(x < -45.0, 0.0, If(x > 45.0, 1.0, 1.0 / (1.0 + Math.Exp(-x))))
+            Return If(x < -45.0, 0.0, If(x > 45.0, 1.0, 1.0 / (1.0 + stdNum.Exp(-x))))
         End Function
 
         Public Overrides Function ToString() As String

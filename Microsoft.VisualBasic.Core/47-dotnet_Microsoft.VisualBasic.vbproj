@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
@@ -34,14 +34,15 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>Full</DebugType>
@@ -54,7 +55,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=FALSE</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <WarningsAsErrors>
@@ -92,7 +93,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=True</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -100,11 +101,13 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>bin\x64\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -116,13 +119,14 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_45=FALSE,NET_48=TRUE</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -130,6 +134,7 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -146,6 +151,7 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -162,12 +168,13 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\CLI_tools\MLkit\Apps\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -178,6 +185,7 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -194,6 +202,7 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -210,6 +219,7 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -226,6 +236,7 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -242,6 +253,7 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU' ">
     <OutputPath>./bin</OutputPath>
@@ -249,6 +261,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64' ">
     <OutputPath>./bin</OutputPath>
@@ -259,6 +272,10 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86' ">
     <OutputPath>./bin</OutputPath>
@@ -266,6 +283,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -282,6 +300,7 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -297,6 +316,7 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -313,15 +333,16 @@
     </WarningsAsErrors>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\App\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=FALSE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -329,12 +350,13 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\app\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>false</Optimize>
@@ -345,15 +367,16 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\plot\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <OutputPath>..\..\..\..\..\biodeep\biodeep_v2\tools\client\biodeep_client\bin\x86\Biodeep\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=True,NET_48=False</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -361,6 +384,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -377,12 +401,13 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=True</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>false</Optimize>
@@ -393,6 +418,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -409,6 +435,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mysqli_X64_release|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -425,15 +452,16 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mysqli_X64_release|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\mysqli\Reflector\bin\x64\mysqli_X64_release\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -441,6 +469,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mysqli_X64_release|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -457,6 +486,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -473,6 +503,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -489,6 +520,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -505,6 +537,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sciBASIC.NET-test-release|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -519,6 +552,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sciBASIC.NET-test-release|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -533,6 +567,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'sciBASIC.NET-test-release|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -547,6 +582,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -563,15 +599,16 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -579,6 +616,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -595,6 +633,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -611,12 +650,13 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <Optimize>false</Optimize>
@@ -627,6 +667,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -643,6 +684,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yilia-Release_x64|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -659,6 +701,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yilia-Release_x64|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -675,6 +718,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yilia-Release_x64|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -691,6 +735,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ProteoWizard.d|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -707,6 +752,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ProteoWizard.d|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -723,6 +769,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ProteoWizard.d|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -739,6 +786,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack-Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -751,6 +799,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack-Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -763,6 +812,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack-Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -775,6 +825,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -789,20 +840,22 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biostack\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,UNIX=True</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=0</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -817,6 +870,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GTA5-game-test|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -829,18 +883,20 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GTA5-game-test|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\GTA5-game-test\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GTA5-game-test|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -853,6 +909,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -870,20 +927,22 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WebAssembly|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\WebAssembly\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <OutputPath>..\..\Apps\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=FALSE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'WebAssembly|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -898,6 +957,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'node-debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -910,6 +970,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'node-debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -922,6 +983,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'node-debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -934,6 +996,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -946,6 +1009,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -958,6 +1022,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -970,12 +1035,182 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Rsharp_app_release\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Rsharp_app_release\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\BioDeep_database\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\BioDeep_database\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=True,UNIX=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\BioDeep_database\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\mzkit\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\PlantMAT\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=FALSE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\PlantMAT\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\PlantMAT\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=True,NET_48=False</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -1015,18 +1250,49 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
-    <Compile Include="ApplicationServices\Terminal\MarkdownRender.vb" />
+    <Compile Include="ApplicationServices\Parallel\RequestStream.vb" />
+    <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
+    <Compile Include="ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
+    <Compile Include="CommandLine\CLI\ProcessEx.vb" />
+    <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
+    <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />
+    <Compile Include="CommandLine\Reflection\ExportApiInformation.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\Extensions.vb" />
+    <Compile Include="ComponentModel\DataStructures\Deque\Data.vb" />
+    <Compile Include="ComponentModel\DataStructures\Deque\Deque.vb" />
+    <Compile Include="ComponentModel\DataStructures\Deque\Enumerator.vb" />
+    <Compile Include="ComponentModel\DataStructures\Deque\IDeque.vb" />
+    <Compile Include="ComponentModel\DataStructures\Deque\ReversedEnumerator.vb" />
+    <Compile Include="ComponentModel\DataStructures\Deque\ReverseQueue.vb" />
+    <Compile Include="ComponentModel\File\IOWorkModes.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
+    <Compile Include="Data\NamespaceDoc.vb" />
+    <Compile Include="Data\Repository\RepositoryFileSystem.vb" />
+    <Compile Include="Data\Trinity\WordSimilarityIndex.vb" />
+    <Compile Include="Extensions\Collection\CategoryOperations.vb" />
+    <Compile Include="Extensions\Collection\Linq\JoinExtensions.vb" />
+    <Compile Include="Extensions\Collection\CollectionValueGetter.vb" />
+    <Compile Include="Extensions\Image\ImageFormats.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
+    <Compile Include="Extensions\Globals.vb" />
+    <Compile Include="Extensions\Reflection\ScriptMeta.vb" />
+    <Compile Include="Extensions\Reflection\ValueReader.vb" />
+    <Compile Include="Extensions\Reflection\EnumHelpers.vb" />
     <Compile Include="Extensions\StringHelpers\StringFormats.vb" />
+    <Compile Include="Language\Linq\Rapply.vb" />
+    <Compile Include="My\RlangInterop.vb" />
     <Compile Include="My\Framework\FrameworkConfig.vb" />
     <Compile Include="My\Framework\DoConfiguration.vb" />
     <Compile Include="My\Framework\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
-    <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
     <Compile Include="ApplicationServices\Tools\Plugin\Loader.vb" />
@@ -1036,11 +1302,6 @@
     <Compile Include="ApplicationServices\Tools\Zip\Options.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\NamespaceDoc.vb" />
-    <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\CodeSign.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\SupportedLanguages.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\LicenseInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
@@ -1062,9 +1323,9 @@
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLSupports.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LCS.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb" />
-    <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
-    <Compile Include="ComponentModel\DataSource\TypeCaster.vb" />
-    <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\Levenshtein\DamerauLevenshteinDistance.vb" />
+    <Compile Include="Data\TypeCaster.vb" />
+    <Compile Include="Data\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\DataSource\Property\GenericProperty.vb" />
     <Compile Include="ComponentModel\File\XmlDataModel.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IntTag.vb" />
@@ -1082,7 +1343,7 @@
     <Compile Include="Extensions\Collection\Linq\Pipeline.vb" />
     <Compile Include="Extensions\Collection\Linq\Takes.vb" />
     <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
-    <Compile Include="Extensions\Collection\BucketExtensions.vb" />
+    <Compile Include="Extensions\Collection\BucketOperators.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
@@ -1100,20 +1361,25 @@
     <Compile Include="Extensions\Math\Information\UncheckHelpers.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Average.vb" />
     <Compile Include="Extensions\StringHelpers\StringBuilders.vb" />
-    <Compile Include="Extensions\Trinity\Extensions.vb" />
-    <Compile Include="Extensions\Trinity\Expression.vb" />
-    <Compile Include="Extensions\Trinity\Word.vb" />
-    <Compile Include="Extensions\Trinity\WordClass.vb" />
+    <Compile Include="Data\Trinity\Extensions.vb" />
+    <Compile Include="Data\Trinity\Expression.vb" />
+    <Compile Include="Data\Trinity\Word.vb" />
+    <Compile Include="Data\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="My\JavaScript\ES6\Map.vb" />
     <Compile Include="My\JavaScript\Linq.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="My\JavaScript\String.vb" />
     <Compile Include="My\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Language\Value\CharStream.vb" />
     <Compile Include="Language\Value\Variant.vb" />
     <Compile Include="My\File.vb" />
+    <Compile Include="My\FileFormats.vb" />
+    <Compile Include="Net\HTTP\URL.vb" />
+    <Compile Include="Net\HTTP\Web\WebQuery.vb" />
+    <Compile Include="Net\HTTP\Web\WebQueryModule.vb" />
     <Compile Include="Net\HTTP\wget.vb" />
     <Compile Include="Net\HTTP\Stream\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
@@ -1159,7 +1425,7 @@
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\SCS.vb" />
     <Compile Include="ComponentModel\Count.vb" />
-    <Compile Include="ComponentModel\DataSource\Abstract.vb" />
+    <Compile Include="Data\Abstract.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\QueryCache.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\NamedValueList.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\BadBehaviourResponses.vb" />
@@ -1168,7 +1434,7 @@
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb" />
     <Compile Include="ComponentModel\DriverModel.vb" />
-    <Compile Include="ComponentModel\DataSource\Tsv.vb" />
+    <Compile Include="Data\Tsv.vb" />
     <Compile Include="ComponentModel\DataSource\Property\NamedCollection.vb" />
     <Compile Include="ComponentModel\DataSource\Property\PropertyValue.vb" />
     <Compile Include="ComponentModel\DataSource\Property\IProperty.vb" />
@@ -1187,25 +1453,40 @@
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
     <Compile Include="ComponentModel\DataStructures\BitMap\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
-    <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Ranges\Relations.vb" />
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
+    <Compile Include="Serialization\BEncoding\BencodeDecoder.vb" />
+    <Compile Include="Serialization\BEncoding\BElement.vb" />
+    <Compile Include="Serialization\BEncoding\BInteger.vb" />
+    <Compile Include="Serialization\BEncoding\BString.vb" />
+    <Compile Include="Serialization\BEncoding\BList.vb" />
+    <Compile Include="Serialization\BEncoding\BDictionary.vb" />
+    <Compile Include="Serialization\BEncoding\BencodingException.vb" />
+    <Compile Include="Serialization\BEncoding\BencodingExtensions.vb" />
     <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
     <Compile Include="Serialization\ICloneable.vb" />
+    <Compile Include="Serialization\RawStream.vb" />
+    <Compile Include="Text\IO\Encodings.vb" />
+    <Compile Include="Text\Parser\CharBuffer.vb" />
+    <Compile Include="Text\Parser\SyntaxTokenlizer.vb" />
+    <Compile Include="Text\Patterns\NamespaceDoc.vb" />
+    <Compile Include="Text\Patterns\Validator\isIP.vb" />
+    <Compile Include="Text\Patterns\Validator\Validator.vb" />
+    <Compile Include="Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb" />
     <Compile Include="Text\Xml\Models\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
-    <Compile Include="ComponentModel\Ranges\RangeModel\IRanges.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\IRangeModel.vb" />
     <Compile Include="ComponentModel\Ranges\RangeModel\Range.vb" />
     <Compile Include="ComponentModel\Ranges\RangeModel\DoubleRange.vb" />
     <Compile Include="ComponentModel\Ranges\RangeModel\IntRange.vb" />
     <Compile Include="ComponentModel\Settings\Inf\IniFile.vb" />
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileTable.vb" />
-    <Compile Include="ComponentModel\SingletonHolder.vb" />
+    <Compile Include="My\SingletonHolder.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\BinaryPriorityQueue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
@@ -1218,7 +1499,7 @@
     <Compile Include="Extensions\Collection\Linq\VectorAssertExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\VectorAssertor.vb" />
     <Compile Include="Extensions\Collection\Linq\NumericSequence.vb" />
-    <Compile Include="Extensions\Collection\Linq\Which.vb" />
+    <Compile Include="Extensions\Collection\Linq\WhichIndex.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\VisualBasicAppException.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\PropertyValue.vb" />
     <Compile Include="Extensions\Collection\AnonymousTypeHelper.vb" />
@@ -1256,7 +1537,7 @@
     <Compile Include="Net\DomainName.vb" />
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
-    <Compile Include="Scripting\Runtime\CType\Narrowing.vb" />
+    <Compile Include="Scripting\Runtime\CType\ImplictCType.vb" />
     <Compile Include="Scripting\VisualBasic\Extensions.vb" />
     <Compile Include="Scripting\VisualBasic\KeywordProcessor.vb" />
     <Compile Include="Serialization\Abstract.vb" />
@@ -1271,7 +1552,7 @@
     <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />
-    <Compile Include="Language\Language\Java\Line2D.vb" />
+    <Compile Include="Extensions\Image\Math\Line2D.vb" />
     <Compile Include="Language\Language\Java\Collections.vb" />
     <Compile Include="Language\Language\Java\Reflection.vb" />
     <Compile Include="Language\Linq\Vectorization\SchemaProvider.vb" />
@@ -1353,7 +1634,7 @@
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
     <Compile Include="Extensions\Math\Random\RandomRange.vb" />
     <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
-    <Compile Include="Extensions\Trinity\NLP\TextTokens.vb" />
+    <Compile Include="Data\Trinity\NLP\TextTokens.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric2.vb" />
     <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
@@ -1393,7 +1674,6 @@
     <Compile Include="ApplicationServices\Parallel\Tasks\IParallelTask.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\BatchTasks.vb" />
-    <Compile Include="ApplicationServices\Parallel\Threads\CodeThread.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
@@ -1418,7 +1698,7 @@
     <Compile Include="Text\Parser\HtmlParser\HtmlStrips.vb" />
     <Compile Include="Text\Parser\ParserValue.vb" />
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
-    <Compile Include="ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\Levenshtein\ResultVisualize.vb" />
     <Compile Include="Text\Xml\Linq\Entity.vb" />
     <Compile Include="Text\Xml\Models\ValueTuples\Extensions.vb" />
     <Compile Include="Text\Xml\Models\Vector.vb" />
@@ -1440,8 +1720,8 @@
     <Compile Include="Extensions\IO\Path\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
-    <Compile Include="Language\Language\UnixBash\FileSystem\PathMapper.vb" />
-    <Compile Include="My\LinuxRunHelper.vb" />
+    <Compile Include="My\UNIX\PathMapper.vb" />
+    <Compile Include="My\UNIX\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
@@ -1451,7 +1731,6 @@
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
     <Compile Include="Net\Tcp\IPTools\AddressEnumerator.vb" />
-    <Compile Include="ApplicationServices\VBDev\Signature\LicenseMgr.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Project.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectMember.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb" />
@@ -1522,31 +1801,23 @@
     <Compile Include="ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb" />
     <Compile Include="Serialization\BinaryDumping\Buffer.vb" />
     <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
-    <Compile Include="Serialization\Controls\Contrls.vb" />
     <Compile Include="Text\Splitter.vb" />
     <Compile Include="Text\IO\EncodingHelper.vb" />
-    <Compile Include="Net\Protocol\Streams\ArrayAbstract.vb" />
-    <Compile Include="Net\Protocol\Streams\VarArray.vb" />
     <Compile Include="ApplicationServices\VBDev\ApplicationInfoUtils.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
     <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />
     <Compile Include="Extensions\Reflection\Reflection.vb" />
-    <Compile Include="ComponentModel\Algorithm\Levenshtein\LevenshteinModel.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinModel.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\Extensions.vb" />
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
-    <Compile Include="Text\TextEncodings.vb" />
-    <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
+    <Compile Include="Text\IO\TextEncodings.vb" />
+    <Compile Include="Net\HTTP\HTTP_RFC.vb" />
     <Compile Include="Net\HTTP\Stream\Base64Codec.vb" />
-    <Compile Include="Extensions\WebServices\NetResponse.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
-    <Compile Include="ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb" />
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\API.vb" />
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\PipeBuffer.vb" />
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\PipeStream.vb" />
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\Pipeline.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb" />
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
     <Compile Include="Scripting\TokenIcer\ParserCommon.vb" />
@@ -1584,41 +1855,22 @@
     <Compile Include="Net\Abstract.vb" />
     <Compile Include="Net\MIME\MIME.vb" />
     <Compile Include="Net\MIME\ContentType.vb" />
-    <Compile Include="Net\Protocol\Abstract.vb" />
-    <Compile Include="Net\Protocol\Streams\Array.vb" />
-    <Compile Include="Net\Protocol\Streams\ArrayBase.vb" />
-    <Compile Include="Net\Protocol\Streams\String.vb" />
-    <Compile Include="Net\Protocol\IVerifySession.vb" />
-    <Compile Include="Net\Protocol\Reflection\AppMgr.vb" />
-    <Compile Include="Net\Protocol\Reflection\ProtocolInvoker.vb" />
-    <Compile Include="Net\Protocol\Reflection\Protocol.vb" />
-    <Compile Include="Net\Protocol\Reflection\ProtocolHandler.vb" />
-    <Compile Include="Net\Protocol\RequestStream.vb" />
-    <Compile Include="Net\Tcp\Persistent\Protocols\POST.vb" />
     <Compile Include="Net\HTTP\wgetTask.vb" />
-    <Compile Include="Net\Tcp\StateObject.vb" />
     <Compile Include="Net\Tcp\IPTools\IPEndPoint.vb" />
     <Compile Include="Net\Tcp\IPTools\LAN.vb" />
     <Compile Include="Net\DomainParser.vb" />
-    <Compile Include="Net\Tcp\Persistent\Socket\WorkSocket.vb" />
-    <Compile Include="Net\Tcp\Persistent\Protocols\Protocol.vb" />
-    <Compile Include="Net\Tcp\Persistent\Socket\TcpClient.vb" />
-    <Compile Include="Net\Tcp\Persistent\Socket\ServicesSocket.vb" />
     <Compile Include="Net\PingUtility.vb" />
-    <Compile Include="Net\Tcp\TcpServicesSocket.vb" />
     <Compile Include="ApplicationServices\Tools\OSVersionInfo.vb" />
     <Compile Include="ApplicationServices\Tools\WinForm\MockForm.vb" />
     <Compile Include="ApplicationServices\Tools\WinForm\SingleInstanceFormEntry.vb" />
     <Compile Include="ApplicationServices\Tools\Resources.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\StringResources.vb" />
-    <Compile Include="ApplicationServices\VBDev\Ngen\Ngen.vb" />
     <Compile Include="Extensions\Security\AES.vb" />
     <Compile Include="Extensions\Security\SHA.vb" />
     <Compile Include="Extensions\Security\RSACrypto.vb" />
     <Compile Include="Extensions\Security\SecurityString.vb" />
     <Compile Include="ApplicationServices\Parallel\OperationTimeOut.vb" />
     <Compile Include="Net\Tcp\TCPExtensions.vb" />
-    <Compile Include="Net\Tcp\TcpRequest.vb" />
     <Compile Include="ApplicationServices\Parallel\Threading.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
     <Compile Include="Extensions\Image\GDI+\GraphicsExtensions.vb" />
@@ -1626,7 +1878,7 @@
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb" />
-    <Compile Include="ApplicationServices\Terminal\Utility\ManualPages.vb" />
+    <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\ManualPages.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Linq\CPOLLicense.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsCovariance.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb" />
@@ -1647,7 +1899,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
     <Compile Include="ApplicationServices\Tools\Zip\ZipLib.vb" />
-    <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
+    <Compile Include="Data\DataFramework.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\CBusyIndicator.vb" />
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />
     <Compile Include="Text\IO\TextFileEncodingDetector.vb" />
@@ -1677,7 +1929,7 @@
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\ProcessLock.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\Shell.vb" />
-    <Compile Include="ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
+    <Compile Include="ApplicationServices\Terminal\STDIO__\IConsole.vb" />
     <Compile Include="Language\Language\C\CFormatProvider.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\STDIO.vb" />
     <Compile Include="ComponentModel\DataStructures\BitMap\HashModel.vb" />
@@ -1686,6 +1938,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -1739,6 +1992,7 @@
     <None Include="Resources\CPOL.htm" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\scripts\runMono.sh" />
     <None Include="Serialization\JSON\Formatter\readme.md" />
     <None Include="Net\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>

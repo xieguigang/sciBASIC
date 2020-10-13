@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::078ee2e0cad5f79420407c60058119fc, Data_science\Visualization\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::cca7f67a5ce7e1c264b2acee0f56e224, Data_science\Visualization\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Fractions
 
@@ -122,7 +122,7 @@ Namespace Fractions
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim gSize = region.PlotRegion.Size
-                    Dim r# = sys.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
+                    Dim r# = stdNum.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
                     Dim topLeft As New Point(margin.Left, margin.Top)
                     Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
                     Dim layoutRect As Rectangle
@@ -146,7 +146,7 @@ Namespace Fractions
 
                             Call circle.AddEllipse(.X, .Y, CSng(r * 2), CSng(r * 2))
                             Call circle.CloseAllFigures()
-                            Call g.DropdownShadows(polygon:=circle)
+                            Call Shadow.DropdownShadows(g, polygon:=circle)
                         End With
 
                         ' 填充浅灰色底层
@@ -159,7 +159,8 @@ Namespace Fractions
                                            CSng(sweep))
 
                             alpha = (+start) - (+sweep / 2)
-                            pt = (r / 1.5, alpha).ToCartesianPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                            ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                            pt = (r / 1.5, alpha).ToCartesianPoint()
                             pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                             label = x.GetValueLabel(valueLabel)
                             labelSize = g.MeasureString(label, valueLabelFont)
@@ -171,8 +172,8 @@ Namespace Fractions
 
                                 ' 标签文本信息跟随pie的值而变化的
                                 Dim layout As New PointF With {
-                                    .X = (r * 1.15 * Math.Cos((start / 360) * (2 * Math.PI))) + centra.X,
-                                    .Y = (r * 1.15 * Math.Sin((start / 360) * (2 * Math.PI))) + centra.Y
+                                    .X = (r * 1.15 * stdNum.Cos((start / 360) * (2 * stdNum.PI))) + centra.X,
+                                    .Y = (r * 1.15 * stdNum.Sin((start / 360) * (2 * stdNum.PI))) + centra.Y
                                 }
 
                                 labelSize = g.MeasureString(x.Name, font)
@@ -236,7 +237,13 @@ Namespace Fractions
                             }
                         Next
 
-                        Call g.DrawLegends(New Point(left, top), legends, legendUnitSize, d, legendBorder)
+                        Call g.DrawLegends(
+                            topLeft:=New Point(left, top),
+                            legends:=legends,
+                            gSize:=legendUnitSize,
+                            d:=d,
+                            shapeBorder:=legendBorder
+                        )
                     End If
                 End Sub
 

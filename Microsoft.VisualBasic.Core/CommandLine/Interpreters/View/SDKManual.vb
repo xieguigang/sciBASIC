@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f9f988fd11956c1f2392450da027f30, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::74c58adc6e9b7e24ef55640f24700803, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
 
     ' Author:
     ' 
@@ -35,16 +35,20 @@
     ' 
     '         Function: HelpSummary, LaunchManual, MarkdownDoc
     ' 
+    '         Sub: AppSummary
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Reflection
+Imports System.Globalization
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
 Imports Microsoft.VisualBasic.CommandLine.Grouping
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
@@ -53,7 +57,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer.Prefix
-Imports Microsoft.VisualBasic.Terminal.Utility
 Imports Microsoft.VisualBasic.Text
 Imports VBCore = Microsoft.VisualBasic.App
 
@@ -185,6 +188,47 @@ Namespace CommandLine.ManView
         End Function
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="assem"></param>
+        ''' <param name="description">命令行的使用功能描述信息文本</param>
+        ''' <param name="SYNOPSIS">命令行的使用语法</param>
+        ''' <param name="write"></param>
+        <Extension>
+        Public Sub AppSummary(assem As AssemblyInfo, description$, SYNOPSIS$, write As TextWriter)
+            Dim descr = assem.AssemblyDescription
+
+            Call write.WriteLine()
+
+            Call write.WriteLine(" // ")
+            Call write.WriteLine(" // " & Strings.Trim(descr) Or "[No description]".AsDefault)
+            Call write.WriteLine(" // ")
+            Call write.WriteLine(" // VERSION:   " & (assem.AssemblyVersion Or "1.0.0.*".AsDefault))
+            Call write.WriteLine(" // ASSEMBLY:  " & assem.AssemblyFullName)
+            Call write.WriteLine(" // COPYRIGHT: " & assem.AssemblyCopyright.Replace("©", "(c)"))
+            Call write.WriteLine(" // GUID:      " & assem.Guid)
+            Call write.WriteLine(" // BUILT:     " & assem.BuiltTime.ToString(New CultureInfo("en-US")))
+            Call write.WriteLine(" // ")
+
+            Call write.WriteLine()
+            Call write.WriteLine()
+
+            For Each line$ In Paragraph.SplitParagraph(description, 110)
+                Call write.WriteLine(" " & line$)
+            Next
+
+            If Not SYNOPSIS.StringEmpty Then
+                Call write.WriteLine()
+                Call write.WriteLine()
+                Call write.WriteLine("SYNOPSIS")
+                Call write.WriteLine(SYNOPSIS)
+                Call write.WriteLine()
+            End If
+
+            Call write.Flush()
+        End Sub
+
+        ''' <summary>
         ''' Returns the summary brief help information of all of the commands in current cli interpreter.
         ''' (枚举出本CLI解释器之中的所有的命令的帮助的摘要信息)
         ''' </summary>
@@ -199,32 +243,14 @@ Namespace CommandLine.ManView
                 .Max
 
             If Not markdown Then
-                Dim descr = VBCore.Info.AssemblyDescription
-
-                Call sb.AppendLine()
-
-                Call sb.AppendLine(" // ")
-                Call sb.AppendLine(" // " & Strings.Trim(descr) Or "[No description]".AsDefault)
-                Call sb.AppendLine(" // ")
-                Call sb.AppendLine(" // VERSION:   " & (VBCore.Info.AssemblyVersion Or "1.0.0.*".AsDefault))
-                Call sb.AppendLine(" // ASSEMBLY:  " & Assembly.LoadFile(VBCore.ExecutablePath).GetName.ToString)
-                Call sb.AppendLine(" // COPYRIGHT: " & VBCore.Info.AssemblyCopyright)
-                Call sb.AppendLine(" // GUID:      " & VBCore.Info.Guid)
-                Call sb.AppendLine(" // BUILT:     " & VBCore.Info.BuiltTime.ToString)
-                Call sb.AppendLine(" // ")
-
-                Call sb.AppendLine()
-                Call sb.AppendLine()
-
-                For Each line$ In Paragraph.SplitParagraph(App.Info.Description, 110)
-                    Call sb.AppendLine(" " & line$)
-                Next
-
-                Call sb.AppendLine()
-                Call sb.AppendLine()
-                Call sb.AppendLine("SYNOPSIS")
-                Call sb.AppendLine($"{VBCore.AssemblyName} command [/argument argument-value...] [/@set environment-variable=value...]")
-                Call sb.AppendLine()
+                Call ($"{VBCore.AssemblyName} command [/argument argument-value...] [/@set environment-variable=value...]") _
+                    .DoCall(Sub(SYNOPSIS)
+                                Call VBCore.Info.AppSummary(
+                                    description:=App.Info.Description,
+                                    SYNOPSIS:=SYNOPSIS,
+                                    write:=New StringWriter(sb)
+                                )
+                            End Sub)
             End If
 
             Call sb.AppendLine(ListAllCommandsPrompt)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60c0f50741ba4fb1373c344874776400, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::ce9a43db7ba786f41239131f8612a980, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
     '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Project
-    '                   Remove, Save, (+2 Overloads) ToArray, TokenCounts, ToString
+    '                   Remove, (+2 Overloads) Save, (+2 Overloads) ToArray, TokenCounts, ToString
     '                   Transpose, Trim
     ' 
     '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
@@ -50,8 +50,8 @@
     '             Properties: IsReadOnly, RowNumbers
     ' 
     '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, GetEnumerator
-    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, Join, Load
-    '                       loads, LoadTsv, Normalization, Parse, ReadHeaderRow
+    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, (+2 Overloads) Join, Load
+    '                       loads, (+2 Overloads) LoadTsv, Normalization, Parse, ReadHeaderRow
     '                       Remove, RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
@@ -264,7 +264,7 @@ B21,B22,B23,...
             Get
                 For Each row As RowObject In _innerTable
                     If InStr(row.First, prefix) = 1 Then
-                        Yield row.AsLine(" ")
+                        Yield row.AsLine(" "c)
                     End If
                 Next
             End Get
@@ -283,6 +283,11 @@ B21,B22,B23,...
             Return df
         End Function
 
+        ''' <summary>
+        ''' 按照列进行投影操作, 这个函数仅适用于小型数据
+        ''' </summary>
+        ''' <param name="fieldNames"></param>
+        ''' <returns></returns>
         Public Function Project(fieldNames As IEnumerable(Of String)) As File
             Dim columns = fieldNames.Select(Function(name) Me(name)).ToArray
             Dim newTable = columns.JoinColumns
@@ -311,9 +316,12 @@ B21,B22,B23,...
             Call _innerTable.Add(New RowObject(row))
         End Sub
 
+        ''' <summary>
+        ''' 添加一个空白行
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine()
-            Call _innerTable.Add(New String() {" "})
+            Call _innerTable.Add(New String() {""})
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -607,6 +615,11 @@ B21,B22,B23,...
             Return StreamIO.SaveDataFrame(Me, path, Encoding)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Save(path$, encoding As Encodings, Optional tsv As Boolean = False, Optional silent As Boolean = True) As Boolean
+            Return StreamIO.SaveDataFrame(Me, path, encoding.CodePage, tsv:=tsv, silent:=silent)
+        End Function
+
         ''' <summary>
         ''' 这个方法是保存<see cref="Csv.DataFrame"></see>对象之中的数据所需要的
         ''' </summary>
@@ -698,13 +711,19 @@ B21,B22,B23,...
             Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadTsv(path$, Optional encoding As Encoding = Nothing) As File
+            Return DataImports.Imports(path, ASCII.TAB, encoding)
+        End Function
+
+
         Public Shared Function ReadHeaderRow(path$, Optional encoding As Encodings = Encodings.UTF8, Optional tsv As Boolean = False) As RowObject
             Dim firstLine$ = path.ReadFirstLine(encoding.CodePage)
 
             If tsv Then
                 Return New RowObject(firstLine.Split(ASCII.TAB))
             Else
-                Return New RowObject(IO.CharsParser(firstLine))
+                Return New RowObject(IO.Tokenizer.CharsParser(firstLine))
             End If
         End Function
 
@@ -723,7 +742,7 @@ B21,B22,B23,...
         ''' <summary>
         ''' 对目标文本内容字符串进行解析，得到csv文件对象数据模型
         ''' </summary>
-        ''' <param name="content$"></param>
+        ''' <param name="content">这个参数是文本内容，而非是文件路径</param>
         ''' <param name="trimBlanks"></param>
         ''' <returns></returns>
         ''' 
@@ -755,6 +774,11 @@ B21,B22,B23,...
             Next
 
             Return csv
+        End Function
+
+        Public Function Join(column As IEnumerable(Of String)) As File
+            Call __setColumn(column.ToArray, Headers.Count)
+            Return Me
         End Function
 
         ''' <summary>
@@ -969,7 +993,7 @@ B21,B22,B23,...
         End Function
 
         Public Sub Save(output As StreamWriter, Optional isTsv As Boolean = False)
-            Dim delimiter$ = "," Or vbTab.When(isTsv)
+            Dim delimiter As Char = ","c Or ASCII.TAB.When(isTsv)
 
             For Each row As RowObject In Me
                 Call output.WriteLine(row.AsLine(delimiter))

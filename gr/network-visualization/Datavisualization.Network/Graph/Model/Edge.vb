@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cab6b911f7ff1e7bad10b633b7db1f62, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::a916c7fc878614dc64e653a940c235df, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,12 @@
 
     '     Class Edge
     ' 
-    '         Properties: __source, __target, data, ID, isDirected
+    '         Properties: data, ID, isDirected, m_interationtype, m_source
+    '                     m_target, weight
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
+    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, Other
+    '                   ToString
     '         Operators: <>, =
     ' 
     ' 
@@ -83,13 +85,16 @@
 '
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace Graph
 
     Public Class Edge : Inherits GraphTheory.Network.Edge(Of Node)
         Implements IInteraction
+        Implements INetworkEdge
         Implements IGraphValueContainer(Of EdgeData)
         Implements ICloneable(Of Edge)
 
@@ -116,7 +121,8 @@ Namespace Graph
         Public Property isDirected As Boolean
 
 #Region "Implements IInteraction"
-        Private Property __source As String Implements IInteraction.source
+
+        Private Property m_source As String Implements IInteraction.source
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return U.label
@@ -126,7 +132,7 @@ Namespace Graph
             End Set
         End Property
 
-        Private Property __target As String Implements IInteraction.target
+        Private Property m_target As String Implements IInteraction.target
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return V.label
@@ -135,6 +141,18 @@ Namespace Graph
                 Throw New NotImplementedException()
             End Set
         End Property
+
+        Private Property m_interationtype As String Implements INetworkEdge.Interaction
+            Get
+                Return data(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
+            End Get
+            Set(value As String)
+                data(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE) = value
+            End Set
+        End Property
+
+        Public Overrides Property weight As Double Implements INetworkEdge.value
+
 #End Region
 
         Public Sub New(id As String, source As Node, target As Node, Optional data As EdgeData = Nothing)
@@ -150,6 +168,14 @@ Namespace Graph
         Sub New()
             Call Me.New(Nothing, Nothing, Nothing, Nothing)
         End Sub
+
+        Public Function Other(current As Node) As Node
+            If U Is current Then
+                Return V
+            Else
+                Return U
+            End If
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
@@ -216,8 +242,9 @@ Namespace Graph
                 .data = New EdgeData With {
                     .label = data.label,
                     .length = data.length,
-                    .weight = data.weight,
-                    .Properties = New Dictionary(Of String, String)(data.Properties)
+                    .Properties = New Dictionary(Of String, String)(data.Properties),
+                    .bends = data.bends.SafeQuery.ToArray,
+                    .color = data.color
                 }
             }
         End Function

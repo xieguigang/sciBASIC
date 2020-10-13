@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31c7f97b66510e2e447684754acc60fc, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
+﻿#Region "Microsoft.VisualBasic::41448d07a58fda8902f2c41b5d46d8e0, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
 
     ' Author:
     ' 
@@ -35,11 +35,7 @@
     ' 
     '     Properties: data
     ' 
-    '     Function: loadData, ParseData
-    ' 
-    ' Structure Sample
-    ' 
-    '     Function: Parse16Bit, Parse8Bit, ToString
+    '     Function: GenericEnumerator, GetEnumerator, loadData, ParseData
     ' 
     ' /********************************************************************************/
 
@@ -47,9 +43,11 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class DataSubChunk : Inherits SubChunk
+    Implements Enumeration(Of Sample)
 
     Public Property data As Sample()
 
@@ -61,7 +59,7 @@ Public Class DataSubChunk : Inherits SubChunk
         End Get
     End Property
 
-    Public Shared Function ParseData(wav As BinaryDataReader, format As FMTSubChunk) As DataSubChunk
+    Friend Shared Function ParseData(wav As BinaryDataReader, format As FMTSubChunk) As DataSubChunk
         Do While wav.ReadString(4) <> "data"
             wav.Seek(-3, SeekOrigin.Current)
         Loop
@@ -88,34 +86,14 @@ Public Class DataSubChunk : Inherits SubChunk
                 Throw New NotImplementedException(format.GetJson)
         End Select
     End Function
+
+    Public Iterator Function GenericEnumerator() As IEnumerator(Of Sample) Implements Enumeration(Of Sample).GenericEnumerator
+        For Each sample In data
+            Yield sample
+        Next
+    End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Sample).GetEnumerator
+        Yield GetEnumerator()
+    End Function
 End Class
-
-Public Structure Sample
-
-    ''' <summary>
-    ''' 一个sample之中是由好几个声道的数据构成的
-    ''' </summary>
-    ''' <remarks>
-    ''' 在这里使用Short来兼容8bit和16bit的数据
-    ''' </remarks>
-    Dim channels As Short()
-
-    Public Overrides Function ToString() As String
-        Return channels.GetJson
-    End Function
-
-    Public Shared Iterator Function Parse16Bit(wav As BinaryDataReader, channels As Integer) As IEnumerable(Of Sample)
-        Dim sampleSize = channels * 2
-
-        Do While Not wav.EndOfStream AndAlso (wav.Position + sampleSize <= wav.Length)
-            Yield New Sample With {
-                .channels = wav.ReadInt16s(channels)
-            }
-        Loop
-    End Function
-
-    Public Shared Iterator Function Parse8Bit(wav As BinaryDataReader, channels As Integer) As IEnumerable(Of Sample)
-        Throw New NotImplementedException
-    End Function
-
-End Structure

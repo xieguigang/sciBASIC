@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::702658a0f3035fd8221dbcb9eb5490c9, Microsoft.VisualBasic.Core\Net\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::059b2012cf20b682907941bd3dfa62c7, Microsoft.VisualBasic.Core\Net\DomainParser.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,15 @@
 
     '     Module DomainParser
     ' 
-    '         Function: Trim, TrimPathAndQuery, (+2 Overloads) TryParse
+    '         Function: IsFullURL, Trim, TrimPathAndQuery, (+2 Overloads) TryParse
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 
 Namespace Net
@@ -51,6 +53,12 @@ Namespace Net
     ''' www.subdomain.anothersubdomain.maindomain.com/something/ -> maindomain.com
     ''' </summary>
     Public Module DomainParser
+
+        <Extension>
+        Public Function IsFullURL(url As String) As Boolean
+            Dim protocol$ = Regex.Match(url, "((https?)|(ftp)|(mailto))://", RegexICSng).Value
+            Return Not String.IsNullOrEmpty(protocol) AndAlso InStr(url, protocol) = 1
+        End Function
 
         ''' <summary>
         ''' 解析错误会返回空字符串

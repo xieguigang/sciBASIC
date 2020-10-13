@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bfd88a629503931126bbe64dd416c02, mime\text%html\HTML\HTML.vb"
+﻿#Region "Microsoft.VisualBasic::fba4fd8423f1613ed15f314869cf87ff, mime\text%html\HTML\HTML.vb"
 
     ' Author:
     ' 
@@ -97,7 +97,7 @@ Namespace HTML.DDM
         End Function
 
         Public Overrides Function ToString() As String
-            Return HTMLWriter.ToString(ToArray)
+            Return StreamWriter.ToString(ToArray)
         End Function
     End Class
 

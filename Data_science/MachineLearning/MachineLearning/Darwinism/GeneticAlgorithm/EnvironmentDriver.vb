@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ece85b48cb0e81335a439253bf440635, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
+﻿#Region "Microsoft.VisualBasic::4b42f9d82c258d6ae599c1b1bf3b9ae7, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
+Imports stdNum = System.Math
 
 Namespace Darwinism.GAF
 
@@ -127,7 +128,7 @@ Namespace Darwinism.GAF
 
                         Dim firstError# = errors.First
 
-                        If Math.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
+                        If stdNum.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
                             Call .DoCall(AddressOf reset)
 
                             ' 如果在这里不替换一下的话

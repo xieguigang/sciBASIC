@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f74cf3449e869734cb2d98890397c8f, mime\application%json\BSON\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::798ad6d7912dd43576fb75dd311afd80, mime\application%json\BSON\Encoder.vb"
 
     ' Author:
     ' 
@@ -44,13 +44,19 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports stdNum = System.Math
 
 Namespace BSON
 
     Public Class Encoder
 
         Private Sub encodeElement(ms As MemoryStream, name As String, v As JsonElement)
+            If v Is Nothing Then
+                Return
+            End If
+
             Select Case v.GetType
                 Case GetType(JsonObject)
                     ms.WriteByte(&H3)
@@ -162,10 +168,12 @@ Namespace BSON
             Dim buf As Byte() = BitConverter.GetBytes(v)
             ms.Write(buf, 0, buf.Length)
         End Sub
+
         Private Sub encodeInt64(ms As MemoryStream, v As Int64)
             Dim buf As Byte() = BitConverter.GetBytes(v)
             ms.Write(buf, 0, buf.Length)
         End Sub
+
         Private Sub encodeUTCDateTime(ms As MemoryStream, dt As DateTime)
             Dim span As TimeSpan
             If dt.Kind = DateTimeKind.Local Then
@@ -175,7 +183,7 @@ Namespace BSON
                 span = dt - New DateTime(1970, 1, 1, 0, 0, 0,
                 0, DateTimeKind.Utc)
             End If
-            Dim buf As Byte() = BitConverter.GetBytes(CType(Math.Truncate(span.TotalSeconds * 1000), Int64))
+            Dim buf As Byte() = BitConverter.GetBytes(CType(stdNum.Truncate(span.TotalSeconds * 1000), Int64))
             ms.Write(buf, 0, buf.Length)
         End Sub
     End Class

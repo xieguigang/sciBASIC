@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cb14b35413196d04634cbeb887b9907, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\CallbackTask.vb"
+﻿#Region "Microsoft.VisualBasic::beb89ab911b1d121d3d9c05fcad1aea3, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\CallbackTask.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,20 @@
     ' 
     '         Properties: CallbackInvoke
     ' 
+    '     Class RevokableTask
+    ' 
+    ' 
+    ' 
+    '     Class RevokableTaskLoop
+    ' 
+    '         Sub: RunTask
+    ' 
+    '     Class RevokableTaskLoop
+    ' 
+    '         Function: RunTask
+    ' 
+    '         Sub: populate
+    ' 
     '     Class CallbackTask
     ' 
     '         Properties: Task
@@ -52,7 +66,6 @@
 
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Parallel.Tasks
@@ -60,6 +73,60 @@ Namespace Parallel.Tasks
     Public Interface ICallbackTask
         ReadOnly Property CallbackInvoke As Action
     End Interface
+
+    Public MustInherit Class RevokableTask
+
+        Protected cancel As Boolean = False
+
+    End Class
+
+    ''' <summary>
+    ''' 可以被取消的循环对象
+    ''' </summary>
+    Public MustInherit Class RevokableTaskLoop : Inherits RevokableTask
+
+        Protected loopIndex As Integer
+
+        Public Sub RunTask()
+            Do While Not cancel
+                [loop]()
+                [loopIndex] += 1
+            Loop
+        End Sub
+
+        Protected MustOverride Sub [loop]()
+
+    End Class
+
+    ''' <summary>
+    ''' 可以被取消的循环对象
+    ''' </summary>
+    Public MustInherit Class RevokableTaskLoop(Of T) : Inherits RevokableTask
+
+        Protected loopIndex As Integer
+
+        Dim populateVal As T
+        Dim reset As Boolean
+
+        Public Iterator Function RunTask() As IEnumerable(Of T)
+            Do While Not cancel
+                [loop]()
+                [loopIndex] += 1
+
+                If reset Then
+                    Yield populateVal
+                    reset = False
+                End If
+            Loop
+        End Function
+
+        Protected MustOverride Sub [loop]()
+        Protected Sub populate(val As T)
+            populateVal = val
+            reset = True
+        End Sub
+
+    End Class
 
     ''' <summary>
     ''' When the task job complete, then the program will notify user code through callback function.

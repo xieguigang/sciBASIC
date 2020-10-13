@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fc962b5cafdc719056489d0069a2859, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::3cc3f7edc2d1c7b047a5aa0768856e14, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
@@ -58,7 +59,7 @@ Imports Microsoft.VisualBasic.Text
 <Package("IO")>
 Public Module IOExtensions
 
-    ReadOnly UTF8 As [Default](Of Encoding) = Encoding.UTF8
+    Public ReadOnly UTF8 As [Default](Of Encoding) = Encoding.UTF8
 
     ''' <summary>
     ''' Open text writer interface from a given <see cref="Stream"/> <paramref name="s"/>. 
@@ -155,18 +156,24 @@ Public Module IOExtensions
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
-    Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate, Optional doClear As Boolean = False) As FileStream
+    Public Function Open(path$,
+                         Optional mode As FileMode = FileMode.OpenOrCreate,
+                         Optional doClear As Boolean = False,
+                         Optional [readOnly] As Boolean = False) As FileStream
+
         Dim access As FileShare
+
+        If path.StringEmpty Then
+            Throw New InvalidProgramException("No file path data provided!")
+        ElseIf path.FileName.Length > 200 Then
+            Throw New PathTooLongException(path)
+        End If
 
         With path.ParentPath
             If Not .DirectoryExists Then
                 Call .MkDIR()
             End If
         End With
-
-        If path.FileName.Length > 200 Then
-            Throw New PathTooLongException(path)
-        End If
 
         If doClear Then
             ' 在这里调用FlushStream函数的话会导致一个循环引用的问题
@@ -178,7 +185,7 @@ Public Module IOExtensions
             access = FileShare.Read
         End If
 
-        Return IO.File.Open(path, mode, FileAccess.ReadWrite, access)
+        Return New FileStream(path, mode, If([readOnly], FileAccess.Read, FileAccess.ReadWrite), access, App.BufferSize)
     End Function
 
     ''' <summary>
@@ -251,7 +258,7 @@ Public Module IOExtensions
     End Function
 
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(stream As Net.Protocols.ISerializable, savePath$) As Boolean
+    <Extension> Public Function FlushStream(stream As ISerializable, savePath$) As Boolean
         Dim rawStream As Byte() = stream.Serialize
         If rawStream Is Nothing Then
             rawStream = New Byte() {}

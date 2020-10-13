@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1075d928dacaaf7926016c99b1dea19, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ca4155b102858fe0f93f81caa984232f, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,8 @@
     ' 
     '     Function: Plot
     ' 
+    '     Sub: printLegend, printXPredicted
+    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -47,6 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
@@ -58,11 +61,38 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Public Module RegressionPlot
 
+    ''' <summary>
+    ''' Plot of the linear regression result
+    ''' </summary>
+    ''' <param name="fit"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="margin$"></param>
+    ''' <param name="xLabel$"></param>
+    ''' <param name="yLabel$"></param>
+    ''' <param name="pointSize!"></param>
+    ''' <param name="title$"></param>
+    ''' <param name="titleFontCss$"></param>
+    ''' <param name="pointBrushStyle$"></param>
+    ''' <param name="errorFitPointStyle$"></param>
+    ''' <param name="predictPointStyle$"></param>
+    ''' <param name="regressionLineStyle$"></param>
+    ''' <param name="predictPointStroke$"></param>
+    ''' <param name="labelAnchorLineStroke$"></param>
+    ''' <param name="predictedX"></param>
+    ''' <param name="showLegend"></param>
+    ''' <param name="legendLabelFontCSS$"></param>
+    ''' <param name="pointLabelFontCSS$"></param>
+    ''' <param name="xAxisTickFormat$"></param>
+    ''' <param name="yAxisTickFormat$"></param>
+    ''' <param name="showErrorBand"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function Plot(Of Result As IFitted)(fit As Result,
+    Public Function Plot(fit As IFitted,
                          Optional size$ = "2100,1600",
                          Optional bg$ = "white",
                          Optional margin$ = g.DefaultPadding,
@@ -79,25 +109,38 @@ Public Module RegressionPlot
                          Optional labelAnchorLineStroke$ = Stroke.StrongHighlightStroke,
                          Optional predictedX As IEnumerable(Of NamedValue(Of Double)) = Nothing,
                          Optional showLegend As Boolean = True,
-                         Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarge,
+                         Optional linearDetailsFontCSS$ = CSSFont.Win10NormalLarge,
+                         Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarger,
                          Optional pointLabelFontCSS$ = CSSFont.Win7LittleLarge,
                          Optional xAxisTickFormat$ = "F2",
                          Optional yAxisTickFormat$ = "F2",
-                         Optional showErrorBand As Boolean = True) As GraphicsData
+                         Optional factorFormat$ = "G4",
+                         Optional showErrorBand As Boolean = True,
+                         Optional labelerIterations% = 1000) As GraphicsData
 
-        Dim xTicks#() = fit.X.Range.CreateAxisTicks(decimalDigits:=xAxisTickFormat.Match("\d+"))
-        Dim yTicks#() = fit.Y.Range.CreateAxisTicks(decimalDigits:=yAxisTickFormat.Match("\d+"))
+        Dim xTicks#() = fit.X.AsEnumerable _
+            .Range(scale:=1.125) _
+            .CreateAxisTicks(decimalDigits:=xAxisTickFormat.Match("\d+"))
+        Dim yTicks#() = (fit.Y.AsList + fit.Yfit.AsEnumerable) _
+            .Range(scale:=1.125) _
+            .CreateAxisTicks(decimalDigits:=yAxisTickFormat.Match("\d+"))
+
         Dim pointBrush As Brush = pointBrushStyle.GetBrush
         Dim regressionPen As Pen = Stroke.TryParse(regressionLineStyle).GDIObject
         Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
         Dim predictedBrush As Brush = predictPointStyle.GetBrush
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
-        Dim legendLabelFont As Font = CSSFont.TryParse(legendLabelFontCSS)
         Dim pointLabelFont As Font = CSSFont.TryParse(pointLabelFontCSS)
         Dim labelAnchorPen As Pen = Stroke.TryParse(labelAnchorLineStroke).GDIObject
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
+
+                If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty Then
+                    Call g.DrawString("Invalid curve!", CSSFont.TryParse(title), Brushes.Black, New PointF)
+                    Return
+                End If
+
                 Dim X = d3js.scale.linear.domain(xTicks).range(integers:={rect.Left, rect.Right})
                 Dim Y = d3js.scale.linear.domain(yTicks).range(integers:={rect.Top, rect.Bottom})
                 Dim scaler As New DataScaler With {
@@ -183,10 +226,10 @@ Public Module RegressionPlot
                             .Y = fit(.X)
                         }
 
-                        line = New Line(A, B).ParallelShift(Math.Abs(point.Err))
+                        line = New Line(A, B).ParallelShift(stdNum.Abs(point.Err))
                         plusError.Add(scaler.Translate(line.A))
 
-                        line = New Line(A, B).ParallelShift(-Math.Abs(point.Err))
+                        line = New Line(A, B).ParallelShift(-stdNum.Abs(point.Err))
                         negError.Add(scaler.Translate(line.A))
                     Next
 
@@ -206,72 +249,19 @@ Public Module RegressionPlot
                 End If
 
                 If Not predictedX Is Nothing Then
-                    Dim labels As New List(Of Label)
-                    Dim anchors As New List(Of PointF)
-                    Dim labelSize As SizeF
-
-                    For Each ptX As NamedValue(Of Double) In predictedX
-                        Dim pt As New PointF With {
-                            .X = ptX.Value,
-                            .Y = fit(.X)
-                        }
-
-                        pt = scaler.Translate(pt)
-                        labelSize = g.MeasureString(ptX.Name, pointLabelFont)
-                        anchors += pt
-
-                        g.DrawCircle(
-                            centra:=pt,
-                            r:=pointSize,
-                            color:=predictedBrush
-                        )
-                        g.DrawCircle(
-                            centra:=pt,
-                            r:=pointSize,
-                            color:=predictedPointBorder,
-                            fill:=False
-                        )
-
-                        labels += New Label With {
-                            .height = labelSize.Height,
-                            .width = labelSize.Width,
-                            .text = ptX.Name,
-                            .X = pt.X,
-                            .Y = pt.Y
-                        }
-                    Next
-
-                    Call d3js.labeler _
-                        .Labels(labels) _
-                        .Anchors(labels.GetLabelAnchors(pointSize)) _
-                        .Width(rect.Width) _
-                        .Height(rect.Height) _
-                        .Start(showProgress:=False, nsweeps:=500)
-
-                    For Each label As SeqValue(Of Label) In labels.SeqIterator
-                        With label.value
-                            Call g.DrawLine(labelAnchorPen, .ByRef, anchors(label))
-                            Call g.DrawString(.text, pointLabelFont, Brushes.Black, .ByRef)
-                        End With
-                    Next
+                    Call g.printXPredicted(
+                        fit, scaler,
+                        predictedX, predictedBrush, predictedPointBorder,
+                        pointSize,
+                        pointLabelFont,
+                        rect,
+                        labelAnchorPen,
+                        labelerIterations:=labelerIterations
+                    )
                 End If
 
                 If showLegend Then
-                    Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString("G2", html:=True)
-                    Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F4")
-                    Dim pt As New PointF With {
-                        .X = rect.Left + g.MeasureString("00", legendLabelFont).Width,
-                        .Y = rect.Top + 20
-                    }
-
-                    Call g.DrawHtmlString(eq, legendLabelFont, Color.Black, pt)
-
-                    pt = New PointF With {
-                        .X = pt.X,
-                        .Y = pt.Y + legendLabelFont.Height + 5
-                    }
-
-                    Call g.DrawHtmlString(R2, legendLabelFont, Color.Black, pt)
+                    Call g.printLegend(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat, Not predictedX Is Nothing)
                 End If
 
                 If Not title.StringEmpty Then
@@ -291,4 +281,116 @@ Public Module RegressionPlot
             plotInternal
         )
     End Function
+
+    <Extension>
+    Private Sub printXPredicted(g As IGraphics, fit As IFitted, scaler As DataScaler,
+                                predictedX As IEnumerable(Of NamedValue(Of Double)),
+                                predictedBrush As Brush,
+                                predictedPointBorder As Pen,
+                                pointSize!,
+                                pointLabelFont As Font,
+                                rect As RectangleF,
+                                labelAnchorPen As Pen,
+                                labelerIterations%)
+
+        Dim labels As New List(Of Label)
+        Dim anchors As New List(Of PointF)
+        Dim labelSize As SizeF
+
+        For Each ptX As NamedValue(Of Double) In predictedX
+            Dim pt As New PointF With {
+                .X = ptX.Value,
+                .Y = fit(.X)
+            }
+
+            If Not (pt.X.IsNaNImaginary OrElse pt.Y.IsNaNImaginary) Then
+                pt = scaler.Translate(pt)
+                labelSize = g.MeasureString(ptX.Name, pointLabelFont)
+
+                g.DrawCircle(
+                    centra:=pt,
+                    r:=pointSize,
+                    color:=predictedBrush
+                )
+                g.DrawCircle(
+                    centra:=pt,
+                    r:=pointSize,
+                    color:=predictedPointBorder,
+                    fill:=False
+                )
+
+                anchors += pt
+                labels += New Label With {
+                    .height = labelSize.Height,
+                    .width = labelSize.Width,
+                    .text = ptX.Name,
+                    .X = pt.X,
+                    .Y = pt.Y
+                }
+            End If
+        Next
+
+        Call d3js.labeler(maxMove:=50, maxAngle:=0.6, w_len:=0.5, w_inter:=5, w_lab2:=30, w_lab_anc:=30, w_orient:=5) _
+            .Labels(labels) _
+            .Anchors(labels.GetLabelAnchors(pointSize)) _
+            .Width(rect.Width) _
+            .Height(rect.Height) _
+            .Start(showProgress:=False, nsweeps:=labelerIterations)
+
+        For Each label As SeqValue(Of Label) In labels.SeqIterator
+            With label.value
+                Call g.DrawLine(labelAnchorPen, .GetTextAnchor(anchors(label)).PointF, anchors(label))
+                Call g.DrawString(.text, pointLabelFont, Brushes.Black, .ByRef)
+            End With
+        Next
+    End Sub
+
+    <Extension>
+    Private Sub printLegend(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$, hasPredictedSamples As Boolean)
+        Dim legendLabelFont As Font = CSSFont.TryParse(linearDetailsFontCSS)
+        Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString(factorFormat, html:=True)
+        Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F5")
+        Dim pt As New PointF With {
+            .X = rect.Left + g.MeasureString("00", legendLabelFont).Width,
+            .Y = rect.Top + 20
+        }
+
+        Call g.DrawHtmlString(eq, legendLabelFont, Color.Black, pt)
+
+        pt = New PointF With {
+            .X = pt.X,
+            .Y = pt.Y + legendLabelFont.Height + 5
+        }
+
+        Call g.DrawHtmlString(R2, legendLabelFont, Color.Black, pt)
+
+        Dim legends As Legend() = {
+            New Legend With {.color = "blue", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Predicts"},
+            New Legend With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Standard Reference"},
+            New Legend With {.color = "black", .fontstyle = legendLabelFontCSS, .style = LegendStyles.SolidLine, .title = "Linear"}
+        }
+
+        If hasPredictedSamples Then
+            legends.Add(New Legend With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Samples"})
+        End If
+
+        Dim border As Stroke = Stroke.ScatterLineStroke
+        Dim maxLabelSize! = legends _
+            .Select(Function(l) l.title) _
+            .MaxLengthString _
+            .DoCall(Function(str)
+                        Return g.MeasureString(str, legendLabelFont)
+                    End Function) _
+            .Width
+        Dim top = rect.Top + rect.Height / 1.5
+        Dim left = rect.Right - 1.25 * maxLabelSize
+
+        Call g.DrawLegends(
+            topLeft:=New Point(left, top),
+            legends:=legends,
+            gSize:="64,18",
+            fillBg:="white",
+            regionBorder:=border
+        )
+    End Sub
 End Module

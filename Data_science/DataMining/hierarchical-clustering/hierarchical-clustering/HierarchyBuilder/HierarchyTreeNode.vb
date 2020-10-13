@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6aa1ffd850b84765f6e3684cf295a61e, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::6421a7c26a95ddf9d77e07fcbf315e2c, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyTreeNode.vb"
 
     ' Author:
     ' 
@@ -119,7 +119,8 @@ Namespace Hierarchy
                 .Distance = New Distance(LinkageDistance)
             }
 
-            ' New clusters will track their children's leaf names; i.e. each cluster knows what part of the original data it contains
+            ' New clusters will track their children's leaf names; 
+            ' i.e.each cluster knows what part of the original data it contains
             cluster.AppendLeafNames(Left.LeafNames)
             cluster.AppendLeafNames(Right.LeafNames)
             cluster.AddChild(Left)

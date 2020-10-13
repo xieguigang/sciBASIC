@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ad9c27db04a246cde7cf84c89873018, www\githubAPI\Class\SearchUser.vb"
+﻿#Region "Microsoft.VisualBasic::35dcc72116e7db220850b5bf81385f3b, www\githubAPI\Class\SearchUser.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace [Class]
 
-    Public Class SearchResult(Of T As Class) : Inherits BaseClass
+    Public Class SearchResult(Of T As Class)
         Public Property total_count As Integer
         Public Property incomplete_results As Boolean
         Public Property items As T()
@@ -74,7 +74,7 @@ Namespace [Class]
     ''' <summary>
     ''' <see cref="login"/>是主键<see cref="INamedValue.Key"/>
     ''' </summary>
-    Public Class User : Inherits BaseClass
+    Public Class User
         Implements INamedValue
 
         Public Property score As Double

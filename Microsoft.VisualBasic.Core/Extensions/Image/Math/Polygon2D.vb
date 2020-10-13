@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3de1704040fc26424f9297c075be7162, Microsoft.VisualBasic.Core\Extensions\Image\Math\Polygon2D.vb"
+﻿#Region "Microsoft.VisualBasic::ed735d40bf3169727d9cde11e6da1b39, Microsoft.VisualBasic.Core\Extensions\Image\Math\Polygon2D.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
 
 #End Region
 
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Imaging.Math2D
 
@@ -79,11 +79,11 @@ Namespace Imaging.Math2D
 
             For i As Integer = 0 To n - 1
                 Dim d5 As Double = x(i)
-                d1 = sys.Min(d1, d5)
-                d3 = Math.Max(d3, d5)
+                d1 = stdNum.Min(d1, d5)
+                d3 = stdNum.Max(d3, d5)
                 Dim d6 As Double = y(i)
-                d2 = sys.Min(d2, d6)
-                d4 = Math.Max(d4, d6)
+                d2 = stdNum.Min(d2, d6)
+                d4 = stdNum.Max(d4, d6)
             Next
 
             Me.bounds1 = New Vector2D(d1, d2)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::652e836aa26b48201bf557c4ff71967b, Microsoft.VisualBasic.Core\Extensions\IO\Path\TemporaryEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::552461eb1d09fc878d08785dd5b80bfc, Microsoft.VisualBasic.Core\Extensions\IO\Path\TemporaryEnvironment.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@ Namespace FileIO
         ''' </summary>
         ''' <param name="newLocation"></param>
         Sub New(newLocation As String)
-            Call MyBase.New(DIR:=makeDirectoryExists(newLocation))
+            Call MyBase.New(directory:=makeDirectoryExists(newLocation))
 
             previous = App.CurrentDirectory
             App.CurrentDirectory = newLocation

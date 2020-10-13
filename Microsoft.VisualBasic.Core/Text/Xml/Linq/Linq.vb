@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56ccdc0840104d302a13ffe87cfdc7d3, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::2b877027c0c00c9b37d9d70826589e2d, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -147,11 +147,12 @@ Namespace Text.Xml.Linq
             Return type.Name
         End Function
 
-        Private Iterator Function InternalIterates(XML$, nodeName$) As IEnumerable(Of String)
+        Private Iterator Function InternalIterates(XML$, nodeName$, filter As Func(Of String, Boolean)) As IEnumerable(Of String)
             Dim XmlNodeList As XmlNodeList = XML _
                 .LoadXmlDocument _
                 .GetElementsByTagName(nodeName)
             Dim sb As New StringBuilder
+            Dim xmlText$
 
             For Each xmlNode As XmlNode In XmlNodeList
                 Call sb.Clear()
@@ -167,7 +168,13 @@ Namespace Text.Xml.Linq
                 Call sb.AppendLine(xmlNode.InnerXml)
                 Call sb.AppendLine($"</{nodeName}>")
 
-                Yield sb.ToString
+                xmlText = sb.ToString
+
+                If Not filter Is Nothing AndAlso filter(xmlText) Then
+                    Continue For
+                End If
+
+                Yield xmlText
             Next
         End Function
 
@@ -184,18 +191,26 @@ Namespace Text.Xml.Linq
         ''' Using for the namespace replacement.
         ''' (当这个参数存在的时候，目标命名空间申明将会被替换为空字符串，数据对象才会被正确的加载)
         ''' </param>
+        ''' <param name="elementFilter">
+        ''' 如果这个函数指针返回true, 则表示当前的数据元素节点需要被抛弃
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function LoadXmlDataSet(Of T As Class)(XML$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing, Optional forceLargeMode As Boolean = False) As IEnumerable(Of T)
+        Public Function LoadXmlDataSet(Of T As Class)(XML$,
+                                                      Optional typeName$ = Nothing,
+                                                      Optional xmlns$ = Nothing,
+                                                      Optional forceLargeMode As Boolean = False,
+                                                      Optional elementFilter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of T)
+
             Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
             Dim source As IEnumerable(Of String)
 
             If forceLargeMode OrElse XML.FileLength > 1024 * 1024 * 128 Then
                 ' 这是一个超大的XML文档
-                source = NodeIterator.IterateArrayNodes(XML, nodeName)
+                source = NodeIterator.IterateArrayNodes(XML, nodeName, elementFilter)
                 xmlns = Nothing
             Else
-                source = InternalIterates(XML, nodeName)
+                source = InternalIterates(XML, nodeName, elementFilter)
             End If
 
             Return source.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName)
@@ -214,9 +229,14 @@ Namespace Text.Xml.Linq
             Dim handle As New DeserializeHandler(Of T)(xmlNode) With {
                 .ReplaceXmlns = replaceXmlns
             }
+            Dim element As T
 
             For Each xml As String In nodes
-                Yield handle.LoadXml(xml)
+                element = handle.LoadXml(xml)
+
+                ' populate a new element from the 
+                ' node Text
+                Yield element
             Next
         End Function
 
@@ -303,6 +323,34 @@ Namespace Text.Xml.Linq
             }
 
             Using reader As XmlReader = XmlReader.Create(documentText, settings)
+
+                ' 20191218
+                ' 
+                ' System.Xml.XmlException
+                '  HResult = 0x80131940
+                '  Message = There Is no Unicode Byte order mark. Cannot switch To Unicode.
+                '  Source  = System.Xml
+                '  StackTrace:
+                '   at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+                '   at System.Xml.XmlTextReaderImpl.CheckEncoding(String newEncodingName)
+                '   at System.Xml.XmlTextReaderImpl.ParseXmlDeclaration(Boolean isTextDecl)
+                '   at System.Xml.XmlTextReaderImpl.Read()
+                '   at System.Xml.XmlReader.MoveToContent()
+                '   at Microsoft.VisualBasic.Text.Xml.Linq.Data.VB$StateMachine_12_UltraLargeXmlNodesIterator.MoveNext() in D:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb:line 322
+                '   at Microsoft.VisualBasic.Text.Xml.Linq.Data.VB$StateMachine_11_UltraLargeXmlNodesIterator.MoveNext() in D:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb:line 305
+                '   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+                '   at Microsoft.VisualBasic.Text.Xml.Linq.Data.VB$StateMachine_6_NodeInstanceBuilder`1.MoveNext() in D:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb:line 235
+                '   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+                '   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+                '   at metadbkit.builderPipeline._Closure$__._Lambda$__12-0(IEnumerable`1 ds) in D:\biodeep\biodeepdb_v3\metadb\metadbkit\builderPipeline.vb:line 173
+                '   at Microsoft.VisualBasic.Linq.PipelineExtensions.DoCall[T, Tout](T input, Func`2 apply) in D:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Pipeline.vb:line 63
+                '   at metadbkit.builderPipeline.readMetaDb(String file, Boolean linq) in D:\biodeep\biodeepdb_v3\metadb\metadbkit\builderPipeline.vb:line 170
+                '
+                ' Due to the reason of small xml file save in sciBASIC.NET is serialize to xml text at first
+                ' save then save the generated xml text to file
+                ' so the xml file encoding in its declaration and the actual text encoding of the saved text file
+                ' could be different
+                ' The the text encoding bugs will happened when read xml file in linq method by this function.
 
                 Call reader.MoveToContent()
 

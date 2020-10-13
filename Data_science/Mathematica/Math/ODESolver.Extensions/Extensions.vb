@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8d57a8517c6bb5d8128d2f7cc24a82a, Data_science\Mathematica\Math\ODESolver.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d037cf9655ddf750a54dbd964e549467, Data_science\Mathematica\Math\ODESolver.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,14 +41,16 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 <HideModuleName> Public Module Extensions
 
@@ -70,20 +72,20 @@ Imports sys = System.Math
     ''' Generates datafram and then can makes the result save data into a csv file.
     ''' </summary>
     ''' <param name="xDisp"></param>
-    ''' <param name="fix%">Formats output by using <see cref="Round"/></param>
+    ''' <param name="fix%">Formats output by using <see cref="stdNum.Round"/></param>
     ''' <returns></returns>
     ''' 
     <Extension>
     Public Function DataFrame(df As ODEsOut, Optional xDisp As String = "X", Optional fix% = -1) As IO.File
         Dim ly = df.y.Values.ToArray
         Dim file As New IO.File
-        Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.Name))
+        Dim head As New RowObject(xDisp + ly.ToList(Function(s) s.name))
         Dim round As Func(Of Double, String)
 
         If fix <= 0 Then
             round = Function(n) CStr(n)
         Else
-            round = Function(n) CStr(sys.Round(n, fix))
+            round = Function(n) CStr(stdNum.Round(n, fix))
         End If
 
         file += head
@@ -98,7 +100,7 @@ Imports sys = System.Math
 #End If
 
         For Each x As SeqValue(Of Double) In df.x.SeqIterator
-            file += (round(x.value) + ly.ToList(Function(n) round(n.Value(x.i))))
+            file += (round(x.value) + ly.ToList(Function(n) round(n.value(x.i))))
         Next
 
         Dim skips As Integer = ly.Length + 2
@@ -138,11 +140,11 @@ Imports sys = System.Math
                                                                    Let values As Double() = s.Skip(1).Select(AddressOf Val).ToArray
                                                                    Select New NamedCollection(Of Double) With {
                                                                        .name = name,
-                                                                       .Value = values
+                                                                       .value = values
                                                                    }
         Return New ODEsOut With {
             .params = args,
-            .X = X.Skip(1).Select(AddressOf Val).ToArray,
+            .x = X.Skip(1).Select(AddressOf Val).ToArray,
             .y = yData.ToDictionary
         }
     End Function
@@ -178,12 +180,12 @@ Imports sys = System.Math
 
         For Each var As NamedCollection(Of Double) In df
             Dim x As New DataSet With {
-                .ID = var.Name,
+                .ID = var.name,
                 .Properties = New Dictionary(Of String, Double)
             }
 
             For Each name$ In vars
-                x.Properties(name$) = correlation(var.Value, df.y(name).Value)
+                x.Properties(name$) = correlation(var.value, df.y(name).value)
             Next
 
             Yield x

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8f36b0edfb7202aadaeacfc27e2b874, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::6ae599b39eb0aee132d5a6b71ef4900f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class HistoryStacks
     ' 
-    '         Properties: FilePath, HistoryList
+    '         Properties: FilePath, HistoryList, MimeType
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -55,10 +55,11 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     Public Class HistoryStacks : Implements ISaveHandle
         Implements IFileReference
@@ -82,6 +83,12 @@ Namespace Terminal
         End Property
 
         Public Property FilePath As String Implements IFileReference.FilePath
+
+        Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Return {MIME.UnknownType}
+            End Get
+        End Property
 
         Dim LastHistory As History
 

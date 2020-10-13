@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac1a4d12fe1a6b584c83cb78b4dfff06, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Takes.vb"
+﻿#Region "Microsoft.VisualBasic::c2368b41d83cc9e285798beca0da0501, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Takes.vb"
 
     ' Author:
     ' 
@@ -71,15 +71,11 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <param name="flags"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Iterator Function Takes(Of T)(source As IEnumerable(Of T), flags As Boolean()) As IEnumerable(Of T)
-            Dim i As i32 = 0
-
-            For Each obj As T In source
-                If flags(++i) Then
-                    Yield obj
-                End If
-            Next
+        Public Function Takes(Of T)(source As IEnumerable(Of T), flags As Boolean()) As IEnumerable(Of T)
+            Return source.Where(Function(obj, i) flags(i))
         End Function
 
         ''' <summary>

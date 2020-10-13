@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76be04c8a46f83fdcaae4842978de6cc, Data_science\Visualization\Visualization\NeuronNetworkExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0bb77c13457b0ddc6571909eb0a93837, Data_science\Visualization\Visualization\NeuronNetworkExtensions.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports NeuronNetwork = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Network
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 网络可视化工具
@@ -120,23 +121,23 @@ Public Module NeuronNetworkExtensions
             .ToArray
         Dim weights As QuantileEstimationGK = model _
             .connections _
-            .Select(Function(syn) Math.Abs(syn.w)) _
+            .Select(Function(syn) stdNum.Abs(syn.w)) _
             .GKQuantile
         Dim threshold# = weights.Query(connectionCutoff)
         Dim edges = model.connections _
-            .Where(Function(syn) Math.Abs(syn.w) >= threshold) _
+            .Where(Function(syn) stdNum.Abs(syn.w) >= threshold) _
             .Select(Function(syn)
                         Return New NetworkEdge With {
-                            .FromNode = syn.in,
-                            .ToNode = syn.out,
+                            .fromNode = syn.in,
+                            .toNode = syn.out,
                             .value = syn.w
                         }
                     End Function) _
             .ToArray
 
         Return New NetworkTables With {
-            .Nodes = nodes,
-            .Edges = edges
+            .nodes = nodes,
+            .edges = edges
         }
     End Function
 

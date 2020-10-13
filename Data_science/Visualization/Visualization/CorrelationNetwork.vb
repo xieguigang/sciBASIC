@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4518226088c46e260c88300fa0027578, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::f14cc7bab4145689fa5d22e7bf35812d, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module CorrelationNetwork
     ' 
-    '     Function: BuildNetwork, CorrelationMatrix, HowStrong
+    '     Function: BuildNetwork, HowStrong
     ' 
     ' /********************************************************************************/
 
@@ -41,61 +41,49 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.Math.Correlations.Correlations
+Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.DataFrame
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' 使用这个模块用来生成相关度的网络，相关度网络是``Kmeans``，``Cmeans``或者其他的一些聚类网络可视化的基础
 ''' </summary>
 Public Module CorrelationNetwork
 
+    ''' <summary>
+    ''' 关联网络是没有方向的
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="cutoff#"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function CorrelationMatrix(data As IEnumerable(Of DataSet), Optional compute As ICorrelation = Nothing) As DataSet()
-        Dim vectors As NamedValue(Of Double())() = data _
-            .NamedMatrix _
-            .Select(Function(x)
-                        Return New NamedValue(Of Double()) With {
-                            .Name = x.Name,
-                            .Value = x.Value.Values.ToArray
-                        }
-                    End Function) _
-            .ToArray
-        Dim matrix = vectors _
-            .CorrelationMatrix(compute) _
-            .AsDataSet _
-            .ToArray
-
-        Return matrix
-    End Function
-
-    <Extension>
-    Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#) As (net As NetworkTables, matrix As DataSet())
-        Dim matrix As DataSet() = data.CorrelationMatrix.ToArray
+    Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#) As (net As NetworkTables, matrix As DistanceMatrix)
+        Dim matrix As DistanceMatrix = data.MatrixBuilder(AddressOf Correlations.GetPearson, False)
         Dim nodes As New Dictionary(Of Node)
-        Dim edges As New Dictionary(Of String, NetworkEdge) ' 关联网络是没有方向的
+        Dim edges As New Dictionary(Of String, NetworkEdge)
+        Dim cor As Double
 
-        For Each row As DataSet In matrix
+        For Each id As String In matrix.Keys
             nodes += New Node With {
-                .ID = row.ID
+                .ID = id
             }
         Next
 
-        For Each row As DataSet In matrix
-            Dim ID$ = row.ID
+        For Each id As String In matrix.Keys
+            For Each partner As String In matrix.Keys
+                cor = matrix(id, partner)
 
-            For Each partner In row.Properties
-                If Math.Abs(partner.Value) >= cutoff Then
-                    Dim uid$ = {partner.Key, ID}.OrderBy(Function(s) s).JoinBy(" - ")
+                If stdNum.Abs(cor) >= cutoff Then
+                    Dim uid$ = {partner, id}.OrderBy(Function(s) s).JoinBy(" - ")
 
                     If Not edges.ContainsKey(uid) Then
                         edges(uid) = New NetworkEdge With {
-                            .FromNode = ID,
-                            .ToNode = partner.Key,
-                            .value = partner.Value,
-                            .Interaction = HowStrong(partner.Value)
+                            .fromNode = id,
+                            .toNode = partner,
+                            .value = cor,
+                            .interaction = HowStrong(cor)
                         }
                     End If
                 End If
@@ -108,7 +96,7 @@ Public Module CorrelationNetwork
     End Function
 
     Private Function HowStrong(c#) As String
-        Dim abs = Math.Abs(c)
+        Dim abs = stdNum.Abs(c)
 
         If abs < 0.4 Then
             Return "Very Weak"

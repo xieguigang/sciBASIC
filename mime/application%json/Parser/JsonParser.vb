@@ -354,17 +354,27 @@ eh:
     ''' <param name="index"></param>
     ''' <returns></returns>
     Private Function parseNumber(ByRef str As String, ByRef index As Long) As JsonValue
-        Dim value As String = "", chr As String
-        skipChar(str, index)
+        Dim value As String = ""
+        Dim chr As String
+
+        Call skipChar(str, index)
+
         While index > 0 AndAlso index <= Len(str)
             chr = Mid(str, index, 1)
+
             If InStr("+-0123456789.eE", chr) Then
                 value &= chr
                 index += 1
+            ElseIf value = "" Then
+                Dim textAround As String = Mid(str, index - 5, 10)
+                Dim msg$ = $"unsure empty string for parse numeric value, text around the current pointer is: ""{textAround}""."
+
+                Throw New InvalidCastException(msg)
             Else
                 Return New JsonValue(CDbl(value))
             End If
         End While
+
         Return New JsonValue(CDbl(value))
     End Function
 

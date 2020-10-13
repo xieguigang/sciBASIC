@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be06e9e8a254343b246e1fe668da7bed, Data_science\Visualization\Plots\3D\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::27708ab0e1676a6214acfbe6784e8709, Data_science\Visualization\Plots\3D\Scatter.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -180,8 +181,8 @@ Namespace Plot3D
                         d:=5,
                         regionBorder:=Stroke.AxisStroke
                     )
-
                 End Sub
+
             Dim plotRegion As New GraphicsRegion With {
                 .Size = camera.screen,
                 .Padding = padding

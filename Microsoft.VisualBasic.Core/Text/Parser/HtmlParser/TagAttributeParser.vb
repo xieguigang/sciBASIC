@@ -1,49 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::77ba6865a0d027987d269c889094aaa4, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
+﻿#Region "Microsoft.VisualBasic::20e9b140e6b323bb3a26f7c21ddbc509, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module TagAttributeParser
-    ' 
-    '         Function: [class], classList, GetAttrValue, GetImageLinks, href
-    '                   img, (+2 Overloads) src, TagAttributes
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module TagAttributeParser
+' 
+'         Function: [class], attr, classList, GetImageLinks, href
+'                   img, parseAttrValImpl, (+2 Overloads) src, TagAttributes
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -65,12 +67,16 @@ Namespace Text.Parser.HtmlParser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function TagAttributes(tag As String) As IEnumerable(Of NamedValue(Of String))
+            If tag.StringEmpty Then
+                Return {}
+            End If
+
             Return r _
                 .Matches(tag.GetBetween("<", ">"), attributeParse, RegexICSng) _
                 .EachValue _
                 .Select(Function(t)
                             Dim a = t.GetTagValue("=", trim:="""'")
-                            Dim val = a.Value.GetStackValue("""", """").GetStackValue("'", "'")
+                            Dim val As String = parseAttrValImpl(a.Value)
 
                             Return New NamedValue(Of String)(a.Name, val)
                         End Function)
@@ -78,22 +84,38 @@ Namespace Text.Parser.HtmlParser
 
         Const attributePattern$ = "%s\s*=\s*([""].+?[""])|(['].+?['])"
 
+        Private Function parseAttrValImpl(value As String) As String
+            If value.Length = 1 AndAlso value.First <> """"c AndAlso value.First <> "'"c Then
+                Return value
+            Else
+                Return value _
+                    .GetStackValue("""", """") _
+                    .GetStackValue("'", "'")
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Get element attribute value
+        ''' </summary>
+        ''' <param name="html$"></param>
+        ''' <param name="attrName$"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function GetAttrValue(html$, attr$) As String
+        Public Function attr(html$, attrName$) As String
             If String.IsNullOrEmpty(html) Then
                 Return ""
             Else
-                attr = attributePattern.Replace("%s", attr)
-                html = html.Match(attr, RegexICSng)
+                attrName = attributePattern.Replace("%s", attrName)
+                html = html.Match(attrName, RegexICSng)
             End If
 
             If String.IsNullOrEmpty(html) Then
                 Return ""
             Else
-                Return html.GetTagValue("=", trim:=True) _
+                Return html _
+                    .GetTagValue("=", trim:="""'") _
                     .Value _
-                    .GetStackValue("""", """") _
-                    .GetStackValue("'", "'")
+                    .DoCall(AddressOf parseAttrValImpl)
             End If
         End Function
 
@@ -106,19 +128,19 @@ Namespace Text.Parser.HtmlParser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Html.Href")>
         <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")> html$) As String
-            Return html.GetAttrValue("href")
+            Return html.attr("href")
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function [class](tag As String) As String
-            Return tag.GetAttrValue("class")
+            Return tag.attr("class")
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function classList(tag As String) As String()
-            Return tag.GetAttrValue("class").StringSplit("\s+")
+            Return tag.attr("class").StringSplit("\s+")
         End Function
 
 #Region "Parsing image source url from the img html tag."
@@ -144,8 +166,10 @@ Namespace Text.Parser.HtmlParser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function src(img As String) As String
-            Return img.GetAttrValue("src")
+            Return img.attr("src")
         End Function
+
+#If NET_48 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -157,6 +181,8 @@ Namespace Text.Parser.HtmlParser
         Public Function img(html$) As (tag$, attrs As NamedValue(Of String)())
             Return ("img", r.Match(html, imgHtmlTagPattern, RegexICSng).Value.TagAttributes.ToArray)
         End Function
+#End If
+
 #End Region
     End Module
 End Namespace

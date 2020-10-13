@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4815a500fffdc82dad422f680b2f3652, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::1a0f42e369feeec6ff303771d5761c55, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,15 @@
 
     ' Module VBDebugger
     ' 
+    '     Properties: debugMode
+    ' 
     '     Function: die, LinqProc
     '     Delegate Sub
     ' 
     '         Properties: ForceSTDError, Mute, UsingxConsole
     ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
+    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, BugsFormatter, (+2 Overloads) PrintException
+    '                   Warning
     ' 
     '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
     '              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
@@ -55,19 +58,39 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.Terminal.Utility
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
 ''' </summary>
 Public Module VBDebugger
+
+    Friend m_inDebugMode As Boolean
+
+    ''' <summary>
+    ''' if in the debug profile(which means ``DEBUG`` constant is defined for the compiler)
+    ''' then this function will always returns value ``true``;
+    ''' otherwise, return value by command line config argument ``--debug``
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property debugMode As Boolean
+        Get
+#If DEBUG Then
+            Return True
+#Else
+            Return m_inDebugMode
+#End If
+        End Get
+    End Property
 
     ''' <summary>
     ''' Assert that the expression value is correctly or not?
@@ -77,7 +100,7 @@ Public Module VBDebugger
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandle
+    Public Function die(message$, Optional failure As Predicate(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandle
         Return New ExceptionHandle With {
             .message = message,
             .failure = failure Or defaultAssert
@@ -167,11 +190,21 @@ Public Module VBDebugger
     ''' Output the full debug information while the project is debugging in debug mode.
     ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)
     ''' </summary>
-    ''' <param name="msg">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
+    ''' <param name="msg">
+    ''' The message fro output to the debugger console, this function will add a time 
+    ''' stamp automaticly To the leading position Of the message.
+    ''' </param>
     ''' <param name="indent"></param>
+    ''' <param name="waitOutput">
+    ''' 等待调试器输出工作线程将内部的消息队列输出完毕
+    ''' </param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
-    <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0, Optional mute As Boolean = False) As String
-        Static indents$() = {"",
+    <Extension> Public Function __DEBUG_ECHO(msg$,
+                                             Optional indent% = 0,
+                                             Optional mute As Boolean = False,
+                                             Optional waitOutput As Boolean = False) As String
+        Static indents$() = {
+            "",
             New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
             New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
             New String(" ", 9), New String(" ", 10)
@@ -187,16 +220,21 @@ Public Module VBDebugger
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
         End If
+        If waitOutput Then
+            Call VBDebugger.WaitOutput()
+        End If
 
         Return Nothing
     End Function
 
-    <Extension> Public Sub __INFO_ECHO(msg$)
+    <Extension> Public Sub __INFO_ECHO(msg$, Optional silent As Boolean = False)
         If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
-            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+            If Not silent Then
+                Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+            End If
 
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
@@ -204,6 +242,10 @@ Public Module VBDebugger
         End If
     End Sub
 
+    ''' <summary>
+    ''' Add additional user logging driver
+    ''' </summary>
+    ''' <param name="driver"></param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AttachLoggingDriver(driver As LoggingDriver)
         My.Log4VB.logs.Add(driver)
@@ -217,8 +259,17 @@ Public Module VBDebugger
     ''' <param name="exception"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
-        Return New Exception(memberName, exception).ToString.PrintException(memberName)
+    <Extension>
+    Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Dim lines = New Exception(memberName, exception).ToString.LineTokens
+        Dim exceptions$() = Strings.Split(lines.First, "--->")
+        Dim formats = exceptions(0) & vbCrLf &
+            vbCrLf &
+            exceptions.Skip(1).JoinBy(vbCrLf) & vbCrLf &
+            vbCrLf &
+            lines.Skip(1).JoinBy(vbCrLf)
+
+        Return formats.PrintException(memberName)
     End Function
 
     ''' <summary>
@@ -231,7 +282,12 @@ Public Module VBDebugger
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
-        Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
+        If My.Log4VB.redirectError Is Nothing Then
+            Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
+        Else
+            Call My.Log4VB.redirectError(memberName, msg, MSG_TYPES.ERR)
+            Return False
+        End If
     End Function
 
     ''' <summary>
@@ -269,7 +325,9 @@ Public Module VBDebugger
     ''' <returns></returns>
     <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
-        If Not Mute Then
+        If Not My.Log4VB.redirectWarning Is Nothing Then
+            Call My.Log4VB.redirectError(calls, msg, MSG_TYPES.WRN)
+        ElseIf Not Mute Then
             Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 
             Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
@@ -419,4 +477,60 @@ Public Module VBDebugger
                 End Sub)
         End If
     End Sub
+
+    ''' <summary>
+    ''' Generates the formatted error log file content.(生成简单的日志板块的内容)
+    ''' </summary>
+    ''' <param name="ex"></param>
+    ''' <param name="trace"></param>
+    ''' <returns></returns>
+    '''
+    <ExportAPI("Bugs.Formatter")>
+    <Extension>
+    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
+        Dim logs = ex.ToString.LineTokens
+        Dim stackTrace = logs _
+            .Where(Function(s)
+                       Return InStr(s, "   在 ") = 1 OrElse InStr(s, "   at ") = 1
+                   End Function) _
+            .AsList
+        Dim message = logs _
+            .Where(Function(s)
+                       Return Not s.IsPattern("\s+[-]{3}.+?[-]{3}\s*") AndAlso stackTrace.IndexOf(s) = -1
+                   End Function) _
+            .JoinBy(ASCII.LF) _
+            .Trim _
+            .StringSplit("\s[-]{3}>\s")
+
+        Return New StringBuilder() _
+            .AppendLine("TIME:  " & Now.ToString) _
+            .AppendLine("TRACE: " & trace) _
+            .AppendLine(New String("=", 120)) _
+            .Append(LogFile.SystemInfo) _
+            .AppendLine(New String("=", 120)) _
+            .AppendLine() _
+            .AppendLine($"Environment Variables from {GetType(App).FullName}:") _
+            .AppendLine(ConfigEngine.Prints(App.GetAppVariables)) _
+            .AppendLine(New String("=", 120)) _
+            .AppendLine() _
+            .AppendLine(ex.GetType.FullName & ":") _
+            .AppendLine() _
+            .AppendLine(message _
+                .Select(Function(s) "    ---> " & s) _
+                .JoinBy(ASCII.LF)) _
+            .AppendLine() _
+            .AppendLine(stackTrace _
+                .Select(Function(s)
+                            If InStr(s, "   在 ") = 1 Then
+                                Return Mid(s, 6).Trim
+                            ElseIf InStr(s, "   at ") = 1 Then
+                                Return Mid(s, 7).Trim
+                            Else
+                                Return s
+                            End If
+                        End Function) _
+                .Select(Function(s) "   at " & s) _
+                .JoinBy(ASCII.LF)) _
+            .ToString()
+    End Function
 End Module

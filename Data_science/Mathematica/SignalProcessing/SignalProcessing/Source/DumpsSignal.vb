@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab264ba6af633ea183200078cf06f8ab, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\DumpsSignal.vb"
+﻿#Region "Microsoft.VisualBasic::d046b5d36db10264ebb628156bdc4c90, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\DumpsSignal.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,8 @@
 
 #End Region
 
+Imports stdNum = System.Math
+
 Namespace Source
 
     ''' <summary>
@@ -76,7 +78,7 @@ Namespace Source
 
             For i As Integer = 0 To length - 1
                 Dim w = (i / length - y) * Z
-                a(i) += x * Math.Exp(-w * w)
+                a(i) += x * stdNum.Exp(-w * w)
             Next
         End Sub
     End Module

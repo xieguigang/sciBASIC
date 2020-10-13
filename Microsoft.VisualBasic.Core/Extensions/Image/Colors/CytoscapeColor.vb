@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aebebc4ce521646ce5bd60853ad3a50c, Microsoft.VisualBasic.Core\Extensions\Image\Colors\CytoscapeColor.vb"
+﻿#Region "Microsoft.VisualBasic::d0ffc3d90ef472db9d8c6705183937f5, Microsoft.VisualBasic.Core\Extensions\Image\Colors\CytoscapeColor.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Imaging
 
@@ -51,12 +51,12 @@ Namespace Imaging
 
 #Region "CONVERSION FROM DECIMAL TO HEXADECIMAL AND VICE VERSA"
 
-        Private Function HexadecimaltoDecimal(hexadecimal As String) As Integer
+        Public Function HexadecimaltoDecimal(hexadecimal As String) As Integer
             Dim result As Integer = 0
 
             For i As Integer = 0 To hexadecimal.Length - 1
                 result += Convert.ToInt32(
-                    GetNumberFromNotation(hexadecimal(i)) * sys.Pow(16, hexadecimal.Length - (i + 1)))
+                    GetNumberFromNotation(hexadecimal(i)) * stdNum.Pow(16, hexadecimal.Length - (i + 1)))
             Next
 
             Return Convert.ToInt32(result)
@@ -96,7 +96,10 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="color"></param>
         ''' <returns></returns>
-        <Extension> Public Function ToHtmlColor(color As Color) As String
+        ''' 
+        <DebuggerStepThrough>
+        <Extension>
+        Public Function ToHtmlColor(color As Color) As String
             'Dim RGBValue As Integer = color.ToArgb
             'Dim HexValue = DeciamlToHexadeciaml(RGBValue)
             'Return HexValue

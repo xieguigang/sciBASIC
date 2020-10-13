@@ -75,11 +75,15 @@ Namespace SecurityString
         ''' <param name="password"></param>
         ''' <param name="saltValue">8 Bytes</param>
         Sub New(password As String, saltValue As String)
+            Call Me.New(password, Encoding.ASCII.GetBytes(saltValue))
+        End Sub
+
+        Sub New(password As String, saltValue As Byte())
             Const initVector = "@1B2c3D4e5F6g7H8"
 
             Me.strPassphrase = password
             Me.initVectorBytes = Encoding.ASCII.GetBytes(initVector)
-            Me.saltValueBytes = Encoding.ASCII.GetBytes(saltValue)
+            Me.saltValueBytes = saltValue
         End Sub
 
         Public Overrides Function ToString() As String

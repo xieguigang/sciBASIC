@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::165f63cf526f6fb898356e124cfe3dd1, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\APIBase.vb"
+﻿#Region "Microsoft.VisualBasic::3ca09afeaf85f3e21c5af252ed11241b, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\APIBase.vb"
 
     ' Author:
     ' 
@@ -42,9 +42,8 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Net.Abstract
-Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol.PushAPI
 

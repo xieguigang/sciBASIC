@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4d500803df92a3b5f6a6b9bd64382f3, Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextSegment.vb"
+﻿#Region "Microsoft.VisualBasic::ca8f970cd2596664119fd3e393d3bb94, Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextSegment.vb"
 
     ' Author:
     ' 
@@ -45,9 +45,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Text.Levenshtein
 
 Namespace Text.Search
 

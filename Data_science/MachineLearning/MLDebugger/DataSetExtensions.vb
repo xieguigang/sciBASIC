@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bff9379dd9b39438f5c371d09b134bb7, Data_science\MachineLearning\MLDebugger\DataSetExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d78439964c9dee886517ca87740b7d40, Data_science\MachineLearning\MLDebugger\DataSetExtensions.vb"
 
     ' Author:
     ' 
@@ -79,25 +79,30 @@ Public Module DataSetExtensions
         Dim outputs As String() = raw.output
         Dim data As Dictionary(Of String, Double)
         Dim size As Integer = raw.DataSamples.size
+        Dim vec As Double()
 
         For Each sample As Sample In raw.DataSamples.AsEnumerable
+            vec = sample.vector
             data = inputNames _
                 .SeqIterator _
                 .ToDictionary(Function(name) name.value,
                               Function(name)
-                                  Return sample.status(name)
+                                  Return vec(name)
                               End Function)
 
             ' append output result to input data
             Call outputs _
                 .SeqIterator _
                 .DoEach(Sub(name)
+                            Dim target As Double() = sample.target
+                            Dim val As Double = target(name)
+
                             ' output element name can not be duplicated with
                             ' the input name
                             If markOutput Then
-                                Call data.Add($"[{name.value}]", sample.target(name))
+                                Call data.Add($"[{name.value}]", val)
                             Else
-                                Call data.Add(name.value, sample.target(name))
+                                Call data.Add(name.value, val)
                             End If
                         End Sub)
 

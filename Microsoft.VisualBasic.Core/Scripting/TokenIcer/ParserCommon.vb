@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b37eed7c0470ebe61929c8d31badae1c, Microsoft.VisualBasic.Core\Scripting\TokenIcer\ParserCommon.vb"
+﻿#Region "Microsoft.VisualBasic::0c1951e4214c058cf64c4091e94a8136, Microsoft.VisualBasic.Core\Scripting\TokenIcer\ParserCommon.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module ParserCommon
     ' 
     '         Function: [As], [CType], [TryCast], GetCodeComment, GetTokens
-    '                   StartEscaping, TokenParser
+    '                   (+2 Overloads) StartEscaping, TokenParser
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,6 +43,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Scripting.TokenIcer
 
@@ -60,6 +61,21 @@ Namespace Scripting.TokenIcer
         <Extension>
         Public Function StartEscaping(buffer As List(Of Char), Optional escape As Char = "\"c) As Boolean
             If buffer.IsNullOrEmpty Then
+                Return False
+            Else
+                Return buffer.Last = escape
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 当前的token对象之中是否是转义的起始，即当前的token之中的最后一个符号是否是转移符<paramref name="escape"/>?
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <param name="escape"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function StartEscaping(buffer As CharBuffer, Optional escape As Char = "\"c) As Boolean
+            If buffer.Size = 0 Then
                 Return False
             Else
                 Return buffer.Last = escape

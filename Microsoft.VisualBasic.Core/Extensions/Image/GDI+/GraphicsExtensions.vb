@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcfdfa610e8d4062f28ff78bce86805c, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::06c583b25547fe549d36a838003e9308, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,7 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
@@ -72,6 +73,7 @@ Namespace Imaging
                   Publisher:="xie.guigang@gmail.com",
                   Revision:=58,
                   Url:="http://gcmodeller.org")>
+    <HideModuleName>
     Public Module GraphicsExtensions
 
         <Extension>
@@ -184,7 +186,7 @@ Namespace Imaging
         ''' <param name="res$"></param>
         ''' <returns></returns>
         <Extension> Public Function GetBrush(res$) As Brush
-            Dim bgColor As Color = res.TranslateColor
+            Dim bgColor As Color = res.TranslateColor(throwEx:=False)
 
             If Not bgColor.IsEmpty Then
                 Return New SolidBrush(bgColor)
@@ -332,7 +334,10 @@ Namespace Imaging
         ''' 则使用这个函数则没有这个问题，在图片加载之后会立即释放掉文件句柄)
         ''' </summary>
         ''' <param name="path"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 当参数<paramref name="throwEx"/>为false时候，函数返回空值的话，说明图片文件错误
+        ''' 例如文件未下载完成或者发生了二进制移码
+        ''' </returns>
         <ExportAPI("LoadImage"), Extension>
         Public Function LoadImage(path$,
                                   Optional base64 As Boolean = False,
@@ -387,7 +392,8 @@ Namespace Imaging
             End With
         End Function
 
-        <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
+        <ExportAPI("GrayBitmap")>
+        <Description("Create the gray color of the target image.")>
         <Extension> Public Function CreateGrayBitmap(res As Image) As Image
             Using g As Graphics2D = DirectCast(res.Clone, Image).CreateCanvas2D
                 With g
@@ -438,11 +444,13 @@ Namespace Imaging
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As SizeF, Optional filled As Color = Nothing) As Graphics2D
+        <Extension>
+        Public Function CreateGDIDevice(r As SizeF, Optional filled As Color = Nothing) As Graphics2D
             Return (New Size(CInt(r.Width), CInt(r.Height))).CreateGDIDevice(filled)
         End Function
 
-        <Extension> Public Function OpenDevice(ctrl As Control) As Graphics2D
+        <Extension>
+        Public Function OpenDevice(ctrl As Control) As Graphics2D
             Dim img As Image = New Bitmap(ctrl.Width, ctrl.Height)
             Dim canvas = img.CreateCanvas2D
 
@@ -513,6 +521,8 @@ Namespace Imaging
 
         Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CreateGDIDevice(t As (width%, height%),
                                                     Optional filled As Color = Nothing,
@@ -521,6 +531,8 @@ Namespace Imaging
                                                     Optional dpi$ = "100,100") As Graphics2D
             Return CreateGDIDevice(t.width, t.height, filled:=filled, dpi:=dpi, trace:=trace)
         End Function
+
+#End If
 
         ''' <summary>
         ''' 创建一个GDI+的绘图设备，默认的背景填充色为白色

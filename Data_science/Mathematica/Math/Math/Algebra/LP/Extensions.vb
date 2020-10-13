@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::030a3835f23b16b579243ade9b3e271c, Data_science\Mathematica\Math\Math\Algebra\LP\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::adfbd0f98e5c18c3f99abff36245455e, Data_science\Mathematica\Math\Math\Algebra\LP\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Algebra.LinearProgramming
+Namespace LinearAlgebra.LinearProgramming
 
     Module Extensions
 

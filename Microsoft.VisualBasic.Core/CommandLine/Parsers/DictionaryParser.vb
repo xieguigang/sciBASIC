@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea86ff9e843facd124b362478be0bb71, Microsoft.VisualBasic.Core\CommandLine\Parsers\DictionaryParser.vb"
+﻿#Region "Microsoft.VisualBasic::18358647228356832b40e826eebbd9ed, Microsoft.VisualBasic.Core\CommandLine\Parsers\DictionaryParser.vb"
 
     ' Author:
     ' 
@@ -40,9 +40,10 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Marshal
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Parsers
 
@@ -53,7 +54,7 @@ Namespace CommandLine.Parsers
         ''' </summary>
         ''' <param name="str$"></param>
         ''' <returns></returns>
-        Public Shared Function TryParse(str$) As Dictionary(Of String, String)
+        Public Shared Function TryParse(str As String) As Dictionary(Of String, String)
             Dim chars As New Pointer(Of Char)(str$)
             Dim tmp As New List(Of Char)
             Dim out As New Dictionary(Of String, String)
@@ -94,10 +95,11 @@ Namespace CommandLine.Parsers
                 t += New String(tmp)
             End If
 
+            Dim value As NamedValue(Of String)
+
             For Each var$ In t
-                Dim value = var.GetTagValue("="c)
-                out(value.Name) =
-                    value.Value.GetString("'")
+                value = var.GetTagValue("="c)
+                out(value.Name) = value.Value.GetString("'")
             Next
 
             Return out

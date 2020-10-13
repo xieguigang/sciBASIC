@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8bac042705d81a90f55375fc4eaaed8, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\LUDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::f9a537dd6ddfc297ae46f218b979dd4d, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\LUDecomposition.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@
 
 Imports System.Runtime.Serialization
 
-Namespace Matrix
+Namespace LinearAlgebra.Matrix
 
     ''' <summary>LU Decomposition.
     ''' For an m-by-n matrix A with m >= n, the LU decomposition is an m-by-n

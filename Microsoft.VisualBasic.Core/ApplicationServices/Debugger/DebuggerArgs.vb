@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fcd2b47d1a839220c30c326d2bb5bc1, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::81c8f5665b46a54623e729b250316f07, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
 
     ' Author:
     ' 
@@ -42,10 +42,10 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports System.Threading
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
@@ -189,6 +189,16 @@ Namespace ApplicationServices.Debugging
                 End Try
             End If
 
+            Dim cultureInfo$ = args <= "--cultureinfo"
+
+            If cultureInfo.StringEmpty Then
+                ' 强制抛出英文错误消息或者用户设置其他语言
+                Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
+            Else
+                ' 强制抛出英文错误消息或者用户设置其他语言
+                Thread.CurrentThread.CurrentUICulture = New CultureInfo(cultureInfo)
+            End If
+
             Dim opt As String = args <= "--echo"
             Dim log As String = args <= "--err"
 
@@ -222,6 +232,7 @@ Namespace ApplicationServices.Debugging
             End If
 
             _AutoPaused = args.GetBoolean("/auto-paused")
+            VBDebugger.m_inDebugMode = args.IsTrue("--debug")
 
             If args.GetBoolean("/mute") Then
                 VBDebugger.Mute = True

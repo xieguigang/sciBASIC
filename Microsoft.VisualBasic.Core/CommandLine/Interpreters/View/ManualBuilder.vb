@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe1d04091f554682726c58ac65cabf51, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ManualBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::0bf585e577e583298ec6bf2be06ab842, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ManualBuilder.vb"
 
     ' Author:
     ' 
@@ -116,6 +116,26 @@ Namespace CommandLine.ManView
                 Call My.Log4VB.Println(api.Usage, ConsoleColor.Green)
 
             End With
+
+            Dim outputMarks = api.EntryPoint _
+                .GetCustomAttributes(True) _
+                .Where(Function(a) a.GetType Is GetType(OutputAttribute)) _
+                .Select(Function(out) DirectCast(out, OutputAttribute)) _
+                .ToArray
+
+            If Not outputMarks.IsNullOrEmpty Then
+                Call Console.WriteLine()
+                Call Console.WriteLine("  This command produce these data files:")
+                Call Console.WriteLine("  ====================================================")
+                Call Console.WriteLine()
+
+                Call outputMarks _
+                    .Select(Function(o)
+                                Dim desc = o.extension.GetMIMEDescrib
+                                Return {desc.FileExt, desc.MIMEType, desc.Name, o.result.FullName}
+                            End Function) _
+                    .PrintTable(App.StdOut)
+            End If
 
             If Not api.Arguments.IsNullOrEmpty Then
                 Call Console.WriteLine()
@@ -257,7 +277,8 @@ Namespace CommandLine.ManView
                     End If
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
-                    blank = New String(" "c, helpOffset - l + 2)
+                    l = helpOffset - l + 2
+                    blank = If(l > 0, New String(" "c, l), "  ")
                     infoLines$ = param.Description _
                         .LineTokens _
                         .Select(Function(str) str.Trim(" "c, ASCII.TAB)) _
@@ -314,7 +335,12 @@ Namespace CommandLine.ManView
                     Call Console.WriteLine()
 
                     Dim allContentTypes = allExts _
-                        .Select(Function(ext) (ext:=ext, Type:=ext.GetMIMEDescrib)) _
+                        .Select(Function(ext)
+                                    Return New With {
+                                        Key .ext = ext,
+                                            .type = ext.GetMIMEDescrib
+                                    }
+                                End Function) _
                         .ToArray
                     Dim table$()() = allContentTypes _
                         .Select(Function(content)

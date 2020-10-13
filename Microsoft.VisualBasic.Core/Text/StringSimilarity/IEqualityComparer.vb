@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd599c599567b68ab309e181369d7838, Microsoft.VisualBasic.Core\Text\StringSimilarity\IEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::e55be13f3c8d0809bcc427b49cb1e3ca, Microsoft.VisualBasic.Core\Text\StringSimilarity\IEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Text.Levenshtein
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
 Namespace Text.Similarity
 

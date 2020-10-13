@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9da379de7a509b7f30cb035a60cf2062, Microsoft.VisualBasic.Core\ComponentModel\File\FileSaveHandle.vb"
+﻿#Region "Microsoft.VisualBasic::011fa2291fe5dd6f7fc89410a001045d, Microsoft.VisualBasic.Core\ComponentModel\File\FileSaveHandle.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,7 @@
     ' 
     '     Interface IFileReference
     ' 
-    '         Properties: FilePath
-    ' 
-    '     Interface IDocumentEditor
-    ' 
-    '         Properties: DocumentPath
-    ' 
-    '         Function: LoadDocument
+    '         Properties: FilePath, MimeType
     ' 
     ' 
     ' /********************************************************************************/
@@ -51,6 +45,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel
@@ -81,10 +76,11 @@ Namespace ComponentModel
         ''' </summary>
         ''' <returns></returns>
         Property FilePath As String
-    End Interface
 
-    Public Interface IDocumentEditor : Inherits ISaveHandle
-        Property DocumentPath As String
-        Function LoadDocument(path As String) As Boolean
+        ''' <summary>
+        ''' 一个可选的只读属性用来标记文件所符合的类型
+        ''' </summary>
+        ''' <returns></returns>
+        ReadOnly Property MimeType As ContentType()
     End Interface
 End Namespace

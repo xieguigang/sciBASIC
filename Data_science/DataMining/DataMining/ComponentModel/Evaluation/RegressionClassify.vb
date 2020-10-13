@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1e1205b2efd8723817832d34597a828, Data_science\DataMining\DataMining\ComponentModel\Evaluation\RegressionClassify.vb"
+﻿#Region "Microsoft.VisualBasic::b322d411c1fb3ff3889d3460c9da2449, Data_science\DataMining\DataMining\ComponentModel\Evaluation\RegressionClassify.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,8 @@
 
 #End Region
 
+Imports stdNum = System.Math
+
 Namespace ComponentModel.Evaluation
 
     ''' <summary>
@@ -53,7 +55,7 @@ Namespace ComponentModel.Evaluation
 
         Public ReadOnly Property errors As Double
             Get
-                Return Math.Abs(predicts - actual)
+                Return stdNum.Abs(predicts - actual)
             End Get
         End Property
 

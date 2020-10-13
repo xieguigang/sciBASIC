@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db4fe1c708a4a58a062bf44eb04c3577, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::3db59065890de08eae250e48a3b71b40, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -54,13 +54,13 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My
 
 Namespace StorageProvider.ComponentModels
 
@@ -218,19 +218,16 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
-        Dim __type As Type
+        Dim rawType As Type
 
         ''' <summary>
         ''' The object <see cref="Type"/> that will be convert to csv row or convert from the csv row.
         ''' </summary>
         ''' <returns></returns>
-        Public Property DeclaringType As Type
+        Public ReadOnly Property DeclaringType As Type
             Get
-                Return __type
+                Return rawType
             End Get
-            Private Set(value As Type)
-                __type = value
-            End Set
         End Property
 
         Public ReadOnly Iterator Property Properties As IEnumerable(Of StorageProvider)
@@ -290,7 +287,7 @@ Namespace StorageProvider.ComponentModels
                 .Columns = (From p In Columns Where p.CanReadDataFromObject Select p).ToArray,
                 .EnumColumns = (From p In EnumColumns Where p.CanReadDataFromObject Select p).ToArray,
                 .KeyValuePairColumns = (From p In KeyValuePairColumns Where p.CanReadDataFromObject Select p).ToArray,
-                .DeclaringType = __type,
+                .rawType = rawType,
                 ._Raw = Me,
                 .MetaAttributes =
                     If(MetaAttributes IsNot Nothing AndAlso
@@ -313,7 +310,7 @@ Namespace StorageProvider.ComponentModels
                 .KeyValuePairColumns = getWriteProvider(KeyValuePairColumns).ToArray,
                 ._Raw = Me,
                 .MetaAttributes = getMeta(),
-                .DeclaringType = DeclaringType
+                .rawType = DeclaringType
             }
         End Function
 
@@ -459,7 +456,7 @@ Namespace StorageProvider.ComponentModels
                 .EnumColumns = GetEnumColumns(properties),
                 .MetaAttributes = GetMetaAttributeColumn(properties, strict),
                 .KeyValuePairColumns = GetKeyValuePairColumn(properties),
-                .DeclaringType = type
+                .rawType = type
             }
             schema._Raw = schema
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5358ad4da98838b9dabf00acc48c73fe, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\Range.vb"
+﻿#Region "Microsoft.VisualBasic::25f7439690cdf2cebb6257a221b2987f, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\Range.vb"
 
     ' Author:
     ' 
@@ -55,10 +55,10 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace ComponentModel.Ranges.Model
 
     Public Class Range(Of T As IComparable)
-        Implements IRanges(Of T)
+        Implements IRangeModel(Of T)
 
-        Public ReadOnly Property Min As T Implements IRanges(Of T).Min
-        Public ReadOnly Property Max As T Implements IRanges(Of T).Max
+        Public ReadOnly Property Min As T Implements IRangeModel(Of T).Min
+        Public ReadOnly Property Max As T Implements IRangeModel(Of T).Max
 
         Sub New(min As T, max As T)
             Me.Min = min
@@ -69,15 +69,15 @@ Namespace ComponentModel.Ranges.Model
             Return Me.GetJson
         End Function
 
-        Public Function IsInside(x As T) As Boolean Implements IRanges(Of T).IsInside
+        Public Function IsInside(x As T) As Boolean Implements IRangeModel(Of T).IsInside
             Return (Language.GreaterThanOrEquals(x, Min) AndAlso Language.LessThanOrEquals(x, Max))
         End Function
 
-        Public Function IsInside(range As IRanges(Of T)) As Boolean Implements IRanges(Of T).IsInside
+        Public Function IsInside(range As IRangeModel(Of T)) As Boolean Implements IRangeModel(Of T).IsInside
             Return ((IsInside(range.Min)) AndAlso (IsInside(range.Max)))
         End Function
 
-        Public Function IsOverlapping(range As IRanges(Of T)) As Boolean Implements IRanges(Of T).IsOverlapping
+        Public Function IsOverlapping(range As IRangeModel(Of T)) As Boolean Implements IRangeModel(Of T).IsOverlapping
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
     End Class

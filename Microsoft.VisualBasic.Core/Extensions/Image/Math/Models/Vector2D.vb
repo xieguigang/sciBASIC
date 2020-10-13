@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69ceea95906ed80e045120aa58ab0bf6, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::81cf1477165f2fcafd76324ce2b58abf, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Vector2D.vb"
 
     ' Author:
     ' 
@@ -33,29 +33,32 @@
 
     '     Class Vector2D
     ' 
-    '         Properties: Length
+    '         Properties: Length, x, y
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Operators: -, (+2 Overloads) *
+    '         Function: ToString
+    '         Operators: (+2 Overloads) -, (+2 Overloads) *, +
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports stdNum = System.Math
+
 Namespace Imaging.Math2D
 
     ''' <summary>
     ''' <see cref="Drawing.PointF"/>
     ''' </summary>
-    Public Class Vector2D
+    Public Class Vector2D : Implements Layout2D
 
-        Public x As Double
-        Public y As Double
+        Public Property x As Double Implements Layout2D.X
+        Public Property y As Double Implements Layout2D.Y
 
         Public ReadOnly Property Length As Double
             Get
-                Return Math.Sqrt(x ^ 2 + y ^ 2)
+                Return stdNum.Sqrt(x ^ 2 + y ^ 2)
             End Get
         End Property
 
@@ -73,6 +76,14 @@ Namespace Imaging.Math2D
             Me.y = y
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"[{x}, {y}]"
+        End Function
+
+        Public Shared Operator +(a As Vector2D, b As Layout2D) As Vector2D
+            Return New Vector2D(a.x + b.X, a.y + b.Y)
+        End Operator
+
         ''' <summary>
         ''' reverse
         ''' </summary>
@@ -82,6 +93,10 @@ Namespace Imaging.Math2D
             With v
                 Return New Vector2D(- .x, - .y)
             End With
+        End Operator
+
+        Public Shared Operator -(a As Vector2D, b As Layout2D) As Vector2D
+            Return New Vector2D(a.x - b.X, a.y - b.Y)
         End Operator
 
         ''' <summary>

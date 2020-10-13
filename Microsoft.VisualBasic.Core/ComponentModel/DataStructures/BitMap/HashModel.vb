@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6454ef3a138ca347bcd3778898de75ea, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BitMap\HashModel.vb"
+﻿#Region "Microsoft.VisualBasic::41ba2dd93115d064fca9cd3c745bf034, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BitMap\HashModel.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel
 
@@ -117,14 +116,16 @@ Namespace ComponentModel
         End Sub
     End Class
 
+    <HideModuleName>
+    <Extension>
     Public Module AddressedValueExtensions
 
         <Extension>
         Public Function Vector(Of T As IAddress(Of Integer), TOut)(source As IEnumerable(Of T), length As Integer, getValue As Func(Of T, TOut)) As TOut()
             Dim chunk As TOut() = New TOut(length - 1) {}
 
-            For Each x As T In source
-                chunk(x.Address) = getValue(x)
+            For Each element As T In source
+                chunk(element.Address) = getValue(element)
             Next
 
             Return chunk

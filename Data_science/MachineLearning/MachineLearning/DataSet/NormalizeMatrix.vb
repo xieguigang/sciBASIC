@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83b87c01b689a6efaa05cf11f79fec85, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::e5d3d816d04e777fda94fb2cf4d9bd7d, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: matrix, names
     ' 
-    '         Function: CreateFromSamples, doNormalInternal, DoNormalize, NormalizeInput
+    '         Function: CreateFromSamples, doNormalInternal, DoNormalize, (+2 Overloads) NormalizeInput
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,9 +46,9 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace StoreProcedure
 
@@ -62,7 +62,7 @@ Namespace StoreProcedure
         ''' </summary>
         ''' <returns></returns>
         <XmlElement("matrix")>
-        Public Property matrix As SampleDistribution()
+        Public Property matrix As XmlList(Of SampleDistribution)
         ''' <summary>
         ''' 属性名称列表,这个序列的长度是和<see cref="matrix"/>的长度一致的,并且元素的顺序一一对应的
         ''' </summary>
@@ -71,21 +71,22 @@ Namespace StoreProcedure
 
         Public Function DoNormalize(name$, value#, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double
             Dim i As Integer = Array.IndexOf(names, name)
-            Dim result = doNormalInternal(i, value, method)
+            Dim dist As SampleDistribution = matrix(i)
+            Dim result = doNormalInternal(dist, value, method)
 
             Return result
         End Function
 
-        Private Function doNormalInternal(i%, x#, method As Normalizer.Methods) As Double
+        Public Shared Function doNormalInternal(dist As SampleDistribution, x#, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double
             Select Case method
                 Case Normalizer.Methods.NormalScaler
-                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                    Return Normalizer.ScalerNormalize(dist, x)
                 Case Normalizer.Methods.RelativeScaler
-                    Return Normalizer.RelativeNormalize(matrix(i), x)
+                    Return Normalizer.RelativeNormalize(dist, x)
                 Case Normalizer.Methods.RangeDiscretizer
-                    Return Normalizer.RangeDiscretizer(matrix(i), x)
+                    Return Normalizer.RangeDiscretizer(dist, x)
                 Case Else
-                    Return Normalizer.ScalerNormalize(matrix(i), x)
+                    Return Normalizer.ScalerNormalize(dist, x)
             End Select
         End Function
 
@@ -96,10 +97,19 @@ Namespace StoreProcedure
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function NormalizeInput(sample As Sample, Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double()
-            Return sample.status _
-                .vector _
+            Return NormalizeInput(sample.vector, method)
+        End Function
+
+        ''' <summary>
+        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
+        ''' </summary>
+        ''' <param name="sample"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function NormalizeInput(sample As IEnumerable(Of Double), Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler) As Double()
+            Return sample _
                 .Select(Function(x, i)
-                            Return doNormalInternal(i, x, method)
+                            Return doNormalInternal(matrix(i), x, method)
                         End Function) _
                 .ToArray
         End Function
@@ -110,22 +120,18 @@ Namespace StoreProcedure
         ''' 在这里将sample的每一个属性都按列归一化为``[0,1]``之间的结果
         ''' </summary>
         ''' <param name="samples"></param>
-        ''' <param name="names"></param>
+        ''' <param name="names">The property names, not sample id names</param>
         ''' <returns></returns>
-        Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample), names As IEnumerable(Of String)) As NormalizeMatrix
-            With samples.ToArray
-                Dim len% = .First.status.Length
-                Dim matrix As SampleDistribution() = (len - 1).SeqIterator _
+        Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample),
+                                                 names As IEnumerable(Of String),
+                                                 Optional estimateQuantile As Boolean = True) As NormalizeMatrix
+            With samples.Select(Function(sample) sample.vector).ToArray
+                Dim len% = .First.Length
+                Dim matrix As SampleDistribution() = len _
+                    .SeqIterator _
                     .AsParallel _
                     .Select(Function(index)
-                                ' 遍历每一列的数据,将每一列的数据都执行归一化
-                                Dim [property] = .Select(Function(sample)
-                                                             Return sample.status(index)
-                                                         End Function) _
-                                                 .ToArray
-                                Dim dist As New SampleDistribution([property])
-
-                                Return (i:=index, Data:=dist)
+                                Return (i:=index, Data:= .ProjectData(index, estimateQuantile))
                             End Function) _
                     .OrderBy(Function(data) data.i) _
                     .Select(Function(r) r.Data) _

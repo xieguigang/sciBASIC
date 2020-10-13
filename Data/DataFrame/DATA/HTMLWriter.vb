@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::410ba1fb1ce4952cde622c10231834f7, Data\DataFrame\DATA\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::08757385b6daafae4f53f4c78165db86, Data\DataFrame\DATA\HTMLWriter.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module HTMLWriter
     ' 
-    '         Function: titleRow, ToHTML, (+2 Overloads) ToHTMLTable
+    '         Function: html, titleRow, ToHTML, ToHTMLTable
     ' 
     '         Sub: bodyRow
     ' 
@@ -63,12 +63,12 @@ Namespace DATA
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="title"></param>
-        ''' <param name="describ"></param>
+        ''' <param name="evenRowClassName"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional title As String = "", Optional describ As String = "") As String
-            Return source.ToCsvDoc(False).ToHTMLTable(title Or GetType(T).FullName.AsDefault, describ Or GetType(T).Description.AsDefault)
+        Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional title As String = "", Optional evenRowClassName$ = "even") As String
+            Return source.ToCsvDoc(False).html(title:=title Or GetType(T).FullName.AsDefault, altClassName:=evenRowClassName)
         End Function
 
         <Extension>
@@ -77,14 +77,17 @@ Namespace DATA
             Optional tableID$ = Nothing,
             Optional width$ = "",
             Optional removes$() = Nothing,
-            Optional alt$ = Nothing) As String
+            Optional title$ = "",
+            Optional altClassName$ = Nothing) As String
 
-            Return source.ToCsvDoc(False).ToHTMLTable(
-                className,
-                tableID,
-                width,
-                removes,
-                alt)
+            Return source.ToCsvDoc(False).html(
+                [class]:=className,
+                id:=tableID,
+                width:=width,
+                removes:=removes,
+                title:=title,
+                altClassName:=altClassName
+            )
         End Function
 
         ''' <summary>
@@ -95,13 +98,13 @@ Namespace DATA
         ''' <returns></returns>
         ''' 
         <ExportAPI("ToHTML.Table")>
-        <Extension> Public Function ToHTMLTable(table As File,
-            Optional className$ = "",
-            Optional tableID$ = Nothing,
+        <Extension> Public Function html(table As File,
+            Optional class$ = "",
+            Optional id$ = Nothing,
             Optional width$ = "",
             Optional title$ = Nothing,
             Optional removes$() = Nothing,
-            Optional alt$ = Nothing) As String
+            Optional altClassName$ = Nothing) As String
 
             Dim innerDoc As New StringBuilder("<table", 4096)
             Dim removeList As New Index(Of String)(removes)
@@ -112,11 +115,11 @@ Namespace DATA
                             Return table.Headers.IndexOf(name)
                         End Function))
 
-            If Not String.IsNullOrEmpty(className) Then
-                Call innerDoc.Append($" class=""{className}""")
+            If Not String.IsNullOrEmpty([class]) Then
+                Call innerDoc.Append($" class=""{[class]}""")
             End If
-            If Not String.IsNullOrEmpty(tableID) Then
-                Call innerDoc.Append($" id=""{tableID}""")
+            If Not String.IsNullOrEmpty(id) Then
+                Call innerDoc.Append($" id=""{id}""")
             End If
             If Not String.IsNullOrEmpty(width) Then
                 Call innerDoc.Append($" width=""{width}""")
@@ -133,11 +136,11 @@ Namespace DATA
 
             For Each row As SeqValue(Of RowObject) In table.Skip(1).SeqIterator
                 With row.value
-                    If alt.StringEmpty Then
+                    If altClassName.StringEmpty Then
                         Call .bodyRow(innerDoc, removeIndex, Nothing)
                     Else
-                        If row Mod 2 = 0 Then
-                            Call .bodyRow(innerDoc, removeIndex, alt)
+                        If (row + 1) Mod 2 = 0 Then
+                            Call .bodyRow(innerDoc, removeIndex, altClassName)
                         Else
                             Call .bodyRow(innerDoc, removeIndex, Nothing)
                         End If
@@ -167,17 +170,17 @@ Namespace DATA
             Return doc.ToString
         End Function
 
-        <Extension> Private Sub bodyRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), alt$)
+        <Extension> Private Sub bodyRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), altClassName$)
             Dim rowText$ = row _
                 .SeqIterator _
                 .Where(Function(i) removes(x:=i.i) = -1) _
                 .Select(Function(x) $"<td>{+x}</td>") _
                 .JoinBy("")
 
-            If alt.StringEmpty Then
+            If altClassName.StringEmpty Then
                 Call doc.Append("<tr>")
             Else
-                Call doc.Append($"<tr class=""{alt}"">")
+                Call doc.Append($"<tr class=""{altClassName}"">")
             End If
 
             Call doc.AppendLine(rowText)

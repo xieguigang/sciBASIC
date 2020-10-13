@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ce60baace81f393dc0f3e4bc8ddd61, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\BatchTasks.vb"
+﻿#Region "Microsoft.VisualBasic::4889043a325dc6b7798981c40d5a37ff, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\BatchTasks.vb"
 
     ' Author:
     ' 
@@ -160,6 +160,9 @@ Namespace Parallel.Threads
                 numThreads = LQuerySchedule.CPU_NUMBER * 2
             End If
 
+            Call $"num_threads: {numThreads}".__INFO_ECHO
+            Call $"CPU allocates: {smart}".__INFO_ECHO
+
             Do While p <= (actions.Length - 1)
                 If taskPool.Count < numThreads Then
                     ' 向任务池里面添加新的并行任务
@@ -171,7 +174,7 @@ Namespace Parallel.Threads
                         ' CPU的负载在指定值之内，则smart模式开启的情况下会添加新的额外的计算任务
                         CPU = Win32.TaskManager.ProcessUsage
 
-                        If CPU <= smart Then
+                        If CPU < smart Then
                             taskPool += New AsyncHandle(Of T)(actions(++p)).Run
                             Call $"CPU:{CPU}% <= {smart}, join an additional task thread...".__DEBUG_ECHO
                         End If

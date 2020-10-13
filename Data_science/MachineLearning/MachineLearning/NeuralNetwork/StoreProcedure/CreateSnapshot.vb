@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4080e5377a27a83bafe0f8934d2ae4b8, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\CreateSnapshot.vb"
+﻿#Region "Microsoft.VisualBasic::72c194c292e451125b6dc923f7ff848c, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\CreateSnapshot.vb"
 
     ' Author:
     ' 
@@ -87,7 +87,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' </summary>
         ''' <param name="instance"></param>
         ''' <returns></returns>
-        Public Function TakeSnapshot(instance As Network, errors#) As NeuralNetwork
+        Public Function TakeSnapshot(instance As Network, errors As Double()) As NeuralNetwork
             Dim nodes As New List(Of NeuronNode)
             Dim hiddenlayers As New List(Of NeuronLayer)
             Dim inputlayer As String()

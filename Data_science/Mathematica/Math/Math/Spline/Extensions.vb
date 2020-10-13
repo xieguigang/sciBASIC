@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::767689f9597a8d66a00b6f279c6a05ca, Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::78232cc60eb0c5bc9e4e57b660ba0516, Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,17 @@
 
     ' Summaries:
 
+    '     Enum Splines
+    ' 
+    '         B_Spline, Bezier, CatmullRomSpline, CentripetalCatmullRomSpline, CubicSpline
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     '     Module Extensions
     ' 
-    '         Function: CubicSpline
+    '         Function: CubicSpline, ParseSplineValue
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,8 +50,33 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Interpolation
+
+    ''' <summary>
+    ''' 线条插值算法类型
+    ''' </summary>
+    Public Enum Splines As Byte
+        ''' <summary>
+        ''' 无插值操作
+        ''' </summary>
+        None = 0
+        ''' <summary>
+        ''' 二次插值
+        ''' </summary>
+        B_Spline
+        ''' <summary>
+        ''' 贝塞尔曲线插值
+        ''' </summary>
+        Bezier
+        CatmullRomSpline
+        CentripetalCatmullRomSpline
+        ''' <summary>
+        ''' 三次插值处理
+        ''' </summary>
+        CubicSpline
+    End Enum
 
     <HideModuleName>
     Public Module Extensions
@@ -52,6 +85,18 @@ Namespace Interpolation
         <Extension>
         Public Function CubicSpline(points As IEnumerable(Of PointF), Optional expected# = 100) As PointF()
             Return Interpolation.CubicSpline.RecalcSpline(points, expected).ToArray
+        End Function
+
+        ReadOnly splineValues As Dictionary(Of String, Splines) = Enums(Of Splines).ToDictionary(Function(a) a.Description.ToLower)
+
+        Public Function ParseSplineValue(describ As String) As Splines
+            With LCase(describ).Trim
+                If .DoCall(AddressOf splineValues.ContainsKey) Then
+                    Return .DoCall(Function(key) splineValues(key))
+                Else
+                    Return Splines.None
+                End If
+            End With
         End Function
     End Module
 End Namespace

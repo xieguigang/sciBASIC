@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34c15663b275d83bb3a5388804e780c7, Data_science\Visualization\Plots\3D\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::555f635cae054217f33ebff82f8908f0, Data_science\Visualization\Plots\3D\ScatterHeatmap.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Namespace Plot3D
 
@@ -280,11 +281,11 @@ Namespace Plot3D
                     }
                     Dim legend As GraphicsData = colors.ColorMapLegend(
                         haveUnmapped:=False,
-                        min:=Math.Round(averages.Min, 1),
-                        max:=Math.Round(averages.Max, 1),
+                        min:=stdNum.Round(averages.Min, 1),
+                        max:=stdNum.Round(averages.Max, 1),
                         title:=legendTitle,
                         titleFont:=legendFont)
-                    Dim lsize As Size = legend.Size
+                    Dim lsize As Size = legend.Layout.Size
                     Dim left% = camera.screen.Width - lsize.Width + 150
                     Dim top% = camera.screen.Height / 3
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2be756d6700b2f582a7f0b902cbff76, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::a84b56ed98f9ac487d695f4c01ff5c44, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Utils.vb"
 
     ' Author:
     ' 
@@ -321,13 +321,14 @@ Namespace Imaging.BitmapImage
         ''' <param name="subject"></param>
         ''' <param name="replaceAs"></param>
         ''' <returns></returns>
-        <Extension> Public Function ColorReplace(image As Bitmap, subject As Color, replaceAs As Color) As Bitmap
+        <Extension>
+        Public Function ColorReplace(image As Bitmap, subject As Color, replaceAs As Color, Optional tolerance% = 3) As Bitmap
             Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image)
                 Dim byts As BitmapBuffer = bitmap
 
                 For x As Integer = 0 To byts.Width - 1
                     For y As Integer = 0 To byts.Height - 1
-                        If GDIColors.Equals(byts.GetPixel(x, y), subject) Then
+                        If GDIColors.Equals(byts.GetPixel(x, y), subject, tolerance) Then
                             Call byts.SetPixel(x, y, replaceAs)
                         End If
                     Next
@@ -339,8 +340,8 @@ Namespace Imaging.BitmapImage
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ColorReplace(image As Image, subject As Color, replaceAs As Color) As Bitmap
-            Return New Bitmap(image).ColorReplace(subject, replaceAs)
+        Public Function ColorReplace(image As Image, subject As Color, replaceAs As Color, Optional tolerance% = 3) As Bitmap
+            Return New Bitmap(image).ColorReplace(subject, replaceAs, tolerance)
         End Function
     End Module
 End Namespace

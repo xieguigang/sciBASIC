@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b6226b1eef6db682e0798b5b09dee22, Microsoft.VisualBasic.Core\Scripting\Expressions\ArrayIndex.vb"
+﻿#Region "Microsoft.VisualBasic::22e0d756b8ab969dcd7a8b9bb5f999c8, Microsoft.VisualBasic.Core\Scripting\Expressions\ArrayIndex.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,9 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Scripting.Expressions
 
+    ''' <summary>
+    ''' Expression text helper for vector index
+    ''' </summary>
     Public Module ArrayIndex
 
         ''' <summary>

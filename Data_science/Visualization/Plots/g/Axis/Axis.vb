@@ -1,46 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::31d8b9f22429d611d4f0652277834839, Data_science\Visualization\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::d5ba3724d0de6d347751c270ef39322e, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Axis
-    ' 
-    '         Properties: delta
-    ' 
-    '         Function: __plotLabel, (+2 Overloads) DrawLabel
-    ' 
-    '         Sub: (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY, DrawYGrid
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Axis
+' 
+'         Properties: delta
+' 
+'         Function: __plotLabel, (+2 Overloads) DrawLabel
+' 
+'         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
+'              DrawYGrid
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,6 +49,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Language
@@ -114,6 +116,7 @@ Namespace Graphic.Axis
                             Optional labelFont$ = CSSFont.Win7Large,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
+                            Optional gridColor$ = "white",
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
@@ -130,9 +133,21 @@ Namespace Graphic.Axis
                     axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel,
                     XtickFormat:=XtickFormat,
                     YtickFormat:=YtickFormat,
-                    tickFontStyle:=tickFontStyle
+                    tickFontStyle:=tickFontStyle,
+                    gridColor:=gridColor
                 )
             End With
+        End Sub
+
+        <Extension>
+        Private Sub checkScaler(scaler As DataScaler)
+            If scaler.X.domainSize = 0.0 Then
+                Throw New InvalidProgramException("the x axis range length is ZERO!")
+            ElseIf scaler.Y.valueDomain.Length = 0.0 Then
+                Throw New InvalidProgramException("the y axis range length is ZERO!")
+            Else
+                ' pass
+            End If
         End Sub
 
         ''' <summary>
@@ -172,20 +187,35 @@ Namespace Graphic.Axis
                 .DashStyle = Drawing2D.DashStyle.Dot
             }
 
+            Call scaler.checkScaler
             Call g.FillRectangle(gridFill.GetBrush, rect)
 
-            If Not scaler.AxisTicks.X.IsNullorEmpty Then
-                For Each tick In scaler.AxisTicks.X
-                    Dim x = scaler.X(tick) + offset.X
-                    Dim top As New Point(x, rect.Top)
-                    Dim bottom As New Point(x, rect.Bottom)
+            If showGrid AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
+                Dim ticks As Double()
+
+                If TypeOf scaler.X Is OrdinalScale Then
+                    ticks = DirectCast(scaler.X, OrdinalScale) _
+                        .getTerms _
+                        .Objects _
+                        .Select(Function(label) scaler.X(label)) _
+                        .ToArray
+                Else
+                    ticks = scaler.AxisTicks.X _
+                        .Select(Function(xi) scaler.X(xi)) _
+                        .ToArray
+                End If
+
+                For Each tick As Double In ticks
+                    Dim x As Single = tick + offset.X
+                    Dim top As New PointF(x, rect.Top)
+                    Dim bottom As New PointF(x, rect.Bottom)
 
                     ' 绘制x网格线
                     Call g.DrawLine(gridPenX, top, bottom)
                 Next
             End If
 
-            If Not scaler.AxisTicks.Y.IsNullorEmpty Then
+            If showGrid AndAlso Not scaler.AxisTicks.Y.IsNullOrEmpty Then
                 For Each tick In scaler.AxisTicks.Y
                     Dim y = scaler.TranslateY(tick) + offset.Y
                     Dim left As New Point(rect.Left, y)
@@ -198,18 +228,17 @@ Namespace Graphic.Axis
 
             Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
 
-            If htmlLabel Then
-                Call "Axis Labeling using HTML render is enable.".__INFO_ECHO
-            Else
-                Call "Axis Labeling using HTML render was disabled!".__INFO_ECHO
-            End If
-
             If xlayout <> XAxisLayoutStyles.None Then
-                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=XtickFormat)
+                Call g.DrawX(pen, xlabel, scaler, xlayout, scaler.Y(0), offset,
+                             labelFontStyle,
+                             tickFont,
+                             htmlLabel:=htmlLabel,
+                             tickFormat:=XtickFormat
+                     )
             End If
             If ylayout <> YAxisLayoutStyles.None Then
                 Call g.DrawY(pen, ylabel,
-                             scaler, scaler.X(0), scaler.AxisTicks.Y,
+                             scaler, scaler.X.Zero, scaler.AxisTicks.Y,
                              ylayout, offset,
                              labelFontStyle,
                              tickFont,
@@ -306,17 +335,28 @@ Namespace Graphic.Axis
             Dim maxYTickSize!
 
             If Not yTicks.IsNullOrEmpty Then
+                Dim p As PointF
+
                 For Each tick As Double In yTicks
                     Dim y! = scaler.TranslateY(tick) + offset.Y
                     Dim axisY As New PointF(ZERO.X, y)
 
                     If showAxisLine Then
-                        Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                        If layout = YAxisLayoutStyles.Right Then
+                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X + delta, y))
+                        Else
+                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                        End If
                     End If
 
                     Dim labelText = (tick).ToString(tickFormat)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
-                    Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
+
+                    If layout = YAxisLayoutStyles.Right Then
+                        p = New PointF(ZERO.X + delta, y - sz.Height / 2)
+                    Else
+                        p = New PointF(ZERO.X - delta - sz.Width, y - sz.Height / 2)
+                    End If
 
                     If sz.Width > maxYTickSize Then
                         maxYTickSize = sz.Width
@@ -351,11 +391,14 @@ Namespace Graphic.Axis
                         location = New PointF(5, location.Y)
                     End If
 
-                    Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
-
-                    With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                        Call .DrawString(label, font, Brushes.Black, location, -90)
-                    End With
+                    ' Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
+                    If TypeOf g Is Graphics2D Then
+                        With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                            Call .DrawString(label, font, Brushes.Black, location, -90)
+                        End With
+                    Else
+                        Call g.DrawString(label, font, Brushes.Black, location)
+                    End If
                 End If
             End If
         End Sub
@@ -442,7 +485,7 @@ Namespace Graphic.Axis
         <Extension> Public Sub DrawX(ByRef g As IGraphics,
                                      pen As Pen, label$,
                                      scaler As DataScaler,
-                                     layout As XAxisLayoutStyles, offset As Point,
+                                     layout As XAxisLayoutStyles, Y0#, offset As Point,
                                      labelFont$,
                                      tickFont As Font,
                                      Optional overridesTickLine% = -1,
@@ -458,6 +501,8 @@ Namespace Graphic.Axis
                     Y += size.Height / 2 + offset.Y
                 Case XAxisLayoutStyles.Top
                     Y += 0
+                Case XAxisLayoutStyles.ZERO
+                    Y = Y0 + offset.Y
                 Case Else
                     Y += size.Height
             End Select
@@ -468,12 +513,27 @@ Namespace Graphic.Axis
 
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
-            If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullorEmpty Then
-                For Each tick# In scaler.AxisTicks.X
-                    Dim x As Single = scaler.X(tick) + offset.X
-                    Dim axisX As New PointF(x, ZERO.Y)
+            If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
+                ' 绘制坐标轴标签
+                Dim ticks As (x#, label$)()
 
-                    Dim labelText = (tick).ToString(tickFormat)
+                If TypeOf scaler.X Is LinearScale Then
+                    ticks = scaler.AxisTicks.X _
+                        .Select(Function(tick)
+                                    Return (scaler.X(tick), (tick).ToString(tickFormat))
+                                End Function) _
+                        .ToArray
+                Else
+                    ticks = DirectCast(scaler.X, OrdinalScale) _
+                        .getTerms _
+                        .Select(Function(tick) (scaler.X(tick.value), tick.value)) _
+                        .ToArray
+                End If
+
+                For Each tick As (X#, label$) In ticks
+                    Dim x As Single = tick.X + offset.X
+                    Dim axisX As New PointF(x, ZERO.Y)
+                    Dim labelText = tick.label
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
@@ -486,7 +546,7 @@ Namespace Graphic.Axis
                     Dim labelImage As Image = label.__plotLabel(labelFont, False)
                     Dim point As New Point With {
                         .X = (size.Width - labelImage.Width) / 2 + scaler.region.Left,
-                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 3
+                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 4
                     }
 
                     Call g.DrawImageUnscaled(labelImage, point)
@@ -495,10 +555,10 @@ Namespace Graphic.Axis
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim point As New PointF With {
                         .X = (size.Width - fSize.Width) / 2 + scaler.region.Left,
-                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 3
+                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 4
                     }
 
-                    Call $"[X:={label}] {point.ToString}".__INFO_ECHO
+                    ' Call $"[X:={label}] {point.ToString}".__INFO_ECHO
                     Call g.DrawString(label, font, Brushes.Black, point)
                 End If
             End If

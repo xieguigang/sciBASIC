@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e273d1dd8fe70be680903255e44fe5d, mime\application%rdf+xml\RDF.vb"
+﻿#Region "Microsoft.VisualBasic::90e4ab445881618c1e1e862acc3d84d5, mime\application%rdf+xml\RDF.vb"
 
     ' Author:
     ' 
@@ -33,95 +33,40 @@
 
     ' Class RDF
     ' 
-    '     Function: (+2 Overloads) LoadDocument, ToString
-    '     Structure __docHelper
+    '     Properties: description
     ' 
-    '         Function: ProcDoc
-    ' 
-    ' 
+    '     Constructor: (+1 Overloads) Sub New
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Text
-Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.MIME.application.rdf_xml.DocumentStream
+Imports System.Xml.Serialization
 
 ''' <summary>
-''' 做序列化的时候请务必要添加一个自定义的属性：&lt;XmlType(RDF.RDF_PREFIX &amp; "RDF")>
+''' the xml file serilization model
 ''' </summary>
-Public Class RDF
+''' <remarks>
+''' 关于RDF模型对象的使用方法，在这里提供两两个抽象对象用来表示RDF模型
+''' 
+''' 1. description数据是对象的注释信息存储位置
+''' 2. 这个RDF抽象类型为注释信息的存储容器
+''' 
+''' 因为不同的应用程序会产生不同的注释信息数据，所以需要继承所提供的
+''' description对象以及继承当前的RDF对象来生成一个特定的数据读取对象
+''' 后进行信息数据的读取操作。
+''' </remarks>
+''' 
+<XmlType("RDF", [Namespace]:=RDFEntity.XmlnsNamespace)>
+Public MustInherit Class RDF(Of T As Description)
 
-    Public Const Namespace$ = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    <XmlNamespaceDeclarations()>
+    Public xmlns As New XmlSerializerNamespaces
 
-    Public Const RDF_PREFIX As String = "rdf-"
+    <XmlElement("Description", [Namespace]:=RDFEntity.XmlnsNamespace)>
+    Public Property description As T
 
-    ' <XmlElement(RDF.RDF_PREFIX & "Description")>
-    '   Public Property ResourceDescription As RDFResourceDescription
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="Text">参数值为文件之中的字符串内容，而非文件的路径</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Shared Function LoadDocument(Text As String) As RDF
-        Dim sBuilder As StringBuilder = New StringBuilder(Text, 1024)
-        Call sBuilder.Replace("rdf:", RDF.RDF_PREFIX)
-        Dim Document As GenericXmlDocument = GenericXmlDocument.CreateObjectFromXmlText(sBuilder.ToString)
-        Dim Description As String = Document.DocumentNodes.First.InternalText
-        ' Dim doc As New RDF With {
-        ' .ResourceDescription = Description.CreateObjectFromXmlFragment(Of RDFResourceDescription)()
-        '     }
-        '    doc.ResourceDescription.InternalText = Description
-        '   Return doc
-    End Function
-
-    Public Shared Function LoadDocument(Of T As RDF)(path As String, Proc As Func(Of StringBuilder, String)) As T
-        Return path.LoadXml(Of T)(preprocess:=AddressOf New __docHelper With {.Proc = Proc}.ProcDoc)
-    End Function
-
-    Private Structure __docHelper
-        Public Proc As Func(Of StringBuilder, String)
-
-        Const XmlNs As String = "xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"""
-
-        Public Function ProcDoc(doc As String) As String
-            Dim sb As New StringBuilder(Regex.Replace(doc, "<rdf:RDF.+?>", $"<rdf:RDF {XmlNs} >", RegexICSng))
-
-            Call sb.Replace("<rdf:", "<" & RDF.RDF_PREFIX)
-            Call sb.Replace("</rdf:", "</" & RDF.RDF_PREFIX)
-            Call sb.Replace(" rdf:", " " & RDF.RDF_PREFIX)
-            Call sb.Replace(" xmlns:rdf=", " xmlns=")
-
-            Return Proc(sb)
-        End Function
-    End Structure
-
-    ''' <summary>
-    ''' 将RDF对象转换为XML文件之中的字符串
-    ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Overrides Function ToString() As String
-        Dim sBuilder As StringBuilder = New StringBuilder(Me.GetXml, capacity:=1024)
-        Call sBuilder.Replace(RDF_PREFIX, "rdf:")
-        Call sBuilder.Replace("&lt;", "<")
-        Call sBuilder.Replace("&gt;", ">")
-        Call sBuilder.Replace("<?xml version=""1.0"" encoding=""utf-16""?>", "")
-        Call sBuilder.Replace(" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema""", "")
-        Call sBuilder.Replace("<rdf:Description>", "")
-
-        Dim value As String = sBuilder.ToString
-        value = Regex.Replace(value, "</rdf:Description>.*</rdf:Description>", "</rdf:Description>")
-        '  Dim AboutValue As String = Regex.Match(value, "rdf:about="".+?"">", RegexOptions.Singleline).Value
-        '  value = value.Replace(AboutValue, AboutValue.Replace(""">", """ />"))
-
-        ' <rdf:Description xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-        ' <rdf:Description xmlns:xsd=.+? xmlns:xsi=.+?>
-        value = Regex.Replace(value, "<rdf:Description xmlns:xsd=.+? xmlns:xsi=.+?>", "")
-
-        Return value
-    End Function
+    Sub New()
+        xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
+    End Sub
 End Class

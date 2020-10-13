@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4caad8d2eafb32a0fe43a0b77c8f2eb, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
+﻿#Region "Microsoft.VisualBasic::95f857ee1b219140f983e143cd3a3b93, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,8 @@
 
 #End Region
 
+Imports stdNum = System.Math
+
 Namespace Distributions
 
     ''' <summary>
@@ -60,7 +62,7 @@ Namespace Distributions
         ''' <returns></returns>
         Public Function Gaussian(x#, a#, b#, c#) As Double
             Dim p# = ((x - b) ^ 2) / (2 * c ^ 2)
-            Dim fx# = a * E ^ (-p)
+            Dim fx# = a * stdNum.E ^ (-p)
             Return fx
         End Function
 

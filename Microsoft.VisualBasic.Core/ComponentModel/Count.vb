@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ad22354f6820da7f7549ed80669838c, Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
+﻿#Region "Microsoft.VisualBasic::9d92e0c5aa27014389535aef2669c1eb, Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
 
     ' Author:
     ' 
@@ -98,6 +98,7 @@ Namespace ComponentModel
         End Operator
     End Class
 
+    <HideModuleName>
     Public Module CounterExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

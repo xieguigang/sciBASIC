@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25e53b71ca3896892263708f3a0d8e06, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::0ed35ff926e582f3bd53b057588cc578, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Layer.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Layer
     ' 
-    '         Properties: doDropOutMode, doNormalize, Neurons, Output
+    '         Properties: doDropOutMode, Neurons, Output, softmaxNormalization
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork
 
@@ -70,10 +71,10 @@ Namespace NeuralNetwork
         End Property
 
         ''' <summary>
-        ''' 将当前层之中的所有的神经元的值都归一化为[0,1]这个区间内
+        ''' 通过<see cref="SoftmaxLayer"/>将当前层之中的所有的神经元的值都归一化为[0,1]这个区间内
         ''' </summary>
         ''' <returns></returns>
-        Public Property doNormalize As Boolean
+        Public Property softmaxNormalization As Boolean
         ''' <summary>
         ''' 是否处于DropOut模式
         ''' </summary>
@@ -87,16 +88,19 @@ Namespace NeuralNetwork
             Me.Neurons = neurons
         End Sub
 
-        Sub New(size%, active As IActivationFunction, weight As Func(Of Double), Optional input As Layer = Nothing, Optional guid As i32 = Nothing)
+        Sub New(size%, active As IActivationFunction, weight As Func(Of Double),
+                Optional input As Layer = Nothing,
+                Optional guid As i32 = Nothing)
+
             Neurons = New Neuron(size - 1) {}
 
             If input Is Nothing Then
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(weight, active, guid)
+                    _Neurons(i) = New Neuron(weight, active, guid)
                 Next
             Else
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(input.Neurons, weight, active, guid)
+                    _Neurons(i) = New Neuron(input.Neurons, weight, active, guid)
                 Next
             End If
         End Sub
@@ -134,11 +138,11 @@ Namespace NeuralNetwork
             End If
         End Sub
 
-        Private Function allActiveNodes() As IEnumerable(Of Neuron)
+        Protected Function allActiveNodes() As IEnumerable(Of Neuron)
             If doDropOutMode Then
-                Return Neurons.Where(Function(n) Not n.isDroppedOut)
+                Return _Neurons.Where(Function(n) Not n.isDroppedOut)
             Else
-                Return Neurons
+                Return _Neurons
             End If
         End Function
 
@@ -151,8 +155,10 @@ Namespace NeuralNetwork
         ''' 在这个函数之中完成<see cref="Neuron.CalculateValue"/>函数的调用之后
         ''' 将会更新<see cref="Neuron.Value"/>属性值
         ''' </remarks>
-        Public Sub CalculateValue(Optional parallel As Boolean = False, Optional truncate As Double = -1)
-            If Not parallel Then
+        Public Overridable Sub CalculateValue(Optional parallel As Boolean = False, Optional truncate As Double = -1)
+            If softmaxNormalization Then
+                Call SoftmaxLayer.CalculateValue(_Neurons, parallel, truncate, doDropOutMode)
+            ElseIf Not parallel Then
                 For Each neuron As Neuron In allActiveNodes()
                     Call neuron.CalculateValue(doDropOutMode, truncate)
                 Next
@@ -168,31 +174,8 @@ Namespace NeuralNetwork
                      In allActiveNodes.AsParallel
                      Let run = neuron.CalculateValue(doDropOutMode, truncate)
                      Into Sum(run)
+
                 End With
-            End If
-
-            If doNormalize Then
-                ' 将当前层之中的所有的神经元的值都归一化为[0,1]这个区间内
-                Dim max As Double = allActiveNodes _
-                    .Where(Function(x) Not x.Value.IsNaNImaginary) _
-                    .Max(Function(n)
-                             ' 2019-06-26
-                             '
-                             ' 因为节点的值是有负数存在的
-                             ' 假若某一个层的节点之中, 大部分的节点值都是负数,则可能
-                             ' 存在一个-10000000的最小值
-                             ' 并且也存在一个1e-99的正实数的最大值
-                             ' 则-10000000/1e-99会产生一个负无穷大的结果,导致出现NaN的问题
-                             ' 在这里使用绝对值来解决这个bug
-                             Return Math.Abs(n.Value)
-                         End Function)
-
-                For Each neuron As Neuron In allActiveNodes()
-                    ' 因为节点的值在约束之前可能就已经存在NaN的结果了
-                    ' 所以在这里会需要使用这个帮助函数来剪裁NaN的值到
-                    ' 归一化之后的最大值-1或者1
-                    neuron.Value = Helpers.ValueTruncate(neuron.Value / max, 1)
-                Next
             End If
         End Sub
 

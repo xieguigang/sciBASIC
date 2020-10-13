@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d45d1aa32d36c48db2aa60266a5ca3c8, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::6b1487624496de01c1ab2d126da9eafb, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\InvokeAPI.vb"
 
     ' Author:
     ' 
@@ -41,17 +41,16 @@
 
 #End Region
 
-Imports System.Net
 Imports Microsoft.VisualBasic.Net.HTTP
-Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol.PushAPI
 
     ''' <summary>
     ''' 服务器端的其他模块调用消息更新推送的接口
     ''' </summary>
-    <Protocol(GetType(Protocols.InvokeAPI.Protocols))>
+    <ProtocolAttribute(GetType(Protocols.InvokeAPI.Protocols))>
     Public Class InvokeAPI : Inherits APIBase
 
         Sub New(push As PushServer)
@@ -63,7 +62,7 @@ Namespace NETProtocol.PushAPI
             Return __protocols.HandleRequest(request, remote)
         End Function
 
-        <Protocol(Protocols.InvokeAPI.Protocols.PushToUser)>
+        <ProtocolAttribute(Protocols.InvokeAPI.Protocols.PushToUser)>
         Private Function __invokePush(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
             Call PushServer.PushUpdate(request)
             Return NetResponse.RFC_OK

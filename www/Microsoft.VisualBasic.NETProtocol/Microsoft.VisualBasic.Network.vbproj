@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.VisualBasic.Network</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -58,11 +58,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <OutputPath>./bin</OutputPath>
@@ -250,6 +252,36 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\GCModeller%28UNIX-Release_X64%29\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\GCModeller%28UNIX-Release_X64%29\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\GCModeller%28UNIX-Release_X64%29\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -273,6 +305,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IProtocolHandler.vb" />
     <Compile Include="HTTP\iana.org\MediaTypes.vb" />
     <Compile Include="HTTP\WebSaveAs.vb" />
     <Compile Include="HTTP\WebCrawling.vb" />
@@ -302,6 +335,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -313,6 +347,30 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Persistent\Protocols\POST.vb" />
+    <Compile Include="Persistent\Protocols\Protocol.vb" />
+    <Compile Include="Persistent\Socket\ServicesSocket.vb" />
+    <Compile Include="Persistent\Socket\TcpClient.vb" />
+    <Compile Include="Persistent\Socket\WorkSocket.vb" />
+    <Compile Include="Pipeline\API.vb" />
+    <Compile Include="Pipeline\PipeBuffer.vb" />
+    <Compile Include="Pipeline\Pipeline.vb" />
+    <Compile Include="Pipeline\PipeStream.vb" />
+    <Compile Include="Protocol\IVerifySession.vb" />
+    <Compile Include="Protocol\NetResponse.vb" />
+    <Compile Include="Protocol\Reflection\AppMgr.vb" />
+    <Compile Include="Protocol\Reflection\ProtocolAttribute.vb" />
+    <Compile Include="Protocol\Reflection\ProtocolHandler.vb" />
+    <Compile Include="Protocol\Reflection\ProtocolInvoker.vb" />
+    <Compile Include="Protocol\Streams\Array.vb" />
+    <Compile Include="Protocol\Streams\ArrayAbstract.vb" />
+    <Compile Include="Protocol\Streams\ArrayBase.vb" />
+    <Compile Include="Protocol\Streams\String.vb" />
+    <Compile Include="Protocol\Streams\VarArray.vb" />
+    <Compile Include="ServerModule.vb" />
+    <Compile Include="StateObject.vb" />
+    <Compile Include="TcpRequest.vb" />
+    <Compile Include="TcpServicesSocket.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -338,10 +396,6 @@
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\mime\text%25html\MIME-htmls.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>MIME-htmls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

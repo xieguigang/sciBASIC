@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5e16014c313463cfdc1db5fb83d1bfd, Microsoft.VisualBasic.Core\Extensions\Collection\IsNullOrEmptyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::624954b0d976d4ee1ecf713953a6fcc5, Microsoft.VisualBasic.Core\Extensions\Collection\IsNullOrEmptyExtensions.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 
+<HideModuleName>
 Public Module IsNullOrEmptyExtensions
 
     <Extension>

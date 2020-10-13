@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb69fc76f81f00cb04dcaaab9410eb37, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::e475508ddb4af538266f0143bcb31848, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,10 @@
     ' 
     '     Class ExportAPIAttribute
     ' 
-    '         Properties: Example, Info, Name, Type, Usage
+    '         Properties: Example, Info, Name, Usage
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GenerateHtmlDoc, printView, PrintView, printViewHTML, ToString
+    '         Function: ToString
     ' 
     '     Interface IExportAPI
     ' 
@@ -52,7 +52,6 @@
 
 #End Region
 
-Imports System.Text
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace CommandLine.Reflection
@@ -103,14 +102,14 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Info As String Implements IExportAPI.Info
+        <Obsolete> Public Property Info As String Implements IExportAPI.Info
         ''' <summary>
         ''' The usage of this command.(这个命令的用法，本属性仅仅是一个助记符，当用户没有编写任何的使用方法信息的时候才会使用本属性的值)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Usage As String Implements IExportAPI.Usage
+        <Obsolete> Public Property Usage As String Implements IExportAPI.Usage
         ''' <summary>
         ''' A example that to useing this command.
         ''' (对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值，
@@ -119,7 +118,7 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property Example As String Implements IExportAPI.Example
+        <Obsolete> Public Property Example As String Implements IExportAPI.Example
 
         ''' <summary>
         ''' You are going to define a available export api for you application to another language or scripting program environment.
@@ -134,64 +133,6 @@ Namespace CommandLine.Reflection
         Public Overrides Function ToString() As String
             Return Name
         End Function
-
-        Public Function PrintView(HTML As Boolean) As String
-            If HTML Then
-                Return printViewHTML()
-            Else
-                Return printView()
-            End If
-        End Function
-
-        Private Function printView()
-            Dim sb As New StringBuilder(1024)
-
-            Call sb.AppendLine($"{NameOf(Name)}    = ""{Name}""")
-            Call sb.AppendLine($"{NameOf(Info)}    = ""{Info}""")
-            Call sb.AppendLine($"{NameOf(Usage)}   = ""{Usage}""")
-            Call sb.AppendLine($"{NameOf(Example)} = ""{Example}""")
-
-            Return sb.ToString
-        End Function
-
-        Private Function printViewHTML() As String
-            Return ExportAPIAttribute.GenerateHtmlDoc(Me, "", "")
-        End Function
-
-        Public Shared Function GenerateHtmlDoc(Command As IExportAPI, addNode As String, addValue As String) As String
-            Dim add As String = If(Not String.IsNullOrEmpty(addValue), $"           <tr>
-    <td>{addNode}</td>
-    <td>{addValue}</td>
-  </tr>", "")
-
-            Return $"<p>Help for ""{Command.Name}"":</p>
-<table frame=""hsides"">
-  <tr>
-    <th>DocNode</th>
-    <th>Content Text</th>
-                 <th><a href=""#""><strong><font size=3>[&#8593;]</font></strong></a></th>
-  </tr>
-  <tr>
-    <td><strong>{NameOf(Name)}</strong></td>
-    <td><strong><a name=""{Command.Name}"">{Command.Name}</a></strong></td>
-  </tr>
-                <tr>
-    <td>{NameOf(Info)}</td>
-    <td>{Command.Info}</td>
-  </tr>
-                <tr>
-    <td>{NameOf(Usage)}</td>
-    <td>{Command.Usage}</td>
-  </tr>
-                <tr>
-    <td>{NameOf(Example)}</td>
-    <td>{Command.Example}</td>
-  </tr>
-    {add}
-</table>"
-        End Function
-
-        Public Shared ReadOnly Property Type As Type = GetType(ExportAPIAttribute)
     End Class
 
     Public Interface IExportAPI

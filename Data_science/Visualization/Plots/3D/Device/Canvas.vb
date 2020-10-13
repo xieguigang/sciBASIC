@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f0f371de4d32a2226601903da474b4e, Data_science\Visualization\Plots\3D\Device\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::39ff30dc3224c319a3f49e2b0b5dde07, Data_science\Visualization\Plots\3D\Device\Canvas.vb"
 
     ' Author:
     ' 
@@ -87,7 +87,7 @@ Namespace Plot3D.Device
             '   Dim x As New DoubleRange(-5, 5)
             '  Dim y As New DoubleRange(-5, 5)
 
-            '  models += Grid(Function(xx, yy) Math.Sin(xx ^ 2) * Math.Cos(yy ^ 2), x, y, ColorMap.PatternJet, 0.05, 0.05).Select(Function(l) DirectCast(l, I3DModel))
+            '  models += Grid(Function(xx, yy) stdNum.Sin(xx ^ 2) * stdNum.Cos(yy ^ 2), x, y, ColorMap.PatternJet, 0.05, 0.05).Select(Function(l) DirectCast(l, I3DModel))
             '  models += Grid(Function(xx, yy) xx * yy, x, y, 0.05, 0.05, Pens.Green).Select(Function(l) DirectCast(l, I3DModel))
 
             'models += New Line3D With {.a = New Point3D(30, 0, 0), .b = New Point3D(-30, 0, 0), .pen = Pens.Red}

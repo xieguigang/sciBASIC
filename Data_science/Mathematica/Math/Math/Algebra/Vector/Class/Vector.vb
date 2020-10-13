@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48069802075045023d88e43d4f764ee5, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::19c2435a1efef398e815a6a8743cdfbe, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -56,11 +56,12 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports numpy = Microsoft.VisualBasic.Language.Python
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace LinearAlgebra
 
@@ -158,7 +159,7 @@ Namespace LinearAlgebra
         Public ReadOnly Property SumMagnitude As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return sys.Sqrt(Me.Mod)
+                Return stdNum.Sqrt(Me.Mod)
             End Get
         End Property
 
@@ -180,7 +181,7 @@ Namespace LinearAlgebra
             End Get
         End Property
 
-        Private ReadOnly Property Data As Double() Implements IVector.Data
+        Protected Overridable ReadOnly Property Data As Double() Implements IVector.Data
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer
@@ -559,7 +560,7 @@ Namespace LinearAlgebra
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As Matrix
+        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As GeneralMatrix
             '获取变量维数
             Dim N0 = v1.[Dim]
             Dim M0 = v2.[Dim]
@@ -569,7 +570,7 @@ Namespace LinearAlgebra
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
 
-            Dim vvmat As New Matrix(N0, N0)
+            Dim vvmat As New GeneralMatrix(N0, N0)
 
             For i As Integer = 0 To N0 - 1
                 For j As Integer = 0 To N0 - 1
@@ -633,7 +634,7 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' Power: <see cref="Math.Pow(Double, Double)"/>
+        ''' Power: <see cref="stdNum.Pow(Double, Double)"/>
         ''' </summary>
         ''' <param name="v"></param>
         ''' <param name="n"></param>

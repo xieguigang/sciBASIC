@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7b436c771093b7b7a81693cc12a2873, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::2fd959a55b078de61582346fc7b2e2d7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -40,10 +40,10 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
-    '                   MeasureWidthOrHeight
+    '         Function: __getDriver, Allocate, CreateGraphics, (+3 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
+    '                   MeasureWidthOrHeight, ParseDriverEnumValue
     ' 
-    '         Sub: (+2 Overloads) DropdownShadows, FillBackground
+    '         Sub: FillBackground, SetDriver
     '         Class InternalCanvas
     ' 
     '             Properties: bg, padding, size
@@ -65,10 +65,10 @@ Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.PostScript
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 
@@ -118,16 +118,25 @@ Namespace Drawing2D
         ''' ```
         ''' </summary>
         Sub New()
-            Dim type$ = App.GetVariable(GraphicDriverEnvironmentConfigName)
+            Dim type$ = Strings.LCase(App.GetVariable(GraphicDriverEnvironmentConfigName))
 
-            If type.TextEquals("svg") Then
-                g.__defaultDriver = Drivers.SVG
-            ElseIf type.TextEquals("gdi") Then
-                g.__defaultDriver = Drivers.GDI
-            Else
-                g.__defaultDriver = Drivers.Default
-            End If
+            g.__defaultDriver = ParseDriverEnumValue(type)
+
+            Call $"The default graphics driver value is config as {g.__defaultDriver.Description}({type}).".__INFO_ECHO
         End Sub
+
+        Public Function ParseDriverEnumValue(str As String) As Drivers
+            Dim type$ = Strings.LCase(str)
+
+            Select Case type
+                Case "svg" : Return Drivers.SVG
+                Case "gdi" : Return Drivers.GDI
+                Case "ps" : Return Drivers.PS
+                Case "wmf" : Return Drivers.WMF
+                Case Else
+                    Return Drivers.Default
+            End Select
+        End Function
 
         ''' <summary>
         ''' Get the result from commandline environment variable: ``graphic_driver``
@@ -146,7 +155,15 @@ Namespace Drawing2D
         ''' <returns></returns>
         Public ReadOnly Property DriverExtensionName As String
             Get
-                Return "png" Or "svg".When(ActiveDriver = Drivers.SVG)
+                Select Case ActiveDriver
+                    Case Drivers.SVG : Return "svg"
+                    Case Drivers.GDI, Drivers.Default
+                        Return "png"
+                    Case Drivers.PS : Return "ps"
+                    Case Drivers.WMF : Return "wmf"
+                    Case Else
+                        Throw New NotImplementedException(ActiveDriver.Description)
+                End Select
             End Get
         End Property
 
@@ -154,7 +171,7 @@ Namespace Drawing2D
         ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖，
         ''' 通常情况下，默认引擎选用的是``gdi+``引擎
         ''' </summary>
-        ReadOnly __defaultDriver As Drivers = Drivers.Default
+        Dim __defaultDriver As Drivers = Drivers.Default
 
         ''' <summary>
         ''' 这个函数不会返回<see cref="Drivers.Default"/>
@@ -174,6 +191,14 @@ Namespace Drawing2D
             End If
         End Function
 
+        ''' <summary>
+        ''' 在代码中手动配置默认的驱动程序
+        ''' </summary>
+        ''' <param name="driver"></param>
+        Public Sub SetDriver(driver As Drivers)
+            g.__defaultDriver = driver
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MeasureWidthOrHeight(wh#, length%) As Single
             If wh > 0 AndAlso wh <= 1 Then
@@ -185,6 +210,35 @@ Namespace Drawing2D
 
         ReadOnly defaultSize As [Default](Of Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
         ReadOnly defaultPaddingValue As [Default](Of Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
+
+        <Extension>
+        Public Function GraphicsPlots(base As GraphicsData, plot As IPlot) As GraphicsData
+            Dim region As GraphicsRegion = base.Layout
+
+            Select Case base.Driver
+                Case Drivers.GDI
+                    Using g As New Graphics2D(base.AsGDIImage)
+                        Dim rect As New Rectangle(New Point, g.Size)
+
+                        With g.Graphics
+                            .CompositingQuality = CompositingQuality.HighQuality
+                            .CompositingMode = CompositingMode.SourceOver
+                            .InterpolationMode = InterpolationMode.HighQualityBicubic
+                            .PixelOffsetMode = PixelOffsetMode.HighQuality
+                            .SmoothingMode = SmoothingMode.HighQuality
+                            .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                        End With
+
+                        Call plot(g, region)
+
+                        Return New ImageData(g.ImageResource, region.Size, region.Padding)
+                    End Using
+                Case Drivers.SVG
+                    Throw New NotImplementedException
+                Case Else
+                    Throw New NotImplementedException(base.Driver.ToString)
+            End Select
+        End Function
 
         ''' <summary>
         ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100).
@@ -205,50 +259,57 @@ Namespace Drawing2D
                                       Optional driver As Drivers = Drivers.Default,
                                       Optional dpi$ = "100,100") As GraphicsData
 
-            Dim image As GraphicsData
+            Dim driverUsed As Drivers = g.__getDriver(developerValue:=driver)
 
             size = size Or defaultSize
             padding = padding Or defaultPaddingValue
 
-            If g.__getDriver(developerValue:=driver) = Drivers.SVG Then
-                Dim svg As New GraphicsSVG(size)
+            Dim region As New GraphicsRegion With {
+                .Size = size,
+                .Padding = padding
+            }
 
-                Call svg.Clear(bg.TranslateColor)
-                Call plotAPI(svg, New GraphicsRegion With {
-                    .Size = size,
-                    .Padding = padding
-                })
+            Select Case driverUsed
+                Case Drivers.SVG
+                    Dim svg As New GraphicsSVG(size)
 
-                image = New SVGData(svg, size)
-            Else
-                ' using gdi+ graphics driver
-                ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
-                Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent, dpi:=dpi)
-                    Dim rect As New Rectangle(New Point, size)
+                    Call svg.Clear(bg.TranslateColor)
+                    Call plotAPI(svg, region)
 
-                    With g.Graphics
+                    Return New SVGData(svg, size, padding)
+                Case Drivers.PS
+                    Dim ps As New GraphicsPS(size)
 
-                        Call .FillBackground(bg$, rect)
+                    Throw New NotImplementedException
+                Case Drivers.WMF
+                    Using wmf As New Wmf(size, WmfData.wmfTmp, bg)
+                        Call plotAPI(wmf, region)
+                        Return New WmfData(wmf.wmfFile, size, padding)
+                    End Using
+                Case Else
+                    ' using gdi+ graphics driver
+                    ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
+                    Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent, dpi:=dpi)
+                        Dim rect As New Rectangle(New Point, size)
 
-                        .CompositingQuality = CompositingQuality.HighQuality
-                        .CompositingMode = CompositingMode.SourceOver
-                        .InterpolationMode = InterpolationMode.HighQualityBicubic
-                        .PixelOffsetMode = PixelOffsetMode.HighQuality
-                        .SmoothingMode = SmoothingMode.HighQuality
-                        .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                        With g.Graphics
 
-                    End With
+                            Call .FillBackground(bg$, rect)
 
-                    Call plotAPI(g, New GraphicsRegion With {
-                        .Size = size,
-                        .Padding = padding
-                    })
+                            .CompositingQuality = CompositingQuality.HighQuality
+                            .CompositingMode = CompositingMode.SourceOver
+                            .InterpolationMode = InterpolationMode.HighQualityBicubic
+                            .PixelOffsetMode = PixelOffsetMode.HighQuality
+                            .SmoothingMode = SmoothingMode.HighQuality
+                            .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
 
-                    image = New ImageData(g.ImageResource, size)
-                End Using
-            End If
+                        End With
 
-            Return image
+                        Call plotAPI(g, region)
+
+                        Return New ImageData(g.ImageResource, size, padding)
+                    End Using
+            End Select
         End Function
 
         ''' <summary>
@@ -262,7 +323,7 @@ Namespace Drawing2D
         ''' </param>
         <Extension>
         Public Sub FillBackground(ByRef g As Graphics, bg$, rect As Rectangle)
-            Dim bgColor As Color = bg.ToColor(onFailure:=Nothing)
+            Dim bgColor As Color = bg.TranslateColor(throwEx:=False)
 
             If Not bgColor.IsEmpty Then
                 Call g.FillRectangle(New SolidBrush(bgColor), rect)
@@ -336,73 +397,6 @@ Namespace Drawing2D
                 Return Graphics2D.Open(DirectCast(img, ImageData).Image)
             End If
         End Function
-
-        ''' <summary>
-        ''' Draw shadow of a specifc <paramref name="rectangle"/>
-        ''' </summary>
-        ''' <param name="g"></param>
-        ''' <param name="rectangle"></param>
-        ''' <param name="shadowColor$"></param>
-        ''' <param name="alphaLevels$"></param>
-        ''' <param name="gradientLevels$"></param>
-        <Extension> Public Sub DropdownShadows(g As IGraphics,
-                                               rectangle As RectangleF,
-                                               Optional shadowColor$ = NameOf(Color.Gray),
-                                               Optional alphaLevels$ = "0,120,150,200",
-                                               Optional gradientLevels$ = "[0,0.125,0.5,1]")
-            Dim path As New GraphicsPath
-
-            Call path.AddRectangle(rectangle)
-            Call path.CloseAllFigures()
-            Call g.DropdownShadows(path, shadowColor, alphaLevels, gradientLevels)
-        End Sub
-
-        ''' <summary>
-        ''' Draw shadow of a specifc <paramref name="polygon"/>
-        ''' </summary>
-        ''' <param name="g"></param>
-        ''' <param name="polygon"></param>
-        ''' <param name="shadowColor$"></param>
-        ''' <param name="alphaLevels$"></param>
-        ''' <param name="gradientLevels$"></param>
-        <Extension> Public Sub DropdownShadows(g As IGraphics,
-                                               polygon As GraphicsPath,
-                                               Optional shadowColor$ = NameOf(Color.Gray),
-                                               Optional alphaLevels$ = "0,120,150,200",
-                                               Optional gradientLevels$ = "[0,0.125,0.5,1]")
-
-            Dim alphas As Vector = alphaLevels
-            ' Create a color blend to manage our colors And positions And
-            ' since we need 3 colors set the default length to 3
-            Dim colorBlend As New ColorBlend(alphas.Length)
-            Dim baseColor As Color = shadowColor.TranslateColor
-
-            ' here Is the important part of the shadow making process, remember
-            ' the clamp mode on the colorblend object layers the colors from
-            ' the outside to the center so we want our transparent color first
-            ' followed by the actual shadow color. Set the shadow color to a 
-            ' slightly transparent DimGray, I find that it works best.|
-            colorBlend.Colors = alphas _
-                .Select(Function(a) Color.FromArgb(a, baseColor)) _
-                .ToArray
-
-            ' our color blend will control the distance of each color layer
-            ' we want to set our transparent color to 0 indicating that the 
-            ' transparent color should be the outer most color drawn, then
-            ' our Dimgray color at about 10% of the distance from the edge
-            colorBlend.Positions = CType(gradientLevels, Vector).AsSingle
-
-            ' this Is where we create the shadow effect, so we will use a 
-            ' pathgradientbursh And assign our GraphicsPath that we created of a 
-            ' Rounded Rectangle
-            Using pgBrush As New PathGradientBrush(polygon) With {
-                .WrapMode = WrapMode.Clamp,
-                .InterpolationColors = colorBlend
-            }
-                ' fill the shadow with our pathgradientbrush
-                Call g.FillPath(pgBrush, polygon)
-            End Using
-        End Sub
 
         ''' <summary>
         ''' 可以借助这个画布对象创建多图层的绘图操作

@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::40edea895787cf43c8a61ab848073a50, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::258b5dfc4b7b1be6762bb302d946463f, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module WebServiceUtils
-    ' 
-    '     Properties: DefaultUA, Protocols, Proxy
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, (+2 Overloads) DownloadFile
-    '               GenerateDictionary, GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy
-    '               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, IsURLPattern
-    '               (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
-    '               UrlDecode, UrlEncode, UrlPathEncode
-    ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    ' 
-    ' /********************************************************************************/
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, LocalIPAddress, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, (+2 Overloads) DownloadFile
+'               GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy, (+2 Overloads) GetRequest
+'               GetRequestRaw, IsSocketPortOccupied, isURL, IsURLPattern, ParseUrlQueryParameters
+'               (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
+'               UrlDecode, UrlEncode, UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,8 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -84,7 +86,7 @@ Public Module WebServiceUtils
     ''' Web protocols enumeration
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Protocols As String() = {"http://", "https://", "ftp://", "sftp://"}
+    Public ReadOnly Property Protocols As IReadOnlyCollection(Of String) = {"http://", "https://", "ftp://", "sftp://"}
 
     Public Const URLPattern$ = "http(s)?://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
 
@@ -97,7 +99,7 @@ Public Module WebServiceUtils
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function isURL(url As String) As Boolean
-        Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(Protocols) = 1
+        Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(DirectCast(Protocols, String())) = 1
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -110,9 +112,8 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="dict"></param>
     ''' <returns></returns>
-    <ExportAPI("Build.Reqparm",
-               Info:="Build the request parameters for the HTTP POST")>
-    <Extension> Public Function BuildReqparm(dict As Dictionary(Of String, String)) As NameValueCollection
+    <Extension>
+    Public Function BuildReqparm(dict As Dictionary(Of String, String)) As NameValueCollection
         Dim reqparm As New NameValueCollection
 
         For Each Value As KeyValuePair(Of String, String) In dict
@@ -127,7 +128,6 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
-    <ExportAPI("Build.Reqparm", Info:="Build the request parameters for the HTTP POST")>
     <Extension>
     Public Function BuildReqparm(data As IEnumerable(Of KeyValuePair(Of String, String))) As Specialized.NameValueCollection
         Dim reqparm As New Specialized.NameValueCollection
@@ -164,36 +164,28 @@ Public Module WebServiceUtils
     ''' ###### 2016-11-21
     ''' 因为post可能会传递数组数据进来，则这个时候就会出现重复的键名，则已经不再适合字典类型了，这里改为返回<see cref="NameValueCollection"/>
     ''' </returns>
-    <ExportAPI("CreateDirectory", Info:="Create a parameter dictionary from the request parameter tokens.")>
     <Extension>
-    Public Function GenerateDictionary(tokens As String(), Optional lowercase As Boolean = True) As NameValueCollection
-        Dim out As New NameValueCollection
+    Public Function ParseUrlQueryParameters(tokens As String(), Optional lowercase As Boolean = True) As NameValueCollection
+        Dim query As New NameValueCollection
 
         If tokens.IsNullOrEmpty Then
-            Return out
+            Return query
         End If
-        If tokens.Length = 1 Then  ' 只有url，没有附带的参数，则返回一个空的字典集合
+        If tokens.Length = 1 Then
+            ' 只有url，没有附带的参数，则返回一个空的字典集合
             If InStr(tokens(Scan0), "=") = 0 Then
-                Return out
+                Return query
             End If
         End If
 
-        Dim LQuery = (From s As String
-                      In tokens
-                      Let p As Integer = InStr(s, "="c)
-                      Let Key As String = Mid(s, 1, p - 1)
-                      Let value = Mid(s, p + 1)
-                      Select Key,
-                          value).ToArray
+        For Each x As NamedValue(Of String) In tokens.Select(Function(q) q.GetTagValue("="))
+            Dim name As String = If(lowercase, x.Name.ToLower, x.Name)
+            Dim value As String = UrlDecode(x.Value)
 
-        For Each x In LQuery
-            Dim name As String = If(lowercase,
-                x.Key.ToLower,
-                x.Key)
-            Call out.Add(name, x.value)
+            Call query.Add(name, value)
         Next
 
-        Return out
+        Return query
     End Function
 
     ''' <summary>
@@ -213,7 +205,7 @@ Public Module WebServiceUtils
             tokens = url.Split("&"c)
         End With
 
-        Return GenerateDictionary(tokens, transLower)
+        Return ParseUrlQueryParameters(tokens, transLower)
     End Function
 
     ReadOnly urlEscaping As [Default](Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
@@ -227,8 +219,22 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)), Optional escaping As Boolean = False) As String
-        Return data.Select(Function(x) $"{x.Key}={(noEscaping Or urlEscaping.When(escaping))(x.Value) }").JoinBy("&")
+    <Extension> Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)),
+                                             Optional escaping As Boolean = False,
+                                             Optional stripNull As Boolean = True) As String
+        If stripNull Then
+            data = data _
+                .Where(Function(a)
+                           Return (Not a.Key.StringEmpty) AndAlso (Not a.Value = Nothing)
+                       End Function) _
+                .ToArray
+        End If
+
+        Return data _
+            .Select(Function(x)
+                        Return $"{x.Key}={(noEscaping Or urlEscaping.When(escaping))(x.Value)}"
+                    End Function) _
+            .JoinBy("&")
     End Function
 
     <ExportAPI("Build.Args")>
@@ -344,12 +350,18 @@ Public Module WebServiceUtils
         End If
 
         Dim params$() = data.UrlDecode.Split("&"c)
-        Dim table = GenerateDictionary(params, toLower)
+        Dim table = ParseUrlQueryParameters(params, toLower)
         Return table
     End Function
 
-    <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(strUrl$, ParamArray args As String()()) As String
+    ''' <summary>
+    ''' GET http request
+    ''' </summary>
+    ''' <param name="strUrl$"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetRequest(strUrl$, ParamArray args As String()()) As String
         If args.IsNullOrEmpty Then
             Return GetRequest(strUrl)
         Else
@@ -368,8 +380,8 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="url"></param>
     ''' <returns></returns>
-    <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = Nothing) As String
+    <Extension>
+    Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = Nothing) As String
         Dim strData As String = ""
         Dim strValue As New List(Of String)
         Dim reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
@@ -409,7 +421,7 @@ Public Module WebServiceUtils
     Public Property Proxy As String
 
     ''' <summary>
-    ''' 
+    ''' GET http request
     ''' </summary>
     ''' <param name="url"></param>
     ''' <param name="https"></param>
@@ -424,10 +436,10 @@ Public Module WebServiceUtils
     ''' Otherwise it will give The server committed a protocol violation. Section=ResponseStatusLine Error.
     ''' </param>
     ''' <returns></returns>
-    <ExportAPI("GET.Raw", Info:="GET http request")>
-    <Extension> Public Function GetRequestRaw(url As String,
-                                              Optional https As Boolean = False,
-                                              Optional userAgent As String = Nothing) As Stream
+    <Extension>
+    Public Function GetRequestRaw(url As String,
+                                Optional https As Boolean = False,
+                                Optional userAgent As String = Nothing) As Stream
         Dim request As HttpWebRequest
         If https Then
             request = WebRequest.CreateDefault(New Uri(url))
@@ -445,12 +457,22 @@ Public Module WebServiceUtils
         Return s
     End Function
 
-    <ExportAPI("POST", Info:="POST http request")>
+    ''' <summary>
+    ''' POST http request
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="params"></param>
+    ''' <returns></returns>
     Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As String
         Return url.POST(params.BuildReqparm)
     End Function
 
-    <ExportAPI("POST", Info:="POST http request")>
+    ''' <summary>
+    ''' POST http request
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="params"></param>
+    ''' <returns></returns>
     Public Function PostRequest(url As String, ParamArray params As String()()) As String
         Dim post As KeyValuePair(Of String, String)()
         If params Is Nothing Then
@@ -470,13 +492,13 @@ Public Module WebServiceUtils
     ''' <param name="params"></param>
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
-    <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function POST(url$,
-                                     Optional params As NameValueCollection = Nothing,
-                                     Optional headers As Dictionary(Of String, String) = Nothing,
-                                     Optional Referer$ = "",
-                                     Optional proxy$ = Nothing,
-                                     Optional contentEncoding As Encodings = Encodings.UTF8) As String
+    <Extension>
+    Public Function POST(url$,
+                        Optional params As NameValueCollection = Nothing,
+                        Optional headers As Dictionary(Of String, String) = Nothing,
+                        Optional Referer$ = "",
+                        Optional proxy$ = Nothing,
+                        Optional contentEncoding As Encodings = Encodings.UTF8) As String
 
         Static emptyBody As New [Default](Of NameValueCollection) With {
             .value = New NameValueCollection,
@@ -573,11 +595,11 @@ Public Module WebServiceUtils
     ''' <param name="data"></param>
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
-    <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function POST(url$, data As Dictionary(Of String, String()),
-                                     Optional Referer$ = "",
-                                     Optional proxy$ = Nothing,
-                                     Optional ua As String = UserAgent.GoogleChrome) As String
+    <Extension>
+    Public Function POST(url$, data As Dictionary(Of String, String()),
+                        Optional Referer$ = "",
+                        Optional proxy$ = Nothing,
+                        Optional ua As String = UserAgent.GoogleChrome) As String
 
         Dim postString As New List(Of String)
 
@@ -655,17 +677,17 @@ Public Module WebServiceUtils
     ''' <param name="save">The file path of the file saved</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("wget", Info:="Download data from the specific URL location.")>
-    <Extension> Public Function DownloadFile(<Parameter("url")> strUrl$,
-                                             <Parameter("Path.Save", "The saved location of the downloaded file data.")>
-                                             save$,
-                                             Optional proxy$ = Nothing,
-                                             Optional ua$ = Nothing,
-                                             Optional retry% = 0,
-                                             Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
-                                             Optional refer$ = Nothing,
-                                             <CallerMemberName>
-                                             Optional trace$ = Nothing) As Boolean
+    <Extension>
+    Public Function DownloadFile(<Parameter("url")> strUrl$,
+                                <Parameter("Path.Save", "The saved location of the downloaded file data.")>
+                                save$,
+                                Optional proxy$ = Nothing,
+                                Optional ua$ = Nothing,
+                                Optional retry% = 0,
+                                Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
+                                Optional refer$ = Nothing,
+                                <CallerMemberName>
+                                Optional trace$ = Nothing) As Boolean
 #Else
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
@@ -718,14 +740,15 @@ RE0:
     End Function
 
     ''' <summary>
-    ''' 使用GET方法下载文件
+    ''' Download file from http request and save to a specific location.
+    ''' (使用GET方法下载文件)
     ''' </summary>
     ''' <param name="url"></param>
     ''' <param name="savePath"></param>
     ''' <returns></returns>
     '''
-    <ExportAPI("GET.Download", Info:="Download file from http request and save to a specific location.")>
-    <Extension> Public Function GetDownload(url As String, savePath As String) As Boolean
+    <Extension>
+    Public Function GetDownload(url As String, savePath As String) As Boolean
         Try
             Dim responseStream As Stream = GetRequestRaw(url)
             Dim localBuffer As Stream = responseStream.CopyStream
@@ -750,7 +773,9 @@ RE0:
     ''' </summary>
     ''' <returns></returns>
     Public Function GetMyIPAddress() As String
-        Dim hasInternet As Boolean
+        Dim hasInternet As Boolean = False
+
+#If NET_48 Then
 
         Try
             hasInternet = Not PingUtility.Ping(System.Net.IPAddress.Parse(MicrosoftDNS)) > Integer.MaxValue
@@ -758,14 +783,34 @@ RE0:
             hasInternet = False
         End Try
 
+#End If
+
         If hasInternet Then
             ' IPAddress on Internet
             Return getIPAddressInternal()
         Else
             ' IPAddress in LAN
-            Return TcpRequest.LocalIPAddress
+            Return LocalIPAddress
         End If
     End Function
+
+    ''' <summary>
+    ''' Gets the IP address of this local machine.
+    ''' (获取本机对象的IP地址，请注意这个属性获取得到的仅仅是本机在局域网内的ip地址，
+    ''' 假若需要获取得到公网IP地址，还需要外部服务器的帮助才行)
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property LocalIPAddress As String
+        Get
+#Disable Warning
+            Dim IP As System.Net.IPAddress = Dns.Resolve(Dns.GetHostName).AddressList(0)
+            Dim IPAddr As String = IP.ToString
+#Enable Warning
+            Return IPAddr
+        End Get
+    End Property
 
     ''' <summary>
     ''' Request an external server and then returns the ip address from the server side.

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2a049a0b52db5293a737b38a98754a6, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
+﻿#Region "Microsoft.VisualBasic::701c285edb3e0a09bea1f06139dbe37e, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
 
     ' Author:
     ' 
@@ -48,9 +48,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein.LevenshteinDistance
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports stdNum = System.Math
 
 Namespace SmithWaterman
 
@@ -174,7 +176,7 @@ Namespace SmithWaterman
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetMatches(scoreThreshold) _
-                    .OrderByDescending(Function(m) m.Score) _
+                    .OrderByDescending(Function(m) m.score) _
                     .ToArray
             End Get
         End Property
@@ -251,7 +253,7 @@ Namespace SmithWaterman
                     Dim upScore As Double = score(i)(j - 1) + __similarity(0, j)
                     Dim leftScore As Double = score(i - 1)(j) + __similarity(i, 0)
 
-                    score(i)(j) = Math.Max(diagScore, Math.Max(upScore, Math.Max(leftScore, 0)))
+                    score(i)(j) = stdNum.Max(diagScore, stdNum.Max(upScore, stdNum.Max(leftScore, 0)))
                     prevCells(i)(j) = 0
 
                     ' find the directions that give the maximum scores.

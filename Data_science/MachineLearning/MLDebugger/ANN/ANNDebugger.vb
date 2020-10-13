@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::398d8b0e76a273e6e1513cad519aac01, Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::044df3b1ece33d4020deed8e698f0728, Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator.GAExtensions
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.DarwinismHybrid
 Imports StoreModel = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure.NeuralNetwork
 
 Public Class ANNDebugger

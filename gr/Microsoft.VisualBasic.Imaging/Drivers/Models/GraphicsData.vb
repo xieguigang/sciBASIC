@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d75375f4fb80981642b60f943b564a19, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
+﻿#Region "Microsoft.VisualBasic::40dd5db05417b786421602dcbd2df836, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class GraphicsData
     ' 
-    '         Properties: Height, Size, Width
+    '         Properties: content_type, Height, Layout, Width
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: (+2 Overloads) Dispose
@@ -46,7 +46,10 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
@@ -66,31 +69,58 @@ Namespace Driver
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Driver As Drivers
-        Public ReadOnly Property Size As Size
+
+        Public ReadOnly Property content_type As String
+            Get
+                Select Case Driver
+                    Case Drivers.GDI
+                        Return "image/png"
+                    Case Drivers.PS
+                        Return "application/postscript"
+                    Case Drivers.SVG
+                        Return "text/xml"
+                    Case Drivers.WMF
+                        Return "application/x-wmf"
+                    Case Else
+                        Return "application/octet-stream"
+                End Select
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The image size
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Layout As GraphicsRegion
 
         Public ReadOnly Property Width As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Size.Width
+                Return _Layout.Size.Width
             End Get
         End Property
 
         Public ReadOnly Property Height As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Size.Height
+                Return _Layout.Size.Height
             End Get
         End Property
 
         ''' <summary>
-        ''' 
+        ''' This constructor of base type is only assign the size value
         ''' </summary>
         ''' <param name="img">其实这个参数在基类<see cref="GraphicsData"/>之中是无用的，只是为了统一接口而设置的</param>
         ''' <param name="size"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(img As Object, size As Size)
-            Me.Size = size
+        Sub New(img As Object, size As Size, padding As Padding)
+            Me.Layout = New GraphicsRegion With {
+                .Size = size,
+                .Padding = padding
+            }
         End Sub
+
+        Public MustOverride Function GetDataURI() As DataURI
 
         ''' <summary>
         ''' Save the image graphics to file

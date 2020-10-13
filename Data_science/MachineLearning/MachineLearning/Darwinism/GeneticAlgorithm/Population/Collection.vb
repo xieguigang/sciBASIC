@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35e1c95b50d4db4879d2011629405ab0, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::8cce063ebb0c7e946d157a5d48f192d1, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Collection.vb"
 
     ' Author:
     ' 
@@ -39,6 +39,8 @@
     ' 
     '         Properties: Count
     ' 
+    '         Function: GetCollection
+    ' 
     '         Sub: Add, OrderBy, Trim
     ' 
     ' 
@@ -55,8 +57,8 @@ Imports Microsoft.VisualBasic.Serialization
 Namespace Darwinism.GAF
 
     Public MustInherit Class PopulationCollection(Of Chr As {Class, Chromosome(Of Chr)})
-        Public MustOverride ReadOnly Property Count As Integer
 
+        Public MustOverride ReadOnly Property Count As Integer
         Default Public MustOverride ReadOnly Property Item(index As Integer) As Chr
 
         Protected Sub New()
@@ -69,6 +71,7 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="fitness"></param>
         Public MustOverride Sub OrderBy(fitness As Func(Of String, Double))
+        Public MustOverride Function GetCollection() As IEnumerable(Of Chr)
 
     End Class
 
@@ -101,6 +104,10 @@ Namespace Darwinism.GAF
         Public Overrides Sub Trim(capacitySize As Integer)
             innerList = innerList.SubList(0, capacitySize)
         End Sub
+
+        Public Overrides Function GetCollection() As IEnumerable(Of Chr)
+            Return innerList
+        End Function
 
         ''' <summary>
         ''' Order by [unique_hashKey => fitness]

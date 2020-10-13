@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::342a6de1f7bc3c807986dc5a2d76b044, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Resources.vb"
+﻿#Region "Microsoft.VisualBasic::a5bdbefd405a19d03854b231540513fe, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Resources.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,10 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: DirectLoadFrom, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString, LoadMy
+    '         Function: DirectLoadFrom, findResourceAssemblyFileName, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString
+    '                   LoadMy
     ' 
-    '         Sub: __load, __resParser
+    '         Sub: doLoad, resourceAssemblyParser
     ' 
     ' 
     ' /********************************************************************************/
@@ -54,6 +55,7 @@ Imports System.Resources
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices
@@ -291,19 +293,41 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="assm"></param>
         Sub New(assm As Assembly)
-            Call Me.New(dll:=assm.Location.ParentPath & "/Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name)
+            Call Me.New(findResourceAssemblyFileName(assm))
         End Sub
 
         Sub New(dll As String)
-            FileName = FileIO.FileSystem.GetFileInfo(dll).FullName
-            Call __resParser()
+            Call resourceAssemblyParser(fileName:=FileIO.FileSystem.GetFileInfo(dll).FullName)
         End Sub
 
-        Private Sub __resParser()
-            Call __load(Assembly.LoadFile(FileName))
+        Private Shared Function findResourceAssemblyFileName(assm As Assembly) As String
+            Dim resourceName As String = "Resources/" & FileIO.FileSystem.GetFileInfo(assm.Location).Name
+            Dim dllFile As String = $"{assm.Location.ParentPath}/{resourceName}"
+
+            If Not dllFile.FileExists Then
+                dllFile = $"{App.CurrentDirectory}/{resourceName}"
+            End If
+            If Not dllFile.FileExists Then
+                dllFile = $"{App.HOME}/{resourceName}"
+            End If
+            If Not dllFile.FileExists Then
+                Throw New EntryPointNotFoundException("missing assembly resource module: " & dllFile)
+            Else
+                Return FileIO.FileSystem.GetFileInfo(dllFile).FullName
+            End If
+        End Function
+
+        Private Sub resourceAssemblyParser(fileName As String)
+            If fileName.FileExists Then
+                Call Assembly.LoadFile(fileName).DoCall(AddressOf doLoad)
+            Else
+                Throw New DllNotFoundException($"Missing required resources satellite assembly file: {fileName.FileName}!")
+            End If
+
+            _FileName = fileName
         End Sub
 
-        Private Sub __load(assm As Assembly)
+        Private Sub doLoad(assm As Assembly)
 #If NET_40 = 0 Then
             Dim resource As Type = GetType(ExportAttribute)
             Dim resourceMgr As Type = LinqAPI.DefaultFirst(Of Type) _
@@ -340,7 +364,7 @@ Namespace ApplicationServices
         ''' <param name="my">null</param>
         ''' <param name="assm"></param>
         Private Sub New(my As Type, assm As Assembly)
-            Call __load(assm)
+            Call doLoad(assm)
         End Sub
 
         ''' <summary>

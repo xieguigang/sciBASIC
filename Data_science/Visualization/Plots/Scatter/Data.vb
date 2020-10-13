@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88d91167e51e85229b2393b3f24fdc4c, Data_science\Visualization\Plots\Scatter\Data.vb"
+﻿#Region "Microsoft.VisualBasic::35234f42f08031ad85290f75dae2f352, Data_science\Visualization\Plots\Scatter\Data.vb"
 
     ' Author:
     ' 
@@ -53,6 +53,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -72,14 +73,14 @@ Public Class SerialData : Implements INamedValue
     ''' <summary>
     ''' 点的半径大小
     ''' </summary>
-    Public PointSize As Single = 1
+    Public pointSize As Single = 1
 
     ''' <summary>
     ''' 线条的颜色
     ''' </summary>
     Public color As Color = Color.Black
     Public width As Single = 20
-    Public Shape As LegendStyles = LegendStyles.Circle
+    Public shape As LegendStyles = LegendStyles.Circle
 
     ''' <summary>
     ''' 对一系列特定的数据点的注释数据
@@ -130,7 +131,7 @@ Public Class SerialData : Implements INamedValue
     End Function
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return $"{color.ToHtmlColor} {title} ({pts.Length} points)"
     End Function
 
     Public Iterator Function GetEnumerator() As IEnumerator(Of PointData) Implements IEnumerable(Of PointData).GetEnumerator
@@ -156,13 +157,18 @@ Public Structure PointData
     ''' <summary>
     ''' 正负误差
     ''' </summary>
-    Public errPlus#, errMinus#, Tag$, value#
+    Public errPlus#, errMinus#, tag$, value#
     ''' <summary>
     ''' 可能会有数据点在<see cref="errPlus"/>或者<see cref="errMinus"/>范围内，或者范围外
     ''' </summary>
     Public Statics#()
     Public color$
     Public stroke$
+
+    ''' <summary>
+    ''' 坐标轴的值模式为字符串模式的时候
+    ''' </summary>
+    Public axisLabel As String
 
     Sub New(x!, y!)
         pt = New PointF(x, y)
@@ -177,6 +183,6 @@ Public Structure PointData
     End Sub
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return $"[{pt.ToString}] {value} {color} {tag}"
     End Function
 End Structure

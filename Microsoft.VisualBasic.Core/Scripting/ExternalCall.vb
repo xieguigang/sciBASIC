@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1472354ab6a5d2b672d99b8df06c3298, Microsoft.VisualBasic.Core\Scripting\ExternalCall.vb"
+﻿#Region "Microsoft.VisualBasic::e4dba50f114e8fd90ba9acdb50c20ed5, Microsoft.VisualBasic.Core\Scripting\ExternalCall.vb"
 
     ' Author:
     ' 
@@ -63,8 +63,8 @@ Namespace Scripting
         ''' <summary>
         ''' 脚本宿主的可执行文件的路径
         ''' </summary>
-        ReadOnly __host As String
-        ReadOnly __ext As String
+        ReadOnly host As String
+        ReadOnly ext As String
 
         ''' <summary>
         ''' 
@@ -72,8 +72,8 @@ Namespace Scripting
         ''' <param name="host">The program its file name to run the script</param>
         ''' <param name="ext">File extension name of this type of script</param>
         Sub New(host As String, Optional ext As String = ".txt")
-            __host = FileIO.FileSystem.GetFileInfo(host).FullName
-            __ext = ext
+            Me.host = FileIO.FileSystem.GetFileInfo(host).FullName
+            Me.ext = ext
         End Sub
 
         ''' <summary>
@@ -83,7 +83,7 @@ Namespace Scripting
         ''' <param name="args"></param>
         ''' <returns></returns>
         Public Function Run(script As String, Optional args As NameValueCollection = Nothing) As ShellValue
-            Dim tmp As String = App.GetAppSysTempFile(__ext)
+            Dim tmp As String = App.GetAppSysTempFile(ext)
             Call script.SaveTo(tmp, Encodings.ASCII.CodePage)
             Return Shell(path:=tmp, args:=args)
         End Function
@@ -97,8 +97,8 @@ Namespace Scripting
         ''' <remarks>Perl脚本测试通过！</remarks>
         Public Function Shell(path As String, Optional args As NameValueCollection = Nothing) As ShellValue
             Dim param As String = buildArguments(args)
-            Dim IO As New IORedirect(__host, path & " " & param)
-            Dim code As Integer = IO.Start(WaitForExit:=True)
+            Dim IO As New IORedirect(host, path & " " & param)
+            Dim code As Integer = IO.Start(waitForExit:=True)
             Return New ShellValue(IO, code)
         End Function
 
@@ -116,7 +116,7 @@ Namespace Scripting
         End Function
 
         Public Overrides Function ToString() As String
-            Return __host
+            Return host
         End Function
     End Class
 

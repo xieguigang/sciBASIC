@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b167eeb21e351587b3f73a6504e0a19, Data_science\Visualization\Plots\csv\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ebddfab9a23f5e58f464be3029a204a2, Data_science\Visualization\Plots\csv\Extensions.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Namespace csv
 
                 Return New ChartPlots.SerialData With {
                     .color = color.TranslateColor(throwEx:=False),
-                    .PointSize = ptSize,
+                    .pointSize = ptSize,
                     .title = $"Plot({fieldX}, {fieldY})",
                     .pts = points
                 }

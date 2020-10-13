@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.VisualBasic.Data.GraphTheory</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -53,6 +53,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
@@ -99,11 +100,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -220,11 +223,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
@@ -285,6 +290,7 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
@@ -392,6 +398,102 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\mzkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\BioDeep_database\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\BioDeep_database\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\BioDeep_database\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -416,23 +518,25 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Dijkstra\LinkCalculator.vb" />
-    <Compile Include="API\PageRank\WeightedPRGraph.vb" />
-    <Compile Include="API\PageRank\GraphMatrix.vb" />
-    <Compile Include="API\PageRank\PageRank.vb" />
-    <Compile Include="API\PQDijkstra\BasicHeap.vb" />
-    <Compile Include="API\PQDijkstra\DijkstraFast.vb" />
-    <Compile Include="API\PQDijkstra\Example.vb" />
-    <Compile Include="API\PQDijkstra\HeapNode.vb" />
-    <Compile Include="API\PQDijkstra\PQDijkstraProvider.vb" />
+    <Compile Include="Analysis\Dijkstra\LinkCalculator.vb" />
+    <Compile Include="Analysis\GraphAnalysis.vb" />
+    <Compile Include="Analysis\PageRank\WeightedPRGraph.vb" />
+    <Compile Include="Analysis\PageRank\GraphMatrix.vb" />
+    <Compile Include="Analysis\PageRank\PageRank.vb" />
+    <Compile Include="Analysis\PQDijkstra\BasicHeap.vb" />
+    <Compile Include="Analysis\PQDijkstra\DijkstraFast.vb" />
+    <Compile Include="Analysis\PQDijkstra\Example.vb" />
+    <Compile Include="Analysis\PQDijkstra\HeapNode.vb" />
+    <Compile Include="Analysis\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Model\Abstract\General.vb" />
+    <Compile Include="Model\GridNetwork\GridCell.vb" />
     <Compile Include="Model\Tree\AbstractTree.vb" />
     <Compile Include="Model\Tree\KdTree\KdTree.vb" />
     <Compile Include="Model\Tree\KdTree\Node.vb" />
     <Compile Include="Model\Tree\TermTree.vb" />
     <Compile Include="Model\Tree\Trie.vb" />
     <Compile Include="Model\Abstract\Edge.vb" />
-    <Compile Include="Model\Grid.vb" />
+    <Compile Include="Model\GridNetwork\Grid.vb" />
     <Compile Include="Model\TimeSerialsGraph.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="Network\Extensions.vb" />
@@ -441,9 +545,8 @@
     <Compile Include="Network\Edge.vb" />
     <Compile Include="Network\NamespaceDoc.vb" />
     <Compile Include="Utils.vb" />
-    <Compile Include="API\Dijkstra\Dijkstra.vb" />
-    <Compile Include="API\Dijkstra\DijkstraAPI.vb" />
-    <Compile Include="API\Dijkstra\Route.vb" />
+    <Compile Include="Analysis\Dijkstra\Dijkstra.vb" />
+    <Compile Include="Analysis\Dijkstra\Route.vb" />
     <Compile Include="Model\Abstract\Graph.vb" />
     <Compile Include="Model\Abstract\Vertex.vb" />
     <Compile Include="Model\Tree\Tree.vb" />

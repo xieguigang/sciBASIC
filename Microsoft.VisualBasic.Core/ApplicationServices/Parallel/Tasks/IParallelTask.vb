@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1949dc0dd55a5a4f0a9cc72039bcdbc, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\IParallelTask.vb"
+﻿#Region "Microsoft.VisualBasic::241779621929953950df7cd48e2a92eb, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\IParallelTask.vb"
 
     ' Author:
     ' 
@@ -42,15 +42,11 @@
 
 #End Region
 
+Imports System.Threading
+
 Namespace Parallel.Tasks
 
     Public MustInherit Class IParallelTask
-
-        Public ReadOnly Property TaskComplete As Boolean
-            Get
-                Return _TaskComplete
-            End Get
-        End Property
 
         Public ReadOnly Property TaskRunning As Boolean
             Get
@@ -59,19 +55,33 @@ Namespace Parallel.Tasks
         End Property
 
         Protected _RunningTask As Boolean
-        Protected _TaskComplete As Boolean = False
+        Protected _signal As New ManualResetEvent(initialState:=False)
+
+        Dim isComplete As Boolean = False
+
+        Public Property TaskComplete As Boolean
+            Get
+                Return isComplete
+            End Get
+            Protected Set(value As Boolean)
+                isComplete = value
+
+                If isComplete Then
+                    _signal.Set()
+                End If
+            End Set
+        End Property
 
         ''' <summary>
         ''' 这个函数会检查<see cref="TaskComplete"/>属性来判断任务是否执行完毕
         ''' </summary>
         Public Sub WaitForExit()
-            Do While Not TaskComplete
-                Call Threading.Thread.Sleep(1)
-            Loop
-
-            Call "Job DONE!".__DEBUG_ECHO
+            If Not TaskComplete Then
+                Call _signal.Reset()
+                Call _signal.WaitOne()
+            End If
         End Sub
 
-        Protected MustOverride Sub __invokeTask()
+        Protected MustOverride Sub doInvokeTask()
     End Class
 End Namespace

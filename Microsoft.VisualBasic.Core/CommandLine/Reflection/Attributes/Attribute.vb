@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14ab68a159339eca4da9b94e67cc896d, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Attribute.vb"
+﻿#Region "Microsoft.VisualBasic::6c99645dbbe3d3bf19078771fb9f1c88, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Attribute.vb"
 
     ' Author:
     ' 
@@ -45,10 +45,18 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
     ' 
+    '     Class NoteAttribute
+    ' 
+    '         Properties: noteText
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports System.ComponentModel
 
 Namespace CommandLine.Reflection
 
@@ -78,5 +86,23 @@ Namespace CommandLine.Reflection
         Public Overrides Function ToString() As String
             Return ExampleInfo
         End Function
+    End Class
+
+    ''' <summary>
+    ''' 这个自定义属性与<see cref="DescriptionAttribute"/>的使用类似
+    ''' 只不过<see cref="DescriptionAttribute"/>是针对命令的简单说明
+    ''' 以及描述
+    ''' 
+    ''' 这个自定义属性是针对命令内的某些注意事项的更加详细的描述，默认是不显示的
+    ''' 会在man模式下被显示出来
+    ''' </summary>
+    <AttributeUsage(AttributeTargets.All, AllowMultiple:=False, Inherited:=True)>
+    Public Class NoteAttribute : Inherits Attribute
+
+        Public ReadOnly Property noteText As String
+
+        Sub New(note As String)
+            Me.noteText = note
+        End Sub
     End Class
 End Namespace

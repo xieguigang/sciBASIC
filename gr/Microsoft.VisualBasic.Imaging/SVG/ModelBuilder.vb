@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91aa360f8a56e06d6516373ba48ad815, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::0c58a658d0fe3491fb7e498c6ba4caca, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace SVG
 
@@ -63,10 +63,10 @@ Namespace SVG
             Dim endAngle! = startAngle + sweepAngle
             Dim rX = width / 2
             Dim rY = height / 2
-            Dim x1 = x + rX * sys.Cos(Math.PI * startAngle / 180)
-            Dim y1 = y + rY * sys.Sin(Math.PI * startAngle / 180)
-            Dim x2 = x + rX * sys.Cos(Math.PI * endAngle / 180)
-            Dim y2 = y + rY * sys.Sin(Math.PI * endAngle / 180)
+            Dim x1 = x + rX * stdNum.Cos(stdNum.PI * startAngle / 180)
+            Dim y1 = y + rY * stdNum.Sin(stdNum.PI * startAngle / 180)
+            Dim x2 = x + rX * stdNum.Cos(stdNum.PI * endAngle / 180)
+            Dim y2 = y + rY * stdNum.Sin(stdNum.PI * endAngle / 180)
             Dim d = $"M{x},{y}  L{x1},{y1}  A{rX},{rY} 0 0,1 {x2},{y2} z" ' 1 means clockwise
 
             Return New path With {

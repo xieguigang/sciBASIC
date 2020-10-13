@@ -1,61 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::6433d6d8b6a514a8f1ff9c7a7624890b, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e1d014d33fc1fd07d67e168da4678ca4, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    ' 
-    ' Module Extensions
-    ' 
-    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
-    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DateToString, DriverRun
-    '               ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime, FuzzyMatching
-    '               GetHexInteger, (+2 Overloads) GetItem, GetValueOrNull, IndexOf, InsertOrUpdate
-    '               Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy
-    '               Keys, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement
-    '               MD5, ModifyValue, NotNull, (+2 Overloads) Offset, ParseDateTime
-    '               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
-    '               RunDriver, Second, SelectFile, SeqRandom, (+3 Overloads) Sequence
-    '               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice
-    '               (+2 Overloads) SplitMV, StdError, ToArray, ToBoolean, ToDictionary
-    '               ToNormalizedPathString, ToString, ToStringArray, ToVector, (+3 Overloads) TrimNull
-    '               TryCount, (+3 Overloads) TryGetValue, Unlist, WriteAddress
-    ' 
-    '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
-    '          SwapItem, SwapWith
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+' 
+' Module Extensions
+' 
+'     Function: [Set], Add, (+3 Overloads) AddRange, AsRange, (+2 Overloads) Average
+'               CheckDuplicated, Constrain, DateToString, DriverRun, FormatTime
+'               FuzzyMatching, IndexOf, InsertOrUpdate, Invoke, InvokeSet
+'               Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy, Keys, (+2 Overloads) LongSeq
+'               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
+'               (+2 Overloads) Offset, Range, Remove, RemoveDuplicates, RemoveFirst
+'               (+2 Overloads) RemoveLast, RunDriver, Second, SelectFile, SeqRandom
+'               (+3 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles
+'               Slice, (+2 Overloads) SplitMV, StdError, ToArray, ToBoolean
+'               ToDictionary, ToNormalizedPathString, ToString, ToStringArray, ToVector
+'               (+3 Overloads) TrimNull, TryCount, Unlist, WriteAddress
+' 
+'     Sub: Add, FillBlank, Removes, Swap, SwapItem
+'          SwapWith
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +68,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
@@ -79,10 +78,12 @@ Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
+#If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.Text.Levenshtein
+#End If
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Text.Similarity
+Imports Microsoft.VisualBasic.CommandLine.Parsers
 
 #Const FRAMEWORD_CORE = 1
 #Const Yes = 1
@@ -153,21 +154,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 将16进制的数字转换为10进制数
-    ''' </summary>
-    ''' <param name="hex$"></param>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' 因为直接使用vb的<see cref="Val"/>函数转换，在Linux上面可能会出错，所以需要在这里用.NET自己的方法来转换
-    ''' </remarks>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetHexInteger(hex$) As Integer
-        Dim num% = Integer.Parse(hex, NumberStyles.HexNumber)
-        Return num
-    End Function
-
-    ''' <summary>
     ''' ``days, hh:mm:ss.ms``
     ''' </summary>
     ''' <param name="t"></param>
@@ -177,7 +163,7 @@ Public Module Extensions
     <Extension>
     Public Function FormatTime(t As TimeSpan) As String
         With t
-            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ .Milliseconds}"
+            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ ZeroFill(.Milliseconds, 3)}"
         End With
     End Function
 
@@ -188,28 +174,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Returns the first not nothing object.
-    ''' </summary>
-    ''' <typeparam name="T">
-    ''' Due to the reason of value type is always not nothing, so that this generic type constrain as Class reference type.
-    ''' </typeparam>
-    ''' <param name="args"></param>
-    ''' <returns></returns>
-    Public Function NotNull(Of T As Class)(ParamArray args As T()) As T
-        If args.IsNullOrEmpty Then
-            Return Nothing
-        Else
-            For Each x In args
-                If Not x Is Nothing Then
-                    Return x
-                End If
-            Next
-        End If
-
-        Return Nothing
-    End Function
-
-    ''' <summary>
     ''' Get target string's md5 hash code
     ''' </summary>
     ''' <param name="s$"></param>
@@ -217,25 +181,6 @@ Public Module Extensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String
         Return s.GetMd5Hash
-    End Function
-
-    ''' <summary>
-    ''' Returns the first not null or empty string.
-    ''' </summary>
-    ''' <param name="args"></param>
-    ''' <returns></returns>
-    Public Function FirstNotEmpty(ParamArray args As String()) As String
-        If args.IsNullOrEmpty Then
-            Return ""
-        Else
-            For Each s As String In args
-                If Not String.IsNullOrEmpty(s) Then
-                    Return s
-                End If
-            Next
-        End If
-
-        Return ""
     End Function
 
     ''' <summary>
@@ -284,19 +229,6 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Gets all keys value from the target <see cref="KeyValuePair"/> collection.
-    ''' </summary>
-    ''' <typeparam name="T1"></typeparam>
-    ''' <typeparam name="T2"></typeparam>
-    ''' <param name="source"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Keys(Of T1, T2)(source As IEnumerable(Of KeyValuePair(Of T1, T2))) As T1()
-        Return source.Select(Function(x) x.Key).ToArray
-    End Function
-
-    ''' <summary>
     ''' Adds the elements of the specified collection to the end of the List`1.
     ''' (会自动跳过空集合，这个方法是安全的)
     ''' </summary>
@@ -310,65 +242,6 @@ Public Module Extensions
             Call list.AddRange(value)
         End If
     End Sub
-
-    ''' <summary>
-    ''' Safe get the specific index element from the target collection, is the index value invalid, then default value will be return.
-    ''' (假若下标越界的话会返回默认值)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="array"></param>
-    ''' <param name="index"></param>
-    ''' <param name="[default]">Default value for invalid index is nothing.</param>
-    ''' <returns></returns>
-    <Extension> Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
-        If array Is Nothing Then
-            Return [default]
-        End If
-
-        If index < 0 OrElse index >= array.Count Then
-            Return [default]
-        End If
-
-        Dim value As T = array(index)
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' This is a safely method for gets the value in a array, if the index was outside of the boundary, then the default value will be return.
-    ''' (假若下标越界的话会返回默认值)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="array"></param>
-    ''' <param name="index"></param>
-    ''' <param name="[default]">Default value for return when the array object is nothing or index outside of the boundary.</param>
-    ''' <returns></returns>
-    <Extension> Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
-        If array.IsNullOrEmpty Then
-            Return [default]
-        End If
-
-        If index < 0 OrElse index >= array.Length Then
-            Return [default]
-        End If
-
-        Dim value As T = array(index)
-        Return value
-    End Function
-
-    <Extension>
-    Public Function ElementAtOrNull(Of T)(array As T(), index As Integer) As T
-        If array Is Nothing Then
-            Return Nothing
-        ElseIf index < 0 Then
-            index = array.Length + index
-        End If
-
-        If index < 0 OrElse index >= array.Length Then
-            Return Nothing
-        Else
-            Return array(index)
-        End If
-    End Function
 
     <Extension> Public Function [Set](Of T)(ByRef array As T(), index As Integer, value As T) As T()
         If index < 0 Then
@@ -386,21 +259,6 @@ Public Module Extensions
 
         Return array
     End Function
-
-#Region ""
-
-    <ExportAPI("SendMessage")>
-    <Extension> Public Sub SendMessage(host As System.Net.IPEndPoint, request As String, Callback As Action(Of String))
-        Dim client As New TcpRequest(host)
-        Call New Threading.Thread(Sub() Callback(client.SendMessage(request))).Start()
-    End Sub
-
-    <ExportAPI("SendMessage")>
-    <Extension> Public Sub SendMessage(host As Net.IPEndPoint, request As String, Callback As Action(Of String))
-        Call host.GetIPEndPoint.SendMessage(request, Callback)
-    End Sub
-
-#End Region
 
     ''' <summary>
     ''' Constrain the inherits class type into the base type.
@@ -436,113 +294,6 @@ Public Module Extensions
         Else
             Return True
         End If
-    End Function
-
-    <Extension>
-    Public Function GetValueOrNull(Of K, V)(table As IDictionary(Of K, V), key As K) As V
-        Dim refOut As V = Nothing
-        Call table.TryGetValue(key, value:=refOut)
-        Return refOut
-    End Function
-
-    ''' <summary>
-    ''' 假若不存在目标键名，则返回空值，默认值为空值
-    ''' </summary>
-    ''' <typeparam name="TKey"></typeparam>
-    ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="table"></param>
-    ''' <param name="keys"></param>
-    ''' <param name="[default]"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
-                                                             keys As TKey(),
-                                                             Optional [default] As TValue = Nothing,
-                                                             Optional mute As Boolean = False,
-                                                             <CallerMemberName> Optional trace$ = Nothing) As TValue
-        ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
-        ' 直接返回默认值
-        If table Is Nothing Then
-#If DEBUG Then
-            Call PrintException("Hash_table is nothing!")
-#End If
-            Return [default]
-        ElseIf keys.IsNullOrEmpty Then
-#If DEBUG Then
-            Call PrintException("Index key is nothing!")
-#End If
-            Return [default]
-        Else
-            For Each key As TKey In keys
-                If table.ContainsKey(key) Then
-                    Return table(key)
-                End If
-            Next
-
-#If DEBUG Then
-            If Not mute Then
-                Call PrintException($"missing_index:={keys.Select(AddressOf Scripting.ToString).GetJson}!", trace)
-            End If
-#End If
-            Return [default]
-        End If
-    End Function
-
-    ''' <summary>
-    ''' 假若不存在目标键名，则返回空值，默认值为空值
-    ''' </summary>
-    ''' <typeparam name="TKey"></typeparam>
-    ''' <typeparam name="TValue"></typeparam>
-    ''' <param name="table"></param>
-    ''' <param name="index">这个函数会自动处理空键名的情况</param>
-    ''' <param name="[default]"></param>
-    ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
-                                                             index As TKey,
-                                                             Optional [default] As TValue = Nothing,
-                                                             Optional mute As Boolean = False,
-                                                             <CallerMemberName> Optional trace$ = Nothing) As TValue
-        ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
-        ' 直接返回默认值
-        If table Is Nothing Then
-#If DEBUG Then
-            Call PrintException("Hash_table is nothing!")
-#End If
-            Return [default]
-        ElseIf index Is Nothing Then
-#If DEBUG Then
-            Call PrintException("Index key is nothing!")
-#End If
-            Return [default]
-        ElseIf Not table.ContainsKey(index) Then
-#If DEBUG Then
-            If Not mute Then
-                Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
-            End If
-#End If
-            Return [default]
-        End If
-
-        Return table(index)
-    End Function
-
-    <Extension> Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
-        If hash Is Nothing Then
-            Return Nothing
-        End If
-
-        If Not hash.ContainsKey(Index) Then
-            Return Nothing
-        End If
-
-        Dim obj As TValue = hash(Index)
-        Dim propertyInfo As PropertyInfo = obj.GetType.GetProperty(prop)
-
-        If propertyInfo Is Nothing Then
-            Return Nothing
-        End If
-
-        Dim value As Object = propertyInfo.GetValue(obj, Nothing)
-        Return DirectCast(value, TProp)
     End Function
 
     ''' <summary>
@@ -582,8 +333,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="dat"></param>
     ''' <returns></returns>
-    <ExportAPI("Date.ToString", Info:="Format the datetime value in the format of yy/mm/dd hh:min")>
-    <Extension> Public Function DateToString(dat As Date) As String
+    <Extension>
+    Public Function DateToString(dat As Date) As String
         Dim yy = dat.Year
         Dim mm As String = dat.Month.FormatZero
         Dim dd As String = dat.Day.FormatZero
@@ -600,8 +351,9 @@ Public Module Extensions
         Dim dd As String = dat.Day.FormatZero
         Dim hh As String = dat.Hour.FormatZero
         Dim mmin As String = dat.Minute.FormatZero
+        Dim sec As String = dat.Second.FormatZero
 
-        Return String.Format("{0}-{1}-{2} {3}.{4}", yy, mm, dd, hh, mmin)
+        Return String.Format("{0}-{1}-{2} {3}.{4}.{5}", yy, mm, dd, hh, mmin, sec)
     End Function
 
     ''' <summary>
@@ -637,8 +389,6 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="ext$"></param>
     ''' <returns></returns>
-    <ExportAPI("File.Select",
-               Info:="Open the file open dialog to gets the file")>
     Public Function SelectFile(Optional ext$ = "*.*", Optional title$ = Nothing) As String
         Dim mime$ = ext.GetMIMEDescrib.Details
 
@@ -656,13 +406,13 @@ Public Module Extensions
 #End If
 
     ''' <summary>
-    ''' 本方法会执行外部命令并等待其执行完毕，函数返回状态值
+    ''' Invoke a folked system process object to execute a parallel task.
+    ''' (本方法会执行外部命令并等待其执行完毕，函数返回状态值)
     ''' </summary>
     ''' <param name="Process"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Invoke", Info:="Invoke a folked system process object to execute a parallel task.")>
     <Extension> Public Function Invoke(Process As Process) As Integer
         Call Process.Start()
         Call Process.WaitForExit()
@@ -671,11 +421,11 @@ Public Module Extensions
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' 非线程的方式启动，当前线程会被阻塞在这里直到运行完毕
+    ''' Running the object model driver, the target object should implement the driver interface.
+    ''' (非线程的方式启动，当前线程会被阻塞在这里直到运行完毕)
     ''' </summary>
     ''' <param name="driver"></param>
     ''' <returns></returns>
-    <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
     Public Function RunDriver(driver As ITaskDriver) As Integer
         Return driver.Run
     End Function
@@ -686,7 +436,6 @@ Public Module Extensions
     ''' (使用线程的方式启动，在函数调用之后，线程是已经启动了的，所以不需要再次调用<see cref="Threading.Thread.Start()"/>方法了)
     ''' </summary>
     ''' <param name="driver">The object which is implements the interface <see cref="ITaskDriver"/></param>
-    <ExportAPI("Run", Info:="Running the object model driver, the target object should implement the driver interface.")>
     <Extension>
     Public Function DriverRun(driver As ITaskDriver) As Threading.Thread
         Return Parallel.RunTask(AddressOf driver.Run)
@@ -740,22 +489,6 @@ Public Module Extensions
             array(i) = array(i) + intOffset
         Next
         Return array
-    End Function
-
-    ''' <summary>
-    ''' Parsing the dat value from the expression text, if any exception happend, a null date value will returned.
-    ''' (空字符串会返回空的日期)
-    ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("Date.Parse")>
-    <Extension> Public Function ParseDateTime(s As String) As Date
-        If String.IsNullOrEmpty(s) Then
-            Return New Date
-        Else
-            Return DateTime.Parse(s)
-        End If
     End Function
 
 #Region ""
@@ -1173,8 +906,6 @@ Public Module Extensions
     ''' <param name="n"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("Double.Is.NA",
-               Info:="Is this double type of the number is an NA type infinity number. this is major comes from the devided by ZERO.")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function IsNaNImaginary(n As Double) As Boolean
 #Else
@@ -1204,9 +935,8 @@ Public Module Extensions
     ''' <param name="Subject"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("FuzzyMatch",
-               Info:="Fuzzy match two string, this is useful for the text query or searching.")>
-    <Extension> Public Function FuzzyMatching(query$, subject$, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
+    <Extension>
+    Public Function FuzzyMatching(query$, subject$, Optional tokenbased As Boolean = True, Optional cutoff# = 0.8) As Boolean
         If tokenbased Then
             Dim similarity# = Evaluate(query, subject,,, )
             Return similarity >= cutoff
@@ -1222,26 +952,6 @@ Public Module Extensions
 #End If
 
     ''' <summary>
-    ''' 这个是一个安全的方法，假若下标越界或者目标数据源为空的话，则会返回空值
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <param name="index"></param>
-    ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Get.Item")>
-    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#Else
-    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#End If
-        If source Is Nothing Then
-            Return Nothing
-        Else
-            Return source.ElementAtOrDefault(index)
-        End If
-    End Function
-
-    ''' <summary>
     ''' 求取该数据集的标准差
     ''' </summary>
     ''' <param name="data"></param>
@@ -1255,11 +965,6 @@ Public Module Extensions
         Sum /= data.Count
         Return Global.System.Math.Sqrt(Sum)
     End Function
-
-    ''' <summary>
-    ''' The first element in a collection.
-    ''' </summary>
-    Public Const Scan0 As Integer = 0
 
     ''' <summary>
     ''' 函数只返回有重复的数据
@@ -1318,8 +1023,8 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("NullValue.Trim", Info:="Remove all of the null object in the target object collection")>
-    <Extension> Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
+    <Extension>
+    Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
 #Else
     ''' <summary>
     ''' Remove all of the null object in the target object collection
@@ -1402,7 +1107,17 @@ Public Module Extensions
         Return LQuery
     End Function
 
-    <Extension> Public Sub Swap(Of T)(ByRef array As T(), a%, b%)
+    ''' <summary>
+    ''' swap two element in the array
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="a%"></param>
+    ''' <param name="b%"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub Swap(Of T)(ByRef array As T(), a%, b%)
         Dim tmp As T = array(a)
         array(a) = array(b)
         array(b) = tmp
@@ -1415,10 +1130,13 @@ Public Module Extensions
     ''' <param name="obj1"></param>
     ''' <param name="obj2"></param>
     ''' <remarks></remarks>
-    <Extension> Public Sub SwapWith(Of T)(ByRef obj1 As T, ByRef obj2 As T)
-        Dim objTemp As T = obj1
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub Swap(Of T)(ByRef obj1 As T, ByRef obj2 As T)
+        Dim temp As T = obj1
         obj1 = obj2
-        obj2 = objTemp
+        obj2 = temp
     End Sub
 
     ''' <summary>
@@ -1473,7 +1191,6 @@ Public Module Extensions
     ''' <returns>A integer array of subscript index of the target generic collection.</returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Sequence.Index", Info:="Gets the subscript index of a generic collection.")>
     <Extension> Public Iterator Function Sequence(Of T)(
                                         <Parameter("source", "")> source As IEnumerable(Of T),
                                         <Parameter("index.OffSet", "")> Optional offSet% = 0) _
@@ -1687,7 +1404,8 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dotNETlist"></param>
     ''' <returns></returns>
-    <Extension> Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
+    <Extension>
+    Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
         If dotNETlist.IsNullOrEmpty Then
             dotNETlist = New List(Of T)
 
@@ -1710,13 +1428,15 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>
     ''' <returns></returns>
-    <Extension> Public Function RemoveLast(Of T)(ByRef list As List(Of T)) As List(Of T)
+    <Extension>
+    Public Function RemoveLast(Of T)(ByRef list As List(Of T)) As List(Of T)
         Return DirectCast(RemoveLast(dotNETlist:=list), List(Of T))
     End Function
 
 #End Region
 
-    <Extension> Public Function RemoveFirst(Of T)(ByRef list As List(Of T)) As List(Of T)
+    <Extension>
+    Public Function RemoveFirst(Of T)(ByRef list As List(Of T)) As List(Of T)
         If list.IsNullOrEmpty OrElse list.Count = 1 Then
             list = New List(Of T)
         Else

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ed88763e0a6e16efdd5d124ae9af951, Microsoft.VisualBasic.Core\CommandLine\Interpreters\InteractiveConsole.vb"
+﻿#Region "Microsoft.VisualBasic::d91fadf6f8f99c58d8e392055ca30964, Microsoft.VisualBasic.Core\CommandLine\Interpreters\InteractiveConsole.vb"
 
     ' Author:
     ' 
@@ -46,11 +46,9 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Microsoft.VisualBasic.Terminal
 
 Namespace CommandLine
 
@@ -77,7 +75,7 @@ Namespace CommandLine
             Dim shell As New Shell(
                 ps1:=PS1.Fedora12,
                 exec:=Sub(input)
-                          Call CLITools.TryParse(input).DoCall(AddressOf RunAppInternal)
+                          Call Parsers.TryParse(input).DoCall(AddressOf RunAppInternal)
                       End Sub
             ) With {
                 .Quite = "exit"

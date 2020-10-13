@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f60200ac4bbb1e1ecc934e51b8661cd, Data_science\DataMining\DataMining\Clustering\KMeans\Models\KMeansCluster.vb"
+﻿#Region "Microsoft.VisualBasic::0bda06d123d3d322620ad54be9db3682, Data_science\DataMining\DataMining\Clustering\KMeans\Models\KMeansCluster.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.KMeans.CompleteLinkage
+Imports stdNum = System.Math
 
 Namespace KMeans
 
@@ -85,12 +86,22 @@ Namespace KMeans
 
         Public Property Center As T
 
+        ''' <summary>
+        ''' Returns the one dimensional array data located at the index
+        ''' </summary>
+        Default Public Overridable ReadOnly Property Item(Index As Integer) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _innerList(Index)
+            End Get
+        End Property
+
         Public Function CalculateKMeansCost() As Double
             Dim kMeansCost As Double = 0
             Dim distanceBetweenPoints As Double = 0
             For pointIndex As Integer = 0 To _innerList.Count - 1
                 distanceBetweenPoints = _innerList(pointIndex).DistanceBetweenPoints(Center)
-                kMeansCost += Math.Pow(distanceBetweenPoints, 2)
+                kMeansCost += stdNum.Pow(distanceBetweenPoints, 2)
             Next pointIndex
             Return kMeansCost
         End Function
@@ -131,16 +142,6 @@ Namespace KMeans
                 _ClusterSum(count) = _ClusterSum(count) + data.entityVector(count)
             Next
         End Sub
-
-        ''' <summary>
-        ''' Returns the one dimensional array data located at the index
-        ''' </summary>
-        Default Public Overridable ReadOnly Property Item(Index As Integer) As T
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _innerList(Index)
-            End Get
-        End Property
 
         ''' <summary>
         ''' Will keep the center member variable, but clear the list of points

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7a8fff568ee72cb38ef07d77677d424, Microsoft.VisualBasic.Core\Language\Language\Perl\die.vb"
+﻿#Region "Microsoft.VisualBasic::e65fee26f9a132bfa486b08e28236137, Microsoft.VisualBasic.Core\Language\Language\Perl\die.vb"
 
     ' Author:
     ' 
@@ -57,9 +57,9 @@ Namespace Language.Perl
     Public Structure ExceptionHandle
 
         Dim message$
-        Dim failure As Assert(Of Object)
+        Dim failure As Predicate(Of Object)
 
-        Shared ReadOnly defaultHandler As New Assert(Of Object)(AddressOf [Default])
+        Shared ReadOnly defaultHandler As New Predicate(Of Object)(AddressOf [Default])
 
         ''' <summary>
         ''' Returns True means test failure(<paramref name="obj"/> is nothing or empty!)

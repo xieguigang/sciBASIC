@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a96cb85fcf17d0101fbb7e187ce62576, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::91f190c969bd8ce7ba229be04bca2bcc, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke, InvokeCLI
-    '                   tryInvoke
+    '         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
+    '                   InvokeCLI, tryInvoke
     ' 
     ' 
     ' /********************************************************************************/
@@ -187,6 +187,14 @@ Namespace CommandLine.Reflection.EntryPoints
                 End If
             End If
 
+            Dim note As NoteAttribute = EntryPoint.GetCustomAttribute(Of NoteAttribute)
+
+            If Not note Is Nothing Then
+                Call sb.AppendLine()
+                Call sb.AppendLine("Author Comment About This Command:")
+                Call sb.AppendLine(note.noteText)
+            End If
+
             Return sb.ToString
         End Function
 
@@ -227,6 +235,14 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="[throw]"></param>
         ''' <returns></returns>
         Private Function tryInvoke(callParameters As Object(), target As Object, [throw] As Boolean) As Object
+#If DEBUG Then
+            Return EntryPoint.Invoke(target, callParameters)
+#Else
+            Return handleUnexpectedErrorCalls(callParameters, target, [throw])
+#End If
+        End Function
+
+        Private Function handleUnexpectedErrorCalls(callParameters As Object(), target As Object, [throw] As Boolean) As Object
             Dim rtvl As Object
 
             Try
@@ -246,7 +262,7 @@ Namespace CommandLine.Reflection.EntryPoints
                 VBDebugger.Mute = False
 
                 Call App.LogException(ex, trace)
-                Call DebuggerArgs.SaveErrorLog(App.BugsFormatter(ex))
+                Call DebuggerArgs.SaveErrorLog(VBDebugger.BugsFormatter(ex))
                 Call VBDebugger.WaitOutput()
 
                 If [throw] Then

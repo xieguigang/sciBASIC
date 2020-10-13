@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b8a45d8307c30f1fc663da7547ad78d, Data\BinaryData\DataStorage\netCDF\Components\Header.vb"
+﻿#Region "Microsoft.VisualBasic::bba812c10656302dfe2aa6cfe1ed3c1c, Data\BinaryData\DataStorage\netCDF\Components\Header.vb"
 
     ' Author:
     ' 
@@ -36,12 +36,14 @@
     '         Properties: dimensions, globalAttributes, recordDimension, variables, version
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Function: checkVariableIdConflicts
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 
 Namespace netCDF.Components
@@ -77,7 +79,7 @@ Namespace netCDF.Components
         ''' List of global attributes
         ''' </summary>
         ''' <returns></returns>
-        Public Property globalAttributes As Attribute()
+        Public Property globalAttributes As attribute()
         ''' <summary>
         ''' List of variables
         ''' </summary>
@@ -114,5 +116,17 @@ Namespace netCDF.Components
             Me.variables = variables.variables
             Me.recordDimension.recordStep = variables.recordStep
         End Sub
+
+        Public Iterator Function checkVariableIdConflicts() As IEnumerable(Of String)
+            Dim uniqueId As New Index(Of String)
+
+            For Each var As variable In variables
+                If var.name Like uniqueId Then
+                    Yield var.name
+                Else
+                    uniqueId.Add(var.name)
+                End If
+            Next
+        End Function
     End Class
 End Namespace

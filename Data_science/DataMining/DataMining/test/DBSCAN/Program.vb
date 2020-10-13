@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ff5e211f39cd3311812d147e5b3ca43, Data_science\DataMining\DataMining\test\DBSCAN\Program.vb"
+﻿#Region "Microsoft.VisualBasic::fd2677b36fa39f34cb95a4defda21d5c, Data_science\DataMining\DataMining\test\DBSCAN\Program.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@ Class Program
         Dim clusters As HashSet(Of MyCustomDatasetItem()) = Nothing
 
         Dim dbs = New DbscanAlgorithm(Of MyCustomDatasetItem)(Function(x, y) Math.Sqrt(((x.X - y.X) * (x.X - y.X)) + ((x.Y - y.Y) * (x.Y - y.Y))))
-        dbs.ComputeClusterDbscan(allPoints:=featureData, epsilon:=0.01, minPts:=10, clusters:=clusters)
+        Dim result = dbs.ComputeClusterDBSCAN(allPoints:=featureData, epsilon:=0.01, minPts:=10)
 
 
 

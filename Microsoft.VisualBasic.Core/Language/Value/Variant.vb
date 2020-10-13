@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c359fd556368c605b8a301ca9e1d2d2, Microsoft.VisualBasic.Core\Language\Value\Variant.vb"
+﻿#Region "Microsoft.VisualBasic::b72f0418d1865f92e931ebec63005007, Microsoft.VisualBasic.Core\Language\Value\Variant.vb"
 
     ' Author:
     ' 
@@ -70,81 +70,122 @@ Namespace Language
             End If
         End Function
 
+        ''' <summary>
+        ''' TryCast to <typeparamref name="A"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property VA As A
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value
+                If Me Like GetType(A) OrElse GetUnderlyingType.IsInheritsFrom(GetType(A)) Then
+                    Return Value
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 
+        ''' <summary>
+        ''' TryCast to <typeparamref name="B"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property VB As B
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Value
+                If Me Like GetType(B) OrElse GetUnderlyingType.IsInheritsFrom(GetType(B)) Then
+                    Return Value
+                Else
+                    Return Nothing
+                End If
             End Get
         End Property
 
+        <DebuggerStepThrough>
         Sub New()
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(a As A)
             Value = a
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(b As B)
             Value = b
         End Sub
 
+        ''' <summary>
+        ''' do direct cast of <see cref="Value"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
+        <DebuggerStepThrough>
         Public Function [TryCast](Of T)() As T
             Return DirectCast(Value, T)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Widening Operator CType(obj As [Variant](Of A, B)) As Type
             Return obj.GetUnderlyingType
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Narrowing Operator CType(obj As [Variant](Of A, B)) As A
             Return obj.VA
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Narrowing Operator CType(obj As [Variant](Of A, B)) As B
             Return obj.VB
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Widening Operator CType(a As A) As [Variant](Of A, B)
             Return New [Variant](Of A, B) With {.Value = a}
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Widening Operator CType(b As B) As [Variant](Of A, B)
             Return New [Variant](Of A, B) With {.Value = b}
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Operator =(obj As [Variant](Of A, B), a As A) As Boolean
             Return obj.VA.Equals(a)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Operator <>(obj As [Variant](Of A, B), a As A) As Boolean
             Return Not obj = a
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Operator =(obj As [Variant](Of A, B), b As B) As Boolean
             Return obj.VB.Equals(b)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Operator <>(obj As [Variant](Of A, B), b As B) As Boolean
             Return Not obj = b
         End Operator
 
+        ''' <summary>
+        ''' 请注意Like是直接进行比较，不会比较继承关系链的？
+        ''' </summary>
+        ''' <param name="var"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Operator Like(var As [Variant](Of A, B), type As Type) As Boolean
             Return var.GetUnderlyingType Is type
         End Operator
@@ -162,49 +203,59 @@ Namespace Language
         Sub New()
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(a As A)
             Value = a
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(b As B)
             Value = b
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(c As C)
             Value = c
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Narrowing Operator CType(obj As [Variant](Of A, B, C)) As C
             Return obj.VC
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Narrowing Operator CType(obj As [Variant](Of A, B, C)) As A
             Return obj.VA
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Narrowing Operator CType(obj As [Variant](Of A, B, C)) As B
             Return obj.VB
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Widening Operator CType(c As C) As [Variant](Of A, B, C)
             Return New [Variant](Of A, B, C) With {.Value = c}
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Widening Operator CType(a As A) As [Variant](Of A, B, C)
             Return New [Variant](Of A, B, C) With {.Value = a}
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Widening Operator CType(b As B) As [Variant](Of A, B, C)
             Return New [Variant](Of A, B, C) With {.Value = b}
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Overloads Shared Operator Like(var As [Variant](Of A, B, C), type As Type) As Boolean
             Return var.GetUnderlyingType Is type
         End Operator

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c252ce7e2743d86c472f5af9a6b501e1, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::5e6fb82ef646f86895796c2c71d0f124, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
 
     ' Author:
     ' 
@@ -54,8 +54,8 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
@@ -81,6 +81,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         ''' </summary>
         Protected Friend methods As Dictionary(Of String, List(Of ProjectMember))
 
+        ''' <summary>
+        ''' The namespace container of this type
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -134,7 +138,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return getInternal(methods, methodName.ToLower)
         End Function
 
-        Public Function EnsureMethod(methodName As String) As ProjectMember
+        Friend Function EnsureMethod(methodName As String) As ProjectMember
             Dim pmlist As List(Of ProjectMember) = Me.GetMethods(methodName)
             Dim pm As New ProjectMember(Me) With {
                 .Name = methodName
@@ -160,7 +164,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return getInternal(properties, propertyName.ToLower)
         End Function
 
-        Public Function EnsureProperty(propertyName As String) As ProjectMember
+        Friend Function EnsureProperty(propertyName As String) As ProjectMember
             Dim pmlist As List(Of ProjectMember) = Me.GetProperties(propertyName)
             Dim pm As New ProjectMember(Me) With {
                 .Name = propertyName
@@ -179,7 +183,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureField(fieldName As String) As ProjectMember
+        Friend Function EnsureField(fieldName As String) As ProjectMember
             Dim pm As ProjectMember = Me.GetField(fieldName)
 
             If pm Is Nothing Then
@@ -201,7 +205,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureEvent(eventName As String) As ProjectMember
+        Friend Function EnsureEvent(eventName As String) As ProjectMember
             Dim pm As ProjectMember = Me.GetField(eventName)
 
             If pm Is Nothing Then
@@ -215,7 +219,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return pm
         End Function
 
-        Public Sub LoadFromNode(xn As XmlNode)
+        Friend Sub LoadFromNode(xn As XmlNode)
             Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
 
             If summaryNode IsNot Nothing Then

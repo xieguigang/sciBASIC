@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eee79e6b0c909dec273d1f4b24eca635, mime\application%json\Javascript\JsonElement.vb"
+﻿#Region "Microsoft.VisualBasic::6c2ab6b3e892f94cd2f84726b9ad1abf, mime\application%json\Javascript\JsonElement.vb"
 
     ' Author:
     ' 
@@ -49,12 +49,15 @@ Namespace Javascript
     ''' </summary>
     Public MustInherit Class JsonElement
 
-        Public MustOverride Function BuildJsonString() As String
-
         Public Overrides Function ToString() As String
             Return "base::json"
         End Function
 
+        ''' <summary>
+        ''' do direct cast to the required json element sub type.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [As](Of T As JsonElement)() As T
             Return DirectCast(Me, T)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f63e51e93c6d27b742043386c10d5bd, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::cbf1fe46bf239d552640ce7a2ea8bd89, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -3463,20 +3463,12 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public MustOverride Sub FillEllipse(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
-        '
-        ' Summary:
-        '     Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   path:
-        '     System.Drawing.Drawing2D.GraphicsPath that represents the path to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-path is null.
+
+        ''' <summary>
+        ''' Fills the interior of a System.Drawing.Drawing2D.GraphicsPath.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="path">System.Drawing.Drawing2D.GraphicsPath that represents the path to fill.</param>
         Public MustOverride Sub FillPath(brush As Brush, path As GraphicsPath)
         '
         ' Summary:

@@ -45,6 +45,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace ComponentModel.DataSourceModel.Repository
 

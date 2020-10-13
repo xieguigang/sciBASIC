@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e266ef3707ea88ae89c7bfbc8d789b4, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::5be6a770764e3149c3121cd62e6832c1, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -39,12 +39,12 @@
     ' 
     '         Function: Assert, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains, ContainsParameter
     '                   GetBoolean, GetByte, GetBytes, GetChar, GetChars
-    '                   GetCommandsOverview, GetDateTime, GetDecimal, GetDictionary, GetDouble
-    '                   GetEnumerator, GetEnumerator1, GetFloat, GetFullDIRPath, GetFullFilePath
-    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetObject
-    '                   GetOrdinal, GetString, GetValue, HavebFlag, IsNull
-    '                   IsTrue, OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput
-    '                   (+2 Overloads) Remove, ToArgumentVector, ToString
+    '                   GetDateTime, GetDecimal, GetDictionary, GetDouble, GetEnumerator
+    '                   GetEnumerator1, GetFloat, GetFullDIRPath, GetFullFilePath, GetGuid
+    '                   GetInt16, GetInt32, GetInt64, GetObject, GetOrdinal
+    '                   GetString, GetValue, HavebFlag, IsNull, IsTrue
+    '                   OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput, (+2 Overloads) Remove
+    '                   ToArgumentVector, ToString, TrimNamePrefix
     ' 
     '         Sub: (+2 Overloads) Add, Clear, CopyTo
     ' 
@@ -58,7 +58,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -212,13 +211,14 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Default Public ReadOnly Property Item(paramName As String) As DefaultString
             Get
-                Dim LQuery As NamedValue(Of String) =
-                    arguments _
-                        .Where(Function(a)
-                                   Return String.Equals(a.Name, paramName, StringComparison.OrdinalIgnoreCase) OrElse
-                                          String.Equals(a.Name.Trim("\", "/", "-"), paramName, StringComparison.OrdinalIgnoreCase)
-                               End Function) _
-                        .FirstOrDefault
+                Dim LQuery As NamedValue(Of String) = arguments _
+                    .Where(Function(a)
+                               Return a.Name.TextEquals(paramName) OrElse
+                                      a.Name.DoCall(AddressOf TrimNamePrefix) _
+                                            .TextEquals(paramName)
+                           End Function) _
+                    .FirstOrDefault
+
                 ' 是值类型，不会出现空引用的情况
                 Dim value As String = LQuery.Value
 
@@ -278,6 +278,11 @@ Namespace CommandLine
             Return cliCommandArgvs
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function TrimNamePrefix(argName As String) As String
+            Return argName.Trim("\", "/", "-")
+        End Function
+
         ''' <summary>
         ''' Get specific argument value as full directory path.
         ''' </summary>
@@ -298,34 +303,6 @@ Namespace CommandLine
             Dim path$ = Me(name)
             path = FixPath(path)
             Return FileIO.FileSystem.GetFileInfo(path).FullName
-        End Function
-
-        ''' <summary>
-        ''' Gets the brief summary information of current cli command line object.
-        ''' (获取当前的命令行对象的参数摘要信息)
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function GetCommandsOverview() As String
-            Dim sb As New StringBuilder(vbCrLf, 1024)
-            Call sb.AppendLine($"Commandline arguments overviews{vbCrLf}Command Name  --  ""{Me.Name}""")
-            Call sb.AppendLine()
-            Call sb.AppendLine("---------------------------------------------------------")
-            Call sb.AppendLine()
-
-            If arguments.Count = 0 Then
-                Call sb.AppendLine("No parameter was define in this commandline.")
-                Return sb.ToString
-            End If
-
-            Dim MaxSwitchName As Integer = (From item As NamedValue(Of String)
-                                            In arguments
-                                            Select Len(item.Name)).Max
-            For Each sw As NamedValue(Of String) In arguments
-                Call sb.AppendLine($"  {sw.Name}  {New String(" "c, MaxSwitchName - Len(sw.Name))}= ""{sw.Value}"";")
-            Next
-
-            Return sb.ToString
         End Function
 
         ''' <summary>
@@ -409,12 +386,12 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(CommandLine As String) As CommandLine
-            Return TryParse(CommandLine)
+            Return Parsers.TryParse(CommandLine)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(CLI As Func(Of String)) As CommandLine
-            Return TryParse(CLI())
+            Return Parsers.TryParse(CLI())
         End Operator
 
         ''' <summary>
@@ -968,7 +945,7 @@ Namespace CommandLine
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(opt As String, args As CommandLine) As CommandLine
-            Return TryParse(args(opt))
+            Return Parsers.TryParse(args(opt))
         End Operator
 
         Public Shared Operator ^(args As CommandLine, [default] As String) As String

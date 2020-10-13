@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::157301c28eb348f8edfe58d6477fadcb, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::024dff47149b5b1bcd16db7d4afc5f84, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,12 @@
 
     '     Module Extensions
     ' 
-    '         Function: DATA, Populate, SafeQuery, ToArray
+    '         Function: DATA, Populate, (+2 Overloads) SafeQuery, ToArray
     '         Delegate Sub
     ' 
-    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, IteratesALL
-    '                       (+2 Overloads) JoinIterates, LastOrDefault, MaxInd, (+2 Overloads) Read, RemoveLeft
-    '                       (+2 Overloads) Removes, Repeats, (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray
-    '                       ToVector, TryCatch
+    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, LastOrDefault
+    '                       MaxInd, (+2 Overloads) Read, RemoveLeft, (+2 Overloads) Removes, Repeats
+    '                       (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray, ToVector, TryCatch
     ' 
     ' 
     ' 
@@ -60,6 +59,7 @@ Namespace Linq
     ''' </summary>
     <Package("LINQ", Category:=APICategories.UtilityTools)>
     <Extension>
+    <HideModuleName>
     Public Module Extensions
 
         ''' <summary>
@@ -87,6 +87,12 @@ Namespace Linq
             Return New DataValue(Of T)(src)
         End Function
 
+        ''' <summary>
+        ''' DirectCast of the <paramref name="source"/> sequence into T() array.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ToArray(Of T)(source As IEnumerable(Of Object)) As T()
             If source Is Nothing Then
@@ -112,6 +118,15 @@ Namespace Linq
                 Call $"Target source sequence is nothing...[{trace}]".Warning
 #End If
                 Return {}
+            End If
+        End Function
+
+        <Extension>
+        Public Function SafeQuery(Of T)(source As Enumeration(Of T)) As IEnumerable(Of T)
+            If source Is Nothing Then
+                Return {}
+            Else
+                Return source.AsEnumerable
             End If
         End Function
 
@@ -221,61 +236,6 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Iterates all of the elements in a two dimension collection as the data source 
-        ''' for the linq expression or ForEach statement.
-        ''' (适用于二维的集合做为linq的数据源，不像<see cref="Unlist"/>是进行转换，
-        ''' 这个是返回迭代器的，推荐使用这个函数)
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="source"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
-            For Each line As IEnumerable(Of T) In source
-                If Not line Is Nothing Then
-                    Using iterator = line.GetEnumerator
-                        Do While iterator.MoveNext
-                            Yield iterator.Current
-                        Loop
-                    End Using
-                End If
-            Next
-        End Function
-
-        ''' <summary>
-        ''' First, iterate populates the elements in collection <paramref name="a"/>, 
-        ''' and then populate out all of the elements on collection <paramref name="b"/>
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="a">Object collection</param>
-        ''' <param name="b">Another object collection.</param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
-            If Not a Is Nothing Then
-                For Each x As T In a
-                    Yield x
-                Next
-            End If
-            If Not b Is Nothing Then
-                For Each x As T In b
-                    Yield x
-                Next
-            End If
-        End Function
-
-        <Extension>
-        Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As T) As IEnumerable(Of T)
-            If Not a Is Nothing Then
-                For Each x As T In a
-                    Yield x
-                Next
-            End If
-
-            Yield b
-        End Function
-
-        ''' <summary>
         ''' Removes the specific key in the dicitonary and returns the last content.
         ''' (删除指定的键之后返回剩下的数据)
         ''' </summary>
@@ -363,12 +323,12 @@ Namespace Linq
         ''' <summary>
         ''' ``0,1,2,3,...<paramref name="n"/>``
         ''' </summary>
-        ''' <param name="n"></param>
+        ''' <param name="n">the api function is already makes ``n-1`` for populate index sequence.</param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <Extension>
         Public Iterator Function SeqIterator(n As Integer, Optional offset As Integer = 0) As IEnumerable(Of Integer)
-            If n < 0 Then
+            If (n + offset) < 0 Then
                 Dim ex As String = $"n:={n} is not a valid index generator value for sequence!"
                 Throw New Exception(ex)
             End If
@@ -398,7 +358,7 @@ Namespace Linq
 
         <Extension, ExportAPI("Sequence")>
         Public Function Sequence(n As Integer, offset As Integer) As Integer()
-            Dim array As Integer() = n.Sequence
+            Dim array As Integer() = n.Sequence.ToArray
 
             For i As Integer = 0 To array.Length - 1
                 array(i) = array(i) + offset
@@ -502,7 +462,7 @@ Namespace Linq
         ''' </param>
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
-            If source Is Nothing Then
+            If source Is Nothing OrElse Not source.Any Then
                 Return [default]
             Else
                 Return source.FirstOrDefault

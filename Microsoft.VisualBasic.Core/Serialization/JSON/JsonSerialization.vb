@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::143777c791dfc55b96e82f8fcc5ba0e4, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::a7eebb7c83bd909671b40f55cd638a2c, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -195,7 +195,8 @@ Namespace Serialization.JSON
                                    type As Type,
                                    Optional simpleDict As Boolean = True,
                                    Optional throwEx As Boolean = True,
-                                   Optional ByRef exception As Exception = Nothing) As Object
+                                   Optional ByRef exception As Exception = Nothing,
+                                   Optional knownTypes As IEnumerable(Of Type) = Nothing) As Object
 
             If String.Equals(json, "null", StringComparison.OrdinalIgnoreCase) Then
                 Return Nothing
@@ -210,7 +211,8 @@ Namespace Serialization.JSON
             Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))
                 Dim settings As New DataContractJsonSerializerSettings With {
                     .UseSimpleDictionaryFormat = simpleDict,
-                    .SerializeReadOnlyTypes = True
+                    .SerializeReadOnlyTypes = True,
+                    .KnownTypes = knownTypes.SafeQuery.ToArray
                 }
                 Dim ser As New DataContractJsonSerializer(type, settings)
                 Dim de As Func(Of Object) = Function() ser.ReadObject(MS)
@@ -240,9 +242,11 @@ Namespace Serialization.JSON
         <Extension> Public Function LoadJSON(Of T)(json$,
                                                    Optional simpleDict As Boolean = True,
                                                    Optional throwEx As Boolean = True,
-                                                   Optional ByRef exception As Exception = Nothing) As T
+                                                   Optional ByRef exception As Exception = Nothing,
+                                                   Optional knownTypes As IEnumerable(Of Type) = Nothing) As T
+
             Dim text$ = json.SolveStream(Encodings.UTF8)
-            Dim value As Object = text.LoadObject(GetType(T), simpleDict, throwEx, exception)
+            Dim value As Object = text.LoadObject(GetType(T), simpleDict, throwEx, exception, knownTypes)
             Dim obj As T = DirectCast(value, T)
             Return obj
         End Function
@@ -271,9 +275,13 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function LoadJsonFile(Of T)(file$, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
+        Public Function LoadJsonFile(Of T)(file$,
+                                           Optional encoding As Encoding = Nothing,
+                                           Optional simpleDict As Boolean = True,
+                                           Optional knownTypes As IEnumerable(Of Type) = Nothing) As T
+
             Return (file.ReadAllText(encoding Or UTF8, throwEx:=False, suppress:=True) Or "null".AsDefault) _
-                .LoadJSON(Of T)(simpleDict)
+                .LoadJSON(Of T)(simpleDict, knownTypes:=knownTypes)
         End Function
 
         Const JsonLongTime$ = "\d+-\d+-\d+T\d+:\d+:\d+\.\d+"

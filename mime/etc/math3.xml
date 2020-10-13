@@ -1,0 +1,117 @@
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <lambda>
+    <bvar>
+      <ci> k1 </ci>
+    </bvar>
+    <bvar>
+      <ci> k_minus3 </ci>
+    </bvar>
+    <bvar>
+      <ci> k_minus1 </ci>
+    </bvar>
+    <bvar>
+      <ci> k4 </ci>
+    </bvar>
+    <bvar>
+      <ci> G </ci>
+    </bvar>
+    <bvar>
+      <ci> k3 </ci>
+    </bvar>
+    <bvar>
+      <ci> P </ci>
+    </bvar>
+    <bvar>
+      <ci> Vmax </ci>
+    </bvar>
+    <bvar>
+      <ci> k2 </ci>
+    </bvar>
+    <bvar>
+      <ci> T </ci>
+    </bvar>
+    <bvar>
+      <ci> k5 </ci>
+    </bvar>
+    <bvar>
+      <ci> S </ci>
+    </bvar>
+    <bvar>
+      <ci> k_minus4 </ci>
+    </bvar>
+    <bvar>
+      <ci> k_minus5 </ci>
+    </bvar>
+    <bvar>
+      <ci> D </ci>
+    </bvar>
+    <apply>
+      <divide/>
+      <apply>
+        <times/>
+        <ci> Vmax </ci>
+        <ci> S </ci>
+      </apply>
+      <apply>
+        <plus/>
+        <apply>
+          <divide/>
+          <apply>
+            <plus/>
+            <ci> k_minus1 </ci>
+            <ci> k2 </ci>
+          </apply>
+          <apply>
+            <ci> k1 </ci>
+            <apply>
+              <plus/>
+              <apply>
+                <plus/>
+                <cn type="integer"> 1 </cn>
+                <apply>
+                  <times/>
+                  <apply>
+                    <divide/>
+                    <apply>
+                      <divide/>
+                      <apply>
+                        <divide/>
+                        <ci> P </ci>
+                        <apply>
+                          <plus/>
+                          <apply>
+                            <divide/>
+                            <ci> k3 </ci>
+                            <ci> k_minus3 </ci>
+                          </apply>
+                          <ci> D </ci>
+                        </apply>
+                      </apply>
+                      <ci> k4 </ci>
+                    </apply>
+                    <ci> k_minus4 </ci>
+                  </apply>
+                  <ci> G </ci>
+                </apply>
+              </apply>
+              <apply>
+                <times/>
+                <apply>
+                  <divide/>
+                  <apply>
+                    <divide/>
+                    <ci> T </ci>
+                    <ci> k5 </ci>
+                  </apply>
+                  <ci> k_minus5 </ci>
+                </apply>
+                <ci> S </ci>
+              </apply>
+            </apply>
+          </apply>
+        </apply>
+        <ci> S </ci>
+      </apply>
+    </apply>
+  </lambda>
+</math>

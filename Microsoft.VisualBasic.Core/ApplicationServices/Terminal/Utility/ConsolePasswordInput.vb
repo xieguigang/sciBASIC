@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a327073d8c1912fb6d47e38285e938b0, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
+﻿#Region "Microsoft.VisualBasic::7cb4c9de3c3a481d4d8a749b0cc0156f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
 
     ' Author:
     ' 
@@ -91,8 +91,9 @@
 
 Imports System.Runtime.InteropServices
 Imports System.Collections
+Imports Microsoft.VisualBasic.Language
 
-Namespace Terminal.Utility
+Namespace ApplicationServices.Terminal.Utility
 
     ''' <summary>
     ''' Constants used with PInvoke methods
@@ -326,7 +327,7 @@ Namespace Terminal.Utility
         Protected dwSaveOldMode As Integer = 0
         Protected dwMode As Integer = 0
         ' Counter used to detect how many characters have been typed in.
-        Protected iCounter As Integer = 0
+        Protected iCounter As i32 = 0
         ' Hashtable to store console input event handler functions.
         Protected htCodeLookup As Hashtable
         ' Used to indicate the maximum number of characters for a password. 20 is the default.
@@ -377,7 +378,7 @@ Namespace Terminal.Utility
                         ' by appending each typed in character at the end of strBuildup.
                         strBuildup += strConcat
 
-                        If System.Threading.Interlocked.Increment(iCounter) < iMaxNumberOfCharacters Then
+                        If ++iCounter < iMaxNumberOfCharacters Then
                             ' Adding 1 to iCounter still makes iCounter less than MaxNumberOfCharacters.
                             ' This means that the total number of characters collected so far (this is
                             ' equal to iCounter, by the way) is less than MaxNumberOfCharacters.

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14f6eba37cce671311b46ab764a7a2ab, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::43ee1a9bf730f719b822c16f5dee981d, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,7 @@
     '         Properties: ID
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: ContainsIDField, Copy, CreateFilter, GetIDList, GetPropertyNames
-    '                   (+4 Overloads) LoadDataSet, readHeaders, ToString
+    '         Function: Copy, CreateFilter, GetPropertyNames, (+4 Overloads) LoadDataSet, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -53,7 +52,6 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text
 
 Namespace IO
 
@@ -71,6 +69,28 @@ Namespace IO
         <Column("ID")>
         Public Overridable Property ID As String Implements INamedValue.Key
 
+        ''' <summary>
+        ''' 这个属性构建出与javascript之中的对象的属性读取类似的效果
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Default Public Overrides Property ItemValue(name As String) As String
+            Get
+                If name = NameOf(ID) Then
+                    Return ID
+                Else
+                    Return MyBase.ItemValue(name)
+                End If
+            End Get
+            Set(value As String)
+                If name = NameOf(ID) Then
+                    ID = value
+                Else
+                    MyBase.ItemValue(name) = value
+                End If
+            End Set
+        End Property
+
         Sub New()
         End Sub
 
@@ -85,8 +105,8 @@ Namespace IO
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(x As EntityObject)
-            Call Me.New(x.ID, New Dictionary(Of String, String)(x.Properties))
+        Sub New(obj As EntityObject)
+            Call Me.New(obj.ID, New Dictionary(Of String, String)(obj.Properties))
         End Sub
 
         ''' <summary>
@@ -103,7 +123,7 @@ Namespace IO
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
+            Return $"{ID}: ({Properties.Count}) {Properties.Keys.JoinBy(", ")}"
         End Function
 
         ''' <summary>
@@ -130,7 +150,8 @@ Namespace IO
                                            Optional ByRef uidMap$ = Nothing,
                                            Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                            Optional tsv As Boolean = False,
-                                           Optional encoding As Encoding = Nothing) As IEnumerable(Of EntityObject)
+                                           Optional encoding As Encoding = Nothing,
+                                           Optional silent As Boolean = False) As IEnumerable(Of EntityObject)
 
             ' 2018-09-04 在原来的代码这里，空的path字符串是返回空集合的
             ' 为了保持和原来的代码的兼容性，在这里使用LastOrDefault来防止抛出错误
@@ -139,90 +160,13 @@ Namespace IO
                 Dim dir$ = path.Trim("*"c)
 
                 For Each file As String In ls - l - r - ("*.csv" Or "*.tsv".When(tsv)) <= dir
-                    data += LoadDataSet(Of EntityObject)(file, uidMap, fieldNameMaps, tsv, encoding:=encoding)
+                    data += LoadDataSet(Of EntityObject)(file, uidMap, fieldNameMaps, tsv, encoding:=encoding, silent:=silent)
                 Next
 
                 Return data
             Else
-                Return LoadDataSet(Of EntityObject)(path, uidMap, fieldNameMaps, tsv, encoding:=encoding)
+                Return LoadDataSet(Of EntityObject)(path, uidMap, fieldNameMaps, tsv, encoding:=encoding, silent:=silent)
             End If
-        End Function
-
-        ''' <summary>
-        ''' 获取数据集之中的被映射为ID列的值列表
-        ''' </summary>
-        ''' <param name="path$"></param>
-        ''' <param name="uidMap$"></param>
-        ''' <param name="tsv"></param>
-        ''' <param name="ignoreMapErrors"></param>
-        ''' <returns></returns>
-        Public Shared Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
-            Dim table As File = If(tsv, File.LoadTsv(path), File.Load(path))
-            Dim getIDsDefault = Function()
-                                    Return table.Columns _
-                                        .First _
-                                        .Skip(1) _
-                                        .ToArray
-                                End Function
-
-            If uidMap.StringEmpty Then
-                ' 第一列的数据就是所需要的编号数据
-                Return getIDsDefault()
-            Else
-                With table.Headers.IndexOf(uidMap)
-                    If .ByRef = -1 AndAlso ignoreMapErrors Then
-                        Return getIDsDefault()
-                    Else
-                        ' 当不忽略错误的时候，不存在的uidMap其index位置会出现越界的错误直接在这里报错
-                        Return table.Columns(.ByRef) _
-                            .Skip(1) _
-                            .ToArray
-                    End If
-                End With
-            End If
-        End Function
-
-        ''' <summary>
-        ''' 使用这个函数来判断目标文件之中是否存在ID列
-        ''' （ID列可能不在第一列）
-        ''' </summary>
-        ''' <param name="path$"></param>
-        ''' <param name="tsv"></param>
-        ''' <param name="encoding"></param>
-        ''' <param name="FirstColumn">
-        ''' 函数总是会从这一个参数返回第一列的标题，如果不存在ID列的话可以用这一列来作为ID（可能会出现意想不到的错误）
-        ''' </param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function ContainsIDField(path$,
-                                               Optional tsv As Boolean = False,
-                                               Optional encoding As Encoding = Nothing,
-                                               Optional ByRef firstColumn$ = Nothing) As Boolean
-            Return readHeaders(
-                    path,
-                    tsv,
-                    encoding,
-                    firstColumn
-                ).Any(Function(s) s = NameOf(EntityObject.ID))
-        End Function
-
-        Private Shared Function readHeaders(path$, tsv As Boolean, encoding As Encoding, ByRef firstColumn$) As String()
-            Dim headers$()
-
-            ' 从文件的第一行数据之中得到列标题列表
-            ' 即表头字符串集合
-            If Not tsv Then
-                headers = New RowObject(path.ReadFirstLine(encoding)).ToArray
-            Else
-                headers = path _
-                    .ReadFirstLine(encoding) _
-                    .Split(ASCII.TAB)
-            End If
-
-            firstColumn = headers(Scan0)
-
-            Return headers
         End Function
 
         ''' <summary>
@@ -258,24 +202,15 @@ Namespace IO
                                                                  Optional ByRef uidMap$ = Nothing,
                                                                  Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                                                  Optional tsv As Boolean = False,
-                                                                 Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
+                                                                 Optional encoding As Encoding = Nothing,
+                                                                 Optional silent As Boolean = False) As IEnumerable(Of T)
             If Not path.FileExists Then
 #If DEBUG Then
                 Call $"{path} is missing on your file system!".Warning
 #End If
                 Return {}
-            End If
-
-            If uidMap.StringEmpty Then
-                If ContainsIDField(path, tsv, encoding, uidMap) Then
-                    uidMap = NameOf(EntityObject.ID)
-                Else
-                    ' 使用第一列作为ID
-                    ' 因为再函数之中已经通过ByRef返回来了，所以do nothing
-                End If
             Else
-                ' 使用用户自定义的列作为ID
-                ' 在这里do nothing
+                uidMap = FileFormat.SolveDataSetIDMapping(path, uidMap, tsv, encoding)
             End If
 
             With New NameMapping(fieldNameMaps)
@@ -290,7 +225,8 @@ Namespace IO
                     Return path.LoadCsv(Of T)(
                         explicit:=False,
                         maps:= .ByRef,
-                        encoding:=encoding
+                        encoding:=encoding,
+                        mute:=silent
                     )
                 End If
             End With

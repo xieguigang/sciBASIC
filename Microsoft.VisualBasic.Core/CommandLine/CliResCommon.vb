@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4997b427ff7828d26117155c6bab2511, Microsoft.VisualBasic.Core\CommandLine\CliResCommon.vb"
+﻿#Region "Microsoft.VisualBasic::59bd2fa95b9c61d2dba7e52326f4afae, Microsoft.VisualBasic.Core\CommandLine\CliResCommon.vb"
 
     ' Author:
     ' 
@@ -69,9 +69,11 @@ Namespace CommandLine
                            Select [Property]
 
             Me.EXPORT = EXPORT
-            Me.Resource = propBufs.ToDictionary(Of String, Func(Of Byte()))(
+            Me.Resource = propBufs.ToDictionary(
                 Function(x) x.Name,
-                Function(x) New Func(Of Byte())(Function() DirectCast(x.GetValue(Nothing, Nothing), Byte())))
+                Function(x)
+                    Return New Func(Of Byte())(Function() DirectCast(x.GetValue(Nothing, Nothing), Byte()))
+                End Function)
         End Sub
 
         ''' <summary>

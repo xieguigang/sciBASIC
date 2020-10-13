@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba5a42b26cebb753302fe07afddec2fb, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Comparer.vb"
+﻿#Region "Microsoft.VisualBasic::521a6385da64640c5632686b88208ddd, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Comparer.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,9 @@
 
 #End Region
 
-Namespace Terminal.xConsole
+Imports Microsoft.VisualBasic.Language
+
+Namespace ApplicationServices.Terminal.xConsole
 
 #Region "COMPARER 💻"
 
@@ -128,11 +130,11 @@ Namespace Terminal.xConsole
                 c += 1
             End While
             ' End while
-            Dim n As Integer = 0
+            Dim n As i32 = 0
             For Each word As Comparer In Words
                 If word.Points = Best AndAlso word.Points > 0 Then
                     Result = word.Word
-                    If System.Threading.Interlocked.Increment(n) > 1 Then
+                    If ++n > 1 Then
                         Result = String.Empty
                     End If
                 End If

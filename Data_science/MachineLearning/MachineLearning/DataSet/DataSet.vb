@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38d600c30d78a034d84c619a570141de, Data_science\MachineLearning\MachineLearning\DataSet\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::1f98a4acadbce110710e17b12d90986a, Data_science\MachineLearning\MachineLearning\DataSet\DataSet.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: DataSamples, NormalizeMatrix, output, OutputSize, Size
     '                     width
     ' 
-    '         Function: createExtends, PopulateNormalizedSamples, ToString
+    '         Function: createExtends, JoinSamples, PopulateNormalizedSamples, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,6 +49,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace StoreProcedure
@@ -71,6 +72,10 @@ Namespace StoreProcedure
         <XmlElement("normalization")>
         Public Property NormalizeMatrix As NormalizeMatrix
 
+        ''' <summary>
+        ''' The element names of output vector
+        ''' </summary>
+        ''' <returns></returns>
         Public Property output As String()
 
         ''' <summary>
@@ -89,7 +94,11 @@ Namespace StoreProcedure
 
         Public ReadOnly Property width As Integer
             Get
-                Return DataSamples(Scan0).status.Length
+                If NormalizeMatrix Is Nothing Then
+                    Return DataSamples(Scan0).vector.Length
+                Else
+                    Return NormalizeMatrix.matrix.size
+                End If
             End Get
         End Property
 
@@ -100,14 +109,18 @@ Namespace StoreProcedure
         Public ReadOnly Property OutputSize As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return DataSamples(Scan0).target.Length
+                If output.IsNullOrEmpty Then
+                    Return DataSamples(Scan0).target.Length
+                Else
+                    Return output.Length
+                End If
             End Get
         End Property
 
         ''' <summary>
         ''' Populates all of the normalized training dataset from current matrix data object.
         ''' </summary>
-        ''' <param name="dummyExtends%">
+        ''' <param name="dummyExtends">
         ''' This function will extends <see cref="Sample.target"/> when this parameter is greater than ZERO.
         ''' </param>
         ''' <returns></returns>
@@ -117,13 +130,9 @@ Namespace StoreProcedure
 
             For Each sample As Sample In DataSamples.items
                 input = NormalizeMatrix.NormalizeInput(sample, method)
-                normSample = New Sample With {
-                    .ID = sample.ID,
-                    .status = input,
-                    .target = sample.target + createExtends(input, dummyExtends)
-                }
+                normSample = New Sample(input, sample.target + createExtends(input, dummyExtends), sample.ID)
 
-                If sample.status.vector.Any(AddressOf IsNaNImaginary) Then
+                If sample.vector.Any(AddressOf IsNaNImaginary) Then
                     Throw New InvalidProgramException("NaN value exists in your dataset: " & normSample.GetJson)
                 End If
 
@@ -145,6 +154,34 @@ Namespace StoreProcedure
             Next
 
             Return extends
+        End Function
+
+        Public Shared Function JoinSamples(dataset As DataSet, samples As IEnumerable(Of Sample), Optional estimateQuantile As Boolean = True) As DataSet
+            Dim union As Sample() = dataset.DataSamples _
+                .AsEnumerable _
+                .JoinIterates(samples) _
+                .ToArray
+            Dim outputNames As String() = dataset.output
+            Dim inputNames As String() = dataset.NormalizeMatrix.names
+
+            If outputNames.IsNullOrEmpty Then
+                outputNames = union(Scan0).target _
+                    .Select(Function(x, i) $"Y_{i + 1}") _
+                    .ToArray
+            End If
+            If inputNames.IsNullOrEmpty Then
+                inputNames = union(Scan0).vector _
+                    .Select(Function(x, i) $"X_{i + 1}") _
+                    .ToArray
+            End If
+
+            Return New DataSet With {
+                .DataSamples = New SampleList With {
+                    .items = union
+                },
+                .NormalizeMatrix = NormalizeMatrix.CreateFromSamples(union, inputNames, estimateQuantile),
+                .output = outputNames
+            }
         End Function
 
         Public Overrides Function ToString() As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8c29ac4791a14e7240181a0cec1e6df, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\SetsExtension.vb"
+﻿#Region "Microsoft.VisualBasic::a4669d3f6b37325ad6e91207ea10da89, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\SetsExtension.vb"
 
     ' Author:
     ' 
@@ -80,25 +80,27 @@ Public Module SetsExtension
     End Function
 
     ''' <summary>
-    ''' 就并集
+    ''' Performs a union of two sets.
+    ''' (就并集)
     ''' </summary>
     ''' <param name="s1"></param>
     ''' <param name="s2"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("Union", Info:="Performs a union of two sets.")>
+    <ExportAPI("Union")>
     Public Function Union(s1 As [Set], s2 As [Set]) As [Set]
         Return s1 Or s2
     End Function
 
     ''' <summary>
-    ''' 求交集
+    ''' Performs an intersection of two sets.
+    ''' (求交集)
     ''' </summary>
     ''' <param name="s1"></param>
     ''' <param name="s2"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("Intersection", Info:="Performs an intersection of two sets.")>
+    <ExportAPI("Intersection")>
     Public Function Intersection(s1 As [Set], s2 As [Set]) As [Set]
         Return s1 And s2
     End Function

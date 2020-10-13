@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba9b6873cf2f0d564fbadf9dc2fe6337, Data\BinaryData\DataStorage\netCDF\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::f6a211dfd0fb8d3a21710bb2dd936c6c, Data\BinaryData\DataStorage\netCDF\Utils.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Utils
     ' 
-    '         Function: notNetcdf, readName
+    '         Function: notNetcdf, readName, readNumber, readType
     ' 
     '         Sub: padding, writeName, writePadding
     ' 
@@ -44,7 +44,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 
 Namespace netCDF
@@ -86,6 +85,11 @@ Namespace netCDF
             End If
         End Sub
 
+        ''' <summary>
+        ''' write name string
+        ''' </summary>
+        ''' <param name="output"></param>
+        ''' <param name="name"></param>
         <Extension>
         Public Sub writeName(output As BinaryDataWriter, name$)
             Call output.Write(name, BinaryStringFormat.UInt32LengthPrefix)
@@ -112,6 +116,66 @@ Namespace netCDF
             Call buffer.padding()
 
             Return New String(name)
+        End Function
+
+        ''' <summary>
+        ''' Auxiliary function to read numeric data
+        ''' </summary>
+        ''' <param name="size%">size - Size of the element to read</param>
+        ''' <param name="bufferReader">bufferReader - Function to read next value</param>
+        ''' <returns>{Array&lt;number>|number}</returns>
+        Public Function readNumber(size%, bufferReader As Func(Of Object)) As Object
+            If (size <> 1) Then
+                Dim numbers As New List(Of Object)
+
+                For i As Integer = 0 To size - 1
+                    numbers.Add(bufferReader())
+                Next
+
+                Return numbers
+            Else
+                Return bufferReader()
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Given a type And a size reads the next element.
+        ''' (这个函数会根据<paramref name="type"/>类以及<paramref name="size"/>的不同而返回不同的数据结果:
+        ''' + 根据<paramref name="type"/>可能会返回字符串或者数字
+        ''' + 如果<paramref name="size"/>等于1,则只会返回单个数字, 如果<paramref name="size"/>大于1, 则会返回一个数组
+        ''' )
+        ''' </summary>
+        ''' <param name="buffer">buffer - Buffer for the file data</param>
+        ''' <param name="type">type - Type of the data to read</param>
+        ''' <param name="size">size - Size of the element to read</param>
+        ''' <returns>``{string|Array&lt;number>|number}``</returns>
+        Public Function readType(buffer As BinaryDataReader, type As CDFDataTypes, size As Integer) As Object
+            If buffer.EndOfStream Then
+                Call $"Binary reader ""{buffer.ToString}"" offset out of boundary!".Warning
+                ' 已经出现越界了
+                Return Nothing
+            End If
+
+            Select Case type
+                Case CDFDataTypes.BYTE
+                    Return buffer.ReadBytes(size)
+                Case CDFDataTypes.CHAR
+                    Return New String(buffer.ReadChars(size)).TrimNull
+                Case CDFDataTypes.SHORT
+                    Return readNumber(size, AddressOf buffer.ReadInt16)
+                Case CDFDataTypes.INT
+                    Return readNumber(size, AddressOf buffer.ReadInt32)
+                Case CDFDataTypes.FLOAT
+                    Return readNumber(size, AddressOf buffer.ReadSingle)
+                Case CDFDataTypes.DOUBLE
+                    Return readNumber(size, AddressOf buffer.ReadDouble)
+                Case CDFDataTypes.LONG
+                    Return readNumber(size, AddressOf buffer.ReadInt64)
+
+                Case Else
+                    ' istanbul ignore next
+                    Return Utils.notNetcdf(True, $"non valid type {type}")
+            End Select
         End Function
     End Module
 End Namespace

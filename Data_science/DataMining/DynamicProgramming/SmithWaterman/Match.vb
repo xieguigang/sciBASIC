@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::444e7081357cbfae5ba88bfa3d1b18a2, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
+﻿#Region "Microsoft.VisualBasic::1bd8f37a1eef5f763a5f7bbe6fefd409, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Match
     ' 
-    '         Properties: FromA, FromB, Score, ToA, ToB
+    '         Properties: fromA, fromB, score, toA, toB
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: isChainable, notOverlap, ToString
@@ -54,42 +54,42 @@ Namespace SmithWaterman
     ''' </summary>
     Public Class Match
 
-        Sub New()
-        End Sub
-
-        Sub New(fA As Integer, tA As Integer, fB As Integer, tB As Integer, s As Double)
-            _FromA = fA
-            _FromB = fB
-            _ToA = tA
-            _ToB = tB
-            _Score = s
-        End Sub
-
         ''' <summary>
         ''' Returns the value of fromA.
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property FromA As Integer
+        <XmlAttribute> Public Property fromA As Integer
 
         ''' <summary>
         ''' Returns the value of fromB.
         ''' </summary>
-        <XmlAttribute> Public Property FromB As Integer
+        <XmlAttribute> Public Property fromB As Integer
 
         ''' <summary>
         ''' Returns the value of toA.
         ''' </summary>
-        <XmlAttribute> Public Property ToA As Integer
+        <XmlAttribute> Public Property toA As Integer
 
         ''' <summary>
         ''' Returns the value of toB.
         ''' </summary>
-        <XmlAttribute> Public Property ToB As Integer
+        <XmlAttribute> Public Property toB As Integer
 
         ''' <summary>
         ''' Returns the value of score.
         ''' </summary>
-        <XmlAttribute> Public Property Score As Double
+        <XmlAttribute> Public Property score As Double
+
+        Sub New()
+        End Sub
+
+        Sub New(fA As Integer, tA As Integer, fB As Integer, tB As Integer, s As Double)
+            _fromA = fA
+            _fromB = fB
+            _toA = tA
+            _toB = tB
+            _score = s
+        End Sub
 
         ''' <summary>
         ''' Check whether this Match onecjt overlap with input Match m;
@@ -100,26 +100,26 @@ Namespace SmithWaterman
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function notOverlap(m As Match) As Boolean
-            Return (m.FromA > _ToA OrElse _FromA > m.ToA) AndAlso (m.FromB > _ToB OrElse _FromB > m.ToB)
+            Return (m.fromA > _toA OrElse _fromA > m.toA) AndAlso (m.fromB > _toB OrElse _fromB > m.toB)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function isChainable(m As Match) As Boolean
-            Return (m.FromA > _ToA AndAlso m.FromB > _ToB)
+            Return (m.fromA > _toA AndAlso m.fromB > _toB)
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[query: {{{FromA}, {ToA}}}, ref: {{{FromB}, {ToB}}}], score:={Score}"
+            Return $"[query: {{{fromA}, {toA}}}, ref: {{{fromB}, {toB}}}], score:={score}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(match As Match, offset%) As Match
             Return New Match With {
-                .FromA = match.FromA - offset,
-                .FromB = match.FromB - offset,
-                .Score = match.Score,
-                .ToA = match.ToA - offset,
-                .ToB = match.ToB - offset
+                .fromA = match.fromA - offset,
+                .fromB = match.fromB - offset,
+                .score = match.score,
+                .toA = match.toA - offset,
+                .toB = match.toB - offset
             }
         End Operator
     End Class

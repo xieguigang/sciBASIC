@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32192bab248baba5e59d3bfaf10981d4, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::5019caa7e61f7a7f02da145b0fb46224, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
 
     ' Author:
     ' 
@@ -44,13 +44,11 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 

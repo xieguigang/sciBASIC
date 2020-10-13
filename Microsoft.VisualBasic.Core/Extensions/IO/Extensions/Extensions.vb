@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd2a158234e426a88e2e3a25a1b611e3, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::29aa1a0e531969ebb371c762357fc3b9, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -101,7 +101,9 @@ Namespace FileIO
         Public Function OpenWriter(path$,
                                    Optional encoding As Encoding = Nothing,
                                    Optional newLine As String = vbLf,
-                                   Optional append As Boolean = False) As StreamWriter
+                                   Optional append As Boolean = False,
+                                   Optional bufferSize As Integer = -1) As StreamWriter
+
             Dim file As FileStream
             Dim writeNew = Function()
                                ' 使用最基础的ASCII编码，可能会解决一些莫名其妙的文件头出现的bug
@@ -125,7 +127,7 @@ Namespace FileIO
                 file = writeNew()
             End If
 
-            Dim writer As New StreamWriter(file, encoding Or UTF8, bufferSize:=App.BufferSize) With {
+            Dim writer As New StreamWriter(file, encoding Or UTF8, bufferSize:=If(bufferSize <= 0, App.BufferSize, bufferSize)) With {
                 .NewLine = newLine Or vbLf.AsDefault
             }
 

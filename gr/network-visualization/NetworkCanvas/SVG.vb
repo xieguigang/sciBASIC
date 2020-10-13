@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5380f2a685347398499c569d27ea7548, gr\network-visualization\NetworkCanvas\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::0cc77bf2c0016a003c8c152ebde695c1, gr\network-visualization\NetworkCanvas\SVG.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Function: DefaultStyle, ToSVG
     '     Delegate Function
     ' 
-    '         Function: __getRadius, Get2DPoint, Get3DPoint
+    '         Function: Get2DPoint, Get3DPoint, getRadius
     ' 
     '         Sub: WriteLayouts
     ' 
@@ -49,7 +49,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.SVG
 Imports Microsoft.VisualBasic.Imaging.d3js.SVG.CSS
@@ -107,10 +108,10 @@ Public Module SVGExtensions
                                        In graph.vertex
                                        Let pos As Point = getPoint(n, rect, viewDistance)
                                        Let c As Color = If(
-                                               TypeOf n.data.Color Is SolidBrush,
-                                               DirectCast(n.data.Color, SolidBrush).Color,
+                                               TypeOf n.data.color Is SolidBrush,
+                                               DirectCast(n.data.color, SolidBrush).Color,
                                                Color.Black)
-                                       Let r As Single = n.__getRadius
+                                       Let r As Single = n.getRadius
                                        Let pt As Point =
                                                New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
                                        Select New circle With {
@@ -127,8 +128,8 @@ Public Module SVGExtensions
                                      Let target As Graph.Node = edge.V
                                      Let pts As Point = getPoint(source, rect, viewDistance)
                                      Let ptt As Point = getPoint(target, rect, viewDistance)
-                                     Let rs As Single = source.__getRadius / 2,
-                                         rt As Single = target.__getRadius / 2
+                                     Let rs As Single = source.getRadius / 2,
+                                         rt As Single = target.getRadius / 2
                                      Select New line With {
                                          .class = "link",
                                          .x1 = pts.X - rs,
@@ -169,20 +170,20 @@ Public Module SVGExtensions
 
     <Extension>
     Public Function Get2DPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As Point
-        Return Renderer.GraphToScreen(TryCast(node.Data.initialPostion, FDGVector2), rect)
+        Return Renderer.GraphToScreen(TryCast(node.data.initialPostion, FDGVector2), rect)
     End Function
 
     <Extension>
     Public Function Get3DPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As Point
-        Dim d3 As FDGVector3 = TryCast(node.Data.initialPostion, FDGVector3)
+        Dim d3 As FDGVector3 = TryCast(node.data.initialPostion, FDGVector3)
         Dim pt3 As New Point3D(d3.x, d3.y, d3.z)
         Return pt3.Project(rect.Width, rect.Height, 256, viewDistance).PointXY
     End Function
 
     <Extension>
-    Private Function __getRadius(n As Graph.Node) As Single
-        Dim r As Single = n.Data.radius
-        Dim rd As Single = If(r = 0!, If(n.Data.Neighborhoods < 30, n.Data.Neighborhoods * 9, n.Data.Neighborhoods * 7), r)
+    Private Function getRadius(n As Graph.Node) As Single
+        Dim r As Single = n.data.size(0)
+        Dim rd As Single = If(r = 0!, If(n.data.neighborhoods < 30, n.data.neighborhoods * 9, n.data.neighborhoods * 7), r)
         Dim r2 As Single = If(rd = 0, 10.0!, rd) / 2.5!
 
         Return r2
@@ -197,14 +198,14 @@ Public Module SVGExtensions
     Public Sub WriteLayouts(ByRef graph As NetworkGraph, engine As IForceDirected)
         If TypeOf engine Is ForceDirected2D Then
             For Each node As Graph.Node In graph.vertex
-                node.data.initialPostion =
-                    New FDGVector2(engine.GetPoint(node).position.Point2D)
+                node.data.initialPostion = New FDGVector2(engine.GetPoint(node).position.Point2D)
             Next
         ElseIf TypeOf engine Is ForceDirected3D Then
+            Dim pos As AbstractVector
+
             For Each node As Graph.Node In graph.vertex
-                Dim pos = engine.GetPoint(node).position
-                node.data.initialPostion =
-                    New FDGVector3(pos.x, pos.y, pos.z)
+                pos = engine.GetPoint(node).position
+                node.data.initialPostion = New FDGVector3(pos.x, pos.y, pos.z)
             Next
         End If
     End Sub

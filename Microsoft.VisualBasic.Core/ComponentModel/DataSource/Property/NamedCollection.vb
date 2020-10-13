@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ecaea55568818c5640d9ca38d5ac3b0, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection.vb"
+﻿#Region "Microsoft.VisualBasic::4ed807ffaf86073eb26ade6dde1e9fba, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection.vb"
 
     ' Author:
     ' 
@@ -143,7 +143,11 @@ Namespace ComponentModel.DataSourceModel
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return value.Length
+                If value Is Nothing Then
+                    Return 0
+                Else
+                    Return value.Length
+                End If
             End Get
         End Property
 
@@ -196,7 +200,11 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Overrides Function ToString() As String
-            Return name
+            If IsEmpty Then
+                Return "NULL"
+            Else
+                Return name
+            End If
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
@@ -209,9 +217,13 @@ Namespace ComponentModel.DataSourceModel
             Yield GetEnumerator()
         End Function
 
+#If NET_48 Then
+
         Public Shared Widening Operator CType(tuple As (name$, value As T())) As NamedCollection(Of T)
             Return New NamedCollection(Of T)(tuple.name, tuple.value)
         End Operator
+
+#End If
 
         Public Shared Operator =(list As NamedCollection(Of T), count As Integer) As Boolean
             Return list.Count = count

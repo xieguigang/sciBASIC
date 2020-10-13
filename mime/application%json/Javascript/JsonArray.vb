@@ -1,50 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::3cd67b9fa63af7a24739f1a9b0f5a232, mime\application%json\Javascript\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::9c65eded9c0728785170de03a93cbabd, mime\application%json\Javascript\JsonArray.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class JsonArray
-    ' 
-    '         Properties: Length
-    ' 
-    '         Function: BuildJsonString, ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: Add, Insert, Remove
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class JsonArray
+' 
+'         Properties: Length
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: Add, Insert, Remove
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Text
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Javascript
@@ -52,13 +53,20 @@ Namespace Javascript
     Public Class JsonArray : Inherits JsonModel
         Implements IEnumerable(Of JsonElement)
 
-        Dim list As New List(Of JsonElement)
+        Friend ReadOnly list As New List(Of JsonElement)
 
         Public ReadOnly Property Length As Integer
             Get
                 Return list.Count
             End Get
         End Property
+
+        Public Sub New()
+        End Sub
+
+        Sub New(objs As IEnumerable(Of JsonElement))
+            list = objs.SafeQuery.ToList
+        End Sub
 
         Public Sub Add(element As JsonElement)
             Call list.Add(element)
@@ -92,19 +100,6 @@ Namespace Javascript
 
         Public Overrides Function ToString() As String
             Return "JsonArray: {count: " & list.Count & "}"
-        End Function
-
-        Public Overrides Function BuildJsonString() As String
-            Dim a As New StringBuilder
-            Dim array$() = list _
-                .Select(Function(x) x.BuildJsonString) _
-                .ToArray
-
-            a.AppendLine("[")
-            a.AppendLine(array.JoinBy(", "))
-            a.AppendLine("]")
-
-            Return a.ToString
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of JsonElement) Implements IEnumerable(Of JsonElement).GetEnumerator

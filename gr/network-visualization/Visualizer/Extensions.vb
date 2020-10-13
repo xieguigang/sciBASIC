@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37de7dabd4e40a364201fb96e9ba8201, gr\network-visualization\Visualizer\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8d20631774732ad993085b4270173581, gr\network-visualization\Visualizer\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: NodeBrushAssert
+    '     Function: GetDisplayText, NodeBrushAssert
     ' 
     ' /********************************************************************************/
 
@@ -41,16 +41,31 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Language.Default
 
 <HideModuleName> Module Extensions
 
     <Extension>
-    Public Function NodeBrushAssert(node As Node) As Assert(Of Object)
+    Public Function NodeBrushAssert(node As Node) As Predicate(Of Object)
         Return Function(null)
                    Return node Is Nothing OrElse
-                          node.Data Is Nothing OrElse
-                          node.Data.Color Is Nothing
+                          node.data Is Nothing OrElse
+                          node.data.color Is Nothing
                End Function
+    End Function
+
+    ''' <summary>
+    ''' 优先显示： <see cref="NodeData.label"/> -> <see cref="NodeData.origID"/> -> <see cref="Node.ID"/>
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetDisplayText(n As Node) As String
+        If n.data Is Nothing OrElse (n.data.origID.StringEmpty AndAlso n.data.label.StringEmpty) Then
+            Return n.label
+        ElseIf n.data.label.StringEmpty Then
+            Return n.data.origID
+        Else
+            Return n.data.label
+        End If
     End Function
 End Module

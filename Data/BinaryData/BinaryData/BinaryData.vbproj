@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.VisualBasic.Data.IO</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.Data.BinaryData</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -62,13 +62,15 @@
     <OutputPath>bin\x64\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <OutputPath>bin\</OutputPath>
@@ -89,13 +91,16 @@
     <OutputPath>bin\x64\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <OutputPath>./bin</OutputPath>
@@ -110,6 +115,11 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -155,13 +165,16 @@
     <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <OutputPath>./bin</OutputPath>
@@ -430,6 +443,157 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
+    <OutputPath>bin\DEMO\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x64'">
+    <OutputPath>bin\x64\DEMO\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
+    <OutputPath>bin\x86\DEMO\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
+    <OutputPath>bin\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
+    <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
+    <OutputPath>bin\x86\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
+    <OutputPath>bin\mzkit\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
+    <OutputPath>bin\x64\mzkit\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
+    <OutputPath>bin\x86\mzkit\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
+    <OutputPath>bin\BioDeep_database\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
+    <OutputPath>bin\x64\BioDeep_database\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
+    <OutputPath>bin\x86\BioDeep_database\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU'">
+    <OutputPath>bin\Surveillance-of-infectious-diseases\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64'">
+    <OutputPath>bin\x64\Surveillance-of-infectious-diseases\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86'">
+    <OutputPath>bin\x86\Surveillance-of-infectious-diseases\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
@@ -448,31 +612,6 @@
     <Compile Include="Extensions\FixLengthString.vb" />
     <Compile Include="Extensions\MSWindows.vb" />
     <Compile Include="BitSet.vb" />
-    <Compile Include="SQLite3\Helpers\BTreeTools.vb" />
-    <Compile Include="SQLite3\Helpers\ReadonlyStream.vb" />
-    <Compile Include="SQLite3\Helpers\SqliteDataStream.vb" />
-    <Compile Include="SQLite3\Helpers\StreamHelper.vb" />
-    <Compile Include="SQLite3\Internal\ReaderBase.vb" />
-    <Compile Include="SQLite3\Extensions.vb" />
-    <Compile Include="SQLite3\Objects\BTreeCellData.vb" />
-    <Compile Include="SQLite3\Objects\BTreeInteriorTablePage.vb" />
-    <Compile Include="SQLite3\Objects\BTreeLeafTablePage.vb" />
-    <Compile Include="SQLite3\Objects\BTreePage.vb" />
-    <Compile Include="SQLite3\Objects\ColumnDataMeta.vb" />
-    <Compile Include="SQLite3\Objects\Enums\BTreeType.vb" />
-    <Compile Include="SQLite3\Objects\Enums\FileReadVersion.vb" />
-    <Compile Include="SQLite3\Objects\Enums\FileWriteVersion.vb" />
-    <Compile Include="SQLite3\Objects\Enums\SqliteDataType.vb" />
-    <Compile Include="SQLite3\Objects\Enums\SqliteEncoding.vb" />
-    <Compile Include="SQLite3\Objects\Headers\BTreeHeader.vb" />
-    <Compile Include="SQLite3\Objects\Headers\DatabaseHeader.vb" />
-    <Compile Include="SQLite3\Sqlite3Database.vb" />
-    <Compile Include="SQLite3\Sqlite3Settings.vb" />
-    <Compile Include="SQLite3\Schema\Schema.vb" />
-    <Compile Include="SQLite3\Tables\Sqlite3MasterTable.vb" />
-    <Compile Include="SQLite3\Tables\Sqlite3Row.vb" />
-    <Compile Include="SQLite3\Tables\Sqlite3SchemaRow.vb" />
-    <Compile Include="SQLite3\Tables\Sqlite3Table.vb" />
     <Compile Include="Storage\Reflection.vb" />
     <Compile Include="Storage\StringWriter.vb" />
     <Compile Include="Stream\BinaryDataFormats.vb" />
@@ -481,6 +620,7 @@
     <Compile Include="Stream\ByteOrder.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="Extensions\ReaderProvider.vb" />
+    <Compile Include="Stream\ByteOrderHelper.vb" />
     <Compile Include="Stream\Offset.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Stream\SeekTask.vb" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a12ead62d9f7b0ade23a395b8d60f0c8, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\ObjectVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::b2c26c4d7ba492eb6c8445f3badcfb78, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\ObjectVisitor.vb"
 
     ' Author:
     ' 
@@ -131,6 +131,10 @@ Namespace Serialization.BinaryDumping
             Dim type As Type
             Dim isVisited As Boolean = False
             Dim isValueType As Boolean = False
+
+            If obj Is Nothing Then
+                Return
+            End If
 
             For Each field As FieldInfo In fields
                 value = field.GetValue(obj)

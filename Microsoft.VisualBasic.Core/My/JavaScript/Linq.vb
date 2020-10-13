@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97023c68e29fa926f4c9890af85a7c30, Microsoft.VisualBasic.Core\My\JavaScript\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::4e0486640d640d50e9a0c21084bc822e, Microsoft.VisualBasic.Core\My\JavaScript\Linq.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Module Linq
     ' 
-    '         Function: (+2 Overloads) match, parseInt, Reduce, (+2 Overloads) Sort, test
+    '         Function: pop, reduce, shift, (+2 Overloads) sort
     ' 
-    '         Sub: match, (+2 Overloads) splice
+    '         Sub: (+2 Overloads) splice
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,36 +43,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports r = System.Text.RegularExpressions.Regex
 
 Namespace My.JavaScript
 
-    Public Module Linq
-
-        <Extension> Public Function test(pattern$, target$) As Boolean
-            Return r.Match(target, pattern).Success
-        End Function
-
-        <Extension> Public Sub match(text$, pattern$, ByRef a$, ByRef b$, Optional ByRef c$ = Nothing)
-            Dim parts = text.match(pattern)
-
-            a = parts.ElementAtOrNull(0)
-            b = parts.ElementAtOrNull(1)
-            c = parts.ElementAtOrNull(2)
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function parseInt(s As String, Optional radix% = 10) As Integer
-            Return Convert.ToInt32(s, radix)
-        End Function
-
-        <Extension> Public Function match(text$, pattern$) As String()
-            Return r.Match(text, pattern).Captures.AsQueryable.Cast(Of String).ToArray
-        End Function
-
-        <Extension> Public Function match(text$, pattern As r) As String()
-            Return pattern.Match(text).Captures.AsQueryable.Cast(Of String).ToArray
-        End Function
+    <HideModuleName> Public Module Linq
 
         <Extension>
         Public Sub splice(Of T)(array As T(), index As Integer, howmany As Integer, ParamArray items As T())
@@ -94,7 +68,7 @@ Namespace My.JavaScript
         ''' <param name="init"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Reduce(Of T, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), init As V) As V
+        Public Function reduce(Of T, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), init As V) As V
             For Each x As T In seq
                 init = produce(init, x)
             Next
@@ -103,7 +77,7 @@ Namespace My.JavaScript
         End Function
 
         <Extension>
-        Public Function Sort(Of T)(seq As IEnumerable(Of T), comparer As Comparison(Of T)) As IEnumerable(Of T)
+        Public Function sort(Of T)(seq As IEnumerable(Of T), comparer As Comparison(Of T)) As IEnumerable(Of T)
             With New List(Of T)(seq)
                 Call .Sort(comparer)
                 Return .AsEnumerable
@@ -112,8 +86,8 @@ Namespace My.JavaScript
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Sort(Of T)(seq As IEnumerable(Of T), comparer As Func(Of T, T, Double)) As IEnumerable(Of T)
-            Return seq.Sort(Function(x, y)
+        Public Function sort(Of T)(seq As IEnumerable(Of T), comparer As Func(Of T, T, Double)) As IEnumerable(Of T)
+            Return seq.sort(Function(x, y)
                                 Dim d As Double = comparer(x, y)
 
                                 If d > 0 Then
@@ -124,6 +98,43 @@ Namespace My.JavaScript
                                     Return 0
                                 End If
                             End Function)
+        End Function
+
+        ''' <summary>
+        ''' 用于删除并返回数组的最后一个元素。
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function pop(Of T)(ByRef a As T()) As T
+            Dim last = a.LastOrDefault
+
+            If a.Length > 0 Then
+                ReDim Preserve a(a.Length - 1)
+            End If
+
+            Return last
+        End Function
+
+        ''' <summary>
+        ''' 用于把数组的第一个元素从其中删除，并返回第一个元素的值。
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function shift(Of T)(ByRef a As T()) As T
+            Dim first = a.FirstOrDefault
+
+            If a.Length > 0 Then
+                Dim resize As T() = New T(a.Length - 1) {}
+
+                Array.ConstrainedCopy(a, 1, resize, Scan0, resize.Length)
+                a = resize
+            End If
+
+            Return first
         End Function
     End Module
 End Namespace

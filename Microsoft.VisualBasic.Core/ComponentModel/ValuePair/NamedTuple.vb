@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fcc9d024b07357353ddd681a28a6080, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\NamedTuple.vb"
+﻿#Region "Microsoft.VisualBasic::7d2479d46b998381f3012ad9a1cdac62, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\NamedTuple.vb"
 
     ' Author:
     ' 
@@ -68,12 +68,16 @@ Namespace ComponentModel
             Me.Name = name
         End Sub
 
+#If NET_48 Then
+
         Public Function AsTuple() As NamedValue(Of (T, T))
             Return New NamedValue(Of (T, T)) With {
                 .Name = Name,
                 .Value = (Item1, Item2)
             }
         End Function
+
+#End If
 
         Public Overrides Function ToString() As String
             Return Name

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::183798cdc52877a3e30613de432c2d50, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::700927987347ef07c2ccecaf171b92eb, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module StreamHelper
     ' 
-    '     Function: CopyStream, PopulateBlocks
+    '     Function: CastByte, CastSByte, CopyStream, PopulateBlocks
     ' 
     '     Sub: Write, WriteLine
     ' 
@@ -46,7 +46,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text
 
 Public Module StreamHelper
 
@@ -57,7 +56,7 @@ Public Module StreamHelper
     ''' Create from <see cref="WebServiceUtils.GetRequestRaw(String, Boolean, String)"/>
     ''' </param>
     ''' <returns></returns>
-    <ExportAPI("Stream.Copy", Info:="Download stream data from the http response.")>
+    <ExportAPI("Stream.Copy")>
     <Extension> Public Function CopyStream(stream As Stream, Optional target As Stream = Nothing, Optional bufferSize% = 64 * 1024) As Stream
         If stream Is Nothing Then
             Return If(target, New MemoryStream)
@@ -124,4 +123,28 @@ Public Module StreamHelper
     Public Sub WriteLine(stream As Stream, Optional value$ = "", Optional encoding As Encoding = Nothing, Optional newLine$ = vbCrLf)
         Call stream.Write(value & newLine, encoding)
     End Sub
+
+    <Extension>
+    Public Function CastByte(signed As SByte()) As Byte()
+        Dim unsigned As Byte() = New Byte(signed.Length - 1) {}
+        Buffer.BlockCopy(signed, Scan0, unsigned, Scan0, signed.Length - 1)
+        Return unsigned
+    End Function
+
+    <Extension>
+    Public Function CastSByte(unsigned As Byte()) As SByte()
+        Dim signed As SByte() = New SByte(unsigned.Length - 1) {}
+        Dim b127 As Byte = 127
+        Dim b256 As Short = 256
+
+        For i As Integer = 0 To unsigned.Length - 1
+            If unsigned(i) > b127 Then
+                signed(i) = CSByte(CShort(unsigned(i)) - b256)
+            Else
+                signed(i) = CSByte(unsigned(i))
+            End If
+        Next
+
+        Return signed
+    End Function
 End Module

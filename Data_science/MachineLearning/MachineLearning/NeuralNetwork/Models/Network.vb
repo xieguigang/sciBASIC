@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db44e7d9180270136ba9d59eef753a69, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Network.vb"
+﻿#Region "Microsoft.VisualBasic::b1cf1cc3111083b672567a9c48ff322d, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Network.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
     '                     Momentum, OutputLayer, Truncate
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: Compute, ForwardPropagate, ToString
     ' 
@@ -116,8 +116,13 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="activations"></param>
         Friend Sub New(activations As LayerActives)
-            Me.Activations = activations.GetXmlModels
             Me.LearnRateDecay = 0.00000001
+            Me.Activations = activations.GetXmlModels
+        End Sub
+
+        Friend Sub New(activations As IReadOnlyDictionary(Of String, ActiveFunction))
+            Me.LearnRateDecay = 0.00000001
+            Me.Activations = activations
         End Sub
 
         ''' <summary>

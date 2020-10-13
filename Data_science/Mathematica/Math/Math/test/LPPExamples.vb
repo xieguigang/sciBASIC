@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ca86dce0e999e729f00d78e0baddf1c, Data_science\Mathematica\Math\Math\test\LPPExamples.vb"
+﻿#Region "Microsoft.VisualBasic::cfec2398838c46299331ea4c17705bc3, Data_science\Mathematica\Math\Math\test\LPPExamples.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Math.Algebra.LinearProgramming
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming
 
 Public Class LPPExamples
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::279ade831195ffec4b0a2e0d898036ed, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::7d90f16bfd7a9769af471bac74f00dd6, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 
@@ -46,17 +46,22 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D
 
     Public Class Camera
 
-        Public ViewDistance!, angleX!, angleY!, angleZ!
+        ''' <summary>
+        ''' the view distance from the user view to target object
+        ''' </summary>
+        Public viewDistance!
+        Public angleX!, angleY!, angleZ!
         Public fov! = 256.0!
         Public screen As Size
         ''' <summary>
@@ -152,12 +157,12 @@ Namespace Drawing3D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Project(pt As Point3D) As Point3D
-            Return pt.Project(screen.Width, screen.Height, fov, ViewDistance, offset)
+            Return pt.Project(screen.Width, screen.Height, fov, viewDistance, offset)
         End Function
 
         Public Iterator Function Project(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
             For Each pt As Point3D In pts
-                Yield pt.Project(screen.Width, screen.Height, fov, ViewDistance, offset)
+                Yield pt.Project(screen.Width, screen.Height, fov, viewDistance, offset)
             Next
         End Function
 
@@ -203,8 +208,21 @@ Namespace Drawing3D
             Return color
         End Function
 
+        ''' <summary>
+        ''' debug view
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Dim debug As New StringBuilder
+
+            Call debug.AppendLine($"Rotation vector:  x={angleX}, y={angleY}, z={angleZ}")
+            Call debug.AppendLine($"View distance:    {viewDistance}")
+            Call debug.AppendLine($"FOV:              {fov}")
+            Call debug.AppendLine($"Screen size:      {screen.Width}px X {screen.Height}px")
+            Call debug.AppendLine($"Light color:      {lightColor.ToHtmlColor}")
+            Call debug.AppendLine($"Light angle:      x={lightAngle.X}, y={lightAngle.Y}, z={lightAngle.Z}")
+
+            Return debug.ToString
         End Function
     End Class
 End Namespace

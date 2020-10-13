@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37056beecd392791b80150db7cd984cb, gr\network-visualization\NetworkCanvas\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::97e4d6dc1231e966f57a687046f1e567, gr\network-visualization\NetworkCanvas\Canvas.vb"
 
     ' Author:
     ' 
@@ -47,8 +47,8 @@
 Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
 ''' <summary>

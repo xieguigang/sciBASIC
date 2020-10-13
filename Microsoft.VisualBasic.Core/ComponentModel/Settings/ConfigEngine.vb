@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb94b88579b5a80cf463c333ca85e8ea, Microsoft.VisualBasic.Core\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::46c658934339d6b9cddc6a8b7954205b, Microsoft.VisualBasic.Core\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ConfigEngine
     ' 
-    '         Properties: AllItems, FilePath, ProfileItemNode, ProfileItemType
+    '         Properties: AllItems, FilePath, MimeType, ProfileItemNode, ProfileItemType
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel.Settings
@@ -304,6 +305,12 @@ Namespace ComponentModel.Settings
 
         Protected Friend Shared ReadOnly Property ProfileItemType As Type = GetType(ProfileItem)
         Protected Friend Shared ReadOnly Property ProfileItemNode As Type = GetType(ProfileNodeItem)
+
+        Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Return {MIME.UnknownType}
+            End Get
+        End Property
 
         Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(path, encoding.CodePage)

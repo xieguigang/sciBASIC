@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa742310460cc18ff1701b360d567bc7, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb"
+﻿#Region "Microsoft.VisualBasic::b5b3b027647d4ae24d667f7ccbde5ac4, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ProjectNamespace
     ' 
-    '         Properties: Path, Types
+    '         Properties: fullName, Types
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: [GetType], EnsureType, ToString
@@ -58,7 +58,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Protected project As Project
         Protected _types As Dictionary(Of String, ProjectType)
 
-        Public Property Path() As String
+        Public Property fullName As String
 
         Public ReadOnly Property Types() As IEnumerable(Of ProjectType)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -82,7 +82,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Path
+            Return fullName
         End Function
 
         Public Overloads Function [GetType](typeName As String) As ProjectType
@@ -93,7 +93,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureType(typeName As String) As ProjectType
+        Friend Function EnsureType(typeName As String) As ProjectType
             Dim pt As ProjectType = Me.[GetType](typeName)
 
             If pt Is Nothing Then

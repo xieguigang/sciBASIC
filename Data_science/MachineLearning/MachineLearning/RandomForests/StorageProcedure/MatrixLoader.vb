@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9fae96978977bf0f5558e29785dd3b0, Data_science\MachineLearning\MachineLearning\RandomForests\StorageProcedure\MatrixLoader.vb"
+﻿#Region "Microsoft.VisualBasic::fcbf83aeb8f6dbaffc5e3c309205d1e9, Data_science\MachineLearning\MachineLearning\RandomForests\StorageProcedure\MatrixLoader.vb"
 
     ' Author:
     ' 
@@ -88,7 +88,7 @@ Namespace RandomForests
             Dim trainingSet As Entity() = matrix _
                 .PopulateNormalizedSamples(Methods.RangeDiscretizer) _
                 .Select(Function(sample)
-                            Dim evidence = sample.status _
+                            Dim evidence = sample _
                                 .vector _
                                 .AsCharacter(format:="G2") _
                                 .AsList

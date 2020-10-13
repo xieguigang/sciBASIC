@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28c3c76e2bc8137ccf9d8326f22776a7, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BinaryHeap.vb"
+﻿#Region "Microsoft.VisualBasic::2b9b4477aab4d6daf2a1ba32be42498b, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BinaryHeap.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
+Imports stdNum = System.Math
 
 Namespace ComponentModel.Collection
 
@@ -142,7 +143,7 @@ Namespace ComponentModel.Collection
             ' When at 0, an element can not go up any further.
             Do While n > 0
                 ' Compute the parent element's index, and fetch it.
-                Dim parentN% = Math.Floor((n + 1) / 2) - 1
+                Dim parentN% = stdNum.Floor((n + 1) / 2) - 1
                 Dim parent = content(parentN)
 
                 ' Swap the elements if the parent is greater.

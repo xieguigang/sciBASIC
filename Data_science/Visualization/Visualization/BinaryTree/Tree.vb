@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4631e66423f6f7cec7aab08f82f0c4d2, Data_science\Visualization\Visualization\BinaryTree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::36cda9d966282aa9ed688b5de426cfcc, Data_science\Visualization\Visualization\BinaryTree\Tree.vb"
 
     ' Author:
     ' 
@@ -46,13 +46,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports stdNum = System.Math
 
 Namespace KMeans
 
@@ -150,9 +150,8 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <ExportAPI("Cluster.Trees.Network",
-                   Info:="Create network model for visualize the binary tree clustering result.")>
-        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityClusterModel), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
+        <Extension>
+        Public Function bTreeNET(source As IEnumerable(Of EntityClusterModel), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
             Dim array = (From x As EntityClusterModel
                          In source
                          Let path As String() = x.Cluster.Split("."c)
@@ -170,7 +169,9 @@ Namespace KMeans
                         props = x.node _
                             .Properties _
                             .ToDictionary(Function(xx) xx.Key,
-                                          Function(xx) CStr(Math.Round(xx.Value, 4)))
+                                          Function(xx)
+                                              Return CStr(stdNum.Round(xx.Value, 4))
+                                          End Function)
                     End If
 
                     Return New FileStream.Node With {
@@ -192,8 +193,8 @@ Namespace KMeans
                 nodes)
 
             Return New FileStream.NetworkTables With {
-                .Edges = edges,
-                .Nodes = nodes.ToArray
+                .edges = edges,
+                .nodes = nodes.ToArray
             }
         End Function
 

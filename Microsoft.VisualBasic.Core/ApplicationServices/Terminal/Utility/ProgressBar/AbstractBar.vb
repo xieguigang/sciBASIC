@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb989a65864302229727d204bec99e19, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\AbstractBar.vb"
+﻿#Region "Microsoft.VisualBasic::67b50757ed4397f983761e1a926bb3bf, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\AbstractBar.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 
 #End Region
 
-Namespace Terminal.ProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar
 
     Public MustInherit Class AbstractBar
 
@@ -52,7 +52,7 @@ Namespace Terminal.ProgressBar
         ''' Prints a simple message 
         ''' </summary>
         ''' <param name="msg">Message to print</param>
-        Public Sub PrintMessage(msg As String)
+        Public Overridable Sub PrintMessage(msg As String)
             Call Console.WriteLine(msg)
         End Sub
 

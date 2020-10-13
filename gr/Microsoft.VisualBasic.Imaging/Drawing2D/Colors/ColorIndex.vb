@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5587c2c373946c5cc6e0e478d49713b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
+﻿#Region "Microsoft.VisualBasic::c8bf3cbca14a6ff3a996187baf3e1e9b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports stdNum = System.Math
 
 Namespace Drawing2D.Colors
 
@@ -153,9 +154,9 @@ Namespace Drawing2D.Colors
             With color
                 Dim array As Double() = { .R, .G, .B}
                 Return Points.Min(
-                    Function(x) Math.EuclideanDistance(
-                        array,
-                        New Double() {x.R, x.G, x.B}))
+                    Function(x)
+                        Return Math.EuclideanDistance(array, New Double() {x.R, x.G, x.B})
+                    End Function)
             End With
         End Function
 

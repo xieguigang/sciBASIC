@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99634e02bd3bb723482cefb5aa8536d9, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::846ccde5e85f5766e79f087f462fa474, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,13 @@
 
     '     Class LogFile
     ' 
-    '         Properties: FileName, FilePath, NowTimeNormalizedString
+    '         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Read, ReadLine, (+3 Overloads) Save, SaveLog, SystemInfo
-    '                   ToString
+    '         Function: Read, ReadLine, SaveLog, SystemInfo, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, (+2 Overloads) LogException, (+4 Overloads) WriteLine
+    '         Sub: (+2 Overloads) Dispose, (+2 Overloads) LogException, Save, (+4 Overloads) WriteLine
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,10 +49,10 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.STDIO__
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Parallel
-Imports Microsoft.VisualBasic.Terminal.STDIO__
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Debugging.Logging
@@ -65,10 +64,9 @@ Namespace ApplicationServices.Debugging.Logging
     ''' <remarks>
     ''' 这个类模块将输入的信息格式化保存到文本文件之中，记录的信息包括信息头，消息文本，以及消息等级
     ''' </remarks>
-    Public Class LogFile : Implements IFileReference
-        Implements ISaveHandle
+    Public Class LogFile
+        Implements IFileReference
         Implements IDisposable
-        Implements I_ConsoleDeviceHandle
 
         Dim buffer As TextWriter
         Dim counts&
@@ -79,9 +77,9 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property FileName As String
+        Public ReadOnly Property fileName As String
             Get
-                Return FilePath.BaseName
+                Return filePath.BaseName
             End Get
         End Property
 
@@ -97,30 +95,40 @@ Namespace ApplicationServices.Debugging.Logging
             End Get
         End Property
 
-        Public Property FilePath As String Implements IFileReference.FilePath
+        Public Property filePath As String Implements IFileReference.FilePath
+
+        Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Return {New ContentType With {.FileExt = ".log", .Name = "Plant Log Text", .MIMEType = "plain/text"}}
+            End Get
+        End Property
 
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Path">This logfile will saved to.</param>
+        ''' <param name="path">This logfile will saved to.</param>
         ''' <remarks></remarks>
         ''' <param name="bufferSize">当日志的记录数目达到这个数目的时候就会将日志数据写入到文件之中</param>
-        Public Sub New(Path As String, Optional AutoFlush As Boolean = True, Optional bufferSize As Integer = 1024)
-            Dim file As New FileStream(Path, FileMode.Append)
+        Public Sub New(path As String,
+                       Optional autoFlush As Boolean = True,
+                       Optional bufferSize As Integer = 1024,
+                       Optional append As Boolean = True)
+
+            Dim file As New FileStream(path, If(append, FileMode.Append, FileMode.Truncate))
 
             buffer = New StreamWriter(file, Encoding.UTF8, bufferSize) With {
-                .AutoFlush = AutoFlush
+                .AutoFlush = autoFlush
             }
             buffer.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
-            FilePath = FileIO.FileSystem.GetFileInfo(Path).FullName
+            filePath = FileIO.FileSystem.GetFileInfo(path).FullName
         End Sub
 
         Public Sub LogException(Msg As String, <CallerMemberName> Optional Object$ = Nothing)
-            Call WriteLine(Msg, [Object], Type:=MSG_TYPES.ERR)
+            Call WriteLine(Msg, [Object], type:=MSG_TYPES.ERR)
         End Sub
 
-        Public Sub LogException(ex As Exception)
-            Call WriteLine(ex.ToString, "", Type:=MSG_TYPES.ERR)
+        Public Sub LogException(ex As Exception, <CallerMemberName> Optional Object$ = Nothing)
+            Call WriteLine(ex.ToString, [Object], type:=MSG_TYPES.ERR)
         End Sub
 
         ''' <summary>
@@ -128,46 +136,30 @@ Namespace ApplicationServices.Debugging.Logging
         ''' </summary>
         ''' <param name="Msg"></param>
         ''' <param name="[Object]"></param>
-        ''' <param name="Type"></param>
-        Public Sub WriteLine(Msg As String, [Object] As String, Optional Type As MSG_TYPES = MSG_TYPES.INF)
+        ''' <param name="type"></param>
+        Public Sub WriteLine(Msg As String, <CallerMemberName> Optional [Object] As String = Nothing, Optional type As MSG_TYPES = MSG_TYPES.INF)
             Dim LogEntry As New LogEntry With {
-                .Msg = Msg,
-                .Object = [Object],
-                .Time = Now,
-                .Type = Type
+                .message = Msg,
+                .[object] = [Object],
+                .time = Now,
+                .level = type
             }
 
             buffer.WriteLine(LogEntry.ToString)
             counts += 1
         End Sub
 
-        ''' <summary>
-        ''' 会自动拓展已经存在的日志数据
-        ''' </summary>
-        ''' <remarks></remarks>
-        Private Function SaveLog() As Boolean
-            Call buffer.WriteLine(vbCrLf & $"//{vbTab}{New String("=", 25)}  END OF LOG FILE  {New String("=", 25)}")
-            Call buffer.WriteLine(vbCrLf)
-            Call buffer.Flush()
-
-            Return True
-        End Function
-
         Public Overrides Function ToString() As String
-            Return $"[{counts} records]'{FilePath.ToFileURL}'"
+            Return $"[{counts} records]'{filePath.ToFileURL}'"
         End Function
 
-        Public Function ReadLine() As String Implements I_ConsoleDeviceHandle.ReadLine
-            Return ""
-        End Function
-
-        Public Sub WriteLine(Optional s As String = "") Implements I_ConsoleDeviceHandle.WriteLine
-            Call WriteLine(s, Type:=MSG_TYPES.INF, [Object]:="")
+        Public Sub WriteLine(Optional s As String = "")
+            Call WriteLine(s, type:=MSG_TYPES.INF, [Object]:="")
         End Sub
 
         Public Sub WriteLine(s As String())
             Dim str As String = String.Join(vbCrLf, s)
-            Call WriteLine(str, Type:=MSG_TYPES.INF, [Object]:="")
+            Call WriteLine(str, type:=MSG_TYPES.INF, [Object]:="")
         End Sub
 
         ''' <summary>
@@ -176,26 +168,10 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="s"></param>
         ''' <param name="args">{[Object] As String, Optional Type As MsgType = MsgType.INF, Optional WriteToScreen As Boolean = True}</param>
         ''' <remarks></remarks>
-        Public Sub WriteLine(s As String, ParamArray args() As String) Implements I_ConsoleDeviceHandle.WriteLine
-            Dim [Object] As String = IIf(String.IsNullOrEmpty(args(0)), "", args(0))
-            Call WriteLine(s, Type:=MSG_TYPES.INF, [Object]:=[Object])
+        Public Sub WriteLine(s As String, ParamArray args() As String)
+            Dim [object] As String = IIf(String.IsNullOrEmpty(args(0)), "", args(0))
+            Call WriteLine(s, type:=MSG_TYPES.INF, [Object]:=[object])
         End Sub
-
-        Public Overloads Function Read() As Integer Implements I_ConsoleDeviceHandle.Read
-            Return -1
-        End Function
-
-        ''' <summary>
-        ''' 日志文件在保存的时候默认是追加的方式
-        ''' </summary>
-        ''' <param name="FilePath"></param>
-        ''' <param name="Encoding"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function Save(FilePath$, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
-            FilePath = FilePath Or Me.FilePath.When(FilePath.StringEmpty)
-            Return SaveLog()
-        End Function
 
         ''' <summary>
         ''' 给出用于调试的系统的信息摘要
@@ -219,12 +195,20 @@ Namespace ApplicationServices.Debugging.Logging
             Return sBuilder.ToString
         End Function
 
-        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Save(path, encoding.CodePage)
-        End Function
+        Public Sub Save()
+            Call SaveLog()
+        End Sub
 
-        Public Function Save() As Boolean
-            Return Save(FilePath)
+        ''' <summary>
+        ''' 会自动拓展已经存在的日志数据
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Function SaveLog() As Boolean
+            Call buffer.WriteLine(vbCrLf & $"//{vbTab}{New String("=", 25)}  END OF LOG FILE  {New String("=", 25)}")
+            Call buffer.WriteLine(vbCrLf)
+            Call buffer.Flush()
+
+            Return True
         End Function
 
 #Region "IDisposable Support"

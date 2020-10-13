@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f326c36f4dc30a9d20ba7ec1e056c2ff, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
+﻿#Region "Microsoft.VisualBasic::686e5010694ce36a2ab7b95cfa3787ec, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
 
     ' Author:
     ' 
@@ -38,18 +38,18 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __invalidIPAddress, __invalidNetMask, contains, Contains, GetAvailableIPs
-    '               GetBinary, GetBroadcastAddress, GetCIDR, GetHostAddressRange, GetNumberOfHosts
-    '               GetWildcardMask, NumericIpToSymbolic, NumericNetmaskToSymbolic, ToString
+    '     Function: contains, Contains, GetAvailableIPs, GetBinary, GetBroadcastAddress
+    '               GetCIDR, GetHostAddressRange, GetNumberOfHosts, GetWildcardMask, invalidIPAddress
+    '               invalidNetMask, NumericIpToSymbolic, NumericNetmaskToSymbolic, ToString
     ' 
-    '     Sub: __checkNetMask, IPNumeric, NetMaskNumeric
+    '     Sub: checkNetMask, IPNumeric, NetMaskNumeric
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.Text
+Imports stdNum = System.Math
 
 Public Class IPv4
 
@@ -64,7 +64,7 @@ Public Class IPv4
     Public Sub New(symbolicIP As String, netmask As String)
         Call IPNumeric(symbolicIP, _baseIPnumeric)
         Call NetMaskNumeric(netmask, _netmaskNumeric)
-        Call __checkNetMask()
+        Call checkNetMask()
 
         ' 反向计算来检查结果是否正确
         Me.IPAddress = NumericIpToSymbolic(_baseIPnumeric)
@@ -83,7 +83,7 @@ Public Class IPv4
     ''' Netmask should always have only ones, then only zeroes, 
     ''' like: ``11111111110000``
     ''' </summary>
-    Private Sub __checkNetMask()
+    Private Sub checkNetMask()
         Dim encounteredOne As Boolean = False
         Dim ourMaskBitPattern As Integer = 1
 
@@ -109,7 +109,7 @@ Public Class IPv4
         Dim tokens As String() = StringSplit(netmask, "\.", True)
 
         If tokens.Length <> 4 Then
-            Throw __invalidNetMask(netmask)
+            Throw invalidNetMask(netmask)
         End If
 
         If Convert.ToInt32(tokens(0)) < 255 Then
@@ -122,7 +122,7 @@ Public Class IPv4
             Dim value As Integer = Convert.ToInt32(tokens(n))
 
             If value <> (value And &HFF) Then
-                Throw __invalidNetMask(netmask)
+                Throw invalidNetMask(netmask)
             End If
 
             netmaskNumeric += value << i
@@ -135,7 +135,7 @@ Public Class IPv4
         Dim tokens As String() = StringSplit(symbolicIP, "\.", True)
 
         If tokens.Length <> 4 Then
-            Throw __invalidIPAddress(symbolicIP)
+            Throw invalidIPAddress(symbolicIP)
         End If
 
         Dim i As Integer = 24
@@ -144,7 +144,7 @@ Public Class IPv4
             Dim value As Integer = Convert.ToInt32(tokens(n))
 
             If value <> (value And &HFF) Then
-                Throw __invalidIPAddress(symbolicIP)
+                Throw invalidIPAddress(symbolicIP)
             End If
 
             baseIPnumeric += value << i
@@ -154,11 +154,11 @@ Public Class IPv4
 
 #Region "Throw Exceptions"
 
-    Private Shared Function __invalidNetMask(netmask As String) As Exception
+    Private Shared Function invalidNetMask(netmask As String) As Exception
         Return New Exception("Invalid netmask address: " & netmask)
     End Function
 
-    Private Shared Function __invalidIPAddress(symbolicIP As String) As Exception
+    Private Shared Function invalidIPAddress(symbolicIP As String) As Exception
         Return New Exception("Invalid IP address: " & symbolicIP)
     End Function
 #End Region
@@ -317,7 +317,7 @@ Public Class IPv4
             End If
         Next
 
-        Dim x As Double = Math.Pow(2, (32 - numberOfBits))
+        Dim x As Double = stdNum.Pow(2, (32 - numberOfBits))
 
         If x = -1 Then
             x = 1.0

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72583ecbe0ad701ec1f8fbc8c7be7a1c, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
+﻿#Region "Microsoft.VisualBasic::9ebcd1e667a37b88ea0cd0cf52c620b0, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: EnsureProject, GetEnumerator, GetProject, IEnumerable_GetEnumerator, ToString
+    '         Function: CreateDocProject, EnsureProject, GetEnumerator, GetProject, IEnumerable_GetEnumerator
+    '                   ToString
     ' 
     '         Sub: ImportFromXmlDocFile, ImportFromXmlDocFolder, LoadFile
     ' 
@@ -49,6 +50,7 @@
 
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.FileIO.FileSystem
@@ -134,8 +136,30 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub LoadFile(fi As FileInfo)
-            Using fs As New FileStream(fi.FullName, FileMode.Open)
+            Call CreateDocProject(fi, excludeVBSpecific, AddressOf EnsureProject)
+        End Sub
+
+        Public Shared Function CreateDocProject(xmlfile As [Variant](Of String, FileInfo),
+                                                Optional excludeVBSpecific As Boolean = True,
+                                                Optional projActivator As Func(Of String, Project) = Nothing) As Project
+
+            If xmlfile Like GetType(FileInfo) Then
+                xmlfile = xmlfile.TryCast(Of FileInfo).FullName
+            Else
+                xmlfile = xmlfile.TryCast(Of String).GetFullPath
+            End If
+
+            If projActivator Is Nothing Then
+                projActivator = Function(name) New Project(name)
+            End If
+
+            ' 20200423
+            ' file should be read access, or
+            ' System.UnauthorizedAccessException: Access to the path "/usr/local/share/R_bin/REnv.xml" is denied.
+            ' on linux platform
+            Using fs As New FileStream(xmlfile, FileMode.Open, access:=FileAccess.Read)
                 Dim streamWriter As New StreamReader(fs)
                 Dim xml$ = streamWriter.ReadToEnd.TrimAssemblyDoc()
                 Dim s As New StringReader(xml)
@@ -148,15 +172,21 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                     Dim nameNode As XmlNode = xd _
                         .DocumentElement _
                         .SelectSingleNode("assembly/name")
+                    Dim proj As Project
 
                     If nameNode IsNot Nothing Then
                         xml = nameNode.InnerText
-                        Call EnsureProject(xml) _
-                            .ProcessXmlDoc(xd, excludeVBSpecific)
+                        proj = projActivator(xml)
+
+                        Call proj.ProcessXmlDoc(xd, excludeVBSpecific)
+
+                        Return proj
+                    Else
+                        Return Nothing
                     End If
                 End Using
             End Using
-        End Sub
+        End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Project) Implements IEnumerable(Of Project).GetEnumerator
             For Each proj As Project In projects

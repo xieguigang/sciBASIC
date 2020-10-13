@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ff49d6a4003e4c1f8027636338f4e85, Data_science\Mathematica\Math\Math\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::a3347ced0506ff8a5d8d3b71d4822413, Data_science\Mathematica\Math\Math\test\Module1.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Algebra.LinearProgramming
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.LinearProgramming
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1

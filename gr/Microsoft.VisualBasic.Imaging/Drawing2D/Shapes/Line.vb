@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3a38134f7e52ec39f138d90c33c0a48, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
+﻿#Region "Microsoft.VisualBasic::cfe7d6f6496e91d0df2cf4625f613f59, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
 
     ' Author:
     ' 
@@ -46,11 +46,13 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Namespace Drawing2D.Shapes
 
@@ -78,7 +80,7 @@ Namespace Drawing2D.Shapes
         Public ReadOnly Property Length As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Math.Sqrt((A.X - B.X) ^ 2 + (A.Y - B.Y) ^ 2)
+                Return stdNum.Sqrt((A.X - B.X) ^ 2 + (A.Y - B.Y) ^ 2)
             End Get
         End Property
 
@@ -108,7 +110,7 @@ Namespace Drawing2D.Shapes
             Get
                 Dim dx! = B.X - Me.A.X
                 Dim dy! = B.Y - Me.A.Y
-                Dim cos = dx / Math.Sqrt(dx ^ 2 + dy ^ 2)
+                Dim cos = dx / stdNum.Sqrt(dx ^ 2 + dy ^ 2)
                 Dim a = Arccos(cos)
 
                 If dy < 0 Then

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e337b1549e44a8a4977b924788e36809, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::5956ac270dafb4552b55add38583aeaa, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::529b3ac85939959a3564dad680f53aa1, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue.vb"
+﻿#Region "Microsoft.VisualBasic::1e9f016653d69c4386429adcdc3d38f3, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
@@ -102,6 +103,33 @@ Namespace ComponentModel.DataSourceModel
                 ' 假若类型参数T是基类型的话，则直接使用GetType(T)只能够得到基类型的信息，无法得到当前的实现类型的信息
                 ' 故而要在这里使用对象自身的GetType方法来获取真正的类型信息
                 Return Value.GetType
+            End Get
+        End Property
+
+        Default Public ReadOnly Property TryMethodInvoke(arg As Object) As Object
+            Get
+                If Value Is Nothing Then
+                    Return Nothing
+                Else
+                    Dim type As Type = ValueType
+
+                    If type.IsInheritsFrom(GetType([Delegate])) Then
+                        Dim del As [Delegate] = CObj(Value)
+                        Return del.DynamicInvoke({arg})
+                    Else
+                        Dim indexProp As PropertyInfo = type _
+                            .GetProperties(PublicProperty) _
+                            .FirstOrDefault(Function(p)
+                                                Return p.CanRead AndAlso Not p.GetIndexParameters.IsNullOrEmpty
+                                            End Function)
+
+                        If Not indexProp Is Nothing Then
+                            Return indexProp.GetMethod.Invoke(Value, {arg})
+                        Else
+                            Return Nothing
+                        End If
+                    End If
+                End If
             End Get
         End Property
 
@@ -178,6 +206,8 @@ Namespace ComponentModel.DataSourceModel
             End If
         End Operator
 
+#If NET_48 Then
+
         ''' <summary>
         ''' Convert from tuple
         ''' </summary>
@@ -193,6 +223,8 @@ Namespace ComponentModel.DataSourceModel
         Public Shared Widening Operator CType(tuple As (name$, value As T, describ$)) As NamedValue(Of T)
             Return New NamedValue(Of T)(tuple.name, tuple.value, tuple.describ)
         End Operator
+
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(tuple As NamedValue(Of T), compares As T) As Boolean

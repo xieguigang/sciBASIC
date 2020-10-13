@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6059623b0d92ef82787b5e78f36de7c, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsPearson.vb"
+﻿#Region "Microsoft.VisualBasic::79ed368dbbec2ec6bb1310e1aa6f477c, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsPearson.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Namespace Math.Statistics.Linq

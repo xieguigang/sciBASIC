@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42bd38ccfe993e3987882d5222e28a6e, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
+﻿#Region "Microsoft.VisualBasic::558c3dd2473fdb9482d5aa392b6cd792, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Interface IFitted
     ' 
-    '     Properties: CorrelationCoefficient, ErrorTest, GetY, Polynomial
+    '     Properties: ErrorTest, GetY, Polynomial, R2
     ' 
     ' /********************************************************************************/
 
@@ -44,12 +44,21 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Public Interface IFitted
 
     ''' <summary>
-    ''' 相关系数
+    ''' 相关系数 R2
     ''' </summary>
     ''' <returns></returns>
-    ReadOnly Property CorrelationCoefficient As Double
+    ReadOnly Property R2 As Double
+    ''' <summary>
+    ''' 线性模型的多项式
+    ''' </summary>
+    ''' <returns></returns>
     ReadOnly Property Polynomial As Polynomial
 
+    ''' <summary>
+    ''' f(x)
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
     Default ReadOnly Property GetY(x As Double) As Double
 
     ''' <summary>

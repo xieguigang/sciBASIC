@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b99a773d915d49ba5a52fade6bf34a5, Data_science\Visualization\Plots\Fractions\RadarChart.vb"
+﻿#Region "Microsoft.VisualBasic::18e97c5824faa49fdc011db24139628d, Data_science\Visualization\Plots\Fractions\RadarChart.vb"
 
     ' Author:
     ' 
@@ -44,12 +44,14 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -58,7 +60,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Fractions
 
@@ -99,7 +101,8 @@ Namespace Fractions
                                         Optional pointRadius! = 30,
                                         Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
                                         Optional axisStrokeStyle$ = Stroke.WhiteLineStroke,
-                                        Optional spline As Boolean = True) As GraphicsData
+                                        Optional spline As Boolean = True,
+                                        Optional textWrap As Integer = 16) As GraphicsData
             Return {
                 New NamedValue(Of FractionData())("", serials.ToArray)
             }.Plot(size:=size,
@@ -114,7 +117,8 @@ Namespace Fractions
                    labelTextColor:=labelTextColor,
                    pointRadius:=pointRadius,
                    shapeBorderWidth:=shapeBorderWidth,
-                   spline:=spline
+                   spline:=spline,
+                   textWrap:=textWrap
               )
         End Function
 
@@ -153,7 +157,8 @@ Namespace Fractions
                              Optional pointRadius! = 30,
                              Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
                              Optional axisStrokeStyle$ = Stroke.WhiteLineStroke,
-                             Optional spline As Boolean = True) As GraphicsData
+                             Optional spline As Boolean = True,
+                             Optional textWrap As Integer = 16) As GraphicsData
 
             Dim serialColors As Color() = Designer.GetColors(serialColorSchema) _
                                                   .Select(Function(c) c.Alpha(colorAlpha)) _
@@ -183,7 +188,7 @@ Namespace Fractions
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim plotRect = region.PlotRegion
                     Dim center As PointF = plotRect.Centre
-                    Dim radius As DoubleRange = {0, sys.Min(plotRect.Width, plotRect.Height) / 2}
+                    Dim radius As DoubleRange = {0, stdNum.Min(plotRect.Width, plotRect.Height) / 2}
                     Dim serial As NamedValue(Of FractionData())
                     Dim r#
                     Dim alpha! = -90
@@ -355,33 +360,38 @@ Namespace Fractions
 
                         ' 绘制坐标轴标签
                         label = directions(i)
+
+                        If label.Length > textWrap Then
+                            label = label.DoWordWrap(textWrap)
+                        End If
+
                         labelSize = g.MeasureString(label, labelFont)
 
                         Select Case center.QuadrantRegion(maxAxis)
 
                             Case QuadrantRegions.RightTop
                                 ' 右上角
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.YTop
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25 / 2, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.LeftTop
                                 ' 左上角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, -labelSize.Height * 1.25)
 
                             Case QuadrantRegions.XLeft
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height / 2)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, -labelSize.Height * 1.25 / 2)
 
                             Case QuadrantRegions.LeftBottom
                                 ' 左下角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, 0)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25, 0)
 
                             Case QuadrantRegions.YBottom
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, 0)
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width * 1.25 / 2, 0)
 
                             Case QuadrantRegions.XRight
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height / 2)
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height * 1.25 / 2)
 
                             Case Else
                                 ' 右下角

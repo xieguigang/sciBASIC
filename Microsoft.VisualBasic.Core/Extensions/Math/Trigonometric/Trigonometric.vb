@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c312da426a7a5ef34abc056584b4c24, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
+﻿#Region "Microsoft.VisualBasic::bd597c54ce2ba57bb6587bcf84f77dcb, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math
 
@@ -52,6 +52,8 @@ Namespace Math
     ''' 三角函数拓展模块
     ''' </summary>
     Public Module Trigonometric
+
+#If NET_48 Then
 
         ''' <summary>
         ''' Polar to cartesian coordinate system point.(将极坐标转换为笛卡尔坐标系直角坐标系)
@@ -63,23 +65,25 @@ Namespace Math
             Dim alpha = polar.alpha
 
             If fromDegree Then
-                alpha = alpha * sys.PI / 180
+                alpha = alpha * stdNum.PI / 180
             End If
 
-            Dim x = polar.r * sys.Cos(alpha)
-            Dim y = polar.r * sys.Sin(alpha)
+            Dim x = polar.r * stdNum.Cos(alpha)
+            Dim y = polar.r * stdNum.Sin(alpha)
 
             Return New PointF(x, y)
         End Function
 
+#End If
+
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="radian">``0 -> 2*<see cref="Math.PI"/>``</param>
+        ''' <param name="radian">``0 -> 2*<see cref="stdNum.PI"/>``</param>
         ''' <returns></returns>
         Public Function GetAngleVector(radian As Single, Optional r As Double = 1) As PointF
-            Dim x = sys.Cos(radian) * r
-            Dim y = sys.Sin(radian) * r
+            Dim x = stdNum.Cos(radian) * r
+            Dim y = stdNum.Sin(radian) * r
 
             Return New PointF(x, y)
         End Function
@@ -93,17 +97,17 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Angle(p As PointF) As Double
-            Return sys.Atan2(p.Y, p.X)
+            Return stdNum.Atan2(p.Y, p.X)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(a As Point, b As Point) As Double
-            Return sys.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
+            Return stdNum.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(a As PointF, b As PointF) As Double
-            Return sys.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
+            Return stdNum.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
 
         ''' <summary>
@@ -122,7 +126,7 @@ Namespace Math
             Dim xDiff As Double = x2 - x1
             Dim yDiff As Double = y2 - y1
 
-            Return 180 - (ToDegrees(sys.Atan2(yDiff, xDiff)) - 90)
+            Return 180 - (ToDegrees(stdNum.Atan2(yDiff, xDiff)) - 90)
         End Function
 
         ''' <summary>
@@ -135,8 +139,8 @@ Namespace Math
         <Extension>
         Public Function MovePoint(p As PointF, angle As Double, distance As Integer) As PointF
             Return New PointF With {
-                .X = p.X + distance * Math.Sin(angle * Math.PI / 180),
-                .Y = p.Y + distance * Math.Cos(angle * Math.PI / 180)
+                .X = p.X + distance * stdNum.Sin(angle * stdNum.PI / 180),
+                .Y = p.Y + distance * stdNum.Cos(angle * stdNum.PI / 180)
             }
         End Function
 
@@ -158,7 +162,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToRadians(angdeg As Double) As Double
-            Return angdeg / 180.0 * sys.PI
+            Return angdeg / 180.0 * stdNum.PI
         End Function
 
         ''' <summary>
@@ -175,13 +179,13 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToDegrees(angrad As Double) As Double
-            Return angrad * 180.0 / sys.PI
+            Return angrad * 180.0 / stdNum.PI
         End Function
 
         <Extension>
         Public Function NearestPoint(points As IEnumerable(Of Point), x%, y%, radius#) As Point
             For Each pos As Point In points
-                Dim dist = sys.Sqrt((x - pos.X) ^ 2 + (y - pos.Y) ^ 2)
+                Dim dist = stdNum.Sqrt((x - pos.X) ^ 2 + (y - pos.Y) ^ 2)
 
                 If dist <= radius Then
                     Return pos

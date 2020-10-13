@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aa1d595aa123f2c055f05a31040cfd1, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\VectorAssertExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::30f0809533229e3dc85abb86041f8892, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\VectorAssertExtensions.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Linq
 
+    <HideModuleName>
     Public Module VectorAssertExtensions
 
         ''' <summary>

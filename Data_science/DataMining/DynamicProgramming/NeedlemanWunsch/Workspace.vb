@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0b59fffa69b6fe8bbad9d98c9be89f5, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::f71e4e2f30a199253bb2ab8666196461, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,20 @@
 
     '     Class Workspace
     ' 
-    '         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
-    '                     Score, Subject
+    '         Properties: NumberOfAlignments, Query, Score, Subject
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: getAligned1, getAligned2, isMatch
+    '         Function: getAligned1, getAligned2
     ' 
     '         Sub: AddAligned1, AddAligned2
+    ' 
+    '     Class ScoreMatrix
+    ' 
+    '         Properties: GapPenalty, MatchScore, MismatchScore
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: getMatchScore, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,6 +56,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NeedlemanWunsch
 
@@ -64,7 +71,6 @@ Namespace NeedlemanWunsch
         Dim aligned2 As New List(Of T())
 
         Protected ReadOnly __toChar As Func(Of T, Char)
-        ReadOnly __equals As IEquals(Of T)
 
         ''' <summary>
         ''' get numberOfAlignments </summary>
@@ -75,21 +81,6 @@ Namespace NeedlemanWunsch
                 Return aligned1.Count
             End Get
         End Property
-
-        ''' <summary>
-        ''' get gap open penalty </summary>
-        ''' <returns> gap open penalty </returns>
-        Public Property GapPenalty As Integer = 1
-
-        ''' <summary>
-        ''' get match score </summary>
-        ''' <returns> match score </returns>
-        Public Property MatchScore As Integer = 1
-
-        ''' <summary>
-        ''' get mismatch score </summary>
-        ''' <returns> mismatch score </returns>
-        Public Property MismatchScore As Integer = -1
 
         Public ReadOnly Property Query As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -115,6 +106,8 @@ Namespace NeedlemanWunsch
         '''    return Math.max(a, Math.max(b, c)); </summary>
         ''' <return> sequence 2 </return>
         Protected Sequence2 As T()
+
+        Protected scoreMatrix As ScoreMatrix(Of T)
 
         ''' <summary>
         ''' get aligned version of sequence 1 </summary>
@@ -151,9 +144,33 @@ Namespace NeedlemanWunsch
         ''' <returns> score </returns>
         Public Property Score As Integer
 
-        Sub New(match As IEquals(Of T), toChar As Func(Of T, Char))
-            __equals = match
+        Sub New(score As ScoreMatrix(Of T), toChar As Func(Of T, Char))
             __toChar = toChar
+            scoreMatrix = score
+        End Sub
+    End Class
+
+    Public Class ScoreMatrix(Of T)
+
+        ''' <summary>
+        ''' get gap open penalty </summary>
+        ''' <returns> gap open penalty </returns>
+        Public Property GapPenalty As Integer = 1
+
+        ''' <summary>
+        ''' get match score </summary>
+        ''' <returns> match score </returns>
+        Public Property MatchScore As Integer = 1
+
+        ''' <summary>
+        ''' get mismatch score </summary>
+        ''' <returns> mismatch score </returns>
+        Public Property MismatchScore As Integer = -1
+
+        Friend ReadOnly __equals As IEquals(Of T)
+
+        Sub New(match As IEquals(Of T))
+            __equals = match
         End Sub
 
         ''' <summary>
@@ -161,12 +178,17 @@ Namespace NeedlemanWunsch
         ''' return the match score
         ''' else return mismatch score
         ''' </summary>
-        Protected Function isMatch(a As T, b As T) As Integer
+        Public Overridable Function getMatchScore(a As T, b As T) As Integer
             If __equals(a, b) Then
                 Return MatchScore
             Else
                 Return MismatchScore
             End If
         End Function
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
     End Class
 End Namespace

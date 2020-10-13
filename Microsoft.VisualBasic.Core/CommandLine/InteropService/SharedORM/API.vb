@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cd88ee07e972e5bb1a7c6ea90754f54, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\API.vb"
+﻿#Region "Microsoft.VisualBasic::2ce81fd26240eaf94505d0b12c5a8a6a, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\API.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Marshal

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b71c3f95f961b06fe3e1cf19138437d0, www\githubAPI\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::dd0ec0417469eee2159136d1538d1f0e, www\githubAPI\Extensions.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Webservices.Github.API
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 
+<HideModuleName>
 Public Module Extensions
 
     <Extension> Public Function WhoIsNotFollowMe(username$) As IEnumerable(Of User)

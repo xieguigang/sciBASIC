@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::847d8485c2c1fc8179aaf75e2848e704, Data_science\Visualization\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::0033921bc7f87378912ae9eca8d6b07e, Data_science\Visualization\Plots\3D\Data.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
@@ -50,8 +52,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Terminal
-Imports Microsoft.VisualBasic.Terminal.ProgressBar
+Imports stdNum = System.Math
 
 Namespace Plot3D
 
@@ -181,15 +182,15 @@ Namespace Plot3D
 
         Private Function __progressProvider(total%, yLen%, ysteps#, x As DoubleRange) As Action(Of Double)
             If App.IsConsoleApp Then
-                Dim tick As New ProgressProvider(total)
-                Dim msg$ = $"Populates data points...(Estimates size: {tick.Target * (yLen / ysteps)}...)"
+                Dim msg$ = $"Populates data points...(Estimates size: {total * (yLen / ysteps)}...)"
                 Dim prog As New ProgressBar(msg, 1, CLS:=True)
+                Dim tick As New ProgressProvider(prog, total)
 
                 Call tick.StepProgress()
 
                 Return Sub(xi#)
                            Dim leftTime As String = tick _
-                               .ETA(prog.ElapsedMilliseconds) _
+                               .ETA() _
                                .FormatTime
 
                            Call prog.SetProgress(
@@ -345,7 +346,7 @@ Namespace Plot3D
                                       Optional ysteps! = 0.01) As IEnumerable(Of Line3D)
             Dim array As Line3D() = Grid(f, x, y, xsteps, ysteps).ToArray
             Dim z#() = array _
-                .Select(Function(pt) Math.Round((pt.a.Z + pt.b.Z) / 2, 1)) _
+                .Select(Function(pt) stdNum.Round((pt.a.Z + pt.b.Z) / 2, 1)) _
                 .Distinct _
                 .ToArray
             Dim levels As Dictionary(Of Double, Integer) =
@@ -360,7 +361,7 @@ Namespace Plot3D
                 Yield New Line3D With {
                     .a = line.a,
                     .b = line.b,
-                    .pen = New Pen(colors.ElementAtOrDefault(levels(Math.Round((.a.Z + .b.Z) / 2, 1)) - 1))
+                    .pen = New Pen(colors.ElementAtOrDefault(levels(stdNum.Round((.a.Z + .b.Z) / 2, 1)) - 1))
                 }
             Next
         End Function

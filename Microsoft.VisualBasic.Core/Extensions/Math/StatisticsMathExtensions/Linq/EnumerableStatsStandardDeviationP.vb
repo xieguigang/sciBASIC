@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d977f07e7fc1a94b17764fb2c3698c7f, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsStandardDeviationP.vb"
+﻿#Region "Microsoft.VisualBasic::73e6c24ead77663511c2fc53c9a8a278, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsStandardDeviationP.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math.Statistics.Linq
 
@@ -140,7 +140,7 @@ Namespace Math.Statistics.Linq
         '     source contains no elements.
         <Extension>
         Public Function StandardDeviationP(source As IEnumerable(Of Double)) As Double
-            Return sys.Sqrt(source.VarianceP())
+            Return System.Math.Sqrt(source.VarianceP())
         End Function
         '
         ' Summary:

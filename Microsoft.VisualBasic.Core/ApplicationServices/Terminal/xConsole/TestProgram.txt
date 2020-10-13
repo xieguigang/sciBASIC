@@ -59,7 +59,7 @@ Namespace TestingxConsole
 			Dim thepassword As String = "hello" & ChrW(8) & "bro"
 
             For Each s As String In thepassword
-                xConsole.CoolWriteLine("[^y{0}^!]:" & vbTab & "^g{1}^!" & vbTab & "(code)^m{2}^!", System.Threading.Interlocked.Increment(k), s.ToString(), AscW(s))
+                xConsole.CoolWriteLine("[^y{0}^!]:" & vbTab & "^g{1}^!" & vbTab & "(code)^m{2}^!", System.k), s.ToString(), AscW(s))
             Next
 
             xConsole.CoolWriteLine(vbCr & vbLf & "The input will be not displayed!")

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41449521f9873c61634511f298b05050, mime\application%json\Serializer\JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::9ffa185b48fc7a71841dd1af0453ce09, mime\application%json\Serializer\JSONSerializer.vb"
 
     ' Author:
     ' 
@@ -33,19 +33,17 @@
 
     ' Module JSONSerializer
     ' 
-    '     Function: (+2 Overloads) GetJson, populateArrayJson, populateObjectJson, populateTableJson
+    '     Function: BuildJsonString, GetJson, jsonArrayString, jsonObjectString, jsonValueString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports System.Text
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json.BSON
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Text
 
 Public Module JSONSerializer
@@ -61,103 +59,80 @@ Public Module JSONSerializer
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function GetJson(Of T)(obj As T, Optional maskReadonly As Boolean = False) As String
-        Return obj.GetType.GetJson(obj, maskReadonly)
+    Public Function GetJson(Of T)(obj As T,
+                                  Optional maskReadonly As Boolean = False,
+                                  Optional indent As Boolean = False,
+                                  Optional enumToStr As Boolean = True,
+                                  Optional unixTimestamp As Boolean = True) As String
+
+        Return New JSONSerializerOptions With {
+            .indent = indent,
+            .maskReadonly = maskReadonly,
+            .enumToString = enumToStr,
+            .unixTimestamp = unixTimestamp
+        }.DoCall(Function(opts)
+                     Return obj.GetType.GetJsonElement(obj, opts).BuildJsonString(opts)
+                 End Function)
     End Function
 
     <Extension>
-    Private Function populateArrayJson(schema As Type, obj As Object, maskReadonly As Boolean) As IEnumerable(Of String)
-        Dim elementSchema As Type
-        Dim populator As IEnumerable(Of String)
-
-        If schema.IsArray Then
-            elementSchema = schema.GetElementType
-            populator = From element As Object
-                        In DirectCast(obj, Array)
-                        Select elementSchema.GetJson(element, maskReadonly)
-        Else
-            ' list of type
-            elementSchema = schema.GenericTypeArguments(Scan0)
-            populator = From element As Object
-                        In DirectCast(obj, IList)
-                        Select elementSchema.GetJson(element, maskReadonly)
+    Public Function BuildJsonString(json As JsonElement, opts As JSONSerializerOptions) As String
+        If json Is Nothing Then
+            Return "null"
         End If
 
-        Return populator
+        Select Case json.GetType
+            Case GetType(JsonValue) : Return DirectCast(json, JsonValue).jsonValueString(opts)
+            Case GetType(JsonObject) : Return DirectCast(json, JsonObject).jsonObjectString(opts)
+            Case GetType(JsonArray) : Return DirectCast(json, JsonArray).jsonArrayString(opts)
+            Case Else
+                Throw New NotImplementedException(json.GetType.FullName)
+        End Select
     End Function
 
     <Extension>
-    Private Function populateObjectJson(schema As Type, obj As Object, maskReadonly As Boolean) As String
-        Dim members As New List(Of String)
-        ' 会需要忽略掉有<ScriptIgnore>标记的属性
-        Dim memberReaders = schema _
-            .Schema(PropertyAccess.Readable, nonIndex:=True) _
-            .Where(Function(p)
-                       If maskReadonly AndAlso Not p.Value.CanWrite Then
-                           Return False
-                       End If
+    Private Function jsonValueString(obj As JsonValue, opt As JSONSerializerOptions) As String
+        Dim value As Object = obj.value
 
-                       Return p.Value.GetAttribute(Of ScriptIgnoreAttribute) Is Nothing
-                   End Function)
-        Dim [property] As PropertyInfo
-        Dim valueType As Type
-
-        For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
-            [property] = reader.Value
-            valueType = [property].PropertyType
-            members += $"""{reader.Key}"": {valueType.GetJson([property].GetValue(obj, Nothing), maskReadonly)}"
-        Next
-
-        Return $"{{
-            {members.JoinBy("," & ASCII.LF)}
-        }}"
+        If value Is Nothing Then
+            Return "null"
+        ElseIf value.GetType Is obj.BSONValue Then
+            Return DirectCast(value, BSONValue).ToString
+        Else
+            Return BSONValue.FromValue(value).ToString
+        End If
     End Function
 
-    ''' <summary>
-    ''' 所有的字典键都会被强制转换为字符串类型
-    ''' </summary>
-    ''' <param name="obj"></param>
-    ''' <param name="valueSchema"></param>
-    ''' <returns></returns>
     <Extension>
-    Private Function populateTableJson(obj As IDictionary, valueSchema As Type, maskReadonly As Boolean) As String
+    Private Function jsonObjectString(obj As JsonObject, opt As JSONSerializerOptions) As String
         Dim members As New List(Of String)
-        Dim key As String
-        Dim value As Object
 
         For Each member In obj
-            key = Scripting.ToString(member.Key)
-            value = member.Value
-            members += $"""{key}"": {valueSchema.GetJson(value, maskReadonly)}"
+            members.Add($"""{member.Name}"": {member.Value.BuildJsonString(opt)}")
         Next
 
-        Return $"{{
+        If opt.indent Then
+            Return $"{{
             {members.JoinBy("," & ASCII.LF)}
         }}"
+        Else
+            Return $"{{{members.JoinBy(",")}}}"
+        End If
     End Function
 
     <Extension>
-    Public Function GetJson(schema As Type, obj As Object, maskReadonly As Boolean) As String
-        If schema.IsArray OrElse schema.IsInheritsFrom(GetType(List(Of )), strict:=False) Then
-            Dim elementJSON = schema.populateArrayJson(obj, maskReadonly).ToArray
+    Private Function jsonArrayString(arr As JsonArray, opt As JSONSerializerOptions) As String
+        Dim a As New StringBuilder
+        Dim array$() = arr _
+            .Select(Function(x) x.BuildJsonString(opt)) _
+            .ToArray
 
-            Return $"[
-                {elementJSON.JoinBy(", " & ASCII.LF)}
-            ]"
-        ElseIf DataFramework.IsPrimitive(schema) Then
-            Return JsonContract.GetObjectJson(schema, obj)
-        ElseIf schema.IsInheritsFrom(GetType(Dictionary(Of, )), strict:=False) Then
-            Dim valueType As Type = schema _
-                .GenericTypeArguments _
-                .ElementAtOrDefault(
-                    index:=1,
-                    [default]:=schema.GenericTypeArguments(Scan0)
-                )
-
-            Return DirectCast(obj, IDictionary).populateTableJson(valueType, maskReadonly)
+        If opt.indent Then
+            Call a.AppendLine("[").AppendLine(array.JoinBy(", ")).AppendLine("]")
         Else
-            ' isObject
-            Return schema.populateObjectJson(obj, maskReadonly)
+            Call a.Append("[").Append(array.JoinBy(", ")).Append("]")
         End If
+
+        Return a.ToString
     End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c72127437983a3700ca5d91931b66df7, Data_science\DataMining\DataMining\ComponentModel\Evaluation\Validate.vb"
+﻿#Region "Microsoft.VisualBasic::c5fd3226e436e03d133f4314e8f3f5fb, Data_science\DataMining\DataMining\ComponentModel\Evaluation\Validate.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: actuals, err, predicts, width
     ' 
-    '         Function: AUC, ROC
+    '         Function: AUC, ROC, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +47,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports stdNum = System.Math
 
 Namespace ComponentModel.Evaluation
 
@@ -63,7 +64,7 @@ Namespace ComponentModel.Evaluation
                 Dim predicts = Me.predicts
 
                 Return actuals _
-                    .Select(Function(x, i) Math.Abs(x - predicts(i))) _
+                    .Select(Function(x, i) stdNum.Abs(x - predicts(i))) _
                     .Average
             End Get
         End Property
@@ -81,6 +82,10 @@ Namespace ComponentModel.Evaluation
                 End If
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"|{actuals.JoinBy(", ")} - {predicts.JoinBy(", ")}| = {err}"
+        End Function
 
         Public Shared Iterator Function ROC(data As IEnumerable(Of Validate),
                                             Optional threshold As Sequence = Nothing,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c88f1ab496a70fade4cc8cca8f21437b, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::e1ac3b378d7c2b948c94322a2642714c, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,11 @@
 
     '     Module CLITools
     ' 
-    '         Function: __checkKeyDuplicated, Args, CreateObject, CreateParameterValues, Equals
-    '                   GetLogicalFlags, GetTokens, IsPossibleLogicFlag, Join, makesureQuot
-    '                   Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
+    '         Function: Args, CreateObject, Equals, GetCommandsOverview, GetFileList
+    '                   GetTokens, Join, makesureQuot, Print, ShellExec
+    '                   SingleValueOrStdIn, TrimParamPrefix, TryParse
     ' 
-    '         Sub: tupleParser
+    '         Sub: AppSummary, tupleParser
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,14 +48,15 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
-Imports StringList = System.Collections.Generic.IEnumerable(Of String)
 Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
 
 Namespace CommandLine
@@ -69,6 +70,33 @@ Namespace CommandLine
                         Description:="",
                         Revision:=52)>
     Public Module CLITools
+
+        ''' <summary>
+        ''' 在命令行之中使用逗号作为分隔符分隔多个文件
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
+        Public Function GetFileList(input As String) As IEnumerable(Of String)
+            If input.FileExists Then
+                Return {input}
+            Else
+                Return input.Split(","c)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="assem"></param>
+        ''' <param name="description">命令行的使用功能描述信息文本</param>
+        ''' <param name="SYNOPSIS">命令行的使用语法</param>
+        ''' <param name="write"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub AppSummary(assem As AssemblyInfo, description$, SYNOPSIS$, write As TextWriter)
+            Call SDKManual.AppSummary(assem, description, SYNOPSIS, write)
+        End Sub
 
         <Extension>
         Public Function ShellExec(cli As IIORedirectAbstract) As String
@@ -97,261 +125,26 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Parsing parameters from a specific tokens.
-        ''' (从给定的词组之中解析出参数的结构)
-        ''' </summary>
-        ''' <param name="tokens">个数为偶数的，但是假若含有开关的时候，则可能为奇数了</param>
-        ''' <param name="includeLogicals">返回来的列表之中是否包含有逻辑开关</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <Extension> Public Function CreateParameterValues(tokens$(), includeLogicals As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
-            Dim list As New List(Of NamedValue(Of String))
-            Dim key As String
-
-            If tokens.IsNullOrEmpty Then
-                Return list
-            ElseIf tokens.Length = 1 Then
-                If IsPossibleLogicFlag(tokens(Scan0)) AndAlso includeLogicals Then
-                    list += New NamedValue(Of String) With {
-                        .Name = tokens(Scan0),
-                        .Value = CStr(True),
-                        .Description = note
-                    }
-                Else
-                    Return list
-                End If
-            End If
-
-            ' 下面都是多余或者等于两个元素的情况
-            ' 数目多于一个的
-            For i As Integer = 0 To tokens.Length - 1
-                Dim [next] As Integer = i + 1
-
-                If [next] = tokens.Length Then
-                    ' 这个元素是开关，已经到达最后则没有了，跳出循环
-                    If IsPossibleLogicFlag(tokens(i)) AndAlso includeLogicals Then
-                        list += New NamedValue(Of String)(tokens(i), True, note)
-                    End If
-
-                    Exit For
-                End If
-
-                Dim s As String = tokens([next])
-
-                ' 当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                If tokens(i).ToLower <> "/@set" AndAlso IsPossibleLogicFlag(s) Then
-                    If includeLogicals Then
-                        list += New NamedValue(Of String)(tokens(i), True, note)
-                    End If
-
-                    Continue For
-                Else
-                    ' 下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
-                    key = tokens(i).ToLower
-                    list += New NamedValue(Of String)(key, s, note)
-
-                    i += 1
-                End If
-            Next
-
-            Return list
-        End Function
-
-        ''' <summary>
-        ''' Get all of the logical parameters from the input tokens.
-        ''' (这个函数所生成的逻辑参数的名称全部都是小写形式的)
-        ''' </summary>
-        ''' <param name="args">要求第一个对象不能够是命令的名称</param>
-        ''' <returns></returns>
-        <Extension> Public Function GetLogicalFlags(args As IEnumerable(Of String), ByRef singleValue$) As String()
-            Dim tokens$() = args.SafeQuery.ToArray
-
-            If tokens.IsNullOrEmpty Then
-                Return New String() {}
-            ElseIf tokens.Length = 1 Then
-                ' 只有一个元素，则肯定为开关
-                Return {tokens(0).ToLower}
-            End If
-
-            Dim tkList As New List(Of String)
-
-            For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
-                Dim next% = i + 1
-
-                If [next] = tokens.Length Then
-                    If IsPossibleLogicFlag(obj:=tokens(i)) Then
-                        tkList += tokens(i)  '
-                    End If
-
-                    Exit For
-                End If
-
-                Dim s As String = tokens([next])
-
-                If IsPossibleLogicFlag(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
-                    If IsPossibleLogicFlag(obj:=tokens(i)) Then
-                        tkList += tokens(i)
-                    Else
-
-                        If i = 0 Then
-                            singleValue = tokens(i)
-                        End If
-
-                    End If
-                Else  '下一个元素不是开关，则当前元素为一个参数名，则跳过下一个元素
-                    i += 1
-                End If
-
-            Next
-
-            Return (From s As String In tkList Select s.ToLower).ToArray
-        End Function
-
-        ''' <summary>
-        ''' Try parsing the cli command string from the string value.(尝试着从文本行之中解析出命令行参数信息)
-        ''' </summary>
-        ''' <param name="args">The commandline arguments which is user inputs from the terminal.</param>
-        ''' <param name="duplicatedAllows">Allow the duplicated command parameter argument name in the input, 
-        ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        <Extension>
-        Public Function TryParse(args As StringList,
-                                 Optional duplicatedAllows As Boolean = False,
-                                 Optional rawInput$ = Nothing) As CommandLine
-
-            Dim tokens$() = args.SafeQuery.ToArray
-            Dim singleValue$ = ""
-
-            If tokens.Length = 0 Then
-                Return New CommandLine
-            Else
-                tokens = tokens.fixWindowsNetworkDirectory.ToArray
-            End If
-
-            Dim bools$() = tokens _
-                .Skip(1) _
-                .GetLogicalFlags(singleValue)
-            Dim cli As New CommandLine With {
-                .Name = tokens(Scan0).ToLower,
-                .Tokens = tokens,
-                .BoolFlags = bools,
-                .cliCommandArgvs = Join(tokens)
-            }
-
-            cli.SingleValue = singleValue
-            cli.cliCommandArgvs = rawInput
-
-            If cli.Parameters.Length = 1 AndAlso
-                String.IsNullOrEmpty(cli.SingleValue) Then
-
-                cli.SingleValue = cli.Parameters(0)
-            End If
-
-            If tokens.Length > 1 Then
-                cli.arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
-
-                Dim Dk As String() = __checkKeyDuplicated(cli.arguments)
-
-                If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
-                    Dim Key$ = String.Join(", ", Dk)
-                    Dim msg$ = String.Format(KeyDuplicated, Key, String.Join(" ", tokens.Skip(1).ToArray))
-
-                    Throw New Exception(msg)
-                End If
-            End If
-
-            Return cli
-        End Function
-
-        Const KeyDuplicated As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
-
-        Private Function __checkKeyDuplicated(source As IEnumerable(Of NamedValue(Of String))) As String()
-            Dim LQuery = (From param As NamedValue(Of String)
-                          In source
-                          Select param.Name.ToLower
-                          Group By ToLower Into Group).ToArray
-
-            Return LinqAPI.Exec(Of String) _
- _
-                () <= From group
-                      In LQuery
-                      Where group.Group.Count > 1
-                      Select group.ToLower
-        End Function
-
-        ''' <summary>
         ''' Gets the commandline object for the current program.
         ''' </summary>
         ''' <returns></returns>
-        <ExportAPI("args", Info:="Gets the commandline object for the current program.")>
+        <ExportAPI("args")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Args() As CommandLine
             Return App.CommandLine
         End Function
 
         ''' <summary>
-        ''' Try parsing the cli command string from the string value.
-        ''' (尝试着从文本行之中解析出命令行参数信息，假若value里面有空格，则必须要将value添加双引号)
-        ''' </summary>
-        ''' <param name="CLI">The commandline arguments which is user inputs from the terminal.</param>
-        ''' <param name="duplicateAllowed">Allow the duplicated command parameter argument name in the input, 
-        ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        ''' 
-        <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        Public Function TryParse(<Parameter("CLI", "The CLI arguments that inputs from the console by user.")> CLI$,
-                                 <Parameter("Duplicates.Allowed")> Optional duplicateAllowed As Boolean = False) As CommandLine
-
-            If String.IsNullOrEmpty(CLI) Then
-                Return New CommandLine
-            Else
-#Const DEBUG = False
-#If DEBUG Then
-                Call CLI.__DEBUG_ECHO
-#End If
-            End If
-
-            Dim args As CommandLine = CLITools _
-                .GetTokens(CLI) _
-                .TryParse(duplicateAllowed, rawInput:=CLI)
-
-            Return args
-        End Function
-
-        ''' <summary>
-        ''' Is this string tokens is a possible <see cref="Boolean"/> value flag
-        ''' </summary>
-        ''' <param name="obj"></param>
-        ''' <returns></returns>
-        <ExportAPI("IsPossibleBoolFlag?")>
-        Public Function IsPossibleLogicFlag(obj As String) As Boolean
-            If obj.Contains(" ") Then
-                Return False
-            ElseIf IsNumeric(obj) Then
-                Return False
-            End If
-
-            ' Linux上面全路径总是从/，即根目录开始的
-            If obj.Count("/"c) > 1 Then
-                Return False
-            End If
-
-            Return obj.StartsWith("-") OrElse obj.StartsWith("/")
-        End Function
-
-        ''' <summary>
         ''' ReGenerate the cli command line argument string text.(重新生成命令行字符串)
         ''' </summary>
-        ''' <param name="tokens">If the token value have a space character, then this function will be wrap that token with quot character automatically.</param>
+        ''' <param name="tokens">
+        ''' If the token value have a space character, then this function 
+        ''' will be wrap that token with quot character automatically.
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <ExportAPI("Join",
-                   Info:="ReGenerate the cli command line argument string text. 
-                   NOTE: If the token have a space character, then this function will be wrap that token with quot character automatically.")>
+        <ExportAPI("Join")>
         Public Function Join(tokens As IEnumerable(Of String)) As String
             If tokens Is Nothing Then
                 Return ""
@@ -502,7 +295,8 @@ Namespace CommandLine
             For i As Integer = 0 To tokens.Length - 1
                 Dim s As String = tokens(i)
 
-                If s.First = InnerDelimited AndAlso s.Last = InnerDelimited Then    '消除单词单元中的双引号
+                ' 消除单词单元中的双引号
+                If s.First = InnerDelimited AndAlso s.Last = InnerDelimited Then
                     tokens(i) = Mid(s, 2, Len(s) - 2)
                 End If
             Next
@@ -557,7 +351,10 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 请注意，这个是有方向性的，由于是依照参数1来进行比较的，假若args2里面的参数要多于第一个参数，但是第一个参数里面的所有参数值都可以被参数2完全比对得上的话，就认为二者是相等的
+        ''' 请注意，这个是有方向性的，由于是依照参数1来进行比较的，
+        ''' 假若args2里面的参数要多于第一个参数，但是第一个参数里
+        ''' 面的所有参数值都可以被参数2完全比对得上的话，就认为二
+        ''' 者是相等的
         ''' </summary>
         ''' <param name="args1"></param>
         ''' <param name="args2"></param>
@@ -594,6 +391,37 @@ Namespace CommandLine
                 Dim reader As New StreamReader(Console.OpenStandardInput)
                 Return reader.ReadToEnd
             End If
+        End Function
+
+        ''' <summary>
+        ''' Gets the brief summary information of current cli command line object.
+        ''' (获取当前的命令行对象的参数摘要信息)
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <Extension>
+        Public Function GetCommandsOverview(cli As CommandLine) As String
+            Dim sb As New StringBuilder(vbCrLf, 1024)
+
+            Call sb.AppendLine($"Commandline arguments overviews{vbCrLf}Command Name  --  ""{cli.Name}""")
+            Call sb.AppendLine()
+            Call sb.AppendLine("---------------------------------------------------------")
+            Call sb.AppendLine()
+
+            If cli.arguments.Count = 0 Then
+                Return sb.AppendLine("No parameter was define in this commandline.").ToString
+            End If
+
+            Dim maxLenParameterName As Integer = Aggregate item As NamedValue(Of String)
+                                                 In cli.arguments
+                                                 Let str_len As Integer = Len(item.Name)
+                                                 Into Max(str_len)
+
+            For Each parameter As NamedValue(Of String) In cli.arguments
+                Call sb.AppendLine($"  {parameter.Name}  {New String(" "c, maxLenParameterName - Len(parameter.Name))}= ""{parameter.Value}"";")
+            Next
+
+            Return sb.ToString
         End Function
     End Module
 End Namespace

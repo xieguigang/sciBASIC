@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aaf99a205d4a67af35d7827b2a91f2f, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::dc59df59459baa5f3e01bf2aa9b97dbf, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
     ' Author:
     ' 
@@ -58,23 +58,23 @@ Namespace ComponentModel.Ranges.Model
     ''' Represents an <see cref="Integer"/> range with minimum and maximum values
     ''' </summary>
     Public Class IntRange
-        Implements IRanges(Of Integer)
+        Implements IRangeModel(Of Integer)
         Implements IEnumerable(Of Integer)
 
         ''' <summary>
         ''' Minimum value
         ''' </summary>
-        Public Property Min() As Integer Implements IRanges(Of Integer).Min
+        Public Property Min As Integer Implements IRangeModel(Of Integer).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
-        Public Property Max() As Integer Implements IRanges(Of Integer).Max
+        Public Property Max As Integer Implements IRangeModel(Of Integer).Max
 
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
-        Public ReadOnly Property Length() As Integer
+        Public ReadOnly Property Length As Integer
             Get
                 Return Max - Min
             End Get
@@ -122,7 +122,7 @@ Namespace ComponentModel.Ranges.Model
         ''' <param name="x">Value to check</param>
         ''' <returns><b>True</b> if the specified value is inside this range or
         ''' <b>false</b> otherwise.</returns>
-        Public Function IsInside(x As Integer) As Boolean Implements IRanges(Of Integer).IsInside
+        Public Function IsInside(x As Integer) As Boolean Implements IRangeModel(Of Integer).IsInside
             Return ((x >= Min) AndAlso (x <= Max))
         End Function
 
@@ -152,11 +152,11 @@ Namespace ComponentModel.Ranges.Model
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 
-        Public Function IsInside(range As IRanges(Of Integer)) As Boolean Implements IRanges(Of Integer).IsInside
+        Public Function IsInside(range As IRangeModel(Of Integer)) As Boolean Implements IRangeModel(Of Integer).IsInside
             Return ((IsInside(range.Min)) AndAlso (IsInside(range.Max)))
         End Function
 
-        Public Function IsOverlapping(range As IRanges(Of Integer)) As Boolean Implements IRanges(Of Integer).IsOverlapping
+        Public Function IsOverlapping(range As IRangeModel(Of Integer)) As Boolean Implements IRangeModel(Of Integer).IsOverlapping
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 

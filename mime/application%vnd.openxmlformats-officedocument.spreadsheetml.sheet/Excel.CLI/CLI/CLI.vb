@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92de9c7e41e484a88df1aae9c89b9765, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::f112ac7c9d91b47d0ee28097726e3f01, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\CLI.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     ' Module CLI
     ' 
     '     Function: Association, cbind, NameValues, rbind, rbindGroup
-    '               Removes, Subtract, Takes, Transpose, Union
-    '               Unique
+    '               Removes, SubsetByColumns, Subtract, Takes, Transpose
+    '               Union, Unique
     ' 
     ' /********************************************************************************/
 
@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -65,6 +66,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
     <ExportAPI("/name.values")>
     <Usage("/name.values /in <table.csv> /name <fieldName> /value <fieldName> [/describ <descriptionInfo.fieldName, default=Description> /out <values.csv>]")>
+    <Description("Subset of the input table file by columns, produce a <name,value,description> dataset.")>
     Public Function NameValues(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim name$ = args <= "/name"
@@ -86,6 +88,21 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
             .ToArray
 
         Return maps.SaveTo(out).CLICode
+    End Function
+
+    <ExportAPI("/subset")>
+    <Description("Subset of the table file by a given specific column labels")>
+    <Usage("/subset /in <table.csv> /columns <column.list> [/out <subset.csv>]")>
+    Public Function SubsetByColumns(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim columns$() = Tokenizer.CharsParser(args <= "/columns")
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.projects={columns.JoinBy(",").NormalizePathString(False)}.csv"
+
+        Using output As StreamWriter = out.OpenWriter
+            Call DATA.ProjectLargeDataFrame([in], columns, output)
+        End Using
+
+        Return 0
     End Function
 
     ''' <summary>
@@ -258,53 +275,63 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     End Function
 
     <ExportAPI("/association")>
-    <Usage("/association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /out <out.csv>]")>
+    <Usage("/association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /column.B <scan0> /ignore.blank.index /out <out.csv>]")>
+    <Description("Append part of data of table ``b`` to table ``a``")>
     Public Function Association(args As CommandLine) As Integer
         Dim a$ = args <= "/a"
         Dim b$ = args <= "/b"
         Dim columnNameA$ = args("/column.A")
+        Dim BcolumnIndex$ = args("/column.B")
         Dim bName$ = b.BaseName
-        Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA)
-        Dim bData = EntityObject.LoadDataSet(b) _
-            .GroupBy(Function(bb) bb.ID) _
-            .ToDictionary(Function(g) g.Key,
+        Dim ignoreBlankIndex As Boolean = args("/ignore.blank.index")
+        Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA) _
+            .GroupBy(Function(n) If(n.ID.StringEmpty, "", n.ID)) _
+            .ToDictionary(Function(n) n.Key,
                           Function(g)
-                              Dim values = g _
-                                  .Select(Function(bb) bb.Properties) _
-                                  .IteratesALL _
-                                  .GroupBy(Function(p) p.Key) _
-                                  .ToDictionary(Function(p) p.Key,
-                                                Function(v)
-                                                    Return v.Values _
-                                                        .Select(Function(s) s.Split(";"c)) _
-                                                        .IteratesALL _
-                                                        .Distinct _
-                                                        .JoinBy(";")
-                                                End Function)
-
-                              Return New EntityObject With {
-                                  .ID = g.Key,
-                                  .Properties = values
-                              }
+                              Return g.ToArray
                           End Function)
+        Dim mapsB As New Dictionary(Of String, String) From {
+            {BcolumnIndex, NameOf(EntityObject.ID)}
+        }
         Dim out$ = args("/out") Or $"{a.TrimSuffix}_AND_{bName}.csv"
         Dim associates As New List(Of EntityObject)
+        Dim key$
 
-        For Each x As EntityObject In aData
-            If bData.ContainsKey(x.ID) Then
-                Dim copy As EntityObject = x.Copy
-                Dim y = bData(x.ID)
+        If ignoreBlankIndex Then
+            If aData.ContainsKey("") Then
+                associates += aData.Popout("")
+            End If
+        End If
 
-                For Each [property] In y.Properties
-                    Dim key = bName & "." & [property].Key
-                    copy.Properties.Add(key, [property].Value)
+        ' 假设B的数据非常大的话
+        For Each rowB As EntityObject In b.OpenHandle(maps:=mapsB).AsLinq(Of EntityObject)
+            If ignoreBlankIndex AndAlso rowB.ID.StringEmpty Then
+                Continue For
+            End If
+
+            If aData.ContainsKey(rowB.ID) Then
+                Dim rowsA As EntityObject() = aData.Popout(rowB.ID)
+
+                For Each x As EntityObject In rowsA
+                    For Each [property] In rowB.Properties
+                        key = bName & "." & [property].Key
+                        x.Properties.Add(key, [property].Value)
+                    Next
+
+                    associates += x
                 Next
 
-                associates += copy
-            Else
-                associates += x
+                If aData.Count = 0 Then
+                    ' 已经关联完了，不需要在遍历整个B文件的数据
+                    Exit For
+                End If
             End If
         Next
+
+        If aData.Count > 0 Then
+            ' 还有一部分的数据是没有在B中存在关联的
+            associates += aData.Values.IteratesALL
+        End If
 
         Return associates _
             .SaveDataSet(out, KeyMap:=columnNameA) _

@@ -123,10 +123,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\BinaryData\BinaryData\BinaryData.vbproj">
-      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
-      <Name>BinaryData</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>

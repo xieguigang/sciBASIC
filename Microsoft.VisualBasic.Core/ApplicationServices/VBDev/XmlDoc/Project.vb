@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14685b62362d8b6d4e76108e94b7b3b5, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Project.vb"
+﻿#Region "Microsoft.VisualBasic::06f75fbdfc170bd1d0de4f2b4f06c7f0, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Project.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: EnsureNamespace, GetNamespace, ToString
+    '         Function: [GetType], EnsureNamespace, GetNamespace, ToString
     ' 
     '         Sub: processMember, processType, ProcessXmlDoc
     ' 
@@ -64,7 +64,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Dim _namespaces As Dictionary(Of String, ProjectNamespace)
 
-        Public Property Name() As String
+        Public Property Name As String
 
         Public ReadOnly Property Namespaces() As IEnumerable(Of ProjectNamespace)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -95,12 +95,32 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return Nothing
         End Function
 
-        Public Function EnsureNamespace(namespacePath As String) As ProjectNamespace
+        ''' <summary>
+        ''' 当目标对象没有xml注释的时候，这个函数返回的是空值
+        ''' </summary>
+        ''' <param name="fullName"></param>
+        ''' <returns></returns>
+        Public Overloads Function [GetType](fullName As String) As ProjectType
+            Dim tokens = fullName.Split("."c)
+            Dim typeName As String = tokens.Last
+            Dim namespaceRef As String = tokens.Take(tokens.Length - 1).JoinBy(".")
+            Dim namespaceDoc As ProjectNamespace = GetNamespace(namespaceRef)
+
+            ' if no xml comment docs, 
+            ' then namespaceDoc object will be nothing
+            If namespaceDoc Is Nothing Then
+                Return Nothing
+            Else
+                Return namespaceDoc.GetType(typeName)
+            End If
+        End Function
+
+        Friend Function EnsureNamespace(namespacePath As String) As ProjectNamespace
             Dim pn As ProjectNamespace = GetNamespace(namespacePath)
 
             If pn Is Nothing Then
                 pn = New ProjectNamespace(Me) With {
-                    .Path = namespacePath
+                    .fullName = namespacePath
                 }
                 _namespaces.Add(namespacePath.ToLower(), pn)
             End If

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c83799ac3a5cee349c13826a6bc637c6, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cd52ce0218595d4738cab4d8259c5a19, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -33,26 +33,17 @@
 
     ' Module NetworkAPI
     ' 
-    '     Function: EndPoints, GetConnections, GetNetworkNodes, GetNextConnects, GetNHetworkEdges
-    '               ReadnetWork, SaveNetwork, Trim, WriteNetwork
+    '     Function: EndPoints, RemoveDuplicated
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Data.csv.Extensions
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Text
-Imports ______NETWORK__ =
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.Network(Of
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.Node,
-    Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkEdge)
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Linq
 
-<Package("DataVisualization.Network", Publisher:="xie.guigang@gmail.com")>
 Public Module NetworkAPI
 
     <Extension>
@@ -60,82 +51,40 @@ Public Module NetworkAPI
         Return New NetworkGraph(Of Graph.Node, Graph.Edge)(network.vertex, network.graphEdges).EndPoints
     End Function
 
-    <ExportAPI("Read.Network")>
-    Public Function ReadnetWork(file As String) As FileStream.NetworkEdge()
-        Return file.LoadCsv(Of FileStream.NetworkEdge)(False).ToArray
-    End Function
-
-    <ExportAPI("Get.NetworkEdges")>
-    Public Function GetNHetworkEdges(Network As ______NETWORK__) As FileStream.NetworkEdge()
-        Return Network.edges
-    End Function
-
-    <ExportAPI("Get.NetworkNodes")>
-    Public Function GetNetworkNodes(Network As ______NETWORK__) As FileStream.Node()
-        Return Network.nodes
-    End Function
-
-    <ExportAPI("Save")>
-    Public Function SaveNetwork(network As ______NETWORK__, <Parameter("DIR.Export")> EXPORT As String) As Boolean
-        Return network.Save(EXPORT, Encodings.UTF8)
-    End Function
-
-    <ExportAPI("Write.Network")>
-    Public Function WriteNetwork(Network As FileStream.NetworkEdge(), <Parameter("Path.Save")> SaveTo As String) As Boolean
-        Return Network.SaveTo(SaveTo, False)
-    End Function
-
     ''' <summary>
-    ''' 这个查找函数是忽略掉了方向了的
+    ''' 移除的重复的边
     ''' </summary>
-    ''' <param name="source"></param>
-    ''' <param name="node"></param>
-    ''' <returns></returns>
-    <Extension, ExportAPI("GetConnections")>
-    Public Function GetConnections(source As IEnumerable(Of FileStream.NetworkEdge), node As String) As FileStream.NetworkEdge()
-        Dim LQuery = LinqAPI.Exec(Of FileStream.NetworkEdge) <=
- _
-            From x As FileStream.NetworkEdge
-            In source.AsParallel
-            Where Not String.IsNullOrEmpty(x.GetConnectedNode(node))
-            Select x
-
-        Return LQuery
-    End Function
-
-    ''' <summary>
-    ''' 查找To关系的节点边
-    ''' </summary>
-    ''' <param name="source"></param>
-    ''' <param name="from"></param>
-    ''' <returns></returns>
-    ''' 
-    <ExportAPI("Get.Connects.Next")>
+    ''' <remarks></remarks>
+    ''' <param name="directed">是否忽略方向？</param>
+    ''' <param name="ignoreTypes">是否忽略边的类型？</param>
     <Extension>
-    Public Function GetNextConnects(source As IEnumerable(Of FileStream.NetworkEdge), from As String) As FileStream.NetworkEdge()
-        Dim LQuery = LinqAPI.Exec(Of FileStream.NetworkEdge) <=
- _
-            From x As FileStream.NetworkEdge
-            In source.AsParallel
-            Where from.TextEquals(x.FromNode)
-            Select x
+    Public Function RemoveDuplicated(g As Graph.NetworkGraph, Optional directed As Boolean = True, Optional ignoreTypes As Boolean = False) As Graph.NetworkGraph
+        Dim graph As New Graph.NetworkGraph()
+        Dim uid = Function(edge As Graph.Edge) As String
+                      If directed Then
+                          Return edge.GetDirectedGuid(ignoreTypes)
+                      Else
+                          Return edge.GetNullDirectedGuid(ignoreTypes)
+                      End If
+                  End Function
 
-        Return LQuery
-    End Function
+        For Each node As Graph.Node In g.vertex
+            Call graph.AddNode(node.Clone)
+        Next
 
-    ''' <summary>
-    ''' Removes all of the selfloop and duplicated edges
-    ''' </summary>
-    ''' <param name="network"></param>
-    ''' <param name="doNothing"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function Trim(network As FileStream.NetworkTables, Optional doNothing As Boolean = False) As FileStream.NetworkTables
-        If Not doNothing Then
-            Call network.RemoveSelfLoop()
-            Call network.RemoveDuplicated()
-        End If
+        For Each edge As Graph.Edge In g.graphEdges _
+            .GroupBy(uid) _
+            .Select(Function(eg) eg.First)
 
-        Return network
+            Call New Graph.Edge With {
+                .U = graph.GetElementByID(edge.U.label),
+                .V = graph.GetElementByID(edge.V.label),
+                .isDirected = edge.isDirected,
+                .weight = edge.weight,
+                .data = edge.data
+            }.DoCall(AddressOf graph.AddEdge)
+        Next
+
+        Return graph
     End Function
 End Module

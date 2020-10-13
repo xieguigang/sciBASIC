@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Json")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Json")> 
-<Assembly: AssemblyCopyright("Copyright ©  2016")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("JSON")>
+<Assembly: AssemblyDescription("JSON")>
+<Assembly: AssemblyCompany("GPL3")>
+<Assembly: AssemblyProduct("sciBASIC.NET")>
+<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2020")>
+<Assembly: AssemblyTrademark("Microsoft VisualBasic")>
 
 <Assembly: ComVisible(False)>
 

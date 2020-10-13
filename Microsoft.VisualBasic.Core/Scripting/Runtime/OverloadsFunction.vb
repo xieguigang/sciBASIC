@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d6786f72ebfd4475e7c88b79cf84fb0, Microsoft.VisualBasic.Core\Scripting\Runtime\OverloadsFunction.vb"
+﻿#Region "Microsoft.VisualBasic::645d10c0aa2312cc9b21724e7867cd26, Microsoft.VisualBasic.Core\Scripting\Runtime\OverloadsFunction.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@ Namespace Scripting.Runtime
 
         Public Function Match(args As Type()) As MethodInfo
             Dim alignments = functions.Select(Function(m) Align(m, args)).ToArray
-            Dim p = Linq.Which.Max(alignments)
+            Dim p = Which.Max(alignments)
 
             If alignments(p) <= 0 Then
                 Return Nothing
@@ -78,7 +78,7 @@ Namespace Scripting.Runtime
         ''' Find the best matched overloads function based on the input parameter
         ''' </summary>
         ''' <param name="target"></param>
-        ''' <param name="args"></param>
+        ''' <param name="args">The type of the input parameter values</param>
         ''' <returns></returns>
         Public Shared Function Align(target As MethodInfo, args As Type()) As Double
             Dim params = target.GetParameters

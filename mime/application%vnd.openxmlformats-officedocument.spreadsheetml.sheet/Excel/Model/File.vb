@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caf7d1f20731408c078462b9a00a0bd4, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::0bbde0cabe836b47a313e3048091dfcb, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     ' Class File
     ' 
-    '     Properties: _rels, ContentTypes, docProps, FilePath, xl
+    '     Properties: _rels, ContentTypes, docProps, FilePath, MimeType
+    '                 xl
     ' 
     '     Function: AddSheetTable, CreatePackage, (+2 Overloads) GetTable, GetWorksheet, LoadDataSet
     '               Open, SheetNames, ToString, (+2 Overloads) WriteSheetTable, WriteXlsx
@@ -95,6 +96,12 @@ Public Class File : Implements IFileReference
         Set
             Call WriteSheetTable(Value, sheetName)
         End Set
+    End Property
+
+    Public ReadOnly Property MimeType As Net.Protocols.ContentTypes.ContentType() Implements IFileReference.MimeType
+        Get
+            Throw New NotImplementedException()
+        End Get
     End Property
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -163,6 +170,11 @@ Public Class File : Implements IFileReference
         End With
     End Sub
 
+    ''' <summary>
+    ''' Add new worksheet
+    ''' </summary>
+    ''' <param name="sheetName"></param>
+    ''' <returns></returns>
     Public Function AddSheetTable(sheetName As String) As worksheet
         With New csv().CreateWorksheet(xl.sharedStrings)
             Call addInternal(sheetName, .ByRef)
@@ -252,7 +264,7 @@ Public Class File : Implements IFileReference
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function Open(path$) As File
+    Public Shared Function Open(path As String) As File
         Return IO.CreateReader(xlsx:=path)
     End Function
 End Class

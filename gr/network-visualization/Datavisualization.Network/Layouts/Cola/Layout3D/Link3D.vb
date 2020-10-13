@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6acdb69e27f1d97a1966e22b96e34c4, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Link3D.vb"
+﻿#Region "Microsoft.VisualBasic::d0c94954bef5aece5f060eec11faf867, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Link3D.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.My.JavaScript
+Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 
@@ -60,7 +61,7 @@ Namespace Layouts.Cola
         End Sub
 
         Public Function actualLength(x As Double()()) As Double
-            Return Math.Sqrt(x.Reduce(Function(c As Double, v As Double())
+            Return stdNum.Sqrt(x.Reduce(Function(c As Double, v As Double())
                                           Dim dx = v(Me.target) - v(Me.source)
                                           Return c + dx * dx
                                       End Function, 0))

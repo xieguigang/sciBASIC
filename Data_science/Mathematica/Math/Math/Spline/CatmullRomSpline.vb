@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5ba7f24568bafb134271027a2621578, Data_science\Mathematica\Math\Math\Spline\CatmullRomSpline.vb"
+﻿#Region "Microsoft.VisualBasic::e5edaf5369d53c5468fdb9e5cbdd22a4, Data_science\Mathematica\Math\Math\Spline\CatmullRomSpline.vb"
 
     ' Author:
     ' 
@@ -66,7 +66,6 @@ Namespace Interpolation
         ''' Normalised distance between second and third point where the spline point will be calculated</param>
         ''' <returns>Calculated Spline Point</returns>
         ''' 
-        <ExportAPI("CatmullRom.Spline", Info:="Calculates interpolated point between two points using Catmull-Rom Spline")>
         Public Function PointOnCurve(p0 As PointF, p1 As PointF, p2 As PointF, p3 As PointF, t#) As PointF
             Dim t2! = t * t
             Dim t3! = t2 * t

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35ed3986afa53fdc102364ae466ee27f, Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a783861f00817ed88af0072d14ab6fc9, Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports stdNum = System.Math
 
 Public Module Extensions
 
@@ -61,8 +62,8 @@ Public Module Extensions
     End Function
 
     Public Function CI(m#, factor#, sd#, n%) As DoubleRange
-        Dim lower = m - factor * sd / Math.Sqrt(n)
-        Dim upper = m + factor * sd / Math.Sqrt(n)
+        Dim lower = m - factor * sd / stdNum.Sqrt(n)
+        Dim upper = m + factor * sd / stdNum.Sqrt(n)
         Return New DoubleRange(lower, upper)
     End Function
 

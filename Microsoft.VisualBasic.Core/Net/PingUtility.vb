@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffe7f62e8c3ac70f7bf03ef730c54013, Microsoft.VisualBasic.Core\Net\PingUtility.vb"
+﻿#Region "Microsoft.VisualBasic::2cbfd8ddb1c1475dea14e2d0237992d5, Microsoft.VisualBasic.Core\Net\PingUtility.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,8 @@
     ' /********************************************************************************/
 
 #End Region
+
+#If NET_48 Then
 
 Imports System.IO
 Imports System.Net
@@ -223,3 +225,5 @@ Namespace Net
         End Sub
     End Module
 End Namespace
+
+#End If

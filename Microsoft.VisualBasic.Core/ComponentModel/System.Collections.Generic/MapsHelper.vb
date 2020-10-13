@@ -1,72 +1,73 @@
-﻿#Region "Microsoft.VisualBasic::92731cf4f0f1ec25a156c62baa4adfb4, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::fac4b39bd4bf7525791d7761bc4a48ed, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MapsHelper
-    ' 
-    '         Properties: [Default]
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetEnumerator, GetValue, IEnumerable_GetEnumerator, ToString
-    ' 
-    '     Class NameMapping
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Add
-    ' 
-    '     Structure Map
-    ' 
-    '         Properties: Key, Maps
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    '         Interface IMap
-    ' 
-    '             Properties: Key, Maps
-    ' 
-    ' 
-    ' 
-    '     Structure IDMap
-    ' 
-    '         Properties: Key, Maps
-    ' 
-    '         Function: ParseFromTsv, ParseTsvFile, ToString, TSV
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MapsHelper
+' 
+'         Properties: [Default]
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetEnumerator, GetValue, IEnumerable_GetEnumerator, ToString
+' 
+'     Class NameMapping
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: Add
+' 
+'     Structure Map
+' 
+'         Properties: Key, Maps
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+'         Interface IMap
+' 
+'             Properties: Key, Maps
+' 
+' 
+' 
+'     Structure IDMap
+' 
+'         Properties: Key, Maps
+' 
+'         Function: ParseFromTsv, ParseTsvFile, ToString, TSV
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -203,10 +204,14 @@ Namespace ComponentModel
             Property Maps As V
         End Interface
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(map As Map(Of T1, V)) As (key As T1, mapAs As V)
             Return (map.Key, map.Maps)
         End Operator
+
+#End If
 
         ''' <summary>
         ''' 因为map主要的作用是获取得到key所配对的value结果，所以在这里是转换为<see cref="Maps"/>结果值的

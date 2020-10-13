@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32953287387cab420d7a37cc9605becc, Microsoft.VisualBasic.Core\Text\StringSimilarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::15a14075c62b3a7bcfa84df211f7d7da, Microsoft.VisualBasic.Core\Text\StringSimilarity\Similarity.vb"
 
     ' Author:
     ' 
@@ -50,10 +50,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.GenericLambda(Of String)
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Text.Levenshtein
 
 Namespace Text.Similarity
 

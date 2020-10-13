@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98e14fe7dba60a0bb5d627eda38da328, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
+﻿#Region "Microsoft.VisualBasic::0f246076fb7ddca2f90327800ff81986, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Structure GlobalAlign
     ' 
-    '         Properties: Length, PossibleSimilarity
+    '         Properties: Length
     ' 
-    '         Function: (+2 Overloads) ToString
+    '         Function: Identities, (+2 Overloads) ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text
 
 Namespace NeedlemanWunsch
@@ -63,11 +64,22 @@ Namespace NeedlemanWunsch
             End Get
         End Property
 
-        Public ReadOnly Property PossibleSimilarity As Double
-            Get
-                Return Score / Length
-            End Get
-        End Property
+        Public Function Identities(scoreMatrix As ScoreMatrix(Of T)) As Double
+            Dim vq As New List(Of Double)
+            Dim vs As New List(Of Double)
+
+            For i As Integer = 0 To Length - 1
+                Call vq.Add(1)
+
+                If scoreMatrix.__equals(query(i), subject(i)) Then
+                    Call vs.Add(1)
+                Else
+                    Call vs.Add(0)
+                End If
+            Next
+
+            Return SSM(vq.AsVector, vs.AsVector)
+        End Function
 
         Public Overloads Function ToString(toChar As Func(Of T, Char)) As String
             Dim q As New List(Of Char)

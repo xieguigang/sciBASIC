@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::965f8261f361f9602ad3e77e53d3e9bf, Microsoft.VisualBasic.Core\Extensions\Math\NumberEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::8972aae26a7b14ee5c1a162a754eeed1, Microsoft.VisualBasic.Core\Extensions\Math\NumberEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace Math
 
@@ -73,8 +74,8 @@ Namespace Math
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Function Equals(x As Double, y As Double) As Boolean Implements IEqualityComparer(Of Double).Equals
-            Return Math.Abs(x - y) <= _DeltaTolerance
+        Public Overridable Overloads Function Equals(x As Double, y As Double) As Boolean Implements IEqualityComparer(Of Double).Equals
+            Return stdNum.Abs(x - y) <= _DeltaTolerance
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

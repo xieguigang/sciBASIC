@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51a410bc94c90e8e86d6f3ee8c60cbd4, gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
+﻿#Region "Microsoft.VisualBasic::0b9f30f3c118ab678c0fb810423470b0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,8 @@
     '         Properties: circles, images, Layers, lines, path
     '                     polygon, polyline, rect, texts, title
     '                     transform
+    ' 
+    '         Function: ToString
     '         Operators: +
     ' 
     ' 
@@ -88,6 +90,10 @@ Namespace SVG.XML
         <XmlElement> Public Property polyline As polyline() Implements ICanvas.polyline
         <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
         <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
+
+        Public Overrides Function ToString() As String
+            Return $"{id} = '{title}'; //{XmlCommentValue}"
+        End Function
 
         Public Shared Operator +(layer As g, offset As PointF) As g
             Return New g With {

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99e80578576883b7c90fca68402a788, Data\BinaryData\DataStorage\netCDF\Data\CDFDataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::26d8822ea5f784fc397ca65b2a818101, Data\BinaryData\DataStorage\netCDF\Data\CDFDataTypes.vb"
 
     ' Author:
     ' 
@@ -87,5 +87,18 @@ Namespace netCDF
         ''' IEEE double precision floats
         ''' </summary>
         <Description("double")> [DOUBLE] = 6
+
+        ' 下面是拓展类型
+
+        ''' <summary>
+        ''' #define NC_INT64   10
+        ''' 
+        ''' probably not supports by the standard netCDF4 library on linux and NASA Panoply software...
+        ''' </summary>
+        <Description("long")> [LONG] = 10
+        ''' <summary>
+        ''' probably not supports by the standard netCDF4 library on linux and NASA Panoply software...
+        ''' </summary>
+        <Description("boolean")> [BOOLEAN] = 11
     End Enum
 End Namespace

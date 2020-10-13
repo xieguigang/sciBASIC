@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::703b70144bb5fa2f70cc17d350fce52e, Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::2766b09a7f0929a9a244f931d0fa47f8, Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,10 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: CalcOffsets, Dimensions, getDimensionList, getVariableHeaderBuffer, GlobalAttributes
+    '         Function: CalcOffsets, Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer
+    '                   GlobalAttributes
     ' 
-    '         Sub: (+2 Overloads) AddVariable, (+2 Overloads) Dispose, Save, writeAttributes
+    '         Sub: (+3 Overloads) AddVariable, (+2 Overloads) Dispose, Save, writeAttributes
     ' 
     ' 
     ' /********************************************************************************/
@@ -199,9 +200,9 @@ Namespace netCDF
 #End Region
 
         Dim output As BinaryDataWriter
-        Dim globalAttrs As attribute()
-        Dim dimensionList As Dictionary(Of String, SeqValue(Of Dimension))
-        Dim variables As List(Of variable)
+        Dim globalAttrs As New List(Of attribute)
+        Dim dimensionList As New Dictionary(Of String, SeqValue(Of Dimension))
+        Dim variables As New List(Of variable)
         Dim recordDimensionLength As UInteger
 
         Sub New(path As String, Optional encoding As Encodings = Encodings.UTF8)
@@ -222,7 +223,7 @@ Namespace netCDF
         ''' <param name="attrs"></param>
         ''' <returns></returns>
         Public Function GlobalAttributes(ParamArray attrs As attribute()) As CDFWriter
-            globalAttrs = attrs
+            Call globalAttrs.AddRange(attrs)
             Return Me
         End Function
 
@@ -235,7 +236,9 @@ Namespace netCDF
             dimensionList = [dim] _
                 .SeqIterator _
                 .ToDictionary(Function(d) d.value.name,
-                              Function(d) d)
+                              Function(d)
+                                  Return d
+                              End Function)
             Return Me
         End Function
 
@@ -314,7 +317,7 @@ Namespace netCDF
                 Call writeAttributes(output, var.attributes)
                 Call output.Write(var.type)
                 ' varSize
-                Call output.Write(var.size)
+                Call output.Write(CUInt(var.size))
                 ' version = 1, write 4 bytes
                 Call output.Write(var.offset)
                 Call output.Flush()
@@ -396,6 +399,9 @@ Namespace netCDF
                     Case CDFDataTypes.SHORT
                         Call output.Write(1)
                         Call output.Write(Short.Parse(attr.value))
+                    Case CDFDataTypes.LONG
+                        Call output.Write(1)
+                        Call output.Write(Long.Parse(attr.value))
                     Case Else
                         Throw New NotImplementedException(attr.type.Description)
                 End Select
@@ -429,6 +435,10 @@ Namespace netCDF
             }
         End Sub
 
+        Public Function getDimension(name As String) As Dimension
+            Return dimensionList.TryGetValue(name).value
+        End Function
+
         Private Function getDimensionList(dims As [Variant](Of String(), String)) As Integer()
             If dims Like GetType(String) Then
                 dims = {dims.TryCast(Of String)}
@@ -439,6 +449,10 @@ Namespace netCDF
                 .Select(Function(d) dimensionList(d).i) _
                 .ToArray
         End Function
+
+        Public Sub AddVariable(name$, data As CDFData, [dim] As Dimension, Optional attrs As attribute() = Nothing)
+            Call AddVariable(name, data, {[dim]}, attrs)
+        End Sub
 
         ''' <summary>
         ''' 如果<paramref name="dims"/>是不存在的，则会自动添加

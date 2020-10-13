@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d8f9a4e2843815a97c23b7cbedc2880, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::7446192962014c883da52c721263e340, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports signals = System.ValueTuple(Of Double, Double)
+Imports stdNum = System.Math
 
 Namespace BarPlot
 
@@ -162,7 +163,7 @@ Namespace BarPlot
                            Dim e#
 
                            For Each n In highlights
-                               e = Math.Abs(n - x)
+                               e = stdNum.Abs(n - x)
 
                                If e <= err Then
                                    Return (e, n, True)

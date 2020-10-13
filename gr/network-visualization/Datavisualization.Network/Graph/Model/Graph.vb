@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::808105be5df77e41e59a5f8ee7550b39, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::094ca0df51d6ca8c83c66dce76fad521, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) AddEdge, AddNode, Clone, ComputeIfNotExists, Copy
-    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetEdge, (+2 Overloads) GetEdges
-    '                   GetElementByID, GetNode, ToString
+    '         Function: (+3 Overloads) AddEdge, AddNode, Clone, ComputeIfNotExists, Copy
+    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedVertex, GetEdge
+    '                   (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, ToString
     ' 
     '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
     '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
@@ -91,16 +91,18 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Graph
 
     ''' <summary>
-    ''' The network graph object model, corresponding network csv table data model is <see cref="FileStream.NetworkTables"/> 
+    ''' The network graph object model
     ''' </summary>
-    Public Class NetworkGraph : Inherits GraphTheory.Network.NetworkGraph(Of Node, Edge)
+    Public Class NetworkGraph : Inherits NetworkGraph(Of Node, Edge)
         Implements ICloneable
 
         ''' <summary>
@@ -123,15 +125,10 @@ Namespace Graph
             End Get
         End Property
 
-        ''' <summary>
-        ''' <see cref="Node.Label"/>为键名
-        ''' </summary>
-        Dim _nodeSet As Dictionary(Of String, Node)
-        Dim _adjacencySet As Dictionary(Of String, AdjacencySet)
-
         Dim _nextNodeId As Integer = 0
         Dim _nextEdgeId As Integer = 0
         Dim _eventListeners As List(Of IGraphEventListener)
+        Dim _index As GraphIndex(Of Node, Edge)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New()
@@ -141,9 +138,8 @@ Namespace Graph
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
             Call MyBase.New({}, {})
 
-            _nodeSet = New Dictionary(Of String, Node)()
             _eventListeners = New List(Of IGraphEventListener)
-            _adjacencySet = New Dictionary(Of String, AdjacencySet)
+            _index = New GraphIndex(Of Node, Edge)
 
             For Each node As Node In nodes
                 Call AddNode(node)
@@ -155,8 +151,10 @@ Namespace Graph
 
             For Each node As Node In vertex
                 If node.adjacencies Is Nothing Then
-                    _adjacencySet.Add(node.label, New AdjacencySet)
-                    node.adjacencies = _adjacencySet(node.label)
+                    node.adjacencies = _index.CreateNodeAdjacencySet(node)
+                End If
+                If node.directedVertex Is Nothing Then
+                    node.directedVertex = New DirectedVertex(node.label)
                 End If
             Next
         End Sub
@@ -167,7 +165,7 @@ Namespace Graph
         Public Sub Clear()
             Call vertices.Clear()
             Call edges.Clear()
-            Call _adjacencySet.Clear()
+            Call _index.Clear()
         End Sub
 
         ''' <summary>
@@ -177,14 +175,17 @@ Namespace Graph
         ''' <param name="node"></param>
         ''' <returns></returns>
         Public Function AddNode(node As Node) As Node
-            If Not _nodeSet.ContainsKey(node.label) Then
+            If Not vertices.ContainsKey(node.label) Then
                 vertices.Add(node)
                 node.ID = buffer.GetAvailablePos
                 buffer += node
             End If
 
-            _nodeSet(node.label) = node
-            notify()
+            _index(node.label) = node
+            _index(node.label).directedVertex = New DirectedVertex(node.label)
+
+            Call notify()
+
             Return node
         End Function
 
@@ -197,17 +198,54 @@ Namespace Graph
             Return vertex.Where(Function(n) n.ID = id).FirstOrDefault
         End Function
 
+        ''' <summary>
+        ''' 根据node节点的label来查找
+        ''' </summary>
+        ''' <param name="labelID"><see cref="Node.label"/></param>
+        ''' <param name="dataLabel"></param>
+        ''' <returns></returns>
+        Public Function GetElementByID(labelID$, Optional dataLabel As Boolean = False) As Node
+            If Not dataLabel AndAlso vertices.ContainsKey(labelID) Then
+                Return vertices(labelID)
+            Else
+                Return vertex _
+                    .Where(Function(n)
+                               Return n.data.label = labelID
+                           End Function) _
+                    .FirstOrDefault
+            End If
+        End Function
+
+        Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As NetworkGraph(Of Node, Edge)
+            Call New EdgeData With {
+                .bends = {},
+                .label = $"{u}->{v}"
+            }.DoCall(Function(data)
+                         ' 在利用这个函数创建edge的时候，
+                         ' 会将创建出来的新edge添加进入当前的这个图对象之中
+                         ' 所以不需要再次调用addedge方法了
+                         Return CreateEdge(GetElementByID(u), GetElementByID(v), weight, data)
+                     End Function)
+
+            Return Me
+        End Function
+
         Public Overloads Function AddEdge(edge As Edge) As Edge
             If Not edges.ContainsKey(edge.ID) Then
                 Call edges.Add(edge.ID, edge)
             End If
 
-            If Not (_adjacencySet.ContainsKey(edge.U.label)) Then
-                _adjacencySet(edge.U.label) = New AdjacencySet With {.U = edge.U.label}
-                edge.U.adjacencies = _adjacencySet(edge.U.label)
-            End If
+            Dim tuple = _index.AddEdge(edge)
 
-            Call _adjacencySet(edge.U.label).Add(edge)
+            ' gr.addEdge(edge)
+            ' tail.addOutgoingEdge(edge)
+            ' head.addIncomingEdge(edge)
+
+            edge.U.adjacencies = tuple.U
+            edge.V.adjacencies = tuple.V
+            edge.U.directedVertex.addEdge(edge)
+            edge.V.directedVertex.addEdge(edge)
+
             Call notify()
 
             Return edge
@@ -229,15 +267,15 @@ Namespace Graph
             Dim u, v As Node
 
             For Each listTrav In dataList
-                If Not _nodeSet.ContainsKey(listTrav.aId) Then
+                If Not vertices.ContainsKey(listTrav.aId) Then
                     Continue For
-                ElseIf Not _nodeSet.ContainsKey(listTrav.bId) Then
+                ElseIf Not vertices.ContainsKey(listTrav.bId) Then
                     Continue For
                 Else
-                    u = _nodeSet(listTrav.aId)
-                    v = _nodeSet(listTrav.bId)
+                    u = _index(listTrav.aId)
+                    v = _index(listTrav.bId)
 
-                    createEdgeInternal(u, v, listTrav.data)
+                    createEdgeInternal(u, v, listTrav.data, 0)
                 End If
             Next
         End Sub
@@ -246,15 +284,15 @@ Namespace Graph
             Dim u, v As Node
 
             For Each listTrav As KeyValuePair(Of String, String) In linkList
-                If Not _nodeSet.ContainsKey(listTrav.Key) Then
+                If Not vertices.ContainsKey(listTrav.Key) Then
                     Continue For
-                ElseIf Not _nodeSet.ContainsKey(listTrav.Value) Then
+                ElseIf Not vertices.ContainsKey(listTrav.Value) Then
                     Continue For
                 Else
-                    u = _nodeSet(listTrav.Key)
-                    v = _nodeSet(listTrav.Value)
+                    u = _index(listTrav.Key)
+                    v = _index(listTrav.Value)
 
-                    createEdgeInternal(u, v, Nothing)
+                    createEdgeInternal(u, v, Nothing, 0)
                 End If
             Next
         End Sub
@@ -274,8 +312,11 @@ Namespace Graph
         ''' <remarks>
         ''' 使用这个函数所构建的节点对象的<see cref="Node.ID"/>是自增的，<paramref name="label"/>则会赋值给<see cref="Node.Label"/>属性
         ''' </remarks>
-        Public Function CreateNode(label As String) As Node
-            Dim data As New NodeData With {.label = label}
+        Public Function CreateNode(label As String, Optional data As NodeData = Nothing) As Node
+            If data Is Nothing Then
+                data = New NodeData With {.label = label}
+            End If
+
             Dim tNewNode As New Node(label, data) With {
                 .ID = _nextNodeId
             }
@@ -284,8 +325,10 @@ Namespace Graph
             Return tNewNode
         End Function
 
-        Private Function createEdgeInternal(u As Node, v As Node, data As EdgeData) As Edge
-            Dim tNewEdge As New Edge(_nextEdgeId.ToString(), u, v, data)
+        Private Function createEdgeInternal(u As Node, v As Node, data As EdgeData, weight#) As Edge
+            Dim tNewEdge As New Edge(_nextEdgeId.ToString(), u, v, data) With {
+                .weight = weight
+            }
             _nextEdgeId += 1
             AddEdge(tNewEdge)
             Return tNewEdge
@@ -298,11 +341,11 @@ Namespace Graph
         ''' <param name="v"></param>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Overloads Function CreateEdge(u As Node, v As Node, Optional data As EdgeData = Nothing) As Edge
+        Public Overloads Function CreateEdge(u As Node, v As Node, Optional weight# = 0, Optional data As EdgeData = Nothing) As Edge
             If u Is Nothing OrElse v Is Nothing Then
                 Return Nothing
             Else
-                Return createEdgeInternal(u, v, data)
+                Return createEdgeInternal(u, v, data, weight)
             End If
         End Function
 
@@ -313,43 +356,67 @@ Namespace Graph
         ''' <param name="target"></param>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Overloads Function CreateEdge(source As String, target As String, Optional data As EdgeData = Nothing) As Edge
-            If Not _nodeSet.ContainsKey(source) Then
+        Public Overloads Function CreateEdge(source As String, target As String, Optional weight# = 0, Optional data As EdgeData = Nothing) As Edge
+            If Not vertices.ContainsKey(source) Then
                 Return Nothing
             End If
-            If Not _nodeSet.ContainsKey(target) Then
+            If Not vertices.ContainsKey(target) Then
                 Return Nothing
             End If
 
-            Dim u As Node = _nodeSet(source)
-            Dim v As Node = _nodeSet(target)
+            Dim u As Node = _index(source)
+            Dim v As Node = _index(target)
 
-            Return createEdgeInternal(u, v, data)
+            If data Is Nothing Then
+                data = New EdgeData
+            End If
+
+            Return createEdgeInternal(u, v, data, weight)
         End Function
 
+        Public Overloads Function GetConnectedVertex(label As String) As Node()
+            Dim node As Node = GetElementByID(label)
+            Dim edges As Edge() = GetEdges(node).ToArray
+            Dim connectedNodes As Node() = edges _
+                .Select(Function(e) {e.U, e.V}) _
+                .IteratesALL _
+                .Where(Function(n)
+                           Return Not n Is node
+                       End Function) _
+                .ToArray
+
+            Return connectedNodes
+        End Function
+
+        ''' <summary>
+        ''' 获取目标两个节点之间的所有的重复的边连接
+        ''' </summary>
+        ''' <param name="u"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetEdges(u As Node, v As Node) As IEnumerable(Of Edge)
-            If u Is Nothing OrElse v Is Nothing Then
-                Return Nothing
-            ElseIf Not _adjacencySet.ContainsKey(u.label) Then
-                Return Nothing
-            Else
-                Return _adjacencySet(u.label).EnumerateAllEdges(v)
-            End If
+            Return _index.GetEdges(u, v)
         End Function
 
+        ''' <summary>
+        ''' 获取得到与目标节点所有相连接的节点
+        ''' </summary>
+        ''' <param name="iNode"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetEdges(iNode As Node) As IEnumerable(Of Edge)
-            If Not _adjacencySet.ContainsKey(iNode.label) Then
-                Return {}
-            Else
-                Return _adjacencySet(iNode.label).EnumerateAllEdges
-            End If
+            Return _index.GetEdges(iNode.label)
         End Function
 
+        ''' <summary>
+        ''' 应该使用这个方法来安全的删除节点
+        ''' </summary>
+        ''' <param name="node"></param>
         Public Sub RemoveNode(node As Node)
-            If _nodeSet.ContainsKey(node.label) Then
-                _nodeSet.Remove(node.label)
-            End If
-
+            Call _index.Delete(node)
             Call vertices.Remove(node)
             Call DetachNode(node)
         End Sub
@@ -374,29 +441,10 @@ Namespace Graph
         ''' </summary>
         ''' <param name="edge"></param>
         Public Sub RemoveEdge(edge As Edge)
-            Dim u_adjacencySet As AdjacencySet = _adjacencySet(edge.U.label)
-
+            Call _index.RemoveEdge(edge)
             Call edges.Remove(edge.ID)
-            Call u_adjacencySet.Remove(edge.V)
-
-            If u_adjacencySet.Count = 0 Then
-                Call _adjacencySet.Remove(edge.U.label)
-            End If
-
             Call notify()
         End Sub
-
-        ''' <summary>
-        ''' 根据node节点的label来查找
-        ''' </summary>
-        ''' <param name="label"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetNode(label As String) As Node
-            Return vertex _
-                .Where(Function(n) n.label = label OrElse n.data.label = label) _
-                .FirstOrDefault
-        End Function
 
         ''' <summary>
         ''' Find edge by label data
@@ -490,36 +538,22 @@ Namespace Graph
         ''' 因为克隆之后的操作可能会涉及对边或者节点对象的修改操作
         ''' </remarks>
         Private Function Clone() As Object Implements ICloneable.Clone
-            Dim vertices As New Dictionary(Of Node)
-            Dim edges As New List(Of Edge)
+            Dim g As New NetworkGraph
+
+            For Each v In vertex
+                g.CreateNode(v.label, v.data.Clone)
+            Next
 
             For Each edge As Edge In graphEdges
-                Dim U = ComputeIfNotExists(vertices, edge.U)
-                Dim V = ComputeIfNotExists(vertices, edge.V)
-
-                edges += New Edge With {
-                    .data = New EdgeData(edge.data),
-                    .U = U,
-                    .V = V,
-                    .ID = edge.ID,
-                    .isDirected = edge.isDirected,
-                    .weight = edge.weight
-                }
+                g.CreateEdge(
+                    u:=g.GetElementByID(edge.U.label),
+                    v:=g.GetElementByID(edge.V.label),
+                    weight:=edge.weight,
+                    data:=edge.data.Clone
+                )
             Next
 
-            ' 可能存在有孤立的节点
-            ' 这个也需要添加加进来
-            For Each node As Node In Me.vertex
-                Call ComputeIfNotExists(vertices, node)
-            Next
-
-            Dim copy As New NetworkGraph(vertices.Values, edges)
-
-            For Each node In copy.vertex
-
-            Next
-
-            Return copy
+            Return g
         End Function
 
         ''' <summary>

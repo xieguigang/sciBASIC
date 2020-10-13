@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f55079416fa4e426c9ddc24cb67e498f, Data\BinaryData\DataStorage\ASN.1\StreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::e577eb24481de28e455573da93359a80, Data\BinaryData\DataStorage\ASN.1\StreamReader.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,6 @@
 
     ' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: hexByte, stringCut
-    ' 
     '     Class StreamReader
     ' 
     '         Properties: [get]
@@ -48,31 +44,9 @@
 
 #End Region
 
-Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 
 Namespace ASN1
-
-    Module Extensions
-
-        Public Function stringCut(str$, len%) As String
-            If (str.Length > len) Then
-                str = str.Substring(0, len) & "..."
-            End If
-
-            Return str
-        End Function
-
-        Public Const hexDigits = "0123456789ABCDEF"
-        Public Const b64Safe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
-
-        Public ReadOnly reTimeS As New Regex("^(\d\d)(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])([01]\d|2[0-3])(?:([0-5]\d)(?:([0-5]\d)(?:[.,](\d{1,3}))?)?)?(Z|[-+](?:[0]\d|1[0-2])([0-5]\d)?)?$", RegexICMul)
-        Public ReadOnly reTimeL As New Regex("^(\d\d\d\d)(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])([01]\d|2[0-3])(?:([0-5]\d)(?:([0-5]\d)(?:[.,](\d{1,3}))?)?)?(Z|[-+](?:[0]\d|1[0-2])([0-5]\d)?)?$", RegexICMul)
-
-        Public Function hexByte(b As Byte) As String
-            Return hexDigits((b >> 4) And &HF) & hexDigits(b And &HF)
-        End Function
-    End Module
 
     ''' <summary>
     ''' 
@@ -140,7 +114,7 @@ Namespace ASN1
             Return True
         End Function
 
-        Public Function parseStringISO(start%, end%)
+        Public Function parseStringISO(start%, end%) As String
             Dim s = ""
             For i As Integer = start To end% - 1
                 s &= Chr(Me.get(i))
@@ -148,38 +122,50 @@ Namespace ASN1
             Return s
         End Function
 
-        Function ex(c) ' must be 10xxxxxx
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="c">must be 10xxxxxx</param>
+        ''' <returns></returns>
+        Function ex(c As Integer) As String
             If ((c < &H80) OrElse (c >= &HC0)) Then
                 Throw New Exception("Invalid UTF-8 continuation byte: " & c)
             End If
+
             Return (c & &H3F)
         End Function
 
-        Function surrogate(cp)
+        Function surrogate(cp As Integer) As String
             If (cp < &H10000) Then
                 Throw New Exception("UTF-8 overlong encoding, codepoint encoded in 4 bytes: " + cp)
             End If
+
             ' we could use String.fromCodePoint(cp) but Let's be nice to older browsers and use surrogate pairs
             cp -= &H10000
+
             Return Chr((cp >> 10) + &HD800) & Chr((cp And &H3FF) + &HDC00)
         End Function
 
-        Public Function parseStringUTF(start%, end%)
+        Public Function parseStringUTF(start%, end%) As String
             Dim s = ""
 
             For j As Integer = start To end% - 1
                 Dim i As i32 = j
                 Dim C = Me.get(++i)
 
-                If (C < &H80) Then  ' 0xxxxxxx (7 bit)
+                If (C < &H80) Then
+                    ' 0xxxxxxx (7 bit)
                     s += Chr(C)
                 ElseIf (C < &HC0) Then
                     Throw New Exception("Invalid UTF-8 starting byte: " + C)
-                ElseIf (C < &HE0) Then ' 110xxxxx 10xxxxxx (11 bit)
+                ElseIf (C < &HE0) Then
+                    ' 110xxxxx 10xxxxxx (11 bit)
                     s += Chr(((C & &H1F) << 6) Or ex(Me.get(++i)))
-                ElseIf (C < &HF0) Then ' 1110xxxx 10xxxxxx 10xxxxxx (16 bit)
+                ElseIf (C < &HF0) Then
+                    ' 1110xxxx 10xxxxxx 10xxxxxx (16 bit)
                     s += Chr(((C & &HF) << 12) Or (ex(Me.get(++i)) << 6) Or ex(Me.get(++i)))
-                ElseIf (C < &HF8) Then ' 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx (21 bit)
+                ElseIf (C < &HF8) Then
+                    ' 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx (21 bit)
                     s += surrogate(((C And &H7) << 18) Or (ex(Me.get(++i)) << 12) Or (ex(Me.get(++i)) << 6) Or ex(Me.get(++i)))
                 Else
                     Throw New Exception("Invalid UTF-8 starting byte (since 2003 it is restricted to 4 bytes): " + C)
@@ -191,9 +177,10 @@ Namespace ASN1
             Return s
         End Function
 
-        Public Function parseStringBMP(start%, end%)
+        Public Function parseStringBMP(start%, end%) As String
             Dim str = ""
             Dim hi, lo
+
             For j As Integer = start To end% - 1
                 Dim i As i32 = j
 
@@ -201,10 +188,11 @@ Namespace ASN1
                 lo = Me.get(++i)
                 str += Chr((hi << 8) Or lo)
             Next
+
             Return str
         End Function
 
-        Public Function parseTime(start%, end%, shortYear As Boolean)
+        Public Function parseTime(start%, end%, shortYear As Boolean) As String
             Dim s = parseStringISO(start, end%)
             Dim m = If(shortYear, reTimeS, reTimeL).Matches(s).ToArray
 
@@ -218,7 +206,9 @@ Namespace ASN1
                 m(1) = +m(1)
                 m(1) += If(m(1) < 70, 2000, 1900)
             End If
+
             s = m(1) + "-" + m(2) + "-" + m(3) + " " + m(4)
+
             If (m(5)) Then
                 s += ":" + m(5)
                 If (m(6)) Then
@@ -228,6 +218,7 @@ Namespace ASN1
                     End If
                 End If
             End If
+
             If (m(8)) Then
                 s += " UTC"
                 If (m(8) <> "Z") Then
@@ -237,6 +228,7 @@ Namespace ASN1
                     End If
                 End If
             End If
+
             Return s
         End Function
 

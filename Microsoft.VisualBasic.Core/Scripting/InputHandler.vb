@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::977e2800b5b5a1a01e74f93e04fd092e, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::9ca85436366fe23ca71b4dbea0002ffd, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: [String], CasterString, Types
     ' 
     '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+2 Overloads) CTypeDynamic
-    '                   DefaultTextParser, IsPrimitive, StringParser, (+2 Overloads) ToString
+    '                   DefaultTextParser, IsPrimitive, ParseDateTime, StringParser, (+2 Overloads) ToString
     ' 
     '         Sub: CapabilityPromise
     ' 
@@ -53,6 +53,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
@@ -111,13 +112,33 @@ Namespace Scripting
         End Function
 
         ''' <summary>
+        ''' Parsing the dat value from the expression text, if any exception happend, a null date value will returned.
+        ''' (空字符串会返回空的日期)
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        '''
+        <ExportAPI("Date.Parse")>
+        <Extension> Public Function ParseDateTime(s As String) As Date
+            If String.IsNullOrEmpty(s) Then
+                Return New Date
+            Else
+                Return DateTime.Parse(s)
+            End If
+        End Function
+
+        ''' <summary>
         ''' Converts a string expression which was input from the console or script file to the specified type.
         ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值，空字符串也会返回空值)
         ''' </summary>
         ''' <param name="expression">The string expression to convert.</param>
         ''' <param name="target">The type to which to convert the object.</param>
         ''' <returns>An object whose type at run time is the requested target type.</returns>
-        <Extension> Public Function CTypeDynamic(expression$, target As Type) As Object
+        ''' <remarks>
+        ''' If all failure, then will try <see cref="Conversion.CTypeDynamic"/>
+        ''' </remarks>
+        <Extension>
+        Public Function CTypeDynamic(expression$, target As Type) As Object
             If expression.StringEmpty Then
                 Return Nothing
             End If
@@ -145,7 +166,7 @@ Namespace Scripting
                     errCaster.Add(expression & "|" & target.FullName)
                 End If
 
-                ex = New Exception($"{expression} ==> {target.FullName}", ex)
+                ex = New Exception($"{expression} => {target.FullName}", ex)
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
                 Return Nothing
             End Try
@@ -262,12 +283,12 @@ Namespace Scripting
             If Types.ContainsKey(lowers) Then
                 Return Types(lowers)
             Else
-                Dim typeInfo As Type = Type.GetType(name, False, True)
+                Dim type As Type = Type.GetType(name, False, True)
 
-                If typeInfo Is Nothing AndAlso objectGeneric Then
+                If type Is Nothing AndAlso objectGeneric Then
                     Return GetType(Object)
                 Else
-                    Return typeInfo
+                    Return type
                 End If
             End If
         End Function
@@ -330,11 +351,14 @@ Namespace Scripting
         ''' 2. 对于<see cref="Byte"/>数组则是被编码为base64字符串
         ''' </summary>
         ''' <param name="obj"></param>
+        ''' <param name="originToStringAsNothing">
+        ''' Result of <see cref="Object.ToString"/> as nothing
+        ''' </param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function ToString(obj As Object, Optional null$ = "") As String
-            Return CStrSafe(obj, null)
+        Public Function ToString(obj As Object, Optional null$ = "", Optional originToStringAsNothing As Boolean = False) As String
+            Return CStrSafe(obj, null, originToStringAsNothing)
         End Function
 
         ''' <summary>
@@ -371,6 +395,8 @@ Namespace Scripting
         ''' <param name="array"></param>
         ''' <param name="type">数组里面的元素的类型</param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function [DirectCast](array As Object(), type As Type) As Object
             Dim out = CreateInstance(type, array.Length)
             Call Copy(array, out, array.Length) ' 直接复制不能够正常工作

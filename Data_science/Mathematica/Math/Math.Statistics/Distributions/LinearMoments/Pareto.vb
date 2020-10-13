@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d06100c688c5042a4c7596d0798b2fca, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Pareto.vb"
+﻿#Region "Microsoft.VisualBasic::9ba0188a43ca2000189a3c7bb69c7234, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Pareto.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,7 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -86,20 +85,20 @@ Namespace Distributions.LinearMoments
         End Sub
         Public Overrides Function GetInvCDF(probability As Double) As Double
             If _K <> 0 Then
-                Return _Xi + (_Alpha * (1 - Math.Pow(1 - probability, _K)) / _K)
+                Return _Xi + (_Alpha * (1 - stdNum.Pow(1 - probability, _K)) / _K)
             Else
-                Return _Xi - _Alpha * Math.Log(1 - probability)
+                Return _Xi - _Alpha * stdNum.Log(1 - probability)
             End If
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
-            Return 1 - Math.Exp(-Y(value))
+            Return 1 - stdNum.Exp(-Y(value))
         End Function
         Public Overrides Function GetPDF(value As Double) As Double
-            Return (1 / _Alpha) * Math.Exp(-(1 - _K) * Y(value))
+            Return (1 / _Alpha) * stdNum.Exp(-(1 - _K) * Y(value))
         End Function
         Public Overridable Function Y(value As Double) As Double
             If _K <> 0 Then
-                Return (1 / -_K) * Math.Log(1 - _K * (value - _Xi) / _Alpha)
+                Return (1 / -_K) * stdNum.Log(1 - _K * (value - _Xi) / _Alpha)
             Else
                 Return (value - _Xi) / _Alpha
             End If

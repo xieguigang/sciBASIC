@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::345fbff285748351ce8c5ff011f25344, gr\network-visualization\Datavisualization.Network\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::353177286d4802108858fdc51907fc4f, gr\network-visualization\Datavisualization.Network\test\Module1.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 
@@ -50,7 +51,7 @@ Module Module1
 
     Sub Main()
 
-        Dim graph = GraphAPI.CytoscapeExportAsGraph(
+        Dim graph = CytoscapeTableLoader.CytoscapeExportAsGraph(
         "D:\GCModeller\src\runtime\sciBASIC#\gr\Datavisualization.Network\net_test\xcb-main-Edges.csv",
         "D:\GCModeller\src\runtime\sciBASIC#\gr\Datavisualization.Network\net_test\xcb-main-Nodes.csv")
 

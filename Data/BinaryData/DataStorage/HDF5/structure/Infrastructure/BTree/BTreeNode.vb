@@ -57,6 +57,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader

@@ -67,5 +67,14 @@ Namespace Javascript
         End Property
 #End Region
 
+        Protected Shared Sub DisposeObjects(obj As JsonElement)
+            If TypeOf obj Is JsonObject Then
+                Call DirectCast(obj, JsonObject).Dispose()
+            ElseIf TypeOf obj Is JsonArray Then
+                Call DirectCast(obj, JsonArray).list.DoEach(AddressOf DisposeObjects)
+                Call DirectCast(obj, JsonArray).list.Clear()
+            End If
+        End Sub
+
     End Class
 End Namespace

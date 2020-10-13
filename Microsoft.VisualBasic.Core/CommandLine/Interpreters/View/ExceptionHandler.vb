@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9bd4ed1ebd97efa821f0d22538001dd, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ExceptionHandler.vb"
+﻿#Region "Microsoft.VisualBasic::d83678903e88759a9090bbdc346641ed, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ExceptionHandler.vb"
 
     ' Author:
     ' 
@@ -48,9 +48,9 @@
 #End Region
 
 Imports System.Reflection
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Terminal
 
 Namespace CommandLine.ManView
 

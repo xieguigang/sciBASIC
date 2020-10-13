@@ -10,8 +10,8 @@
     <AssemblyName>Microsoft.VisualBasic.Data.Storage</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <Deterministic>true</Deterministic>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,7 +64,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_x64%29|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU' ">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\GCModeller%28Release_x64%29\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
@@ -74,15 +74,17 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_x64%29|x64'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64' ">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\GCModeller%28Release_x64%29\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -123,6 +125,7 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack-Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -229,7 +232,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_x64%29|x86'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86' ">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\GCModeller%28Release_x64%29\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
@@ -301,6 +304,194 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\GCModeller%28UNIX-Release_X64%29\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\GCModeller%28UNIX-Release_X64%29\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\DEMO\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\DEMO\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\DEMO\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Rsharp_app_release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\mzkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\BioDeep_database\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\BioDeep_database\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\BioDeep_database\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Surveillance-of-infectious-diseases\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Surveillance-of-infectious-diseases\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Surveillance-of-infectious-diseases\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -323,6 +514,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASN.1\Extensions.vb" />
+    <Compile Include="ASN.1\Index.vb" />
     <Compile Include="ASN.1\StreamReader.vb" />
     <Compile Include="HDF5\dataset\ChunkedDatasetV3.vb" />
     <Compile Include="HDF5\dataset\CompactDataset.vb" />
@@ -412,6 +605,33 @@
     <Compile Include="netCDF\netCDFReader.vb" />
     <Compile Include="netCDF\ToString.vb" />
     <Compile Include="netCDF\Utils.vb" />
+    <Compile Include="SQLite3\Extensions.vb" />
+    <Compile Include="SQLite3\Helpers\BTreeTools.vb" />
+    <Compile Include="SQLite3\Helpers\ReadonlyStream.vb" />
+    <Compile Include="SQLite3\Helpers\SqliteDataStream.vb" />
+    <Compile Include="SQLite3\Helpers\StreamHelper.vb" />
+    <Compile Include="SQLite3\Internal\ReaderBase.vb" />
+    <Compile Include="SQLite3\Objects\BTreeCellData.vb" />
+    <Compile Include="SQLite3\Objects\BTreeInteriorTablePage.vb" />
+    <Compile Include="SQLite3\Objects\BTreeLeafTablePage.vb" />
+    <Compile Include="SQLite3\Objects\BTreePage.vb" />
+    <Compile Include="SQLite3\Objects\ColumnDataMeta.vb" />
+    <Compile Include="SQLite3\Objects\Enums\BTreeType.vb" />
+    <Compile Include="SQLite3\Objects\Enums\FileReadVersion.vb" />
+    <Compile Include="SQLite3\Objects\Enums\FileWriteVersion.vb" />
+    <Compile Include="SQLite3\Objects\Enums\SqliteDataType.vb" />
+    <Compile Include="SQLite3\Objects\Enums\SqliteEncoding.vb" />
+    <Compile Include="SQLite3\Objects\Headers\BTreeHeader.vb" />
+    <Compile Include="SQLite3\Objects\Headers\DatabaseHeader.vb" />
+    <Compile Include="SQLite3\Schema\Extensions.vb" />
+    <Compile Include="SQLite3\Schema\SQLParser.vb" />
+    <Compile Include="SQLite3\Schema\Schema.vb" />
+    <Compile Include="SQLite3\Sqlite3Database.vb" />
+    <Compile Include="SQLite3\Sqlite3Settings.vb" />
+    <Compile Include="SQLite3\Tables\Sqlite3MasterTable.vb" />
+    <Compile Include="SQLite3\Tables\Sqlite3Row.vb" />
+    <Compile Include="SQLite3\Tables\Sqlite3SchemaRow.vb" />
+    <Compile Include="SQLite3\Tables\Sqlite3Table.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

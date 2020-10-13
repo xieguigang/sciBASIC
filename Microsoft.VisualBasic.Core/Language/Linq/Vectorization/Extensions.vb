@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c4353d24abf909ca2603923128841d9, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a04d31342f9719ac8e8b95597bb778b3, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Extensions.vb"
 
     ' Author:
     ' 
@@ -63,6 +63,13 @@ Namespace Language.Vectorization
             Return New Vector(Of T)(list)
         End Function
 
+        ''' <summary>
+        ''' Dynamics add a element into the target array.(注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Add(Of T)(x As Vector(Of T), obj As T) As Vector(Of T)
             Call x.Array.Add(obj)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b140e1247998449c2e44aee59c798206, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb"
+﻿#Region "Microsoft.VisualBasic::3dbae4711a9e602a3a9daf2f1771469d, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Structure LogEntry
     ' 
-    '         Properties: [Object], [Type], Msg, Time
+    '         Properties: [object], level, message, time
     ' 
-    '         Function: FormatMessage, ToString, TrimObject
+    '         Function: FormatMessage, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,47 +43,46 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 
 Namespace ApplicationServices.Debugging.Logging
 
+    ''' <summary>
+    ''' 一条记录日志对象
+    ''' </summary>
     Public Structure LogEntry
 
-        Public Property Msg As String
-        Public Property [Object] As String
-        Public Property [Type] As MSG_TYPES
-        Public Property Time As Date
+        Public Property message As String
+        Public Property [object] As String
+        Public Property level As MSG_TYPES
+        Public Property time As Date
 
         ''' <summary>
         ''' 生成日志文档之中的一行记录数据
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Dim obj As String = TrimObject()
+            Dim obj As String = [object].TrimNewLine
             Dim str As String
 
-            If Msg.Contains(vbCr) OrElse Msg.Contains(vbLf) Then  '多行模式
-                str = $"[{Time.ToString}][{Type.ToString}][{[obj]}]{vbCrLf}{Msg}"
-            Else                '单行模式
-                str = $"[{Time.ToString}][{Type.ToString}][{[obj]}] {Msg}"
+            If message.Contains(vbCr) OrElse message.Contains(vbLf) Then
+                ' 多行模式
+                str = $"[{time.ToString}][{level.ToString}][{[obj]}]{vbCrLf}{message}"
+            Else
+                ' 单行模式
+                str = $"[{time.ToString}][{level.ToString}][{[obj]}] {message}"
             End If
 
-            Return str & vbCrLf
+            Return str
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FormatMessage(header$, message$, level As MSG_TYPES) As String
             Return New LogEntry With {
-                .Msg = message,
-                .Object = header,
-                .Type = level,
-                .Time = Now
+                .message = message,
+                .[object] = header,
+                .level = level,
+                .time = Now
             }.ToString
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function TrimObject() As String
-            Return Object$.Replace(vbCr, " ").Replace(vbLf, " ")
         End Function
     End Structure
 End Namespace

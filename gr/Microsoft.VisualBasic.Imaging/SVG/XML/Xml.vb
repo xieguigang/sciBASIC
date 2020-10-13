@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::299ecf4456202d88edad01848ac39ad2, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::6d6c519d9ad4a4293658d6ef668ec199, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@
     '         Properties: height, rx, ry, width, x
     '                     y
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Operators: +
     ' 
     '     Class path
@@ -78,6 +78,8 @@
     ' 
     '         Properties: anchor, dy, transform, value, x
     '                     y
+    ' 
+    '         Function: ToString
     '         Operators: +
     ' 
     ' 
@@ -203,6 +205,15 @@ Namespace SVG.XML
         Sub New()
         End Sub
 
+        Sub New(rect As RectangleF)
+            With Me
+                .width = rect.Width
+                .height = rect.Height
+                .x = rect.X
+                .y = rect.Y
+            End With
+        End Sub
+
         Sub New(rect As Rectangle)
             With Me
                 .width = rect.Width
@@ -310,6 +321,10 @@ Namespace SVG.XML
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property x As String
+
+        Public Overrides Function ToString() As String
+            Return $"[{x}, {y}] {value}"
+        End Function
 
         Public Shared Operator +(text As text, offset As PointF) As text
             text = DirectCast(text.MemberwiseClone, text)

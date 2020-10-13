@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd7f316870c022eafb90f9f5678740fe, Data\BinaryData\DataStorage\HDF5\device\ReadHelper.vb"
+﻿#Region "Microsoft.VisualBasic::39dff2e3b8a2bf19a8d670882f5520aa, Data\BinaryData\DataStorage\HDF5\device\ReadHelper.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
+Imports stdNum = System.Math
 
 Namespace HDF5.device
 
@@ -229,7 +230,7 @@ Namespace HDF5.device
         End Function
 
         Public Function readVariableSizeFactor([in] As BinaryReader, sizeFactor As Integer) As Long
-            Dim size As Integer = CInt(Math.Truncate(Math.Pow(2, sizeFactor)))
+            Dim size As Integer = CInt(stdNum.Truncate(stdNum.Pow(2, sizeFactor)))
             Return readVariableSizeUnsigned([in], size)
         End Function
 

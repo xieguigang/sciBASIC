@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d1efa6a209cd7ffaec8999c2a3e45f3, Microsoft.VisualBasic.Core\CommandLine\GitBashEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::e38c01d0026c45fa72b97ebdb2675015, Microsoft.VisualBasic.Core\CommandLine\GitBashEnvironment.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,7 @@ Namespace CommandLine
                 .Select(Function(t) t.Replace(gitBash, "")) _
                 .ToArray
             Dim cliString$ = tokens.JoinBy(" ")
-            Dim cli = CLITools.TryParse(tokens, False, cliString)
+            Dim cli = Parsers.TryParse(tokens, False, cliString)
 
             Return cli
         End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a64a2f3951ad63fc29ea88edc624c9da, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::78f100f1b99e42a5939ac4e6ae253402, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 
@@ -35,19 +35,22 @@
     ' 
     '         Properties: File, Line, Method
     ' 
-    '         Function: Parser, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Parser, parserImpl, ToString
     ' 
     '     Class Method
     ' 
     '         Properties: [Module], [Namespace], Method
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Debugging.Diagnostics
 
@@ -69,32 +72,59 @@ Namespace ApplicationServices.Debugging.Diagnostics
         ''' <returns></returns>
         Public Property Line As String
 
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' make value copy
+        ''' </summary>
+        ''' <param name="clone"></param>
+        Sub New(clone As StackFrame)
+            File = clone.File
+            Line = clone.Line
+            Method = New Method With {
+                .Method = clone.Method.Method,
+                .[Module] = clone.Method.Module,
+                .[Namespace] = clone.Method.Namespace
+            }
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{Method} at {File}:line {Line}"
         End Function
 
         Public Shared Function Parser(line As String) As StackFrame
             With line.Replace("位置", "in").Replace("行号", "line")
-                Dim t = .StringSplit(" in ")
-                Dim method = t(0)
-                Dim location = t.ElementAtOrDefault(1)
-                Dim file$, lineNumber$
+                Return .StringSplit(" in ").DoCall(AddressOf parserImpl)
+            End With
+        End Function
 
-                If Not location.StringEmpty Then
-                    t = location.StringSplit("[:]line ")
-                    file = t(0)
-                    lineNumber = t(1)
-                Else
+        Private Shared Function parserImpl(t As String()) As StackFrame
+            Dim method As String = t(0)
+            Dim location As String = t.ElementAtOrDefault(1)
+            Dim file$, lineNumber$
+
+            If Not location.StringEmpty Then
+                t = location.StringSplit("[:]line ")
+
+                If t.Length = 1 Then
+                    ' on mono environment
                     file = "Unknown"
                     lineNumber = 0
+                Else
+                    file = t(0)
+                    lineNumber = t(1)
                 End If
+            Else
+                file = "Unknown"
+                lineNumber = 0
+            End If
 
-                Return New StackFrame With {
-                    .Method = New Method(method),
-                    .File = file,
-                    .Line = lineNumber
-                }
-            End With
+            Return New StackFrame With {
+                .Method = New Method(method),
+                .File = file,
+                .Line = lineNumber
+            }
         End Function
     End Class
 
@@ -103,6 +133,9 @@ Namespace ApplicationServices.Debugging.Diagnostics
         Public Property [Namespace] As String
         Public Property [Module] As String
         Public Property Method As String
+
+        Sub New()
+        End Sub
 
         Sub New(s As String)
             Dim t = s.Split("."c).AsList

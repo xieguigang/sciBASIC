@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03ff858003686cc92d3eab5acd654e71, Microsoft.VisualBasic.Core\Extensions\Image\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::057fc5da2dcf25d977dd52a55e858a9a, Microsoft.VisualBasic.Core\Extensions\Image\TiffWriter.vb"
 
     ' Author:
     ' 
@@ -35,26 +35,22 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __bitmaps, __getPageNumber, ConvertToBitonal, ExistingFileSave, GetCodec
-    '                   GetEnumerator, IEnumerable_GetEnumerator, MultipageTiffSave, SaveMultipage, SaveToExistingFile
+    '         Function: ConvertToBitonal, ExistingFileSave, GetCodec, GetEnumerator, getPageNumber
+    '                   IEnumerable_GetEnumerator, layers2Bitmaps, MultipageTiffSave, SaveMultipage, SaveToExistingFile
     ' 
-    '         Sub: __saveImageExistingMultiplePage, __saveImageExistingSinglePage, __saveMultipage, __saveToExistingFile, Add
+    '         Sub: __saveImageExistingMultiplePage, __saveImageExistingSinglePage, Add, doSaveToExistingFile, saveMultipage
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.ComponentModel
-Imports System.Data
 Imports System.Drawing
-Imports System.Collections
-Imports System.Windows.Forms
 Imports System.Drawing.Imaging
-Imports System.Runtime.InteropServices
-Imports System.Runtime.InteropServices.Marshal
 Imports System.IO
+Imports System.Runtime.InteropServices.Marshal
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Imaging
 
@@ -86,6 +82,8 @@ Namespace Imaging
         Public Function MultipageTiffSave(path As String) As Boolean
             If _imageLayers.Count = 0 Then
                 Return False
+            ElseIf path.FileLength > 0 Then
+                Return ExistingFileSave(path)
             Else
                 Return SaveMultipage(_imageLayers, path, "TIFF")
             End If
@@ -94,36 +92,42 @@ Namespace Imaging
         Public Function ExistingFileSave(path As String) As Boolean
             If _imageLayers.IsNullOrEmpty Then
                 Return False
+            Else
+                Return _imageLayers _
+                    .DoCall(AddressOf layers2Bitmaps) _
+                    .DoCall(Function(layers)
+                                Return SaveToExistingFile(path, layers, "TIFF")
+                            End Function)
             End If
-
-            Dim Res = SaveToExistingFile(path, __bitmaps(_imageLayers), "TIFF")
-            Return Res
         End Function
 
         Public Shared Function SaveMultipage(bmp As List(Of Image), location As String, type As String) As Boolean
             If bmp Is Nothing Then Return False
 
             Try
-                Call __saveMultipage(__bitmaps(bmp), location, type)
+                Call location.ParentPath.MkDIR
+                Call saveMultipage(layers2Bitmaps(bmp), location, type)
                 Return True
             Catch ex As Exception
-                ex = New Exception(location.ToFileURL & " ===> " & type, ex)
+                ex = New Exception(location.ToFileURL, ex)
                 Call App.LogException(ex)
+                Call ex.PrintException
             End Try
 
             Return False
         End Function
 
-        Private Shared Function __bitmaps(bmps As IEnumerable(Of Image)) As Image()
-            Return LinqAPI.Exec(Of Image) <=
-                From image As Image
-                In bmps
-                Where Not image Is Nothing
-                Let bitonal = ConvertToBitonal(DirectCast(image, Bitmap))
-                Select DirectCast(bitonal, Image)
+        Private Shared Function layers2Bitmaps(bmps As IEnumerable(Of Image)) As Image()
+            Return LinqAPI.Exec(Of Image) _
+ _
+                () <= From image As Image
+                      In bmps
+                      Where Not image Is Nothing
+                      Let bitonal = ConvertToBitonal(DirectCast(image, Bitmap))
+                      Select DirectCast(bitonal, Image)
         End Function
 
-        Private Shared Sub __saveMultipage(bmp As Image(), location As String, type As String)
+        Private Shared Sub saveMultipage(bmp As Image(), location As String, type As String)
             Dim codecInfo As ImageCodecInfo = GetCodec(type)
 
             If bmp.Length = 1 Then
@@ -189,7 +193,7 @@ Namespace Imaging
         ''' <returns></returns>
         Public Shared Function SaveToExistingFile(fileName As String, bmp As Image(), type As String) As Boolean
             Try
-                Call __saveToExistingFile(fileName, bmp, type)
+                Call doSaveToExistingFile(fileName, bmp, type)
                 Return True
             Catch ex As Exception
                 Call App.LogException(ex)
@@ -197,21 +201,21 @@ Namespace Imaging
             End Try
         End Function
 
-        Private Shared Sub __saveToExistingFile(fileName As String, bmp As Image(), type As String)
-            'bmp[0] is containing Image from Existing file on which we will append newly scanned Images
-            'SO first we will dicide wheter existing file is single page or multipage
-            Dim fr As FileStream = IO.File.Open(fileName, FileMode.Open, FileAccess.ReadWrite)
-            Dim origionalFile As Image = Image.FromStream(fr)
-            Dim PageNumber As Integer = __getPageNumber(origionalFile)
+        Private Shared Sub doSaveToExistingFile(fileName As String, bmp As Image(), type As String)
+            ' bmp[0] is containing Image from Existing file on which we will append newly scanned Images
+            ' SO first we will dicide wheter existing file is single page or multipage
+            Using fr As FileStream = IO.File.Open(fileName, FileMode.Open, FileAccess.ReadWrite)
+                Dim origionalFile As Image = Image.FromStream(fr)
+                Dim PageNumber As Integer = getPageNumber(origionalFile)
 
-            If PageNumber > 1 Then        'Existing File is multi page tiff file
-                __saveImageExistingMultiplePage(bmp, origionalFile, type, PageNumber, "shreeTemp.tif")
-            ElseIf PageNumber = 1 Then                    'Existing file is single page file
-                __saveImageExistingSinglePage(bmp, origionalFile, type, "shreeTemp.tif")
-            End If
+                If PageNumber > 1 Then        'Existing File is multi page tiff file
+                    __saveImageExistingMultiplePage(bmp, origionalFile, type, PageNumber, "shreeTemp.tif")
+                ElseIf PageNumber = 1 Then                    'Existing file is single page file
+                    __saveImageExistingSinglePage(bmp, origionalFile, type, "shreeTemp.tif")
+                End If
 
-            Call fr.Flush()
-            Call fr.Close()
+                Call fr.Flush()
+            End Using
 
             Call IO.File.Replace("shreeTemp.tif", fileName, "Backup.tif", True)
         End Sub
@@ -301,7 +305,7 @@ Namespace Imaging
             pages.SaveAdd(EncoderParams)
         End Sub
 
-        Private Shared Function __getPageNumber(img As Image) As Integer
+        Private Shared Function getPageNumber(img As Image) As Integer
             Dim objGuid As Guid = img.FrameDimensionsList(0)
             Dim objDimension As New FrameDimension(objGuid)
             'Gets the total number of frames in the .tiff file

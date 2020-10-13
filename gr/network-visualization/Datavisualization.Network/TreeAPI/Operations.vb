@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc35d05a8430726829948d41571faec0, gr\network-visualization\Datavisualization.Network\TreeAPI\Operations.vb"
+﻿#Region "Microsoft.VisualBasic::d5c7b6cea85c356a60c86dd5c3f70a19, gr\network-visualization\Datavisualization.Network\TreeAPI\Operations.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Namespace TreeAPI
 
@@ -61,7 +62,7 @@ Namespace TreeAPI
 
         <ExportAPI("Tree.Build")>
         <Extension>
-        Public Function BuildTree(net As IEnumerable(Of FileStream.NetworkEdge)) As NaiveBinaryTree(Of String, NodeTypes)
+        Public Function BuildTree(net As IEnumerable(Of Edge)) As NaiveBinaryTree(Of String, NodeTypes)
             'Dim ROOTs = net.GetConnections(ROOT)
             'Dim tree As New NaiveBinaryTree(Of String, NodeTypes)(ROOT, NodeTypes.ROOT, AddressOf String.Compare)
             'Dim netList = net.AsList
@@ -78,7 +79,7 @@ Namespace TreeAPI
             Throw New NotImplementedException
         End Function
 
-        Private Sub __buildTREE(ByRef tree As NaiveBinaryTree(Of String, NodeTypes), node As String, ByRef netList As List(Of FileStream.NetworkEdge))
+        Private Sub __buildTREE(ByRef tree As NaiveBinaryTree(Of String, NodeTypes), node As String, ByRef netList As List(Of Edge))
             'Dim nexts = (From x In netList.GetNextConnects(node) Select x Group x By x.Interaction Into Group)
 
             'For Each part In nexts
@@ -142,7 +143,7 @@ Namespace TreeAPI
         ''' <param name="net"></param>
         ''' <returns></returns>
         <ExportAPI("Cluster.Parts")>
-        Public Function ClusterParts(net As IEnumerable(Of FileStream.NetworkEdge)) As Dictionary(Of String, String())
+        Public Function ClusterParts(net As IEnumerable(Of Edge)) As Dictionary(Of String, String())
             ' Dim tree As BinaryTree(Of NodeTypes) = net.BuildTree
             '  Return tree.ClusterParts(AddressOf __isLeaf, AddressOf __isLeafX, AddressOf __getEntities)
             Throw New NotImplementedException

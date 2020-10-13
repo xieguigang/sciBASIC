@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f95d6aa886006fbd587e8bdb6fd181a5, Microsoft.VisualBasic.Core\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::392e3ddd3233c9af8fca7a47ff882ad8, Microsoft.VisualBasic.Core\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -499,6 +499,7 @@ Namespace Text
             ''' </summary>
             Public Const TAB As Integer = Asc(vbTab)
 
+            Public Const Hyphen As Integer = Asc("-"c)
         End Class
     End Class
 End Namespace

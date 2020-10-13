@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fe47497e0a9083e05b52887c58f2115, Data_science\Graph\Network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0bbf7cb166a7de8b369d54ee8a3958c0, Data_science\Graph\Network\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: ComputeDegreeData, EndPoints, IteratesSubNetworks
+    '         Function: (+2 Overloads) ComputeDegreeData, EndPoints, IteratesSubNetworks
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,6 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Namespace Network
@@ -57,7 +58,7 @@ Namespace Network
         ''' <returns></returns>
         <Extension>
         Public Function EndPoints(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, Edge)) As (input As Node(), output As Node())
-            Dim inputs As New List(Of Node)(network.Vertex)
+            Dim inputs As New List(Of Node)(network.vertex)
             Dim output As New List(Of Node)(inputs)
             Dim removes = Sub(ByRef list As List(Of Node), getNode As Func(Of Edge, Node))
                               For Each link As Edge In network
@@ -88,13 +89,14 @@ Namespace Network
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)}, Graph As {New, NetworkGraph(Of Node, U)})(network As NetworkGraph(Of Node, U)) As IEnumerable(Of Graph)
+        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)}, Graph As {New, NetworkGraph(Of Node, U)})(network As NetworkGraph(Of Node, U), Optional singleNodeAsGraph As Boolean = False) As IEnumerable(Of Graph)
             Dim edges As List(Of U) = network.edges.Values.AsList
             Dim popFirstEdge = Function(n As Node) As U
                                    Return edges _
                                       .Where(Function(e) e.U Is n OrElse e.V Is n) _
                                       .FirstOrDefault
                                End Function
+            Dim populatedNodes As New List(Of Node)
 
             Do While edges > 0
                 Dim subnetwork As New Graph
@@ -109,6 +111,8 @@ Namespace Network
                     subnetwork.AddVertex(edge.U)
                     subnetwork.AddVertex(edge.V)
                     subnetwork.AddEdge(edge.U, edge.V)
+                    populatedNodes.Add(edge.U)
+                    populatedNodes.Add(edge.V)
                     edges.Remove(edge)
 
                     If -1 = list.IndexOf(edge.U) Then
@@ -132,9 +136,26 @@ Namespace Network
 
                 Yield subnetwork
             Loop
+
+            If singleNodeAsGraph Then
+                Dim removedIndex As Index(Of Node) = populatedNodes.Distinct.Indexing
+                Dim [single] As New Graph
+
+                For Each v As Node In network.vertex.Where(Function(n) removedIndex(n) = -1)
+                    [single] = New Graph
+                    [single].AddVertex(v)
+
+                    Yield [single]
+                Next
+            End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ComputeDegreeData(Of T As {New, Network.Node}, Edge As {New, Network.Edge(Of T)})(edges As IEnumerable(Of Edge)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+            Return ComputeDegreeData(edges, Function(l) l.U.label, Function(l) l.V.label)
+        End Function
+
+        Public Function ComputeDegreeData(Of Edge)(edges As IEnumerable(Of Edge), U As Func(Of Edge, String), V As Func(Of Edge, String)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
             Dim [in] As New Dictionary(Of String, Integer)
             Dim out As New Dictionary(Of String, Integer)
             Dim count = Sub(node$, ByRef table As Dictionary(Of String, Integer))
@@ -148,8 +169,8 @@ Namespace Network
             Dim countOut = Sub(node$) Call count(node, out)
 
             For Each link As Edge In edges
-                Call countIn(link.U.Label)
-                Call countOut(link.V.Label)
+                Call countIn(U(link))
+                Call countOut(V(link))
             Next
 
             Return ([in], out)

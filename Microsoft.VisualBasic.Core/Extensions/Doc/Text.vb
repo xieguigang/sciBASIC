@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::400f086acc384a348306716fc505f3ed, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::86bcb0110e10fb0520ceec29ecf382aa, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -98,9 +98,11 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 
+    ''' 这个函数会自动判断所给定的数据是一个文件路径或者文本数据
+    ''' 如果是文件路径则会返回该文本文件之中的所有的行数据
+    ''' 反之将目标数据当作为文本返回所有文本行
     ''' </summary>
-    ''' <param name="handle$">
+    ''' <param name="handle">
     ''' + 当这个参数为文件路径的时候会返回<see cref="Linq.IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
     ''' + 当这个参数只是为文本字符串的时候，则会返回<see cref="LineTokens"/>函数的结果
     ''' </param>
@@ -179,8 +181,10 @@ Public Module TextDoc
     Public Function OpenWriter(path$,
                                Optional encoding As Encodings = Encodings.UTF8,
                                Optional newLine$ = ASCII.LF,
-                               Optional append As Boolean = False) As StreamWriter
-        Return FileIO.OpenWriter(path, encoding.CodePage, newLine, append)
+                               Optional append As Boolean = False,
+                               Optional bufferSize As Integer = -1) As StreamWriter
+
+        Return FileIO.OpenWriter(path, encoding.CodePage, newLine, append, bufferSize:=bufferSize)
     End Function
 
     ''' <summary>
@@ -214,6 +218,10 @@ Public Module TextDoc
     ''' </param>
     ''' <returns></returns>
     <Extension> Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
+        If path.FileLength <= 0 Then
+            Return ""
+        End If
+
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
             Using reader As New StreamReader(file, encoding Or DefaultEncoding)
                 Dim first$ = reader.ReadLine
@@ -231,9 +239,10 @@ Public Module TextDoc
     ''' <remarks>
     ''' 不适用于大文本数据
     ''' </remarks>
-    <Extension> Public Function SolveStream(handle$, Optional encoding As Encodings = Encodings.UTF8) As String
+    <Extension>
+    Public Function SolveStream(handle$, Optional encoding As Encodings = Encodings.UTF8, Optional null$ = "null") As String
         If handle Is Nothing Then
-            Return ""
+            Return null
         ElseIf handle.IndexOf(ASCII.CR) > -1 OrElse handle.IndexOf(ASCII.LF) > -1 Then
             ' is text content, not path
             Return handle
@@ -244,7 +253,11 @@ Public Module TextDoc
                      ' 所以需要添加一个额外的判断条件
                      Return i <> ":"c AndAlso handle.IndexOf(i) > -1
                  End Function) Then
+
             ' is text content, not path
+            Return handle
+        ElseIf handle.Count(":"c) > 1 Then
+            ' json?
             Return handle
         End If
 

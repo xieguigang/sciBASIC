@@ -12,7 +12,7 @@
     <AssemblyName>Microsoft.VisualBasic.MIME.application.rdf_xml</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -313,6 +313,37 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Biostack\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.rdf_xml.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Biostack\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.rdf_xml.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Biostack\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.application.rdf_xml.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -337,17 +368,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\Bag.vb" />
+    <Compile Include="DataModel\Resource.vb" />
     <Compile Include="DataModel\Description.vb" />
     <Compile Include="DataModel\DCMI.vb" />
     <Compile Include="DataTypes.vb" />
-    <Compile Include="RDFWriter.vb" />
+    <Compile Include="NamespaceDoc.vb" />
     <Compile Include="RDFEntity.vb" />
     <Compile Include="RDF.vb" />
-    <Compile Include="GenericXmlDocument.vb" />
-    <Compile Include="Serializer\CodeDOMCreator.vb" />
-    <Compile Include="Serializer\DynamicCompiler.vb" />
-    <Compile Include="Serializer\Serializer.vb" />
-    <Compile Include="Serializer\RDF.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb63cde407f533b915185b636ca705d8, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::f8dcec1057096faea6649500079d8ce5, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
 
     ' Author:
     ' 
@@ -247,10 +247,14 @@ Namespace ComponentModel.Collection
             Return table
         End Function
 
+#If NET_48 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CreateBuckets(Of K, V)(source As IEnumerable(Of (K, V)), Optional size% = Short.MaxValue * 10) As BucketDictionary(Of K, V)
             Return source.CreateBuckets(Function(t) t.Item1, Function(t) t.Item2, size:=size)
         End Function
+
+#End If
     End Module
 End Namespace

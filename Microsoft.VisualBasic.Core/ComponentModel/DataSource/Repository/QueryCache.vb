@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::001b8cce47ecce5f7b8273fbd965f952, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\QueryCache.vb"
+﻿#Region "Microsoft.VisualBasic::1c6a1f2ea063a534f0d1ff88edb6ab89, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\QueryCache.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Namespace ComponentModel.DataSourceModel.Repository
 
         Dim cache As New Dictionary(Of String, T)
         Dim factory As Func(Of String, T)
-        Dim assertIsNothing As Assert(Of Object)
+        Dim assertIsNothing As Predicate(Of Object)
 
         ''' <summary>
         ''' 
@@ -68,7 +68,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <param name="factory"></param>
         ''' <param name="cache"></param>
         ''' <param name="assertIsNothing">如果这个函数返回的结果是True，说明目标为空值，这个主要是针对于structure类型而言的</param>
-        Sub New(factory As Func(Of String, T), Optional cache As IReadOnlyDictionary(Of String, T) = Nothing, Optional assertIsNothing As Assert(Of Object) = Nothing)
+        Sub New(factory As Func(Of String, T), Optional cache As IReadOnlyDictionary(Of String, T) = Nothing, Optional assertIsNothing As Predicate(Of Object) = Nothing)
             Me.factory = factory
             Me.cache = cache.SafeQuery.ToDictionary
             Me.assertIsNothing = assertIsNothing Or defaultAssert

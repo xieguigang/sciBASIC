@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9eb7f3e9c445dcf4d61cee06ac718a4, Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::4f3beff9b1935ec5c39357aaa0c1b439, Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     ' Class MappingsHelper
     ' 
-    '     Function: CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames, TagFieldName
+    '     Function: [Typeof], CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames
+    '               TagFieldName
     ' 
     ' /********************************************************************************/
 
@@ -49,6 +50,23 @@ Imports Field = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.S
 ''' 在写csv的时候生成列域名的映射的一些快捷函数
 ''' </summary>
 Public Class MappingsHelper
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="types"></param>
+    ''' <returns>这个匹配函数是安全的函数, 如果一个结果都没有被匹配上,则这个函数会返回<see cref="System.Void"/>类型</returns>
+    Public Shared Function [Typeof](file$, ParamArray types As Type()) As Type
+        Dim headers As New RowObject(Tokenizer.CharsParser(file.ReadFirstLine))
+        Dim match As Type = StreamIO.TypeOf(headers, types)
+
+        If match Is Nothing Then
+            Return GetType(Void)
+        Else
+            Return match
+        End If
+    End Function
 
     ''' <summary>
     ''' 这个函数只适用于只需要解析一个或者少数属性的列名称，假若需要解析的列数量很多，则出于性能方面的考虑不推荐使用这个函数来进行
@@ -77,11 +95,13 @@ Public Class MappingsHelper
     ''' <returns></returns>
     Public Shared Function PropertyNames(Of T)() As Dictionary(Of String, String)
         Dim schemaTable = SchemaProvider.CreateObjectInternal(GetType(T))
-        Dim table = schemaTable _
+        Dim table As Dictionary(Of String, String) = schemaTable _
             .ToDictionary(Function(prop)
                               Return prop.BindProperty.Name
                           End Function,
-                          Function(field) field.Name)
+                          Function(field)
+                              Return field.Name
+                          End Function)
         Return table
     End Function
 
@@ -93,10 +113,14 @@ Public Class MappingsHelper
     ''' <returns></returns>
     Public Shared Function CheckFieldConsistent(Of T As Class)(csv$) As String
         Dim headers As New RowObject(Tokenizer.CharsParser(csv.ReadFirstLine))
+        ' 因为这里是判断读文件的时候是否能够把csv文件之中的
+        ' 所有的列数据都读取完全了， 所以在这里是获取所有的
+        ' 可写属性
         Dim schema As SchemaProvider = SchemaProvider _
             .CreateObject(Of T)(strict:=False) _
-            .CopyWriteDataToObject  ' 因为这里是判断读文件的时候是否能够把csv文件之中的所有的列数据都读取完全了，所以在这里是获取所有的可写属性
+            .CopyWriteDataToObject
         Dim result$ = schema.CheckFieldConsistent(headers)
+
         Return result
     End Function
 
@@ -117,7 +141,8 @@ Public Class MappingsHelper
 
     Public Shared Iterator Function TagFieldName(data As IEnumerable(Of EntityObject), tagName As String, fieldName$) As IEnumerable(Of EntityObject)
         For Each obj As EntityObject In data
-            Dim val = obj.Properties(fieldName)
+            Dim val As String = obj.Properties(fieldName)
+
             obj.Properties.Remove(fieldName)
             obj($"{tagName}.{fieldName}") = val
 

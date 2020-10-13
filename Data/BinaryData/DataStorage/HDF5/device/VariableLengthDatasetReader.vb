@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports Microsoft.VisualBasic.Language

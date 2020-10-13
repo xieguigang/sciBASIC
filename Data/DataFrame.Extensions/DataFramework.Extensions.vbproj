@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.VisualBasic.Data.Csv.Extensions</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -142,11 +142,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
@@ -269,13 +271,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Math.vb" />
+    <Compile Include="Outlining\Schema.vb" />
+    <Compile Include="Outlining\OutliningDataLoader.vb" />
+    <Compile Include="Outlining\NamespaceDoc.vb" />
+    <Compile Include="Serialize\NamespaceDoc.vb" />
+    <Compile Include="Serialize\ObjectSchema\Class.vb" />
     <Compile Include="Templates\TemplateHelper.vb" />
     <Compile Include="Templates\TemplateAttribute.vb" />
-    <Compile Include="Writer.vb" />
-    <Compile Include="Field.vb" />
-    <Compile Include="Extensions.vb" />
-    <Compile Include="Schema.vb" />
+    <Compile Include="Serialize\Writer.vb" />
+    <Compile Include="Serialize\ObjectSchema\Field.vb" />
+    <Compile Include="Serialize\Extensions.vb" />
+    <Compile Include="Serialize\ObjectSchema\Schema.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -321,6 +327,7 @@
       <Name>47_dotnet_ms-vb_data.framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

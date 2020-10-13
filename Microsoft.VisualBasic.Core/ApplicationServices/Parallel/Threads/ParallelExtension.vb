@@ -48,14 +48,47 @@ Namespace Parallel
     ''' <summary>
     ''' Parallel based on the threading
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module ParallelExtension
+
+        ''' <summary>
+        ''' <see cref="Application.DoEvents()"/>
+        ''' </summary>
+        ''' <remarks>
+        ''' this function will fixed the errors on centos linux system:
+        ''' 
+        ''' ```
+        ''' Unhandled Exception:
+        ''' System.Reflection.TargetInvocationException: Exception has been thrown by the target Of an invocation. 
+        ''' ---> System.TypeInitializationException: The type initializer For 'System.Windows.Forms.XplatUI' threw an exception. 
+        ''' ---> System.ArgumentNullException: Could not open display (X-Server required. Check your DISPLAY environment variable)
+        ''' 
+        ''' Parameter name :  Display
+        '''   at System.Windows.Forms.XplatUIX11.SetDisplay (System.IntPtr display_handle) [0x00408] In &lt;01b7792664764a0a8aecd9a1e8220761>:0 
+        '''   at System.Windows.Forms.XplatUIX11..ctor () [0x00077] In &lt;01b7792664764a0a8aecd9a1e8220761>:0 
+        '''   at System.Windows.Forms.XplatUIX11.GetInstance () [0x00019] In &lt;01b7792664764a0a8aecd9a1e8220761>:0 
+        '''   at System.Windows.Forms.XplatUI..cctor () [0x000c0] In &lt;01b7792664764a0a8aecd9a1e8220761>:0 
+        '''    --- End of inner exception stack trace ---
+        '''   at System.Windows.Forms.Application.DoEvents () [0x00000] In &lt;01b7792664764a0a8aecd9a1e8220761>:0
+        ''' ```
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Sub DoEvents()
+#If UNIX = False Then
+            Call Application.DoEvents()
+#End If
+        End Sub
 
         ''' <summary>
         ''' Start a new thread and then returns the background thread task handle.
         ''' </summary>
         ''' <param name="start"></param>
         ''' <returns></returns>
-        <Extension> Public Function RunTask(start As ThreadStart) As Thread
+        <Extension>
+        <DebuggerStepThrough>
+        Public Function RunTask(start As ThreadStart) As Thread
             Dim thread As New Thread(start)
             Call thread.Start()
             Return thread

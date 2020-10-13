@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5849bcc671a83afef68906e254d1a0a, Data_science\Mathematica\Math\Math\Scripting\ParameterCompute.vb"
+﻿#Region "Microsoft.VisualBasic::0af73256bed2c212a8a132af1a013e40, Data_science\Mathematica\Math\Math\Scripting\ParameterCompute.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,9 @@
 
     ' Summaries:
 
-    '     Module ParameterExpression
+    '     Module ParameterExpressionScript
     ' 
-    '         Function: Demo, (+2 Overloads) Evaluate, GetValue
+    '         Function: (+2 Overloads) Evaluate, GetValue
     ' 
     '         Sub: Apply
     ' 
@@ -48,6 +48,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Emit.Parameters
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace Scripting
@@ -56,21 +57,21 @@ Namespace Scripting
     ''' 在vb之中由于可选参数的值只能够是常量，假若变量之间还存在关联，则必须要用表达式，
     ''' 但是表达式不是常量，所以使用这个模块之中的代码来模拟R语言之中的可选参数表达式
     ''' </summary>
-    Public Module ParameterExpression
+    Public Module ParameterExpressionScript
 
-        Public Function Demo(c#,
-                             Optional x$ = "c*33+5!",
-                             Optional y$ = "log(x)+sin(9)",
-                             Optional title$ = "This is a title string, not numeric expression") As Double()
+        'Public Function Demo(c#,
+        '                     Optional x$ = "c*33+5!",
+        '                     Optional y$ = "log(x)+sin(9)",
+        '                     Optional title$ = "This is a title string, not numeric expression") As Double()
 
-            Dim parameters As Dictionary(Of String, Double) = Evaluate(Function() {c, x, y})
+        '    Dim parameters As Dictionary(Of String, Double) = Evaluate(Function() {c, x, y})
 
-            Return {
-                c,
-                parameters(NameOf(x)),
-                parameters(NameOf(y))
-            }
-        End Function
+        '    Return {
+        '        c,
+        '        parameters(NameOf(x)),
+        '        parameters(NameOf(y))
+        '    }
+        'End Function
 
         '<Extension>
         'Public Function Evaluate(params As IEnumerable(Of Object)) As Dictionary(Of String, Double)
@@ -178,7 +179,7 @@ Namespace Scripting
                 .Where(Function(n) params.ContainsKey(n.Name)) _
                 .ToArray   ' 按顺序计算
             Dim out As New List(Of String)
-            Dim expression As New Expression
+            Dim expression As New ExpressionEngine
 
             strings = New List(Of String)
 
@@ -186,7 +187,7 @@ Namespace Scripting
                 Dim value As Value = params(name.Name)
 
                 If value.IsNumeric Then
-                    Call expression.SetVariable(name.Name, CDbl(value.Value))
+                    Call expression.SetSymbol(name.Name, CDbl(value.Value))
                 ElseIf value.IsString Then
                     Dim s$ = CStr(value.Value)
 
@@ -194,7 +195,7 @@ Namespace Scripting
                         strings += name.Name
                         Continue For ' 跳过字符串插值计算
                     Else
-                        Call expression.SetVariable(name.Name, s)
+                        Call expression.SetSymbol(name.Name, s)
                     End If
                 Else
                     ' 忽略掉其他的类型
@@ -206,7 +207,9 @@ Namespace Scripting
 
             Dim values As Dictionary(Of String, Double) = out _
                 .ToDictionary(Function(name) name,
-                              Function(name) expression(name))
+                              Function(name)
+                                  Return expression.GetSymbolValue(name)
+                              End Function)
             Return values
         End Function
     End Module

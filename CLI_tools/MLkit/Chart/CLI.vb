@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac64aeb9e7501941c2c93388796f03a4, CLI_tools\MLkit\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::462fa230031ad5f91e550b9611ccc819, CLI_tools\MLkit\Chart\CLI.vb"
 
     ' Author:
     ' 
@@ -33,26 +33,33 @@
 
     ' Module CLI
     ' 
-    '     Function: BarPlotCLI, KMeansCluster, RegressionROC, ROC, Scatter
+    '     Function: BarPlotCLI, KMeansCluster, LinePlot, RegressionROC, ROC
+    '               Scatter
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -108,6 +115,46 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
         Throw New NotImplementedException
     End Function
 
+    <ExportAPI("/lines")>
+    <Usage("/lines /in <source.csv> /x <label> /y <label.list> [/color <colorsetname, default=> /out <output.png>]")>
+    Public Function LinePlot(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim xLabel$ = args <= "/x"
+        Dim yLabels$() = Tokenizer.CharsParser(args <= "/y")
+        Dim colors As LoopArray(Of Color) = Designer.GetColors(args("/color") Or "")
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.plot({xLabel.NormalizePathString}, {yLabels.JoinBy(",").NormalizePathString(False)}).png"
+        Dim table As File = File.Load([in])
+        Dim x As Double() = table.GetColumnObjects(xLabel, AddressOf Val).ToArray
+        Dim serials = yLabels _
+            .Select(Function(ylabel)
+                        Dim y = table.GetColumnObjects(ylabel, AddressOf Val).ToArray
+                        Dim points = x.Select(Function(xi, i) New PointF(xi, y(i))).ToArray
+                        Dim serial As New SerialData With {
+                            .color = colors.Next(),
+                            .lineType = DashStyle.Solid,
+                            .pointSize = 10,
+                            .title = ylabel,
+                            .width = 5,
+                            .shape = LegendStyles.Triangle,
+                            .pts = points _
+                                .Select(Function(p)
+                                            Return New PointData With {
+                                                .pt = p
+                                            }
+                                        End Function) _
+                                .ToArray
+                        }
+
+                        Return serial
+                    End Function) _
+            .ToArray
+
+        Return ChartPlots.Scatter _
+            .Plot(serials, drawLine:=True, fill:=False) _
+            .Save(out) _
+            .CLICode
+    End Function
+
     <ExportAPI("/kmeans")>
     <Usage("/kmeans /in <matrix.csv> [/n <expected_cluster_numbers, default=3> /out <clusters.csv>]")>
     <Group("Data tools")>
@@ -148,23 +195,72 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
     End Function
 
     <ExportAPI("/ROC.regression")>
-    <Usage("/ROC.regression /in <validate.test.csv> [/out <ROC.png>]")>
+    <Usage("/ROC.regression /in <validate.test.csv> [/label.predicts <labelName> /label.actuals <labelName> /positive.pattern <actual_label.pattern> /out <ROC.png>]")>
     <Description("Draw ROC chart plot of the regression classifier output result.")>
     <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
-              AcceptTypes:={GetType(RegressionClassify)},
+              AcceptTypes:={GetType(RegressionClassify), GetType(DataSet)},
               Extensions:="*.csv",
               Description:="")>
+    <Argument("/label.predicts", True, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The column title name label for read sample dataset predicts data.")>
+    <Argument("/label.actuals", True, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="The column title name label for read sample dataset actual classify labels. 
+              The value in this column should be integer value. ALL ZERO value is negative labels.")>
+    <Argument("/positive.pattern", True, CLITypes.String,
+              AcceptTypes:={GetType(String)},
+              Description:="If the ``/label.predicts`` is not the integer labels value, 
+              but have sample id data, and the positive label can be parse from the id data, 
+              then you could specific this argument a regular expression pattern for parse such positive pattern.")>
     Public Function RegressionROC(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ROC.png"
-        Dim data = [in].LoadCsv(Of RegressionClassify) _
-            .Select(Function(p)
-                        Return New Validate With {
-                            .actuals = {p.actual},
-                            .predicts = {p.predicts}
-                        }
-                    End Function) _
-            .ToArray
+        Dim data As Validate()
+
+        If MappingsHelper.Typeof([in], GetType(RegressionClassify)) Is GetType(RegressionClassify) Then
+            data = [in].LoadCsv(Of RegressionClassify) _
+                .Select(Function(p)
+                            Return New Validate With {
+                                .actuals = {p.actual},
+                                .predicts = {p.predicts}
+                            }
+                        End Function) _
+                .ToArray
+        Else
+            Dim labelPredicts$ = args <= "/label.predicts"
+            Dim labelActuals$ = args <= "/label.actuals"
+            Dim positivePattern$ = args <= "/positive.pattern"
+            Dim resultSet As EntityObject() = EntityObject.LoadDataSet([in]).ToArray
+            Dim parseActual As Func(Of String, Double)
+
+            If Not positivePattern.StringEmpty Then
+                Dim allPredictsValues = resultSet.Vector(labelPredicts).AsDouble
+                Dim positive = allPredictsValues.Max
+                Dim negative = Math.Min(allPredictsValues.Min, 0)
+                Dim pattern As New Regex(positivePattern, RegexICSng)
+
+                parseActual = Function(label As String) As Double
+                                  If pattern.Match(label).Success Then
+                                      Return positive
+                                  Else
+                                      Return negative
+                                  End If
+                              End Function
+            Else
+                parseActual = AddressOf Val
+            End If
+
+            data = resultSet _
+                .Select(Function(r)
+                            Return New Validate With {
+                                .actuals = {parseActual(r(labelActuals))},
+                                .predicts = {Val(r(labelPredicts))}
+                            }
+                        End Function) _
+                .ToArray
+        End If
+
         Dim actuals = data _
             .Select(Function(p) p.actuals(Scan0)) _
             .ToArray

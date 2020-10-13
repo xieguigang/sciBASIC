@@ -1,56 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::ee859640b797034c8e1716e154eef6fb, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d7ca2546571541fd950172ca60573499, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module RegexExtensions
-    ' 
-    '     Properties: RegexpTimeout
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) EachValue, EndsWith, IsPattern, Locates, PythonRawRegexp
-    '               StartsWith, (+2 Overloads) ToArray
-    '     Structure [NameOf]
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module RegexExtensions
+' 
+'     Properties: RegexpTimeout
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: (+2 Overloads) EachValue, EndsWith, (+2 Overloads) IsPattern, Locates, PythonRawRegexp
+'               StartsWith, (+2 Overloads) ToArray
+'     Structure [NameOf]
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Public Module RegexExtensions
@@ -270,7 +271,39 @@ Public Module RegexExtensions
         ' 2018-6-1 因为空字符串肯定无法匹配上目标模式
         ' 所以match函数总回返回空字符串
         ' 由于s参数本身就是空字符串，所以会造成空字符串可以被任意模式完全匹配的bug
-        Return Not s.StringEmpty AndAlso Regex.Match(s, pattern, opt).Value = s
+        If s.StringEmpty AndAlso pattern <> StringEmptyPattern Then
+            Return False
+        End If
+
+        Static patternCache As New Dictionary(Of String, Regex)
+
+        Dim match$ = patternCache _
+            .ComputeIfAbsent(pattern, lazyValue:=Function(r) New Regex(r, opt)) _
+            .Match(s) _
+            .Value
+
+        If match = s Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Const StringEmptyPattern As String = "\s*"
+
+    ''' <summary>
+    ''' The enitre string input equals to the pattern's matched.
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="pattern"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsPattern(s As String, pattern As Regex) As Boolean
+        If s.StringEmpty AndAlso pattern.ToString <> StringEmptyPattern Then
+            Return False
+        End If
+
+        Return pattern.Match(s).Value = s
     End Function
 
     ''' <summary>

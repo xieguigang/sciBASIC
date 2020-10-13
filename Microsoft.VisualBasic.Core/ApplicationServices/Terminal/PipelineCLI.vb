@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c82045a56ccf9a6611a6f19d9df9155, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PipelineCLI.vb"
+﻿#Region "Microsoft.VisualBasic::91480881a7aedf9600bb9961ac988746, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PipelineCLI.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 
-Namespace Terminal
+Namespace ApplicationServices.Terminal
 
     ''' <summary>
     ''' a | b - 管道命令在读写方面更加适合于文本数据，由于省去了IO的时间，故而效率较高
@@ -67,18 +67,19 @@ Namespace Terminal
         ''' 
         <Extension>
         Public Sub Start(buf As Stream, app As String, Optional args As String = "")
-            Dim Proc As New Process
+            Dim proc As New Process
 
-            Proc.StartInfo.CreateNoWindow = True
-            Proc.StartInfo.UseShellExecute = False
-            Proc.StartInfo.FileName = app
-            Proc.StartInfo.RedirectStandardOutput = True
-            Proc.StartInfo.RedirectStandardError = True
-            Proc.StartInfo.RedirectStandardInput = True
+            proc.StartInfo.CreateNoWindow = True
+            proc.StartInfo.UseShellExecute = False
+            proc.StartInfo.FileName = app
+            proc.StartInfo.RedirectStandardOutput = True
+            proc.StartInfo.RedirectStandardError = True
+            proc.StartInfo.RedirectStandardInput = True
+            proc.StartInfo.Arguments = args
 
-            Proc.Start()
+            proc.Start()
 
-            Using writer As New BinaryWriter(Proc.StandardInput.BaseStream)
+            Using writer As New BinaryWriter(proc.StandardInput.BaseStream)
                 Dim read As New BinaryReader(buf)
 
                 Do While True
@@ -90,7 +91,7 @@ Namespace Terminal
                 Call writer.Close()
             End Using
 
-            Call Proc.WaitForExit()
+            Call proc.WaitForExit()
         End Sub
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::061d3943f477ad923144a3cbaca58177, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::6c66100e15ffe8e2a3aeab4b0457fb99, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -67,6 +67,8 @@ Public Module PrimitiveParser
 
     ''' <summary>
     ''' 用于匹配任意实数的正则表达式
+    ''' 
+    ''' (这个正则表达式有一个bug，会匹配上一个单独的字母E)
     ''' </summary>
     ''' <remarks>
     ''' 这个表达式并不用于<see cref="IsNumeric"/>, 但是其他的模块的代码可能会需要这个通用的表达式来做一些判断
@@ -80,11 +82,16 @@ Public Module PrimitiveParser
     ''' Is this token value string is a number?
     ''' </summary>
     ''' <returns></returns>
-    <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
-    <Extension> Public Function IsNumeric(num As String) As Boolean
+    <Extension>
+    Public Function IsNumeric(num As String) As Boolean
         Dim dotCheck As Boolean = False
         Dim c As Char = num(Scan0)
         Dim offset As Integer = 0
+
+        ' 修复正则匹配的bug
+        If num = "e" OrElse num = "E" Then
+            Return False
+        End If
 
         If c = "-"c OrElse c = "+"c Then
             ' check for number sign symbol
@@ -168,7 +175,7 @@ Public Module PrimitiveParser
     End Function
 
     ''' <summary>
-    ''' <see cref="Double"/> text parser. (这个是一个非常安全的字符串解析函数)
+    ''' <see cref="Double"/> text parser. (这个是一个基于<see cref="ParseNumeric"/>的非常安全的字符串解析函数)
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
@@ -218,6 +225,7 @@ Public Module PrimitiveParser
         {"ok!", True},
         {"success", True}, {"successful", True}, {"successfully", True}, {"succeeded", True},
         {"right", True},
+        {"on", True}, {"off", False},
         {"wrong", False},
         {"failure", False}, {"failures", False},
         {"exception", False},

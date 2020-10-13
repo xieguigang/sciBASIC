@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1787e82d350a4c7d21feea6f82e1ec6, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\csv.vb"
+﻿#Region "Microsoft.VisualBasic::5f7db2c62d8164f41e989261bc620536, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\csv.vb"
 
     ' Author:
     ' 
@@ -78,11 +78,22 @@ Namespace KMeans
             Return ID
         End Function
 
-        Public Function ToModel() As ClusterEntity
-            Return New ClusterEntity With {
-                .uid = ID,
-                .entityVector = Properties.Values.ToArray
-            }
+        Public Function ToModel(Optional projection As String() = Nothing) As ClusterEntity
+            If projection.IsNullOrEmpty Then
+                Return New ClusterEntity With {
+                    .uid = ID,
+                    .entityVector = Properties.Values.ToArray
+                }
+            Else
+                Return New ClusterEntity With {
+                    .uid = ID,
+                    .entityVector = projection _
+                        .Select(Function(key)
+                                    Return Properties.TryGetValue(key)
+                                End Function) _
+                        .ToArray
+                }
+            End If
         End Function
 
         Public Shared Iterator Function FromModel(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of EntityClusterModel)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b61840466aee2308ad35290687c43ef9, Data\DataFrame\Linq\LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::0c294fdb2eb1a77b518d9d828eba5e30, Data\DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 
@@ -159,12 +159,17 @@ Namespace IO.Linq
             Dim opr As ExprToken = lst(Scan0)
             Dim param As ExprToken = lst(1)
 
-            Call tokens.RemoveAt(Scan0)  ' 去掉第一个逻辑操作符
+            ' 去掉第一个逻辑操作符
+            Call tokens.RemoveAt(Scan0)
             Call tokens.RemoveAt(Scan0)
 
             If String.Equals(opr.Operator, "and", StringComparison.OrdinalIgnoreCase) Then
-                Dim _innerStack As Func(Of T, Boolean) =    ' 对当前的运算做堆栈处理
-                    Function(x As T) stack(x) AndAlso __getTest(param).TestToken(x) ' 从左到右递归编译右边的表达式
+                ' 对当前的运算做堆栈处理
+                Dim _innerStack As Func(Of T, Boolean) =
+                    Function(x As T)
+                        ' 从左到右递归编译右边的表达式
+                        Return stack(x) AndAlso __getTest(param).TestToken(x)
+                    End Function
 
                 If tokens.Count = 0 Then
                     Return _innerStack
@@ -172,12 +177,14 @@ Namespace IO.Linq
                     Return __compile(tokens, _innerStack)
                 End If
             ElseIf String.Equals(opr.Operator, "or", StringComparison.OrdinalIgnoreCase) Then
-                Dim left As Func(Of T, Boolean) = AddressOf __getTest(param).TestToken ' 从左到右递归编译右边的表达式
+                ' 从左到右递归编译右边的表达式
+                Dim left As Func(Of T, Boolean) = AddressOf __getTest(param).TestToken
 
                 If tokens.Count = 0 Then
                     Return Function(x As T) stack(x) OrElse left(x)
                 Else
-                    Dim _inner As Func(Of T, Boolean) = __compile(tokens, left)  ' 对当前的运算做堆栈处理
+                    ' 对当前的运算做堆栈处理
+                    Dim _inner As Func(Of T, Boolean) = __compile(tokens, left)
                     Return Function(x As T) stack(x) OrElse _inner(x)
                 End If
             Else
@@ -315,9 +322,10 @@ Namespace IO.Linq
         Public Shared Function TryParse(expr As String) As LinqWhere(Of T)
             Dim tokens = CommandLine.GetTokens(expr)
             Dim lstCond = tokens.Select(Function(s) __tokenParser(s)).ToArray
+
             Return New LinqWhere(Of T) With {
-            ._Tokens = lstCond
-        }.Compile
+                ._Tokens = lstCond
+            }.Compile
         End Function
 
         Private Shared Function __tokenParser(s As String) As ExprToken
@@ -339,7 +347,8 @@ Namespace IO.Linq
                 opr = __getOperator(s, [operator])
             Else
                 opr = __getOperator(s, [operator])
-                If opr = -1 Then  ' 可能是逻辑运算符
+                If opr = -1 Then
+                    ' 可能是逻辑运算符
                     Return New ExprToken With {.Operator = s}
                 End If
                 name = Mid(s, 1, opr - 1)

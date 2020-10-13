@@ -150,6 +150,7 @@ Namespace Drawing2D
             End Get
         End Property
 
+        <DebuggerStepThrough>
         Sub New(size As Size, padding As Padding)
             Me.Size = size
             Me.Padding = padding

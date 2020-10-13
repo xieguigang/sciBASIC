@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ace065b1c8fa32d27a4802a089772660, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\Task.vb"
+﻿#Region "Microsoft.VisualBasic::d42e865588a0ba13d09d6f8fbd4c03c9, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\Task.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: GetValue, Start
     ' 
-    '         Sub: __invokeTask
+    '         Sub: doInvokeTask
     ' 
     '     Class Task
     ' 
@@ -47,22 +47,12 @@
     ' 
     '         Function: Start
     ' 
-    '         Sub: __invokeTask, RaisingEvent
-    ' 
-    '     Class Task
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Start
-    ' 
-    '         Sub: __invokeTask, RaisingEvent
+    '         Sub: doInvokeTask
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
-
-Imports System.Reflection
 
 Namespace Parallel.Tasks
 
@@ -77,13 +67,16 @@ Namespace Parallel.Tasks
         Dim _Input As T
 
         ''' <summary>
-        ''' 假若任务已经完成，则会返回计算值，假若没有完成，则只会返回空值，假若想要在任何情况之下都会得到后台任务所执行的计算结果，请使用<see cref="GetValue()"/>方法
+        ''' 假若任务已经完成，则会返回计算值，假若没有完成，则只会返回空值，
+        ''' 假若想要在任何情况之下都会得到后台任务所执行的计算结果，
+        ''' 请使用<see cref="GetValue()"/>方法
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Value As TOut
 
         ''' <summary>
-        ''' 假若后台任务还没有完成，则函数会一直阻塞在这里直到任务执行完毕，假若任务早已完成，则函数会立即返回数据
+        ''' 假若后台任务还没有完成，则函数会一直阻塞在这里直到任务执行完毕，
+        ''' 假若任务早已完成，则函数会立即返回数据
         ''' </summary>
         ''' <returns></returns>
         Public Function GetValue() As TOut
@@ -92,7 +85,7 @@ Namespace Parallel.Tasks
             End If
 
             Call WaitForExit()
-            Return _Value
+            Return Value
         End Function
 
         Sub New(Input As T, Handle As Func(Of T, TOut))
@@ -101,94 +94,46 @@ Namespace Parallel.Tasks
         End Sub
 
         Public Function Start() As Task(Of T, TOut)
-            _TaskComplete = False
+            TaskComplete = False
             _RunningTask = True
-            Call New Threading.Thread(AddressOf __invokeTask).Start()
+            Call RunTask(AddressOf doInvokeTask)
             Return Me
         End Function
 
-        Protected Overrides Sub __invokeTask()
-
-            _TaskComplete = False
+        Protected Overrides Sub doInvokeTask()
+            TaskComplete = False
             _RunningTask = True
             _Value = _Handle(_Input)
-            _TaskComplete = True
+            TaskComplete = True
             _RunningTask = False
-
-        End Sub
-    End Class
-
-    ''' <summary>
-    ''' 这个是带有<see cref="Task.TaskJobComplete"/>事件的任务对象
-    ''' </summary>
-    Public Class Task : Inherits IParallelTask
-
-        ''' <summary>
-        ''' 当所请求的任务执行完毕之后触发
-        ''' </summary>
-        Public Event TaskJobComplete()
-
-        Dim _Handle As Action
-
-        Sub New(Handle As Action)
-            _Handle = Handle
-        End Sub
-
-        Protected Overrides Sub __invokeTask()
-            _TaskComplete = False
-            _RunningTask = True
-            Call _Handle()
-            _TaskComplete = True
-            _RunningTask = False
-        End Sub
-
-        Public Function Start() As Task
-            _TaskComplete = False
-            _RunningTask = True
-            Call New Threading.Thread(AddressOf __invokeTask).Start()
-            Call Threading.Thread.Sleep(1)
-            Call New Threading.Thread(AddressOf RaisingEvent).Start()
-            Return Me
-        End Function
-
-        Private Sub RaisingEvent()
-            Call WaitForExit()
-            RaiseEvent TaskJobComplete()
         End Sub
     End Class
 
     Public Class Task(Of T) : Inherits IParallelTask
 
-        Dim _Input As T
-        Dim _Handle As Action(Of T)
+        Dim inputVal As T
+        Dim handleTask As Action(Of T)
 
         Public Event TaskJobComplete()
 
         Sub New(Input As T, Handle As Action(Of T))
-            _Input = Input
-            _Handle = Handle
+            inputVal = Input
+            handleTask = Handle
         End Sub
 
         Public Function Start() As Task(Of T)
-            _TaskComplete = False
-            _RunningTask = True
-            Call New Threading.Thread(AddressOf __invokeTask).Start()
-            Call Threading.Thread.Sleep(1)
-            Call New Threading.Thread(AddressOf RaisingEvent).Start()
+            Call RunTask(AddressOf doInvokeTask)
             Return Me
         End Function
 
-        Private Sub RaisingEvent()
-            Call WaitForExit()
-            RaiseEvent TaskJobComplete()
-        End Sub
-
-        Protected Overrides Sub __invokeTask()
-            _TaskComplete = False
+        Protected Overrides Sub doInvokeTask()
+            TaskComplete = False
             _RunningTask = True
-            Call _Handle(_Input)
-            _TaskComplete = True
+            Call handleTask(inputVal)
+            TaskComplete = True
             _RunningTask = False
+
+            RaiseEvent TaskJobComplete()
         End Sub
     End Class
 End Namespace

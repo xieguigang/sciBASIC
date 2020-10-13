@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e93d47961896d9fcaad122fc7e9c01ed, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
+﻿#Region "Microsoft.VisualBasic::2017947f4565118930c2ab5af95fb68d, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ProgressBar\SwayBar.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@
     ' 
     '     Function: buildBlankPointer
     ' 
-    '     Sub: [Step], ClearBar, PlacePointer
+    '     Sub: (+2 Overloads) [Step], ClearBar, PlacePointer, PrintMessage
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,7 +55,7 @@
 
 Imports System.Text
 
-Namespace Terminal.ProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar
 
     ''' <summary>
     ''' 像乒乓球一样左右碰撞的进度条
@@ -122,10 +122,18 @@ Namespace Terminal.ProgressBar
             bar = bar.Insert(start, pointer)
         End Sub
 
+        Public Overrides Sub PrintMessage(msg As String)
+
+        End Sub
+
         ''' <summary>
         ''' prints the progress bar acorrding to pointers and current direction
         ''' </summary>
         Public Overrides Sub [Step]()
+            Call [Step](message:="")
+        End Sub
+
+        Public Overloads Sub [Step](message As String)
             If currdir = direction.right Then
                 PlacePointer(counter, pointer.Length)
                 counter += 1
@@ -142,7 +150,13 @@ Namespace Terminal.ProgressBar
                 End If
             End If
 
-            Call Console.Write(bar & vbCr)
+            message = bar & message
+
+            If message.Length > Console.WindowWidth Then
+                message = Mid(message, 1, Console.WindowWidth - 15) & "..."
+            End If
+
+            Call Console.Write(message & vbCr)
         End Sub
     End Class
 End Namespace

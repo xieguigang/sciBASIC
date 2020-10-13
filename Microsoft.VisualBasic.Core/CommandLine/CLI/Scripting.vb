@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43f3eea17d8ad201c092583195b3e1ed, Microsoft.VisualBasic.Core\CommandLine\CLI\Scripting.vb"
+﻿#Region "Microsoft.VisualBasic::59b88f692c6293c9bfc2b7e7af2d6e63, Microsoft.VisualBasic.Core\CommandLine\CLI\Scripting.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Namespace CommandLine
 
     Module ScriptingExtensions
 
-        Public Function Cmd(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean, stdin$) As String
+        Public Function Cmd(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean, stdin$, isShellCommand As Boolean) As String
             Dim bat As New StringBuilder(1024)
 
             ' 切换工作目录至当前的进程所处的文件夹
@@ -82,7 +82,7 @@ Namespace CommandLine
                 ' 生成IO重定向的命令行
                 ' https://stackoverflow.com/questions/3680977/can-a-batch-file-capture-the-exit-codes-of-the-commands-it-is-invoking
                 Call bat.AppendLine("set errorlevel=")
-                Call bat.start(program, argv, stdin)
+                Call bat.start(program, argv, stdin, isShellCommand)
                 Call bat.AppendLine("exit /b %errorlevel%")
             End If
 
@@ -90,15 +90,23 @@ Namespace CommandLine
         End Function
 
         <Extension>
-        Private Sub start(script As StringBuilder, program$, argv$, stdin$)
+        Private Sub start(script As StringBuilder, program$, argv$, stdin$, isShellCommand As Boolean)
             If stdin.StringEmpty Then
-                Call script.AppendLine($"""{program}"" {argv}")
+                If isShellCommand Then
+                    Call script.AppendLine($"{program} {argv}")
+                Else
+                    Call script.AppendLine($"""{program}"" {argv}")
+                End If
             Else
-                Call script.AppendLine($"echo {stdin} | ""{program}"" {argv}")
+                If isShellCommand Then
+                    Call script.AppendLine($"echo {stdin} | {program} {argv}")
+                Else
+                    Call script.AppendLine($"echo {stdin} | ""{program}"" {argv}")
+                End If
             End If
         End Sub
 
-        Public Function Bash(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean, stdin$) As String
+        Public Function Bash(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean, stdin$, isShellCommand As Boolean) As String
             Dim shell As New StringBuilder("#!/bin/bash")
 
             Call shell.AppendLine()
@@ -114,7 +122,7 @@ Namespace CommandLine
             End If
 
             Call shell.AppendLine($"cd {App.CurrentDirectory.CLIPath}")
-            Call shell.start(program, argv, stdin)
+            Call shell.start(program, argv, stdin, isShellCommand)
 
             Return shell.ToString
         End Function

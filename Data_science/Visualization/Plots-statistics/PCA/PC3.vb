@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::378758b8a1b483c70dec6394042b204f, Data_science\Visualization\Plots-statistics\PCA\PC3.vb"
+﻿#Region "Microsoft.VisualBasic::8f9839c95378b6a7d13a0bdd0619eb32, Data_science\Visualization\Plots-statistics\PCA\PC3.vb"
 
     ' Author:
     ' 
@@ -40,20 +40,9 @@
 
 #End Region
 
-Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Matrix
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports PCA_analysis = Microsoft.VisualBasic.Math.LinearAlgebra.PCA
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace PCA
 

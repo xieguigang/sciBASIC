@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bbad6cf7bb5421225b9d3126a901196, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb"
+﻿#Region "Microsoft.VisualBasic::6ecb20ef051d8d35aa35f2e55c59aff7, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -154,10 +155,10 @@ Namespace NeuralNetwork.StoreProcedure
         End Operator
 
 #Region "Default Expressions"
-        Public Shared ReadOnly Property ReLU As [Default](Of  String) = "ReLU()"
-        Public Shared ReadOnly Property Threshold As [Default](Of  String) = "Threshold()"
-        Public Shared ReadOnly Property Sigmoid As [Default](Of  String) = "Sigmoid(alpha:=2.0)"
-        Public Shared ReadOnly Property BipolarSigmoid As [Default](Of  String) = "BipolarSigmoid(alpha:=2.0)"
+        Public Shared ReadOnly Property ReLU As [Default](Of String) = "ReLU()"
+        Public Shared ReadOnly Property Threshold As [Default](Of String) = "Threshold()"
+        Public Shared ReadOnly Property Sigmoid As [Default](Of String) = "Sigmoid(alpha:=2.0)"
+        Public Shared ReadOnly Property BipolarSigmoid As [Default](Of String) = "BipolarSigmoid(alpha:=2.0)"
 #End Region
 
         ''' <summary>
@@ -166,11 +167,13 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="expression">这个字符串表达式应该是<see cref="IActivationFunction.ToString()"/>的函数输出结果字符串</param>
         ''' <returns></returns>
         Public Shared Function Parse(expression As String) As ActiveFunction
-            Dim func As Func = FuncParser.TryParse(expression)
+            Dim func As NamedValue(Of String) = expression.GetTagValue("(", trim:=True)
 
             Return New ActiveFunction With {
                 .name = func.Name,
-                .Arguments = func.Args _
+                .Arguments = func.Value _
+                    .Trim(")"c) _
+                    .StringSplit("\s*,\s*") _
                     .Select(Function(a) a.GetTagValue(":=")) _
                     .Select(Function(a)
                                 Return New NamedValue With {

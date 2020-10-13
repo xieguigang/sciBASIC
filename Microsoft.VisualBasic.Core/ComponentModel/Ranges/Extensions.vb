@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b1e1c05c972f9fb87a019455680f7c2, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c50094d34198bf8e142be14ff0a87e37, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Extensions.vb"
 
     ' Author:
     ' 
@@ -159,6 +159,11 @@ Namespace ComponentModel.Ranges
             End If
 
             Dim vector#() = from.ToArray
+
+            If vector.Length = 1 Then
+                Return {[to].Max}
+            End If
+
             Dim scale = New DoubleRange(vector).GetScaler
             Dim percentages#() = vector.Select(scale).ToArray
             Dim length# = [to].Length

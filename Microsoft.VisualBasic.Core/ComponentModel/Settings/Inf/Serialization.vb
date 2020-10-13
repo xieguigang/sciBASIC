@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c4bc00b15ec114103b991207f7ba1bd, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::2b0d51b5393f39ab9816abbfe05e69ca, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
+Imports Microsoft.VisualBasic.My.UNIX
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Settings.Inf

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7215eacef6da5d9f4c3c795ae8d23869, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::54467bcb1d0626f3f4ef23e204bcb70a, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,6 @@
     '     Delegate Function
     ' 
     ' 
-    '     Delegate Function
-    ' 
-    ' 
     '     Interface IDefault
     ' 
     '         Properties: DefaultValue
@@ -55,8 +52,6 @@
     ' 
     ' 
     ' 
-    ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -66,8 +61,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Perl
 
 Namespace Language.Default
-
-    Public Delegate Function Assert(Of T)(obj As T) As Boolean
 
     ''' <summary>
     ''' + Test of A eqauls to B?
@@ -140,7 +133,7 @@ Namespace Language.Default
         ''' test on the object, means object value is missing or null, then default 
         ''' value <see cref="DefaultValue"/> will be returns.
         ''' </summary>
-        Dim assert As Assert(Of Object)
+        Dim assert As Predicate(Of Object)
 
         ''' <summary>
         ''' 这个判断函数优化了对数字类型的判断
@@ -170,7 +163,7 @@ Namespace Language.Default
             End Select
         End Function
 
-        Sub New(value As T, Optional assert As Assert(Of Object) = Nothing)
+        Sub New(value As T, Optional assert As Predicate(Of Object) = Nothing)
             Me.value = value
             Me.assert = assert Or defaultAssert
         End Sub
@@ -184,7 +177,7 @@ Namespace Language.Default
         ''' + 如果这个参数为true，则表示表达式为lazy加载，只会执行一次
         ''' + 反之当这个参数为false的时候，则表达式会不断的产生新的值
         ''' </param>
-        Sub New(populator As Func(Of T), Optional assert As Assert(Of Object) = Nothing, Optional isLazy As Boolean = True)
+        Sub New(populator As Func(Of T), Optional assert As Predicate(Of Object) = Nothing, Optional isLazy As Boolean = True)
             If isLazy Then
                 Me.lazy = populator.AsLazy
             Else
@@ -199,7 +192,7 @@ Namespace Language.Default
             Return Me
         End Function
 
-        Public Function [When](assert As Assert(Of T)) As [Default](Of T)
+        Public Function [When](assert As Predicate(Of T)) As [Default](Of T)
             Me.assert = Function(o) assert(DirectCast(o, T))
             Return Me
         End Function
@@ -216,7 +209,7 @@ Namespace Language.Default
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +([default] As [Default](Of T), assert As Assert(Of Object)) As [Default](Of T)
+        Public Shared Operator +([default] As [Default](Of T), assert As Predicate(Of Object)) As [Default](Of T)
             Return New [Default](Of T) With {
                 .assert = assert,
                 .value = [default].value
@@ -245,7 +238,7 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function getDefault(value As T, [default] As T, assert As Assert(Of Object))
+        Private Shared Function getDefault(value As T, [default] As T, assert As Predicate(Of Object))
             Return If(assert(value), [default], value)
         End Function
 

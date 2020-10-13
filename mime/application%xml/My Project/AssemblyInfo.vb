@@ -10,9 +10,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("application_xml")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Microsoft")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
 <Assembly: AssemblyProduct("application_xml")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2018")>
+<Assembly: AssemblyCopyright("Copyright © xie.guigang@live.com 2018")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

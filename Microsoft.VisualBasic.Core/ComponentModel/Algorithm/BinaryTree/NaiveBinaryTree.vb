@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cab0da9ef50f6674ce07f1b33dad9fc, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::464f8286a4a7e7470a1a695d3019fac4, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb"
 
     ' Author:
     ' 
@@ -216,6 +216,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' Add a symbol to the tree if it's a new one. Returns reference to the new
         ''' node if a new node inserted, else returns null to indicate node already present.
         ''' </summary>
+        ''' <param name="append">
+        ''' If this argument value is set to ``TRUE``, then it means do value key clustering. 
+        ''' </param>
         ''' <returns> Returns reference to the new node is the node was inserted.
         ''' If a duplicate node (same name was located then returns null</returns>
         Public Function insert(key As K, obj As V, Optional append As Boolean = True) As BinaryTree(Of K, V)

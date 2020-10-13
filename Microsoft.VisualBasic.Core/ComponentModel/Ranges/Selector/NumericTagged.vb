@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fe28d8fe19788ad638c9172a49963b1, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\NumericTagged.vb"
+﻿#Region "Microsoft.VisualBasic::9972dfc3f040568740d2c80ffbaff018, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\NumericTagged.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports stdNum = System.Math
 
 Namespace ComponentModel.Ranges
 
@@ -82,7 +83,7 @@ Namespace ComponentModel.Ranges
             If d = 0R Then
                 Return 0
             Else
-                Return Math.Sign(d)
+                Return stdNum.Sign(d)
             End If
         End Function
 

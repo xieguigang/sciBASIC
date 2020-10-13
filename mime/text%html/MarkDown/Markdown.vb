@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8ec2642dc27c8f5120cfcd200c24f54, mime\text%html\MarkDown\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::b81386391808985de64a8b612b72db9f, mime\text%html\MarkDown\Markdown.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,6 @@
 
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace MarkDown
 
@@ -1560,14 +1559,15 @@ Namespace MarkDown
         ''' with the escape values by accident.
         ''' </summary>
         Private Function EscapeSpecialCharsWithinTagAttributes(text As String) As String
-            Dim tokens As List(Of Token(Of TokenType)) = TokenizeHTML(text)
+            Dim tokens As IEnumerable(Of DocumentToken) = TokenizeHTML(text)
             ' now, rebuild text from the tokens
             Dim sb = New StringBuilder(text.Length)
+            Dim value As String
 
-            For Each token As Token(Of TokenType) In tokens
-                Dim value As String = token.Value
+            For Each token As DocumentToken In tokens
+                value = token.text
 
-                If token.Type = TokenType.Tag Then
+                If token.name = TokenType.Tag Then
                     value = value.Replace("\", _escapeTable("\"))
 
                     If _AutoHyperlink AndAlso value.StartsWith("<!") Then

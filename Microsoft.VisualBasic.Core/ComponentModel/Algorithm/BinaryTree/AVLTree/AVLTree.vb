@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae2cef48d9685292786c693e33d68e7c, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb"
+﻿#Region "Microsoft.VisualBasic::92b077ee5953d923f97d83e5763ed99b, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb"
 
     ' Author:
     ' 
@@ -69,6 +69,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' Create an instance of the AVL binary tree.
         ''' </summary>
         ''' <param name="compares">
+        ''' ``compares(newKey, treeKey)``:
+        ''' 
         ''' Compare between two keys. This comparison function should returns: 
         ''' 
         ''' + 0, means two keys are equals.
@@ -152,6 +154,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End If
         End Sub
 
+        ''' <summary>
+        ''' This function will returns nothing if <paramref name="term"/> not found in current tree.
+        ''' </summary>
+        ''' <param name="term"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Find(term As K) As BinaryTree(Of K, V)
             Return root.Find(key:=term, compares:=compares)

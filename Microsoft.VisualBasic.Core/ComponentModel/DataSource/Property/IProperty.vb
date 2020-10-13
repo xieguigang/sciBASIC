@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9323d6cc7d0a0aa572c751ef79fd2eab, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\IProperty.vb"
+﻿#Region "Microsoft.VisualBasic::d34ddc7da24f4bda8b4fbb91b55616f2, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\IProperty.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,12 @@
     ' 
     '         Sub: SetValue
     ' 
+    '     Interface IDynamicsObject
+    ' 
+    '         Function: GetItemValue, GetNames, HasName
+    ' 
+    '         Sub: Add, SetValue
+    ' 
     '     Interface IDynamicMeta
     ' 
     '         Properties: Properties
@@ -65,6 +71,20 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="target"></param>
         ''' <param name="value"></param>
         Sub SetValue(target As Object, value As Object)
+    End Interface
+
+    ''' <summary>
+    ''' Apply for R# object
+    ''' </summary>
+    Public Interface IDynamicsObject
+
+        Sub Add(propertyName$, value As Object)
+        Sub SetValue(propertyName$, value As Object)
+
+        Function GetNames() As IEnumerable(Of String)
+        Function GetItemValue(propertyName As String) As Object
+        Function HasName(name As String) As Boolean
+
     End Interface
 
     ''' <summary>

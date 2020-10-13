@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8407549a4344e66864d26fc6501e8cf, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::f33061cc2ba166f39d3c6a8f9ea74dd1, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Solver.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 
@@ -203,7 +204,7 @@ Namespace Layouts.Cola
             satisfy()
             cost = bs.cost()
 
-            While (Math.Abs(lastcost - cost) > 0.0001)
+            While (stdNum.Abs(lastcost - cost) > 0.0001)
                 satisfy()
                 lastcost = cost
                 cost = bs.cost()

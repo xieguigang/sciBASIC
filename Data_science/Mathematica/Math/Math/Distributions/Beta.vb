@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10c5bb0af65991ecd86709ef21597672, Data_science\Mathematica\Math\Math\Distributions\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::a6c5698f9542f8c8dd3b4d395dbabfd5, Data_science\Mathematica\Math\Math\Distributions\Beta.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,7 @@
 
 #End Region
 
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.Distributions.DirichletDistribution
 Imports Microsoft.VisualBasic.Math.LinearAlgebra

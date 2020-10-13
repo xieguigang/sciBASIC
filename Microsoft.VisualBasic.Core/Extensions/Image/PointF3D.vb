@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b70ed42a2afa9a49564dac1214e5d1c3, Microsoft.VisualBasic.Core\Extensions\Image\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::aeea519afd17da857810af769111f0a1, Microsoft.VisualBasic.Core\Extensions\Image\PointF3D.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,10 @@
     ' 
     '         Properties: X, Y, Z
     ' 
+    '     Interface Layout2D
+    ' 
+    '         Properties: X, Y
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -46,8 +50,15 @@ Namespace Imaging
     ''' 这个接口是为了实现Imaging模块的Point3D对象和数学函数模块的3D插值模块的兼容
     ''' </summary>
     Public Interface PointF3D
-        Property X!
-        Property Y!
-        Property Z!
+        Property X As Double
+        Property Y As Double
+        Property Z As Double
+    End Interface
+
+    Public Interface Layout2D
+
+        Property X As Double
+        Property Y As Double
+
     End Interface
 End Namespace

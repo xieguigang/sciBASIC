@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18c568c9dc55700311fb34858170498d, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
+﻿#Region "Microsoft.VisualBasic::2e4655c16e3372225d723ca27812cefc, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Namespace Darwinism
 
@@ -266,18 +267,18 @@ Namespace Darwinism
                 ' calculate New candidate solution
 
                 ' pick random point from population
-                Dim x = Math.Floor(random.NextDouble * (populationSize - 1))
+                Dim x = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Dim a, b, c As Integer
 
                 ' pick three different random points from population
                 Do While (a = x)
-                    a = Math.Floor(random.NextDouble * (populationSize - 1))
+                    a = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
                 Do While (b = x OrElse b = a)
-                    b = Math.Floor(random.NextDouble * (populationSize - 1))
+                    b = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
                 Do While (c = x OrElse c = a OrElse c = b)
-                    c = Math.Floor(random.NextDouble * (populationSize - 1))
+                    c = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
 
                 ' Pick a random index [0-Dimensionality]
@@ -300,7 +301,7 @@ Namespace Darwinism
                     ' 所以需要在这里添加一个随机数来解决这个问题
                     ' 假设数量级很大的话，这里是否需要通过log10来取指数进行突变？
                     'Dim raw = individual1.Yield(R)
-                    'Dim mutate# = Math.Log10(Math.Abs(raw)) + F * (Math.Log10(Math.Abs(individual2.Yield(R))) - Math.Log10(Math.Abs(individual3.Yield(R))))
+                    'Dim mutate# = stdNum.Log10(Math.Abs(raw)) + F * (Math.Log10(Math.Abs(individual2.Yield(R))) - stdNum.Log10(Math.Abs(individual3.Yield(R))))
                     'mutate = raw + If(random.NextBoolean, 1, -1) * 10 ^ mutate
                     Dim mutate# = individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R))
                     mutate *= random.NextDouble

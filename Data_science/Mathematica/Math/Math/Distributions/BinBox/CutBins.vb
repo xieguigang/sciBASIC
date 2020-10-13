@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe0641da49a026a0be5ef3af72cea7b8, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
+﻿#Region "Microsoft.VisualBasic::f9a663d1ff6d25e02ddcfd4fca491d64, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module CutBins
     ' 
-    '         Function: EqualFrequencyBins, (+2 Overloads) FixedWidthBins
+    '         Function: EqualFrequencyBins, (+3 Overloads) FixedWidthBins
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,6 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 
 Namespace Distributions.BinBox
@@ -57,6 +58,9 @@ Namespace Distributions.BinBox
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 宽度是自动计算的
+        ''' </remarks>
         Public Function FixedWidthBins(Of T)(data As IEnumerable(Of T), k%, eval As Evaluate(Of T)) As IEnumerable(Of DataBinBox(Of T))
             ' 升序排序方便进行快速计算
             Dim v = data.OrderBy(Function(d) eval(d)).ToArray
@@ -64,7 +68,7 @@ Namespace Distributions.BinBox
             Dim max# = eval(v.Last)
             Dim width# = (max - min) / k
 
-            Return FixedWidthBins(v, width, eval)
+            Return FixedWidthBins(v, width, eval, min, max)
         End Function
 
         ''' <summary>
@@ -77,15 +81,37 @@ Namespace Distributions.BinBox
         ''' <param name="width">所给定的区间宽度</param>
         ''' <param name="eval"></param>
         ''' <returns></returns>
-        Public Iterator Function FixedWidthBins(Of T)(v As T(), width#, eval As Evaluate(Of T)) As IEnumerable(Of DataBinBox(Of T))
+        ''' <remarks>
+        ''' 宽度是手工指定的
+        ''' </remarks>
+        Public Function FixedWidthBins(Of T)(v As IEnumerable(Of T), width#, range As DoubleRange, eval As Evaluate(Of T)) As IEnumerable(Of DataBinBox(Of T))
+            Return FixedWidthBins(v.OrderBy(Function(d) eval(d)).ToArray, width, eval, range.Min, range.Max)
+        End Function
+
+        ''' <summary>
+        ''' ### 数据等宽分箱
+        ''' 
+        ''' 将变量按照给定的值域宽度分为多个区间
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="v"></param>
+        ''' <param name="width">所给定的区间宽度</param>
+        ''' <param name="eval"></param>
+        ''' <returns></returns>
+        Public Iterator Function FixedWidthBins(Of T)(v As T(), width#, eval As Evaluate(Of T), min#, max#, Optional slideWindowSteps# = -1) As IEnumerable(Of DataBinBox(Of T))
             Dim x As New Value(Of Double)
             Dim len% = v.Length
-            Dim min# = eval(v.First)
-            Dim max# = eval(v.Last)
             Dim i As i32 = 0
             Dim lowerbound# = min
             Dim upbound#
             Dim list As New List(Of T)
+
+            If v.Length = 1 Then
+                Yield New DataBinBox(Of T)(v, eval)
+                Return
+            End If
+
+            slideWindowSteps = slideWindowSteps Or width.When(slideWindowSteps <= 0)
 
             Do While lowerbound < max
                 upbound = lowerbound + width
@@ -101,6 +127,7 @@ Namespace Distributions.BinBox
                     Exit Do
                 Else
                     list *= 0
+                    lowerbound += slideWindowSteps
                 End If
             Loop
         End Function

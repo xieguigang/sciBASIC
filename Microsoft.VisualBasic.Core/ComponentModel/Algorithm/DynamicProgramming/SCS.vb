@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e8f96d8510319c1ec0fc9011f9b0e4f, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
+﻿#Region "Microsoft.VisualBasic::5db76c6c27cacfb60cc608fc9c5e531d, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module SCS
     ' 
-    '         Function: Coverage, MaxPrefixLength, ShortestCommonSuperString
+    '         Function: Coverage, MaxPrefixLength, runIteration, ShortestCommonSuperString
     ' 
     '         Sub: TableView
     ' 
@@ -109,62 +109,72 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
         ''' 当这个函数遇到完全没有重叠的序列片段的时候，是会直接将这个不重叠的片段接到SCS的最末尾的
         ''' </remarks>
         <Extension>
-        Public Function ShortestCommonSuperString(seqs As Generic.List(Of String)) As String
-            Dim l As Integer = seqs.Count
+        Public Function ShortestCommonSuperString(strs As IEnumerable(Of String)) As String()
+            Dim seqs As String() = strs.ToArray
+            Dim l As Integer = seqs.Length
+            Dim p As Integer
+            Dim q As Integer
+            Dim finalStr As String
 
             Do While l > 1
-                Dim currMax As Integer = Integer.MinValue
-                Dim finalStr As String = Nothing
-                Dim p As Integer = -1, q As Integer = -1
-
-                For j As Integer = 0 To l - 1
-                    For k As Integer = j + 1 To l - 1
-                        Dim str As String = seqs(j)
-                        Dim b As String = seqs(k)
-
-                        If str.Contains(b) Then
-                            If b.Length > currMax Then
-                                finalStr = str
-                                currMax = b.Length
-                                p = j
-                                q = k
-                            End If
-                        ElseIf b.Contains(str) Then
-                            If str.Length > currMax Then
-                                finalStr = b
-                                currMax = str.Length
-                                p = j
-                                q = k
-                            End If
-                        Else
-                            ' find max common prefix and suffix
-                            Dim maxPrefixMatch = MaxPrefixLength(str, b)
-
-                            If maxPrefixMatch > currMax Then
-                                finalStr = str & b.Substring(maxPrefixMatch)
-                                currMax = maxPrefixMatch
-                                p = j
-                                q = k
-                            End If
-
-                            Dim maxSuffixMatch = MaxPrefixLength(b, str)
-
-                            If maxSuffixMatch > currMax Then
-                                finalStr = b & str.Substring(maxSuffixMatch)
-                                currMax = maxSuffixMatch
-                                p = j
-                                q = k
-                            End If
-                        End If
-                    Next
-                Next
-
+                p = -1
+                q = -1
+                finalStr = runIteration(l, seqs, p, q)
                 l -= 1
                 seqs(p) = finalStr
                 seqs(q) = seqs(l)
             Loop
 
-            Return seqs.First
+            Return seqs
+        End Function
+
+        Private Function runIteration(l As Integer, seqs As String(), ByRef p%, ByRef q%) As String
+            Dim currMax As Integer = Integer.MinValue
+            Dim finalStr As String = Nothing
+
+            For j As Integer = 0 To l - 1
+                For k As Integer = j + 1 To l - 1
+                    Dim str As String = seqs(j)
+                    Dim b As String = seqs(k)
+
+                    If str.Contains(b) Then
+                        If b.Length > currMax Then
+                            finalStr = str
+                            currMax = b.Length
+                            p = j
+                            q = k
+                        End If
+                    ElseIf b.Contains(str) Then
+                        If str.Length > currMax Then
+                            finalStr = b
+                            currMax = str.Length
+                            p = j
+                            q = k
+                        End If
+                    Else
+                        ' find max common prefix and suffix
+                        Dim maxPrefixMatch = MaxPrefixLength(str, b)
+
+                        If maxPrefixMatch > currMax Then
+                            finalStr = str & b.Substring(maxPrefixMatch)
+                            currMax = maxPrefixMatch
+                            p = j
+                            q = k
+                        End If
+
+                        Dim maxSuffixMatch = MaxPrefixLength(b, str)
+
+                        If maxSuffixMatch > currMax Then
+                            finalStr = b & str.Substring(maxSuffixMatch)
+                            currMax = maxSuffixMatch
+                            p = j
+                            q = k
+                        End If
+                    End If
+                Next
+            Next
+
+            Return finalStr
         End Function
 
         Private Function MaxPrefixLength(a As String, b As String) As Integer

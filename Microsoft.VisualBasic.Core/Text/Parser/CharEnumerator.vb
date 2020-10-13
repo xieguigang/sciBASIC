@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9419b8655e218d4b7f1b8f381fa51413, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::4237ad5a8459385d8bcd9f01d26ec31b, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: Remaining
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: PeekNext, PopNext, ToString
+    '         Operators: (+2 Overloads) Not
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,9 +47,13 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Parser
 
+    ''' <summary>
+    ''' Char enumerator
+    ''' </summary>
     Public Class CharPtr : Inherits Pointer(Of Char)
 
         ''' <summary>
@@ -58,7 +63,7 @@ Namespace Text.Parser
         Public ReadOnly Property Remaining As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return buffer.Skip(index).CharString
+                Return buffer.Skip(index + 1).CharString
             End Get
         End Property
 
@@ -66,6 +71,22 @@ Namespace Text.Parser
             ' 可能会存在空字符串
             Call MyBase.New(data.SafeQuery)
         End Sub
+
+        Public Overloads Function PeekNext(length As Integer) As String
+            Dim buf As New List(Of Char)
+
+            For i As Integer = 0 To length - 1
+                buf += Me(i)
+            Next
+
+            Return buf.CharString
+        End Function
+
+        Public Function PopNext(length As Integer) As String
+            Dim result As String = PeekNext(length)
+            index += length
+            Return result
+        End Function
 
         ''' <summary>
         ''' 这个调试试图函数会将当前的读取位置给标记出来
@@ -78,6 +99,11 @@ Namespace Text.Parser
 
             Return $"{previous} ->[{current}]<- {remaining}"
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator Not(chars As CharPtr) As Boolean
+            Return Not chars.EndRead
+        End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(str As String) As CharPtr
