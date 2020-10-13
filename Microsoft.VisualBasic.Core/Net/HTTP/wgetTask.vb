@@ -59,7 +59,7 @@ Namespace Net.Http
     ''' </summary>
     Public Class wgetTask : Implements IDisposable
 
-        ReadOnly fs As FileStream
+        Friend ReadOnly fs As Stream
 
         Dim _speedSamples As List(Of Double)
 
@@ -105,9 +105,21 @@ Namespace Net.Http
         ''' Module will create a new <see cref="FileStream"/> that writes to this desired download path
         ''' </param>
         Sub New(downloadUrl As String, saveFile As String)
-            Me.fs = saveFile.Open(doClear:=True)
+            Call Me.New(downloadUrl, saveFile.Open(doClear:=True))
+        End Sub
+
+        Sub New(downloadUrl As String, save As Stream)
+            Me.fs = save
             Me.url = downloadUrl
-            Me.saveFile = saveFile
+
+            Select Case save.GetType
+                Case GetType(FileStream)
+                    Me.saveFile = DirectCast(save, FileStream).Name
+                Case GetType(MemoryStream)
+                    Me.saveFile = $"<in_memory_{save.GetHashCode.ToHexString}>"
+                Case Else
+                    Me.saveFile = $"<unknown_{save.GetHashCode.ToHexString}>"
+            End Select
         End Sub
 
         Public Function StartTask(Optional doRetry As Boolean = True) As Boolean
@@ -214,7 +226,7 @@ RE:
                 busy += 1
             End If
 
-            Return $"> '{saveFile.FileName}'{New String("."c, busy)}  {StringFormats.Lanudry(currentSize)} [{(100 * _currentSize / _totalSize).ToString("F2")}%, {StringFormats.Lanudry(downloadSpeed)}/sec], elapsed {TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).FormatTime}"
+            Return $"> '{saveFile}'{New String("."c, busy)}  {StringFormats.Lanudry(currentSize)} [{(100 * _currentSize / _totalSize).ToString("F2")}%, {StringFormats.Lanudry(downloadSpeed)}/sec], elapsed {TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - _startTime).FormatTime}"
         End Function
 
 #Region "IDisposable Support"

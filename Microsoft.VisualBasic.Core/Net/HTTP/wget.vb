@@ -66,7 +66,7 @@ Namespace Net.Http
                 Call task.Dispose()
 
                 Call Console.WriteLine()
-                Call Console.WriteLine($"{Now.ToString} ({StringFormats.Lanudry(task.downloadSpeed)}/s) - '{task.saveFile.FileName}' saved [{task.saveFile.FileLength}]")
+                Call Console.WriteLine($"{Now.ToString} ({StringFormats.Lanudry(task.downloadSpeed)}/s) - '{task.saveFile}' saved [{task.fs.Length}]")
                 Call Console.WriteLine()
             End If
         End Sub
@@ -95,11 +95,11 @@ Namespace Net.Http
             Call Console.WriteLine()
 
             Call ClearLine() : Console.WriteLine($"--{Now.ToString}--  {task.url}")
-            Call ClearLine() : Console.WriteLine($"     => '{task.saveFile.FileName}'")
+            Call ClearLine() : Console.WriteLine($"     => '{task.saveFile}'")
             Call ClearLine() : Console.WriteLine()
             Call ClearLine() : Console.WriteLine($"Resolving {resp.ResponseUri.Host} ({domain})... {remote}")
             Call ClearLine() : Console.WriteLine($"==> METHOD ... {req.Method}/{req.RequestUri.Scheme} {DirectCast(req, HttpWebRequest).ProtocolVersion}")
-            Call ClearLine() : Console.WriteLine($"==> SIZE {task.saveFile.FileName} ... {resp.ContentLength}")
+            Call ClearLine() : Console.WriteLine($"==> SIZE {task.saveFile} ... {resp.ContentLength}")
             Call ClearLine() : Console.WriteLine($"==> CONTENT-TYPE ... {resp.ContentType}")
             Call ClearLine() : Console.WriteLine($"Length: {resp.ContentLength} ({StringFormats.Lanudry(resp.ContentLength)})")
 
