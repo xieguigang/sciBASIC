@@ -93,12 +93,13 @@ Namespace ApplicationServices.Terminal
             Do While App.Running
                 Call dev.Write(ps1.ToString)
 
-                If Strings.Trim((cli = dev.ReadLine)).StringEmpty Then
-                    Call _shell(cli)
-                    Continue Do
-                End If
+                If Strings.Trim((cli = dev.ReadLine)).StringEmpty OrElse
+                    cli.Value = vbCrLf OrElse
+                    cli.Value = vbCr OrElse
+                    cli.Value = vbLf Then
 
-                If cli.Value.TextEquals(Quite) Then
+                    Call _shell("")
+                ElseIf cli.Value.TextEquals(Quite) Then
                     Exit Do
                 Else
                     Call _shell(cli)
