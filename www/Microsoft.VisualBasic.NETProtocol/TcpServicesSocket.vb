@@ -255,7 +255,7 @@ Namespace Tcp
             End Try
 
             ' Create the state object for the async receive.
-            Dim state As StateObject = New StateObject With {
+            Dim state As New StateObject With {
                 .workSocket = handler
             }
 
