@@ -126,27 +126,8 @@ End Enum
 Public Class Pdf417Encoder
     Inherits Pdf417EncoderTables
 
-    ''' <summary>
-    ''' Data rows
-    ''' </summary>
-
-    ''' <summary>
-    ''' Data columns
-    ''' </summary>
-
-    ''' <summary>
-    ''' Returns the barcode width in terms of narrow bars
-    ''' </summary>
-
-    ''' <summary>
-    ''' Barcode image width in pixels
-    ''' </summary>
-
-    ''' <summary>
-    ''' Barcode image height in pixels
-    ''' </summary>
-    Private _DataRows As Integer, _DataColumns As Integer, _BarColumns As Integer, _ImageWidth As Integer, _ImageHeight As Integer
     ' encoding mode
+
     Private Enum EncodingMode
         [Byte]
         Text
@@ -168,50 +149,30 @@ Public Class Pdf417Encoder
     ''' </summary>
     Public Const VersionNumber As String = "Rev 2.2.0 - 2019-05-26"
 
+    ''' <summary>
+    ''' Data rows
+    ''' </summary>
     Public Property DataRows As Integer
-        Get
-            Return _DataRows
-        End Get
-        Private Set(ByVal value As Integer)
-            _DataRows = value
-        End Set
-    End Property
 
+    ''' <summary>
+    ''' Data columns
+    ''' </summary>
     Public Property DataColumns As Integer
-        Get
-            Return _DataColumns
-        End Get
-        Private Set(ByVal value As Integer)
-            _DataColumns = value
-        End Set
-    End Property
 
+    ''' <summary>
+    ''' Returns the barcode width in terms of narrow bars
+    ''' </summary>
     Public Property BarColumns As Integer
-        Get
-            Return _BarColumns
-        End Get
-        Private Set(ByVal value As Integer)
-            _BarColumns = value
-        End Set
-    End Property
 
+    ''' <summary>
+    ''' Barcode image width in pixels
+    ''' </summary>
     Public Property ImageWidth As Integer
-        Get
-            Return _ImageWidth
-        End Get
-        Private Set(ByVal value As Integer)
-            _ImageWidth = value
-        End Set
-    End Property
 
+    ''' <summary>
+    ''' Barcode image height in pixels
+    ''' </summary>
     Public Property ImageHeight As Integer
-        Get
-            Return _ImageHeight
-        End Get
-        Private Set(ByVal value As Integer)
-            _ImageHeight = value
-        End Set
-    End Property
 
     ''' <summary>
     ''' Barcode matrix (each bar is one bool item)
