@@ -71,10 +71,13 @@ Namespace Linq
         ''' <param name="apply"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Sub DoCall(Of T)(input As T, apply As Action(Of T))
             Call apply(input)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension>
         Public Function PipeOf(Of T, Rest)(input As T, task As Action(Of T, Rest)) As Action(Of Rest)
             Return Sub(a) task(input, a)
