@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
 Imports GraphNetwork = Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NamesOf
+Imports Node = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 
 Namespace Analysis
 
@@ -64,7 +65,7 @@ Namespace Analysis
         Public Function Sum(degrees As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))) As Dictionary(Of String, Integer)
             Dim degreeValue As New Dictionary(Of String, Integer)(degrees.in)
 
-            For Each node In degrees.out
+            For Each node As KeyValuePair(Of String, Integer) In degrees.out
                 degreeValue(node.Key) += degreeValue(node.Key) + node.Value
             Next
 
@@ -113,7 +114,9 @@ Namespace Analysis
         ''' 这个函数计算网络的节点的degree，然后将degree数据写入节点的同时，通过字典返回给用户
         ''' </summary>
         ''' <param name="g"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' ``[<see cref="Node.label"/> => degree]``
+        ''' </returns>
         <Extension>
         Public Function ComputeNodeDegrees(ByRef g As NetworkGraph) As Dictionary(Of String, Integer)
             Dim connectNodes As Dictionary(Of String, Integer) = g.ConnectedDegrees

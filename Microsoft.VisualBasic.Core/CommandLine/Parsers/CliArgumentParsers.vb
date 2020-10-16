@@ -173,7 +173,9 @@ Namespace CommandLine.Parsers
         ''' <returns></returns>
         <ExportAPI("IsPossibleBoolFlag?")>
         Public Function IsPossibleLogicFlag(obj As String) As Boolean
-            If obj.Contains(" ") Then
+            If String.IsNullOrEmpty(obj) Then
+                Return False
+            ElseIf obj.Contains(" ") Then
                 Return False
             ElseIf IsNumeric(obj) Then
                 Return False

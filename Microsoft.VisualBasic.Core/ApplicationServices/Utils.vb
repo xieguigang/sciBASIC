@@ -249,7 +249,9 @@ Namespace ApplicationServices
         ''' <param name="token"></param>
         ''' <returns></returns>
         <Extension> Public Function CLIToken(token As String) As String
-            If String.IsNullOrEmpty(token) OrElse Not Len(token) > 2 Then
+            If String.IsNullOrEmpty(token) Then
+                Return """"""
+            ElseIf Not Len(token) > 2 Then
                 Return token
             End If
 
