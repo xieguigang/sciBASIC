@@ -93,8 +93,7 @@ Namespace Tcp
                     Dim ep As String = workSocket.RemoteEndPoint.ToString
 
                     ' TODO: dispose managed state (managed objects).
-                    Call received.Clear()
-                    Call received.Free
+                    Call received.Dispose()
                     Call readBuffer.Free
                     Call workSocket.Shutdown(SocketShutdown.Both)
                     Call workSocket.Free
