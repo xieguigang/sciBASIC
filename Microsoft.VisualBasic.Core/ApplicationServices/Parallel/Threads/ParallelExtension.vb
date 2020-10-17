@@ -85,7 +85,9 @@ Namespace Parallel
         ''' Start a new thread and then returns the background thread task handle.
         ''' </summary>
         ''' <param name="start"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the thread method <see cref="Thread.Start()"/> is already be called
+        ''' </returns>
         <Extension>
         <DebuggerStepThrough>
         Public Function RunTask(start As ThreadStart) As Thread

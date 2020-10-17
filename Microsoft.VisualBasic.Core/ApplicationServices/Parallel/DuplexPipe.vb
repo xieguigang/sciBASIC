@@ -8,14 +8,23 @@ Namespace Parallel
         ReadOnly dataFragments As New Queue(Of Byte())
         ReadOnly writeClose As New Value(Of Boolean)(False)
 
+        Public ReadOnly Property Length As Long
+
         Public Sub Close()
             writeClose.Value = True
         End Sub
 
-        Public Sub Write(buffer As IEnumerable(Of Byte))
+        Public Sub Write(buffer As Byte())
             SyncLock dataFragments
-                dataFragments.Enqueue(buffer.ToArray)
+                _Length += buffer.Length
+                dataFragments.Enqueue(buffer)
             End SyncLock
+        End Sub
+
+        Public Sub Wait()
+            Do While dataFragments.Count > 0
+                Call Thread.Sleep(1)
+            Loop
         End Sub
 
         Public Overrides Function Read() As Byte()
