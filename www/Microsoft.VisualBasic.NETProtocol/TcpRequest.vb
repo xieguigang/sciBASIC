@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::5307380b3d46f497ae1ce6ed4c0f0713, www\Microsoft.VisualBasic.NETProtocol\TcpRequest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TcpRequest
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
-    ' 
-    '         Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
-    '              SendCallback
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TcpRequest
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
+' 
+'         Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
+'              SendCallback
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
@@ -74,12 +75,6 @@ Namespace Tcp
         ''' </summary>
         ''' <remarks></remarks>
         Dim port As Integer
-
-        ''' <summary>
-        ''' The response from the remote device.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Dim response As Byte()
 
         ''' <summary>
         ''' ' ManualResetEvent instances signal completion.
@@ -256,20 +251,24 @@ Namespace Tcp
             End If
         End Function
 
-        ''' <summary>
-        ''' 最底层的消息发送函数
-        ''' </summary>
-        ''' <param name="Message"></param>
-        ''' <returns></returns>
-        Public Function SendMessage(Message As Byte()) As Byte()
-            If Not RequestStream.IsAvaliableStream(Message) Then
-                Message = New RequestStream(0, 0, Message).Serialize
-            End If
+        Public Sub RequestToStream(message As RequestStream, stream As Stream)
+            Dim client As Socket = getSocket(message.Serialize)
 
+            ' Receive the response from the remote device.
+            Call Receive(client, stream)
+            Call receiveDone.WaitOne()
+
+            On Error Resume Next
+
+            ' Release the socket.
+            Call client.Shutdown(SocketShutdown.Both)
+            Call client.Close()
+        End Sub
+
+        Private Function getSocket(message As Byte()) As Socket
             connectDone = New ManualResetEvent(False) ' ManualResetEvent instances signal completion.
             sendDone = New ManualResetEvent(False)
             receiveDone = New ManualResetEvent(False)
-            response = Nothing
 
             ' Establish the remote endpoint for the socket.
             ' For this example use local machine.
@@ -281,11 +280,27 @@ Namespace Tcp
             ' Wait for connect.
             Call connectDone.WaitOne()
             ' Send test data to the remote device.
-            Call __send(client, Message)
+            Call __send(client, message)
             Call sendDone.WaitOne()
 
+            Return client
+        End Function
+
+        ''' <summary>
+        ''' 最底层的消息发送函数
+        ''' </summary>
+        ''' <param name="message"></param>
+        ''' <returns></returns>
+        Public Function SendMessage(message As Byte()) As Byte()
+            If Not RequestStream.IsAvaliableStream(message) Then
+                message = New RequestStream(0, 0, message).Serialize
+            End If
+
+            Dim client As Socket = getSocket(message)
+            Dim buffer As New MemoryStream
+
             ' Receive the response from the remote device.
-            Call Receive(client)
+            Call Receive(client, buffer)
             Call receiveDone.WaitOne()
 
             On Error Resume Next
@@ -294,7 +309,7 @@ Namespace Tcp
             Call client.Shutdown(SocketShutdown.Both)
             Call client.Close()
 
-            Return response
+            Return buffer.ToArray
         End Function
 
         Private Sub ConnectCallback(ar As IAsyncResult)
@@ -318,10 +333,11 @@ Namespace Tcp
         ''' (when sending on a datagram socket using a sendto call) no address was supplied
         ''' </summary>
         ''' <param name="client"></param>
-        Private Sub Receive(client As Socket)
+        Private Sub Receive(client As Socket, buffer As Stream)
             ' Create the state object.
             Dim state As New StateObject With {
-                .workSocket = client
+                .workSocket = client,
+                .received = buffer
             }
 
             ' Begin receiving the data from the remote device.
@@ -351,16 +367,12 @@ Namespace Tcp
 
             If bytesRead > 0 Then
                 ' There might be more data, so store the data received so far.
-                state.received.AddRange(state.readBuffer.Takes(bytesRead))
+                state.received.Write(state.readBuffer.Takes(bytesRead).ToArray, Scan0, bytesRead)
                 ' Get the rest of the data.
                 client.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReceiveCallback), state)
             Else
                 ' All the data has arrived; put it in response.
-                If state.received.Count > 1 Then
-                    response = state.received.ToArray
-                Else
-EX_EXIT:            response = Nothing
-                End If
+EX_EXIT:
                 ' Signal that all bytes have been received.
                 Call receiveDone.Set()
             End If

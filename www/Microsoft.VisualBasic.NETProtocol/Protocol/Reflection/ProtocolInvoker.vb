@@ -62,25 +62,16 @@ Namespace Protocols.Reflection
         End Sub
 
         Public Function InvokeProtocol0(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As BufferPipe
-            Dim value = method.Invoke(obj, Nothing)
-            Dim data = DirectCast(value, RequestStream)
-
-            Return New DataPipe(data)
+            Return method.Invoke(obj, Nothing)
         End Function
 
         Public Function InvokeProtocol1(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As BufferPipe
-            Dim value = method.Invoke(obj, {request})
-            Dim data = DirectCast(value, RequestStream)
-
-            Return New DataPipe(data)
+            Return method.Invoke(obj, {request})
         End Function
 
         Public Function InvokeProtocol2(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As BufferPipe
             Try
-                Dim value = method.Invoke(obj, {request, remoteDevice})
-                Dim data = DirectCast(value, RequestStream)
-
-                Return New DataPipe(data)
+                Return method.Invoke(obj, {request, remoteDevice})
             Catch ex As Exception
                 ex = New Exception(method.FullName, ex)
 
