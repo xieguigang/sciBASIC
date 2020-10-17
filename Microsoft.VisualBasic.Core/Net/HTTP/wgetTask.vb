@@ -66,7 +66,7 @@ Namespace Net.Http
                 If Not fs Is Nothing Then
                     Return fs.Length
                 Else
-                    Return pipeline.length
+                    Return pipeline.Length
                 End If
             End Get
         End Property
@@ -261,25 +261,26 @@ RE:
             End If
 
             ' Ask for the response
-            Dim resp As WebResponse = req.GetResponse
+            Dim _resp As WebResponse = req.GetResponse
 
-            _totalSize = resp.ContentLength
+            _totalSize = _resp.ContentLength
             _speedSamples = New List(Of Double)
             _currentSize = 0
             _startTime = App.ElapsedMilliseconds
             _isUnknownContentSize = totalSize < 0
 
-            RaiseEvent ReportRequest(req, resp, remote)
+            RaiseEvent ReportRequest(req, _resp, remote)
             RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
 
             If totalSize = -1 Then
                 ' task with no Content-Length
-                Call doDownloadTask(resp, bufferSize, Function(read) read = 0)
+                Call doDownloadTask(_resp, bufferSize, Function(read) read = 0)
             Else
-                Call doDownloadTask(resp, bufferSize, Function() currentSize >= totalSize)
+                Call doDownloadTask(_resp, bufferSize, Function() currentSize >= totalSize)
             End If
 
-            resp.Close()
+            Call _resp.Close()
+            Call _stream.Dispose()
         End Sub
 
         Private Sub doDownloadTask(resp As WebResponse, bufferSize%, exitJob As Func(Of Integer, Boolean))
@@ -353,7 +354,6 @@ RE:
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call _stream.Dispose()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

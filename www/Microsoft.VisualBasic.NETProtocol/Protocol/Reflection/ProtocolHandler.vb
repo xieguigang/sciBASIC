@@ -165,7 +165,7 @@ Namespace Protocols.Reflection
         Private Shared Function GetMethod(obj As Object, entryPoint As MethodInfo) As DataRequestHandler
             Dim parameters As ParameterInfo() = entryPoint.GetParameters
 
-            If Not entryPoint.ReturnType.Equals(GetType(RequestStream)) Then
+            If Not entryPoint.ReturnType.Equals(GetType(BufferPipe)) Then
                 Return Nothing
             ElseIf parameters.Length > 2 Then
                 Return Nothing
