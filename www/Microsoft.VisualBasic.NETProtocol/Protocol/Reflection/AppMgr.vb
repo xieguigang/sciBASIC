@@ -98,9 +98,9 @@ Namespace Protocols.Reflection
             Return Register(DirectCast(App, Object), [overrides])
         End Function
 
-        Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As TcpEndPoint) As RequestStream
+        Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As TcpEndPoint) As BufferPipe
             If Not ProtocolApps.ContainsKey(request.ProtocolCategory) Then
-                Return NetResponse.RFC_NOT_FOUND
+                Return New DataPipe(NetResponse.RFC_NOT_FOUND)
             End If
 
             Dim protocol As ProtocolHandler = ProtocolApps(request.ProtocolCategory)
