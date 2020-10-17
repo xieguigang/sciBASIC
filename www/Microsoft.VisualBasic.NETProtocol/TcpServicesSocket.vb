@@ -49,9 +49,7 @@
 
 Imports System.Net
 Imports System.Net.Sockets
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.ComponentModel
@@ -329,18 +327,20 @@ Namespace Tcp
             Dim remoteEP = DirectCast(handler.RemoteEndPoint, TcpEndPoint)
 
             Try
+                Dim result As BufferPipe
+
                 If requestData.IsPing Then
-                    requestData = NetResponse.RFC_OK
+                    result = New DataPipe(NetResponse.RFC_OK)
                 Else
-                    requestData = Me.ResponseHandler()(requestData, remoteEP)
+                    result = Me.ResponseHandler()(requestData, remoteEP)
                 End If
 
-                Call Send(handler, requestData)
+                Call Send(handler, result)
             Catch ex As Exception
                 Call _exceptionHandle(ex)
                 ' 错误可能是内部处理请求的时候出错了，则将SERVER_INTERNAL_EXCEPTION结果返回给客户端
                 Try
-                    Call Send(handler, NetResponse.RFC_INTERNAL_SERVER_ERROR)
+                    Call Send(handler, New DataPipe(NetResponse.RFC_INTERNAL_SERVER_ERROR))
                 Catch ex2 As Exception
                     ' 这里处理的是可能是强制断开连接的错误
                     Call _exceptionHandle(ex2)
@@ -354,27 +354,13 @@ Namespace Tcp
         ''' <param name="handler"></param>
         ''' <param name="data"></param>
         ''' <remarks></remarks>
-        Private Sub Send(handler As Socket, data As String)
+        Private Sub Send(handler As Socket, data As BufferPipe)
             ' Convert the string data to byte data using ASCII encoding.
-            Dim byteData As Byte() = Encoding.UTF8.GetBytes(data)
-            byteData = New RequestStream(0, 0, byteData).Serialize
-            ' Begin sending the data to the remote device.
-            Call handler.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), handler)
-        End Sub
+            For Each byteData As Byte() In data.GetBlocks
+                Call handler.Send(byteData)
+            Next
 
-        Private Sub Send(handler As Socket, data As RequestStream)
-            ' Convert the string data to byte data using ASCII encoding.
-            Dim byteData As Byte() = data.Serialize
-            ' Begin sending the data to the remote device.
-            Call handler.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), handler)
-        End Sub
-
-        Private Sub SendCallback(ar As IAsyncResult)
-            ' Retrieve the socket from the state object.
-            Dim handler As Socket = DirectCast(ar.AsyncState, Socket)
             ' Complete sending the data to the remote device.
-            Dim bytesSent As Integer = handler.EndSend(ar)
-
             Call handler.Shutdown(SocketShutdown.Both)
             Call handler.Close()
         End Sub
