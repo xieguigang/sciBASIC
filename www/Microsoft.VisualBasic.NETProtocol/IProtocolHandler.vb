@@ -72,7 +72,8 @@ Imports Microsoft.VisualBasic.Parallel
 Public MustInherit Class IProtocolHandler
 
     MustOverride ReadOnly Property ProtocolEntry As Long
-    MustOverride Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
+    MustOverride Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As BufferPipe
+
 End Class
 
 #Region "Delegate Abstract Interface"

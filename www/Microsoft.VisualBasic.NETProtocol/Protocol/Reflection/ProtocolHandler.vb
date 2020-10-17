@@ -130,7 +130,7 @@ Namespace Protocols.Reflection
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function HandlePush(uid As Long, request As RequestStream) As RequestStream
+        Public Function HandlePush(uid As Long, request As RequestStream) As BufferPipe
             Return HandleRequest(request, Nothing)
         End Function
 
@@ -140,12 +140,12 @@ Namespace Protocols.Reflection
         ''' <param name="request">The request stream object which contains the commands from the client</param>
         ''' <param name="remoteDevcie">The IPAddress of the target incoming client data request.</param>
         ''' <returns></returns>
-        Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As TcpEndPoint) As RequestStream
+        Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As TcpEndPoint) As BufferPipe
             If request.ProtocolCategory <> Me.ProtocolEntry Then
 #If DEBUG Then
                 Call $"Protocol_entry:={request.ProtocolCategory} was not found!".__DEBUG_ECHO
 #End If
-                Return NetResponse.RFC_VERSION_NOT_SUPPORTED
+                Return New DataPipe(NetResponse.RFC_VERSION_NOT_SUPPORTED)
             End If
 
             If Not Me.Protocols.ContainsKey(request.Protocol) Then
@@ -153,11 +153,12 @@ Namespace Protocols.Reflection
                 Call $"Protocol:={request.Protocol} was not found!".__DEBUG_ECHO
 #End If
                 ' 没有找到相对应的协议处理逻辑，则没有实现相对应的数据协议处理方法
-                Return NetResponse.RFC_NOT_IMPLEMENTED
+                Return New DataPipe(NetResponse.RFC_NOT_IMPLEMENTED)
             End If
 
-            Dim EntryPoint As DataRequestHandler = Me.Protocols(request.Protocol)
-            Dim value As RequestStream = EntryPoint(request, remoteDevcie)
+            Dim process As DataRequestHandler = Me.Protocols(request.Protocol)
+            Dim value As BufferPipe = process(request, remoteDevcie)
+
             Return value
         End Function
 
