@@ -67,6 +67,11 @@ Namespace Imaging
             Return colors.Select(AddressOf ToHtmlColor)
         End Function
 
+        Public Function Greyscale(data As Single, d As Integer) As Color
+            ' int i = 0;  //1.0f = black
+            Return Color.FromArgb(200 - 255 * (data / d), 0, 0, 0)
+        End Function
+
         ''' <summary>
         ''' ``<paramref name="x"/> -> <paramref name="y"/>``：返回两个颜色之间的中间的颜色，这个函数是某些插值操作所需要的
         ''' </summary>

@@ -59,9 +59,9 @@ Public Class DataSubChunk : Inherits SampleDataChunk
         End Get
     End Property
 
-    Public Overrides Function LoadSamples(start As Integer, length As Integer) As IEnumerable(Of Sample)
+    Public Overrides Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
         Dim [sub] As Sample() = New Sample(length - 1) {}
-        Call Array.ConstrainedCopy(data, start, [sub], Scan0, length)
+        Call Array.ConstrainedCopy(data, start, [sub], scan0, length)
         Return [sub]
     End Function
 
@@ -104,7 +104,7 @@ End Class
 
 Public MustInherit Class SampleDataChunk : Inherits SubChunk
 
-    Public MustOverride Iterator Function LoadSamples(start As Integer, length As Integer) As IEnumerable(Of Sample)
+    Public MustOverride Iterator Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
 
 End Class
 
@@ -120,10 +120,14 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
         Me.position = MoveToDataChunk(wav).Position
     End Sub
 
-    Public Overrides Iterator Function LoadSamples(start As Integer, length As Integer) As IEnumerable(Of Sample)
+    Public Sub Close()
+        Call wav.Dispose()
+    End Sub
+
+    Public Overrides Iterator Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
         ' little endian
         wav.ByteOrder = ByteOrder.LittleEndian
-        wav.Position = CalculateOffset(start)
+        wav.Position = CalculateOffset(start, scan0)
 
         For i As Integer = 0 To length - 1
             Select Case format.BitsPerSample
@@ -135,20 +139,20 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
         Next
     End Function
 
-    Public Function CalculateOffset(start As Integer) As Long
+    Public Function CalculateOffset(start As Integer, Optional scan0% = 0) As Long
         Dim sampleSize As Integer
 
         Select Case format.BitsPerSample
             Case 8 : sampleSize = format.channels * 1
             Case 16 : sampleSize = format.channels * 2
-            Case 32 : sampleSize = format.channels * 3
+            Case 32 : sampleSize = format.channels * 4
             Case Else
                 Throw New BadImageFormatException(format.GetJson)
         End Select
 
         Dim offset As Long = start * sampleSize
 
-        Return position + offset
+        Return (position + scan0) + offset
     End Function
 
     Public Shared Function MoveToDataChunk(wav As BinaryDataReader) As BinaryDataReader
