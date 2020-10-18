@@ -50,7 +50,7 @@ Public Structure Sample
     ''' <remarks>
     ''' 在这里使用Short来兼容8bit和16bit的数据
     ''' </remarks>
-    Dim channels As Short()
+    Dim channels As Single()
 
     Public Overrides Function ToString() As String
         Return channels.GetJson
@@ -61,7 +61,7 @@ Public Structure Sample
 
         Do While Not wav.EndOfStream AndAlso (wav.Position + sampleSize <= wav.Length)
             Yield New Sample With {
-                .channels = wav.ReadInt16s(channels)
+                .channels = wav.ReadInt16s(channels).Select(Function(a) CSng(a)).ToArray
             }
         Loop
     End Function
@@ -71,7 +71,13 @@ Public Structure Sample
     End Function
 
     Friend Shared Iterator Function Parse32Bit(wav As BinaryDataReader, channels As Integer) As IEnumerable(Of Sample)
-        Throw New NotImplementedException
+        Dim sampleSize = channels * 4
+
+        Do While Not wav.EndOfStream AndAlso (wav.Position + sampleSize <= wav.Length)
+            Yield New Sample With {
+                .channels = wav.ReadSingles(channels)
+            }
+        Loop
     End Function
 
 End Structure

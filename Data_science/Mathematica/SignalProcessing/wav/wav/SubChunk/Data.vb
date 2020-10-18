@@ -51,7 +51,7 @@ Public Class DataSubChunk : Inherits SubChunk
 
     Public Property data As Sample()
 
-    Default Public ReadOnly Property channel(position As Integer) As Short()
+    Default Public ReadOnly Property channel(position As Integer) As Single()
         Get
             Return data _
                 .Select(Function(sample) sample.channels(position)) _
@@ -82,6 +82,8 @@ Public Class DataSubChunk : Inherits SubChunk
                 Return Sample.Parse8Bit(wav, format.channels)
             Case 16
                 Return Sample.Parse16Bit(wav, format.channels)
+            Case 32
+                Return Sample.Parse32Bit(wav, format.channels)
             Case Else
                 Throw New NotImplementedException(format.GetJson)
         End Select

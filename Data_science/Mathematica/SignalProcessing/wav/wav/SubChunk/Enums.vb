@@ -76,3 +76,9 @@ Public Enum Channels
     Mono = 1
     Stereo = 2
 End Enum
+
+Public Enum ChannelPositions
+    None
+    Left
+    Right
+End Enum
