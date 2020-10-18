@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::41448d07a58fda8902f2c41b5d46d8e0, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class DataSubChunk
-    ' 
-    '     Properties: data
-    ' 
-    '     Function: GenericEnumerator, GetEnumerator, loadData, ParseData
-    ' 
-    ' /********************************************************************************/
+' Class DataSubChunk
+' 
+'     Properties: data
+' 
+'     Function: GenericEnumerator, GetEnumerator, loadData, ParseData
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -137,6 +137,28 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
                     Throw New NotImplementedException(format.ToString)
             End Select
         Next
+    End Function
+
+    Public Function MeasureChunkSize(length As Integer) As Long
+        Dim size As Long = 0
+        Dim bytes As Integer
+
+        Select Case format.BitsPerSample
+            Case 32
+                bytes = format.channels * 4
+            Case 16
+                bytes = format.channels * 2
+            Case 8
+                bytes = format.channels * 1
+            Case Else
+                Throw New NotImplementedException(format.ToString)
+        End Select
+
+        For i As Integer = 0 To length - 1
+            size += bytes
+        Next
+
+        Return size
     End Function
 
     Public Function CalculateOffset(start As Integer, Optional scan0% = 0) As Long
