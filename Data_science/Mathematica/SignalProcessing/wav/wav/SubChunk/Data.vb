@@ -140,7 +140,6 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
     End Function
 
     Public Function MeasureChunkSize(length As Integer) As Long
-        Dim size As Long = 0
         Dim bytes As Integer
 
         Select Case format.BitsPerSample
@@ -154,11 +153,7 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
                 Throw New NotImplementedException(format.ToString)
         End Select
 
-        For i As Integer = 0 To length - 1
-            size += bytes
-        Next
-
-        Return size
+        Return bytes * length
     End Function
 
     Public Function CalculateOffset(start As Integer, Optional scan0% = 0) As Long
