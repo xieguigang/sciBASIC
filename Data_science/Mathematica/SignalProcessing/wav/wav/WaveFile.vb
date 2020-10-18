@@ -83,15 +83,15 @@ Public Class WaveFile
     ''' Subchunk2
     ''' </summary>
     ''' <returns></returns>
-    Public Property data As DataSubChunk
+    Public Property data As SampleDataChunk
 
-    Public Shared Function Open(wav As BinaryDataReader) As WaveFile
+    Public Shared Function Open(wav As BinaryDataReader, Optional lazy As Boolean = False) As WaveFile
         Return New WaveFile With {
             .magic = wav.ReadString(4),
             .fileSize = wav.ReadInt32,
             .format = wav.ReadString(4),
             .fmt = FMTSubChunk.ParseChunk(wav),
-            .data = DataSubChunk.ParseData(wav, format:= .fmt)
+            .data = If(lazy, New LazyDataChunk(wav, .fmt), DataSubChunk.ParseData(wav, format:= .fmt))
         }
     End Function
 End Class
