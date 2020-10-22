@@ -94,10 +94,11 @@ Namespace Plot3D
                              Optional labY$ = "Y",
                              Optional labZ$ = "Z",
                              Optional legendWidth! = 20,
-                             Optional arrowFactor$ = "2,2") As GraphicsData
+                             Optional arrowFactor$ = "2,2",
+                             Optional showLegend As Boolean = True) As GraphicsData
 
             Dim list As Serial3D() = serials.ToArray
-            Dim points = list _
+            Dim points As Point3D() = list _
                 .Select(Function(s) s.Points.Values) _
                 .IteratesALL _
                 .ToArray
@@ -107,9 +108,9 @@ Namespace Plot3D
             Dim X, Y, Z As Vector
 
             With points.VectorShadows
-                X = DirectCast(.X, IEnumerable(Of Single)).AsDouble.Range.CreateAxisTicks
-                Y = DirectCast(.Y, IEnumerable(Of Single)).AsDouble.Range.CreateAxisTicks
-                Z = DirectCast(.Z, IEnumerable(Of Single)).AsDouble.Range.CreateAxisTicks
+                X = DirectCast(.X, IEnumerable(Of Double)).Range.CreateAxisTicks
+                Y = DirectCast(.Y, IEnumerable(Of Double)).Range.CreateAxisTicks
+                Z = DirectCast(.Z, IEnumerable(Of Double)).Range.CreateAxisTicks
             End With
 
             ' 然后生成底部的网格
@@ -174,13 +175,16 @@ Namespace Plot3D
 
                     ' 要先绘制三维图形，要不然会将图例遮住的
                     Call model.RenderAs3DChart(g, camera, region, CSSFont.TryParse(elementLabelFont))
-                    Call g.DrawLegends(
-                        topLeft:=topLeft,
-                        legends:=legends,
-                        gSize:=legendSize,
-                        d:=5,
-                        regionBorder:=Stroke.AxisStroke
-                    )
+
+                    If showLegend Then
+                        Call g.DrawLegends(
+                            topLeft:=topLeft,
+                            legends:=legends,
+                            gSize:=legendSize,
+                            d:=5,
+                            regionBorder:=Stroke.AxisStroke
+                        )
+                    End If
                 End Sub
 
             Dim plotRegion As New GraphicsRegion With {

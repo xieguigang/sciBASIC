@@ -138,7 +138,7 @@ Namespace Plot3D.Device
                 .Anchors(anchors) _
                 .Width(canvas.Size.Width) _
                 .Height(canvas.Size.Height) _
-                .Start(500)
+                .Start(500, showProgress:=False)
 
             For i As Integer = 0 To labels.Length - 1
                 label = labels(i)

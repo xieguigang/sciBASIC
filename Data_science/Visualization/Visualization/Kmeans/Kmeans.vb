@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::4099e5cb7c99287e3ed2869e3300b4d4, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module KmeansExtensions
-    ' 
-    '         Function: ClusterGroups, labelSelector, Scatter2D, (+2 Overloads) Scatter3D
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module KmeansExtensions
+' 
+'         Function: ClusterGroups, labelSelector, Scatter2D, (+2 Overloads) Scatter3D
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,7 +49,6 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -60,6 +59,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Namespace KMeans
 
@@ -212,7 +212,8 @@ Namespace KMeans
                                   Optional boxStroke$ = Stroke.StrongHighlightStroke,
                                   Optional axisStroke$ = Stroke.AxisStroke,
                                   Optional arrowFactor$ = "2,2",
-                                  Optional labelsQuantile# = -1) As GraphicsData
+                                  Optional labelsQuantile# = -1,
+                                  Optional showLegend As Boolean = True) As GraphicsData
 
             Dim clusters As Dictionary(Of String, EntityClusterModel()) = clusterData.ClusterGroups
 
@@ -263,25 +264,38 @@ Namespace KMeans
                 boxStroke:=boxStroke,
                 axisStroke:=axisStroke,
                 labX:=labX, labY:=labY, labZ:=labZ,
-                arrowFactor:=arrowFactor
+                arrowFactor:=arrowFactor,
+                showLegend:=showLegend
             )
         End Function
 
         <Extension>
-        Private Function labelSelector(serials As IEnumerable(Of Serial3D), labelsQuantile#) As List(Of Serial3D)
-            Dim q As QuantileEstimationGK = serials _
+        Private Function dimensionQuantile(serials As IEnumerable(Of Serial3D), [dim] As Func(Of Point3D, Double)) As QuantileEstimationGK
+            Return serials _
                 .Select(Function(s)
-                            Return s.Points.Select(Function(p) {CDbl(p.Value.X), CDbl(p.Value.Y), CDbl(p.Value.Z)}.Average)
+                            Return s.Points _
+                                .Select(Function(p)
+                                            Return stdNum.Abs([dim](p.Value))
+                                        End Function)
                         End Function) _
                 .IteratesALL _
                 .GKQuantile
-            Dim quantile# = q.Query(labelsQuantile)
+        End Function
+
+        <Extension>
+        Private Function labelSelector(serials As IEnumerable(Of Serial3D), labelsQuantile#) As List(Of Serial3D)
+            Dim qX# = serials.dimensionQuantile(Function(p) p.X).Query(labelsQuantile)
+            Dim qY# = serials.dimensionQuantile(Function(p) p.Y).Query(labelsQuantile)
+            Dim qZ# = serials.dimensionQuantile(Function(p) p.Z).Query(labelsQuantile)
 
             serials = serials _
                 .Select(Function(s)
                             s.Points = s.Points _
                                 .Select(Function(p)
-                                            If {p.Value.X, p.Value.Y, p.Value.Z}.Average >= quantile Then
+                                            If stdNum.Abs(p.Value.X) >= qX OrElse
+                                               stdNum.Abs(p.Value.Y) >= qY OrElse
+                                               stdNum.Abs(p.Value.Z) >= qZ Then
+
                                                 Return p
                                             Else
                                                 Return New NamedValue(Of Point3D) With {

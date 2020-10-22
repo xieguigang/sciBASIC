@@ -49,7 +49,6 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps

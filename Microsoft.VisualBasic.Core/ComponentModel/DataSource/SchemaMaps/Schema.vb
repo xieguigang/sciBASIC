@@ -54,16 +54,25 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     ''' <typeparam name="T"></typeparam>
     Public Class Schema(Of T As Attribute)
 
+        Public Property [Namespace] As String
         Public Property SchemaName As String
         Public Property Fields As BindProperty(Of T)()
 
         Sub New()
         End Sub
 
-        Sub New(type As Type, Optional explict As Boolean = False)
-            Fields = type.GetFields(Of T)(Function(o) o.ToString, explict)
+        Sub New(type As Type, Optional getName As Func(Of T, String) = Nothing, Optional explict As Boolean = False)
+            Fields = type.GetFields(Of T)(getName Or Scripting.GetString(Of T), explict)
             SchemaName = type.Name
+            [Namespace] = type.Namespace
         End Sub
+
+        Public Shared Function GetSchema(type As Type, Optional getName As Func(Of T, String) = Nothing, Optional explict As Boolean = False) As Schema(Of T)
+            Dim key As String = $"{type.FullName}+{explict}"
+
+            Static cache As New Dictionary(Of String, Schema(Of T))
+            Return cache.ComputeIfAbsent(key, Function() New Schema(Of T)(type, getName, explict))
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{SchemaName}: {Fields.Keys.GetJson}]"
