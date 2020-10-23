@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::c5dec718721c6b50c72a06dfd4dbecbb, Microsoft.VisualBasic.Core\ComponentModel\Uid.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Uid
-    ' 
-    '         Properties: Key
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: __plus, Plus, ToString
-    ' 
-    '         Sub: __error
-    ' 
-    '         Operators: (+2 Overloads) +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Uid
+' 
+'         Properties: Key
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: __plus, Plus, ToString
+' 
+'         Sub: __error
+' 
+'         Operators: (+2 Overloads) +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace ComponentModel
 
@@ -134,7 +135,8 @@ Namespace ComponentModel
             chars += -1
 
             If Not caseSensitive Then
-                __upbound -= 26    ' 则只有小写字母
+                ' 则只有小写字母
+                __upbound -= 26
             End If
 
             For i As Integer = 0 To n - 1
@@ -146,7 +148,8 @@ Namespace ComponentModel
             chars = New List(Of Integer)(i.chars)
 
             If Not caseSensitive Then
-                __upbound -= 26    ' 则只有小写字母
+                ' 则只有小写字母
+                __upbound -= 26
             End If
         End Sub
 
@@ -159,6 +162,26 @@ Namespace ComponentModel
         Sub New(Optional caseSensitive As Boolean = True)
             Call Me.New(Scan0, caseSensitive)
         End Sub
+
+        Private Sub New(chars As List(Of Integer))
+            Me.__upbound -= 26
+            Me.chars = chars
+            Me.value = 1
+
+            For Each i In chars
+                Me.value *= i
+            Next
+        End Sub
+
+        Public Shared Function GetRandomId() As Uid
+            Dim chars As New List(Of Integer)
+
+            For i As Integer = 0 To 3
+                chars.Add(randf.NextInteger(10))
+            Next
+
+            Return New Uid(chars)
+        End Function
 
         Private Function __plus(l As Integer) As Integer
             Dim n As Integer = chars(l) + 1
