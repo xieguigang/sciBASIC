@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::da14906f800cd40886d3ef12c766aa0f, Microsoft.VisualBasic.Core\CommandLine\CLI\ProcExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ProcessExtensions
-    ' 
-    '         Function: FindProc, (+2 Overloads) GetProc
-    '         Delegate Sub
-    ' 
-    '             Function: [Call]
-    ' 
-    '             Sub: ExecSub
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ProcessExtensions
+' 
+'         Function: FindProc, (+2 Overloads) GetProc
+'         Delegate Sub
+' 
+'             Function: [Call]
+' 
+'             Sub: ExecSub
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -109,8 +109,6 @@ Namespace CommandLine
 
         Const NoProcessFound As String = "Unable to found associated process {0}, it maybe haven't been started or already terminated."
 
-        Public Delegate Sub dReadLine(strLine As String)
-
         ''' <summary>
         ''' 执行CMD命令
         ''' 
@@ -124,7 +122,7 @@ Namespace CommandLine
         ''' <param name="args">参数</param>
         ''' <param name="onReadLine">行信息（委托）</param>
         ''' <remarks>https://github.com/lishewen/LSWFramework/blob/master/LSWClassLib/CMD/CMDHelper.vb</remarks>
-        Public Sub ExecSub(app As String, args As String, onReadLine As dReadLine, Optional [in] As String = "")
+        Public Sub ExecSub(app As String, args As String, onReadLine As Action(Of String), Optional [in] As String = "")
             Dim p As New Process
             p.StartInfo = New ProcessStartInfo
             p.StartInfo.FileName = app
@@ -137,7 +135,6 @@ Namespace CommandLine
             p.Start()
 
             Dim reader As StreamReader = p.StandardOutput
-            Dim line As String = reader.ReadLine
 
             If Not String.IsNullOrEmpty([in]) Then
                 Dim writer As StreamWriter = p.StandardInput
@@ -146,24 +143,23 @@ Namespace CommandLine
             End If
 
             While Not reader.EndOfStream
-                onReadLine(line)
-                line = reader.ReadLine()
+                Call onReadLine(reader.ReadLine)
             End While
 
             Call p.WaitForExit()
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Run process and then gets the ``std_out`` of the child process
         ''' </summary>
         ''' <param name="app">The file path of the application to be called by its parent process.</param>
         ''' <param name="args">CLI arguments</param>
         ''' <returns></returns>
         <Extension>
         Public Function [Call](app As String, args As String, Optional [in] As String = "") As String
-            Dim STDout As New List(Of String)
-            Call ExecSub(app, args, AddressOf STDout.Add, [in])
-            Return STDout.JoinBy(vbCrLf)
+            Dim stdout As New List(Of String)
+            Call ExecSub(app, args, AddressOf stdout.Add, [in])
+            Return stdout.JoinBy(vbCrLf)
         End Function
     End Module
 End Namespace

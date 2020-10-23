@@ -151,7 +151,7 @@ Namespace ApplicationServices.Zip
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="DIR$"></param>
+        ''' <param name="directory$"></param>
         ''' <param name="saveZip$"></param>
         ''' <param name="action"></param>
         ''' <param name="fileOverwrite"></param>
@@ -163,7 +163,7 @@ Namespace ApplicationServices.Zip
         ''' 这个参数默认为False，即保留有原来的文件夹树形结构
         ''' </param>
         <ExportAPI("DIR.Zip")>
-        Public Sub DirectoryArchive(DIR$, saveZip$,
+        Public Sub DirectoryArchive(directory$, saveZip$,
                                     Optional action As ArchiveAction = ArchiveAction.Replace,
                                     Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
                                     Optional compression As CompressionLevel = CompressionLevel.Optimal,
@@ -172,14 +172,14 @@ Namespace ApplicationServices.Zip
             ' 2018-7-28 如果rel是空字符串
             ' 那么再压缩函数之中只会将文件名作为entry，即实现无文件树的效果
             ' 反之会使用相对路径生成文件树，即树状的非flat结构
-            Dim rel$ = DIR Or "".When(flatDirectory)
+            Dim rel$ = directory Or "".When(flatDirectory)
 
             If Not rel.StringEmpty Then
                 rel = rel.GetDirectoryFullPath
             End If
 
             Call saveZip.ParentPath.MkDIR
-            Call (ls - l - r - "*.*" <= DIR) _
+            Call (ls - l - r - "*.*" <= directory) _
                 .AddToArchive(
                     archiveFullName:=saveZip,
                     action:=action,

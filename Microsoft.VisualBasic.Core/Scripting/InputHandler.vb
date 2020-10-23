@@ -402,9 +402,10 @@ Namespace Scripting
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function [DirectCast](array As Object(), type As Type) As Object
-            Dim out = CreateInstance(type, array.Length)
-            Call Copy(array, out, array.Length) ' 直接复制不能够正常工作
+        Public Function [DirectCast](array As IEnumerable, type As Type) As Object
+            Dim objs As Object() = (From item As Object In array.AsQueryable Select item).ToArray
+            Dim out = CreateInstance(type, objs.Length)
+            Call Copy(objs, out, objs.Length) ' 直接复制不能够正常工作
             Return out
         End Function
     End Module

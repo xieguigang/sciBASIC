@@ -59,7 +59,7 @@ Imports System.Threading
 Namespace ApplicationServices.Terminal.Utility
 
     ''' <summary>
-    ''' A finalize action after the user cancel current task operations.
+    ''' A finalize action after the user cancel current task operations.(ctrl + C)
     ''' </summary>
     Public Class UserTaskCancelAction : Inherits ConsoleUserTaskAction
         Implements IDisposable
@@ -137,6 +137,9 @@ Namespace ApplicationServices.Terminal.Utility
         End Sub
     End Class
 
+    ''' <summary>
+    ''' ``ctrl + S``
+    ''' </summary>
     Public Class UserTaskSaveAction : Inherits ConsoleUserTaskAction
         Implements IDisposable
 

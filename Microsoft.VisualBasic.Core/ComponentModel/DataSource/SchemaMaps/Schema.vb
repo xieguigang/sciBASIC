@@ -67,6 +67,27 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             [Namespace] = type.Namespace
         End Sub
 
+        Public Function FindField(name As String) As BindProperty(Of T)
+            Return Fields.Where(Function(p) p.Identity = name).FirstOrDefault
+        End Function
+
+        Public Function Write(name$, target As Object, value As Object) As Boolean
+            Dim p As BindProperty(Of T) = FindField(name)
+
+            If p.member Is Nothing Then
+                Return False
+            End If
+
+            Try
+                Call p.SetValue(target, value)
+            Catch ex As Exception
+                Call App.LogException(ex)
+                Return False
+            End Try
+
+            Return True
+        End Function
+
         Public Shared Function GetSchema(type As Type, Optional getName As Func(Of T, String) = Nothing, Optional explict As Boolean = False) As Schema(Of T)
             Dim key As String = $"{type.FullName}+{explict}"
 

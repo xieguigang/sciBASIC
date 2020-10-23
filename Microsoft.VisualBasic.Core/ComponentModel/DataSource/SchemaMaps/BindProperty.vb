@@ -1,54 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::846e9343a1f39e358aabc37998874578, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\BindProperty.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure BindProperty
-    ' 
-    '         Properties: Identity, IsNull, IsPrimitive, Type
-    ' 
-    '         Constructor: (+6 Overloads) Sub New
-    ' 
-    '         Function: FromSchemaTable, GetValue, ToString
-    ' 
-    '         Sub: SetValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure BindProperty
+' 
+'         Properties: Identity, IsNull, IsPrimitive, Type
+' 
+'         Constructor: (+6 Overloads) Sub New
+' 
+'         Function: FromSchemaTable, GetValue, ToString
+' 
+'         Sub: SetValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Scripting.Abstract
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
@@ -72,6 +73,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         Dim field As T
         Dim name As String
+
+        ReadOnly caster As LoadObject
 
         Friend ReadOnly handleSetValue As Action(Of Object, Object)
         Friend ReadOnly handleGetValue As Func(Of Object, Object)
@@ -128,10 +131,19 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Property
 #End Region
 
+        Private Sub New(type As Type)
+            Me.Type = type
+
+            If Scripting.CasterString.ContainsKey(type) Then
+                Me.caster = Scripting.CasterString(type)
+            End If
+        End Sub
+
         Sub New(attr As T, prop As PropertyInfo, Optional getName As IToString(Of T) = Nothing)
+            Call Me.New(prop.PropertyType)
+
             field = attr
             member = prop
-            Type = prop.PropertyType
 
             If Not getName Is Nothing Then
                 name = getName(attr)
@@ -160,9 +172,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Sub
 
         Sub New(attr As T, field As FieldInfo, Optional getName As IToString(Of T) = Nothing)
+            Call Me.New(field.FieldType)
+
             Me.field = attr
             Me.member = field
-            Type = field.FieldType
 
             If Not getName Is Nothing Then
                 name = getName(attr)
@@ -175,10 +188,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Sub
 
         Sub New(attr As T, method As MethodInfo, Optional getName As IToString(Of T) = Nothing)
+            Call Me.New(method.ReturnType)
+
             Me.field = attr
             Me.member = method
-
-            Type = method.ReturnType
 
             If Not getName Is Nothing Then
                 name = getName(attr)
@@ -233,6 +246,12 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             ' 2017-6-26 目前value参数为空值的话，会报错，故而在这里添加了一个If分支判断
             If value IsNot Nothing Then
                 Call handleSetValue(obj, value)
+            End If
+        End Sub
+
+        Public Sub WriteScriptValue(obj As Object, value As String)
+            If Not value Is Nothing Then
+                Call SetValue(obj, caster(value))
             End If
         End Sub
 

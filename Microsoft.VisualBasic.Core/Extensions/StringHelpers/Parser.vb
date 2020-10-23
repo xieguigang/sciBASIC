@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::6c66100e15ffe8e2a3aeab4b0457fb99, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module PrimitiveParser
-    ' 
-    '     Function: Eval, IsBooleanFactor, IsInteger, IsNumeric, (+2 Overloads) ParseBoolean
-    '               ParseDate, ParseDouble, ParseInteger, ParseLong, ParseSingle
-    ' 
-    ' /********************************************************************************/
+' Module PrimitiveParser
+' 
+'     Function: Eval, IsBooleanFactor, IsInteger, IsNumeric, (+2 Overloads) ParseBoolean
+'               ParseDate, ParseDouble, ParseInteger, ParseLong, ParseSingle
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -289,5 +289,54 @@ Public Module PrimitiveParser
         End Select
 
         Return True
+    End Function
+
+    Public Function ParseTimeSpan(str As String) As TimeSpan
+        Dim val As TimeSpan = Nothing
+
+        str = Strings.Trim(str)
+
+        If str = "" Then
+            Return Nothing
+        End If
+
+        If TimeSpan.TryParse(str, val) Then
+            Return val
+        End If
+
+        Dim tokens = str.Split(":"c)
+
+        If tokens.Length = 2 Then
+            ' hh:mm 
+            Dim hh = Integer.Parse(tokens(0))
+            Dim mm = Integer.Parse(tokens(1))
+
+            val = TimeSpan.FromHours(hh) + TimeSpan.FromMinutes(mm)
+        ElseIf tokens.Length = 3 Then
+            ' hh:mm:ss
+            Dim hh = Integer.Parse(tokens(0))
+            Dim mm = Integer.Parse(tokens(1))
+            Dim ss = Integer.Parse(tokens(2))
+
+            val = TimeSpan.FromHours(hh) + TimeSpan.FromMinutes(mm) + TimeSpan.FromSeconds(ss)
+        Else
+            If str.IsPattern("\d+\s*((min)|(hour)|(second))") Then
+                Dim n As Integer = Integer.Parse(str.Match("\d+"))
+                Dim unit As String = str.Split.Last
+
+                Select Case unit.ToLower
+                    Case "min" : val = TimeSpan.FromMinutes(n)
+                    Case "hour", "hours" : val = TimeSpan.FromHours(n)
+                    Case "second", "seconds" : val = TimeSpan.FromSeconds(n)
+                    Case "day", "days" : val = TimeSpan.FromDays(n)
+                    Case Else
+                        Throw New NotImplementedException(unit)
+                End Select
+            Else
+                Throw New InvalidExpressionException(str)
+            End If
+        End If
+
+        Return val
     End Function
 End Module
