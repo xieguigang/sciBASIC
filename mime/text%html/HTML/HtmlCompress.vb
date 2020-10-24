@@ -3,7 +3,9 @@
     ''' <summary>
     ''' html compress
     ''' </summary>
-    ''' 
+    ''' <remarks>
+    ''' https://github.com/lizzy0118/HtmlCompress
+    ''' </remarks>
     <HideModuleName>
     Public Module HtmlCompress
 
