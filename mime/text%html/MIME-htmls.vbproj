@@ -685,6 +685,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTML\HtmlCompress.vb" />
     <Compile Include="HTML\CSS\CSSEnvirnment.vb" />
     <Compile Include="HTML\CSS\CSSLayer.vb" />
     <Compile Include="HTML\CSS\Extensions.vb" />
