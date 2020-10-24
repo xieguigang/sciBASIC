@@ -61,6 +61,12 @@ Public Class Resampler
         End Get
     End Property
 
+    Default Public ReadOnly Property GetVector(x As IEnumerable(Of Double)) As Double()
+        Get
+            Return x.Select(AddressOf GetIntensity).ToArray
+        End Get
+    End Property
+
     Public Function GetIntensity(x As Double) As Double
         Dim i As Integer = getPosition(x)
 
@@ -88,6 +94,14 @@ Public Class Resampler
         Next
 
         Return Me.x.Length
+    End Function
+
+    Public Shared Function CreateSampler(x As Double(), y As Double()) As Resampler
+        If x.Length <> y.Length Then
+            Throw New ArgumentException($"the size of x should equals to the size of y!")
+        End If
+
+        Return New Resampler With {.x = x, .y = y}
     End Function
 
     Public Shared Function CreateSampler(raw As GeneralSignal) As Resampler
