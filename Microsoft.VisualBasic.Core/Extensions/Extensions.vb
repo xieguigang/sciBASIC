@@ -153,20 +153,6 @@ Public Module Extensions
         Return parts
     End Function
 
-    ''' <summary>
-    ''' ``days, hh:mm:ss.ms``
-    ''' </summary>
-    ''' <param name="t"></param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function FormatTime(t As TimeSpan) As String
-        With t
-            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ ZeroFill(.Milliseconds, 3)}"
-        End With
-    End Function
-
     <Extension>
     Public Function Average(data As IEnumerable(Of TimeSpan)) As TimeSpan
         Dim avg# = data.Select(Function(x) x.TotalMilliseconds).Average

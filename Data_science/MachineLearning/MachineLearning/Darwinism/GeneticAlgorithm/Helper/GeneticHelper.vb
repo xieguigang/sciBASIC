@@ -274,7 +274,7 @@ Namespace Darwinism.GAF.Helper
                 Call population.Add(chr)
             Next
 
-            Call $"Takes {DateTimeHelper.ReadableElapsedTime(App.ElapsedMilliseconds - time)} for intialize population.".__DEBUG_ECHO
+            Call $"Takes {StringFormats.ReadableElapsedTime(App.ElapsedMilliseconds - time)} for intialize population.".__DEBUG_ECHO
 
             Return population
         End Function

@@ -229,29 +229,6 @@ Namespace ValueTypes
             End If
         End Function
 
-        Public Function ReadableElapsedTime(microtime&, Optional format$ = "%.3f%s", Optional round% = 3) As String
-            Dim unit$
-            Dim time!
-
-            If microtime >= 1000 Then
-                unit = "s"
-                time = stdNum.Round(microtime / 1000, round)
-
-                If time >= 60 Then
-                    unit = "min"
-                    time = stdNum.Round(time / 60, round)
-                End If
-
-                format = sprintf(format, time, unit)
-            Else
-                unit = "ms"
-                time = microtime
-                format = sprintf("%s%s", time, unit)
-            End If
-
-            Return format
-        End Function
-
         ' var s = "1364835180000-0700"
         ' alert(toDate(s)); // Tue Apr 02 2013 09:53:00 GMT+1000 (EST)
 

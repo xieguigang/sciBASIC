@@ -463,7 +463,7 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <param name="params"></param>
     ''' <returns></returns>
-    Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As String
+    Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As WebResponseResult
         Return url.POST(params.BuildReqparm)
     End Function
 
@@ -473,7 +473,7 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <param name="params"></param>
     ''' <returns></returns>
-    Public Function PostRequest(url As String, ParamArray params As String()()) As String
+    Public Function PostRequest(url As String, ParamArray params As String()()) As WebResponseResult
         Dim post As KeyValuePair(Of String, String)()
         If params Is Nothing Then
             post = Nothing
@@ -494,11 +494,11 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <Extension>
     Public Function POST(url$,
-                        Optional params As NameValueCollection = Nothing,
-                        Optional headers As Dictionary(Of String, String) = Nothing,
-                        Optional Referer$ = "",
-                        Optional proxy$ = Nothing,
-                        Optional contentEncoding As Encodings = Encodings.UTF8) As String
+                         Optional params As NameValueCollection = Nothing,
+                         Optional headers As Dictionary(Of String, String) = Nothing,
+                         Optional Referer$ = "",
+                         Optional proxy$ = Nothing,
+                         Optional contentEncoding As Encodings = Encodings.UTF8) As WebResponseResult
 
         Static emptyBody As New [Default](Of NameValueCollection) With {
             .value = New NameValueCollection,
@@ -527,12 +527,27 @@ Public Module WebServiceUtils
 
             Call $"[POST] {url}....".__DEBUG_ECHO
 
+            Dim timer As Stopwatch = Stopwatch.StartNew
             Dim response As Byte() = request.UploadValues(url, "POST", params Or emptyBody)
             Dim str$ = contentEncoding.CodePage.GetString(response)
 
             Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
 
-            Return str
+            Dim rtvlHeaders As New Dictionary(Of HttpHeaderName, String)
+            Dim raw = request.ResponseHeaders
+
+            For Each key As String In raw.AllKeys
+                Call rtvlHeaders.Add(ParseHeaderName(key), raw.Get(key))
+            Next
+
+            Dim result As New WebResponseResult With {
+                .url = url,
+                .html = str,
+                .timespan = timer.ElapsedMilliseconds,
+                .headers = rtvlHeaders
+            }
+
+            Return result
         End Using
     End Function
 

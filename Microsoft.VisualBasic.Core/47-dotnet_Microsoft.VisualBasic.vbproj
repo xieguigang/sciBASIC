@@ -1460,6 +1460,7 @@
     <Compile Include="Language\Value\Variant.vb" />
     <Compile Include="My\File.vb" />
     <Compile Include="My\FileFormats.vb" />
+    <Compile Include="Net\HTTP\HttpHeaderName.vb" />
     <Compile Include="Net\HTTP\URL.vb" />
     <Compile Include="Net\HTTP\Web\WebQuery.vb" />
     <Compile Include="Net\HTTP\Web\WebQueryModule.vb" />
