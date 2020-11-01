@@ -645,8 +645,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Evaluation.vb" />
-    <Compile Include="Linear\MLR.vb" />
+    <Compile Include="Linear\MLR\Error.vb" />
+    <Compile Include="Linear\MLR\MLRFit.vb" />
     <Compile Include="Linear\DoubleLinear.vb" />
+    <Compile Include="Linear\MLR\LinearFitting.vb" />
     <Compile Include="LMA.vb" />
     <Compile Include="Linear\IFitted.vb" />
     <Compile Include="Linear\Weighted\WeightedFit.vb" />

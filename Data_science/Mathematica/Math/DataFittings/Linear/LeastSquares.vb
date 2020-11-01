@@ -164,7 +164,7 @@ Public Module LeastSquares
             Next
         Next
 
-        Call gaussSolve(poly_n + 1, ata, result.Polynomial.Factors, sumxy)
+        Call gaussSolve(poly_n + 1, ata, DirectCast(result.Polynomial, Polynomial).Factors, sumxy)
         ' 计算拟合后的数据并计算误差
         Call calcError(x, y, length, result)
 
@@ -204,7 +204,9 @@ Public Module LeastSquares
         Next
 
         result.RMSE = stdNum.Sqrt(result.SSE / CDbl(length))
-        result.ErrorTest = err.ToArray
+        result.ErrorTest = err _
+            .Select(Function(e) DirectCast(e, IFitError)) _
+            .ToArray
     End Sub
 
     Private Sub gaussSolve(n%, ByRef A As List(Of Double), ByRef x#(), ByRef b As List(Of Double))

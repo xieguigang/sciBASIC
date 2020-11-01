@@ -62,7 +62,7 @@ Public Module FeatureProjection
     <Extension>
     Public Function Project(points As (x As Double(), y As Double()), dimension%) As Vector
         Dim fit = LeastSquares.PolyFit(points.x, points.y, poly_n:=dimension)
-        Dim projection As Vector = fit.Polynomial.Factors
+        Dim projection As Vector = DirectCast(fit.Polynomial, Polynomial).Factors
 
         Return projection
     End Function

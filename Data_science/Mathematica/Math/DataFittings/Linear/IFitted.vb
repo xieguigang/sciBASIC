@@ -41,6 +41,9 @@
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
+''' <summary>
+''' a unify interface model of linear fitting result
+''' </summary>
 Public Interface IFitted
 
     ''' <summary>
@@ -52,18 +55,18 @@ Public Interface IFitted
     ''' 线性模型的多项式
     ''' </summary>
     ''' <returns></returns>
-    ReadOnly Property Polynomial As Polynomial
-
-    ''' <summary>
-    ''' f(x)
-    ''' </summary>
-    ''' <param name="x"></param>
-    ''' <returns></returns>
-    Default ReadOnly Property GetY(x As Double) As Double
+    ReadOnly Property Polynomial As Formula
 
     ''' <summary>
     ''' 保存拟合后的y值，在拟合时可设置为不保存节省内存
     ''' </summary>
-    Property ErrorTest As TestPoint()
+    Property ErrorTest As IFitError()
+
+    ''' <summary>
+    ''' f(x) or f(x1, x2, x3)
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Function GetY(ParamArray x As Double()) As Double
 
 End Interface

@@ -45,12 +45,19 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 
+Public Interface IFitError
+
+    Property Y As Double
+    Property Yfit As Double
+
+End Interface
+
 <XmlType("point", [Namespace]:="http://scibasic.net/math/Bootstrapping")>
-Public Structure TestPoint
+Public Structure TestPoint : Implements IFitError
 
     <XmlAttribute("x")> Public Property X As Double
-    <XmlAttribute("y")> Public Property Y As Double
-    <XmlAttribute("fx")> Public Property Yfit As Double
+    <XmlAttribute("y")> Public Property Y As Double Implements IFitError.Y
+    <XmlAttribute("fx")> Public Property Yfit As Double Implements IFitError.Yfit
 
     <XmlIgnore>
     Public ReadOnly Property Err As Double

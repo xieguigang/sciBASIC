@@ -181,21 +181,30 @@ Namespace LinearAlgebra.Matrix
         End Sub
 
         ''' <summary>Construct a matrix from a 2-D array.</summary>
-        ''' <param name="A">   Two-dimensional array of doubles.
+        ''' <param name="A">Two-dimensional array of doubles.
         ''' </param>
-        ''' <exception cref="System.ArgumentException">   All rows must have the same length
+        ''' <param name="t">
+        ''' the given raw data parameter <paramref name="A"/> is in columns
+        ''' required transpose of the matrix.
+        ''' </param>
+        ''' <exception cref="ArgumentException">All rows must have the same length
         ''' </exception>
         ''' <seealso cref="Create">
         ''' </seealso>
+        Public Sub New(A As Double()(), Optional t As Boolean = False)
+            If t Then
+                A = A.MatrixTranspose.ToArray
+            End If
 
-        Public Sub New(A As Double()())
             m = A.Length
             n = A(0).Length
+
             For i As Integer = 0 To m - 1
                 If A(i).Length <> n Then
                     Throw New ArgumentException("All rows must have the same length.")
                 End If
             Next
+
             Me.buffer = A
         End Sub
 

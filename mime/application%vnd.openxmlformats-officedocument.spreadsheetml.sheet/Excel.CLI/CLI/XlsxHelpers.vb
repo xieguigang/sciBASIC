@@ -80,7 +80,7 @@ Partial Module CLI
     <ExportAPI("/Create")>
     <Usage("/Create /target <xlsx>")>
     <Description("Create an empty Excel xlsx package file on a specific file path")>
-    <Argument("/Create", False, CLITypes.File,
+    <Argument("/target", False, CLITypes.File,
               Description:="The file path for save this New created Excel xlsx package.")>
     <Group(Program.XlsxTools)>
     Public Function newEmpty(args As CommandLine) As Integer

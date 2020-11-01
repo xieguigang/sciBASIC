@@ -75,8 +75,8 @@ Namespace My.FrameworkInternal
             ' --load_options.disable 开关将会禁止所有的环境项目的设置
             ' 但是环境变量任然会进行加载设置
             If Not disableLoadOptions AndAlso Not envir.IsNullOrEmpty Then
-                If envir.ContainsKey("Proxy") Then
-                    WebServiceUtils.Proxy = envir("Proxy")
+                If envir.ContainsKey("proxy") Then
+                    WebServiceUtils.Proxy = envir("proxy")
                     Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__INFO_ECHO
                 End If
                 If envir.ContainsKey("setwd") Then

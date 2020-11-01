@@ -50,6 +50,9 @@
 Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
+#If DEBUG Then
+Imports System.Reflection
+#End If
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions

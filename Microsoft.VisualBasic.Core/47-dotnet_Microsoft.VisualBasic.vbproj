@@ -406,7 +406,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>..\..\..\R-sharp\App\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1,NET_48=True</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -1332,6 +1332,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\INativeHandle.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\MarshalExtra.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\NativeHandle.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\PlatformUtility.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\SafeHandleUnmanagedDll.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\UnixLibraryLoader.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\UnmanagedDll.vb" />
+    <Compile Include="ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb" />
     <Compile Include="ApplicationServices\Parallel\DuplexPipe.vb" />
     <Compile Include="ApplicationServices\Parallel\RequestStream.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
@@ -1464,7 +1473,8 @@
     <Compile Include="Net\HTTP\URL.vb" />
     <Compile Include="Net\HTTP\Web\WebQuery.vb" />
     <Compile Include="Net\HTTP\Web\WebQueryModule.vb" />
-    <Compile Include="Net\HTTP\wget.vb" />
+    <Compile Include="Net\HTTP\Wget\WriteData.vb" />
+    <Compile Include="Net\HTTP\Wget\wget.vb" />
     <Compile Include="Net\HTTP\Stream\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
     <Compile Include="Net\HTTP\DataURI.vb" />
@@ -1752,6 +1762,7 @@
     <Compile Include="Language\Language\C\CString.vb" />
     <Compile Include="Language\Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />
+    <None Include="ApplicationServices\DynamicInterop\README.md" />
     <None Include="Extensions\Reflection\Delegate\README.md" />
     <None Include="ApplicationServices\Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
     <Compile Include="Language\Language\UnixBash\PS1.vb" />
@@ -1939,7 +1950,7 @@
     <Compile Include="Net\Abstract.vb" />
     <Compile Include="Net\MIME\MIME.vb" />
     <Compile Include="Net\MIME\ContentType.vb" />
-    <Compile Include="Net\HTTP\wgetTask.vb" />
+    <Compile Include="Net\HTTP\Wget\wgetTask.vb" />
     <Compile Include="Net\Tcp\IPTools\IPEndPoint.vb" />
     <Compile Include="Net\Tcp\IPTools\LAN.vb" />
     <Compile Include="Net\DomainParser.vb" />
@@ -2081,6 +2092,7 @@
     <None Include="Net\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationServices\DynamicInterop\License.txt" />
     <Content Include="ComponentModel\Ranges\RangeModel\Copyright.txt" />
     <None Include="Resources\scripts\bashRunner.sh" />
     <None Include="Resources\scripts\help.sh" />

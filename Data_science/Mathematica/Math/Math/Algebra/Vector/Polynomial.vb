@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::cb2cc5275d4d3b7475bbcf4945bba142, Data_science\Mathematica\Math\Math\Algebra\Vector\Polynomial.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Polynomial
-    ' 
-    '         Properties: Factors, IsLinear
-    ' 
-    '         Function: (+3 Overloads) ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Polynomial
+' 
+'         Properties: Factors, IsLinear
+' 
+'         Function: (+3 Overloads) ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,16 +46,45 @@ Imports System.Runtime.CompilerServices
 
 Namespace LinearAlgebra
 
-    ''' <summary>
-    ''' 一元多项式的数据模型
-    ''' </summary>
-    Public Class Polynomial
+    Public MustInherit Class Formula
 
         ''' <summary>
         ''' 多项式系数向量
         ''' </summary>
         ''' <returns></returns>
         Public Property Factors As Double()
+
+        Public MustOverride Function Evaluate(ParamArray x As Double()) As Double
+        Public MustOverride Overloads Function ToString(format As String, Optional html As Boolean = False) As String
+
+    End Class
+
+    ''' <summary>
+    ''' 多元多项式
+    ''' 
+    ''' ```
+    ''' f(x1, x2, x3, ...) = a + bx1 + cx2 + dx3 + ...
+    ''' ```
+    ''' </summary>
+    Public Class MultivariatePolynomial : Inherits Formula
+
+        Public Overrides Function Evaluate(ParamArray x() As Double) As Double
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function ToString(format As String, Optional html As Boolean = False) As String
+            Throw New NotImplementedException()
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' 一元多项式的数据模型
+    ''' 
+    ''' ```
+    ''' f(x) = a + bx + cx^2 + dx^3 + ...
+    ''' ```
+    ''' </summary>
+    Public Class Polynomial : Inherits Formula
 
         ''' <summary>
         ''' f(x)
@@ -86,11 +115,16 @@ Namespace LinearAlgebra
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function Evaluate(ParamArray x() As Double) As Double
+            Return F(x:=x(Scan0))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return ToString(format:="F2")
         End Function
 
-        Public Overloads Function ToString(format As String, Optional html As Boolean = False) As String
+        Public Overloads Overrides Function ToString(format As String, Optional html As Boolean = False) As String
             Dim items = Factors _
                 .Select(Function(a, i)
                             If i = 0 Then

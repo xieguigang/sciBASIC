@@ -58,7 +58,7 @@ Public Module Extensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function X(fit As IFitted) As Vector
-        Return fit.ErrorTest.Select(Function(point) point.X).AsVector
+        Return fit.ErrorTest.Select(Function(point) DirectCast(point, TestPoint).X).AsVector
     End Function
 
     ''' <summary>

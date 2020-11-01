@@ -58,7 +58,7 @@ Public Module DoubleLinear
     <Extension>
     Public Function GetInputPoints(bestfit As IFitted) As PointF()
         Return bestfit.ErrorTest _
-            .Select(Function(p) New PointF(p.X, p.Y)) _
+            .Select(Function(p) New PointF(DirectCast(p, TestPoint).X, p.Y)) _
             .ToArray
     End Function
 

@@ -86,22 +86,27 @@ Public Class WeightedFit : Implements IFitted
     ''' <returns></returns>
     Public Property VarianceMatrix() As Double(,)
 
-    Default Public ReadOnly Property GetY(x As Double) As Double Implements IFitted.GetY
+    Default Public ReadOnly Property GetY(x As Double) As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Polynomial(x)
+            Return DirectCast(Polynomial, Polynomial)(x)
         End Get
     End Property
 
-    Public Property Polynomial As Polynomial Implements IFitted.Polynomial
+    Public Property Polynomial As Formula Implements IFitted.Polynomial
 
     ''' <summary>
     ''' Ycalc: Calculated values of Y.(根据所拟合的公式所计算出来的预测值)
     ''' </summary>
     ''' <returns></returns>
-    Public Property ErrorTest As TestPoint() Implements IFitted.ErrorTest
+    Public Property ErrorTest As IFitError() Implements IFitted.ErrorTest
 
     Public Overrides Function ToString() As String
         Return $"{Polynomial.ToString("G6")}, R2={CorrelationCoefficient.ToString("F4")}"
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function IFitted_GetY(ParamArray x() As Double) As Double Implements IFitted.GetY
+        Return Polynomial.Evaluate(x)
     End Function
 End Class

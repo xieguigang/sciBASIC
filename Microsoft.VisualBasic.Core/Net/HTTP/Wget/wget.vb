@@ -94,11 +94,11 @@ Namespace Net.Http
             Call task.StartTask()
 
             If Not task.isDownloading Then
-                Call task.Dispose()
-
                 Call Console.WriteLine()
                 Call Console.WriteLine($"{Now.ToString} ({StringFormats.Lanudry(task.downloadSpeed)}/s) - '{task.saveFile}' saved [{task.StreamSize}]")
                 Call Console.WriteLine()
+
+                Call task.Dispose()
             End If
         End Sub
 

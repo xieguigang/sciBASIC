@@ -195,6 +195,7 @@ Public Module WeightedLinearRegression
                                 .Yfit = Ycalc(i)
                             }
                         End Function) _
+                .Select(Function(p) DirectCast(p, IFitError)) _
                 .ToArray,
             .Polynomial = New Polynomial With {
                 .Factors = C
