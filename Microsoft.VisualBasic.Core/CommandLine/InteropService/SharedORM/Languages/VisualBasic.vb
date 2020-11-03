@@ -169,12 +169,12 @@ Namespace CommandLine.InteropService.SharedORM
             ' Xml comment 已经是经过转义了的，所以不需要再做xml entity的转义了
             Dim xmlComments$ = addXmlComments(api.Description)
             Dim params$()
-            Dim usage As Argument() = cli.API _
+            Dim usage As ArgumentAttribute() = cli.API _
                 .GetCustomAttributes(True) _
                 .Where(Function(a)
-                           Return a.GetType Is GetType(Argument)
+                           Return a.GetType Is GetType(ArgumentAttribute)
                        End Function) _
-                .Select(Function(use) DirectCast(use, Argument)) _
+                .Select(Function(use) DirectCast(use, ArgumentAttribute)) _
                 .ToArray
 
             Try
@@ -222,12 +222,12 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("End Function")
         End Sub
 
-        Private Shared Function ArgumentXmlDocs(args As Argument()) As String()
+        Private Shared Function ArgumentXmlDocs(args As ArgumentAttribute()) As String()
             Dim out As New List(Of String)
             Dim param$
             Dim comments$
 
-            For Each arg As Argument In args
+            For Each arg As ArgumentAttribute In args
                 comments = XmlEntity.EscapingXmlEntity(arg.Description) _
                     .Replace("\n", vbCrLf) _
                     .LineTokens _

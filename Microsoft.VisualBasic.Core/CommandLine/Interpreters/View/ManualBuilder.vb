@@ -219,7 +219,7 @@ Namespace CommandLine.ManView
                 Dim skipOptionalLine As Boolean = False
 
                 ' 必须的参数放在前面，可选的参数都是在后面的位置
-                For Each param As Argument In api.Arguments.Select(Function(a) a.Value)
+                For Each param As ArgumentAttribute In api.Arguments.Select(Function(a) a.Value)
                     If param.TokenType = CLITypes.Boolean AndAlso Not boolSeperator Then
                         boolSeperator = True
 
@@ -363,7 +363,7 @@ Namespace CommandLine.ManView
         End Function
 
         <Extension>
-        Public Function GetFileExtensions(arg As Argument) As String()
+        Public Function GetFileExtensions(arg As ArgumentAttribute) As String()
             If arg.TokenType = CLITypes.File AndAlso Not arg.Extensions.StringEmpty Then
                 Dim extensions$() = arg _
                     .Extensions _
@@ -390,7 +390,7 @@ Namespace CommandLine.ManView
         Public Const boolFlag$ = "(boolean flag does not require of argument value)"
 
         <Extension>
-        Public Function ExampleValue(arg As Argument) As String
+        Public Function ExampleValue(arg As ArgumentAttribute) As String
             Dim example$
 
             Select Case arg.TokenType

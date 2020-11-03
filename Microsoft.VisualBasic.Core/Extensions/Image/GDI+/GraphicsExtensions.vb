@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::06c583b25547fe549d36a838003e9308, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GraphicsExtensions
-    ' 
-    '         Function: BackgroundGraphics, CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D
-    '                   (+4 Overloads) CreateGDIDevice, CreateGrayBitmap, EntireImage, GetBrush, GetBrushes
-    '                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
-    '                   IsValidGDIParameter, (+3 Overloads) LoadImage, (+2 Overloads) Opacity, OpenDevice, (+2 Overloads) PointF
-    '                   SaveIcon, SizeF, ToFloat, ToPoint, ToPoints
-    '                   ToStream
-    ' 
-    '         Sub: (+5 Overloads) DrawCircle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GraphicsExtensions
+' 
+'         Function: BackgroundGraphics, CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D
+'                   (+4 Overloads) CreateGDIDevice, CreateGrayBitmap, EntireImage, GetBrush, GetBrushes
+'                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
+'                   IsValidGDIParameter, (+3 Overloads) LoadImage, (+2 Overloads) Opacity, OpenDevice, (+2 Overloads) PointF
+'                   SaveIcon, SizeF, ToFloat, ToPoint, ToPoints
+'                   ToStream
+' 
+'         Sub: (+5 Overloads) DrawCircle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,6 +55,7 @@ Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
@@ -75,6 +76,16 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     <HideModuleName>
     Public Module GraphicsExtensions
+
+        ''' <summary>
+        ''' https://github.com/dotnet/runtime/issues/28361
+        ''' </summary>
+        ''' <param name="pointSize"></param>
+        ''' <param name="dpiResolution"></param>
+        ''' <returns></returns>
+        Public Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
+            Return If(RuntimeInformation.IsOSPlatform(OSPlatform.Windows), pointSize, pointSize * dpiResolution / 96)
+        End Function
 
         <Extension>
         Public Function GetStringPath(s$, dpi!, rect As RectangleF, font As Font, format As StringFormat) As GraphicsPath
@@ -568,6 +579,9 @@ Namespace Imaging
                 With dpi.SizeParser
                     Call bitmap.SetResolution(.Width, .Height)
                 End With
+
+                Call $"Bitmap size: [{bitmap.Width}, {bitmap.Height}]".__DEBUG_ECHO
+                Call $"Bitmap dpi: [{bitmap.HorizontalResolution}, {bitmap.VerticalResolution}]".__DEBUG_ECHO
             Catch ex As Exception
                 ex = New Exception(New Size(width, height).ToString, ex)
                 ex = New Exception(trace, ex)

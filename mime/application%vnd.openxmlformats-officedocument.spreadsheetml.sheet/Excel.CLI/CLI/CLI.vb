@@ -145,13 +145,13 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     <ExportAPI("/cbind")>
     <Usage("/cbind /in <a.csv> /append <b.csv> [/ID.a <default=ID> /ID.b <default=ID> /grep.ID <grep_script, default=""token <SPACE> first""> /unique /nothing.as.empty /out <ALL.csv>]")>
     <Description("Join of two table by a unique ID.")>
-    <Argument("/in", False, CLITypes.File,
+    <ArgumentAttribute("/in", False, CLITypes.File,
               Description:="The table for append by column, its row ID can be duplicated.")>
-    <Argument("/append", False, CLITypes.File,
+    <ArgumentAttribute("/append", False, CLITypes.File,
               Description:="The target table that will be append into the table ``a``, the row ID must be unique!")>
-    <Argument("/grep.ID", True, CLITypes.String, PipelineTypes.undefined, AcceptTypes:={GetType(String)},
+    <ArgumentAttribute("/grep.ID", True, CLITypes.String, PipelineTypes.undefined, AcceptTypes:={GetType(String)},
               Description:="This argument parameter describ how to parse the ID in file ``a.csv``")>
-    <Argument("/unique", True, CLITypes.Boolean,
+    <ArgumentAttribute("/unique", True, CLITypes.Boolean,
               Description:="Make the id of file ``append`` be unique?")>
     <Group(Program.CsvTools)>
     Public Function cbind(args As CommandLine) As Integer
@@ -182,7 +182,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     <ExportAPI("/rbind")>
     <Description("Row bind(merge tables directly) of the csv tables")>
     <Usage("/rbind /in <*.csv.DIR> [/order_by <column_name> /out <EXPORT.csv>]")>
-    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+    <ArgumentAttribute("/in", False, CLITypes.File, PipelineTypes.std_in,
               Description:="A directory path that contains csv files that will be merge into one file directly.")>
     <Group(Program.CsvTools)>
     Public Function rbind(args As CommandLine) As Integer
@@ -366,7 +366,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     <ExportAPI("/removes")>
     <Usage("/removes /in <dataset.csv> /pattern <regexp_pattern> [/by_row /out <out.csv>]")>
     <Description("Removes row or column data by given regular expression pattern.")>
-    <Argument("/by_row", True, CLITypes.Boolean, AcceptTypes:={GetType(Boolean)},
+    <ArgumentAttribute("/by_row", True, CLITypes.Boolean, AcceptTypes:={GetType(Boolean)},
               Description:="This argument specific that removes data by row or by column, by default is by column.")>
     Public Function Removes(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
@@ -421,7 +421,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     <ExportAPI("/takes")>
     <Description("Takes specific rows by a given row id list.")>
     <Usage("/takes /in <data.csv> /id <id.list> [/reverse /out <takes.csv>]")>
-    <Argument("/reverse", True, CLITypes.Boolean,
+    <ArgumentAttribute("/reverse", True, CLITypes.Boolean,
               AcceptTypes:={GetType(Boolean)},
               Description:="If this argument is presents in the cli inputs, then all of the rows that not in input list will be output as result.")>
     Public Function Takes(args As CommandLine) As Integer

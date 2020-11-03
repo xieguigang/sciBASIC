@@ -58,7 +58,7 @@ Partial Module CLI
     <ExportAPI("/push")>
     <Usage("/push /write <*.xlsx> /table <*.csv> [/sheetName <name_string> /saveAs <*.xlsx>]")>
     <Description("Write target csv table its content data as a worksheet into the target Excel package.")>
-    <Argument("/sheetName", True, CLITypes.String, PipelineTypes.std_in,
+    <ArgumentAttribute("/sheetName", True, CLITypes.String, PipelineTypes.std_in,
               Description:="The New sheet table name, if this argument Is Not presented, then the program will 
               using the file basename as the sheet table name. If the sheet table name Is exists in current xlsx file, 
               then the exists table value will be updated, otherwise will add New table.")>
@@ -80,7 +80,7 @@ Partial Module CLI
     <ExportAPI("/Create")>
     <Usage("/Create /target <xlsx>")>
     <Description("Create an empty Excel xlsx package file on a specific file path")>
-    <Argument("/target", False, CLITypes.File,
+    <ArgumentAttribute("/target", False, CLITypes.File,
               Description:="The file path for save this New created Excel xlsx package.")>
     <Group(Program.XlsxTools)>
     Public Function newEmpty(args As CommandLine) As Integer
@@ -92,12 +92,12 @@ Partial Module CLI
     <ExportAPI("/Extract")>
     <Usage("/Extract /open <xlsx> [/sheetName <name_string, default=*> /out <out.csv/directory>]")>
     <Description("Open target excel file And get target table And save into a csv file.")>
-    <Argument("/open", False, CLITypes.File,
+    <ArgumentAttribute("/open", False, CLITypes.File,
               Description:="File path of the Excel ``*.xlsx`` file for open And read.")>
-    <Argument("/sheetName", True, CLITypes.String,
+    <ArgumentAttribute("/sheetName", True, CLITypes.String,
               Description:="The worksheet table name for read data And save as csv file. 
               If this argument value is equals to ``*``, then all of the tables in the target xlsx excel file will be extract.")>
-    <Argument("/out", True, CLITypes.File,
+    <ArgumentAttribute("/out", True, CLITypes.File,
               Description:="The csv output file path or a directory path value when the ``/sheetName`` parameter is value ``*``.")>
     <Group(Program.XlsxTools)>
     Public Function Extract(args As CommandLine) As Integer
@@ -133,13 +133,13 @@ Partial Module CLI
     <ExportAPI("/Print")>
     <Usage("/Print /in <table.csv/xlsx> [/fields <fieldNames> /sheet <sheetName> /out <device/txt>]")>
     <Description("Print the csv/xlsx file content onto the console screen or text file in table layout.")>
-    <Argument("/sheet", True, CLITypes.String,
+    <ArgumentAttribute("/sheet", True, CLITypes.String,
               AcceptTypes:={GetType(String)},
               Description:="The sheet name of table in xlsx file for display, this option only works when target file format is a xlsx file.")>
-    <Argument("/fields", True, CLITypes.String,
+    <ArgumentAttribute("/fields", True, CLITypes.String,
               AcceptTypes:={GetType(String())},
               Description:="A list of selected field names for display, seperated with comma symbol. By default, is display all of the fields data.")>
-    <Argument("/in", False, CLITypes.File, PipelineTypes.std_in,
+    <ArgumentAttribute("/in", False, CLITypes.File, PipelineTypes.std_in,
               Extensions:="*.csv, *.xlsx, *.txt, *.tsv",
               Description:="Standard input pipeline device only works for csv/tsv file. Target table file for display on the console.")>
     Public Function Print(args As CommandLine) As Integer

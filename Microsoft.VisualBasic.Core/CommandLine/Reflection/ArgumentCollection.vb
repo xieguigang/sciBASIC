@@ -55,9 +55,9 @@ Namespace CommandLine.Reflection
     ''' The help information for a specific command line parameter switch.(某一个指定的命令的开关的帮助信息)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class ArgumentCollection : Implements IEnumerable(Of NamedValue(Of Argument))
+    Public Class ArgumentCollection : Implements IEnumerable(Of NamedValue(Of ArgumentAttribute))
 
-        ReadOnly _params As New Dictionary(Of String, Argument)
+        ReadOnly _params As New Dictionary(Of String, ArgumentAttribute)
 
         ''' <summary>
         ''' 本命令行对象中的包含有帮助信息的开关参数的数目
@@ -93,7 +93,7 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         Public ReadOnly Property GetExample() As String
             Get
-                Dim required = From par As Argument
+                Dim required = From par As ArgumentAttribute
                                In Me._params.Values
                                Where Not par.Optional
                                Select par
@@ -103,10 +103,10 @@ Namespace CommandLine.Reflection
                                 Select par
                 Dim sb As New StringBuilder(1024)
 
-                For Each Switch As Argument In required
+                For Each Switch As ArgumentAttribute In required
                     Call sb.AppendFormat("{0} {1} ", Switch.Name, Switch.Example)
                 Next
-                For Each Switch As Argument In optionals
+                For Each Switch As ArgumentAttribute In optionals
                     Call sb.AppendFormat("[{0} {1}] ", Switch.Name, Switch.Example)
                 Next
 
@@ -126,10 +126,10 @@ Namespace CommandLine.Reflection
                                 Select par
                 Dim sb As New StringBuilder(1024)
 
-                For Each param As Argument In requireds
+                For Each param As ArgumentAttribute In requireds
                     Call sb.AppendFormat("{0} {1} ", param.Name, param.Usage)
                 Next
-                For Each param As Argument In optionals
+                For Each param As ArgumentAttribute In optionals
                     Call sb.AppendFormat("[{0} {1}] ", param.Name, param.Usage)
                 Next
 
@@ -146,7 +146,7 @@ Namespace CommandLine.Reflection
 
         Public ReadOnly Property EmptyExample As Boolean
             Get
-                Dim LQuery = From par As Argument
+                Dim LQuery = From par As ArgumentAttribute
                              In _params.Values
                              Where String.IsNullOrEmpty(par.Example)
                              Select 1 '
@@ -162,32 +162,32 @@ Namespace CommandLine.Reflection
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder(1024)
 
-            For Each parameter As Argument In _params.Values
+            For Each parameter As ArgumentAttribute In _params.Values
                 Call sb.AppendLine(parameter.ToString)
             Next
             Return Trim(sb.ToString)
         End Function
 
-        ReadOnly __flag As Type = GetType(Argument)
+        ReadOnly __flag As Type = GetType(ArgumentAttribute)
 
         Sub New(methodInfo As MethodInfo)
             Dim attrs() = methodInfo.GetCustomAttributes(__flag, inherit:=False)
-            Dim LQuery = LinqAPI.Exec(Of Argument) _
+            Dim LQuery = LinqAPI.Exec(Of ArgumentAttribute) _
  _
                 () <= From attr As Object
                       In attrs
-                      Let parameter As Argument = TryCast(attr, Argument)
+                      Let parameter As ArgumentAttribute = TryCast(attr, ArgumentAttribute)
                       Select parameter
                       Order By parameter.Optional, parameter.TokenType Ascending ' 必须参数都在前面，可选参数都在后面
 
-            For Each param As Argument In LQuery
+            For Each param As ArgumentAttribute In LQuery
                 Call _params.Add(param.Name, param)
             Next
         End Sub
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of Argument)) Implements IEnumerable(Of NamedValue(Of Argument)).GetEnumerator
+        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of ArgumentAttribute)) Implements IEnumerable(Of NamedValue(Of ArgumentAttribute)).GetEnumerator
             For Each obj In _params
-                Yield New NamedValue(Of Argument) With {
+                Yield New NamedValue(Of ArgumentAttribute) With {
                     .Name = obj.Key,
                     .Value = obj.Value
                 }

@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::64214d9aa13eb893c9ab261d3880468b, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Argument.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Argument
-    ' 
-    '         Properties: [Optional], AcceptTypes, Description, Example, Extensions
-    '                     Name, Out, Pipeline, TokenType, Usage
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Class OutputAttribute
-    ' 
-    '         Properties: extension, result
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Argument
+' 
+'         Properties: [Optional], AcceptTypes, Description, Example, Extensions
+'                     Name, Out, Pipeline, TokenType, Usage
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+'     Class OutputAttribute
+' 
+'         Properties: extension, result
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,7 +61,7 @@ Namespace CommandLine.Reflection
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
-    Public Class Argument : Inherits CLIToken
+    Public Class ArgumentAttribute : Inherits CLIToken
 
         ''' <summary>
         ''' The name of this command line parameter switch.(该命令开关的名称)
@@ -74,6 +74,12 @@ Namespace CommandLine.Reflection
                 Return MyBase.Name
             End Get
         End Property
+
+        ''' <summary>
+        ''' POSIX short name
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property BriefName As String
 
         Dim describ As String
 
@@ -166,17 +172,17 @@ Namespace CommandLine.Reflection
         ''' <summary>
         ''' 对命令行之中的某一个参数进行描述性信息的创建，包括用法和含义
         ''' </summary>
-        ''' <param name="Name">The name of this command line parameter switch.(该命令开关的名称)</param>
-        ''' <param name="Optional">Is this parameter switch is an optional value.(本开关是否为可选的参数)</param>
+        ''' <param name="Name">The full name of this command line parameter switch.(该命令开关的名称)</param>
+        ''' <param name="optional">Is this parameter switch is an optional value.(本开关是否为可选的参数)</param>
         ''' <remarks></remarks>
         Sub New(name$,
-                Optional [Optional] As Boolean = False,
+                Optional [optional] As Boolean = False,
                 Optional type As CLITypes = CLITypes.String,
                 Optional pip As PipelineTypes = PipelineTypes.undefined)
 
             Call MyBase.New(name)
 
-            Me.[Optional] = [Optional]
+            Me.[Optional] = [optional]
             Me.TokenType = type
             Me.Pipeline = pip
         End Sub
@@ -211,22 +217,5 @@ Namespace CommandLine.Reflection
 
             Return sb.ToString
         End Function
-    End Class
-
-    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
-    Public Class OutputAttribute : Inherits Attribute
-
-        Public ReadOnly Property result As Type
-        ''' <summary>
-        ''' The file extension name, like ``*.csv``
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property extension As String
-
-        Sub New(resultType As Type, fileExt$)
-            result = resultType
-            extension = fileExt
-        End Sub
-
     End Class
 End Namespace

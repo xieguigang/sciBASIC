@@ -46,7 +46,7 @@
 Namespace CommandLine.Reflection
 
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Struct Or AttributeTargets.Enum, AllowMultiple:=False, Inherited:=True)>
-    Public Class ActiveViews : Inherits Attribute
+    Public Class ActiveViewsAttribute : Inherits Attribute
 
         Public ReadOnly Property Views As String
         ''' <summary>

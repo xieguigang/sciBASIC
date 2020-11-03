@@ -252,7 +252,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\app\</OutputPath>
-    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>

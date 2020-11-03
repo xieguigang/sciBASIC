@@ -173,7 +173,7 @@ Namespace CommandLine.ManView
                     If Not prints.Length = 0 Then
                         Call sb.AppendLine("##### Accepted Types")
 
-                        For Each param As NamedValue(Of Argument) In prints
+                        For Each param As NamedValue(Of ArgumentAttribute) In prints
                             Call sb.AppendLine("###### " & param.Name)
 
                             For Each pType As Type In param.Value.AcceptTypes

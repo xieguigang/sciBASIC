@@ -1394,6 +1394,11 @@
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
     <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
     <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\IExportAPI.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\LastUpdatedAttribute.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\OutputAttribute.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\ExampleAttribute.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\UsageAttribute.vb" />
     <Compile Include="CommandLine\Reflection\ExportApiInformation.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\DataSource\Property\Extensions.vb" />
@@ -1404,6 +1409,8 @@
     <Compile Include="ComponentModel\DataStructures\Deque\ReversedEnumerator.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\ReverseQueue.vb" />
     <Compile Include="ComponentModel\File\IOWorkModes.vb" />
+    <Compile Include="ComponentModel\File\XmlAssembly\DigitalSignature.vb" />
+    <Compile Include="ComponentModel\File\XmlAssembly\XmlStyleProcessor.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
     <Compile Include="Data\NamespaceDoc.vb" />
     <Compile Include="Data\Repository\RepositoryFileSystem.vb" />
@@ -1459,7 +1466,7 @@
     <Compile Include="Data\TypeCaster.vb" />
     <Compile Include="Data\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\DataSource\Property\GenericProperty.vb" />
-    <Compile Include="ComponentModel\File\XmlDataModel.vb" />
+    <Compile Include="ComponentModel\File\XmlAssembly\XmlDataModel.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IntTag.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\SelectorExtensions.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\NumericTagged.vb" />
@@ -1542,11 +1549,11 @@
     <Compile Include="CommandLine\CLITools.vb" />
     <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
     <Compile Include="CommandLine\Interpreters\Abstract.vb" />
-    <Compile Include="CommandLine\Reflection\Attributes\Argument.vb" />
-    <Compile Include="CommandLine\Reflection\Attributes\ActiveViews.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\ArgumentAttribute.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\ActiveViewsAttribute.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\Grouping.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\Flags.vb" />
-    <Compile Include="CommandLine\Reflection\Attributes\[Namespace].vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\Namespace.vb" />
     <Compile Include="CommandLine\Reflection\Grouping.vb" />
     <Compile Include="CommandLine\Reflection\CLITypes.vb" />
     <Compile Include="CommandLine\Interpreters\View\ExceptionHandler.vb" />
@@ -2052,7 +2059,7 @@
     <Compile Include="ComponentModel\Settings\Settings.vb" />
     <Compile Include="ComponentModel\Algorithm\base\Combination\Comb.vb" />
     <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
-    <Compile Include="CommandLine\Reflection\Attributes\Attribute.vb" />
+    <Compile Include="CommandLine\Reflection\Attributes\NoteAttribute.vb" />
     <Compile Include="CommandLine\Reflection\ArgumentCollection.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
@@ -2133,6 +2140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationServices\DynamicInterop\License.txt" />
+    <None Include="CommandLine\POSIX\README.md" />
     <Content Include="ComponentModel\Ranges\RangeModel\Copyright.txt" />
     <None Include="Resources\scripts\bashRunner.sh" />
     <None Include="Resources\scripts\help.sh" />

@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Namespace CommandLine.Reflection
 
     ''' <summary>
-    ''' (<see cref="Microsoft.VisualBasic.CommandLine.Interpreter">CommandLine interpreter</see> executation Entry and the ShellScript software packages namespace.)这是一个命令行解释器所使用的执行入口点的集合
+    ''' (<see cref="Interpreter">CommandLine interpreter</see> executation Entry and the ShellScript software packages namespace.)这是一个命令行解释器所使用的执行入口点的集合
     ''' </summary>
     ''' <remarks></remarks>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>

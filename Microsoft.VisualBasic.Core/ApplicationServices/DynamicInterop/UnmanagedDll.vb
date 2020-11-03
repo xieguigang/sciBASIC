@@ -1,6 +1,8 @@
 ﻿Imports System.Collections.Concurrent
 Imports System.IO
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace ApplicationServices.DynamicInterop
 
@@ -114,7 +116,7 @@ Namespace ApplicationServices.DynamicInterop
             Throw New ArgumentException(strMsg)
         End Sub
 
-        Private delegateFunctionPointers As ConcurrentDictionary(Of String, Object) = New ConcurrentDictionary(Of String, Object)()
+        Private delegateFunctionPointers As New ConcurrentDictionary(Of String, Object)()
 
         ''' <summary>
         ''' Creates the delegate function for the specified function defined in the DLL.
@@ -132,31 +134,30 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="entryPoint">The name of the function exported by the DLL</param>
         ''' <returns>The delegate.</returns>
         Public Function GetFunction(Of TDelegate As Class)(ByVal entryPoint As String) As TDelegate
-            If String.IsNullOrEmpty(entryPoint) Then Throw New ArgumentNullException("entryPoint", "Native function name cannot be null or empty")
+            If String.IsNullOrEmpty(entryPoint) Then
+                Throw New ArgumentNullException("entryPoint", "Native function name cannot be null or empty")
+            ElseIf Not GetType(TDelegate).IsSubclassOf(GetType([Delegate])) Then
+                Throw New InvalidCastException()
+            End If
 
             SyncLock Me
-                Dim delegateType = GetType(TDelegate)
-                If delegateFunctionPointers.ContainsKey(entryPoint) Then Return delegateFunctionPointers(entryPoint)
-
-                If Not delegateType.IsSubclassOf(GetType([Delegate])) Then
-                    Throw New InvalidCastException()
-                End If
-
-                Dim [function] = GetFunctionAddress(entryPoint)
-
-                If [function] = IntPtr.Zero Then
-                    throwEntryPointNotFound(entryPoint)
-                End If
-
-                Dim dFunc = TryCast(Marshal.GetDelegateForFunctionPointer([function], delegateType), TDelegate)
-                delegateFunctionPointers(entryPoint) = dFunc
-                Return dFunc
+                Return delegateFunctionPointers.ComputeIfAbsent(
+                    key:=entryPoint,
+                    lazyValue:=Function(func)
+                                   Return TryCast(GetFunction(entryPoint, GetType(TDelegate)), TDelegate)
+                               End Function)
             End SyncLock
         End Function
 
-        Private Sub throwEntryPointNotFound(ByVal entryPoint As String)
-            Throw New EntryPointNotFoundException(String.Format("Function {0} not found in native library {1}", entryPoint, FileName))
-        End Sub
+        Private Function GetFunction(entryPoint As String, type As Type) As Object
+            Dim [function] = GetFunctionAddress(entryPoint)
+
+            If [function] = IntPtr.Zero Then
+                Throw New EntryPointNotFoundException($"Function {entryPoint} not found in native library {FileName}")
+            Else
+                Return Marshal.GetDelegateForFunctionPointer([function], type)
+            End If
+        End Function
 
         ''' <summary>
         ''' Gets the address of a native function entry point.

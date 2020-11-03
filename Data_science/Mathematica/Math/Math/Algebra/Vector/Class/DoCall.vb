@@ -52,7 +52,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports ArgumentAttribute = Microsoft.VisualBasic.CommandLine.Reflection.Argument
+Imports ArgumentAttribute = Microsoft.VisualBasic.CommandLine.Reflection.ArgumentAttribute
 
 Namespace LinearAlgebra
 

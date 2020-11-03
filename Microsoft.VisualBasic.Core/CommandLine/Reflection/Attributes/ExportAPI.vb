@@ -57,31 +57,6 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Namespace CommandLine.Reflection
 
     ''' <summary>
-    ''' 主要是用于帮助标记命令行命令的更新时间,了解哪些命令可能是已经过时了的
-    ''' </summary>
-    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
-    Public Class LastUpdatedAttribute : Inherits Attribute
-
-        Public ReadOnly [Date] As Date
-
-        Sub New([date] As Date)
-            Me.Date = [date]
-        End Sub
-
-        Sub New([date] As String)
-            Me.Date = Date.Parse([date])
-        End Sub
-
-        Sub New(yy%, mm%, dd%, H%, M%, S%)
-            Me.Date = New Date(yy, mm, dd, H, M, S)
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return [Date].ToString
-        End Function
-    End Class
-
-    ''' <summary>
     ''' A command object that with a specific name.(一个具有特定名称命令执行对象)
     ''' </summary>
     ''' <remarks></remarks>
@@ -134,36 +109,4 @@ Namespace CommandLine.Reflection
             Return Name
         End Function
     End Class
-
-    Public Interface IExportAPI
-
-        ''' <summary>
-        ''' The name of the commandline object.(这个命令的名称)
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        ReadOnly Property Name As String
-        ''' <summary>
-        ''' Something detail of help information.(详细的帮助信息)
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        ReadOnly Property Info As String
-        ''' <summary>
-        ''' The usage of this command.(这个命令的用法，本属性仅仅是一个助记符，当用户没有编写任何的使用方法信息的时候才会使用本属性的值)
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        ReadOnly Property Usage As String
-        ''' <summary>
-        ''' A example that to useing this command.(对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值)
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        ReadOnly Property Example As String
-    End Interface
 End Namespace

@@ -164,11 +164,13 @@
     <OutputPath>bin\app\</OutputPath>
     <DefineConstants>TRACE=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.HierarchicalClustering.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>None</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <OutputPath>..\..\..\..\..\..\..\..\plot\</OutputPath>

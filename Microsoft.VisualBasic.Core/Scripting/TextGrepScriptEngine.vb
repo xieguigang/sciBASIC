@@ -283,7 +283,7 @@ Namespace Scripting
         ''' <remarks></remarks>
         <ExportAPI("Tokens")>
         <Usage("tokens p_str pointer")>
-        <Argument("pointer", False, Description:="pointer must be a zero base integer number which is smaller than 
+        <ArgumentAttribute("pointer", False, Description:="pointer must be a zero base integer number which is smaller than 
             the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last 
             element and ""first"" to get the first element in the tokens array.")>
         <Description("Split source text with delimiter [{0}], and get the token at position [{1}]")>

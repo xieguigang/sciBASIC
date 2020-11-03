@@ -86,7 +86,7 @@ Namespace IO
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <ActiveViews(File.ActiveViews)> Public Class File
+    <ActiveViewsAttribute(File.ActiveViews)> Public Class File
         Implements IEnumerable(Of RowObject)
         Implements IList(Of RowObject)
         Implements ISaveHandle

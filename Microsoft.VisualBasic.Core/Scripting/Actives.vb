@@ -63,7 +63,7 @@ Namespace Scripting
         ''' <returns></returns>
         <Extension> Public Function DisplayType(type As Type) As String
             Dim sb As New StringBuilder
-            Dim view As ActiveViews = type.GetCustomAttribute(Of ActiveViews)
+            Dim view As ActiveViewsAttribute = type.GetCustomAttribute(Of ActiveViewsAttribute)
             Dim fullName$ = type.FullName
 
             If fullName.Split("."c).First = "System" Then

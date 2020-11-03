@@ -60,34 +60,6 @@ Imports System.ComponentModel
 
 Namespace CommandLine.Reflection
 
-    <AttributeUsage(AttributeTargets.All, AllowMultiple:=False, Inherited:=True)>
-    Public Class UsageAttribute : Inherits Attribute
-
-        Public ReadOnly Property UsageInfo As String
-
-        Sub New(usage$)
-            UsageInfo = usage
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return UsageInfo
-        End Function
-    End Class
-
-    <AttributeUsage(AttributeTargets.All, AllowMultiple:=False, Inherited:=True)>
-    Public Class ExampleAttribute : Inherits Attribute
-
-        Public ReadOnly Property ExampleInfo As String
-
-        Sub New(note$)
-            ExampleInfo = note
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return ExampleInfo
-        End Function
-    End Class
-
     ''' <summary>
     ''' 这个自定义属性与<see cref="DescriptionAttribute"/>的使用类似
     ''' 只不过<see cref="DescriptionAttribute"/>是针对命令的简单说明

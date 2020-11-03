@@ -127,7 +127,7 @@ Namespace ComponentModel.Collection
         ''' <param name="lazyValue"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ComputeIfAbsent(Of K, V)(table As Dictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
+        Public Function ComputeIfAbsent(Of K, V)(table As IDictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
             If Not table.ContainsKey(key) OrElse table(key) Is Nothing Then
                 table(key) = lazyValue(key)
             End If
