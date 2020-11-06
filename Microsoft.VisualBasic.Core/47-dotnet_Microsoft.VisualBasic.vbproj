@@ -2051,8 +2051,6 @@
     <Compile Include="ComponentModel\DataSource\SchemaMaps\DataSource.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\IEnumerable.vb" />
     <Compile Include="Text\Xml\Models\ValueTuples\ValuePair.vb" />
-    <Compile Include="Serialization\DumpData\DumpData.vb" />
-    <Compile Include="Serialization\DumpData\DumpNode.vb" />
     <Compile Include="Extensions\Security\TripleDES.vb" />
     <Compile Include="Extensions\WebServices\WebServiceUtils.vb" />
     <Compile Include="ComponentModel\Settings\Inf\INIProfile.vb" />
