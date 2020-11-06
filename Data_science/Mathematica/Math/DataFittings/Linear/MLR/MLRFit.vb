@@ -75,9 +75,11 @@ Namespace Multivariate
         ''' <summary>
         ''' sum of squared
         ''' </summary>
-        Public SSE#, SST#
+        Public Property SSE As Double
+        Public Property SST As Double
 
         Public ReadOnly Property R2 As Double Implements IFitted.R2
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return 1.0 - SSE / SST
             End Get
@@ -93,19 +95,22 @@ Namespace Multivariate
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Overridable ReadOnly Property Fx(x As Vector) As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return (x * beta).Sum
             End Get
         End Property
 
         Public ReadOnly Property Polynomial As Formula Implements IFitted.Polynomial
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Throw New NotImplementedException()
+                Return New MultivariatePolynomial With {.Factors = beta}
             End Get
         End Property
 
         Public Property ErrorTest As IFitError() Implements IFitted.ErrorTest
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetY(ParamArray x() As Double) As Double Implements IFitted.GetY
             Return Fx(New Vector(x))
         End Function

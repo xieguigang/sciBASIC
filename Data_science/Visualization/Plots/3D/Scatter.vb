@@ -77,6 +77,7 @@ Namespace Plot3D
         ''' <param name="axisLabelFontCSS$"></param>
         ''' <param name="boxStroke$"></param>
         ''' <param name="axisStroke$"></param>
+        ''' <param name="showHull">show convex hull for each <paramref name="serials"/> data.</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 首先要生成3维图表的模型元素，然后将这些元素混合在一起，最后按照Z深度的排序结果顺序绘制出来，才能够生成一幅有层次感的3维图表
@@ -95,7 +96,10 @@ Namespace Plot3D
                              Optional labZ$ = "Z",
                              Optional legendWidth! = 20,
                              Optional arrowFactor$ = "2,2",
-                             Optional showLegend As Boolean = True) As GraphicsData
+                             Optional showLegend As Boolean = True,
+                             Optional showHull As Boolean = True,
+                             Optional hullAlpha As Integer = 150,
+                             Optional hullBspline As Single = 2) As GraphicsData
 
             Dim list As Serial3D() = serials.ToArray
             Dim points As Point3D() = list _
@@ -125,13 +129,22 @@ Namespace Plot3D
 
             ' 最后混合进入系列点
             For Each serial As Serial3D In list
-
                 Dim data As NamedValue(Of Point3D)() = serial.Points
                 Dim size As New Size With {
                     .Width = serial.PointSize,
                     .Height = serial.PointSize
                 }
                 Dim color As New SolidBrush(serial.Color)
+
+                If showHull Then
+                    model += New ConvexHullPolygon With {
+                        .brush = New SolidBrush(serial.Color.Alpha(hullAlpha)),
+                        .Path = data _
+                            .Select(Function(pt) pt.Value) _
+                            .ToArray,
+                        .bspline = hullBspline
+                    }
+                End If
 
                 model += data _
                     .Select(Function(pt)

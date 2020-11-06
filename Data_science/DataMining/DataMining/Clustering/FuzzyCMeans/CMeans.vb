@@ -134,7 +134,7 @@ Namespace FuzzyCMeans
                                Optional maxLoop As Integer = 10000) As Classify()
 
             Dim u As Double()() = GetRandomMatrix(classCount, nsamples:=entities.Length).ToArray()
-            Dim _j As Double = -1
+            Dim j_old As Double = -1
             Dim centers As Double()() = Nothing
             Dim width As Integer = entities(0).Length
             Dim j_new As Double
@@ -144,15 +144,15 @@ Namespace FuzzyCMeans
             While True
                 centers = GetCenters(classCount, fuzzification, u, entities, width).ToArray
                 j_new = J(fuzzification, u, centers, entities)
-                membership_diff = stdNum.Abs(j_new - _j)
+                membership_diff = stdNum.Abs(j_new - j_old)
 
-                If _j <> -1 AndAlso membership_diff < threshold Then
+                If j_old <> -1 AndAlso membership_diff < threshold Then
                     Exit While
                 Else
-                    Call $"loop_{[loop]} membership_diff: |{j_new} - {_j}| = {membership_diff}".__DEBUG_ECHO
+                    Call $"loop_{[loop]} membership_diff: |{j_new} - {j_old}| = {membership_diff}".__DEBUG_ECHO
                 End If
 
-                _j = j_new
+                j_old = j_new
 
                 If parallel Then
                     Call u.updateMembershipParallel(entities, centers, classCount, fuzzification)
@@ -171,21 +171,21 @@ Namespace FuzzyCMeans
         <Extension>
         Private Sub updateMembershipParallel(ByRef u As Double()(), entities As ClusterEntity(), centers As Double()(), classCount As Integer, m As Double)
             u = Enumerable.Range(0, u.Length) _
-            .Select(Function(i) (i, Val:=entities(i))) _
-            .AsParallel _
-            .Select(Function(obj)
-                        Dim result As Double() = centers.scanRow(
-                            entity:=obj.val,
-                            classCount:=classCount,
-                            m:=m
-                        )
-                        Dim pack = (obj.i, result)
+                .Select(Function(i) (i, Val:=entities(i))) _
+                .AsParallel _
+                .Select(Function(obj)
+                            Dim result As Double() = centers.scanRow(
+                                entity:=obj.val,
+                                classCount:=classCount,
+                                m:=m
+                            )
+                            Dim pack = (obj.i, result)
 
-                        Return pack
-                    End Function) _
-            .OrderBy(Function(pack) pack.i) _
-            .Select(Function(a) a.result) _
-            .ToArray
+                            Return pack
+                        End Function) _
+                .OrderBy(Function(pack) pack.i) _
+                .Select(Function(a) a.result) _
+                .ToArray
         End Sub
 
         <Extension>
@@ -195,10 +195,10 @@ Namespace FuzzyCMeans
             For j As Integer = 0 To classCount - 1
                 Dim jIndex As Integer = j
                 Dim sumAll As Double = Aggregate x As Integer
-                                   In Enumerable.Range(0, classCount)
-                                   Let a As Double = stdNum.Sqrt(Dist(entity, centers(jIndex))) / stdNum.Sqrt(Dist(entity, centers(x)))
-                                   Let val As Double = a ^ (2 / (m - 1))
-                                   Into Sum(val)
+                                       In Enumerable.Range(0, classCount)
+                                       Let a As Double = stdNum.Sqrt(Dist(entity, centers(jIndex))) / stdNum.Sqrt(Dist(entity, centers(x)))
+                                       Let val As Double = a ^ (2 / (m - 1))
+                                       Into Sum(val)
                 ui(j) = 1 / sumAll
 
                 If Double.IsNaN(ui(j)) Then
@@ -211,16 +211,20 @@ Namespace FuzzyCMeans
 
         <Extension>
         Private Sub updateMembership(u As Double()(), entities As ClusterEntity(), centers As Double()(), classCount As Integer, m As Double)
+            Dim classIndex As Integer() = Enumerable.Range(0, classCount).ToArray
+
             For i As Integer = 0 To u.Length - 1
                 Dim index As Integer = i
 
                 For j As Integer = 0 To u(i).Length - 1
                     Dim jIndex As Integer = j
                     Dim sumAll As Double = Aggregate x As Integer
-                                       In Enumerable.Range(0, classCount)
-                                       Let a As Double = stdNum.Sqrt(Dist(entities(index), centers(jIndex))) / stdNum.Sqrt(Dist(entities(index), centers(x)))
-                                       Let val As Double = a ^ (2 / (m - 1))
-                                       Into Sum(val)
+                                           In classIndex
+                                           Let d1 As Double = stdNum.Sqrt(Dist(entities(index), centers(jIndex)))
+                                           Let d2 As Double = stdNum.Sqrt(Dist(entities(index), centers(x)))
+                                           Let a As Double = d1 / d2
+                                           Let val As Double = a ^ (2 / (m - 1))
+                                           Into Sum(val)
                     u(i)(j) = 1 / sumAll
 
                     If Double.IsNaN(u(i)(j)) Then
@@ -232,6 +236,10 @@ Namespace FuzzyCMeans
 
         <Extension>
         Private Function PopulateClusters(values As ClusterEntity(), classCount As Integer, u As Double()(), centers As Double()()) As Classify()
+            Dim index As Integer
+            Dim maxMembership As Double
+            Dim clusterMembership As Double()
+            Dim resultEntity As FuzzyCMeansEntity
             Dim result As Classify() = Enumerable.Range(0, classCount) _
                 .[Select](Function(i)
                               Return New Classify() With {
@@ -240,10 +248,6 @@ Namespace FuzzyCMeans
                                 }
                           End Function) _
                 .ToArray
-            Dim index As Integer
-            Dim maxMembership As Double
-            Dim clusterMembership As Double()
-            Dim resultEntity As FuzzyCMeansEntity
 
             For i As Integer = 0 To values.Length - 1
                 clusterMembership = u(i)
@@ -259,6 +263,7 @@ Namespace FuzzyCMeans
                                           Return clusterMembership(a.Id - 1)
                                       End Function)
                 }
+
                 result(index).members.Add(resultEntity)
             Next
 
@@ -266,28 +271,31 @@ Namespace FuzzyCMeans
         End Function
 
         Public Iterator Function GetCenters(classCount As Integer, m As Double, u As Double()(), entities As ClusterEntity(), width As Integer) As IEnumerable(Of Double())
+            Dim entityIndex As Integer() = Enumerable.Range(0, entities.Count).ToArray
+
             For Each i As Integer In Enumerable.Range(0, classCount)
                 Yield Enumerable.Range(0, width) _
-                              .[Select](Function(x)
-                                            Dim sumAll = Aggregate j As Integer In Enumerable.Range(0, entities.Count)
-                                                   Let val As Double = (u(j)(i) ^ m) * entities(j)(x)
-                                                   Into Sum(val)
-                                            Dim b = Aggregate j As Integer In Enumerable.Range(0, entities.Count)
-                                                        Let val As Double = u(j)(i) ^ m
-                                                           Into Sum(val)
+                    .[Select](Function(x)
+                                  Dim sumAll = Aggregate j As Integer In entityIndex Let val As Double = (u(j)(i) ^ m) * entities(j)(x) Into Sum(val)
+                                  Dim bValue = Aggregate j As Integer In entityIndex Let val As Double = u(j)(i) ^ m Into Sum(val)
 
-                                            Return sumAll / b
-                                        End Function) _
-                              .ToArray()
+                                  Return sumAll / bValue
+                              End Function) _
+                    .ToArray()
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function J(m As Double, u As Double()(), centers As Double()(), entities As ClusterEntity()) As Double
-            Return centers.Select(Function(x, i)
-                                      Return entities.Select(Function(y, j1)
-                                                                 Return (u(j1)(i) ^ m) * Dist(y, x)
-                                                             End Function).Sum()
-                                  End Function).Sum()
+            Return centers _
+                .Select(Function(x, i)
+                            Return entities _
+                                .Select(Function(y, j1)
+                                            Return (u(j1)(i) ^ m) * Dist(y, x)
+                                        End Function) _
+                                .Sum()
+                        End Function) _
+                .Sum()
         End Function
 
         ''' <summary>
@@ -296,6 +304,8 @@ Namespace FuzzyCMeans
         ''' <param name="obj"></param>
         ''' <param name="center"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function Dist(obj As ClusterEntity, center As Double()) As Double
             Return obj.entityVector.Select(Function(x, i) (x - center(i)) ^ 2).Sum()
         End Function

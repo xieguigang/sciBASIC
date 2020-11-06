@@ -105,7 +105,7 @@ Namespace Imaging
         End Function
 
         ''' <summary>
-        ''' alpha=[0, 255]
+        ''' adjust the color alpha value, ``alpha=[0, 255]``
         ''' </summary>
         ''' <param name="c"></param>
         ''' <param name="alphaValue%"></param>

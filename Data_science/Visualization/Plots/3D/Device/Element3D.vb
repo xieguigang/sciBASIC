@@ -1,71 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::2eb38e23716e1fa3330ab3597944da30, Data_science\Visualization\Plots\3D\Device\Element3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Element3D
-    ' 
-    '         Properties: Location
-    ' 
-    '         Function: GetPosition, ToString
-    ' 
-    '         Sub: Transform
-    ' 
-    '     Class Polygon
-    ' 
-    '         Properties: brush, Path
-    ' 
-    '         Sub: Draw, Transform
-    ' 
-    '     Class Label
-    ' 
-    '         Properties: Color, Font, Text
-    ' 
-    '         Sub: Draw
-    ' 
-    '     Class Line
-    ' 
-    '         Properties: A, B, Stroke
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: __init, Draw, Transform
-    ' 
-    '     Class ShapePoint
-    ' 
-    '         Properties: Fill, Label, Point2D, Size, Style
-    ' 
-    '         Sub: Draw
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Element3D
+' 
+'         Properties: Location
+' 
+'         Function: GetPosition, ToString
+' 
+'         Sub: Transform
+' 
+'     Class Polygon
+' 
+'         Properties: brush, Path
+' 
+'         Sub: Draw, Transform
+' 
+'     Class Label
+' 
+'         Properties: Color, Font, Text
+' 
+'         Sub: Draw
+' 
+'     Class Line
+' 
+'         Properties: A, B, Stroke
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: __init, Draw, Transform
+' 
+'     Class ShapePoint
+' 
+'         Properties: Fill, Label, Point2D, Size, Style
+' 
+'         Sub: Draw
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,6 +73,8 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -126,6 +128,30 @@ Namespace Plot3D.Device
                 .ToArray
 
             Call g.FillPolygon(brush, shape)
+        End Sub
+    End Class
+
+    Public Class ConvexHullPolygon : Inherits Polygon
+
+        Public Property bspline As Single = 2
+
+        Public Overrides Sub Draw(g As IGraphics, offset As PointF)
+            Dim screen As Size = g.Size
+            Dim shape As PointF() = Path _
+                .Select(Function(p)
+                            Return p.PointXY(screen).OffSet2D(offset).PointF
+                        End Function) _
+                .ToArray
+
+            If shape.Length > 2 Then
+                shape = shape.JarvisMatch
+
+                If bspline > 1 Then
+                    shape = shape.BSpline(degree:=bspline).ToArray
+                End If
+
+                Call g.FillPolygon(brush, shape)
+            End If
         End Sub
     End Class
 
