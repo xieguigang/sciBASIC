@@ -1,52 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::584a68f1ece99345b38e0642bb306175, Microsoft.VisualBasic.Core\Serialization\RawStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface ISerializable
-    ' 
-    '         Function: Serialize
-    ' 
-    '     Class RawStream
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetRawStream
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface ISerializable
+' 
+'         Function: Serialize
+' 
+'     Class RawStream
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetRawStream
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
+Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text
 
 Namespace Serialization
 
@@ -60,6 +66,8 @@ Namespace Serialization
         ''' <returns></returns>
         Function Serialize() As Byte()
     End Interface
+
+    Public Delegate Function ReadObject(Of T)(bytes As Byte(), offset As Integer) As T
 
     ''' <summary>
     ''' 原始串流的基本模型，这个流对象应该具备有两个基本的方法：
@@ -112,27 +120,81 @@ Namespace Serialization
         Public Const SingleFloat As Integer = 4
         Public Const DecimalInt As Integer = 12
 
-        '''' <summary>
-        '''' 
-        '''' </summary>
-        '''' <param name="addr">IPEndPoint string value likes 127.0.0.1:8080</param>
-        '''' <param name="raw"></param>
-        '''' <returns></returns>
-        '''' <![CDATA[
-        ''''
-        '''' Dim rep As RequestStream = "127.0.0.1:80" <= New RequestStream With {
-        ''''     ...
-        '''' }
-        '''' ]]>
-        'Public Shared Operator <=(addr As String, raw As RawStream) As RequestStream
-        '    Dim ep As New IPEndPoint(addr)
-        '    Dim invoke As New TcpRequest(ep)
-        '    Dim rep As New RequestStream(invoke.SendMessage(raw.Serialize))
-        '    Return rep
-        'End Operator
+        Public Shared Function GetData(raw As Stream, code As TypeCode, Optional encoding As Encodings = Encodings.UTF8) As Array
+            Dim type As Type = code.CreatePrimitiveType
+            Dim bytes As Byte() = New Byte(raw.Length - 1) {}
 
-        'Public Shared Operator >=(addr As String, raw As RawStream) As RequestStream
-        '    Throw New NotSupportedException
-        'End Operator
+            Call raw.Read(bytes, Scan0, bytes.Length)
+
+            Select Case code
+                Case TypeCode.Boolean
+                    Dim flags As Boolean() = New Boolean(bytes.Length - 1) {}
+
+                    For i As Integer = 0 To bytes.Length - 1
+                        flags(i) = bytes(i) <> 0
+                    Next
+
+                    Return flags
+                Case TypeCode.Byte
+                    Return bytes
+                Case TypeCode.Char
+                    Return encoding.CodePage.GetString(bytes).ToArray
+                Case TypeCode.Double
+                    Return readInternal(bytes, AddressOf BitConverter.ToDouble)
+                Case TypeCode.Single
+                    Return readInternal(bytes, AddressOf BitConverter.ToSingle)
+                Case TypeCode.String
+
+                Case TypeCode.Int64
+                    Return readInternal(bytes, AddressOf BitConverter.ToInt64)
+                Case TypeCode.Int16
+                    Return readInternal(bytes, AddressOf BitConverter.ToInt16)
+                Case TypeCode.Int32
+                    Return readInternal(bytes, AddressOf BitConverter.ToInt32)
+                Case Else
+                    Throw New NotImplementedException(code.ToString)
+            End Select
+        End Function
+
+        Private Shared Function readInternal(Of T)(bytes As Byte(), read As ReadObject(Of T)) As T()
+            Dim sizeof As Integer = Marshal.SizeOf(GetType(T))
+            Dim objs As T() = New T(bytes.Length / sizeof - 1) {}
+
+            For i As Integer = 0 To objs.Length - 1
+                objs(i) = read(bytes, i * sizeof)
+            Next
+
+            Return objs
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetBytes(vector As Array, Optional encoding As Encodings = Encodings.UTF8) As Byte()
+            Return BytesInternal(vector, encoding).IteratesALL.ToArray
+        End Function
+
+        Private Shared Function BytesInternal(vector As Array, encoding As Encodings) As IEnumerable(Of Byte())
+            If TypeOf vector Is Integer() Then
+                Return DirectCast(vector, Integer()).Select(Function(s) BitConverter.GetBytes(s))
+            ElseIf TypeOf vector Is Long() Then
+                Return DirectCast(vector, Long()).Select(Function(s) BitConverter.GetBytes(s))
+            ElseIf TypeOf vector Is Double() Then
+                Return DirectCast(vector, Double()).Select(Function(s) BitConverter.GetBytes(s))
+            ElseIf TypeOf vector Is Single() Then
+                Return DirectCast(vector, Single()).Select(Function(s) BitConverter.GetBytes(s))
+            ElseIf TypeOf vector Is Boolean() Then
+                Return DirectCast(vector, Boolean()).Select(Function(b) {If(b, CByte(1), CByte(0))})
+            ElseIf TypeOf vector Is Byte() Then
+                Return {DirectCast(vector, Byte())}
+            ElseIf TypeOf vector Is String() Then
+                Dim codepage As Encoding = encoding.CodePage
+
+                Return DirectCast(vector, String()) _
+                    .Select(Function(str)
+                                Return codepage.GetBytes(str).JoinIterates({0})
+                            End Function)
+            Else
+                Throw New NotImplementedException(vector.GetType.FullName)
+            End If
+        End Function
     End Class
 End Namespace
