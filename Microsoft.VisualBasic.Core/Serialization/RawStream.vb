@@ -49,10 +49,12 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace Serialization
 
@@ -144,7 +146,27 @@ Namespace Serialization
                 Case TypeCode.Single
                     Return readInternal(bytes, AddressOf BitConverter.ToSingle)
                 Case TypeCode.String
+                    Dim str As New List(Of String)
+                    Dim size As Integer
+                    Dim codepage As Encoding = encoding.CodePage
+                    Dim intBuffer As Byte() = New Byte(3) {}
 
+                    Using ms As New MemoryStream(bytes)
+                        Do While ms.Position < ms.Length
+                            ms.Read(intBuffer, Scan0, 4)
+                            size = BitConverter.ToInt32(intBuffer, Scan0)
+                            bytes = New Byte(size - 1) {}
+                            ms.Read(bytes, Scan0, bytes.Length)
+                            str += codepage.GetString(bytes)
+                        Loop
+                    End Using
+
+                    Return str.ToArray
+                Case TypeCode.DateTime
+                    Dim timestamps = readInternal(bytes, AddressOf BitConverter.ToDouble)
+                    Dim time As DateTime() = timestamps.Select(AddressOf FromUnixTimeStamp).ToArray
+
+                    Return time
                 Case TypeCode.Int64
                     Return readInternal(bytes, AddressOf BitConverter.ToInt64)
                 Case TypeCode.Int16
@@ -185,12 +207,17 @@ Namespace Serialization
                 Return DirectCast(vector, Boolean()).Select(Function(b) {If(b, CByte(1), CByte(0))})
             ElseIf TypeOf vector Is Byte() Then
                 Return {DirectCast(vector, Byte())}
+            ElseIf TypeOf vector Is DateTime() Then
+                Return DirectCast(vector, DateTime()).Select(Function(d) BitConverter.GetBytes(d.UnixTimeStamp))
             ElseIf TypeOf vector Is String() Then
                 Dim codepage As Encoding = encoding.CodePage
 
                 Return DirectCast(vector, String()) _
                     .Select(Function(str)
-                                Return codepage.GetBytes(str).JoinIterates({0})
+                                Dim bytes As Byte() = codepage.GetBytes(str)
+                                Dim size As Byte() = BitConverter.GetBytes(bytes.Length)
+
+                                Return size.JoinIterates(bytes).ToArray
                             End Function)
             Else
                 Throw New NotImplementedException(vector.GetType.FullName)
