@@ -95,7 +95,6 @@ Namespace Graph
         <ScriptIgnore>
         Public Property color As Brush
 
-        <DumpNode>
         Public Property weights As Double()
 
         ''' <summary>
@@ -104,7 +103,6 @@ Namespace Graph
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <DumpNode>
         Public Property neighbours As Integer()
 
         Public Property betweennessCentrality As Double
