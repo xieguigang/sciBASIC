@@ -9,6 +9,8 @@
     <Import_RootNamespace>TcpRequest</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)NetResponse.vb" />
+    <Compile Include="$(MSBuildThisFileDirectory)StateObject.vb" />
     <Compile Include="$(MSBuildThisFileDirectory)TcpRequest.vb" />
   </ItemGroup>
 </Project>

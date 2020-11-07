@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Parallel
 Imports TcpEndPoint = System.Net.IPEndPoint
+Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 
 Namespace Tcp
 
@@ -162,11 +163,11 @@ Namespace Tcp
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function OperationTimeOut(str As String) As Boolean
-            Return String.Equals(str, NetResponse.RFC_REQUEST_TIMEOUT.GetUTF8String)
+            Return String.Equals(str, HTTP.NetResponse.RFC_REQUEST_TIMEOUT.GetUTF8String)
         End Function
 
         ''' <summary>
-        ''' Returns the server reply.(假若操作超时的话，则会返回<see cref="NetResponse.RFC_REQUEST_TIMEOUT"></see>)
+        ''' Returns the server reply.(假若操作超时的话，则会返回<see cref="HTTP.NetResponse.RFC_REQUEST_TIMEOUT"></see>)
         ''' </summary>
         ''' <param name="Message"></param>
         ''' <param name="OperationTimeOut">操作超时的时间长度，默认为30秒</param>
@@ -181,7 +182,7 @@ Namespace Tcp
         End Function
 
         ''' <summary>
-        ''' Returns the server reply.(假若操作超时的话，则会返回<see cref="NetResponse.RFC_REQUEST_TIMEOUT"></see>，
+        ''' Returns the server reply.(假若操作超时的话，则会返回<see cref="HTTP.NetResponse.RFC_REQUEST_TIMEOUT"></see>，
         ''' 请注意，假若目标服务器启用了ssl加密服务的话，假若这个请求是明文数据，则服务器会直接拒绝请求返回<see cref="HTTP_RFC.RFC_NO_CERT"/> 496错误代码，
         ''' 所以调用前请确保参数<paramref name="Message"/>已经使用证书加密)
         ''' </summary>
@@ -194,11 +195,12 @@ Namespace Tcp
                                     Optional timeoutHandler As Action = Nothing) As RequestStream
 
             Dim response As RequestStream = Nothing
-            Dim bResult As Boolean = Parallel.OperationTimeOut(
-                AddressOf SendMessage,
-                [In]:=Message,
-                Out:=response,
-                TimeOut:=timeout / 1000)
+            Dim sendHandler As New Func(Of RequestStream, RequestStream)(AddressOf SendMessage)
+            Dim bResult As Boolean = sendHandler.OperationTimeOut(
+                [in]:=Message,
+                out:=response,
+                timeOut:=timeout / 1000
+            )
 
             If bResult Then
                 If Not timeoutHandler Is Nothing Then Call timeoutHandler() '操作超时了
@@ -274,7 +276,7 @@ Namespace Tcp
             ' For this example use local machine.
             ' Create a TCP/IP socket.
             Dim client As New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
-            Call client.Bind(New System.Net.IPEndPoint(System.Net.IPAddress.Any, 0))
+            Call client.Bind(New TcpEndPoint(System.Net.IPAddress.Any, 0))
             ' Connect to the remote endpoint.
             Call client.BeginConnect(remoteEP, New AsyncCallback(AddressOf ConnectCallback), client)
             ' Wait for connect.

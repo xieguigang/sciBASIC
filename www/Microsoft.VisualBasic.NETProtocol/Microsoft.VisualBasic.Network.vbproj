@@ -357,7 +357,6 @@
     <Compile Include="Pipeline\Pipeline.vb" />
     <Compile Include="Pipeline\PipeStream.vb" />
     <Compile Include="Protocol\IVerifySession.vb" />
-    <Compile Include="Protocol\NetResponse.vb" />
     <Compile Include="Protocol\Reflection\AppMgr.vb" />
     <Compile Include="Protocol\Reflection\ProtocolAttribute.vb" />
     <Compile Include="Protocol\Reflection\ProtocolHandler.vb" />
@@ -368,7 +367,6 @@
     <Compile Include="Protocol\Streams\String.vb" />
     <Compile Include="Protocol\Streams\VarArray.vb" />
     <Compile Include="ServerModule.vb" />
-    <Compile Include="StateObject.vb" />
     <Compile Include="TcpServicesSocket.vb" />
   </ItemGroup>
   <ItemGroup>
