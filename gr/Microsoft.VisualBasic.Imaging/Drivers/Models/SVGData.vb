@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::6f90216d245d768e0384feb9265b1290, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SVGData
-    ' 
-    '         Properties: Driver, SVG, title, XmlComment
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetDataURI, Render, (+2 Overloads) Save
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SVGData
+' 
+'         Properties: Driver, SVG, title, XmlComment
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetDataURI, Render, (+2 Overloads) Save
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Net.Http
@@ -103,6 +104,15 @@ Namespace Driver
                 Call data.Seek(Scan0, SeekOrigin.Begin)
 
                 Return New DataURI(data, content_type)
+            End Using
+        End Function
+
+        Public Function GetSVGXml() As String
+            Using buffer As New MemoryStream
+                Call Save(out:=buffer)
+                Call buffer.Flush()
+
+                Return Encoding.UTF8.GetString(buffer.ToArray)
             End Using
         End Function
 
