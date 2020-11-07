@@ -90,6 +90,7 @@ Namespace ApplicationServices.Debugging
         End Function
     End Class
 
+    <HideModuleName>
     Public Module ExceptionExtensions
 
         ''' <summary>

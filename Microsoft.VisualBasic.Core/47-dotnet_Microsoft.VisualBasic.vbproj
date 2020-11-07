@@ -1371,6 +1371,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Debugger\Exception\MethodFrame.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\StackFrame.vb" />
     <Compile Include="ApplicationServices\DynamicInterop\INativeHandle.vb" />
     <Compile Include="ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb" />
