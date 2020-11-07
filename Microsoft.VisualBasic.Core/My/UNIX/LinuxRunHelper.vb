@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::13d178dddd3f1d3dd7fac3176d93b6f7, Microsoft.VisualBasic.Core\My\UNIX\LinuxRunHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module LinuxRunHelper
-    ' 
-    '         Function: BashRun, BashShell, GetLocationHelper, MonoRun
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module LinuxRunHelper
+' 
+'         Function: BashRun, BashShell, GetLocationHelper, MonoRun
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
@@ -99,6 +100,31 @@ Namespace My.UNIX
                 .CLIArguments = app.GetFullPath.CLIPath & " " & CLI
             }
             Return proc
+        End Function
+
+        ''' <summary>
+        ''' Run linux command
+        ''' </summary>
+        ''' <param name="command"></param>
+        ''' <param name="args"></param>
+        ''' <param name="verbose"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Shell(command As String, args As String, Optional verbose As Boolean = False) As String
+            Dim cmdl As String
+
+            If args.StringEmpty Then
+                cmdl = command
+            Else
+                cmdl = $"{command} {args}"
+            End If
+
+            If verbose Then
+                Call Console.WriteLine("run commandline:")
+                Call Console.WriteLine($"/bin/bash -c ""{cmdl}""")
+            End If
+
+            Return CommandLine.Call("/bin/bash", $"-c ""{cmdl}""")
         End Function
     End Module
 End Namespace

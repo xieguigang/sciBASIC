@@ -902,20 +902,7 @@ Public Module App
 #If UNIX Then
         Return False
 #Else
-        Dim pt As PlatformID = Platform
-
-        ' 枚举值在.NET和Mono之间可能会不一样??
-        If pt.ToString = NameOf(PlatformID.Unix) Then
-            Return False
-        ElseIf pt.ToString = NameOf(PlatformID.MacOSX) Then
-            Return False
-        End If
-
-        Return pt = PlatformID.Win32NT OrElse
-            pt = PlatformID.Win32S OrElse
-            pt = PlatformID.Win32Windows OrElse
-            pt = PlatformID.WinCE OrElse
-            pt = PlatformID.Xbox
+        Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
 #End If
     End Function
 

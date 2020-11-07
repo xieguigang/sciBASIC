@@ -231,16 +231,19 @@ Namespace ApplicationServices
         ''' (假若命令行之中的文件名参数之中含有空格的话，则可能会造成错误，需要添加一个双引号来消除歧义)
         ''' </summary>
         ''' <param name="path"></param>
-        ''' <returns></returns>
-        '''
+        ''' <returns>
+        ''' A unix system compatible file path
+        ''' </returns>
         <ExportAPI("CLI_PATH")>
         <Extension> Public Function CLIPath(path As String) As String
             If String.IsNullOrEmpty(path) Then
                 Return ""
             Else
-                path = path.Replace("\", "/")  '这个是R、Java、Perl等程序对路径的要求所导致的
-                Return path.CLIToken
+                ' 这个是R、Java、Perl等程序对路径的要求所导致的
+                path = path.Replace("\", "/")
             End If
+
+            Return path.CLIToken
         End Function
 
         ''' <summary>

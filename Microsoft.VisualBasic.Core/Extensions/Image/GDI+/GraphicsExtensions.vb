@@ -55,7 +55,6 @@ Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
@@ -84,7 +83,7 @@ Namespace Imaging
         ''' <param name="dpiResolution"></param>
         ''' <returns></returns>
         Public Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
-            Return If(RuntimeInformation.IsOSPlatform(OSPlatform.Windows), pointSize, pointSize * dpiResolution / 96)
+            Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
         End Function
 
         <Extension>
