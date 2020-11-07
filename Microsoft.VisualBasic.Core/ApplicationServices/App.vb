@@ -1333,7 +1333,8 @@ Public Module App
     Public Function Shell(app$, CLI$,
                           Optional CLR As Boolean = False,
                           Optional stdin$ = Nothing,
-                          Optional ioRedirect As Boolean = False) As IIORedirectAbstract
+                          Optional ioRedirect As Boolean = False,
+                          Optional debug As Boolean = False) As IIORedirectAbstract
 
         If Not IsMicrosoftPlatform Then
             If CLR Then
@@ -1349,7 +1350,7 @@ Public Module App
         Else
             If CLR Then
                 ' 由于是重新调用自己，所以这个重定向是没有多大问题的
-                Return New IORedirect(app, CLI, IOredirect:=ioRedirect)
+                Return New IORedirect(app, CLI, IOredirect:=ioRedirect, displayDebug:=debug)
             Else
                 Dim process As New IORedirectFile(app, CLI, stdin:=stdin)
                 Return process

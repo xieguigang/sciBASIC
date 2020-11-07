@@ -199,8 +199,11 @@ Namespace CommandLine
 
             pInfo.RedirectStandardInput = True
             pInfo.ErrorDialog = False
-            pInfo.WindowStyle = ProcessWindowStyle.Hidden
-            pInfo.CreateNoWindow = True
+
+            If Not displayDebug Then
+                pInfo.WindowStyle = ProcessWindowStyle.Hidden
+                pInfo.CreateNoWindow = True
+            End If
 
             If Not ENV Is Nothing Then
                 For Each para As KeyValuePair(Of String, String) In ENV
