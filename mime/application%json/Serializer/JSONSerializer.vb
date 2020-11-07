@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ffa185b48fc7a71841dd1af0453ce09, mime\application%json\Serializer\JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::b9faeb7c9edf9050ffa75af1c2571f39, mime\application%json\Serializer\JSONSerializer.vb"
 
     ' Author:
     ' 

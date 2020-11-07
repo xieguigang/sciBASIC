@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d06dd4959cc7fd100370e63101a122c2, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::e7e860d24dde996ecca0d9317368a9e8, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 

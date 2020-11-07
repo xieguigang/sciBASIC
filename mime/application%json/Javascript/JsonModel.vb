@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb52542363397242d84e616a3b2e291d, mime\application%json\Javascript\JsonModel.vb"
+﻿#Region "Microsoft.VisualBasic::9181e8afa491fce795988254b89aae9d, mime\application%json\Javascript\JsonModel.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class JsonModel
     ' 
-    ' 
+    '         Sub: DisposeObjects
     ' 
     ' 
     ' /********************************************************************************/

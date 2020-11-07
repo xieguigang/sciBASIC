@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c9888f7d209d64146146b1adbf51981, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\ProblemTable.vb"
+﻿#Region "Microsoft.VisualBasic::dca0d8eb053aea50944ddbb57bb9b978, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\ProblemTable.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '     Class ProblemTable
     ' 
-    '         Properties: DimensionNames, vectors
+    '         Properties: dimensionNames, vectors
     ' 
     '         Function: Append, Clone, GetProblem, GetTopicLabels, GetTopics
     ' 

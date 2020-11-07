@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d401960cf460e3a8da6da251bb8a96a, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::5c04e1b48b50beabd7c6063ea58e3c0b, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Enums.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,14 @@
     ' 
     ' Enum Channels
     ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum ChannelPositions
+    ' 
+    '     Left, None, Right
     ' 
     '  
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6178e4969cf54bba78fcbd6d7ed5eafa, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb"
+﻿#Region "Microsoft.VisualBasic::84ea77c3d8cf4d69b57b2233f4cdaf8f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\IConsole.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
-    '     Interface I_ConsoleDeviceHandle
+    '     Interface IReadDevice
     ' 
-    '         Function: Read, ReadLine
+    '         Function: Read, ReadKey, ReadLine
     ' 
-    '         Sub: (+2 Overloads) WriteLine
+    '     Interface IWriteDevice
+    ' 
+    '         Sub: Clear, Write, (+3 Overloads) WriteLine
+    ' 
+    '     Interface InteractiveDevice
+    ' 
+    ' 
+    ' 
+    '     Interface IConsole
+    ' 
+    '         Properties: BackgroundColor, ForegroundColor, WindowWidth
     ' 
     ' 
     ' /********************************************************************************/

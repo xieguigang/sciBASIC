@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c77fa475de838810b80c4535dcd001e, Data_science\MachineLearning\MachineLearning\SVM\Node.vb"
+﻿#Region "Microsoft.VisualBasic::994c6216f326e715dcc8cc270c61120a, Data_science\MachineLearning\MachineLearning\SVM\Node.vb"
 
     ' Author:
     ' 

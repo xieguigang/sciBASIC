@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bb8b3315b46ca29365da78baf34c58e, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\SvmModelJSON.vb"
+﻿#Region "Microsoft.VisualBasic::541b819a4093237abc5fc66c675c0040, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\SvmModelJSON.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,20 @@
 
     ' Summaries:
 
+    '     Class supportNodeVector
+    ' 
+    '         Properties: index, value
+    ' 
+    '         Function: CreateNodes, CreateVector
+    ' 
+    '     Class Model
+    ' 
+    '         Properties: classLabels, dimensionNames, numberOfClasses, numberOfSVPerClass, pairwiseProbabilityA
+    '                     pairwiseProbabilityB, parameter, rho, supportVectorCoefficients, supportVectorCount
+    '                     supportVectorIndices, supportVectors, trainingSize
+    ' 
+    '         Function: CreateJSONModel, CreateModel
+    ' 
     '     Class SvmModelJSON
     ' 
     '         Properties: factors, gaussianTransform, model, rangeTransform

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cd9987b81191a20509b586b1eb63974, Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
+﻿#Region "Microsoft.VisualBasic::abdb422db13a685d8583cf302c1be332, Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
 
     ' Author:
     ' 

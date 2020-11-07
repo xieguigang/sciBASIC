@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::543d83f97ddfdac8886ead022637d65c, Microsoft.VisualBasic.Core\My\Framework\DoConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::85ca6ea2cdd22152193014a0a31005d9, Microsoft.VisualBasic.Core\My\Framework\DoConfiguration.vb"
 
     ' Author:
     ' 

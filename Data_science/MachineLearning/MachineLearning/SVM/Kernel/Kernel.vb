@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f44481b7be3cfe4c2dad1a6b98a824c, Data_science\MachineLearning\MachineLearning\SVM\Kernel\Kernel.vb"
+﻿#Region "Microsoft.VisualBasic::2b4a81e6ba7a1941a9f8044763d8e4a5, Data_science\MachineLearning\MachineLearning\SVM\Kernel\Kernel.vb"
 
     ' Author:
     ' 

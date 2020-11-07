@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fa82dcb2fef9136bc86345a8ee89ce5, Data_science\Mathematica\SignalProcessing\SignalProcessing\Cluster\SignalClustering.vb"
+﻿#Region "Microsoft.VisualBasic::fda392c98ae1f63a816862d319136503, Data_science\Mathematica\SignalProcessing\SignalProcessing\Cluster\SignalClustering.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@ Public Class SignalClustering
         Return Me
     End Function
 End Class
-

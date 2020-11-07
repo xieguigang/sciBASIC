@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1399ee78e830fc974bb16efe6d002051, Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\RangeTransform.vb"
+﻿#Region "Microsoft.VisualBasic::0ed7376f24e64e8d336722c70f3c1d75, Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\RangeTransform.vb"
 
     ' Author:
     ' 

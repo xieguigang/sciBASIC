@@ -1,4 +1,90 @@
-﻿''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+﻿#Region "Microsoft.VisualBasic::d2045c183b81643efdb5215608532f7e, mime\application%pdf\PdfFileWriter\417Encoder\Pdf417Encoder.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Enum EncodingControl
+    ' 
+    '     Auto, ByteOnly, TextAndByte
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum ErrorCorrectionLevel
+    ' 
+    '     AutoHigh, AutoLow, AutoMedium, AutoNormal, Level_0
+    '     Level_1, Level_2, Level_3, Level_4, Level_5
+    '     Level_6, Level_7, Level_8
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class Pdf417Encoder
+    ' 
+    ' 
+    '     Enum EncodingMode
+    ' 
+    '         [Byte], Numeric, Text
+    ' 
+    ' 
+    ' 
+    '     Enum TextEncodingMode
+    ' 
+    '         Lower, Mixed, Punct, ShiftPunct, ShiftUpper
+    '         Upper
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: BarColumns, DataColumns, DataRows, DefaultDataColumns, EncodingControl
+    '                 ErrorCorrection, GlobalLabelIDCharacterSet, GlobalLabelIDGeneralPurpose, GlobalLabelIDUserDefined, ImageHeight
+    '                 ImageWidth, NarrowBarWidth, QuietZone, RowHeight
+    ' 
+    '     Function: ConvertBarcodeMatrixToPixels, CountBytes, CountDigits, CountPunctuation, CountText
+    '               CreateBarcodeMatrix, SetDataColumns, SetDataRows, WidthToHeightRatio
+    ' 
+    '     Sub: CalculateErrorCorrection, CodewordToModules, DataEncoding, (+2 Overloads) Encode, EncodeByteSegment
+    '          EncodeNumericSegment, EncodeTextSegment, SetDataRowsAndColumns, SetErrorCorrectionLevel, SetImageWidthAndHeight
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '
 '	PDF417 Barcode Encoder
 '
@@ -1274,4 +1360,5 @@ _Select0_CasePdfFileWriter_Pdf417Encoder_TextEncodingMode_Upper:
         Return
     End Sub
 End Class
+
 

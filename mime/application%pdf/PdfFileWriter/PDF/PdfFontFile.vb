@@ -1,4 +1,65 @@
-﻿''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+﻿#Region "Microsoft.VisualBasic::c56aeeb789aa5eb48d4411851ca96ddd, mime\application%pdf\PdfFileWriter\PDF\PdfFontFile.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class PdfFontFile
+    ' 
+    ' 
+    '     Enum Tag
+    ' 
+    '         cmap, cvt, fpgm, glyf, head
+    '         hhea, hmtx, loca, maxp, prep
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: BuildEmbeddedFile, CreateFontFile, CreateGlyphDataList, ReadInt16BigEndian, ReadInt64BigEndian
+    '               ReadUInt16BigEndian, ReadUInt32BigEndian, SelectcmapSubTable, TableChecksum, TagBinToStr
+    ' 
+    '     Sub: AddCompositeGlyphs, AddGlyph, BuildCharMapTable, BuildFontProgramTables, BuildGlyphArray
+    '          BuildGlyphArray1, BuildHeadTable, BuildHheaTable, BuildhmtxTable, BuildLocaTable
+    '          BuildMaxpTable, CalculateGlyphChksum, GetcmapTable, GetCompositeGlyph, GetFontFileHeaderApi
+    '          GetheadTable, GethheaTable, GethmtxTable, GetlocaTable, GetmaxpTable
+    '          ReplaceGlyphCode, WriteInt16BigEndian, WriteInt64BigEndian, WriteUInt16BigEndian, WriteUInt32BigEndian
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -1441,4 +1502,5 @@ Friend Class PdfFontFile
         Return StrTag.ToString()
     End Function
 End Class
+
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2de08589f91aad2eab2ace6b6163774c, Data_science\MachineLearning\MachineLearning\SVM\Parameter\ParameterSelection.vb"
+﻿#Region "Microsoft.VisualBasic::e4c72b277708c782047ac955e18ac269, Data_science\MachineLearning\MachineLearning\SVM\Parameter\ParameterSelection.vb"
 
     ' Author:
     ' 

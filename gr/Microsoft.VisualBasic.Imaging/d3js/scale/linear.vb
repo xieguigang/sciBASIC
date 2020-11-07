@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90c053d5ee6a6c593bef2a41e7fe1b69, gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
+﻿#Region "Microsoft.VisualBasic::04037871fd5a4b5e53b137553932e582, gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class LinearScale
     ' 
-    '         Properties: valueDomain
+    '         Properties: domainSize, valueDomain, Zero
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+4 Overloads) domain, ToString

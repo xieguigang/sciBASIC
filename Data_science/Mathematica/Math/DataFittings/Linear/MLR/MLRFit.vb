@@ -1,48 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::39d4188be766f57e9840955d8183b2d0, Data_science\Mathematica\Math\DataFittings\Linear\MLR.vb"
+﻿#Region "Microsoft.VisualBasic::a9e9ab2d412b227481c47d5227c1c59a, Data_science\Mathematica\Math\DataFittings\Linear\MLR\MLRFit.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class MLRFit
-' 
-'     Properties: beta, Fx, N, p, R2
-' 
-'     Function: ConfidenceInterval, CurveScale, left, (+2 Overloads) LinearFitting, right
-'     Structure [Error]
-' 
-'         Function: RunTest, ToString
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Class MLRFit
+    ' 
+    '         Properties: beta, ErrorTest, Fx, N, p
+    '                     Polynomial, R2, SSE, SST
+    ' 
+    '         Function: GetY, LinearFitting
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -121,4 +118,3 @@ Namespace Multivariate
         End Function
     End Class
 End Namespace
-

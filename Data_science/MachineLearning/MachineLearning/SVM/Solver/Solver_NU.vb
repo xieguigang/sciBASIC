@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe00979ab7a42ae35dcfb89f0b7fe35d, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver_NU.vb"
+﻿#Region "Microsoft.VisualBasic::e97fc618aea52ea9f926f3682729d774, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver_NU.vb"
 
     ' Author:
     ' 

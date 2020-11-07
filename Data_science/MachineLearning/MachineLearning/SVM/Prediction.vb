@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106d3bae4427cb3952d3f5f2b0e1b8d8, Data_science\MachineLearning\MachineLearning\SVM\Prediction.vb"
+﻿#Region "Microsoft.VisualBasic::098fff8df089a51ebd090c795c6096ab, Data_science\MachineLearning\MachineLearning\SVM\Prediction.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,6 @@
     '     Module Prediction
     ' 
     '         Function: (+2 Overloads) Predict, PredictLabels, PredictLabelsProbability, PredictProbability
-    ' 
-    '         Sub: exit_with_help
     ' 
     ' 
     ' /********************************************************************************/

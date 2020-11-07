@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41f8224493093853b1bb15377e0dd567, Microsoft.VisualBasic.Core\Extensions\Image\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::820c6d667ce9c66ad6a0719c643951ee, Microsoft.VisualBasic.Core\Extensions\Image\ImageFormat.vb"
 
     ' Author:
     ' 
@@ -31,16 +31,6 @@
 
     ' Summaries:
 
-    '     Enum ImageFormats
-    ' 
-    '         Base64, Bmp, Emf, Exif, Gif
-    '         Icon, Jpeg, MemoryBmp, Png, Tiff
-    '         Wmf
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     '     Module ImageFormatExtensions
     ' 
     '         Properties: Png

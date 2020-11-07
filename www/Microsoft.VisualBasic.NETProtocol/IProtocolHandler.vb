@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::516a4e8c2460894de24fb8907d7a3a3c, www\Microsoft.VisualBasic.NETProtocol\IProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::7075546f0babe2fabc26932b629beb88, www\Microsoft.VisualBasic.NETProtocol\IProtocolHandler.vb"
 
     ' Author:
     ' 

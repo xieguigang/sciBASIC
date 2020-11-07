@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4777a80c3367aca57dac8002c0bcc9d1, Data_science\Mathematica\Math\DataFittings\Linear\LeastSquares.vb"
+﻿#Region "Microsoft.VisualBasic::2fdbc8c7512a818299cded8f96ebd5a3, Data_science\Mathematica\Math\DataFittings\Linear\LeastSquares.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c2d35ad7b9d2d4336c64a975db1aa7a, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ProblemText.vb"
+﻿#Region "Microsoft.VisualBasic::ce34067740e8a46aa4be2900fe2f7d03, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ProblemText.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d94f6aeb0a175f42efc33547e37d1c3c, www\Microsoft.VisualBasic.NETProtocol\Pipeline\API.vb"
+﻿#Region "Microsoft.VisualBasic::297d5eb7cdac3a5525ad20a7976b5344, www\Microsoft.VisualBasic.NETProtocol\Pipeline\API.vb"
 
     ' Author:
     ' 

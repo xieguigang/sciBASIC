@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8639b08d08e7cc13f0c2bb565242a377, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
+﻿#Region "Microsoft.VisualBasic::62f6e05605b9bc68c22f74c04e1984d6, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Properties: ErrorTest, FactorSize, Intercept, IsPolyFit, Polynomial
     '                 R_square, RMSE, Slope, SSE, SSR
     ' 
-    '     Function: ToString
+    '     Function: IFitted_GetY, ToString
     ' 
     ' /********************************************************************************/
 

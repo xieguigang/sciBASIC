@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::558c3dd2473fdb9482d5aa392b6cd792, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
+﻿#Region "Microsoft.VisualBasic::aaddfcffa892d4cc3545f5e58f86ef6a, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,9 @@
 
     ' Interface IFitted
     ' 
-    '     Properties: ErrorTest, GetY, Polynomial, R2
+    '     Properties: ErrorTest, Polynomial, R2
+    ' 
+    '     Function: GetY
     ' 
     ' /********************************************************************************/
 

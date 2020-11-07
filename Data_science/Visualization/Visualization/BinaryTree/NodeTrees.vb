@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e051c6ee8f096e33dbe761ec943581e, Data_science\Visualization\Visualization\BinaryTree\NodeTrees.vb"
+﻿#Region "Microsoft.VisualBasic::ae888446c779a64c3b1ec764b04d88a5, Data_science\Visualization\Visualization\BinaryTree\NodeTrees.vb"
 
     ' Author:
     ' 

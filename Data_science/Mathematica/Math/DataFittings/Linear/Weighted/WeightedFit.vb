@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac0f2e7cf158c383cee530b8b6ad546b, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedFit.vb"
+﻿#Region "Microsoft.VisualBasic::1ecbe1c4e61e9b408438081afc323b53, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedFit.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Properties: CoefficientsStandardError, CorrelationCoefficient, ErrorTest, FisherF, Polynomial
     '                 Residuals, StandardDeviation, VarianceMatrix
     ' 
-    '     Function: ToString
+    '     Function: IFitted_GetY, ToString
     ' 
     ' /********************************************************************************/
 

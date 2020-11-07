@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64437cdbb8b7467a26eb139eb14719c3, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::bcb9fe5f6231dbbfddd914104c5700ec, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,10 @@
 
     ' Summaries:
 
+    '     Class Scaler
+    ' 
+    ' 
+    ' 
     '     Class IScale
     ' 
     '         Constructor: (+1 Overloads) Sub New

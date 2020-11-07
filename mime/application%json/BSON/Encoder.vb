@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::798ad6d7912dd43576fb75dd311afd80, mime\application%json\BSON\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::38c422e5764f1118b46604d9d29b23cd, mime\application%json\BSON\Encoder.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a192acbe9cbd7cb8daca930d506cbc41, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::6660c748be09594936710401bc64f5cf, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Class Parameter
     ' 
-    '         Properties: C, CacheSize, Coefficient0, Degree, EPS
-    '                     Gamma, KernelType, Nu, P, Probability
-    '                     Shrinking, SvmType, Weights
+    '         Properties: c, cacheSize, coefficient0, degree, EPS
+    '                     gamma, kernelType, nu, P, probability
+    '                     shrinking, svmType, weights
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Clone, Equals, GetHashCode, ToString

@@ -1,4 +1,54 @@
-﻿Imports System.Collections.Concurrent
+﻿#Region "Microsoft.VisualBasic::705eda7755f3906081f010dd0da5e079, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class UnmanagedDll
+    ' 
+    '         Properties: FileName
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: checkedGetSymbolHandle, createLdLibPathMsg, DangerousGetHandle, GetAnsiString, GetByte
+    '                   (+3 Overloads) GetFunction, GetFunctionAddress, GetInt32, GetInt64, GetIntPtr
+    ' 
+    '         Sub: (+2 Overloads) Dispose, ReportLoadLibError, ThrowFailedLibraryLoad, WriteByte, WriteInt32
+    '              WriteInt64, WriteIntPtr
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.Concurrent
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -307,3 +357,4 @@ Namespace ApplicationServices.DynamicInterop
         End Function
     End Class
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74c58adc6e9b7e24ef55640f24700803, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::879b185d4c38c5f09b9a9a0dbff03aef, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::635520bbec757c6eaf63ff676e28594e, mime\application%json\BSON\BSON.vb"
+﻿#Region "Microsoft.VisualBasic::7efca70d80e0a6d153fb57313978ac4f, mime\application%json\BSON\BSON.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module BSONFormat
     ' 
-    '         Function: GetBuffer, Load
+    '         Function: GetBuffer, (+2 Overloads) Load
     ' 
     '         Sub: WriteBuffer
     ' 

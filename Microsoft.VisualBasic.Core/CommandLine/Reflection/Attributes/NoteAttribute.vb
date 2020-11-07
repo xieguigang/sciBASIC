@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c99645dbbe3d3bf19078771fb9f1c88, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Attribute.vb"
+﻿#Region "Microsoft.VisualBasic::bf23dd5abcd4c079b5dc29f66a019927, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\NoteAttribute.vb"
 
     ' Author:
     ' 
@@ -31,20 +31,6 @@
 
     ' Summaries:
 
-    '     Class UsageAttribute
-    ' 
-    '         Properties: UsageInfo
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Class ExampleAttribute
-    ' 
-    '         Properties: ExampleInfo
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
     '     Class NoteAttribute
     ' 
     '         Properties: noteText

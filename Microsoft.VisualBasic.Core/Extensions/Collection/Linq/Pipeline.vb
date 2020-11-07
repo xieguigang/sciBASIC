@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f1ac162ed29442e523abe92f47d582e, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::5cbadd7b88a66bbf48adbb098c5e4da6, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Pipeline.vb"
 
     ' Author:
     ' 

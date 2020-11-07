@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aebc06780bf72d53b80b82a127ebce84, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::e667132a5d68449ea2f3f020836559b5, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Methods.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace ComponentModel.Normalizer
 

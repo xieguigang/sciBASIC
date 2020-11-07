@@ -1,4 +1,55 @@
-﻿''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+﻿#Region "Microsoft.VisualBasic::08c03b8f6f902be6809fd91691f71794, mime\application%pdf\PdfFileWriter\PDF\PdfAxialShading.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum MappingMode
+    ' 
+    '         Absolute, Relative
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class PdfAxialShading
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Sub: AntiAlias, ExtendShading, SetAxisDirection, SetBoundingBox, WriteObjectToPdfFile
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -210,4 +261,5 @@ Imports SysMedia = System.Windows.Media
             Return
         End Sub
     End Class
+
 

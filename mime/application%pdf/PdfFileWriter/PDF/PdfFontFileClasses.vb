@@ -1,4 +1,81 @@
-﻿''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+﻿#Region "Microsoft.VisualBasic::665ec75519c4c33314081c071eb3f70a, mime\application%pdf\PdfFileWriter\PDF\PdfFontFileClasses.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class FontFileHeader
+    ' 
+    '         Properties: EntrySelector, RangeShift, SearchRange
+    ' 
+    '     Class TableRecord
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class cmapSubTbl
+    ' 
+    '         Properties: EntrySelector, RangeShift, SearchRange, SegCountX2
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: CompareTo
+    ' 
+    '     Class cmapSeg
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: CompareTo
+    ' 
+    '     Class headTable
+    ' 
+    ' 
+    ' 
+    '     Class hheaTable
+    ' 
+    ' 
+    ' 
+    '     Class maxpTable
+    ' 
+    ' 
+    ' 
+    '     Enum CompFlag
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -321,4 +398,5 @@ Imports System
         ScaledComponentOffset = &H800       ' bit11 Composite designed to have the component offset scaled (designed for Apple rasterizer).
         UnscaledComponentOffset = &H1000    ' bit12 Composite designed not to have the component offset scaled (designed for the Microsoft TrueType rasterizer).
     End Enum
+
 

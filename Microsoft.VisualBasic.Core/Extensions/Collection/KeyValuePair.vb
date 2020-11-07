@@ -1,51 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::781868a789d500d923c822e1b3b8d625, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::9699d21e82d3ed1acc82b5192aa94452, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module KeyValuePairExtensions
-' 
-'     Function: (+2 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
-'               ComputeIfAbsent, (+3 Overloads) ContainsKey, (+2 Overloads) DescendingMap, DictionaryData, (+2 Overloads) EnumerateTuples
-'               EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey
-'               HaveData, IterateNameCollections, IterateNameValues, IteratesAll, Join
-'               KeyItem, (+3 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
-'               Popout, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
-'               (+2 Overloads) Subset, tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower
-'               ToUpper, Tsv, Tuple, TupleTable, (+2 Overloads) Values
-'               XMLModel
-' 
-'     Sub: SortByKey, SortByValue
-' 
-' /********************************************************************************/
+    '     Module KeyValuePairExtensions
+    ' 
+    '         Function: (+2 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
+    '                   ComputeIfAbsent, (+3 Overloads) ContainsKey, (+2 Overloads) DescendingMap, DictionaryData, (+2 Overloads) EnumerateTuples
+    '                   EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey
+    '                   HaveData, IterateNameCollections, IterateNameValues, IteratesAll, Join
+    '                   KeyItem, (+3 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
+    '                   Popout, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
+    '                   (+2 Overloads) Subset, tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower
+    '                   ToUpper, Tsv, Tuple, TupleTable, (+2 Overloads) Values
+    '                   XMLModel
+    ' 
+    '         Sub: SortByKey, SortByValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

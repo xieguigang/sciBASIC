@@ -1,4 +1,64 @@
-﻿''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+﻿#Region "Microsoft.VisualBasic::b0e8bad2c4e77db4e8fd2c024a4c1b10, mime\application%pdf\PdfFileWriter\PDF\PdfDictionary.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Enum ValueType
+    ' 
+    '     [String], Dictionary, Other
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class PdfDictionary
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: Find, GetValue
+    ' 
+    '     Sub: (+2 Overloads) Add, AddBoolean, AddDictionary, AddFormat, AddIndirectReference
+    '          AddInteger, AddName, AddPdfString, (+2 Overloads) AddReal, (+2 Overloads) AddRectangle
+    '          Remove, (+2 Overloads) WriteToPdfFile
+    ' 
+    ' Class PdfKeyValue
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -323,4 +383,5 @@ Friend Class PdfKeyValue
         Return
     End Sub
 End Class
+
 

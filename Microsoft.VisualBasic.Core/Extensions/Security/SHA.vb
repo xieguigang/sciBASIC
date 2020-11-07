@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aea2365815cc6204399888e7186c27d2, Microsoft.VisualBasic.Core\Extensions\Security\SHA.vb"
+﻿#Region "Microsoft.VisualBasic::2545004bbf22df1b121354da8939da63, Microsoft.VisualBasic.Core\Extensions\Security\SHA.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: CertificateSigned, Passphrase
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Decrypt, DecryptString, Deserialization, Encrypt, EncryptData
     '                   (+2 Overloads) GetDynamicsCertification, Serialization, ToString
     ' 

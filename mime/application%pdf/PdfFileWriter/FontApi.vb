@@ -1,4 +1,108 @@
-﻿''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+﻿#Region "Microsoft.VisualBasic::fcea6cb6700e5adee909057e5fbef5c4, mime\application%pdf\PdfFileWriter\FontApi.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class CharInfo
+    ' 
+    '     Properties: ActiveChar, CharCode, DesignBBoxBottom, DesignBBoxLeft, DesignBBoxRight
+    '                 DesignBBoxTop, DesignWidth, GlyphIndex, Type0Font
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: CompareTo
+    ' 
+    ' Class SortByNewIndex
+    ' 
+    '     Function: Compare
+    ' 
+    ' Class FontBox
+    ' 
+    '     Properties: Bottom, Left, Right, Top
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class WinPanose
+    ' 
+    '     Properties: bArmStyle, bContrast, bFamilyType, bLetterform, bMidline
+    '                 bProportion, bSerifStyle, bStrokeVariation, bWeight, bXHeight
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class WinKerningPair
+    ' 
+    '     Properties: First, KernAmount, Second
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: CompareTo
+    ' 
+    ' Class WinTextMetric
+    ' 
+    '     Properties: tmAscent, tmAveCharWidth, tmBreakChar, tmCharSet, tmDefaultChar
+    '                 tmDescent, tmDigitizedAspectX, tmDigitizedAspectY, tmExternalLeading, tmFirstChar
+    '                 tmHeight, tmInternalLeading, tmItalic, tmLastChar, tmMaxCharWidth
+    '                 tmOverhang, tmPitchAndFamily, tmStruckOut, tmUnderlined, tmWeight
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class WinOutlineTextMetric
+    ' 
+    '     Properties: otmAscent, otmDescent, otmEMSquare, otmfsSelection, otmfsType
+    '                 otmItalicAngle, otmLineGap, otmMacAscent, otmMacDescent, otmMacLineGap
+    '                 otmPanoseNumber, otmpFaceName, otmpFamilyName, otmpFullName, otmpStyleName
+    '                 otmptSubscriptOffset, otmptSubscriptSize, otmptSuperscriptOffset, otmptSuperscriptSize, otmrcFontBox
+    '                 otmsCapEmHeight, otmsCharSlopeRise, otmsCharSlopeRun, otmSize, otmsStrikeoutPosition
+    '                 otmsStrikeoutSize, otmsUnderscorePosition, otmsUnderscoreSize, otmsXHeight, otmTextMetric
+    '                 otmusMinimumPPEM
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class FontApi
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: BuildUnitMarix, DeleteObject, FormatMessage, GetFontData, GetFontDataApi
+    '               GetGlyphIndices, GetGlyphIndicesApi, GetGlyphMetricsApi, GetGlyphMetricsApiByCode, GetGlyphMetricsApiByGlyphIndex
+    '               GetGlyphOutline, GetKerningPairs, GetKerningPairsApi, GetOutlineTextMetrics, GetOutlineTextMetricsApi
+    '               GetTextMetrics, GetTextMetricsApi, ReadByte, ReadChar, ReadInt16
+    '               ReadInt16Array, ReadInt32, ReadInt32Array, ReadString, ReadUInt16
+    '               ReadUInt32, ReadWinPoint, SelectObject
+    ' 
+    '     Sub: Align4, AllocateBuffer, Dispose, FreeBuffer, ThrowSystemErrorException
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -1894,4 +1998,5 @@ Public Class FontApi
         Return
     End Sub
 End Class
+
 

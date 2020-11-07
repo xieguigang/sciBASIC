@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75f778e755b91dab0b2fcf45cb398236, Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a7052003283ca54d5dd5fd15c508f219, Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,10 @@
 
     ' Summaries:
 
+    ' Interface IFitError
+    ' 
+    '     Properties: Y, Yfit
+    ' 
     ' Structure TestPoint
     ' 
     '     Properties: Err, X, Y, Yfit

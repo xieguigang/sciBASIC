@@ -1,4 +1,54 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::9f45e0e714c6d7e99f8ccf9a8b159b5f, Microsoft.VisualBasic.Core\Net\HTTP\HttpHeaderName.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum HttpHeaderName
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Module HttpHeaderNameExtensions
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ParseHeaderName
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 Imports System.ComponentModel
 Imports System.Net
 

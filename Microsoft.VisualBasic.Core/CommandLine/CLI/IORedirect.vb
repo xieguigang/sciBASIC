@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f50f16590232337d58b85a4dd6d637b1, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::5907f6ccbfd6a47524457b5fa4521eca, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 
@@ -44,12 +44,12 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetError, Read, ReadLine, Run, Shell
-    '                   (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
-    '                   WaitOutput
+    '         Function: GetError, Read, ReadKey, ReadLine, Run
+    '                   Shell, (+3 Overloads) Start, ToString, WaitError, waitForExit
+    '                   WaitForExit, WaitOutput
     ' 
-    '         Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
-    '              (+2 Overloads) WriteLine
+    '         Sub: Clear, (+2 Overloads) Dispose, errorHandler, Kill, outputHandler
+    '              (+2 Overloads) Write, (+3 Overloads) WriteLine
     ' 
     ' 
     ' 

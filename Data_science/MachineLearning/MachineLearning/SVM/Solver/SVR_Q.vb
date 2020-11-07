@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aaea4ea6b94362040933f733cbc11e8, Data_science\MachineLearning\MachineLearning\SVM\Solver\SVR_Q.vb"
+﻿#Region "Microsoft.VisualBasic::3b5c8ee2c95754e2bb35ba2a87305c84, Data_science\MachineLearning\MachineLearning\SVM\Solver\SVR_Q.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5019caa7e61f7a7f02da145b0fb46224, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::8b99895a0ac91782c3f4f712a48fbf4f, Data_science\Visualization\Plots\BarPlot\Data\BarDataGroup.vb"
 
     ' Author:
     ' 

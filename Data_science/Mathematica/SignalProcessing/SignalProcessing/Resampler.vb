@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e69c50fa36bf87b10d790d7efa0a564, Data_science\Mathematica\SignalProcessing\SignalProcessing\Resampler.vb"
+﻿#Region "Microsoft.VisualBasic::ad51cfe09b19532c6384f8433954cac6, Data_science\Mathematica\SignalProcessing\SignalProcessing\Resampler.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Properties: enumerateMeasures
     ' 
-    '     Function: CreateSampler, GetIntensity, getPosition
+    '     Function: (+2 Overloads) CreateSampler, GetIntensity, getPosition
     ' 
     ' /********************************************************************************/
 

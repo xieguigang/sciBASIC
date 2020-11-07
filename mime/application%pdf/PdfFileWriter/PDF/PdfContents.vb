@@ -1,4 +1,136 @@
-﻿''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+﻿#Region "Microsoft.VisualBasic::94329aa392c24a147ae92a4bff1c1989, mime\application%pdf\PdfFileWriter\PDF\PdfContents.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Enum DrawStyle
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum PaintOp
+    ' 
+    '     NoOperator
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum PdfLineCap
+    ' 
+    '     Butt, Round, Square
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum PdfLineJoin
+    ' 
+    '     Bevel, Miter, Round
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum TextRendering
+    ' 
+    '     Clip, Fill, FillClip, FillStroke, FillStrokeClip
+    '     Invisible, Stroke, StrokeClip
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum TextJustify
+    ' 
+    '     Center, Left, Right
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum TextBoxJustify
+    ' 
+    '     Center, FitToWidth, Left, Right
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum BezierPointOne
+    ' 
+    '     Ignore, LineTo, MoveTo
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum BlendMode
+    ' 
+    '     ColorBurn, ColorDodge, Darken, Difference, Exclusion
+    '     HardLight, Lighten, Multiply, Normal, Overlay
+    '     Screen, SoftLight
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class PdfContents
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: CreateFontResStr, (+3 Overloads) DrawBarcode, (+13 Overloads) DrawText, DrawTextInternal, (+2 Overloads) DrawTextWithAnnotation
+    '               (+2 Overloads) DrawTextWithKerning, (+2 Overloads) DrawWebLink, PaintOpStr, ReverseString, TextFitToWidth
+    ' 
+    '     Sub: AddToUsedResources, BeginTextMode, ClipText, CommitToPdfFile, DrawArc
+    '          DrawBarcodeText, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBezierNoP1, (+2 Overloads) DrawBezierNoP2, (+2 Overloads) DrawChart
+    '          DrawDoubleBezierPath, (+2 Overloads) DrawHeart, (+2 Overloads) DrawImage, DrawInwardCornerRectangle, (+7 Overloads) DrawLine
+    '          (+2 Overloads) DrawOval, (+2 Overloads) DrawPolygon, (+2 Overloads) DrawRectangle, (+2 Overloads) DrawRegularPolygon, (+2 Overloads) DrawRoundedRectangle
+    '          (+2 Overloads) DrawShading, (+4 Overloads) DrawStar, DrawWPFPath, (+4 Overloads) DrawXObject, EndTextMode
+    '          GrayLevelNonStroking, GrayLevelStroking, LayerEnd, LayerStart, (+2 Overloads) LineTo
+    '          (+2 Overloads) MoveTo, OutputOneByte, RestoreGraphicsState, SaveGraphicsState, Scale
+    '          (+2 Overloads) SetAlphaNonStroking, (+2 Overloads) SetAlphaStroking, SetBlendMode, SetCharacterSpacing, SetColorNonStroking
+    '          SetColorStroking, SetDashLine, SetLineCap, SetLineJoin, SetLineWidth
+    '          SetMiterLimit, (+2 Overloads) SetPaintOp, SetPatternNonStroking, SetPatternStroking, SetTextPosition
+    '          SetTextRenderingMode, SetTransMatrix, SetWordSpacing, (+2 Overloads) Translate, (+4 Overloads) TranslateScale
+    '          (+3 Overloads) TranslateScaleRotate, WriteObjectToPdfFile
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -3189,4 +3321,5 @@ Public Class PdfContents
         Return
     End Sub
 End Class
+
 

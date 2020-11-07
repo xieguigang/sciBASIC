@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::846ccde5e85f5766e79f087f462fa474, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::f756af2f095e7275ddc1683e29c2b763, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Read, ReadLine, SaveLog, SystemInfo, ToString
+    '         Function: SaveLog, SystemInfo, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose, (+2 Overloads) LogException, Save, (+4 Overloads) WriteLine
     ' 

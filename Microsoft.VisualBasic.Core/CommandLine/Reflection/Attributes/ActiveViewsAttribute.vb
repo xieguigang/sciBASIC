@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e61dd6f3ed4c08397368f16e7769142f, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ActiveViews.vb"
+﻿#Region "Microsoft.VisualBasic::739f2005aa1812d6eed17fed26549c46, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ActiveViewsAttribute.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class ActiveViews
+    '     Class ActiveViewsAttribute
     ' 
     '         Properties: type, Views
     ' 
