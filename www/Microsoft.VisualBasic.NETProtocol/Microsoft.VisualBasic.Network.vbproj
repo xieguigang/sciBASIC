@@ -369,7 +369,6 @@
     <Compile Include="Protocol\Streams\VarArray.vb" />
     <Compile Include="ServerModule.vb" />
     <Compile Include="StateObject.vb" />
-    <Compile Include="TcpRequest.vb" />
     <Compile Include="TcpServicesSocket.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -398,6 +397,7 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="TcpRequest\TcpRequest.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

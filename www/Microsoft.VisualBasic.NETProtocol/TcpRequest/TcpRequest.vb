@@ -178,7 +178,7 @@ Namespace Tcp
             Dim request As New RequestStream(0, 0, Message)
             Dim response = SendMessage(request, OperationTimeOut, OperationTimeoutHandler).GetUTF8String
             Return response
-        End Function 'Main
+        End Function
 
         ''' <summary>
         ''' Returns the server reply.(假若操作超时的话，则会返回<see cref="NetResponse.RFC_REQUEST_TIMEOUT"></see>，
@@ -233,7 +233,7 @@ Namespace Tcp
             byteData = SendMessage(byteData)
             Dim response As String = New RequestStream(byteData).GetUTF8String
             Return response
-        End Function 'Main
+        End Function
 
         ''' <summary>
         ''' Send a request message to the remote server.
@@ -265,7 +265,8 @@ Namespace Tcp
         End Sub
 
         Private Function getSocket(message As Byte()) As Socket
-            connectDone = New ManualResetEvent(False) ' ManualResetEvent instances signal completion.
+            ' ManualResetEvent instances signal completion.
+            connectDone = New ManualResetEvent(False)
             sendDone = New ManualResetEvent(False)
             receiveDone = New ManualResetEvent(False)
 
@@ -312,7 +313,6 @@ Namespace Tcp
         End Function
 
         Private Sub ConnectCallback(ar As IAsyncResult)
-
             ' Retrieve the socket from the state object.
             Dim client As Socket = DirectCast(ar.AsyncState, Socket)
 
@@ -324,7 +324,7 @@ Namespace Tcp
             Catch ex As Exception
                 Call exceptionHandler(ex)
             End Try
-        End Sub 'ConnectCallback
+        End Sub
 
         ''' <summary>
         ''' An exception of type '<see cref="SocketException"/>' occurred in System.dll but was not handled in user code
@@ -345,10 +345,11 @@ Namespace Tcp
             Catch ex As Exception
                 Call Me.exceptionHandler(ex)
             End Try
-        End Sub 'Receive
+        End Sub
 
         ''' <summary>
-        ''' Retrieve the state object and the client socket from the asynchronous state object.
+        ''' Retrieve the state object and the client socket from the 
+        ''' asynchronous state object.
         ''' </summary>
         ''' <param name="ar"></param>
         Private Sub ReceiveCallback(ar As IAsyncResult)
@@ -387,7 +388,6 @@ EX_EXIT:
         ''' <param name="byteData"></param>
         ''' <remarks></remarks>
         Private Sub __send(client As Socket, byteData As Byte())
-
             ' Begin sending the data to the remote device.
             Try
                 Call client.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), client)
@@ -397,7 +397,6 @@ EX_EXIT:
         End Sub
 
         Private Sub SendCallback(ar As IAsyncResult)
-
             ' Retrieve the socket from the state object.
             Dim client As Socket = DirectCast(ar.AsyncState, Socket)
             ' Complete sending the data to the remote device.
