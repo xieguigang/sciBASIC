@@ -117,6 +117,24 @@ Namespace CommandLine.Parsers
             Return tokens
         End Function
 
+        <Extension>
+        Private Iterator Function extract(tokens As IEnumerable(Of String)) As IEnumerable(Of String)
+            For Each token As String In tokens
+                If token.StartsWith("-") OrElse token.StartsWith("/") Then
+                    If token.IndexOf("="c) > -1 Then
+                        With token.GetTagValue("=", trim:=True)
+                            Yield .Name
+                            Yield .Value
+                        End With
+                    Else
+                        Yield token
+                    End If
+                Else
+                    Yield token
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' Try parsing the cli command string from the string value.(尝试着从文本行之中解析出命令行参数信息)
         ''' </summary>
@@ -137,7 +155,10 @@ Namespace CommandLine.Parsers
             If tokens.Length = 0 Then
                 Return New CommandLine
             Else
-                tokens = tokens.fixWindowsNetworkDirectory.ToArray
+                tokens = tokens _
+                    .fixWindowsNetworkDirectory _
+                    .extract _
+                    .ToArray
             End If
 
             Dim bools$() = tokens _
