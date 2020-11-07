@@ -240,10 +240,10 @@ Namespace Tcp
         ''' <summary>
         ''' Send a request message to the remote server.
         ''' </summary>
-        ''' <param name="Message"></param>
+        ''' <param name="message"></param>
         ''' <returns></returns>
-        Public Function SendMessage(Message As RequestStream) As RequestStream
-            Dim byteData As Byte() = SendMessage(Message.Serialize)
+        Public Function SendMessage(message As RequestStream) As RequestStream
+            Dim byteData As Byte() = SendMessage(message.Serialize)
 
             If RequestStream.IsAvaliableStream(byteData) Then
                 Return New RequestStream(byteData)

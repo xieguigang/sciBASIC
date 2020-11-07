@@ -93,11 +93,19 @@ Namespace Net
         ''' <summary>
         '''
         ''' </summary>
-        ''' <param name="IPAddress">IPAddress string using for create object using method <see cref="System.Net.IPAddress.Parse(String)"/></param>
+        ''' <param name="IPAddress">
+        ''' IPAddress string using for create object using 
+        ''' method <see cref="System.Net.IPAddress.Parse(String)"/>
+        ''' </param>
         ''' <param name="Port"><see cref="System.Net.IPEndPoint.Port"/></param>
         Sub New(IPAddress As String, Port As Integer)
+            If IPAddress.TextEquals("localhost") Then
+                Me.ipAddress = "127.0.0.1"
+            Else
+                Me.ipAddress = IPAddress
+            End If
+
             Me.port = Port
-            Me.ipAddress = IPAddress
         End Sub
 
         ''' <summary>
