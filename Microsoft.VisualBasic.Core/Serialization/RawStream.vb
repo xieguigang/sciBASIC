@@ -122,6 +122,13 @@ Namespace Serialization
         Public Const SingleFloat As Integer = 4
         Public Const DecimalInt As Integer = 12
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetData(raw As Byte(), code As TypeCode, Optional encoding As Encodings = Encodings.UTF8) As Array
+            Using ms As New MemoryStream(raw)
+                Return GetData(ms, code, encoding)
+            End Using
+        End Function
+
         Public Shared Function GetData(raw As Stream, code As TypeCode, Optional encoding As Encodings = Encodings.UTF8) As Array
             Dim type As Type = code.CreatePrimitiveType
             Dim bytes As Byte() = New Byte(raw.Length - 1) {}

@@ -7,6 +7,15 @@ Namespace ApplicationServices.Debugging.Diagnostics
 
         Public Property StackTrace As StackFrame()
 
+        Sub New()
+        End Sub
+
+        Sub New(raw As Byte())
+            Using buffer As New MemoryStream(raw)
+                StackTrace = DecodeFrames(buffer)
+            End Using
+        End Sub
+
         Private Shared Function EachFrame(frame As StackFrame) As Byte()
             Dim strings As String() = {frame.File, frame.Line, frame.Method.Module, frame.Method.Namespace, frame.Method.Method}
             Dim bytes As Byte() = RawStream.GetBytes(strings)
@@ -31,7 +40,7 @@ Namespace ApplicationServices.Debugging.Diagnostics
             End Using
         End Function
 
-        Public Shared Function DecodeFrames(buffer As Stream) As TraceBuffer
+        Public Shared Function DecodeFrames(buffer As Stream) As StackFrame()
             Dim sizeof As Integer
             Dim bytes As Byte()
             Dim int_size As Byte() = New Byte(3) {}
@@ -51,7 +60,7 @@ Namespace ApplicationServices.Debugging.Diagnostics
                 frames(i) = Decode(bytes)
             Next
 
-            Return New TraceBuffer With {.StackTrace = frames}
+            Return frames
         End Function
 
         Public Overrides Function Serialize() As Byte()
