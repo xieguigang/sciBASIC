@@ -1350,7 +1350,7 @@ Public Module App
         Else
             If CLR Then
                 ' 由于是重新调用自己，所以这个重定向是没有多大问题的
-                Return New IORedirect(app, CLI, IOredirect:=ioRedirect, displayDebug:=debug)
+                Return New IORedirect(app, CLI, IOredirect:=ioRedirect, hide:=Not debug)
             Else
                 Dim process As New IORedirectFile(app, CLI, stdin:=stdin)
                 Return process
