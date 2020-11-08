@@ -282,7 +282,7 @@ Namespace Tcp
             ' Wait for connect.
             Call connectDone.WaitOne()
             ' Send test data to the remote device.
-            Call __send(client, message)
+            Call doSend(client, message)
             Call sendDone.WaitOne()
 
             Return client
@@ -389,7 +389,7 @@ EX_EXIT:
         ''' <param name="client"></param>
         ''' <param name="byteData"></param>
         ''' <remarks></remarks>
-        Private Sub __send(client As Socket, byteData As Byte())
+        Private Sub doSend(client As Socket, byteData As Byte())
             ' Begin sending the data to the remote device.
             Try
                 Call client.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), client)
