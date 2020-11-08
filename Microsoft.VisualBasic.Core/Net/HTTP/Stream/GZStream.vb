@@ -63,6 +63,18 @@ Namespace Net.Http
             Return New Byte() {&H1F, &H8B}.JoinIterates(data)
         End Function
 
+        <Extension>
+        Public Function CheckGZipMagic(data As Stream) As Boolean
+            Dim magic As Byte() = New Byte(1) {}
+            Dim isGzipMagic As Boolean
+
+            data.Read(magic, Scan0, magic.Length)
+            data.Seek(-2, SeekOrigin.Current)
+            isGzipMagic = magic(0) = &H1F AndAlso magic(1) = &H8B
+
+            Return isGzipMagic
+        End Function
+
         ''' <summary>
         ''' Unzip the stream data in the <paramref name="base64"/> string.
         ''' </summary>
@@ -75,6 +87,24 @@ Namespace Net.Http
             Return Convert.FromBase64String(base64).UnGzipStream
         End Function
 
+
+        ''' <summary>
+        ''' 将输入的流数据进行gzip解压缩
+        ''' </summary>
+        ''' <remarks>
+        ''' 使用这个函数得到的结果需要注意进行<see cref="IDisposable.Dispose()"/>,否则很容易造成内存泄漏
+        ''' </remarks>
+        ''' <param name="stream"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function UnGzipStream(stream As Stream) As MemoryStream
+            Using gz As New GZipStream(stream, CompressionMode.Decompress)
+                Dim ms As New MemoryStream
+                Call gz.CopyTo(ms)
+                Return ms
+            End Using
+        End Function
+
         ''' <summary>
         ''' 将输入的流数据进行gzip解压缩
         ''' </summary>
@@ -85,10 +115,8 @@ Namespace Net.Http
         ''' <returns></returns>
         <Extension>
         Public Function UnGzipStream(stream As IEnumerable(Of Byte)) As MemoryStream
-            Using gz As New Compression.GZipStream(New MemoryStream(stream.ToArray), CompressionMode.Decompress)
-                Dim ms As New MemoryStream
-                Call gz.CopyTo(ms)
-                Return ms
+            Using buffer As New MemoryStream(stream.ToArray)
+                Return buffer.UnGzipStream
             End Using
         End Function
 
