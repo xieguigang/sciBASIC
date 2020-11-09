@@ -58,7 +58,7 @@ Namespace Tcp
         ''' Size of receive buffer.
         ''' </summary>
         ''' <remarks></remarks>
-        Public Const BufferSize As Integer = 1024 * 4096 * 10
+        Public Const BufferSize As Integer = 1024
 
         ''' <summary>
         ''' Client  socket.
@@ -69,7 +69,7 @@ Namespace Tcp
         ''' Receive buffer.
         ''' </summary>
         ''' <remarks></remarks>
-        Public readBuffer(BufferSize) As Byte
+        Public readBuffer(BufferSize - 1) As Byte
         ''' <summary>
         ''' Received data.
         ''' </summary>
