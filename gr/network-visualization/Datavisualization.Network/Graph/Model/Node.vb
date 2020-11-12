@@ -133,6 +133,10 @@ Namespace Graph
             Return label.GetHashCode()
         End Function
 
+        ''' <summary>
+        ''' 枚举出所有的与当前节点直接相邻接的节点列表
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function EnumerateAdjacencies() As IEnumerable(Of Node)
             For Each edge As Edge In adjacencies.EnumerateAllEdges
                 If edge.U Is Me Then

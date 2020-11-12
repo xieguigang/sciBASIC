@@ -94,6 +94,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts
 
@@ -271,8 +272,9 @@ Namespace Layouts
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Random() As AbstractVector
-            Return New FDGVector2(10.0F * (RandomSingle() - 0.5F), 10.0F * (RandomSingle() - 0.5F))
+        <DebuggerStepThrough>
+        Public Shared Function Random(Optional width% = 1440, Optional height% = 900) As AbstractVector
+            Return New FDGVector2(width * (randf.RandomSingle() - 0.5F), height * (randf.RandomSingle() - 0.5F))
         End Function
 
         Public Overloads Shared Operator +(a As FDGVector2, b As FDGVector2) As FDGVector2

@@ -135,7 +135,7 @@ Namespace Graph
             Call Me.New({}, {})
         End Sub
 
-        Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
+        Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge), Optional ignoresBrokenLinks As Boolean = False)
             Call MyBase.New({}, {})
 
             _eventListeners = New List(Of IGraphEventListener)
@@ -146,7 +146,11 @@ Namespace Graph
             Next
 
             For Each edge As Edge In edges
-                Call AddEdge(edge)
+                If ignoresBrokenLinks AndAlso edge.U Is Nothing OrElse edge.V Is Nothing Then
+                    Call $"[{edge}] link is broken!".Warning
+                Else
+                    Call AddEdge(edge)
+                End If
             Next
 
             For Each node As Node In vertex
@@ -414,6 +418,12 @@ Namespace Graph
         ''' <summary>
         ''' 应该使用这个方法来安全的删除节点
         ''' </summary>
+        ''' <remarks>
+        ''' 这个函数会移除:
+        ''' 
+        ''' 1. 目标节点从内部索引中删除
+        ''' 2. 删除与之相关的边连接
+        ''' </remarks>
         ''' <param name="node"></param>
         Public Sub RemoveNode(node As Node)
             Call _index.Delete(node)
@@ -538,6 +548,10 @@ Namespace Graph
         ''' 因为克隆之后的操作可能会涉及对边或者节点对象的修改操作
         ''' </remarks>
         Private Function Clone() As Object Implements ICloneable.Clone
+            Return Clone(vertex)
+        End Function
+
+        Private Function Clone(vertex As IEnumerable(Of Node)) As Object
             Dim g As New NetworkGraph
 
             For Each v In vertex
@@ -554,6 +568,10 @@ Namespace Graph
             Next
 
             Return g
+        End Function
+
+        Public Function GetConnectedGraph() As NetworkGraph
+            Return Clone(connectedNodes)
         End Function
 
         ''' <summary>

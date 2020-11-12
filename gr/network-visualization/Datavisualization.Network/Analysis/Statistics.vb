@@ -98,6 +98,11 @@ Namespace Analysis
             Return data
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns>``[<see cref="Node.label"/> => degree]``</returns>
         <Extension>
         Public Function ConnectedDegrees(g As NetworkGraph) As Dictionary(Of String, Integer)
             Return g.graphEdges _
