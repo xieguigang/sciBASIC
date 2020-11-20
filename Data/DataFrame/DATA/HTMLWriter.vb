@@ -54,7 +54,9 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace DATA
 
-    <Package("Csv.HTML.Writer")>
+    ''' <summary>
+    ''' file generator for mshtml
+    ''' </summary>
     Public Module HTMLWriter
 
         ''' <summary>
