@@ -168,8 +168,10 @@ Namespace CommandLine
                 End Try
             End If
 
+            Dim app_argv As String = argv.TrimNewLine(" ")
+
             Bin = file
-            argv = $"{argv.TrimNewLine(" ")} > {_TempRedirect}"
+            argv = $"{app_argv} > {_TempRedirect}"
             CLIArguments = argv
 
             ' 系统可能不会自动创建文件夹，则需要在这里使用这个方法来手工创建，
@@ -186,10 +188,12 @@ Namespace CommandLine
 
             If debug Then
                 If isShellCommand Then
-                    Call $"""{file}"" {argv}".__DEBUG_ECHO
+                    Call $"""{file}"" {app_argv}".__DEBUG_ECHO
                 Else
-                    Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+                    Call $"""{file.ToFileURL}"" {app_argv}".__DEBUG_ECHO
                 End If
+
+                Call $"stdout_temp: {_TempRedirect}".__DEBUG_ECHO
             End If
         End Sub
 

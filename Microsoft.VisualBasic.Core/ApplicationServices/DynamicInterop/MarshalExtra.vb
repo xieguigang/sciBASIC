@@ -112,7 +112,7 @@ Namespace ApplicationServices.DynamicInterop
         End Sub
 
         Public Shared Function ArrayOfStructureToPtr(Of T As Structure)(ByVal managedObjects As T()) As IntPtr
-            Dim structSize As Integer = Marshal.SizeOf(Of T)()
+            Dim structSize As Integer = Marshal.SizeOf(GetType(T))
             Dim result = Marshal.AllocHGlobal(managedObjects.Length * structSize)
 
             For i = 0 To managedObjects.Length - 1

@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::d9ba2514d25c6d20d89e7697a06f554f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Section.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Section
-    ' 
-    '         Properties: Comment, Items, Name
-    ' 
-    '         Function: CreateDocFragment, GetValue, Have, ToString
-    ' 
-    '         Sub: appendComments, Delete, SetComments, SetValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Section
+' 
+'         Properties: Comment, Items, Name
+' 
+'         Function: CreateDocFragment, GetValue, Have, ToString
+' 
+'         Sub: appendComments, Delete, SetComments, SetValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports HashValue = Microsoft.VisualBasic.Text.Xml.Models.Property
 
@@ -91,19 +92,19 @@ Namespace ComponentModel.Settings.Inf
             Return configTable.ContainsKey(key.ToLower)
         End Function
 
-        Public Function GetValue(Key As String) As String
-            With Key.ToLower
-                If configTable.ContainsKey(.ByRef) Then
+        Public Function GetValue(key As String, Optional default$ = "") As String
+            With key.ToLower
+                If .DoCall(AddressOf configTable.ContainsKey) Then
                     Return configTable(.ByRef).value
                 Else
-                    Return ""
+                    Return [default]
                 End If
             End With
         End Function
 
         Public Sub Delete(name As String)
             With name.ToLower
-                If configTable.ContainsKey(.ByRef) Then
+                If .DoCall(AddressOf configTable.ContainsKey) Then
                     Call configTable.Remove(.ByRef)
                 End If
             End With
@@ -123,14 +124,14 @@ Namespace ComponentModel.Settings.Inf
 
             configTable(KeyFind) = New HashValue With {
                 .name = Name,
-                .Comment = comment,
+                .comment = comment,
                 .value = value
             }
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetComments(name$, comments$)
-            SetValue(name, GetValue(name), comments)
+            Call SetValue(name, GetValue(name), comments)
         End Sub
 
         ''' <summary>
@@ -159,7 +160,7 @@ Namespace ComponentModel.Settings.Inf
             End If
 
             For Each item As HashValue In configTable.Values
-                Call appendComments(sb, item.Comment, ";")
+                Call appendComments(sb, item.comment, ";")
                 Call sb.AppendLine($"{item.name}={item.value}")
             Next
 

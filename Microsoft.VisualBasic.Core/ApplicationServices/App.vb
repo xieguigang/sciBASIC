@@ -906,7 +906,11 @@ Public Module App
         Return False
 #End If
 #Else
-        Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+#If NET_48 Then
+            Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+#Else
+        Return True
+#End If
 #End If
     End Function
 

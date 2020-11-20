@@ -290,7 +290,9 @@ Namespace CommandLine
             End If
 
             Dim regxPattern$ = TokenDelimited & TokenSplitRegex.Replace("%"c, InnerDelimited)
-            Dim tokens = Regex.Split(CommandLine, regxPattern)
+            Dim tokens As String() = Regex.Split(CommandLine, regxPattern) _
+                .Where(Function(s) Not String.IsNullOrEmpty(s)) _
+                .ToArray
 
             For i As Integer = 0 To tokens.Length - 1
                 Dim s As String = tokens(i)
