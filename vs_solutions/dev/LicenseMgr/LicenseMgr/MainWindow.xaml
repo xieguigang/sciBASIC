@@ -1,0 +1,36 @@
+﻿<mui:ModernWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MainWindow"
+        Title="sciBASIC# code licenses signing tool" IsTitleVisible="True"       
+        ContentSource="/Pages/Home.xaml" Initialized="ModernWindow_Initialized" d:DesignHeight="567.871" Width="1185.746">
+
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="home">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/Pages/Home.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="file">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Apply To Source File" Source="/Pages/FileSymbolic.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="folder">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Apply To Project" Source="/Pages/FolderSymbolic.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="settings" GroupKey="settings">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="software" Source="/Pages/Settings.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+
+    <mui:ModernWindow.TitleLinks>
+        <mui:Link DisplayName="settings" Source="/Pages/Settings.xaml" />
+        <mui:Link DisplayName="GitHub" Source="https://github.com/xieguigang/sciBASIC#" />
+    </mui:ModernWindow.TitleLinks>
+</mui:ModernWindow>

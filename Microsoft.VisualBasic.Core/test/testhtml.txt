@@ -1,0 +1,16 @@
+<ul class="pagination">
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=6">&laquo;</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=3">3</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=4">4</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=5">5</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=6">6</a></li>
+    <li class="page-item active"><a class="page-link">7<span class="sr-only">(current)</span></a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=8">8</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=9">9</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=10">10</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=11">11</a></li>
+    <li class="page-item"><a class="page-link" href="/deg/public/index.php/query/bacteria/degac/DEG1005.html?lineage=bacteria&amp;field=degac&amp;term=DEG1005&amp;page=8">&raquo;</a></li>
+    <li class="page-item disabled"><a class='page-link'>Total <span class="text-primary">642</span> records of No.<span class="text-primary">7</span>/<span class="text-primary">11</span>Pages</a></li>
+</ul>

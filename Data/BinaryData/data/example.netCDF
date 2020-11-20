@@ -1,0 +1,13 @@
+netCDF example {
+dimensions:
+        EW = 87 ;
+        SN = 61 ;
+variables:
+        double EW(EW) ;
+                EW:units = "meters" ;
+        double SN(SN) ;
+                SN:units = "meters" ;
+        float Elevation(SN, EW) ;
+                Elevation:units = "meters" ;
+                Elevation:missing_value = -1.f ;
+}

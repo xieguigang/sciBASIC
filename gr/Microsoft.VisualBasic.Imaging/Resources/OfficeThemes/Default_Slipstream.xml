@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<a:clrScheme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="Default_Slipstream">
+  <a:dk1>
+    <a:sysClr val="windowText" lastClr="000000"/>
+  </a:dk1>
+  <a:lt1>
+    <a:sysClr val="window" lastClr="FFFFFF"/>
+  </a:lt1>
+  <a:dk2>
+    <a:srgbClr val="212745"/>
+  </a:dk2>
+  <a:lt2>
+    <a:srgbClr val="B4DCFA"/>
+  </a:lt2>
+  <a:accent1>
+    <a:srgbClr val="4E67C8"/>
+  </a:accent1>
+  <a:accent2>
+    <a:srgbClr val="5ECCF3"/>
+  </a:accent2>
+  <a:accent3>
+    <a:srgbClr val="A7EA52"/>
+  </a:accent3>
+  <a:accent4>
+    <a:srgbClr val="5DCEAF"/>
+  </a:accent4>
+  <a:accent5>
+    <a:srgbClr val="FF8021"/>
+  </a:accent5>
+  <a:accent6>
+    <a:srgbClr val="F14124"/>
+  </a:accent6>
+  <a:hlink>
+    <a:srgbClr val="56C7AA"/>
+  </a:hlink>
+  <a:folHlink>
+    <a:srgbClr val="59A8D1"/>
+  </a:folHlink>
+</a:clrScheme>

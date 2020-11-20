@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Microsoft.VisualBasic.Core/v15/Server/sqlite3
+*.suo
+bin/
+Debug/
+Release/
+obj/
+*.dtbcache
+/.vs/Microsoft.VisualBasic.NET47/v15/Server/sqlite3
+*.lock
+*.ide
+*.ide-shm
+*.ide-wal
+*.sqlite
+*.sqlite-journal
+.vs/Microsoft.VisualBasic.Core/DesignTimeBuild/.dtbcache.v2

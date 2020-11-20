@@ -1,0 +1,201 @@
+speed,meal,coffee,oxley,bim,weather,temp,day,mood,restaurant
+quick,other,yes,1-3,0,sunny,mild,W,grumpy,Buck-I-Mart
+quick,sandwich,no,1-3,4-8,rainy,hot,M,busy,Oxley's
+quick,soup,yes,>8,0,sunny,cold,R,grumpy,Buck-I-Mart
+leisurely,sandwich,no,4-8,>8,rainy,hot,M,busy,Oxley's
+quick,soup,no,>8,>8,sunny,cold,F,busy,Oxley's
+medium,other,no,1-3,0,snowy,cold,W,happy,Buck-I-Mart
+quick,other,no,>8,>8,rainy,hot,R,grumpy,Buck-I-Mart
+leisurely,other,no,1-3,>8,sunny,cold,T,happy,Oxley's
+quick,soup,no,4-8,4-8,snowy,cold,W,grumpy,Oxley's cafe
+quick,sandwich,yes,1-3,1-3,sunny,mild,T,happy,Buck-I-Mart
+leisurely,sandwich,no,4-8,1-3,sunny,cold,F,happy,Brennan's
+leisurely,soup,no,>8,0,rainy,hot,M,busy,Buck-I-Mart
+medium,soup,yes,>8,0,sunny,cold,T,grumpy,Buck-I-Mart
+quick,sandwich,yes,4-8,4-8,rainy,cold,T,happy,Oxley's cafe
+leisurely,other,yes,1-3,1-3,sunny,cold,F,grumpy,Brennan's
+medium,soup,no,0,1-3,rainy,cold,W,busy,Buck-I-Mart
+quick,soup,no,1-3,4-8,rainy,hot,F,happy,Oxley's
+medium,sandwich,yes,>8,>8,snowy,cold,R,grumpy,Brennan's
+leisurely,soup,no,4-8,>8,sunny,mild,M,happy,Buck-I-Mart
+leisurely,sandwich,no,>8,>8,snowy,cold,R,happy,Oxley's
+medium,other,no,1-3,1-3,snowy,cold,W,busy,Buck-I-Mart
+medium,sandwich,no,0,>8,sunny,hot,R,grumpy,Oxley's cafe
+quick,other,no,4-8,4-8,snowy,cold,W,grumpy,Oxley's cafe
+leisurely,sandwich,no,0,1-3,sunny,hot,F,grumpy,Brennan's
+quick,other,yes,0,4-8,sunny,cold,R,grumpy,Oxley's
+leisurely,other,yes,>8,>8,snowy,cold,R,happy,Brennan's
+quick,soup,yes,1-3,4-8,snowy,cold,F,busy,Oxley's
+leisurely,sandwich,yes,4-8,4-8,sunny,mild,W,busy,Brennan's
+quick,soup,no,0,0,snowy,cold,R,grumpy,Buck-I-Mart
+medium,sandwich,no,1-3,>8,sunny,cold,R,happy,Oxley's
+leisurely,soup,yes,4-8,4-8,snowy,cold,T,busy,Brennan's
+medium,other,yes,>8,>8,snowy,cold,W,grumpy,Brennan's
+quick,sandwich,yes,0,4-8,sunny,hot,T,busy,Oxley's
+leisurely,soup,yes,0,1-3,snowy,cold,R,happy,Brennan's
+quick,soup,no,4-8,>8,snowy,cold,T,grumpy,Brennan's
+quick,sandwich,yes,>8,>8,rainy,cold,T,grumpy,Brennan's
+leisurely,soup,yes,4-8,>8,rainy,hot,M,happy,Brennan's
+leisurely,sandwich,no,1-3,4-8,sunny,hot,R,happy,Oxley's
+medium,other,yes,0,1-3,rainy,cold,T,busy,Buck-I-Mart
+medium,sandwich,no,4-8,0,sunny,hot,F,happy,Oxley's
+quick,sandwich,no,0,0,sunny,cold,W,happy,Buck-I-Mart
+quick,sandwich,no,0,0,sunny,cold,T,busy,Buck-I-Mart
+quick,soup,no,4-8,1-3,sunny,cold,W,grumpy,Buck-I-Mart
+quick,sandwich,no,0,4-8,rainy,mild,M,busy,Oxley's
+leisurely,sandwich,no,>8,0,rainy,mild,T,grumpy,Oxley's
+leisurely,sandwich,yes,0,0,rainy,mild,R,happy,Brennan's
+medium,other,yes,>8,>8,rainy,hot,R,busy,Oxley's cafe
+quick,sandwich,no,1-3,>8,rainy,hot,R,grumpy,Oxley's cafe
+medium,sandwich,yes,4-8,4-8,rainy,hot,T,grumpy,Oxley's cafe
+medium,soup,yes,1-3,1-3,rainy,cold,M,happy,Buck-I-Mart
+medium,soup,yes,4-8,0,rainy,hot,F,happy,Buck-I-Mart
+quick,other,yes,>8,1-3,rainy,mild,F,grumpy,Buck-I-Mart
+quick,soup,no,4-8,4-8,rainy,hot,W,busy,Oxley's cafe
+medium,soup,yes,1-3,4-8,rainy,cold,F,grumpy,Buck-I-Mart
+medium,sandwich,yes,4-8,1-3,snowy,cold,W,grumpy,Buck-I-Mart
+quick,sandwich,yes,4-8,4-8,rainy,hot,W,busy,Oxley's cafe
+leisurely,soup,yes,0,4-8,snowy,cold,F,busy,Brennan's
+quick,soup,no,4-8,>8,snowy,cold,W,busy,Brennan's
+quick,other,yes,1-3,>8,snowy,cold,F,grumpy,Brennan's
+medium,other,no,0,>8,rainy,hot,R,grumpy,Oxley's cafe
+leisurely,soup,no,4-8,4-8,rainy,mild,M,happy,Buck-I-Mart
+quick,sandwich,no,>8,4-8,snowy,cold,R,happy,Oxley's cafe
+medium,sandwich,yes,>8,1-3,sunny,hot,F,happy,Oxley's
+quick,sandwich,no,4-8,>8,rainy,hot,W,grumpy,Oxley's
+leisurely,other,yes,1-3,>8,rainy,hot,M,grumpy,Brennan's
+quick,other,yes,1-3,1-3,snowy,cold,M,happy,Buck-I-Mart
+medium,soup,yes,>8,>8,rainy,cold,R,busy,Buck-I-Mart
+medium,soup,yes,1-3,1-3,snowy,cold,W,grumpy,Buck-I-Mart
+quick,sandwich,no,>8,4-8,rainy,cold,T,busy,Oxley's cafe
+medium,soup,yes,1-3,1-3,snowy,cold,W,happy,Buck-I-Mart
+quick,other,no,0,1-3,snowy,cold,M,happy,Buck-I-Mart
+leisurely,soup,no,4-8,>8,rainy,cold,F,busy,Buck-I-Mart
+quick,other,no,4-8,1-3,snowy,cold,W,happy,Buck-I-Mart
+medium,other,yes,4-8,0,sunny,cold,T,happy,Buck-I-Mart
+quick,sandwich,yes,0,1-3,snowy,cold,F,grumpy,Buck-I-Mart
+quick,other,yes,1-3,4-8,rainy,cold,M,happy,Oxley's
+quick,sandwich,no,>8,4-8,rainy,cold,W,happy,Oxley's cafe
+quick,soup,no,0,4-8,sunny,hot,W,busy,Oxley's
+quick,sandwich,yes,4-8,0,rainy,cold,F,happy,Buck-I-Mart
+leisurely,sandwich,no,4-8,1-3,sunny,cold,M,grumpy,Oxley's
+quick,sandwich,yes,4-8,0,rainy,cold,W,busy,Buck-I-Mart
+quick,soup,yes,0,4-8,rainy,hot,T,grumpy,Oxley's
+quick,soup,no,>8,>8,snowy,cold,W,grumpy,Oxley's
+leisurely,soup,yes,>8,1-3,snowy,cold,W,grumpy,Brennan's
+leisurely,other,no,0,4-8,sunny,cold,T,grumpy,Oxley's
+leisurely,sandwich,no,4-8,4-8,rainy,hot,M,happy,Oxley's
+leisurely,sandwich,no,>8,1-3,sunny,mild,W,grumpy,Oxley's
+quick,sandwich,no,>8,0,rainy,hot,M,busy,Buck-I-Mart
+leisurely,sandwich,no,0,>8,sunny,cold,R,happy,Oxley's
+leisurely,other,yes,1-3,4-8,snowy,cold,F,grumpy,Brennan's
+leisurely,sandwich,no,1-3,1-3,snowy,cold,R,happy,Oxley's
+medium,soup,yes,4-8,0,snowy,cold,T,busy,Buck-I-Mart
+medium,soup,no,0,0,snowy,cold,T,happy,Buck-I-Mart
+leisurely,soup,no,0,0,rainy,mild,R,grumpy,Buck-I-Mart
+medium,sandwich,no,4-8,4-8,rainy,cold,M,grumpy,Buck-I-Mart
+leisurely,other,yes,1-3,>8,rainy,cold,W,happy,Brennan's
+quick,soup,yes,1-3,1-3,rainy,hot,F,grumpy,Buck-I-Mart
+quick,other,yes,>8,4-8,snowy,cold,W,happy,Oxley's cafe
+leisurely,soup,no,1-3,4-8,sunny,cold,R,happy,Buck-I-Mart
+leisurely,other,yes,4-8,>8,snowy,cold,W,happy,Brennan's
+quick,soup,yes,>8,1-3,snowy,cold,M,grumpy,Buck-I-Mart
+quick,other,no,0,4-8,snowy,cold,W,grumpy,Oxley's
+leisurely,soup,yes,1-3,4-8,sunny,hot,T,busy,Brennan's
+medium,other,no,1-3,0,snowy,cold,R,busy,Buck-I-Mart
+quick,sandwich,no,0,1-3,snowy,cold,R,happy,Buck-I-Mart
+quick,sandwich,no,1-3,>8,snowy,cold,M,grumpy,Buck-I-Mart
+leisurely,soup,no,>8,1-3,rainy,mild,M,grumpy,Buck-I-Mart
+leisurely,soup,yes,0,1-3,snowy,cold,M,grumpy,Brennan's
+quick,other,no,0,0,snowy,cold,R,grumpy,Buck-I-Mart
+leisurely,other,no,1-3,1-3,snowy,cold,M,happy,Oxley's
+quick,soup,yes,1-3,>8,rainy,hot,F,grumpy,Oxley's
+medium,other,yes,4-8,>8,sunny,cold,F,happy,Brennan's
+leisurely,sandwich,no,0,0,rainy,cold,F,busy,Brennan's
+medium,sandwich,no,1-3,1-3,snowy,cold,M,busy,Buck-I-Mart
+quick,soup,yes,>8,4-8,snowy,cold,W,grumpy,Oxley's cafe
+leisurely,sandwich,yes,0,0,rainy,cold,T,grumpy,Brennan's
+medium,sandwich,yes,1-3,1-3,snowy,cold,M,grumpy,Buck-I-Mart
+leisurely,other,no,>8,1-3,rainy,hot,F,grumpy,Brennan's
+quick,sandwich,no,1-3,>8,snowy,cold,M,busy,Brennan's
+quick,sandwich,yes,>8,0,rainy,mild,M,happy,Buck-I-Mart
+medium,other,no,0,0,snowy,cold,R,grumpy,Buck-I-Mart
+medium,other,no,>8,4-8,rainy,mild,F,busy,Buck-I-Mart
+quick,other,yes,1-3,0,rainy,cold,T,busy,Buck-I-Mart
+medium,sandwich,no,0,>8,snowy,cold,R,grumpy,Oxley's
+quick,sandwich,no,0,1-3,sunny,cold,F,happy,Buck-I-Mart
+leisurely,sandwich,yes,4-8,0,rainy,cold,M,grumpy,Brennan's
+medium,sandwich,no,>8,>8,snowy,cold,M,happy,Brennan's
+leisurely,soup,yes,4-8,0,rainy,hot,W,happy,Brennan's
+leisurely,other,yes,>8,1-3,snowy,cold,T,grumpy,Brennan's
+quick,other,no,0,1-3,snowy,cold,F,happy,Buck-I-Mart
+medium,sandwich,no,4-8,>8,snowy,cold,M,grumpy,Brennan's
+medium,sandwich,yes,>8,4-8,rainy,cold,T,grumpy,Buck-I-Mart
+quick,other,no,4-8,>8,rainy,cold,M,happy,Buck-I-Mart
+leisurely,sandwich,yes,0,0,rainy,cold,F,happy,Brennan's
+quick,other,no,>8,1-3,rainy,hot,M,happy,Buck-I-Mart
+quick,other,no,4-8,>8,rainy,cold,T,happy,Buck-I-Mart
+quick,sandwich,yes,>8,0,snowy,cold,T,busy,Buck-I-Mart
+quick,other,yes,>8,1-3,snowy,cold,R,happy,Buck-I-Mart
+leisurely,soup,yes,>8,>8,sunny,hot,R,happy,Brennan's
+leisurely,sandwich,yes,0,>8,sunny,mild,R,happy,Brennan's
+leisurely,other,yes,>8,>8,sunny,cold,T,happy,Brennan's
+leisurely,soup,no,0,>8,rainy,hot,R,busy,Buck-I-Mart
+leisurely,other,no,4-8,1-3,sunny,mild,W,busy,Oxley's
+medium,sandwich,yes,0,4-8,rainy,hot,M,grumpy,Oxley's
+quick,soup,no,>8,1-3,sunny,cold,F,happy,Buck-I-Mart
+medium,soup,yes,0,0,sunny,hot,R,happy,Buck-I-Mart
+medium,other,yes,0,1-3,sunny,cold,R,grumpy,Buck-I-Mart
+quick,sandwich,yes,4-8,0,rainy,cold,R,happy,Buck-I-Mart
+medium,soup,no,1-3,>8,rainy,hot,T,busy,Oxley's
+quick,sandwich,no,1-3,>8,snowy,cold,W,grumpy,Oxley's
+medium,sandwich,yes,4-8,>8,snowy,cold,R,grumpy,Brennan's
+quick,other,yes,1-3,>8,sunny,cold,W,busy,Brennan's
+quick,soup,no,0,>8,snowy,cold,F,happy,Brennan's
+leisurely,soup,no,0,4-8,rainy,cold,T,grumpy,Buck-I-Mart
+leisurely,soup,yes,>8,0,snowy,cold,T,busy,Brennan's
+quick,sandwich,no,1-3,4-8,sunny,hot,M,happy,Oxley's
+medium,other,yes,0,0,rainy,mild,T,grumpy,Oxley's cafe
+quick,sandwich,yes,>8,4-8,rainy,cold,F,grumpy,Oxley's cafe
+quick,sandwich,no,0,>8,rainy,mild,T,busy,Oxley's cafe
+leisurely,sandwich,no,1-3,0,snowy,cold,T,busy,Oxley's
+medium,sandwich,no,0,1-3,sunny,cold,R,busy,Buck-I-Mart
+medium,other,yes,4-8,4-8,sunny,cold,R,grumpy,Buck-I-Mart
+medium,sandwich,no,4-8,>8,sunny,mild,M,busy,Buck-I-Mart
+medium,other,no,0,>8,snowy,cold,M,grumpy,Oxley's
+leisurely,sandwich,no,1-3,1-3,snowy,cold,T,happy,Oxley's
+leisurely,soup,no,>8,1-3,sunny,hot,F,happy,Buck-I-Mart
+quick,sandwich,yes,0,0,sunny,mild,M,grumpy,Buck-I-Mart
+leisurely,soup,yes,1-3,>8,rainy,hot,M,busy,Brennan's
+medium,other,no,>8,4-8,snowy,cold,M,busy,Buck-I-Mart
+medium,soup,no,0,1-3,snowy,cold,T,busy,Buck-I-Mart
+quick,soup,yes,0,4-8,sunny,mild,M,busy,Oxley's
+quick,soup,yes,>8,4-8,rainy,cold,M,happy,Oxley's cafe
+medium,other,yes,1-3,1-3,rainy,mild,W,grumpy,Oxley's
+quick,sandwich,yes,4-8,>8,snowy,cold,T,busy,Oxley's
+medium,soup,no,1-3,4-8,rainy,mild,T,happy,Buck-I-Mart
+quick,sandwich,yes,>8,0,snowy,cold,M,grumpy,Buck-I-Mart
+leisurely,other,yes,1-3,>8,rainy,hot,M,grumpy,Brennan's
+medium,sandwich,yes,>8,4-8,sunny,hot,W,grumpy,Oxley's
+quick,soup,no,4-8,4-8,snowy,cold,R,busy,Oxley's cafe
+leisurely,sandwich,yes,0,1-3,snowy,cold,M,happy,Brennan's
+medium,other,no,4-8,1-3,snowy,cold,T,busy,Buck-I-Mart
+quick,other,yes,4-8,4-8,sunny,hot,F,grumpy,Oxley's cafe
+medium,sandwich,no,4-8,4-8,snowy,cold,R,busy,Buck-I-Mart
+medium,sandwich,no,0,4-8,sunny,mild,T,busy,Oxley's cafe
+medium,soup,yes,4-8,0,sunny,cold,W,grumpy,Buck-I-Mart
+quick,soup,no,4-8,1-3,sunny,cold,T,busy,Buck-I-Mart
+medium,sandwich,yes,4-8,1-3,rainy,hot,R,happy,Oxley's cafe
+quick,sandwich,no,>8,4-8,snowy,cold,F,happy,Oxley's cafe
+quick,soup,no,4-8,4-8,rainy,mild,M,happy,Oxley's cafe
+leisurely,other,yes,1-3,>8,sunny,mild,M,grumpy,Brennan's
+leisurely,soup,yes,4-8,0,snowy,cold,M,happy,Brennan's
+quick,sandwich,yes,0,0,sunny,hot,M,grumpy,Buck-I-Mart
+quick,sandwich,no,>8,0,sunny,mild,R,grumpy,Buck-I-Mart
+leisurely,sandwich,no,4-8,>8,snowy,cold,F,happy,Brennan's
+leisurely,sandwich,no,1-3,4-8,rainy,hot,R,happy,Oxley's
+quick,other,yes,>8,4-8,sunny,cold,T,happy,Oxley's cafe
+medium,soup,yes,>8,1-3,sunny,cold,M,busy,Buck-I-Mart
+medium,other,no,1-3,>8,sunny,mild,W,busy,Buck-I-Mart
+quick,sandwich,yes,0,4-8,rainy,mild,M,happy,Oxley's
+leisurely,soup,yes,>8,1-3,rainy,cold,R,busy,Brennan's

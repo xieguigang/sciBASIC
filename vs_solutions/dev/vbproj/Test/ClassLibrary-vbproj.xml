@@ -1,0 +1,800 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Microsoft.VisualBasic</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>Full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>X:\nuget_publish\VB_APP\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>X:\nuget_publish\VB_APP\x64\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>X:\nuget_publish\VB_APP\x86\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\docs\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\sdk\bin\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\docs\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>42105,42106,42107</WarningsAsErrors>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|AnyCPU'">
+    <OutputPath>bin\Release2\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x64'">
+    <OutputPath>bin\x64\Release2\</OutputPath>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release2|x86'">
+    <OutputPath>bin\x86\Release2\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualC" />
+    <Reference Include="Microsoft.VisualC.STLCLR" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Management.Instrumentation" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Presentation" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.Serialization" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandLine\Parsers\CLIParser.vb" />
+    <Compile Include="CommandLine\Parsers\DictionaryParser.vb" />
+    <Compile Include="CommandLine\CLIMapper.vb" />
+    <Compile Include="CommandLine\CLIBuilder.vb" />
+    <Compile Include="CommandLine\CLI\IIORedirectAbstract.vb" />
+    <Compile Include="CommandLine\CLI\IORedirectFile.vb" />
+    <Compile Include="CommandLine\CLITools.vb" />
+    <Compile Include="CommandLine\CLI\ProcExtensions.vb" />
+    <Compile Include="CommandLine\Interpreters\Abstract.vb" />
+    <Compile Include="CommandLine\Reflection\CLITypes.vb" />
+    <Compile Include="CommandLine\Reflection\ExceptionHandler.vb" />
+    <Compile Include="CommandLine\Reflection\SDKManual.vb" />
+    <Compile Include="CommandLine\Reflection\CLIToken.vb" />
+    <Compile Include="CommandLine\Reflection\ExportAPI.vb" />
+    <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\BindProperty%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataSource\IMatched.vb" />
+    <Compile Include="ComponentModel\DataSource\Repository.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\SQL.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\Schema.vb" />
+    <Compile Include="ComponentModel\DataStructures\BinaryTree\ClusterParts.vb" />
+    <Compile Include="ComponentModel\DataStructures\BinaryTree\NewickParser.vb" />
+    <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
+    <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
+    <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
+    <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
+    <Compile Include="ComponentModel\DataStructures\HandleList\HashHandle.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
+    <Compile Include="ComponentModel\File\BufferedStream.vb" />
+    <Compile Include="ComponentModel\DataSource\DataSample.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeList.vb" />
+    <Compile Include="ComponentModel\Ranges\IRanges.vb" />
+    <Compile Include="ComponentModel\Ranges\Range.vb" />
+    <Compile Include="ComponentModel\Ranges\DoubleRange.vb" />
+    <Compile Include="ComponentModel\Ranges\IntRange.vb" />
+    <Compile Include="ComponentModel\Settings\Inf\IniFile.vb" />
+    <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
+    <Compile Include="ComponentModel\Settings\LDM\ProfileTable.vb" />
+    <Compile Include="ComponentModel\SingletonHolder.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\List%28Of T%29.vb" />
+    <Compile Include="ComponentModel\Coords.vb" />
+    <Compile Include="ComponentModel\DataSource\DynamicProperty.vb" />
+    <Compile Include="ComponentModel\DataSource\Iterator.vb" />
+    <Compile Include="ComponentModel\DataStructures\BinaryTree\TreeNode%28Of T%29.vb" />
+    <Compile Include="ComponentModel\DataStructures\Enumerable\ILocalSearchHandle.vb" />
+    <Compile Include="ComponentModel\DataStructures\Enumerable\Enumerable.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\Set.vb" />
+    <Compile Include="ComponentModel\DataStructures\SlideWindowHandle.vb" />
+    <Compile Include="ComponentModel\File\FileSaveHandle.vb" />
+    <Compile Include="ComponentModel\IO\ReadStream.vb" />
+    <Compile Include="ComponentModel\IO\WriteStream.vb" />
+    <Compile Include="ComponentModel\LazyLoader.vb" />
+    <Compile Include="ComponentModel\Settings\ConfigEngine.vb" />
+    <Compile Include="ComponentModel\Settings\Inf\Serialization.vb" />
+    <Compile Include="ComponentModel\Settings\LDM\BindMapping.vb" />
+    <Compile Include="ComponentModel\Settings\LDM\ModelBase.vb" />
+    <Compile Include="ComponentModel\Settings\LDM\ProfileItem.vb" />
+    <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\CollectionIO.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue.vb" />
+    <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
+    <Compile Include="ComponentModel\ValuePair\RefValue.vb" />
+    <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
+    <Compile Include="ComponentModel\ValuePair\Triple.vb" />
+    <Compile Include="ConsoleDevices\InteractiveIODevice\Shell.vb" />
+    <Compile Include="ConsoleDevices\PipelineCLI.vb" />
+    <Compile Include="ConsoleDevices\InnerQueue.vb" />
+    <Compile Include="ConsoleDevices\InteractiveIODevice\TerminalExtensions.vb" />
+    <Compile Include="ConsoleDevices\PrintAsTable.vb" />
+    <Compile Include="ConsoleDevices\ProgressBar\AbstractBar.vb" />
+    <Compile Include="ConsoleDevices\ProgressBar\AnimatedBar.vb" />
+    <Compile Include="ConsoleDevices\ProgressBar\ProgressBar.vb" />
+    <Compile Include="ConsoleDevices\ProgressBar\Program.vb" />
+    <Compile Include="ConsoleDevices\ProgressBar\SwayBar.vb" />
+    <Compile Include="ConsoleDevices\Utility\EventProc.vb" />
+    <Compile Include="ConsoleDevices\Utility\ConsolePasswordInput.vb" />
+    <Compile Include="ComponentModel\RelayCommand.vb" />
+    <Compile Include="ConsoleDevices\xConsole\Helpers.vb" />
+    <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
+    <Compile Include="Extensions\Debugger\Config.vb" />
+    <Compile Include="Extensions\Image\Colors\HexColor.vb" />
+    <Compile Include="Extensions\IO\Includes.vb" />
+    <Compile Include="Extensions\IO\Extensions.vb" />
+    <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
+    <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
+    <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
+    <Compile Include="Extensions\Math\Random\RandomRange.vb" />
+    <Compile Include="Extensions\Math\Random\PreciseRandom.vb" />
+    <Compile Include="Extensions\Math\TokenConnections.vb" />
+    <Compile Include="Extensions\Math\Trigonometric\Arctan.vb" />
+    <Compile Include="Extensions\Math\Trigonometric\Trigonometric2.vb" />
+    <Compile Include="Extensions\Math\Trigonometric\Trigonometric.vb" />
+    <Compile Include="Extensions\Reflection\Delegate\DelegateFactory.vb" />
+    <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
+    <Compile Include="Extensions\StringHelpers\DateParser.vb" />
+    <Compile Include="Extensions\StringHelpers\Wildcards.vb" />
+    <Compile Include="Extensions\WebServices\UserAgent.vb" />
+    <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
+    <Compile Include="Language\Java\Arrays.vb" />
+    <Compile Include="Language\LanguageExtensions.vb" />
+    <Compile Include="Language\Python\Array.vb" />
+    <Compile Include="Language\Tuple.vb" />
+    <Compile Include="Language\Python\Regexp.vb" />
+    <Compile Include="Language\Value.vb" />
+    <Compile Include="Language\Python\Collection.vb" />
+    <Compile Include="Language\Python\NamedTuple.vb" />
+    <Compile Include="Parallel\Threads\ThreadPool.vb" />
+    <Compile Include="Serialization\JSON\SchemaProvider\Markdown.vb" />
+    <Compile Include="Serialization\JSON\SchemaProvider\Extensions.vb" />
+    <Compile Include="Serialization\JSON\SchemaProvider\VisualBasicCode.vb" />
+    <Compile Include="Serialization\JSON\SchemaProvider\Schema.vb" />
+    <Compile Include="Text\ASCII.vb" />
+    <Compile Include="Language\Perl\Tools.vb" />
+    <Compile Include="Language\Pointer.vb" />
+    <Compile Include="Language\Java\JavaMath.vb" />
+    <Compile Include="Language\Java\LogTricks.vb" />
+    <Compile Include="Language\Java\MathUtils.vb" />
+    <Compile Include="Language\Java\MersenneTwisterFast.vb" />
+    <Compile Include="Language\Uid.vb" />
+    <Compile Include="Language\C\CString.vb" />
+    <Compile Include="Language\C\File.vb" />
+    <Compile Include="Language\StringHelpers.vb" />
+    <None Include="Extensions\Reflection\Delegate\README.md" />
+    <None Include="Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
+    <Compile Include="Language\UnixBash\PS1.vb" />
+    <Compile Include="Parallel\Tasks\IParallelTask.vb" />
+    <Compile Include="Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
+    <Compile Include="Parallel\Threads\BatchTasks.vb" />
+    <Compile Include="Parallel\Threads\CodeThread.vb" />
+    <Compile Include="Parallel\Threads\ThreadQueue.vb" />
+    <Compile Include="Parallel\Threads\LQuerySchedule\Models.vb" />
+    <Compile Include="Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
+    <Compile Include="Scripting\Actives.vb" />
+    <Compile Include="Scripting\Where.vb" />
+    <Compile Include="Serialization\JSON\JsonFormatter.vb" />
+    <Compile Include="Serialization\JSON\Formatter\FormatterScopeState.vb" />
+    <Compile Include="Serialization\JSON\Formatter\ICharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\JsonFormatterInternal.vb" />
+    <Compile Include="Serialization\JSON\Formatter\JsonFormatterStrategyContext.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CloseSquareBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb" />
+    <Compile Include="Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb" />
+    <Compile Include="Text\Parser\ParserValue.vb" />
+    <Compile Include="Text\Xml\Models.vb" />
+    <Compile Include="Text\Xml\XmlDeclaration.vb" />
+    <Compile Include="Text\Xml\Xmlns.vb" />
+    <Compile Include="Text\Xml\XmlDoc.vb" />
+    <Compile Include="Extensions\Image\Bitmap\hBitmap.vb" />
+    <Compile Include="Extensions\Image\Bitmap\hcBitmap.vb" />
+    <Compile Include="Extensions\Image\GDI+\Interface.vb" />
+    <Compile Include="Extensions\Image\Colors\ColorExtensions.vb" />
+    <Compile Include="Extensions\IO\PathMatch.vb" />
+    <Compile Include="Extensions\Math\NumberGroups.vb" />
+    <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
+    <Compile Include="Language\NET40_Compatible.vb" />
+    <Compile Include="Language\UnixBash\FileSystem\PathMapper.vb" />
+    <Compile Include="Language\UnixBash\LinuxRunHelper.vb" />
+    <Compile Include="LICENSE.vb" />
+    <Compile Include="Scripting\MetaData\Author.vb" />
+    <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
+    <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
+    <Compile Include="Extensions\IO\Directory.vb" />
+    <Compile Include="Scripting\ExternalCall.vb" />
+    <Compile Include="Extensions\WebServices\WebResult.vb" />
+    <Compile Include="Text\Parser\FormattedParser.vb" />
+    <Compile Include="Tools\SoftwareToolkits\LicenseMgr.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Project.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectMember.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectNamespace.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectSpace.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\ProjectType.vb" />
+    <Compile Include="Tools\Win32\HardwareInfo.vb" />
+    <Compile Include="Tools\Win32\GetLastErrorAPI.vb" />
+    <Compile Include="Tools\Win32\TaskManager.vb" />
+    <Compile Include="Tools\Win32\PriorityClass.vb" />
+    <Compile Include="Tools\WinForm\VistaSecurity.vb" />
+    <Compile Include="Tools\Win32\Win32API.vb" />
+    <Compile Include="Tools\Win32\Win32File.vb" />
+    <None Include="app.config" />
+    <None Include="ConsoleDevices\xConsole\TestProgram.txt" />
+    <Compile Include="ConsoleDevices\xConsole\xConsole.vb" />
+    <Compile Include="Language\UnixBash\Cowsay.vb" />
+    <Compile Include="Extensions\App.vb" />
+    <Compile Include="Extensions\CodeDOM\CodeDOM.vb" />
+    <Compile Include="Extensions\CodeDOM\CodeDOMExpressions.vb" />
+    <Compile Include="Extensions\CodeDOM\VBC.vb" />
+    <Compile Include="Extensions\Controls.vb" />
+    <Compile Include="Extensions\Collection\ListExtensions.vb" />
+    <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
+    <Compile Include="Extensions\Collection\KeyValuePair.vb" />
+    <Compile Include="ComponentModel\DataStructures\LoopArray.vb" />
+    <Compile Include="Extensions\Collection\Vector.vb" />
+    <Compile Include="Extensions\Collection\Linq\Linq.vb" />
+    <Compile Include="Extensions\Collection\Matrix.vb" />
+    <Compile Include="Extensions\Debugger\DebuggerLevels.vb" />
+    <Compile Include="Extensions\Debugger\Debugger.vb" />
+    <Compile Include="Extensions\Debugger\DebuggerArgs.vb" />
+    <Compile Include="Extensions\Image\GDI+\FontFace.vb" />
+    <Compile Include="Extensions\IO\IO.vb" />
+    <Compile Include="Extensions\Doc\PartitionedStream.vb" />
+    <Compile Include="Extensions\Doc\Text.vb" />
+    <Compile Include="Extensions\Doc\XmlExtensions.vb" />
+    <Compile Include="Extensions\Image\Colors\ColorCube.vb" />
+    <Compile Include="Extensions\Image\Colors\ColorMap.vb" />
+    <Compile Include="Extensions\Image\GDI+\gdi+Device.vb" />
+    <Compile Include="Extensions\Image\GDI+\GDITransform.vb" />
+    <Compile Include="Extensions\Image\Wmf.vb" />
+    <Compile Include="Extensions\Image\TiffWriter.vb" />
+    <Compile Include="Extensions\Image\ImageFormat.vb" />
+    <Compile Include="Extensions\IO\NetFile.vb" />
+    <Compile Include="Extensions\Math\Correlations.vb" />
+    <Compile Include="Extensions\Math\Ranks.vb" />
+    <Compile Include="Extensions\Math\Random\RandomExtensions.vb" />
+    <Compile Include="Extensions\Math\ScaleMaps.vb" />
+    <Compile Include="ComponentModel\DataStructures\Pointer.vb" />
+    <Compile Include="Extensions\CloneExtensions.vb" />
+    <Compile Include="Extensions\Reflection\Marshal\Pointer%28Of T%29.vb" />
+    <Compile Include="Extensions\Security\Md5HashProvider.vb" />
+    <Compile Include="Extensions\StringHelpers\Parser.vb" />
+    <Compile Include="Language\Linq.vb" />
+    <Compile Include="Text\UnbufferedStringReader.vb" />
+    <Compile Include="Tools\HtmlParser\Table.vb" />
+    <Compile Include="Language\Class.vb" />
+    <Compile Include="Language\UnixBash\FileSystem\Searchs.vb" />
+    <Compile Include="Language\UnixBash\FileSystem\File.vb" />
+    <Compile Include="Language\ClassObject.vb" />
+    <Compile Include="Language\Numeric.vb" />
+    <Compile Include="Language\UnixBash\Text\Grep.vb" />
+    <Compile Include="MMFProtocol\WorkFlow.vb" />
+    <Compile Include="Parallel\Tasks\CallbackTask.vb" />
+    <Compile Include="Parallel\Tasks\TaskQueue.vb" />
+    <Compile Include="Parallel\Threads\Groups\DataGroup.vb" />
+    <Compile Include="Parallel\Threads\Groups\GroupAPI.vb" />
+    <Compile Include="Serialization\BinaryDumping\Buffer.vb" />
+    <Compile Include="Serialization\ConfigMappings\Attributes.vb" />
+    <Compile Include="Serialization\Controls\Contrls.vb" />
+    <Compile Include="Text\Splitter.vb" />
+    <Compile Include="Text\EncodingHelper.vb" />
+    <Compile Include="Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
+    <Compile Include="Tools\Network\Protocol\Streams\VarArray.vb" />
+    <Compile Include="Tools\SoftwareToolkits\ApplicationDetails.vb" />
+    <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
+    <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
+    <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />
+    <Compile Include="Extensions\Reflection\Reflection.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinModel.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\Extensions.vb" />
+    <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
+    <Compile Include="Extensions\StringHelpers\TextEncodings.vb" />
+    <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
+    <Compile Include="Extensions\WebServices\Base64Codec.vb" />
+    <Compile Include="Extensions\WebServices\NetResponse.vb" />
+    <Compile Include="Tools\Win32\WindowsServices.vb" />
+    <Compile Include="Extensions\Security\Md5.vb" />
+    <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
+    <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinDistance.vb" />
+    <Compile Include="MMFProtocol\Pipeline\API.vb" />
+    <Compile Include="MMFProtocol\Pipeline\PipeBuffer.vb" />
+    <Compile Include="MMFProtocol\Pipeline\PipeStream.vb" />
+    <Compile Include="MMFProtocol\Pipeline\Pipeline.vb" />
+    <Compile Include="Scripting\MetaData\MetaAPI.vb" />
+    <Compile Include="Scripting\MetaData\Type.vb" />
+    <Compile Include="Scripting\TokenIcer\ParserAPI.vb" />
+    <Compile Include="Scripting\TokenIcer\LDM\StackTokens%28Of Tokens%29.vb" />
+    <Compile Include="Scripting\TokenIcer\LDM\Func.vb" />
+    <Compile Include="Scripting\TokenIcer\LDM\LDM.vb" />
+    <Compile Include="Scripting\TokenIcer\Prefix.vb" />
+    <Compile Include="Scripting\TokenIcer\StackParser.vb" />
+    <Compile Include="Scripting\TokenIcer\TokenParser.vb" />
+    <Compile Include="Serialization\BinaryDumping\BinaryReader.vb" />
+    <Compile Include="Serialization\JSON\JsonSerialization.vb" />
+    <Compile Include="MMFProtocol\MapStream\MSWriter.vb" />
+    <Compile Include="MMFProtocol\MapStream\MSReader.vb" />
+    <Compile Include="Parallel\Tasks\AsyncHandle.vb" />
+    <Compile Include="Parallel\Threads\ServicesFolk.vb" />
+    <Compile Include="Parallel\Tasks\UpdateThread.vb" />
+    <Compile Include="Parallel\Threads\ParallelLoading.vb" />
+    <Compile Include="Parallel\Threads\ParallelExtension.vb" />
+    <Compile Include="Scripting\Casting.vb" />
+    <Compile Include="Scripting\InputHandler.vb" />
+    <Compile Include="Scripting\MetaData\Cite.vb" />
+    <Compile Include="Scripting\MetaData\Parameter.vb" />
+    <Compile Include="Scripting\MetaData\Namespace.vb" />
+    <Compile Include="Serialization\BinaryDumping\BinaryWriter.vb" />
+    <Compile Include="Text\StringSimilarity\Similarity.vb" />
+    <Compile Include="Text\TextIndexing.vb" />
+    <Compile Include="Text\GB2312.vb" />
+    <Compile Include="Tools\Logging\LogFile\ISupportLoggingClient.vb" />
+    <Compile Include="Tools\Logging\LogFile\LogReader.vb" />
+    <Compile Include="Tools\Logging\LogFile\LogEntry.vb" />
+    <Compile Include="Tools\Logging\LogFile\MSG_TYPES.vb" />
+    <Compile Include="CommandLine\CliResCommon.vb" />
+    <Compile Include="Parallel\Tasks\Task.vb" />
+    <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
+    <Compile Include="ComponentModel\TimeSpan.vb" />
+    <Compile Include="Extensions\Image\GrayBitmap.vb" />
+    <Compile Include="Tools\Logging\EventLog.vb" />
+    <Compile Include="Extensions\Debugger\NETDebugger.vb" />
+    <Compile Include="Tools\Network\Mailto\MailConfigure.vb" />
+    <Compile Include="Tools\Network\Mailto\MailContents.vb" />
+    <Compile Include="Tools\Network\Abstract.vb" />
+    <Compile Include="Tools\Network\MIME\MIME.vb" />
+    <Compile Include="Tools\Network\MIME\ContentType.vb" />
+    <Compile Include="Tools\Network\Protocol\Abstract.vb" />
+    <Compile Include="Tools\Network\Protocol\Streams\Array.vb" />
+    <Compile Include="Tools\Network\Protocol\Streams\ArrayBase.vb" />
+    <Compile Include="Tools\Network\Protocol\Streams\String.vb" />
+    <Compile Include="Tools\Network\SSL\Certificate.vb" />
+    <Compile Include="Tools\Network\Protocol\IVerifySession.vb" />
+    <Compile Include="Tools\Network\Protocol\Reflection\AppMgr.vb" />
+    <Compile Include="Tools\Network\Protocol\Reflection\ProtocolInvoker.vb" />
+    <Compile Include="Tools\Network\Protocol\Reflection\Protocol.vb" />
+    <Compile Include="Tools\Network\Protocol\Reflection\ProtocolHandler.vb" />
+    <Compile Include="Tools\Network\SSL\Extensions.vb" />
+    <Compile Include="Tools\Network\SSL\Protocol.vb" />
+    <Compile Include="Tools\Network\SSL\SSLSynchronizationServicesSocket.vb" />
+    <Compile Include="Tools\Network\Protocol\RequestStream.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\UserId.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\POST.vb" />
+    <Compile Include="Tools\Network\wGetTools.vb" />
+    <Compile Include="Tools\Network\Tcp\StateObject.vb" />
+    <Compile Include="Tools\Network\Tcp\IPEndPoint.vb" />
+    <Compile Include="Tools\Network\Tcp\LAN.vb" />
+    <Compile Include="Tools\Network\DomainParser.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLClient.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\SSLPushServices.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\Abstract.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Socket\WorkSocket.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Protocols\Protocol.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\User.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\MessagePushServices\MessagePushServer.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Socket\TcpClient.vb" />
+    <Compile Include="Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb" />
+    <Compile Include="Tools\Network\Tcp\PingUtility.vb" />
+    <Compile Include="Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb" />
+    <Compile Include="Tools\OSVersionInfo.vb" />
+    <Compile Include="Tools\WinForm\MockForm.vb" />
+    <Compile Include="Tools\WinForm\SingleInstanceFormEntry.vb" />
+    <Compile Include="Tools\SoftwareToolkits\Resources.vb" />
+    <Compile Include="Tools\SoftwareToolkits\LanguageHelper\StringResources.vb" />
+    <Compile Include="Tools\SoftwareToolkits\Ngen\Ngen.vb" />
+    <Compile Include="Extensions\Security\AES.vb" />
+    <Compile Include="Extensions\Security\SHA.vb" />
+    <Compile Include="Extensions\Security\RSACrypto.vb" />
+    <Compile Include="Extensions\Security\SecurityString.vb" />
+    <Compile Include="Parallel\OperationTimeOut.vb" />
+    <Compile Include="Tools\Network\Tcp\TCPExtensions.vb" />
+    <Compile Include="Tools\Network\Tcp\AsynInvoke.vb" />
+    <Compile Include="Parallel\Threading.vb" />
+    <Compile Include="ComponentModel\DataStructures\BinaryTree\BinaryTree.vb" />
+    <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
+    <Compile Include="Extensions\Image\GDI+\GDIPlusExtensions.vb" />
+    <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
+    <Compile Include="ConsoleDevices\InteractiveIODevice\InteractiveDevice.vb" />
+    <Compile Include="ConsoleDevices\InteractiveIODevice\HistoryStacks.vb" />
+    <Compile Include="ConsoleDevices\InteractiveIODevice\Terminal.vb" />
+    <Compile Include="ConsoleDevices\Utility\ManualPages.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\CPOLLicense.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStats.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsCovariance.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsMedian.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsMode.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsPearson.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsRange.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsStandardDeviation.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsStandardDeviationP.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsVariance.vb" />
+    <Compile Include="Extensions\Math\StatisticsMathExtensions\EnumerableStatsVarianceP.vb" />
+    <Compile Include="Parallel\Threads\LQuerySchedule\LQuerySchedule.vb" />
+    <Compile Include="CommandLine\Interpreters\ActivityInst.vb" />
+    <Compile Include="Serialization\ConfigMappings\DynamicsConfiguration.vb" />
+    <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
+    <Compile Include="Serialization\ShadowsCopy.vb" />
+    <Compile Include="Text\TextGrepScriptEngine.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Member.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\Doc.vb" />
+    <Compile Include="Tools\SoftwareToolkits\XmlDoc\Serialization\DocAPI.vb" />
+    <Compile Include="Tools\ZipLib.vb" />
+    <Compile Include="Tools\SoftwareToolkits\ChangeLog.vb" />
+    <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
+    <Compile Include="ConsoleDevices\Utility\CBusyIndicator.vb" />
+    <Compile Include="Extensions\Doc\LargeTextFile.vb" />
+    <Compile Include="Tools\SoftwareToolkits\ToolkitAPI.vb" />
+    <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.Designer.vb">
+      <DependentUpon>UpdatesEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\SoftwareToolkits\UpdatesEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Text\TextFileEncodingDetector.vb" />
+    <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
+    <Compile Include="Extensions\IO\PathSearchTool.vb" />
+    <Compile Include="ComponentModel\Href.vb" />
+    <Compile Include="ComponentModel\DataSource\SchemaMaps\DataSource.vb" />
+    <Compile Include="ComponentModel\DataStructures\Enumerable\IEnumerable.vb" />
+    <Compile Include="ComponentModel\ValuePair\ValuePair.vb" />
+    <Compile Include="Serialization\DumpData\DumpData.vb" />
+    <Compile Include="Serialization\DumpData\DumpNode.vb" />
+    <Compile Include="Extensions\Security\TripleDES.vb" />
+    <Compile Include="Extensions\WebServices\WebServiceUtils.vb" />
+    <Compile Include="ComponentModel\Settings\Inf\INIProfile.vb" />
+    <Compile Include="ComponentModel\File\ITextFile.vb" />
+    <Compile Include="ComponentModel\Settings\Settings.vb" />
+    <Compile Include="ComponentModel\Comb.vb" />
+    <Compile Include="CommandLine\Interpreters\Interpreter.vb" />
+    <Compile Include="CommandLine\Reflection\Attribute.vb" />
+    <Compile Include="CommandLine\Reflection\ParameterInfo.vb" />
+    <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
+    <Compile Include="CommandLine\CommandLine.vb" />
+    <Compile Include="Extensions\Math\Math.vb" />
+    <Compile Include="Tools\Network\Mailto\GMailClient.vb" />
+    <Compile Include="CommandLine\CLI\IORedirect.vb" />
+    <Compile Include="Tools\SoftwareToolkits\LanguageHelper\LanguageAttribute.vb" />
+    <Compile Include="Tools\SoftwareToolkits\LanguageHelper\LanguageHelper.vb" />
+    <Compile Include="Tools\Logging\LogFile\LogFile.vb" />
+    <Compile Include="Extensions\Extensions.vb" />
+    <Compile Include="MMFProtocol\MMFSocket.vb" />
+    <Compile Include="MMFProtocol\ProcessLock.vb" />
+    <Compile Include="ConsoleDevices\STDIO__\Shell.vb" />
+    <Compile Include="ConsoleDevices\STDIO__\I_ConsoleDeviceHandle.vb" />
+    <Compile Include="ConsoleDevices\STDIO__\CFormatProvider.vb" />
+    <Compile Include="ConsoleDevices\STDIO__\STDIO.vb" />
+    <Compile Include="ComponentModel\DataStructures\HandleList\IHandler.vb" />
+    <Compile Include="ComponentModel\DataStructures\HandleList\HandledList.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\SoftwareToolkits\UpdatesEditor.resx">
+      <DependentUpon>UpdatesEditor.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gpl.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CPOL.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Serialization\JSON\Formatter\readme.md" />
+    <None Include="Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ComponentModel\Ranges\Copyright.txt" />
+    <Content Include="Serialization\JSON\Formatter\license.txt" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

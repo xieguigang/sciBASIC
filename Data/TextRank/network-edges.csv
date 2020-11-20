@@ -1,0 +1,12 @@
+﻿toNode,fromNode,Confidence,InteractionType,c
+important,the,0,,1
+pagerank,important,0,,1
+on,show,0,,1
+pagerank,on,0,,2
+significance,have,0,,1
+pagerank,significance,0,,1
+pagerank,implements,0,,1
+algorithm,pagerank,0,,1
+base,textrank,0,,1
+on,base,0,,1
+pagerank,on,0,,2

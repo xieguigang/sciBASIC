@@ -1,0 +1,19 @@
+node {
+	size: map(Degree, [10, 50]);
+	fill: #skyblue;
+	label: "Common Name";
+	stroke: map("Super Pathway", true=red, false=green);
+}
+
+edge {
+	width: 5;
+	color: map(interaction, INCOMING=red, interact_with=yellow, Contains=blue, OUTGOING=green);
+}
+
+node["Super Pathway" = true] {
+	opacity: 0.4;
+}
+
+edge["interaction" = INCOMING] {
+	stroke-dash: dash;
+}
