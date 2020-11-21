@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
@@ -22,7 +23,22 @@ Public Class DendrogramPanelv2 : Inherits Plot
         Dim plotRegion As Rectangle = canvas.PlotRegion
         ' 每一个样本点都平分一段长度
         Dim unitWidth As Double = plotRegion.Height / hist.Leafs
-        Dim scaleX As d3js.scale.LinearScale = d3js.scale.linear().domain({0, hist.DistanceValue}).range(integers:={plotRegion.Left, plotRegion.Right})
+        Dim axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
+        Dim scaleX As d3js.scale.LinearScale = d3js.scale.linear().domain(axisTicks).range(integers:={plotRegion.Left, plotRegion.Right})
+
+        ' 绘制距离标尺
+        Dim left = plotRegion.Right - scaleX(hist.DistanceValue)
+        Dim right = plotRegion.Right - scaleX(0)
+        Dim y = unitWidth / 3
+        Dim x!
+
+        Call g.DrawLine(Pens.Black, New PointF(left, y), New PointF(right, y))
+
+        For Each tick As Double In axisTicks
+            x = plotRegion.Right - scaleX(tick)
+            g.DrawLine(Pens.Black, New PointF(x, y), New PointF(x, y - 20))
+            g.DrawString(tick, CSSFont.TryParse(CSSFont.PlotLabelNormal), Brushes.Black, New PointF(x, y - 20))
+        Next
 
         Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing)
     End Sub
@@ -46,8 +62,11 @@ Public Class DendrogramPanelv2 : Inherits Plot
             y = i * unitWidth + (partition.Leafs * unitWidth) / 2
         End If
 
-        Call g.DrawLine(Pens.Blue, parentPt, New PointF(parentPt.X, y))
-        Call g.DrawLine(Pens.Blue, New PointF(x, y), New PointF(parentPt.X, y))
+        If Not parentPt.IsEmpty Then
+            ' 绘制连接线
+            Call g.DrawLine(Pens.Blue, parentPt, New PointF(parentPt.X, y))
+            Call g.DrawLine(Pens.Blue, New PointF(x, y), New PointF(parentPt.X, y))
+        End If
 
         Call g.DrawCircle(New PointF(x, y), 15, Brushes.Red)
         Call g.DrawString(partition.Name, CSSFont.TryParse(CSSFont.PlotLabelNormal), Brushes.Black, New PointF(x, y))
