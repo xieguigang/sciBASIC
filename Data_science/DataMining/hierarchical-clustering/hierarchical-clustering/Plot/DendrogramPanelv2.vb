@@ -1,10 +1,12 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports stdNum = System.Math
@@ -51,6 +53,15 @@ Public Class DendrogramPanelV2 : Inherits Plot
         Else
             Return classIndex(classinfo(id)).color.TranslateColor
         End If
+    End Function
+
+    Dim labels As New List(Of NamedValue(Of PointF))
+
+    Public Function Paint(g As IGraphics, layout As Rectangle) As IEnumerable(Of NamedValue(Of PointF))
+        Call labels.Clear()
+        Call PlotInternal(g, EvaluateLayout(g, layout))
+
+        Return labels
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -110,6 +121,10 @@ Public Class DendrogramPanelV2 : Inherits Plot
 
         If partition.isLeaf Then
             y = i * unitWidth + unitWidth
+            labels += New NamedValue(Of PointF) With {
+                .Name = partition.Name,
+                .Value = New PointF(x, y)
+            }
         Else
             ' 连接节点在中间？
             y = (i + 0.5) * unitWidth + (partition.Leafs * unitWidth) / 2
