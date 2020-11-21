@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::fdd4e70a83a138c169665f86077bccc8, Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module HistStackedBarplot
-    ' 
-    '     Function: Plot, SampleDataSet
-    ' 
-    ' /********************************************************************************/
+' Module HistStackedBarplot
+' 
+'     Function: Plot, SampleDataSet
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,9 +46,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -65,7 +65,7 @@ Public Module HistStackedBarplot
     <Extension>
     Private Function SampleDataSet(sample As BarDataSample, keys$()) As DataSet
         Return New DataSet With {
-            .ID = sample.Tag,
+            .ID = sample.tag,
             .Properties = keys _
                 .SeqIterator _
                 .ToDictionary(Function(key) key.value,
@@ -100,17 +100,7 @@ Public Module HistStackedBarplot
             .Select(Function(sample) sample.SampleDataSet(data.Serials.Keys)) _
             .ToArray
         Dim histCanvas = Function(cluster As Cluster)
-                             Return New DendrogramPanel With {
-                                 .LineColor = Color.Black,
-                                 .ScaleValueDecimals = 0,
-                                 .ScaleValueInterval = 1,
-                                 .Model = cluster,
-                                 .ShowScale = False,
-                                 .ShowDistanceValues = False,
-                                 .ShowLeafLabel = False,
-                                 .LinkDotRadius = 0,
-                                 .ClassTable = sampleGroup
-                             }
+                             Return New DendrogramPanelV2(cluster, New Theme)
                          End Function
 
         Dim plotInternal =
