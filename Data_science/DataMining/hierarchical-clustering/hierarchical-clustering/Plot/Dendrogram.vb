@@ -19,7 +19,8 @@ Public Module Dendrogram
                          Optional axisTickCss$ = CSSFont.PlotLabelNormal,
                          Optional labelCss$ = CSSFont.PlotLabelNormal,
                          Optional pointSize% = 5,
-                         Optional linkStroke$ = Stroke.HighlightStroke) As GraphicsData
+                         Optional linkStroke$ = Stroke.HighlightStroke,
+                         Optional axisStroke As String = Stroke.AxisStroke) As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
@@ -27,7 +28,8 @@ Public Module Dendrogram
             .axisTickCSS = axisTickCss,
             .tagCSS = labelCss,
             .PointSize = pointSize,
-            .gridStroke = linkStroke
+            .gridStroke = linkStroke,
+            .axisStroke = axisStroke
         }
         Dim colors As ColorClass() = Nothing
 

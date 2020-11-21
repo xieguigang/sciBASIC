@@ -122,6 +122,7 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property axisTickCSS As String
+        Public Property axisStroke As String
 
         ''' <summary>
         ''' 是否显示图例

@@ -9,6 +9,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports stdNum = System.Math
 
+''' <summary>
+''' 绘制层次聚类图
+''' </summary>
 Public Class DendrogramPanelV2 : Inherits Plot
 
     Friend ReadOnly hist As Cluster
@@ -20,6 +23,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
     ''' </summary>
     Friend ReadOnly classinfo As Dictionary(Of String, String)
     Friend ReadOnly showAllLabels As Boolean
+    Friend ReadOnly showAllNodes As Boolean
 
     ReadOnly labelFont As Font
     ReadOnly linkColor As Pen
@@ -27,7 +31,8 @@ Public Class DendrogramPanelV2 : Inherits Plot
     Public Sub New(hist As Cluster, theme As Theme,
                    Optional classes As ColorClass() = Nothing,
                    Optional classinfo As Dictionary(Of String, String) = Nothing,
-                   Optional showAllLabels As Boolean = False)
+                   Optional showAllLabels As Boolean = False,
+                   Optional showAllNodes As Boolean = False)
 
         MyBase.New(theme)
 
@@ -37,6 +42,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
         Me.showAllLabels = showAllLabels
         Me.labelFont = CSSFont.TryParse(theme.tagCSS)
         Me.linkColor = Stroke.TryParse(theme.gridStroke).GDIObject
+        Me.showAllNodes = showAllNodes
     End Sub
 
     Private Function GetColor(id As String) As Color
@@ -66,6 +72,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
         Dim tickLabelSize As SizeF
         Dim labelPadding As Integer
         Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
+        Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
 
         If classinfo.IsNullOrEmpty Then
             labelPadding = g.MeasureString("0", labelFont).Width / 2
@@ -73,14 +80,14 @@ Public Class DendrogramPanelV2 : Inherits Plot
             labelPadding = g.MeasureString("00", labelFont).Width
         End If
 
-        Call g.DrawLine(Pens.Black, New PointF(left, y), New PointF(right, y))
+        Call g.DrawLine(axisPen, New PointF(left, y), New PointF(right, y))
 
         For Each tick As Double In axisTicks.Take(axisTicks.Length - 1)
             x = plotRegion.Right - scaleX(tick)
             tickLable = tick.ToString
             tickLabelSize = g.MeasureString(tickLable, tickFont)
 
-            g.DrawLine(Pens.Black, New PointF(x, y), New PointF(x, y - dh))
+            g.DrawLine(axisPen, New PointF(x, y), New PointF(x, y - dh))
             g.DrawString(tick, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
         Next
 
@@ -114,7 +121,9 @@ Public Class DendrogramPanelV2 : Inherits Plot
             Call g.DrawLine(linkColor, New PointF(x, y), New PointF(parentPt.X, y))
         End If
 
-        Call g.DrawCircle(New PointF(x, y), theme.PointSize, Brushes.Red)
+        If partition.isLeaf OrElse showAllNodes Then
+            Call g.DrawCircle(New PointF(x, y), theme.PointSize, Brushes.Red)
+        End If
 
         If partition.isLeaf OrElse showAllLabels Then
             Dim lsize As SizeF = g.MeasureString(partition.Name, labelFont)
