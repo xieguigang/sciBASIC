@@ -2,22 +2,38 @@
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Class DendrogramPanelv2 : Inherits Plot
 
     Friend ReadOnly hist As Cluster
     Friend ReadOnly layout As Layouts
+    Friend ReadOnly classIndex As Dictionary(Of String, ColorClass)
 
-    Public Sub New(hist As Cluster, theme As Theme)
+    ''' <summary>
+    ''' leaf id map to <see cref="ColorClass.name"/>
+    ''' </summary>
+    Friend ReadOnly classinfo As Dictionary(Of String, String)
+
+    Public Sub New(hist As Cluster, theme As Theme, Optional classes As ColorClass() = Nothing, Optional classinfo As Dictionary(Of String, String) = Nothing)
         MyBase.New(theme)
 
         Me.hist = hist
+        Me.classIndex = classes.ToDictionary(Function(a) a.name)
+        Me.classinfo = classinfo
     End Sub
+
+    Private Function GetColor(id As String) As Color
+        If classinfo Is Nothing OrElse Not classinfo.ContainsKey(id) Then
+            Return Nothing
+        Else
+            Return classIndex(classinfo(id)).color.TranslateColor
+        End If
+    End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim plotRegion As Rectangle = canvas.PlotRegion
@@ -72,7 +88,8 @@ Public Class DendrogramPanelv2 : Inherits Plot
         Call g.DrawString(partition.Name, CSSFont.TryParse(CSSFont.PlotLabelNormal), Brushes.Black, New PointF(x, y))
 
         If partition.isLeaf Then
-            Return
+            ' 绘制class颜色块
+
         Else
             Dim n As Integer = 0
 

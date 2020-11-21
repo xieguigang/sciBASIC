@@ -540,6 +540,10 @@
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>
       <Name>Plots</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DataMining\DataMining.vbproj">
+      <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
+      <Name>DataMining</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

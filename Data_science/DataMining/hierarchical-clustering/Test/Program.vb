@@ -59,6 +59,15 @@ Module Program
 
     Sub test2()
         Dim cluster As Cluster = createSampleCluster()
+        Dim info As New Dictionary(Of String, String) From {
+            {"O1", "green"},
+            {"O2", "green"},
+            {"O3", "blue"},
+            {"O4", "yellow"},
+            {"O5", "red"},
+            {"O6", "red"}
+        }
+
         Dim img = cluster.Plot.AsGDIImage
 
         Call img.SaveAs("./test_v2.png")
