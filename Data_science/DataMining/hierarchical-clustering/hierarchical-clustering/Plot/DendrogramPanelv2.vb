@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Public Class DendrogramPanelV2 : Inherits Plot
 
@@ -21,6 +22,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
     Friend ReadOnly showAllLabels As Boolean
 
     ReadOnly labelFont As Font
+    ReadOnly linkColor As Pen
 
     Public Sub New(hist As Cluster, theme As Theme,
                    Optional classes As ColorClass() = Nothing,
@@ -34,6 +36,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
         Me.classinfo = classinfo
         Me.showAllLabels = showAllLabels
         Me.labelFont = CSSFont.TryParse(theme.tagCSS)
+        Me.linkColor = Stroke.TryParse(theme.gridStroke).GDIObject
     End Sub
 
     Private Function GetColor(id As String) As Color
@@ -62,6 +65,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
         Dim tickLable As String
         Dim tickLabelSize As SizeF
         Dim labelPadding As Integer
+        Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
 
         If classinfo.IsNullOrEmpty Then
             labelPadding = g.MeasureString("0", labelFont).Width / 2
@@ -80,7 +84,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
             g.DrawString(tick, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
         Next
 
-        Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, labelPadding)
+        Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, labelPadding, charWidth)
     End Sub
 
     Private Overloads Sub DendrogramPlot(partition As Cluster,
@@ -90,7 +94,8 @@ Public Class DendrogramPanelV2 : Inherits Plot
                                          i As Integer,
                                          scaleX As d3js.scale.LinearScale,
                                          parentPt As PointF,
-                                         labelPadding As Integer)
+                                         labelPadding As Integer,
+                                         charWidth As Integer)
 
         Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
         Dim x = plotRegion.Right - scaleX(partition.DistanceValue)
@@ -105,8 +110,8 @@ Public Class DendrogramPanelV2 : Inherits Plot
 
         If Not parentPt.IsEmpty Then
             ' 绘制连接线
-            Call g.DrawLine(Pens.Blue, parentPt, New PointF(parentPt.X, y))
-            Call g.DrawLine(Pens.Blue, New PointF(x, y), New PointF(parentPt.X, y))
+            Call g.DrawLine(linkColor, parentPt, New PointF(parentPt.X, y))
+            Call g.DrawLine(linkColor, New PointF(x, y), New PointF(parentPt.X, y))
         End If
 
         Call g.DrawCircle(New PointF(x, y), theme.PointSize, Brushes.Red)
@@ -121,9 +126,10 @@ Public Class DendrogramPanelV2 : Inherits Plot
         If partition.isLeaf Then
             ' 绘制class颜色块
             Dim color As New SolidBrush(GetColor(partition.Name))
+            Dim d As Double = stdNum.Max(charWidth / 2, theme.PointSize)
             Dim layout As New Rectangle With {
-                .Location = New Point(x + theme.PointSize, y - unitWidth / 2),
-                .Size = New Size(labelPadding - theme.PointSize * 1.25, unitWidth)
+                .Location = New Point(x + d, y - unitWidth / 2),
+                .Size = New Size(labelPadding - d * 1.25, unitWidth)
             }
 
             Call g.FillRectangle(color, layout)
@@ -133,7 +139,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
             parentPt = New PointF(x, y)
 
             For Each part As Cluster In orders
-                Call DendrogramPlot(part, unitWidth, g, plotRegion, i + n, scaleX, parentPt, labelPadding)
+                DendrogramPlot(part, unitWidth, g, plotRegion, i + n, scaleX, parentPt, labelPadding, charWidth)
                 n += part.Leafs
             Next
         End If

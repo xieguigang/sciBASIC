@@ -18,14 +18,16 @@ Public Module Dendrogram
                          Optional colorSet$ = DesignerTerms.ClusterCategory10,
                          Optional axisTickCss$ = CSSFont.PlotLabelNormal,
                          Optional labelCss$ = CSSFont.PlotLabelNormal,
-                         Optional pointSize% = 5) As GraphicsData
+                         Optional pointSize% = 5,
+                         Optional linkStroke$ = Stroke.HighlightStroke) As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
             .padding = padding,
             .axisTickCSS = axisTickCss,
             .tagCSS = labelCss,
-            .PointSize = pointSize
+            .PointSize = pointSize,
+            .gridStroke = linkStroke
         }
         Dim colors As ColorClass() = Nothing
 
