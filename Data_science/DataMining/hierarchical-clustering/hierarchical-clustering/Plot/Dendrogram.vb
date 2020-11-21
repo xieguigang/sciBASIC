@@ -12,7 +12,7 @@ Public Module Dendrogram
     <Extension>
     Public Function Plot(hist As Cluster,
                          Optional classinfo As Dictionary(Of String, String) = Nothing,
-                         Optional size$ = "2000,2000",
+                         Optional size$ = "2700,2100",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional colorSet$ = DesignerTerms.ClusterCategory10,

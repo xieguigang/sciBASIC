@@ -18,16 +18,19 @@ Public Class DendrogramPanelV2 : Inherits Plot
     ''' leaf id map to <see cref="ColorClass.name"/>
     ''' </summary>
     Friend ReadOnly classinfo As Dictionary(Of String, String)
+    Friend ReadOnly showAllLabels As Boolean
 
     Public Sub New(hist As Cluster, theme As Theme,
                    Optional classes As ColorClass() = Nothing,
-                   Optional classinfo As Dictionary(Of String, String) = Nothing)
+                   Optional classinfo As Dictionary(Of String, String) = Nothing,
+                   Optional showAllLabels As Boolean = False)
 
         MyBase.New(theme)
 
         Me.hist = hist
         Me.classIndex = classes.SafeQuery.ToDictionary(Function(a) a.name)
         Me.classinfo = classinfo
+        Me.showAllLabels = showAllLabels
     End Sub
 
     Private Function GetColor(id As String) As Color
@@ -96,7 +99,10 @@ Public Class DendrogramPanelV2 : Inherits Plot
         End If
 
         Call g.DrawCircle(New PointF(x, y), 15, Brushes.Red)
-        Call g.DrawString(partition.Name, CSSFont.TryParse(CSSFont.PlotLabelNormal), Brushes.Black, New PointF(x, y))
+
+        If partition.isLeaf OrElse showAllLabels Then
+            Call g.DrawString(partition.Name, CSSFont.TryParse(CSSFont.PlotLabelNormal), Brushes.Black, New PointF(x, y))
+        End If
 
         If partition.isLeaf Then
             ' 绘制class颜色块
