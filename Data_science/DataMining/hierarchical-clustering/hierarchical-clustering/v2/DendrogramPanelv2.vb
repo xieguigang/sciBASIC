@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Class DendrogramPanelv2 : Inherits Plot
@@ -23,7 +24,7 @@ Public Class DendrogramPanelv2 : Inherits Plot
         MyBase.New(theme)
 
         Me.hist = hist
-        Me.classIndex = classes.ToDictionary(Function(a) a.name)
+        Me.classIndex = classes.safequery.ToDictionary(Function(a) a.name)
         Me.classinfo = classinfo
     End Sub
 
@@ -89,7 +90,13 @@ Public Class DendrogramPanelv2 : Inherits Plot
 
         If partition.isLeaf Then
             ' 绘制class颜色块
+            Dim color As New SolidBrush(GetColor(partition.Name))
+            Dim layout As New Rectangle With {
+                .Location = New Point(x, y),
+                .Size = New Size(10, unitWidth)
+            }
 
+            Call g.FillRectangle(color, layout)
         Else
             Dim n As Integer = 0
 

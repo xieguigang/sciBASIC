@@ -68,7 +68,7 @@ Module Program
             {"O6", "red"}
         }
 
-        Dim img = cluster.Plot.AsGDIImage
+        Dim img = cluster.Plot(classinfo:=info).AsGDIImage
 
         Call img.SaveAs("./test_v2.png")
 
