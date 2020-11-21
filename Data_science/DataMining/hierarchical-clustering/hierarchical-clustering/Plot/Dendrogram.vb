@@ -16,12 +16,14 @@ Public Module Dendrogram
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional colorSet$ = DesignerTerms.ClusterCategory10,
-                         Optional axisTickCss$ = CSSFont.PlotLabelNormal) As GraphicsData
+                         Optional axisTickCss$ = CSSFont.PlotLabelNormal,
+                         Optional labelCss$ = CSSFont.PlotLabelNormal) As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
             .padding = padding,
-            .axisTickCSS = axisTickCss
+            .axisTickCSS = axisTickCss,
+            .tagCSS = labelCss
         }
         Dim colors As ColorClass() = Nothing
 

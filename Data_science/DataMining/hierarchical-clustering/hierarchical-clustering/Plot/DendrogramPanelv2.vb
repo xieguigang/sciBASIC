@@ -20,6 +20,8 @@ Public Class DendrogramPanelV2 : Inherits Plot
     Friend ReadOnly classinfo As Dictionary(Of String, String)
     Friend ReadOnly showAllLabels As Boolean
 
+    ReadOnly labelFont As Font
+
     Public Sub New(hist As Cluster, theme As Theme,
                    Optional classes As ColorClass() = Nothing,
                    Optional classinfo As Dictionary(Of String, String) = Nothing,
@@ -31,6 +33,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
         Me.classIndex = classes.SafeQuery.ToDictionary(Function(a) a.name)
         Me.classinfo = classinfo
         Me.showAllLabels = showAllLabels
+        Me.labelFont = CSSFont.TryParse(theme.tagCSS)
     End Sub
 
     Private Function GetColor(id As String) As Color
@@ -101,7 +104,10 @@ Public Class DendrogramPanelV2 : Inherits Plot
         Call g.DrawCircle(New PointF(x, y), 15, Brushes.Red)
 
         If partition.isLeaf OrElse showAllLabels Then
-            Call g.DrawString(partition.Name, CSSFont.TryParse(CSSFont.PlotLabelNormal), Brushes.Black, New PointF(x, y))
+            Dim lsize As SizeF = g.MeasureString(partition.Name, labelFont)
+            Dim lpos As New PointF(x, y - lsize.Height / 2)
+
+            Call g.DrawString(partition.Name, labelFont, Brushes.Black, lpos)
         End If
 
         If partition.isLeaf Then
