@@ -218,20 +218,20 @@ Namespace StorageProvider.Reflection
         ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="Explicit"></param>
+        ''' <param name="strict"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Iterator Function GetsRowData(source As IEnumerable(Of Object), type As Type,
-                        Optional Explicit As Boolean = True,
+                        Optional strict As Boolean = True,
                         Optional maps As Dictionary(Of String, String) = Nothing,
                         Optional parallel As Boolean = True,
                         Optional metaBlank As String = "",
                         Optional reorderKeys As Integer = 0,
                         Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
 
-            For Each row As RowObject In doSave(source, type, Explicit, Nothing, metaBlank,
+            For Each row As RowObject In doSave(source, type, strict, Nothing, metaBlank,
                                                 maps:=maps,
                                                 parallel:=parallel,
                                                 reorderKeys:=reorderKeys,

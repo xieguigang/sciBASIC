@@ -1,52 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::583d38cd65c9661433bbf1ef70cf6744, Data_science\DataMining\hierarchical-clustering\Test\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Program
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: createSampleCluster
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Module Program
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: createSampleCluster
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
@@ -55,7 +57,18 @@ Module Program
         ' VBDebugger.Mute = True
     End Sub
 
+    Sub test2()
+        Dim cluster As Cluster = createSampleCluster()
+        Dim img = cluster.Plot.AsGDIImage
+
+        Call img.SaveAs("./test_v2.png")
+
+        Pause()
+    End Sub
+
     Public Sub Main()
+        Call test2()
+
         Dim cluster As Cluster = createSampleCluster()
         Dim dp As New DendrogramPanel With {
             .LineColor = Color.Blue,

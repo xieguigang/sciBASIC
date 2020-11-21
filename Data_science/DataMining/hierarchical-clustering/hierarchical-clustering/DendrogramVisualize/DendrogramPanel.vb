@@ -145,14 +145,14 @@ Namespace DendrogramVisualize
             Dim comp As ClusterComponent = Nothing
 
             If cluster IsNot Nothing Then
-                Dim leafHeight As Double = clusterHeight / cluster.CountLeafs()
+                Dim leafHeight As Double = clusterHeight / cluster.Leafs()
                 Dim yChild As Double = pt0.Y - (clusterHeight / 2)
                 Dim distance As Double = cluster.DistanceValue
 
                 comp = New ClusterComponent(cluster, cluster.Leaf, pt0)
 
                 For Each child As Cluster In cluster.Children
-                    Dim childLeafCount As Integer = child.CountLeafs()
+                    Dim childLeafCount As Integer = child.Leafs()
                     Dim childHeight As Double = childLeafCount * leafHeight
                     Dim childDistance As Double = child.DistanceValue
                     Dim childInitCoord As New PointF With {
@@ -271,7 +271,7 @@ Namespace DendrogramVisualize
             Dim yFactor As Double = hDisplay / hModel
             Dim xOffset As Integer = CInt(Fix(xDisplayOrigin - xModelOrigin * xFactor))
             Dim yOffset As Integer = CInt(Fix(yDisplayOrigin - yModelOrigin * yFactor))
-            Dim classHeight! = (1 / component.Cluster.CountLeafs) * yFactor
+            Dim classHeight! = (1 / component.Cluster.Leafs) * yFactor
             Dim labels As New List(Of NamedValue(Of PointF))
             Dim colorLegendSize As Size
 

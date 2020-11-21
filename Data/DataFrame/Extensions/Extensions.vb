@@ -67,7 +67,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 
@@ -76,9 +75,6 @@ Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 ''' </summary>
 ''' <remarks></remarks>
 '''
-<Package("IO_Device.Csv.Extensions",
-        Description:="The shortcuts operation for the common csv document operations.",
-        Publisher:="xie.guigang@gmail.com")>
 <HideModuleName>
 Public Module Extensions
 
@@ -584,7 +580,7 @@ Public Module Extensions
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source:=objSeq,
             type:=GetType(T),
-            Explicit:=strict,
+            strict:=strict,
             maps:=maps,
             parallel:=Not nonParallel,
             metaBlank:=metaBlank,

@@ -508,6 +508,8 @@
     <Compile Include="DendrogramVisualize\ClusterComponent.vb" />
     <Compile Include="DendrogramVisualize\DendrogramPanel.vb" />
     <Compile Include="DendrogramVisualize\Paintable.vb" />
+    <Compile Include="v2\DendrogramPanelv2.vb" />
+    <Compile Include="v2\Dendrogram.vb" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -533,6 +535,10 @@
     <ProjectReference Include="..\..\..\..\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Visualization\Plots\Plots.vbproj">
+      <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>
+      <Name>Plots</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

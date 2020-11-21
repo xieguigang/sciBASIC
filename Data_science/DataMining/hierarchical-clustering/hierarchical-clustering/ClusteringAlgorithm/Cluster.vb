@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::2c87377f84f81fca7644f2dc0ff8ecb5, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Cluster
-    ' 
-    '     Properties: Children, Distance, DistanceValue, Leaf, LeafNames
-    '                 Name, Parent, TotalDistance, WeightValue
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: contains, (+2 Overloads) CountLeafs, Equals, GetHashCode, ToString
-    ' 
-    '     Sub: AddChild, AddLeafName, AppendLeafNames
-    ' 
-    ' /********************************************************************************/
+' Class Cluster
+' 
+'     Properties: Children, Distance, DistanceValue, Leaf, LeafNames
+'                 Name, Parent, TotalDistance, WeightValue
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: contains, (+2 Overloads) CountLeafs, Equals, GetHashCode, ToString
+' 
+'     Sub: AddChild, AddLeafName, AppendLeafNames
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
@@ -158,9 +159,13 @@ Public Class Cluster : Implements INamedValue
     ''' 计算出所有的叶节点的总数，包括自己的child的叶节点
     ''' </summary>
     ''' <returns></returns>
-    Public Function CountLeafs() As Integer
-        Return CountLeafs(Me, 0)
-    End Function
+    ''' 
+    Public ReadOnly Property Leafs() As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return CountLeafs(Me, 0)
+        End Get
+    End Property
 
     ''' <summary>
     ''' 对某一个节点的所有的叶节点进行计数
@@ -171,7 +176,7 @@ Public Class Cluster : Implements INamedValue
     Public Shared Function CountLeafs(node As Cluster, count As Integer) As Integer
         If node.Leaf Then count += 1
         For Each child As Cluster In node.Children
-            count += child.CountLeafs()
+            count += child.Leafs()
         Next
         Return count
     End Function
