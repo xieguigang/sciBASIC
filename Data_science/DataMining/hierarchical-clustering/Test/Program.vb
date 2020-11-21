@@ -43,13 +43,10 @@
 
 #End Region
 
-Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
 
@@ -65,7 +62,8 @@ Module Program
             {"O3", "blue"},
             {"O4", "yellow"},
             {"O5", "red"},
-            {"O6", "red"}
+            {"O6", "red"},
+            {"I7", "yellow"}
         }
 
         Dim img = cluster.Plot(classinfo:=info).AsGDIImage
@@ -78,50 +76,51 @@ Module Program
     Public Sub Main()
         Call test2()
 
-        Dim cluster As Cluster = createSampleCluster()
-        Dim dp As New DendrogramPanel With {
-            .LineColor = Color.Blue,
-            .ScaleValueDecimals = 0,
-            .ScaleValueInterval = 1,
-            .Model = cluster,
-            .ClassTable = New Dictionary(Of String, String) From {
-                {"O1", "green"},
-                {"O2", "green"},
-                {"O3", "blue"},
-                {"O4", "yellow"},
-                {"O5", "red"},
-                {"O6", "red"}
-            }
-        }
+        'Dim cluster As Cluster = createSampleCluster()
+        'Dim dp As New DendrogramPanel With {
+        '    .LineColor = Color.Blue,
+        '    .ScaleValueDecimals = 0,
+        '    .ScaleValueInterval = 1,
+        '    .Model = cluster,
+        '    .ClassTable = New Dictionary(Of String, String) From {
+        '        {"O1", "green"},
+        '        {"O2", "green"},
+        '        {"O3", "blue"},
+        '        {"O4", "yellow"},
+        '        {"O5", "red"},
+        '        {"O6", "red"}
+        '    }
+        '}
 
-        Using g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
-            Call dp.Paint(g, New Rectangle(300, 100, 500, 500), layout:=Layouts.Vertical).GetJson(True).__DEBUG_ECHO
-            Call g.Save("../../dendrogram-visualize-vertical.png", ImageFormats.Png)
-        End Using
+        'Using g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
+        '    Call dp.Paint(g, New Rectangle(300, 100, 500, 500), layout:=Layouts.Vertical).GetJson(True).__DEBUG_ECHO
+        '    Call g.Save("../../dendrogram-visualize-vertical.png", ImageFormats.Png)
+        'End Using
 
-        Using g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
+        'Using g As Graphics2D = New Size(1024, 768).CreateGDIDevice(filled:=Color.White)
 
-            dp.ShowScale = False
-            dp.ShowDistanceValues = False
-            dp.Debug = True
+        '    dp.ShowScale = False
+        '    dp.ShowDistanceValues = False
+        '    dp.Debug = True
 
-            Call dp.Paint(g, New Rectangle(100, 100, 800, 600), layout:=Layouts.Horizon).GetJson(True).__DEBUG_ECHO
-            Call g.Save("../../dendrogram-visualize-horizon.png", ImageFormats.Png)
-        End Using
+        '    Call dp.Paint(g, New Rectangle(100, 100, 800, 600), layout:=Layouts.Horizon).GetJson(True).__DEBUG_ECHO
+        '    Call g.Save("../../dendrogram-visualize-horizon.png", ImageFormats.Png)
+        'End Using
 
-        Pause()
+        'Pause()
     End Sub
 
     Private Function createSampleCluster() As Cluster
         Dim distances = {
-            {0#, 1, 9, 7, 11, 14},
-            {1, 0, 4, 3, 8, 10},
-            {9, 4, 0, 9, 2, 8},
-            {7, 3, 9, 0, 6, 13},
-            {11, 8, 2, 6, 0, 10},
-            {14, 10, 8, 13, 10, 0}
+            {0#, 1, 9, 7, 11, 14, 8},
+            {1, 0, 4, 3, 8, 10, 9},
+            {9, 4, 0, 9, 2, 8, 8},
+            {7, 3, 9, 0, 6, 13, 0},
+            {11, 8, 2, 6, 0, 10, 9},
+            {14, 10, 8, 13, 10, 0, 100},
+            {14, 10, 8, 13, 10, 1, 10}
         }
-        Dim names$() = {"O1", "O2", "O3", "O4", "O5", "O6"}
+        Dim names$() = {"O1", "O2", "O3", "O4", "O5", "O6", "I7"}
         Dim alg As ClusteringAlgorithm = New DefaultClusteringAlgorithm
         Dim cluster As Cluster = alg.performClustering(
             distances.RowIterator.ToArray,
