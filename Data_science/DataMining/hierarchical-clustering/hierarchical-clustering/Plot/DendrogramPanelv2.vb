@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
-Public Class DendrogramPanelv2 : Inherits Plot
+Public Class DendrogramPanelV2 : Inherits Plot
 
     Friend ReadOnly hist As Cluster
     Friend ReadOnly layout As Layouts
@@ -19,11 +19,14 @@ Public Class DendrogramPanelv2 : Inherits Plot
     ''' </summary>
     Friend ReadOnly classinfo As Dictionary(Of String, String)
 
-    Public Sub New(hist As Cluster, theme As Theme, Optional classes As ColorClass() = Nothing, Optional classinfo As Dictionary(Of String, String) = Nothing)
+    Public Sub New(hist As Cluster, theme As Theme,
+                   Optional classes As ColorClass() = Nothing,
+                   Optional classinfo As Dictionary(Of String, String) = Nothing)
+
         MyBase.New(theme)
 
         Me.hist = hist
-        Me.classIndex = classes.safequery.ToDictionary(Function(a) a.name)
+        Me.classIndex = classes.SafeQuery.ToDictionary(Function(a) a.name)
         Me.classinfo = classinfo
     End Sub
 
@@ -47,13 +50,21 @@ Public Class DendrogramPanelv2 : Inherits Plot
         Dim right = plotRegion.Right - scaleX(0)
         Dim y = unitWidth / 3
         Dim x!
+        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS)
+        Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
+        Dim dh As Double = tickFontHeight / 3
+        Dim tickLable As String
+        Dim tickLabelSize As SizeF
 
         Call g.DrawLine(Pens.Black, New PointF(left, y), New PointF(right, y))
 
-        For Each tick As Double In axisTicks
+        For Each tick As Double In axisTicks.Take(axisTicks.Length - 1)
             x = plotRegion.Right - scaleX(tick)
-            g.DrawLine(Pens.Black, New PointF(x, y), New PointF(x, y - 20))
-            g.DrawString(tick, CSSFont.TryParse(CSSFont.PlotLabelNormal), Brushes.Black, New PointF(x, y - 20))
+            tickLable = tick.ToString
+            tickLabelSize = g.MeasureString(tickLable, tickFont)
+
+            g.DrawLine(Pens.Black, New PointF(x, y), New PointF(x, y - dh))
+            g.DrawString(tick, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
         Next
 
         Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing)

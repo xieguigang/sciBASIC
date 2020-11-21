@@ -505,7 +505,7 @@
     <Compile Include="HierarchyBuilder\HierarchyBuilder.vb" />
     <Compile Include="ClusteringAlgorithm\LinkageStrategy.vb" />
     <Compile Include="ClusteringAlgorithm\PDistClusteringAlgorithm.vb" />
-    <Compile Include="Plot\DendrogramPanelv2.vb" />
+    <Compile Include="Plot\DendrogramPanelV2.vb" />
     <Compile Include="Plot\Dendrogram.vb" />
   </ItemGroup>
   <ItemGroup />
