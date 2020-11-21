@@ -97,6 +97,12 @@ Namespace Graphic.Canvas
         ''' <returns></returns>
         Public Property tagCSS As String
         ''' <summary>
+        ''' 数据点的大小值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property PointSize As Integer
+
+        ''' <summary>
         ''' X坐标轴的布局
         ''' </summary>
         ''' <returns></returns>

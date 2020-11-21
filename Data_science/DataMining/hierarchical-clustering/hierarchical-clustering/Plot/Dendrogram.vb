@@ -17,13 +17,15 @@ Public Module Dendrogram
                          Optional bg$ = "white",
                          Optional colorSet$ = DesignerTerms.ClusterCategory10,
                          Optional axisTickCss$ = CSSFont.PlotLabelNormal,
-                         Optional labelCss$ = CSSFont.PlotLabelNormal) As GraphicsData
+                         Optional labelCss$ = CSSFont.PlotLabelNormal,
+                         Optional pointSize% = 5) As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
             .padding = padding,
             .axisTickCSS = axisTickCss,
-            .tagCSS = labelCss
+            .tagCSS = labelCss,
+            .PointSize = pointSize
         }
         Dim colors As ColorClass() = Nothing
 
@@ -31,7 +33,15 @@ Public Module Dendrogram
             Dim classNames = classinfo.Values.Distinct.ToArray
             Dim colorList = Designer.GetColors(colorSet).AsLoop
 
-            colors = classNames.Select(Function(name, i) New ColorClass With {.color = colorList.Next.ToHtmlColor, .enumInt = i, .name = name}).ToArray
+            colors = classNames _
+                .Select(Function(name, i)
+                            Return New ColorClass With {
+                                .color = colorList.Next.ToHtmlColor,
+                                .enumInt = i,
+                                .name = name
+                            }
+                        End Function) _
+                .ToArray
         End If
 
         Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size)

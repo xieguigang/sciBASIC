@@ -54,13 +54,20 @@ Public Class DendrogramPanelV2 : Inherits Plot
         ' 绘制距离标尺
         Dim left = plotRegion.Right - scaleX(hist.DistanceValue)
         Dim right = plotRegion.Right - scaleX(0)
-        Dim y = unitWidth / 3
+        Dim y = unitWidth - unitWidth * 0.1
         Dim x!
         Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS)
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
         Dim tickLable As String
         Dim tickLabelSize As SizeF
+        Dim labelPadding As Integer
+
+        If classinfo.IsNullOrEmpty Then
+            labelPadding = g.MeasureString("0", labelFont).Width / 2
+        Else
+            labelPadding = g.MeasureString("00", labelFont).Width
+        End If
 
         Call g.DrawLine(Pens.Black, New PointF(left, y), New PointF(right, y))
 
@@ -73,7 +80,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
             g.DrawString(tick, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
         Next
 
-        Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing)
+        Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, labelPadding)
     End Sub
 
     Private Overloads Sub DendrogramPlot(partition As Cluster,
@@ -82,17 +89,18 @@ Public Class DendrogramPanelV2 : Inherits Plot
                                          plotRegion As Rectangle,
                                          i As Integer,
                                          scaleX As d3js.scale.LinearScale,
-                                         parentPt As PointF)
+                                         parentPt As PointF,
+                                         labelPadding As Integer)
 
         Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
         Dim x = plotRegion.Right - scaleX(partition.DistanceValue)
         Dim y As Integer
 
         If partition.isLeaf Then
-            y = i * unitWidth + unitWidth / 2
+            y = i * unitWidth + unitWidth
         Else
             ' 连接节点在中间？
-            y = i * unitWidth + (partition.Leafs * unitWidth) / 2
+            y = (i + 0.5) * unitWidth + (partition.Leafs * unitWidth) / 2
         End If
 
         If Not parentPt.IsEmpty Then
@@ -101,11 +109,11 @@ Public Class DendrogramPanelV2 : Inherits Plot
             Call g.DrawLine(Pens.Blue, New PointF(x, y), New PointF(parentPt.X, y))
         End If
 
-        Call g.DrawCircle(New PointF(x, y), 15, Brushes.Red)
+        Call g.DrawCircle(New PointF(x, y), theme.PointSize, Brushes.Red)
 
         If partition.isLeaf OrElse showAllLabels Then
             Dim lsize As SizeF = g.MeasureString(partition.Name, labelFont)
-            Dim lpos As New PointF(x, y - lsize.Height / 2)
+            Dim lpos As New PointF(x + labelPadding, y - lsize.Height / 2)
 
             Call g.DrawString(partition.Name, labelFont, Brushes.Black, lpos)
         End If
@@ -114,8 +122,8 @@ Public Class DendrogramPanelV2 : Inherits Plot
             ' 绘制class颜色块
             Dim color As New SolidBrush(GetColor(partition.Name))
             Dim layout As New Rectangle With {
-                .Location = New Point(x, y),
-                .Size = New Size(10, unitWidth)
+                .Location = New Point(x + theme.PointSize, y - unitWidth / 2),
+                .Size = New Size(labelPadding - theme.PointSize * 1.25, unitWidth)
             }
 
             Call g.FillRectangle(color, layout)
@@ -125,7 +133,7 @@ Public Class DendrogramPanelV2 : Inherits Plot
             parentPt = New PointF(x, y)
 
             For Each part As Cluster In orders
-                Call DendrogramPlot(part, unitWidth, g, plotRegion, i + n, scaleX, parentPt)
+                Call DendrogramPlot(part, unitWidth, g, plotRegion, i + n, scaleX, parentPt, labelPadding)
                 n += part.Leafs
             Next
         End If
