@@ -78,6 +78,10 @@ Public Class Cluster : Implements INamedValue
         End Get
     End Property
 
+    ''' <summary>
+    ''' value of <see cref="Distance"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property DistanceValue As Double
         Get
             Return Distance.Distance
@@ -149,7 +153,11 @@ Public Class Cluster : Implements INamedValue
         Return If(Name Is Nothing, 0, Name.GetHashCode())
     End Function
 
-    Public ReadOnly Property Leaf As Boolean
+    ''' <summary>
+    ''' 是否是一个叶节点？
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property isLeaf As Boolean
         Get
             Return Children.Count = 0
         End Get
@@ -174,7 +182,7 @@ Public Class Cluster : Implements INamedValue
     ''' <param name="count"></param>
     ''' <returns></returns>
     Public Shared Function CountLeafs(node As Cluster, count As Integer) As Integer
-        If node.Leaf Then count += 1
+        If node.isLeaf Then count += 1
         For Each child As Cluster In node.Children
             count += child.Leafs()
         Next

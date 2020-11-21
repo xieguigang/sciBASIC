@@ -184,7 +184,7 @@ Namespace DendrogramVisualize
 
                 g.DrawLine(.stroke, x1, y1, x2, y2)
 
-                If Cluster.Leaf Then
+                If Cluster.isLeaf Then
 
                     ' 如果目标是叶节点才会进行标签字符串的绘制操作
                     Dim nx!
@@ -269,7 +269,7 @@ Namespace DendrogramVisualize
 
         Private Function getNameWidth(g As IGraphics, labelFont As Font, includeNonLeafs As Boolean) As Integer
             Dim width As Integer = 0
-            If includeNonLeafs OrElse Cluster.Leaf Then
+            If includeNonLeafs OrElse Cluster.isLeaf Then
                 Dim rect As RectangleF = g.FontMetrics(labelFont).GetStringBounds(Cluster.Name)
                 width = CInt(Fix(rect.Width))
             End If

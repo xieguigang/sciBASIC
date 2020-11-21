@@ -8,9 +8,10 @@ Public Module Dendrogram
     <Extension>
     Public Function Plot(hist As Cluster, Optional size$ = "2000,2000", Optional padding$ = g.DefaultPadding, Optional bg$ = "white") As GraphicsData
         Dim theme As New Theme With {
-            .background = bg
+            .background = bg,
+            .padding = padding
         }
 
-        Return New DendrogramPanelv2(hist, theme).Plot(size, padding)
+        Return New DendrogramPanelv2(hist, theme).Plot(size)
     End Function
 End Module

@@ -149,7 +149,7 @@ Namespace DendrogramVisualize
                 Dim yChild As Double = pt0.Y - (clusterHeight / 2)
                 Dim distance As Double = cluster.DistanceValue
 
-                comp = New ClusterComponent(cluster, cluster.Leaf, pt0)
+                comp = New ClusterComponent(cluster, cluster.isLeaf, pt0)
 
                 For Each child As Cluster In cluster.Children
                     Dim childLeafCount As Integer = child.Leafs()
