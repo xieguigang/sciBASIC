@@ -62,7 +62,9 @@ Module Program
             {"O3", "blue"},
             {"O4", "yellow"},
             {"O5", "red"},
-            {"O6", "red"}
+            {"O6", "red"},
+            {"i7", "red"},
+            {"i8", "yellow"}
         }
 
         Dim img = cluster.Plot(classinfo:=info).AsGDIImage
@@ -111,14 +113,16 @@ Module Program
 
     Private Function createSampleCluster() As Cluster
         Dim distances = {
-            {0#, 1, 9, 7, 11, 14},
-            {1, 0, 4, 3, 8, 10},
-            {9, 4, 0, 9, 2, 8},
-            {7, 3, 9, 0, 6, 13},
-            {11, 8, 2, 6, 0, 10},
-            {14, 10, 8, 13, 10, 0}
+            {0#, 1, 9, 7, 11, 14, 10, 35},
+            {1, 0, 4, 3, 8, 10, 10, 55},
+            {9, 4, 0, 9, 2, 8, 10, 0},
+            {7, 3, 9, 0, 6, 13, 10, 0},
+            {11, 8, 2, 6, 0, 10, 10, 0},
+            {14, 10, 8, 13, 10, 0, 30, 0},
+            {14, 10, 8, 13, 10, 0, 40, 5},
+            {1, 0, 4, 3, 8, 10, 10, 50}
         }
-        Dim names$() = {"O1", "O2", "O3", "O4", "O5", "O6"}
+        Dim names$() = {"O1", "O2", "O3", "O4", "O5", "O6", "i7", "i8"}
         Dim alg As ClusteringAlgorithm = New DefaultClusteringAlgorithm
         Dim cluster As Cluster = alg.performClustering(
             distances.RowIterator.ToArray,

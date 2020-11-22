@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::31bdfe45d9eb0040e42038f1e0760f28, Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class DistanceMatrix
-    ' 
-    '     Properties: keys, size
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: CreateMatrix, PopulateRowObjects, PopulateRows, ToString, Visit
-    ' 
-    ' /********************************************************************************/
+' Class DistanceMatrix
+' 
+'     Properties: keys, size
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Function: CreateMatrix, PopulateRowObjects, PopulateRows, ToString, Visit
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -60,7 +61,7 @@ Public Class DistanceMatrix
     ''' <summary>
     ''' is correlation matrix or distance matrix
     ''' </summary>
-    ReadOnly is_dist As Boolean = True
+    Public ReadOnly Property is_dist As Boolean = True
 
     Default Public Property dist(a$, b$) As Double
         Get
@@ -116,6 +117,18 @@ Public Class DistanceMatrix
             Throw New InvalidConstraintException("the given member names is not equals to the matrix size!")
         End If
     End Sub
+
+    Public Function GetQuantile(reverse As Boolean) As QuantileEstimationGK
+        If reverse Then
+            Dim data = matrix.IteratesALL.ToArray
+            Dim max = data.Max
+            Dim reverse_data = data.Select(Function(x) max - x).ToArray
+
+            Return reverse_data.GKQuantile
+        Else
+            Return matrix.IteratesALL.GKQuantile
+        End If
+    End Function
 
     Public Function Visit(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(projectName As String, direction As MatrixVisit) As DataSet
         Dim v As New DataSet With {.Key = projectName}

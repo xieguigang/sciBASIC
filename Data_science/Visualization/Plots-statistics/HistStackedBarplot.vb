@@ -80,7 +80,7 @@ Public Module HistStackedBarplot
     ''' <param name="size$"></param>
     ''' <param name="margin$"></param>
     ''' <param name="treeWidth#">假若这个宽度值在[0-1]之之间，则认为是百分比，反之当这个宽度值超过了1，则认为是实际的像素值</param>
-    ''' <param name="sampleGroup"><see cref="DendrogramPanel.ClassTable"/></param>
+    ''' <param name="sampleGroup"><see cref="DendrogramPanelV2.classinfo"/></param>
     ''' <returns></returns>
     Public Function Plot(data As BarDataGroup,
                          Optional size$ = "2700,2100",

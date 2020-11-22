@@ -125,6 +125,7 @@ Namespace Hierarchy
             cluster.AppendLeafNames(Right.LeafNames)
             cluster.AddChild(Left)
             cluster.AddChild(Right)
+
             Left.Parent = cluster
             Right.Parent = cluster
 

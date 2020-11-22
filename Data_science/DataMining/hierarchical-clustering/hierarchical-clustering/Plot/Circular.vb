@@ -5,17 +5,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports stdNum = System.Math
 
-''' <summary>
-''' 绘制层次聚类图
-''' </summary>
-Public Class DendrogramPanelV2 : Inherits DendrogramPanel
-
-    Protected Friend ReadOnly layout As Layouts
+Public Class Circular : Inherits DendrogramPanel
 
     Public Sub New(hist As Cluster, theme As Theme,
                    Optional classes As ColorClass() = Nothing,
@@ -27,19 +20,11 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
         MyBase.New(hist, theme, classes, classinfo, showAllLabels, showAllNodes, pointColor)
     End Sub
 
-    Dim labels As New List(Of NamedValue(Of PointF))
-
-    Public Function Paint(g As IGraphics, layout As Rectangle) As IEnumerable(Of NamedValue(Of PointF))
-        Call labels.Clear()
-        Call PlotInternal(g, EvaluateLayout(g, layout))
-
-        Return labels
-    End Function
-
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim plotRegion As Rectangle = canvas.PlotRegion
+        Dim plotRegion = canvas.PlotRegion
+        Dim maxRadius As Double = stdNum.Min(plotRegion.Width, plotRegion.Height) / 2
         ' 每一个样本点都平分一段长度
-        Dim unitWidth As Double = plotRegion.Height / hist.Leafs
+        Dim unitAngle As Double = (2 * stdNum.PI) / hist.Leafs
         Dim axisTicks As Double()
 
         If hist.DistanceValue <= 0.1 Then
@@ -48,15 +33,15 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
         End If
 
-        Dim scaleX As d3js.scale.LinearScale = d3js.scale _
+        Dim scaleR As d3js.scale.LinearScale = d3js.scale _
             .linear() _
             .domain(axisTicks) _
-            .range(integers:={plotRegion.Left, plotRegion.Right})
+            .range(integers:={0, maxRadius})
 
         ' 绘制距离标尺
-        Dim left = plotRegion.Left + plotRegion.Right - scaleX(axisTicks.Max)
-        Dim right = plotRegion.Left + plotRegion.Right - scaleX(0)
-        Dim y = plotRegion.Top + unitWidth - unitWidth / 2
+        Dim outer = plotRegion.Left + plotRegion.Right - scaleR(axisTicks.Max)
+        Dim inner = plotRegion.Left + plotRegion.Right - scaleR(0)
+        Dim y = plotRegion.Top + unitAngle - unitAngle / 2
         Dim x!
         Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS)
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
@@ -73,10 +58,10 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             labelPadding = g.MeasureString("00", labelFont).Width
         End If
 
-        Call g.DrawLine(axisPen, New PointF(left, y), New PointF(right, y))
+        Call g.DrawLine(axisPen, New PointF(outer, y), New PointF(inner, y))
 
         For Each tick As Double In axisTicks
-            x = plotRegion.Left + plotRegion.Right - scaleX(tick)
+            x = plotRegion.Left + plotRegion.Right - scaleR(tick)
             tickLable = tick.ToString(theme.axisTickFormat)
             tickLabelSize = g.MeasureString(tickLable, tickFont)
 
@@ -84,7 +69,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             g.DrawString(tickLable, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
         Next
 
-        Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, labelPadding, charWidth)
+        Call DendrogramPlot(hist, unitAngle, g, plotRegion, 0, scaleR, Nothing, labelPadding, charWidth)
     End Sub
 
     Private Overloads Sub DendrogramPlot(partition As Cluster,

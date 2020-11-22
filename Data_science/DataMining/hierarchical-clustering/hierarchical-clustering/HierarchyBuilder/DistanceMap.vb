@@ -113,15 +113,16 @@ Namespace Hierarchy
 
         Public Function ToList() As IList(Of HierarchyTreeNode)
             Dim l As New List(Of HierarchyTreeNode)
+
             For Each clusterPair As HierarchyLink In data
                 l.Add(clusterPair.Tree)
             Next
+
             Return l
         End Function
 
         Public Function FindByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
-            Dim inCode As String = hashCodePair(c1, c2)
-            Return linkTable(inCode).Tree
+            Return linkTable(hashCodePair(c1, c2)).Tree
         End Function
 
         Public Function RemoveFirst() As HierarchyTreeNode

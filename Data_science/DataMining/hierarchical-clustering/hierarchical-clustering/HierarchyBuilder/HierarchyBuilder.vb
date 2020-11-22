@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::2f7665102698526e5269de898c7f7e67, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HierarchyBuilder
-    ' 
-    '         Properties: Clusters, Distances, First, RootCluster, TreeComplete
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: findByClusters, flatAgg
-    ' 
-    '         Sub: Agglomerate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HierarchyBuilder
+' 
+'         Properties: Clusters, Distances, First, RootCluster, TreeComplete
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: findByClusters, flatAgg
+' 
+'         Sub: Agglomerate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,8 @@
 ' limitations under the License.
 ' *****************************************************************************
 '
+
+Imports System.Runtime.CompilerServices
 
 Namespace Hierarchy
 
@@ -147,11 +149,11 @@ Namespace Hierarchy
             Dim oldClusterL As Cluster = minDistLink.Left()
             Dim oldClusterR As Cluster = minDistLink.Right()
             Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
+            Dim distanceValues As New List(Of Distance)
 
             For Each iClust As Cluster In Clusters
                 Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
                 Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
-                Dim distanceValues As New List(Of Distance)
 
                 If link1 IsNot Nothing Then
                     Dim distVal As Double = link1.LinkageDistance
@@ -175,6 +177,7 @@ Namespace Hierarchy
                         .Distance
                 }
 
+                Call distanceValues.Clear()
                 Call Distances.Add(newLinkage, direct:=True)
             Next
 
@@ -182,6 +185,7 @@ Namespace Hierarchy
             Call Clusters.Add(newCluster)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function findByClusters(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Return Distances.FindByCodePair(c1, c2)
         End Function

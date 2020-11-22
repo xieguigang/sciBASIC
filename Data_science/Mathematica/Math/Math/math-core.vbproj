@@ -756,6 +756,7 @@
     <Compile Include="Numerics\UncheckedInteger.vb" />
     <Compile Include="Numerics\Half.vb" />
     <Compile Include="Numerics\HalfHelper.vb" />
+    <Compile Include="Quantile\FastRankQuantile.vb" />
     <Compile Include="Quantile\DataQuartile.vb" />
     <Compile Include="Scripting\Aggregate\Aggregate.vb" />
     <Compile Include="Scripting\Expression\ExpressionCompiler.vb" />

@@ -45,9 +45,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 '
 '   Copyright 2012 Andrew Wang (andrew@umbrant.com)
@@ -67,6 +65,10 @@ Imports sys = System.Math
 
 Namespace Quantile
 
+    Public Interface QuantileQuery
+        Function Query(quantile#) As Double
+    End Interface
+
     ''' <summary>
     ''' Implementation of the Greenwald and Khanna algorithm for streaming
     ''' calculation of epsilon-approximate quantiles.
@@ -75,7 +77,7 @@ Namespace Quantile
     ''' 
     ''' > Greenwald and Khanna, "Space-efficient online computation of quantile summaries" in SIGMOD 2001
     ''' </summary>
-    Public Class QuantileEstimationGK
+    Public Class QuantileEstimationGK : Implements QuantileQuery
 
         ''' <summary>
         ''' Acceptable % error in percentile estimate
@@ -89,6 +91,8 @@ Namespace Quantile
         ''' Threshold to trigger a compaction
         ''' </summary>
         ReadOnly compact_size As Integer
+
+        Dim sample As New List(Of X)
 
         ''' <summary>
         ''' Implementation of the Greenwald and Khanna algorithm for streaming
@@ -107,13 +111,8 @@ Namespace Quantile
             End If
         End Sub
 
-        Dim sample As New List(Of X)
-
         Public Overrides Function ToString() As String
-            Return seq(0, 1, 0.25) _
-                .ToDictionary(Function(pct) (100 * pct).ToString("F2") & "%",
-                              Function(pct) Query(pct).ToString("F2")) _
-                .GetJson
+            Return Me.debugView
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -132,8 +131,11 @@ Namespace Quantile
             Dim idx As Integer = 0
 
             For Each i As X In sample
-                If i.value > v Then Exit For
-                idx += 1
+                If i.value > v Then
+                    Exit For
+                Else
+                    idx += 1
+                End If
             Next
 
             Dim delta As Integer
@@ -141,7 +143,7 @@ Namespace Quantile
             If idx = 0 OrElse idx = sample.Count Then
                 delta = 0
             Else
-                delta = CInt(Fix(sys.Floor(2 * epsilon * count)))
+                delta = CInt(Fix(stdNum.Floor(2 * epsilon * count)))
             End If
 
             Call sample.Insert(idx, New X(v, 1, delta))
@@ -166,7 +168,7 @@ Namespace Quantile
 
                 ' Merge the items together if we don't need it to maintain the
                 ' error bound
-                If x.g + x1.g + x1.delta <= sys.Floor(2 * epsilon * count) Then
+                If x.g + x1.g + x1.delta <= stdNum.Floor(2 * epsilon * count) Then
                     x1.g += x.g
                     sample.RemoveAt(i)
                     removed += 1
@@ -179,7 +181,7 @@ Namespace Quantile
         ''' </summary>
         ''' <param name="quantile#">``[0,1]``之间的百分比值</param>
         ''' <returns>阈值</returns>
-        Public Function Query(quantile#) As Double
+        Public Function Query(quantile#) As Double Implements QuantileQuery.Query
             Dim rankMin As Integer = 0
             Dim desired As Integer = CInt(Fix(quantile * count))
 

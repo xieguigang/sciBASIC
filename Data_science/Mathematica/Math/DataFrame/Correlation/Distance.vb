@@ -45,6 +45,12 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Public Module Distance
 
+    ''' <summary>
+    ''' 使用欧式距离构建出一个距离矩阵
+    ''' </summary>
+    ''' <typeparam name="DataSet"></typeparam>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Euclidean(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As DistanceMatrix
         Return data.MatrixBuilder(AddressOf EuclideanDistance, True)

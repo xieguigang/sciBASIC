@@ -97,6 +97,38 @@ Public Class Cluster : Implements INamedValue
     Public ReadOnly Property Children As IList(Of Cluster)
     Public ReadOnly Property LeafNames As List(Of String)
 
+    ''' <summary>
+    ''' 是否是一个叶节点？
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property isLeaf As Boolean
+        Get
+            Return Children.Count = 0
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 计算出所有的叶节点的总数，包括自己的child的叶节点
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    Public ReadOnly Property Leafs() As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return CountLeafs(Me, 0)
+        End Get
+    End Property
+
+    Public ReadOnly Property TotalDistance As Double
+        Get
+            Dim dist As Double = If(Distance Is Nothing, 0, Distance.Distance)
+            If Children.Count > 0 Then
+                dist += Children(0).TotalDistance
+            End If
+            Return dist
+        End Get
+    End Property
+
     Public Sub New(name$)
         Me.Name = name
         LeafNames = New List(Of String)
@@ -121,7 +153,11 @@ Public Class Cluster : Implements INamedValue
     End Function
 
     Public Overrides Function ToString() As String
-        Return "Cluster " & Name
+        If isLeaf Then
+            Return "Leaf " & Name
+        Else
+            Return "Cluster " & Name
+        End If
     End Function
 
     Public Overrides Function Equals(obj As Object) As Boolean
@@ -154,28 +190,6 @@ Public Class Cluster : Implements INamedValue
     End Function
 
     ''' <summary>
-    ''' 是否是一个叶节点？
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property isLeaf As Boolean
-        Get
-            Return Children.Count = 0
-        End Get
-    End Property
-
-    ''' <summary>
-    ''' 计算出所有的叶节点的总数，包括自己的child的叶节点
-    ''' </summary>
-    ''' <returns></returns>
-    ''' 
-    Public ReadOnly Property Leafs() As Integer
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return CountLeafs(Me, 0)
-        End Get
-    End Property
-
-    ''' <summary>
     ''' 对某一个节点的所有的叶节点进行计数
     ''' </summary>
     ''' <param name="node"></param>
@@ -188,14 +202,4 @@ Public Class Cluster : Implements INamedValue
         Next
         Return count
     End Function
-
-    Public ReadOnly Property TotalDistance As Double
-        Get
-            Dim dist As Double = If(Distance Is Nothing, 0, Distance.Distance)
-            If Children.Count > 0 Then
-                dist += Children(0).TotalDistance
-            End If
-            Return dist
-        End Get
-    End Property
 End Class

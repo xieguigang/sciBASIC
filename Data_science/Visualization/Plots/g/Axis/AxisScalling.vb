@@ -60,6 +60,19 @@ Namespace Graphic.Axis
             Return data.Range.CreateAxisTicks(ticks, decimalDigits)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <param name="ticks%"></param>
+        ''' <param name="decimalDigits">
+        ''' if the value range its max value is a very small positive number, 
+        ''' then you should set this parameter to -1!
+        ''' </param>
+        ''' <param name="w_steps#"></param>
+        ''' <param name="w_min#"></param>
+        ''' <param name="w_max#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CreateAxisTicks(range As DoubleRange,

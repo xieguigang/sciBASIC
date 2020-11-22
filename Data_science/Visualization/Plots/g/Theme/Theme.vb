@@ -123,6 +123,7 @@ Namespace Graphic.Canvas
         ''' <returns></returns>
         Public Property axisTickCSS As String
         Public Property axisStroke As String
+        Public Property axisTickFormat As String = "F2"
 
         ''' <summary>
         ''' 是否显示图例
