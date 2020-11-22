@@ -60,6 +60,11 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         Public Property Angle As Single
 
+        Sub New(Optional radius As Double = 0, Optional angle As Double = 0)
+            Me.Angle = angle
+            Me.Radius = radius
+        End Sub
+
 #If NET_48 Then
 
         ''' <summary>
