@@ -4,44 +4,27 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports stdNum = System.Math
 
-''' <summary>
-''' 绘制层次聚类图
-''' </summary>
-Public Class DendrogramPanelV2 : Inherits DendrogramPanel
-
-    Protected showRuler As Boolean = True
-    Protected labels As New List(Of NamedValue(Of PointF))
+Public Class Horizon : Inherits DendrogramPanelV2
 
     Public Sub New(hist As Cluster, theme As Theme,
-                   Optional classes As ColorClass() = Nothing,
+                   Optional classes() As ColorClass = Nothing,
                    Optional classinfo As Dictionary(Of String, String) = Nothing,
                    Optional showAllLabels As Boolean = False,
                    Optional showAllNodes As Boolean = False,
-                   Optional pointColor$ = "red",
+                   Optional pointColor As String = "red",
                    Optional showRuler As Boolean = True)
 
-        MyBase.New(hist, theme, classes, classinfo, showAllLabels, showAllNodes, pointColor)
-
-        Me.showRuler = showRuler
+        MyBase.New(hist, theme, classes, classinfo, showAllLabels, showAllNodes, pointColor, showRuler)
     End Sub
 
-    Public Function Paint(g As IGraphics, layout As Rectangle) As IEnumerable(Of NamedValue(Of PointF))
-        Call labels.Clear()
-        Call PlotInternal(g, EvaluateLayout(g, layout))
-
-        Return labels
-    End Function
-
-    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As Imaging.Drawing2D.GraphicsRegion)
         Dim plotRegion As Rectangle = canvas.PlotRegion
         ' 每一个样本点都平分一段长度
-        Dim unitWidth As Double = plotRegion.Height / hist.Leafs
+        Dim unitWidth As Double = plotRegion.Width / hist.Leafs
         Dim axisTicks As Double()
 
         If hist.DistanceValue <= 0.1 Then
@@ -50,16 +33,16 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
         End If
 
-        Dim scaleX As d3js.scale.LinearScale = d3js.scale _
+        Dim scaleY As d3js.scale.LinearScale = d3js.scale _
             .linear() _
             .domain(axisTicks) _
-            .range(integers:={plotRegion.Left, plotRegion.Right})
+            .range(integers:={plotRegion.Top, plotRegion.Bottom})
 
         ' 绘制距离标尺
-        Dim left = plotRegion.Left + plotRegion.Right - scaleX(axisTicks.Max)
-        Dim right = plotRegion.Left + plotRegion.Right - scaleX(0)
-        Dim y = plotRegion.Top + unitWidth - unitWidth / 2
-        Dim x!
+        Dim top = plotRegion.Top + plotRegion.Bottom - scaleY(axisTicks.Max)
+        Dim bottom = plotRegion.Top + plotRegion.Bottom - scaleY(0)
+        Dim x = plotRegion.Left + unitWidth - unitWidth / 2
+        Dim y!
         Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS)
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
@@ -75,49 +58,49 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             labelPadding = g.MeasureString("00", labelFont).Width
         End If
 
-        Call g.DrawLine(axisPen, New PointF(left, y), New PointF(right, y))
+        Call g.DrawLine(axisPen, New PointF(x, top), New PointF(x, bottom))
 
         For Each tick As Double In axisTicks
-            x = plotRegion.Left + plotRegion.Right - scaleX(tick)
+            y = plotRegion.Top + plotRegion.Bottom - scaleY(tick)
             tickLable = tick.ToString(theme.axisTickFormat)
             tickLabelSize = g.MeasureString(tickLable, tickFont)
 
-            g.DrawLine(axisPen, New PointF(x, y), New PointF(x, y - dh))
+            g.DrawLine(axisPen, New PointF(x, y), New PointF(x - dh, y))
             g.DrawString(tickLable, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
         Next
 
-        Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, labelPadding, charWidth)
+        Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleY, Nothing, labelPadding, charWidth)
     End Sub
 
-    Protected Overridable Overloads Sub DendrogramPlot(partition As Cluster,
-                                                       unitWidth As Double,
-                                                       g As IGraphics,
-                                                       plotRegion As Rectangle,
-                                                       i As Integer,
-                                                       scaleX As d3js.scale.LinearScale,
-                                                       parentPt As PointF,
-                                                       labelPadding As Integer,
-                                                       charWidth As Integer)
+    Protected Overrides Sub DendrogramPlot(partition As Cluster,
+                                           unitWidth As Double,
+                                           g As IGraphics,
+                                           plotRegion As Rectangle,
+                                           i As Integer,
+                                           scaleX As LinearScale,
+                                           parentPt As PointF,
+                                           labelPadding As Integer,
+                                           charWidth As Integer)
 
         Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
-        Dim x = plotRegion.Left + plotRegion.Right - scaleX(partition.DistanceValue)
-        Dim y As Integer
+        Dim y = plotRegion.Top + plotRegion.Bottom - scaleX(partition.DistanceValue)
+        Dim x As Integer
 
         If partition.isLeaf Then
-            y = plotRegion.Top + i * unitWidth + unitWidth
+            x = plotRegion.Left + i * unitWidth + unitWidth
             labels += New NamedValue(Of PointF) With {
                 .Name = partition.Name,
                 .Value = New PointF(x, y)
             }
         Else
             ' 连接节点在中间？
-            y = plotRegion.Top + (i + 0.5) * unitWidth + (partition.Leafs * unitWidth) / 2
+            x = plotRegion.Left + (i + 0.5) * unitWidth + (partition.Leafs * unitWidth) / 2
         End If
 
         If Not parentPt.IsEmpty Then
             ' 绘制连接线
-            Call g.DrawLine(linkColor, parentPt, New PointF(parentPt.X, y))
-            Call g.DrawLine(linkColor, New PointF(x, y), New PointF(parentPt.X, y))
+            Call g.DrawLine(linkColor, parentPt, New PointF(x, parentPt.Y))
+            Call g.DrawLine(linkColor, New PointF(x, y), New PointF(x, parentPt.Y))
         End If
 
         If partition.isLeaf OrElse showAllNodes Then
@@ -137,7 +120,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             Dim d As Double = stdNum.Max(charWidth / 2, theme.PointSize)
             Dim layout As New Rectangle With {
                 .Location = New Point(x + d, y - unitWidth / 2),
-                .Size = New Size(labelPadding - d * 1.25, unitWidth)
+                .Size = New Size(unitWidth, labelPadding - d * 1.25)
             }
 
             Call g.FillRectangle(color, layout)

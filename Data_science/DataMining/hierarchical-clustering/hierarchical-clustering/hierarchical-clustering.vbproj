@@ -499,6 +499,7 @@
   <ItemGroup>
     <Compile Include="HierarchyBuilder\HierarchyLink.vb" />
     <Compile Include="Plot\Circular.vb" />
+    <Compile Include="Plot\Horizon.vb" />
     <Compile Include="Plot\DendrogramPanel.vb" />
     <Compile Include="Plot\Layouts.vb" />
     <Compile Include="PrintHelper.vb" />
