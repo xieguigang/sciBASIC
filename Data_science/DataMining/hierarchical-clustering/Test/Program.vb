@@ -71,6 +71,10 @@ Module Program
 
         Call img.SaveAs("../../dendrogram-visualize-horizon.png")
 
+        Dim img2 = cluster.Plot(classinfo:=info, layout:=Layouts.Horizon).AsGDIImage
+
+        Call img2.SaveAs("../../dendrogram-visualize-vertical.png")
+
         Pause()
     End Sub
 
