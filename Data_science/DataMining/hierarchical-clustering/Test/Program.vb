@@ -67,11 +67,19 @@ Module Program
             {"i8", "yellow"}
         }
 
-        Dim img = cluster.Plot(classinfo:=info).AsGDIImage
+        Dim img = cluster.Plot(
+            classinfo:=info,
+            padding:="padding:100px 300px 300px 200px;",
+            linkStroke:="stroke: black; stroke-width: 10px; stroke-dash: dash;"
+        ).AsGDIImage
 
         Call img.SaveAs("../../dendrogram-visualize-horizon.png")
 
-        Dim img2 = cluster.Plot(classinfo:=info, layout:=Layouts.Horizon).AsGDIImage
+        Dim img2 = cluster.Plot(
+            classinfo:=info,
+            layout:=Layouts.Horizon,
+            padding:="padding:200px 300px 300px 200px;",
+            linkStroke:="stroke: black; stroke-width: 10px; stroke-dash: dash;").AsGDIImage
 
         Call img2.SaveAs("../../dendrogram-visualize-vertical.png")
 

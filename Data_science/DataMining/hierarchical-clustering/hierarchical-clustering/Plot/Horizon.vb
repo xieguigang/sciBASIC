@@ -66,7 +66,7 @@ Public Class Horizon : Inherits DendrogramPanelV2
             tickLabelSize = g.MeasureString(tickLable, tickFont)
 
             g.DrawLine(axisPen, New PointF(x, y), New PointF(x - dh, y))
-            g.DrawString(tickLable, tickFont, Brushes.Black, New PointF(x - tickLabelSize.Width / 2, y - dh - tickFontHeight))
+            g.DrawString(tickLable, tickFont, Brushes.Black, New PointF(x - dh - tickLabelSize.Width, y - tickFontHeight / 2))
         Next
 
         Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleY, Nothing, labelPadding, charWidth)
@@ -109,7 +109,7 @@ Public Class Horizon : Inherits DendrogramPanelV2
 
         If partition.isLeaf OrElse showAllLabels Then
             Dim lsize As SizeF = g.MeasureString(partition.Name, labelFont)
-            Dim lpos As New PointF(x + labelPadding, y - lsize.Height / 2)
+            Dim lpos As New PointF(x - lsize.Width / 2, y + labelPadding)
 
             Call g.DrawString(partition.Name, labelFont, Brushes.Black, lpos)
         End If
@@ -119,7 +119,7 @@ Public Class Horizon : Inherits DendrogramPanelV2
             Dim color As New SolidBrush(GetColor(partition.Name))
             Dim d As Double = stdNum.Max(charWidth / 2, theme.PointSize)
             Dim layout As New Rectangle With {
-                .Location = New Point(x + d, y - unitWidth / 2),
+                .Location = New Point(x - unitWidth / 2, y + d),
                 .Size = New Size(unitWidth, labelPadding - d * 1.25)
             }
 
