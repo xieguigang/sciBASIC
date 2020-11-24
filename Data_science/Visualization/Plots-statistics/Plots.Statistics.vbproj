@@ -457,6 +457,7 @@
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
     <Compile Include="Heatmap\BubbleHeatmap.vb" />
+    <Compile Include="Heatmap\CorrelationHeatmap.vb" />
     <Compile Include="Heatmap\Models.vb" />
     <Compile Include="Heatmap\DataScaler.vb" />
     <Compile Include="ROCPlot.vb" />
@@ -470,7 +471,7 @@
     <Compile Include="ForestPlot.vb" />
     <Compile Include="HistStackedBarplot.vb" />
     <Compile Include="Heatmap\Heatmap.vb" />
-    <Compile Include="Heatmap\CorrelationHeatmap.vb" />
+    <Compile Include="Heatmap\CorrelationTriangle.vb" />
     <Compile Include="Heatmap\Internal.vb" />
     <Compile Include="Heatmap\DensityPlot.vb" />
     <Compile Include="Heatmap\PlotExtensions.vb" />
