@@ -283,5 +283,9 @@ Namespace Heatmap
             Me.range = range
             Me.data = data
         End Sub
+
+        Public Function GetMatrix() As Double()()
+
+        End Function
     End Class
 End Namespace
