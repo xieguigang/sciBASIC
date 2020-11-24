@@ -457,6 +457,7 @@
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
     <Compile Include="Heatmap\BubbleHeatmap.vb" />
+    <Compile Include="Heatmap\CorrelationData.vb" />
     <Compile Include="Heatmap\CorrelationHeatmap.vb" />
     <Compile Include="Heatmap\Models.vb" />
     <Compile Include="Heatmap\DataScaler.vb" />
