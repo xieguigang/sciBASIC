@@ -87,22 +87,17 @@ Module FuzzyCMeansVisualize
         Next
 
         Dim n% = 10  ' required of 10 clusters
-        Dim trace As New Dictionary(Of Integer, List(Of FuzzyCMeansEntity))
 
         ' invoke cmeans cluster and gets the centra points
-        Dim centras = raw.FuzzyCMeans(n, 2, trace:=trace)
+        Dim centras = raw.CMeans(n, 2)
 
 #Region "DEBUG INFO OUTPUTS"
-        For Each x In centras
-            Call $"centra {x.uid} =>  {x.entityVector.GetJson}".PrintException
-        Next
-
         For Each x In raw
-            Call ($"{x.uid}: {x.entityVector.GetJson} => " & x.Memberships.GetJson).__DEBUG_ECHO
+            Call ($"{x.uid}: {x.entityVector.GetJson} => " & x.memberships.GetJson).__DEBUG_ECHO
         Next
 #End Region
 
-        Return (raw, n, trace)
+        Return (raw, n, Nothing)
     End Function
 
     Private Sub CMeansVisualize()
