@@ -55,4 +55,17 @@ Public Module Distance
     Public Function Euclidean(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As DistanceMatrix
         Return data.MatrixBuilder(AddressOf EuclideanDistance, True)
     End Function
+
+    <Extension>
+    Public Function Correlation(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional spearman As Boolean = False) As DistanceMatrix
+        Dim cor As Func(Of Double(), Double(), Double)
+
+        If spearman Then
+            cor = AddressOf Correlations.Spearman
+        Else
+            cor = AddressOf Correlations.GetPearson
+        End If
+
+        Return data.MatrixBuilder(cor, isDistance:=False)
+    End Function
 End Module

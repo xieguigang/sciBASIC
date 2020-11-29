@@ -18,6 +18,8 @@ Public MustInherit Class DendrogramPanel : Inherits Plot
 
     Protected Friend ReadOnly showAllLabels As Boolean
     Protected Friend ReadOnly showAllNodes As Boolean
+    Protected Friend ReadOnly showLeafLabels As Boolean
+    Protected Friend ReadOnly showRuler As Boolean
 
     Protected ReadOnly labelFont As Font
     Protected ReadOnly linkColor As Pen
@@ -28,7 +30,9 @@ Public MustInherit Class DendrogramPanel : Inherits Plot
                       classinfo As Dictionary(Of String, String),
                       showAllLabels As Boolean,
                       showAllNodes As Boolean,
-                      pointColor$)
+                      pointColor$,
+                      showLeafLabels As Boolean,
+                      showRuler As Boolean)
 
         MyBase.New(theme)
 
@@ -40,6 +44,8 @@ Public MustInherit Class DendrogramPanel : Inherits Plot
         Me.linkColor = Stroke.TryParse(theme.gridStroke).GDIObject
         Me.showAllNodes = showAllNodes
         Me.pointColor = pointColor.GetBrush
+        Me.showLeafLabels = showLeafLabels
+        Me.showRuler = showRuler
     End Sub
 
     Protected Function GetColor(id As String) As Color

@@ -16,9 +16,11 @@ Public Class Circular : Inherits DendrogramPanel
                    Optional classinfo As Dictionary(Of String, String) = Nothing,
                    Optional showAllLabels As Boolean = False,
                    Optional showAllNodes As Boolean = False,
-                   Optional pointColor$ = "red")
+                   Optional pointColor$ = "red",
+                   Optional showRuler As Boolean = True,
+                   Optional showLeafLabels As Boolean = True)
 
-        MyBase.New(hist, theme, classes, classinfo, showAllLabels, showAllNodes, pointColor)
+        MyBase.New(hist, theme, classes, classinfo, showAllLabels, showAllNodes, pointColor, showLeafLabels, showRuler)
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -60,17 +62,19 @@ Public Class Circular : Inherits DendrogramPanel
             labelPadding = g.MeasureString("00", labelFont).Width
         End If
 
-        Call g.DrawLine(axisPen, New PointF(outer, angle), New PointF(inner, angle))
+        If showRuler Then
+            Call g.DrawLine(axisPen, New PointF(outer, angle), New PointF(inner, angle))
 
-        For Each tick As Double In axisTicks
-            r = scaleR(tick)
+            For Each tick As Double In axisTicks
+                r = scaleR(tick)
 
-            tickLable = tick.ToString(theme.axisTickFormat)
-            tickLabelSize = g.MeasureString(tickLable, tickFont)
+                tickLable = tick.ToString(theme.axisTickFormat)
+                tickLabelSize = g.MeasureString(tickLable, tickFont)
 
-            g.DrawLine(axisPen, New PolarPoint(r, angle).Point, New PolarPoint(r, angle).Point)
-            g.DrawString(tickLable, tickFont, Brushes.Black, New PolarPoint(r, angle).Point)
-        Next
+                g.DrawLine(axisPen, New PolarPoint(r, angle).Point, New PolarPoint(r, angle).Point)
+                g.DrawString(tickLable, tickFont, Brushes.Black, New PolarPoint(r, angle).Point)
+            Next
+        End If
 
         Call DendrogramPlot(hist, unitAngle, g, plotRegion, 0, scaleR, Nothing, labelPadding, charWidth, center)
     End Sub

@@ -133,36 +133,31 @@ Namespace HTML.CSS
             End Get
         End Property
 
-        '
-        ' Summary:
-        '     Gets or sets the padding value for the top edge.
-        '
-        ' Returns:
-        '     The padding, in pixels, for the top edge.
+        ''' <summary>
+        ''' Gets or sets the padding value for the top edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the top edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
         Public Property Top As Integer
-        '
-        ' Summary:
-        '     Gets or sets the padding value for the right edge.
-        '
-        ' Returns:
-        '     The padding, in pixels, for the right edge.
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the right edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the right edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
         Public Property Right As Integer
-        '
-        ' Summary:
-        '     Gets or sets the padding value for the left edge.
-        '
-        ' Returns:
-        '     The padding, in pixels, for the left edge.
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the left edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the left edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
         Public Property Left As Integer
-        '
-        ' Summary:
-        '     Gets or sets the padding value for the bottom edge.
-        '
-        ' Returns:
-        '     The padding, in pixels, for the bottom edge.
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the bottom edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the bottom edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
         Public Property Bottom As Integer
 
@@ -201,6 +196,8 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <param name="padding"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(padding As Padding) As String
             Return padding.ToString
         End Operator
@@ -210,7 +207,9 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <param name="css$"></param>
         ''' <returns></returns>
-        Public Shared Widening Operator CType(css$) As Padding
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(css As String) As Padding
             Return Padding.TryParse(css)
         End Operator
 
@@ -235,17 +234,12 @@ Namespace HTML.CSS
             End If
         End Function
 
-        '
-        ' Summary:
-        '     Determines whether the value of the specified object is equivalent to the current
-        '     System.Windows.Forms.Padding.
-        '
-        ' Parameters:
-        '   other:
-        '     The object to compare to the current System.Windows.Forms.Padding.
-        '
-        ' Returns:
-        '     true if the System.Windows.Forms.Padding objects are equivalent; otherwise, false.
+        ''' <summary>
+        ''' Determines whether the value of the specified object is equivalent to the current
+        ''' System.Windows.Forms.Padding.
+        ''' </summary>
+        ''' <param name="other">The object to compare to the current System.Windows.Forms.Padding.</param>
+        ''' <returns>true if the System.Windows.Forms.Padding objects are equivalent; otherwise, false.</returns>
         Public Overrides Function Equals(other As Object) As Boolean
             If other Is Nothing Then
                 Return False
@@ -258,20 +252,13 @@ Namespace HTML.CSS
             End If
         End Function
 
-        '
-        ' Summary:
-        '     Performs vector addition on the two specified System.Windows.Forms.Padding objects,
-        '     resulting in a new System.Windows.Forms.Padding.
-        '
-        ' Parameters:
-        '   p1:
-        '     The first System.Windows.Forms.Padding to add.
-        '
-        '   p2:
-        '     The second System.Windows.Forms.Padding to add.
-        '
-        ' Returns:
-        '     A new System.Windows.Forms.Padding that results from adding p1 and p2.
+        ''' <summary>
+        ''' Performs vector addition on the two specified System.Windows.Forms.Padding objects,
+        ''' resulting in a new System.Windows.Forms.Padding.
+        ''' </summary>
+        ''' <param name="p1">The first System.Windows.Forms.Padding to add.</param>
+        ''' <param name="p2">The second System.Windows.Forms.Padding to add.</param>
+        ''' <returns>A new System.Windows.Forms.Padding that results from adding p1 and p2.</returns>
         Public Shared Operator +(p1 As Padding, p2 As Padding) As Padding
             Dim a = p1.LayoutVector
             Dim b = p2.LayoutVector

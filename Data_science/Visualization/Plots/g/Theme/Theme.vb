@@ -137,6 +137,8 @@ Namespace Graphic.Canvas
         Public Property drawGrid As Boolean
         Public Property gridStroke As String
 
+        Public Property colorSet As String
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

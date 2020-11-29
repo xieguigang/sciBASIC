@@ -16,9 +16,10 @@ Public Class Horizon : Inherits DendrogramPanelV2
                    Optional showAllLabels As Boolean = False,
                    Optional showAllNodes As Boolean = False,
                    Optional pointColor As String = "red",
-                   Optional showRuler As Boolean = True)
+                   Optional showRuler As Boolean = True,
+                   Optional showLeafLabels As Boolean = True)
 
-        MyBase.New(hist, theme, classes, classinfo, showAllLabels, showAllNodes, pointColor, showRuler)
+        MyBase.New(hist, theme, classes, classinfo, showAllLabels, showAllNodes, pointColor, showRuler, showLeafLabels)
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As Imaging.Drawing2D.GraphicsRegion)
@@ -58,16 +59,18 @@ Public Class Horizon : Inherits DendrogramPanelV2
             labelPadding = g.MeasureString("00", labelFont).Width
         End If
 
-        Call g.DrawLine(axisPen, New PointF(x, top), New PointF(x, bottom))
+        If showRuler Then
+            Call g.DrawLine(axisPen, New PointF(x, top), New PointF(x, bottom))
 
-        For Each tick As Double In axisTicks
-            y = plotRegion.Top + plotRegion.Bottom - scaleY(tick)
-            tickLable = tick.ToString(theme.axisTickFormat)
-            tickLabelSize = g.MeasureString(tickLable, tickFont)
+            For Each tick As Double In axisTicks
+                y = plotRegion.Top + plotRegion.Bottom - scaleY(tick)
+                tickLable = tick.ToString(theme.axisTickFormat)
+                tickLabelSize = g.MeasureString(tickLable, tickFont)
 
-            g.DrawLine(axisPen, New PointF(x, y), New PointF(x - dh, y))
-            g.DrawString(tickLable, tickFont, Brushes.Black, New PointF(x - dh - tickLabelSize.Width, y - tickFontHeight / 2))
-        Next
+                g.DrawLine(axisPen, New PointF(x, y), New PointF(x - dh, y))
+                g.DrawString(tickLable, tickFont, Brushes.Black, New PointF(x - dh - tickLabelSize.Width, y - tickFontHeight / 2))
+            Next
+        End If
 
         Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleY, Nothing, labelPadding, charWidth)
     End Sub
@@ -103,11 +106,11 @@ Public Class Horizon : Inherits DendrogramPanelV2
             Call g.DrawLine(linkColor, New PointF(x, y), New PointF(x, parentPt.Y))
         End If
 
-        If partition.isLeaf OrElse showAllNodes Then
+        If (partition.isLeaf OrElse showAllNodes) AndAlso theme.PointSize > 0 Then
             Call g.DrawCircle(New PointF(x, y), theme.PointSize, pointColor)
         End If
 
-        If partition.isLeaf OrElse showAllLabels Then
+        If showLeafLabels AndAlso (partition.isLeaf OrElse showAllLabels) Then
             Dim lsize As SizeF = g.MeasureString(partition.Name, labelFont)
             Dim lpos As New PointF(x - lsize.Width / 2, y + labelPadding)
 

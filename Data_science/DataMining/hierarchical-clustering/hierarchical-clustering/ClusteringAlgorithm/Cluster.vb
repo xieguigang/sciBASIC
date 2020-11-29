@@ -153,14 +153,18 @@ Public Class Cluster : Implements INamedValue
     End Function
 
     Public Function OrderLeafs() As String()
-        Dim orders = Children.OrderBy(Function(c) c.Leafs).ToArray
-        Dim names As New List(Of String)
+        If Children.IsNullOrEmpty Then
+            Return New String() {Name}
+        Else
+            Dim orders = Children.OrderBy(Function(c) c.Leafs).ToArray
+            Dim names As New List(Of String)
 
-        For Each node In orders
-            names.AddRange(node.OrderLeafs)
-        Next
+            For Each node In orders
+                names.AddRange(node.OrderLeafs)
+            Next
 
-        Return names.ToArray
+            Return names.ToArray
+        End If
     End Function
 
     Public Overrides Function ToString() As String

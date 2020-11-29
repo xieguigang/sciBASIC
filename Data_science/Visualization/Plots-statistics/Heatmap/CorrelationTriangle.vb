@@ -236,7 +236,7 @@ Namespace Heatmap
             Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelFontStyle).GDIObject
             Dim keys$() = data.keys
             Dim colors As SolidBrush() = Designer.GetColors(mapName, mapLevels).Reverse.GetBrushes
-            Dim cor As New CorrelationData(range, data)
+            Dim cor As New CorrelationData(data, range)
             Dim theme As New Theme With {
                 .drawGrid = drawGrid,
                 .mainCSS = titleFont,

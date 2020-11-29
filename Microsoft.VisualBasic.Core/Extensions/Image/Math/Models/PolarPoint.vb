@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::608abffde3f61be9ee3d4904c843e0f5, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\PolarPoint.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PolarPoint
-    ' 
-    '         Properties: Angle, Point, Radius
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PolarPoint
+' 
+'         Properties: Angle, Point, Radius
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,9 @@ Namespace Imaging.Math2D
         ''' 与这个极坐标点等价的笛卡尔直角坐标系上面的坐标点
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个是默认以[0,0]为圆心进行计算的
+        ''' </remarks>
         Public ReadOnly Property Point As PointF
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -79,6 +82,11 @@ Namespace Imaging.Math2D
         End Property
 
 #End If
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Translate(center As PointF, Optional fromDegree As Boolean = True) As PointF
+            Return (Radius, Angle).ToCartesianPoint(fromDegree, offsetX:=center.X, offsetY:=center.Y)
+        End Function
 
         ''' <summary>
         ''' 显示这个极坐标点

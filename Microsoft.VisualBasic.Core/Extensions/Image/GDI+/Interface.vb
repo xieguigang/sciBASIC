@@ -990,22 +990,14 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public MustOverride Sub DrawImage(image As Image, rect As Rectangle)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image, using its original physical size, at
-        '     the specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   point:
-        '     System.Drawing.PointF structure that represents the upper-left corner of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified <see cref="Image"/>, using its original physical size, at
+        ''' the specified location.
+        ''' </summary>
+        ''' <param name="image"><see cref="Image"/> to draw.</param>
+        ''' <param name="point"><see cref="Drawing.PointF"/> structure that represents the upper-left corner of the
+        ''' drawn image.</param>
         Public MustOverride Sub DrawImage(image As Image, point As PointF)
         '
         ' Summary:
@@ -1892,9 +1884,9 @@ Namespace Imaging
         ''' <summary>
         ''' Draws a line connecting two System.Drawing.PointF structures.
         ''' </summary>
-        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
-        ''' <param name="pt1">System.Drawing.PointF structure that represents the first point to connect.</param>
-        ''' <param name="pt2">System.Drawing.PointF structure that represents the second point to connect.</param>
+        ''' <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the line.</param>
+        ''' <param name="pt1"><see cref="Drawing.PointF"/> structure that represents the first point to connect.</param>
+        ''' <param name="pt2"><see cref="Drawing.PointF"/> structure that represents the second point to connect.</param>
         Public MustOverride Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
 
         ''' <summary>
