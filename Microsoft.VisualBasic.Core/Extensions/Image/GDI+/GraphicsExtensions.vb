@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::ff6f78cfe9ee33dc066d788c6054e051, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GraphicsExtensions
-    ' 
-    '         Function: BackgroundGraphics, CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D
-    '                   (+4 Overloads) CreateGDIDevice, CreateGrayBitmap, EntireImage, GetBrush, GetBrushes
-    '                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
-    '                   IsValidGDIParameter, (+3 Overloads) LoadImage, (+2 Overloads) Opacity, OpenDevice, (+2 Overloads) PointF
-    '                   PointSizeScale, SaveIcon, SizeF, ToFloat, ToPoint
-    '                   ToPoints, ToStream
-    ' 
-    '         Sub: (+5 Overloads) DrawCircle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GraphicsExtensions
+' 
+'         Function: BackgroundGraphics, CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D
+'                   (+4 Overloads) CreateGDIDevice, CreateGrayBitmap, EntireImage, GetBrush, GetBrushes
+'                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
+'                   IsValidGDIParameter, (+3 Overloads) LoadImage, (+2 Overloads) Opacity, OpenDevice, (+2 Overloads) PointF
+'                   PointSizeScale, SaveIcon, SizeF, ToFloat, ToPoint
+'                   ToPoints, ToStream
+' 
+'         Sub: (+5 Overloads) DrawCircle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -170,12 +170,26 @@ Namespace Imaging
             Return path
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="fill"></param>
+        ''' <param name="val">a value in range ``[0, 1]``</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Opacity(fill As Color, val#) As Color
             Return Color.FromArgb(val * 255, baseColor:=fill)
         End Function
 
+        ''' <summary>
+        ''' adjust the color opacity value of the <see cref="SolidBrush"/>
+        ''' </summary>
+        ''' <param name="fill"></param>
+        ''' <param name="val">
+        ''' the alpha value for <see cref="Opacity"/>, value in range ``[0, 1]``.
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function Opacity(fill As Brush, val#) As Brush
             If TypeOf fill Is SolidBrush Then
@@ -195,20 +209,25 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="res$"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetBrush(res$) As Brush
+        <Extension>
+        Public Function GetBrush(res As String) As Brush
             Dim bgColor As Color = res.TranslateColor(throwEx:=False)
 
             If Not bgColor.IsEmpty Then
                 Return New SolidBrush(bgColor)
+            End If
+
+            Dim img As Image
+
+            If res.FileExists Then
+                img = LoadImage(path:=res$)
             Else
-                Dim img As Image
+                img = Base64Codec.GetImage(res$)
+            End If
 
-                If res.FileExists Then
-                    img = LoadImage(path:=res$)
-                Else
-                    img = Base64Codec.GetImage(res$)
-                End If
-
+            If img Is Nothing Then
+                Throw New InvalidCastException($"unable to cast expression '{res}' to any brush object!")
+            Else
                 Return New TextureBrush(img)
             End If
         End Function
