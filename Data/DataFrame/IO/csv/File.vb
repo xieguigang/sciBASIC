@@ -708,12 +708,12 @@ B21,B22,B23,...
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
-            Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
+            Return csv.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadTsv(path$, Optional encoding As Encoding = Nothing) As File
-            Return DataImports.Imports(path, ASCII.TAB, encoding)
+            Return csv.Imports(path, ASCII.TAB, encoding)
         End Function
 
 

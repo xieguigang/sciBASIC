@@ -53,17 +53,10 @@ Namespace DATA
     ''' </summary>
     Public Module RDataFrameHelpers
 
-        ReadOnly NaN As Index(Of String) = {
-            "正无穷大", "负无穷大", "非数字",
-            "Infinity", "-Infinity",
-            "NaN",
-            "∞", "-∞"
-        }
-
         Private Function processValue(map As KeyValuePair(Of String, Double), replaceAs$) As String
             Dim s As String = map.Value.ToString
 
-            If s Like NaN Then
+            If isNaN(s) Then
                 Return replaceAs
             Else
                 Return s

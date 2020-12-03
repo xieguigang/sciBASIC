@@ -79,12 +79,24 @@ Public Module PrimitiveParser
 #Region "text token pattern assert"
     ' 2019-04-17 正则表达式的执行效率过低
 
+    ReadOnly NaN As Index(Of String) = {
+        "正无穷大", "负无穷大", "非数字",
+        "Infinity", "-Infinity",
+        "NaN",
+        "∞", "-∞"
+    }
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function isNaN(s As String) As Boolean
+        Return s Like NaN
+    End Function
+
     ''' <summary>
     ''' Is this token value string is a number?
     ''' </summary>
     ''' <returns></returns>
     <Extension>
-    Public Function IsNumeric(num As String) As Boolean
+    Public Function IsNumeric(num As String, Optional includesNaNFactor As Boolean = False) As Boolean
         Dim dotCheck As Boolean = False
         Dim c As Char = num(Scan0)
         Dim offset As Integer = 0
@@ -92,6 +104,8 @@ Public Module PrimitiveParser
         ' 修复正则匹配的bug
         If num = "e" OrElse num = "E" Then
             Return False
+        ElseIf includesNaNFactor AndAlso isNaN(num) Then
+            Return True
         End If
 
         If c = "-"c OrElse c = "+"c Then
@@ -131,6 +145,7 @@ Public Module PrimitiveParser
 
     ReadOnly numbers As Index(Of Char) = {"0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c}
 
+    <Extension>
     Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
         Dim c As Char = num(Scan0)
 
@@ -258,7 +273,7 @@ Public Module PrimitiveParser
     ''' <remarks></remarks>
     <ExportAPI("ParseBoolean")>
     <Extension>
-    Public Function ParseBoolean(str$) As Boolean
+    Public Function ParseBoolean(str As String) As Boolean
         If String.IsNullOrEmpty(str) Then
             Return False
         Else

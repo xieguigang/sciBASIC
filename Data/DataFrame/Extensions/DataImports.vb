@@ -230,55 +230,8 @@ Public Module DataImports
     ''' 
     <ExportAPI("DataType.Match")>
     <Extension>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SampleForType(column As IEnumerable(Of String)) As Type
-        Dim array$() = column.ToArray, n% = array.Length
-
-        If LinqAPI.IsEquals(Of Integer)(n) =
-            From s As String
-            In column
-            Let Dbl As Double = Val(s)
-            Let ss As String = Dbl.ToString
-            Where String.Equals(ss, s)
-            Select 1 Then
-
-            Return GetType(Double)
-        End If
-
-        If LinqAPI.IsEquals(Of Integer)(n) =
-            From s As String
-            In column
-            Let Int As Integer = CInt(Val(s))
-            Let ss As String = Int.ToString
-            Where String.Equals(ss, s)
-            Select 1 Then
-
-            Return GetType(Integer)
-        End If
-
-        If LinqAPI.IsEquals(Of Integer)(n) =
-            From s As String
-            In column
-            Let Bol As Boolean = Boolean.Parse(s)
-            Let ss As String = Bol.ToString
-            Where String.Equals(ss, s)
-            Select 1 Then
-
-            Return GetType(Boolean)
-        End If
-
-        If LinqAPI.IsEquals(Of Integer)() = From s As String
-                                            In column
-                                            Let Dat As Date = Date.Parse(s)
-                                            Where Dat.Year = 0 AndAlso
-                                                Dat.Month = 0 AndAlso
-                                                Dat.Day = 0 AndAlso
-                                                Dat.Hour = 0 AndAlso
-                                                Dat.Minute = 0 AndAlso
-                                                Dat.Second = 0
-                                            Select 1 Then
-            Return GetType(Date)
-        End If
-
-        Return GetType(String)
+        Return IO.DataImports.SampleForType(column.ToArray)
     End Function
 End Module

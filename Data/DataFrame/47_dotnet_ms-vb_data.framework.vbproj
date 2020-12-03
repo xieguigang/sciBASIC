@@ -830,6 +830,7 @@
     <Compile Include="IO\csv\RowTokenizer.vb" />
     <Compile Include="IO\csv\FileLoader.vb" />
     <Compile Include="IO\csv\RowHelpers.vb" />
+    <Compile Include="IO\DataFrame\DataImports.vb" />
     <Compile Include="IO\Generic\Extensions.vb" />
     <Compile Include="IO\Generic\DataSet.vb" />
     <Compile Include="IO\Generic\Table.vb" />
