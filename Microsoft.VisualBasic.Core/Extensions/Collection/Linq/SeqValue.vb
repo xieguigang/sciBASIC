@@ -98,7 +98,7 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Overrides Function ToString() As String
-            Return Me.value.GetJson(False)
+            Return $"[{i}] {Me.value.GetJson(False)}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
