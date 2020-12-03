@@ -52,27 +52,31 @@ Imports stdNum = System.Math
 ''' </summary>
 Public Module CorrelationNetwork
 
+    <Extension>
+    Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#) As (net As NetworkTables, matrix As DistanceMatrix)
+        Return data.MatrixBuilder(AddressOf Correlations.GetPearson, False).BuildNetwork(cutoff)
+    End Function
+
     ''' <summary>
     ''' 关联网络是没有方向的
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="cutoff#"></param>
+    ''' <param name="matrix"></param>
+    ''' <param name="cutoff"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#) As (net As NetworkTables, matrix As DistanceMatrix)
-        Dim matrix As DistanceMatrix = data.MatrixBuilder(AddressOf Correlations.GetPearson, False)
+    Public Function BuildNetwork(matrix As DistanceMatrix, cutoff#) As (net As NetworkTables, matrix As DistanceMatrix)
         Dim nodes As New Dictionary(Of Node)
         Dim edges As New Dictionary(Of String, NetworkEdge)
         Dim cor As Double
 
-        For Each id As String In matrix.Keys
+        For Each id As String In matrix.keys
             nodes += New Node With {
                 .ID = id
             }
         Next
 
-        For Each id As String In matrix.Keys
-            For Each partner As String In matrix.Keys
+        For Each id As String In matrix.keys
+            For Each partner As String In matrix.keys
                 cor = matrix(id, partner)
 
                 If stdNum.Abs(cor) >= cutoff Then

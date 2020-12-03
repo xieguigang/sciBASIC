@@ -81,12 +81,11 @@ Namespace Imaging.Math2D
             End Get
         End Property
 
-#End If
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Translate(center As PointF, Optional fromDegree As Boolean = True) As PointF
             Return (Radius, Angle).ToCartesianPoint(fromDegree, offsetX:=center.X, offsetY:=center.Y)
         End Function
+#End If
 
         ''' <summary>
         ''' 显示这个极坐标点

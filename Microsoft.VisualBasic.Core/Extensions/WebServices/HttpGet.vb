@@ -69,8 +69,10 @@ Public Module HttpGet
     ''' </summary>
     ''' <param name="url">web http request url or a file path handle</param>
     ''' <param name="retry">发生错误的时候的重试的次数</param>
+    ''' <param name="timeout">设置请求超时的时间长度，单位为秒</param>
     ''' <returns>失败或者错误会返回空字符串</returns>
     ''' <remarks>这个工具只适合于文本数据的传输操作</remarks>
+    ''' 
     <ExportAPI("Webpage.Request")>
     <Extension> Public Function [GET](url As String,
                                       <Parameter("Request.TimeOut")>
@@ -81,7 +83,8 @@ Public Module HttpGet
                                       Optional UA$ = Nothing,
                                       Optional refer$ = Nothing,
                                       Optional ByRef is404 As Boolean = False,
-                                      Optional echo As Boolean = True) As String
+                                      Optional echo As Boolean = True,
+                                      Optional timeout As Long = 600) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -128,11 +131,20 @@ Public Module HttpGet
             headers(NameOf(refer)) = refer
         End If
 
-        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404, echo)
+        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404, echo, timeout)
     End Function
 
     <Extension>
-    Private Function httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$, ByRef is404 As Boolean, echo As Boolean) As String
+    Private Function httpRequest(url$,
+                                 retries%,
+                                 headers As Dictionary(Of String, String),
+                                 proxy$,
+                                 doNotRetry404 As Boolean,
+                                 UA$,
+                                 ByRef is404 As Boolean,
+                                 echo As Boolean,
+                                 timeout As Long) As String
+
         Dim retryTime As Integer = 0
 
         If String.IsNullOrEmpty(proxy) Then
@@ -141,8 +153,8 @@ Public Module HttpGet
 
         Try
 Re0:
-            Return BuildWebRequest(url, headers, proxy, UA).UrlGet(echo:=echo).html
-        Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso DoNotRetry404
+            Return BuildWebRequest(url, headers, proxy, UA, timeout:=timeout).UrlGet(echo:=echo).html
+        Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso doNotRetry404
             is404 = True
             Return LogException(url, New Exception(url, ex))
 
@@ -181,7 +193,13 @@ Re0:
     ''' <returns></returns>
     Public Property HttpRequestTimeOut As Double
 
-    Public Function BuildWebRequest(url$, headers As Dictionary(Of String, String), proxy$, UA$, Optional isPost As Boolean = False) As HttpWebRequest
+    Public Function BuildWebRequest(url$,
+                                    headers As Dictionary(Of String, String),
+                                    proxy$,
+                                    UA$,
+                                    Optional isPost As Boolean = False,
+                                    Optional timeout As Long = 600) As HttpWebRequest
+
         Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
 
         webRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
@@ -193,10 +211,12 @@ Re0:
 
         If HttpRequestTimeOut > 0 Then
             webRequest.Timeout = 1000 * HttpRequestTimeOut
+        Else
+            webRequest.Timeout = 1000 * timeout
         End If
 
         If Not headers.IsNullOrEmpty Then
-            For Each x In headers
+            For Each x As KeyValuePair(Of String, String) In headers
                 webRequest.Headers(x.Key) = x.Value
             Next
         End If

@@ -524,10 +524,16 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="explicit">
-    ''' 列名称隐式解析，即不强制要求属性上面有<see cref="ColumnAttribute"/>标记，默认是，否则只解析出带有<see cref="ColumnAttribute"/>自定义属性标记的属性作为csv的列的数据源
+    ''' 列名称隐式解析，即不强制要求属性上面有<see cref="ColumnAttribute"/>标记，默认是，
+    ''' 否则只解析出带有<see cref="ColumnAttribute"/>自定义属性标记的属性作为csv的列的
+    ''' 数据源
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As IEnumerable(Of T)
+    <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String),
+                                                          Optional explicit As Boolean = True,
+                                                          Optional trimBlanks As Boolean = False,
+                                                          Optional isTsv As Boolean = False) As IEnumerable(Of T)
+
         Return New File(FileLoader.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
     End Function
 

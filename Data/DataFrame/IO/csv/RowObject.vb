@@ -96,8 +96,7 @@ Namespace IO
             Try
                 buffer = Tokenizer.CharsParser(rawString, delimiter:=","c Or ASCII.TAB.When(tsv)).AsList
             Catch ex As Exception
-                ex = New Exception(rawString)
-                Throw ex
+                Throw New Exception(rawString, ex)
             End Try
         End Sub
 

@@ -116,13 +116,17 @@ Namespace IO
         ''' <param name="buf"></param>
         ''' <param name="trimBlanks">如果这个选项为真，则会移除所有全部都是逗号分隔符``,,,,,,,,,``的空白行</param>
         ''' <returns></returns>
-        Public Function Load(buf As String(), trimBlanks As Boolean, Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of RowObject)
-            Dim first As New RowObject(buf(Scan0))
+        Public Function Load(buf As String(), trimBlanks As Boolean,
+                             Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                             Optional isTsv As Boolean = False) As List(Of RowObject)
+
+            Dim first As New RowObject(buf(Scan0), tsv:=isTsv)
             Dim test As Func(Of String, Boolean)
             Dim headerIndex As Integer = first.IndexOf(skipWhile.Name)
+            Dim delimiter As Char = If(isTsv, ASCII.TAB, ","c)
 
             If trimBlanks Then
-                test = Function(s) Not Tokenizer.IsEmptyRow(s, ","c)
+                test = Function(s) Not Tokenizer.IsEmptyRow(s, delimiter)
             Else
                 test = Function(s) True
             End If
@@ -131,18 +135,23 @@ Namespace IO
                 Call $"Required test for skip on field: [{skipWhile.Name}], but no such field exists in current file data...".Warning
             End If
 
-            Return first + buf.parallelLoad(headerIndex, test, skipWhile).AsList
+            Return first + buf.parallelLoad(headerIndex, isTsv, test, skipWhile).AsList
         End Function
 
         <Extension>
-        Private Function parallelLoad(buf$(), headerIndex%, test As Func(Of String, Boolean), skipWhile As NamedValue(Of Func(Of String, Boolean))) As IEnumerable(Of RowObject)
+        Private Function parallelLoad(buf$(),
+                                      headerIndex%,
+                                      isTsv As Boolean,
+                                      test As Func(Of String, Boolean),
+                                      skipWhile As NamedValue(Of Func(Of String, Boolean))) As IEnumerable(Of RowObject)
+
             Dim testForSkip = skipWhile.Value
             Dim loader = From s As SeqValue(Of String)
                          In buf.Skip(1) _
                             .SeqIterator _
                             .AsParallel
                          Where test(s.value)
-                         Select row = New RowObject(s.value), i = s.i
+                         Select row = New RowObject(s.value, tsv:=isTsv), i = s.i
                          Order By i Ascending
 
             If headerIndex = -1 Then

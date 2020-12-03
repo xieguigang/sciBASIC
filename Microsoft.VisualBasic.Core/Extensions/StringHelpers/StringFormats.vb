@@ -74,7 +74,7 @@ Public Module StringFormats
     <Extension>
     Public Function FormatTime(t As TimeSpan) As String
         With t
-            Return $"{ZeroFill(.Days, 2)}, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ ZeroFill(.Milliseconds, 3)}"
+            Return $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ ZeroFill(.Milliseconds, 3)}"
         End With
     End Function
 
