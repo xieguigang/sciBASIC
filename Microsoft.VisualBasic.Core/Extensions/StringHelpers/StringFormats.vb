@@ -72,22 +72,28 @@ Public Module StringFormats
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function FormatTime(t As TimeSpan) As String
+    Public Function FormatTime(t As TimeSpan, Optional showMs As Boolean = True) As String
         With t
-            Return $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}.{ ZeroFill(.Milliseconds, 3)}"
+            Dim dhms As String = $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+
+            If showMs Then
+                Return $"{dhms}.{ZeroFill(.Milliseconds, 3)}"
+            Else
+                Return dhms
+            End If
         End With
     End Function
 
     <Extension>
-    Public Function Lanudry(timespan As TimeSpan) As String
+    Public Function Lanudry(timespan As TimeSpan, Optional showMs As Boolean = True) As String
         If timespan < TimeSpan.FromMinutes(1) Then
-            Return $"{timespan.TotalSeconds} seconds"
+            Return $"{timespan.TotalSeconds.ToString("F1")} seconds"
         ElseIf timespan < TimeSpan.FromHours(1) Then
-            Return $"{timespan.TotalMinutes} min"
+            Return $"{timespan.TotalMinutes.ToString("F2")} min"
         ElseIf timespan < TimeSpan.FromDays(1) Then
-            Return $"{timespan.TotalHours} hours"
+            Return $"{timespan.TotalHours.ToString("F2")} hours"
         Else
-            Return timespan.FormatTime
+            Return timespan.FormatTime(showMs)
         End If
     End Function
 

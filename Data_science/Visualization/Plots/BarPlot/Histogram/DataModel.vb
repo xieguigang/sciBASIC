@@ -187,17 +187,10 @@ Namespace BarPlot.Histogram
             End Get
         End Property
 
-        Public Function GetLine(color As Color, width!, ptSize!, Optional type As DashStyle = DashStyle.Solid) As SerialData
-            Return New SerialData With {
-                .color = color,
-                .width = width,
-                .lineType = type,
-                .pointSize = ptSize,
-                .pts = data _
-                    .Select(Function(x) x.LinePoint) _
-                    .ToArray
-            }
-        End Function
+        Sub New(legend As Legend, data As HistogramData())
+            Me.legend = legend
+            Me.data = data
+        End Sub
 
         ''' <summary>
         ''' 仅仅在这里初始化了<see cref="data"/>
@@ -232,5 +225,22 @@ Namespace BarPlot.Histogram
                     .y = n
                 }
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return legend.ToString
+        End Function
+
+        Public Function GetLine(color As Color, width!, ptSize!, Optional type As DashStyle = DashStyle.Solid) As SerialData
+            Return New SerialData With {
+                .color = color,
+                .width = width,
+                .lineType = type,
+                .pointSize = ptSize,
+                .pts = data _
+                    .Select(Function(x) x.LinePoint) _
+                    .ToArray
+            }
+        End Function
+
     End Structure
 End Namespace

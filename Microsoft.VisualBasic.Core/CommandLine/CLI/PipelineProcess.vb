@@ -54,7 +54,7 @@ Namespace CommandLine
     ''' </summary>
     ''' 
     <HideModuleName>
-    Public Module ProcessExtensions
+    Public Module PipelineProcess
 
         ''' <summary>
         ''' <see cref="Process.GetProcessById"/>

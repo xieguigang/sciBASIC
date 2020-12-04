@@ -203,7 +203,9 @@ Namespace BarPlot.Histogram
                              Optional xlabel$ = "X",
                              Optional Ylabel$ = "Y",
                              Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold,
-                             Optional xAxis$ = Nothing) As GraphicsData
+                             Optional xAxis$ = Nothing,
+                             Optional title$ = Nothing,
+                             Optional titleCss$ = CSSFont.PlotTitle) As GraphicsData
 
             Dim margin As Padding = padding
             Dim plotInternal =
@@ -246,6 +248,17 @@ Namespace BarPlot.Histogram
                     Call g.DrawAxis(
                         region, scaler, showGrid, xlabel:=xlabel, ylabel:=Ylabel,
                         htmlLabel:=False)
+
+                    If Not title.StringEmpty Then
+                        Dim titleFont As Font = CSSFont.TryParse(titleCss)
+                        Dim titleSize As SizeF = g.MeasureString(title, titleFont)
+                        Dim titlePos As New PointF With {
+                            .X = region.PlotRegion.Left + (region.PlotRegion.Width - titleSize.Width) / 2,
+                            .Y = region.PlotRegion.Top - titleSize.Height * 1.125
+                        }
+
+                        Call g.DrawString(title, titleFont, Brushes.Black, titlePos)
+                    End If
 
                     For Each hist As HistProfile In groups.Samples
                         Dim ann As NamedValue(Of Color) = annotations(hist.legend.title)

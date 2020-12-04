@@ -2049,21 +2049,15 @@ Namespace Imaging
         Public Overrides Sub DrawImageUnscaled(image As Image, rect As Rectangle)
             Call Graphics.DrawImageUnscaled(image, rect)
         End Sub
-        '
-        ' Summary:
-        '     Draws a specified image using its original physical size at a specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   point:
-        '     System.Drawing.Point structure that specifies the upper-left corner of the drawn
-        '     image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws a specified image using its original physical size at a specified location.
+        ''' </summary>
+        ''' <param name="image"><see cref="Image"/> to draw.</param>
+        ''' <param name="point"><see cref="Point"/> structure that specifies the upper-left corner of the drawn
+        ''' image.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawImageUnscaled(image As Image, point As Point)
             Call Graphics.DrawImageUnscaled(image, point)
         End Sub

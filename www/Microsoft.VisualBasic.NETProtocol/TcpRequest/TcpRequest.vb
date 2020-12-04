@@ -394,9 +394,11 @@ EX_EXIT:
         Private Sub doSend(client As Socket, byteData As Byte())
             ' Begin sending the data to the remote device.
             Try
-                For Each block As Byte() In byteData.Split(512)
-                    Call client.Send(block, socketFlags:=SocketFlags.None)
-                Next
+                ' For Each block As Byte() In byteData.Split(512)
+                ' Call client.Send(block, socketFlags:=SocketFlags.None)
+                ' Next
+                Call client.Send(byteData, socketFlags:=SocketFlags.None)
+
             Catch ex As Exception
                 Call Me.exceptionHandler(ex)
             Finally

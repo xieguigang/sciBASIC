@@ -349,7 +349,7 @@ Public Module WebServiceUtils
             Return New NameValueCollection
         End If
 
-        Dim params$() = data.UrlDecode.Split("&"c)
+        Dim params$() = data.Split("&"c)
         Dim table = ParseUrlQueryParameters(params, toLower)
         Return table
     End Function
