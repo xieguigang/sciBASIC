@@ -53,11 +53,11 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 
-#If NET_48 Then
-
 Namespace Math
 
     Public Delegate Function Evaluate(Of T)(x As T) As Double
+
+#If NET_48 Then
 
     Public Class Ranking(Of T)
 
@@ -125,6 +125,7 @@ Namespace Math
             Return ranks.Select(Function(x) x.value)
         End Function
     End Module
+#End If
 End Namespace
 
-#End If
+

@@ -134,12 +134,12 @@ Namespace Tester
                         Dim vector = vectorUid.vector
                         Dim uid = vectorUid.UID
 
-                        g.FillEllipse(colors(Integer.Parse(uid)), CSng(vector.X * width), CSng(vector.Y * height), 5, 5)
+                        g.FillEllipse(colors(Integer.Parse(uid)), CSng(vector.X * width), CSng(vector.Y * height), 10, 10)
                         ' g.FillEllipse(colors.First, CSng(vector.X * width), CSng(vector.Y * height), 5, 5)
                     Next
                 End Using
 
-                bitmap.Save("Output-Color.png")
+                bitmap.Save("E:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\umap\MNIST-LabelledVectorArray-60000x100.png")
             End Using
 
             Console.WriteLine("Generated visualisation images")
@@ -151,7 +151,7 @@ Namespace Tester
             ' Note: The MNIST data here consist of normalized vectors (so the CosineForNormalizedVectors distance function can be safely used)
             Dim data = MsgPackSerializer.Deserialize(Of LabelledVector())(File.ReadAllBytes(test_data))
 
-            Call RunTest(data.Take(10_000).ToArray)
+            Call RunTest(data.Take(20_000).ToArray)
         End Sub
     End Class
 
