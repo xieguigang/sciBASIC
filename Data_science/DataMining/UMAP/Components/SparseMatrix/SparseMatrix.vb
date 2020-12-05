@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::a9b9831cb126ee4247e3efbfc611dd8b, Data_science\DataMining\UMAP\Components\SparseMatrix\SparseMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class SparseMatrix
-    ' 
-    '     Properties: Dims
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Function: [Get], Add, Combine, ElementWiseWith, GetAll
-    '               GetCols, GetCSR, GetRows, GetValues, (+2 Overloads) Map
-    '               MultiplyScalar, PairwiseMultiply, Subtract, ToArray, Transpose
-    ' 
-    '     Sub: [Set], CheckDims, ForEach
-    ' 
-    ' /********************************************************************************/
+' Class SparseMatrix
+' 
+'     Properties: Dims
+' 
+'     Constructor: (+3 Overloads) Sub New
+' 
+'     Function: [Get], Add, Combine, ElementWiseWith, GetAll
+'               GetCols, GetCSR, GetRows, GetValues, (+2 Overloads) Map
+'               MultiplyScalar, PairwiseMultiply, Subtract, ToArray, Transpose
+' 
+'     Sub: [Set], CheckDims, ForEach
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,7 +60,7 @@ Friend NotInheritable Class SparseMatrix
         Me.New(SparseMatrix.Combine(rows, cols, values), dims)
     End Sub
 
-    Private Sub New(entries As IEnumerable(Of (Integer, Integer, Single)), dims As (Integer, Integer))
+    Private Sub New(entries As IEnumerable(Of (row As Integer, col As Integer, value As Single)), dims As (rows As Integer, cols As Integer))
         Me.Dims = dims
         _entries = New Dictionary(Of RowCol, Single)()
 
@@ -221,28 +221,33 @@ Friend NotInheritable Class SparseMatrix
     ''' but a lot of the ported python tree search logic depends on this data format.
     ''' </summary>
     Public Function GetCSR() As (Integer(), Single(), Integer())
-        Dim entries = New List(Of (Single, Integer, Integer))()
-        ForEach(Sub(value, row, col) entries.Add((value, row, col)))
-        entries.Sort(Function(a, b)
-                         If a.row = b.row Then Return a.col - b.col
-                         Return a.row - b.row
-                     End Function)
+        Dim entries As New List(Of (value As Single, row As Integer, col As Integer))()
+
+        Call ForEach(Sub(value, row, col) entries.Add((value, row, col)))
+        Call entries.Sort(Function(a, b)
+                              If a.row = b.row Then
+                                  Return a.col - b.col
+                              Else
+                                  Return a.row - b.row
+                              End If
+                          End Function)
+
         Dim indices = New List(Of Integer)()
         Dim values = New List(Of Single)()
         Dim indptr = New List(Of Integer)()
         Dim currentRow = -1
-        Dim valueRowCol = Nothing
+        Dim xi As (value As Single, row As Integer, col As Integer)
 
-        For i = 0 To entries.Count - 1
-            valueRowCol = entries(i)
+        For i As Integer = 0 To entries.Count - 1
+            xi = entries(i)
 
-            If row <> currentRow Then
-                currentRow = row
+            If xi.row <> currentRow Then
+                currentRow = xi.row
                 indptr.Add(i)
             End If
 
-            indices.Add(col)
-            values.Add(value)
+            indices.Add(xi.col)
+            values.Add(xi.value)
         Next
 
         Return (indices.ToArray(), values.ToArray(), indptr.ToArray())
