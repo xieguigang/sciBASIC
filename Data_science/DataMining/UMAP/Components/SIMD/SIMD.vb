@@ -47,7 +47,9 @@ Imports stdNum = System.Math
 
 Friend Module SIMD
 
-    Private ReadOnly _vs1 As Integer = 8 ' Vector(Of Double).Count
+    Const Count As Integer = 8
+
+    Private ReadOnly _vs1 As Integer = Count    ' Vector(Of Double).Count
     Private ReadOnly _vs2 As Integer = 2 * _vs1 ' Vector(Of Double).Count
     Private ReadOnly _vs3 As Integer = 3 * _vs1 ' Vector(Of Double).Count
     Private ReadOnly _vs4 As Integer = 4 * _vs1 ' Vector(Of Double).Count
@@ -63,6 +65,7 @@ Friend Module SIMD
         Dim count = lhs.Length
         Dim offset = 0
         Dim diff As Vector
+        Dim d As Double
 
         While count >= SIMD._vs4
             diff = New Vector(lhs, offset) - New Vector(rhs, offset)
@@ -73,7 +76,11 @@ Friend Module SIMD
             result += diff.DotProduct(diff)
             diff = New Vector(lhs, offset + SIMD._vs3) - New Vector(rhs, offset + SIMD._vs3)
             result += diff.DotProduct(diff)
-            If count = SIMD._vs4 Then Return result
+
+            If count = SIMD._vs4 Then
+                Return result
+            End If
+
             count -= SIMD._vs4
             offset += SIMD._vs4
         End While
@@ -83,7 +90,11 @@ Friend Module SIMD
             result += diff.DotProduct(diff)
             diff = New Vector(lhs, offset + SIMD._vs1) - New Vector(rhs, offset + SIMD._vs1)
             result += diff.DotProduct(diff)
-            If count = SIMD._vs2 Then Return result
+
+            If count = SIMD._vs2 Then
+                Return result
+            End If
+
             count -= SIMD._vs2
             offset += SIMD._vs2
         End If
@@ -91,14 +102,18 @@ Friend Module SIMD
         If count >= SIMD._vs1 Then
             diff = New Vector(lhs, offset) - New Vector(rhs, offset)
             result += diff.DotProduct(diff)
-            If count = SIMD._vs1 Then Return result
+
+            If count = SIMD._vs1 Then
+                Return result
+            End If
+
             count -= SIMD._vs1
             offset += SIMD._vs1
         End If
 
         If count > 0 Then
             While count > 0
-                Dim d = lhs(offset) - rhs(offset)
+                d = lhs(offset) - rhs(offset)
                 result += d * d
                 offset += 1
                 count -= 1
@@ -116,25 +131,37 @@ Friend Module SIMD
 
         While count >= SIMD._vs4
             Call (New Vector(lhs, offset) + v).CopyTo(lhs, offset)
-            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs1)) + v).CopyTo(lhs, offset + SIMD._vs1)
-            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs2)) + v).CopyTo(lhs, offset + SIMD._vs2)
-            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs3)) + v).CopyTo(lhs, offset + SIMD._vs3)
-            If count = SIMD._vs4 Then Return
+            Call (New Vector(lhs, offset + SIMD._vs1) + v).CopyTo(lhs, offset + SIMD._vs1)
+            Call (New Vector(lhs, offset + SIMD._vs2) + v).CopyTo(lhs, offset + SIMD._vs2)
+            Call (New Vector(lhs, offset + SIMD._vs3) + v).CopyTo(lhs, offset + SIMD._vs3)
+
+            If count = SIMD._vs4 Then
+                Return
+            End If
+
             count -= SIMD._vs4
             offset += SIMD._vs4
         End While
 
         If count >= SIMD._vs2 Then
             Call (New Vector(lhs, offset) + v).CopyTo(lhs, offset)
-            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs1)) + v).CopyTo(lhs, offset + SIMD._vs1)
-            If count = SIMD._vs2 Then Return
+            Call (New Vector(lhs, CInt(offset + SIMD._vs1)) + v).CopyTo(lhs, offset + SIMD._vs1)
+
+            If count = SIMD._vs2 Then
+                Return
+            End If
+
             count -= SIMD._vs2
             offset += SIMD._vs2
         End If
 
         If count >= SIMD._vs1 Then
             Call (New Vector(lhs, offset) + v).CopyTo(lhs, offset)
-            If count = SIMD._vs1 Then Return
+
+            If count = SIMD._vs1 Then
+                Return
+            End If
+
             count -= SIMD._vs1
             offset += SIMD._vs1
         End If
@@ -155,25 +182,37 @@ Friend Module SIMD
 
         While count >= SIMD._vs4
             Call (New Vector(lhs, offset) * f).CopyTo(lhs, offset)
-            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs1)) * f).CopyTo(lhs, offset + SIMD._vs1)
-            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs2)) * f).CopyTo(lhs, offset + SIMD._vs2)
-            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs3)) * f).CopyTo(lhs, offset + SIMD._vs3)
-            If count = SIMD._vs4 Then Return
+            Call (New Vector(lhs, CInt(offset + SIMD._vs1)) * f).CopyTo(lhs, offset + SIMD._vs1)
+            Call (New Vector(lhs, CInt(offset + SIMD._vs2)) * f).CopyTo(lhs, offset + SIMD._vs2)
+            Call (New Vector(lhs, CInt(offset + SIMD._vs3)) * f).CopyTo(lhs, offset + SIMD._vs3)
+
+            If count = SIMD._vs4 Then
+                Return
+            End If
+
             count -= SIMD._vs4
             offset += SIMD._vs4
         End While
 
         If count >= SIMD._vs2 Then
             Call (New Vector(lhs, offset) * f).CopyTo(lhs, offset)
-            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs1)) * f).CopyTo(lhs, offset + SIMD._vs1)
-            If count = SIMD._vs2 Then Return
+            Call (New Vector(lhs, CInt(offset + SIMD._vs1)) * f).CopyTo(lhs, offset + SIMD._vs1)
+
+            If count = SIMD._vs2 Then
+                Return
+            End If
+
             count -= SIMD._vs2
             offset += SIMD._vs2
         End If
 
         If count >= SIMD._vs1 Then
             Call (New Vector(lhs, offset) * f).CopyTo(lhs, offset)
-            If count = SIMD._vs1 Then Return
+
+            If count = SIMD._vs1 Then
+                Return
+            End If
+
             count -= SIMD._vs1
             offset += SIMD._vs1
         End If
@@ -198,7 +237,11 @@ Friend Module SIMD
             result += New Vector(lhs, offset + SIMD._vs1).DotProduct(New Vector(rhs, offset + SIMD._vs1))
             result += New Vector(lhs, offset + SIMD._vs2).DotProduct(New Vector(rhs, offset + SIMD._vs2))
             result += New Vector(lhs, offset + SIMD._vs3).DotProduct(New Vector(rhs, offset + SIMD._vs3))
-            If count = SIMD._vs4 Then Return result
+
+            If count = SIMD._vs4 Then
+                Return result
+            End If
+
             count -= SIMD._vs4
             offset += SIMD._vs4
         End While
@@ -206,14 +249,22 @@ Friend Module SIMD
         If count >= SIMD._vs2 Then
             result += New Vector(lhs, offset).DotProduct(New Vector(rhs, offset))
             result += New Vector(lhs, offset + SIMD._vs1).DotProduct(New Vector(rhs, offset + SIMD._vs1))
-            If count = SIMD._vs2 Then Return result
+
+            If count = SIMD._vs2 Then
+                Return result
+            End If
+
             count -= SIMD._vs2
             offset += SIMD._vs2
         End If
 
         If count >= SIMD._vs1 Then
             result += New Vector(lhs, offset).DotProduct(New Vector(rhs, offset))
-            If count = SIMD._vs1 Then Return result
+
+            If count = SIMD._vs1 Then
+                Return result
+            End If
+
             count -= SIMD._vs1
             offset += SIMD._vs1
         End If

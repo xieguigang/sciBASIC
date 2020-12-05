@@ -1,4 +1,6 @@
-﻿Namespace Emit.Marshal
+﻿Imports Microsoft.VisualBasic.Language.Python
+
+Namespace Emit.Marshal
 
     ''' <summary>
     ''' A simulation of system.span in .NET 5
@@ -17,6 +19,12 @@
         Public ReadOnly Property Length As Integer
             Get
                 Return span_size
+            End Get
+        End Property
+
+        Public ReadOnly Property SpanView As T()
+            Get
+                Return buffer.SpanSlice(start, span_size)
             End Get
         End Property
 

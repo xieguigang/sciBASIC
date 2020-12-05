@@ -292,12 +292,15 @@ Public NotInheritable Class Umap
 
                 If index > 0 Then
                     rho(i) = nonZeroDists(index - 1)
-                    If interpolation > Umap.SMOOTH_K_TOLERANCE Then rho(i) += interpolation * (nonZeroDists(index) - nonZeroDists(index - 1))
+
+                    If interpolation > Umap.SMOOTH_K_TOLERANCE Then
+                        rho(i) += interpolation * (nonZeroDists(index) - nonZeroDists(index - 1))
+                    End If
                 Else
                     rho(i) = interpolation * nonZeroDists(0)
                 End If
             ElseIf nonZeroDists.Length > 0 Then
-                rho(i) = Utils.Max(nonZeroDists)
+                rho(i) = nonZeroDists.Max
             End If
 
             For n = 0 To nIter - 1
@@ -335,11 +338,17 @@ Public NotInheritable Class Umap
 
             ' TODO[umap-js]: This is very inefficient, but will do for now. FIXME
             If rho(i) > 0 Then
-                Dim meanIthDistances = Utils.Mean(ithDistances)
-                If result(i) < Umap.MIN_K_DIST_SCALE * meanIthDistances Then result(i) = Umap.MIN_K_DIST_SCALE * meanIthDistances
+                Dim meanIthDistances = ithDistances.Average
+
+                If result(i) < Umap.MIN_K_DIST_SCALE * meanIthDistances Then
+                    result(i) = Umap.MIN_K_DIST_SCALE * meanIthDistances
+                End If
             Else
-                Dim meanDistances = Utils.Mean(distances.[Select](New Func(Of Double(), Double)(AddressOf Utils.Mean)).ToArray())
-                If result(i) < Umap.MIN_K_DIST_SCALE * meanDistances Then result(i) = Umap.MIN_K_DIST_SCALE * meanDistances
+                Dim meanDistances = distances.Select(Function(d) d.Average).Average
+
+                If result(i) < Umap.MIN_K_DIST_SCALE * meanDistances Then
+                    result(i) = Umap.MIN_K_DIST_SCALE * meanDistances
+                End If
             End If
         Next
 
@@ -352,14 +361,14 @@ Public NotInheritable Class Umap
         Dim rows = New Integer(nSamples * nNeighbors - 1) {}
         Dim cols = New Integer(nSamples * nNeighbors - 1) {}
         Dim vals = New Double(nSamples * nNeighbors - 1) {}
+        Dim val As Double
 
         For i = 0 To nSamples - 1
             For j = 0 To nNeighbors - 1
                 If knnIndices(i)(j) = -1 Then
-                    Continue For ' We didn't get the full knn for i
+                    ' We didn't get the full knn for i
+                    Continue For
                 End If
-
-                Dim val As Double
 
                 If knnIndices(i)(j) = i Then
                     val = 0
@@ -446,7 +455,7 @@ Public NotInheritable Class Umap
 
     Private Shared Function MakeEpochsPerSample(weights As Double(), nEpochs As Integer) As Double()
         Dim result = Utils.Filled(weights.Length, -1)
-        Dim max = Utils.Max(weights)
+        Dim max = weights.Max
 
         For Each nI In weights.Select(Function(w, i) (w / max * nEpochs, i))
             Dim n = nI.Item1

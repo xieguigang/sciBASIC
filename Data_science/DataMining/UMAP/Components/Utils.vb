@@ -66,20 +66,6 @@ Module Utils
     End Function
 
     ''' <summary>
-    ''' Returns the mean of an array
-    ''' </summary>
-    Public Function Mean(input As Double()) As Double
-        Return input.Sum() / input.Length
-    End Function
-
-    ''' <summary>
-    ''' Returns the maximum value of an array
-    ''' </summary>
-    Public Function Max(input As Double()) As Double
-        Return input.Max()
-    End Function
-
-    ''' <summary>
     ''' Generate nSamples many integers from 0 to poolSize such that no integer is selected twice.The duplication constraint is achieved via rejection sampling.
     ''' </summary>
     Public Function RejectionSample(nSamples As Integer, poolSize As Integer, random As IProvideRandomValues) As Integer()

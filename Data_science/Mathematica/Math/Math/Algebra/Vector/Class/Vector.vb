@@ -300,8 +300,8 @@ Namespace LinearAlgebra
         ''' <param name="index">
         ''' The starting index position from which to create the vector.
         ''' </param>
-        Sub New(values As Double(), index As Integer)
-            Call Me.New(values.Skip(index))
+        Sub New(values As Double(), index As Integer, Optional count As Integer = 8)
+            Call Me.New(values.Skip(index).Take(count))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -315,16 +315,8 @@ Namespace LinearAlgebra
         ''' <param name="destination">The array to receive a copy of the vector values.</param>
         ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
         Public Sub CopyTo(ByRef destination As Double(), startIndex As Integer)
-            Dim i As Integer = 0
-            Dim is_single As Boolean = buffer.Length = 1
-
-            For id As Integer = startIndex To destination.Length - 1
-                If is_single Then
-                    destination(id) = buffer(Scan0)
-                Else
-                    destination(id) = buffer(i)
-                    i += 1
-                End If
+            For id As Integer = 0 To buffer.Length - 1
+                destination(id + startIndex) = buffer(id)
             Next
         End Sub
 
@@ -334,16 +326,8 @@ Namespace LinearAlgebra
         ''' <param name="destination">The array to receive a copy of the vector values.</param>
         ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
         Public Sub CopyTo(destination As Integer(), startIndex As Integer)
-            Dim i As Integer = 0
-            Dim is_single As Boolean = buffer.Length = 1
-
-            For id As Integer = startIndex To destination.Length - 1
-                If is_single Then
-                    destination(id) = buffer(Scan0)
-                Else
-                    destination(id) = buffer(i)
-                    i += 1
-                End If
+            For id As Integer = 0 To buffer.Length - 1
+                destination(id + startIndex) = buffer(id)
             Next
         End Sub
 
@@ -353,16 +337,8 @@ Namespace LinearAlgebra
         ''' <param name="destination">The array to receive a copy of the vector values.</param>
         ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
         Public Sub CopyTo(destination As Single(), startIndex As Integer)
-            Dim i As Integer = 0
-            Dim is_single As Boolean = buffer.Length = 1
-
-            For id As Integer = startIndex To destination.Length - 1
-                If is_single Then
-                    destination(id) = buffer(Scan0)
-                Else
-                    destination(id) = buffer(i)
-                    i += 1
-                End If
+            For id As Integer = 0 To buffer.Length - 1
+                destination(id + startIndex) = buffer(id)
             Next
         End Sub
 
