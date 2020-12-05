@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14c330f7cda55dbe3b1c426efeb59d96, mime\application%pdf\PdfFileWriter\ImageSizePos.vb"
+﻿#Region "Microsoft.VisualBasic::1cf25c1287562723441567bd6acf7b06, mime\application%pdf\PdfFileWriter\ImageSizePos.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,6 @@
     ' Module ImageSizePos
     ' 
     '     Function: (+2 Overloads) ImageArea, ImageSize
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -158,5 +157,3 @@ Public Module ImageSizePos
         Return OutputSize
     End Function
 End Module
-
-

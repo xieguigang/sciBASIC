@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b87e55af20b0e0004321c5082cd11e4c, mime\application%pdf\PdfFileWriter\PDF\PdfRadialShading.vb"
+﻿#Region "Microsoft.VisualBasic::de12f037db6ea1670c77e8dc72c9d543, mime\application%pdf\PdfFileWriter\PDF\PdfRadialShading.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,6 @@
     ' 
     '     Constructor: (+3 Overloads) Sub New
     '     Sub: AntiAlias, ExtendShading, SetBoundingBox, SetGradientDirection, WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -251,5 +250,3 @@ Public Class PdfRadialShading
         Return
     End Sub
 End Class
-
-

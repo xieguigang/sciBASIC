@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b27b2a095f7c90b07a00a3cc35590600, Microsoft.VisualBasic.Core\ComponentModel\File\XmlAssembly\DigitalSignature.vb"
+﻿#Region "Microsoft.VisualBasic::2e2d0c31f027bab9a6b4ab84ab439e74, Microsoft.VisualBasic.Core\ComponentModel\File\XmlAssembly\DigitalSignature.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace ComponentModel
 

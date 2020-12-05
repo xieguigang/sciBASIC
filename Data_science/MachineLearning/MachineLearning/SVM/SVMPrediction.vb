@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e1d5831f79d0726f6cda5c1c9ae9af, Data_science\MachineLearning\MachineLearning\SVM\SVMPrediction.vb"
+﻿#Region "Microsoft.VisualBasic::683d09ba0f87044c9b5a9a2fc4668849, Data_science\MachineLearning\MachineLearning\SVM\SVMPrediction.vb"
 
     ' Author:
     ' 
@@ -58,5 +58,3 @@ Namespace SVM
 
     End Structure
 End Namespace
-
-

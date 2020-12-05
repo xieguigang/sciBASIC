@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d97d1c6b4a9235bcf7d251864412239, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::f81c9416833b774b207578261958106e, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb"
 
     ' Author:
     ' 
@@ -77,4 +77,3 @@ Namespace ApplicationServices.DynamicInterop
         Function GetFunctionAddress(hModule As IntPtr, lpProcName As String) As IntPtr
     End Interface
 End Namespace
-

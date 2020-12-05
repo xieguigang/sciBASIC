@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e3fb7ff70f094915c4b59cf2120abfd, Microsoft.VisualBasic.Core\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::34766f4a09707ef789f5b26952da094f, Microsoft.VisualBasic.Core\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module CLIParser
     ' 
-    '         Function: checkKeyDuplicated, GetTokens, (+2 Overloads) TryParse
+    '         Function: checkKeyDuplicated, extract, GetTokens, (+2 Overloads) TryParse
     ' 
     ' 
     ' /********************************************************************************/

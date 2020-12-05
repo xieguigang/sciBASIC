@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e6507667e475e621916ca5fd2972300, mime\application%pdf\PdfFileWriter\PDF\PdfTableStyle.vb"
+﻿#Region "Microsoft.VisualBasic::df2b637060af1ce7e3753911c8b07482, mime\application%pdf\PdfFileWriter\PDF\PdfTableStyle.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Sub: Copy
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -351,5 +350,3 @@ Imports System.Globalization
             Return
         End Sub
     End Class
-
-

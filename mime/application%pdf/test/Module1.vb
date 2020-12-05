@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d779fd4a67c4413eb4b1983820d5c32, mime\application%pdf\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::88c4a0f11ffbd587e4e680df4a929b58, mime\application%pdf\test\Module1.vb"
 
     ' Author:
     ' 
@@ -202,4 +202,3 @@ Module Module1
     End Sub
 
 End Module
-

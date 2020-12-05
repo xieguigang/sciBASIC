@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::665ec75519c4c33314081c071eb3f70a, mime\application%pdf\PdfFileWriter\PDF\PdfFontFileClasses.vb"
+﻿#Region "Microsoft.VisualBasic::8811ba85ca8a24c99f20b83df6bd2e9a, mime\application%pdf\PdfFileWriter\PDF\PdfFontFileClasses.vb"
 
     ' Author:
     ' 
@@ -67,7 +67,6 @@
     ' 
     ' 
     '  
-    ' 
     ' 
     ' 
     ' 
@@ -398,5 +397,3 @@ Imports System
         ScaledComponentOffset = &H800       ' bit11 Composite designed to have the component offset scaled (designed for Apple rasterizer).
         UnscaledComponentOffset = &H1000    ' bit12 Composite designed not to have the component offset scaled (designed for the Microsoft TrueType rasterizer).
     End Enum
-
-

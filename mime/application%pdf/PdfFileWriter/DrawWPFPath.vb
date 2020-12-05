@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b54a68fe8ddc6d6e01c0f7cf947e3687, mime\application%pdf\PdfFileWriter\DrawWPFPath.vb"
+﻿#Region "Microsoft.VisualBasic::00e484d11fc042883a77f27927528959, mime\application%pdf\PdfFileWriter\DrawWPFPath.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,6 @@
     '          (+7 Overloads) SetBrush, (+2 Overloads) SetPen, SetPenWidth, SetTransformation, UseCurrectBrush
     '          UseCurrectPen
     '     Class UseCurrent
-    ' 
     ' 
     ' 
     ' 
@@ -798,5 +797,3 @@ Public Class DrawWPFPath
         Return New SizeD(stdNum.Abs(ScaleX) * PathSize.Width, stdNum.Abs(ScaleY) * PathSize.Height)
     End Function
 End Class
-
-

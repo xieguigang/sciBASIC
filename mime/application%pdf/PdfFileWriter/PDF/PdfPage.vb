@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::460b08378e061928870a7a86a27de296, mime\application%pdf\PdfFileWriter\PDF\PdfPage.vb"
+﻿#Region "Microsoft.VisualBasic::cb2039ef2d62095b54ebe642a43d741f, mime\application%pdf\PdfFileWriter\PDF\PdfPage.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     '                   (+2 Overloads) AddWebLink, GetCurrentContents, PageSize
     ' 
     '         Sub: AddAnnotInternal, AddContents, AddLocationMarker, ConstructorHelper, WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -435,5 +434,3 @@ Imports System.Text
             Return
         End Sub
     End Class
-
-

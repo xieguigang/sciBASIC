@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42d190cc774f3c50ad784ff63693d92a, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::40f89b1c5e74644d25e450d8183517cf, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,10 @@
 
     ' Summaries:
 
+    '     Interface QuantileQuery
+    ' 
+    '         Function: Query
+    ' 
     '     Class QuantileEstimationGK
     ' 
     '         Constructor: (+1 Overloads) Sub New

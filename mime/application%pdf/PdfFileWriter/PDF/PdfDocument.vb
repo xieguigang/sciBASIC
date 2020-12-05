@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bfa71af57c59131107ea0ec2bd40fdb, mime\application%pdf\PdfFileWriter\PDF\PdfDocument.vb"
+﻿#Region "Microsoft.VisualBasic::bebb08a7a9d98a5f1714d42b9a5aedbe, mime\application%pdf\PdfFileWriter\PDF\PdfDocument.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,6 @@
     ' 
     '     Sub: AddDestToLinkAnnot, ConstructorHelper, CreateFile, CreateNamedDestinations, Dispose
     '          MovePage, (+4 Overloads) SetEncryption
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1231,5 +1230,3 @@ Public Class PdfDocument
         Return
     End Sub
 End Class
-
-

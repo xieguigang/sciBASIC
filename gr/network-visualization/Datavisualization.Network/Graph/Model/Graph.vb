@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::094ca0df51d6ca8c83c66dce76fad521, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::d0052d11fa16e8824844b47fce1a6740, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) AddEdge, AddNode, Clone, ComputeIfNotExists, Copy
-    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedVertex, GetEdge
-    '                   (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, ToString
+    '         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, ComputeIfNotExists, Copy
+    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
+    '                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, ToString
     ' 
     '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
     '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge

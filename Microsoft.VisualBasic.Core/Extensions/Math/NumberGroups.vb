@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61d497ad46c986184f0c586076eb3c82, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::4b0fff9d569d5f44eb456813d9db26f3, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -35,11 +35,10 @@
     ' 
     '         Function: BinarySearch, (+3 Overloads) GroupBy, GroupByImpl, GroupByParallel, Groups
     '                   Match, Min
-    '         Interface IVector
     ' 
-    '             Properties: Data
+    '     Interface IVector
     ' 
-    ' 
+    '         Properties: Data
     ' 
     '     Interface INumberTag
     ' 

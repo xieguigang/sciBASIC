@@ -1,48 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::2c87377f84f81fca7644f2dc0ff8ecb5, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::0444cc5817effe7e932f28332d44cae3, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class Cluster
-' 
-'     Properties: Children, Distance, DistanceValue, Leaf, LeafNames
-'                 Name, Parent, TotalDistance, WeightValue
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: contains, (+2 Overloads) CountLeafs, Equals, GetHashCode, ToString
-' 
-'     Sub: AddChild, AddLeafName, AppendLeafNames
-' 
-' /********************************************************************************/
+    ' Class Cluster
+    ' 
+    '     Properties: Children, Distance, DistanceValue, isLeaf, LeafNames
+    '                 Leafs, Name, Parent, TotalDistance, WeightValue
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: contains, CountLeafs, Equals, GetHashCode, OrderLeafs
+    '               ToString
+    ' 
+    '     Sub: AddChild, AddLeafName, AppendLeafNames
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

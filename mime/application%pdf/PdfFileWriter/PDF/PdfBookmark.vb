@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2c4fd15c41bfb48ec18279f679915b5, mime\application%pdf\PdfFileWriter\PDF\PdfBookmark.vb"
+﻿#Region "Microsoft.VisualBasic::852f5b08685f5073685e57d4fbb9169f, mime\application%pdf\PdfFileWriter\PDF\PdfBookmark.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
     '     Function: (+4 Overloads) AddBookmark, GetChild
     ' 
     '     Sub: WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -358,5 +357,3 @@ Imports System.Drawing
             Return
         End Sub
     End Class
-
-

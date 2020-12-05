@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25a823b8827147c85ee73096ad048c57, mime\application%pdf\PdfFileWriter\ArcToBezier.vb"
+﻿#Region "Microsoft.VisualBasic::bfd994b015c7021277591a0ca43008fb, mime\application%pdf\PdfFileWriter\ArcToBezier.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' Module ArcToBezier
     ' 
     '     Function: CircularArc, CreateArc
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -257,5 +256,3 @@ Public Module ArcToBezier
         Return SegArray
     End Function
 End Module
-
-

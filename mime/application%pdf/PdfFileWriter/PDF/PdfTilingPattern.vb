@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::604adbfd20770ebaddfc3ec285d7e612, mime\application%pdf\PdfFileWriter\PDF\PdfTilingPattern.vb"
+﻿#Region "Microsoft.VisualBasic::e90ae4b04e44cd613d4a12768c250343, mime\application%pdf\PdfFileWriter\PDF\PdfTilingPattern.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
     '         Function: SetBrickPattern, SetWeavePattern
     ' 
     '         Sub: SetPatternMatrix, (+2 Overloads) SetScale, SetScaleAndOrigin, (+3 Overloads) SetTileBox, SetTilingType
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -359,5 +358,3 @@ Imports System.Drawing
             Return Pattern
         End Function
     End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e291a6711eab85fd175e16e6cbbfa556, mime\application%pdf\PdfFileWriter\LocationMarker.vb"
+﻿#Region "Microsoft.VisualBasic::af2e0ac97a1ee296e7d58ae2e64204b4, mime\application%pdf\PdfFileWriter\LocationMarker.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,6 @@
     '         Function: CompareTo
     ' 
     '         Sub: Create
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -245,5 +244,3 @@ Imports System.Collections.Generic
             Return String.CompareOrdinal(LocMarkerName, Other.LocMarkerName)
         End Function
     End Class
-
-

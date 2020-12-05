@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::092a8021c659ead964ddc3a907975033, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::262c9b0ae1b81bf61fc79fa51fe822bc, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
@@ -47,8 +47,8 @@
     ' 
     '         Properties: SerialData
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetLine
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: GetLine, ToString
     ' 
     ' 
     ' /********************************************************************************/

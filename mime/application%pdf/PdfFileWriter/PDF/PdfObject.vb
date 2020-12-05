@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8b1da7f6e3411930bead6911f33db54, mime\application%pdf\PdfFileWriter\PDF\PdfObject.vb"
+﻿#Region "Microsoft.VisualBasic::d289d0be82398321616d42c29a280d45, mime\application%pdf\PdfFileWriter\PDF\PdfObject.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,6 @@
     '               ToPt
     ' 
     '     Sub: ObjectValueAppend, ObjectValueFormat, WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -478,5 +477,3 @@ Public Class PdfObject
         Return AdlerHigh << 16 Or AdlerLow
     End Function
 End Class
-
-

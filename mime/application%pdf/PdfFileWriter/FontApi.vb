@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcea6cb6700e5adee909057e5fbef5c4, mime\application%pdf\PdfFileWriter\FontApi.vb"
+﻿#Region "Microsoft.VisualBasic::5a3a93da4cfadb3b890458bee75bb0e8, mime\application%pdf\PdfFileWriter\FontApi.vb"
 
     ' Author:
     ' 
@@ -96,7 +96,6 @@
     '               ReadUInt32, ReadWinPoint, SelectObject
     ' 
     '     Sub: Align4, AllocateBuffer, Dispose, FreeBuffer, ThrowSystemErrorException
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1998,5 +1997,3 @@ Public Class FontApi
         Return
     End Sub
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c457502a2cab0f4c92b3b9a5caa5855b, mime\application%pdf\PdfFileWriter\Barcode.vb"
+﻿#Region "Microsoft.VisualBasic::c08a8af309b475331619c13309448d64, mime\application%pdf\PdfFileWriter\Barcode.vb"
 
     ' Author:
     ' 
@@ -80,7 +80,6 @@
     '     Function: BarWidth
     ' 
     '     Sub: Checksum
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1757,5 +1756,3 @@ Public Class BarcodeInterleaved2of5
         Return
     End Sub
 End Class
-
-

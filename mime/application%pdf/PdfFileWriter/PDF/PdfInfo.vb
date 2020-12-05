@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::559ada83dad9c5e2e26a91132bb1769b, mime\application%pdf\PdfFileWriter\PDF\PdfInfo.vb"
+﻿#Region "Microsoft.VisualBasic::89414a916c7f1f44897c1fff07996ae8, mime\application%pdf\PdfFileWriter\PDF\PdfInfo.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' 
     '         Sub: Author, CreationDate, Creator, Keywords, ModDate
     '              Producer, Subject, Title
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -192,5 +191,3 @@
             Return
         End Sub
     End Class
-
-

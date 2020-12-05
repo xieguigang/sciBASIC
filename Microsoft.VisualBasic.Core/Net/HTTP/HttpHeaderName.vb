@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f45e0e714c6d7e99f8ccf9a8b159b5f, Microsoft.VisualBasic.Core\Net\HTTP\HttpHeaderName.vb"
+﻿#Region "Microsoft.VisualBasic::e36848874153231ebc1c4829a707141a, Microsoft.VisualBasic.Core\Net\HTTP\HttpHeaderName.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.ComponentModel
 Imports System.Net

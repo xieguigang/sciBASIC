@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6810cedaab5aed31c00777d9afca225c, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace ApplicationServices.Debugging.Diagnostics
 

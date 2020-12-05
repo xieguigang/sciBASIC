@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57368282dff3b3565155d66887c61200, mime\application%pdf\PdfFileWriter\PDF\PdfTable.vb"
+﻿#Region "Microsoft.VisualBasic::607d9ffa27a65cdc4f2c6f7581bb8638, mime\application%pdf\PdfFileWriter\PDF\PdfTable.vb"
 
     ' Author:
     ' 
@@ -1119,5 +1119,3 @@ Imports System.Drawing
             Return
         End Sub
     End Class
-
-

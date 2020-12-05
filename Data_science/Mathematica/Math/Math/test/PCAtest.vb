@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f91c0a742d4790b245c44d80a843ee03, Data_science\Mathematica\Math\Math\Test\PCAtest.vb"
+﻿#Region "Microsoft.VisualBasic::f91c0a742d4790b245c44d80a843ee03, Data_science\Mathematica\Math\Math\test\PCAtest.vb"
 
     ' Author:
     ' 

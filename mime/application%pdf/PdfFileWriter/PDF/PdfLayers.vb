@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18af76c06ae33d8e539a99658fad6364, mime\application%pdf\PdfFileWriter\PDF\PdfLayers.vb"
+﻿#Region "Microsoft.VisualBasic::315ee4d224a189b2559c32bbb212e7f9, mime\application%pdf\PdfFileWriter\PDF\PdfLayers.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: CreateDictionary, DisplayOrder, DisplayOrderEndGroup, DisplayOrderStartGroup
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -260,5 +259,3 @@ Imports System.Text
             Return
         End Sub
     End Class
-
-

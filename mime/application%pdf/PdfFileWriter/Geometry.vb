@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::218a7982e272f8b3b799d60b874c0eb8, mime\application%pdf\PdfFileWriter\Geometry.vb"
+﻿#Region "Microsoft.VisualBasic::b0176889ff6461df19e43c7c89a966bc, mime\application%pdf\PdfFileWriter\Geometry.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,6 @@
     '     Constructor: (+4 Overloads) Sub New
     '     Function: CircleFirstQuarter, CircleFourthQuarter, CircleSecondQuarter, CircleThirdQuarter, OvalFirstQuarter
     '               OvalFourthQuarter, OvalSecondQuarter, OvalThirdQuarter
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -489,5 +488,3 @@ Public Class BezierD
         Return New BezierD(X, Y - Height, X + CircleFactor * Width, Y - Height, X + Width, Y - CircleFactor * Height, X + Width, Y)
     End Function
 End Class
-
-

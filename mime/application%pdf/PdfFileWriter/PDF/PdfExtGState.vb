@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33bb3df5db2138afc75532f427f75f48, mime\application%pdf\PdfFileWriter\PDF\PdfExtGState.vb"
+﻿#Region "Microsoft.VisualBasic::7275a658e86c33c28d37a0fcb6f4c2c2, mime\application%pdf\PdfFileWriter\PDF\PdfExtGState.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,6 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: CompareTo, CreateExtGState
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -132,5 +131,3 @@ Imports System.Collections.Generic
             Return String.Compare(Value, Other.Value)
         End Function
     End Class
-
-

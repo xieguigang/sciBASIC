@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11680287b53d46496bf87234f65bf4c6, mime\text%html\HTML\HtmlCompress.vb"
+﻿#Region "Microsoft.VisualBasic::a3134ba60c99e516a3b9fb27a7633545, mime\text%html\HTML\HtmlCompress.vb"
 
     ' Author:
     ' 
@@ -176,4 +176,3 @@ Namespace HTML
         End Sub
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f14cc7bab4145689fa5d22e7bf35812d, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::e07fc09acb483d849b0bd5155e2f15fc, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module CorrelationNetwork
     ' 
-    '     Function: BuildNetwork, HowStrong
+    '     Function: (+2 Overloads) BuildNetwork, HowStrong
     ' 
     ' /********************************************************************************/
 

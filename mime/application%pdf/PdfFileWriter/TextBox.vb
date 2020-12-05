@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52b57874d3df00d05dc4b0a561ee42fc, mime\application%pdf\PdfFileWriter\TextBox.vb"
+﻿#Region "Microsoft.VisualBasic::15b417851fd5e0be28922f16d533cd1c, mime\application%pdf\PdfFileWriter\TextBox.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,6 @@
     '         Function: (+3 Overloads) BoxHeightExtra
     ' 
     '         Sub: AddLine, (+8 Overloads) AddText, BreakLine, Clear, Terminate
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -908,5 +907,3 @@ Public Class TextBoxSeg
             Return
         End Sub
     End Class
-
-

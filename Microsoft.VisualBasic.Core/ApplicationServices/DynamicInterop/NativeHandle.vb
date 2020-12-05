@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0b6bdac6e14893b53b9a9a1fa6402a5, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\NativeHandle.vb"
+﻿#Region "Microsoft.VisualBasic::c200c8eeff2906f21da9699abaf81ade, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\NativeHandle.vb"
 
     ' Author:
     ' 
@@ -160,4 +160,3 @@ Namespace ApplicationServices.DynamicInterop
         End Sub
     End Class
 End Namespace
-

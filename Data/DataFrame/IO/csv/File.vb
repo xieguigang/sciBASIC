@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45b7319ebafc6de55350e89871a59c3d, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::ea77b7db21314bc24d7d7c0618b86d1e, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 

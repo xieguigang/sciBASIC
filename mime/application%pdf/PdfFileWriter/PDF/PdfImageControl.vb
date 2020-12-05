@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b86ce8dcc21e7a821bc941efb5e0252, mime\application%pdf\PdfFileWriter\PDF\PdfImageControl.vb"
+﻿#Region "Microsoft.VisualBasic::20ab3125d7ce1ceea0b99cf345bf190e, mime\application%pdf\PdfFileWriter\PDF\PdfImageControl.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,6 @@
     '     Properties: GrayToBWCutoff, ImageQuality
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -130,5 +129,3 @@ Public Class PdfImageControl
 
     Friend _GrayToBWCutoff As Integer
 End Class
-
-

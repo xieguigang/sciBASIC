@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33ebb6c9b00bab86580cfcbf302ba6ca, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::20bebfc7c07ed4a5dabc476dd86d3b2a, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,6 @@
     '     Module GeometryMath
     ' 
     '         Function: (+2 Overloads) angleBetween2Lines, GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
-    ' 
-    '     Enum QuadrantRegions
-    ' 
-    '         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
-    '         XRight, YBottom, YTop
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum Intersections
-    ' 
-    '         Containment, Intersection, None, Tangent
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

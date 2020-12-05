@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::705eda7755f3906081f010dd0da5e079, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
+﻿#Region "Microsoft.VisualBasic::621fac823c2f87d127ece9f31559d0d4, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
 
     ' Author:
     ' 
@@ -357,4 +357,3 @@ Namespace ApplicationServices.DynamicInterop
         End Function
     End Class
 End Namespace
-

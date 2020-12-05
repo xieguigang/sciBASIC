@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30c21c8d085310e2bf46b6dadce25d9e, mime\application%pdf\PdfFileWriter\PDF\PdfLayer.vb"
+﻿#Region "Microsoft.VisualBasic::a4e97558f59151b8f8f3964b135c4263, mime\application%pdf\PdfFileWriter\PDF\PdfLayer.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: CompareTo
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -165,5 +164,3 @@ Imports System
             Return ObjectNumber - Other.ObjectNumber
         End Function
     End Class
-
-

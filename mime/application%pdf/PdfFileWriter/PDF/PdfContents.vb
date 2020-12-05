@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94329aa392c24a147ae92a4bff1c1989, mime\application%pdf\PdfFileWriter\PDF\PdfContents.vb"
+﻿#Region "Microsoft.VisualBasic::e3a98cdd485b6e8f0a41adb783e3739d, mime\application%pdf\PdfFileWriter\PDF\PdfContents.vb"
 
     ' Author:
     ' 
@@ -124,7 +124,6 @@
     '          SetMiterLimit, (+2 Overloads) SetPaintOp, SetPatternNonStroking, SetPatternStroking, SetTextPosition
     '          SetTextRenderingMode, SetTransMatrix, SetWordSpacing, (+2 Overloads) Translate, (+4 Overloads) TranslateScale
     '          (+3 Overloads) TranslateScaleRotate, WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -3321,5 +3320,3 @@ Public Class PdfContents
         Return
     End Sub
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3c3ba03d23de77a79ad984e07e1d568, mime\application%pdf\PdfFileWriter\AnnotAction.vb"
+﻿#Region "Microsoft.VisualBasic::4ae6a31b6d1d3c61c63d00f95cf6d228, mime\application%pdf\PdfFileWriter\AnnotAction.vb"
 
     ' Author:
     ' 
@@ -87,7 +87,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: IsEqual
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -364,5 +363,3 @@ Public Enum FileAttachIcon
             Return Equals(Note, StickyNote.Note) AndAlso Icon = StickyNote.Icon
         End Function
     End Class
-
-

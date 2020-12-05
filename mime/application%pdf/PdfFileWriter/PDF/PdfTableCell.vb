@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c573ebcc7493c888ad2cc5685c50f19, mime\application%pdf\PdfFileWriter\PDF\PdfTableCell.vb"
+﻿#Region "Microsoft.VisualBasic::17b1e96680b298c5f1a2608399abd491, mime\application%pdf\PdfFileWriter\PDF\PdfTableCell.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,6 @@
     '         Function: CreateTextBox, LeftPos, TextHorPos, TextVerPos, TopPos
     ' 
     '         Sub: DrawCell, DrawCellInitialization, Reset, TextBoxInitialization
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -845,5 +844,3 @@ Imports System.Runtime.InteropServices
             Return
         End Sub
     End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08c03b8f6f902be6809fd91691f71794, mime\application%pdf\PdfFileWriter\PDF\PdfAxialShading.vb"
+﻿#Region "Microsoft.VisualBasic::33fd1180e5a4d978ca0883154f14745e, mime\application%pdf\PdfFileWriter\PDF\PdfAxialShading.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Sub: AntiAlias, ExtendShading, SetAxisDirection, SetBoundingBox, WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -261,5 +260,3 @@ Imports SysMedia = System.Windows.Media
             Return
         End Sub
     End Class
-
-

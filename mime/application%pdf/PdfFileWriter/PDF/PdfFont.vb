@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62f80b6830f9eb0d1b06aa6bd64c0f47, mime\application%pdf\PdfFileWriter\PDF\PdfFont.vb"
+﻿#Region "Microsoft.VisualBasic::9e994ba6ef109070aaa514ea32c5d1eb, mime\application%pdf\PdfFileWriter\PDF\PdfFont.vb"
 
     ' Author:
     ' 
@@ -69,7 +69,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: CompareTo
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1517,5 +1516,3 @@ Friend Class GlyphWidth
         Return GlyphIndex - Other.GlyphIndex
     End Function
 End Class
-
-

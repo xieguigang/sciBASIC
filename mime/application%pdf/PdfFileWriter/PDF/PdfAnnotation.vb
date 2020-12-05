@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a7bb79517f240aff70a859059087909, mime\application%pdf\PdfFileWriter\PDF\PdfAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::204010e8c5a67c7d8d08c2676a1a0f63, mime\application%pdf\PdfFileWriter\PDF\PdfAnnotation.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: ActivateActionWhenPageIsVisible, Appearance, DisplayBorder, WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -231,5 +230,3 @@ Imports System.Collections.Generic
             Return
         End Sub
     End Class
-
-

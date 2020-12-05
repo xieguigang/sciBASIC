@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbf1fe46bf239d552640ce7a2ea8bd89, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::60e734e343b1c5526c060e73de90e90f, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 

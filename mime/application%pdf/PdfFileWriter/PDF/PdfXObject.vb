@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::183265ee58578aefc1924cd0d90436bc, mime\application%pdf\PdfFileWriter\PDF\PdfXObject.vb"
+﻿#Region "Microsoft.VisualBasic::34907dbd8e05cada9954cedf1ef4a604, mime\application%pdf\PdfFileWriter\PDF\PdfXObject.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: LayerControl
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -174,5 +173,3 @@
             Return
         End Sub
     End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be45cbf52986189ef5619dd0fd100bae, mime\application%pdf\PdfFileWriter\PDF\PdfChart.vb"
+﻿#Region "Microsoft.VisualBasic::51c7ef42645909b21341684361eea684, mime\application%pdf\PdfFileWriter\PDF\PdfChart.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,6 @@
     '         Function: CreateChart, CreateFont
     ' 
     '         Sub: CommitToPdfFile, WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -348,5 +347,3 @@ Imports System.Windows.Forms.DataVisualization.Charting
             Return
         End Sub
     End Class
-
-

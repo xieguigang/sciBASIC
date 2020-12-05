@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::739ff38cac336e9cb70e43667155ae52, Data_science\Mathematica\SignalProcessing\Signal.Plots\TimeSignalPlot.vb"
+﻿#Region "Microsoft.VisualBasic::aecfb8c84b78e2c59cc5372a7527436f, Data_science\Mathematica\SignalProcessing\Signal.Plots\TimeSignalPlot.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Public Class TimeSignalPlot : Inherits Plot
 
     End Function
 End Class
-

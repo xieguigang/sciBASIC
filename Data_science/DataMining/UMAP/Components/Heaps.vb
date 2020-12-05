@@ -1,4 +1,53 @@
-﻿Imports Microsoft.VisualBasic.Math
+﻿#Region "Microsoft.VisualBasic::dfe198722bf11d8fd2fc61052639f906, Data_science\DataMining\UMAP\Components\Heaps.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Heaps
+    ' 
+    '     Function: BuildCandidates, DeHeapSort, HeapPush, MakeArrays, MakeHeap
+    '               SmallestFlagged, UncheckedHeapPush
+    ' 
+    '     Sub: SiftDown
+    '     Class Heap
+    ' 
+    '         Sub: Add
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
 Friend Module Heaps
@@ -218,3 +267,4 @@ Friend Module Heaps
         End Sub
     End Class
 End Module
+

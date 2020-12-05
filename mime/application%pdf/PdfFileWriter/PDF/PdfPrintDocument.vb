@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::624921e1e1a7f03146b24b6b943bcd24, mime\application%pdf\PdfFileWriter\PDF\PdfPrintDocument.vb"
+﻿#Region "Microsoft.VisualBasic::c60fa225510781cf5cfa882bba771a21, mime\application%pdf\PdfFileWriter\PDF\PdfPrintDocument.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: AddPagesToPdfDocument, SetMargins
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -291,5 +290,3 @@ Imports System.Drawing.Printing
             Return
         End Sub
     End Class
-
-

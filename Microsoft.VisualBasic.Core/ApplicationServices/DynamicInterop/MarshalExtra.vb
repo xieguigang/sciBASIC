@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dbfcc7445d6da786ab0655677754c50, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\MarshalExtra.vb"
+﻿#Region "Microsoft.VisualBasic::150386fe3396050394bd3493fa83f9a4, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\MarshalExtra.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace ApplicationServices.DynamicInterop
         End Sub
     End Class
 End Namespace
-

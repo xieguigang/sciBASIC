@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd5f992eca262f25830a3b66ed2af265, mime\application%pdf\PdfFileWriter\CreateMetafile.vb"
+﻿#Region "Microsoft.VisualBasic::3b6a132c93158138a265a68df339a3eb, mime\application%pdf\PdfFileWriter\CreateMetafile.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     '         Function: CopyEnhMetaFile, DeleteEnhMetaFile
     ' 
     '         Sub: DeleteMetafile, Dispose, SaveMetafile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -201,5 +200,3 @@ Imports System.Runtime.InteropServices
             Return
         End Sub
     End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e96589cd6c6ebb49540a3da1cb168f6a, mime\application%pdf\PdfFileWriter\PDF\PdfEmbeddedFile.vb"
+﻿#Region "Microsoft.VisualBasic::d181d429169d4718ef2df9776a785d11, mime\application%pdf\PdfFileWriter\PDF\PdfEmbeddedFile.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: CompareTo, TranslateExtToMime
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -274,5 +273,3 @@ Imports System.Collections.Generic
             Return
         End Sub
     End Class
-
-

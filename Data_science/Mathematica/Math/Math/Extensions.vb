@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a26e1fc1348c2039b76a66e66f3d2e66, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5695e5ea0eb2ad5e0b1890dc13a28284, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 

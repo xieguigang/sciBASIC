@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::127dd6600ca2ef45bb90e11c8a636ce4, mime\application%pdf\PdfFileWriter\PDF\PdfBinaryWriter.vb"
+﻿#Region "Microsoft.VisualBasic::530e71de163036574e13bd545c0c646f, mime\application%pdf\PdfFileWriter\PDF\PdfBinaryWriter.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: WriteFormat, (+2 Overloads) WriteString
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -152,5 +151,3 @@ Imports System.Text
             Return
         End Sub
     End Class
-
-

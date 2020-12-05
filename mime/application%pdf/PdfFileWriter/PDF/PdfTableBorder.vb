@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b963671d295eeb84cd6520de71ef8dbb, mime\application%pdf\PdfFileWriter\PDF\PdfTableBorder.vb"
+﻿#Region "Microsoft.VisualBasic::22e69ee34d654fc1f89e836de7b844ca, mime\application%pdf\PdfFileWriter\PDF\PdfTableBorder.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,6 @@
     '          ClearHeaderHorBorder, ClearHeaderVertBorder, ClearTopBorder, (+4 Overloads) SetAllBorders, (+2 Overloads) SetBottomBorder
     '          (+2 Overloads) SetCellHorBorder, (+2 Overloads) SetCellVertBorder, SetDefaultBorders, (+2 Overloads) SetFrame, (+2 Overloads) SetHeaderHorBorder
     '          (+2 Overloads) SetHeaderVertBorder, (+2 Overloads) SetTopBorder, TestInit
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -737,5 +736,3 @@ Public Class PdfTableBorder
         Return
     End Sub
 End Class
-
-

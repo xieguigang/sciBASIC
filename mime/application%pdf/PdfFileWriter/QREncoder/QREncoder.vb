@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8df6f8d2993524534c5893814b54abbe, mime\application%pdf\PdfFileWriter\QREncoder\QREncoder.vb"
+﻿#Region "Microsoft.VisualBasic::7ca1eecad92d9f16e3dd89df9f7c00df, mime\application%pdf\PdfFileWriter\QREncoder\QREncoder.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,6 @@
     '          BuildBaseMatrix, CalculateErrorCorrection, (+4 Overloads) Encode, EncodeData, Initialization
     '          InterleaveBlocks, LoadMatrixWithData, PolynominalDivision, SaveBitsToCodewordsArray, SelectBastMask
     '          SetDataCodewordsLength
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1586,5 +1585,3 @@ Public Class QREncoder
         Return
     End Sub
 End Class
-
-

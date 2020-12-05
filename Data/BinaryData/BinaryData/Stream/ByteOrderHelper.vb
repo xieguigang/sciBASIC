@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b5c974567f42234228d0f82eea2714d, Data\BinaryData\BinaryData\Stream\ByteOrderHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7d489a56cc6819e50de3c05548adf8c4, Data\BinaryData\BinaryData\Stream\ByteOrderHelper.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Module ByteOrderHelper
         Return chunk
     End Function
 End Module
-

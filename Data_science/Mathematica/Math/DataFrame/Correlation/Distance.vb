@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dce4dbd3336a35ce0b6fa3c00c5962c7, Data_science\Mathematica\Math\DataFrame\Correlation\Distance.vb"
+﻿#Region "Microsoft.VisualBasic::b15a79483ded86b9ea182c2261fd4e5b, Data_science\Mathematica\Math\DataFrame\Correlation\Distance.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Distance
     ' 
-    '     Function: Euclidean
+    '     Function: Correlation, Euclidean
     ' 
     ' /********************************************************************************/
 

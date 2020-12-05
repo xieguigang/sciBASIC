@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b0eb63ea92293d39b9701c07574a65, mime\application%pdf\PdfFileWriter\PDF\PdfImage.vb"
+﻿#Region "Microsoft.VisualBasic::d15d647079709129f06785401b54d9b8, mime\application%pdf\PdfFileWriter\PDF\PdfImage.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,6 @@
     ' 
     '     Sub: BooleanToBWImage, ConstructorHelper, ConvertImageToBitmap, Dispose, ImageRectangle
     '          ImageSizeInPixels, (+5 Overloads) LoadImage, PictureToJpeg, WriteObjectToPdfFile
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1196,5 +1195,3 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         Return
     End Sub
 End Class
-
-

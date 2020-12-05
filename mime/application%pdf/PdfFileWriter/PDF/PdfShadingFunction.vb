@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f46b7c605d8abc716fe1d92812d1859, mime\application%pdf\PdfFileWriter\PDF\PdfShadingFunction.vb"
+﻿#Region "Microsoft.VisualBasic::766a1e613737416aa8eec560a5d2a939, mime\application%pdf\PdfFileWriter\PDF\PdfShadingFunction.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,6 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Sub: Constructorhelper
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -148,5 +147,3 @@ Imports SysMedia = System.Windows.Media
             Return
         End Sub
     End Class
-
-

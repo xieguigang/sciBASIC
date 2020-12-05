@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::365df20c97f1fbe9e54d7ecabb73ba53, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\APIBase.vb"
+﻿#Region "Microsoft.VisualBasic::2791dc6db94648265fca292fa3e94454, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\APIBase.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@
 
 '    End Class
 'End Namespace
-

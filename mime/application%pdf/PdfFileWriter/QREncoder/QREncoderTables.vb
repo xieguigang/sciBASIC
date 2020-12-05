@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5191a0274ba6a90d7c0fb5fbb8dc018a, mime\application%pdf\PdfFileWriter\QREncoder\QREncoderTables.vb"
+﻿#Region "Microsoft.VisualBasic::1291de96cb4c5c37da36bec4039073b8, mime\application%pdf\PdfFileWriter\QREncoder\QREncoderTables.vb"
 
     ' Author:
     ' 
@@ -32,7 +32,6 @@
     ' Summaries:
 
     '     Class QREncoderTables
-    ' 
     ' 
     ' 
     ' 
@@ -384,5 +383,3 @@
         {FixedBlack, FixedWhite, FixedWhite, FixedWhite, FixedBlack},
         {FixedBlack, FixedBlack, FixedBlack, FixedBlack, FixedBlack}}
     End Class
-
-

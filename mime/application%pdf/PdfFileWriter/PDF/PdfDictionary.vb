@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0e8bad2c4e77db4e8fd2c024a4c1b10, mime\application%pdf\PdfFileWriter\PDF\PdfDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::510c30536c384df0aaf6b7cce2e597fc, mime\application%pdf\PdfFileWriter\PDF\PdfDictionary.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,6 @@
     ' Class PdfKeyValue
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -383,5 +382,3 @@ Friend Class PdfKeyValue
         Return
     End Sub
 End Class
-
-

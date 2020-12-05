@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2045c183b81643efdb5215608532f7e, mime\application%pdf\PdfFileWriter\417Encoder\Pdf417Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::504f22d6ffcdb35e3f2021f98f267e4f, mime\application%pdf\PdfFileWriter\417Encoder\Pdf417Encoder.vb"
 
     ' Author:
     ' 
@@ -78,7 +78,6 @@
     ' 
     '     Sub: CalculateErrorCorrection, CodewordToModules, DataEncoding, (+2 Overloads) Encode, EncodeByteSegment
     '          EncodeNumericSegment, EncodeTextSegment, SetDataRowsAndColumns, SetErrorCorrectionLevel, SetImageWidthAndHeight
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1360,5 +1359,3 @@ _Select0_CasePdfFileWriter_Pdf417Encoder_TextEncodingMode_Upper:
         Return
     End Sub
 End Class
-
-

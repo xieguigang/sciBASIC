@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c56aeeb789aa5eb48d4411851ca96ddd, mime\application%pdf\PdfFileWriter\PDF\PdfFontFile.vb"
+﻿#Region "Microsoft.VisualBasic::c103b3ce57c78072541f537abf33fb65, mime\application%pdf\PdfFileWriter\PDF\PdfFontFile.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,6 @@
     '          BuildMaxpTable, CalculateGlyphChksum, GetcmapTable, GetCompositeGlyph, GetFontFileHeaderApi
     '          GetheadTable, GethheaTable, GethmtxTable, GetlocaTable, GetmaxpTable
     '          ReplaceGlyphCode, WriteInt16BigEndian, WriteInt64BigEndian, WriteUInt16BigEndian, WriteUInt32BigEndian
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1502,5 +1501,3 @@ Friend Class PdfFontFile
         Return StrTag.ToString()
     End Function
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11db8203d245faea8472e09634a3f91b, mime\application%pdf\PdfFileWriter\PDF\PdfRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::dcceff5b6e53d42e4e8eb1c8cc6b5ad3, mime\application%pdf\PdfFileWriter\PDF\PdfRectangle.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,6 @@
     '                     Width
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -177,5 +176,3 @@
             End Get
         End Property
     End Class
-
-

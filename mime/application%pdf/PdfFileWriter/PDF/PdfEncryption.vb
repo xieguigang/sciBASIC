@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::260962288653aae6e2c01ec39591df9b, mime\application%pdf\PdfFileWriter\PDF\PdfEncryption.vb"
+﻿#Region "Microsoft.VisualBasic::4049edc641776c966b0858cfde469933, mime\application%pdf\PdfFileWriter\PDF\PdfEncryption.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,6 @@
     '     Function: CreateEncryptionKey, CreateOwnerKey, CreateUserKey, EncryptByteArray, ProcessPassword
     ' 
     '     Sub: CreateMasterKey, Dispose, EncryptRC4
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -487,5 +486,3 @@ Public Class PdfEncryption
         Return
     End Sub
 End Class
-
-

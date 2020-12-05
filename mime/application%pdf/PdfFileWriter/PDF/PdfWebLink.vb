@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d24dd7c0657d741de1e23e532d8bf74, mime\application%pdf\PdfFileWriter\PDF\PdfWebLink.vb"
+﻿#Region "Microsoft.VisualBasic::20de3aa47e082d8fb9f9500633cfe243, mime\application%pdf\PdfFileWriter\PDF\PdfWebLink.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,6 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: AddWebLink, CompareTo
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -155,5 +154,3 @@ Imports System.Collections.Generic
             Return String.Compare(WebLinkStr, Other.WebLinkStr)
         End Function
     End Class
-
-

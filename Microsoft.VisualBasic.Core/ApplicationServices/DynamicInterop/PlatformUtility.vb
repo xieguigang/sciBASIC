@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aac79300c10ff49675e93aece9f2d74c, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\PlatformUtility.vb"
+﻿#Region "Microsoft.VisualBasic::9782ddefd09bbd56b82550737795e382, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\PlatformUtility.vb"
 
     ' Author:
     ' 
@@ -194,4 +194,3 @@ Namespace ApplicationServices.DynamicInterop
         End Function
     End Module
 End Namespace
-

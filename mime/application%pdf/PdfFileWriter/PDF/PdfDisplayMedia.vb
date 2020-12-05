@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c61a0834e26788be082b75c8707b17f, mime\application%pdf\PdfFileWriter\PDF\PdfDisplayMedia.vb"
+﻿#Region "Microsoft.VisualBasic::9ccd6a15041d4eb9c6c38ab8582e121f, mime\application%pdf\PdfFileWriter\PDF\PdfDisplayMedia.vb"
 
     ' Author:
     ' 
@@ -96,7 +96,6 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: DisplayControls, InitialMediaOperation, MediaTempFilePermission, RepeatCount, ScaleMedia
     '              SetMediaWindow
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -575,5 +574,3 @@ Imports System
             Return
         End Sub
     End Class
-
-

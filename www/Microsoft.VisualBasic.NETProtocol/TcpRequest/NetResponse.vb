@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6112f798cf6edece255a09292d6ea60, www\Microsoft.VisualBasic.NETProtocol\Protocol\NetResponse.vb"
+﻿#Region "Microsoft.VisualBasic::b6112f798cf6edece255a09292d6ea60, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\NetResponse.vb"
 
     ' Author:
     ' 

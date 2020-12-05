@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac37a6899ef4bf7f57a32220746c9968, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::6d5c51bc0373ca613d4accf135673b25, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Namespace ApplicationServices.DynamicInterop
         End Function
     End Module
 End Namespace
-

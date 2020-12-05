@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6776de5301f39c38e0d3e017d6747cf, Microsoft.VisualBasic.Core\CommandLine\CLI\ProcExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b1a7569833ec56f40c28816858e1fa3a, Microsoft.VisualBasic.Core\CommandLine\CLI\PipelineProcess.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Module ProcessExtensions
+    '     Module PipelineProcess
     ' 
     '         Function: [Call], FindProc, (+2 Overloads) GetProc
     ' 

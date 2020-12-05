@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6421a7c26a95ddf9d77e07fcbf315e2c, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::013f4dd2616be2010ff621f16daa7b38, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyTreeNode.vb"
 
     ' Author:
     ' 
