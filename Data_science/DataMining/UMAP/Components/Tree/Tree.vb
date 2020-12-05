@@ -1,46 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::1e21483303528dc02c586f052f1017df, Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Tree
-    ' 
-    '         Function: EuclideanRandomProjectionSplit, FlattenTree, MakeEuclideanTree, MakeLeafArray, MakeTree
-    '                   NumLeaves, NumNodes, RecursiveFlatten, SearchFlatTree, SelectSide
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Tree
+' 
+'         Function: EuclideanRandomProjectionSplit, FlattenTree, MakeEuclideanTree, MakeLeafArray, MakeTree
+'                   NumLeaves, NumNodes, RecursiveFlatten, SearchFlatTree, SelectSide
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
 
 Namespace Tree
@@ -57,19 +58,18 @@ Namespace Tree
         End Function
 
         Private Function MakeEuclideanTree(data As Single()(), indices As Integer(), leafSize As Integer, q As Integer, random As IProvideRandomValues) As RandomProjectionTreeNode
-            Dim indicesLeftIndicesRightHyperplaneVectorHyperplaneOffset = Nothing
-
             If indices.Length > leafSize Then
-                indicesLeftIndicesRightHyperplaneVectorHyperplaneOffset = Tree.EuclideanRandomProjectionSplit(data, indices, random)
-                Dim leftChild = Tree.MakeEuclideanTree(data, indicesLeft, leafSize, q + 1, random)
-                Dim rightChild = Tree.MakeEuclideanTree(data, indicesRight, leafSize, q + 1, random)
+                Dim any = Tree.EuclideanRandomProjectionSplit(data, indices, random)
+                Dim leftChild = Tree.MakeEuclideanTree(data, any.indicesLeft, leafSize, q + 1, random)
+                Dim rightChild = Tree.MakeEuclideanTree(data, any.IndicesRight, leafSize, q + 1, random)
+
                 Return New RandomProjectionTreeNode With {
                     .Indices = indices,
                     .LeftChild = leftChild,
                     .RightChild = rightChild,
                     .IsLeaf = False,
-                    .Hyperplane = hyperplaneVector,
-                    .Offset = hyperplaneOffset
+                    .Hyperplane = any.HyperplaneVector,
+                    .Offset = any.HyperplaneOffset
                 }
             Else
                 Return New RandomProjectionTreeNode With {
@@ -84,15 +84,17 @@ Namespace Tree
         End Function
 
         Public Function FlattenTree(tree As RandomProjectionTreeNode, leafSize As Integer) As FlatTree
-            Dim nNodes = tree.NumNodes(tree)
-            Dim nLeaves = tree.NumLeaves(tree)
+            Dim nNodes = NumNodes(tree)
+            Dim nLeaves = NumLeaves(tree)
 
             ' TODO[umap-js]: Verify that sparse code is not relevant...
             Dim hyperplanes = Utils.Range(nNodes).[Select](Function(__) New Single(tree.Hyperplane.Length - 1) {}).ToArray()
             Dim offsets = New Single(nNodes - 1) {}
             Dim children = Utils.Range(nNodes).[Select](Function(__) {-1, -1}).ToArray()
             Dim indices = Utils.Range(nLeaves).[Select](Function(__) Utils.Range(leafSize).[Select](Function(____) -1).ToArray()).ToArray()
-            tree.RecursiveFlatten(tree, hyperplanes, offsets, children, indices, 0, 0)
+
+            RecursiveFlatten(tree, hyperplanes, offsets, children, indices, 0, 0)
+
             Return New FlatTree With {
                 .Hyperplanes = hyperplanes,
                 .Offsets = offsets,
@@ -106,7 +108,7 @@ Namespace Tree
         ''' the basis for a random projection tree, which simply uses this splitting recursively. This particular split uses euclidean distance to determine the hyperplane and which side each data
         ''' sample falls on.
         ''' </summary>
-        Private Function EuclideanRandomProjectionSplit(data As Single()(), indices As Integer(), random As IProvideRandomValues) As (Integer(), Integer(), Single(), Single)
+        Private Function EuclideanRandomProjectionSplit(data As Single()(), indices As Integer(), random As IProvideRandomValues) As (indicesLeft As Integer(), IndicesRight As Integer(), HyperplaneVector As Single(), HyperplaneOffset As Single)
             Dim [dim] = data(0).Length
 
             ' Select two random points, set the hyperplane between them
@@ -178,7 +180,7 @@ Namespace Tree
             Return (indicesLeft, indicesRight, hyperplaneVector, hyperplaneOffset)
         End Function
 
-        Private Function RecursiveFlatten(tree As RandomProjectionTreeNode, hyperplanes As Single()(), offsets As Single(), children As Integer()(), indices As Integer()(), nodeNum As Integer, leafNum As Integer) As (Integer, Integer)
+        Private Function RecursiveFlatten(tree As RandomProjectionTreeNode, hyperplanes As Single()(), offsets As Single(), children As Integer()(), indices As Integer()(), nodeNum As Integer, leafNum As Integer) As (nodeNum As Integer, leafNum As Integer)
             If tree.IsLeaf Then
                 children(nodeNum)(0) = -leafNum
 
@@ -192,21 +194,23 @@ Namespace Tree
                 offsets(nodeNum) = tree.Offset
                 children(nodeNum)(0) = nodeNum + 1
                 Dim oldNodeNum = nodeNum
-                Dim res = tree.RecursiveFlatten(tree.LeftChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
+                Dim res = RecursiveFlatten(tree.LeftChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
                 nodeNum = res.nodeNum
                 leafNum = res.leafNum
                 children(oldNodeNum)(1) = nodeNum + 1
-                res = tree.RecursiveFlatten(tree.RightChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
+                res = RecursiveFlatten(tree.RightChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
                 Return (res.nodeNum, res.leafNum)
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function NumNodes(tree As RandomProjectionTreeNode) As Integer
-            Return If(tree.IsLeaf, 1, 1 + tree.NumNodes(tree.LeftChild) + tree.NumNodes(tree.RightChild))
+            Return If(tree.IsLeaf, 1, 1 + NumNodes(tree.LeftChild) + NumNodes(tree.RightChild))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function NumLeaves(tree As RandomProjectionTreeNode) As Integer
-            Return If(tree.IsLeaf, 1, 1 + tree.NumLeaves(tree.LeftChild) + tree.NumLeaves(tree.RightChild))
+            Return If(tree.IsLeaf, 1, 1 + NumLeaves(tree.LeftChild) + NumLeaves(tree.RightChild))
         End Function
 
         ''' <summary>
@@ -227,8 +231,7 @@ Namespace Tree
 
                 Return output.ToArray()
             Else
-                Return {
-                {-1}}
+                Return {New Integer() {-1}}
             End If
         End Function
 
@@ -239,7 +242,7 @@ Namespace Tree
             Dim node = 0
 
             While tree.Children(node)(0) > 0
-                Dim side = tree.SelectSide(tree.Hyperplanes(node), tree.Offsets(node), point, random)
+                Dim side = SelectSide(tree.Hyperplanes(node), tree.Offsets(node), point, random)
 
                 If side = 0 Then
                     node = tree.Children(node)(0)
