@@ -111,13 +111,23 @@ Public Class MsgPackSerializer
         Return endPos
     End Function
 
-    Public Shared Function Deserialize(Of T As New)(buffer As Byte()) As T
-        Using stream As MemoryStream = New MemoryStream(buffer)
+    Public Shared Function Deserialize(Of T)(buffer As Byte()) As T
+        Using stream As MemoryStream = New MemoryStream(buffer), reader As BinaryReader = New BinaryReader(stream)
+            If GetType(T).IsArray Then
+                Dim list As Type = GetType(List(Of )).MakeGenericType(GetType(T).GetElementType)
+                Dim listObj As IList = DeserializeObjectType(list, reader)
+                Dim array As Array = Array.CreateInstance(GetType(T).GetElementType, listObj.Count)
+                Dim i As i32 = Scan0
 
-            Using reader As BinaryReader = New BinaryReader(stream)
+                For Each item As Object In listObj
+                    Call array.SetValue(item, ++i)
+                Next
+
+                Return CObj(array)
+            Else
                 Dim o = DeserializeObjectType(GetType(T), reader)
                 Return Convert.ChangeType(o, GetType(T))
-            End Using
+            End If
         End Using
     End Function
 
