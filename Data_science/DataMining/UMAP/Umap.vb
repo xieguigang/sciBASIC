@@ -145,7 +145,7 @@ Public NotInheritable Class Umap
 
         For i As Integer = 0 To _optimizationState.NVertices - 1
             ' slice函数需要进行验证
-            final(i) = span.slice(CInt(i * _optimizationState.Dim), CInt(_optimizationState.Dim)).ToArray()
+            final(i) = span.SpanSlice(CInt(i * _optimizationState.Dim), CInt(_optimizationState.Dim)).ToArray()
         Next
 
         Return final
@@ -521,8 +521,8 @@ Public NotInheritable Class Umap
         Dim j As Integer = _optimizationState.Head(i)
         Dim k As Integer = _optimizationState.Tail(i)
 
-        Dim current = embeddingSpan.slice(j * _optimizationState.Dim, _optimizationState.Dim).ToArray
-        Dim other = embeddingSpan.slice(k * _optimizationState.Dim, _optimizationState.Dim).ToArray
+        Dim current = embeddingSpan.SpanSlice(j * _optimizationState.Dim, _optimizationState.Dim).ToArray
+        Dim other = embeddingSpan.SpanSlice(k * _optimizationState.Dim, _optimizationState.Dim).ToArray
 
         Dim distSquared = Umap.RDist(current, other)
         Dim gradCoeff = 0F
@@ -550,7 +550,7 @@ Public NotInheritable Class Umap
         For p = 0 To nNegSamples - 1
 
             k = _random.Next(0, _optimizationState.NVertices)
-            other = embeddingSpan.slice(k * _optimizationState.Dim, _optimizationState.Dim)
+            other = embeddingSpan.SpanSlice(k * _optimizationState.Dim, _optimizationState.Dim)
             distSquared = Umap.RDist(current, other)
             gradCoeff = 0F
             If (distSquared > 0) Then

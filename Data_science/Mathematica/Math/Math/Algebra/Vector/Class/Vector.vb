@@ -356,14 +356,21 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(v1 As Vector, v2 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
-            Dim v3 As New Vector(N0)
+            If v1.Length = 1 Then
+                Return v1(Scan0) + v2
+            ElseIf v2.Length = 1 Then
+                Return v1 + v2(Scan0)
+            Else
+                ' 获取变量维数
+                Dim N0 As Integer = v1.[Dim]
+                Dim v3 As New Vector(N0)
 
-            For j As Integer = 0 To N0 - 1
-                v3(j) = v1(j) + v2(j)
-            Next
+                For j As Integer = 0 To N0 - 1
+                    v3(j) = v1(j) + v2(j)
+                Next
 
-            Return v3
+                Return v3
+            End If
         End Operator
 
         ''' <summary>

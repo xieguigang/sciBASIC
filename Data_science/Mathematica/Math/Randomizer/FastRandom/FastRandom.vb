@@ -166,7 +166,10 @@ Public Class FastRandom
     ''' upperBound must be >= lowerBound. lowerBound may be negative.
     ''' </summary>
     Public Function [Next](lowerBound As Integer, upperBound As Integer) As Integer
-        If lowerBound > upperBound Then Throw New ArgumentOutOfRangeException("upperBound", upperBound, "upperBound must be >=lowerBound")
+        If lowerBound > upperBound Then
+            Throw New ArgumentOutOfRangeException("upperBound", upperBound, "upperBound must be >=lowerBound")
+        End If
+
         Dim t = x Xor x << 11
         x = yField
         yField = zField
@@ -175,19 +178,24 @@ Public Class FastRandom
         ' The explicit int cast before the first multiplication gives better performance.
         ' See comments in NextDouble.
         Dim range = upperBound - lowerBound
+        Dim rnd As Integer
 
         If range < 0 Then   ' If range is <0 then an overflow has occured and must resort to using long integer arithmetic instead (slower).
             ' We also must use all 32 bits of precision, instead of the normal 31, which again is slower.
             wField = wField Xor wField >> 19 Xor t Xor t >> 8
-
-            Return lowerBound + CInt(FastRandom.REAL_UNIT_UINT * CDbl(wField) * (upperBound - CLng(lowerBound)))
+            rnd = lowerBound + CInt(FastRandom.REAL_UNIT_UINT * CDbl(wField) * (upperBound - CLng(lowerBound)))
+        Else
+            ' 31 bits of precision will suffice if range<=int.MaxValue. This allows us to cast to an int and gain
+            ' a little more performance.
+            wField = wField Xor wField >> 19 Xor t Xor t >> 8
+            rnd = lowerBound + CInt(FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And wField) * range)
         End If
 
-        ' 31 bits of precision will suffice if range<=int.MaxValue. This allows us to cast to an int and gain
-        ' a little more performance.
-        wField = wField Xor wField >> 19 Xor t Xor t >> 8
-
-        Return lowerBound + CInt(FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And wField) * range)
+        If rnd = upperBound Then
+            Return upperBound - 1
+        Else
+            Return rnd
+        End If
     End Function
 
     ''' <summary>
