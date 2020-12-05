@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1ddeffb0041f52f92a8da3fbc0d871d, Data_science\DataMining\UMAP\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::50c6ea33bfbbc9a7c61974bf99ad5a2f, Data_science\DataMining\UMAP\test\Module1.vb"
 
     ' Author:
     ' 
@@ -46,4 +46,3 @@ Module Module1
     End Sub
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4161a8c28ea8d18201248e8fd3c292fa, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\MsHtml.vb"
+﻿#Region "Microsoft.VisualBasic::9eae19ec81621c6613186207286dbc75, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\MsHtml.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Public Module MsHtml
         Return html.ToString()
     End Function
 End Module
-

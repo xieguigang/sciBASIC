@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e68171f53839009525017f9366081e44, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationData.vb"
+﻿#Region "Microsoft.VisualBasic::705cab2d3934cc12dd47b18f44086dd9, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationData.vb"
 
     ' Author:
     ' 
@@ -118,6 +118,3 @@ Namespace Heatmap
     End Class
 
 End Namespace
-
-
-

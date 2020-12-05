@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c3bdefc953cc9f960bb84f1ece991de, Data_science\DataMining\UMAP\Components\DefaultRandomGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::643f056f056ed2f002e370493fce2794, Data_science\DataMining\UMAP\Components\DefaultRandomGenerator.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Public NotInheritable Class DefaultRandomGenerator
         ThreadSafeFastRandom.NextFloats(buffer)
     End Sub
 End Class
-

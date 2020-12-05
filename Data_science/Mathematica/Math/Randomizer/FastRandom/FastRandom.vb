@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::250e3781ed8f1daaf6bbc53a1ffb07e8, Data_science\Mathematica\Math\Randomizer\FastRandom\FastRandom.vb"
+﻿#Region "Microsoft.VisualBasic::0498977b361e43e63926b2d95b72af61, Data_science\Mathematica\Math\Randomizer\FastRandom\FastRandom.vb"
 
     ' Author:
     ' 
@@ -380,4 +380,3 @@ Public Class FastRandom
         Return (bitBuffer And 1) = 0
     End Function
 End Class
-

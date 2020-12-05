@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9a1af17d3c25bc1ace8e16a402dd2a6, Data_science\Mathematica\Math\Randomizer\FastRandom\ThreadSafeFastRandom.vb"
+﻿#Region "Microsoft.VisualBasic::0ad2407e8885c0295f5a7286f36bf8b6, Data_science\Mathematica\Math\Randomizer\FastRandom\ThreadSafeFastRandom.vb"
 
     ' Author:
     ' 
@@ -166,4 +166,3 @@ Public Module ThreadSafeFastRandom
         inst.NextFloats(buffer)
     End Sub
 End Module
-

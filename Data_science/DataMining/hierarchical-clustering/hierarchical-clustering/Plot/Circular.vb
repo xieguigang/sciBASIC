@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4db10b93496f0bbb18002af70f75f32b, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Circular.vb"
+﻿#Region "Microsoft.VisualBasic::31c1c38e9ecf68717ff9fc862a943ea1, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Circular.vb"
 
     ' Author:
     ' 
@@ -182,4 +182,3 @@ Public Class Circular : Inherits DendrogramPanel
         End If
     End Sub
 End Class
-

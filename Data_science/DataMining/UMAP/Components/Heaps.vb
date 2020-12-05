@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfe198722bf11d8fd2fc61052639f906, Data_science\DataMining\UMAP\Components\Heaps.vb"
+﻿#Region "Microsoft.VisualBasic::4b918a0c183bed64ee6d3151dc42fa38, Data_science\DataMining\UMAP\Components\Heaps.vb"
 
     ' Author:
     ' 
@@ -267,4 +267,3 @@ Friend Module Heaps
         End Sub
     End Class
 End Module
-

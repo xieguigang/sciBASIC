@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5835aea2949b6049b376b60082a517fc, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Horizon.vb"
+﻿#Region "Microsoft.VisualBasic::9a6667dd1f9508177d8a98a935295a46, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Horizon.vb"
 
     ' Author:
     ' 
@@ -181,4 +181,3 @@ Public Class Horizon : Inherits DendrogramPanelV2
         End If
     End Sub
 End Class
-

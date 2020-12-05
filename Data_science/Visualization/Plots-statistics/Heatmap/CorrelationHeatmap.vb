@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac38c0298719cc9be078f606b04f4a8f, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::954e419c9ac9c0bf110dc57a1b67e4e7, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationHeatmap.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77f2cfc9c80071b85ae5d6c20057a53b, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanel.vb"
+﻿#Region "Microsoft.VisualBasic::a37e79463eeeb937abe91d07bd6aaced, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanel.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public MustInherit Class DendrogramPanel : Inherits Plot
         End If
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11c410e75a5e3558b4dae0111cd1e316, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Dendrogram.vb"
+﻿#Region "Microsoft.VisualBasic::6b2a25b626a77737a2e1b58c09a4f3fc, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Dendrogram.vb"
 
     ' Author:
     ' 
@@ -99,4 +99,3 @@ Public Module Dendrogram
         End If
     End Function
 End Module
-

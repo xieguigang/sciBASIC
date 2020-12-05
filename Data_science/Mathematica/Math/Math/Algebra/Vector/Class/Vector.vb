@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19c2435a1efef398e815a6a8743cdfbe, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::a4baf7c76b11d71da96effabf05ff503, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -36,10 +36,14 @@
     '         Properties: [Mod], Data, Inf, IsNumeric, NAN
     '                     Range, SumMagnitude, Unit, Zero
     ' 
-    '         Constructor: (+8 Overloads) Sub New
+    '         Constructor: (+10 Overloads) Sub New
+    ' 
     '         Function: Abs, AsSparse, CumSum, DotProduct, Ones
     '                   Order, Product, (+2 Overloads) rand, ScaleToRange, slice
     '                   SumMagnitudes, (+2 Overloads) ToString
+    ' 
+    '         Sub: (+3 Overloads) CopyTo
+    ' 
     '         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
     '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor

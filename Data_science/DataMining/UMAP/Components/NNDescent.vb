@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de274e4b53b61702ff474702ff284393, Data_science\DataMining\UMAP\Components\NNDescent.vb"
+﻿#Region "Microsoft.VisualBasic::05815521caa5ffab2fd03e88b5840cfd, Data_science\DataMining\UMAP\Components\NNDescent.vb"
 
     ' Author:
     ' 
@@ -140,4 +140,3 @@ Friend Class NNDescent : Implements NNDescentFn
         Return Heaps.DeHeapSort(currentGraph)
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f955d4ef32446b8a415f6423681ac95e, Data_science\DataMining\UMAP\Components\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::8049e23e0850cc23293e1563ff3f5c65, Data_science\DataMining\UMAP\Components\Utils.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Module Utils
         Return result
     End Function
 End Module
-

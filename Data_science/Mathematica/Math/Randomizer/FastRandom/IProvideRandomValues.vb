@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59f4c8223f38823e9c60b4d630a993fb, Data_science\Mathematica\Math\Randomizer\FastRandom\IProvideRandomValues.vb"
+﻿#Region "Microsoft.VisualBasic::ea44b5c760af485d14ea97f50089352f, Data_science\Mathematica\Math\Randomizer\FastRandom\IProvideRandomValues.vb"
 
     ' Author:
     ' 
@@ -72,4 +72,3 @@ Public Interface IProvideRandomValues
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Function [Next](minValue As Integer, maxValue As Integer) As Integer
 End Interface
-
