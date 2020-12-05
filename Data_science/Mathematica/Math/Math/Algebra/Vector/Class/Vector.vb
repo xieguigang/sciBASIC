@@ -205,6 +205,10 @@ Namespace LinearAlgebra
             Call Me.New(0R, m)
         End Sub
 
+        Sub New(f As Single)
+            Call Me.New({CDbl(f)})
+        End Sub
+
         ''' <summary>
         ''' 创建一个空的向量，包含有零个元素
         ''' </summary>
@@ -262,10 +266,82 @@ Namespace LinearAlgebra
             Next
         End Sub
 
+        ''' <summary>
+        ''' Creates a vector from a specified array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="values">
+        ''' The values to add to the vector, as an array of objects of type T. 
+        ''' The array must contain at least Count elements from the specified 
+        ''' index and only the first Count elements are used.
+        ''' </param>
+        ''' <param name="index">
+        ''' The starting index position from which to create the vector.
+        ''' </param>
+        Sub New(values As Single(), index As Integer)
+            Call Me.New(values.Skip(index).Select(Function(sng) CDbl(sng)))
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AsSparse() As SparseVector
             Return New SparseVector(Me)
         End Function
+
+        ''' <summary>
+        ''' Copies the vector instance to a specified destination array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="destination">The array to receive a copy of the vector values.</param>
+        ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
+        Public Sub CopyTo(destination As Double(), startIndex As Integer)
+            Dim i As Integer = 0
+            Dim is_single As Boolean = buffer.Length = 1
+
+            For id As Integer = startIndex To destination.Length - 1
+                If is_single Then
+                    destination(id) = buffer(Scan0)
+                Else
+                    destination(id) = buffer(i)
+                    i += 1
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Copies the vector instance to a specified destination array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="destination">The array to receive a copy of the vector values.</param>
+        ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
+        Public Sub CopyTo(destination As Integer(), startIndex As Integer)
+            Dim i As Integer = 0
+            Dim is_single As Boolean = buffer.Length = 1
+
+            For id As Integer = startIndex To destination.Length - 1
+                If is_single Then
+                    destination(id) = buffer(Scan0)
+                Else
+                    destination(id) = buffer(i)
+                    i += 1
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Copies the vector instance to a specified destination array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="destination">The array to receive a copy of the vector values.</param>
+        ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
+        Public Sub CopyTo(destination As Single(), startIndex As Integer)
+            Dim i As Integer = 0
+            Dim is_single As Boolean = buffer.Length = 1
+
+            For id As Integer = startIndex To destination.Length - 1
+                If is_single Then
+                    destination(id) = buffer(Scan0)
+                Else
+                    destination(id) = buffer(i)
+                    i += 1
+                End If
+            Next
+        End Sub
 
 #Region "Operators"
         ''' <summary>
