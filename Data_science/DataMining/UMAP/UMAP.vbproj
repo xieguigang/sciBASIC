@@ -84,10 +84,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KNNState.vb" />
     <Compile Include="Components\DistanceCalculation.vb" />
     <Compile Include="DistanceFunctions.vb" />
     <Compile Include="OptimizationState.vb" />
-    <Compile Include="Components\ProgressReporter.vb" />
+    <Compile Include="Components\IProgressReporter.vb" />
     <Compile Include="Components\DefaultRandomGenerator.vb" />
     <Compile Include="Components\Heaps.vb" />
     <Compile Include="Components\SparseMatrix\RowCol.vb" />

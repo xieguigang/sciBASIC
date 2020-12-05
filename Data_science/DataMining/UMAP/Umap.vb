@@ -52,42 +52,47 @@ Imports stdNum = System.Math
 
 Public NotInheritable Class Umap
 
-    Private Const SMOOTH_K_TOLERANCE As Double = 0.00001F
-    Private Const MIN_K_DIST_SCALE As Double = 0.001F
+    Const SMOOTH_K_TOLERANCE As Double = 0.00001F
+    Const MIN_K_DIST_SCALE As Double = 0.001F
 
-    Private ReadOnly _learningRate As Double = 1.0F
-    Private ReadOnly _localConnectivity As Double = 1.0F
-    Private ReadOnly _minDist As Double = 0.1F
-    Private ReadOnly _negativeSampleRate As Integer = 5
-    Private ReadOnly _repulsionStrength As Double = 1
-    Private ReadOnly _setOpMixRatio As Double = 1
-    Private ReadOnly _spread As Double = 1
-    Private ReadOnly _distanceFn As DistanceCalculation
-    Private ReadOnly _random As IProvideRandomValues
-    Private ReadOnly _nNeighbors As Integer
-    Private ReadOnly _customNumberOfEpochs As Integer?
-    Private ReadOnly _progressReporter As ProgressReporter
+    ReadOnly _learningRate As Double = 1.0F
+    ReadOnly _localConnectivity As Double = 1.0F
+    ReadOnly _minDist As Double = 0.1F
+    ReadOnly _negativeSampleRate As Integer = 5
+    ReadOnly _repulsionStrength As Double = 1
+    ReadOnly _setOpMixRatio As Double = 1
+    ReadOnly _spread As Double = 1
+    ReadOnly _distanceFn As DistanceCalculation
+    ReadOnly _random As IProvideRandomValues
+    ReadOnly _nNeighbors As Integer
+    ReadOnly _customNumberOfEpochs As Integer?
+    ReadOnly _progressReporter As IProgressReporter
+    ReadOnly _optimizationState As OptimizationState
 
-    ' KNN state (can be precomputed and supplied via initializeFit)
-    Private _knnIndices As Integer()() = Nothing
-    Private _knnDistances As Double()() = Nothing
+    ''' <summary>
+    ''' KNN state (can be precomputed and supplied via initializeFit)
+    ''' </summary>
+    ReadOnly knn As New KNNState
 
-    ' Internal graph connectivity representation
+    ''' <summary>
+    ''' Internal graph connectivity representation
+    ''' </summary>
     Private _graph As SparseMatrix = Nothing
     Private _x As Double()() = Nothing
     Private _isInitialized As Boolean = False
     Private _rpForest As Tree.FlatTree() = New Tree.FlatTree(-1) {}
 
-    ' Projected embedding
-    Private _embedding As Double()
-    Private ReadOnly _optimizationState As OptimizationState
+    ''' <summary>
+    ''' Projected embedding
+    ''' </summary>
+    Dim _embedding As Double()
 
     Public Sub New(Optional distance As DistanceCalculation = Nothing,
                    Optional random As IProvideRandomValues = Nothing,
                    Optional dimensions As Integer = 2,
                    Optional numberOfNeighbors As Integer = 15,
                    Optional customNumberOfEpochs As Integer? = Nothing,
-                   Optional progressReporter As ProgressReporter = Nothing)
+                   Optional progressReporter As IProgressReporter = Nothing)
 
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
             Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
@@ -103,7 +108,7 @@ Public NotInheritable Class Umap
         _progressReporter = progressReporter
     End Sub
 
-    Private Function GetProgress() As ProgressReporter
+    Private Function GetProgress() As IProgressReporter
         If _progressReporter Is Nothing Then
             Return Sub(progress)
                        ' do nothing
@@ -114,7 +119,9 @@ Public NotInheritable Class Umap
     End Function
 
     ''' <summary>
-    ''' Initializes fit by computing KNN and a fuzzy simplicial set, as well as initializing the projected embeddings. Sets the optimization state ahead of optimization steps.
+    ''' Initializes fit by computing KNN and a fuzzy simplicial set, as well as initializing 
+    ''' the projected embeddings. Sets the optimization state ahead of optimization steps.
+    ''' 
     ''' Returns the number of epochs to be used for the SGD optimization.
     ''' </summary>
     Public Function InitializeFit(x As Double()()) As Integer
@@ -123,17 +130,19 @@ Public NotInheritable Class Umap
             Return GetNEpochs()
         End If
 
-        ' For large quantities of data (which is where the progress estimating is more useful), InitializeFit takes at least 80% of the total time (the calls to Step are
-        ' completed much more quickly AND they naturally lend themselves to granular progress updates; one per loop compared to the recommended number of epochs)
-        Dim initializeFitProgressReporter As ProgressReporter = GetProgress()
+        ' For large quantities of data (which is where the progress estimating is more useful), 
+        ' InitializeFit Takes at least 80% of the total time (the calls to Step are
+        ' completed much more quickly AND they naturally lend themselves to granular progress updates; 
+        ' one per loop compared to the recommended number of epochs)
+        Dim initializeFitProgressReporter As IProgressReporter = GetProgress()
 
         _x = x
 
-        If _knnIndices Is Nothing AndAlso _knnDistances Is Nothing Then
+        If knn._knnIndices Is Nothing AndAlso knn._knnDistances Is Nothing Then
             ' This part of the process very roughly accounts for 1/3 of the work
             With Me.NearestNeighbors(x, Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
-                _knnIndices = .knnIndices
-                _knnDistances = .knnDistances
+                knn._knnIndices = .knnIndices
+                knn._knnDistances = .knnDistances
             End With
         End If
 
@@ -197,7 +206,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
     ''' </summary>
-    Friend Function NearestNeighbors(x As Double()(), progressReporter As ProgressReporter) As (knnIndices As Integer()(), knnDistances As Double()())
+    Friend Function NearestNeighbors(x As Double()(), progressReporter As IProgressReporter) As (knnIndices As Integer()(), knnDistances As Double()())
         Dim metricNNDescent = New NNDescent(_distanceFn, _random)
 
         Call progressReporter(0.05F)
@@ -245,26 +254,20 @@ Public NotInheritable Class Umap
     ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
     ''' simplicial sets into a global one via a fuzzy union.
     ''' </summary>
-    Private Function FuzzySimplicialSet(x As Double()(), nNeighbors As Integer, setOpMixRatio As Double, progressReporter As ProgressReporter) As SparseMatrix
-        Dim knnIndices = If(_knnIndices, New Integer(-1)() {})
-        Dim knnDistances = If(_knnDistances, New Single(-1)() {})
-        progressReporter(0.1F)
-        Dim sigmasRhos = Umap.SmoothKNNDistance(knnDistances, nNeighbors, _localConnectivity)
-        progressReporter(0.2F)
-        Dim rowsColsVals = Umap.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos)
-        progressReporter(0.3F)
-        Dim sparseMatrix = New SparseMatrix(rowsColsVals.rows, rowsColsVals.cols, rowsColsVals.vals, (x.Length, x.Length))
+    Private Function FuzzySimplicialSet(x As Double()(), nNeighbors As Integer, setOpMixRatio As Double, progressReporter As IProgressReporter) As SparseMatrix
+        Dim knnIndices = If(knn._knnIndices, New Integer(-1)() {})
+        Dim knnDistances = If(knn._knnDistances, New Single(-1)() {})
+        Dim report As New ProgressReporter With {.report = progressReporter}
+        Dim sigmasRhos = report.Run(Function() Umap.SmoothKNNDistance(knnDistances, nNeighbors, _localConnectivity), 0.1)
+        Dim rowsColsVals = report.Run(Function() Umap.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2)
+        Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.rows, rowsColsVals.cols, rowsColsVals.vals, (x.Length, x.Length)), 0.3)
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
-        progressReporter(0.4F)
-        Dim a = sparseMatrix.Add(CType(transpose, SparseMatrix)).Subtract(prodMatrix)
-        progressReporter(0.5F)
-        Dim b = a.MultiplyScalar(setOpMixRatio)
-        progressReporter(0.6F)
-        Dim c = prodMatrix.MultiplyScalar(1 - setOpMixRatio)
-        progressReporter(0.7F)
-        Dim result = b.Add(c)
-        progressReporter(0.8F)
+        Dim a = report.Run(Function() sparseMatrix.Add(CType(transpose, SparseMatrix)).Subtract(prodMatrix), 0.4)
+        Dim b = report.Run(Function() a.MultiplyScalar(setOpMixRatio), 0.5)
+        Dim c = report.Run(Function() prodMatrix.MultiplyScalar(1 - setOpMixRatio), 0.6)
+        Dim result = report.Run(Function() b.Add(c), 0.7)
+
         Return result
     End Function
 
@@ -656,7 +659,7 @@ Public NotInheritable Class Umap
         End If
     End Function
 
-    Private Shared Function ScaleProgressReporter(progressReporter As ProgressReporter, start As Double, [end] As Double) As ProgressReporter
+    Private Shared Function ScaleProgressReporter(progressReporter As IProgressReporter, start As Double, [end] As Double) As IProgressReporter
         Dim range = [end] - start
         Return Sub(progress) progressReporter(range * progress + start)
     End Function
