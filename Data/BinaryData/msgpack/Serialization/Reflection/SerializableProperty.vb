@@ -2,6 +2,7 @@
 Imports System.Reflection
 
 Friend Class SerializableProperty
+
     Private _PropInfo As System.Reflection.PropertyInfo, _Name As String, _ValueType As System.Type
     Friend Shared ReadOnly EmptyObjArgs As Object() = {}
     Private ReadOnly _nilImplication As NilImplication

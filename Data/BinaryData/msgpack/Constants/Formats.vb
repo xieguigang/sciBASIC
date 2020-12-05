@@ -1,7 +1,4 @@
-﻿
-Friend Module MsgPackConstants
-
-    Public Const MAX_PROPERTY_COUNT As Integer = 15
+﻿Namespace Constants
 
     Public NotInheritable Class Formats
         Public Const NIL As Byte = &HC0
@@ -35,32 +32,4 @@ Friend Module MsgPackConstants
         Public Const MAP_16 As Byte = &HDE
         Public Const MAP_32 As Byte = &HDF
     End Class
-
-    Public NotInheritable Class FixedInteger
-        Public Const POSITIVE_MIN As Byte = &H0
-        Public Const POSITIVE_MAX As Byte = &H7F
-        Public Const NEGATIVE_MIN As Byte = &HE0
-        Public Const NEGATIVE_MAX As Byte = &HFF
-    End Class
-
-    Public NotInheritable Class FixedString
-        Public Const MIN As Byte = &HA0
-        Public Const MAX As Byte = &HBF
-        Public Const MAX_LENGTH As Integer = 31
-    End Class
-
-    Public NotInheritable Class FixedMap
-        Public Const MIN As Byte = &H80
-        Public Const MAX As Byte = &H8F
-    End Class
-
-    Public NotInheritable Class FixedArray
-        Public Const MIN As Byte = &H90
-        Public Const MAX As Byte = &H9F
-    End Class
-
-    Public NotInheritable Class Bool
-        Public Const [FALSE] As Byte = &HC2
-        Public Const [TRUE] As Byte = &HC3
-    End Class
-End Module
+End Namespace

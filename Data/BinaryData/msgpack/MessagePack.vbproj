@@ -50,18 +50,24 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Formats.vb" />
+    <Compile Include="Constants\FixedInteger.vb" />
+    <Compile Include="Constants\FixedString.vb" />
+    <Compile Include="Constants\Bool.vb" />
+    <Compile Include="Constants\FixedArray.vb" />
+    <Compile Include="Constants\FixedMap.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Extensions\ObjectExtensions.vb" />
     <Compile Include="MsgPackSerializer.vb" />
-    <Compile Include="SerializableProperty.vb" />
-    <Compile Include="MsgPackConstants.vb" />
+    <Compile Include="Serialization\Reflection\SerializableProperty.vb" />
+    <Compile Include="Constants\MsgPackConstants.vb" />
     <Compile Include="MsgPackIO.vb" />
-    <Compile Include="NilImplication.vb" />
-    <Compile Include="MessagePackMemberAttribute.vb" />
+    <Compile Include="Serialization\NilImplication.vb" />
+    <Compile Include="Serialization\MessagePackMemberAttribute.vb" />
     <Compile Include="SerializationContext.vb" />
-    <Compile Include="SerializationMethod.vb" />
-    <Compile Include="TypeInfo.vb" />
-    <Compile Include="MessagePackMemberDefinition.vb" />
+    <Compile Include="Serialization\SerializationMethod.vb" />
+    <Compile Include="Serialization\Reflection\TypeInfo.vb" />
+    <Compile Include="Serialization\MessagePackMemberDefinition.vb" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <ItemGroup>

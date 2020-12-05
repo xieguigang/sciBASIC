@@ -1,5 +1,6 @@
 ﻿Public Class SerializationContext
-    Private _Serializers As System.Collections.Generic.Dictionary(Of System.Type, MsgPackSerializer)
+
+    Private _Serializers As Dictionary(Of System.Type, MsgPackSerializer)
 
     Friend Property Serializers As Dictionary(Of Type, MsgPackSerializer)
         Get
