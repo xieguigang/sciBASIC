@@ -54,6 +54,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
 
+' i++
+' Math.Min(Threading.Interlocked.Increment(i), i - 1)
+
 ''' <summary>
 ''' 向量以及统计函数拓展
 ''' </summary>

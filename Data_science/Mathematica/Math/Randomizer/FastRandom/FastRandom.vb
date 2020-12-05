@@ -1,4 +1,5 @@
-﻿
+﻿Imports Microsoft.VisualBasic.Language
+
 ''' <summary>
 ''' A fast random number generator for .NET, from https://www.codeproject.com/Articles/9187/A-fast-equivalent-for-System-Random
 ''' Colin Green, January 2005
@@ -109,7 +110,9 @@ Public Class FastRandom
 
         ' The explicit int cast before the first multiplication gives better performance.
         ' See comments in NextDouble.
-        Return CInt(FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * upperBound)
+        wField = wField Xor wField >> 19 Xor t Xor t >> 8
+
+        Return CInt(FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And wField) * upperBound)
     End Function
 
     ''' <summary>
@@ -129,12 +132,16 @@ Public Class FastRandom
 
         If range < 0 Then   ' If range is <0 then an overflow has occured and must resort to using long integer arithmetic instead (slower).
             ' We also must use all 32 bits of precision, instead of the normal 31, which again is slower.
-            Return lowerBound + CInt(FastRandom.REAL_UNIT_UINT * CDbl(CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * (upperBound - CLng(lowerBound)))
+            wField = wField Xor wField >> 19 Xor t Xor t >> 8
+
+            Return lowerBound + CInt(FastRandom.REAL_UNIT_UINT * CDbl(wField) * (upperBound - CLng(lowerBound)))
         End If
 
         ' 31 bits of precision will suffice if range<=int.MaxValue. This allows us to cast to an int and gain
         ' a little more performance.
-        Return lowerBound + CInt(FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * range)
+        wField = wField Xor wField >> 19 Xor t Xor t >> 8
+
+        Return lowerBound + CInt(FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And wField) * range)
     End Function
 
     ''' <summary>
@@ -155,7 +162,9 @@ Public Class FastRandom
         '
         ' Also note that the loss of one bit of precision is equivalent to what occurs within
         ' System.Random.
-        Return FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8))
+        wField = wField Xor wField >> 19 Xor t Xor t >> 8
+
+        Return FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And wField)
     End Function
 
     ''' <summary>
@@ -181,7 +190,7 @@ Public Class FastRandom
     ''' </summary>
     Public Sub NextFloats(buffer As Single())
         Dim x = Me.x, y = yField, z = zField, w = wField
-        Dim i = 0
+        Dim i As i32 = 0
         Dim t As UInteger
         Dim bound = buffer.Length
 
@@ -191,7 +200,7 @@ Public Class FastRandom
             y = z
             z = w
             w = w Xor w >> 19 Xor t Xor t >> 8
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = FastRandom.FLOAT_UNIT_INT * (&H7FFFFFFF And w)
+            buffer(++i) = FastRandom.FLOAT_UNIT_INT * (&H7FFFFFFF And w)
         End While
 
         Me.x = x
@@ -208,7 +217,7 @@ Public Class FastRandom
     Public Sub NextBytes(buffer As Byte())
         ' Fill up the bulk of the buffer in chunks of 4 bytes at a time.
         Dim x = Me.x, y = yField, z = zField, w = wField
-        Dim i = 0
+        Dim i As i32 = 0
         Dim t As UInteger
         Dim bound = buffer.Length - 3
 
@@ -222,10 +231,10 @@ Public Class FastRandom
             y = z
             z = w
             w = w Xor w >> 19 Xor t Xor t >> 8
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w)
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 8)
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 16)
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 24)
+            buffer(++i) = CByte(w)
+            buffer(++i) = CByte(w >> 8)
+            buffer(++i) = CByte(w >> 16)
+            buffer(++i) = CByte(w >> 24)
         End While
 
         ' Fill up any remaining bytes in the buffer.
@@ -236,69 +245,13 @@ Public Class FastRandom
             y = z
             z = w
             w = w Xor w >> 19 Xor t Xor t >> 8
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w)
+            buffer(++i) = CByte(w)
 
             If i < buffer.Length Then
-                buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 8)
+                buffer(++i) = CByte(w >> 8)
 
                 If i < buffer.Length Then
-                    buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 16)
-
-                    If i < buffer.Length Then
-                        buffer(i) = CByte(w >> 24)
-                    End If
-                End If
-            End If
-        End If
-
-        Me.x = x
-        yField = y
-        zField = z
-        wField = w
-    End Sub
-
-    ''' <summary>
-    ''' Fills the provided byte array with random bytes.
-    ''' This method is functionally equivalent to System.Random.NextBytes().
-    ''' </summary>
-    Public Sub NextBytes(buffer As Byte())
-        ' Fill up the bulk of the buffer in chunks of 4 bytes at a time.
-        Dim x = Me.x, y = yField, z = zField, w = wField
-        Dim i = 0
-        Dim t As UInteger
-        Dim bound = buffer.Length - 3
-
-        While i < bound
-            ' Generate 4 bytes.
-            ' Increased performance is achieved by generating 4 random bytes per loop.
-            ' Also note that no mask needs to be applied to zero out the higher order bytes before
-            ' casting because the cast ignores thos bytes. Thanks to Stefan Troschütz for pointing this out.
-            t = x Xor x << 11
-            x = y
-            y = z
-            z = w
-            w = w Xor w >> 19 Xor t Xor t >> 8
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w)
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 8)
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 16)
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 24)
-        End While
-
-        ' Fill up any remaining bytes in the buffer.
-        If i < buffer.Length Then
-            ' Generate 4 bytes.
-            t = x Xor x << 11
-            x = y
-            y = z
-            z = w
-            w = w Xor w >> 19 Xor t Xor t >> 8
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w)
-
-            If i < buffer.Length Then
-                buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 8)
-
-                If i < buffer.Length Then
-                    buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = CByte(w >> 16)
+                    buffer(++i) = CByte(w >> 16)
 
                     If i < buffer.Length Then
                         buffer(i) = CByte(w >> 24)
@@ -326,7 +279,9 @@ Public Class FastRandom
         x = yField
         yField = zField
         zField = wField
-        Return CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)
+        wField = wField Xor wField >> 19 Xor t Xor t >> 8
+
+        Return wField
     End Function
 
     ''' <summary>
@@ -342,7 +297,9 @@ Public Class FastRandom
         x = yField
         yField = zField
         zField = wField
-        Return CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8))
+        wField = wField Xor wField >> 19 Xor t Xor t >> 8
+
+        Return CInt(&H7FFFFFFF And wField)
     End Function
 
 
@@ -363,21 +320,17 @@ Public Class FastRandom
             x = yField
             yField = zField
             zField = wField
-            bitBuffer = CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)
+            wField = wField Xor wField >> 19 Xor t Xor t >> 8
+
+            bitBuffer = wField
 
             ' Reset the bitMask that tells us which bit to read next.
             bitMask = &H80000000
             Return (bitBuffer And bitMask) = 0
         End If
 
-        Return (bitBuffer And CSharpImpl.__Assign(bitMask, 1)) = 0
-    End Function
+        bitMask = 1
 
-    Private Class CSharpImpl
-        <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-        Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
-    End Class
+        Return (bitBuffer And 1) = 0
+    End Function
 End Class

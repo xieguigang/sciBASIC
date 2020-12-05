@@ -3,9 +3,11 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Public Module ThreadSafeFastRandom
-    Private ReadOnly _global As Random = New Random()
+
+    ReadOnly _global As New Random()
+
     <ThreadStatic>
-    Private _local As FastRandom
+    Dim _local As FastRandom
 
     Private Function GetGlobalSeed() As Integer
         Dim seed As Integer
@@ -28,7 +30,9 @@ Public Module ThreadSafeFastRandom
         If inst Is Nothing Then
             Dim seed As Integer
             seed = ThreadSafeFastRandom.GetGlobalSeed()
-            ThreadSafeFastRandom._local = CSharpImpl.__Assign(inst, New FastRandom(seed))
+            inst = New FastRandom(seed)
+
+            ThreadSafeFastRandom._local = inst
         End If
 
         Return inst.Next()
@@ -37,8 +41,9 @@ Public Module ThreadSafeFastRandom
     ''' <summary>
     ''' Returns a non-negative random integer that is less than the specified maximum.
     ''' </summary>
-    ''' <paramname="maxValue">The exclusive upper bound of the random number to be generated. maxValue must be greater than or equal to 0.</param>
-    ''' <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue; that is, the range of return values ordinarily includes 0 but not maxValue. However,</returns>        '  if maxValue equals 0, maxValue is returned.</returns>
+    ''' <param name="maxValue">The exclusive upper bound of the random number to be generated. maxValue must be greater than or equal to 0.</param>
+    ''' <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue; that is, the range of return values ordinarily includes 0 but not maxValue. However,
+    ''' if maxValue equals 0, maxValue is returned.</returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [Next](maxValue As Integer) As Integer
         Dim inst = ThreadSafeFastRandom._local
@@ -46,7 +51,9 @@ Public Module ThreadSafeFastRandom
         If inst Is Nothing Then
             Dim seed As Integer
             seed = ThreadSafeFastRandom.GetGlobalSeed()
-            ThreadSafeFastRandom._local = CSharpImpl.__Assign(inst, New FastRandom(seed))
+            inst = New FastRandom(seed)
+
+            ThreadSafeFastRandom._local = inst
         End If
 
         Dim ans As Integer
@@ -61,9 +68,10 @@ Public Module ThreadSafeFastRandom
     ''' <summary>
     ''' Returns a random integer that is within a specified range.
     ''' </summary>
-    ''' <paramname="minValue">The inclusive lower bound of the random number returned.</param>
-    ''' <paramname="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
-    ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue; that is, the range of return values includes minValue but not maxValue. If minValue</returns>        '  equals maxValue, minValue is returned.</returns>
+    ''' <param name="minValue">The inclusive lower bound of the random number returned.</param>
+    ''' <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
+    ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue; that is, the range of return values includes minValue but not maxValue. If minValue
+    ''' equals maxValue, minValue is returned.</returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [Next](minValue As Integer, maxValue As Integer) As Integer
         Dim inst = ThreadSafeFastRandom._local
@@ -71,7 +79,9 @@ Public Module ThreadSafeFastRandom
         If inst Is Nothing Then
             Dim seed As Integer
             seed = ThreadSafeFastRandom.GetGlobalSeed()
-            ThreadSafeFastRandom._local = CSharpImpl.__Assign(inst, New FastRandom(seed))
+            inst = New FastRandom(seed)
+
+            ThreadSafeFastRandom._local = inst
         End If
 
         Return inst.Next(minValue, maxValue)
@@ -87,7 +97,9 @@ Public Module ThreadSafeFastRandom
         If inst Is Nothing Then
             Dim seed As Integer
             seed = ThreadSafeFastRandom.GetGlobalSeed()
-            ThreadSafeFastRandom._local = CSharpImpl.__Assign(inst, New FastRandom(seed))
+            inst = New FastRandom(seed)
+
+            ThreadSafeFastRandom._local = inst
         End If
 
         Return inst.NextFloat()
@@ -96,7 +108,7 @@ Public Module ThreadSafeFastRandom
     ''' <summary>
     ''' Fills the elements of a specified array of bytes with random numbers.
     ''' </summary>
-    ''' <paramname="buffer">An array of bytes to contain random numbers.</param>
+    ''' <param name="buffer">An array of bytes to contain random numbers.</param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub NextFloats(buffer As Single())
         Dim inst As FastRandom = ThreadSafeFastRandom._local
