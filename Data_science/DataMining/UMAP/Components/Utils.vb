@@ -1,4 +1,6 @@
-﻿Module Utils
+﻿Imports Microsoft.VisualBasic.Math
+
+Module Utils
 
     ''' <summary>
     ''' Creates an empty array

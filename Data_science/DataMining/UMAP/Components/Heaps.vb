@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Friend Module Heaps
     ''' <summary>
@@ -196,7 +197,7 @@ Friend Module Heaps
 
         If resultIndex >= 0 Then
             flag(resultIndex) = 0
-            Return CInt(Math.Floor(ind(resultIndex)))
+            Return CInt(stdNum.Floor(ind(resultIndex)))
         Else
             Return -1
         End If
