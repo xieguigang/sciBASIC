@@ -47,10 +47,10 @@ Imports stdNum = System.Math
 
 Friend Module SIMD
 
-    Private ReadOnly _vs1 As Integer = 1 ' Vector(Of Double).Count
-    Private ReadOnly _vs2 As Integer = 2 * 1 ' Vector(Of Double).Count
-    Private ReadOnly _vs3 As Integer = 3 * 1 ' Vector(Of Double).Count
-    Private ReadOnly _vs4 As Integer = 4 * 1 ' Vector(Of Double).Count
+    Private ReadOnly _vs1 As Integer = 8 ' Vector(Of Double).Count
+    Private ReadOnly _vs2 As Integer = 2 * _vs1 ' Vector(Of Double).Count
+    Private ReadOnly _vs3 As Integer = 3 * _vs1 ' Vector(Of Double).Count
+    Private ReadOnly _vs4 As Integer = 4 * _vs1 ' Vector(Of Double).Count
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Magnitude(ByRef vec As Double()) As Double

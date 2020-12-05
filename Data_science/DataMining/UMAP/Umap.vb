@@ -387,7 +387,9 @@ Public NotInheritable Class Umap
         Dim graphMax = 0F
 
         For Each value In _graph.GetValues()
-            If graphMax < value Then graphMax = value
+            If graphMax < value Then
+                graphMax = value
+            End If
         Next
 
         Dim graph = _graph.Map(Function(value) If(value < graphMax / nEpochs, 0, value))

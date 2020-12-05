@@ -314,7 +314,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <param name="destination">The array to receive a copy of the vector values.</param>
         ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
-        Public Sub CopyTo(destination As Double(), startIndex As Integer)
+        Public Sub CopyTo(ByRef destination As Double(), startIndex As Integer)
             Dim i As Integer = 0
             Dim is_single As Boolean = buffer.Length = 1
 

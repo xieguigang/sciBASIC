@@ -45,10 +45,10 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Friend Module SIMDint
 
-    Private ReadOnly _vs1 As Integer = 1 ' Vector(Of Integer).Count
-    Private ReadOnly _vs2 As Integer = 2 * 1 ' Vector(Of Integer).Count
-    Private ReadOnly _vs3 As Integer = 3 * 1 ' Vector(Of Integer).Count
-    Private ReadOnly _vs4 As Integer = 4 * 1 ' Vector(Of Integer).Count
+    Private ReadOnly _vs1 As Integer = 8 ' Vector(Of Integer).Count
+    Private ReadOnly _vs2 As Integer = 2 * _vs1 ' Vector(Of Integer).Count
+    Private ReadOnly _vs3 As Integer = 3 * _vs1 ' Vector(Of Integer).Count
+    Private ReadOnly _vs4 As Integer = 4 * _vs1 ' Vector(Of Integer).Count
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Zero(ByRef lhs As Integer())
