@@ -93,7 +93,9 @@ Friend Module SIMDint
     Public Sub Uniform(ByRef data As Double(), a As Double, random As IProvideRandomValues)
         Dim a2 = 2 * a
         Dim an = -a
-        random.NextFloats(data)
+
+        Call random.NextFloats(data)
+
         SIMD.Multiply(data, a2)
         SIMD.Add(data, an)
     End Sub

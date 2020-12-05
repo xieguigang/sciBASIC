@@ -415,7 +415,8 @@ Public NotInheritable Class Umap
             End If
         Next
 
-        ShuffleTogether(head, tail, weights)
+        Call ShuffleTogether(head, tail, weights)
+
         Return (head.ToArray(), tail.ToArray(), Umap.MakeEpochsPerSample(weights.ToArray(), nEpochs))
     End Function
 
@@ -448,7 +449,10 @@ Public NotInheritable Class Umap
         For Each nI In weights.Select(Function(w, i) (w / max * nEpochs, i))
             Dim n = nI.Item1
             Dim i = nI.Item2
-            If n > 0 Then result(i) = nEpochs / n
+
+            If n > 0 Then
+                result(i) = nEpochs / n
+            End If
         Next
 
         Return result
@@ -462,6 +466,7 @@ Public NotInheritable Class Umap
         Dim nEpochs = GetNEpochs()
         Dim nVertices = _graph.Dims.cols
         Dim aB As (a!, b!) = Umap.FindABParams(_spread, _minDist)
+
         _optimizationState.Head = head
         _optimizationState.Tail = tail
         _optimizationState.EpochsPerSample = epochsPerSample
@@ -490,6 +495,7 @@ Public NotInheritable Class Umap
         Dim epochsPerNegativeSample = epochsPerSample.[Select](Function(e) e / negativeSampleRate).ToArray()
         Dim epochOfNextNegativeSample = epochsPerNegativeSample.ToArray()
         Dim epochOfNextSample = epochsPerSample.ToArray()
+
         _optimizationState.EpochOfNextSample = epochOfNextSample
         _optimizationState.EpochOfNextNegativeSample = epochOfNextNegativeSample
         _optimizationState.EpochsPerNegativeSample = epochsPerNegativeSample
@@ -546,14 +552,14 @@ Public NotInheritable Class Umap
     End Sub
 
     Private Sub Iterate(i As Integer, n As Integer)
-        Dim embeddingSpan = _embedding
+        Dim embeddingSpan As Span(Of Double) = _embedding
         Dim j As Integer = _optimizationState.Head(i)
         Dim k As Integer = _optimizationState.Tail(i)
 
         Dim current_start As Integer = j * _optimizationState.Dim
         Dim other_start As Integer = k * _optimizationState.Dim
-        Dim current = embeddingSpan.SpanSlice(current_start, _optimizationState.Dim).ToArray
-        Dim other = embeddingSpan.SpanSlice(other_start, _optimizationState.Dim).ToArray
+        Dim current = embeddingSpan.Slice(current_start, _optimizationState.Dim)
+        Dim other = embeddingSpan.Slice(other_start, _optimizationState.Dim)
 
         Dim distSquared = Umap.RDist(current, other)
         Dim gradCoeff = 0F
@@ -575,9 +581,6 @@ Public NotInheritable Class Umap
             If (_optimizationState.MoveOther) Then
                 other(d) += -gradD * _optimizationState.Alpha
             End If
-
-            Call embeddingSpan.Flush(current, current_start)
-            Call embeddingSpan.Flush(other, other_start)
         Next
 
         _optimizationState.EpochOfNextSample(i) += _optimizationState.EpochsPerSample(i)
@@ -588,7 +591,7 @@ Public NotInheritable Class Umap
 
             k = _random.Next(0, _optimizationState.NVertices)
             other_start = k * _optimizationState.Dim
-            other = embeddingSpan.SpanSlice(other_start, _optimizationState.Dim).ToArray
+            other = embeddingSpan.Slice(other_start, _optimizationState.Dim)
             distSquared = Umap.RDist(current, other)
             gradCoeff = 0F
 
@@ -609,8 +612,6 @@ Public NotInheritable Class Umap
 
                 current(d) += gradD * _optimizationState.Alpha
             Next
-
-            Call embeddingSpan.Flush(current, current_start)
         Next
 
         _optimizationState.EpochOfNextNegativeSample(i) += nNegSamples * _optimizationState.EpochsPerNegativeSample(i)
@@ -619,7 +620,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Reduced Euclidean distance
     ''' </summary>
-    Private Shared Function RDist(x As Double(), y As Double()) As Double
+    Private Shared Function RDist(x As Span(Of Double), y As Span(Of Double)) As Double
         Dim distSquared = 0F
         Dim d As Double
 

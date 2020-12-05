@@ -73,7 +73,10 @@ Namespace Tester
 
             For i = 0 To nEpochs - 1
                 umap.Step()
-                If i Mod 10 = 0 Then Console.WriteLine($"- Completed {i + 1} of {nEpochs}")
+
+                If i Mod 10 = 0 Then
+                    Console.WriteLine($"- Completed {i + 1} of {nEpochs}")
+                End If
             Next
 
             Console.WriteLine("- Done")
