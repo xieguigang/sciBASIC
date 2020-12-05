@@ -67,7 +67,6 @@
     <Compile Include="DefaultRandomGenerator.vb" />
     <Compile Include="FastRandom.vb" />
     <Compile Include="Heaps.vb" />
-    <Compile Include="InternalsVisibleTo.vb" />
     <Compile Include="IProvideRandomValues.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

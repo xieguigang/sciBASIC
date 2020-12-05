@@ -67,9 +67,9 @@ Friend Class FastRandom
         ' the seeds x,y,z,w is non-zero. We fulfill that requirement by only allowing
         ' resetting of the x seed
         x = CUInt(seed)
-        yField = UMAP.FastRandom.Y
-        zField = UMAP.FastRandom.Z
-        wField = UMAP.FastRandom.W
+        yField = FastRandom.Y
+        zField = FastRandom.Z
+        wField = FastRandom.W
     End Sub
 
     ''' <summary>
@@ -155,7 +155,7 @@ Friend Class FastRandom
         '
         ' Also note that the loss of one bit of precision is equivalent to what occurs within
         ' System.Random.
-        Return UMAP.FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8))
+        Return FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8))
     End Function
 
     ''' <summary>
@@ -168,7 +168,7 @@ Friend Class FastRandom
         y = z
         z = w
         w = w Xor w >> 19 Xor t Xor t >> 8
-        Dim value = UMAP.FastRandom.FLOAT_UNIT_INT * (&H7FFFFFFF And w)
+        Dim value = FastRandom.FLOAT_UNIT_INT * (&H7FFFFFFF And w)
         Me.x = x
         yField = y
         zField = z
@@ -179,7 +179,7 @@ Friend Class FastRandom
     ''' <summary>
     ''' Fills the provided byte array with random floats.
     ''' </summary>
-    Public Sub NextFloats(ByVal buffer As Span(Of Single))
+    Public Sub NextFloats(ByVal buffer As Single())
         Dim x = Me.x, y = yField, z = zField, w = wField
         Dim i = 0
         Dim t As UInteger
@@ -191,7 +191,7 @@ Friend Class FastRandom
             y = z
             z = w
             w = w Xor w >> 19 Xor t Xor t >> 8
-            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = UMAP.FastRandom.FLOAT_UNIT_INT * (&H7FFFFFFF And w)
+            buffer(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = FastRandom.FLOAT_UNIT_INT * (&H7FFFFFFF And w)
         End While
 
         Me.x = x
@@ -261,7 +261,7 @@ Friend Class FastRandom
     ''' Fills the provided byte array with random bytes.
     ''' This method is functionally equivalent to System.Random.NextBytes().
     ''' </summary>
-    Public Sub NextBytes(ByVal buffer As Span(Of Byte))
+    Public Sub NextBytes(ByVal buffer As Byte())
         ' Fill up the bulk of the buffer in chunks of 4 bytes at a time.
         Dim x = Me.x, y = yField, z = zField, w = wField
         Dim i = 0

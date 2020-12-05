@@ -7,8 +7,8 @@ Friend Module Heaps
     ''' are newly added to the list or not.Internally this is stored as a single array; the first axis determines whether we are looking at the array of candidate indices, the array of distances, or the
     ''' flag array for whether elements are new or not.Each of these arrays are of shape (``nPoints``, ``size``)
     ''' </summary>
-    Public Function MakeHeap(ByVal nPoints As Integer, ByVal size As Integer) As UMAP.Heaps.Heap
-        Dim heap = New UMAP.Heaps.Heap()
+    Public Function MakeHeap(ByVal nPoints As Integer, ByVal size As Integer) As Heaps.Heap
+        Dim heap = New Heaps.Heap()
         heap.Add(MakeArrays(-1))
         heap.Add(MakeArrays(Single.MaxValue))
         heap.Add(MakeArrays(0))
@@ -18,7 +18,7 @@ Friend Module Heaps
         ''' 
         ''' Input:
         ''' 
-        Float[][] MakeArrays(float fillValue) => UMAP.Utils.Empty(nPoints).Select(_ => UMAP.Utils.Filled(size, fillValue)).ToArray();
+        Float[][] MakeArrays(float fillValue) => Utils.Empty(nPoints).Select(_ => Utils.Filled(size, fillValue)).ToArray();
 
 ''' 
         End Function
@@ -27,7 +27,7 @@ Friend Module Heaps
     ''' Push a new element onto the heap. The heap stores potential neighbors for each data point.The ``row`` parameter determines which data point we are addressing, the ``weight`` determines the distance
     ''' (for heap sorting), the ``index`` is the element to add, and the flag determines whether this is to be considered a new addition.
     ''' </summary>
-    Public Function HeapPush(ByVal heap As UMAP.Heaps.Heap, ByVal row As Integer, ByVal weight As Single, ByVal index As Integer, ByVal flag As Integer) As Integer
+    Public Function HeapPush(ByVal heap As Heaps.Heap, ByVal row As Integer, ByVal weight As Single, ByVal index As Integer, ByVal flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         If weight >= weights(0) Then Return 0
@@ -37,14 +37,14 @@ Friend Module Heaps
             If index = indices(i) Then Return 0
         Next
 
-        Return UMAP.Heaps.UncheckedHeapPush(heap, row, weight, index, flag)
+        Return Heaps.UncheckedHeapPush(heap, row, weight, index, flag)
     End Function
 
     ''' <summary>
     ''' Push a new element onto the heap. The heap stores potential neighbors for each data point. The ``row`` parameter determines which data point we are addressing, the ``weight`` determines the distance
     ''' (for heap sorting), the ``index`` is the element to add, and the flag determines whether this is to be considered a new addition.
     ''' </summary>
-    Public Function UncheckedHeapPush(ByVal heap As UMAP.Heaps.Heap, ByVal row As Integer, ByVal weight As Single, ByVal index As Integer, ByVal flag As Integer) As Integer
+    Public Function UncheckedHeapPush(ByVal heap As Heaps.Heap, ByVal row As Integer, ByVal weight As Single, ByVal index As Integer, ByVal flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         Dim isNew = heap(2)(row)
@@ -104,8 +104,8 @@ Friend Module Heaps
     ''' <summary>
     ''' Build a heap of candidate neighbors for nearest neighbor descent. For each vertex the candidate neighbors are any current neighbors, and any vertices that have the vertex as one of their nearest neighbors.
     ''' </summary>
-    Public Function BuildCandidates(ByVal currentGraph As UMAP.Heaps.Heap, ByVal nVertices As Integer, ByVal nNeighbors As Integer, ByVal maxCandidates As Integer, ByVal random As UMAP.IProvideRandomValues) As UMAP.Heaps.Heap
-        Dim candidateNeighbors = UMAP.Heaps.MakeHeap(nVertices, maxCandidates)
+    Public Function BuildCandidates(ByVal currentGraph As Heaps.Heap, ByVal nVertices As Integer, ByVal nNeighbors As Integer, ByVal maxCandidates As Integer, ByVal random As IProvideRandomValues) As Heaps.Heap
+        Dim candidateNeighbors = Heaps.MakeHeap(nVertices, maxCandidates)
 
         For i = 0 To nVertices - 1
 
@@ -114,8 +114,8 @@ Friend Module Heaps
                 Dim idx = CInt(currentGraph(0)(i)(j)) ' TOOD: Should Heap be int values instead of float?
                 Dim isn = CInt(currentGraph(2)(i)(j)) ' TOOD: Should Heap be int values instead of float?
                 Dim d = random.NextFloat()
-                UMAP.Heaps.HeapPush(candidateNeighbors, i, d, idx, isn)
-                UMAP.Heaps.HeapPush(candidateNeighbors, idx, d, i, isn)
+                Heaps.HeapPush(candidateNeighbors, i, d, idx, isn)
+                Heaps.HeapPush(candidateNeighbors, idx, d, i, isn)
                 currentGraph(2)(i)(j) = 0
             Next
         Next
@@ -127,7 +127,7 @@ Friend Module Heaps
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(ByVal heap As UMAP.Heaps.Heap) As (Integer()(), Single()())
+    Public Function DeHeapSort(ByVal heap As Heaps.Heap) As (Integer()(), Single()())
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
@@ -145,11 +145,11 @@ Friend Module Heaps
                 Dim temp2 = distHeap(0)
                 distHeap(0) = distHeap(distHeapIndex)
                 distHeap(distHeapIndex) = temp2
-                UMAP.Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
+                Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
             Next
         Next
 
-        Dim indicesAsInts = indices.[Select](Function(floatArray) floatArray.[Select](Function(value) value).ToArray()).ToArray()
+        Dim indicesAsInts = indices.[Select](Function(floatArray) floatArray.[Select](Function(value) CInt(value)).ToArray()).ToArray()
         Return (indicesAsInts, weights)
     End Function
 
@@ -181,7 +181,7 @@ Friend Module Heaps
     ''' <summary>
     ''' Search the heap for the smallest element that is still flagged
     ''' </summary>
-    Public Function SmallestFlagged(ByVal heap As UMAP.Heaps.Heap, ByVal row As Integer) As Integer
+    Public Function SmallestFlagged(ByVal heap As Heaps.Heap, ByVal row As Integer) As Integer
         Dim ind = heap(0)(row)
         Dim dist = heap(1)(row)
         Dim flag = heap(2)(row)
@@ -208,11 +208,8 @@ Friend Module Heaps
     End Function
 
     Public NotInheritable Class Heap
-        Private ReadOnly _values As List(Of Single()())
 
-        Public Sub New()
-            CSharpImpl.__Assign(_values, New List(Of Single()())())
-        End Sub
+        ReadOnly _values As New List(Of Single()())
 
         Default Public ReadOnly Property Item(ByVal index As Integer) As Single()()
             Get
@@ -223,13 +220,5 @@ Friend Module Heaps
         Public Sub Add(ByVal value As Single()())
             _values.Add(value)
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Module

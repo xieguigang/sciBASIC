@@ -1,5 +1,5 @@
-﻿Imports System.Linq
-Friend Module Utils
+﻿Module Utils
+
     ''' <summary>
     ''' Creates an empty array
     ''' </summary>
@@ -38,7 +38,7 @@ Friend Module Utils
     ''' <summary>
     ''' Generate nSamples many integers from 0 to poolSize such that no integer is selected twice.The duplication constraint is achieved via rejection sampling.
     ''' </summary>
-    Public Function RejectionSample(ByVal nSamples As Integer, ByVal poolSize As Integer, ByVal random As Umap.IProvideRandomValues) As Integer()
+    Public Function RejectionSample(ByVal nSamples As Integer, ByVal poolSize As Integer, ByVal random As IProvideRandomValues) As Integer()
         Dim result = New Integer(nSamples - 1) {}
 
         For i = 0 To nSamples - 1

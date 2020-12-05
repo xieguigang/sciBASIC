@@ -3,6 +3,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Runtime.CompilerServices
 Imports System.Threading.Tasks
+Imports Microsoft.VisualBasic.Language.Python
 
 Public NotInheritable Class Umap
     Private Const SMOOTH_K_TOLERANCE As Single = 0.00001F
@@ -14,37 +15,37 @@ Public NotInheritable Class Umap
     Private ReadOnly _repulsionStrength As Single = 1
     Private ReadOnly _setOpMixRatio As Single = 1
     Private ReadOnly _spread As Single = 1
-    Private ReadOnly _distanceFn As UMAP.DistanceCalculation
-    Private ReadOnly _random As UMAP.IProvideRandomValues
+    Private ReadOnly _distanceFn As Umap.DistanceCalculation
+    Private ReadOnly _random As Umap.IProvideRandomValues
     Private ReadOnly _nNeighbors As Integer
     Private ReadOnly _customNumberOfEpochs As Integer?
-    Private ReadOnly _progressReporter As UMAP.Umap.ProgressReporter
+    Private ReadOnly _progressReporter As Umap.Umap.ProgressReporter
 
     ' KNN state (can be precomputed and supplied via initializeFit)
     Private _knnIndices As Integer()() = Nothing
     Private _knnDistances As Single()() = Nothing
 
     ' Internal graph connectivity representation
-    Private _graph As UMAP.SparseMatrix = Nothing
+    Private _graph As Umap.SparseMatrix = Nothing
     Private _x As Single()() = Nothing
     Private _isInitialized As Boolean = False
-    Private _rpForest As UMAP.Tree.FlatTree() = New UMAP.Tree.FlatTree(-1) {}
+    Private _rpForest As Umap.Tree.FlatTree() = New Umap.Tree.FlatTree(-1) {}
 
     ' Projected embedding
     Private _embedding As Single()
-    Private ReadOnly _optimizationState As UMAP.Umap.OptimizationState
+    Private ReadOnly _optimizationState As Umap.Umap.OptimizationState
 
     ''' <summary>
     ''' The progress will be a value from 0 to 1 that indicates approximately how much of the processing has been completed
     ''' </summary>
     Public Delegate Sub ProgressReporter(ByVal progress As Single)
 
-    Public Sub New(ByVal Optional distance As UMAP.DistanceCalculation = Nothing, ByVal Optional random As UMAP.IProvideRandomValues = Nothing, ByVal Optional dimensions As Integer = 2, ByVal Optional numberOfNeighbors As Integer = 15, ByVal Optional customNumberOfEpochs As Integer? = Nothing, ByVal Optional progressReporter As UMAP.Umap.ProgressReporter = Nothing)
+    Public Sub New(ByVal Optional distance As Umap.DistanceCalculation = Nothing, ByVal Optional random As Umap.IProvideRandomValues = Nothing, ByVal Optional dimensions As Integer = 2, ByVal Optional numberOfNeighbors As Integer = 15, ByVal Optional customNumberOfEpochs As Integer? = Nothing, ByVal Optional progressReporter As Umap.Umap.ProgressReporter = Nothing)
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
-        _distanceFn = If(distance, AddressOf UMAP.Umap.DistanceFunctions.Cosine)
-        _random = If(random, UMAP.DefaultRandomGenerator.Instance)
+        _distanceFn = If(distance, AddressOf Umap.Umap.DistanceFunctions.Cosine)
+        _random = If(random, Umap.DefaultRandomGenerator.Instance)
         _nNeighbors = numberOfNeighbors
-        _optimizationState = New UMAP.Umap.OptimizationState With {
+        _optimizationState = New Umap.Umap.OptimizationState With {
             .[Dim] = dimensions
         }
         _customNumberOfEpochs = customNumberOfEpochs
@@ -61,17 +62,17 @@ Public NotInheritable Class Umap
 
         ' For large quantities of data (which is where the progress estimating is more useful), InitializeFit takes at least 80% of the total time (the calls to Step are
         ' completed much more quickly AND they naturally lend themselves to granular progress updates; one per loop compared to the recommended number of epochs)
-        Dim initializeFitProgressReporter As UMAP.Umap.ProgressReporter = If(_progressReporter Is Nothing, Sub(progress)
-                                                                                                           End Sub, UMAP.Umap.ScaleProgressReporter(_progressReporter, 0, 0.8F))
+        Dim initializeFitProgressReporter As Umap.Umap.ProgressReporter = If(_progressReporter Is Nothing, Sub(progress)
+                                                                                                           End Sub, Umap.Umap.ScaleProgressReporter(_progressReporter, 0, 0.8F))
         _x = x
 
         If _knnIndices Is Nothing AndAlso _knnDistances Is Nothing Then
                 ' This part of the process very roughly accounts for 1/3 of the work
-                (_knnIndices, _knnDistances) = Me.NearestNeighbors(x, UMAP.Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
+                (_knnIndices, _knnDistances) = Me.NearestNeighbors(x, Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
             End If
 
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
-        _graph = Me.FuzzySimplicialSet(x, _nNeighbors, _setOpMixRatio, UMAP.Umap.ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1))
+        _graph = Me.FuzzySimplicialSet(x, _nNeighbors, _setOpMixRatio, Umap.Umap.ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1))
         Dim headTailEpochsPerSample = Nothing
         headTailEpochsPerSample = InitializeSimplicialSetEmbedding()
 
@@ -89,10 +90,10 @@ Public NotInheritable Class Umap
 
     Public Function GetEmbedding() As Single()()
         Dim final = New Single(_optimizationState.NVertices - 1)() {}
-        Dim span As Span(Of Single) = _embedding.AsSpan()
+        Dim span As Single() = _embedding
 
         For i As Integer = 0 To _optimizationState.NVertices - 1
-            final(i) = span.Slice(CInt(i * _optimizationState.Dim), CInt(_optimizationState.Dim)).ToArray()
+            final(i) = span.slice(CInt(i * _optimizationState.Dim), CInt(_optimizationState.Dim)).ToArray()
         Next
 
         Return final
@@ -119,21 +120,21 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
     ''' </summary>
-    Friend Function NearestNeighbors(ByVal x As Single()(), ByVal progressReporter As UMAP.Umap.ProgressReporter) As (Integer()(), Single()())
-        Dim metricNNDescent = UMAP.NNDescent.MakeNNDescent(_distanceFn, _random)
+    Friend Function NearestNeighbors(ByVal x As Single()(), ByVal progressReporter As Umap.Umap.ProgressReporter) As (Integer()(), Single()())
+        Dim metricNNDescent = Umap.NNDescent.MakeNNDescent(_distanceFn, _random)
         progressReporter(0.05F)
         Dim nTrees = 5 + Round(Math.Sqrt(x.Length) / 20)
         Dim nIters = Math.Max(5, CInt(Math.Floor(Math.Round(Math.Log(x.Length, 2)))))
         progressReporter(0.1F)
         Dim leafSize = Math.Max(10, _nNeighbors)
-        Dim forestProgressReporter = UMAP.Umap.ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
+        Dim forestProgressReporter = Umap.Umap.ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
         _rpForest = Enumerable.Range(0, nTrees).[Select](Function(i)
                                                              forestProgressReporter(CSng(i) / nTrees)
-                                                             Return UMAP.Tree.FlattenTree(UMAP.Tree.MakeTree(x, leafSize, i, _random), leafSize)
+                                                             Return Umap.Tree.FlattenTree(Umap.Tree.MakeTree(x, leafSize, i, _random), leafSize)
                                                          End Function).ToArray()
-        Dim leafArray = UMAP.Tree.MakeLeafArray(_rpForest)
+        Dim leafArray = Umap.Tree.MakeLeafArray(_rpForest)
         progressReporter(0.45F)
-        Dim nnDescendProgressReporter = UMAP.Umap.ScaleProgressReporter(progressReporter, 0.5F, 1)
+        Dim nnDescendProgressReporter = Umap.Umap.ScaleProgressReporter(progressReporter, 0.5F, 1)
 
         ' Handle python3 rounding down from 0.5 discrpancy
         Return metricNNDescent(x, leafArray, _nNeighbors, nIters, startingIteration:=Sub(i, max) nnDescendProgressReporter(CSng(i) / max))
@@ -153,17 +154,17 @@ Public NotInheritable Class Umap
     ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
     ''' simplicial sets into a global one via a fuzzy union.
     ''' </summary>
-    Private Function FuzzySimplicialSet(ByVal x As Single()(), ByVal nNeighbors As Integer, ByVal setOpMixRatio As Single, ByVal progressReporter As UMAP.Umap.ProgressReporter) As UMAP.SparseMatrix
+    Private Function FuzzySimplicialSet(ByVal x As Single()(), ByVal nNeighbors As Integer, ByVal setOpMixRatio As Single, ByVal progressReporter As Umap.Umap.ProgressReporter) As Umap.SparseMatrix
         Dim knnIndices = If(_knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(_knnDistances, New Single(-1)() {})
         progressReporter(0.1F)
         Dim sigmasRhos = Nothing
-        sigmasRhos = UMAP.Umap.SmoothKNNDistance(knnDistances, nNeighbors, _localConnectivity)
+        sigmasRhos = Umap.Umap.SmoothKNNDistance(knnDistances, nNeighbors, _localConnectivity)
         progressReporter(0.2F)
         Dim rowsColsVals = Nothing
-        rowsColsVals = UMAP.Umap.ComputeMembershipStrengths(knnIndices, knnDistances, sigmas, rhos)
+        rowsColsVals = Umap.Umap.ComputeMembershipStrengths(knnIndices, knnDistances, sigmas, rhos)
         progressReporter(0.3F)
-        Dim sparseMatrix = New UMAP.SparseMatrix(rows, cols, vals, (x.Length, x.Length))
+        Dim sparseMatrix = New Umap.SparseMatrix(rows, cols, vals, (x.Length, x.Length))
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
         progressReporter(0.4F)
@@ -198,12 +199,12 @@ Public NotInheritable Class Umap
 
                 If index > 0 Then
                     rho(i) = nonZeroDists(index - 1)
-                    If interpolation > UMAP.Umap.SMOOTH_K_TOLERANCE Then rho(i) += interpolation * (nonZeroDists(index) - nonZeroDists(index - 1))
+                    If interpolation > Umap.Umap.SMOOTH_K_TOLERANCE Then rho(i) += interpolation * (nonZeroDists(index) - nonZeroDists(index - 1))
                 Else
                     rho(i) = interpolation * nonZeroDists(0)
                 End If
             ElseIf nonZeroDists.Length > 0 Then
-                rho(i) = UMAP.Utils.Max(nonZeroDists)
+                rho(i) = Umap.Utils.Max(nonZeroDists)
             End If
 
             For n = 0 To nIter - 1
@@ -219,7 +220,7 @@ Public NotInheritable Class Umap
                     End If
                 Next
 
-                If Math.Abs(psum - target) < UMAP.Umap.SMOOTH_K_TOLERANCE Then Exit For
+                If Math.Abs(psum - target) < Umap.Umap.SMOOTH_K_TOLERANCE Then Exit For
 
                 If psum > target Then
                     hi = mid
@@ -239,11 +240,11 @@ Public NotInheritable Class Umap
 
             ' TODO[umap-js]: This is very inefficient, but will do for now. FIXME
             If rho(i) > 0 Then
-                Dim meanIthDistances = UMAP.Utils.Mean(ithDistances)
-                If result(i) < UMAP.Umap.MIN_K_DIST_SCALE * meanIthDistances Then result(i) = UMAP.Umap.MIN_K_DIST_SCALE * meanIthDistances
+                Dim meanIthDistances = Utils.Mean(ithDistances)
+                If result(i) < Umap.MIN_K_DIST_SCALE * meanIthDistances Then result(i) = Umap.Umap.MIN_K_DIST_SCALE * meanIthDistances
             Else
-                Dim meanDistances = UMAP.Utils.Mean(distances.[Select](New Func(Of Single(), Single)(AddressOf UMAP.Utils.Mean)).ToArray())
-                If result(i) < UMAP.Umap.MIN_K_DIST_SCALE * meanDistances Then result(i) = UMAP.Umap.MIN_K_DIST_SCALE * meanDistances
+                Dim meanDistances = Utils.Mean(distances.[Select](New Func(Of Single(), Single)(AddressOf Umap.Utils.Mean)).ToArray())
+                If result(i) < Umap.MIN_K_DIST_SCALE * meanDistances Then result(i) = Umap.Umap.MIN_K_DIST_SCALE * meanDistances
             End If
         Next
 
@@ -297,7 +298,7 @@ Public NotInheritable Class Umap
         ' We're not computing the spectral initialization in this implementation until we determine a better eigenvalue/eigenvector computation approach
 
         _embedding = New Single(graph.Dims.rows * _optimizationState.Dim - 1) {}
-        UMAP.SIMDint.Uniform(_embedding, 10, _random)
+        SIMDint.Uniform(_embedding, 10, _random)
 
         ' Get graph data in ordered way...
         Dim weights = New List(Of Single)()
@@ -317,7 +318,7 @@ Public NotInheritable Class Umap
         Next
 
         ShuffleTogether(head, tail, weights)
-        Return (head.ToArray(), tail.ToArray(), UMAP.Umap.MakeEpochsPerSample(weights.ToArray(), nEpochs))
+        Return (head.ToArray(), tail.ToArray(), Umap.MakeEpochsPerSample(weights.ToArray(), nEpochs))
     End Function
 
     Private Sub ShuffleTogether(Of T, T2, T3)(ByVal list As List(Of T), ByVal other As List(Of T2), ByVal weights As List(Of T3))
@@ -343,8 +344,8 @@ Public NotInheritable Class Umap
     End Sub
 
     Private Shared Function MakeEpochsPerSample(ByVal weights As Single(), ByVal nEpochs As Integer) As Single()
-        Dim result = UMAP.Utils.Filled(weights.Length, -1)
-        Dim max = UMAP.Utils.Max(weights)
+        Dim result = Utils.Filled(weights.Length, -1)
+        Dim max = Utils.Max(weights)
 
         For Each nI In weights.Select(Function(w, i) (w / max * nEpochs, i))
             Dim n = nI.Item1
@@ -363,7 +364,7 @@ Public NotInheritable Class Umap
         Dim nEpochs = GetNEpochs()
         Dim nVertices = _graph.Dims.cols
         Dim aB = Nothing
-        aB = UMAP.Umap.FindABParams(_spread, _minDist)
+        aB = Umap.FindABParams(_spread, _minDist)
         _optimizationState.Head = head
         _optimizationState.Tail = tail
         _optimizationState.EpochsPerSample = epochsPerSample
@@ -412,7 +413,7 @@ Public NotInheritable Class Umap
             If _progressReporter IsNot Nothing Then
                 ' InitializeFit roughly approximately takes 80% of the processing time for large quantities of data, leaving 20% for the Step iterations - the progress reporter
                 ' calls made here are based on the assumption that Step will be called the recommended number of times (the number-of-epochs value returned from InitializeFit)
-                UMAP.Umap.ScaleProgressReporter(_progressReporter, 0.8F, 1)(CSng(currentEpoch) / numberOfEpochsToComplete)
+                Umap.Umap.ScaleProgressReporter(_progressReporter, 0.8F, 1)(CSng(currentEpoch) / numberOfEpochsToComplete)
             End If
         End If
 
@@ -455,7 +456,7 @@ Public NotInheritable Class Umap
                 var current = embeddingSpan.Slice(j * this._optimizationState.Dim, this._optimizationState.Dim);
                 var other = embeddingSpan.Slice(k * this._optimizationState.Dim, this._optimizationState.Dim);
 
-                var distSquared = UMAP.Umap.RDist(current, other);
+                var distSquared = Umap.RDist(current, other);
                 var gradCoeff = 0f;
 
                 if (distSquared > 0)
@@ -467,7 +468,7 @@ Public NotInheritable Class Umap
                 const float clipValue = 4f;
                 for (var d = 0; d <this._optimizationState.Dim; d++)
                 {
-                    var gradD = UMAP.Umap.Clip(gradCoeff * (current[d] - other[d]), clipValue);
+                    var gradD = Umap.Clip(gradCoeff * (current[d] - other[d]), clipValue);
                     current[d] += gradD * this._optimizationState.Alpha;
                     if (this._optimizationState.MoveOther)
                         other[d] += -gradD * this._optimizationState.Alpha;
@@ -481,7 +482,7 @@ Public NotInheritable Class Umap
                 {
                     k = this._random.Next(0, this._optimizationState.NVertices);
                     other = embeddingSpan.Slice(k * this._optimizationState.Dim, this._optimizationState.Dim);
-                    distSquared = UMAP.Umap.RDist(current, other);
+                    distSquared = Umap.RDist(current, other);
                     gradCoeff = 0f;
                     if (distSquared > 0)
                     {
@@ -495,7 +496,7 @@ Public NotInheritable Class Umap
                     {
                         var gradD = 4f;
                         if (gradCoeff > 0)
-                            gradD = UMAP.Umap.Clip(gradCoeff * (current[d] - other[d]), clipValue);
+                            gradD = Umap.Clip(gradCoeff * (current[d] - other[d]), clipValue);
                         current[d] += gradD * this._optimizationState.Alpha;
                     }
                 }
@@ -534,22 +535,22 @@ Public NotInheritable Class Umap
         End If
         End Function
 
-        Private Shared Function ScaleProgressReporter(ByVal progressReporter As UMAP.Umap.ProgressReporter, ByVal start As Single, ByVal [end] As Single) As UMAP.Umap.ProgressReporter
+        Private Shared Function ScaleProgressReporter(ByVal progressReporter As Umap.Umap.ProgressReporter, ByVal start As Single, ByVal [end] As Single) As Umap.Umap.ProgressReporter
         Dim range = [end] - start
         Return Sub(progress) progressReporter(range * progress + start)
     End Function
 
     Public NotInheritable Class DistanceFunctions
         Public Shared Function Cosine(ByVal lhs As Single(), ByVal rhs As Single()) As Single
-            Return 1 - UMAP.SIMD.DotProduct(lhs, rhs) / (UMAP.SIMD.Magnitude(lhs) * UMAP.SIMD.Magnitude(rhs))
+            Return 1 - Umap.SIMD.DotProduct(lhs, rhs) / (Umap.SIMD.Magnitude(lhs) * Umap.SIMD.Magnitude(rhs))
         End Function
 
         Public Shared Function CosineForNormalizedVectors(ByVal lhs As Single(), ByVal rhs As Single()) As Single
-            Return 1 - UMAP.SIMD.DotProduct(lhs, rhs)
+            Return 1 - Umap.SIMD.DotProduct(lhs, rhs)
         End Function
 
         Public Shared Function Euclidean(ByVal lhs As Single(), ByVal rhs As Single()) As Single
-            Return Math.Sqrt(UMAP.SIMD.Euclidean(lhs, rhs)) ' TODO: Replace with netcore3 MathF class when the framework is available
+            Return Math.Sqrt(Umap.SIMD.Euclidean(lhs, rhs)) ' TODO: Replace with netcore3 MathF class when the framework is available
         End Function
     End Class
 

@@ -5,19 +5,19 @@ Friend Module Tree
     ''' <summary>
     ''' Construct a random projection tree based on ``data`` with leaves of size at most ``leafSize``
     ''' </summary>
-    Public Function MakeTree(ByVal data As Single()(), ByVal leafSize As Integer, ByVal n As Integer, ByVal random As UMAP.IProvideRandomValues) As UMAP.Tree.RandomProjectionTreeNode
+    Public Function MakeTree(ByVal data As Single()(), ByVal leafSize As Integer, ByVal n As Integer, ByVal random As IProvideRandomValues) As Tree.RandomProjectionTreeNode
         Dim indices = Enumerable.Range(0, data.Length).ToArray()
-        Return UMAP.Tree.MakeEuclideanTree(data, indices, leafSize, n, random)
+        Return Tree.MakeEuclideanTree(data, indices, leafSize, n, random)
     End Function
 
-    Private Function MakeEuclideanTree(ByVal data As Single()(), ByVal indices As Integer(), ByVal leafSize As Integer, ByVal q As Integer, ByVal random As UMAP.IProvideRandomValues) As UMAP.Tree.RandomProjectionTreeNode
+    Private Function MakeEuclideanTree(ByVal data As Single()(), ByVal indices As Integer(), ByVal leafSize As Integer, ByVal q As Integer, ByVal random As IProvideRandomValues) As Tree.RandomProjectionTreeNode
         Dim indicesLeftIndicesRightHyperplaneVectorHyperplaneOffset = Nothing
 
         If indices.Length > leafSize Then
-            indicesLeftIndicesRightHyperplaneVectorHyperplaneOffset = UMAP.Tree.EuclideanRandomProjectionSplit(data, indices, random)
-            Dim leftChild = UMAP.Tree.MakeEuclideanTree(data, indicesLeft, leafSize, q + 1, random)
-            Dim rightChild = UMAP.Tree.MakeEuclideanTree(data, indicesRight, leafSize, q + 1, random)
-            Return New UMAP.Tree.RandomProjectionTreeNode With {
+            indicesLeftIndicesRightHyperplaneVectorHyperplaneOffset = Tree.EuclideanRandomProjectionSplit(data, indices, random)
+            Dim leftChild = Tree.MakeEuclideanTree(data, indicesLeft, leafSize, q + 1, random)
+            Dim rightChild = Tree.MakeEuclideanTree(data, indicesRight, leafSize, q + 1, random)
+            Return New Tree.RandomProjectionTreeNode With {
                 .indices = indices,
                 .leftChild = leftChild,
                 .rightChild = rightChild,
@@ -26,7 +26,7 @@ Friend Module Tree
                 .Offset = hyperplaneOffset
             }
         Else
-            Return New UMAP.Tree.RandomProjectionTreeNode With {
+            Return New Tree.RandomProjectionTreeNode With {
                 .indices = indices,
                 .LeftChild = Nothing,
                 .RightChild = Nothing,
@@ -37,17 +37,17 @@ Friend Module Tree
         End If
     End Function
 
-    Public Function FlattenTree(ByVal tree As UMAP.Tree.RandomProjectionTreeNode, ByVal leafSize As Integer) As UMAP.Tree.FlatTree
-        Dim nNodes = UMAP.Tree.NumNodes(tree)
-        Dim nLeaves = UMAP.Tree.NumLeaves(tree)
+    Public Function FlattenTree(ByVal tree As Tree.RandomProjectionTreeNode, ByVal leafSize As Integer) As Tree.FlatTree
+        Dim nNodes = Tree.NumNodes(tree)
+        Dim nLeaves = Tree.NumLeaves(tree)
 
         ' TODO[umap-js]: Verify that sparse code is not relevant...
-        Dim hyperplanes = UMAP.Utils.Range(nNodes).[Select](Function(__) New Single(tree.Hyperplane.Length - 1) {}).ToArray()
+        Dim hyperplanes = Utils.Range(nNodes).[Select](Function(__) New Single(tree.Hyperplane.Length - 1) {}).ToArray()
         Dim offsets = New Single(nNodes - 1) {}
-        Dim children = UMAP.Utils.Range(nNodes).[Select](Function(__) {-1, -1}).ToArray()
-        Dim indices = UMAP.Utils.Range(nLeaves).[Select](Function(__) UMAP.Utils.Range(leafSize).[Select](Function(____) -1).ToArray()).ToArray()
-        UMAP.Tree.RecursiveFlatten(tree, hyperplanes, offsets, children, indices, 0, 0)
-        Return New UMAP.Tree.FlatTree With {
+        Dim children = Utils.Range(nNodes).[Select](Function(__) {-1, -1}).ToArray()
+        Dim indices = Utils.Range(nLeaves).[Select](Function(__) Utils.Range(leafSize).[Select](Function(____) -1).ToArray()).ToArray()
+        Tree.RecursiveFlatten(tree, hyperplanes, offsets, children, indices, 0, 0)
+        Return New Tree.FlatTree With {
             .hyperplanes = hyperplanes,
             .offsets = offsets,
             .children = children,
@@ -60,7 +60,7 @@ Friend Module Tree
     ''' the basis for a random projection tree, which simply uses this splitting recursively. This particular split uses euclidean distance to determine the hyperplane and which side each data
     ''' sample falls on.
     ''' </summary>
-    Private Function EuclideanRandomProjectionSplit(ByVal data As Single()(), ByVal indices As Integer(), ByVal random As UMAP.IProvideRandomValues) As (Integer(), Integer(), Single(), Single)
+    Private Function EuclideanRandomProjectionSplit(ByVal data As Single()(), ByVal indices As Integer(), ByVal random As IProvideRandomValues) As (Integer(), Integer(), Single(), Single)
         Dim [dim] = data(0).Length
 
         ' Select two random points, set the hyperplane between them
@@ -132,7 +132,7 @@ Friend Module Tree
         Return (indicesLeft, indicesRight, hyperplaneVector, hyperplaneOffset)
     End Function
 
-    Private Function RecursiveFlatten(ByVal tree As UMAP.Tree.RandomProjectionTreeNode, ByVal hyperplanes As Single()(), ByVal offsets As Single(), ByVal children As Integer()(), ByVal indices As Integer()(), ByVal nodeNum As Integer, ByVal leafNum As Integer) As (Integer, Integer)
+    Private Function RecursiveFlatten(ByVal tree As Tree.RandomProjectionTreeNode, ByVal hyperplanes As Single()(), ByVal offsets As Single(), ByVal children As Integer()(), ByVal indices As Integer()(), ByVal nodeNum As Integer, ByVal leafNum As Integer) As (Integer, Integer)
         If tree.IsLeaf Then
             children(nodeNum)(0) = -leafNum
 
@@ -146,21 +146,21 @@ Friend Module Tree
             offsets(nodeNum) = tree.Offset
             children(nodeNum)(0) = nodeNum + 1
             Dim oldNodeNum = nodeNum
-            Dim res = UMAP.Tree.RecursiveFlatten(tree.LeftChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
+            Dim res = Tree.RecursiveFlatten(tree.LeftChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
             nodeNum = res.nodeNum
             leafNum = res.leafNum
             children(oldNodeNum)(1) = nodeNum + 1
-            res = UMAP.Tree.RecursiveFlatten(tree.RightChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
+            res = Tree.RecursiveFlatten(tree.RightChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
             Return (res.nodeNum, res.leafNum)
         End If
     End Function
 
-    Private Function NumNodes(ByVal tree As UMAP.Tree.RandomProjectionTreeNode) As Integer
-        Return If(tree.IsLeaf, 1, 1 + UMAP.Tree.NumNodes(tree.LeftChild) + UMAP.Tree.NumNodes(tree.RightChild))
+    Private Function NumNodes(ByVal tree As Tree.RandomProjectionTreeNode) As Integer
+        Return If(tree.IsLeaf, 1, 1 + Tree.NumNodes(tree.LeftChild) + Tree.NumNodes(tree.RightChild))
     End Function
 
-    Private Function NumLeaves(ByVal tree As UMAP.Tree.RandomProjectionTreeNode) As Integer
-        Return If(tree.IsLeaf, 1, 1 + UMAP.Tree.NumLeaves(tree.LeftChild) + UMAP.Tree.NumLeaves(tree.RightChild))
+    Private Function NumLeaves(ByVal tree As Tree.RandomProjectionTreeNode) As Integer
+        Return If(tree.IsLeaf, 1, 1 + Tree.NumLeaves(tree.LeftChild) + Tree.NumLeaves(tree.RightChild))
     End Function
 
     ''' <summary>
@@ -168,7 +168,7 @@ Friend Module Tree
     ''' a set of potential nearest neighbors.Given enough trees the set of all such leaves gives a good likelihood of getting a good set of nearest neighbors in composite. Since such
     ''' a random projection forest is inexpensive to compute, this can be a useful means of seeding other nearest neighbor algorithms.
     ''' </summary>
-    Public Function MakeLeafArray(ByVal forest As UMAP.Tree.FlatTree()) As Integer()()
+    Public Function MakeLeafArray(ByVal forest As Tree.FlatTree()) As Integer()()
         If forest.Length > 0 Then
             Dim output = New List(Of Integer())()
 
@@ -189,11 +189,11 @@ Friend Module Tree
     ''' <summary>
     ''' Searches a flattened rp-tree for a point
     ''' </summary>
-    Public Function SearchFlatTree(ByVal point As Single(), ByVal tree As UMAP.Tree.FlatTree, ByVal random As UMAP.IProvideRandomValues) As Integer()
+    Public Function SearchFlatTree(ByVal point As Single(), ByVal tree As Tree.FlatTree, ByVal random As IProvideRandomValues) As Integer()
         Dim node = 0
 
         While tree.Children(node)(0) > 0
-            Dim side = UMAP.Tree.SelectSide(tree.Hyperplanes(node), tree.Offsets(node), point, random)
+            Dim side = Tree.SelectSide(tree.Hyperplanes(node), tree.Offsets(node), point, random)
 
             If side = 0 Then
                 node = tree.Children(node)(0)
@@ -209,7 +209,7 @@ Friend Module Tree
     ''' <summary>
     ''' Select the side of the tree to search during flat tree search
     ''' </summary>
-    Private Function SelectSide(ByVal hyperplane As Single(), ByVal offset As Single, ByVal point As Single(), ByVal random As UMAP.IProvideRandomValues) As Integer
+    Private Function SelectSide(ByVal hyperplane As Single(), ByVal offset As Single, ByVal point As Single(), ByVal random As IProvideRandomValues) As Integer
         Dim margin = offset
 
         For d = 0 To point.Length - 1
@@ -235,8 +235,8 @@ Friend Module Tree
     Public NotInheritable Class RandomProjectionTreeNode
         Public Property IsLeaf As Boolean
         Public Property Indices As Integer()
-        Public Property LeftChild As UMAP.Tree.RandomProjectionTreeNode
-        Public Property RightChild As UMAP.Tree.RandomProjectionTreeNode
+        Public Property LeftChild As Tree.RandomProjectionTreeNode
+        Public Property RightChild As Tree.RandomProjectionTreeNode
         Public Property Hyperplane As Single()
         Public Property Offset As Single
     End Class

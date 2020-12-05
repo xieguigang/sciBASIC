@@ -6,18 +6,18 @@ Friend Module NNDescent
     ''' <summary>
     ''' Create a version of nearest neighbor descent.
     ''' </summary>
-    Public Function MakeNNDescent(ByVal distanceFn As UMAP.DistanceCalculation, ByVal random As UMAP.IProvideRandomValues) As UMAP.NNDescent.NNDescentFn
+    Public Function MakeNNDescent(ByVal distanceFn As DistanceCalculation, ByVal random As IProvideRandomValues) As NNDescent.NNDescentFn
         Return Function(data, leafArray, nNeighbors, nIters, maxCandidates, delta, rho, rpTreeInit, startingIteration)
                    Dim nVertices = data.Length
-                   Dim currentGraph = UMAP.Heaps.MakeHeap(data.Length, nNeighbors)
+                   Dim currentGraph = Heaps.MakeHeap(data.Length, nNeighbors)
 
                    For i = 0 To data.Length - 1
-                       Dim indices = UMAP.Utils.RejectionSample(nNeighbors, data.Length, random)
+                       Dim indices = Utils.RejectionSample(nNeighbors, data.Length, random)
 
                        For j = 0 To indices.Length - 1
                            Dim d = distanceFn(data(i), data(indices(j)))
-                           UMAP.Heaps.HeapPush(currentGraph, i, d, indices(j), 1)
-                           UMAP.Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
+                           Heaps.HeapPush(currentGraph, i, d, indices(j), 1)
+                           Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
                        Next
                    Next
 
@@ -30,8 +30,8 @@ Friend Module NNDescent
                                For j = i + 1 To leafArray(CInt(n)).Length - 1
                                    If leafArray(n)(j) < 0 Then Exit For
                                    Dim d = distanceFn(data(leafArray(n)(i)), data(leafArray(n)(j)))
-                                   UMAP.Heaps.HeapPush(currentGraph, leafArray(n)(i), d, leafArray(n)(j), 1)
-                                   UMAP.Heaps.HeapPush(currentGraph, leafArray(n)(j), d, leafArray(n)(i), 1)
+                                   Heaps.HeapPush(currentGraph, leafArray(n)(i), d, leafArray(n)(j), 1)
+                                   Heaps.HeapPush(currentGraph, leafArray(n)(j), d, leafArray(n)(i), 1)
                                Next
                            Next
                        Next
@@ -39,7 +39,7 @@ Friend Module NNDescent
 
                    For n = 0 To nIters - 1
                        startingIteration?.Invoke(n, nIters)
-                       Dim candidateNeighbors = UMAP.Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
+                       Dim candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
                        Dim c = 0
 
                        For i = 0 To nVertices - 1
@@ -54,8 +54,8 @@ Friend Module NNDescent
                                    Dim ck = candidateNeighbors(2)(i)(k)
                                    If q < 0 OrElse cj = 0 AndAlso ck = 0 Then Continue For
                                    Dim d = distanceFn(data(p), data(q))
-                                   c += UMAP.Heaps.HeapPush(currentGraph, p, d, q, 1)
-                                   c += UMAP.Heaps.HeapPush(currentGraph, q, d, p, 1)
+                                   c += Heaps.HeapPush(currentGraph, p, d, q, 1)
+                                   c += Heaps.HeapPush(currentGraph, q, d, p, 1)
                                Next
                            Next
                        Next
@@ -65,7 +65,7 @@ Friend Module NNDescent
                        End If
                    Next
 
-                   Return UMAP.Heaps.DeHeapSort(currentGraph)
+                   Return Heaps.DeHeapSort(currentGraph)
                End Function
     End Function
 End Module

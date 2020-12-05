@@ -4,7 +4,7 @@ Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Friend NotInheritable Class SparseMatrix
-    Private ReadOnly _entries As Dictionary(Of UMAP.SparseMatrix.RowCol, Single)
+    Private ReadOnly _entries As Dictionary(Of SparseMatrix.RowCol, Single)
 
     Public Sub New(ByVal rows As IEnumerable(Of Integer), ByVal cols As IEnumerable(Of Integer), ByVal values As IEnumerable(Of Single), ByVal dims As (Integer, Integer))
         Me.New(UMAP.SparseMatrix.Combine(rows, cols, values), dims)
@@ -12,17 +12,17 @@ Friend NotInheritable Class SparseMatrix
 
     Private Sub New(ByVal entries As IEnumerable(Of (Integer, Integer, Single)), ByVal dims As (Integer, Integer))
         Me.Dims = dims
-        _entries = New Dictionary(Of UMAP.SparseMatrix.RowCol, Single)()
+        _entries = New Dictionary(Of SparseMatrix.RowCol, Single)()
 
         For Each entryIndex In entries.[Select](Function(entry, index) (entry, index))
             Dim entry = entryIndex.Item1
             Dim index = entryIndex.Item2
             Me.CheckDims(entry.row, entry.col)
-            _entries(New UMAP.SparseMatrix.RowCol(entry.row, entry.col)) = entry.value
+            _entries(New SparseMatrix.RowCol(entry.row, entry.col)) = entry.value
         Next
     End Sub
 
-    Private Sub New(ByVal entries As Dictionary(Of UMAP.SparseMatrix.RowCol, Single), ByVal dims As (Integer, Integer))
+    Private Sub New(ByVal entries As Dictionary(Of SparseMatrix.RowCol, Single), ByVal dims As (Integer, Integer))
         Me.Dims = dims
         _entries = entries
     End Sub
@@ -42,14 +42,14 @@ Friend NotInheritable Class SparseMatrix
 
     Public Sub [Set](ByVal row As Integer, ByVal col As Integer, ByVal value As Single)
         CheckDims(row, col)
-        _entries(New UMAP.SparseMatrix.RowCol(row, col)) = value
+        _entries(New SparseMatrix.RowCol(row, col)) = value
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [Get](ByVal row As Integer, ByVal col As Integer, ByVal Optional defaultValue As Single = 0) As Single
         CheckDims(row, col)
         Dim v As float = Nothing
-        Return If(_entries.TryGetValue(New UMAP.SparseMatrix.RowCol(row, col), v), v, defaultValue)
+        Return If(_entries.TryGetValue(New SparseMatrix.RowCol(row, col), v), v, defaultValue)
     End Function
 
     Public Function GetAll() As IEnumerable(Of (Integer, Integer, Single))
@@ -74,13 +74,13 @@ Friend NotInheritable Class SparseMatrix
         Next
     End Sub
 
-    Public Function Map(ByVal fn As Func(Of Single, Single)) As UMAP.SparseMatrix
+    Public Function Map(ByVal fn As Func(Of Single, Single)) As SparseMatrix
         Return Map(Function(value, row, col) fn(value))
     End Function
 
-    Public Function Map(ByVal fn As Func(Of Single, Integer, Integer, Single)) As UMAP.SparseMatrix
+    Public Function Map(ByVal fn As Func(Of Single, Integer, Integer, Single)) As SparseMatrix
         Dim newEntries = _entries.ToDictionary(Function(kv) kv.Key, Function(kv) fn(kv.Value, kv.Key.Row, kv.Key.Col))
-        Return New UMAP.SparseMatrix(newEntries, Dims)
+        Return New SparseMatrix(newEntries, Dims)
     End Function
 
     Public Function ToArray() As Single()()
@@ -100,22 +100,22 @@ Friend NotInheritable Class SparseMatrix
 #End If
     End Sub
 
-    Public Function Transpose() As UMAP.SparseMatrix
+    Public Function Transpose() As SparseMatrix
         Dim dims = (Me.Dims.cols, Me.Dims.rows)
-        Dim entries = New Dictionary(Of UMAP.SparseMatrix.RowCol, Single)(_entries.Count)
+        Dim entries = New Dictionary(Of SparseMatrix.RowCol, Single)(_entries.Count)
 
         For Each entry In _entries
-            entries(New UMAP.SparseMatrix.RowCol(entry.Key.Col, entry.Key.Row)) = entry.Value
+            entries(New SparseMatrix.RowCol(entry.Key.Col, entry.Key.Row)) = entry.Value
         Next
 
-        Return New UMAP.SparseMatrix(entries, dims)
+        Return New SparseMatrix(entries, dims)
     End Function
 
     ''' <summary>
     ''' Element-wise multiplication of two matrices
     ''' </summary>
-    Public Function PairwiseMultiply(ByVal other As UMAP.SparseMatrix) As UMAP.SparseMatrix
-        Dim newEntries = New Dictionary(Of UMAP.SparseMatrix.RowCol, Single)(_entries.Count)
+    Public Function PairwiseMultiply(ByVal other As SparseMatrix) As SparseMatrix
+        Dim newEntries = New Dictionary(Of SparseMatrix.RowCol, Single)(_entries.Count)
         Dim v As float = Nothing
 
         For Each kv In _entries
@@ -125,42 +125,42 @@ Friend NotInheritable Class SparseMatrix
             End If
         Next
 
-        Return New UMAP.SparseMatrix(newEntries, Dims)
+        Return New SparseMatrix(newEntries, Dims)
     End Function
 
     ''' <summary>
     ''' Element-wise addition of two matrices
     ''' </summary>
-    Public Function Add(ByVal other As UMAP.SparseMatrix) As UMAP.SparseMatrix
+    Public Function Add(ByVal other As SparseMatrix) As SparseMatrix
         Return Me.ElementWiseWith(other, Function(x, y) x + y)
     End Function
 
     ''' <summary>
     ''' Element-wise subtraction of two matrices
     ''' </summary>
-    Public Function Subtract(ByVal other As UMAP.SparseMatrix) As UMAP.SparseMatrix
+    Public Function Subtract(ByVal other As SparseMatrix) As SparseMatrix
         Return Me.ElementWiseWith(other, Function(x, y) x - y)
     End Function
 
     ''' <summary>
     ''' Scalar multiplication of a matrix
     ''' </summary>
-    Public Function MultiplyScalar(ByVal scalar As Single) As UMAP.SparseMatrix
+    Public Function MultiplyScalar(ByVal scalar As Single) As SparseMatrix
         Return Map(Function(value, row, cols) value * scalar)
     End Function
 
     ''' <summary>
     ''' Helper function for element-wise operations
     ''' </summary>
-    Private Function ElementWiseWith(ByVal other As UMAP.SparseMatrix, ByVal op As Func(Of Single, Single, Single)) As UMAP.SparseMatrix
-        Dim newEntries = New Dictionary(Of UMAP.SparseMatrix.RowCol, Single)(_entries.Count)
+    Private Function ElementWiseWith(ByVal other As SparseMatrix, ByVal op As Func(Of Single, Single, Single)) As SparseMatrix
+        Dim newEntries = New Dictionary(Of SparseMatrix.RowCol, Single)(_entries.Count)
         Dim x As float = Nothing, y As float = Nothing
 
         For Each k In _entries.Keys.Union(other._entries.Keys)
             newEntries(k) = op(If(_entries.TryGetValue(k, x), x, 0F), If(other._entries.TryGetValue(k, y), y, 0F))
         Next
 
-        Return New UMAP.SparseMatrix(newEntries, Dims)
+        Return New SparseMatrix(newEntries, Dims)
     End Function
 
     ''' <summary>
@@ -196,7 +196,7 @@ Friend NotInheritable Class SparseMatrix
     End Function
 
     Private Structure RowCol
-        Implements IEquatable(Of UMAP.SparseMatrix.RowCol)
+        Implements IEquatable(Of SparseMatrix.RowCol)
 
         Public Sub New(ByVal row As Integer, ByVal col As Integer)
             Me.Row = row
@@ -208,12 +208,12 @@ Friend NotInheritable Class SparseMatrix
 
         ' 2019-06-24 DWR: Structs get default Equals and GetHashCode implementations but they can be slow - having these versions makes the code run much quicker
         ' and it seems a good practice to throw in IEquatable<RowCol> to avoid boxing when Equals is called
-        Public Overloads Function Equals(ByVal other As UMAP.SparseMatrix.RowCol) As Boolean Implements IEquatable(Of RowCol).Equals
+        Public Overloads Function Equals(ByVal other As SparseMatrix.RowCol) As Boolean Implements IEquatable(Of RowCol).Equals
             Return other.Row = Row AndAlso other.Col = Col
         End Function
 
         Public Overrides Function Equals(ByVal obj As Object) As Boolean
-            Return (CSharpImpl.__Assign(rc, TryCast(obj, UMAP.SparseMatrix.RowCol)) IsNot Nothing) AndAlso rc.Equals(Me)
+            Return (CSharpImpl.__Assign(rc, TryCast(obj, SparseMatrix.RowCol)) IsNot Nothing) AndAlso rc.Equals(Me)
         End Function
 
         Public Overrides Function GetHashCode() As Integer ' Courtesy of https://stackoverflow.com/a/263416/3813189

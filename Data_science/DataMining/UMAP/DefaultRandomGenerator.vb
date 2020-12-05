@@ -1,38 +1,37 @@
-﻿Imports System
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 
 Public NotInheritable Class DefaultRandomGenerator
-    Implements UMAP.IProvideRandomValues
+    Implements IProvideRandomValues
     ''' <summary>
     ''' This is the default configuration (it supports the optimization process to be executed on multiple threads)
     ''' </summary>
-    Public Shared ReadOnly Property Instance As UMAP.DefaultRandomGenerator = New UMAP.DefaultRandomGenerator(allowParallel:=True)
+    Public Shared ReadOnly Property Instance As DefaultRandomGenerator = New DefaultRandomGenerator(allowParallel:=True)
 
     ''' <summary>
     ''' This uses the same random number generator but forces the optimization process to run on a single thread (which may be desirable if multiple requests may be processed concurrently
     ''' or if it is otherwise not desirable to let a single request access all of the CPUs)
     ''' </summary>
-    Public Shared ReadOnly Property DisableThreading As UMAP.DefaultRandomGenerator = New UMAP.DefaultRandomGenerator(allowParallel:=False)
+    Public Shared ReadOnly Property DisableThreading As DefaultRandomGenerator = New DefaultRandomGenerator(allowParallel:=False)
 
     Private Sub New(ByVal allowParallel As Boolean)
-        CSharpImpl.__Assign(IsThreadSafe, allowParallel)
+        IsThreadSafe = allowParallel
     End Sub
 
     Public ReadOnly Property IsThreadSafe As Boolean Implements IProvideRandomValues.IsThreadSafe
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [Next](ByVal minValue As Integer, ByVal maxValue As Integer) As Integer Implements IProvideRandomValues.Next
-        Return UMAP.ThreadSafeFastRandom.Next(minValue, maxValue)
+        Return ThreadSafeFastRandom.Next(minValue, maxValue)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function NextFloat() As Single Implements IProvideRandomValues.NextFloat
-        Return UMAP.ThreadSafeFastRandom.NextFloat()
+        Return ThreadSafeFastRandom.NextFloat()
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub NextFloats(ByVal buffer As Span(Of Single)) Implements IProvideRandomValues.NextFloats
-        UMAP.ThreadSafeFastRandom.NextFloats(buffer)
+    Public Sub NextFloats(ByVal buffer As Single()) Implements IProvideRandomValues.NextFloats
+        ThreadSafeFastRandom.NextFloats(buffer)
     End Sub
 
     Private Class CSharpImpl

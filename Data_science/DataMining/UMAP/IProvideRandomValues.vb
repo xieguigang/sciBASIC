@@ -16,7 +16,7 @@ Public Interface IProvideRandomValues
     ''' </summary>
     ''' <paramname="buffer">An array of bytes to contain random numbers.</param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Sub NextFloats(ByVal buffer As Span(Of Single))
+    Sub NextFloats(ByVal buffer As Single())
 
     ''' <summary>
     ''' Returns a random integer that is within a specified range.

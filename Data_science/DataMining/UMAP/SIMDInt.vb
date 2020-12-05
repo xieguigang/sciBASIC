@@ -13,29 +13,29 @@ Friend Module SIMDint
         Dim count = lhs.Length
         Dim offset = 0
 
-        While count >= UMAP.SIMDint._vs4
+        While count >= SIMDint._vs4
             Vector(Of Integer).Zero.CopyTo(lhs, offset)
-            Vector(Of Integer).Zero.CopyTo(lhs, offset + UMAP.SIMDint._vs1)
-            Vector(Of Integer).Zero.CopyTo(lhs, offset + UMAP.SIMDint._vs2)
-            Vector(Of Integer).Zero.CopyTo(lhs, offset + UMAP.SIMDint._vs3)
-            If count = UMAP.SIMDint._vs4 Then Return
-            count -= UMAP.SIMDint._vs4
-            offset += UMAP.SIMDint._vs4
+            Vector(Of Integer).Zero.CopyTo(lhs, offset + SIMDint._vs1)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset + SIMDint._vs2)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset + SIMDint._vs3)
+            If count = SIMDint._vs4 Then Return
+            count -= SIMDint._vs4
+            offset += SIMDint._vs4
         End While
 
-        If count >= UMAP.SIMDint._vs2 Then
+        If count >= SIMDint._vs2 Then
             Vector(Of Integer).Zero.CopyTo(lhs, offset)
-            Vector(Of Integer).Zero.CopyTo(lhs, offset + UMAP.SIMDint._vs1)
-            If count = UMAP.SIMDint._vs2 Then Return
-            count -= UMAP.SIMDint._vs2
-            offset += UMAP.SIMDint._vs2
+            Vector(Of Integer).Zero.CopyTo(lhs, offset + SIMDint._vs1)
+            If count = SIMDint._vs2 Then Return
+            count -= SIMDint._vs2
+            offset += SIMDint._vs2
         End If
 
-        If count >= UMAP.SIMDint._vs1 Then
+        If count >= SIMDint._vs1 Then
             Vector(Of Integer).Zero.CopyTo(lhs, offset)
-            If count = UMAP.SIMDint._vs1 Then Return
-            count -= UMAP.SIMDint._vs1
-            offset += UMAP.SIMDint._vs1
+            If count = SIMDint._vs1 Then Return
+            count -= SIMDint._vs1
+            offset += SIMDint._vs1
         End If
 
         If count > 0 Then
@@ -48,11 +48,11 @@ Friend Module SIMDint
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Uniform(ByRef data As Single(), ByVal a As Single, ByVal random As UMAP.IProvideRandomValues)
+    Public Sub Uniform(ByRef data As Single(), ByVal a As Single, ByVal random As IProvideRandomValues)
         Dim a2 = 2 * a
         Dim an = -a
         random.NextFloats(data)
-        UMAP.SIMD.Multiply(data, a2)
-        UMAP.SIMD.Add(data, an)
+        SIMD.Multiply(data, a2)
+        SIMD.Add(data, an)
     End Sub
 End Module
