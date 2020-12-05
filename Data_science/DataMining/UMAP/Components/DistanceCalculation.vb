@@ -39,4 +39,4 @@
 
 #End Region
 
-Public Delegate Function DistanceCalculation(lhs As Single(), rhs As Single()) As Single
+Public Delegate Function DistanceCalculation(lhs As Double(), rhs As Double()) As Double

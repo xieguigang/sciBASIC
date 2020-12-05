@@ -209,6 +209,10 @@ Namespace LinearAlgebra
             Call Me.New(0R, m)
         End Sub
 
+        Sub New(f As Double)
+            Call Me.New({f})
+        End Sub
+
         Sub New(f As Single)
             Call Me.New({CDbl(f)})
         End Sub
@@ -283,6 +287,21 @@ Namespace LinearAlgebra
         ''' </param>
         Sub New(values As Single(), index As Integer)
             Call Me.New(values.Skip(index).Select(Function(sng) CDbl(sng)))
+        End Sub
+
+        ''' <summary>
+        ''' Creates a vector from a specified array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="values">
+        ''' The values to add to the vector, as an array of objects of type T. 
+        ''' The array must contain at least Count elements from the specified 
+        ''' index and only the first Count elements are used.
+        ''' </param>
+        ''' <param name="index">
+        ''' The starting index position from which to create the vector.
+        ''' </param>
+        Sub New(values As Double(), index As Integer)
+            Call Me.New(values.Skip(index))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

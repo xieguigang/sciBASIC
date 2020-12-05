@@ -153,7 +153,7 @@ Public Module ThreadSafeFastRandom
     ''' </summary>
     ''' <param name="buffer">An array of bytes to contain random numbers.</param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub NextFloats(buffer As Single())
+    Public Sub NextFloats(buffer As Double())
         Dim inst As FastRandom = ThreadSafeFastRandom._local
 
         If inst Is Nothing Then

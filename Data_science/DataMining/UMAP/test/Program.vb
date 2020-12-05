@@ -59,9 +59,14 @@ Namespace Tester
 
         Public Shared Sub RunTest(data As LabelledVector())
             Dim timer = Stopwatch.StartNew()
-            Dim umap = New Umap(distance:=AddressOf DistanceFunctions.CosineForNormalizedVectors)
+            Dim umap = New Umap(
+                distance:=AddressOf DistanceFunctions.CosineForNormalizedVectors,
+                progressReporter:=Sub(p)
+                                      Console.WriteLine(p)
+                                  End Sub)
             Console.WriteLine("Initialize fit..")
-            Dim nEpochs = umap.InitializeFit(data.[Select](Function(entry) entry.Vector).ToArray())
+            Dim rawMatrix = data.[Select](Function(entry) entry.Vector).ToArray()
+            Dim nEpochs = umap.InitializeFit(rawMatrix)
             Console.WriteLine("- Done")
             Console.WriteLine()
             Console.WriteLine("Calculating..")
@@ -125,7 +130,8 @@ Namespace Tester
                         Dim vector = vectorUid.vector
                         Dim uid = vectorUid.UID
 
-                        g.FillEllipse(colors(Integer.Parse(uid)), vector.X * width, vector.Y * height, 5, 5)
+                        ' g.FillEllipse(colors(Integer.Parse(uid)), vector.X * width, vector.Y * height, 5, 5)
+                        g.FillEllipse(colors.First, CSng(vector.X * width), CSng(vector.Y * height), 5, 5)
                     Next
                 End Using
 
@@ -148,7 +154,7 @@ Namespace Tester
     Public NotInheritable Class LabelledVector
 
         Public UID As String
-        Public Vector As Single()
+        Public Vector As Double()
 
         Sub New()
 

@@ -64,7 +64,7 @@ Friend Module Heaps
         Return heap
     End Function
 
-    Private Function MakeArrays(fillValue As Single, nPoints As Integer, size As Integer)
+    Private Function MakeArrays(fillValue As Double, nPoints As Integer, size As Integer)
         Return Utils.Empty(nPoints).Select(Function(any) Utils.Filled(size, fillValue)).ToArray()
     End Function
 
@@ -72,7 +72,7 @@ Friend Module Heaps
     ''' Push a new element onto the heap. The heap stores potential neighbors for each data point.The ``row`` parameter determines which data point we are addressing, the ``weight`` determines the distance
     ''' (for heap sorting), the ``index`` is the element to add, and the flag determines whether this is to be considered a new addition.
     ''' </summary>
-    Public Function HeapPush(heap As Heaps.Heap, row As Integer, weight As Single, index As Integer, flag As Integer) As Integer
+    Public Function HeapPush(heap As Heaps.Heap, row As Integer, weight As Double, index As Integer, flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         If weight >= weights(0) Then Return 0
@@ -89,7 +89,7 @@ Friend Module Heaps
     ''' Push a new element onto the heap. The heap stores potential neighbors for each data point. The ``row`` parameter determines which data point we are addressing, the ``weight`` determines the distance
     ''' (for heap sorting), the ``index`` is the element to add, and the flag determines whether this is to be considered a new addition.
     ''' </summary>
-    Public Function UncheckedHeapPush(heap As Heaps.Heap, row As Integer, weight As Single, index As Integer, flag As Integer) As Integer
+    Public Function UncheckedHeapPush(heap As Heaps.Heap, row As Integer, weight As Double, index As Integer, flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         Dim isNew = heap(2)(row)
@@ -172,7 +172,7 @@ Friend Module Heaps
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(heap As Heaps.Heap) As (Integer()(), Single()())
+    Public Function DeHeapSort(heap As Heaps.Heap) As (Integer()(), Double()())
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
@@ -201,7 +201,7 @@ Friend Module Heaps
     ''' <summary>
     ''' Restore the heap property for a heap with an out of place element at position ``elt``. This works with a heap pair where heap1 carries the weights and heap2 holds the corresponding elements.
     ''' </summary>
-    Private Sub SiftDown(heap1 As Single(), heap2 As Single(), ceiling As Integer, elt As Integer)
+    Private Sub SiftDown(heap1 As Double(), heap2 As Double(), ceiling As Integer, elt As Integer)
         While elt * 2 + 1 < ceiling
             Dim leftChild = elt * 2 + 1
             Dim rightChild = leftChild + 1
@@ -254,15 +254,15 @@ Friend Module Heaps
 
     Public NotInheritable Class Heap
 
-        ReadOnly _values As New List(Of Single()())
+        ReadOnly _values As New List(Of Double()())
 
-        Default Public ReadOnly Property Item(index As Integer) As Single()()
+        Default Public ReadOnly Property Item(index As Integer) As Double()()
             Get
                 Return _values(index)
             End Get
         End Property
 
-        Public Sub Add(value As Single()())
+        Public Sub Add(value As Double()())
             _values.Add(value)
         End Sub
     End Class

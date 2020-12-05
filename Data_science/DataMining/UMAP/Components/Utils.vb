@@ -47,35 +47,35 @@ Module Utils
     ''' <summary>
     ''' Creates an empty array
     ''' </summary>
-    Public Function Empty(n As Integer) As Single()
-        Return New Single(n - 1) {}
+    Public Function Empty(n As Integer) As Double()
+        Return New Double(n - 1) {}
     End Function
 
     ''' <summary>
     ''' Creates an array filled with index values
     ''' </summary>
-    Public Function Range(n As Integer) As Single()
-        Return Enumerable.Range(0, n).[Select](Function(i) CSng(i)).ToArray()
+    Public Function Range(n As Integer) As Double()
+        Return Enumerable.Range(0, n).[Select](Function(i) CDbl(i)).ToArray()
     End Function
 
     ''' <summary>
     ''' Creates an array filled with a specific value
     ''' </summary>
-    Public Function Filled(count As Integer, value As Single) As Single()
+    Public Function Filled(count As Integer, value As Double) As Double()
         Return Enumerable.Range(0, count).[Select](Function(i) value).ToArray()
     End Function
 
     ''' <summary>
     ''' Returns the mean of an array
     ''' </summary>
-    Public Function Mean(input As Single()) As Single
+    Public Function Mean(input As Double()) As Double
         Return input.Sum() / input.Length
     End Function
 
     ''' <summary>
     ''' Returns the maximum value of an array
     ''' </summary>
-    Public Function Max(input As Single()) As Single
+    Public Function Max(input As Double()) As Double
         Return input.Max()
     End Function
 

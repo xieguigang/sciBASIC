@@ -53,14 +53,14 @@ Public Interface IProvideRandomValues
     ''' Generates a random float. Values returned are from 0.0 up to but not including 1.0.
     ''' </summary>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Function NextFloat() As Single
+    Function NextFloat() As Double
 
     ''' <summary>
     ''' Fills the elements of a specified array of bytes with random numbers.
     ''' </summary>
     ''' <param name="buffer">An array of bytes to contain random numbers.</param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Sub NextFloats(buffer As Single())
+    Sub NextFloats(buffer As Double())
 
     ''' <summary>
     ''' Returns a random integer that is within a specified range.

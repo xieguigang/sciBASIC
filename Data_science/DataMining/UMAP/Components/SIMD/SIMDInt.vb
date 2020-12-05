@@ -90,7 +90,7 @@ Friend Module SIMDint
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Uniform(ByRef data As Single(), a As Single, random As IProvideRandomValues)
+    Public Sub Uniform(ByRef data As Double(), a As Double, random As IProvideRandomValues)
         Dim a2 = 2 * a
         Dim an = -a
         random.NextFloats(data)

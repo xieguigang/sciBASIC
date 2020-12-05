@@ -49,13 +49,13 @@ Imports stdNum = System.Math
 
 Public Interface NNDescentFn
 
-    Function NNDescent(data As Single()(), leafArray As Integer()(), nNeighbors As Integer,
+    Function NNDescent(data As Double()(), leafArray As Integer()(), nNeighbors As Integer,
                        Optional nIters As Integer = 10,
                        Optional maxCandidates As Integer = 50,
-                       Optional delta As Single = 0.001F,
-                       Optional rho As Single = 0.5F,
+                       Optional delta As Double = 0.001F,
+                       Optional rho As Double = 0.5F,
                        Optional rpTreeInit As Boolean = True,
-                       Optional startingIteration As Action(Of Integer, Integer) = Nothing) As (Integer()(), Single()())
+                       Optional startingIteration As Action(Of Integer, Integer) = Nothing) As (Integer()(), Double()())
 
 End Interface
 
@@ -72,13 +72,13 @@ Friend Class NNDescent : Implements NNDescentFn
     ''' <summary>
     ''' Create a version of nearest neighbor descent.
     ''' </summary>
-    Public Function MakeNNDescent(data As Single()(), leafArray As Integer()(), nNeighbors As Integer,
+    Public Function MakeNNDescent(data As Double()(), leafArray As Integer()(), nNeighbors As Integer,
                                   Optional nIters As Integer = 10,
                                   Optional maxCandidates As Integer = 50,
-                                  Optional delta As Single = 0.001F,
-                                  Optional rho As Single = 0.5F,
+                                  Optional delta As Double = 0.001F,
+                                  Optional rho As Double = 0.5F,
                                   Optional rpTreeInit As Boolean = True,
-                                  Optional startingIteration As Action(Of Integer, Integer) = Nothing) As (Integer()(), Single()()) Implements NNDescentFn.NNDescent
+                                  Optional startingIteration As Action(Of Integer, Integer) = Nothing) As (Integer()(), Double()()) Implements NNDescentFn.NNDescent
 
         Dim nVertices = data.Length
         Dim currentGraph = Heaps.MakeHeap(data.Length, nNeighbors)

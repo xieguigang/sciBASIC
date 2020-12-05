@@ -242,7 +242,7 @@ Public Class FastRandom
     ''' <summary>
     ''' Fills the provided byte array with random floats.
     ''' </summary>
-    Public Sub NextFloats(buffer As Single())
+    Public Sub NextFloats(buffer As Double())
         Dim x = Me.x, y = yField, z = zField, w = wField
         Dim i As i32 = 0
         Dim t As UInteger

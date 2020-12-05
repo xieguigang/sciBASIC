@@ -51,16 +51,16 @@ Imports stdNum = System.Math
 
 Public NotInheritable Class Umap
 
-    Private Const SMOOTH_K_TOLERANCE As Single = 0.00001F
-    Private Const MIN_K_DIST_SCALE As Single = 0.001F
+    Private Const SMOOTH_K_TOLERANCE As Double = 0.00001F
+    Private Const MIN_K_DIST_SCALE As Double = 0.001F
 
-    Private ReadOnly _learningRate As Single = 1.0F
-    Private ReadOnly _localConnectivity As Single = 1.0F
-    Private ReadOnly _minDist As Single = 0.1F
+    Private ReadOnly _learningRate As Double = 1.0F
+    Private ReadOnly _localConnectivity As Double = 1.0F
+    Private ReadOnly _minDist As Double = 0.1F
     Private ReadOnly _negativeSampleRate As Integer = 5
-    Private ReadOnly _repulsionStrength As Single = 1
-    Private ReadOnly _setOpMixRatio As Single = 1
-    Private ReadOnly _spread As Single = 1
+    Private ReadOnly _repulsionStrength As Double = 1
+    Private ReadOnly _setOpMixRatio As Double = 1
+    Private ReadOnly _spread As Double = 1
     Private ReadOnly _distanceFn As DistanceCalculation
     Private ReadOnly _random As IProvideRandomValues
     Private ReadOnly _nNeighbors As Integer
@@ -69,16 +69,16 @@ Public NotInheritable Class Umap
 
     ' KNN state (can be precomputed and supplied via initializeFit)
     Private _knnIndices As Integer()() = Nothing
-    Private _knnDistances As Single()() = Nothing
+    Private _knnDistances As Double()() = Nothing
 
     ' Internal graph connectivity representation
     Private _graph As SparseMatrix = Nothing
-    Private _x As Single()() = Nothing
+    Private _x As Double()() = Nothing
     Private _isInitialized As Boolean = False
     Private _rpForest As Tree.FlatTree() = New Tree.FlatTree(-1) {}
 
     ' Projected embedding
-    Private _embedding As Single()
+    Private _embedding As Double()
     Private ReadOnly _optimizationState As OptimizationState
 
     Public Sub New(Optional distance As DistanceCalculation = Nothing,
@@ -102,46 +102,67 @@ Public NotInheritable Class Umap
         _progressReporter = progressReporter
     End Sub
 
+    Private Function GetProgress() As ProgressReporter
+        If _progressReporter Is Nothing Then
+            Return Sub(progress)
+                       ' do nothing
+                   End Sub
+        Else
+            Return Umap.ScaleProgressReporter(_progressReporter, 0, 0.8F)
+        End If
+    End Function
+
     ''' <summary>
     ''' Initializes fit by computing KNN and a fuzzy simplicial set, as well as initializing the projected embeddings. Sets the optimization state ahead of optimization steps.
     ''' Returns the number of epochs to be used for the SGD optimization.
     ''' </summary>
-    Public Function InitializeFit(x As Single()()) As Integer
+    Public Function InitializeFit(x As Double()()) As Integer
         ' We don't need to reinitialize if we've already initialized for this data
-        If _x Is x AndAlso _isInitialized Then Return GetNEpochs()
+        If _x Is x AndAlso _isInitialized Then
+            Return GetNEpochs()
+        End If
 
         ' For large quantities of data (which is where the progress estimating is more useful), InitializeFit takes at least 80% of the total time (the calls to Step are
         ' completed much more quickly AND they naturally lend themselves to granular progress updates; one per loop compared to the recommended number of epochs)
-        Dim initializeFitProgressReporter As ProgressReporter = If(_progressReporter Is Nothing, Sub(progress)
-                                                                                                 End Sub, Umap.ScaleProgressReporter(_progressReporter, 0, 0.8F))
+        Dim initializeFitProgressReporter As ProgressReporter = GetProgress()
+
         _x = x
 
         If _knnIndices Is Nothing AndAlso _knnDistances Is Nothing Then
             ' This part of the process very roughly accounts for 1/3 of the work
-            Dim any = Me.NearestNeighbors(x, Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
-            _knnIndices = any.knnIndices
-            _knnDistances = any.knnDistances
+            With Me.NearestNeighbors(x, Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
+                _knnIndices = .knnIndices
+                _knnDistances = .knnDistances
+            End With
         End If
 
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
-        _graph = Me.FuzzySimplicialSet(x, _nNeighbors, _setOpMixRatio, ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1))
-        Dim headTailEpochsPerSample = InitializeSimplicialSetEmbedding()
+        _graph = Me.FuzzySimplicialSet(
+            x:=x,
+            nNeighbors:=_nNeighbors,
+            setOpMixRatio:=_setOpMixRatio,
+            progressReporter:=ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1)
+        )
 
-        ' Set the optimization routine state
-        _optimizationState.Head = headTailEpochsPerSample.head
-        _optimizationState.Tail = headTailEpochsPerSample.tail
-        _optimizationState.EpochsPerSample = headTailEpochsPerSample.epochsPerSample
+        With InitializeSimplicialSetEmbedding()
+            ' Set the optimization routine state
+            _optimizationState.Head = .head
+            _optimizationState.Tail = .tail
+            _optimizationState.EpochsPerSample = .epochsPerSample
+        End With
 
         ' Now, initialize the optimization steps
-        InitializeOptimization()
-        PrepareForOptimizationLoop()
+        Call InitializeOptimization()
+        Call PrepareForOptimizationLoop()
+
         _isInitialized = True
+
         Return GetNEpochs()
     End Function
 
-    Public Function GetEmbedding() As Single()()
-        Dim final = New Single(_optimizationState.NVertices - 1)() {}
-        Dim span As Single() = _embedding
+    Public Function GetEmbedding() As Double()()
+        Dim final = New Double(_optimizationState.NVertices - 1)() {}
+        Dim span As Double() = _embedding
 
         For i As Integer = 0 To _optimizationState.NVertices - 1
             ' slice函数需要进行验证
@@ -172,7 +193,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
     ''' </summary>
-    Friend Function NearestNeighbors(x As Single()(), progressReporter As ProgressReporter) As (knnIndices As Integer()(), knnDistances As Single()())
+    Friend Function NearestNeighbors(x As Double()(), progressReporter As ProgressReporter) As (knnIndices As Integer()(), knnDistances As Double()())
         Dim metricNNDescent = New NNDescent(_distanceFn, _random)
 
         Call progressReporter(0.05F)
@@ -220,7 +241,7 @@ Public NotInheritable Class Umap
     ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
     ''' simplicial sets into a global one via a fuzzy union.
     ''' </summary>
-    Private Function FuzzySimplicialSet(x As Single()(), nNeighbors As Integer, setOpMixRatio As Single, progressReporter As ProgressReporter) As SparseMatrix
+    Private Function FuzzySimplicialSet(x As Double()(), nNeighbors As Integer, setOpMixRatio As Double, progressReporter As ProgressReporter) As SparseMatrix
         Dim knnIndices = If(_knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(_knnDistances, New Single(-1)() {})
         progressReporter(0.1F)
@@ -243,14 +264,14 @@ Public NotInheritable Class Umap
         Return result
     End Function
 
-    Private Shared Function SmoothKNNDistance(distances As Single()(), k As Integer,
-                                              Optional localConnectivity As Single = 1,
+    Private Shared Function SmoothKNNDistance(distances As Double()(), k As Integer,
+                                              Optional localConnectivity As Double = 1,
                                               Optional nIter As Integer = 64,
-                                              Optional bandwidth As Single = 1) As (sigmas As Single(), rhos As Single())
+                                              Optional bandwidth As Double = 1) As (sigmas As Double(), rhos As Double())
 
         Dim target = stdNum.Log(k, 2) * bandwidth ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
-        Dim rho = New Single(distances.Length - 1) {}
-        Dim result = New Single(distances.Length - 1) {}
+        Dim rho = New Double(distances.Length - 1) {}
+        Dim result = New Double(distances.Length - 1) {}
 
         For i = 0 To distances.Length - 1
             Dim lo = 0F
@@ -313,7 +334,7 @@ Public NotInheritable Class Umap
                 Dim meanIthDistances = Utils.Mean(ithDistances)
                 If result(i) < Umap.MIN_K_DIST_SCALE * meanIthDistances Then result(i) = Umap.MIN_K_DIST_SCALE * meanIthDistances
             Else
-                Dim meanDistances = Utils.Mean(distances.[Select](New Func(Of Single(), Single)(AddressOf Utils.Mean)).ToArray())
+                Dim meanDistances = Utils.Mean(distances.[Select](New Func(Of Double(), Double)(AddressOf Utils.Mean)).ToArray())
                 If result(i) < Umap.MIN_K_DIST_SCALE * meanDistances Then result(i) = Umap.MIN_K_DIST_SCALE * meanDistances
             End If
         Next
@@ -321,12 +342,12 @@ Public NotInheritable Class Umap
         Return (result, rho)
     End Function
 
-    Private Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Single()(), sigmas As Single(), rhos As Single()) As (rows As Integer(), cols As Integer(), vals As Single())
+    Private Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Double()(), sigmas As Double(), rhos As Double()) As (rows As Integer(), cols As Integer(), vals As Double())
         Dim nSamples = knnIndices.Length
         Dim nNeighbors = knnIndices(0).Length
         Dim rows = New Integer(nSamples * nNeighbors - 1) {}
         Dim cols = New Integer(nSamples * nNeighbors - 1) {}
-        Dim vals = New Single(nSamples * nNeighbors - 1) {}
+        Dim vals = New Double(nSamples * nNeighbors - 1) {}
 
         For i = 0 To nSamples - 1
             For j = 0 To nNeighbors - 1
@@ -334,7 +355,7 @@ Public NotInheritable Class Umap
                     Continue For ' We didn't get the full knn for i
                 End If
 
-                Dim val As Single
+                Dim val As Double
 
                 If knnIndices(i)(j) = i Then
                     val = 0
@@ -357,7 +378,7 @@ Public NotInheritable Class Umap
     ''' Initialize a fuzzy simplicial set embedding, using a specified initialisation method and then minimizing the fuzzy set cross entropy between the 1-skeletons of the high and low
     ''' dimensional fuzzy simplicial sets.
     ''' </summary>
-    Private Function InitializeSimplicialSetEmbedding() As (head As Integer(), tail As Integer(), epochsPerSample As Single())
+    Private Function InitializeSimplicialSetEmbedding() As (head As Integer(), tail As Integer(), epochsPerSample As Double())
         Dim nEpochs = GetNEpochs()
         Dim graphMax = 0F
 
@@ -367,13 +388,14 @@ Public NotInheritable Class Umap
 
         Dim graph = _graph.Map(Function(value) If(value < graphMax / nEpochs, 0, value))
 
-        ' We're not computing the spectral initialization in this implementation until we determine a better eigenvalue/eigenvector computation approach
+        ' We're not computing the spectral initialization in this implementation 
+        ' until we determine a better eigenvalue/eigenvector computation approach
+        _embedding = New Double(graph.Dims.rows * _optimizationState.Dim - 1) {}
 
-        _embedding = New Single(graph.Dims.rows * _optimizationState.Dim - 1) {}
-        SIMDint.Uniform(_embedding, 10, _random)
+        Call SIMDint.Uniform(_embedding, 10, _random)
 
         ' Get graph data in ordered way...
-        Dim weights = New List(Of Single)()
+        Dim weights = New List(Of Double)()
         Dim head = New List(Of Integer)()
         Dim tail = New List(Of Integer)()
 
@@ -415,7 +437,7 @@ Public NotInheritable Class Umap
         End While
     End Sub
 
-    Private Shared Function MakeEpochsPerSample(weights As Single(), nEpochs As Integer) As Single()
+    Private Shared Function MakeEpochsPerSample(weights As Double(), nEpochs As Integer) As Double()
         Dim result = Utils.Filled(weights.Length, -1)
         Dim max = Utils.Max(weights)
 
@@ -445,7 +467,7 @@ Public NotInheritable Class Umap
         _optimizationState.NVertices = nVertices
     End Sub
 
-    Friend Shared Function FindABParams(spread As Single, minDist As Single) As (Single, Single)
+    Friend Shared Function FindABParams(spread As Double, minDist As Double) As (Single, Double)
         ' 2019-06-21 DWR: If we need to support other spread, minDist values then we might be able to use the LM implementation in Accord.NET but I'll hard code values that relate to the default configuration for now
         If spread <> 1 OrElse minDist <> 0.1F Then
             Throw New ArgumentException($"Currently, the {NameOf(FindABParams)} method only supports spread, minDist values of 1, 0.1 (the Levenberg-Marquardt algorithm is required to process other values")
@@ -500,11 +522,11 @@ Public NotInheritable Class Umap
     ''' </summary>
     Private Sub OptimizeLayoutStep(n As Integer)
         If _random.IsThreadSafe Then
-            System.Threading.Tasks.Parallel.For(0, _optimizationState.EpochsPerSample.Length, Sub(i) Call Iterate(i, n))
+            System.Threading.Tasks.Parallel.For(0, _optimizationState.EpochsPerSample.Length, Sub(i) Call RunIterate(i, n))
         Else
 
             For i = 0 To _optimizationState.EpochsPerSample.Length - 1
-                Iterate(i, n)
+                RunIterate(i, n)
             Next
         End If
 
@@ -512,10 +534,13 @@ Public NotInheritable Class Umap
         _optimizationState.CurrentEpoch += 1 'Preparation for future work for interpolating the table before optimizing
     End Sub
 
+    Private Sub RunIterate(i As Integer, n As Integer)
+        If Not (_optimizationState.EpochOfNextSample(i) >= n) Then
+            Call Iterate(i, n)
+        End If
+    End Sub
+
     Private Sub Iterate(i As Integer, n As Integer)
-
-        If (_optimizationState.EpochOfNextSample(i) >= n) Then Return
-
         Dim embeddingSpan = _embedding.ToArray()
 
         Dim j As Integer = _optimizationState.Head(i)
@@ -550,7 +575,7 @@ Public NotInheritable Class Umap
         For p = 0 To nNegSamples - 1
 
             k = _random.Next(0, _optimizationState.NVertices)
-            other = embeddingSpan.SpanSlice(k * _optimizationState.Dim, _optimizationState.Dim)
+            other = embeddingSpan.SpanSlice(k * _optimizationState.Dim, _optimizationState.Dim).ToArray
             distSquared = Umap.RDist(current, other)
             gradCoeff = 0F
             If (distSquared > 0) Then
@@ -575,7 +600,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Reduced Euclidean distance
     ''' </summary>
-    Private Shared Function RDist(x As Single(), y As Single()) As Single
+    Private Shared Function RDist(x As Double(), y As Double()) As Double
         'return Mosaik.Core.SIMD.Euclidean(ref x, ref y);
         Dim distSquared = 0F
 
@@ -590,7 +615,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Standard clamping of a value into a fixed range
     ''' </summary>
-    Private Shared Function Clip(x As Single, clipValue As Single) As Single
+    Private Shared Function Clip(x As Double, clipValue As Double) As Double
         If x > clipValue Then
             Return clipValue
         ElseIf x < -clipValue Then
@@ -600,7 +625,7 @@ Public NotInheritable Class Umap
         End If
     End Function
 
-    Private Shared Function ScaleProgressReporter(progressReporter As ProgressReporter, start As Single, [end] As Single) As ProgressReporter
+    Private Shared Function ScaleProgressReporter(progressReporter As ProgressReporter, start As Double, [end] As Double) As ProgressReporter
         Dim range = [end] - start
         Return Sub(progress) progressReporter(range * progress + start)
     End Function

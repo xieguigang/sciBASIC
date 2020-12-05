@@ -43,8 +43,8 @@
 Namespace Tree
 
     Public NotInheritable Class FlatTree
-        Public Property Hyperplanes As Single()()
-        Public Property Offsets As Single()
+        Public Property Hyperplanes As Double()()
+        Public Property Offsets As Double()
         Public Property Children As Integer()()
         Public Property Indices As Integer()()
     End Class

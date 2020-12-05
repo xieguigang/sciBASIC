@@ -73,12 +73,12 @@ Public NotInheritable Class DefaultRandomGenerator
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function NextFloat() As Single Implements IProvideRandomValues.NextFloat
+    Public Function NextFloat() As Double Implements IProvideRandomValues.NextFloat
         Return ThreadSafeFastRandom.NextFloat()
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub NextFloats(buffer As Single()) Implements IProvideRandomValues.NextFloats
+    Public Sub NextFloats(buffer As Double()) Implements IProvideRandomValues.NextFloats
         ThreadSafeFastRandom.NextFloats(buffer)
     End Sub
 End Class

@@ -53,12 +53,12 @@ Friend Module SIMD
     Private ReadOnly _vs4 As Integer = 4 * 1 ' Vector(Of Single).Count
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Magnitude(ByRef vec As Single()) As Single
+    Public Function Magnitude(ByRef vec As Double()) As Double
         Return stdNum.Sqrt(SIMD.DotProduct(vec, vec))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Euclidean(ByRef lhs As Single(), ByRef rhs As Single()) As Single
+    Public Function Euclidean(ByRef lhs As Double(), ByRef rhs As Double()) As Double
         Dim result = 0F
         Dim count = lhs.Length
         Dim offset = 0
@@ -109,16 +109,16 @@ Friend Module SIMD
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Add(ByRef lhs As Single(), f As Single)
+    Public Sub Add(ByRef lhs As Double(), f As Double)
         Dim count = lhs.Length
         Dim offset = 0
         Dim v = New Vector(f)
 
         While count >= SIMD._vs4
             Call (New Vector(lhs, offset) + v).CopyTo(lhs, offset)
-            Call (New Vector(CType(lhs, Single()), CInt(offset + SIMD._vs1)) + v).CopyTo(lhs, offset + SIMD._vs1)
-            Call (New Vector(CType(lhs, Single()), CInt(offset + SIMD._vs2)) + v).CopyTo(lhs, offset + SIMD._vs2)
-            Call (New Vector(CType(lhs, Single()), CInt(offset + SIMD._vs3)) + v).CopyTo(lhs, offset + SIMD._vs3)
+            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs1)) + v).CopyTo(lhs, offset + SIMD._vs1)
+            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs2)) + v).CopyTo(lhs, offset + SIMD._vs2)
+            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs3)) + v).CopyTo(lhs, offset + SIMD._vs3)
             If count = SIMD._vs4 Then Return
             count -= SIMD._vs4
             offset += SIMD._vs4
@@ -126,7 +126,7 @@ Friend Module SIMD
 
         If count >= SIMD._vs2 Then
             Call (New Vector(lhs, offset) + v).CopyTo(lhs, offset)
-            Call (New Vector(CType(lhs, Single()), CInt(offset + SIMD._vs1)) + v).CopyTo(lhs, offset + SIMD._vs1)
+            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs1)) + v).CopyTo(lhs, offset + SIMD._vs1)
             If count = SIMD._vs2 Then Return
             count -= SIMD._vs2
             offset += SIMD._vs2
@@ -149,15 +149,15 @@ Friend Module SIMD
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Multiply(ByRef lhs As Single(), f As Single)
+    Public Sub Multiply(ByRef lhs As Double(), f As Double)
         Dim count = lhs.Length
         Dim offset = 0
 
         While count >= SIMD._vs4
             Call (New Vector(lhs, offset) * f).CopyTo(lhs, offset)
-            Call (New Vector(CType(lhs, Single()), CInt(offset + SIMD._vs1)) * f).CopyTo(lhs, offset + SIMD._vs1)
-            Call (New Vector(CType(lhs, Single()), CInt(offset + SIMD._vs2)) * f).CopyTo(lhs, offset + SIMD._vs2)
-            Call (New Vector(CType(lhs, Single()), CInt(offset + SIMD._vs3)) * f).CopyTo(lhs, offset + SIMD._vs3)
+            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs1)) * f).CopyTo(lhs, offset + SIMD._vs1)
+            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs2)) * f).CopyTo(lhs, offset + SIMD._vs2)
+            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs3)) * f).CopyTo(lhs, offset + SIMD._vs3)
             If count = SIMD._vs4 Then Return
             count -= SIMD._vs4
             offset += SIMD._vs4
@@ -165,7 +165,7 @@ Friend Module SIMD
 
         If count >= SIMD._vs2 Then
             Call (New Vector(lhs, offset) * f).CopyTo(lhs, offset)
-            Call (New Vector(CType(lhs, Single()), CInt(offset + SIMD._vs1)) * f).CopyTo(lhs, offset + SIMD._vs1)
+            Call (New Vector(CType(lhs, Double()), CInt(offset + SIMD._vs1)) * f).CopyTo(lhs, offset + SIMD._vs1)
             If count = SIMD._vs2 Then Return
             count -= SIMD._vs2
             offset += SIMD._vs2
@@ -188,7 +188,7 @@ Friend Module SIMD
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function DotProduct(ByRef lhs As Single(), ByRef rhs As Single()) As Single
+    Public Function DotProduct(ByRef lhs As Double(), ByRef rhs As Double()) As Double
         Dim result = 0F
         Dim count = lhs.Length
         Dim offset = 0

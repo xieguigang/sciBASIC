@@ -51,30 +51,34 @@ Imports System.Runtime.CompilerServices
 
 Friend NotInheritable Class SparseMatrix
 
-    ReadOnly _entries As Dictionary(Of RowCol, Single)
+    ReadOnly _entries As Dictionary(Of RowCol, Double)
+
+    Public ReadOnly Property Dims As (rows As Integer, cols As Integer)
 
     Public Sub New(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Single), dims As (Integer, Integer))
         Me.New(SparseMatrix.Combine(rows, cols, values), dims)
     End Sub
 
-    Private Sub New(entries As IEnumerable(Of (row As Integer, col As Integer, value As Single)), dims As (rows As Integer, cols As Integer))
-        Me.Dims = dims
-        _entries = New Dictionary(Of RowCol, Single)()
+    Private Sub New(entries As IEnumerable(Of (row As Integer, col As Integer, value As Double)), dims As (rows As Integer, cols As Integer))
+        _Dims = dims
+        _entries = New Dictionary(Of RowCol, Double)()
 
         For Each entryIndex In entries.[Select](Function(entry, index) (entry, index))
             Dim entry = entryIndex.Item1
             Dim index = entryIndex.Item2
-            Me.CheckDims(entry.row, entry.col)
+
+            Call CheckDims(entry.row, entry.col)
+
             _entries(New RowCol(entry.row, entry.col)) = entry.value
         Next
     End Sub
 
-    Private Sub New(entries As Dictionary(Of RowCol, Single), dims As (Integer, Integer))
-        Me.Dims = dims
-        Me._entries = entries
+    Private Sub New(entries As Dictionary(Of RowCol, Double), dims As (Integer, Integer))
+        _Dims = dims
+        _entries = entries
     End Sub
 
-    Private Shared Iterator Function Combine(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Single)) As IEnumerable(Of (Integer, Integer, Single))
+    Private Shared Iterator Function Combine(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Single)) As IEnumerable(Of (Integer, Integer, Double))
         Dim rowsArray = rows.ToArray()
         Dim colsArray = cols.ToArray()
         Dim valuesArray = values.ToArray()
@@ -88,21 +92,19 @@ Friend NotInheritable Class SparseMatrix
         Next
     End Function
 
-    Public ReadOnly Property Dims As (rows As Integer, cols As Integer)
-
-    Public Sub [Set](row As Integer, col As Integer, value As Single)
+    Public Sub [Set](row As Integer, col As Integer, value As Double)
         CheckDims(row, col)
         _entries(New RowCol(row, col)) = value
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function [Get](row As Integer, col As Integer, Optional defaultValue As Single = 0) As Single
+    Public Function [Get](row As Integer, col As Integer, Optional defaultValue As Double = 0) As Double
         CheckDims(row, col)
-        Dim v As Single = Nothing
+        Dim v As Double = Nothing
         Return If(_entries.TryGetValue(New RowCol(row, col), v), v, defaultValue)
     End Function
 
-    Public Function GetAll() As IEnumerable(Of (Integer, Integer, Single))
+    Public Function GetAll() As IEnumerable(Of (Integer, Integer, Double))
         Return _entries.Select(Function(kv) (kv.Key.Row, kv.Key.Col, kv.Value))
     End Function
 
@@ -124,17 +126,17 @@ Friend NotInheritable Class SparseMatrix
         Next
     End Sub
 
-    Public Function Map(fn As Func(Of Single, Single)) As SparseMatrix
+    Public Function Map(fn As Func(Of Single, Double)) As SparseMatrix
         Return Map(Function(value, row, col) fn(value))
     End Function
 
-    Public Function Map(fn As Func(Of Single, Integer, Integer, Single)) As SparseMatrix
+    Public Function Map(fn As Func(Of Single, Integer, Integer, Double)) As SparseMatrix
         Dim newEntries = _entries.ToDictionary(Function(kv) kv.Key, Function(kv) fn(kv.Value, kv.Key.Row, kv.Key.Col))
         Return New SparseMatrix(newEntries, Dims)
     End Function
 
-    Public Function ToArray() As Single()()
-        Dim output = Enumerable.Range(0, Dims.rows).[Select](Function(__) New Single(Dims.cols - 1) {}).ToArray()
+    Public Function ToArray() As Double()()
+        Dim output = Enumerable.Range(0, Dims.rows).[Select](Function(__) New Double(Dims.cols - 1) {}).ToArray()
 
         For Each kv In _entries
             output(kv.Key.Row)(kv.Key.Col) = kv.Value
@@ -145,16 +147,14 @@ Friend NotInheritable Class SparseMatrix
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub CheckDims(row As Integer, col As Integer)
-#If DEBUG Then
         If row >= Dims.rows OrElse col >= Dims.cols Then
             Throw New Exception("array index out of bounds")
         End If
-#End If
     End Sub
 
     Public Function Transpose() As SparseMatrix
         Dim dims = (Me.Dims.cols, Me.Dims.rows)
-        Dim entries = New Dictionary(Of RowCol, Single)(_entries.Count)
+        Dim entries = New Dictionary(Of RowCol, Double)(_entries.Count)
 
         For Each entry In _entries
             entries(New RowCol(entry.Key.Col, entry.Key.Row)) = entry.Value
@@ -167,11 +167,10 @@ Friend NotInheritable Class SparseMatrix
     ''' Element-wise multiplication of two matrices
     ''' </summary>
     Public Function PairwiseMultiply(other As SparseMatrix) As SparseMatrix
-        Dim newEntries = New Dictionary(Of RowCol, Single)(_entries.Count)
-        Dim v As Single = Nothing
+        Dim newEntries = New Dictionary(Of RowCol, Double)(_entries.Count)
+        Dim v As Double = Nothing
 
         For Each kv In _entries
-
             If other._entries.TryGetValue(kv.Key, v) Then
                 newEntries(kv.Key) = kv.Value * v
             End If
@@ -197,17 +196,17 @@ Friend NotInheritable Class SparseMatrix
     ''' <summary>
     ''' Scalar multiplication of a matrix
     ''' </summary>
-    Public Function MultiplyScalar(scalar As Single) As SparseMatrix
+    Public Function MultiplyScalar(scalar As Double) As SparseMatrix
         Return Map(Function(value, row, cols) value * scalar)
     End Function
 
     ''' <summary>
     ''' Helper function for element-wise operations
     ''' </summary>
-    Private Function ElementWiseWith(other As SparseMatrix, op As Func(Of Single, Single, Single)) As SparseMatrix
-        Dim newEntries = New Dictionary(Of RowCol, Single)(_entries.Count)
-        Dim x As Single = Nothing
-        Dim y As Single = Nothing
+    Private Function ElementWiseWith(other As SparseMatrix, op As Func(Of Single, Double, Double)) As SparseMatrix
+        Dim newEntries = New Dictionary(Of RowCol, Double)(_entries.Count)
+        Dim x As Double = Nothing
+        Dim y As Double = Nothing
 
         For Each k In _entries.Keys.Union(other._entries.Keys)
             newEntries(k) = op(If(_entries.TryGetValue(k, x), x, 0F), If(other._entries.TryGetValue(k, y), y, 0F))
@@ -222,8 +221,8 @@ Friend NotInheritable Class SparseMatrix
     ''' purpose of this convention) but a lot of the ported python tree search logic depends 
     ''' on this data format.
     ''' </summary>
-    Public Function GetCSR() As (Integer(), Single(), Integer())
-        Dim entries As New List(Of (value As Single, row As Integer, col As Integer))()
+    Public Function GetCSR() As (Integer(), Double(), Integer())
+        Dim entries As New List(Of (value As Double, row As Integer, col As Integer))()
 
         Call ForEach(Sub(value, row, col) entries.Add((value, row, col)))
         Call entries.Sort(Function(a, b)
@@ -235,10 +234,10 @@ Friend NotInheritable Class SparseMatrix
                           End Function)
 
         Dim indices = New List(Of Integer)()
-        Dim values = New List(Of Single)()
+        Dim values = New List(Of Double)()
         Dim indptr = New List(Of Integer)()
         Dim currentRow = -1
-        Dim xi As (value As Single, row As Integer, col As Integer)
+        Dim xi As (value As Double, row As Integer, col As Integer)
 
         For i As Integer = 0 To entries.Count - 1
             xi = entries(i)

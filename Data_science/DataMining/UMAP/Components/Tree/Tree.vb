@@ -52,12 +52,12 @@ Namespace Tree
         ''' <summary>
         ''' Construct a random projection tree based on ``data`` with leaves of size at most ``leafSize``
         ''' </summary>
-        Public Function MakeTree(data As Single()(), leafSize As Integer, n As Integer, random As IProvideRandomValues) As RandomProjectionTreeNode
+        Public Function MakeTree(data As Double()(), leafSize As Integer, n As Integer, random As IProvideRandomValues) As RandomProjectionTreeNode
             Dim indices = Enumerable.Range(0, data.Length).ToArray()
             Return Tree.MakeEuclideanTree(data, indices, leafSize, n, random)
         End Function
 
-        Private Function MakeEuclideanTree(data As Single()(), indices As Integer(), leafSize As Integer, q As Integer, random As IProvideRandomValues) As RandomProjectionTreeNode
+        Private Function MakeEuclideanTree(data As Double()(), indices As Integer(), leafSize As Integer, q As Integer, random As IProvideRandomValues) As RandomProjectionTreeNode
             If indices.Length > leafSize Then
                 Dim any = Tree.EuclideanRandomProjectionSplit(data, indices, random)
                 Dim leftChild = Tree.MakeEuclideanTree(data, any.indicesLeft, leafSize, q + 1, random)
@@ -88,8 +88,8 @@ Namespace Tree
             Dim nLeaves = NumLeaves(tree)
 
             ' TODO[umap-js]: Verify that sparse code is not relevant...
-            Dim hyperplanes = Utils.Range(nNodes).[Select](Function(__) New Single(tree.Hyperplane.Length - 1) {}).ToArray()
-            Dim offsets = New Single(nNodes - 1) {}
+            Dim hyperplanes = Utils.Range(nNodes).[Select](Function(__) New Double(tree.Hyperplane.Length - 1) {}).ToArray()
+            Dim offsets = New Double(nNodes - 1) {}
             Dim children = Utils.Range(nNodes).[Select](Function(__) {-1, -1}).ToArray()
             Dim indices = Utils.Range(nLeaves).[Select](Function(__) Utils.Range(leafSize).[Select](Function(____) -1).ToArray()).ToArray()
 
@@ -108,7 +108,7 @@ Namespace Tree
         ''' the basis for a random projection tree, which simply uses this splitting recursively. This particular split uses euclidean distance to determine the hyperplane and which side each data
         ''' sample falls on.
         ''' </summary>
-        Private Function EuclideanRandomProjectionSplit(data As Single()(), indices As Integer(), random As IProvideRandomValues) As (indicesLeft As Integer(), IndicesRight As Integer(), HyperplaneVector As Single(), HyperplaneOffset As Single)
+        Private Function EuclideanRandomProjectionSplit(data As Double()(), indices As Integer(), random As IProvideRandomValues) As (indicesLeft As Integer(), IndicesRight As Integer(), HyperplaneVector As Double(), HyperplaneOffset As Double)
             Dim [dim] = data(0).Length
 
             ' Select two random points, set the hyperplane between them
@@ -121,7 +121,7 @@ Namespace Tree
 
             ' Compute the normal vector to the hyperplane (the vector between the two points) and the offset from the origin
             Dim hyperplaneOffset = 0F
-            Dim hyperplaneVector = New Single([dim] - 1) {}
+            Dim hyperplaneVector = New Double([dim] - 1) {}
 
             For i = 0 To hyperplaneVector.Length - 1
                 hyperplaneVector(i) = data(left)(i) - data(right)(i)
@@ -180,7 +180,7 @@ Namespace Tree
             Return (indicesLeft, indicesRight, hyperplaneVector, hyperplaneOffset)
         End Function
 
-        Private Function RecursiveFlatten(tree As RandomProjectionTreeNode, hyperplanes As Single()(), offsets As Single(), children As Integer()(), indices As Integer()(), nodeNum As Integer, leafNum As Integer) As (nodeNum As Integer, leafNum As Integer)
+        Private Function RecursiveFlatten(tree As RandomProjectionTreeNode, hyperplanes As Double()(), offsets As Double(), children As Integer()(), indices As Integer()(), nodeNum As Integer, leafNum As Integer) As (nodeNum As Integer, leafNum As Integer)
             If tree.IsLeaf Then
                 children(nodeNum)(0) = -leafNum
 
@@ -238,7 +238,7 @@ Namespace Tree
         ''' <summary>
         ''' Searches a flattened rp-tree for a point
         ''' </summary>
-        Public Function SearchFlatTree(point As Single(), tree As FlatTree, random As IProvideRandomValues) As Integer()
+        Public Function SearchFlatTree(point As Double(), tree As FlatTree, random As IProvideRandomValues) As Integer()
             Dim node = 0
 
             While tree.Children(node)(0) > 0
@@ -258,7 +258,7 @@ Namespace Tree
         ''' <summary>
         ''' Select the side of the tree to search during flat tree search
         ''' </summary>
-        Private Function SelectSide(hyperplane As Single(), offset As Single, point As Single(), random As IProvideRandomValues) As Integer
+        Private Function SelectSide(hyperplane As Double(), offset As Double, point As Double(), random As IProvideRandomValues) As Integer
             Dim margin = offset
 
             For d = 0 To point.Length - 1
