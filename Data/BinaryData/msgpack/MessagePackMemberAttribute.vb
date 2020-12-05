@@ -1,11 +1,9 @@
-﻿''' <summary>
-''' Mimic the full CLI namespace and naming so that this library can be used
-''' as a drop-in replacement and/or linked file with both frameworks as needed.
-''' </summary>
+﻿Namespace Serialization
 
-Imports System
-
-Namespace MsgPack.Serialization
+    ''' <summary>
+    ''' Mimic the full CLI namespace and naming so that this library can be used
+    ''' as a drop-in replacement and/or linked file with both frameworks as needed.
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class MessagePackMemberAttribute
         Inherits Attribute

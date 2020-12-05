@@ -3,7 +3,8 @@
 ''' as a drop-in replacement and/or linked file with both frameworks as needed.
 ''' </summary>
 
-Namespace MsgPack.Serialization
+Namespace Serialization
+
     Public Enum NilImplication
         MemberDefault
         Null
