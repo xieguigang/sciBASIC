@@ -57,8 +57,8 @@ Friend Module Heaps
     ''' are newly added to the list or not.Internally this is stored as a single array; the first axis determines whether we are looking at the array of candidate indices, the array of distances, or the
     ''' flag array for whether elements are new or not.Each of these arrays are of shape (``nPoints``, ``size``)
     ''' </summary>
-    Public Function MakeHeap(nPoints As Integer, size As Integer) As Heaps.Heap
-        Dim heap As New Heaps.Heap()
+    Public Function MakeHeap(nPoints As Integer, size As Integer) As Heap
+        Dim heap As New Heap()
 
         heap.Add(MakeArrays(-1, nPoints, size))
         heap.Add(MakeArrays(Single.MaxValue, nPoints, size))
@@ -75,7 +75,7 @@ Friend Module Heaps
     ''' Push a new element onto the heap. The heap stores potential neighbors for each data point.The ``row`` parameter determines which data point we are addressing, the ``weight`` determines the distance
     ''' (for heap sorting), the ``index`` is the element to add, and the flag determines whether this is to be considered a new addition.
     ''' </summary>
-    Public Function HeapPush(heap As Heaps.Heap, row As Integer, weight As Double, index As Integer, flag As Integer) As Integer
+    Public Function HeapPush(heap As Heap, row As Integer, weight As Double, index As Integer, flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         If weight >= weights(0) Then Return 0
@@ -92,7 +92,7 @@ Friend Module Heaps
     ''' Push a new element onto the heap. The heap stores potential neighbors for each data point. The ``row`` parameter determines which data point we are addressing, the ``weight`` determines the distance
     ''' (for heap sorting), the ``index`` is the element to add, and the flag determines whether this is to be considered a new addition.
     ''' </summary>
-    Public Function UncheckedHeapPush(heap As Heaps.Heap, row As Integer, weight As Double, index As Integer, flag As Integer) As Integer
+    Public Function UncheckedHeapPush(heap As Heap, row As Integer, weight As Double, index As Integer, flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         Dim isNew = heap(2)(row)
@@ -152,7 +152,7 @@ Friend Module Heaps
     ''' <summary>
     ''' Build a heap of candidate neighbors for nearest neighbor descent. For each vertex the candidate neighbors are any current neighbors, and any vertices that have the vertex as one of their nearest neighbors.
     ''' </summary>
-    Public Function BuildCandidates(currentGraph As Heaps.Heap, nVertices As Integer, nNeighbors As Integer, maxCandidates As Integer, random As IProvideRandomValues) As Heaps.Heap
+    Public Function BuildCandidates(currentGraph As Heap, nVertices As Integer, nNeighbors As Integer, maxCandidates As Integer, random As IProvideRandomValues) As Heap
         Dim candidateNeighbors = Heaps.MakeHeap(nVertices, maxCandidates)
 
         For i = 0 To nVertices - 1
@@ -175,7 +175,7 @@ Friend Module Heaps
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(heap As Heaps.Heap) As (Integer()(), Double()())
+    Public Function DeHeapSort(heap As Heap) As (Integer()(), Double()())
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
@@ -229,7 +229,7 @@ Friend Module Heaps
     ''' <summary>
     ''' Search the heap for the smallest element that is still flagged
     ''' </summary>
-    Public Function SmallestFlagged(heap As Heaps.Heap, row As Integer) As Integer
+    Public Function SmallestFlagged(heap As Heap, row As Integer) As Integer
         Dim ind = heap(0)(row)
         Dim dist = heap(1)(row)
         Dim flag = heap(2)(row)
@@ -254,19 +254,4 @@ Friend Module Heaps
             Return -1
         End If
     End Function
-
-    Public NotInheritable Class Heap
-
-        ReadOnly _values As New List(Of Double()())
-
-        Default Public ReadOnly Property Item(index As Integer) As Double()()
-            Get
-                Return _values(index)
-            End Get
-        End Property
-
-        Public Sub Add(value As Double()())
-            _values.Add(value)
-        End Sub
-    End Class
 End Module
