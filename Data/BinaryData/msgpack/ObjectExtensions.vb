@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::234de4ab1ceb4f346c3b85bc8f68776e, Data\BinaryData\msgpack\ObjectExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f61a6b61ad519773feba1412ffdf78f1, Data\BinaryData\msgpack\ObjectExtensions.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Public Module ObjectExtensions
         End If
     End Function
 End Module
-

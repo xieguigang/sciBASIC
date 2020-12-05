@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0066df5433558816040bf8a2feee953d, Data\BinaryData\msgpack\Constants\MsgPackConstants.vb"
+﻿#Region "Microsoft.VisualBasic::6027da4becb6e05db8f636c5e52f110d, Data\BinaryData\msgpack\Constants\MsgPackConstants.vb"
 
     ' Author:
     ' 
@@ -48,5 +48,3 @@ Namespace Constants
 
     End Module
 End Namespace
-
-

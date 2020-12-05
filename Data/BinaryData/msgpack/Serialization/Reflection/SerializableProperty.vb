@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::391b031e76bf3f6a5ee37976ee263cd7, Data\BinaryData\msgpack\Serialization\Reflection\SerializableProperty.vb"
+﻿#Region "Microsoft.VisualBasic::f66596d63c86e8d98e241defd8c657a6, Data\BinaryData\msgpack\Serialization\Reflection\SerializableProperty.vb"
 
     ' Author:
     ' 
@@ -32,8 +32,6 @@
     ' Summaries:
 
     '     Class SerializableProperty
-    ' 
-    '         Properties: Name, PropInfo, Sequence, ValueType
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

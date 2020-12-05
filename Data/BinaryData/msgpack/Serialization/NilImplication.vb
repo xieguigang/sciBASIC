@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ea5164bb67cc863785c03874b73e908, Data\BinaryData\msgpack\Serialization\NilImplication.vb"
+﻿#Region "Microsoft.VisualBasic::6ccf763dbd453864ec8eaa9dc0ee3343, Data\BinaryData\msgpack\Serialization\NilImplication.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Namespace Serialization
         Prohibit
     End Enum
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e13727beecfea78a44eb3417b568b9ed, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::01855abe8f2b0468468a2af33897f6c3, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranks.vb"
 
     ' Author:
     ' 
@@ -127,5 +127,3 @@ Namespace Math
     End Module
 #End If
 End Namespace
-
-

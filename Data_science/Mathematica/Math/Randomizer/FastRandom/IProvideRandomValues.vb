@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea44b5c760af485d14ea97f50089352f, Data_science\Mathematica\Math\Randomizer\FastRandom\IProvideRandomValues.vb"
+﻿#Region "Microsoft.VisualBasic::32e10c9bd83ae9824a0744ef74c27c2e, Data_science\Mathematica\Math\Randomizer\FastRandom\IProvideRandomValues.vb"
 
     ' Author:
     ' 

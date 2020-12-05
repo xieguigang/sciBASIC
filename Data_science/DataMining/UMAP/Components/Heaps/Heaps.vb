@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b918a0c183bed64ee6d3151dc42fa38, Data_science\DataMining\UMAP\Components\Heaps.vb"
+﻿#Region "Microsoft.VisualBasic::4f9c6782431506d3313f8f5ec035bf48, Data_science\DataMining\UMAP\Components\Heaps\Heaps.vb"
 
     ' Author:
     ' 
@@ -37,11 +37,6 @@
     '               SmallestFlagged, UncheckedHeapPush
     ' 
     '     Sub: SiftDown
-    '     Class Heap
-    ' 
-    '         Sub: Add
-    ' 
-    ' 
     ' 
     ' /********************************************************************************/
 

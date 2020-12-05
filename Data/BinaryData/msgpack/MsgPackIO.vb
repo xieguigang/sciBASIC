@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcae2c1a66244c10e34111cb51bc5e8c, Data\BinaryData\msgpack\MsgPackIO.vb"
+﻿#Region "Microsoft.VisualBasic::5b32c553779239356bea93ca27097356, Data\BinaryData\msgpack\MsgPackIO.vb"
 
     ' Author:
     ' 
@@ -843,4 +843,3 @@ Public Module MsgPackIO
         End If
     End Sub
 End Module
-

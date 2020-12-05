@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21531ed80176a6d96918f10e01508c47, Data_science\DataMining\UMAP\Components\DistanceCalculation.vb"
+﻿#Region "Microsoft.VisualBasic::3360320b367f9504be5efb12d5a9f333, Data_science\DataMining\UMAP\Components\DistanceCalculation.vb"
 
     ' Author:
     ' 

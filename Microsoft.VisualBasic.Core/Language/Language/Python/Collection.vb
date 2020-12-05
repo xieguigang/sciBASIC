@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66694617b20c7369b1e33346e177bfe2, Microsoft.VisualBasic.Core\Language\Language\Python\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::77217b3c2b3b5f041bd5529e7073b150, Microsoft.VisualBasic.Core\Language\Language\Python\Collection.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Collection
     ' 
-    '         Function: slice
+    '         Function: slice, SpanSlice
     ' 
     ' 
     ' /********************************************************************************/

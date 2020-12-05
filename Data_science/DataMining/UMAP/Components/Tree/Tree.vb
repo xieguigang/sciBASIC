@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2e5a12a54c115c74c1bd8d4b377c8d1, Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::41124035c32932ec0fabd3ae798c7e2a, Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
 
     ' Author:
     ' 
