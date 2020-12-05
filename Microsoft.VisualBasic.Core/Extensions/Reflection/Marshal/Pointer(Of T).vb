@@ -176,6 +176,13 @@ Namespace Emit.Marshal
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <remarks>
+        ''' 为了保持原来的对象引用，在这里就不进行ToArray数组复制来打破这种引用关系了
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ByRef array As T())
             buffer = array

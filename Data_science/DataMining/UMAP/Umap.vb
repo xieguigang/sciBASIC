@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::27c6f3d73b65fca3a60ca856dd5b773f, Data_science\DataMining\UMAP\Umap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Umap
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: [Step], Clip, ComputeMembershipStrengths, FindABParams, FuzzySimplicialSet
-    '               GetEmbedding, GetNEpochs, InitializeFit, InitializeSimplicialSetEmbedding, MakeEpochsPerSample
-    '               NearestNeighbors, RDist, Round, ScaleProgressReporter, SmoothKNNDistance
-    ' 
-    '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, ShuffleTogether
-    ' 
-    ' /********************************************************************************/
+' Class Umap
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: [Step], Clip, ComputeMembershipStrengths, FindABParams, FuzzySimplicialSet
+'               GetEmbedding, GetNEpochs, InitializeFit, InitializeSimplicialSetEmbedding, MakeEpochsPerSample
+'               NearestNeighbors, RDist, Round, ScaleProgressReporter, SmoothKNNDistance
+' 
+'     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, ShuffleTogether
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
@@ -176,8 +177,11 @@ Public NotInheritable Class Umap
     ''' Gets the number of epochs for optimizing the projection - NOTE: This heuristic differs from the python version
     ''' </summary>
     Private Function GetNEpochs() As Integer
-        If _customNumberOfEpochs IsNot Nothing Then Return _customNumberOfEpochs.Value
         Dim length = _graph.Dims.rows
+
+        If _customNumberOfEpochs IsNot Nothing Then
+            Return _customNumberOfEpochs.Value
+        End If
 
         If length <= 2500 Then
             Return 500
@@ -521,14 +525,15 @@ Public NotInheritable Class Umap
     ''' In practice this is done by sampling edges based on their membership strength(with the (1-p) terms coming from negative sampling similar to word2vec).
     ''' </summary>
     Private Sub OptimizeLayoutStep(n As Integer)
-        If _random.IsThreadSafe Then
-            System.Threading.Tasks.Parallel.For(0, _optimizationState.EpochsPerSample.Length, Sub(i) Call RunIterate(i, n))
-        Else
+        'If _random.IsThreadSafe Then
+        '    System.Threading.Tasks.Parallel.For(0, _optimizationState.EpochsPerSample.Length, Sub(i) Call RunIterate(i, n))
+        'Else
 
-            For i = 0 To _optimizationState.EpochsPerSample.Length - 1
-                RunIterate(i, n)
-            Next
-        End If
+        For i = 0 To _optimizationState.EpochsPerSample.Length - 1
+            RunIterate(i, n)
+        Next
+
+        ' End If
 
         _optimizationState.Alpha = _optimizationState.InitialAlpha * (1.0F - n / _optimizationState.NEpochs)
         _optimizationState.CurrentEpoch += 1 'Preparation for future work for interpolating the table before optimizing
@@ -541,16 +546,18 @@ Public NotInheritable Class Umap
     End Sub
 
     Private Sub Iterate(i As Integer, n As Integer)
-        Dim embeddingSpan = _embedding.ToArray()
-
+        Dim embeddingSpan = _embedding
         Dim j As Integer = _optimizationState.Head(i)
         Dim k As Integer = _optimizationState.Tail(i)
 
-        Dim current = embeddingSpan.SpanSlice(j * _optimizationState.Dim, _optimizationState.Dim).ToArray
-        Dim other = embeddingSpan.SpanSlice(k * _optimizationState.Dim, _optimizationState.Dim).ToArray
+        Dim current_start As Integer = j * _optimizationState.Dim
+        Dim other_start As Integer = k * _optimizationState.Dim
+        Dim current = embeddingSpan.SpanSlice(current_start, _optimizationState.Dim).ToArray
+        Dim other = embeddingSpan.SpanSlice(other_start, _optimizationState.Dim).ToArray
 
         Dim distSquared = Umap.RDist(current, other)
         Dim gradCoeff = 0F
+        Dim gradD As Double
 
         If (distSquared > 0) Then
 
@@ -559,13 +566,18 @@ Public NotInheritable Class Umap
         End If
 
         Const clipValue = 4.0F
+
         For d = 0 To _optimizationState.Dim - 1
 
-            Dim gradD = Umap.Clip(gradCoeff * (current(d) - other(d)), clipValue)
+            gradD = Umap.Clip(gradCoeff * (current(d) - other(d)), clipValue)
             current(d) += gradD * _optimizationState.Alpha
+
             If (_optimizationState.MoveOther) Then
                 other(d) += -gradD * _optimizationState.Alpha
             End If
+
+            Call embeddingSpan.Flush(current, current_start)
+            Call embeddingSpan.Flush(other, other_start)
         Next
 
         _optimizationState.EpochOfNextSample(i) += _optimizationState.EpochsPerSample(i)
@@ -575,23 +587,30 @@ Public NotInheritable Class Umap
         For p = 0 To nNegSamples - 1
 
             k = _random.Next(0, _optimizationState.NVertices)
-            other = embeddingSpan.SpanSlice(k * _optimizationState.Dim, _optimizationState.Dim).ToArray
+            other_start = k * _optimizationState.Dim
+            other = embeddingSpan.SpanSlice(other_start, _optimizationState.Dim).ToArray
             distSquared = Umap.RDist(current, other)
             gradCoeff = 0F
-            If (distSquared > 0) Then
-                gradCoeff = 2 * _optimizationState.Gamma * _optimizationState.B
-                gradCoeff *= _optimizationState.GetDistanceFactor(distSquared) ' Preparation For future work For interpolating the table before optimizing
 
+            If (distSquared > 0) Then
+                ' Preparation For future work For interpolating the table before optimizing
+                gradCoeff = 2 * _optimizationState.Gamma * _optimizationState.B
+                gradCoeff *= _optimizationState.GetDistanceFactor(distSquared)
             ElseIf (j = k) Then
                 Continue For
             End If
 
             For d = 0 To _optimizationState.Dim - 1
+                gradD = 4.0F
 
-                Dim gradD = 4.0F
-                If (gradCoeff > 0) Then gradD = Umap.Clip(gradCoeff * (current(d) - other(d)), clipValue)
+                If (gradCoeff > 0) Then
+                    gradD = Umap.Clip(gradCoeff * (current(d) - other(d)), clipValue)
+                End If
+
                 current(d) += gradD * _optimizationState.Alpha
             Next
+
+            Call embeddingSpan.Flush(current, current_start)
         Next
 
         _optimizationState.EpochOfNextNegativeSample(i) += nNegSamples * _optimizationState.EpochsPerNegativeSample(i)
@@ -601,11 +620,11 @@ Public NotInheritable Class Umap
     ''' Reduced Euclidean distance
     ''' </summary>
     Private Shared Function RDist(x As Double(), y As Double()) As Double
-        'return Mosaik.Core.SIMD.Euclidean(ref x, ref y);
         Dim distSquared = 0F
+        Dim d As Double
 
         For i = 0 To x.Length - 1
-            Dim d = x(i) - y(i)
+            d = x(i) - y(i)
             distSquared += d * d
         Next
 
