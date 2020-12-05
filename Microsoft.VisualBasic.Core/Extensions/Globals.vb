@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38015ee2ef7709e45db0400900d4fcb9, Microsoft.VisualBasic.Core\Extensions\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::df4276157657af5801eb6dc292d28f2c, Microsoft.VisualBasic.Core\Extensions\Globals.vb"
 
     ' Author:
     ' 
