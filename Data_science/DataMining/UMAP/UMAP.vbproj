@@ -84,10 +84,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Components\NNDescent.vb" />
-    <Compile Include="SIMD.vb" />
-    <Compile Include="SIMDInt.vb" />
+    <Compile Include="Components\SIMD\SIMD.vb" />
+    <Compile Include="Components\SIMD\SIMDInt.vb" />
     <Compile Include="Components\SparseMatrix.vb" />
-    <Compile Include="Tree.vb" />
+    <Compile Include="Components\Tree\Tree.vb" />
     <Compile Include="Umap.vb" />
     <Compile Include="Components\Utils.vb" />
   </ItemGroup>
