@@ -1,4 +1,5 @@
 ﻿Imports System.Collections
+Imports System.Diagnostics
 Imports System.IO
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Constants
@@ -59,6 +60,7 @@ Public Class MsgPackSerializer
         Return info.IsSerializableGenericCollection
     End Function
 
+    <DebuggerStepThrough>
     Private Shared Function GetSerializer(t As Type) As MsgPackSerializer
         Dim result As MsgPackSerializer = Nothing
 
@@ -183,9 +185,12 @@ Public Class MsgPackSerializer
         End If
 
         Dim constructorInfo = type.GetConstructor(Type.EmptyTypes)
-        If constructorInfo Is Nothing Then Throw New ApplicationException($"Can't deserialize Type [{type}] in MsgPackSerializer because it has no default constructor")
-        Dim result = constructorInfo.Invoke(SerializableProperty.EmptyObjArgs)
-        Return GetSerializer(type).Deserialize(result, reader)
+
+        If constructorInfo Is Nothing Then
+            Throw New ApplicationException($"Can't deserialize Type [{type}] in MsgPackSerializer because it has no default constructor")
+        Else
+            Return GetSerializer(type).Deserialize(constructorInfo.Invoke(SerializableProperty.EmptyObjArgs), reader)
+        End If
     End Function
 
     Friend Function Deserialize(result As Object, reader As BinaryReader) As Object
