@@ -1,5 +1,4 @@
-﻿Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports Microsoft.VisualBasic.Math
 
 Friend Module Tree
     ''' <summary>
@@ -18,16 +17,16 @@ Friend Module Tree
             Dim leftChild = Tree.MakeEuclideanTree(data, indicesLeft, leafSize, q + 1, random)
             Dim rightChild = Tree.MakeEuclideanTree(data, indicesRight, leafSize, q + 1, random)
             Return New Tree.RandomProjectionTreeNode With {
-                .indices = indices,
-                .leftChild = leftChild,
-                .rightChild = rightChild,
+                .Indices = indices,
+                .LeftChild = leftChild,
+                .RightChild = rightChild,
                 .IsLeaf = False,
                 .Hyperplane = hyperplaneVector,
                 .Offset = hyperplaneOffset
             }
         Else
             Return New Tree.RandomProjectionTreeNode With {
-                .indices = indices,
+                .Indices = indices,
                 .LeftChild = Nothing,
                 .RightChild = Nothing,
                 .IsLeaf = True,
@@ -38,20 +37,20 @@ Friend Module Tree
     End Function
 
     Public Function FlattenTree(tree As Tree.RandomProjectionTreeNode, leafSize As Integer) As Tree.FlatTree
-        Dim nNodes = Tree.NumNodes(tree)
-        Dim nLeaves = Tree.NumLeaves(tree)
+        Dim nNodes = tree.NumNodes(tree)
+        Dim nLeaves = tree.NumLeaves(tree)
 
         ' TODO[umap-js]: Verify that sparse code is not relevant...
         Dim hyperplanes = Utils.Range(nNodes).[Select](Function(__) New Single(tree.Hyperplane.Length - 1) {}).ToArray()
         Dim offsets = New Single(nNodes - 1) {}
         Dim children = Utils.Range(nNodes).[Select](Function(__) {-1, -1}).ToArray()
         Dim indices = Utils.Range(nLeaves).[Select](Function(__) Utils.Range(leafSize).[Select](Function(____) -1).ToArray()).ToArray()
-        Tree.RecursiveFlatten(tree, hyperplanes, offsets, children, indices, 0, 0)
+        tree.RecursiveFlatten(tree, hyperplanes, offsets, children, indices, 0, 0)
         Return New Tree.FlatTree With {
-            .hyperplanes = hyperplanes,
-            .offsets = offsets,
-            .children = children,
-            .indices = indices
+            .Hyperplanes = hyperplanes,
+            .Offsets = offsets,
+            .Children = children,
+            .Indices = indices
         }
     End Function
 
@@ -146,21 +145,21 @@ Friend Module Tree
             offsets(nodeNum) = tree.Offset
             children(nodeNum)(0) = nodeNum + 1
             Dim oldNodeNum = nodeNum
-            Dim res = Tree.RecursiveFlatten(tree.LeftChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
+            Dim res = tree.RecursiveFlatten(tree.LeftChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
             nodeNum = res.nodeNum
             leafNum = res.leafNum
             children(oldNodeNum)(1) = nodeNum + 1
-            res = Tree.RecursiveFlatten(tree.RightChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
+            res = tree.RecursiveFlatten(tree.RightChild, hyperplanes, offsets, children, indices, nodeNum + 1, leafNum)
             Return (res.nodeNum, res.leafNum)
         End If
     End Function
 
     Private Function NumNodes(tree As Tree.RandomProjectionTreeNode) As Integer
-        Return If(tree.IsLeaf, 1, 1 + Tree.NumNodes(tree.LeftChild) + Tree.NumNodes(tree.RightChild))
+        Return If(tree.IsLeaf, 1, 1 + tree.NumNodes(tree.LeftChild) + tree.NumNodes(tree.RightChild))
     End Function
 
     Private Function NumLeaves(tree As Tree.RandomProjectionTreeNode) As Integer
-        Return If(tree.IsLeaf, 1, 1 + Tree.NumLeaves(tree.LeftChild) + Tree.NumLeaves(tree.RightChild))
+        Return If(tree.IsLeaf, 1, 1 + tree.NumLeaves(tree.LeftChild) + tree.NumLeaves(tree.RightChild))
     End Function
 
     ''' <summary>
@@ -193,7 +192,7 @@ Friend Module Tree
         Dim node = 0
 
         While tree.Children(node)(0) > 0
-            Dim side = Tree.SelectSide(tree.Hyperplanes(node), tree.Offsets(node), point, random)
+            Dim side = tree.SelectSide(tree.Hyperplanes(node), tree.Offsets(node), point, random)
 
             If side = 0 Then
                 node = tree.Children(node)(0)

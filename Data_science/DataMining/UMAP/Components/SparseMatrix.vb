@@ -4,10 +4,11 @@ Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Friend NotInheritable Class SparseMatrix
-    Private ReadOnly _entries As Dictionary(Of SparseMatrix.RowCol, Single)
+
+    ReadOnly _entries As Dictionary(Of SparseMatrix.RowCol, Single)
 
     Public Sub New(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Single), dims As (Integer, Integer))
-        Me.New(UMAP.SparseMatrix.Combine(rows, cols, values), dims)
+        Me.New(SparseMatrix.Combine(rows, cols, values), dims)
     End Sub
 
     Private Sub New(entries As IEnumerable(Of (Integer, Integer, Single)), dims As (Integer, Integer))
@@ -31,14 +32,16 @@ Friend NotInheritable Class SparseMatrix
         Dim rowsArray = rows.ToArray()
         Dim colsArray = cols.ToArray()
         Dim valuesArray = values.ToArray()
-        If rowsArray.Length <> valuesArray.Length OrElse colsArray.Length <> valuesArray.Length Then Throw New ArgumentException($"The input lists {NameOf(rows)}, {NameOf(cols)} and {NameOf(values)} must all have the same number of elements")
+        If rowsArray.Length <> valuesArray.Length OrElse colsArray.Length <> valuesArray.Length Then
+            Throw New ArgumentException($"The input lists {NameOf(rows)}, {NameOf(cols)} and {NameOf(values)} must all have the same number of elements")
+        End If
 
         For i = 0 To valuesArray.Length - 1
             Yield (rowsArray(i), colsArray(i), valuesArray(i))
         Next
     End Function
 
-    Public ReadOnly Property Dims As (Integer, Integer)
+    Public ReadOnly Property Dims As (rows As Integer, cols As Integer)
 
     Public Sub [Set](row As Integer, col As Integer, value As Single)
         CheckDims(row, col)
@@ -48,7 +51,7 @@ Friend NotInheritable Class SparseMatrix
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [Get](row As Integer, col As Integer, Optional defaultValue As Single = 0) As Single
         CheckDims(row, col)
-        Dim v As float = Nothing
+        Dim v As Single = Nothing
         Return If(_entries.TryGetValue(New SparseMatrix.RowCol(row, col), v), v, defaultValue)
     End Function
 
@@ -116,7 +119,7 @@ Friend NotInheritable Class SparseMatrix
     ''' </summary>
     Public Function PairwiseMultiply(other As SparseMatrix) As SparseMatrix
         Dim newEntries = New Dictionary(Of SparseMatrix.RowCol, Single)(_entries.Count)
-        Dim v As float = Nothing
+        Dim v As Single = Nothing
 
         For Each kv In _entries
 
@@ -154,7 +157,8 @@ Friend NotInheritable Class SparseMatrix
     ''' </summary>
     Private Function ElementWiseWith(other As SparseMatrix, op As Func(Of Single, Single, Single)) As SparseMatrix
         Dim newEntries = New Dictionary(Of SparseMatrix.RowCol, Single)(_entries.Count)
-        Dim x As float = Nothing, y As float = Nothing
+        Dim x As Single = Nothing
+        Dim y As Single = Nothing
 
         For Each k In _entries.Keys.Union(other._entries.Keys)
             newEntries(k) = op(If(_entries.TryGetValue(k, x), x, 0F), If(other._entries.TryGetValue(k, y), y, 0F))
@@ -195,8 +199,7 @@ Friend NotInheritable Class SparseMatrix
         Return (indices.ToArray(), values.ToArray(), indptr.ToArray())
     End Function
 
-    Private Structure RowCol
-        Implements IEquatable(Of SparseMatrix.RowCol)
+    Private Class RowCol : Implements IEquatable(Of SparseMatrix.RowCol)
 
         Public Sub New(row As Integer, col As Integer)
             Me.Row = row
@@ -213,24 +216,17 @@ Friend NotInheritable Class SparseMatrix
         End Function
 
         Public Overrides Function Equals(obj As Object) As Boolean
-            Return (CSharpImpl.__Assign(rc, TryCast(obj, SparseMatrix.RowCol)) IsNot Nothing) AndAlso rc.Equals(Me)
+            Dim rc = TryCast(obj, SparseMatrix.RowCol)
+            Return (Not rc Is Nothing) AndAlso rc.Equals(Me)
         End Function
 
         Public Overrides Function GetHashCode() As Integer ' Courtesy of https://stackoverflow.com/a/263416/3813189
-            BEGIN TODO : Visual Basic does Not support checked statements!
-                Dim hash = 17 ' Overflow is fine, just wrap
+            ' BEGIN TODO : Visual Basic does Not support checked statements!
+            Dim hash = 17 ' Overflow is fine, just wrap
             hash = hash * 23 + Row
             hash = hash * 23 + Col
             Return hash
-            End TODO : Visual Basic does Not support checked statements!
-            End Function
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-    End Structure
+            ' End TODO : Visual Basic does Not support checked statements!
+        End Function
+    End Class
 End Class

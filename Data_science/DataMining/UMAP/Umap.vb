@@ -1,16 +1,9 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Runtime.CompilerServices
-Imports System.Threading.Tasks
+﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Python
-
-''' <summary>
-''' The progress will be a value from 0 to 1 that indicates approximately how much of the processing has been completed
-''' </summary>
-Public Delegate Sub ProgressReporter(progress As Single)
+Imports Microsoft.VisualBasic.Math
 
 Public NotInheritable Class Umap
+
     Private Const SMOOTH_K_TOLERANCE As Single = 0.00001F
     Private Const MIN_K_DIST_SCALE As Single = 0.001F
     Private ReadOnly _learningRate As Single = 1.0F
@@ -40,12 +33,21 @@ Public NotInheritable Class Umap
     Private _embedding As Single()
     Private ReadOnly _optimizationState As Umap.OptimizationState
 
-    Public Sub New(Optional distance As DistanceCalculation = Nothing, Optional random As IProvideRandomValues = Nothing, Optional dimensions As Integer = 2, Optional numberOfNeighbors As Integer = 15, Optional customNumberOfEpochs As Integer? = Nothing, Optional progressReporter As Umap.Umap.ProgressReporter = Nothing)
-        If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
+    Public Sub New(Optional distance As DistanceCalculation = Nothing,
+                   Optional random As IProvideRandomValues = Nothing,
+                   Optional dimensions As Integer = 2,
+                   Optional numberOfNeighbors As Integer = 15,
+                   Optional customNumberOfEpochs As Integer? = Nothing,
+                   Optional progressReporter As ProgressReporter = Nothing)
+
+        If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
+            Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
+        End If
+
         _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
         _random = If(random, DefaultRandomGenerator.Instance)
         _nNeighbors = numberOfNeighbors
-        _optimizationState = New Umap.OptimizationState With {
+        _optimizationState = New OptimizationState With {
             .[Dim] = dimensions
         }
         _customNumberOfEpochs = customNumberOfEpochs
@@ -72,7 +74,7 @@ Public NotInheritable Class Umap
             End If
 
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
-        _graph = Me.FuzzySimplicialSet(x, _nNeighbors, _setOpMixRatio, Umap.Umap.ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1))
+        _graph = Me.FuzzySimplicialSet(x, _nNeighbors, _setOpMixRatio, ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1))
         Dim headTailEpochsPerSample = Nothing
         headTailEpochsPerSample = InitializeSimplicialSetEmbedding()
 
@@ -121,7 +123,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
     ''' </summary>
-    Friend Function NearestNeighbors(x As Single()(), progressReporter As Umap.ProgressReporter) As (Integer()(), Single()())
+    Friend Function NearestNeighbors(x As Single()(), progressReporter As ProgressReporter) As (Integer()(), Single()())
         Dim metricNNDescent = NNDescent.MakeNNDescent(_distanceFn, _random)
         progressReporter(0.05F)
         Dim nTrees = 5 + Round(Math.Sqrt(x.Length) / 20)
@@ -159,7 +161,7 @@ Public NotInheritable Class Umap
     ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
     ''' simplicial sets into a global one via a fuzzy union.
     ''' </summary>
-    Private Function FuzzySimplicialSet(x As Single()(), nNeighbors As Integer, setOpMixRatio As Single, progressReporter As Umap.Umap.ProgressReporter) As Umap.SparseMatrix
+    Private Function FuzzySimplicialSet(x As Single()(), nNeighbors As Integer, setOpMixRatio As Single, progressReporter As ProgressReporter) As SparseMatrix
         Dim knnIndices = If(_knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(_knnDistances, New Single(-1)() {})
         progressReporter(0.1F)
@@ -380,7 +382,10 @@ Public NotInheritable Class Umap
 
     Friend Shared Function FindABParams(spread As Single, minDist As Single) As (Single, Single)
         ' 2019-06-21 DWR: If we need to support other spread, minDist values then we might be able to use the LM implementation in Accord.NET but I'll hard code values that relate to the default configuration for now
-        If spread <> 1 OrElse minDist <> 0.1F Then Throw New ArgumentException($"Currently, the {NameOf(FindABParams)} method only supports spread, minDist values of 1, 0.1 (the Levenberg-Marquardt algorithm is required to process other values")
+        If spread <> 1 OrElse minDist <> 0.1F Then
+            Throw New ArgumentException($"Currently, the {NameOf(FindABParams)} method only supports spread, minDist values of 1, 0.1 (the Levenberg-Marquardt algorithm is required to process other values")
+        End If
+
         Return (1.56947052F, 0.8941996F)
     End Function
 

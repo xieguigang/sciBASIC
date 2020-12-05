@@ -64,8 +64,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\ProgressReporter.vb" />
     <Compile Include="Components\DefaultRandomGenerator.vb" />
-    <Compile Include="Heaps.vb" />
+    <Compile Include="Components\Heaps.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -82,10 +83,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="NNDescent.vb" />
+    <Compile Include="Components\NNDescent.vb" />
     <Compile Include="SIMD.vb" />
     <Compile Include="SIMDInt.vb" />
-    <Compile Include="SparseMatrix.vb" />
+    <Compile Include="Components\SparseMatrix.vb" />
     <Compile Include="Tree.vb" />
     <Compile Include="Umap.vb" />
     <Compile Include="Components\Utils.vb" />

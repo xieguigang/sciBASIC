@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Numerics
 Imports System.Runtime.CompilerServices
-
+Imports stdNum = System.Math
 
 Friend Module SIMD
     Private ReadOnly _vs1 As Integer = Vector(Of Single).Count
@@ -11,7 +11,7 @@ Friend Module SIMD
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Magnitude(ByRef vec As Single()) As Single
-        Return Math.Sqrt(UMAP.SIMD.DotProduct(vec, vec))
+        Return stdNum.Sqrt(SIMD.DotProduct(vec, vec))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

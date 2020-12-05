@@ -1,6 +1,5 @@
-﻿Imports System.Numerics
-Imports System.Runtime.CompilerServices
-
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math
 
 Friend Module SIMDint
     Private ReadOnly _vs1 As Integer = Vector(Of Integer).Count
