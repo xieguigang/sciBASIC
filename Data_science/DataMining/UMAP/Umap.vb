@@ -48,6 +48,7 @@
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
+Imports Parallel = System.Threading.Tasks.Parallel
 
 Public NotInheritable Class Umap
 
@@ -117,19 +118,20 @@ Public NotInheritable Class Umap
         _x = x
 
         If _knnIndices Is Nothing AndAlso _knnDistances Is Nothing Then
-                ' This part of the process very roughly accounts for 1/3 of the work
-                (_knnIndices, _knnDistances) = Me.NearestNeighbors(x, Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
-            End If
+            ' This part of the process very roughly accounts for 1/3 of the work
+            Dim any = Me.NearestNeighbors(x, Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
+            _knnIndices = any.knnIndices
+            _knnDistances = any.knnDistances
+        End If
 
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
         _graph = Me.FuzzySimplicialSet(x, _nNeighbors, _setOpMixRatio, ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1))
-        Dim headTailEpochsPerSample = Nothing
-        headTailEpochsPerSample = InitializeSimplicialSetEmbedding()
+        Dim headTailEpochsPerSample = InitializeSimplicialSetEmbedding()
 
         ' Set the optimization routine state
-        _optimizationState.Head = head
-        _optimizationState.Tail = tail
-        _optimizationState.EpochsPerSample = epochsPerSample
+        _optimizationState.Head = headTailEpochsPerSample.head
+        _optimizationState.Tail = headTailEpochsPerSample.tail
+        _optimizationState.EpochsPerSample = headTailEpochsPerSample.epochsPerSample
 
         ' Now, initialize the optimization steps
         InitializeOptimization()
@@ -171,7 +173,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
     ''' </summary>
-    Friend Function NearestNeighbors(x As Single()(), progressReporter As ProgressReporter) As (Integer()(), Single()())
+    Friend Function NearestNeighbors(x As Single()(), progressReporter As ProgressReporter) As (knnIndices As Integer()(), knnDistances As Single()())
         Dim metricNNDescent = New NNDescent(_distanceFn, _random)
 
         Call progressReporter(0.05F)
@@ -223,13 +225,11 @@ Public NotInheritable Class Umap
         Dim knnIndices = If(_knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(_knnDistances, New Single(-1)() {})
         progressReporter(0.1F)
-        Dim sigmasRhos = Nothing
-        sigmasRhos = Umap.SmoothKNNDistance(knnDistances, nNeighbors, _localConnectivity)
+        Dim sigmasRhos = Umap.SmoothKNNDistance(knnDistances, nNeighbors, _localConnectivity)
         progressReporter(0.2F)
-        Dim rowsColsVals = Nothing
-        rowsColsVals = Umap.ComputeMembershipStrengths(knnIndices, knnDistances, sigmas, rhos)
+        Dim rowsColsVals = Umap.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos)
         progressReporter(0.3F)
-        Dim sparseMatrix = New SparseMatrix(rows, cols, vals, (x.Length, x.Length))
+        Dim sparseMatrix = New SparseMatrix(rowsColsVals.rows, rowsColsVals.cols, rowsColsVals.vals, (x.Length, x.Length))
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
         progressReporter(0.4F)
@@ -244,7 +244,11 @@ Public NotInheritable Class Umap
         Return result
     End Function
 
-    Private Shared Function SmoothKNNDistance(distances As Single()(), k As Integer, Optional localConnectivity As Single = 1, Optional nIter As Integer = 64, Optional bandwidth As Single = 1) As (Single(), Single())
+    Private Shared Function SmoothKNNDistance(distances As Single()(), k As Integer,
+                                              Optional localConnectivity As Single = 1,
+                                              Optional nIter As Integer = 64,
+                                              Optional bandwidth As Single = 1) As (sigmas As Single(), rhos As Single())
+
         Dim target = stdNum.Log(k, 2) * bandwidth ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
         Dim rho = New Single(distances.Length - 1) {}
         Dim result = New Single(distances.Length - 1) {}
@@ -318,7 +322,7 @@ Public NotInheritable Class Umap
         Return (result, rho)
     End Function
 
-    Private Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Single()(), sigmas As Single(), rhos As Single()) As (Integer(), Integer(), Single())
+    Private Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Single()(), sigmas As Single(), rhos As Single()) As (rows As Integer(), cols As Integer(), vals As Single())
         Dim nSamples = knnIndices.Length
         Dim nNeighbors = knnIndices(0).Length
         Dim rows = New Integer(nSamples * nNeighbors - 1) {}
@@ -354,7 +358,7 @@ Public NotInheritable Class Umap
     ''' Initialize a fuzzy simplicial set embedding, using a specified initialisation method and then minimizing the fuzzy set cross entropy between the 1-skeletons of the high and low
     ''' dimensional fuzzy simplicial sets.
     ''' </summary>
-    Private Function InitializeSimplicialSetEmbedding() As (Integer(), Integer(), Single())
+    Private Function InitializeSimplicialSetEmbedding() As (head As Integer(), tail As Integer(), epochsPerSample As Single())
         Dim nEpochs = GetNEpochs()
         Dim graphMax = 0F
 
@@ -497,7 +501,7 @@ Public NotInheritable Class Umap
     ''' </summary>
     Private Sub OptimizeLayoutStep(n As Integer)
         If _random.IsThreadSafe Then
-            Parallel.For(0, _optimizationState.EpochsPerSample.Length, Sub(i) Call Iterate(i, n))
+            System.Threading.Tasks.Parallel.For(0, _optimizationState.EpochsPerSample.Length, Sub(i) Call Iterate(i, n))
         Else
 
             For i = 0 To _optimizationState.EpochsPerSample.Length - 1
