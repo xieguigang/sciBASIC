@@ -48,15 +48,11 @@ Namespace Serialization
     ''' 必须要使用这个自定义属性标记在对象属性上才会被加入序列化之中
     ''' </summary>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
-    Public Class MessagePackMemberAttribute
-        Inherits Attribute
+    Public Class MessagePackMemberAttribute : Inherits Attribute
 
-        Private ReadOnly idField As Integer
+        ReadOnly idField As Integer
 
-        Public Sub New(id As Integer)
-            idField = id
-            NilImplication = NilImplication.MemberDefault
-        End Sub
+        Public Property NilImplication As NilImplication
 
         Public ReadOnly Property Id As Integer
             Get
@@ -64,7 +60,14 @@ Namespace Serialization
             End Get
         End Property
 
-        Public Property NilImplication As NilImplication
+        Public Sub New(id As Integer)
+            idField = id
+            NilImplication = NilImplication.MemberDefault
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{Id}] {NilImplication.ToString}"
+        End Function
     End Class
 End Namespace
 

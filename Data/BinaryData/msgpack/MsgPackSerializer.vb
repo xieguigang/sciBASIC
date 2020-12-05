@@ -59,10 +59,11 @@ Public Class MsgPackSerializer
 
     Public Shared ReadOnly DefaultContext As SerializationContext = New SerializationContext()
 
+    Shared ReadOnly typeInfos As New Dictionary(Of Type, TypeInfo)()
+
     Private propsByName As Dictionary(Of String, SerializableProperty)
     Private props As List(Of SerializableProperty)
     Private serializedType As Type
-    Private Shared typeInfos As Dictionary(Of Type, TypeInfo) = New Dictionary(Of Type, TypeInfo)()
 
     Public Sub New(type As Type)
         serializedType = type
@@ -111,10 +112,10 @@ Public Class MsgPackSerializer
     Private Shared Function GetSerializer(t As Type) As MsgPackSerializer
         Dim result As MsgPackSerializer = Nothing
 
-        SyncLock DefaultContext.Serializers
-            If Not DefaultContext.Serializers.TryGetValue(t, result) Then
+        SyncLock DefaultContext._serializers
+            If Not DefaultContext._serializers.TryGetValue(t, result) Then
                 result = New MsgPackSerializer(t)
-                DefaultContext.Serializers(t) = result
+                DefaultContext._serializers(t) = result
             End If
         End SyncLock
 
@@ -234,7 +235,6 @@ Public Class MsgPackSerializer
         If header = Formats.NIL Then
             result = Nothing
         Else
-
             If DefaultContext.SerializationMethod = SerializationMethod.Array Then
                 If header = Formats.ARRAY_16 Then
                     reader.ReadByte()
@@ -267,7 +267,10 @@ Public Class MsgPackSerializer
                 For i = 0 To numElements - 1
                     Dim propName = CStr(ReadMsgPackString(reader, NilImplication.Null))
                     Dim propToProcess As SerializableProperty = Nothing
-                    If propsByName.TryGetValue(propName, propToProcess) Then propToProcess.Deserialize(result, reader)
+
+                    If propsByName.TryGetValue(propName, propToProcess) Then
+                        propToProcess.Deserialize(result, reader)
+                    End If
                 Next
             End If
         End If
@@ -305,7 +308,7 @@ Public Class MsgPackSerializer
                     End If
 
                     For Each prop In props
-                        WriteMsgPack(writer, prop.Name)
+                        WriteMsgPack(writer, prop.name)
                         prop.Serialize(o, writer, DefaultContext.SerializationMethod)
                     Next
                 Else
@@ -359,12 +362,12 @@ Public Class MsgPackSerializer
 
                 If serializableProp IsNot Nothing Then
                     props.Add(serializableProp)
-                    propsByName(serializableProp.Name) = serializableProp
+                    propsByName(serializableProp.name) = serializableProp
                 End If
             Next
 
             If DefaultContext.SerializationMethod = SerializationMethod.Array Then
-                props.Sort(Function(x, y) x.Sequence.CompareTo(y.Sequence))
+                props.Sort(Function(x, y) x.sequence.CompareTo(y.sequence))
             End If
         End If
     End Sub
@@ -393,12 +396,12 @@ Public Class MsgPackSerializer
 
                 If serializableProp IsNot Nothing Then
                     props.Add(serializableProp)
-                    propsByName(serializableProp.Name) = serializableProp
+                    propsByName(serializableProp.name) = serializableProp
                 End If
             Next
 
             If DefaultContext.SerializationMethod = SerializationMethod.Array Then
-                props.Sort(Function(x, y) x.Sequence.CompareTo(y.Sequence))
+                props.Sort(Function(x, y) x.sequence.CompareTo(y.sequence))
             End If
         End If
     End Sub

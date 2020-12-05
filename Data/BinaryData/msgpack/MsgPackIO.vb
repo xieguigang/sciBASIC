@@ -128,10 +128,17 @@ Public Module MsgPackIO
 
     Friend Function DeserializeCollection(collection As IDictionary, reader As BinaryDataReader, Optional header As Byte? = Nothing) As Boolean
         Dim isNull = True
-        If Not collection.GetType().IsGenericType Then Throw New NotSupportedException("Only generic Dictionary<T,U> dictionaries are supported")
+
+        If Not collection.GetType().IsGenericType Then
+            Throw New NotSupportedException("Only generic Dictionary<T,U> dictionaries are supported")
+        End If
+
         Dim keyType As Type = collection.GetType().GetGenericArguments()(0)
         Dim valueType As Type = collection.GetType().GetGenericArguments()(1)
-        If Not header.HasValue Then header = reader.ReadByte()
+
+        If Not header.HasValue Then
+            header = reader.ReadByte()
+        End If
 
         If header <> Formats.NIL Then
             Dim numElements = 0
@@ -397,9 +404,16 @@ Public Module MsgPackIO
         Dim v = If(header = 0, ReadHeader(GetType(Double), reader, nilImplication, result), header)
 
         If v <> Formats.NIL Then
-            If v <> Formats.FLOAT_64 Then Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
+            If v <> Formats.FLOAT_64 Then
+                Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
+            End If
+
             Dim data = reader.ReadBytes(8)
-            If BitConverter.IsLittleEndian Then Array.Reverse(data)
+
+            If BitConverter.IsLittleEndian Then
+                Array.Reverse(data)
+            End If
+
             result = BitConverter.ToDouble(data, 0)
         End If
 
@@ -411,7 +425,10 @@ Public Module MsgPackIO
         Dim v = If(header = 0, ReadHeader(GetType(ULong), reader, nilImplication, result), header)
 
         If v <> Formats.NIL Then
-            If v <> Formats.UINT_64 Then Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
+            If v <> Formats.UINT_64 Then
+                Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
+            End If
+
             result = reader.ReadUInt64()
         End If
 

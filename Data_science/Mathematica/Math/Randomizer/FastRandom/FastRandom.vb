@@ -82,12 +82,14 @@ Imports Microsoft.VisualBasic.Language
 '''
 ''' </summary>
 Public Class FastRandom
+
     ' The +1 ensures NextDouble doesn't generate 1.0
     Const FLOAT_UNIT_INT As Single = 1.0F / (Integer.MaxValue + 1.0F)
     Const REAL_UNIT_INT As Double = 1.0 / (Integer.MaxValue + 1.0)
     Const REAL_UNIT_UINT As Double = 1.0 / (UInteger.MaxValue + 1.0)
     Const Y As UInteger = 842502087, Z As UInteger = 3579807591, W As UInteger = 273326509
-    Private x, yField, zField, wField As UInteger
+
+    Dim x, yField, zField, wField As UInteger
 
     ''' <summary>
     ''' Initialises a new instance using time dependent seed.
@@ -132,6 +134,7 @@ Public Class FastRandom
     ''' </summary>
     Public Function [Next]() As Integer
         Dim t = x Xor x << 11
+
         x = yField
         yField = zField
         zField = wField
@@ -140,16 +143,26 @@ Public Class FastRandom
         ' Handle the special case where the value int.MaxValue is generated. This is outside of
         ' the range of permitted values, so we therefore call Next() to try again.
         Dim rtn As UInteger = wField And &H7FFFFFFF
-        If rtn = &H7FFFFFFF Then Return [Next]()
-        Return rtn
+
+        If rtn = &H7FFFFFFF Then
+            Return [Next]()
+        Else
+            Return rtn
+        End If
     End Function
 
     ''' <summary>
     ''' Generates a random int over the range 0 to upperBound-1, and not including upperBound.
     ''' </summary>
     Public Function [Next](upperBound As Integer) As Integer
-        If upperBound < 0 Then Throw New ArgumentOutOfRangeException("upperBound", upperBound, "upperBound must be >=0")
-        Dim t = x Xor x << 11
+        Dim t As UInteger
+
+        If upperBound < 0 Then
+            Throw New ArgumentOutOfRangeException("upperBound", upperBound, "upperBound must be >=0")
+        Else
+            t = x Xor x << 11
+        End If
+
         x = yField
         yField = zField
         zField = wField
@@ -166,11 +179,14 @@ Public Class FastRandom
     ''' upperBound must be >= lowerBound. lowerBound may be negative.
     ''' </summary>
     Public Function [Next](lowerBound As Integer, upperBound As Integer) As Integer
+        Dim t As UInteger
+
         If lowerBound > upperBound Then
             Throw New ArgumentOutOfRangeException("upperBound", upperBound, "upperBound must be >=lowerBound")
+        Else
+            t = x Xor x << 11
         End If
 
-        Dim t = x Xor x << 11
         x = yField
         yField = zField
         zField = wField
@@ -180,7 +196,8 @@ Public Class FastRandom
         Dim range = upperBound - lowerBound
         Dim rnd As Integer
 
-        If range < 0 Then   ' If range is <0 then an overflow has occured and must resort to using long integer arithmetic instead (slower).
+        If range < 0 Then
+            ' If range is <0 then an overflow has occured and must resort to using long integer arithmetic instead (slower).
             ' We also must use all 32 bits of precision, instead of the normal 31, which again is slower.
             wField = wField Xor wField >> 19 Xor t Xor t >> 8
             rnd = lowerBound + CInt(FastRandom.REAL_UNIT_UINT * CDbl(wField) * (upperBound - CLng(lowerBound)))
@@ -203,6 +220,7 @@ Public Class FastRandom
     ''' </summary>
     Public Function NextDouble() As Double
         Dim t = x Xor x << 11
+
         x = yField
         yField = zField
         zField = wField

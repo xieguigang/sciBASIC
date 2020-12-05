@@ -53,20 +53,26 @@ Namespace Serialization.Reflection
 
     Friend Class SerializableProperty
 
-        Private _PropInfo As System.Reflection.PropertyInfo, _Name As String, _ValueType As System.Type
         Friend Shared ReadOnly EmptyObjArgs As Object() = {}
-        Private ReadOnly _nilImplication As NilImplication
+
+        Friend propInfo As PropertyInfo
+        Friend name As String
+        Friend valueType As Type
+        Friend sequence As Integer
+
+        ReadOnly _nilImplication As NilImplication
 
         Friend Sub New(propInfo As PropertyInfo, Optional sequence As Integer = 0, Optional nilImplication As NilImplication? = Nothing)
-            Me.PropInfo = propInfo
-            Name = propInfo.Name
-            _nilImplication = If(nilImplication, Serialization.NilImplication.MemberDefault)
-            Me.Sequence = sequence
-            ValueType = propInfo.PropertyType
+            Me.propInfo = propInfo
+            Me.name = propInfo.Name
+            Me._nilImplication = If(nilImplication, Serialization.NilImplication.MemberDefault)
+            Me.sequence = sequence
+            Me.valueType = propInfo.PropertyType
+
             Dim underlyingType = Nullable.GetUnderlyingType(propInfo.PropertyType)
 
             If underlyingType IsNot Nothing Then
-                ValueType = underlyingType
+                valueType = underlyingType
 
                 If nilImplication.HasValue = False Then
                     _nilImplication = Serialization.NilImplication.Null
@@ -74,47 +80,19 @@ Namespace Serialization.Reflection
             End If
         End Sub
 
-        Friend Property PropInfo As PropertyInfo
-            Get
-                Return _PropInfo
-            End Get
-            Private Set(value As PropertyInfo)
-                _PropInfo = value
-            End Set
-        End Property
-
-        Friend Property Name As String
-            Get
-                Return _Name
-            End Get
-            Private Set(value As String)
-                _Name = value
-            End Set
-        End Property
-
-        Friend Property ValueType As Type
-            Get
-                Return _ValueType
-            End Get
-            Private Set(value As Type)
-                _ValueType = value
-            End Set
-        End Property
-
-        Friend Property Sequence As Integer
-
         Friend Sub Serialize(o As Object, writer As BinaryWriter, serializationMethod As SerializationMethod)
-            SerializeValue(PropInfo.GetValue(o, EmptyObjArgs), writer, serializationMethod)
+            Call SerializeValue(propInfo.GetValue(o, EmptyObjArgs), writer, serializationMethod)
         End Sub
 
         Friend Sub Deserialize(o As Object, reader As BinaryDataReader)
-            Dim val = DeserializeValue(ValueType, reader, _nilImplication)
-            Dim safeValue = If(val Is Nothing, Nothing, Convert.ChangeType(val, ValueType))
-            PropInfo.SetValue(o, safeValue, EmptyObjArgs)
+            Dim val = DeserializeValue(valueType, reader, _nilImplication)
+            Dim safeValue = If(val Is Nothing, Nothing, Convert.ChangeType(val, valueType))
+
+            Call propInfo.SetValue(o, safeValue, EmptyObjArgs)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return String.Format("[SerializableProperty: Name:{0} ValueType:{1}]", Name, ValueType)
+            Return String.Format("[SerializableProperty: Name:{0} ValueType:{1}]", name, valueType)
         End Function
     End Class
 End Namespace
