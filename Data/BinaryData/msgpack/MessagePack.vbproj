@@ -57,7 +57,7 @@
     <Compile Include="Constants\FixedArray.vb" />
     <Compile Include="Constants\FixedMap.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
-    <Compile Include="Extensions\ObjectExtensions.vb" />
+    <Compile Include="ObjectExtensions.vb" />
     <Compile Include="MsgPackSerializer.vb" />
     <Compile Include="Serialization\Reflection\SerializableProperty.vb" />
     <Compile Include="Constants\MsgPackConstants.vb" />

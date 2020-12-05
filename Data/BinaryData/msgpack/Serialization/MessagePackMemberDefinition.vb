@@ -1,8 +1,12 @@
-﻿Public Class MessagePackMemberDefinition
+﻿Namespace Serialization
 
-    Public Sub New()
-    End Sub
+    Public Class MessagePackMemberDefinition
 
-    Public Property PropertyName As String
-    Public Property NilImplication As NilImplication
-End Class
+        Public Property PropertyName As String
+        Public Property NilImplication As NilImplication
+
+        Public Sub New()
+        End Sub
+
+    End Class
+End Namespace
