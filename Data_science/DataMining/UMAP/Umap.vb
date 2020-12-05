@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::9753393c2c8468d86c3967716c870d63, Data_science\DataMining\UMAP\Umap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Umap
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: [Step], Clip, ComputeMembershipStrengths, FindABParams, FuzzySimplicialSet
-    '               GetEmbedding, GetNEpochs, InitializeFit, InitializeSimplicialSetEmbedding, MakeEpochsPerSample
-    '               NearestNeighbors, RDist, Round, ScaleProgressReporter, SmoothKNNDistance
-    ' 
-    '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, ShuffleTogether
-    ' 
-    ' /********************************************************************************/
+' Class Umap
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: [Step], Clip, ComputeMembershipStrengths, FindABParams, FuzzySimplicialSet
+'               GetEmbedding, GetNEpochs, InitializeFit, InitializeSimplicialSetEmbedding, MakeEpochsPerSample
+'               NearestNeighbors, RDist, Round, ScaleProgressReporter, SmoothKNNDistance
+' 
+'     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, ShuffleTogether
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Public NotInheritable Class Umap
 
     Private Const SMOOTH_K_TOLERANCE As Single = 0.00001F
     Private Const MIN_K_DIST_SCALE As Single = 0.001F
+
     Private ReadOnly _learningRate As Single = 1.0F
     Private ReadOnly _localConnectivity As Single = 1.0F
     Private ReadOnly _minDist As Single = 0.1F
@@ -78,7 +79,7 @@ Public NotInheritable Class Umap
 
     ' Projected embedding
     Private _embedding As Single()
-    Private ReadOnly _optimizationState As Umap.OptimizationState
+    Private ReadOnly _optimizationState As OptimizationState
 
     Public Sub New(Optional distance As DistanceCalculation = Nothing,
                    Optional random As IProvideRandomValues = Nothing,
@@ -171,23 +172,33 @@ Public NotInheritable Class Umap
     ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
     ''' </summary>
     Friend Function NearestNeighbors(x As Single()(), progressReporter As ProgressReporter) As (Integer()(), Single()())
-        Dim metricNNDescent = NNDescent.MakeNNDescent(_distanceFn, _random)
-        progressReporter(0.05F)
-        Dim nTrees = 5 + Round(Math.Sqrt(x.Length) / 20)
-        Dim nIters = Math.Max(5, CInt(Math.Floor(Math.Round(Math.Log(x.Length, 2)))))
-        progressReporter(0.1F)
-        Dim leafSize = Math.Max(10, _nNeighbors)
+        Dim metricNNDescent = New NNDescent(_distanceFn, _random)
+
+        Call progressReporter(0.05F)
+
+        Dim nTrees = 5 + Round(stdNum.Sqrt(x.Length) / 20)
+        Dim nIters = stdNum.Max(5, CInt(stdNum.Floor(stdNum.Round(stdNum.Log(x.Length, 2)))))
+
+        Call progressReporter(0.1F)
+
+        Dim leafSize = stdNum.Max(10, _nNeighbors)
         Dim forestProgressReporter = Umap.ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
-        _rpForest = Enumerable.Range(0, nTrees).[Select](Function(i)
-                                                             forestProgressReporter(CSng(i) / nTrees)
-                                                             Return Tree.FlattenTree(Tree.MakeTree(x, leafSize, i, _random), leafSize)
-                                                         End Function).ToArray()
+
+        _rpForest = Enumerable.Range(0, nTrees) _
+            .[Select](Function(i)
+                          forestProgressReporter(CSng(i) / nTrees)
+                          Return Tree.FlattenTree(Tree.MakeTree(x, leafSize, i, _random), leafSize)
+                      End Function) _
+            .ToArray()
+
         Dim leafArray = Tree.MakeLeafArray(_rpForest)
-        progressReporter(0.45F)
+
+        Call progressReporter(0.45F)
+
         Dim nnDescendProgressReporter = Umap.ScaleProgressReporter(progressReporter, 0.5F, 1)
 
         ' Handle python3 rounding down from 0.5 discrpancy
-        Return metricNNDescent(x, leafArray, _nNeighbors, nIters, startingIteration:=Sub(i, max) nnDescendProgressReporter(CSng(i) / max))
+        Return metricNNDescent.MakeNNDescent(x, leafArray, _nNeighbors, nIters, startingIteration:=Sub(i, max) nnDescendProgressReporter(CSng(i) / max))
     End Function
 
     ''' <summary>
@@ -199,7 +210,7 @@ Public NotInheritable Class Umap
         If n = 0.5 Then
             Return 0
         Else
-            Return Math.Floor(Math.Round(n))
+            Return stdNum.Floor(stdNum.Round(n))
         End If
     End Function
 
@@ -234,7 +245,7 @@ Public NotInheritable Class Umap
     End Function
 
     Private Shared Function SmoothKNNDistance(distances As Single()(), k As Integer, Optional localConnectivity As Single = 1, Optional nIter As Integer = 64, Optional bandwidth As Single = 1) As (Single(), Single())
-        Dim target = Math.Log(k, 2) * bandwidth ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
+        Dim target = stdNum.Log(k, 2) * bandwidth ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
         Dim rho = New Single(distances.Length - 1) {}
         Dim result = New Single(distances.Length - 1) {}
 
@@ -248,7 +259,7 @@ Public NotInheritable Class Umap
             Dim nonZeroDists = ithDistances.Where(Function(d) d > 0).ToArray()
 
             If nonZeroDists.Length >= localConnectivity Then
-                Dim index = CInt(Math.Floor(localConnectivity))
+                Dim index = CInt(stdNum.Floor(localConnectivity))
                 Dim interpolation = localConnectivity - index
 
                 If index > 0 Then
@@ -268,13 +279,15 @@ Public NotInheritable Class Umap
                     Dim d = distances(i)(j) - rho(i)
 
                     If d > 0 Then
-                        psum += Math.Exp(-(d / mid))
+                        psum += stdNum.Exp(-(d / mid))
                     Else
                         psum += 1.0
                     End If
                 Next
 
-                If Math.Abs(psum - target) < Umap.SMOOTH_K_TOLERANCE Then Exit For
+                If stdNum.Abs(psum - target) < Umap.SMOOTH_K_TOLERANCE Then
+                    Exit For
+                End If
 
                 If psum > target Then
                     hi = mid
@@ -313,9 +326,11 @@ Public NotInheritable Class Umap
         Dim vals = New Single(nSamples * nNeighbors - 1) {}
 
         For i = 0 To nSamples - 1
-
             For j = 0 To nNeighbors - 1
-                If knnIndices(i)(j) = -1 Then Continue For ' We didn't get the full knn for i
+                If knnIndices(i)(j) = -1 Then
+                    Continue For ' We didn't get the full knn for i
+                End If
+
                 Dim val As Single
 
                 If knnIndices(i)(j) = i Then
@@ -323,7 +338,7 @@ Public NotInheritable Class Umap
                 ElseIf knnDistances(i)(j) - rhos(i) <= 0.0 Then
                     val = 1
                 Else
-                    val = CSng(Math.Exp(-((knnDistances(i)(j) - rhos(i)) / sigmas(i))))
+                    val = CSng(stdNum.Exp(-((knnDistances(i)(j) - rhos(i)) / sigmas(i))))
                 End If
 
                 rows(i * nNeighbors + j) = i
@@ -511,8 +526,8 @@ Public NotInheritable Class Umap
 
         If (distSquared > 0) Then
 
-            gradCoeff = -2 * _optimizationState.A * _optimizationState.B * Math.Pow(distSquared, _optimizationState.B - 1)
-            gradCoeff /= _optimizationState.A * Math.Pow(distSquared, _optimizationState.B) + 1
+            gradCoeff = -2 * _optimizationState.A * _optimizationState.B * stdNum.Pow(distSquared, _optimizationState.B - 1)
+            gradCoeff /= _optimizationState.A * stdNum.Pow(distSquared, _optimizationState.B) + 1
         End If
 
         Const clipValue = 4.0F
@@ -527,7 +542,7 @@ Public NotInheritable Class Umap
 
         _optimizationState.EpochOfNextSample(i) += _optimizationState.EpochsPerSample(i)
 
-        Dim nNegSamples As Integer = Math.Floor((n - _optimizationState.EpochOfNextNegativeSample(i)) / _optimizationState.EpochsPerNegativeSample(i))
+        Dim nNegSamples As Integer = stdNum.Floor((n - _optimizationState.EpochOfNextNegativeSample(i)) / _optimizationState.EpochsPerNegativeSample(i))
 
         For p = 0 To nNegSamples - 1
 
