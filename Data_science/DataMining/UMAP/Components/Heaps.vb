@@ -51,16 +51,19 @@ Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
 Friend Module Heaps
+
     ''' <summary>
     ''' Constructor for the heap objects. The heaps are used for approximate nearest neighbor search, maintaining a list of potential neighbors sorted by their distance.We also flag if potential neighbors
     ''' are newly added to the list or not.Internally this is stored as a single array; the first axis determines whether we are looking at the array of candidate indices, the array of distances, or the
     ''' flag array for whether elements are new or not.Each of these arrays are of shape (``nPoints``, ``size``)
     ''' </summary>
     Public Function MakeHeap(nPoints As Integer, size As Integer) As Heaps.Heap
-        Dim heap = New Heaps.Heap()
+        Dim heap As New Heaps.Heap()
+
         heap.Add(MakeArrays(-1, nPoints, size))
         heap.Add(MakeArrays(Single.MaxValue, nPoints, size))
         heap.Add(MakeArrays(0, nPoints, size))
+
         Return heap
     End Function
 

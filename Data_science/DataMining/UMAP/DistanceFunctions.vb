@@ -56,6 +56,7 @@ Public NotInheritable Class DistanceFunctions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Euclidean(lhs As Double(), rhs As Double()) As Double
-        Return stdNum.Sqrt(SIMD.Euclidean(lhs, rhs)) ' TODO: Replace with netcore3 MathF class when the framework is available
+        ' TODO: Replace with netcore3 MathF class when the framework is available
+        Return stdNum.Sqrt(SIMD.Euclidean(lhs, rhs))
     End Function
 End Class

@@ -45,6 +45,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
@@ -276,11 +277,12 @@ Public NotInheritable Class Umap
                                               Optional nIter As Integer = 64,
                                               Optional bandwidth As Double = 1) As (sigmas As Double(), rhos As Double())
 
-        Dim target = stdNum.Log(k, 2) * bandwidth ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
+        ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
+        Dim target = stdNum.Log(k, 2) * bandwidth
         Dim rho = New Double(distances.Length - 1) {}
         Dim result = New Double(distances.Length - 1) {}
 
-        For i = 0 To distances.Length - 1
+        For i As Integer = 0 To distances.Length - 1
             Dim lo = 0F
             Dim hi = Single.MaxValue
             Dim mid = 1.0F
@@ -306,7 +308,7 @@ Public NotInheritable Class Umap
                 rho(i) = nonZeroDists.Max
             End If
 
-            For n = 0 To nIter - 1
+            For n As Integer = 0 To nIter - 1
                 Dim psum = 0.0
 
                 For j = 1 To distances(i).Length - 1
@@ -391,8 +393,8 @@ Public NotInheritable Class Umap
     End Function
 
     ''' <summary>
-    ''' Initialize a fuzzy simplicial set embedding, using a specified initialisation method and then minimizing the fuzzy set cross entropy between the 1-skeletons of the high and low
-    ''' dimensional fuzzy simplicial sets.
+    ''' Initialize a fuzzy simplicial set embedding, using a specified initialisation method and then minimizing the 
+    ''' fuzzy set cross entropy between the 1-skeletons of the high and low dimensional fuzzy simplicial sets.
     ''' </summary>
     Private Function InitializeSimplicialSetEmbedding() As (head As Integer(), tail As Integer(), epochsPerSample As Double())
         Dim nEpochs = GetNEpochs()
@@ -429,32 +431,10 @@ Public NotInheritable Class Umap
             End If
         Next
 
-        Call ShuffleTogether(head, tail, weights)
+        Call ShuffleTogether(head, tail, weights, _random)
 
         Return (head.ToArray(), tail.ToArray(), Umap.MakeEpochsPerSample(weights.ToArray(), nEpochs))
     End Function
-
-    Private Sub ShuffleTogether(Of T, T2, T3)(list As List(Of T), other As List(Of T2), weights As List(Of T3))
-        Dim n = list.Count
-
-        If other.Count <> n Then
-            Throw New Exception()
-        End If
-
-        While n > 1
-            n -= 1
-            Dim k As Integer = _random.Next(0, n + 1)
-            Dim value = list(k)
-            list(k) = list(n)
-            list(n) = value
-            Dim otherValue = other(k)
-            other(k) = other(n)
-            other(n) = otherValue
-            Dim weightsValue = weights(k)
-            weights(k) = weights(n)
-            weights(n) = weightsValue
-        End While
-    End Sub
 
     Private Shared Function MakeEpochsPerSample(weights As Double(), nEpochs As Integer) As Double()
         Dim result = Utils.Filled(weights.Length, -1)
@@ -491,7 +471,9 @@ Public NotInheritable Class Umap
     End Sub
 
     Friend Shared Function FindABParams(spread As Double, minDist As Double) As (Single, Double)
-        ' 2019-06-21 DWR: If we need to support other spread, minDist values then we might be able to use the LM implementation in Accord.NET but I'll hard code values that relate to the default configuration for now
+        ' 2019-06-21 DWR: If we need to support other spread, minDist values then we might 
+        ' be able to use the LM implementation in Accord.NET but I'll hard code values that 
+        ' relate to the default configuration for now
         If spread <> 1 OrElse minDist <> 0.1F Then
             Throw New ArgumentException($"Currently, the {NameOf(FindABParams)} method only supports spread, minDist values of 1, 0.1 (the Levenberg-Marquardt algorithm is required to process other values")
         End If
@@ -528,11 +510,13 @@ Public NotInheritable Class Umap
         Dim numberOfEpochsToComplete = GetNEpochs()
 
         If currentEpoch < numberOfEpochsToComplete Then
-            Me.OptimizeLayoutStep(currentEpoch)
+            Call OptimizeLayoutStep(currentEpoch)
 
             If _progressReporter IsNot Nothing Then
-                ' InitializeFit roughly approximately takes 80% of the processing time for large quantities of data, leaving 20% for the Step iterations - the progress reporter
-                ' calls made here are based on the assumption that Step will be called the recommended number of times (the number-of-epochs value returned from InitializeFit)
+                ' InitializeFit roughly approximately takes 80% of the processing time for large quantities of data, 
+                ' leaving 20% for the Step iterations - the progress reporter calls made here are based on the 
+                ' assumption that Step will be called the recommended number of times (the number-of-epochs value 
+                ' returned From InitializeFit)
                 Umap.ScaleProgressReporter(_progressReporter, 0.8F, 1)(CSng(currentEpoch) / numberOfEpochsToComplete)
             End If
         End If
@@ -541,22 +525,21 @@ Public NotInheritable Class Umap
     End Function
 
     ''' <summary>
-    ''' Improve an embedding using stochastic gradient descent to minimize the fuzzy set cross entropy between the 1-skeletons of the high dimensional and low dimensional fuzzy simplicial sets.
-    ''' In practice this is done by sampling edges based on their membership strength(with the (1-p) terms coming from negative sampling similar to word2vec).
+    ''' Improve an embedding using stochastic gradient descent to minimize the fuzzy set cross entropy between 
+    ''' the 1-skeletons of the high dimensional and low dimensional fuzzy simplicial sets.
+    ''' 
+    ''' In practice this is done by sampling edges based on their membership strength(with the (1-p) terms 
+    ''' coming from negative sampling similar to word2vec).
     ''' </summary>
     Private Sub OptimizeLayoutStep(n As Integer)
-        'If _random.IsThreadSafe Then
-        '    System.Threading.Tasks.Parallel.For(0, _optimizationState.EpochsPerSample.Length, Sub(i) Call RunIterate(i, n))
-        'Else
-
+        ' 在这里可以进行并行化？
         For i = 0 To _optimizationState.EpochsPerSample.Length - 1
             RunIterate(i, n)
         Next
 
-        ' End If
-
+        ' Preparation for future work for interpolating the table before optimizing
         _optimizationState.Alpha = _optimizationState.InitialAlpha * (1.0F - n / _optimizationState.NEpochs)
-        _optimizationState.CurrentEpoch += 1 'Preparation for future work for interpolating the table before optimizing
+        _optimizationState.CurrentEpoch += 1
     End Sub
 
     Private Sub RunIterate(i As Integer, n As Integer)
@@ -567,6 +550,7 @@ Public NotInheritable Class Umap
 
     Private Sub Iterate(i As Integer, n As Integer)
         Dim embeddingSpan As Span(Of Double) = _embedding
+
         Dim j As Integer = _optimizationState.Head(i)
         Dim k As Integer = _optimizationState.Tail(i)
 
@@ -580,15 +564,13 @@ Public NotInheritable Class Umap
         Dim gradD As Double
 
         If (distSquared > 0) Then
-
             gradCoeff = -2 * _optimizationState.A * _optimizationState.B * stdNum.Pow(distSquared, _optimizationState.B - 1)
             gradCoeff /= _optimizationState.A * stdNum.Pow(distSquared, _optimizationState.B) + 1
         End If
 
         Const clipValue = 4.0F
 
-        For d = 0 To _optimizationState.Dim - 1
-
+        For d As Integer = 0 To _optimizationState.Dim - 1
             gradD = Umap.Clip(gradCoeff * (current(d) - other(d)), clipValue)
             current(d) += gradD * _optimizationState.Alpha
 
@@ -617,7 +599,7 @@ Public NotInheritable Class Umap
                 Continue For
             End If
 
-            For d = 0 To _optimizationState.Dim - 1
+            For d As Integer = 0 To _optimizationState.Dim - 1
                 gradD = 4.0F
 
                 If (gradCoeff > 0) Then
@@ -659,8 +641,8 @@ Public NotInheritable Class Umap
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Shared Function ScaleProgressReporter(progressReporter As IProgressReporter, start As Double, [end] As Double) As IProgressReporter
-        Dim range = [end] - start
-        Return Sub(progress) progressReporter(range * progress + start)
+        Return Sub(progress) progressReporter(([end] - start) * progress + start)
     End Function
 End Class

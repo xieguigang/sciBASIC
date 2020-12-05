@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::05815521caa5ffab2fd03e88b5840cfd, Data_science\DataMining\UMAP\Components\NNDescent.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Interface NNDescentFn
-    ' 
-    '     Function: NNDescent
-    ' 
-    ' Class NNDescent
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: MakeNNDescent
-    ' 
-    ' /********************************************************************************/
+' Interface NNDescentFn
+' 
+'     Function: NNDescent
+' 
+' Class NNDescent
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: MakeNNDescent
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -82,14 +82,16 @@ Friend Class NNDescent : Implements NNDescentFn
 
         Dim nVertices = data.Length
         Dim currentGraph = Heaps.MakeHeap(data.Length, nNeighbors)
+        Dim d As Double
 
         For i = 0 To data.Length - 1
-            Dim indices = Utils.RejectionSample(nNeighbors, data.Length, random)
+            Dim indices As Integer() = Utils.RejectionSample(nNeighbors, data.Length, random)
 
             For j = 0 To indices.Length - 1
-                Dim d = distanceFn(data(i), data(indices(j)))
-                Heaps.HeapPush(currentGraph, i, d, indices(j), 1)
-                Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
+                d = distanceFn(data(i), data(indices(j)))
+
+                Call Heaps.HeapPush(currentGraph, i, d, indices(j), 1)
+                Call Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
             Next
         Next
 
@@ -97,35 +99,52 @@ Friend Class NNDescent : Implements NNDescentFn
             For n = 0 To leafArray.Length - 1
 
                 For i = 0 To leafArray(CInt(n)).Length - 1
-                    If leafArray(n)(i) < 0 Then Exit For
+                    If leafArray(n)(i) < 0 Then
+                        Exit For
+                    End If
 
                     For j = i + 1 To leafArray(CInt(n)).Length - 1
-                        If leafArray(n)(j) < 0 Then Exit For
-                        Dim d = distanceFn(data(leafArray(n)(i)), data(leafArray(n)(j)))
-                        Heaps.HeapPush(currentGraph, leafArray(n)(i), d, leafArray(n)(j), 1)
-                        Heaps.HeapPush(currentGraph, leafArray(n)(j), d, leafArray(n)(i), 1)
+                        If leafArray(n)(j) < 0 Then
+                            Exit For
+                        Else
+                            d = distanceFn(data(leafArray(n)(i)), data(leafArray(n)(j)))
+                        End If
+
+                        Call Heaps.HeapPush(currentGraph, leafArray(n)(i), d, leafArray(n)(j), 1)
+                        Call Heaps.HeapPush(currentGraph, leafArray(n)(j), d, leafArray(n)(i), 1)
                     Next
                 Next
             Next
         End If
 
-        For n = 0 To nIters - 1
-            startingIteration?.Invoke(n, nIters)
-            Dim candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
-            Dim c = 0
+        Dim candidateNeighbors As Heap
+        Dim c As Integer
 
-            For i = 0 To nVertices - 1
+        For n As Integer = 0 To nIters - 1
+            Call startingIteration?.Invoke(n, nIters)
 
-                For j = 0 To maxCandidates - 1
+            candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
+            c = 0
+
+            For i As Integer = 0 To nVertices - 1
+                For j As Integer = 0 To maxCandidates - 1
                     Dim p = CInt(stdNum.Floor(candidateNeighbors(0)(i)(j)))
-                    If p < 0 OrElse (random.NextFloat() < rho) Then Continue For
+
+                    If p < 0 OrElse (random.NextFloat() < rho) Then
+                        Continue For
+                    End If
 
                     For k = 0 To maxCandidates - 1
                         Dim q = CInt(stdNum.Floor(candidateNeighbors(0)(i)(k)))
                         Dim cj = candidateNeighbors(2)(i)(j)
                         Dim ck = candidateNeighbors(2)(i)(k)
-                        If q < 0 OrElse cj = 0 AndAlso ck = 0 Then Continue For
-                        Dim d = distanceFn(data(p), data(q))
+
+                        If q < 0 OrElse cj = 0 AndAlso ck = 0 Then
+                            Continue For
+                        Else
+                            d = distanceFn(data(p), data(q))
+                        End If
+
                         c += Heaps.HeapPush(currentGraph, p, d, q, 1)
                         c += Heaps.HeapPush(currentGraph, q, d, p, 1)
                     Next

@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::8049e23e0850cc23293e1563ff3f5c65, Data_science\DataMining\UMAP\Components\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Utils
-    ' 
-    '     Function: Empty, Filled, Max, Mean, Range
-    '               RejectionSample
-    ' 
-    ' /********************************************************************************/
+' Module Utils
+' 
+'     Function: Empty, Filled, Max, Mean, Range
+'               RejectionSample
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
 
 Module Utils
@@ -93,4 +94,31 @@ Module Utils
 
         Return result
     End Function
+
+    <Extension>
+    Friend Sub ShuffleTogether(Of T, T2, T3)(list As List(Of T), other As List(Of T2), weights As List(Of T3), randf As IProvideRandomValues)
+        Dim n As Integer = list.Count
+        Dim k As Integer
+        Dim value As T
+        Dim otherValue As T2
+        Dim weightsValue As T3
+
+        If other.Count <> n Then
+            Throw New Exception()
+        End If
+
+        While n > 1
+            n -= 1
+            k = randf.Next(0, n + 1)
+            value = list(k)
+            list(k) = list(n)
+            list(n) = value
+            otherValue = other(k)
+            other(k) = other(n)
+            other(n) = otherValue
+            weightsValue = weights(k)
+            weights(k) = weights(n)
+            weights(n) = weightsValue
+        End While
+    End Sub
 End Module
