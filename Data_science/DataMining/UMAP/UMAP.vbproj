@@ -67,6 +67,8 @@
     <Compile Include="Components\ProgressReporter.vb" />
     <Compile Include="Components\DefaultRandomGenerator.vb" />
     <Compile Include="Components\Heaps.vb" />
+    <Compile Include="Components\Tree\FlatTree.vb" />
+    <Compile Include="Components\Tree\RandomProjectionTreeNode.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
