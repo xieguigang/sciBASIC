@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C57630A3-33B1-4CAD-9DC8-3A9E66CE93FF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>UMAP</RootNamespace>
-    <AssemblyName>UMAP</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.DataMining.UMAP</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.DataMining.UMAP</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>UMAP.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.UMAP.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>UMAP.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.UMAP.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -64,11 +64,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.vb" />
+    <Compile Include="DefaultRandomGenerator.vb" />
+    <Compile Include="FastRandom.vb" />
+    <Compile Include="Heaps.vb" />
+    <Compile Include="InternalsVisibleTo.vb" />
+    <Compile Include="IProvideRandomValues.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -80,6 +85,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="NNDescent.vb" />
+    <Compile Include="SIMD.vb" />
+    <Compile Include="SIMDInt.vb" />
+    <Compile Include="SparseMatrix.vb" />
+    <Compile Include="ThreadSafeFastRandom.vb" />
+    <Compile Include="Tree.vb" />
+    <Compile Include="Umap.vb" />
+    <Compile Include="Utils.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
