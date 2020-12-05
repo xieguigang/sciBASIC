@@ -67,6 +67,7 @@
     <Compile Include="Components\ProgressReporter.vb" />
     <Compile Include="Components\DefaultRandomGenerator.vb" />
     <Compile Include="Components\Heaps.vb" />
+    <Compile Include="Components\SparseMatrix\RowCol.vb" />
     <Compile Include="Components\Tree\FlatTree.vb" />
     <Compile Include="Components\Tree\RandomProjectionTreeNode.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -88,7 +89,7 @@
     <Compile Include="Components\NNDescent.vb" />
     <Compile Include="Components\SIMD\SIMD.vb" />
     <Compile Include="Components\SIMD\SIMDInt.vb" />
-    <Compile Include="Components\SparseMatrix.vb" />
+    <Compile Include="Components\SparseMatrix\SparseMatrix.vb" />
     <Compile Include="Components\Tree\Tree.vb" />
     <Compile Include="Umap.vb" />
     <Compile Include="Components\Utils.vb" />
