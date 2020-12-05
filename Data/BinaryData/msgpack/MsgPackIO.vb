@@ -140,127 +140,156 @@ Public Module MsgPackIO
 
     Friend Function DeserializeValue(type As Type, reader As BinaryReader, nilImplication As NilImplication) As Object
         Dim result As Object = Nothing
-        Dim isRichType = False
 
-        If type Is GetType(String) Then
-            result = ReadMsgPackString(reader, nilImplication)
-        ElseIf type Is GetType(Integer) OrElse type Is GetType(UInteger) OrElse type Is GetType(Byte) OrElse type Is GetType(SByte) OrElse type Is GetType(Short) OrElse type Is GetType(UShort) OrElse type Is GetType(Long) OrElse type Is GetType(ULong) OrElse type Is GetType(Integer?) OrElse type Is GetType(UInteger?) OrElse type Is GetType(Byte?) OrElse type Is GetType(SByte?) OrElse type Is GetType(Short?) OrElse type Is GetType(UShort?) OrElse type Is GetType(Long?) OrElse type Is GetType(ULong?) Then
-            result = ReadMsgPackInt(reader, nilImplication)
-        ElseIf type Is GetType(Char) Then
-            result = ReadMsgPackInt(reader, nilImplication)
-        ElseIf type Is GetType(Single) Then
-            result = ReadMsgPackFloat(reader, nilImplication)
-        ElseIf type Is GetType(Double) Then
-            result = ReadMsgPackDouble(reader, nilImplication)
-        ElseIf type Is GetType(Boolean) OrElse type Is GetType(Boolean) Then
-            result = ReadMsgPackBoolean(reader, nilImplication)
-        ElseIf type Is GetType(Date) Then
-            Dim boxedVal = ReadMsgPackInt(reader, nilImplication)
+        Select Case type
+            Case GetType(String)
+                result = ReadMsgPackString(reader, nilImplication)
+            Case GetType(Integer),
+                 GetType(UInteger),
+                 GetType(Byte),
+                 GetType(SByte),
+                 GetType(Short),
+                 GetType(UShort),
+                 GetType(Long),
+                 GetType(ULong),
+                 GetType(Integer?),
+                 GetType(UInteger?),
+                 GetType(Byte?),
+                 GetType(SByte?),
+                 GetType(Short?),
+                 GetType(UShort?),
+                 GetType(Long?),
+                 GetType(ULong?)
 
-            If boxedVal Is Nothing Then
-                result = Nothing
-            Else
-                Dim unixEpochTicks As Long = boxedVal
-                result = ToDateTime(unixEpochTicks)
-            End If
-        ElseIf type Is GetType(TimeSpan) Then
-            Dim boxedVal = ReadMsgPackInt(reader, nilImplication)
+                result = ReadMsgPackInt(reader, nilImplication)
+            Case GetType(Char)
+                result = ReadMsgPackInt(reader, nilImplication)
+            Case GetType(Single)
+                result = ReadMsgPackFloat(reader, nilImplication)
+            Case GetType(Double)
+                result = ReadMsgPackDouble(reader, nilImplication)
+            Case GetType(Boolean), GetType(Boolean)
+                result = ReadMsgPackBoolean(reader, nilImplication)
+            Case GetType(Date)
+                Dim boxedVal = ReadMsgPackInt(reader, nilImplication)
 
-            If boxedVal Is Nothing Then
-                result = Nothing
-            Else
-                Dim unixEpochTicks As Integer = boxedVal
-                result = ToTimeSpan(unixEpochTicks)
-            End If
-        ElseIf type.IsEnum Then
-            Dim boxedVal = ReadMsgPackString(reader, nilImplication)
-
-            If boxedVal Is Nothing Then
-                result = Nothing
-            Else
-                Dim enumVal = CStr(boxedVal)
-
-                If Equals(enumVal, "") Then
+                If boxedVal Is Nothing Then
                     result = Nothing
                 Else
-                    result = [Enum].Parse(type, enumVal)
+                    Dim unixEpochTicks As Long = boxedVal
+                    result = ToDateTime(unixEpochTicks)
                 End If
-            End If
-        ElseIf type.IsArray Then
-            Dim numElements = ReadNumArrayElements(reader)
+            Case GetType(TimeSpan)
+                Dim boxedVal = ReadMsgPackInt(reader, nilImplication)
 
-            If numElements = -1 Then
-                result = Nothing
-            Else
-                result = Activator.CreateInstance(type, New Object() {numElements})
-                DeserializeArray(CType(result, Array), numElements, reader)
-            End If
-        ElseIf type Is GetType(Object) Then
-            Dim header As Byte = reader.ReadByte()
-
-            If header = Formats.NIL Then
-                result = Nothing
-            ElseIf header = Bool.TRUE Then
-                result = True
-            ElseIf header = Bool.FALSE Then
-                result = False
-            ElseIf header = Formats.FLOAT_64 Then
-                result = ReadMsgPackDouble(reader, nilImplication, header)
-            ElseIf header = Formats.FLOAT_32 Then
-                result = ReadMsgPackFloat(reader, nilImplication, header)
-            ElseIf header = Formats.INTEGER_16 Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header = Formats.INTEGER_32 Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header = Formats.INTEGER_64 Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header = Formats.INTEGER_8 Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header = Formats.STRING_8 Then
-                result = ReadMsgPackString(reader, nilImplication, header)
-            ElseIf header = Formats.STRING_16 Then
-                result = ReadMsgPackString(reader, nilImplication, header)
-            ElseIf header = Formats.STRING_32 Then
-                result = ReadMsgPackString(reader, nilImplication, header)
-            ElseIf header >= FixedString.MIN AndAlso header <= FixedString.MAX Then
-                result = ReadMsgPackString(reader, nilImplication, header)
-            ElseIf header = Formats.UNSIGNED_INTEGER_8 Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header = Formats.UNSIGNED_INTEGER_16 Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header = Formats.UNSIGNED_INTEGER_32 Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header = Formats.UNSIGNED_INTEGER_64 Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header >= FixedInteger.POSITIVE_MIN AndAlso header <= FixedInteger.POSITIVE_MAX Then
-
-                If header = 0 Then
-                    result = 0
+                If boxedVal Is Nothing Then
+                    result = Nothing
                 Else
-                    result = ReadMsgPackInt(reader, nilImplication, header)
+                    Dim unixEpochTicks As Integer = boxedVal
+                    result = ToTimeSpan(unixEpochTicks)
                 End If
-            ElseIf header >= FixedInteger.NEGATIVE_MIN AndAlso header <= FixedInteger.NEGATIVE_MAX Then
-                result = ReadMsgPackInt(reader, nilImplication, header)
-            ElseIf header >= FixedMap.MIN AndAlso header <= FixedMap.MAX OrElse header = Formats.MAP_16 OrElse header = Formats.MAP_32 Then
-                result = New Dictionary(Of String, Object)()
-                DeserializeCollection(CType(result, Dictionary(Of String, Object)), reader, header)
+            Case Else
+
+                If type.IsEnum Then
+                    Dim boxedVal = ReadMsgPackString(reader, nilImplication)
+
+                    If boxedVal Is Nothing Then
+                        result = Nothing
+                    Else
+                        Dim enumVal = CStr(boxedVal)
+
+                        If Equals(enumVal, "") Then
+                            result = Nothing
+                        Else
+                            result = [Enum].Parse(type, enumVal)
+                        End If
+                    End If
+                ElseIf type.IsArray Then
+                    Dim numElements = ReadNumArrayElements(reader)
+
+                    If numElements = -1 Then
+                        result = Nothing
+                    Else
+                        result = Activator.CreateInstance(type, New Object() {numElements})
+                        DeserializeArray(CType(result, Array), numElements, reader)
+                    End If
+                ElseIf type Is GetType(Object) Then
+                    Return DeserializeAnyObj(type, reader, nilImplication)
+                Else
+                    Return DeserializeRichObj(type, reader, nilImplication)
+                End If
+        End Select
+
+        Return result
+    End Function
+
+    Private Function DeserializeAnyObj(type As Type, reader As BinaryReader, nilImplication As NilImplication) As Object
+        Dim header As Byte = reader.ReadByte()
+        Dim result As Object
+
+        If header = Formats.NIL Then
+            result = Nothing
+        ElseIf header = Bool.TRUE Then
+            result = True
+        ElseIf header = Bool.FALSE Then
+            result = False
+        ElseIf header = Formats.FLOAT_64 Then
+            result = ReadMsgPackDouble(reader, nilImplication, header)
+        ElseIf header = Formats.FLOAT_32 Then
+            result = ReadMsgPackFloat(reader, nilImplication, header)
+        ElseIf header = Formats.INTEGER_16 Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header = Formats.INTEGER_32 Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header = Formats.INTEGER_64 Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header = Formats.INTEGER_8 Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header = Formats.STRING_8 Then
+            result = ReadMsgPackString(reader, nilImplication, header)
+        ElseIf header = Formats.STRING_16 Then
+            result = ReadMsgPackString(reader, nilImplication, header)
+        ElseIf header = Formats.STRING_32 Then
+            result = ReadMsgPackString(reader, nilImplication, header)
+        ElseIf header >= FixedString.MIN AndAlso header <= FixedString.MAX Then
+            result = ReadMsgPackString(reader, nilImplication, header)
+        ElseIf header = Formats.UNSIGNED_INTEGER_8 Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header = Formats.UNSIGNED_INTEGER_16 Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header = Formats.UNSIGNED_INTEGER_32 Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header = Formats.UNSIGNED_INTEGER_64 Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header >= FixedInteger.POSITIVE_MIN AndAlso header <= FixedInteger.POSITIVE_MAX Then
+
+            If header = 0 Then
+                result = 0
             Else
-                isRichType = True
+                result = ReadMsgPackInt(reader, nilImplication, header)
             End If
+        ElseIf header >= FixedInteger.NEGATIVE_MIN AndAlso header <= FixedInteger.NEGATIVE_MAX Then
+            result = ReadMsgPackInt(reader, nilImplication, header)
+        ElseIf header >= FixedMap.MIN AndAlso header <= FixedMap.MAX OrElse header = Formats.MAP_16 OrElse header = Formats.MAP_32 Then
+            result = New Dictionary(Of String, Object)()
+            DeserializeCollection(CType(result, Dictionary(Of String, Object)), reader, header)
         Else
-            isRichType = True
+            Return DeserializeRichObj(type, reader, nilImplication)
         End If
 
-        If isRichType Then
-            Dim constructorInfo = type.GetConstructor(Type.EmptyTypes)
+        Return result
+    End Function
 
-            If constructorInfo Is Nothing Then
-                Throw New ApplicationException($"Can't deserialize Type [{type}] because it has no default constructor")
-            End If
+    Private Function DeserializeRichObj(type As Type, reader As BinaryReader, nilImplication As NilImplication) As Object
+        Dim constructorInfo = type.GetConstructor(Type.EmptyTypes)
+        Dim result As Object
 
-            result = constructorInfo.Invoke(SerializableProperty.EmptyObjArgs)
-            result = MsgPackSerializer.DeserializeObject(result, reader, nilImplication)
+        If constructorInfo Is Nothing Then
+            Throw New ApplicationException($"Can't deserialize Type [{type}] because it has no default constructor")
         End If
+
+        result = constructorInfo.Invoke(SerializableProperty.EmptyObjArgs)
+        result = MsgPackSerializer.DeserializeObject(result, reader, nilImplication)
 
         Return result
     End Function
